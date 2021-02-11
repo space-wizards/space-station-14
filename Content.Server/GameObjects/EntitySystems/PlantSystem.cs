@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _timer = 0f;
 
-            foreach (var plantHolder in _componentManager.EntityQuery<PlantHolderComponent>())
+            foreach (var plantHolder in _componentManager.EntityQuery<PlantHolderComponent>(true))
             {
                 plantHolder.Update();
             }

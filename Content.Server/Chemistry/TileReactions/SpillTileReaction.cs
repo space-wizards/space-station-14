@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using JetBrains.Annotations;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -17,7 +18,7 @@ namespace Content.Server.Chemistry.TileReactions
         private float _paralyzeTime = 1f;
         private bool _overflow;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             // If you want to modify more puddle/slippery values, add them here.
             serializer.DataField(ref _paralyzeTime, "paralyzeTime", 1f);

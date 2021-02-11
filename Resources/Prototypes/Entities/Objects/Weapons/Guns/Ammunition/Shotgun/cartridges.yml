@@ -102,5 +102,5 @@
   - type: ChemicalAmmo
   - type: SolutionContainer
     maxVol: 15
-    caps: AddTo, RemoveFrom
-  - type: Pourable
+    caps: Refillable, Drainable
+  - type: SolutionTransfer

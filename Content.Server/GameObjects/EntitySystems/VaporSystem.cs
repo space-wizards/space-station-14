@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var vaporComp in ComponentManager.EntityQuery<VaporComponent>())
+            foreach (var vaporComp in ComponentManager.EntityQuery<VaporComponent>(true))
             {
                 vaporComp.Update(frameTime);
             }

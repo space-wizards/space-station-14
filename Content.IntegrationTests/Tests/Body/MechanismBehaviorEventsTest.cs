@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
 using NUnit.Framework;
@@ -103,7 +102,7 @@ namespace Content.IntegrationTests.Tests.Body
             }
         }
 
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: HumanBodyDummy
   id: HumanBodyDummy
@@ -117,7 +116,7 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task EventsTest()
         {
-            var options = new ServerContentIntegrationOption {ExtraPrototypes = PROTOTYPES};
+            var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             await server.WaitAssertion(() =>

@@ -9,7 +9,6 @@
   "states": [
     {
       "name": "icon",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -24,7 +23,6 @@
     },
     {
       "name": "icon-unlit",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -39,7 +37,6 @@
     },
     {
       "name": "broken",
-      "directions": 1,
     },
     {
       "name": "equipped-BACKPACK",

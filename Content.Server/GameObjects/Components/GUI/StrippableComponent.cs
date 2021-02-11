@@ -24,6 +24,7 @@ using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefine
 namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedStrippableComponent))]
     public sealed class StrippableComponent : SharedStrippableComponent
     {
         public const float StripDelay = 2f;

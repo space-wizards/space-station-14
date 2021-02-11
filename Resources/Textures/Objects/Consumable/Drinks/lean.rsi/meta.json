@@ -8,8 +8,7 @@
   "copyright": "https://github.com/tgstation/tgstation/blob/master/icons/obj/drinks.dmi",
   "states": [
     {
-      "name": "icon",
-      "directions": 1
+      "name": "icon"
     },
     {
       "name": "inhand-right",

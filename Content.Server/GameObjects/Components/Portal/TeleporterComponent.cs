@@ -23,7 +23,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Portal
 {
     [RegisterComponent]
-    public class TeleporterComponent : Component, IAfterInteract 
+    public class TeleporterComponent : Component, IAfterInteract
     {
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
         [Dependency] private readonly IRobustRandom _spreadRandom = default!;
@@ -78,7 +78,7 @@ namespace Content.Server.GameObjects.Components.Portal
             _state = newState;
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (_teleporterType == TeleporterType.Directed)
             {
@@ -89,6 +89,8 @@ namespace Content.Server.GameObjects.Components.Portal
             {
                 TryRandomTeleport(eventArgs.User);
             }
+
+            return true;
         }
 
         public void TryDirectedTeleport(IEntity user, MapCoordinates mapCoords)

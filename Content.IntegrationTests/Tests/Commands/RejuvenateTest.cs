@@ -22,8 +22,6 @@ namespace Content.IntegrationTests.Tests.Commands
   components:
   - type: Damageable
     damagePrototype: biologicalDamageContainer
-    criticalThreshold: 100
-    deadThreshold: 200
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}

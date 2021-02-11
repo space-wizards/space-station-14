@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Robust.Shared.Analyzers;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -49,7 +52,7 @@ namespace Content.Shared.Chemistry
         }
 
         /// <inheritdoc />
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataReadWriteFunction(
                 "reagents",
@@ -90,7 +93,7 @@ namespace Content.Shared.Chemistry
                 return "";
             }
 
-            var majorReagent = Contents.OrderByDescending(reagent => reagent.Quantity).First(); ;
+            var majorReagent = Contents.OrderByDescending(reagent => reagent.Quantity).First();
             return majorReagent.ReagentId;
         }
 
@@ -313,6 +316,20 @@ namespace Content.Shared.Chemistry
 
             newSolution.TotalVolume = volume;
             return newSolution;
+        }
+
+        public void DoEntityReaction(IEntity entity, ReactionMethod method)
+        {
+            var proto = IoCManager.Resolve<IPrototypeManager>();
+
+            foreach (var (reagentId, quantity) in _contents.ToArray())
+            {
+                if (!proto.TryIndex(reagentId, out ReagentPrototype reagent))
+                    continue;
+
+                var removedAmount = reagent.ReactionEntity(entity, method, quantity);
+                RemoveReagent(reagentId, removedAmount);
+            }
         }
 
         [Serializable, NetSerializable]

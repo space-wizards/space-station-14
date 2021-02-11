@@ -16,6 +16,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
+using System;
+using Robust.Shared.Serialization;
 
 namespace Content.IntegrationTests.Tests.Networking
 {
@@ -415,6 +417,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 return new PredictionComponentState(Foo);
             }
 
+            [Serializable, NetSerializable]
             private sealed class PredictionComponentState : ComponentState
             {
                 public bool Foo { get; }

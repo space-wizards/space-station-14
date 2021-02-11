@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 AudioHelpers.WithVariation(0.125f));
         }
 
-        public void Land(LandEventArgs eventArgs)
+        void ILand.Land(LandEventArgs eventArgs)
         {
             PlaySound();
 

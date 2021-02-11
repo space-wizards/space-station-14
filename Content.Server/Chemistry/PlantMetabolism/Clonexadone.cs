@@ -5,6 +5,7 @@ using Content.Shared.Interfaces.Chemistry;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
@@ -13,7 +14,7 @@ namespace Content.Server.Chemistry.PlantMetabolism
     [UsedImplicitly]
     public class Clonexadone : IPlantMetabolizable
     {
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
         }
 

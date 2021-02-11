@@ -5,6 +5,7 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using System;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 
@@ -15,7 +16,7 @@ namespace Content.Server.Construction.Completions
     {
         public int Amount { get; private set; }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Amount, "amount", 1);
         }

@@ -46,7 +46,7 @@ namespace Content.Client.GameObjects.Components.Observer
 
         private void SetGhostVisibility(bool visibility)
         {
-            foreach (var ghost in _componentManager.GetAllComponents(typeof(GhostComponent)))
+            foreach (var ghost in _componentManager.GetAllComponents(typeof(GhostComponent), true))
             {
                 if (ghost.Owner.TryGetComponent(out SpriteComponent? component))
                 {

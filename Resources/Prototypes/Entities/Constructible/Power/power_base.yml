@@ -38,6 +38,9 @@
     supplyRate: 3000
   - type: Anchorable
   - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
 
 - type: entity
   id: BaseSmes
@@ -93,6 +96,9 @@
     activeSupplyRate: 1000
   - type: Anchorable
   - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
 
 - type: entity
   id: BaseSubstation
@@ -148,6 +154,10 @@
     activeSupplyRate: 1000
   - type: Anchorable
   - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
+    - MVDummyWire
 
 - type: entity
   id: BaseApc
@@ -201,6 +211,10 @@
   - type: Construction
     graph: apc
     node: apc
+  - type: ClientEntitySpawner
+    prototypes:
+    - MVDummyWire
+    - LVDummyWire
 
 - type: entity
   id: SolarPanel
@@ -243,9 +257,14 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Breakage"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Anchorable
   - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire

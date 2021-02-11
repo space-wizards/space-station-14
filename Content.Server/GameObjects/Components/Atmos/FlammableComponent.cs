@@ -214,7 +214,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             });
         }
 
-        public ReagentUnit ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
+        ReagentUnit IReagentReaction.ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
         {
             switch (reagent.ID)
             {
@@ -225,7 +225,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 case "chem.WeldingFuel":
                 case "chem.Thermite":
-                case "chem.Phoron":
+                case "chem.Plasma":
                 case "chem.Ethanol":
                     AdjustFireStacks(volume.Float() / 10f);
                     return volume;

@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(HumanInventoryControllerComponent))]
     public class HumanInventoryUniformSlotsTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: HumanDummy
   id: HumanDummy
@@ -59,7 +59,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             IEntity human = null;

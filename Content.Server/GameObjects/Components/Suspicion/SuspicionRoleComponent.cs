@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.GameMode;
 using Content.Server.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Mobs.Roles.Suspicion;

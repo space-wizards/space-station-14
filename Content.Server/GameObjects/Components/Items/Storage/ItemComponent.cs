@@ -97,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: true);
         }
 
-        public bool InteractHand(InteractHandEventArgs eventArgs)
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             if (!CanPickup(eventArgs.User)) return false;
 

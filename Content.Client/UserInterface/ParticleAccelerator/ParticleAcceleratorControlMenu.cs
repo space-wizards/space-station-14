@@ -188,11 +188,11 @@ namespace Content.Client.ParticleAccelerator
                             new MarginContainer
                             {
                                 MarginLeftOverride = 4,
+                                SizeFlagsHorizontal = SizeFlags.FillExpand,
                                 Children =
                                 {
                                     new VBoxContainer
                                     {
-                                        SizeFlagsHorizontal = SizeFlags.FillExpand,
                                         Children =
                                         {
                                             new HBoxContainer
@@ -246,55 +246,61 @@ namespace Content.Client.ParticleAccelerator
                                     }
                                 }
                             },
-                            new VBoxContainer
+                            new MarginContainer
                             {
-                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                CustomMinimumSize = (186, 0),
                                 Children =
                                 {
-                                    (_statusLabel = new Label
+                                    new VBoxContainer
                                     {
-                                        SizeFlagsHorizontal = SizeFlags.ShrinkCenter
-                                    }),
-                                    new Control
-                                    {
-                                        CustomMinimumSize = (0, 20)
-                                    },
-                                    new PanelContainer
-                                    {
-                                        SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                                        PanelOverride = back2,
                                         Children =
                                         {
-                                            new GridContainer
+                                            (_statusLabel = new Label
                                             {
-                                                Columns = 3,
-                                                VSeparationOverride = 0,
-                                                HSeparationOverride = 0,
+                                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                                            }),
+                                            new Control
+                                            {
+                                                CustomMinimumSize = (0, 20)
+                                            },
+                                            new PanelContainer
+                                            {
+                                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                                                PanelOverride = back2,
                                                 Children =
                                                 {
-                                                    new Control {CustomMinimumSize = imgSize},
-                                                    (_endCapTexture = Segment("end_cap")),
-                                                    new Control {CustomMinimumSize = imgSize},
-                                                    (_controlBoxTexture = Segment("control_box")),
-                                                    (_fuelChamberTexture = Segment("fuel_chamber")),
-                                                    new Control {CustomMinimumSize = imgSize},
-                                                    new Control {CustomMinimumSize = imgSize},
-                                                    (_powerBoxTexture = Segment("power_box")),
-                                                    new Control {CustomMinimumSize = imgSize},
-                                                    (_emitterLeftTexture = Segment("emitter_left")),
-                                                    (_emitterCenterTexture = Segment("emitter_center")),
-                                                    (_emitterRightTexture = Segment("emitter_right")),
+                                                    new GridContainer
+                                                    {
+                                                        Columns = 3,
+                                                        VSeparationOverride = 0,
+                                                        HSeparationOverride = 0,
+                                                        Children =
+                                                        {
+                                                            new Control {CustomMinimumSize = imgSize},
+                                                            (_endCapTexture = Segment("end_cap")),
+                                                            new Control {CustomMinimumSize = imgSize},
+                                                            (_controlBoxTexture = Segment("control_box")),
+                                                            (_fuelChamberTexture = Segment("fuel_chamber")),
+                                                            new Control {CustomMinimumSize = imgSize},
+                                                            new Control {CustomMinimumSize = imgSize},
+                                                            (_powerBoxTexture = Segment("power_box")),
+                                                            new Control {CustomMinimumSize = imgSize},
+                                                            (_emitterLeftTexture = Segment("emitter_left")),
+                                                            (_emitterCenterTexture = Segment("emitter_center")),
+                                                            (_emitterRightTexture = Segment("emitter_right")),
+                                                        }
+                                                    }
                                                 }
-                                            }
+                                            },
+                                            (_scanButton = new Button
+                                            {
+                                                Text = Loc.GetString("Scan Parts"),
+                                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                                            })
                                         }
-                                    },
-                                    (_scanButton = new Button
-                                    {
-                                        Text = Loc.GetString("Scan Parts"),
-                                        SizeFlagsHorizontal = SizeFlags.ShrinkCenter
-                                    })
+                                    }
                                 }
-                            }
+                            },
                         }
                     },
                     new StripeBack
@@ -507,7 +513,7 @@ namespace Content.Client.ParticleAccelerator
             public void SetPowerState(ParticleAcceleratorUIState state, bool exists)
             {
                 _base.ShaderOverride = exists ? null : _menu._greyScaleShader;
-                _base.ModulateSelfOverride = exists ? (Color?)null : new Color(127, 127, 127);
+                _base.ModulateSelfOverride = exists ? (Color?) null : new Color(127, 127, 127);
 
                 if (!state.Enabled || !exists)
                 {

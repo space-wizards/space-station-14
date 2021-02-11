@@ -13,14 +13,22 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Sprite
+    netsync: false
     sprite: Constructible/Atmos/pump.rsi
-  - type: Icon
-    sprite: Constructible/Atmos/pump.rsi
+    layers:
+    - sprite: Constructible/Atmos/pipe.rsi
+      state: pipeStraight
+    - state: pumpPressure
+  - type: Appearance
+    visuals:
+    - type: PumpVisualizer
 
 - type: entity
   parent: PumpBase
@@ -38,11 +46,3 @@
   - type: PressurePump
     inletDirection: West
     outletDirection: East
-  - type: Sprite
-    state: pumpPressure2
-  - type: Icon
-    state: pumpPressure2
-  - type: Appearance
-    visuals:
-    - type: PumpVisualizer
-      pumpEnabledState: pumpPressure2On

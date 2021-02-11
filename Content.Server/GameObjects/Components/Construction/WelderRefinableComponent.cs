@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Construction
             serializer.DataField(ref _refineTime, "refineTime", 2f);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // check if object is welder
             if (!eventArgs.Using.TryGetComponent(out ToolComponent? tool))

@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body.Behavior;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -99,6 +100,11 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public override void Update(float frameTime)
         {
+            if (Body != null && Body.Owner.TryGetComponent(out IMobStateComponent? mobState) && mobState.IsCritical())
+            {
+                return;
+            }
+
             if (Status == LungStatus.None)
             {
                 Status = LungStatus.Inhaling;

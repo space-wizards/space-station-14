@@ -49,7 +49,7 @@ namespace Content.IntegrationTests
 
             // Connecting to Discord is a massive waste of time.
             // Basically just makes the CI logs a mess.
-            options.CVarOverrides["discord.enabled"] = "true";
+            options.CVarOverrides["discord.enabled"] = "false";
 
             return base.StartClient(options);
         }
@@ -79,6 +79,9 @@ namespace Content.IntegrationTests
 
             // Avoid funny race conditions with the database.
             options.CVarOverrides[CCVars.DatabaseSynchronous.Name] = "true";
+
+            // Avoid loading a large map by default for integration tests.
+            options.CVarOverrides[CCVars.GameMap.Name] = "Maps/Test/empty.yml";
 
             return base.StartServer(options);
         }

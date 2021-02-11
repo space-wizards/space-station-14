@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
@@ -14,12 +15,19 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     /// clicking on another object and no interaction occurs, at any range. This includes
     /// clicking on an object in the world as well as clicking on an object in inventory.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IAfterInteract
     {
         /// <summary>
+        /// The interaction priority. Higher numbers get called first.
+        /// </summary>
+        /// <value>Priority defaults to 0</value>
+        int Priority => 0;
+
+        /// <summary>
         /// Called when we interact with nothing, or when we interact with an entity out of range that has no behavior
         /// </summary>
-        Task AfterInteract(AfterInteractEventArgs eventArgs);
+        Task<bool> AfterInteract(AfterInteractEventArgs eventArgs);
     }
 
     public class AfterInteractEventArgs : EventArgs

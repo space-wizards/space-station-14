@@ -65,7 +65,7 @@
   reactants:
     chem.B52:
       amount: 10
-    chem.U:
+    chem.Uranium:
       amount: 1
   products:
     chem.AtomicBomb: 11

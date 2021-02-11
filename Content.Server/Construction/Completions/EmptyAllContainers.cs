@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
@@ -12,7 +13,7 @@ namespace Content.Server.Construction.Completions
     [UsedImplicitly]
     public class EmptyAllContainers : IGraphAction
     {
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
         }
 

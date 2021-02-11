@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Body
     [TestOf(typeof(BodyComponent))]
     public class LegTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: HumanBodyAndAppearanceDummy
   id: HumanBodyAndAppearanceDummy
@@ -32,7 +32,7 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task RemoveLegsFallTest()
         {
-            var options = new ServerContentIntegrationOption{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             AppearanceComponent appearance = null;

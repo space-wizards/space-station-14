@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Radio
             return true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             return Use(eventArgs.User);
         }
@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Radio
             _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             Use(eventArgs.User);
         }

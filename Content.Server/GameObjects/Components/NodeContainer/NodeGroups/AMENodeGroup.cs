@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Explosions;
@@ -24,12 +25,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         /// since any part connected to the node group can easily find the master.
         /// </summary>
         [ViewVariables]
-        private AMEControllerComponent _masterController;
+        private AMEControllerComponent? _masterController;
 
         [Dependency]
         private readonly IRobustRandom _random = default!;
 
-        public AMEControllerComponent MasterController => _masterController;
+        public AMEControllerComponent? MasterController => _masterController;
 
         private readonly List<AMEShieldComponent> _cores = new();
 
@@ -52,20 +53,18 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             if (_masterController != null && _masterController?.Owner == node.Owner) { _masterController = null; }
         }
 
-        public void RefreshAMENodes(AMEControllerComponent controller)
+        public void RefreshAMENodes(AMEControllerComponent? controller)
         {
             if(_masterController == null && controller != null)
             {
                 _masterController = controller;
             }
 
-            if (_cores != null) {
-                foreach (AMEShieldComponent core in _cores)
-                {
-                    core.UnsetCore();
-                }
-                _cores.Clear();
+            foreach (AMEShieldComponent core in _cores)
+            {
+                core.UnsetCore();
             }
+            _cores.Clear();
 
             //Check each shield node to see if it meets core criteria
             foreach (Node node in Nodes)
@@ -79,10 +78,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                     .Select(entity => entity.TryGetComponent<AMEShieldComponent>(out var adjshield) ? adjshield : null)
                     .Where(adjshield => adjshield != null);
 
-                if (nodeNeighbors.Count() >= 8) { _cores.Add(shield); }
+                if (nodeNeighbors.Count() >= 8)
+                {
+                    _cores.Add(shield);
+                }
             }
-
-            if (_cores == null) { return; }
 
             foreach (AMEShieldComponent core in _cores)
             {

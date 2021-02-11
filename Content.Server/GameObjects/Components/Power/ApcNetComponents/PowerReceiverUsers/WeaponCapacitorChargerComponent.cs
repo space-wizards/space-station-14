@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
+#nullable enable
+using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;

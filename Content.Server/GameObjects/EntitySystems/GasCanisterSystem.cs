@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var component in ComponentManager.EntityQuery<GasCanisterComponent>())
+            foreach (var component in ComponentManager.EntityQuery<GasCanisterComponent>(true))
             {
                 component.Update(frameTime);
             }

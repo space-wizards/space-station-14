@@ -1,34 +1,35 @@
-﻿#nullable enable
-using System;
+#nullable enable
 using System.Linq;
+using System.Text;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Speech
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class AddAccent : IClientCommand
+    public class AddAccent : IConsoleCommand
     {
         public string Command => "addaccent";
         public string Description => "Add a speech component to the current player";
         public string Help => $"{Command} <component>/?";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity == null)
             {
-                shell.SendText(player, "You don't have an entity!");
+                shell.WriteLine("You don't have an entity!");
                 return;
             }
 
             if (args.Length == 0)
             {
-                shell.SendText(player, Help);
+                shell.WriteLine(Help);
                 return;
             }
 
@@ -39,39 +40,33 @@ namespace Content.Server.Commands.Speech
                 // Get all components that implement the ISpeechComponent except
                 var speeches = compFactory.GetAllRefTypes()
                     .Where(c => typeof(IAccentComponent).IsAssignableFrom(c) && c.IsClass);
-                var msg = "";
+                var msg = new StringBuilder();
+
                 foreach(var s in speeches)
                 {
-                    msg += $"{compFactory.GetRegistration(s).Name}\n";
+                    msg.Append($"{compFactory.GetRegistration(s).Name}\n");
                 }
-                shell.SendText(player, msg);
+
+                shell.WriteLine(msg.ToString());
             }
             else
             {
                 var name = args[0];
+
                 // Try to get the Component
-                Type type;
-                try
+                if (!compFactory.TryGetRegistration(name, out var registration, true))
                 {
-                    var comp = compFactory.GetComponent(name);
-                    type = comp.GetType();
-                }
-                catch (Exception)
-                {
-                    shell.SendText(player, $"Accent {name} not found. Try {Command} ? to get a list of all appliable accents.");
+                    shell.WriteLine($"Accent {name} not found. Try {Command} ? to get a list of all applicable accents.");
                     return;
                 }
 
+                var type = registration.Type;
+
                 // Check if that already exists
-                try
+                if (player.AttachedEntity.HasComponent(type))
                 {
-                    var comp = player.AttachedEntity.GetComponent(type);
-                    shell.SendText(player, "You already have this accent!");
+                    shell.WriteLine("You already have this accent!");
                     return;
-                }
-                catch (Exception)
-                {
-                    // Accent not found
                 }
 
                 // Generic fuckery
