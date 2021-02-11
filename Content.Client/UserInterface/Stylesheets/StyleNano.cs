@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Content.Client.Chat;
-aaaaaausing Content.Client.GameObjects.EntitySystems;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Utility;
 using Robust.Client.Graphics;
@@ -19,7 +19,6 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
         public const string StyleClassInventorySlotBackground = "InventorySlotBackground";
         public const string StyleClassHandSlotHighlight = "HandSlotHighlight";
-        public const string StyleClassChatSubPanel = "ChatSubPanel";
         public const string StyleClassTransparentBorderedWindowPanel = "TransparentBorderedWindowPanel";
         public const string StyleClassHotbarPanel = "HotbarPanel";
         public const string StyleClassTooltipPanel = "tooltipBox";
