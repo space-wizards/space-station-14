@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    [Migration("20210112221053_AdminOocColor")]
-    partial class AdminOocColor
+    [Migration("20210211211028_AdminOOCColor")]
+    partial class AdminOOCColor
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -197,6 +197,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasColumnName("preference_id");
+
+                    b.Property<string>("AdminOOCColor")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("admin_ooc_color");
 
                     b.Property<int>("SelectedCharacterSlot")
                         .HasColumnType("INTEGER")

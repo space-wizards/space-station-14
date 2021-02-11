@@ -2,7 +2,7 @@
 
 namespace Content.Server.Database.Migrations.Postgres
 {
-    public partial class AdminOocColor : Migration
+    public partial class AdminOOCColor : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 table: "preference",
                 type: "text",
                 nullable: false,
-                defaultValue: "#c43b23");
+                defaultValue: "#ff0000");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

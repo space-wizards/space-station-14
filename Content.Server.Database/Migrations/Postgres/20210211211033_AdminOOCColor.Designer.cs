@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    [Migration("20210112221057_AdminOocColor")]
-    partial class AdminOocColor
+    [Migration("20210211211033_AdminOOCColor")]
+    partial class AdminOOCColor
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -359,6 +359,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("preference_id")
                         .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("AdminOOCColor")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("admin_ooc_color");
 
                     b.Property<int>("SelectedCharacterSlot")
                         .HasColumnType("integer")

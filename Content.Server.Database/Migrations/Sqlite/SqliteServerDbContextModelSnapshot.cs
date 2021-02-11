@@ -196,6 +196,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("preference_id");
 
+                    b.Property<string>("AdminOOCColor")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("admin_ooc_color");
+
                     b.Property<int>("SelectedCharacterSlot")
                         .HasColumnType("INTEGER")
                         .HasColumnName("selected_character_slot");
@@ -203,10 +208,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT")
                         .HasColumnName("user_id");
-
-                    b.Property<string>("AdminOocColor")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("admin_ooc_color");
 
                     b.HasKey("Id");
 

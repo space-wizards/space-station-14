@@ -358,6 +358,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnName("preference_id")
                         .UseIdentityByDefaultColumn();
 
+                    b.Property<string>("AdminOOCColor")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("admin_ooc_color");
+
                     b.Property<int>("SelectedCharacterSlot")
                         .HasColumnType("integer")
                         .HasColumnName("selected_character_slot");
@@ -365,10 +370,6 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
-
-                    b.Property<string>("AdminOocColor")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("admin_ooc_color");
 
                     b.HasKey("Id");
 

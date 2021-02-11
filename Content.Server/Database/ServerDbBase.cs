@@ -102,7 +102,7 @@ namespace Content.Server.Database
             {
                 UserId = userId.UserId,
                 SelectedCharacterSlot = 0,
-                AdminOOCColor = "#c43b23"
+                AdminOOCColor = Color.Red.ToHex()
             };
 
             prefs.Profiles.Add(profile);
