@@ -42,6 +42,12 @@ namespace Content.Shared.Physics.Controllers
         {
             if (!ActionBlockerSystem.CanMove(mover.Owner)) return;
 
+            // TODO: Fuck it's a hack but I want collisions working first
+            if (mover.Owner.Prototype?.ID == "AdminObserver")
+            {
+                physicsComponent.LinearVelocity = Vector2.Zero;
+            }
+
             var (walkDir, sprintDir) = mover.VelocityDir;
 
             var weightless = transform.Owner.IsWeightless();
@@ -95,7 +101,8 @@ namespace Content.Shared.Physics.Controllers
 
             if (addSpeed <= 0f) return;
 
-            var accelSpeed = accel * frameTime * wishSpeed * GetTileFriction(body);
+            // TODO Look at source for dis.
+            var accelSpeed = accel * frameTime * wishSpeed * (1 - GetTileFriction(body));
             accelSpeed = MathF.Min(accelSpeed, addSpeed);
 
             body.LinearVelocity += wishDir * accelSpeed;

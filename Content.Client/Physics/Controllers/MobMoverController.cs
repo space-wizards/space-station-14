@@ -15,15 +15,12 @@ namespace Content.Client.Physics.Controllers
             base.UpdateBeforeSolve(map, frameTime);
 
             var player = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
-            if (player != null && player.TryGetComponent(out IPhysicsComponent? physicsComponent))
-            {
-                physicsComponent.Predict = true;
-            }
+            if (player == null ||
+                !player.TryGetComponent(out SharedPlayerInputMoverComponent? mover) ||
+                !player.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
 
-            foreach (var (mover, physics) in ComponentManager.EntityQuery<SharedPlayerInputMoverComponent, PhysicsComponent>(false))
-            {
-                UpdateKinematics(frameTime, mover.Owner.Transform, mover, physics);
-            }
+            physicsComponent.Predict = true;
+            UpdateKinematics(frameTime, player.Transform, mover, physicsComponent);
         }
     }
 }
