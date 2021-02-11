@@ -148,7 +148,7 @@
       maxCharge: 50
       startingCharge: 50
       autoRecharge: true
-      autoRechargeRate: 0.16667 #takes about 5 minutes to charge itself back to full
+      autoRechargeRate: 0.16667 #takes about 5 minutes to charge itself back to full (charge per second)
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer

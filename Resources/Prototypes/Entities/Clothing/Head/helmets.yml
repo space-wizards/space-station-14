@@ -13,7 +13,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHelmetCosmonaut
   name: cosmonaut
-  description:
+  description: An old cosmonaut helmet with tinted blue visor.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/cosmonaut.rsi
