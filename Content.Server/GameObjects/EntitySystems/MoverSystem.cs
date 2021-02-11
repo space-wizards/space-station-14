@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
@@ -11,6 +11,7 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -149,7 +150,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
                 var file = _robustRandom.Pick(soundCollection.PickFiles);
-                _audioSystem.PlayAtCoords(file, coordinates);
+                _audioSystem.PlayAtCoords(file, coordinates, AudioParams.Default.WithVolume(1f));
             }
             catch (UnknownPrototypeException)
             {
