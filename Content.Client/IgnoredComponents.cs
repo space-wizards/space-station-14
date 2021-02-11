@@ -7,7 +7,6 @@ namespace Content.Client
         {
             "Anchorable",
             "AmmoBox",
-            "Breakable",
             "Pickaxe",
             "Interactable",
             "CloningPod",
@@ -179,7 +178,6 @@ namespace Content.Client
             "Rehydratable",
             "Headset",
             "ComputerBoard",
-            "BreakableConstruction",
             "GasCanister",
             "GasCanisterPort",
             "Cleanable",

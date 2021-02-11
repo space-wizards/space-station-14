@@ -4,11 +4,10 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 
 namespace Content.Server.AI.Utils
 {

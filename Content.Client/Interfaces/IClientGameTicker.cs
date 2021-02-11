@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Robust.Shared.Network;
-using Robust.Shared.Timing;
 using static Content.Shared.GameTicking.SharedGameTicker;
 
 namespace Content.Client.Interfaces

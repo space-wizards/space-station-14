@@ -3,8 +3,7 @@ using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
@@ -12,7 +11,8 @@ using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototy
 namespace Content.IntegrationTests.Tests.Destructible
 {
     [TestFixture]
-    [TestOf(typeof(TotalDamageTypesTrigger))]
+    [TestOf(typeof(DamageTypeTrigger))]
+    [TestOf(typeof(AndTrigger))]
     public class DestructibleDamageTypeTest : ContentIntegrationTest
     {
         [Test]
@@ -82,7 +82,12 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(threshold.Behaviors, Is.Empty);
                 Assert.NotNull(threshold.Trigger);
                 Assert.That(threshold.Triggered, Is.True);
-                Assert.IsInstanceOf<TotalDamageTypesTrigger>(threshold.Trigger);
+                Assert.IsInstanceOf<AndTrigger>(threshold.Trigger);
+
+                var trigger = (AndTrigger) threshold.Trigger;
+
+                Assert.IsInstanceOf<DamageTypeTrigger>(trigger.Triggers[0]);
+                Assert.IsInstanceOf<DamageTypeTrigger>(trigger.Triggers[1]);
 
                 sThresholdListenerComponent.ThresholdsReached.Clear();
 
@@ -139,7 +144,12 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(threshold.Behaviors, Is.Empty);
                 Assert.NotNull(threshold.Trigger);
                 Assert.That(threshold.Triggered, Is.True);
-                Assert.IsInstanceOf<TotalDamageTypesTrigger>(threshold.Trigger);
+                Assert.IsInstanceOf<AndTrigger>(threshold.Trigger);
+
+                trigger = (AndTrigger) threshold.Trigger;
+
+                Assert.IsInstanceOf<DamageTypeTrigger>(trigger.Triggers[0]);
+                Assert.IsInstanceOf<DamageTypeTrigger>(trigger.Triggers[1]);
 
                 sThresholdListenerComponent.ThresholdsReached.Clear();
 

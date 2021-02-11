@@ -19,19 +19,14 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -647,7 +642,7 @@ namespace Content.Server.GameObjects.Components.Botany
             Update();
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var user = eventArgs.User;
             var usingItem = eventArgs.Using;
@@ -810,7 +805,7 @@ namespace Content.Server.GameObjects.Components.Botany
             return false;
         }
 
-        public ReagentUnit ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
+        ReagentUnit IReagentReaction.ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
         {
             if(_solutionContainer == null)
                 return ReagentUnit.Zero;
@@ -819,7 +814,7 @@ namespace Content.Server.GameObjects.Components.Botany
             return accepted;
         }
 
-        public ReagentUnit ReagentReactInjection(ReagentPrototype reagent, ReagentUnit volume)
+        ReagentUnit IReagentReaction.ReagentReactInjection(ReagentPrototype reagent, ReagentUnit volume)
         {
             if(_solutionContainer == null)
                 return ReagentUnit.Zero;
@@ -828,13 +823,13 @@ namespace Content.Server.GameObjects.Components.Botany
             return accepted;
         }
 
-        public bool InteractHand(InteractHandEventArgs eventArgs)
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             // DoHarvest does the sanity checks.
             return DoHarvest(eventArgs.User);
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             // DoHarvest does the sanity checks.
             DoHarvest(eventArgs.User);

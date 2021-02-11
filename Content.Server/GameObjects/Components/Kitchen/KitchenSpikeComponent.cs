@@ -7,8 +7,6 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.Kitchen
@@ -92,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             victim.Delete();
         }
 
-        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             var othersMessage = Loc.GetString("{0:theName} has thrown themselves on a meat spike!", victim);
             victim.PopupMessageOtherClients(othersMessage);

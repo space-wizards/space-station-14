@@ -1,7 +1,5 @@
 ﻿using Content.Server.Players;
-using Content.Shared;
 using Content.Shared.GameTicking;
-using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;

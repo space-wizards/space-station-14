@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System;
 using Content.Server.Mobs;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 

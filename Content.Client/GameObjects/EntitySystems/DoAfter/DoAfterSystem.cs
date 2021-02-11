@@ -4,11 +4,10 @@ using System.Linq;
 using Content.Client.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.EntitySystems.DoAfter
 {

@@ -4,11 +4,10 @@ using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.Input;
+using Robust.Client.Input;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Client.GameObjects.Components.Actor

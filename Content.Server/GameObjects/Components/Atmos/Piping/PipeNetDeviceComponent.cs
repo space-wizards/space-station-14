@@ -2,7 +2,6 @@
 using Content.Server.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {

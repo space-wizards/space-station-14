@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Utility.Actions

@@ -9,14 +9,11 @@ using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
-using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 // ReSharper disable once RedundantUsingDirective
 using Robust.Shared.IoC;
 using Robust.Shared.Map;

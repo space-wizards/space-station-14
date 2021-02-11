@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using Content.Shared.Materials;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Reflection;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -59,7 +58,7 @@ namespace Content.Shared.GameObjects.Components.Materials
             public object Key;
             public string Value;
 
-            public void ExposeData(ObjectSerializer serializer)
+            void IExposeData.ExposeData(ObjectSerializer serializer)
             {
                 if (serializer.Writing)
                 {

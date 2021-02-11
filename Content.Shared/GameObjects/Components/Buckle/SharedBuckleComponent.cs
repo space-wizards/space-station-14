@@ -6,9 +6,6 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -80,7 +77,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
             return args.Target.HasComponent<SharedStrapComponent>();
         }
 
-        public bool Drop(DragDropEventArgs args)
+        bool IDraggable.Drop(DragDropEventArgs args)
         {
             return TryBuckle(args.User, args.Target);
         }

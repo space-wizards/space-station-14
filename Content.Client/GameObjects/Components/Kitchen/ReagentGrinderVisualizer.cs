@@ -1,5 +1,4 @@
 ﻿using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using static Content.Shared.Kitchen.SharedReagentGrinderComponent;
 
 namespace Content.Client.GameObjects.Components.Kitchen

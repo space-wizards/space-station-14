@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System;
-using System.Linq;
 using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;
@@ -11,10 +10,7 @@ using Content.Server.GameObjects.Components.Destructible;
 using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
@@ -46,7 +42,7 @@ namespace Content.Server.GameObjects.Components
             {
                 foreach (var threshold in destructible.Thresholds)
                 {
-                    if (threshold.Trigger is not TotalDamageTrigger trigger)
+                    if (threshold.Trigger is not DamageTrigger trigger)
                     {
                         continue;
                     }
@@ -65,12 +61,12 @@ namespace Content.Server.GameObjects.Components
             }
 
             var damage = damageable.TotalDamage;
-            TotalDamageTrigger? trigger = null;
+            DamageTrigger? trigger = null;
 
             // TODO: Pretend this does not exist until https://github.com/space-wizards/space-station-14/pull/2783 is merged
             foreach (var threshold in destructible.Thresholds)
             {
-                if ((trigger = threshold.Trigger as TotalDamageTrigger) != null)
+                if ((trigger = threshold.Trigger as DamageTrigger) != null)
                 {
                     break;
                 }

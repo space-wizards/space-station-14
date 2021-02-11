@@ -1,11 +1,11 @@
 ﻿using Content.Shared.GameObjects.Components.Disposal;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using System.Collections.Generic;
+using Robust.Client.Graphics;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalMailingUnitComponent;
 
 namespace Content.Client.GameObjects.Components.Disposal

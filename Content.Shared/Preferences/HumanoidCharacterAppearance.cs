@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using Content.Shared.Preferences.Appearance;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;

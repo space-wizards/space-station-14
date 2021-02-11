@@ -6,24 +6,16 @@ using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Fluids;
 using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Fluids
@@ -187,13 +179,13 @@ namespace Content.Server.GameObjects.Components.Fluids
             return true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             ToggleSafety(eventArgs.User);
             return true;
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             ToggleSafety(eventArgs.User);
         }
@@ -214,7 +206,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 appearance.SetData(SprayVisuals.Safety, _safety);
         }
 
-        public void Dropped(DroppedEventArgs eventArgs)
+        void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
             if(_hasSafety && Owner.TryGetComponent(out AppearanceComponent appearance))
                 appearance.SetData(SprayVisuals.Safety, _safety);

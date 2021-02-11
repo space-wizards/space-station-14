@@ -165,9 +165,9 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:TotalDamageTypesTrigger
-        damage:
-          Blunt: 400
+        !type:DamageTypeTrigger
+        type: Blunt
+        damage: 400
       behaviors:
       - !type:GibBehavior { }
   - type: HeatResistance

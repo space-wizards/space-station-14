@@ -2,11 +2,6 @@
 using Robust.Client.Placement;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Client.Placement.Modes
 {

@@ -1,11 +1,13 @@
 using System;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Analyzers;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Interfaces.GameObjects
 {
     /// <summary>
     ///     Implements behavior when an entity is disarmed.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IDisarmedAct
     {
         /// <summary>

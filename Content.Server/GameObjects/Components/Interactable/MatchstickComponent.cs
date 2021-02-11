@@ -4,12 +4,7 @@ using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -89,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             Owner.SpawnTimer(_duration * 1000, () => CurrentState = SharedBurningStates.Burnt);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Target.TryGetComponent<IHotItem>(out var hotItem)
                 && hotItem.IsCurrentlyHot()

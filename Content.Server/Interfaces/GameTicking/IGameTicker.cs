@@ -4,8 +4,8 @@ using Content.Server.GameTicking;
 using Content.Server.Mobs;
 using Content.Shared.Roles;
 using Content.Shared.Preferences;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 

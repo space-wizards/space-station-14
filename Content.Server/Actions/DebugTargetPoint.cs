@@ -1,8 +1,6 @@
-﻿using Content.Server.Utility;
+using Content.Server.Utility;
 using Content.Shared.Actions;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Actions
@@ -10,7 +8,7 @@ namespace Content.Server.Actions
     [UsedImplicitly]
     public class DebugTargetPoint : ITargetPointAction, ITargetPointItemAction
     {
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
         }
 

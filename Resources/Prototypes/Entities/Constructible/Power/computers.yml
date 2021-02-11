@@ -99,13 +99,13 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:TotalDamageTrigger
+        !type:DamageTrigger
         damage: 100
       behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: monitorBroken
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: BreakableConstruction
-    node: monitorBroken
   - type: Sprite
     sprite: Constructible/Power/computers.rsi
     layers:

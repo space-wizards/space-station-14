@@ -7,7 +7,6 @@ using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -101,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_initialInletDirection, _initialOutletDirection, PumpEnabled));
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             PumpEnabled = !PumpEnabled;
         }

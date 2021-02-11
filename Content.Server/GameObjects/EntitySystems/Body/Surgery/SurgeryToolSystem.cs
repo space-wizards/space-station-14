@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Body.Surgery;
 using Content.Server.GameObjects.Components.Body.Surgery.Messages;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameTicking;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems.Body.Surgery
 {

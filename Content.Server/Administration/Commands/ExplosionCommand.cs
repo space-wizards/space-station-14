@@ -1,6 +1,6 @@
 using Content.Server.Explosions;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 

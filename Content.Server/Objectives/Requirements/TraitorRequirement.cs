@@ -9,7 +9,7 @@ namespace Content.Server.Objectives.Requirements
     [UsedImplicitly]
     public class TraitorRequirement : IObjectiveRequirement
     {
-        public void ExposeData(ObjectSerializer serializer){}
+        void IExposeData.ExposeData(ObjectSerializer serializer){}
 
         public bool CanBeAssigned(Mind mind)
         {

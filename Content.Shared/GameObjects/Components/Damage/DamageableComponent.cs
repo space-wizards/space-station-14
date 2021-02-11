@@ -8,7 +8,6 @@ using Content.Shared.Damage.ResistanceSet;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -38,8 +37,6 @@ namespace Content.Shared.GameObjects.Components.Damage
         private readonly HashSet<DamageType> _supportedTypes = new();
         private readonly HashSet<DamageClass> _supportedClasses = new();
         private DamageFlag _flags;
-
-        public event Action<DamageChangedEventArgs>? HealthChangedEvent;
 
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
         [ViewVariables] public string DamageContainerId { get; set; } = default!;
@@ -460,7 +457,6 @@ namespace Content.Shared.GameObjects.Components.Damage
         protected virtual void OnHealthChanged(DamageChangedEventArgs e)
         {
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, e);
-            HealthChangedEvent?.Invoke(e);
 
             var message = new DamageChangedMessage(this, e.Data);
             SendMessage(message);
@@ -468,7 +464,7 @@ namespace Content.Shared.GameObjects.Components.Damage
             Dirty();
         }
 
-        public void RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
+        void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
         {
             var totalDamage = Math.Max((int)(frameTime * radiation.RadsPerSecond), 1);
 

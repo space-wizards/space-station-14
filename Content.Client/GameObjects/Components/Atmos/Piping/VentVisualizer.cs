@@ -1,9 +1,8 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Atmos;
+using Robust.Shared.GameObjects;
 using YamlDotNet.RepresentationModel;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Client.GameObjects.Components.Atmos

@@ -73,7 +73,7 @@
       amount: 1
     chem.Sodium:
       amount: 1
-    chem.Phoron:
+    chem.Plasma:
       amount: 5
       catalyst: true
   products:
@@ -106,7 +106,7 @@
   reactants:
     chem.Oxygen:
       amount: 2
-    chem.Phoron:
+    chem.Plasma:
       amount: 5
       catalyst: true
   products:
@@ -211,7 +211,7 @@
       amount: 1
     chem.Copper:
       amount: 1
-    chem.Phoron:
+    chem.Plasma:
       amount: 5
       catalyst: true
   products:
@@ -239,7 +239,7 @@
       amount: 1
     chem.Tramadol:
       amount: 1
-    chem.Phoron:
+    chem.Plasma:
       amount: 1
   products:
     chem.Oxycodone: 3
@@ -407,7 +407,7 @@
   reactants:
     chem.Ammonia:
       amount: 1
-    chem.Phoron:
+    chem.Plasma:
       amount: 1
   products:
     chem.Lexorin: 2

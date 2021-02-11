@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
@@ -13,11 +12,11 @@ namespace Content.Shared.Prototypes.Tag
     ///     gets saved in TagComponent.
     /// </summary>
     [Prototype("Tag")]
-    public class TagPrototype : IPrototype, IIndexedPrototype, IExposeData
+    public class TagPrototype : IPrototype, IIndexedPrototype
     {
         public string ID { get; [UsedImplicitly] private set; } = default!;
 
-        public void ExposeData(ObjectSerializer serializer)
+        private void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.ID, "id", "");
         }
