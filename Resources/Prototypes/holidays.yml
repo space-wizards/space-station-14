@@ -78,6 +78,9 @@
   name: Cosmonautics Day
   beginDay: 12
   beginMonth: April
+  greet:
+    !type:Custom
+    text: On this day over 600 years ago, Comrade Yuri Gagarin first ventured into space!
 
 - type: holiday
   id: SalyutAnniversary
@@ -135,6 +138,9 @@
     !type:WeekdayInMonth
     weekday: Sunday
     occurrence: 2
+  greet:
+    !type:Custom
+    text: "Happy Mother's Day in most of the Americas, Asia, and Oceania!"
 
 - type: holiday
   id: OwlAndPussycatDay
@@ -210,12 +216,18 @@
   name: Bastille Day
   beginDay: 14
   beginMonth: July
+  greet:
+    !type:Custom
+    text: Do you hear the people sing?
 
 - type: holiday
   id: FriendshipDay
   name: Friendship Day
   beginDay: 30
   beginMonth: July
+  greet:
+    !type:Custom
+    text: Have a magical Friendship Day!
 
 - type: holiday
   id: BeerDay
@@ -230,6 +242,9 @@
   name: Talk-Like-a-Pirate Day
   beginDay: 19
   beginMonth: September
+  greet:
+    !type:Custom
+    text: "Ye be talkin' like a pirate today or else ye'r walkin' tha plank, matey!"
 
 - type: holiday
   id: ProgrammersDay
@@ -280,6 +295,9 @@
   name: Halloween
   beginDay: 31
   beginMonth: October
+  greet:
+    !type:Custom
+    text: Have a spooky Halloween!
 
 - type: holiday
   id: VeganDay
@@ -298,6 +316,9 @@
   name: Kindness Day
   beginDay: 13
   beginMonth: November
+  greet:
+    !type:Custom
+    text: Go do some random acts of kindness for a stranger!
 
 - type: holiday
   id: LifeDay
@@ -360,6 +381,9 @@
   beginDay: 24
   endDay: 26
   beginMonth: December
+  greet:
+    !type:Custom
+    text: Have a merry Christmas!
 
 - type: holiday
   id: FestiveSeason
@@ -367,6 +391,9 @@
   beginDay: 1
   endDay: 31
   beginMonth: December
+  greet:
+    !type:Custom
+    text: Have a nice festive season!
 
 - type: holiday
   id: BoxingDay
