@@ -17,8 +17,11 @@ namespace Content.Shared.GameObjects.Components.Buckle
         public sealed override string Name => "Buckle";
 
         public sealed override uint? NetID => ContentNetIDs.BUCKLE;
+
+        [ComponentDependency] protected readonly IPhysicsComponent? Physics;
+
         /// <summary>
-        ///     The range from which this entity can buckle to a <see cref="StrapComponent"/>.
+        ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.
         /// </summary>
         [ViewVariables]
         public float Range { get; protected set; }
@@ -26,20 +29,22 @@ namespace Content.Shared.GameObjects.Components.Buckle
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataReadWriteFunction("range", SharedInteractionSystem.InteractionRange / 1.4f, value => Range = value, () => Range);
+
+            serializer.DataField(this, x => x.Range, "range", SharedInteractionSystem.InteractionRange / 1.4f);
         }
 
         /// <summary>
         ///     True if the entity is buckled, false otherwise.
         /// </summary>
         public abstract bool Buckled { get; }
+
         public EntityUid? LastEntityBuckledTo { get; set; }
 
         public bool IsOnStrapEntityThisFrame { get; set; }
-        public bool DontCollide { get; set; }
-        public abstract bool TryBuckle(IEntity user, IEntity to);
 
-        [ComponentDependency] protected IPhysicsComponent? Body;
+        public bool DontCollide { get; set; }
+
+        public abstract bool TryBuckle(IEntity user, IEntity to);
 
         bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
         {
@@ -55,11 +60,6 @@ namespace Content.Shared.GameObjects.Components.Buckle
         bool IActionBlocker.CanMove()
         {
             return !Buckled;
-        }
-        public override void Initialize()
-        {
-            base.Initialize();
-            Owner.TryGetComponent(out Body);
         }
 
         bool IActionBlocker.CanChangeDirection()
