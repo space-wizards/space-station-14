@@ -30,7 +30,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
 
         private TimeSpan _lastFireTime;
 

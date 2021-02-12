@@ -18,8 +18,6 @@ namespace Content.Server.GameObjects.EntitySystems.GameMode
     public sealed class SuspicionEndTimerSystem : EntitySystem, IResettingEntitySystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = null!;
-        [Dependency] private readonly IGameTiming _timing = null!;
-        [Dependency] private readonly IGameTicker _gameTicker = null!;
 
         private TimeSpan? _endTime;
 
