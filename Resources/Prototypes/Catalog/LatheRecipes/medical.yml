@@ -76,15 +76,9 @@
     steel: 50
 
 - type: latheRecipe
-<<<<<<< HEAD
   id: BodyBag_Item
   icon: Objects/Specific/Morgue/bodybags.rsi
   result: BodyBag_Item
-=======
-  id: BodyBag_item
-  icon: Objects/Specific/Morgue/bodybags.rsi
-  result: BodyBag_item
->>>>>>> bd8a1cb6b (Revert "Revert "Revert "Revert "My first contribution in a while.Change AddAccent command to be case insensitive (#3112)"""")
   completetime: 300
   materials:
     glass: 20

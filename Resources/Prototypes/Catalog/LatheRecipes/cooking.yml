@@ -15,17 +15,6 @@
     steel: 30
 
 - type: latheRecipe
-<<<<<<< HEAD
-=======
-  id: DrinkBottleOfNothingFull
-  icon: Objects/Consumable/Drinks/bottleofnothing.rsi
-  result: DrinkBottleOfNothingFull
-  completetime: 200
-  materials:
-    glass: 30
-
-- type: latheRecipe
->>>>>>> bd8a1cb6b (Revert "Revert "Revert "Revert "My first contribution in a while.Change AddAccent command to be case insensitive (#3112)"""")
   id: DrinkMug
   icon: Objects/Consumable/Drinks/mug.rsi
   result: DrinkMug
