@@ -15,14 +15,6 @@
     steel: 30
 
 - type: latheRecipe
-  id: DrinkBottleOfNothingFull
-  icon: Objects/Consumable/Drinks/bottleofnothing.rsi
-  result: DrinkBottleOfNothingFull
-  completetime: 200
-  materials:
-    glass: 30
-
-- type: latheRecipe
   id: DrinkMug
   icon: Objects/Consumable/Drinks/mug.rsi
   result: DrinkMug
