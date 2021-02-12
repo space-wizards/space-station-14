@@ -242,6 +242,12 @@ namespace Content.Shared
             CVarDef.Create("midi.max_lagged_batches", 8, CVar.SERVERONLY);
 
         /*
+         * Holidays
+         */
+
+        public static readonly CVarDef<bool> HolidaysEnabled = CVarDef.Create("holidays.enabled", true, CVar.SERVERONLY);
+
+        /*
          * Branding stuff
          */
 

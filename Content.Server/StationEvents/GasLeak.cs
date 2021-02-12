@@ -1,13 +1,8 @@
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Atmos;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Map;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -30,7 +25,7 @@ namespace Content.Server.StationEvents
         protected override string? EndAnnouncement => "The source of the gas leak has been fixed. Please be cautious around areas with gas remaining.";
 
         private static readonly Gas[] LeakableGases = {
-            Gas.Phoron,
+            Gas.Plasma,
             Gas.Tritium,
         };
 

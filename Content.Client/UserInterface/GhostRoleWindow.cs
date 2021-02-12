@@ -1,6 +1,4 @@
-using Content.Client.GameObjects.EntitySystems;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Client.UserInterface
 {

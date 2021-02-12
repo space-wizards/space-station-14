@@ -1,18 +1,15 @@
 using System.Collections.Generic;
-using System.Drawing;
 using Content.Server.Administration;
 using Content.Server.Eui;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Shared.GameObjects.Components.Observer;
-using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.EntitySystems

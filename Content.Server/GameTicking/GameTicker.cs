@@ -11,6 +11,8 @@ using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameTicking.GamePresets;
+using Content.Server.Holiday;
+using Content.Server.Holiday.Interfaces;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;

@@ -1,7 +1,6 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 

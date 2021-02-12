@@ -2,9 +2,8 @@ using System;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Players;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.Components.Observer
 {
