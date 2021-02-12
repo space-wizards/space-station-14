@@ -487,6 +487,7 @@ namespace Content.Server.GameTicking
                 "traitor" => typeof(PresetTraitor),
                 "traitordm" => typeof(PresetTraitorDeathMatch),
                 "traitordeathmatch" => typeof(PresetTraitorDeathMatch),
+                "extended" => typeof(PresetExtended),
                 _ => default
             };
 
