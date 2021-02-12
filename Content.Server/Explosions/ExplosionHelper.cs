@@ -93,7 +93,7 @@ namespace Content.Server.Explosions
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out PhysicsComponent body) || body.Fixtures.Count < 1)
+                if (!entity.TryGetComponent(out PhysicsComponent? body) || body.Fixtures.Count < 1)
                 {
                     continue;
                 }

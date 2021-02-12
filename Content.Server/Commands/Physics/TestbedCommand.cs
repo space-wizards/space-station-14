@@ -24,13 +24,10 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Physics;
-using Robust.Server.Interfaces.Console;
-using Robust.Server.Interfaces.Player;
-using Robust.Server.Interfaces.Timing;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Server.Player;
+using Robust.Server.Timing;
+using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -51,16 +48,16 @@ namespace Content.Server.Commands.Physics
     ///     Copies of Box2D's physics testbed for debugging.
     /// </summary>
     [AdminCommand(AdminFlags.Mapping)]
-    public class TestbedCommand : IClientCommand
+    public class TestbedCommand : IConsoleCommand
     {
         public string Command => "testbed";
         public string Description => "Loads a physics testbed and teleports your player there";
         public string Help => $"{Command} <mapid> <test>";
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.SendText(player, "Require 2 args for testbed!");
+                shell.WriteLine("Require 2 args for testbed!");
                 return;
             }
 
@@ -68,16 +65,24 @@ namespace Content.Server.Commands.Physics
 
             if (!int.TryParse(args[0], out var mapInt))
             {
-                shell.SendText(player, $"Unable to parse map {args[0]}");
+                shell.WriteLine($"Unable to parse map {args[0]}");
                 return;
             }
 
             var mapId = new MapId(mapInt);
             if (!mapManager.MapExists(mapId))
             {
-                shell.SendText(player, "Unable to find map {mapId}");
+                shell.WriteLine("Unable to find map {mapId}");
                 return;
             }
+
+            if (shell.Player == null)
+            {
+                shell.WriteLine("No player found");
+                return;
+            }
+
+            var player = (IPlayerSession) shell.Player;
 
             switch (args[1])
             {
@@ -90,11 +95,11 @@ namespace Content.Server.Commands.Physics
                     CreateCircleStack(mapId);
                     break;
                 default:
-                    shell.SendText(player, $"testbed {args[0]} not found!");
+                    shell.WriteLine($"testbed {args[0]} not found!");
                     return;
             }
 
-            shell.SendText(player, $"Testbed on map {mapId}");
+            shell.WriteLine($"Testbed on map {mapId}");
         }
 
         // TODO: Try actually adding in SynchronizeFixtures and have it whenever the body is moved it's dirty???

@@ -8,7 +8,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Content.Shared.GameObjects.Components.Pulling;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Physics.Broadphase;
 using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 
