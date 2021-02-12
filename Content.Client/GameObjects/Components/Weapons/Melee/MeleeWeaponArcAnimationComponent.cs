@@ -2,7 +2,6 @@ using Content.Shared.GameObjects.Components.Weapons.Melee;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Weapons.Melee

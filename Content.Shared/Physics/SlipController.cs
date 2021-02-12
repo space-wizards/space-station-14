@@ -1,6 +1,4 @@
-﻿using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Physics;
-using Robust.Shared.IoC;
+﻿using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;

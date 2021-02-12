@@ -152,18 +152,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/tastybread.rsi
-
-
-- type: entity
-  name: trash bag
-  parent: TrashBase
-  id: TrashBag
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Trash/trashbag.rsi
-
-  - type: Storage
-    capacity: 125
+    
 
 - type: entity
   name: tray (trash)

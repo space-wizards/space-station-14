@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -17,15 +17,8 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Physics.Pull;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.EntitySystemMessages;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -33,6 +26,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 
 namespace Content.Server.GameObjects.Components.GUI
 {
@@ -175,9 +169,16 @@ namespace Content.Server.GameObjects.Components.GUI
 
             Dirty();
 
+            var position = item.Owner.Transform.Coordinates;
+            var contained = item.Owner.IsInContainer();
             var success = hand.Container.Insert(item.Owner);
             if (success)
             {
+                //If the entity isn't in a container, and it isn't located exactly at our position (i.e. in our own storage), then we can safely play the animation
+                if (position != Owner.Transform.Coordinates && !contained)
+                {
+                    SendNetworkMessage(new AnimatePickupEntityMessage(item.Owner.Uid, position));
+                }
                 item.Owner.Transform.LocalPosition = Vector2.Zero;
                 OnItemChanged?.Invoke();
             }
@@ -190,12 +191,31 @@ namespace Content.Server.GameObjects.Components.GUI
             return success;
         }
 
+        /// <summary>
+        ///     Drops the item if <paramref name="mob"/> doesn't have hands.
+        /// </summary>
+        public static void PutInHandOrDropStatic(IEntity mob, ItemComponent item, bool mobCheck = true)
+        {
+            if (!mob.TryGetComponent(out HandsComponent? hands))
+            {
+                DropAtFeet(mob, item);
+                return;
+            }
+
+            hands.PutInHandOrDrop(item, mobCheck);
+        }
+
         public void PutInHandOrDrop(ItemComponent item, bool mobCheck = true)
         {
             if (!PutInHand(item, mobCheck))
             {
-                item.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
+                DropAtFeet(Owner, item);
             }
+        }
+
+        private static void DropAtFeet(IEntity mob, ItemComponent item)
+        {
+            item.Owner.Transform.Coordinates = mob.Transform.Coordinates;
         }
 
         public bool CanPutInHand(ItemComponent item, bool mobCheck = true)

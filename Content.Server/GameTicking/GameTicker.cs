@@ -11,6 +11,8 @@ using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameTicking.GamePresets;
+using Content.Server.Holiday;
+using Content.Server.Holiday.Interfaces;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
@@ -25,19 +27,13 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Utility;
 using Prometheus;
-using Robust.Server.Interfaces;
-using Robust.Server.Interfaces.Maps;
-using Robust.Server.Interfaces.Player;
+using Robust.Server;
+using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Server.ServerStatus;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -493,6 +489,7 @@ namespace Content.Server.GameTicking
                 "traitor" => typeof(PresetTraitor),
                 "traitordm" => typeof(PresetTraitorDeathMatch),
                 "traitordeathmatch" => typeof(PresetTraitorDeathMatch),
+                "extended" => typeof(PresetExtended),
                 _ => default
             };
 

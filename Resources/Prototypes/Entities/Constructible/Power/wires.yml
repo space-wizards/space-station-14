@@ -24,10 +24,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: SubFloorHide
 
 - type: entity
@@ -55,15 +57,17 @@
     wireType: HighVoltage
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            HVWireStack1:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          HVWireStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: WireBase
@@ -92,15 +96,17 @@
     wireType: MediumVoltage
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            MVWireStack1:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MVWireStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: WireBase
@@ -131,15 +137,17 @@
     wireType: Apc
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            ApcExtensionCableStack1:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ApcExtensionCableStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 #Dummy wires
 

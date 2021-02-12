@@ -8,8 +8,7 @@ namespace Content.Server.Actions
     [UsedImplicitly]
     public class DebugTargetEntity : ITargetEntityAction, ITargetEntityItemAction
     {
-
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
         }
 

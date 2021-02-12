@@ -55,8 +55,18 @@
   - type: Construction
     graph: machine
     node: machine
-  - type: BreakableConstruction
-    node: machineFrame
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Machine
     board: AutolatheMachineCircuitboard
   - type: Wires
@@ -78,6 +88,11 @@
       - CableStack
       - Crowbar
       - Multitool
+      - MiniHoe
+      - Scythe
+      - Hatchet
+      - Shovel
+      - Spade
   - type: Appearance
     visuals:
     - type: AutolatheVisualizer
@@ -105,8 +120,18 @@
   - type: Construction
     graph: machine
     node: machine
-  - type: BreakableConstruction
-    node: machineFrame
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Machine
     board: ProtolatheMachineCircuitboard
   - type: Wires

@@ -1,11 +1,8 @@
+using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.GameObjects.Components;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -87,6 +84,9 @@ namespace Content.Server.GameObjects.Components
 
             if(!container.Insert(board))
                 Logger.Warning($"Couldn't insert board {board} to computer {Owner}!");
+
+            if (Owner.TryGetComponent(out ConstructionComponent construction))
+                construction.AddContainer("board");
         }
 
         public void MapInit()

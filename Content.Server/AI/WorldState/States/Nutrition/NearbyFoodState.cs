@@ -5,7 +5,7 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Nutrition;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.WorldState.States.Nutrition
 {

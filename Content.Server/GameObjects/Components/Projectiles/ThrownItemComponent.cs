@@ -1,18 +1,11 @@
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Shared.Damage;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Physics;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Timers;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {

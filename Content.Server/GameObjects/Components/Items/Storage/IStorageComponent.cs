@@ -1,4 +1,4 @@
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {

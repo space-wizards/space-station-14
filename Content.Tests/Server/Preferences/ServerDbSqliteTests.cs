@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Database;
-using Content.Shared;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
@@ -11,8 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.UnitTesting;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization.Macros;
 
 namespace Content.Tests.Server.Preferences

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.Botany;
 using Content.Server.GameObjects.Components.Botany;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
@@ -70,7 +67,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _timer = 0f;
 
-            foreach (var plantHolder in _componentManager.EntityQuery<PlantHolderComponent>())
+            foreach (var plantHolder in _componentManager.EntityQuery<PlantHolderComponent>(true))
             {
                 plantHolder.Update();
             }

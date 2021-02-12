@@ -1,10 +1,10 @@
 ﻿using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using System.Collections.Generic;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Construction.ConstructionConditions
 {
@@ -13,7 +13,8 @@ namespace Content.Shared.Construction.ConstructionConditions
     {
 
         public List<string> TargetTiles { get; private set; }
-        public void ExposeData(ObjectSerializer serializer)
+
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.TargetTiles, "targets", null);
         }

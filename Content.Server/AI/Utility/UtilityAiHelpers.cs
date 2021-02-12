@@ -1,7 +1,7 @@
 using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.WorldState;
 using Content.Server.GameObjects.Components.Movement;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Utility
 {

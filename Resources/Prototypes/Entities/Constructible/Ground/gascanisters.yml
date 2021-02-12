@@ -13,10 +13,12 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: GasCanister
   - type: Anchorable
   - type: Pullable
@@ -78,7 +80,7 @@
           - 0 # oxygen
           - 0 # nitrogen
           - 0 # CO2
-          - 0 # Phoron
+          - 0 # Plasma
           - 0 # Tritium
           - 0 # Water vapor
         temperature: 293.15
@@ -151,8 +153,8 @@
 
 - type: entity
   parent: GasCanister
-  id: PhoronCanister
-  name: Phoron Canister
+  id: PlasmaCanister
+  name: Plasma Canister
   components:
     - type: Sprite
       sprite: Constructible/Atmos/canister.rsi
@@ -164,7 +166,7 @@
           - 0 # oxygen
           - 0 # nitrogen
           - 0 # carbon dioxide
-          - 1871.71051 # phoron
+          - 1871.71051 # plasma
         temperature: 293.15
 
 - type: entity
@@ -182,7 +184,7 @@
           - 0 # oxygen
           - 0 # nitrogen
           - 0 # CO2
-          - 0 # Phoron
+          - 0 # Plasma
           - 1871.71051 # Tritium
         temperature: 293.15
 
@@ -201,7 +203,7 @@
           - 0 # oxygen
           - 0 # nitrogen
           - 0 # CO2
-          - 0 # Phoron
+          - 0 # Plasma
           - 0 # Tritium
           - 1871.71051 # Water vapor
         temperature: 293.15

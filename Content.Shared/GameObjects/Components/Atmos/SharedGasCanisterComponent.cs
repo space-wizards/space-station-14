@@ -1,9 +1,7 @@
 ﻿#nullable enable annotations
 using System;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Atmos
 {

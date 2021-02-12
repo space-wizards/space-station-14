@@ -101,7 +101,7 @@
   - type: ClientEntitySpawner
     prototypes:
     - HVDummyWire
-    
+
 - type: entity
   id: BaseSubstation
   description: Reduces the voltage of electricity put into it.
@@ -161,7 +161,7 @@
     prototypes:
     - HVDummyWire
     - MVDummyWire
-  
+
 - type: entity
   id: BaseApc
   description: A control terminal for the area's electrical systems.
@@ -219,7 +219,7 @@
     prototypes:
     - MVDummyWire
     - LVDummyWire
-    
+
 - type: entity
   id: SolarPanel
   name: solar panel
@@ -262,10 +262,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Breakage"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Anchorable
   - type: Pullable
   - type: ClientEntitySpawner

@@ -8,7 +8,7 @@ using Content.Server.Preferences;
 using Content.Server.Utility;
 using Content.Shared;
 using Microsoft.EntityFrameworkCore;
-using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 

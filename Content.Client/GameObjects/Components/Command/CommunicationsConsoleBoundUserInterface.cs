@@ -1,10 +1,10 @@
 ﻿using System;
 using Content.Client.Command;
 using Content.Shared.GameObjects.Components.Command;
-using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Command

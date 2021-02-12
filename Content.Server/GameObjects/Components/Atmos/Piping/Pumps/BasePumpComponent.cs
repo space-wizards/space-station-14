@@ -4,9 +4,9 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
     /// <summary>
     ///     Transfer gas from one <see cref="PipeNode"/> to another.
     /// </summary>
-    public abstract class BasePumpComponent : Component
+    public abstract class BasePumpComponent : Component, IActivate
     {
         /// <summary>
         ///     If the pump is currently pumping.
@@ -100,6 +100,11 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_initialInletDirection, _initialOutletDirection, PumpEnabled));
         }
 
+        void IActivate.Activate(ActivateEventArgs eventArgs)
+        {
+            PumpEnabled = !PumpEnabled;
+        }
+
         private void SetPipes()
         {
             _inletPipe = null;
@@ -107,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
 
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
-                Logger.Error($"{typeof(BasePumpComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
+                Logger.Error($"{nameof(BasePumpComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
                 return;
             }
             var pipeNodes = container.Nodes.OfType<PipeNode>();
@@ -115,7 +120,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             _outletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _initialOutletDirection).FirstOrDefault();
             if (_inletPipe == null || _outletPipe == null)
             {
-                Logger.Error($"{typeof(BasePumpComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                Logger.Error($"{nameof(BasePumpComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
         }

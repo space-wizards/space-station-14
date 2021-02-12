@@ -12,7 +12,7 @@
   - type: InteractionOutline
   - type: SolutionContainer
     maxVol: 100
-    caps: AddTo
+    caps: Refillable
   - type: Appearance
     visuals:
     - type: MicrowaveVisualizer

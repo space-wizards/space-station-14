@@ -8,16 +8,16 @@ namespace Content.Client.UserInterface
 {
     internal sealed class EscapeMenu : SS14Window
     {
-        private readonly IClientConsole _console;
+        private readonly IClientConsoleHost _consoleHost;
 
         private BaseButton DisconnectButton;
         private BaseButton QuitButton;
         private BaseButton OptionsButton;
         private OptionsMenu optionsMenu;
 
-        public EscapeMenu(IClientConsole console)
+        public EscapeMenu(IClientConsoleHost consoleHost)
         {
-            _console = console;
+            _consoleHost = consoleHost;
 
             IoCManager.InjectDependencies(this);
 
@@ -50,13 +50,13 @@ namespace Content.Client.UserInterface
 
         private void OnQuitButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            _console.ProcessCommand("quit");
+            _consoleHost.ExecuteCommand("quit");
             Dispose();
         }
 
         private void OnDisconnectButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            _console.ProcessCommand("disconnect");
+            _consoleHost.ExecuteCommand("disconnect");
             Dispose();
         }
 

@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Alert;
 using Content.Shared.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Mobs.State
 {

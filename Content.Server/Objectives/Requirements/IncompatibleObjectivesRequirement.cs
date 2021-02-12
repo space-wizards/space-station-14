@@ -8,7 +8,8 @@ namespace Content.Server.Objectives.Requirements
     public class IncompatibleObjectivesRequirement : IObjectiveRequirement
     {
         private List<string> _incompatibleObjectives = new();
-        public void ExposeData(ObjectSerializer serializer)
+
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x=>x._incompatibleObjectives, "objectives", new List<string>());
         }

@@ -1,9 +1,9 @@
 ﻿using Content.Client.UserInterface.Stylesheets;
-using Robust.Client.Interfaces.Graphics;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared;
-using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Configuration;
 using Robust.Shared.Localization;
 
 namespace Content.Client.UserInterface

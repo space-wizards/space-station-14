@@ -36,7 +36,7 @@ namespace Content.Shared.Administration
         Permissions = 1 << 4,
 
         /// <summary>
-        ///     Ability to control teh server like restart it or change the round type.
+        ///     Ability to control the server like restart it or change the round type.
         /// </summary>
         Server = 1 << 5,
 

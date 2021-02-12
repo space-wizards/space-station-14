@@ -1,9 +1,8 @@
 ﻿using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Sound
@@ -39,7 +38,8 @@ namespace Content.Server.GameObjects.Components.Sound
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundName, Owner, AudioParams.Default.WithVolume(-2f));
             }
         }
-        public void Land(LandEventArgs eventArgs)
+
+        void ILand.Land(LandEventArgs eventArgs)
         {
             PlaySoundEffect();
         }
