@@ -12,7 +12,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Server.Holiday
 {
     [Prototype("holiday")]
-    public class HolidayPrototype : IPrototype, IIndexedPrototype, IExposeData
+    public class HolidayPrototype : IPrototype, IIndexedPrototype
     {
         [ViewVariables] public string Name { get; private set; } = string.Empty;
         [ViewVariables] public string ID { get; private set; } = string.Empty;
