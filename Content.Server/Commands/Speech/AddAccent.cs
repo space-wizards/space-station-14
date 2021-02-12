@@ -1,6 +1,6 @@
 #nullable enable
-using System;
 using System.Linq;
+using System.Text;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Shared.Administration;
@@ -40,39 +40,33 @@ namespace Content.Server.Commands.Speech
                 // Get all components that implement the ISpeechComponent except
                 var speeches = compFactory.GetAllRefTypes()
                     .Where(c => typeof(IAccentComponent).IsAssignableFrom(c) && c.IsClass);
-                var msg = "";
+                var msg = new StringBuilder();
+
                 foreach(var s in speeches)
                 {
-                    msg += $"{compFactory.GetRegistration(s).Name}\n";
+                    msg.Append($"{compFactory.GetRegistration(s).Name}\n");
                 }
-                shell.WriteLine(msg);
+
+                shell.WriteLine(msg.ToString());
             }
             else
             {
                 var name = args[0];
+
                 // Try to get the Component
-                Type type;
-                try
+                if (!compFactory.TryGetRegistration(name, out var registration, true))
                 {
-                    var comp = compFactory.GetComponent(name);
-                    type = comp.GetType();
-                }
-                catch (Exception)
-                {
-                    shell.WriteLine($"Accent {name} not found. Try {Command} ? to get a list of all appliable accents.");
+                    shell.WriteLine($"Accent {name} not found. Try {Command} ? to get a list of all applicable accents.");
                     return;
                 }
 
+                var type = registration.Type;
+
                 // Check if that already exists
-                try
+                if (player.AttachedEntity.HasComponent(type))
                 {
-                    var comp = player.AttachedEntity.GetComponent(type);
                     shell.WriteLine("You already have this accent!");
                     return;
-                }
-                catch (Exception)
-                {
-                    // Accent not found
                 }
 
                 // Generic fuckery
