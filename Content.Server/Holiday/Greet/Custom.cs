@@ -1,13 +1,11 @@
-using System;
 using Content.Server.Holiday.Interfaces;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Holiday.Greet
 {
     [UsedImplicitly]
-    public class Custom : IHolidayGreet, IExposeData
+    public class Custom : IHolidayGreet
     {
         private string _greet;
 

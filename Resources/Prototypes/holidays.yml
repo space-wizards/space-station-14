@@ -13,6 +13,12 @@
   beginMonth: January
 
 - type: holiday
+  id: ChineseNewYear
+  name: Chinese New Year
+  shouldCelebrate:
+    !type:ChineseNewYear {}
+
+- type: holiday
   id: GroundhogDay
   name: Groundhog Day
   beginDay: 2

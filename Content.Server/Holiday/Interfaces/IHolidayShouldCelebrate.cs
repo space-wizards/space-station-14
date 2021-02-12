@@ -1,5 +1,4 @@
 using System;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Holiday.Interfaces

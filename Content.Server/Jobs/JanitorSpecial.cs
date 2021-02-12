@@ -4,7 +4,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Holiday.Interfaces;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 

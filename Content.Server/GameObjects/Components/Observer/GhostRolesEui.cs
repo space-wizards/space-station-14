@@ -2,7 +2,7 @@ using Content.Server.Eui;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Eui;
 using Content.Shared.GameObjects.Components.Observer;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Observer
 {
