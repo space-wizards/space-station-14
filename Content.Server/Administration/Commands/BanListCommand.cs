@@ -18,10 +18,16 @@ namespace Content.Server.Administration.Commands
 
         public async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            if (args.Length != 1)
+            {
+                shell.WriteLine($"Invalid amount of args. {Help}");
+                return;
+            }
+
             var plyMgr = IoCManager.Resolve<IPlayerManager>();
             var dbMan = IoCManager.Resolve<IServerDbManager>();
 
-            var target = string.Join(" ", args);
+            var target = args[0];
             NetUserId targetUid;
 
             if (plyMgr.TryGetSessionByUsername(target, out var targetSession))
