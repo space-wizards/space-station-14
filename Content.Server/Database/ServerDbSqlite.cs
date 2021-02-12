@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -70,6 +71,42 @@ namespace Content.Server.Database
             }
 
             return null;
+        }
+
+        public override async Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId)
+        {
+            await using var db = await GetDbImpl();
+
+            // SQLite can't do the net masking stuff we need to match IP address ranges.
+            // So just pull down the whole list into memory.
+            var queryBans = await db.SqliteDbContext.Ban
+                .Include(p => p.Unban)
+                .ToListAsync();
+
+            var bans = new List<ServerBanDef>();
+
+            foreach (var ban in queryBans)
+            {
+                ServerBanDef? banDef = null;
+
+                if (address != null && ban.Address != null && address.IsInSubnet(ban.Address))
+                {
+                    banDef = ConvertBan(ban);
+                }
+                else if (userId is { } id && ban.UserId == id.UserId)
+                {
+                    banDef = ConvertBan(ban);
+                }
+
+                if (banDef == null)
+                {
+                    continue;
+                }
+
+                bans.Add(banDef);
+            }
+
+            return bans;
         }
 
         public override async Task AddServerBanAsync(ServerBanDef serverBan)
@@ -182,6 +219,7 @@ namespace Content.Server.Database
             }
 
             return new ServerBanDef(
+                ban.Id,
                 uid,
                 addrTuple,
                 ban.BanTime,
