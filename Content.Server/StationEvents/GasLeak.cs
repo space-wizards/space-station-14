@@ -161,10 +161,10 @@ namespace Content.Server.StationEvents
                 }
 
                 var atmos = gridAtmos.GetTile(_targetTile);
-                if (atmos?.Air == null) return;
-                atmos.Air.Temperature = 1000f;
+                // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
+                // it COULD start potentially start a bigger fire.
+                atmos?.HotspotExpose(700f, 50f, true);
                 EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/sparks4.ogg", _targetCoords);
-                atmos.Invalidate();
             }
         }
 
@@ -182,7 +182,7 @@ namespace Content.Server.StationEvents
             var gridBounds = grid.WorldBounds;
             var gridPos = grid.WorldPosition;
 
-            for (var i = 0; i < 20; i++)
+            for (var i = 0; i < 10; i++)
             {
                 var randomX = robustRandom.Next((int) gridBounds.Left, (int) gridBounds.Right);
                 var randomY = robustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
