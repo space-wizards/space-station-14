@@ -287,6 +287,15 @@
     weekday: Monday
 
 - type: holiday
+  id: SpiritDay
+  name: Spirit Day
+  beginMonth: October
+  shouldCelebrate:
+    !type:WeekdayInMonth
+    occurrence: 3
+    weekday: Thursday
+
+- type: holiday
   id: Halloween
   name: Halloween
   beginDay: 31
