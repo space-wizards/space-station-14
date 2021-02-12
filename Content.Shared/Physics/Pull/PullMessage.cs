@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 
 namespace Content.Shared.Physics.Pull
 {

@@ -3,11 +3,9 @@ using BenchmarkDotNet.Attributes;
 using Moq;
 using Robust.Shared.Exceptions;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Log;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Reflection;
 
 namespace Content.Benchmarks
 {

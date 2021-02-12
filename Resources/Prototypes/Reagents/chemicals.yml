@@ -99,8 +99,8 @@
       amount: 0.5
 
 - type: reagent
-  id: chem.Phoron
-  name: phoron
+  id: chem.Plasma
+  name: plasma
   desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
   physicalDesc: gaseous
   color: "#7e009e"

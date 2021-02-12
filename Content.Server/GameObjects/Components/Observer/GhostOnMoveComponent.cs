@@ -2,7 +2,6 @@
 using System;
 using Content.Server.Commands.Observer;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.Console;
 using Robust.Shared.Console;

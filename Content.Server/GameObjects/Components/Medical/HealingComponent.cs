@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -26,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Medical
             serializer.DataField(this, h => h.Heal, "heal", new Dictionary<DamageType, int>());
         }
 
-        public async Task<bool> AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {

@@ -12,7 +12,7 @@ namespace Content.Server.Alert.Click
     [UsedImplicitly]
     public class RemoveCuffs : IAlertClick
     {
-        public void ExposeData(ObjectSerializer serializer) {}
+        void IExposeData.ExposeData(ObjectSerializer serializer) {}
 
         public void AlertClicked(ClickAlertEventArgs args)
         {

@@ -14,7 +14,7 @@ namespace Content.Client.GameObjects.Components.Body
             return true;
         }
 
-        public bool CanDrop(CanDropEventArgs args)
+        bool IDraggable.CanDrop(CanDropEventArgs args)
         {
             return true;
         }

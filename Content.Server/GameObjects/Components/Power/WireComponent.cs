@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Power
             serializer.DataField(ref _wireType, "wireType", WireType.HighVoltage);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (_wireDroppedOnCutPrototype == null)
                 return false;

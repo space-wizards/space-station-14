@@ -1,9 +1,8 @@
 #nullable enable
 using System;
-using Robust.Client.Graphics.ClientEye;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -134,7 +133,7 @@ namespace Content.Client.GameObjects.Components
 
             public static DirBoundData Default { get; } = new();
 
-            public void ExposeData(ObjectSerializer serializer)
+            void IExposeData.ExposeData(ObjectSerializer serializer)
             {
                 serializer.DataField(ref All, "all", default);
                 serializer.DataField(ref North, "north", default);

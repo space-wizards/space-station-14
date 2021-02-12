@@ -4,10 +4,7 @@ using Content.Shared.Audio;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -121,7 +118,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             UpdateColor();
         }
 
-        public void Land(LandEventArgs eventArgs)
+        void ILand.Land(LandEventArgs eventArgs)
         {
 
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("GlassBreak");

@@ -1,9 +1,7 @@
-﻿#nullable enable
-using Content.Server.GameObjects.Components;
+#nullable enable
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -13,14 +11,8 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Timing;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -117,12 +109,12 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
                 else
                 {
-                    PlayFootstepSound(transform.Coordinates);
+                    PlayFootstepSound(transform.Coordinates, mover.Sprinting);
                 }
             }
         }
 
-        private void PlayFootstepSound(EntityCoordinates coordinates)
+        private void PlayFootstepSound(EntityCoordinates coordinates, bool sprinting)
         {
             // Step one: figure out sound collection prototype.
             var grid = _mapManager.GetGrid(coordinates.GetGridId(EntityManager));
@@ -158,7 +150,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
                 var file = _robustRandom.Pick(soundCollection.PickFiles);
-                _audioSystem.PlayAtCoords(file, coordinates);
+                _audioSystem.PlayAtCoords(file, coordinates, sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
             }
             catch (UnknownPrototypeException)
             {

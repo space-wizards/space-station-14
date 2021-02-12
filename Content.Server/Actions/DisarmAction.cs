@@ -1,26 +1,18 @@
 #nullable enable
 using System;
 using System.Linq;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -36,7 +28,7 @@ namespace Content.Server.Actions
         private float _pushProb;
         private float _cooldown;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _failProb, "failProb", 0.4f);
             serializer.DataField(ref _pushProb, "pushProb", 0.4f);

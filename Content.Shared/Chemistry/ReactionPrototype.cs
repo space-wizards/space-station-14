@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Interfaces.Chemistry;
 using Content.Shared.Interfaces;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -82,7 +81,7 @@ namespace Content.Shared.Chemistry
         /// </summary>
         public bool Catalyst => _catalyst;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _amount, "amount", ReagentUnit.New(1));
             serializer.DataField(ref _catalyst, "catalyst", false);

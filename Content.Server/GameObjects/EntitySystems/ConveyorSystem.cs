@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Conveyor;
-using Content.Shared.GameObjects.Components.Conveyor;
+﻿using Content.Server.GameObjects.Components.Conveyor;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

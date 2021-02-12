@@ -1,7 +1,7 @@
 using System;
 using Content.Server.Database;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -48,7 +48,7 @@ namespace Content.Server.Administration.Commands
                 expires = DateTimeOffset.Now + TimeSpan.FromMinutes(duration);
             }
 
-            await dbMan.AddServerBanAsync(new ServerBanDef(targetUid, null, DateTimeOffset.Now, expires, reason, player?.UserId));
+            await dbMan.AddServerBanAsync(new ServerBanDef(null, targetUid, null, DateTimeOffset.Now, expires, reason, player?.UserId));
 
             if (plyMgr.TryGetSessionById(targetUid, out var targetPlayer))
             {

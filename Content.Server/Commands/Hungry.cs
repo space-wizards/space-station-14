@@ -3,7 +3,7 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Nutrition;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Commands

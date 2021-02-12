@@ -35,7 +35,7 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:TotalDamageTrigger
+        !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:DoActsBehavior
@@ -45,7 +45,6 @@
   name: chair
   id: Chair
   parent: SeatBase
-  description: Apply butt.
   components:
   - type: Rotatable
   - type: Sprite

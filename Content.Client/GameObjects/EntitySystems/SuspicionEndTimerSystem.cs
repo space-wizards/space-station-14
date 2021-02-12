@@ -1,6 +1,6 @@
 ﻿using System;
 using Content.Shared.GameObjects.EntitySystemMessages;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.EntitySystems
 {

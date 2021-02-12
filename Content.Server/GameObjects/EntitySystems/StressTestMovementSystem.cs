@@ -1,7 +1,7 @@
 using System;
 using Content.Server.GameObjects.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.EntitySystems

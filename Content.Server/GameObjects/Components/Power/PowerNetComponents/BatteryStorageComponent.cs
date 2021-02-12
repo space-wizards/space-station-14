@@ -1,6 +1,5 @@
 #nullable enable
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 

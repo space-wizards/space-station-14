@@ -1,4 +1,4 @@
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.IoC;
 
 namespace Content.Client

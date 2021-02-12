@@ -5,8 +5,6 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -83,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             serializer.DataField(ref _temperature, "temperature", 673.15f);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent(out IHotItem? lighter)
                 && lighter.IsCurrentlyHot()

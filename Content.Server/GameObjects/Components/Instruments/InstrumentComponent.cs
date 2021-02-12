@@ -9,15 +9,11 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Localization;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -261,7 +257,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             _laggedBatches = 0;
         }
 
-        public void Dropped(DroppedEventArgs eventArgs)
+        void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
             Clean();
             SendNetworkMessage(new InstrumentStopMidiMessage());
@@ -269,7 +265,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             UserInterface?.CloseAll();
         }
 
-        public void Thrown(ThrownEventArgs eventArgs)
+        void IThrown.Thrown(ThrownEventArgs eventArgs)
         {
             Clean();
             SendNetworkMessage(new InstrumentStopMidiMessage());
@@ -277,7 +273,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             UserInterface?.CloseAll();
         }
 
-        public void HandSelected(HandSelectedEventArgs eventArgs)
+        void IHandSelected.HandSelected(HandSelectedEventArgs eventArgs)
         {
             if (eventArgs.User == null || !eventArgs.User.TryGetComponent(out BasicActorComponent? actor))
                 return;
@@ -289,14 +285,14 @@ namespace Content.Server.GameObjects.Components.Instruments
             InstrumentPlayer = session;
         }
 
-        public void HandDeselected(HandDeselectedEventArgs eventArgs)
+        void IHandDeselected.HandDeselected(HandDeselectedEventArgs eventArgs)
         {
             Clean();
             SendNetworkMessage(new InstrumentStopMidiMessage());
             UserInterface?.CloseAll();
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (Handheld || !eventArgs.User.TryGetComponent(out IActorComponent? actor)) return;
 
@@ -306,7 +302,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             OpenUserInterface(actor.playerSession);
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return false;
 

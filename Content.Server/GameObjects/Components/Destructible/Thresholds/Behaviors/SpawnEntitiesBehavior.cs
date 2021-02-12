@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Utility;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
         /// </summary>
         public Dictionary<string, MinMax> Spawn { get; set; } = new();
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Spawn, "spawn", new Dictionary<string, MinMax>());
         }

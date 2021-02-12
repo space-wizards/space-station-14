@@ -12,7 +12,7 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:TotalDamageTrigger
+        !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundCollectionBehavior
@@ -20,7 +20,7 @@
       - !type:DoActsBehavior
         acts: [ "Breakage" ]
     - trigger:
-        !type:TotalDamageTrigger
+        !type:DamageTrigger
         damage: 10
       behaviors:
       - !type:PlaySoundCollectionBehavior

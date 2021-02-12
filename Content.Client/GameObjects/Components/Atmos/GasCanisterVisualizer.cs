@@ -1,10 +1,6 @@
 ﻿using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 

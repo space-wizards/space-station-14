@@ -2,7 +2,7 @@
 using Content.Server.GameObjects.Components.Suspicion;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems.GameMode
 {

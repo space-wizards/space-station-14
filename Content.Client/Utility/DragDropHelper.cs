@@ -1,4 +1,4 @@
-﻿using Robust.Client.Interfaces.Input;
+﻿using Robust.Client.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 

@@ -132,7 +132,7 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:TotalDamageTrigger
+        !type:DamageTrigger
         damage: 10
       behaviors:
       - !type:PlaySoundBehavior
@@ -163,7 +163,7 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:TotalDamageTrigger
+        !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior

@@ -7,8 +7,7 @@ using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
@@ -191,7 +190,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 // Verify the first one, should be the lowest one (20)
                 msg = sThresholdListenerComponent.ThresholdsReached[0];
-                var trigger = (TotalDamageTrigger) msg.Threshold.Trigger;
+                var trigger = (DamageTrigger) msg.Threshold.Trigger;
                 Assert.NotNull(trigger);
                 Assert.That(trigger.Damage, Is.EqualTo(20));
 
@@ -202,7 +201,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 // Verify the second one, should be the highest one (50)
                 msg = sThresholdListenerComponent.ThresholdsReached[1];
-                trigger = (TotalDamageTrigger) msg.Threshold.Trigger;
+                trigger = (DamageTrigger) msg.Threshold.Trigger;
                 Assert.NotNull(trigger);
                 Assert.That(trigger.Damage, Is.EqualTo(50));
 

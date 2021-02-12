@@ -1,11 +1,10 @@
 ﻿#nullable enable
-using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
@@ -15,7 +14,7 @@ namespace Content.Server.Construction.Completions
     {
         public string Container { get; private set; } = string.Empty;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Container, "container", string.Empty);
         }

@@ -12,22 +12,23 @@ namespace Content.Server.GameObjects.Components.Items
     public class DebugEquipComponent : Component, IEquipped, IEquippedHand, IUnequipped, IUnequippedHand
     {
         public override string Name => "DebugEquip";
-        public void Equipped(EquippedEventArgs eventArgs)
+
+        void IEquipped.Equipped(EquippedEventArgs eventArgs)
         {
             eventArgs.User.PopupMessage("equipped " + Owner.Name);
         }
 
-        public void EquippedHand(EquippedHandEventArgs eventArgs)
+        void IEquippedHand.EquippedHand(EquippedHandEventArgs eventArgs)
         {
             eventArgs.User.PopupMessage("equipped hand " + Owner.Name);
         }
 
-        public void Unequipped(UnequippedEventArgs eventArgs)
+        void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
         {
             eventArgs.User.PopupMessage("unequipped " + Owner.Name);
         }
 
-        public void UnequippedHand(UnequippedHandEventArgs eventArgs)
+        void IUnequippedHand.UnequippedHand(UnequippedHandEventArgs eventArgs)
         {
             eventArgs.User.PopupMessage("unequipped hand" + Owner.Name);
         }

@@ -3,7 +3,7 @@ using Content.Server.AI.Utils;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.WorldState.States.Combat.Nearby
 {

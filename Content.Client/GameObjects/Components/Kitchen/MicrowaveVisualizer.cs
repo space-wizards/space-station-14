@@ -5,7 +5,6 @@ using Content.Shared.GameObjects.Components.Sound;
 using Content.Shared.Kitchen;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Log;
 

@@ -3,12 +3,11 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Threading.Tasks;
+using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -34,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
         /// <inheritdoc />
-        public async Task<bool> AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (_wirePrototypeID == null)
                 return true;

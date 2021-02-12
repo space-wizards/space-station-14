@@ -1,8 +1,7 @@
 #nullable enable
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Robust.Server.Console;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Commands.Damage
