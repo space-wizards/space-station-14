@@ -33,10 +33,10 @@ namespace Content.Server.GameObjects.Components.Buckle
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        [ComponentDependency] public readonly AppearanceComponent? AppearanceComponent = null;
-        [ComponentDependency] private readonly ServerAlertsComponent? _serverAlertsComponent = null;
-        [ComponentDependency] private readonly StunnableComponent? _stunnableComponent = null;
-        [ComponentDependency] private readonly MobStateComponent? _mobStateComponent = null;
+        [ComponentDependency] public readonly AppearanceComponent? Appearance = null;
+        [ComponentDependency] private readonly ServerAlertsComponent? _serverAlerts = null;
+        [ComponentDependency] private readonly StunnableComponent? _stunnable = null;
+        [ComponentDependency] private readonly MobStateComponent? _mobState = null;
 
         private int _size;
 
@@ -59,7 +59,6 @@ namespace Content.Server.GameObjects.Components.Buckle
         public Vector2 BuckleOffset { get; private set; }
 
         private StrapComponent? _buckledTo;
-
 
         /// <summary>
         ///     The strap that this component is buckled to.
@@ -92,21 +91,20 @@ namespace Content.Server.GameObjects.Components.Buckle
         /// </summary>
         private void UpdateBuckleStatus()
         {
-            if (_serverAlertsComponent == null)
+            if (_serverAlerts == null)
             {
                 return;
             }
 
             if (Buckled)
             {
-                _serverAlertsComponent.ShowAlert(BuckledTo?.BuckledAlertType ?? AlertType.Buckled);
+                _serverAlerts.ShowAlert(BuckledTo?.BuckledAlertType ?? AlertType.Buckled);
             }
             else
             {
-                _serverAlertsComponent.ClearAlertCategory(AlertCategory.Buckled);
+                _serverAlerts.ClearAlertCategory(AlertCategory.Buckled);
             }
         }
-
 
         /// <summary>
         ///     Reattaches this entity to the strap, modifying its position and rotation.
@@ -254,7 +252,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 return false;
             }
 
-            AppearanceComponent?.SetData(BuckleVisuals.Buckled, true);
+            Appearance?.SetData(BuckleVisuals.Buckled, true);
 
             BuckledTo = strap;
             LastEntityBuckledTo = BuckledTo.Owner.Uid;
@@ -324,9 +322,9 @@ namespace Content.Server.GameObjects.Components.Buckle
                 Owner.Transform.WorldRotation = oldBuckledTo.Owner.Transform.WorldRotation;
             }
 
-            AppearanceComponent?.SetData(BuckleVisuals.Buckled, false);
+            Appearance?.SetData(BuckleVisuals.Buckled, false);
 
-            if (_stunnableComponent != null && _stunnableComponent.KnockedDown)
+            if (_stunnable != null && _stunnable.KnockedDown)
             {
                 EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }
@@ -335,7 +333,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 EntitySystem.Get<StandingStateSystem>().Standing(Owner);
             }
 
-            _mobStateComponent?.CurrentState?.EnterState(Owner);
+            _mobState?.CurrentState?.EnterState(Owner);
 
             UpdateBuckleStatus();
 
@@ -411,7 +409,6 @@ namespace Content.Server.GameObjects.Components.Buckle
                 drawDepth = BuckledTo.SpriteComponent.DrawDepth - 1;
             }
 
-
             return new BuckleComponentState(Buckled, drawDepth, LastEntityBuckledTo, DontCollide);
         }
 
@@ -420,13 +417,12 @@ namespace Content.Server.GameObjects.Components.Buckle
             return TryUnbuckle(eventArgs.User);
         }
 
-
         public void Update()
         {
-            if (!DontCollide || Body == null)
+            if (!DontCollide || Physics == null)
                 return;
 
-            Body.WakeBody();
+            Physics.WakeBody();
 
             if (!IsOnStrapEntityThisFrame && DontCollide)
             {
