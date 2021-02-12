@@ -73,25 +73,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetSerializer", "RobustTool
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Physics", "RobustToolbox\Robust.Physics\Robust.Physics.csproj", "{3BC34700-882F-426B-82BB-56D5708B5E0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.LoaderApi", "RobustToolbox\Robust.LoaderApi\Robust.LoaderApi\Robust.LoaderApi.csproj", "{1FAE651D-29D8-437A-9864-47CE0D180016}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.LoaderApi", "RobustToolbox\Robust.LoaderApi\Robust.LoaderApi\Robust.LoaderApi.csproj", "{1FAE651D-29D8-437A-9864-47CE0D180016}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Client.NameGenerator", "RobustToolbox\Robust.Client.NameGenerator\Robust.Client.NameGenerator.csproj", "{3CFEB7DB-12C6-46F3-89FC-1450F3016FFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Client.NameGenerator", "RobustToolbox\Robust.Client.NameGenerator\Robust.Client.NameGenerator.csproj", "{3CFEB7DB-12C6-46F3-89FC-1450F3016FFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Client.Injectors", "RobustToolbox\Robust.Client.Injectors\Robust.Client.Injectors.csproj", "{8922428F-17C3-47A7-BFE9-570DEB2464DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Client.Injectors", "RobustToolbox\Robust.Client.Injectors\Robust.Client.Injectors.csproj", "{8922428F-17C3-47A7-BFE9-570DEB2464DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Net.HttpListener", "RobustToolbox\ManagedHttpListener\src\System.Net.HttpListener.csproj", "{3429ACDA-F32F-4710-90F5-8C6DF4800304}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Net.HttpListener", "RobustToolbox\ManagedHttpListener\src\System.Net.HttpListener.csproj", "{3429ACDA-F32F-4710-90F5-8C6DF4800304}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlX.IL.Cecil", "RobustToolbox\XamlX\src\XamlX.IL.Cecil\XamlX.IL.Cecil.csproj", "{16F7DE32-0186-44B9-9345-0C20D1BF2422}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlX.IL.Cecil", "RobustToolbox\XamlX\src\XamlX.IL.Cecil\XamlX.IL.Cecil.csproj", "{16F7DE32-0186-44B9-9345-0C20D1BF2422}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamlX", "XamlX", "{AFF53804-115F-4E67-B81F-26265EA27880}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlX", "RobustToolbox\XamlX\src\XamlX\XamlX.csproj", "{23F09C45-950E-4DB7-A465-E937450FF008}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlX", "RobustToolbox\XamlX\src\XamlX\XamlX.csproj", "{23F09C45-950E-4DB7-A465-E937450FF008}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlX.Runtime", "RobustToolbox\XamlX\src\XamlX.Runtime\XamlX.Runtime.csproj", "{440426C1-8DCA-43F6-967F-94439B8DAF47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlX.Runtime", "RobustToolbox\XamlX\src\XamlX.Runtime\XamlX.Runtime.csproj", "{440426C1-8DCA-43F6-967F-94439B8DAF47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Tools", "Content.Tools\Content.Tools.csproj", "{75AB8F8D-9E56-4B12-85E3-E03A852B31CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Tools", "Content.Tools\Content.Tools.csproj", "{75AB8F8D-9E56-4B12-85E3-E03A852B31CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Analyzers", "RobustToolbox\Robust.Analyzers\Robust.Analyzers.csproj", "{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Analyzers", "RobustToolbox\Robust.Analyzers\Robust.Analyzers.csproj", "{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -227,8 +227,8 @@ Global
 		{3CFEB7DB-12C6-46F3-89FC-1450F3016FFA} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{8922428F-17C3-47A7-BFE9-570DEB2464DA} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{3429ACDA-F32F-4710-90F5-8C6DF4800304} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
-		{AFF53804-115F-4E67-B81F-26265EA27880} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{16F7DE32-0186-44B9-9345-0C20D1BF2422} = {AFF53804-115F-4E67-B81F-26265EA27880}
+		{AFF53804-115F-4E67-B81F-26265EA27880} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{23F09C45-950E-4DB7-A465-E937450FF008} = {AFF53804-115F-4E67-B81F-26265EA27880}
 		{440426C1-8DCA-43F6-967F-94439B8DAF47} = {AFF53804-115F-4E67-B81F-26265EA27880}
 		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
