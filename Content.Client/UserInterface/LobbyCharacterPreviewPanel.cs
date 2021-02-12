@@ -2,15 +2,14 @@
 using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
-using Content.Shared;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Robust.Client.GameObjects;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;

@@ -1,7 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Client.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Mobs.State
 {

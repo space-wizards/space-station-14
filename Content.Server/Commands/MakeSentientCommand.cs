@@ -1,15 +1,14 @@
 #nullable enable
+using System.Threading;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Mobs.Speech;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.Commands
 {
@@ -47,10 +46,14 @@ namespace Content.Server.Commands
             if(entity.HasComponent<AiControllerComponent>())
                 entity.RemoveComponent<AiControllerComponent>();
 
-            entity.EnsureComponent<MindComponent>();
-            entity.EnsureComponent<PlayerInputMoverComponent>();
-            entity.EnsureComponent<SharedSpeechComponent>();
-            entity.EnsureComponent<SharedEmotingComponent>();
+            // Delay spawning these components to avoid race conditions with the deferred removal of AiController.
+            Timer.Spawn(100, () =>
+            {
+                entity.EnsureComponent<MindComponent>();
+                entity.EnsureComponent<PlayerInputMoverComponent>();
+                entity.EnsureComponent<SharedSpeechComponent>();
+                entity.EnsureComponent<SharedEmotingComponent>();
+            });
         }
     }
 }

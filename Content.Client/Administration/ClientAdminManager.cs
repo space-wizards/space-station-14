@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.Administration;
 using Content.Shared.Network.NetMessages;
 using Robust.Client.Console;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Network;
 
 #nullable enable
 

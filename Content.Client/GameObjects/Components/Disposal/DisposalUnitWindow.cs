@@ -1,5 +1,5 @@
 ﻿using Content.Shared.GameObjects.Components.Disposal;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;

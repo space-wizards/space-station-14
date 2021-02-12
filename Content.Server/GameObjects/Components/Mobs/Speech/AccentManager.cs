@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Content.Server.Interfaces.Chat;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Mobs.Speech

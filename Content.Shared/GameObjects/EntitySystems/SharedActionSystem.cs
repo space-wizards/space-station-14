@@ -1,6 +1,5 @@
 ﻿using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {

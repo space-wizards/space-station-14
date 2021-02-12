@@ -3,16 +3,15 @@ using Content.Client.GameObjects.Components.Items;
 using Content.Client.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.EntitySystems;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.Input;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.EntitySystems
 {

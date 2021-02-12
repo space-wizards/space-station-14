@@ -12,8 +12,6 @@ using Content.Shared.GameObjects.Components.Suspicion;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;

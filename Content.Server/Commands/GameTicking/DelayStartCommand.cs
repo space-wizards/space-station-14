@@ -3,7 +3,6 @@ using Content.Server.Administration;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 

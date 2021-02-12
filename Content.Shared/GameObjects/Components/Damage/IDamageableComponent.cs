@@ -1,9 +1,8 @@
 #nullable enable
-using System;
 using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.EntitySystems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Damage
 {

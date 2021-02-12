@@ -3,8 +3,7 @@ using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Scanner;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 

@@ -4,9 +4,7 @@ using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Maths;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 

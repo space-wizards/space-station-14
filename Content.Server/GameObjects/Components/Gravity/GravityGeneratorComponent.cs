@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Utility;
@@ -11,11 +10,8 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;

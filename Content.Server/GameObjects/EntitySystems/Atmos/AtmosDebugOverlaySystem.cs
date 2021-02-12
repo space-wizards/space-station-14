@@ -6,14 +6,13 @@ using Content.Shared;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
-using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.EntitySystems.Atmos
 {

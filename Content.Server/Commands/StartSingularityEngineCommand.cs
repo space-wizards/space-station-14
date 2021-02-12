@@ -1,15 +1,11 @@
 ﻿#nullable enable
-using System;
-using System.Collections.Generic;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Singularity;
 using Content.Server.GameObjects.Components.PA;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands

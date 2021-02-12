@@ -6,14 +6,11 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Power.AME
 {

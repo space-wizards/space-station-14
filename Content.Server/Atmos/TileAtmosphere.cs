@@ -1,4 +1,4 @@
-﻿#nullable enable annotations
+#nullable enable annotations
 using System;
 using System.Buffers;
 using System.Collections.Generic;
@@ -11,14 +11,9 @@ using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Random;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;

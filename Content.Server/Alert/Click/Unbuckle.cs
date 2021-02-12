@@ -2,7 +2,6 @@
 using Content.Shared.Alert;
 using Robust.Shared.Serialization;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Server.Alert.Click
 {

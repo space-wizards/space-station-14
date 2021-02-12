@@ -5,7 +5,6 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Body.Behavior
 {

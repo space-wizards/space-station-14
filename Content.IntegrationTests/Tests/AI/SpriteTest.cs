@@ -1,11 +1,10 @@
 #nullable enable
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.AI

@@ -1,5 +1,5 @@
 using Content.Server.GameObjects.Components.GUI;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Operators.Inventory
 {

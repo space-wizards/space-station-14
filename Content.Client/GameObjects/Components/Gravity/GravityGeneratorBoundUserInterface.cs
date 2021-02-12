@@ -1,8 +1,8 @@
 using Content.Shared.GameObjects.Components.Gravity;
-using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
