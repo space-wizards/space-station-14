@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Content.Client.GameObjects.Components.Wires;
 using Content.Shared.Audio;
@@ -18,9 +19,9 @@ namespace Content.Client.GameObjects.Components.Doors
     {
         private const string AnimationKey = "airlock_animation";
 
-        private Animation CloseAnimation;
-        private Animation OpenAnimation;
-        private Animation DenyAnimation;
+        private Animation CloseAnimation = default!;
+        private Animation OpenAnimation = default!;
+        private Animation DenyAnimation = default!;
 
         public override void LoadData(YamlMappingNode node)
         {

@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.Interfaces.GameObjects.Components;
 using System;
