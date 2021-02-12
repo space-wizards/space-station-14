@@ -83,12 +83,6 @@
     text: On this day over 600 years ago, Comrade Yuri Gagarin first ventured into space!
 
 - type: holiday
-  id: SalyutAnniversary
-  name: Salyut 1's Launch Anniversary
-  beginDay: 19
-  beginMonth: April
-
-- type: holiday
   id: FourTwenty
   name: Four-Twenty
   beginDay: 20
@@ -286,9 +280,11 @@
 - type: holiday
   id: CanadianThanksgiving
   name: Thanksgiving in Canada
-  beginWeek: 2
-  beginWeekday: Monday
   beginMonth: October
+  shouldCelebrate:
+    !type:WeekdayInMonth
+    occurrence: 2
+    weekday: Monday
 
 - type: holiday
   id: Halloween
@@ -347,9 +343,11 @@
 - type: holiday
   id: Thanksgiving
   name: Thanksgiving in the United States
-  beginWeek: 4
-  beginWeekday: Thursday
   beginMonth: November
+  shouldCelebrate:
+    !type:WeekdayInMonth
+    occurrence: 4
+    weekday: Thursday
 
 - type: holiday
   id: Sinterklaas

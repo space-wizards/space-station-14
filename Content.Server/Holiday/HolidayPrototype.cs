@@ -30,8 +30,6 @@ namespace Content.Server.Holiday
         ///     Month this holiday will end in. Invalid means it lasts a single month.
         /// </summary>
         [ViewVariables] public Month EndMonth { get; set; } = Month.Invalid;
-        [ViewVariables] public byte? BeginWeek { get; set; } = null;
-        [ViewVariables] public DayOfWeek? BeginWeekday { get; set; } = null;
 
         [ViewVariables]
         private IHolidayShouldCelebrate _shouldCelebrate = new DefaultHolidayShouldCelebrate();
@@ -56,8 +54,6 @@ namespace Content.Server.Holiday
             serializer.DataField(this, x => x.BeginMonth, "beginMonth", Month.Invalid);
             serializer.DataField(this, x => x.EndDay, "endDay", (byte)0);
             serializer.DataField(this, x => x.EndMonth, "endMonth", Month.Invalid);
-            serializer.DataField(this, x => x.BeginWeek, "beginWeek", null);
-            serializer.DataField(this, x => x.BeginWeekday, "beginWeekday", null);
             serializer.DataField(ref _shouldCelebrate, "shouldCelebrate", new DefaultHolidayShouldCelebrate());
             serializer.DataField(ref _greet, "greet", new DefaultHolidayGreet());
             serializer.DataField(ref _celebrate, "celebrate", new DefaultHolidayCelebrate());

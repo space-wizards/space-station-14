@@ -18,14 +18,11 @@ namespace Content.Server.Holiday.ShouldCelebrate
         void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _weekday, "weekday", DayOfWeek.Monday);
-            serializer.DataField(ref _occurrence, "cccurrence", 1u);
+            serializer.DataField(ref _occurrence, "occurrence", 1u);
         }
 
         public override bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
         {
-            if (holiday.EndMonth != Month.Invalid)
-                base.ShouldCelebrate(date, holiday);
-
             // Occurrence NEEDS to be between 1 and 4.
             _occurrence = Math.Max(1, Math.Min(_occurrence, 4));
 
@@ -42,13 +39,10 @@ namespace Content.Server.Holiday.ShouldCelebrate
 
                 d = d.AddDays(7 * (_occurrence-1));
 
-                holiday.BeginDay = (byte)d.Day;
-                holiday.EndMonth = holiday.BeginMonth;
-                holiday.EndDay = holiday.BeginDay;
-                break;
+                return date.Day == d.Day;
             }
 
-            return base.ShouldCelebrate(date, holiday);
+            return false;
         }
     }
 }

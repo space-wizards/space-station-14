@@ -8,13 +8,6 @@ namespace Content.Server.Holiday.ShouldCelebrate
     {
         public virtual bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
         {
-            var calendar = new GregorianCalendar();
-
-            if(holiday.BeginWeek != null && holiday.BeginWeekday != null)
-                if (holiday.BeginWeek == calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday)
-                    && holiday.BeginWeekday == calendar.GetDayOfWeek(date) && (int) holiday.BeginMonth == date.Month)
-                    return true;
-
             if (holiday.EndDay == 0)
                 holiday.EndDay = holiday.BeginDay;
 
