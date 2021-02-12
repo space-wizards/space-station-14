@@ -116,9 +116,13 @@
     anchored: false
     mass: 85
     fixtures:
+    #- shape: This is the TODO godmode we want but gotta fix the fucken rects first
+    #    !type:PhysShapeCircle
+    #      radius: 0.35
     - shape:
-        !type:PhysShapeCircle
-          radius: 0.35
+        !type:PhysShapeAabb
+          bounds: "-0.35, -0.5, 0.35, 0.5"
+      restitution: 0.2
       mask:
       - Impassable
       - MobImpassable

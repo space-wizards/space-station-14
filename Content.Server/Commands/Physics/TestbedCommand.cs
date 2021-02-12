@@ -42,6 +42,11 @@ using Robust.Shared.Physics.Dynamics.Shapes;
 
 namespace Content.Server.Commands.Physics
 {
+    /*
+     * I didn't use blueprints because this is way easier to iterate upon as I can shit out testbed upon testbed on new maps
+     * and never have to leave my debugger.
+     */
+
     /// <summary>
     ///     Copies of Box2D's physics testbed for debugging.
     /// </summary>
@@ -80,6 +85,10 @@ namespace Content.Server.Commands.Physics
                     SetupPlayer(mapId, shell, player, mapManager);
                     CreateBoxStack(mapId);
                     break;
+                case "circlestack":
+                    SetupPlayer(mapId, shell, player, mapManager);
+                    CreateCircleStack(mapId);
+                    break;
                 default:
                     shell.SendText(player, $"testbed {args[0]} not found!");
                     return;
@@ -94,7 +103,7 @@ namespace Content.Server.Commands.Physics
         {
             var pauseManager = IoCManager.Resolve<IPauseManager>();
             pauseManager.SetMapPaused(mapId, false);
-            var map = EntitySystem.Get<SharedPhysicsSystem>().Maps[mapId].Gravity = new Vector2(0, -9.8f);
+            var map = EntitySystem.Get<SharedPhysicsSystem>().Maps[mapId].Gravity = new Vector2(0, -4.9f);
 
             return;
         }
@@ -140,12 +149,72 @@ namespace Content.Server.Commands.Physics
                     var x = 0.0f;
 
                     var box = entityManager.SpawnEntity("BlankEntity",
-                        new MapCoordinates(new Vector2(xs[j] + x, 0.55f + 1.1f * i), mapId)).AddComponent<PhysicsComponent>();
+                        new MapCoordinates(new Vector2(xs[j] + x, 0.55f + 2.1f * i), mapId)).AddComponent<PhysicsComponent>();
 
                     box.BodyType = BodyType.Dynamic;
                     box.SleepingAllowed = false;
                     shape = new PolygonShape();
                     shape.SetAsBox(0.5f, 0.5f);
+                    box.FixedRotation = false;
+                    // TODO: Need to detect shape and work out if we need to use fixedrotation
+
+                    var fixture = new Fixture(box, shape)
+                    {
+                        CollisionMask = (int) CollisionGroup.Impassable,
+                        CollisionLayer = (int) CollisionGroup.Impassable,
+                        Hard = true,
+                    };
+                    box.AddFixture(fixture);
+                }
+            }
+        }
+
+        private void CreateCircleStack(MapId mapId)
+        {
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+
+            // TODO: Need a blank entity we can spawn for testbed.
+            var ground = entityManager.SpawnEntity("BlankEntity", new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
+
+            var horizontal = new EdgeShape(new Vector2(-20, 0), new Vector2(20, 0));
+            var horizontalFixture = new Fixture(ground, horizontal)
+            {
+                CollisionLayer = (int) CollisionGroup.Impassable,
+                CollisionMask = (int) CollisionGroup.Impassable,
+                Hard = true
+            };
+            ground.AddFixture(horizontalFixture);
+
+            var vertical = new EdgeShape(new Vector2(10, 0), new Vector2(10, 10));
+            var verticalFixture = new Fixture(ground, vertical)
+            {
+                CollisionLayer = (int) CollisionGroup.Impassable,
+                CollisionMask = (int) CollisionGroup.Impassable,
+                Hard = true
+            };
+            ground.AddFixture(verticalFixture);
+
+            var xs = new[]
+            {
+                0.0f, -10.0f, -5.0f, 5.0f, 10.0f
+            };
+
+            var columnCount = 1;
+            var rowCount = 15;
+            PhysShapeCircle shape;
+
+            for (var j = 0; j < columnCount; j++)
+            {
+                for (var i = 0; i < rowCount; i++)
+                {
+                    var x = 0.0f;
+
+                    var box = entityManager.SpawnEntity("BlankEntity",
+                        new MapCoordinates(new Vector2(xs[j] + x, 0.55f + 2.1f * i), mapId)).AddComponent<PhysicsComponent>();
+
+                    box.BodyType = BodyType.Dynamic;
+                    box.SleepingAllowed = false;
+                    shape = new PhysShapeCircle {Radius = 0.5f};
                     box.FixedRotation = false;
                     // TODO: Need to detect shape and work out if we need to use fixedrotation
 
