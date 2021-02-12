@@ -17,19 +17,13 @@ using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -589,7 +583,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }, _autoCloseCancelTokenSource.Token);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if(!eventArgs.Using.TryGetComponent(out ToolComponent? tool))
             {

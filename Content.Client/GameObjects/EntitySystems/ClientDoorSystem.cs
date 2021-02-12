@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Doors;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.EntitySystems
 {

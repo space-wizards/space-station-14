@@ -1,6 +1,6 @@
 #nullable enable
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
