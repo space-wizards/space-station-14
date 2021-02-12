@@ -42,7 +42,7 @@ namespace Content.IntegrationTests.Tests.Utility
                 var grid = sMapManager.GetGrid(new GridId(1));
                 var entityCoordinates = new EntityCoordinates(grid.GridEntityId, 0, 0);
 
-                // Nothing blocking it
+                // Nothing blocking it, only entity is the grid
                 Assert.NotNull(sEntityManager.SpawnIfUnobstructed(null, entityCoordinates, CollisionGroup.Impassable));
                 Assert.True(sEntityManager.TrySpawnIfUnobstructed(null, entityCoordinates, CollisionGroup.Impassable, out var entity));
                 Assert.NotNull(entity);
@@ -50,7 +50,7 @@ namespace Content.IntegrationTests.Tests.Utility
                 var mapId = new MapId(1);
                 var mapCoordinates = new MapCoordinates(0, 0, mapId);
 
-                // Nothing blocking it
+                // Nothing blocking it, only entity is the grid
                 Assert.NotNull(sEntityManager.SpawnIfUnobstructed(null, mapCoordinates, CollisionGroup.Impassable));
                 Assert.True(sEntityManager.TrySpawnIfUnobstructed(null, mapCoordinates, CollisionGroup.Impassable, out entity));
                 Assert.NotNull(entity);
