@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Mobs;
 using Robust.Server.Player;
 using Robust.Shared.Network;
@@ -60,16 +59,6 @@ namespace Content.Server.Players
         public static PlayerData? ContentData(this IPlayerSession session)
         {
             return session.Data.ContentData();
-        }
-
-        public static bool TryContentData(this IPlayerData engineData, [NotNullWhen(true)] out PlayerData? data)
-        {
-            return (data = engineData.ContentData()) != null;
-        }
-
-        public static bool TryContentData(this IPlayerSession session, [NotNullWhen(true)] out PlayerData? data)
-        {
-            return (data = session.ContentData()) != null;
         }
     }
 }
