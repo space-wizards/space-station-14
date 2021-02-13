@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics.Pull;
 using JetBrains.Annotations;
@@ -120,7 +121,7 @@ namespace Content.Shared.Physics.Controllers
                     !otherCollider.CanCollide ||
                     (collider.CollisionMask & otherCollider.CollisionLayer) == 0 ||
                     (otherCollider.CollisionMask & collider.CollisionLayer) == 0 ||
-                    otherCollider.HasController<PullController>())
+                    (otherCollider.Entity.TryGetComponent(out SharedPullableComponent? pullable) && pullable.BeingPulled))
                 {
                     continue;
                 }

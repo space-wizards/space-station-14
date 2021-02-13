@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Pulling
@@ -19,7 +20,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
         public override string Name => "Pullable";
         public override uint? NetID => ContentNetIDs.PULLABLE;
 
-        [ComponentDependency] private readonly IPhysicsComponent? _physics = default!;
+        [ComponentDependency] private readonly PhysicsComponent? _physics = default!;
 
         /// <summary>
         /// Only set in Puller->set! Only set in unison with _pullerPhysics!
@@ -27,6 +28,8 @@ namespace Content.Shared.GameObjects.Components.Pulling
         private IEntity? _puller;
         private IPhysicsComponent? _pullerPhysics;
         public IPhysicsComponent? PullerPhysics => _pullerPhysics;
+
+        private DistanceJoint? _pullJoint = null;
 
         /// <summary>
         /// The current entity pulling this component.
@@ -60,7 +63,6 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                         oldPuller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
                         _physics.WakeBody();
-                        _physics.TryRemoveController<PullController>();
                     }
                     // else-branch warning is handled below
                 }
@@ -81,7 +83,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                         return;
                     }
 
-                    if (!value.TryGetComponent<IPhysicsComponent>(out var valuePhysics))
+                    if (!value.TryGetComponent<PhysicsComponent>(out var valuePhysics))
                     {
                         return;
                     }
@@ -141,6 +143,9 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     _puller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
                     _physics.WakeBody();
+                    _pullJoint = valuePhysics.CreateDistanceJoint(_physics);
+                    _pullJoint.CollideConnected = true;
+                    _pullJoint.Length = 1.4f;
                 }
                 // Code here will not run if pulling a new object was attempted and failed because of the returns from the refactor.
             }
@@ -209,6 +214,12 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return false;
             }
 
+            if (_physics != null && _pullJoint != null)
+            {
+                _physics.RemoveJoint(_pullJoint);
+            }
+
+            _pullJoint = null;
             Puller = null;
             return true;
         }
