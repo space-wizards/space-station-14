@@ -66,7 +66,7 @@
   - type: Icon
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
   - type: Damageable
-    resistances: metallicResistances
+    resistances: reinforcedMetallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -99,7 +99,7 @@
   - type: Icon
     sprite: Constructible/Structures/Windows/plasma_window.rsi
   - type: Damageable
-    resistances: metallicResistances
+    resistances: reinforcedMetallicResistances
   - type: Destructible
     thresholds:
     - trigger:

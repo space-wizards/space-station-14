@@ -363,7 +363,7 @@
     graph: girder
     node: reinforcedWall
   - type: Damageable
-    resistances: metallicResistances
+    resistances: reinforcedMetallicResistances
   - type: Destructible
     thresholds:
     - trigger:

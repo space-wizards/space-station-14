@@ -282,6 +282,8 @@
     - type: StorageVisualizer
       state_open: secgearcrate_open
       state_closed: secgearcrate_door
+  - type: Damageable
+    resistances: reinforcedMetallicResistances
 
 - type: entity
   id: CrateEngineeringSecure
@@ -311,6 +313,8 @@
     - type: StorageVisualizer
       state_open: engicratesecure_open
       state_closed: engicratesecure_door
+  - type: Damageable
+    resistances: reinforcedMetallicResistances
 
 - type: entity
   id: CrateMedicalSecure
@@ -340,6 +344,8 @@
     - type: StorageVisualizer
       state_open: medicalcratesecure_open
       state_closed: medicalcratesecure_door
+  - type: Damageable
+    resistances: reinforcedMetallicResistances
 
 - type: entity
   id: CratePrivateSecure
@@ -368,6 +374,8 @@
     - type: StorageVisualizer
       state_open: privatecrate_open
       state_closed: privatecrate_door
+  - type: Damageable
+    resistances: reinforcedMetallicResistances
 
 - type: entity
   id: CrateScienceSecure
@@ -397,6 +405,8 @@
     - type: StorageVisualizer
       state_open: scicratesecure_open
       state_closed: scicratesecure_door
+  - type: Damageable
+    resistances: reinforcedMetallicResistances
 
 - type: entity
   id: CratePlasma
@@ -426,6 +436,8 @@
     - type: StorageVisualizer
       state_open: plasmacrate_open
       state_closed: plasmacrate_door
+  - type: Damageable
+    resistances: reinforcedMetallicResistances
 
 - type: entity
   id: CrateSecure
@@ -454,6 +466,8 @@
     - type: StorageVisualizer
       state_open: securecrate_open
       state_closed: securecrate_door
+  - type: Damageable
+    resistances: reinforcedMetallicResistances
 
 - type: entity
   id: CrateHydroSecure
@@ -483,6 +497,8 @@
     - type: StorageVisualizer
       state_open: hydrocratesecure_open
       state_closed: hydrocratesecure_door
+  - type: Damageable
+    resistances: reinforcedMetallicResistances
 
 - type: entity
   id: CrateWeaponSecure
@@ -509,4 +525,5 @@
     - type: StorageVisualizer
       state_open: weaponcrate_open
       state_closed: weaponcrate_door
-
+  - type: Damageable
+    resistances: reinforcedMetallicResistances
