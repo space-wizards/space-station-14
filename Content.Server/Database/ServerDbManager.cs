@@ -41,6 +41,7 @@ namespace Content.Server.Database
         Task<NetUserId?> GetAssignedUserIdAsync(string name);
 
         // Ban stuff
+        Task<ServerBanDef?> GetServerBanAsync(int id);
         Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
         Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId);
         Task AddServerBanAsync(ServerBanDef serverBan);
@@ -138,6 +139,11 @@ namespace Content.Server.Database
         public Task<NetUserId?> GetAssignedUserIdAsync(string name)
         {
             return _db.GetAssignedUserIdAsync(name);
+        }
+
+        public Task<ServerBanDef?> GetServerBanAsync(int id)
+        {
+            return _db.GetServerBanAsync(id);
         }
 
         public Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId)

@@ -46,6 +46,18 @@ namespace Content.Server.Database
             }
         }
 
+        public override async Task<ServerBanDef?> GetServerBanAsync(int id)
+        {
+            await using var db = await GetDbImpl();
+
+            var ban = await db.SqliteDbContext.Ban
+                .Include(p => p.Unban)
+                .Where(p => p.Id == id)
+                .SingleOrDefaultAsync();
+
+            return ConvertBan(ban);
+        }
+
         public override async Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId)
         {
             await using var db = await GetDbImpl();
@@ -232,6 +244,8 @@ namespace Content.Server.Database
                     int.Parse(ban.Address.AsSpan(idx + 1), provider: CultureInfo.InvariantCulture));
             }
 
+            var unban = ConvertUnban(ban.Unban);
+
             return new ServerBanDef(
                 ban.Id,
                 uid,
@@ -239,7 +253,27 @@ namespace Content.Server.Database
                 ban.BanTime,
                 ban.ExpirationTime,
                 ban.Reason,
-                aUid);
+                aUid,
+                unban);
+        }
+
+        private static ServerUnbanDef? ConvertUnban(SqliteServerUnban? unban)
+        {
+            if (unban == null)
+            {
+                return null;
+            }
+
+            NetUserId? aUid = null;
+            if (unban.UnbanningAdmin is {} aGuid)
+            {
+                aUid = new NetUserId(aGuid);
+            }
+
+            return new ServerUnbanDef(
+                unban.Id,
+                aUid,
+                unban.UnbanTime);
         }
 
         public override async Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address)

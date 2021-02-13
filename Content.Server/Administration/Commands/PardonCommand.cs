@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Robust.Server.Player;
@@ -30,6 +31,29 @@ namespace Content.Server.Administration.Commands
             if (!int.TryParse(args[0], out var banId))
             {
                 shell.WriteLine($"Unable to parse {args[1]} as a ban id integer.\n{Help}");
+                return;
+            }
+
+            var ban = await dbMan.GetServerBanAsync(banId);
+
+            if (ban == null)
+            {
+                shell.WriteLine($"No ban found with id {banId}");
+                return;
+            }
+
+            if (ban.Unban != null)
+            {
+                var response = new StringBuilder("This ban has already been pardoned");
+
+                if (ban.Unban.UnbanningAdmin != null)
+                {
+                    response.Append($" by {ban.Unban.UnbanningAdmin.Value}");
+                }
+
+                response.Append($" in {ban.Unban.UnbanTime}.");
+
+                shell.WriteLine(response.ToString());
                 return;
             }
 
