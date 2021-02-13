@@ -154,7 +154,7 @@ namespace Content.Shared.Physics.Pull
                 }
 
                 var distanceAbs = Vector2.Abs(distance);
-                var totalAabb = _puller.AABB.Size + ControlledComponent.AABB.Size / 2;
+                var totalAabb = _puller.GetWorldAABB().Size + ControlledComponent.GetWorldAABB().Size / 2;
                 if (distanceAbs.X < totalAabb.X && distanceAbs.Y < totalAabb.Y)
                 {
                     LinearVelocity = Vector2.Zero;
