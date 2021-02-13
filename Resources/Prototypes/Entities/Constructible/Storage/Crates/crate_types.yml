@@ -260,6 +260,7 @@
   parent: CrateGeneric
   components:
   - type: AccessReader
+    access: [["Security"]]
   - type: SecureEntityStorage
   - type: Sprite
     sprite: Constructible/Storage/Crates/sec_gear.rsi
@@ -288,6 +289,7 @@
   parent: CrateGeneric
   components:
   - type: AccessReader
+    access: [["Engineering"]]
   - type: SecureEntityStorage
   - type: Sprite
     sprite: Constructible/Storage/Crates/engicrate_secure.rsi
@@ -316,6 +318,7 @@
   parent: CrateGeneric
   components:
   - type: AccessReader
+    access: [["Medical"]]
   - type: SecureEntityStorage
   - type: Sprite
     sprite: Constructible/Storage/Crates/medicalcrate_secure.rsi
@@ -372,6 +375,7 @@
   parent: CrateGeneric
   components:
   - type: AccessReader
+    access: [["Science"]]
   - type: SecureEntityStorage
   - type: Sprite
     sprite: Constructible/Storage/Crates/scicrate_secure.rsi
@@ -400,6 +404,7 @@
   parent: CrateGeneric
   components:
   - type: AccessReader
+    access: [["Engineering"]]
   - type: SecureEntityStorage
   - type: Sprite
     sprite: Constructible/Storage/Crates/plasma.rsi
@@ -456,6 +461,7 @@
   parent: CrateGeneric
   components:
   - type: AccessReader
+    access: [["Service"]]
   - type: SecureEntityStorage
   - type: Sprite
     sprite: Constructible/Storage/Crates/hydro_secure.rsi
@@ -484,6 +490,7 @@
   parent: CrateGeneric
   components:
   - type: AccessReader
+    access: [["Security"]]
   - type: SecureEntityStorage
   - type: Sprite
     sprite: Constructible/Storage/Crates/weapon.rsi

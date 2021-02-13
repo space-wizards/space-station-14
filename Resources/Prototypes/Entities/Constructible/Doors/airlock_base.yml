@@ -36,6 +36,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+  - type: Door
   - type: Airlock
   - type: Appearance
     visuals:
@@ -78,7 +79,7 @@
   parent: Airlock
   name: glass airlock
   components:
-  - type: Airlock
+  - type: Door
     occludes: false
   - type: Occluder
     enabled: false

@@ -230,6 +230,7 @@ namespace Content.Server.Database
          * BAN STUFF
          */
         public abstract Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
+        public abstract Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId);
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
 
         /*

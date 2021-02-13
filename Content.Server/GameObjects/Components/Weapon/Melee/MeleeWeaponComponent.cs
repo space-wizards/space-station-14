@@ -20,7 +20,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     [RegisterComponent]
-    public class MeleeWeaponComponent : Component, IAttack
+    public class MeleeWeaponComponent : Component, IAttack, IHandSelected
     {
         [Dependency] private readonly IPhysicsManager _physicsManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -127,11 +127,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             _lastAttackTime = curTime;
             _cooldownEnd = _lastAttackTime + TimeSpan.FromSeconds(ArcCooldownTime);
 
-            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
-            {
-                cooldown.CooldownStart = _lastAttackTime;
-                cooldown.CooldownEnd = _cooldownEnd;
-            }
+            RefreshItemCooldown();
 
             return true;
         }
@@ -181,11 +177,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             _lastAttackTime = curTime;
             _cooldownEnd = _lastAttackTime + TimeSpan.FromSeconds(CooldownTime);
 
-            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
-            {
-                cooldown.CooldownStart = _lastAttackTime;
-                cooldown.CooldownEnd = _cooldownEnd;
-            }
+            RefreshItemCooldown();
 
             return true;
         }
@@ -214,6 +206,39 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             }
 
             return resSet;
+        }
+
+        void IHandSelected.HandSelected(HandSelectedEventArgs eventArgs)
+        {
+            var curTime = _gameTiming.CurTime;
+            var cool = TimeSpan.FromSeconds(CooldownTime * 0.5f);
+
+            if (curTime < _cooldownEnd)
+            {
+                if (_cooldownEnd - curTime < cool)
+                {
+                    _lastAttackTime = curTime;
+                    _cooldownEnd += cool;
+                }
+                else
+                    return;
+            }
+            else
+            {
+                _lastAttackTime = curTime;
+                _cooldownEnd = curTime + cool;
+            }
+
+            RefreshItemCooldown();
+        }
+
+        private void RefreshItemCooldown()
+        {
+            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
+            {
+                cooldown.CooldownStart = _lastAttackTime;
+                cooldown.CooldownEnd = _cooldownEnd;
+            }
         }
     }
 
