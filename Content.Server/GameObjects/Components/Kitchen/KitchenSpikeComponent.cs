@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class KitchenSpikeComponent : Component, IActivate, ISuicideAct
+    public class KitchenSpikeComponent : Component, IActivate, ISuicideAct, IDragDropOn
     {
         public override string Name => "KitchenSpike";
 
@@ -31,61 +31,82 @@ namespace Content.Server.GameObjects.Components.Kitchen
         {
             SpriteComponent? sprite;
 
-            if (!EntitySystem.Get<SharedPullingSystem>().TryGetPulled(eventArgs.User, out var victim))
-            {
-                if (_meatParts == 0)
-                {
-                    return;
-                }
-                _meatParts--;
-
-                if (!string.IsNullOrEmpty(_meatPrototype))
-                {
-                    var meat = Owner.EntityManager.SpawnEntity(_meatPrototype, Owner.Transform.Coordinates);
-                    if (meat != null)
-                    {
-                        meat.Name = _meatName;
-                    }
-                }
-
-                if (_meatParts != 0)
-                {
-                    eventArgs.User.PopupMessage(_meatSource1p);
-                }
-                else
-                {
-                    if (Owner.TryGetComponent(out sprite))
-                    {
-                        sprite.LayerSetState(0, "spike");
-                    }
-
-                    eventArgs.User.PopupMessage(_meatSource0);
-                }
-
-                return;
-            }
-
-            if (!victim.TryGetComponent<IMobStateComponent>(out var state))
+            if (_meatParts == 0)
             {
                 return;
             }
+            _meatParts--;
 
-            if ((!state.IsDead() && !state.IsCritical() && !state.IsIncapacitated()) || ActionBlockerSystem.CanMove(victim))
+            if (!string.IsNullOrEmpty(_meatPrototype))
             {
-                return;
+                var meat = Owner.EntityManager.SpawnEntity(_meatPrototype, Owner.Transform.Coordinates);
+                if (meat != null)
+                {
+                    meat.Name = _meatName;
+                }
             }
-            // DoAfter?
+
+            if (_meatParts != 0)
+            {
+                eventArgs.User.PopupMessage(_meatSource1p);
+            }
+            else
+            {
+                if (Owner.TryGetComponent(out sprite))
+                {
+                    sprite.LayerSetState(0, "spike");
+                }
+
+                eventArgs.User.PopupMessage(_meatSource0);
+            }
+
+            return;
+            
+        }
+
+        bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
+        {
+            if (!eventArgs.Dragged.TryGetComponent<IMobStateComponent>(out var state))
+            {
+                return false;
+            }
+
+            if ((!state.IsDead() && !state.IsCritical() && !state.IsIncapacitated()))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<bool> TrySpike(IEntity victim, IEntity user)
+        {
+            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+
+            // Can't check if our target AND disposals moves currently so we'll just check target.
+            // if you really want to check if disposals moves then add a predicate.
+            var doAfterArgs = new DoAfterEventArgs(user, 3, default, victim)
+            {
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                NeedHand = false,
+            };
+
+            var result = await doAfterSystem.DoAfter(doAfterArgs);
+
+            if (result == DoAfterStatus.Cancelled)
+                return false;
 
             if (_meatParts > 0)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The spike already has something on it, finish collecting its meat first!"));
-                return;
+                Owner.PopupMessage(user, Loc.GetString("The spike already has something on it, finish collecting its meat first!"));
+                return false;
             }
 
             if (!victim.TryGetComponent<ButcherableComponent>(out var food))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("{0:theName} can't be butchered on the spike.", victim));
-                return;
+                Owner.PopupMessage(user, Loc.GetString("{0:theName} can't be butchered on the spike.", victim));
+                return false;
             }
 
             _meatPrototype = food.MeatPrototype;
@@ -96,13 +117,20 @@ namespace Content.Server.GameObjects.Components.Kitchen
             // But Name is RobustToolbox-level, so presumably it'd have to be done in some other way (interface???)
             _meatName = Loc.GetString("{0:name} meat", victim);
 
-            if (Owner.TryGetComponent(out sprite))
+            if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
             {
                 sprite.LayerSetState(0, "spikebloody");
             }
 
-            Owner.PopupMessageEveryone(Loc.GetString("{0:theName} has forced {1:theName} onto the spike, killing them instantly!", eventArgs.User, victim));
+            Owner.PopupMessageEveryone(Loc.GetString("{0:theName} has forced {1:theName} onto the spike, killing them instantly!", user, victim));
             victim.Delete();
+            return true;
+        }
+
+        bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
+        {
+            _ = TrySpike(eventArgs.Dragged, eventArgs.User);
+            return true;
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
