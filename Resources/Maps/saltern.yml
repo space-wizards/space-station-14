@@ -534,6 +534,8 @@ entities:
     pos: -15.694785,24.608267
     rot: -1.5707963267948966 rad
     type: Transform
+  - caps: Refillable, Drainable
+    type: SolutionContainer
 - uid: 60
   type: DisgustingSweptSoup
   components:
@@ -650,6 +652,8 @@ entities:
     pos: -3.470539,16.956116
     rot: -1.5707963267948966 rad
     type: Transform
+  - caps: Refillable, Drainable
+    type: SolutionContainer
 - uid: 74
   type: Carpet
   components:
@@ -699,6 +703,8 @@ entities:
     pos: 8.439846,26.712742
     rot: 1.5707963267948966 rad
     type: Transform
+  - caps: Refillable, Drainable
+    type: SolutionContainer
 - uid: 81
   type: Table
   components:
@@ -923,6 +929,8 @@ entities:
   - parent: 853
     pos: 8.661116,25.513401
     type: Transform
+  - caps: Refillable, Drainable
+    type: SolutionContainer
 - uid: 114
   type: BoxDonkpocket
   components:
@@ -3104,7 +3112,7 @@ entities:
   components:
   - parent: 853
     pos: -22.5,14.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -6583,6 +6591,8 @@ entities:
   - containers:
       potted_plant_hide:
         type: Content.Server.GameObjects.ContainerSlot
+      stash:
+        type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 743
   type: ReinforcedWindow
@@ -6601,6 +6611,8 @@ entities:
   - containers:
       potted_plant_hide:
         type: Content.Server.GameObjects.ContainerSlot
+      stash:
+        type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 745
   type: PottedPlantRandomPlastic
@@ -6612,6 +6624,8 @@ entities:
   - containers:
       potted_plant_hide:
         type: Content.Server.GameObjects.ContainerSlot
+      stash:
+        type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 746
   type: PottedPlantRandom
@@ -6622,6 +6636,8 @@ entities:
     type: Transform
   - containers:
       potted_plant_hide:
+        type: Content.Server.GameObjects.ContainerSlot
+      stash:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 747
@@ -6683,6 +6699,8 @@ entities:
   - containers:
       potted_plant_hide:
         type: Content.Server.GameObjects.ContainerSlot
+      stash:
+        type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 755
   type: LowWall
@@ -6722,6 +6740,8 @@ entities:
   - containers:
       potted_plant_hide:
         type: Content.Server.GameObjects.ContainerSlot
+      stash:
+        type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 760
   type: LockerEmergencyFilledRandom
@@ -6745,6 +6765,8 @@ entities:
     type: Transform
   - containers:
       potted_plant_hide:
+        type: Content.Server.GameObjects.ContainerSlot
+      stash:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 762
@@ -6783,6 +6805,8 @@ entities:
   - containers:
       potted_plant_hide:
         type: Content.Server.GameObjects.ContainerSlot
+      stash:
+        type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 765
   type: PottedPlantRandom
@@ -6793,6 +6817,8 @@ entities:
     type: Transform
   - containers:
       potted_plant_hide:
+        type: Content.Server.GameObjects.ContainerSlot
+      stash:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 766
@@ -6844,6 +6870,8 @@ entities:
   - containers:
       potted_plant_hide:
         type: Content.Server.GameObjects.ContainerSlot
+      stash:
+        type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 770
   type: LockerEmergencyFilledRandom
@@ -6868,6 +6896,8 @@ entities:
   - containers:
       potted_plant_hide:
         type: Content.Server.GameObjects.ContainerSlot
+      stash:
+        type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 772
   type: PottedPlantRandom
@@ -6878,6 +6908,8 @@ entities:
     type: Transform
   - containers:
       potted_plant_hide:
+        type: Content.Server.GameObjects.ContainerSlot
+      stash:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 773
@@ -7188,6 +7220,8 @@ entities:
     type: Transform
   - containers:
       potted_plant_hide:
+        type: Content.Server.GameObjects.ContainerSlot
+      stash:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 797
@@ -20359,7 +20393,7 @@ entities:
   components:
   - parent: 853
     pos: 33.5,11.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 939
   type: SignDirectionalBridge
@@ -20959,14 +20993,14 @@ entities:
   components:
   - parent: 853
     pos: 9.5,-21.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 1015
   type: AirlockCommandGlassLocked
   components:
   - parent: 853
     pos: 2.5,27.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 1016
   type: FirelockGlass
@@ -20982,7 +21016,7 @@ entities:
   components:
   - parent: 853
     pos: -22.5,13.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -20991,7 +21025,7 @@ entities:
   components:
   - parent: 853
     pos: 3.5,27.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 1019
   type: ApcExtensionCable
@@ -21061,7 +21095,7 @@ entities:
   components:
   - parent: 853
     pos: 11.5,-21.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 1029
   type: FirelockGlass
@@ -21109,7 +21143,7 @@ entities:
   components:
   - parent: 853
     pos: 10.5,-21.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 1035
   type: Poweredlight
@@ -21430,8 +21464,8 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
-    rot: 3.141592653589793 rad
     pos: -7,-23.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -22603,7 +22637,6 @@ entities:
   components:
   - parent: 853
     pos: -34,-0.5
-    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -22617,8 +22650,8 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
-    rot: 3.141592653589793 rad
     pos: -18,-4.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -22669,7 +22702,7 @@ entities:
   components:
   - parent: 853
     pos: -5.5,23.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 1208
   type: ChairOfficeDark
@@ -22695,8 +22728,6 @@ entities:
     pos: -1.7489221,25.142187
     rot: 3.141592653589793 rad
     type: Transform
-  - fillingSteps: 0
-    type: SolutionContainer
 - uid: 1211
   type: PoweredSmallLight
   components:
@@ -22885,8 +22916,8 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
-    rot: 3.141592653589793 rad
     pos: -19,9.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -22929,8 +22960,8 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
-    rot: 3.141592653589793 rad
     pos: -7,-12.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -22944,8 +22975,8 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
-    rot: 3.141592653589793 rad
     pos: -11,-10.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23020,6 +23051,8 @@ entities:
     type: Transform
   - startingCharge: 11999.417
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 1240
   type: Poweredlight
   components:
@@ -23117,7 +23150,6 @@ entities:
   components:
   - parent: 853
     pos: -19,16.5
-    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23147,7 +23179,6 @@ entities:
   components:
   - parent: 853
     pos: -19,22.5
-    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23162,7 +23193,6 @@ entities:
   components:
   - parent: 853
     pos: -18,9.5
-    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23391,7 +23421,6 @@ entities:
   components:
   - parent: 853
     pos: -1,8.5
-    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23406,7 +23435,6 @@ entities:
   components:
   - parent: 853
     pos: -4,8.5
-    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23555,7 +23583,6 @@ entities:
   components:
   - parent: 853
     pos: -4,17.5
-    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23788,8 +23815,8 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
-    rot: 3.141592653589793 rad
     pos: 17,15.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -23803,8 +23830,8 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
-    rot: 3.141592653589793 rad
     pos: 14,16.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24390,8 +24417,8 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
-    rot: 3.141592653589793 rad
     pos: 28,-15.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24440,8 +24467,8 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
-    rot: 3.141592653589793 rad
     pos: 28,-10.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24462,8 +24489,8 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
-    rot: 3.141592653589793 rad
     pos: 24,0.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24478,7 +24505,6 @@ entities:
   components:
   - parent: 853
     pos: 26,-4.5
-    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24523,7 +24549,6 @@ entities:
   components:
   - parent: 853
     pos: 26,11.5
-    rot: 0 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24719,8 +24744,8 @@ entities:
   type: PoweredSmallLight
   components:
   - parent: 853
-    rot: 3.141592653589793 rad
     pos: 44,-1.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -24841,21 +24866,21 @@ entities:
   components:
   - parent: 853
     pos: 4.5,27.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 1397
   type: LowWall
   components:
   - parent: 853
     pos: 3.5,27.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 1398
   type: FirelockGlass
   components:
   - parent: 853
     pos: 6.5,20.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -25410,7 +25435,7 @@ entities:
   components:
   - parent: 853
     pos: 25.5,-6.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 1478
   type: LowWall
@@ -32239,6 +32264,8 @@ entities:
     pos: -8.476567,-17.420076
     rot: -1.5707963267948966 rad
     type: Transform
+  - caps: Refillable, Drainable
+    type: SolutionContainer
 - uid: 2443
   type: TableWood
   components:
@@ -32478,7 +32505,7 @@ entities:
   components:
   - parent: 853
     pos: -6.5,23.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 2477
   type: solid_wall
@@ -32690,6 +32717,8 @@ entities:
     type: Transform
   - startingCharge: 11999.634
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2505
   type: SalternApc
   components:
@@ -32699,6 +32728,8 @@ entities:
     type: Transform
   - startingCharge: 11999.3
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2506
   type: SalternApc
   components:
@@ -32708,6 +32739,8 @@ entities:
     type: Transform
   - startingCharge: 11999.066
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2507
   type: SalternApc
   components:
@@ -32717,6 +32750,8 @@ entities:
     type: Transform
   - startingCharge: 11999.733
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2508
   type: SalternApc
   components:
@@ -32726,6 +32761,8 @@ entities:
     type: Transform
   - startingCharge: 11999.483
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2509
   type: SalternApc
   components:
@@ -32735,6 +32772,8 @@ entities:
     type: Transform
   - startingCharge: 11991.15
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2510
   type: SalternApc
   components:
@@ -32744,6 +32783,8 @@ entities:
     type: Transform
   - startingCharge: 11999.15
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2511
   type: SalternApc
   components:
@@ -32753,6 +32794,8 @@ entities:
     type: Transform
   - startingCharge: 11999.384
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2512
   type: SalternApc
   components:
@@ -32762,6 +32805,8 @@ entities:
     type: Transform
   - startingCharge: 11999.116
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2513
   type: SalternApc
   components:
@@ -32771,6 +32816,8 @@ entities:
     type: Transform
   - startingCharge: 11999.2
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2514
   type: SalternApc
   components:
@@ -32780,6 +32827,8 @@ entities:
     type: Transform
   - startingCharge: 11999.066
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2515
   type: SalternApc
   components:
@@ -32789,6 +32838,8 @@ entities:
     type: Transform
   - startingCharge: 11999.467
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2516
   type: CrateEmergencyFire
   components:
@@ -32811,6 +32862,8 @@ entities:
     type: Transform
   - startingCharge: 11999.483
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2518
   type: SalternApc
   components:
@@ -32820,6 +32873,8 @@ entities:
     type: Transform
   - startingCharge: 11999.4
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2519
   type: SalternApc
   components:
@@ -32829,6 +32884,8 @@ entities:
     type: Transform
   - startingCharge: 11999.4
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2520
   type: SalternApc
   components:
@@ -32838,6 +32895,8 @@ entities:
     type: Transform
   - startingCharge: 11998.483
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2521
   type: Table
   components:
@@ -32854,6 +32913,8 @@ entities:
     type: Transform
   - startingCharge: 11999.75
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2523
   type: ApcExtensionCable
   components:
@@ -32877,6 +32938,8 @@ entities:
     type: Transform
   - startingCharge: 11999.083
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2526
   type: SalternApc
   components:
@@ -32886,6 +32949,8 @@ entities:
     type: Transform
   - startingCharge: 11996.233
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2527
   type: SalternApc
   components:
@@ -32895,6 +32960,8 @@ entities:
     type: Transform
   - startingCharge: 11999.65
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2528
   type: ApcExtensionCable
   components:
@@ -33086,6 +33153,8 @@ entities:
     type: Transform
   - startingCharge: 11999.833
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2555
   type: ApcExtensionCable
   components:
@@ -34733,6 +34802,8 @@ entities:
     type: Transform
   - startingCharge: 11999.45
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2790
   type: ApcExtensionCable
   components:
@@ -42421,21 +42492,21 @@ entities:
   components:
   - parent: 853
     pos: 23.5,-10.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 3881
   type: AirlockMaintSecLocked
   components:
   - parent: 853
     pos: -16.5,16.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 3882
   type: AirlockMaintCommandLocked
   components:
   - parent: 853
     pos: 12.5,22.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 3883
   type: EmergencyLight
@@ -42827,6 +42898,8 @@ entities:
     type: Transform
   - startingCharge: 11999.217
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 3922
   type: EmergencyLight
   components:
@@ -43249,7 +43322,7 @@ entities:
   components:
   - parent: 853
     pos: 15.5,-3.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43515,7 +43588,7 @@ entities:
   components:
   - parent: 853
     pos: 36.5,5.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43524,7 +43597,7 @@ entities:
   components:
   - parent: 853
     pos: 36.5,4.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43563,7 +43636,7 @@ entities:
   components:
   - parent: 853
     pos: -15.5,0.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43617,7 +43690,7 @@ entities:
   components:
   - parent: 853
     pos: 37.5,-5.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43626,7 +43699,7 @@ entities:
   components:
   - parent: 853
     pos: 0.5,-14.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43635,7 +43708,7 @@ entities:
   components:
   - parent: 853
     pos: 13.5,0.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43674,7 +43747,7 @@ entities:
   components:
   - parent: 853
     pos: 3.5,15.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43683,7 +43756,7 @@ entities:
   components:
   - parent: 853
     pos: 4.5,15.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43692,7 +43765,7 @@ entities:
   components:
   - parent: 853
     pos: 2.5,15.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43746,7 +43819,7 @@ entities:
   components:
   - parent: 853
     pos: -10.5,1.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43755,7 +43828,7 @@ entities:
   components:
   - parent: 853
     pos: -10.5,0.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43764,7 +43837,7 @@ entities:
   components:
   - parent: 853
     pos: 15.5,8.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43773,7 +43846,7 @@ entities:
   components:
   - parent: 853
     pos: 36.5,3.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43782,7 +43855,7 @@ entities:
   components:
   - parent: 853
     pos: -10.5,11.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43791,7 +43864,7 @@ entities:
   components:
   - parent: 853
     pos: -10.5,10.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43800,7 +43873,7 @@ entities:
   components:
   - parent: 853
     pos: -10.5,-0.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43809,7 +43882,7 @@ entities:
   components:
   - parent: 853
     pos: 38.5,-5.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43818,7 +43891,7 @@ entities:
   components:
   - parent: 853
     pos: 0.5,-15.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43845,7 +43918,7 @@ entities:
   components:
   - parent: 853
     pos: 11.5,14.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43854,7 +43927,7 @@ entities:
   components:
   - parent: 853
     pos: -17.5,17.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43900,7 +43973,7 @@ entities:
   components:
   - parent: 853
     pos: 11.5,3.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43916,7 +43989,7 @@ entities:
   components:
   - parent: 853
     pos: 11.5,5.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -43932,7 +44005,7 @@ entities:
   components:
   - parent: 853
     pos: 11.5,4.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -44015,7 +44088,7 @@ entities:
   components:
   - parent: 853
     pos: -10.5,24.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -44024,7 +44097,7 @@ entities:
   components:
   - parent: 853
     pos: -10.5,25.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -44040,7 +44113,7 @@ entities:
   components:
   - parent: 853
     pos: -18.5,17.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963705062866 rad
     type: Transform
   - airBlocked: False
     type: Airtight
@@ -44345,6 +44418,8 @@ entities:
     type: Transform
   - startingCharge: 11999.233
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 4112
   type: Bed
   components:
@@ -45158,21 +45233,21 @@ entities:
   components:
   - parent: 853
     pos: -9.5,23.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 4208
   type: reinforced_wall
   components:
   - parent: 853
     pos: -8.5,23.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 4209
   type: reinforced_wall
   components:
   - parent: 853
     pos: -7.5,23.5
-    rot: 1.5707963267948966 rad
+    rot: -1.5707963705062866 rad
     type: Transform
 - uid: 4210
   type: SpawnPointHeadOfSecurity

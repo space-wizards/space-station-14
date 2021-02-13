@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -74,6 +75,56 @@ namespace Content.Server.Database
             return ConvertBan(ban);
         }
 
+        public override async Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId)
+        {
+            if (address == null && userId == null)
+            {
+                throw new ArgumentException("Address and userId cannot both be null");
+            }
+
+            await using var db = await GetDbImpl();
+
+            var query = db.PgDbContext.Ban
+                .Include(p => p.Unban).AsQueryable();
+
+            if (userId is { } uid)
+            {
+                if (address == null)
+                {
+                    // Only have a user ID.
+                    query = query.Where(p => p.UserId == uid.UserId);
+                }
+                else
+                {
+                    // Have both user ID and IP address.
+                    query = query.Where(p =>
+                        (p.Address != null && EF.Functions.ContainsOrEqual(p.Address.Value, address))
+                        || p.UserId == uid.UserId);
+                }
+            }
+            else
+            {
+                // Only have a connecting address.
+                query = query.Where(
+                    p => p.Address != null && EF.Functions.ContainsOrEqual(p.Address.Value, address));
+            }
+
+            var queryBans = await query.ToArrayAsync();
+            var bans = new List<ServerBanDef>();
+
+            foreach (var ban in queryBans)
+            {
+                var banDef = ConvertBan(ban);
+
+                if (banDef != null)
+                {
+                    bans.Add(banDef);
+                }
+            }
+
+            return bans;
+        }
+
         private static ServerBanDef? ConvertBan(PostgresServerBan? ban)
         {
             if (ban == null)
@@ -94,6 +145,7 @@ namespace Content.Server.Database
             }
 
             return new ServerBanDef(
+                ban.Id,
                 uid,
                 ban.Address,
                 ban.BanTime,

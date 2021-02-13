@@ -44,6 +44,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             KnockdownTimer = 0f;
+            Dirty();
         }
 
         public void Update(float delta)

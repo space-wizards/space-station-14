@@ -1,8 +1,7 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using System.Threading;
-using Content.Server.Atmos;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Atmos;
@@ -10,6 +9,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Doors;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
@@ -20,7 +20,10 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -29,56 +32,87 @@ namespace Content.Server.GameObjects.Components.Doors
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class ServerDoorComponent : Component, IActivate, ICollideBehavior, IInteractUsing
+    [ComponentReference(typeof(SharedDoorComponent))]
+    public class ServerDoorComponent : SharedDoorComponent, IActivate, ICollideBehavior, IInteractUsing, IMapInit
     {
-        public override string Name => "Door";
-
-        [ViewVariables]
-        private DoorState _state = DoorState.Closed;
-
-        public virtual DoorState State
+        [ComponentDependency]
+        private readonly IDoorCheck? _doorCheck = null;
+        
+        public override DoorState State
         {
-            get => _state;
+            get => base.State;
             protected set
             {
-                if (_state == value)
+                if (State == value)
+                {
                     return;
+                }
 
-                _state = value;
+                base.State = value;
 
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
+                StateChangeStartTime = State switch
+                {
+                    DoorState.Open or DoorState.Closed => null,
+                    DoorState.Opening or DoorState.Closing => GameTiming.CurTime,
+                    _ => throw new ArgumentOutOfRangeException(),
+                };
+
+                if (_doorCheck != null)
+                {
+                    _doorCheck.OnStateChange(State);
+                    RefreshAutoClose();
+                }
+
+                Dirty();
             }
         }
 
+        /// <summary>
+        /// The amount of time the door has been open. Used to automatically close the door if it autocloses.
+        /// </summary>
         [ViewVariables]
-        protected float OpenTimeCounter;
+        private float _openTimeCounter;
         [ViewVariables(VVAccess.ReadWrite)]
-        protected bool AutoClose = true;
-        protected const float AutoCloseDelay = 5;
-        [ViewVariables(VVAccess.ReadWrite)]
-        protected float CloseSpeed = AutoCloseDelay;
 
-        private CancellationTokenSource? _cancellationTokenSource;
+        private static readonly TimeSpan AutoCloseDelay = TimeSpan.FromSeconds(5);
 
-        protected virtual TimeSpan CloseTimeOne => TimeSpan.FromSeconds(0.3f);
-        protected virtual TimeSpan CloseTimeTwo => TimeSpan.FromSeconds(0.9f);
-        protected virtual TimeSpan OpenTimeOne => TimeSpan.FromSeconds(0.3f);
-        protected virtual TimeSpan OpenTimeTwo => TimeSpan.FromSeconds(0.9f);
-        protected virtual TimeSpan DenyTime => TimeSpan.FromSeconds(0.45f);
+        private CancellationTokenSource? _stateChangeCancelTokenSource;
+        private CancellationTokenSource? _autoCloseCancelTokenSource;
 
         private const int DoorCrushDamage = 15;
         private const float DoorStunTime = 5f;
-        [ViewVariables(VVAccess.ReadWrite)]
-        protected bool Safety = true;
 
+        /// <summary>
+        /// Whether the door will ever crush.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        private bool _inhibitCrush;
+
+        /// <summary>
+        /// Whether the door blocks light.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] private bool _occludes;
-
         public bool Occludes => _occludes;
 
+        /// <summary>
+        /// Whether the door will open when it is bumped into.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] private bool _bumpOpen;
 
-        public bool BumpOpen => _bumpOpen;
+        /// <summary>
+        /// Whether the door starts open when it's first loaded from prototype. A door won't start open if its prototype is also welded shut.
+        /// Handled in Startup().
+        /// </summary>
+        private bool _startOpen;
 
+        /// <summary>
+        /// Whether the airlock is welded shut. Can be set by the prototype, although this will fail if the door isn't weldable.
+        /// When set by prototype, handled in Startup().
+        /// </summary>
+        private bool _isWeldedShut;
+        /// <summary>
+        /// Whether the airlock is welded shut.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public bool IsWeldedShut
         {
@@ -94,37 +128,76 @@ namespace Content.Server.GameObjects.Components.Doors
                 SetAppearance(_isWeldedShut ? DoorVisualState.Welded : DoorVisualState.Closed);
             }
         }
-        private bool _isWeldedShut;
 
-        private bool _canWeldShut = true;
+        /// <summary>
+        /// Whether the door can ever be welded shut.
+        /// </summary>
+        private bool _weldable;
+        /// <summary>
+        /// Whether the door can currently be welded.
+        /// </summary>
+        private bool CanWeldShut => _weldable && State == DoorState.Closed;
 
         /// <summary>
         ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
         /// </summary>
-        private bool _beingWelded;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        private bool _canCrush = true;
+        private bool _beingWelded = false;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _occludes, "occludes", true);
-            serializer.DataField(ref _bumpOpen, "bumpOpen", true);
             serializer.DataField(ref _isWeldedShut, "welded", false);
-            serializer.DataField(ref _canCrush, "canCrush", true);
+            serializer.DataField(ref _startOpen, "startOpen", false);
+            serializer.DataField(ref _weldable, "weldable", true);
+            serializer.DataField(ref _bumpOpen, "bumpOpen", true);
+            serializer.DataField(ref _occludes, "occludes", true);
+            serializer.DataField(ref _inhibitCrush, "inhibitCrush", false);
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            if (IsWeldedShut)
+            {
+                if (!CanWeldShut)
+                {
+                    Logger.Warning("{0} prototype loaded with incompatible flags: 'welded' is true, but door cannot be welded.", Owner.Name);
+                    return;
+                }
+                SetAppearance(DoorVisualState.Welded);
+            }
         }
 
         public override void OnRemove()
         {
-            _cancellationTokenSource?.Cancel();
+            _stateChangeCancelTokenSource?.Cancel();
+            _autoCloseCancelTokenSource?.Cancel();
 
             base.OnRemove();
         }
 
-        protected virtual void ActivateImpl(ActivateEventArgs eventArgs)
+        void IMapInit.MapInit()
         {
+            if (_startOpen)
+            {
+                if (IsWeldedShut)
+                {
+                    Logger.Warning("{0} prototype loaded with incompatible flags: 'welded' and 'startOpen' are both true.", Owner.Name);
+                    return;
+                }
+                QuickOpen();
+            }
+        }
+
+        void IActivate.Activate(ActivateEventArgs eventArgs)
+        {
+            if (_doorCheck != null && _doorCheck.BlockActivate(eventArgs))
+            {
+                return;
+            }
+
             if (State == DoorState.Open)
             {
                 TryClose(eventArgs.User);
@@ -133,11 +206,6 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 TryOpen(eventArgs.User);
             }
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            ActivateImpl(eventArgs);
         }
 
         void ICollideBehavior.CollideWith(IEntity entity)
@@ -173,57 +241,11 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        protected void SetAppearance(DoorVisualState state)
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-            {
-                appearance.SetData(DoorVisuals.VisualState, state);
-            }
-        }
-
-        public virtual bool CanOpen()
-        {
-            return !_isWeldedShut;
-        }
-
-        public virtual bool CanOpen(IEntity user)
-        {
-            if (!CanOpen()) return false;
-
-            if (!Owner.TryGetComponent<AccessReader>(out var accessReader))
-            {
-                return true;
-            }
-
-            var doorSystem = EntitySystem.Get<DoorSystem>();
-            var isAirlockExternal = HasAccessType("External");
-
-            return doorSystem.AccessType switch
-            {
-                DoorSystem.AccessTypes.AllowAll => true,
-                DoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal ? accessReader.IsAllowed(user) : true,
-                DoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
-                _ => accessReader.IsAllowed(user)
-            };
-        }
-
-        /// <summary>
-        /// Returns whether a door has a certain access type. For example, maintenance doors will have access type
-        /// "Maintenance" in their AccessReader.
-        /// </summary>
-        private bool HasAccessType(string accesType)
-        {
-            if(Owner.TryGetComponent<AccessReader>(out var accessReader))
-            {
-                return accessReader.AccessLists.Any(list => list.Contains(accesType));
-            }
-
-            return true;
-        }
+        #region Opening
 
         public void TryOpen(IEntity user)
         {
-            if (CanOpen(user))
+            if (CanOpenByEntity(user))
             {
                 Open();
 
@@ -239,64 +261,113 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        public void Open()
+        public bool CanOpenByEntity(IEntity user)
         {
-            if (State != DoorState.Closed)
+            if(!CanOpenGeneric())
             {
-                return;
+                return false;
             }
 
-            _canWeldShut = false;
-            State = DoorState.Opening;
-            SetAppearance(DoorVisualState.Opening);
-            if (_occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
-            {
-                occluder.Enabled = false;
-            }
-
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource = new();
-
-            Owner.SpawnTimer(OpenTimeOne, async () =>
-            {
-                if (Owner.TryGetComponent(out AirtightComponent? airtight))
-                {
-                    airtight.AirBlocked = false;
-                }
-
-                if (Owner.TryGetComponent(out IPhysicsComponent? physics))
-                {
-                    physics.CanCollide = false;
-                }
-
-                await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
-
-                State = DoorState.Open;
-                SetAppearance(DoorVisualState.Open);
-            }, _cancellationTokenSource.Token);
-
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, false));
-        }
-
-        public virtual bool CanClose()
-        {
-            return true;
-        }
-
-        public virtual bool CanClose(IEntity user)
-        {
-            if (!CanClose()) return false;
-            if (!Owner.TryGetComponent(out AccessReader? accessReader))
+            if (!Owner.TryGetComponent(out AccessReader? access))
             {
                 return true;
             }
 
-            return accessReader.IsAllowed(user);
+            var doorSystem = EntitySystem.Get<ServerDoorSystem>();
+            var isAirlockExternal = HasAccessType("External");
+
+            return doorSystem.AccessType switch
+            {
+                ServerDoorSystem.AccessTypes.AllowAll => true,
+                ServerDoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal || access.IsAllowed(user),
+                ServerDoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
+                _ => access.IsAllowed(user)
+            };
         }
+
+        /// <summary>
+        /// Returns whether a door has a certain access type. For example, maintenance doors will have access type
+        /// "Maintenance" in their AccessReader.
+        /// </summary>
+        private bool HasAccessType(string accessType)
+        {
+            if (Owner.TryGetComponent(out AccessReader? access))
+            {
+                return access.AccessLists.Any(list => list.Contains(accessType));
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Checks if we can open at all, for anyone or anything. Will return false if inhibited by an IDoorCheck component.
+        /// </summary>
+        /// <returns>Boolean describing whether this door can open.</returns>
+        public bool CanOpenGeneric()
+        {
+            // note the welded check -- CanCloseGeneric does not have this
+            if (IsWeldedShut)
+            {
+                return false;
+            }
+            if(_doorCheck != null)
+            {
+                return _doorCheck.OpenCheck();
+            }
+            
+            return true;
+        }
+
+        /// <summary>
+        /// Opens the door. Does not check if this is possible.
+        /// </summary>
+        public void Open()
+        {
+            State = DoorState.Opening;
+            if (Occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
+            {
+                occluder.Enabled = false;
+            }
+
+            _stateChangeCancelTokenSource?.Cancel();
+            _stateChangeCancelTokenSource = new();
+
+            Owner.SpawnTimer(OpenTimeOne, async () =>
+            {
+                OnPartialOpen();
+                await Timer.Delay(OpenTimeTwo, _stateChangeCancelTokenSource.Token);
+
+                State = DoorState.Open;
+            }, _stateChangeCancelTokenSource.Token);
+        }
+
+        protected override void OnPartialOpen()
+        {
+            if (Owner.TryGetComponent(out AirtightComponent? airtight))
+            {
+                airtight.AirBlocked = false;
+            }
+            base.OnPartialOpen();
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, false));
+        }
+
+        private void QuickOpen()
+        {
+            if (Occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
+            {
+                occluder.Enabled = false;
+            }
+            OnPartialOpen();
+            State = DoorState.Open;
+        }
+
+        #endregion
+
+        #region Closing
 
         public void TryClose(IEntity user)
         {
-            if (!CanClose(user))
+            if (!CanCloseByEntity(user))
             {
                 Deny();
                 return;
@@ -305,220 +376,275 @@ namespace Content.Server.GameObjects.Components.Doors
             Close();
         }
 
-        private void CheckCrush()
+        public bool CanCloseByEntity(IEntity user)
         {
-            if (!Owner.TryGetComponent(out IPhysicsComponent? body))
-                return;
+            if (!CanCloseGeneric())
+            {
+                return false;
+            }
+
+            if (!Owner.TryGetComponent(out AccessReader? access))
+            {
+                return true;
+            }
+
+            return access.IsAllowed(user);
+        }
+
+        /// <summary>
+        /// Checks if we can close at all, for anyone or anything. Will return false if inhibited by an IDoorCheck component or if we are colliding with somebody while our Safety is on.
+        /// </summary>
+        /// <returns>Boolean describing whether this door can close.</returns>
+        public bool CanCloseGeneric()
+        {
+            if (_doorCheck != null && !_doorCheck.CloseCheck())
+            {
+                return false;
+            }
+
+            return !IsSafetyColliding();
+        }
+
+        private bool SafetyCheck()
+        {
+            return (_doorCheck != null && _doorCheck.SafetyCheck()) || _inhibitCrush;
+        }
+
+        /// <summary>
+        /// Checks if we care about safety, and if so, if something is colliding with it; ignores the CanCollide of the door's PhysicsComponent.
+        /// </summary>
+        /// <returns>True if something is colliding with us and we shouldn't crush things, false otherwise.</returns>
+        private bool IsSafetyColliding()
+        {
+            var safety = SafetyCheck();
+
+            if (safety && PhysicsComponent != null)
+            {
+                var physics = IoCManager.Resolve<IPhysicsManager>();
+
+                foreach(var e in physics.GetCollidingEntities(Owner.Transform.MapID, PhysicsComponent.WorldAABB))
+                {
+                    if (e.CanCollide &&
+                       ((PhysicsComponent.CollisionMask & e.CollisionLayer) != 0x0 ||
+                        (PhysicsComponent.CollisionLayer & e.CollisionMask) != 0x0))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Closes the door. Does not check if this is possible.
+        /// </summary>
+        public void Close()
+        {
+            State = DoorState.Closing;
+            _openTimeCounter = 0;
+
+            // no more autoclose; we ARE closed
+            _autoCloseCancelTokenSource?.Cancel();
+
+            _stateChangeCancelTokenSource?.Cancel();
+            _stateChangeCancelTokenSource = new();
+            Owner.SpawnTimer(CloseTimeOne, async () =>
+            {
+                // if somebody walked into the door as it was closing, and we don't crush things
+                if (IsSafetyColliding())
+                {
+                    Open();
+                    return;
+                }
+
+                OnPartialClose();
+                await Timer.Delay(CloseTimeTwo, _stateChangeCancelTokenSource.Token);
+                
+                if (Occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
+                {
+                    occluder.Enabled = true;
+                }
+
+                State = DoorState.Closed;
+            }, _stateChangeCancelTokenSource.Token);
+        }
+
+        protected override void OnPartialClose()
+        {
+            base.OnPartialClose();
+
+            // if safety is off, crushes people inside of the door, temporarily turning off collisions with them while doing so.
+            var becomeairtight = SafetyCheck() || !TryCrush();
+
+            if (becomeairtight && Owner.TryGetComponent(out AirtightComponent? airtight))
+            {
+                airtight.AirBlocked = true;
+            }
+
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, true));
+        }
+
+        /// <summary>
+        /// Crushes everyone colliding with us by more than 10%.
+        /// </summary>
+        /// <returns>True if we crushed somebody, false if we did not.</returns>
+        private bool TryCrush()
+        {
+            if (PhysicsComponent == null)
+            {
+                return false;
+            }
+
+            var collidingentities = PhysicsComponent.GetCollidingEntities(Vector2.Zero, false);
+
+            if (!collidingentities.Any())
+            {
+                return false;
+            }
+
+            var doorAABB = PhysicsComponent.WorldAABB;
+            var hitsomebody = false;
 
             // Crush
-            foreach (var e in body.GetCollidingEntities(Vector2.Zero, false))
+            foreach (var e in collidingentities)
             {
                 if (!e.TryGetComponent(out StunnableComponent? stun)
                     || !e.TryGetComponent(out IDamageableComponent? damage)
                     || !e.TryGetComponent(out IPhysicsComponent? otherBody))
+                {
                     continue;
+                }
 
-                var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
+                var percentage = otherBody.WorldAABB.IntersectPercentage(doorAABB);
 
                 if (percentage < 0.1f)
                     continue;
 
+                hitsomebody = true;
+                CurrentlyCrushing.Add(e.Uid);
+
                 damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
                 stun.Paralyze(DoorStunTime);
+            }
 
-                // If we hit someone, open up after stun (opens right when stun ends)
+            // If we hit someone, open up after stun (opens right when stun ends)
+            if (hitsomebody)
+            {
                 Owner.SpawnTimer(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, Open);
-                break;
-            }
-        }
-
-        public bool IsHoldingPressure(float threshold = 20)
-        {
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-
-            if (!Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos))
-                return false;
-
-            var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.GridID);
-
-            var minMoles = float.MaxValue;
-            var maxMoles = 0f;
-
-            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
-            {
-                // includeAirBlocked remains false, and therefore Air must be present
-                var moles = adjacent.Air!.TotalMoles;
-                if (moles < minMoles)
-                    minMoles = moles;
-                if (moles > maxMoles)
-                    maxMoles = moles;
-            }
-
-            return (maxMoles - minMoles) > threshold;
-        }
-
-        public bool IsHoldingFire()
-        {
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-
-            if (!Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos))
-                return false;
-
-            if (tileAtmos.Hotspot.Valid)
                 return true;
-
-            var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.GridID);
-
-            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
-            {
-                if (adjacent.Hotspot.Valid)
-                    return true;
             }
 
             return false;
         }
 
-        public bool Close()
+        #endregion
+
+        public void Deny()
         {
-            bool shouldCheckCrush = false;
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
-                physics.CanCollide = true;
-
-            if (_canCrush && physics != null &&
-                physics.IsColliding(Vector2.Zero, false))
+            if (_doorCheck != null && !_doorCheck.DenyCheck())
             {
-                if (Safety)
-                {
-                    physics.CanCollide = false;
-                    return false;
-                }
-
-                // check if we crush someone while closing
-                shouldCheckCrush = true;
+                return;
             }
 
-            State = DoorState.Closing;
-            OpenTimeCounter = 0;
-            SetAppearance(DoorVisualState.Closing);
-            if (_occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
-            {
-                occluder.Enabled = true;
-            }
-
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource = new();
-
-            Owner.SpawnTimer(CloseTimeOne, async () =>
-            {
-                if (shouldCheckCrush && _canCrush)
-                {
-                    CheckCrush();
-                }
-
-                if (Owner.TryGetComponent(out AirtightComponent? airtight))
-                {
-                    airtight.AirBlocked = true;
-                }
-
-                if (Owner.TryGetComponent(out IPhysicsComponent? body))
-                {
-                    body.CanCollide = true;
-                }
-
-                await Timer.Delay(CloseTimeTwo, _cancellationTokenSource.Token);
-
-                _canWeldShut = true;
-                State = DoorState.Closed;
-                SetAppearance(DoorVisualState.Closed);
-            }, _cancellationTokenSource.Token);
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, true));
-            return true;
-        }
-
-        public virtual void Deny()
-        {
-            if (State == DoorState.Open || _isWeldedShut)
+            if (State == DoorState.Open || IsWeldedShut)
                 return;
 
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource = new();
+            _stateChangeCancelTokenSource?.Cancel();
+            _stateChangeCancelTokenSource = new();
             SetAppearance(DoorVisualState.Deny);
             Owner.SpawnTimer(DenyTime, () =>
             {
                 SetAppearance(DoorVisualState.Closed);
-            }, _cancellationTokenSource.Token);
+            }, _stateChangeCancelTokenSource.Token);
         }
 
-        public virtual void OnUpdate(float frameTime)
+        /// <summary>
+        /// Stops the current auto-close timer if there is one. Starts a new one if this is appropriate (i.e. entity has an IDoorCheck component that allows auto-closing).
+        /// </summary>
+        public void RefreshAutoClose()
         {
-            if (State != DoorState.Open)
+            _autoCloseCancelTokenSource?.Cancel();
+
+            if (State != DoorState.Open || _doorCheck == null || !_doorCheck.AutoCloseCheck())
             {
                 return;
             }
+            _autoCloseCancelTokenSource = new();
 
-            if (AutoClose)
+            var realCloseTime = _doorCheck.GetCloseSpeed() ?? AutoCloseDelay;
+
+            Owner.SpawnTimer(realCloseTime, async () =>
             {
-                OpenTimeCounter += frameTime;
+                if (CanCloseGeneric())
+                {
+                    // Close() cancels _autoCloseCancellationTokenSource, so we're fine.
+                    Close();
+                }
+            }, _autoCloseCancelTokenSource.Token);
+        }
+
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            if(!eventArgs.Using.TryGetComponent(out ToolComponent? tool))
+            {
+                return false;
             }
 
-            if (OpenTimeCounter > CloseSpeed)
+            // for prying doors
+            if (tool.HasQuality(ToolQuality.Prying) && !IsWeldedShut)
             {
-                if (!CanClose() || !Close())
+                var successfulPry = false;
+
+                if (_doorCheck != null)
                 {
-                    // Try again in 2 seconds if it's jammed or something.
-                    OpenTimeCounter -= 2;
+                    _doorCheck.OnStartPry(eventArgs);
+                    successfulPry = await tool.UseTool(eventArgs.User, Owner,
+                        _doorCheck.GetPryTime() ?? 0.5f, ToolQuality.Prying, () => _doorCheck.CanPryCheck(eventArgs));
+                }
+                else
+                {
+                    successfulPry = await tool.UseTool(eventArgs.User, Owner, 0.5f, ToolQuality.Prying);
+                }
+
+                if (successfulPry && !IsWeldedShut)
+                {
+                    if (State == DoorState.Closed)
+                    {
+                        Open();
+                    }
+                    else if (State == DoorState.Open)
+                    {
+                        Close();
+                    }
+                    return true;
                 }
             }
-        }
 
-        public enum DoorState
-        {
-            Closed,
-            Open,
-            Closing,
-            Opening,
-        }
-
-        public virtual async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            if (!_canWeldShut)
+            // for welding doors
+            if (CanWeldShut && tool.Owner.TryGetComponent(out WelderComponent? welder) && welder.WelderLit)
+            {
+                if(!_beingWelded)
+                {
+                    _beingWelded = true;
+                    if(await welder.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Welding, 3f, () => CanWeldShut))
+                    {
+                        _beingWelded = false;
+                        IsWeldedShut = !IsWeldedShut;
+                        return true;
+                    }
+                    _beingWelded = false;
+                }
+            }
+            else
             {
                 _beingWelded = false;
-                return false;
             }
-
-            if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool) || !tool.WelderLit)
-            {
-                _beingWelded = false;
-                return false;
-            }
-
-            if (_beingWelded)
-                return false;
-
-            _beingWelded = true;
-
-            if (!await tool.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Welding, 3f, () => _canWeldShut))
-            {
-                _beingWelded = false;
-                return false;
-            }
-
-            _beingWelded = false;
-            IsWeldedShut ^= true;
-            return true;
+            return false;
         }
-    }
 
-    public sealed class DoorStateMessage : EntitySystemMessage
-    {
-        public ServerDoorComponent Component { get; }
-        public ServerDoorComponent.DoorState State { get; }
-
-        public DoorStateMessage(ServerDoorComponent component, ServerDoorComponent.DoorState state)
+        public override ComponentState GetComponentState()
         {
-            Component = component;
-            State = state;
+            return new DoorComponentState(State, StateChangeStartTime, CurrentlyCrushing, GameTiming.CurTime);
         }
     }
 }

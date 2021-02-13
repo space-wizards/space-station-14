@@ -79,6 +79,9 @@ namespace Content.IntegrationTests
             // Avoid funny race conditions with the database.
             options.CVarOverrides[CCVars.DatabaseSynchronous.Name] = "true";
 
+            // Disable holidays as some of them might mess with the map at round start.
+            options.CVarOverrides[CCVars.HolidaysEnabled.Name] = "false";
+
             // Avoid loading a large map by default for integration tests.
             options.CVarOverrides[CCVars.GameMap.Name] = "Maps/Test/empty.yml";
 

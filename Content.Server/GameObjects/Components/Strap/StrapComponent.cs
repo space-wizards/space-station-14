@@ -108,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Strap
 
             _occupiedSize += buckle.Size;
 
-            buckle.AppearanceComponent?.SetData(StrapVisuals.RotationAngle, _rotation);
+            buckle.Appearance?.SetData(StrapVisuals.RotationAngle, _rotation);
 
             SendMessage(new StrapMessage(buckle.Owner, Owner));
 
