@@ -320,6 +320,7 @@ namespace Content.Client.Construction
         private void RecipeSelected(ItemList.ItemListSelectedEventArgs obj)
         {
             _selected = (ConstructionPrototype) obj.ItemList[obj.ItemIndex].Metadata!;
+            if(_placementManager.IsActive && !_placementManager.Eraser) UpdateGhostPlacement();
             PopulateInfo(_selected);
         }
 
@@ -344,7 +345,7 @@ namespace Content.Client.Construction
         {
             if (args.Pressed)
             {
-                if (_selected == null) return;
+                if(_selected == null) return;
 
                 var constructSystem = EntitySystem.Get<ConstructionSystem>();
 
@@ -355,11 +356,7 @@ namespace Content.Client.Construction
                     return;
                 }
 
-                _placementManager.BeginPlacing(new PlacementInformation()
-                {
-                    IsTile = false,
-                    PlacementOption = _selected.PlacementMode,
-                }, new ConstructionPlacementHijack(constructSystem, _selected));
+                UpdateGhostPlacement();
             }
             else
             {
@@ -367,6 +364,21 @@ namespace Content.Client.Construction
             }
 
             BuildButton.Pressed = args.Pressed;
+        }
+
+        private void UpdateGhostPlacement()
+        {
+            if (_selected == null || _selected.Type != ConstructionType.Structure) return;
+
+            var constructSystem = EntitySystem.Get<ConstructionSystem>();
+
+            _placementManager.BeginPlacing(new PlacementInformation()
+            {
+                IsTile = false,
+                PlacementOption = _selected.PlacementMode,
+            }, new ConstructionPlacementHijack(constructSystem, _selected));
+
+            BuildButton.Pressed = true;
         }
 
         private void EraseButtonToggled(BaseButton.ButtonToggledEventArgs args)
