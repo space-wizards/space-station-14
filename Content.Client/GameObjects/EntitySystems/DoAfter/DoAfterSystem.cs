@@ -26,7 +26,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
      * DoAfterComponent handles network messages inbound as well as storing the DoAfter data.
      *     It'll also handle overall cleanup when one is removed (i.e. removing it from DoAfterGui).
     */
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         /// <summary>
