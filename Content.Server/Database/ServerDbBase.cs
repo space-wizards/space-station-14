@@ -7,9 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;
+using Robust.Shared.Localization.Macros;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Localization.Macros;
 
 namespace Content.Server.Database
 {
@@ -229,9 +229,36 @@ namespace Content.Server.Database
         /*
          * BAN STUFF
          */
+        /// <summary>
+        ///     Looks up a ban by id.
+        ///     This will return a pardoned ban as well.
+        /// </summary>
+        /// <param name="id">The ban id to look for.</param>
+        /// <returns>The ban with the given id or null if none exist.</returns>
+        public abstract Task<ServerBanDef?> GetServerBanAsync(int id);
+
+        /// <summary>
+        ///     Looks up an user's most recent received un-pardoned ban.
+        ///     This will NOT return a pardoned ban.
+        ///     One of <see cref="address"/> or <see cref="userId"/> need to not be null.
+        /// </summary>
+        /// <param name="address">The ip address of the user.</param>
+        /// <param name="userId">The id of the user.</param>
+        /// <returns>The user's latest received un-pardoned ban, or null if none exist.</returns>
         public abstract Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
+
+        /// <summary>
+        ///     Looks up an user's ban history.
+        ///     This will return pardoned bans as well.
+        ///     One of <see cref="address"/> or <see cref="userId"/> need to not be null.
+        /// </summary>
+        /// <param name="address">The ip address of the user.</param>
+        /// <param name="userId">The id of the user.</param>
+        /// <returns>The user's ban history.</returns>
         public abstract Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId);
+
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
+        public abstract Task AddServerUnbanAsync(ServerUnbanDef serverUnban);
 
         /*
          * PLAYER RECORDS
