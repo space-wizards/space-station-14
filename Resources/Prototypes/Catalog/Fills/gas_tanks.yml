@@ -17,7 +17,7 @@
   id: YellowOxygenTankFilled
   parent: OxygenTankFilled
   name: oxygen tank
-  description: A tank of oxygen. This one is in yellow.
+  description: A tank of oxygen. This one is yellow.
   suffix: Filled
   components:
     - type: Sprite
@@ -29,7 +29,7 @@
   id: RedOxygenTankFilled
   parent: OxygenTankFilled
   name: oxygen tank
-  description: A tank of oxygen. This one is in yellow.
+  description: A tank of oxygen. This one is red.
   suffix: Filled
   components:
     - type: Sprite
