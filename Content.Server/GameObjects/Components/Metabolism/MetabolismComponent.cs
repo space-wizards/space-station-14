@@ -12,19 +12,14 @@ using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -206,10 +201,13 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
                 if (bloodstreamAmount < amountNeeded)
                 {
-                    // Panic inhale
-                    foreach (var lung in lungs)
+                    if (!Owner.GetComponent<IMobStateComponent>().IsCritical())
                     {
-                        lung.Gasp();
+                        // Panic inhale
+                        foreach (var lung in lungs)
+                        {
+                            lung.Gasp();
+                        }
                     }
 
                     bloodstreamAmount = bloodstream.Air.GetMoles(gas);

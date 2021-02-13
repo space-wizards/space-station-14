@@ -1,10 +1,8 @@
 ﻿using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -45,17 +43,18 @@ namespace Content.Server.GameObjects.Components.Items
             }
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             Squeak();
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             Squeak();
             return false;
         }
-        public void Land(LandEventArgs eventArgs)
+
+        void ILand.Land(LandEventArgs eventArgs)
         {
             Squeak();
         }

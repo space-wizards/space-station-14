@@ -15,6 +15,10 @@
   - type: PowerCell
   - type: Sprite
     netsync: false
+  - type: SolutionContainer
+    maxVol: 5
+    caps: Injectable, Drawable
+
 
 - type: entity
   id: PowerCellSmallBase

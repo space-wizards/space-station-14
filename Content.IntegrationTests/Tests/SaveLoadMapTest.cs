@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 using NUnit.Framework;
-using Robust.Server.Interfaces.Maps;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Resources;
+using Robust.Server.Maps;
+using Robust.Shared.ContentPack;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;

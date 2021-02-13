@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.AI;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems.AI
 {
@@ -48,7 +47,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                 yield break;
             }
 
-            foreach (var component in ComponentManager.EntityQuery<AiFactionTagComponent>())
+            foreach (var component in ComponentManager.EntityQuery<AiFactionTagComponent>(true))
             {
                 if ((component.Factions & hostile) == 0)
                     continue;

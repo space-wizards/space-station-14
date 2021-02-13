@@ -2,11 +2,11 @@
 using Content.Client.Administration;
 using Content.Shared.Input;
 using Robust.Client.Console;
-using Robust.Client.Interfaces.Input;
+using Robust.Client.Input;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.Client.UserInterface.AdminMenu
 {

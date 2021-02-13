@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Client.Console;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.IntegrationTests.Tests.Networking
 {
@@ -27,7 +27,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
-            await client.WaitPost(() => IoCManager.Resolve<IClientConsole>().ProcessCommand("disconnect"));
+            await client.WaitPost(() => IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("disconnect"));
 
             // Run some ticks for the disconnect to complete and such.
             await RunTicksSync(client, server, 5);

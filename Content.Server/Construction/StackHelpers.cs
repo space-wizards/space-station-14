@@ -2,7 +2,7 @@
 using System;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
@@ -33,8 +33,8 @@ namespace Content.Server.Construction
                     prototype = "MetalRodStack1";
                     break;
 
-                case StackType.Phoron:
-                    prototype = "PhoronStack1";
+                case StackType.Plasma:
+                    prototype = "PlasmaStack1";
                     break;
 
                 case StackType.Plasteel:

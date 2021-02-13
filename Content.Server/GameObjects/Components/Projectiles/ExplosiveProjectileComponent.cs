@@ -1,7 +1,5 @@
 using Content.Server.GameObjects.Components.Explosion;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {

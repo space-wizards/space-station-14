@@ -2,7 +2,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Combat.Melee

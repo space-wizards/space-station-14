@@ -31,7 +31,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             }
         }
 
-        protected enum InjectorToggleMode
+        public enum InjectorToggleMode
         {
             Inject,
             Draw

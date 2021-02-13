@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -9,10 +10,10 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Npgsql;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Log;
-using Robust.Shared.Interfaces.Resources;
+using Robust.Shared.Configuration;
+using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Network;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 using LogLevel = Robust.Shared.Log.LogLevel;
@@ -41,6 +42,7 @@ namespace Content.Server.Database
 
         // Ban stuff
         Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
+        Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId);
         Task AddServerBanAsync(ServerBanDef serverBan);
 
         // Player records
@@ -140,6 +142,11 @@ namespace Content.Server.Database
         public Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId)
         {
             return _db.GetServerBanAsync(address, userId);
+        }
+
+        public Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId)
+        {
+            return _db.GetServerBansAsync(address, userId);
         }
 
         public Task AddServerBanAsync(ServerBanDef serverBan)

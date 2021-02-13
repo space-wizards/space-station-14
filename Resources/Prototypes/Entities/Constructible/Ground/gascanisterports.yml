@@ -10,22 +10,21 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
+    netsync: false
     sprite: Constructible/Atmos/gascanisterport.rsi
-    state: gasCanisterPort
-  - type: Icon
-    sprite: Constructible/Atmos/gascanisterport.rsi
-    state: gasCanisterPort
-  - type: Appearance
-    visuals:
-    - type: PipeVisualizer
-      pipeRSI: Constructible/Atmos/pipe.rsi
+    layers:
+    - sprite: Constructible/Atmos/pipe.rsi
+      state: pipeHalf
+    - state: gasCanisterPort
   - type: Damageable
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: GasCanisterPort
 
 - type: entity

@@ -1,7 +1,7 @@
 using System;
 using JetBrains.Annotations;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
@@ -9,6 +9,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     /// This interface gives components behavior when being clicked on by a user with an empty hand
     /// who is in range and has unobstructed reach of the target entity (allows inside blockers).
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IInteractHand
     {
         /// <summary>

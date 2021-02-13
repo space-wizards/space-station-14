@@ -24,7 +24,6 @@
   - type: StorageFill
     contents:
       - name: BoxSurvival
-      - name: Stunbaton
       - name: Flash
 
 - type: entity

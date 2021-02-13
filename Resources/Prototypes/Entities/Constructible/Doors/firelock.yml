@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: Firelock
   name: firelock
   description: Apply crowbar.
@@ -36,6 +36,13 @@
             - MobImpassable
             - VaultImpassable
             - SmallImpassable
+    - type: Door
+      closeTimeOne: 0.1
+      closeTimeTwo: 0.6
+      openTimeOne: 0.1
+      openTimeTwo: 0.6
+      startOpen: true
+      bumpOpen: false
     - type: Firelock
     - type: Appearance
       visuals:
@@ -70,7 +77,7 @@
   parent: Firelock
   name: glass firelock
   components:
-    - type: Firelock
+    - type: Door
       occludes: false
     - type: Occluder
       enabled: false
@@ -83,9 +90,9 @@
   parent: Firelock
   name: firelock
   components:
-    - type: Firelock
+    - type: Door
       occludes: false
-      canCrush: false
+      inhibitCrush: true
     - type: Sprite
       sprite: Constructible/Structures/Doors/edge_door_hazard.rsi
     - type: Airtight

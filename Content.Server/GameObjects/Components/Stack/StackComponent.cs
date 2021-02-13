@@ -7,8 +7,6 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -82,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Stack
             return false;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent<StackComponent>(out var stack))
                 return false;

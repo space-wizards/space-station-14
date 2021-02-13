@@ -1,5 +1,5 @@
 using Content.Client.Instruments;
-using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Client.GameObjects;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Instruments

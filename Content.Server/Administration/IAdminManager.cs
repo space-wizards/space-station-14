@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 
 #nullable enable
 

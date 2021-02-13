@@ -30,3 +30,26 @@
   materials:
     steel: 60
     glass: 10
+
+- type: latheRecipe
+  id: Shovel
+  icon:
+    sprite: Constructible/Hydroponics/hydro_tools.rsi
+    state: shovel
+  result: Shovel
+  completetime: 500
+  materials:
+    steel: 60
+    glass: 10
+
+- type: latheRecipe
+  id: Spade
+  icon:
+    sprite: Constructible/Hydroponics/hydro_tools.rsi
+    state: spade
+  result: Spade
+  completetime: 500
+  materials:
+    steel: 30
+    glass: 10
+

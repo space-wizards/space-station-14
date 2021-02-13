@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Content.Shared.Construction;
 using Content.Shared.Interfaces;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Completions
     [UsedImplicitly]
     public class PopupUser : IGraphAction
     {
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Text, "text", string.Empty);
             serializer.DataField(this, x => x.Cursor, "cursor", false);

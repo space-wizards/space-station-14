@@ -98,12 +98,14 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-  - type: BreakableConstruction
-    node: monitorBroken
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: monitorBroken
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Sprite
     sprite: Constructible/Power/computers.rsi
     layers:

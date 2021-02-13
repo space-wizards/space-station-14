@@ -12,9 +12,9 @@ namespace Content.Server.GameObjects.Components.Interactable
     {
         public override string Name => "Matchbox";
 
-        public int Priority => 1;
+        int IInteractUsing.Priority => 1;
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent<MatchstickComponent>(out var matchstick)
                 && matchstick.CurrentState == SharedBurningStates.Unlit)

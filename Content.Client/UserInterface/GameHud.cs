@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Transactions;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.Input;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Client.UserInterface;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -17,7 +13,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using YamlDotNet.Core.Tokens;
 using static Robust.Client.Input.Keyboard.Key;
 using Control = Robust.Client.UserInterface.Control;
 
@@ -66,7 +61,8 @@ namespace Content.Client.UserInterface
 
         Control HandsContainer { get; }
         Control SuspicionContainer { get; }
-        Control InventoryQuickButtonContainer { get; }
+        Control RightInventoryQuickButtonContainer { get; }
+        Control LeftInventoryQuickButtonContainer { get; }
 
         bool CombatPanelVisible { get; set; }
         bool CombatModeActive { get; set; }
@@ -100,7 +96,8 @@ namespace Content.Client.UserInterface
 
         public Control HandsContainer { get; private set; }
         public Control SuspicionContainer { get; private set; }
-        public Control InventoryQuickButtonContainer { get; private set; }
+        public Control RightInventoryQuickButtonContainer { get; private set; }
+        public Control LeftInventoryQuickButtonContainer { get; private set; }
 
         public bool CombatPanelVisible
         {
@@ -260,21 +257,6 @@ namespace Content.Client.UserInterface
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenTutorial,
                 InputCmdHandler.FromDelegate(s => ButtonTutorialOnOnToggled()));
 
-            var inventoryContainer = new HBoxContainer
-            {
-                SeparationOverride = 10
-            };
-
-            RootControl.AddChild(inventoryContainer);
-
-            LayoutContainer.SetGrowHorizontal(inventoryContainer, LayoutContainer.GrowDirection.Begin);
-            LayoutContainer.SetGrowVertical(inventoryContainer, LayoutContainer.GrowDirection.Begin);
-            LayoutContainer.SetAnchorAndMarginPreset(inventoryContainer, LayoutContainer.LayoutPreset.BottomRight);
-
-            InventoryQuickButtonContainer = new MarginContainer
-            {
-                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
-            };
 
             _combatPanelContainer = new VBoxContainer
             {
@@ -289,23 +271,40 @@ namespace Content.Client.UserInterface
                 }
             };
 
+            LayoutContainer.SetGrowHorizontal(_combatPanelContainer, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetGrowVertical(_combatPanelContainer, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetAnchorAndMarginPreset(_combatPanelContainer, LayoutContainer.LayoutPreset.BottomRight);
+            LayoutContainer.SetMarginBottom(_combatPanelContainer, -10f);
+            RootControl.AddChild(_combatPanelContainer);
+
             _combatModeButton.OnToggled += args => OnCombatModeChanged?.Invoke(args.Pressed);
             _targetingDoll.OnZoneChanged += args => OnTargetingZoneChanged?.Invoke(args);
 
-            inventoryContainer.Children.Add(InventoryQuickButtonContainer);
-            inventoryContainer.Children.Add(_combatPanelContainer);
-
+            var centerBottomContainer = new HBoxContainer
+            {
+                SeparationOverride = 5
+            };
+            LayoutContainer.SetAnchorAndMarginPreset(centerBottomContainer, LayoutContainer.LayoutPreset.CenterBottom);
+            LayoutContainer.SetGrowHorizontal(centerBottomContainer, LayoutContainer.GrowDirection.Both);
+            LayoutContainer.SetGrowVertical(centerBottomContainer, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetMarginBottom(centerBottomContainer, -10f);
+            RootControl.AddChild(centerBottomContainer);
 
             HandsContainer = new MarginContainer
             {
                 SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
             };
-
-            RootControl.AddChild(HandsContainer);
-
-            LayoutContainer.SetAnchorAndMarginPreset(HandsContainer, LayoutContainer.LayoutPreset.CenterBottom);
-            LayoutContainer.SetGrowHorizontal(HandsContainer, LayoutContainer.GrowDirection.Both);
-            LayoutContainer.SetGrowVertical(HandsContainer, LayoutContainer.GrowDirection.Begin);
+            RightInventoryQuickButtonContainer = new MarginContainer
+            {
+                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
+            };
+            LeftInventoryQuickButtonContainer = new MarginContainer
+            {
+                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
+            };
+            centerBottomContainer.AddChild(LeftInventoryQuickButtonContainer);
+            centerBottomContainer.AddChild(HandsContainer);
+            centerBottomContainer.AddChild(RightInventoryQuickButtonContainer);
 
             SuspicionContainer = new MarginContainer
             {
