@@ -1,11 +1,10 @@
 ﻿using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using System.Collections.Generic;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Construction.ConstructionConditions
 {

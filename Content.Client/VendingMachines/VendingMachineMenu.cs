@@ -2,10 +2,9 @@
 using Content.Client.GameObjects.Components.VendingMachines;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;

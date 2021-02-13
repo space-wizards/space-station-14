@@ -4,8 +4,8 @@ using System.Linq;
 using Content.Client.Interfaces;
 using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
 namespace Content.Client

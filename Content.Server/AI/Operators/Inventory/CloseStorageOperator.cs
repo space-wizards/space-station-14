@@ -3,7 +3,7 @@ using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Operators.Inventory
 {

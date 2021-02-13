@@ -3,7 +3,6 @@ using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
 {

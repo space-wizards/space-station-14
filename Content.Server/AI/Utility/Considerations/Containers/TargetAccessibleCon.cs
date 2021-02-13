@@ -4,7 +4,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Utility.Considerations.Containers
 {

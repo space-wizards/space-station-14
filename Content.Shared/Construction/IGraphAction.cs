@@ -1,8 +1,7 @@
 ﻿#nullable enable
-using System;
 using System.Threading.Tasks;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Construction
 {

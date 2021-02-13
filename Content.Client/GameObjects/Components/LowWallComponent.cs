@@ -2,9 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using Content.Client.GameObjects.Components.IconSmoothing;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 using static Robust.Client.GameObjects.SpriteComponent;

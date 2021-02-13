@@ -1,8 +1,8 @@
 using Content.Server.GameObjects.Components.Instruments;
 using Content.Shared;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Configuration;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.EntitySystems

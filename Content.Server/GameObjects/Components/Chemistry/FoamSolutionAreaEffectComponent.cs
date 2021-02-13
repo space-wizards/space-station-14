@@ -7,8 +7,6 @@ using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Inventory;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Chemistry

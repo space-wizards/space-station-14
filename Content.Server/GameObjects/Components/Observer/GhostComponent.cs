@@ -6,20 +6,17 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Mobs;
 using Content.Shared.GameObjects.Components.Observer;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.Utility;
 using Robust.Shared.Localization;
-using Robust.Shared.Interfaces.Timing;
 using System;
+using Robust.Server.Player;
+using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 #nullable enable
 namespace Content.Server.GameObjects.Components.Observer

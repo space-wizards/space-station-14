@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using Content.Client.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.Components
 {

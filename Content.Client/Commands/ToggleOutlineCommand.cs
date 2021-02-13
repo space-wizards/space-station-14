@@ -1,6 +1,6 @@
 using Content.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
 
 namespace Content.Client.Commands

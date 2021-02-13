@@ -1,9 +1,9 @@
 using JetBrains.Annotations;
 using Content.Client.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects.Systems;
 using Content.Shared.Atmos;
 using System;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Commands
 {

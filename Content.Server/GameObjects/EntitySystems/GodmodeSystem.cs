@@ -4,8 +4,7 @@ using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

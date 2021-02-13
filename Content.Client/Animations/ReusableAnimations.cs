@@ -1,13 +1,11 @@
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
 using Robust.Shared.Animations;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using System;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Animations
 {

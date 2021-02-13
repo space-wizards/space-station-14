@@ -3,11 +3,9 @@ using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems.Click;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystemMessages;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

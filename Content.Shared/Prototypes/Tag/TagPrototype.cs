@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;

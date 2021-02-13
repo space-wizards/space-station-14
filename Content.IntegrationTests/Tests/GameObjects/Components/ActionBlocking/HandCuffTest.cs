@@ -3,13 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.ActionBlocking;
-using Content.Server.GameObjects.Components.Body;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Body;
 using NUnit.Framework;
 using Robust.Server.Console;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
@@ -20,7 +18,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
     [TestOf(typeof(HandcuffComponent))]
     public class HandCuffTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: HumanDummy
   id: HumanDummy
@@ -41,18 +39,15 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
         [Test]
         public async Task Test()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             IEntity human;
             IEntity otherHuman;
             IEntity cuffs;
             IEntity secondCuffs;
-            HandcuffComponent handcuff;
-            HandcuffComponent secondHandcuff;
             CuffableComponent cuffed;
             IHandsComponent hands;
-            IBody body;
 
             server.Assert(() =>
             {
@@ -72,9 +67,9 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 // Test for components existing
                 Assert.True(human.TryGetComponent(out cuffed!), $"Human has no {nameof(CuffableComponent)}");
                 Assert.True(human.TryGetComponent(out hands!), $"Human has no {nameof(HandsComponent)}");
-                Assert.True(human.TryGetComponent(out body!), $"Human has no {nameof(IBody)}");
-                Assert.True(cuffs.TryGetComponent(out handcuff!), $"Handcuff has no {nameof(HandcuffComponent)}");
-                Assert.True(secondCuffs.TryGetComponent(out secondHandcuff!), $"Second handcuffs has no {nameof(HandcuffComponent)}");
+                Assert.True(human.TryGetComponent(out IBody _), $"Human has no {nameof(IBody)}");
+                Assert.True(cuffs.TryGetComponent(out HandcuffComponent _), $"Handcuff has no {nameof(HandcuffComponent)}");
+                Assert.True(secondCuffs.TryGetComponent(out HandcuffComponent _), $"Second handcuffs has no {nameof(HandcuffComponent)}");
 
                 // Test to ensure cuffed players register the handcuffs
                 cuffed.TryAddNewCuffs(human, cuffs);

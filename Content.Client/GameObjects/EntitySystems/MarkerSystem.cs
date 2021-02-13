@@ -1,5 +1,5 @@
 using Content.Client.GameObjects.Components.Markers;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.EntitySystems
 {

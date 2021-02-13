@@ -4,16 +4,12 @@ using Content.Client.GameObjects.Components.Weapons.Melee;
 using Content.Shared.GameObjects.Components.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.EntitySystemMessages;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using static Content.Shared.GameObjects.EntitySystemMessages.MeleeWeaponSystemMessages;
 
 namespace Content.Client.GameObjects.EntitySystems

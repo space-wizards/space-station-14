@@ -5,8 +5,6 @@ using Content.Shared.GameObjects.Components.Trigger;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Trigger.TimerTrigger

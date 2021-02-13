@@ -2,8 +2,7 @@
  using Content.Shared.GameObjects.Components.Pulling;
  using Content.Shared.GameObjects.EntitySystems;
  using JetBrains.Annotations;
- using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Alert.Click

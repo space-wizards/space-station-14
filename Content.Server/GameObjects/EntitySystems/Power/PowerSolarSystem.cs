@@ -4,13 +4,12 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

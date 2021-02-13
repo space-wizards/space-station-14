@@ -10,8 +10,6 @@ using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Surgery;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.Body.Surgery.ISurgeryData;
 

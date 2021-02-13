@@ -3,7 +3,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Medical;
 using Content.Server.Mobs;
 using Content.Shared.GameTicking;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

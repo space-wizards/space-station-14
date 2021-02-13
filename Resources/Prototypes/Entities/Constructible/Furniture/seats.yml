@@ -45,7 +45,6 @@
   name: chair
   id: Chair
   parent: SeatBase
-  description: Apply butt.
   components:
   - type: Rotatable
   - type: Sprite

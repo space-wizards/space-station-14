@@ -3,8 +3,6 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
