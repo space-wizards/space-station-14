@@ -402,7 +402,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 return;
             }
 
-            damageable.ChangeDamage(DamageClass.Airloss, _suffocationDamage, false);
+            damageable.ChangeDamage(DamageType.Asphyxiation, _suffocationDamage, false);
         }
 
         private void StopSuffocation()
@@ -411,7 +411,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
             if (Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.ChangeDamage(DamageClass.Airloss, -_suffocationDamageRecovery, false);
+                damageable.ChangeDamage(DamageType.Asphyxiation, -_suffocationDamageRecovery, false);
             }
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
