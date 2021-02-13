@@ -1,5 +1,4 @@
 #nullable enable
-using System;
 using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -22,26 +21,19 @@ namespace Content.Client.GameObjects.Components.Atmos
     [UsedImplicitly]
     public class PipeVisualizer : AppearanceVisualizer
     {
-        private RSI _pipeRSI = default!;
+        private RSI? _pipeRSI;
 
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
             var serializer = YamlObjectSerializer.NewReader(node);
 
-            var rsiString = serializer.ReadDataField("rsi", "Constructible/Atmos/pipe.rsi");
-            if (!string.IsNullOrWhiteSpace(rsiString))
-            {
-                var rsiPath = SharedSpriteComponent.TextureRoot / rsiString;
-                try
-                {
-                    _pipeRSI = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(rsiPath).RSI;
-                }
-                catch (Exception e)
-                {
-                    Logger.ErrorS($"{nameof(PipeVisualizer)}", $"Unable to load RSI {rsiPath}. Trace:\n{e}");
-                }
-            }
+            var rsiString = SharedSpriteComponent.TextureRoot + "/" + serializer.ReadDataField("rsi", "Constructible/Atmos/pipe.rsi");
+            var resourceCache = IoCManager.Resolve<IResourceCache>();
+            if (resourceCache.TryGetResource(rsiString, out RSIResource? rsi))
+                _pipeRSI = rsi.RSI;
+            else
+                Logger.Error($"{nameof(PipeVisualizer)} could not load to load RSI {rsiString}.");
         }
 
         public override void InitializeEntity(IEntity entity)
@@ -50,7 +42,10 @@ namespace Content.Client.GameObjects.Components.Atmos
             if (!entity.TryGetComponent<ISpriteComponent>(out var sprite)) return;
             sprite.LayerMapReserveBlank(Layer.PipeBase);
             var pipeBaseLayer = sprite.LayerMapGet(Layer.PipeBase);
-            sprite.LayerSetRSI(pipeBaseLayer, _pipeRSI);
+
+            if (_pipeRSI != null)
+                sprite.LayerSetRSI(pipeBaseLayer, _pipeRSI);
+
             sprite.LayerSetVisible(pipeBaseLayer, true);
         }
 

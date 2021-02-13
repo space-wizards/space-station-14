@@ -23,6 +23,8 @@ namespace Content.Client.GameObjects.Components.Atmos
 
         private RSI _connectorRsi = default!;
 
+        private const string DefaultRsiString = "Constructible/Atmos/pipe.rsi";
+
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
@@ -30,19 +32,17 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             serializer.DataField(ref _baseState, "baseState", "pipeConnector");
 
-            var rsiString = serializer.ReadDataField("rsi", "Constructible/Atmos/pipe.rsi");
-            if (!string.IsNullOrWhiteSpace(rsiString))
-            {
-                var rsiPath = SharedSpriteComponent.TextureRoot / rsiString;
-                try
-                {
-                    _connectorRsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(rsiPath).RSI;
-                }
-                catch (Exception e)
-                {
-                    Logger.ErrorS($"{nameof(PipeConnectorVisualizer)}", $"Unable to load RSI {rsiPath}. Trace:\n{e}");
-                }
-            }
+            serializer.DataReadWriteFunction("rsi", DefaultRsiString,
+                value => { }
+                () => _connectorRsi.Path.ToRelativePath
+                );
+
+            var rsiString = SharedSpriteComponent.TextureRoot + "/" + serializer.ReadDataField("rsi", );
+            var resourceCache = IoCManager.Resolve<IResourceCache>();
+            if (resourceCache.TryGetResource(rsiString, out RSIResource? rsi))
+                _connectorRsi = rsi.RSI;
+            else
+                Logger.Error($"{nameof(PipeVisualizer)} could not load to load RSI {rsiString}.");
         }
 
         public override void InitializeEntity(IEntity entity)
