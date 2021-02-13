@@ -82,9 +82,9 @@
 - type: resistanceSet
   id: reinforcedMetallicResistances
   coefficients:
-    Blunt: 0
-    Slash: 0
-    Piercing: 0.5
+    Blunt: 0.7
+    Slash: 0.7
+    Piercing: 1
     Heat: 0.7
     Shock: 1.2
     Cold: 0
@@ -94,9 +94,9 @@
     Bloodloss: 0
     Cellular: 0
   flatReductions:
-    Blunt: 0
-    Slash: 0
-    Piercing: 0
+    Blunt: 20
+    Slash: 30
+    Piercing: 5
     Heat: 0
     Shock: 0
     Cold: 0
