@@ -13,6 +13,8 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string StyleClassLabelSubText = "LabelSubText";
         public const string StyleClassItalic = "Italic";
 
+        public const string ClassAngleRect = "AngleRect";
+
         public const string ButtonOpenRight = "OpenRight";
         public const string ButtonOpenLeft = "OpenLeft";
         public const string ButtonOpenBoth = "OpenBoth";
@@ -29,6 +31,8 @@ namespace Content.Client.UserInterface.Stylesheets
         protected StyleBoxTexture BaseButtonOpenLeft { get; }
         protected StyleBoxTexture BaseButtonOpenBoth { get; }
         protected StyleBoxTexture BaseButtonSquare { get; }
+
+        protected StyleBoxTexture BaseAngleRect { get; }
 
         protected StyleBase(IResourceCache resCache)
         {
@@ -79,6 +83,12 @@ namespace Content.Client.UserInterface.Stylesheets
             BaseButtonSquare.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
             BaseButtonSquare.SetPadding(StyleBox.Margin.Right, 2);
             BaseButtonSquare.SetPadding(StyleBox.Margin.Left, 1);
+
+            BaseAngleRect = new StyleBoxTexture
+            {
+                Texture = buttonTex,
+            };
+            BaseAngleRect.SetPatchMargin(StyleBox.Margin.All, 10);
 
             BaseRules = new[]
             {

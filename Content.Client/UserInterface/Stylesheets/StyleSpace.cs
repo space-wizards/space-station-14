@@ -30,6 +30,18 @@ namespace Content.Client.UserInterface.Stylesheets
             var notoSans10 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 10);
             var notoSansBold16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 16);
 
+            var progressBarBackground = new StyleBoxFlat
+            {
+                BackgroundColor = new Color(0.25f, 0.25f, 0.25f)
+            };
+            progressBarBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
+
+            var progressBarForeground = new StyleBoxFlat
+            {
+                BackgroundColor = new Color(0.25f, 0.50f, 0.25f)
+            };
+            progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
+
             Stylesheet = new Stylesheet(BaseRules.Concat(new StyleRule[]
             {
                 Element<Label>().Class(StyleClassLabelHeading)
@@ -103,10 +115,18 @@ namespace Content.Client.UserInterface.Stylesheets
                 Element<Label>().Class(ContainerButton.StyleClassButton)
                     .Prop(Label.StylePropertyAlignMode, Label.AlignMode.Center),
 
+                Element<PanelContainer>().Class(ClassAngleRect)
+                    .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#202030")),
+
                 Child()
                     .Parent(Element<Button>().Class(ContainerButton.StylePseudoClassDisabled))
                     .Child(Element<Label>())
                     .Prop("font-color", Color.FromHex("#E5E5E581")),
+
+                Element<ProgressBar>()
+                    .Prop(ProgressBar.StylePropertyBackground, progressBarBackground)
+                    .Prop(ProgressBar.StylePropertyForeground, progressBarForeground),
 
             }).ToList());
         }

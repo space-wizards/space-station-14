@@ -21,6 +21,7 @@ namespace Content.Client.UserInterface
         public Button OptionsButton { get; }
         public Button LeaveButton { get; }
         public ChatBox Chat { get; }
+        public VBoxContainer VoteContainer { get; }
         public LobbyPlayerList OnlinePlayerList { get; }
         public ServerInfo ServerInfo { get; }
         public LobbyCharacterPreviewPanel CharacterPreview { get; }

@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
+using Content.Client.Voting;
 using Content.Shared.Input;
 using Robust.Client;
 using Robust.Client.Console;
@@ -36,6 +37,7 @@ namespace Content.Client.State
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IVoteManager _voteManager = default!;
 
         [ViewVariables] private CharacterSetupGui _characterSetup;
         [ViewVariables] private LobbyGui _lobby;
@@ -64,6 +66,8 @@ namespace Content.Client.State
             LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
 
             _chatManager.SetChatBox(_lobby.Chat);
+            _voteManager.SetPopupContainer(_lobby.VoteContainer);
+
             _lobby.Chat.DefaultChatFormat = "ooc \"{0}\"";
 
             _lobby.ServerName.Text = _baseClient.GameInfo.ServerName;
