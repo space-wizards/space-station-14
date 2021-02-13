@@ -1,4 +1,5 @@
-﻿#nullable enable
+#nullable enable
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
@@ -10,6 +11,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using System.Threading.Tasks;
+using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -62,6 +66,17 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
                 return;
             }
+
+            if (!victim.TryGetComponent<IMobStateComponent>(out var state))
+            {
+                return;
+            }
+
+            if ((!state.IsDead() && !state.IsCritical() && !state.IsIncapacitated()) || ActionBlockerSystem.CanMove(victim))
+            {
+                return;
+            }
+            // DoAfter?
 
             if (_meatParts > 0)
             {
