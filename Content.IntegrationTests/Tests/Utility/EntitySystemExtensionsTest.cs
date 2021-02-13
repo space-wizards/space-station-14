@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿#nullable enable
+using System.Threading.Tasks;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
 using NUnit.Framework;
