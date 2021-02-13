@@ -119,6 +119,20 @@ namespace Content.Server.Database
             await db.PgDbContext.SaveChangesAsync();
         }
 
+        public override async Task AddServerUnbanAsync(ServerUnbanDef serverUnban)
+        {
+            await using var db = await GetDbImpl();
+
+            db.PgDbContext.Unban.Add(new PostgresServerUnban
+            {
+                 BanId = serverUnban.BanId,
+                 UnbanningAdmin = serverUnban.UnbanningAdmin?.UserId,
+                 UnbanTime = serverUnban.UnbanTime.UtcDateTime
+            });
+
+            await db.PgDbContext.SaveChangesAsync();
+        }
+
         public override async Task UpdatePlayerRecord(NetUserId userId, string userName, IPAddress address)
         {
             await using var db = await GetDbImpl();

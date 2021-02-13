@@ -14,8 +14,8 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
-using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 using LogLevel = Robust.Shared.Log.LogLevel;
+using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 #nullable enable
 
@@ -42,6 +42,7 @@ namespace Content.Server.Database
         // Ban stuff
         Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
         Task AddServerBanAsync(ServerBanDef serverBan);
+        Task AddServerUnbanAsync(ServerUnbanDef serverBan);
 
         // Player records
         Task UpdatePlayerRecordAsync(NetUserId userId, string userName, IPAddress address);
@@ -145,6 +146,11 @@ namespace Content.Server.Database
         public Task AddServerBanAsync(ServerBanDef serverBan)
         {
             return _db.AddServerBanAsync(serverBan);
+        }
+
+        public Task AddServerUnbanAsync(ServerUnbanDef serverUnban)
+        {
+            return _db.AddServerUnbanAsync(serverUnban);
         }
 
         public Task UpdatePlayerRecordAsync(NetUserId userId, string userName, IPAddress address)

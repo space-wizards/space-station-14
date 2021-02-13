@@ -95,6 +95,20 @@ namespace Content.Server.Database
             await db.SqliteDbContext.SaveChangesAsync();
         }
 
+        public override async Task AddServerUnbanAsync(ServerUnbanDef serverUnban)
+        {
+            await using var db = await GetDbImpl();
+
+            db.SqliteDbContext.Unban.Add(new SqliteServerUnban
+            {
+                BanId = serverUnban.BanId,
+                UnbanningAdmin = serverUnban.UnbanningAdmin?.UserId,
+                UnbanTime = serverUnban.UnbanTime.UtcDateTime
+            });
+
+            await db.SqliteDbContext.SaveChangesAsync();
+        }
+
         public override async Task UpdatePlayerRecord(NetUserId userId, string userName, IPAddress address)
         {
             await using var db = await GetDbImpl();

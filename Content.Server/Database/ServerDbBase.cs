@@ -7,9 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;
+using Robust.Shared.Localization.Macros;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Localization.Macros;
 
 namespace Content.Server.Database
 {
@@ -231,6 +231,7 @@ namespace Content.Server.Database
          */
         public abstract Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
+        public abstract Task AddServerUnbanAsync(ServerUnbanDef serverUnban);
 
         /*
          * PLAYER RECORDS
