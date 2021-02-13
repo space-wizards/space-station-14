@@ -375,10 +375,11 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             serializer.DataField(ref _size, "size", 100);
 
-            var seconds = 0.25f;
-            serializer.DataField(ref seconds, "cooldown", 0.25f);
-
-            _unbuckleDelay = TimeSpan.FromSeconds(seconds);
+            serializer.DataReadWriteFunction(
+                "cooldown",
+                0.25f,
+                seconds => _unbuckleDelay = TimeSpan.FromSeconds(seconds),
+                () => (float) _unbuckleDelay.TotalSeconds);
         }
 
         protected override void Startup()
