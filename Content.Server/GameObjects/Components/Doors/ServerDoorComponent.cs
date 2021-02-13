@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Linq;
 using System.Threading;
@@ -24,6 +24,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -37,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Doors
     {
         [ComponentDependency]
         private readonly IDoorCheck? _doorCheck = null;
-        
+
         public override DoorState State
         {
             get => base.State;
@@ -314,7 +315,7 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 return _doorCheck.OpenCheck();
             }
-            
+
             return true;
         }
 
@@ -383,15 +384,6 @@ namespace Content.Server.GameObjects.Components.Doors
                 return false;
             }
 
-                if (percentage < 0.1f)
-                    continue;
-
-                damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
-                stun.Paralyze(DoorStunTime);
-
-                // If we hit someone, open up after stun (opens right when stun ends)
-                Owner.SpawnTimer(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, Open);
-                break;
             if (!Owner.TryGetComponent(out AccessReader? access))
             {
                 return true;
@@ -429,9 +421,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             if (safety && PhysicsComponent != null)
             {
-                var physics = IoCManager.Resolve<IPhysicsManager>();
-
-                foreach(var e in physics.GetCollidingEntities(Owner.Transform.MapID, PhysicsComponent.WorldAABB))
+                foreach(var e in EntitySystem.Get<SharedBroadPhaseSystem>().GetCollidingEntities(Owner.Transform.MapID, PhysicsComponent.GetWorldAABB()))
                 {
                     if (e.CanCollide &&
                        ((PhysicsComponent.CollisionMask & e.CollisionLayer) != 0x0 ||
@@ -468,7 +458,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 OnPartialClose();
                 await Timer.Delay(CloseTimeTwo, _stateChangeCancelTokenSource.Token);
-                
+
                 if (Occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
                 {
                     occluder.Enabled = true;
@@ -511,26 +501,25 @@ namespace Content.Server.GameObjects.Components.Doors
                 return false;
             }
 
-            var doorAABB = PhysicsComponent.WorldAABB;
+            var doorAABB = PhysicsComponent.GetWorldAABB();
             var hitsomebody = false;
 
             // Crush
             foreach (var e in collidingentities)
             {
-                if (!e.TryGetComponent(out StunnableComponent? stun)
-                    || !e.TryGetComponent(out IDamageableComponent? damage)
-                    || !e.TryGetComponent(out IPhysicsComponent? otherBody))
+                if (!e.Entity.TryGetComponent(out StunnableComponent? stun)
+                    || !e.Entity.TryGetComponent(out IDamageableComponent? damage))
                 {
                     continue;
                 }
 
-                var percentage = otherBody.WorldAABB.IntersectPercentage(doorAABB);
+                var percentage = e.GetWorldAABB().IntersectPercentage(doorAABB);
 
                 if (percentage < 0.1f)
                     continue;
 
                 hitsomebody = true;
-                CurrentlyCrushing.Add(e.Uid);
+                CurrentlyCrushing.Add(e.Entity.Uid);
 
                 damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
                 stun.Paralyze(DoorStunTime);
