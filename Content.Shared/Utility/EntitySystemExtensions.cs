@@ -2,8 +2,10 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 
 namespace Content.Shared.Utility
 {
@@ -14,11 +16,13 @@ namespace Content.Shared.Utility
             string? prototypeName,
             EntityCoordinates coordinates,
             CollisionGroup collisionLayer,
-            Box2? box = null,
-            bool approximate = false)
+            in Box2? box = null,
+            IPhysicsManager? physicsManager = null)
         {
+            physicsManager ??= IoCManager.Resolve<IPhysicsManager>();
             var mapCoordinates = coordinates.ToMap(entityManager);
-            return entityManager.SpawnIfUnobstructed(prototypeName, mapCoordinates, collisionLayer, box, approximate);
+
+            return entityManager.SpawnIfUnobstructed(prototypeName, mapCoordinates, collisionLayer, box, physicsManager);
         }
 
         public static IEntity? SpawnIfUnobstructed(
@@ -26,24 +30,20 @@ namespace Content.Shared.Utility
             string? prototypeName,
             MapCoordinates coordinates,
             CollisionGroup collisionLayer,
-            Box2? box = null,
-            bool approximate = false)
+            in Box2? box = null,
+            IPhysicsManager? physicsManager = null)
         {
-            box ??= Box2.UnitCentered;
+            var boxOrDefault = box.GetValueOrDefault(Box2.UnitCentered);
+            physicsManager ??= IoCManager.Resolve<IPhysicsManager>();
 
-            foreach (var entity in entityManager.GetEntitiesIntersecting(coordinates.MapId, box.Value, approximate))
+            foreach (var body in physicsManager.GetCollidingEntities(coordinates.MapId, in boxOrDefault))
             {
-                if (!entity.TryGetComponent(out IPhysicsComponent? physics))
+                if (!body.Hard)
                 {
                     continue;
                 }
 
-                if (!physics.Hard)
-                {
-                    continue;
-                }
-
-                if (collisionLayer == 0 || (physics.CollisionMask & (int) collisionLayer) == 0)
+                if (collisionLayer == 0 || (body.CollisionMask & (int) collisionLayer) == 0)
                 {
                     continue;
                 }
@@ -61,9 +61,9 @@ namespace Content.Shared.Utility
             CollisionGroup collisionLayer,
             [NotNullWhen(true)] out IEntity? entity,
             Box2? box = null,
-            bool approximate = false)
+            IPhysicsManager? physicsManager = null)
         {
-            entity = entityManager.SpawnIfUnobstructed(prototypeName, coordinates, collisionLayer, box, approximate);
+            entity = entityManager.SpawnIfUnobstructed(prototypeName, coordinates, collisionLayer, box, physicsManager);
 
             return entity != null;
         }
@@ -74,10 +74,10 @@ namespace Content.Shared.Utility
             MapCoordinates coordinates,
             CollisionGroup collisionLayer,
             [NotNullWhen(true)] out IEntity? entity,
-            Box2? box = null,
-            bool approximate = false)
+            in Box2? box = null,
+            IPhysicsManager? physicsManager = null)
         {
-            entity = entityManager.SpawnIfUnobstructed(prototypeName, coordinates, collisionLayer, box, approximate);
+            entity = entityManager.SpawnIfUnobstructed(prototypeName, coordinates, collisionLayer, box, physicsManager);
 
             return entity != null;
         }
