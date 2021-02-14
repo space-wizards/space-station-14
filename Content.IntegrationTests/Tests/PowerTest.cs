@@ -228,7 +228,6 @@ namespace Content.IntegrationTests.Tests
                 var mapId = new MapId(1);
                 mapMan.CreateMap(mapId);
                 var grid = mapMan.CreateGrid(mapId);
-                entityMan.GetEntity(grid.GridEntityId).AddComponent<GridPowerComponent>();
 
                 var apcEnt = entityMan.SpawnEntity("ApcDummy", grid.ToCoordinates(0, 0));
                 var apcExtensionEnt = entityMan.SpawnEntity("ApcExtensionCableDummy", grid.ToCoordinates(0, 1));
