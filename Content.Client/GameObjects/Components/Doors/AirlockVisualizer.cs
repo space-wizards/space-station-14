@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using Content.Client.GameObjects.Components.Wires;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Doors;
@@ -16,9 +17,9 @@ namespace Content.Client.GameObjects.Components.Doors
     {
         private const string AnimationKey = "airlock_animation";
 
-        private Animation CloseAnimation;
-        private Animation OpenAnimation;
-        private Animation DenyAnimation;
+        private Animation CloseAnimation = default!;
+        private Animation OpenAnimation = default!;
+        private Animation DenyAnimation = default!;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -113,35 +114,31 @@ namespace Content.Client.GameObjects.Components.Doors
             var unlitVisible = true;
             var boltedVisible = false;
             var weldedVisible = false;
+
+            if (animPlayer.HasRunningAnimation(AnimationKey))
+            {
+                animPlayer.Stop(AnimationKey);
+            }
             switch (state)
             {
+                case DoorVisualState.Open:
+                    sprite.LayerSetState(DoorVisualLayers.Base, "open");
+                    unlitVisible = false;
+                    break;
                 case DoorVisualState.Closed:
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
                     sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted");
                     sprite.LayerSetState(WiresVisualizer.WiresVisualLayers.MaintenancePanel, "panel_open");
                     break;
-                case DoorVisualState.Closing:
-                    if (!animPlayer.HasRunningAnimation(AnimationKey))
-                    {
-                        animPlayer.Play(CloseAnimation, AnimationKey);
-                    }
-                    break;
                 case DoorVisualState.Opening:
-                    if (!animPlayer.HasRunningAnimation(AnimationKey))
-                    {
-                        animPlayer.Play(OpenAnimation, AnimationKey);
-                    }
+                    animPlayer.Play(OpenAnimation, AnimationKey);
                     break;
-                case DoorVisualState.Open:
-                    sprite.LayerSetState(DoorVisualLayers.Base, "open");
-                    unlitVisible = false;
+                case DoorVisualState.Closing:
+                    animPlayer.Play(CloseAnimation, AnimationKey);
                     break;
                 case DoorVisualState.Deny:
-                    if (!animPlayer.HasRunningAnimation(AnimationKey))
-                    {
-                        animPlayer.Play(DenyAnimation, AnimationKey);
-                    }
+                    animPlayer.Play(DenyAnimation, AnimationKey);
                     break;
                 case DoorVisualState.Welded:
                     weldedVisible = true;

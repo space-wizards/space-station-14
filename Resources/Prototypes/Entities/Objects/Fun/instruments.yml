@@ -67,8 +67,11 @@
   - type: Instrument
     program: 56
   - type: Sprite
-    sprite: Objects/Fun/Instruments/otherinstruments.rsi
-    state: trumpet
+    sprite: Objects/Fun/Instruments/trumpet.rsi
+    state: icon
+  - type: Item
+    size: 24
+    sprite: Objects/Fun/Instruments/trumpet.rsi
 
 - type: entity
   name: electric guitar

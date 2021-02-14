@@ -113,7 +113,7 @@ namespace Content.Server
 
             context.Respond("Success", HttpStatusCode.OK);
 
-            return false;
+            return true;
         }
 
         [JsonObject(MemberSerialization.Fields)]

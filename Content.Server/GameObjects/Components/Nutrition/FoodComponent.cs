@@ -28,7 +28,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
     public class FoodComponent : Component, IUse, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Food";
 

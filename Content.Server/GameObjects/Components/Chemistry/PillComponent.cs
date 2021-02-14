@@ -23,7 +23,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     public class PillComponent : FoodComponent, IUse, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Pill";
 
