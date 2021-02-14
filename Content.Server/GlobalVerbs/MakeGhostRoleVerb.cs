@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Mobs;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Console;
@@ -21,7 +22,13 @@ namespace Content.Server.GlobalVerbs
 
             var groupController = IoCManager.Resolve<IConGroupController>();
 
-            if (!user.TryGetComponent(out IActorComponent actor) ||
+            if (target.TryGetComponent(out MindComponent? mind) &&
+                mind.HasMind)
+            {
+                return;
+            }
+
+            if (!user.TryGetComponent(out IActorComponent? actor) ||
                 !groupController.CanCommand(actor.playerSession, "makeghostrole"))
             {
                 return;
@@ -36,8 +43,13 @@ namespace Content.Server.GlobalVerbs
         {
             var groupController = IoCManager.Resolve<IConGroupController>();
 
-            if (target.HasComponent<MindComponent>() ||
-                !user.TryGetComponent(out IActorComponent actor) ||
+            if (target.TryGetComponent(out MindComponent? mind) &&
+                mind.HasMind)
+            {
+                return;
+            }
+
+            if (!user.TryGetComponent(out IActorComponent? actor) ||
                 !groupController.CanCommand(actor.playerSession, "makeghostrole"))
             {
                 return;
