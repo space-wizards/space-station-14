@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using Content.Server.Administration;
 using Content.Server.Eui;
 using Content.Server.GameObjects.Components.Observer;
-using Content.Shared.GameObjects.Components.Observer;
+using Content.Server.GameObjects.Components.Observer.GhostRoles;
+using Content.Shared.GameObjects.Components.Observer.GhostRoles;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -22,6 +23,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private uint _nextRoleIdentifier = 0;
         private readonly Dictionary<uint, GhostRoleComponent> _ghostRoles = new();
         private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
+        private readonly Dictionary<IPlayerSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
 
         [ViewVariables]
         public IReadOnlyCollection<GhostRoleComponent> GhostRoles => _ghostRoles.Values;
@@ -49,6 +51,19 @@ namespace Content.Server.GameObjects.EntitySystems
             eui.StateDirty();
         }
 
+        public void OpenMakeGhostRoleEui(IPlayerSession session, EntityUid uid)
+        {
+            if (session.AttachedEntity == null)
+                return;
+
+            if (_openMakeGhostRoleUis.ContainsKey(session))
+                CloseEui(session);
+
+            var eui = _openMakeGhostRoleUis[session] = new MakeGhostRoleEui(uid);
+            _euiManager.OpenEui(eui, session);
+            eui.StateDirty();
+        }
+
         public void CloseEui(IPlayerSession session)
         {
             if (!_openUis.ContainsKey(session)) return;
@@ -56,6 +71,14 @@ namespace Content.Server.GameObjects.EntitySystems
             _openUis.Remove(session, out var eui);
 
             eui?.Close();
+        }
+
+        public void CloseMakeGhostRoleEui(IPlayerSession session)
+        {
+            if (_openMakeGhostRoleUis.Remove(session, out var eui))
+            {
+                eui?.Close();
+            }
         }
 
         public void UpdateAllEui()
