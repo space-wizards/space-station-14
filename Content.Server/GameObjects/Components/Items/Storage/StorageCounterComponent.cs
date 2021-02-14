@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Tag;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.Interfaces.GameObjects;
+
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Items.Storage

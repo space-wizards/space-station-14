@@ -3,7 +3,7 @@
 using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
