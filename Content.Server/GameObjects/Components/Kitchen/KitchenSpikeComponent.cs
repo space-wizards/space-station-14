@@ -12,15 +12,14 @@ using Robust.Shared.Localization;
 using System.Threading.Tasks;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.GameObjects.Components.Kitchen;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class KitchenSpikeComponent : Component, IActivate, ISuicideAct, IDragDropOn
+    public class KitchenSpikeComponent : SharedKitchenSpikeComponent, IActivate, ISuicideAct
     {
-        public override string Name => "KitchenSpike";
-
         private int _meatParts;
         private string? _meatPrototype;
         private string _meatSource1p = "?";
@@ -64,18 +63,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
             
         }
 
-        bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEventArgs eventArgs)
         {
-            if (!eventArgs.Dragged.TryGetComponent<IMobStateComponent>(out var state))
-            {
-                return false;
-            }
-
-            if ((!state.IsDead() && !state.IsCritical() && !state.IsIncapacitated()))
-            {
-                return false;
-            }
-
+            _ = TrySpike(eventArgs.Dragged, eventArgs.User);
             return true;
         }
 
@@ -124,12 +114,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             Owner.PopupMessageEveryone(Loc.GetString("{0:theName} has forced {1:theName} onto the spike, killing them instantly!", user, victim));
             victim.Delete();
-            return true;
-        }
-
-        bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
-        {
-            _ = TrySpike(eventArgs.Dragged, eventArgs.User);
             return true;
         }
 
