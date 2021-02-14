@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Robust.Server.Player;
@@ -15,7 +16,7 @@ namespace Content.Server.Administration.Commands
     {
         public string Command => "ban";
         public string Description => "Bans somebody";
-        public string Help => "Usage: <name or user ID> <reason> <duration in minutes, or 0 for permanent ban>";
+        public string Help => $"Usage: {Command} <name or user ID> <reason> <duration in minutes, or 0 for permanent ban>";
 
         public async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -23,9 +24,33 @@ namespace Content.Server.Administration.Commands
             var plyMgr = IoCManager.Resolve<IPlayerManager>();
             var dbMan = IoCManager.Resolve<IServerDbManager>();
 
-            var target = args[0];
-            var reason = args[1];
-            var duration = int.Parse(args[2]);
+            string target;
+            string reason;
+            uint minutes;
+
+            switch (args.Length)
+            {
+                case 2:
+                    target = args[0];
+                    reason = args[1];
+                    minutes = 0;
+                    break;
+                case 3:
+                    target = args[0];
+                    reason = args[1];
+
+                    if (!uint.TryParse(args[2], out minutes))
+                    {
+                        shell.WriteLine($"{args[2]} is not a valid amount of minutes.\n{Help}");
+                        return;
+                    }
+
+                    break;
+                default:
+                    shell.WriteLine($"Invalid amount of arguments.{Help}");
+                    return;
+            }
+
             NetUserId targetUid;
 
             if (plyMgr.TryGetSessionByUsername(target, out var targetSession))
@@ -42,13 +67,27 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            DateTimeOffset? expires = null;
-            if (duration > 0)
+            if (player != null && player.UserId == targetUid)
             {
-                expires = DateTimeOffset.Now + TimeSpan.FromMinutes(duration);
+                shell.WriteLine("You can't ban yourself!");
+                return;
+            }
+
+            DateTimeOffset? expires = null;
+            if (minutes > 0)
+            {
+                expires = DateTimeOffset.Now + TimeSpan.FromMinutes(minutes);
             }
 
             await dbMan.AddServerBanAsync(new ServerBanDef(null, targetUid, null, DateTimeOffset.Now, expires, reason, player?.UserId, null));
+
+            var response = new StringBuilder($"Banned {targetUid} with reason \"{reason}\"");
+
+            response.Append(expires == null ?
+                " permanently."
+                : $" until {expires.ToString()}");
+
+            shell.WriteLine(response.ToString());
 
             if (plyMgr.TryGetSessionById(targetUid, out var targetPlayer))
             {

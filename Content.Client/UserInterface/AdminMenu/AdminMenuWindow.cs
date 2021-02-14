@@ -36,6 +36,7 @@ namespace Content.Client.UserInterface.AdminMenu
         private readonly List<CommandButton> _adminButtons = new()
         {
             new KickCommandButton(),
+            new BanCommandButton(),
             new DirectCommandButton("Admin Ghost", "aghost"),
             new TeleportCommandButton(),
             new DirectCommandButton("Permissions Panel", "permissions"),
@@ -549,6 +550,42 @@ namespace Content.Client.UserInterface.AdminMenu
             public override void Submit()
             {
                 IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"kick \"{_playerDropDown.GetValue()}\" \"{CommandParsing.Escape(_reason.GetValue())}\"");
+            }
+        }
+
+        private class BanCommandButton : UICommandButton
+        {
+            public override string Name => "Ban";
+            public override string RequiredCommand => "ban";
+
+            private readonly CommandUIDropDown _playerDropDown = new()
+            {
+                Name = "Player",
+                GetData = () => IoCManager.Resolve<IPlayerManager>().Sessions.ToList<object>(),
+                GetDisplayName = (obj) => $"{((IPlayerSession) obj).Name} ({((IPlayerSession) obj).AttachedEntity?.Name})",
+                GetValueFromData = (obj) => ((IPlayerSession) obj).Name,
+            };
+
+            private readonly CommandUILineEdit _reason = new()
+            {
+                Name = "Reason"
+            };
+
+            private readonly CommandUILineEdit _minutes = new()
+            {
+                Name = "Minutes"
+            };
+
+            public override List<CommandUIControl> UI => new()
+            {
+                _playerDropDown,
+                _reason,
+                _minutes
+            };
+
+            public override void Submit()
+            {
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"ban \"{_playerDropDown.GetValue()}\" \"{CommandParsing.Escape(_reason.GetValue())}\" \"{_minutes.GetValue()}");
             }
         }
 
