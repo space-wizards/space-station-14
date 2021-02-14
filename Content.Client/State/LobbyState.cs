@@ -60,7 +60,7 @@ namespace Content.Client.State
                 _lobby.CharacterPreview.UpdateUI();
             };
 
-            _lobby = new LobbyGui(_entityManager, _resourceCache, _preferencesManager);
+            _lobby = new LobbyGui(_entityManager, _preferencesManager);
             _userInterfaceManager.StateRoot.AddChild(_lobby);
 
             LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);

@@ -64,6 +64,7 @@ namespace Content.Client.Voting
 
                 _votePopups.Add(vId, popup);
                 _popupContainer.AddChild(popup);
+                popup.UpdateData();
             }
         }
 
