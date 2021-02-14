@@ -4,19 +4,23 @@
 
     <c:VBoxContainer>
         <c:HBoxContainer>
-            <c:Label Name="RoleEntityLabel" Text="Entity"></c:Label>
-            <c:Label Name="RoleEntity" Text=""></c:Label>
+            <c:Label Name="RoleEntityLabel" Text="Entity" />
+            <c:Label Name="RoleEntity" Text="" />
         </c:HBoxContainer>
         <c:HBoxContainer>
-            <c:Label Name="RoleNameLabel" Text="Role Name"></c:Label>
+            <c:Label Name="RoleNameLabel" Text="Role Name" />
             <c:LineEdit Name="RoleName" SizeFlagsHorizontal="FillExpand"/>
         </c:HBoxContainer>
         <c:HBoxContainer>
-            <c:Label Name="RoleDescriptionLabel" Text="Role Description"></c:Label>
+            <c:Label Name="RoleDescriptionLabel" Text="Role Description" />
             <c:LineEdit Name="RoleDescription" SizeFlagsHorizontal="FillExpand"/>
         </c:HBoxContainer>
         <c:HBoxContainer>
-            <c:Button Name="MakeButton" Text="Make"></c:Button>
+            <c:Label Name="MakeSentientLabel" Text="Make Sentient" />
+            <c:CheckBox Name="MakeSentientCheckbox" />
+        </c:HBoxContainer>
+        <c:HBoxContainer>
+            <c:Button Name="MakeButton" Text="Make" />
         </c:HBoxContainer>
     </c:VBoxContainer>
 

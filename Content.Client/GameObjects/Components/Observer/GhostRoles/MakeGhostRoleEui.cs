@@ -42,7 +42,7 @@ namespace Content.Client.GameObjects.Components.Observer.GhostRoles
             _window.OpenCentered();
         }
 
-        private void OnMake(EntityUid uid, string name, string description)
+        private void OnMake(EntityUid uid, string name, string description, bool makeSentient)
         {
             var player = _playerManager.LocalPlayer;
             if (player == null)
@@ -50,13 +50,20 @@ namespace Content.Client.GameObjects.Components.Observer.GhostRoles
                 return;
             }
 
-            var command =
+            var makeGhostRoleCommand =
                 $"makeghostrole " +
                 $"\"{CommandParsing.Escape(uid.ToString())}\" " +
                 $"\"{CommandParsing.Escape(name)}\" " +
                 $"\"{CommandParsing.Escape(description)}\"";
 
-            _consoleHost.ExecuteCommand(player.Session, command);
+            _consoleHost.ExecuteCommand(player.Session, makeGhostRoleCommand);
+
+            if (makeSentient)
+            {
+                var makeSentientCommand = $"makesentient \"{CommandParsing.Escape(uid.ToString())}\"";
+                _consoleHost.ExecuteCommand(player.Session, makeSentientCommand);
+            }
+
             _window.Close();
         }
 

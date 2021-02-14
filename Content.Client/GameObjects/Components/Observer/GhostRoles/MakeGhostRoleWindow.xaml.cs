@@ -10,12 +10,13 @@ namespace Content.Client.GameObjects.Components.Observer.GhostRoles
     [GenerateTypedNameReferences]
     public partial class MakeGhostRoleWindow : SS14Window
     {
-        public delegate void MakeRole(EntityUid uid, string name, string description);
+        public delegate void MakeRole(EntityUid uid, string name, string description, bool makeSentient);
 
         public MakeGhostRoleWindow()
         {
             RobustXamlLoader.Load(this);
 
+            MakeSentientLabel.CustomMinimumSize = (150, 0);
             RoleEntityLabel.CustomMinimumSize = (150, 0);
             RoleNameLabel.CustomMinimumSize = (150, 0);
             RoleName.CustomMinimumSize = (300, 0);
@@ -42,7 +43,7 @@ namespace Content.Client.GameObjects.Components.Observer.GhostRoles
                 return;
             }
 
-            OnMake?.Invoke(EntityUid.Value, RoleName.Text, RoleDescription.Text);
+            OnMake?.Invoke(EntityUid.Value, RoleName.Text, RoleDescription.Text, MakeSentientCheckbox.Pressed);
         }
     }
 }
