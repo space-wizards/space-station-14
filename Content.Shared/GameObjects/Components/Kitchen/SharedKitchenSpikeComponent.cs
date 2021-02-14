@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;

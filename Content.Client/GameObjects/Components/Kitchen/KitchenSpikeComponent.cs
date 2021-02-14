@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Shared.GameObjects.Components.Kitchen;
 using Robust.Shared.GameObjects;
 
