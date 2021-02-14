@@ -5,6 +5,7 @@ using Content.Client.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
@@ -25,16 +26,13 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
      * DoAfterComponent handles network messages inbound as well as storing the DoAfter data.
      *     It'll also handle overall cleanup when one is removed (i.e. removing it from DoAfterGui).
     */
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         /// <summary>
         ///     We'll use an excess time so stuff like finishing effects can show.
         /// </summary>
         public const float ExcessTime = 0.5f;
-
-        // Each component in range will have its own vBox which we need to keep track of so if they go out of range or
-        // come into range it needs altering
-        private readonly HashSet<DoAfterComponent> _knownComponents = new();
 
         private IEntity? _attachedEntity;
 
@@ -54,40 +52,37 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             base.Update(frameTime);
 
             var currentTime = _gameTiming.CurTime;
-            var foundComps = new HashSet<DoAfterComponent>();
 
             // Can't see any I guess?
             if (_attachedEntity == null || _attachedEntity.Deleted)
                 return;
 
+            var viewbox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
+
             foreach (var comp in ComponentManager.EntityQuery<DoAfterComponent>(true))
             {
-                if (!_knownComponents.Contains(comp))
-                {
-                    _knownComponents.Add(comp);
-                }
-
                 var doAfters = comp.DoAfters.ToList();
+                var compPos = comp.Owner.Transform.WorldPosition;
 
-                if (doAfters.Count == 0)
+                if (doAfters.Count == 0 ||
+                    comp.Owner.Transform.MapID != _attachedEntity.Transform.MapID ||
+                    !viewbox.Contains(compPos))
                 {
-                    if (comp.Gui != null)
-                        comp.Gui.FirstDraw = true;
-
+                    comp.Disable();
                     continue;
                 }
 
-                var range = (comp.Owner.Transform.WorldPosition - _attachedEntity.Transform.WorldPosition).Length + 0.01f;
+                var range = (compPos - _attachedEntity.Transform.WorldPosition).Length +
+                            0.01f;
 
-                if (comp.Owner != _attachedEntity && !ExamineSystemShared.InRangeUnOccluded(
-                    _attachedEntity.Transform.MapPosition,
-                    comp.Owner.Transform.MapPosition, range,
-                    entity => entity == comp.Owner || entity == _attachedEntity))
+                if (comp.Owner != _attachedEntity &&
+                    !ExamineSystemShared.InRangeUnOccluded(
+                        _attachedEntity.Transform.MapPosition,
+                        comp.Owner.Transform.MapPosition, range,
+                        entity => entity == comp.Owner || entity == _attachedEntity))
                 {
-                    if (comp.Gui != null)
-                        comp.Gui.FirstDraw = true;
-
-                    return;
+                    comp.Disable();
+                    continue;
                 }
 
                 comp.Enable();
@@ -108,7 +103,9 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
 
                     // Don't predict cancellation if it's already finished.
                     if (elapsedTime > doAfter.Delay)
+                    {
                         continue;
+                    }
 
                     // Predictions
                     if (doAfter.BreakOnUserMove)
@@ -122,7 +119,9 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
 
                     if (doAfter.BreakOnTargetMove)
                     {
-                        if (EntityManager.TryGetEntity(doAfter.TargetUid, out var targetEntity) && !targetEntity.Transform.Coordinates.InRange(EntityManager, doAfter.TargetGrid, doAfter.MovementThreshold))
+                        if (EntityManager.TryGetEntity(doAfter.TargetUid, out var targetEntity) &&
+                            !targetEntity.Transform.Coordinates.InRange(EntityManager, doAfter.TargetGrid,
+                                doAfter.MovementThreshold))
                         {
                             comp.Cancel(id, currentTime);
                             continue;
@@ -139,18 +138,6 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                     {
                         comp.Remove(cancelled.Message);
                     }
-                }
-
-                // Remove any components that we no longer need to track
-                foundComps.Add(comp);
-            }
-
-            foreach (var comp in foundComps)
-            {
-                if (!_knownComponents.Contains(comp))
-                {
-                    _knownComponents.Remove(comp);
-                    comp.Disable();
                 }
             }
         }

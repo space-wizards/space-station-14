@@ -78,7 +78,7 @@ namespace Content.Server.Administration.Commands
                 expires = DateTimeOffset.Now + TimeSpan.FromMinutes(minutes);
             }
 
-            await dbMan.AddServerBanAsync(new ServerBanDef(null, targetUid, null, DateTimeOffset.Now, expires, reason, player?.UserId));
+            await dbMan.AddServerBanAsync(new ServerBanDef(null, targetUid, null, DateTimeOffset.Now, expires, reason, player?.UserId, null));
 
             if (plyMgr.TryGetSessionById(targetUid, out var targetPlayer))
             {

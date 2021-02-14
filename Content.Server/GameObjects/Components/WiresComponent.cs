@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -482,15 +482,33 @@ namespace Content.Server.GameObjects.Components
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
+            {
                 return false;
-            if (!await tool.UseTool(eventArgs.User, Owner, 0.5f, ToolQuality.Screwing))
-                return false;
+            }
 
-            IsPanelOpen = !IsPanelOpen;
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(IsPanelOpen ? "/Audio/Machines/screwdriveropen.ogg" : "/Audio/Machines/screwdriverclose.ogg",
-                    Owner);
-            return true;
+            // opens the wires ui if using a tool with cutting or multitool quality on it
+            if (IsPanelOpen &&
+               (tool.HasQuality(ToolQuality.Cutting) ||
+                tool.HasQuality(ToolQuality.Multitool)))
+            {
+                if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
+                {
+                    OpenInterface(actor.playerSession);
+                    return true;
+                }
+            }
+
+            // screws the panel open if the tool can do so
+            else if (await tool.UseTool(eventArgs.User, Owner, 0.5f, ToolQuality.Screwing))
+            {
+                IsPanelOpen = !IsPanelOpen;
+                EntitySystem.Get<AudioSystem>()
+                    .PlayFromEntity(IsPanelOpen ? "/Audio/Machines/screwdriveropen.ogg" : "/Audio/Machines/screwdriverclose.ogg",
+                        Owner);
+                return true;
+            }
+
+            return false;
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)

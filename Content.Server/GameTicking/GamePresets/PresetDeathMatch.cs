@@ -6,6 +6,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.GamePresets
 {
+    [GamePreset("deathmatch")]
     public sealed class PresetDeathMatch : GamePreset
     {
         [Dependency] private readonly IGameTicker _gameTicker = default!;

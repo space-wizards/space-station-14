@@ -33,6 +33,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public override string Name => "Drink";
 
+        int IAfterInteract.Priority => 10;
+
         [ViewVariables]
         private bool _opened;
 
@@ -150,9 +152,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return false;
             }
 
-            TryUseDrink(eventArgs.Target, true);
-
-            return true;
+            return TryUseDrink(eventArgs.Target, true);
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
