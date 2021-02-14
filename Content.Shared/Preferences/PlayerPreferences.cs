@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -15,10 +16,11 @@ namespace Content.Shared.Preferences
     {
         private Dictionary<int, ICharacterProfile> _characters;
 
-        public PlayerPreferences(IEnumerable<KeyValuePair<int, ICharacterProfile>> characters, int selectedCharacterIndex)
+        public PlayerPreferences(IEnumerable<KeyValuePair<int, ICharacterProfile>> characters, int selectedCharacterIndex, Color adminOOCColor)
         {
             _characters = new Dictionary<int, ICharacterProfile>(characters);
             SelectedCharacterIndex = selectedCharacterIndex;
+            AdminOOCColor = adminOOCColor;
         }
 
         /// <summary>
@@ -40,6 +42,8 @@ namespace Content.Shared.Preferences
         ///     The currently selected character.
         /// </summary>
         public ICharacterProfile SelectedCharacter => Characters[SelectedCharacterIndex];
+
+        public Color AdminOOCColor { get; set; }
 
         public int FirstEmptySlot()
         {

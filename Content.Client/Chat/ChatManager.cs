@@ -205,23 +205,21 @@ namespace Content.Client.Chat
                 messageText = string.Format(message.MessageWrap, messageText);
             }
 
-            switch (message.Channel)
+            if (message.MessageColorOverride != Color.Transparent)
             {
-                case ChatChannel.Server:
-                    color = Color.Orange;
-                    break;
-                case ChatChannel.Radio:
-                    color = Color.Green;
-                    break;
-                case ChatChannel.OOC:
-                    color = Color.LightSkyBlue;
-                    break;
-                case ChatChannel.Dead:
-                    color = Color.MediumPurple;
-                    break;
-                case ChatChannel.AdminChat:
-                    color = Color.Red;
-                    break;
+                color = message.MessageColorOverride;
+            }
+            else
+            {
+                color = message.Channel switch
+                {
+                    ChatChannel.Server => Color.Orange,
+                    ChatChannel.Radio => Color.Green,
+                    ChatChannel.OOC => Color.LightSkyBlue,
+                    ChatChannel.Dead => Color.MediumPurple,
+                    ChatChannel.AdminChat => Color.Red,
+                    _ => color
+                };
             }
 
             _currentChatBox?.AddLine(messageText, message.Channel, color);

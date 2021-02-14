@@ -14,6 +14,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
@@ -31,6 +32,8 @@ namespace Content.Server.Database
         Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index);
 
         Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot);
+
+        Task SaveAdminOOCColorAsync(NetUserId userId, Color color);
 
         // Single method for two operations for transaction.
         Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
@@ -149,6 +152,11 @@ namespace Content.Server.Database
         public Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot)
         {
             return _db.DeleteSlotAndSetSelectedIndex(userId, deleteSlot, newSlot);
+        }
+
+        public Task SaveAdminOOCColorAsync(NetUserId userId, Color color)
+        {
+            return _db.SaveAdminOOCColorAsync(userId, color);
         }
 
         public Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
