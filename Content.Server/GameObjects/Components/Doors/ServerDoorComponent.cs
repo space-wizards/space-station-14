@@ -565,7 +565,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             var realCloseTime = _doorCheck.GetCloseSpeed() ?? AutoCloseDelay;
 
-            Owner.SpawnTimer(realCloseTime, async () =>
+            Owner.SpawnRepeatingTimer(realCloseTime, async () =>
             {
                 if (CanCloseGeneric())
                 {
