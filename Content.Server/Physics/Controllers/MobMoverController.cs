@@ -41,9 +41,9 @@ namespace Content.Server.Physics.Controllers
             _audioSystem = EntitySystem.Get<AudioSystem>();
         }
 
-        public override void UpdateBeforeSolve(PhysicsMap map, float frameTime)
+        public override void UpdateBeforeSolve(bool prediction, PhysicsMap map, float frameTime)
         {
-            base.UpdateBeforeSolve(map, frameTime);
+            base.UpdateBeforeSolve(prediction, map, frameTime);
 
             foreach (var (mover, physics) in ComponentManager.EntityQuery<SharedPlayerInputMoverComponent, PhysicsComponent>(false))
             {

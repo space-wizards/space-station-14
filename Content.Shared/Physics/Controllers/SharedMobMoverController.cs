@@ -60,13 +60,8 @@ namespace Content.Shared.Physics.Controllers
                 if (!touching)
                 {
                     transform.LocalRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
+                    return;
                 }
-                else
-                {
-                    // Controller.Push(combined, mover.CurrentSpeed)
-                }
-
-                return;
             }
 
             // Regular movement.
@@ -75,7 +70,7 @@ namespace Content.Shared.Physics.Controllers
             var wishDir = wishSpeed > 0 ? total.Normalized : Vector2.Zero;
 
             // Clamp to server-max speed?
-            var accelerate = 80.0f;
+            var accelerate = 40.0f;
 
             Accelerate(frameTime, physicsComponent, wishDir, wishSpeed, accelerate);
 
@@ -101,7 +96,7 @@ namespace Content.Shared.Physics.Controllers
             if (addSpeed <= 0f) return;
 
             // TODO Look at source for dis.
-            var accelSpeed = accel * frameTime * wishSpeed * (1 - GetTileFriction(body));
+            var accelSpeed = accel * frameTime * wishSpeed;
             accelSpeed = MathF.Min(accelSpeed, addSpeed);
 
             body.LinearVelocity += wishDir * accelSpeed;
@@ -117,10 +112,10 @@ namespace Content.Shared.Physics.Controllers
                 if (otherCollider == collider) continue; // Don't try to push off of yourself!
 
                 // Only allow pushing off of anchored things that have collision.
-                if (otherCollider.BodyType == BodyType.Static ||
+                if (otherCollider.BodyType != BodyType.Static ||
                     !otherCollider.CanCollide ||
-                    (collider.CollisionMask & otherCollider.CollisionLayer) == 0 ||
-                    (otherCollider.CollisionMask & collider.CollisionLayer) == 0 ||
+                    ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
+                    (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
                     (otherCollider.Entity.TryGetComponent(out SharedPullableComponent? pullable) && pullable.BeingPulled))
                 {
                     continue;
@@ -133,21 +128,5 @@ namespace Content.Shared.Physics.Controllers
         }
 
         protected virtual void HandleFootsteps(IMoverComponent mover) {}
-
-        // TODO: Copy-pasted shitcode.
-        [Pure]
-        private float GetTileFriction(IPhysicsComponent body)
-        {
-            if (!body.OnGround)
-                return 0.0f;
-
-            var transform = body.Owner.Transform;
-            var coords = transform.Coordinates;
-
-            var grid = _mapManager.GetGrid(coords.GetGridId(body.Owner.EntityManager));
-            var tile = grid.GetTileRef(coords);
-            var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
-            return tileDef.Friction;
-        }
     }
 }

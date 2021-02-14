@@ -134,7 +134,6 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     _puller = value;
                     _pullerPhysics = valuePhysics;
 
-                    _physics.EnsureController<PullController>().Manager = this;
                     var message = new PullStartedMessage(_pullerPhysics, _physics);
 
                     _puller.SendMessage(null, message);
@@ -145,7 +144,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     _physics.WakeBody();
                     _pullJoint = valuePhysics.CreateDistanceJoint(_physics);
                     _pullJoint.CollideConnected = true;
-                    _pullJoint.Length = 1.4f;
+                    _pullJoint.Length = 2.0f; // TODO hacky, we should consider ours and their bb
                 }
                 // Code here will not run if pulling a new object was attempted and failed because of the returns from the refactor.
             }

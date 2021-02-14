@@ -1,11 +1,15 @@
 using System;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
 
@@ -18,11 +22,11 @@ namespace Content.Shared.Physics.Controllers
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
-        private const float StopSpeed = 0.5f;
+        private const float StopSpeed = 0.01f;
 
-        public override void UpdateBeforeSolve(PhysicsMap map, float frameTime)
+        public override void UpdateBeforeSolve(bool prediction, PhysicsMap map, float frameTime)
         {
-            base.UpdateBeforeSolve(map, frameTime);
+            base.UpdateBeforeSolve(prediction, map, frameTime);
 
             foreach (var body in map.AwakeBodies)
             {
@@ -32,23 +36,40 @@ namespace Content.Shared.Physics.Controllers
                 var drop = 0.0f;
                 float control;
 
-                var surfaceFriction = GetTileFriction(body);
+                /*
+                 * Okay so here's the thing: If you also consider surface friction then the player will be able to move faster
+                 * on some tiles compared to others which is probably not the ideal goal? As such it only applies to literally everything else
+                 * (or mobs when stunned).
+                 */
 
-                // TODO: Make const
+                var useMobMovement = body.Owner.HasComponent<IBody>() &&
+                                     ActionBlockerSystem.CanMove(body.Owner) &&
+                                     (!body.Owner.IsWeightless() ||
+                                      body.Owner.TryGetComponent(out IMoverComponent? mover) && IsAroundCollider(body.Owner.Transform, mover, body));
 
-                var frictionModifier = body.Owner.HasComponent<IBody>() && ActionBlockerSystem.CanMove(body.Owner) ? 60.0f : 10.0f;
-
+                var surfaceFriction = useMobMovement ? 1.0f : GetTileFriction(body);
+                // TODO: Make cvar
+                var frictionModifier = useMobMovement ? 40.0f : 10.0f;
                 var friction = frictionModifier * surfaceFriction;
 
                 if (friction > 0.0f)
                 {
-                    control = speed < StopSpeed ? StopSpeed : speed;
+                    // TBH I can't really tell if this makes a difference, player movement is fucking hard.
+                    if (!prediction)
+                    {
+                        control = speed < StopSpeed ? StopSpeed : speed;
+                    }
+                    else
+                    {
+                        control = speed;
+                    }
+
                     drop += control * friction * frameTime;
                 }
 
                 var newSpeed = MathF.Max(0.0f, speed - drop);
 
-                if (MathHelper.CloseTo(newSpeed, speed)) continue;
+                if (speed <= 0.0f) continue;
 
                 newSpeed /= speed;
                 body.LinearVelocity *= newSpeed;
@@ -68,6 +89,32 @@ namespace Content.Shared.Physics.Controllers
             var tile = grid.GetTileRef(coords);
             var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
             return tileDef.Friction;
+        }
+
+        // TODO: Fucking copy-pasted shitcode oh my god.
+        private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
+            IPhysicsComponent collider)
+        {
+            var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
+
+            foreach (var otherCollider in EntitySystem.Get<SharedBroadPhaseSystem>().GetCollidingEntities(transform.MapID, enlargedAABB))
+            {
+                if (otherCollider == collider) continue; // Don't try to push off of yourself!
+
+                // Only allow pushing off of anchored things that have collision.
+                if (otherCollider.BodyType != BodyType.Static ||
+                    !otherCollider.CanCollide ||
+                    ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
+                     (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
+                    (otherCollider.Entity.TryGetComponent(out SharedPullableComponent? pullable) && pullable.BeingPulled))
+                {
+                    continue;
+                }
+
+                return true;
+            }
+
+            return false;
         }
     }
 }
