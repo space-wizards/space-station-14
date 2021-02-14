@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Robust.Server.Player;
@@ -79,6 +80,14 @@ namespace Content.Server.Administration.Commands
             }
 
             await dbMan.AddServerBanAsync(new ServerBanDef(null, targetUid, null, DateTimeOffset.Now, expires, reason, player?.UserId, null));
+
+            var response = new StringBuilder($"Banned {targetUid} with reason \"{reason}\"");
+
+            response.Append(expires == null ?
+                " permanently."
+                : $" until {expires.ToString()}");
+
+            shell.WriteLine(response.ToString());
 
             if (plyMgr.TryGetSessionById(targetUid, out var targetPlayer))
             {
