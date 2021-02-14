@@ -70,8 +70,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
         {
             var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
 
-            // Can't check if our target AND disposals moves currently so we'll just check target.
-            // if you really want to check if disposals moves then add a predicate.
             var doAfterArgs = new DoAfterEventArgs(user, 3, default, victim)
             {
                 BreakOnTargetMove = true,
