@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
@@ -41,6 +44,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -118,6 +122,8 @@ namespace Content.Server.GameTicking
             set => _preset = value;
         }
 
+        public ImmutableDictionary<string, Type> Presets { get; private set; }
+
         private GamePreset _preset;
 
         public event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
@@ -131,6 +137,22 @@ namespace Content.Server.GameTicking
             base.Initialize();
 
             DebugTools.Assert(!_initialized);
+
+            var presets = new Dictionary<string, Type>();
+
+            foreach (var type in _reflectionManager.FindTypesWithAttribute<GamePresetAttribute>())
+            {
+                var attribute = type.GetCustomAttribute<GamePresetAttribute>();
+
+                presets.Add(attribute!.Id.ToLowerInvariant(), type);
+
+                foreach (var alias in attribute.Aliases)
+                {
+                    presets.Add(alias.ToLowerInvariant(), type);
+                }
+            }
+
+            Presets = presets.ToImmutableDictionary();
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
@@ -479,21 +501,10 @@ namespace Content.Server.GameTicking
 
         public IEnumerable<GameRule> ActiveGameRules => _gameRules;
 
-        public bool TryGetPreset(string name, out Type type)
+        public bool TryGetPreset(string name, [NotNullWhen(true)] out Type type)
         {
-            type = name.ToLower() switch
-            {
-                "sandbox" => typeof(PresetSandbox),
-                "deathmatch" => typeof(PresetDeathMatch),
-                "suspicion" => typeof(PresetSuspicion),
-                "traitor" => typeof(PresetTraitor),
-                "traitordm" => typeof(PresetTraitorDeathMatch),
-                "traitordeathmatch" => typeof(PresetTraitorDeathMatch),
-                "extended" => typeof(PresetExtended),
-                _ => default
-            };
-
-            return type != default;
+            name = name.ToLowerInvariant();
+            return Presets.TryGetValue(name, out type);
         }
 
         public void SetStartPreset(Type type, bool force = false)
@@ -513,7 +524,7 @@ namespace Content.Server.GameTicking
         {
             if (!TryGetPreset(name, out var type))
             {
-                throw new NotSupportedException();
+                throw new NotSupportedException($"No preset found with name {name}");
             }
 
             SetStartPreset(type, force);
@@ -576,7 +587,7 @@ namespace Content.Server.GameTicking
 
         private IEntity _spawnPlayerMob(Job job, HumanoidCharacterProfile profile, bool lateJoin = true)
         {
-            EntityCoordinates coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
+            var coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
             var entity = _entityManager.SpawnEntity(PlayerPrototypeName, coordinates);
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear);
             EquipStartingGear(entity, startingGear, profile);
@@ -1071,6 +1082,7 @@ The current game mode is: [color=white]{0}[/color].
         [Dependency] private readonly IBaseServer _baseServer = default!;
         [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
     }
 
     public enum GameRunLevel
