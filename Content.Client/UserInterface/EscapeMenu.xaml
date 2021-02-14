@@ -1,0 +1,9 @@
+﻿<SS14Window xmlns="https://spacestation14.io" Title="{Loc 'Esc Menu'}"
+            Resizable="False">
+
+    <VBoxContainer SeparationOverride="4">
+        <Button Name="OptionsButton" Text="{Loc 'Options'}" />
+        <Button Name="DisconnectButton" Text="{Loc 'Disconnect'}" />
+        <Button Name="QuitButton" Text="{Loc 'Quit game'}" />
+    </VBoxContainer>
+</SS14Window>
