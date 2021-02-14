@@ -53,7 +53,7 @@
         - type: BagOpenCloseVisualizer
           openIcon: cig_open
         - type: StackVisualizer
-          transparent: true
+          composite: true
           stackLayers:
             - cigarette_1
             - cigarette_2

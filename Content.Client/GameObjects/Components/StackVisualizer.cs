@@ -14,9 +14,14 @@ namespace Content.Client.GameObjects.Components
 {
     /// <summary>
     /// Visualizer for items that come in stacks and have different appearance
-    /// depending on the size of the stack.
-    /// </summary>
+    /// depending on the size of the stack. Visualizer can work by switching between different
+    /// icons in <c>_spriteLayers</c> or if the sprite layers are supposed to be composed as transparent layers.
+    /// The former behavior is default and the latter behavior can be defined in prototypes. 
+    ///
     /// <example>
+    /// <para>To define a Stack Visualizer prototype insert the following
+    /// snippet (you can skip Appearance if already defined)
+    /// </para>
     /// <code>
     /// - type: Appearance
     ///   visuals:
@@ -27,6 +32,22 @@ namespace Content.Client.GameObjects.Components
     ///         - goldbar_30
     /// </code>
     /// </example>
+    /// <example>
+    /// <para>Defining a stack visualizer with composable transparent layers</para>
+    /// <code>
+    ///   - type: StackVisualizer
+    ///     composite: true
+    ///     stackLayers:
+    ///       - cigarette_1
+    ///       - cigarette_2
+    ///       - cigarette_3
+    ///       - cigarette_4
+    ///       - cigarette_5
+    ///       - cigarette_6
+    /// </code>
+    /// </example>
+    ///  <seealso cref="_spriteLayers"/>
+    /// </summary>
     [UsedImplicitly]
     public class StackVisualizer : AppearanceVisualizer
     {
@@ -34,27 +55,27 @@ namespace Content.Client.GameObjects.Components
         /// Default IconLayer stack.
         /// </summary>
         private const int IconLayer = 0;
-        
+
         /// <summary>
         /// Sprite layers used in stack visualizer. Sprites first in layer correspond to lower stack states
         /// e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
         /// </summary>
         private readonly List<string> _spriteLayers = new();
-        
+
         /// <summary>
-        /// Determines if the visualizer uses opaque or transparent sprite layers.
+        /// Determines if the visualizer uses composite or non-composite layers for icons. Defaults to false.
         ///
         /// <list type="bullet">
         /// <item>
-        /// <description>true: they are transparent and thus layered one over another in ascending order first</description>
+        /// <description>false: they are opaque and mutually exclusive (e.g. sprites in a wire coil). <b>Default value</b></description>
         /// </item>
         /// <item>
-        /// <description>false: they are opaque and mutually exclusive (e.g. sprites in a wire coil)</description>
+        /// <description>true: they are transparent and thus layered one over another in ascending order first</description>
         /// </item>
         /// </list>
         /// 
         /// </summary>
-        private bool _isTransparent;
+        private bool _isComposite;
 
         public override void LoadData(YamlMappingNode mapping)
         {
@@ -68,9 +89,9 @@ namespace Content.Client.GameObjects.Components
                 }
             }
 
-            if (mapping.TryGetNode<YamlScalarNode>("transparent", out var transparent))
+            if (mapping.TryGetNode<YamlScalarNode>("composite", out var transparent))
             {
-                _isTransparent = transparent.AsBool();
+                _isComposite = transparent.AsBool();
             }
         }
 
@@ -78,7 +99,7 @@ namespace Content.Client.GameObjects.Components
         {
             base.InitializeEntity(entity);
 
-            if (_isTransparent
+            if (_isComposite
                 && _spriteLayers.Count > 0
                 && entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
             {
@@ -98,9 +119,9 @@ namespace Content.Client.GameObjects.Components
 
             if (component.Owner.TryGetComponent<ISpriteComponent>(out var spriteComponent))
             {
-                if (_isTransparent)
+                if (_isComposite)
                 {
-                    ProcessTransparentSprites(component, spriteComponent);
+                    ProcessCompositeSprites(component, spriteComponent);
                 }
                 else
                 {
@@ -111,15 +132,18 @@ namespace Content.Client.GameObjects.Components
 
         private void ProcessOpaqueSprites(AppearanceComponent component, ISpriteComponent spriteComponent)
         {
-            // Skip processing if no actual/maxCount
+            // Skip processing if no actual
             if (!component.TryGetData<int>(StackVisuals.Actual, out var actual)) return;
-            if (!component.TryGetData<int>(StackVisuals.MaxCount, out var maxCount)) return;
+            if (!component.TryGetData<int>(StackVisuals.MaxCount, out var maxCount))
+            {
+                maxCount = _spriteLayers.Count;
+            }
 
-            var activeLayer = ContentHelpers.RoundToNearestLevels(actual, maxCount, _spriteLayers.Count-1);
+            var activeLayer = ContentHelpers.RoundToNearestLevels(actual, maxCount, _spriteLayers.Count - 1);
             spriteComponent.LayerSetState(IconLayer, _spriteLayers[activeLayer]);
         }
 
-        private void ProcessTransparentSprites(AppearanceComponent component, ISpriteComponent spriteComponent)
+        private void ProcessCompositeSprites(AppearanceComponent component, ISpriteComponent spriteComponent)
         {
             // If hidden, don't render any sprites
             if (!component.TryGetData<bool>(StackVisuals.Hide, out var hide)
@@ -135,7 +159,11 @@ namespace Content.Client.GameObjects.Components
 
             // Skip processing if no actual/maxCount
             if (!component.TryGetData<int>(StackVisuals.Actual, out var actual)) return;
-            if (!component.TryGetData<int>(StackVisuals.MaxCount, out var maxCount)) return;
+            if (!component.TryGetData<int>(StackVisuals.MaxCount, out var maxCount))
+            {
+                maxCount = _spriteLayers.Count;
+            }
+
 
             var activeTill = ContentHelpers.RoundToNearestLevels(actual, maxCount, _spriteLayers.Count);
             for (var i = 0; i < _spriteLayers.Count; i++)
