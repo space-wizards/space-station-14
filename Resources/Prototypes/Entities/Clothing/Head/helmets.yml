@@ -79,7 +79,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHelmetSpaceNinja
   name: space ninja helmet
-  description: What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear."
+  description: What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/spaceninja.rsi
