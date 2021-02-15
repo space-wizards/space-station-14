@@ -11,6 +11,7 @@ caseSensitive: false
 labelMappings:
     "[ATMOS]": "Area: Atmos"
     "[BODY]": "Area: Body System"
+    "[BODY SYSTEM]": "Area: Body System"
     "[CONSTRUCTION]": "Area: Construction"
     "[ENTITY AI]": "Area: Entity AI"
     "[PHYSICS]": "Area: Physics"
