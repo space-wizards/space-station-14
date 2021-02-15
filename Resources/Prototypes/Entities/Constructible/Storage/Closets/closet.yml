@@ -21,7 +21,7 @@
     soundHit: /Audio/Effects/bang.ogg
   - type: InteractionOutline
   - type: Physics
-    mass: 25
+    mass: 50
     anchored: false
     fixtures:
     - shape:

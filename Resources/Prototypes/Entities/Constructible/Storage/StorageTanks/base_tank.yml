@@ -7,7 +7,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 15
+    mass: 100
     anchored: false
     fixtures:
     - shape:

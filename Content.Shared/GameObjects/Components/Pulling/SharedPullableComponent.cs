@@ -144,7 +144,10 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     _physics.WakeBody();
                     _pullJoint = valuePhysics.CreateDistanceJoint(_physics);
                     _pullJoint.CollideConnected = true;
-                    _pullJoint.Length = 2.0f; // TODO hacky, we should consider ours and their bb
+                    _pullJoint.MaxLength = 2.0f; // TODO hacky, we should consider ours and their bb
+                    _pullJoint.MinLength = 1.0f;
+                    _pullJoint.Length = 1.0f;
+                    _pullJoint.LinearStiffness(0.5f, 0.7f);
                 }
                 // Code here will not run if pulling a new object was attempted and failed because of the returns from the refactor.
             }
