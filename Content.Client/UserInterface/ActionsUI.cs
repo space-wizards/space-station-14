@@ -359,7 +359,7 @@ namespace Content.Client.UserInterface
         {
             if (_actionManager.TryGet(itemlessActionType, out var action))
             {
-                actionSlot.Assign(action!);
+                actionSlot.Assign(action);
             }
             else
             {
