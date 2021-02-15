@@ -19,9 +19,20 @@
 
 - type: entity
   parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelHydroponics
+  name: hydroponics duffel bag
+  description: "A large duffel bag for holding extra gardening tools."
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/hydroponics.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/hydroponics.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelEngineering
   name: engineering duffel bag
-  description:
+  description: "A large duffel bag for holding extra tools and supplies."
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/engineering.rsi
@@ -38,6 +49,52 @@
     sprite: Clothing/Back/Duffels/medical.rsi
   - type: Clothing
     sprite: Clothing/Back/Duffels/medical.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelMedicalSurgery
+  name: surgical duffel bag
+  description: "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/medical.rsi
+    state: icon-med
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/medical.rsi
+    ClothingPrefix: med
+  
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelVirology
+  name: virology duffel bag
+  description: "A large duffel bag for holding extra viral bottles."
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/virology.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/virology.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelToxins
+  name: toxins duffel bag
+  description: "A large duffel bag for holding extra scientific components."
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/toxins.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/toxins.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelGenetics
+  name: genetics duffel bag
+  description: "A large duffel bag for holding extra genetic mutations."
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/genetics.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/genetics.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -108,7 +165,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicate
-  name: syndicate duffel bag
+  name: suspicious looking duffel bag
   description: "A large duffel bag for holding various traitor goods."
   components:
   - type: Sprite
@@ -119,7 +176,8 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
   id: ClothingBackpackDuffelSyndicateAmmo
-  name: syndicate duffel bag
+  name: ammunition duffel bag
+  description: "A large duffel bag for holding extra weapons ammunition and supplies."
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi
@@ -131,7 +189,8 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
   id: ClothingBackpackDuffelSyndicateMedical
-  name: syndicate duffel bag
+  name: medical duffel bag
+  description: "A large duffel bag for holding extra tactical medical supplies."
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi
@@ -139,6 +198,28 @@
   - type: Clothing
     sprite: Clothing/Back/Duffels/syndicate.rsi
     ClothingPrefix: med
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelExplorer
+  name: explorer's duffel bag
+  description: "A large duffel bag for holding extra exotic treasures."
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/explorer.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/explorer.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelDrone
+  name: drone duffel bag
+  description: "A large duffel bag for holding drone things." 
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/drone.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/drone.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel

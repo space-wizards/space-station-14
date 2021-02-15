@@ -20,7 +20,7 @@
 - type: entity
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelEngineering
-  name: engineering satchel
+  name: industrial satchel
   description: A tough satchel with extra pockets.
   components:
   - type: Sprite
@@ -93,6 +93,50 @@
     sprite: Clothing/Back/Satchels/hydroponics.rsi
   - type: Clothing
     sprite: Clothing/Back/Satchels/hydroponics.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelVirology
+  name: virologists satchel
+  description: A sterile satchel with virologist colours.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/virology.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Satchels/virology.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelGenetics
+  name: hydroponics satchel
+  description: A sterile satchel with geneticist colours.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/genetic.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Satchels/genetic.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelToxins
+  name: toxins satchel
+  description: Useful for holding research materials..
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/toxins.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Satchels/toxins.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelExplorer
+  name: explorer satchel
+  description: A robust satchel for stashing your loot.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/explorer.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Satchels/explorer.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel
