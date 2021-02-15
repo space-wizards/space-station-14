@@ -17,6 +17,7 @@
   - type: SolutionTransfer
     transferAmount: 5.0
   - type: Spillable
+  - type: Drink
   - type: GlassBeaker
 
 - type: entity
@@ -38,6 +39,7 @@
   - type: SolutionTransfer
     transferAmount: 5.0
   - type: Spillable
+  - type: Drink
   - type: GlassBeaker
 
 - type: entity
