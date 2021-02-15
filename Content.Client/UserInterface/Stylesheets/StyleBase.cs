@@ -11,6 +11,7 @@ namespace Content.Client.UserInterface.Stylesheets
     public abstract class StyleBase
     {
         public const string ClassHighDivider = "HighDivider";
+        public const string ClassLowDivider = "LowDivider";
         public const string StyleClassLabelHeading = "LabelHeading";
         public const string StyleClassLabelSubText = "LabelSubText";
         public const string StyleClassItalic = "Italic";

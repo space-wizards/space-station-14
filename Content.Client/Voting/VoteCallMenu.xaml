@@ -15,14 +15,25 @@
         </HBoxContainer>
         <cuic:HighDivider />
 
-        <HBoxContainer SizeFlagsVertical="Expand">
-            <OptionButton Name="VoteTypeButton" SizeFlagsHorizontal="FillExpand" />
-            <Control SizeFlagsHorizontal="FillExpand">
-                <OptionButton Name="VoteSecondButton" Visible="False" />
-            </Control>
-        </HBoxContainer>
+        <MarginContainer SizeFlagsHorizontal="Fill" SizeFlagsVertical="Expand"
+                         MarginLeftOverride="8" MarginRightOverride="8" MarginTopOverride="2">
+            <HBoxContainer>
+                <OptionButton Name="VoteTypeButton" SizeFlagsHorizontal="FillExpand" />
+                <Control SizeFlagsHorizontal="FillExpand">
+                    <OptionButton Name="VoteSecondButton" Visible="False" />
+                </Control>
+            </HBoxContainer>
+        </MarginContainer>
 
-        <Button Name="CreateButton" Text="{Loc 'Call Vote'}" SizeFlagsHorizontal="Fill" />
+        <MarginContainer SizeFlagsHorizontal="Fill"
+                         MarginLeftOverride="8" MarginRightOverride="8" MarginBottomOverride="2">
+            <Button Name="CreateButton" Text="{Loc 'Call Vote'}" />
+        </MarginContainer>
+
+        <PanelContainer StyleClasses="LowDivider" />
+        <MarginContainer MarginLeftOverride="12">
+            <Label StyleClasses="LabelSubText" Text="{Loc 'Powered by Robust™ Anti-Tamper Technology'}" />
+        </MarginContainer>
 
     </VBoxContainer>
 </v:VoteCallMenu>

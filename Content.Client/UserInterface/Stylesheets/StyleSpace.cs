@@ -59,6 +59,15 @@ namespace Content.Client.UserInterface.Stylesheets
                     {
                         BackgroundColor = SpaceRed, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
                     }),
+
+                Element<PanelContainer>().Class(ClassLowDivider)
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
+                    {
+                        BackgroundColor = Color.FromHex("#444"),
+                        ContentMarginLeftOverride = 2,
+                        ContentMarginBottomOverride = 2
+                    }),
+
                 // Shapes for the buttons.
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButton),
