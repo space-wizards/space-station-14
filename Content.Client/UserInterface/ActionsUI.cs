@@ -311,7 +311,7 @@ namespace Content.Client.UserInterface
         {
             if (_actionManager.TryGet(actionType, out var action))
             {
-                actionSlot.Assign(action!, true);
+                actionSlot.Assign(action, true);
             }
             else
             {
@@ -348,7 +348,7 @@ namespace Content.Client.UserInterface
             }
 
             // check if we need to toggle it
-            if (action!.BehaviorType == BehaviorType.Toggle)
+            if (action.BehaviorType == BehaviorType.Toggle)
             {
                 actionSlot.ToggledOn = actionState.ToggledOn;
             }
@@ -375,7 +375,7 @@ namespace Content.Client.UserInterface
             if (!_entityManager.TryGetEntity(item, out var itemEntity)) return;
             if (_actionManager.TryGet(itemActionType, out var action))
             {
-                actionSlot.Assign(action!, itemEntity, true);
+                actionSlot.Assign(action, itemEntity, true);
             }
             else
             {
@@ -393,7 +393,7 @@ namespace Content.Client.UserInterface
                                           " a state but it didn't", assignedActionType);
                 _actionsComponent.Assignments.AssignSlot(SelectedHotbar, actionSlot.SlotIndex,
                     ActionAssignment.For(itemActionType));
-                actionSlot.Assign(action!);
+                actionSlot.Assign(action);
                 return;
             }
 
@@ -423,7 +423,7 @@ namespace Content.Client.UserInterface
             actionSlot.Cooldown = actionState.Cooldown;
 
             // check if we need to toggle it
-            if (action!.BehaviorType == BehaviorType.Toggle)
+            if (action.BehaviorType == BehaviorType.Toggle)
             {
                 actionSlot.ToggledOn = actionState.ToggledOn;
             }

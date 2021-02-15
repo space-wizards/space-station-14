@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                             performActionMessage.ActionType);
                         return null;
                     }
-                    attempt = new ActionAttempt(action!);
+                    attempt = new ActionAttempt(action);
                     break;
                 case PerformItemActionMessage performItemActionMessage:
                     if (!ActionManager.TryGet(performItemActionMessage.ActionType, out var itemAction))
@@ -151,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                         return null;
                     }
 
-                    attempt = new ItemActionAttempt(itemAction!, item, actionsComponent);
+                    attempt = new ItemActionAttempt(itemAction, item, actionsComponent);
                     break;
                 default:
                     return null;

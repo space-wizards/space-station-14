@@ -60,7 +60,7 @@ namespace Content.Server.Commands.Actions
 
             var cooldownEnd = cooldownStart.Add(TimeSpan.FromSeconds(seconds));
 
-            actionsComponent.Cooldown(action!.ActionType, (cooldownStart, cooldownEnd));
+            actionsComponent.Cooldown(action.ActionType, (cooldownStart, cooldownEnd));
         }
     }
 }
