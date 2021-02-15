@@ -2,6 +2,8 @@ using Content.Client.Utility;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface.Stylesheets
@@ -38,6 +40,7 @@ namespace Content.Client.UserInterface.Stylesheets
         {
             var notoSans12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
             var notoSans12Italic = resCache.GetFont("/Fonts/NotoSans/NotoSans-Italic.ttf", 12);
+            var textureCloseButton = resCache.GetTexture("/Textures/Interface/Nano/cross.svg.png");
 
             // Button styles.
             var buttonTex = resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
@@ -107,6 +110,33 @@ namespace Content.Client.UserInterface.Stylesheets
                     {
                         new StyleProperty("font", notoSans12Italic),
                     }),
+
+                // Window close button base texture.
+                new StyleRule(
+                    new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
+                        null),
+                    new[]
+                    {
+                        new StyleProperty(TextureButton.StylePropertyTexture, textureCloseButton),
+                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#4B596A")),
+                    }),
+                // Window close button hover.
+                new StyleRule(
+                    new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
+                        new[] {TextureButton.StylePseudoClassHover}),
+                    new[]
+                    {
+                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
+                    }),
+                // Window close button pressed.
+                new StyleRule(
+                    new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
+                        new[] {TextureButton.StylePseudoClassPressed}),
+                    new[]
+                    {
+                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
+                    }),
+
             };
         }
     }

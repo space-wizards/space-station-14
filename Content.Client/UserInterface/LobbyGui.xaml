@@ -4,7 +4,8 @@
          xmlns:style="clr-namespace:Content.Client.UserInterface.Stylesheets"
          xmlns:cui="clr-namespace:Content.Client.UserInterface"
          xmlns:chat="clr-namespace:Content.Client.Chat"
-         xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths">
+         xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths"
+         xmlns:voting="clr-namespace:Content.Client.Voting">
 
     <!-- One day I'll code a Margin property for controls. -->
     <MarginContainer MarginBottomOverride="20" MarginLeftOverride="20" MarginRightOverride="20"
@@ -17,10 +18,9 @@
                     <Label StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'Lobby'}" />
                 </MarginContainer>
                 <Label Name="CServerName" StyleClasses="LabelHeadingBigger" VAlign="Center" />
-                <Button Name="COptionsButton" StyleClasses="ButtonBig" SizeFlagsHorizontal="ShrinkEnd"
-                        Text="{Loc 'Options'}" />
-                <Button Name="CLeaveButton" StyleClasses="ButtonBig" SizeFlagsHorizontal="ShrinkEnd"
-                        Text="{Loc 'Leave'}" />
+                <voting:VoteCallMenuButton Name="CCallVoteButton" StyleClasses="ButtonBig" />
+                <Button Name="COptionsButton" StyleClasses="ButtonBig" Text="{Loc 'Options'}" />
+                <Button Name="CLeaveButton" StyleClasses="ButtonBig" Text="{Loc 'Leave'}" />
             </HBoxContainer>
             <!-- Gold line -->
             <PanelContainer>

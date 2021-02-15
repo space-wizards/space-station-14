@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.UserInterface
 {
     [GenerateTypedNameReferences]
-    internal sealed partial class EscapeMenu : SS14Window
+    internal partial class EscapeMenu : SS14Window
     {
         private readonly IClientConsoleHost _consoleHost;
 

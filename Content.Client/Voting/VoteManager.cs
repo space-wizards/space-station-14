@@ -18,6 +18,8 @@ namespace Content.Client.Voting
         void SendCastVote(int voteId, int option);
         void ClearPopupContainer();
         void SetPopupContainer(Control container);
+        bool CanCallVote { get; }
+        event Action<bool> CanCallVoteChanged;
     }
 
     public sealed class VoteManager : IVoteManager
@@ -30,9 +32,13 @@ namespace Content.Client.Voting
         private readonly Dictionary<int, VotePopup> _votePopups = new();
         private Control? _popupContainer;
 
+        public bool CanCallVote { get; private set; }
+        public event Action<bool>? CanCallVoteChanged;
+
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgVoteData>(MsgVoteData.NAME, ReceiveVoteData);
+            _netManager.RegisterNetMessage<MsgVoteCanCall>(MsgVoteCanCall.NAME, ReceiveVoteCanCall);
         }
 
         public void ClearPopupContainer()
@@ -135,6 +141,15 @@ namespace Content.Client.Voting
             {
                 ePopup.UpdateData();
             }
+        }
+
+        private void ReceiveVoteCanCall(MsgVoteCanCall message)
+        {
+            if (CanCallVote == message.CanCall)
+                return;
+
+            CanCallVote = message.CanCall;
+            CanCallVoteChanged?.Invoke(CanCallVote);
         }
 
         public void SendCastVote(int voteId, int option)

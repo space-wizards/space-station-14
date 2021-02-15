@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration;
@@ -13,13 +14,14 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 #nullable enable
 
 namespace Content.Server.Voting
 {
-    public sealed class VoteManager : IVoteManager
+    public sealed partial class VoteManager : IVoteManager
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
@@ -193,26 +195,16 @@ namespace Content.Server.Voting
             }
 
             // Find winner or stalemate.
-            ref var winningEntry = ref v.Entries[0];
-            var stalemate = false;
-            for (var i = 1; i < v.Entries.Length; i++)
-            {
-                ref var contender = ref v.Entries[i];
-
-                if (contender.Votes == winningEntry.Votes)
-                {
-                    stalemate = true;
-                }
-                else if (contender.Votes > winningEntry.Votes)
-                {
-                    stalemate = false;
-                    winningEntry = contender;
-                }
-            }
+            var winners = v.Entries
+                .GroupBy(e => e.Votes)
+                .OrderByDescending(g => g.Key)
+                .First()
+                .Select(e => e.Data)
+                .ToImmutableArray();
 
             v.Finished = true;
             v.Dirty = true;
-            var args = new VoteFinishedEventArgs(stalemate ? null : winningEntry.Data);
+            var args = new VoteFinishedEventArgs(winners.Length == 1 ? winners[0] : null, winners);
             v.OnFinished?.Invoke(_voteHandles[v.Id], args);
         }
 
@@ -229,52 +221,6 @@ namespace Content.Server.Voting
         }
 
         #region Preset Votes
-
-        public void CreateRestartVote(IPlayerSession? initiator)
-        {
-            var options = new VoteOptions
-            {
-                Title = Loc.GetString("Restart round"),
-                Options =
-                {
-                    (Loc.GetString("Yes"), true),
-                    (Loc.GetString("No"), false)
-                },
-                Duration = _playerManager.PlayerCount == 1 && initiator != null
-                    ? TimeSpan.FromSeconds(10)
-                    : TimeSpan.FromSeconds(30)
-            };
-
-            WirePresetVoteInitiator(options, initiator);
-
-            var vote = CreateVote(options);
-
-            vote.OnFinished += (_, args) =>
-            {
-                if (args.Winner == null)
-                {
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("Restart vote failed due to stalemate."));
-                    return;
-                }
-
-                var win = (bool) args.Winner;
-                if (win)
-                {
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("Restart vote succeeded."));
-                    _ticker.RestartRound();
-                }
-                else
-                {
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("Restart vote failed."));
-                }
-            };
-
-            if (initiator != null)
-            {
-                // Cast yes vote if created the vote yourself.
-                vote.CastVote(initiator, 0);
-            }
-        }
 
         private void WirePresetVoteInitiator(VoteOptions options, IPlayerSession? player)
         {
@@ -324,11 +270,11 @@ namespace Content.Server.Voting
 
         private struct VoteEntry
         {
-            public object? Data;
+            public object Data;
             public string Text;
             public int Votes;
 
-            public VoteEntry(object? data, string text)
+            public VoteEntry(object data, string text)
             {
                 Data = data;
                 Text = text;

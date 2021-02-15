@@ -42,6 +42,8 @@ namespace Content.Client.UserInterface.Stylesheets
             };
             progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
 
+            var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
+
             Stylesheet = new Stylesheet(BaseRules.Concat(new StyleRule[]
             {
                 Element<Label>().Class(StyleClassLabelHeading)
@@ -127,6 +129,29 @@ namespace Content.Client.UserInterface.Stylesheets
                 Element<ProgressBar>()
                     .Prop(ProgressBar.StylePropertyBackground, progressBarBackground)
                     .Prop(ProgressBar.StylePropertyForeground, progressBarForeground),
+
+                // OptionButton
+                Element<OptionButton>()
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButton),
+
+                Element<OptionButton>().Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDefault),
+
+                Element<OptionButton>().Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorHovered),
+
+                Element<OptionButton>().Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorPressed),
+
+                Element<OptionButton>().Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
+
+                Element<TextureRect>().Class(OptionButton.StyleClassOptionTriangle)
+                    .Prop(TextureRect.StylePropertyTexture, textureInvertedTriangle),
+
+                Element<Label>().Class(OptionButton.StyleClassOptionButton)
+                    .Prop(Label.StylePropertyAlignMode, Label.AlignMode.Center),
+
 
             }).ToList());
         }

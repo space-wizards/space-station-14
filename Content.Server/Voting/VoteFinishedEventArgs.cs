@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 
 #nullable enable
 
@@ -11,9 +12,15 @@ namespace Content.Server.Voting
         /// </summary>
         public readonly object? Winner;
 
-        public VoteFinishedEventArgs(object? winner)
+        /// <summary>
+        ///     Winners. More than one if there was a stalemate.
+        /// </summary>
+        public readonly ImmutableArray<object> Winners;
+
+        public VoteFinishedEventArgs(object? winner, ImmutableArray<object> winners)
         {
             Winner = winner;
+            Winners = winners;
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Content.Server.Voting
         void Initialize();
         bool TryGetVote(int voteId, [NotNullWhen(true)] out IVoteHandle? vote);
         void CreateRestartVote(IPlayerSession? initiator);
+        void CreatePresetVote(IPlayerSession? initiator);
         void Update();
+        IVoteHandle CreateVote(VoteOptions options);
     }
 }
