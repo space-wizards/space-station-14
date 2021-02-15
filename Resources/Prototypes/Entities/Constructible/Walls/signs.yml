@@ -200,6 +200,7 @@
     state: direction_supply
 
 # Regular Signs
+# Descriptions intentionally left empty.
 
 - type: entity
   parent: BaseSign
@@ -685,7 +686,6 @@
   parent: BaseSign
   id: SignPrison
   name: prison sign
-  description:
   components:
   - type: Physics
     shapes:
