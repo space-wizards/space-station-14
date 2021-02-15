@@ -33,6 +33,13 @@
       <DependentUpon>OptionsMenu.cs</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Page Include="UserInterface\AdminMenu\CustomControls\ButtonGrid.xaml" />
+    <Page Include="UserInterface\AdminMenu\Tabs\AdminbusTab.xaml" />
+    <Page Include="UserInterface\AdminMenu\Tabs\AdminTab.xaml" />
+    <Page Include="UserInterface\AdminMenu\Tabs\AtmosTab.xaml" />
+    <Page Include="UserInterface\AdminMenu\Tabs\RoundTab.xaml" />
+  </ItemGroup>
 
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />

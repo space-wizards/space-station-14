@@ -74,6 +74,7 @@ namespace Content.Client.UserInterface.AdminMenu
         public void Open()
         {
             if (_window == null)
+                // _window = new AdminMenuWindowOld();
                 _window = new AdminMenuWindow();
             _window.OpenCentered();
         }
