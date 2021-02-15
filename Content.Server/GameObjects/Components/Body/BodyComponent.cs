@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using Content.Server.Commands.Observer;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Body;
@@ -24,6 +25,10 @@ namespace Content.Server.GameObjects.Components.Body
     [ComponentReference(typeof(IGhostOnMove))]
     public class BodyComponent : SharedBodyComponent, IRelayMoveInput, IGhostOnMove
     {
+#pragma warning disable 649
+        [Dependency] private readonly IComponentManager _componentManager = default!;
+#pragma warning restore 649
+
         private Container _partContainer = default!;
 
         protected override bool CanAddPart(string slot, IBodyPart part)
@@ -95,6 +100,17 @@ namespace Content.Server.GameObjects.Components.Body
 
         public override void Gib(bool gibParts = false)
         {
+            if (Owner.TryGetComponent(out MindComponent? mindComponent))
+            {
+                var visitingEntity = mindComponent.Mind?.VisitingEntity;
+                if (visitingEntity != null && (visitingEntity.Prototype?.ID == "AdminObserver" || visitingEntity.Prototype?.ID == "MobObserver"))
+                {
+                    mindComponent.Mind?.UnVisit();
+                    _componentManager.CullRemovedComponents(); //to avoid exception on next line
+                    mindComponent.Mind?.TransferTo(visitingEntity);
+                }
+            }
+
             base.Gib(gibParts);
 
             EntitySystem.Get<AudioSystem>()
@@ -113,7 +129,6 @@ namespace Content.Server.GameObjects.Components.Body
                     }
                 }
             }
-
             Owner.Delete();
         }
     }
