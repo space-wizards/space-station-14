@@ -33,6 +33,11 @@ namespace Content.Server.Voting
         public TimeSpan Duration { get; set; } = TimeSpan.FromMinutes(1);
 
         /// <summary>
+        ///     How long the initiator should be timed out from calling votes. Defaults to duration * 2;
+        /// </summary>
+        public TimeSpan? InitiatorTimeout { get; set; }
+
+        /// <summary>
         ///     The options of the vote. Each entry is a tuple of the player-shown text,
         ///     and a data object that can be used to keep track of options later.
         /// </summary>

@@ -12,6 +12,7 @@ namespace Content.Server.Voting
     {
         public void CreateRestartVote(IPlayerSession? initiator)
         {
+            var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
             {
                 Title = Loc.GetString("Restart round"),
@@ -20,10 +21,13 @@ namespace Content.Server.Voting
                     (Loc.GetString("Yes"), true),
                     (Loc.GetString("No"), false)
                 },
-                Duration = _playerManager.PlayerCount == 1 && initiator != null
+                Duration = alone
                     ? TimeSpan.FromSeconds(10)
                     : TimeSpan.FromSeconds(30)
             };
+
+            if (alone)
+                options.InitiatorTimeout = TimeSpan.FromSeconds(10);
 
             WirePresetVoteInitiator(options, initiator);
 
@@ -66,13 +70,17 @@ namespace Content.Server.Voting
                 ["suspicion"] = "Suspicion"
             };
 
+            var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
             {
                 Title = Loc.GetString("Next gamemode"),
-                Duration = _playerManager.PlayerCount == 1 && initiator != null
+                Duration = alone
                     ? TimeSpan.FromSeconds(10)
                     : TimeSpan.FromSeconds(30)
             };
+
+            if (alone)
+                options.InitiatorTimeout = TimeSpan.FromSeconds(10);
 
             foreach (var (k, v) in presets)
             {

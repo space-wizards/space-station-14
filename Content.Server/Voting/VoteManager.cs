@@ -6,15 +6,14 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared.Administration;
 using Content.Shared.Network.NetMessages;
 using Content.Shared.Utility;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 #nullable enable
@@ -35,13 +34,21 @@ namespace Content.Server.Voting
         private readonly Dictionary<int, VoteReg> _votes = new();
         private readonly Dictionary<int, VoteHandle> _voteHandles = new();
 
-        private readonly Dictionary<NetUserId, TimeSpan> _lastVoteTime = new();
+        private readonly Dictionary<NetUserId, TimeSpan> _voteTimeout = new();
+        private readonly HashSet<IPlayerSession> _playerCanCallVoteDirty = new();
 
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgVoteData>(MsgVoteData.NAME);
+            _netManager.RegisterNetMessage<MsgVoteCanCall>(MsgVoteCanCall.NAME);
 
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
+            _adminMgr.OnPermsChanged += AdminPermsChanged;
+        }
+
+        private void AdminPermsChanged(AdminPermsChangedEventArgs obj)
+        {
+            DirtyCanCallVote(obj.Player);
         }
 
         private void PlayerManagerOnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -53,6 +60,8 @@ namespace Content.Server.Voting
                 {
                     SendSingleUpdate(voteReg, e.Session);
                 }
+
+                DirtyCanCallVote(e.Session);
             }
             else if (e.NewStatus == SessionStatus.Disconnected)
             {
@@ -95,8 +104,8 @@ namespace Content.Server.Voting
 
         public void Update()
         {
+            // Handle active votes.
             var remQueue = new RemQueue<int>();
-
             foreach (var v in _votes.Values)
             {
                 // Logger.Debug($"{_timing.ServerTime}");
@@ -115,6 +124,31 @@ namespace Content.Server.Voting
                 _votes.Remove(id);
                 _voteHandles.Remove(id);
             }
+
+            // Handle player timeouts.
+            var timeoutRemQueue = new RemQueue<NetUserId>();
+            foreach (var (userId, timeout) in _voteTimeout)
+            {
+                if (timeout < _timing.RealTime)
+                    timeoutRemQueue.Add(userId);
+            }
+
+            foreach (var userId in timeoutRemQueue)
+            {
+                _voteTimeout.Remove(userId);
+
+                if (_playerManager.TryGetSessionById(userId, out var session))
+                    DirtyCanCallVote(session);
+            }
+
+            // Handle dirty canCallVotes.
+            foreach (var dirtyPlayer in _playerCanCallVoteDirty)
+            {
+                if (dirtyPlayer.Status != SessionStatus.Disconnected)
+                    SendUpdateCanCallVote(dirtyPlayer);
+            }
+
+            _playerCanCallVoteDirty.Clear();
         }
 
         public IVoteHandle CreateVote(VoteOptions options)
@@ -133,7 +167,13 @@ namespace Content.Server.Voting
             _votes.Add(id, reg);
             _voteHandles.Add(id, handle);
 
-            // TODO: timeout players.
+            if (options.InitiatorPlayer != null)
+            {
+                var timeout = options.InitiatorTimeout ?? options.Duration * 2;
+                _voteTimeout[options.InitiatorPlayer.UserId] = _timing.RealTime + timeout;
+            }
+
+            DirtyCanCallVoteAll();
 
             return handle;
         }
@@ -187,6 +227,36 @@ namespace Content.Server.Voting
             player.ConnectedClient.SendMessage(msg);
         }
 
+        private void DirtyCanCallVoteAll()
+        {
+            _playerCanCallVoteDirty.UnionWith(_playerManager.GetAllPlayers());
+        }
+
+        private void SendUpdateCanCallVote(IPlayerSession player)
+        {
+            var msg = _netManager.CreateNetMessage<MsgVoteCanCall>();
+            msg.CanCall = CanCallVote(player);
+
+            _netManager.ServerSendMessage(msg, player.ConnectedClient);
+        }
+
+        public bool CanCallVote(IPlayerSession player)
+        {
+            // Admins can always call votes.
+            if (_adminMgr.HasAdminFlag(player, AdminFlags.Admin))
+            {
+                return true;
+            }
+
+            // Cannot start vote if vote is already active (as non-admin).
+            if (_votes.Count != 0)
+            {
+                return false;
+            }
+
+            return !_voteTimeout.ContainsKey(player.UserId);
+        }
+
         private void EndVote(VoteReg v)
         {
             if (v.Finished)
@@ -206,7 +276,22 @@ namespace Content.Server.Voting
             v.Dirty = true;
             var args = new VoteFinishedEventArgs(winners.Length == 1 ? winners[0] : null, winners);
             v.OnFinished?.Invoke(_voteHandles[v.Id], args);
+            DirtyCanCallVoteAll();
         }
+
+        private void CancelVote(VoteReg v)
+        {
+            if (v.Cancelled)
+                return;
+
+            v.Cancelled = true;
+            v.Finished = true;
+            v.Dirty = true;
+            v.OnCancelled?.Invoke(_voteHandles[v.Id]);
+            DirtyCanCallVoteAll();
+        }
+
+        public IEnumerable<IVoteHandle> ActiveVotes => _voteHandles.Values;
 
         public bool TryGetVote(int voteId, [NotNullWhen(true)] out IVoteHandle? vote)
         {
@@ -218,6 +303,11 @@ namespace Content.Server.Voting
 
             vote = default;
             return false;
+        }
+
+        private void DirtyCanCallVote(IPlayerSession player)
+        {
+            _playerCanCallVoteDirty.Add(player);
         }
 
         #region Preset Votes
@@ -249,10 +339,12 @@ namespace Content.Server.Voting
             public readonly TimeSpan EndTime;
             public readonly HashSet<IPlayerSession> VotesDirty = new();
 
+            public bool Cancelled;
             public bool Finished;
             public bool Dirty = true;
 
             public VoteFinishedEventHandler? OnFinished;
+            public VoteCancelledEventHandler? OnCancelled;
             public IPlayerSession? Initiator { get; }
 
             public VoteReg(int id, VoteEntry[] entries, string title, string initiatorText,
@@ -291,10 +383,22 @@ namespace Content.Server.Voting
             private readonly VoteManager _mgr;
             private readonly VoteReg _reg;
 
+            public int Id => _reg.Id;
+            public string Title => _reg.Title;
+            public string InitiatorText => _reg.InitiatorText;
+            public bool Finished => _reg.Finished;
+            public bool Cancelled => _reg.Cancelled;
+
             public event VoteFinishedEventHandler? OnFinished
             {
                 add => _reg.OnFinished += value;
                 remove => _reg.OnFinished -= value;
+            }
+
+            public event VoteCancelledEventHandler? OnCancelled
+            {
+                add => _reg.OnCancelled += value;
+                remove => _reg.OnCancelled -= value;
             }
 
             public VoteHandle(VoteManager mgr, VoteReg reg)
@@ -311,6 +415,11 @@ namespace Content.Server.Voting
             public void CastVote(IPlayerSession session, int? optionId)
             {
                 _mgr.CastVote(_reg, session, optionId);
+            }
+
+            public void Cancel()
+            {
+                _mgr.CancelVote(_reg);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using Content.Server.Administration;
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Administration;
@@ -30,6 +31,12 @@ namespace Content.Server.Voting
             var type = args[0];
 
             var mgr = IoCManager.Resolve<IVoteManager>();
+
+            if (shell.Player != null && !mgr.CanCallVote((IPlayerSession) shell.Player))
+            {
+                shell.WriteError("You can't call a vote right now!");
+                return;
+            }
 
             switch (type)
             {
@@ -153,6 +160,51 @@ namespace Content.Server.Voting
             }
 
             vote.CastVote((IPlayerSession) shell.Player!, optionN);
+        }
+    }
+
+    [AnyCommand]
+    public sealed class ListVotesCommand : IConsoleCommand
+    {
+        public string Command => "listvotes";
+        public string Description => "Lists currently active votes";
+        public string Help => "Usage: listvotes";
+
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            var mgr = IoCManager.Resolve<IVoteManager>();
+
+            foreach (var vote in mgr.ActiveVotes)
+            {
+                shell.WriteLine($"[{vote.Id}] {vote.InitiatorText}: {vote.Title}");
+            }
+        }
+    }
+
+    [AdminCommand(AdminFlags.Admin)]
+    public sealed class CancelVoteCommand : IConsoleCommand
+    {
+        public string Command => "cancelvotes";
+        public string Description => "Cancels an active vote";
+        public string Help => "Usage: cancelvote <id>\nYou can get the ID from the listvotes command.";
+
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            var mgr = IoCManager.Resolve<IVoteManager>();
+
+            if (args.Length < 1)
+            {
+                shell.WriteError("Missing ID");
+                return;
+            }
+
+            if (!int.TryParse(args[0], out var id) || !mgr.TryGetVote(id, out var vote))
+            {
+                shell.WriteError("Invalid vote ID");
+                return;
+            }
+
+            vote.Cancel();
         }
     }
 }
