@@ -35,6 +35,19 @@ namespace Content.Server.Database
             });
         }
 
+        public override async Task<ServerBanDef?> GetServerBanAsync(int id)
+        {
+            await using var db = await GetDbImpl();
+
+            var query = db.PgDbContext.Ban
+                .Include(p => p.Unban)
+                .Where(p => p.Id == id);
+
+            var ban = await query.SingleOrDefaultAsync();
+
+            return ConvertBan(ban);
+        }
+
         public override async Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId)
         {
             if (address == null && userId == null)
@@ -144,6 +157,8 @@ namespace Content.Server.Database
                 aUid = new NetUserId(aGuid);
             }
 
+            var unbanDef = ConvertUnban(ban.Unban);
+
             return new ServerBanDef(
                 ban.Id,
                 uid,
@@ -151,7 +166,27 @@ namespace Content.Server.Database
                 ban.BanTime,
                 ban.ExpirationTime,
                 ban.Reason,
-                aUid);
+                aUid,
+                unbanDef);
+        }
+
+        private static ServerUnbanDef? ConvertUnban(PostgresServerUnban? unban)
+        {
+            if (unban == null)
+            {
+                return null;
+            }
+
+            NetUserId? aUid = null;
+            if (unban.UnbanningAdmin is {} aGuid)
+            {
+                aUid = new NetUserId(aGuid);
+            }
+
+            return new ServerUnbanDef(
+                unban.Id,
+                aUid,
+                unban.UnbanTime);
         }
 
         public override async Task AddServerBanAsync(ServerBanDef serverBan)
@@ -166,6 +201,20 @@ namespace Content.Server.Database
                 BanTime = serverBan.BanTime.UtcDateTime,
                 ExpirationTime = serverBan.ExpirationTime?.UtcDateTime,
                 UserId = serverBan.UserId?.UserId
+            });
+
+            await db.PgDbContext.SaveChangesAsync();
+        }
+
+        public override async Task AddServerUnbanAsync(ServerUnbanDef serverUnban)
+        {
+            await using var db = await GetDbImpl();
+
+            db.PgDbContext.Unban.Add(new PostgresServerUnban
+            {
+                 BanId = serverUnban.BanId,
+                 UnbanningAdmin = serverUnban.UnbanningAdmin?.UserId,
+                 UnbanTime = serverUnban.UnbanTime.UtcDateTime
             });
 
             await db.PgDbContext.SaveChangesAsync();

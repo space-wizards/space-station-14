@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Server.Commands;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Players;
 using JetBrains.Annotations;
@@ -18,8 +19,11 @@ namespace Content.Server.GameObjects.Components.Observer
         public override string Name => "GhostRoleMobSpawner";
 
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool _deleteOnSpawn = true;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        private bool _makeSentient = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private int _availableTakeovers = 1;
@@ -35,6 +39,7 @@ namespace Content.Server.GameObjects.Components.Observer
 
             serializer.DataField(this, x => x.Prototype, "prototype", null);
             serializer.DataField(ref _deleteOnSpawn, "deleteOnSpawn", true);
+            serializer.DataField(ref _makeSentient, "makeSentient", true);
             serializer.DataField(ref _availableTakeovers, "availableTakeovers", 1);
         }
 
@@ -48,7 +53,11 @@ namespace Content.Server.GameObjects.Components.Observer
 
             var mob = Owner.EntityManager.SpawnEntity(Prototype, Owner.Transform.Coordinates);
 
+            if(_makeSentient)
+                MakeSentientCommand.MakeSentient(mob);
+
             mob.EnsureComponent<MindComponent>();
+
             session.ContentData().Mind.TransferTo(mob);
 
             if (++_currentTakeovers < _availableTakeovers) return true;

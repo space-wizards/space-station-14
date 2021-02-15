@@ -24,6 +24,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.GamePresets
 {
+    [GamePreset("suspicion")]
     public class PresetSuspicion : GamePreset
     {
         [Dependency] private readonly IChatManager _chatManager = default!;

@@ -80,6 +80,7 @@ namespace Content.Server.Database
         [Column("preference_id")] public int Id { get; set; }
         [Column("user_id")] public Guid UserId { get; set; }
         [Column("selected_character_slot")] public int SelectedCharacterSlot { get; set; }
+        [Column("admin_ooc_color")] public string AdminOOCColor { get; set; } = null!;
         public List<Profile> Profiles { get; } = new();
     }
 

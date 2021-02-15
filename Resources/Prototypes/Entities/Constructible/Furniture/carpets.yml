@@ -20,6 +20,15 @@
       - !type:PhysShapeAabb
         bounds: "-0.5, -0.5, 0.5, 0.5"
         layer: [ Passable ]
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
 
 - type: entity
   id: Carpet

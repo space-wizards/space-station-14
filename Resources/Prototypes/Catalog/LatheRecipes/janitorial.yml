@@ -39,3 +39,11 @@
   completetime: 500
   materials:
     glass: 50
+
+- type: latheRecipe
+  id: TrashBag
+  icon: Objects/Specific/Janitorial/trashbag.rsi
+  result: TrashBag
+  completetime: 300
+  materials:
+    glass: 15

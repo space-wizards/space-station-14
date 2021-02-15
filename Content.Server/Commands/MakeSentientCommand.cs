@@ -43,6 +43,11 @@ namespace Content.Server.Commands
                 return;
             }
 
+            MakeSentient(entity);
+        }
+
+        public static void MakeSentient(IEntity entity)
+        {
             if(entity.HasComponent<AiControllerComponent>())
                 entity.RemoveComponent<AiControllerComponent>();
 

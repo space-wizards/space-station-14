@@ -1,5 +1,7 @@
+using JetBrains.Annotations;
 using Lidgren.Network;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Chat
@@ -7,6 +9,7 @@ namespace Content.Shared.Chat
     /// <summary>
     ///     Sent from server to client to notify the client about a new chat message.
     /// </summary>
+    [UsedImplicitly]
     public sealed class MsgChatMessage : NetMessage
     {
         #region REQUIRED
@@ -38,6 +41,12 @@ namespace Content.Shared.Chat
         /// </summary>
         public EntityUid SenderEntity { get; set; }
 
+        /// <summary>
+        /// The override color of the message
+        /// </summary>
+        public Color MessageColorOverride { get; set; } = Color.Transparent;
+
+
         public override void ReadFromBuffer(NetIncomingMessage buffer)
         {
             Channel = (ChatChannel) buffer.ReadInt16();
@@ -53,6 +62,7 @@ namespace Content.Shared.Chat
                     SenderEntity = buffer.ReadEntityUid();
                     break;
             }
+            MessageColorOverride = buffer.ReadColor();
         }
 
         public override void WriteToBuffer(NetOutgoingMessage buffer)
@@ -70,6 +80,7 @@ namespace Content.Shared.Chat
                     buffer.Write(SenderEntity);
                     break;
             }
+            buffer.Write(MessageColorOverride);
         }
     }
 }

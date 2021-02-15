@@ -22,6 +22,10 @@ namespace Content.Server.Holiday.ShouldCelebrate
 
         public override bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
         {
+            // Not the needed month.
+            if (date.Month != (int) holiday.BeginMonth)
+                return false;
+
             // Occurrence NEEDS to be between 1 and 4.
             _occurrence = Math.Max(1, Math.Min(_occurrence, 4));
 

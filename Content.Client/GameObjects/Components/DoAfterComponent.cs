@@ -18,7 +18,7 @@ namespace Content.Client.GameObjects.Components
 
         public IReadOnlyDictionary<byte, ClientDoAfter> DoAfters => _doAfters;
         private readonly Dictionary<byte, ClientDoAfter> _doAfters = new();
-        
+
         public readonly List<(TimeSpan CancelTime, ClientDoAfter Message)> CancelledDoAfters = new();
 
         public DoAfterGui? Gui { get; set; }
@@ -54,7 +54,7 @@ namespace Content.Client.GameObjects.Components
             if (Gui != null && !Gui.Disposed)
                 return;
 
-            Gui = new DoAfterGui {AttachedEntity = Owner};
+            Gui = new DoAfterGui {AttachedEntity = Owner, FirstDraw = true};
 
             foreach (var (_, doAfter) in _doAfters)
             {
