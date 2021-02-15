@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -33,7 +34,7 @@ namespace Content.Shared.Actions
         {
             Performer = performer;
             ActionType = actionType;
-            if (!Performer.TryGetComponent(out PerformerActions))
+            if (!Performer.TryGetComponent(out PerformerActions!))
             {
                 throw new InvalidOperationException($"performer {performer.Name} tried to perform action {actionType} " +
                                                     $" but the performer had no actions component," +

@@ -1,5 +1,4 @@
 ﻿#nullable enable
-
 using Content.Shared.Actions;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
@@ -79,22 +78,22 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public void DoInstantAction(IEntity player)
         {
-            _action.InstantAction.DoInstantAction(new InstantActionEventArgs(player, _action.ActionType));
+            _action.InstantAction!.DoInstantAction(new InstantActionEventArgs(player, _action.ActionType));
         }
 
         public bool DoToggleAction(IEntity player, bool on)
         {
-            return _action.ToggleAction.DoToggleAction(new ToggleActionEventArgs(player, _action.ActionType, on));
+            return _action.ToggleAction!.DoToggleAction(new ToggleActionEventArgs(player, _action.ActionType, on));
         }
 
         public void DoTargetPointAction(IEntity player, EntityCoordinates target)
         {
-            _action.TargetPointAction.DoTargetPointAction(new TargetPointActionEventArgs(player, target, _action.ActionType));
+            _action.TargetPointAction!.DoTargetPointAction(new TargetPointActionEventArgs(player, target, _action.ActionType));
         }
 
         public void DoTargetEntityAction(IEntity player, IEntity target)
         {
-            _action.TargetEntityAction.DoTargetEntityAction(new TargetEntityActionEventArgs(player, _action.ActionType,
+            _action.TargetEntityAction!.DoTargetEntityAction(new TargetEntityActionEventArgs(player, _action.ActionType,
                 target));
         }
 
@@ -145,23 +144,23 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public void DoInstantAction(IEntity player)
         {
-            _action.InstantAction.DoInstantAction(new InstantItemActionEventArgs(player, _item, _action.ActionType));
+            _action.InstantAction!.DoInstantAction(new InstantItemActionEventArgs(player, _item, _action.ActionType));
         }
 
         public bool DoToggleAction(IEntity player, bool on)
         {
-            return _action.ToggleAction.DoToggleAction(new ToggleItemActionEventArgs(player, on, _item, _action.ActionType));
+            return _action.ToggleAction!.DoToggleAction(new ToggleItemActionEventArgs(player, on, _item, _action.ActionType));
         }
 
         public void DoTargetPointAction(IEntity player, EntityCoordinates target)
         {
-            _action.TargetPointAction.DoTargetPointAction(new TargetPointItemActionEventArgs(player, target, _item,
+            _action.TargetPointAction!.DoTargetPointAction(new TargetPointItemActionEventArgs(player, target, _item,
                 _action.ActionType));
         }
 
         public void DoTargetEntityAction(IEntity player, IEntity target)
         {
-            _action.TargetEntityAction.DoTargetEntityAction(new TargetEntityItemActionEventArgs(player, target,
+            _action.TargetEntityAction!.DoTargetEntityAction(new TargetEntityItemActionEventArgs(player, target,
                 _item, _action.ActionType));
         }
 

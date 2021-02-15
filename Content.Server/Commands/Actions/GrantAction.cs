@@ -47,7 +47,7 @@ namespace Content.Server.Commands.Actions
                 shell.WriteLine("unrecognized actionType " + actionType);
                 return;
             }
-            actionsComponent.Grant(action.ActionType);
+            actionsComponent.Grant(action!.ActionType);
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Content.Server.Commands.Actions
                 return;
             }
 
-            actionsComponent.Revoke(action.ActionType);
+            actionsComponent.Revoke(action!.ActionType);
         }
     }
 }

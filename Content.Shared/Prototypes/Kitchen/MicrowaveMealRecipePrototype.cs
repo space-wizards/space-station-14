@@ -19,10 +19,10 @@ namespace Content.Shared.Prototypes.Kitchen
         private string _name;
         private string _result;
         private int _cookTime;
-        
+
         private Dictionary<string, int> _ingsReagents;
         private Dictionary<string, int> _ingsSolids;
-        
+
         public string Name => Loc.GetString(_name);
         public string ID => _id;
         public string Result => _result;
@@ -30,7 +30,7 @@ namespace Content.Shared.Prototypes.Kitchen
         public IReadOnlyDictionary<string, int> IngredientsReagents => _ingsReagents;
         public IReadOnlyDictionary<string, int> IngredientsSolids => _ingsSolids;
 
-        
+
         public void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);

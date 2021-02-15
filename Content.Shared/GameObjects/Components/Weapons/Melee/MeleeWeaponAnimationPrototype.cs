@@ -19,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Weapons.Melee
         private float _speed;
         private float _width;
         private WeaponArcType _arcType;
-        
+
         [ViewVariables] public string ID => _id;
         [ViewVariables] public string State => _state;
         [ViewVariables] public string Prototype => _prototype;

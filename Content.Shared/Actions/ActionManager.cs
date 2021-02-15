@@ -1,4 +1,5 @@
-﻿﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -14,12 +15,11 @@ namespace Content.Shared.Actions
         [Dependency]
         private readonly IPrototypeManager _prototypeManager = default!;
 
-        private Dictionary<ActionType, ActionPrototype> _typeToAction;
-        private Dictionary<ItemActionType, ItemActionPrototype> _typeToItemAction;
+        private readonly Dictionary<ActionType, ActionPrototype> _typeToAction = new();
+        private readonly Dictionary<ItemActionType, ItemActionPrototype> _typeToItemAction = new();
 
         public void Initialize()
         {
-            _typeToAction = new Dictionary<ActionType, ActionPrototype>();
             foreach (var action in _prototypeManager.EnumeratePrototypes<ActionPrototype>())
             {
                 if (!_typeToAction.TryAdd(action.ActionType, action))
@@ -30,7 +30,6 @@ namespace Content.Shared.Actions
                 }
             }
 
-            _typeToItemAction = new Dictionary<ItemActionType, ItemActionPrototype>();
             foreach (var action in _prototypeManager.EnumeratePrototypes<ItemActionPrototype>())
             {
                 if (!_typeToItemAction.TryAdd(action.ActionType, action))
@@ -53,7 +52,7 @@ namespace Content.Shared.Actions
         /// Tries to get the action of the indicated type
         /// </summary>
         /// <returns>true if found</returns>
-        public bool TryGet(ActionType actionType, out ActionPrototype action)
+        public bool TryGet(ActionType actionType, out ActionPrototype? action)
         {
             return _typeToAction.TryGetValue(actionType, out action);
         }
@@ -62,7 +61,7 @@ namespace Content.Shared.Actions
         /// Tries to get the item action of the indicated type
         /// </summary>
         /// <returns>true if found</returns>
-        public bool TryGet(ItemActionType actionType, out ItemActionPrototype action)
+        public bool TryGet(ItemActionType actionType, out ItemActionPrototype? action)
         {
             return _typeToItemAction.TryGetValue(actionType, out action);
         }

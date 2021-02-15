@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,35 +20,35 @@ namespace Content.Shared.Actions
         /// Icon representing this action in the UI.
         /// </summary>
         [ViewVariables]
-        public SpriteSpecifier Icon { get; private set; }
+        public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         /// For toggle actions only, icon to show when toggled on. If omitted,
         /// the action will simply be highlighted when turned on.
         /// </summary>
         [ViewVariables]
-        public SpriteSpecifier IconOn { get; private set; }
+        public SpriteSpecifier IconOn { get; private set; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         /// Name to show in UI. Accepts formatting.
         /// </summary>
-        public FormattedMessage Name { get; private set; }
+        public FormattedMessage Name { get; private set; } = new();
 
         /// <summary>
         /// Description to show in UI. Accepts formatting.
         /// </summary>
-        public FormattedMessage Description { get; private set; }
+        public FormattedMessage Description { get; private set; } = new();
 
         /// <summary>
         /// Requirements message to show in UI. Accepts formatting, but generally should be avoided
         /// so the requirements message isn't too prominent in the tooltip.
         /// </summary>
-        public string Requires { get; private set; }
+        public string Requires { get; private set; } = null!;
 
         /// <summary>
         /// The type of behavior this action has. This is valid clientside and serverside.
         /// </summary>
-        public BehaviorType BehaviorType { get; protected set; }
+        public BehaviorType BehaviorType { get; protected set; } = BehaviorType.None;
 
         /// <summary>
         /// For targetpoint or targetentity actions, if this is true the action will remain
@@ -71,12 +72,12 @@ namespace Content.Shared.Actions
         /// <summary>
         /// Filters that can be used to filter this item in action menu.
         /// </summary>
-        public IEnumerable<string> Filters { get; private set; }
+        public IEnumerable<string> Filters { get; private set; } = new List<string>();
 
         /// <summary>
         /// Keywords that can be used to search this item in action menu.
         /// </summary>
-        public IEnumerable<string> Keywords { get; private set; }
+        public IEnumerable<string> Keywords { get; private set; } = new List<string>();
 
         /// <summary>
         /// True if this is an action that requires selecting a target
@@ -93,7 +94,7 @@ namespace Content.Shared.Actions
             serializer.DataReadFunction("description", string.Empty,
                 s => Description = FormattedMessage.FromMarkup(s));
 
-            serializer.DataField(this, x => x.Requires,"requires", null);
+            serializer.DataField(this, x => x.Requires,"requires", null!);
             serializer.DataField(this, x => x.Icon,"icon", SpriteSpecifier.Invalid);
             serializer.DataField(this, x => x.IconOn,"iconOn", SpriteSpecifier.Invalid);
 
