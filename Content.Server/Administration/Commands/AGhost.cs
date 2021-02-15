@@ -46,6 +46,17 @@ namespace Content.Server.Administration.Commands
                     .SpawnEntity("AdminObserver", player.AttachedEntity?.Transform.Coordinates
                                                   ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint());
 
+                // Upgrading normal ghost to admin one
+                if (mind.VisitingEntity != null && mind.VisitingEntity.Prototype?.ID == "MobObserver")
+                {
+                    var visiting = mind.VisitingEntity;
+                    mind.UnVisit();
+                    visiting.Delete();
+                }
+                //for ghosts that can't return to body
+                var markGhostForDelete = mind.CurrentEntity != null && mind.CurrentEntity.Prototype?.ID == "MobObserver";
+                var currentEntity = mind.CurrentEntity;
+
                 if (canReturn)
                 {
                     ghost.Name = mind.CharacterName;
@@ -55,6 +66,11 @@ namespace Content.Server.Administration.Commands
                 {
                     ghost.Name = player.Name;
                     mind.TransferTo(ghost);
+                }
+
+                if (markGhostForDelete)
+                {
+                    currentEntity.Delete();
                 }
 
                 ghost.GetComponent<GhostComponent>().CanReturnToBody = canReturn;
