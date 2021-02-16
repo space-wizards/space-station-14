@@ -5,13 +5,11 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Physics;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 
 namespace Content.Shared.Maps
 {

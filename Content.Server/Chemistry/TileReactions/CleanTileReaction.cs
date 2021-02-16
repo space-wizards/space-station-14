@@ -2,7 +2,6 @@
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using System.Linq;

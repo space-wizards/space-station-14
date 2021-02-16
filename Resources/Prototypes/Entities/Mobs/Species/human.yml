@@ -20,7 +20,7 @@
   # Organs
   - type: SolutionContainer
     maxVol: 250
-    caps: AddTo, RemoveFrom
+    caps: Injectable, Drawable
   - type: Bloodstream
     max_volume: 100
   # StatusEffects
@@ -164,9 +164,12 @@
       200: !type:DeadMobState {}
   - type: Destructible
     thresholds:
-      400:
-        behaviors:
-          - !type:GibBehavior { }
+    - trigger:
+        !type:DamageTypeTrigger
+        type: Blunt
+        damage: 400
+      behaviors:
+      - !type:GibBehavior { }
   - type: HeatResistance
   - type: Appearance
     visuals:
@@ -196,6 +199,7 @@
   - type: Pullable
   - type: DoAfter
   - type: CreamPied
+  - type: Stripping
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -206,6 +210,8 @@
     meat: FoodMeat
   - type: Recyclable
     safe: false
+  - type: Speech
+  - type: Emoting
 
 - type: entity
   save: false

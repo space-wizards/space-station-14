@@ -1,10 +1,9 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -29,7 +28,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         private INodeGroup _nodeGroup = BaseNodeGroup.NullGroup;
 
         [ViewVariables]
-        public IEntity Owner { get; private set; }
+        public IEntity Owner { get; private set; } = default!;
 
         [ViewVariables]
         private bool _needsGroup = true;
@@ -46,8 +45,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         private bool _deleting = false;
 
-        private INodeGroupFactory _nodeGroupFactory;
-
         public virtual void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.NodeGroupID, "nodeGroupID", NodeGroupID.Default);
@@ -56,7 +53,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public virtual void Initialize(IEntity owner)
         {
             Owner = owner;
-            _nodeGroupFactory = IoCManager.Resolve<INodeGroupFactory>();
         }
 
         public virtual void OnContainerStartup()
@@ -163,7 +159,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private INodeGroup MakeNewGroup()
         {
-            return _nodeGroupFactory.MakeNodeGroup(this);
+            return IoCManager.Resolve<INodeGroupFactory>().MakeNodeGroup(this);
         }
     }
 }

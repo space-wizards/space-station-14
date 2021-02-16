@@ -3,9 +3,7 @@ using Content.Shared.GameObjects.Components.Power;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Power
@@ -19,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Power
         private Animation _insertingMetalAnimation;
         private Animation _insertingGlassAnimation;
         private Animation _insertingGoldAnimation;
-        private Animation _insertingPhoronAnimation;
+        private Animation _insertingPlasmaAnimation;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -29,7 +27,7 @@ namespace Content.Client.GameObjects.Components.Power
             _insertingMetalAnimation = PopulateAnimation("autolathe_inserting_metal_plate", "autolathe_inserting_unlit", 0.9f);
             _insertingGlassAnimation = PopulateAnimation("autolathe_inserting_glass_plate", "autolathe_inserting_unlit", 0.9f);
             _insertingGoldAnimation = PopulateAnimation("autolathe_inserting_gold_plate", "autolathe_inserting_unlit", 0.9f);
-            _insertingPhoronAnimation = PopulateAnimation("autolathe_inserting_phoron_sheet", "autolathe_inserting_unlit", 0.9f);
+            _insertingPlasmaAnimation = PopulateAnimation("autolathe_inserting_plasma_sheet", "autolathe_inserting_unlit", 0.9f);
         }
 
         private Animation PopulateAnimation(string sprite, string spriteUnlit, float length)
@@ -103,10 +101,10 @@ namespace Content.Client.GameObjects.Components.Power
                         animPlayer.Play(_insertingGoldAnimation, AnimationKey);
                     }
                     break;
-                case LatheVisualState.InsertingPhoron:
+                case LatheVisualState.InsertingPlasma:
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
-                        animPlayer.Play(_insertingPhoronAnimation, AnimationKey);
+                        animPlayer.Play(_insertingPlasmaAnimation, AnimationKey);
                     }
                     break;
                 default:

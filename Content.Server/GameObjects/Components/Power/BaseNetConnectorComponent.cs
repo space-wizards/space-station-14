@@ -1,4 +1,6 @@
-﻿using System.Linq;
+#nullable enable
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
@@ -15,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         [ViewVariables]
         public TNetType Net { get => _net; set => SetNet(value); }
-        private TNetType _net;
+        private TNetType _net = default!; //set in OnAdd()
 
         protected abstract TNetType NullNet { get; }
 
@@ -68,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         protected abstract void RemoveSelfFromNet(TNetType net);
 
-        private bool TryFindNet(out TNetType foundNet)
+        private bool TryFindNet([NotNullWhen(true)] out TNetType? foundNet)
         {
             if (Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {

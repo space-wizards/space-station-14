@@ -17,7 +17,7 @@
   id: YellowOxygenTankFilled
   parent: OxygenTankFilled
   name: oxygen tank
-  description: A tank of oxygen. This one is in yellow.
+  description: A tank of oxygen. This one is yellow.
   suffix: Filled
   components:
     - type: Sprite
@@ -29,7 +29,7 @@
   id: RedOxygenTankFilled
   parent: OxygenTankFilled
   name: oxygen tank
-  description: A tank of oxygen. This one is in yellow.
+  description: A tank of oxygen. This one is red.
   suffix: Filled
   components:
     - type: Sprite
@@ -103,11 +103,11 @@
       sprite: Objects/Tanks/generic.rsi
 
 - type: entity
-  id: PhoronTankFilled
-  parent: PhoronTank
-  name: phoron tank
+  id: PlasmaTankFilled
+  parent: PlasmaTank
+  name: plasma tank
   suffix: Filled
-  description: "Contains dangerous phoron. Do not inhale. Warning: extremely flammable."
+  description: "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
   components:
     - type: GasTank
       outputPressure: 101.325
@@ -117,5 +117,5 @@
           - 0
           - 0
           - 0
-          - 11.3146928 # phoron
+          - 11.3146928 # plasma
         temperature: 293.15

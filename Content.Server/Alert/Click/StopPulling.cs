@@ -2,8 +2,8 @@
  using Content.Shared.GameObjects.Components.Pulling;
  using Content.Shared.GameObjects.EntitySystems;
  using JetBrains.Annotations;
- using Robust.Shared.GameObjects.Systems;
- using Robust.Shared.Serialization;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Alert.Click
 {
@@ -13,7 +13,7 @@ namespace Content.Server.Alert.Click
     [UsedImplicitly]
     public class StopPulling : IAlertClick
     {
-        public void ExposeData(ObjectSerializer serializer) { }
+        void IExposeData.ExposeData(ObjectSerializer serializer) { }
 
         public void AlertClicked(ClickAlertEventArgs args)
         {

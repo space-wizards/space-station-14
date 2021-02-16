@@ -1,6 +1,6 @@
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.Actions.Test;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Utility.BehaviorSets
 {

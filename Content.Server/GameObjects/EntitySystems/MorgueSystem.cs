@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Morgue;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (_accumulatedFrameTime >= 10)
             {
-                foreach (var morgue in ComponentManager.EntityQuery<MorgueEntityStorageComponent>())
+                foreach (var morgue in ComponentManager.EntityQuery<MorgueEntityStorageComponent>(true))
                 {
                     morgue.Update();
                 }

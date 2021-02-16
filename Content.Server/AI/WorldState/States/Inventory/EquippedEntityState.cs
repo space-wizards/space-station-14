@@ -1,6 +1,6 @@
 using Content.Server.GameObjects.Components.GUI;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.WorldState.States.Inventory
 {

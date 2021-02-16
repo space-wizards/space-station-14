@@ -4,12 +4,11 @@ using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using System.Threading.Tasks;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -62,14 +61,16 @@ namespace Content.Server.GameObjects.Components.Fluids
             Owner.EnsureComponentWarn(out SolutionContainerComponent _);
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents)) return;
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
+                return false;
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+                return false;
 
             if (CurrentVolume <= 0)
             {
-                return;
+                return true;
             }
 
             if (eventArgs.Target == null)
@@ -77,12 +78,12 @@ namespace Content.Server.GameObjects.Components.Fluids
                 // Drop the liquid on the mop on to the ground
                 contents.SplitSolution(CurrentVolume).SpillAt(eventArgs.ClickLocation, "PuddleSmear");
 
-                return;
+                return true;
             }
 
             if (!eventArgs.Target.TryGetComponent(out PuddleComponent? puddleComponent))
             {
-                return;
+                return true;
             }
             // Essentially pickup either:
             // - _pickupAmount,
@@ -101,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 }
                 else
                 {
-                    return;
+                    return true;
                 }
             }
             else
@@ -121,12 +122,12 @@ namespace Content.Server.GameObjects.Components.Fluids
             // Give some visual feedback shit's happening (for anyone who can't hear sound)
             Owner.PopupMessage(eventArgs.User, Loc.GetString("Swish"));
 
-            if (string.IsNullOrWhiteSpace(_pickupSound))
+            if (!string.IsNullOrWhiteSpace(_pickupSound))
             {
-                return;
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_pickupSound, Owner);
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_pickupSound, Owner);
+            return true;
         }
     }
 }

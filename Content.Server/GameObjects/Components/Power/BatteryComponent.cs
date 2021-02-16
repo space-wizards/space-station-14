@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -53,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         ///     If sufficient charge is avaiable on the battery, use it. Otherwise, don't.
         /// </summary>
-        public bool TryUseCharge(float chargeToUse)
+        public virtual bool TryUseCharge(float chargeToUse)
         {
             if (chargeToUse >= CurrentCharge)
             {
@@ -66,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        public float UseCharge(float toDeduct)
+        public virtual float UseCharge(float toDeduct)
         {
             var chargeChangedBy = Math.Min(CurrentCharge, toDeduct);
             CurrentCharge -= chargeChangedBy;

@@ -14,8 +14,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -143,7 +141,7 @@ namespace Content.Server.GameObjects.Components
     [UsedImplicitly]
     public sealed class ToggleMagbootsAction : IToggleItemAction
     {
-        public void ExposeData(ObjectSerializer serializer) { }
+        void IExposeData.ExposeData(ObjectSerializer serializer) { }
 
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {

@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Threading;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Random;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.StationEvents
@@ -43,7 +42,7 @@ namespace Content.Server.StationEvents
         {
             var componentManager = IoCManager.Resolve<IComponentManager>();
 
-            foreach (var component in componentManager.EntityQuery<PowerReceiverComponent>())
+            foreach (var component in componentManager.EntityQuery<PowerReceiverComponent>(true))
             {
                 component.PowerDisabled = true;
                 _powered.Add(component.Owner);

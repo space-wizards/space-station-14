@@ -1,5 +1,5 @@
 ﻿using Robust.Client.UserInterface;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.UserInterface
 {

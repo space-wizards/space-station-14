@@ -8,16 +8,11 @@ using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
@@ -179,6 +174,10 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 return ApcExternalPowerState.None;
             }
             var consumer = batteryStorage.Consumer;
+
+            if (consumer == null)
+                return ApcExternalPowerState.None;
+
             if (consumer.ReceivedPower == 0 && consumer.DrawRate != 0)
             {
                 return ApcExternalPowerState.None;

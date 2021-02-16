@@ -5,9 +5,8 @@ using Content.Shared.GameObjects.Components.Observer;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
@@ -46,7 +45,7 @@ namespace Content.Client.GameObjects.Components.Observer
 
         private void SetGhostVisibility(bool visibility)
         {
-            foreach (var ghost in _componentManager.GetAllComponents(typeof(GhostComponent)))
+            foreach (var ghost in _componentManager.GetAllComponents(typeof(GhostComponent), true))
             {
                 if (ghost.Owner.TryGetComponent(out SpriteComponent? component))
                 {

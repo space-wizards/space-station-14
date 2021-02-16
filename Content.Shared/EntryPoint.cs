@@ -1,15 +1,17 @@
-﻿﻿using System;
- using System.Collections.Generic;
- using System.Globalization;
- using Content.Shared.Maps;
- using Robust.Shared.ContentPack;
- using Robust.Shared.Interfaces.Map;
- using Robust.Shared.IoC;
- using Robust.Shared.Localization;
- using Robust.Shared.Localization.Macros;
- using Robust.Shared.Prototypes;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using Content.Shared.Chemistry;
+using Content.Shared.Maps;
+using Robust.Shared.ContentPack;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Localization.Macros;
+using Robust.Shared.Log;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
- namespace Content.Shared
+namespace Content.Shared
 {
     public class EntryPoint : GameShared
     {
@@ -18,16 +20,17 @@
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly ITextMacroFactory _textMacroFactory = default!;
+        [Dependency] private readonly IResourceManager _resourceManager = default!;
 
         public override void PreInit()
         {
             IoCManager.InjectDependencies(this);
 
-            var textMacroFactory = IoCManager.Resolve<ITextMacroFactory>();
-            textMacroFactory.DoAutoRegistrations();
+            _textMacroFactory.DoAutoRegistrations();
 
             // Default to en-US.
-            Loc.LoadCulture(new CultureInfo(Culture));
+            Loc.LoadCulture(_resourceManager, _textMacroFactory, new CultureInfo(Culture));
         }
 
         public override void Init()
@@ -39,6 +42,33 @@
             base.PostInit();
 
             _initTileDefinitions();
+            CheckReactions();
+        }
+
+        private void CheckReactions()
+        {
+            foreach (var reaction in _prototypeManager.EnumeratePrototypes<ReactionPrototype>())
+            {
+                foreach (var reactant in reaction.Reactants.Keys)
+                {
+                    if (!_prototypeManager.HasIndex<ReagentPrototype>(reactant))
+                    {
+                        Logger.ErrorS(
+                            "chem", "Reaction {reaction} has unknown reactant {reagent}.",
+                            reaction.ID, reactant);
+                    }
+                }
+
+                foreach (var product in reaction.Products.Keys)
+                {
+                    if (!_prototypeManager.HasIndex<ReagentPrototype>(product))
+                    {
+                        Logger.ErrorS(
+                            "chem", "Reaction {reaction} has unknown product {product}.",
+                            reaction.ID, product);
+                    }
+                }
+            }
         }
 
         private void _initTileDefinitions()
@@ -55,6 +85,7 @@
                 {
                     continue;
                 }
+
                 prototypeList.Add(tileDef);
             }
 

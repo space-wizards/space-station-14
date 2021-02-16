@@ -99,8 +99,8 @@
       amount: 0.5
 
 - type: reagent
-  id: chem.Phoron
-  name: phoron
+  id: chem.Plasma
+  name: plasma
   desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
   physicalDesc: gaseous
   color: "#7e009e"
@@ -125,6 +125,15 @@
       amount: -4
     - !type:AdjustHealth
       amount: -8
+
+- type: reagent
+  id: chem.FluorosulfuricAcid
+  name: fluorosulfuric acid
+  desc: An extremely corrosive chemical substance.
+  physicalDecs: strong-smelling
+  color: "#5050ff"
+  boilingPoint: 165
+  meltingPoint: -87
 
 - type: reagent
   id: chem.TableSalt
@@ -241,3 +250,13 @@
   meltingPoint: -80.7
   tileReactions:
     - !type:FlammableTileReaction {}
+
+- type: reagent
+  id: chem.Fluorosurfactant
+  name: fluorosurfactant
+  desc: A perfluoronated sulfonic acid that forms a foam when mixed with water.
+  physicalDesc: opaque
+  color: "#9e6b38"
+  boilingPoint: 190.0 # Perfluorooctanoic Acid.
+  meltingPoint: 45.0
+

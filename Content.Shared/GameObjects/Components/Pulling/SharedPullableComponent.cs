@@ -7,10 +7,6 @@ using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -53,6 +49,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     var oldPullerPhysics = _pullerPhysics;
 
                     _puller = null;
+                    Dirty();
                     _pullerPhysics = null;
 
                     if (_physics != null)
@@ -134,6 +131,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     // Pull start confirm
 
                     _puller = value;
+                    Dirty();
                     _pullerPhysics = valuePhysics;
 
                     _physics.EnsureController<PullController>().Manager = this;

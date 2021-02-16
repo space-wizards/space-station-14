@@ -29,7 +29,7 @@ namespace Content.Shared
             GameLobbyEnabled = CVarDef.Create("game.lobbyenabled", false, CVar.ARCHIVE);
 
         public static readonly CVarDef<int>
-            GameLobbyDuration = CVarDef.Create("game.lobbyduration", 20, CVar.ARCHIVE);
+            GameLobbyDuration = CVarDef.Create("game.lobbyduration", 60, CVar.ARCHIVE);
 
         public static readonly CVarDef<string>
             GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
@@ -240,6 +240,12 @@ namespace Content.Shared
 
         public static readonly CVarDef<int> MaxMidiLaggedBatches =
             CVarDef.Create("midi.max_lagged_batches", 8, CVar.SERVERONLY);
+
+        /*
+         * Holidays
+         */
+
+        public static readonly CVarDef<bool> HolidaysEnabled = CVarDef.Create("holidays.enabled", true, CVar.SERVERONLY);
 
         /*
          * Branding stuff

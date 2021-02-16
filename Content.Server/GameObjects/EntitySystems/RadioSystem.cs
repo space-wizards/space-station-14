@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -25,7 +24,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _messages.Add(message);
 
-            foreach (var radio in ComponentManager.EntityQuery<IRadio>())
+            foreach (var radio in ComponentManager.EntityQuery<IRadio>(true))
             {
                 if (radio.Channels.Contains(channel))
                 {

@@ -7,8 +7,6 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 
@@ -80,13 +78,13 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
         {
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
-                Logger.Error($"{typeof(BaseVentComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
+                Logger.Error($"{nameof(BaseVentComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
                 return;
             }
             _ventInlet = container.Nodes.OfType<PipeNode>().FirstOrDefault();
             if (_ventInlet == null)
             {
-                Logger.Error($"{typeof(BaseVentComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                Logger.Error($"{nameof(BaseVentComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
         }

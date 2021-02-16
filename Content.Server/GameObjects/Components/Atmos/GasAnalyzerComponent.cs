@@ -9,18 +9,13 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Robust.Server.Player;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -253,18 +248,20 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!eventArgs.CanReach)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("You can't reach there!"));
-                return;
+                return true;
             }
 
             if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 OpenInterface(actor.playerSession, eventArgs.ClickLocation);
             }
+
+            return true;
         }
 
 

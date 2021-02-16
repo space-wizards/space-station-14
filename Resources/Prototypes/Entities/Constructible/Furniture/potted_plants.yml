@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: PottedPlantBase
   abstract: true
   components:
@@ -23,6 +23,8 @@
   - type: Sprite
     sprite: Constructible/Misc/potted_plants.rsi
   - type: PottedPlantHide
+  - type: SecretStash
+    secretPartName: the plant
   - type: Anchorable
   - type: Pullable
 

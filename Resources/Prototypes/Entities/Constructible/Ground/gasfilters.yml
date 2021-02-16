@@ -13,10 +13,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Sprite
     netsync: false
     sprite: Constructible/Atmos/gasfilter.rsi
@@ -28,7 +30,7 @@
     visuals:
     - type: PipeConnectorVisualizer
     - type: GasFilterVisualizer
-    
+
 - type: entity
   parent: GasFilterBase
   id: GasFilter
@@ -49,4 +51,4 @@
   - type: GasFilter
     inletDirection: South
     filterOutletDirection: East
-    outletDirection: North 
+    outletDirection: North

@@ -2,10 +2,9 @@
 using Content.Server.GameObjects.Components.Weapon;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Explosion

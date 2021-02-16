@@ -1,8 +1,7 @@
-﻿using System;
-using Content.Shared.GameObjects.Components.Inventory;
+﻿using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
@@ -14,6 +13,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     This DOES NOT fire when removing the entity from a hand slot (<see cref="IUnequippedHand"/>), nor
     ///     does it fire when removing the entity from held/equipped storage.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IUnequipped
     {
         void Unequipped(UnequippedEventArgs eventArgs);

@@ -2,8 +2,6 @@ using Content.Server.Cargo;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Cargo;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {

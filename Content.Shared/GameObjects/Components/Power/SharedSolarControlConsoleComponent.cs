@@ -1,6 +1,5 @@
 using System;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
