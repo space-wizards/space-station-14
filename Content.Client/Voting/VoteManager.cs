@@ -46,9 +46,12 @@ namespace Content.Client.Voting
             if (_popupContainer == null)
                 return;
 
-            foreach (var popup in _votePopups.Values)
+            if (!_popupContainer.Disposed)
             {
-                popup.Orphan();
+                foreach (var popup in _votePopups.Values)
+                {
+                    popup.Orphan();
+                }
             }
 
             _votePopups.Clear();
