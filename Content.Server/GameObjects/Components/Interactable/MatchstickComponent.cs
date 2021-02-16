@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Threading.Tasks;
+using Content.Server.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -82,6 +83,8 @@ namespace Content.Server.GameObjects.Components.Interactable
             // Change state
             CurrentState = SharedBurningStates.Lit;
             Owner.SpawnTimer(_duration * 1000, () => CurrentState = SharedBurningStates.Burnt);
+            Owner.Transform.Coordinates
+                .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);//causes match to light atmosphere when held.
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
