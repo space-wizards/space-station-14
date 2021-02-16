@@ -25,9 +25,14 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
             return canMove;
         }
 
-        public static bool CanInteract(IEntity entity)
+        public static bool CanInteract(IEntity? entity)
         {
             var canInteract = true;
+
+            if (entity == null)
+            {
+                return canInteract;
+            }
 
             foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
@@ -37,9 +42,14 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
             return canInteract;
         }
 
-        public static bool CanUse(IEntity entity)
+        public static bool CanUse(IEntity? entity)
         {
             var canUse = true;
+
+            if (entity == null)
+            {
+                return canUse;
+            }
 
             foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {

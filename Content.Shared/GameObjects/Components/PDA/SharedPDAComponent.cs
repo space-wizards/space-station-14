@@ -108,9 +108,9 @@ namespace Content.Shared.GameObjects.Components.PDA
     [Serializable, NetSerializable]
     public struct PDAIdInfoText
     {
-        public string ActualOwnerName;
-        public string IdOwner;
-        public string JobTitle;
+        public string? ActualOwnerName;
+        public string? IdOwner;
+        public string? JobTitle;
     }
 
     [Serializable, NetSerializable]
