@@ -22,11 +22,11 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Map;
-using Robust.Shared.Network;
 
 namespace Content.Server.GameObjects.Components.GUI
 {
@@ -244,7 +244,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             return hand != null &&
                    hand.Enabled &&
-                   hand.Container.CanInsert(item.Owner) == true;
+                   hand.Container.CanInsert(item.Owner);
         }
 
         /// <summary>
