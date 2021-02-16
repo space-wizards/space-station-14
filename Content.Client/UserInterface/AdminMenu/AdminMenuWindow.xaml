@@ -10,6 +10,6 @@
         <atmosTab:AtmosTab />
         <adminMenu:RoundTab />
         <adminMenu:ServerTab />
-        <adminMenu:PlayerTab />
+        <adminMenu:PlayerTab Name="PlayerTabControl" />
     </TabContainer>
 </SS14Window>

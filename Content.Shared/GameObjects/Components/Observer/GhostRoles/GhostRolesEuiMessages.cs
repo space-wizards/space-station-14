@@ -2,7 +2,7 @@ using System;
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Observer
+namespace Content.Shared.GameObjects.Components.Observer.GhostRoles
 {
     [NetSerializable, Serializable]
     public struct GhostRoleInfo

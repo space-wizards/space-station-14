@@ -1,6 +1,7 @@
 using Content.Client.Chat;
 using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
+using Content.Client.Voting;
 using Content.Shared.Input;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
@@ -18,6 +19,7 @@ namespace Content.Client.State
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IVoteManager _voteManager = default!;
 
         [ViewVariables] private ChatBox _gameChat;
 
@@ -35,6 +37,7 @@ namespace Content.Client.State
 
             _userInterfaceManager.StateRoot.AddChild(_gameHud.RootControl);
             _chatManager.SetChatBox(_gameChat);
+            _voteManager.SetPopupContainer(_gameHud.VoteContainer);
             _gameChat.DefaultChatFormat = "say \"{0}\"";
             _gameChat.Input.PlaceHolder = Loc.GetString("Say something! [ for OOC");
 
