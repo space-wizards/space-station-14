@@ -130,6 +130,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, _powerCellContainer.ContainedEntity != null);
             _appearanceComponent?.SetData(AmmoVisuals.AmmoCount, ShotsLeft);
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
+            Dirty();
         }
 
         public override IEntity PeekAmmo()
