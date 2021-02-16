@@ -1,0 +1,88 @@
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         xmlns:style="clr-namespace:Content.Client.UserInterface.Stylesheets"
+         xmlns:cui="clr-namespace:Content.Client.UserInterface"
+         xmlns:chat="clr-namespace:Content.Client.Chat"
+         xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths"
+         xmlns:voting="clr-namespace:Content.Client.Voting">
+
+    <!-- One day I'll code a Margin property for controls. -->
+    <MarginContainer MarginBottomOverride="20" MarginLeftOverride="20" MarginRightOverride="20"
+                     MarginTopOverride="20">
+        <PanelContainer StyleClasses="AngleRect" />
+        <VBoxContainer>
+            <!-- Top row -->
+            <HBoxContainer CustomMinimumSize="0 40">
+                <MarginContainer MarginLeftOverride="8">
+                    <Label StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'Lobby'}" />
+                </MarginContainer>
+                <Label Name="CServerName" StyleClasses="LabelHeadingBigger" VAlign="Center" />
+                <voting:VoteCallMenuButton Name="CCallVoteButton" StyleClasses="ButtonBig" />
+                <Button Name="COptionsButton" StyleClasses="ButtonBig" Text="{Loc 'Options'}" />
+                <Button Name="CLeaveButton" StyleClasses="ButtonBig" Text="{Loc 'Leave'}" />
+            </HBoxContainer>
+            <!-- Gold line -->
+            <PanelContainer>
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}"
+                                      ContentMarginTopOverride="2" />
+                </PanelContainer.PanelOverride>
+            </PanelContainer>
+            <!-- Middle section with the two vertical panels -->
+            <HBoxContainer SizeFlagsVertical="FillExpand">
+                <!-- Left panel -->
+                <VBoxContainer Name="CLeftPanelContainer" SizeFlagsHorizontal="FillExpand">
+                    <cui:StripeBack>
+                        <MarginContainer MarginLeftOverride="3" MarginRightOverride="3" MarginBottomOverride="3"
+                                         MarginTopOverride="3">
+                            <HBoxContainer SeparationOverride="6">
+                                <Button Name="CObserveButton" Text="{Loc 'Observe'}" StyleClasses="ButtonBig" />
+                                <Label Name="CStartTime" Align="Right"
+                                       FontColorOverride="{x:Static maths:Color.DarkGray}"
+                                       StyleClasses="LabelBig" SizeFlagsHorizontal="FillExpand" />
+                                <Button Name="CReadyButton" ToggleMode="True" Text="{Loc 'Ready Up'}"
+                                        StyleClasses="ButtonBig" />
+                            </HBoxContainer>
+                        </MarginContainer>
+                    </cui:StripeBack>
+                    <MarginContainer SizeFlagsVertical="FillExpand" MarginLeftOverride="3" MarginRightOverride="3"
+                                     MarginBottomOverride="3"
+                                     MarginTopOverride="3">
+                        <chat:ChatBox Name="CChat" />
+                    </MarginContainer>
+                </VBoxContainer>
+                <!-- Gold line -->
+                <PanelContainer CustomMinimumSize="2 0">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" />
+                    </PanelContainer.PanelOverride>
+                </PanelContainer>
+                <!-- Right panel -->
+                <Control SizeFlagsHorizontal="FillExpand">
+                    <VBoxContainer>
+                        <!-- Player list -->
+                        <cui:NanoHeading Text="{Loc 'Online Players'}" />
+                        <MarginContainer SizeFlagsVertical="FillExpand"
+                                         MarginRightOverride="3" MarginLeftOverride="3"
+                                         MarginBottomOverride="3" MarginTopOverride="3">
+                            <cui:LobbyPlayerList Name="COnlinePlayerList"
+                                                 SizeFlagsHorizontal="FillExpand"
+                                                 SizeFlagsVertical="FillExpand" />
+                        </MarginContainer>
+                        <!-- Server info -->
+                        <cui:NanoHeading Text="{Loc 'Server Info'}" />
+                        <MarginContainer SizeFlagsVertical="FillExpand"
+                                         MarginRightOverride="3" MarginLeftOverride="3"
+                                         MarginBottomOverride="2" MarginTopOverride="3">
+                            <cui:ServerInfo Name="CServerInfo" />
+                        </MarginContainer>
+                    </VBoxContainer>
+                    <MarginContainer SizeFlagsHorizontal="ShrinkEnd" MarginTopOverride="8" MarginRightOverride="8">
+                        <VBoxContainer Name="CVoteContainer" />
+                    </MarginContainer>
+                </Control>
+            </HBoxContainer>
+        </VBoxContainer>
+    </MarginContainer>
+</Control>

@@ -21,6 +21,7 @@ using Content.Server.PDA;
 using Content.Server.Preferences;
 using Content.Server.Sandbox;
 using Content.Server.Utility;
+using Content.Server.Voting;
 using Content.Shared.Actions;
 using Content.Shared.Interfaces;
 using Content.Shared.Kitchen;
@@ -58,6 +59,7 @@ namespace Content.Server
             IoCManager.Register<IDeviceNetwork, DeviceNetwork>();
             IoCManager.Register<EuiManager, EuiManager>();
             IoCManager.Register<IHolidayManager, HolidayManager>();
+            IoCManager.Register<IVoteManager, VoteManager>();
         }
     }
 }

@@ -14,6 +14,7 @@ using Content.Client.UserInterface;
 using Content.Client.UserInterface.AdminMenu;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Graphics.Overlays;
+using Content.Client.Voting;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Cargo;
@@ -161,6 +162,7 @@ namespace Content.Client
             IoCManager.Resolve<EuiManager>().Initialize();
             IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<ActionManager>().Initialize();
+            IoCManager.Resolve<IVoteManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {
