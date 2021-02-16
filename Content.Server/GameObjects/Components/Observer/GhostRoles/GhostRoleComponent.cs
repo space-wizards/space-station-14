@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Observer
+namespace Content.Server.GameObjects.Components.Observer.GhostRoles
 {
     public abstract class GhostRoleComponent : Component
     {
@@ -16,11 +16,8 @@ namespace Content.Server.GameObjects.Components.Observer
         [ViewVariables(VVAccess.ReadWrite)]
         public string RoleName
         {
-            get
-            {
-                return _roleName;
-            }
-            private set
+            get => _roleName;
+            set
             {
                 _roleName = value;
                 EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();
@@ -30,11 +27,8 @@ namespace Content.Server.GameObjects.Components.Observer
         [ViewVariables(VVAccess.ReadWrite)]
         public string RoleDescription
         {
-            get
-            {
-                return _roleDescription;
-            }
-            private set
+            get => _roleDescription;
+            set
             {
                 _roleDescription = value;
                 EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();

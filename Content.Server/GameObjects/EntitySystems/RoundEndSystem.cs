@@ -21,9 +21,14 @@ namespace Content.Server.GameObjects.EntitySystems
         public const float RestartRoundTime = 20f;
 
         private CancellationTokenSource _roundEndCancellationTokenSource = new();
+        private CancellationTokenSource _callCooldownEndedTokenSource = new();
         public bool IsRoundEndCountdownStarted { get; private set; }
         public TimeSpan RoundEndCountdownTime { get; set; } = TimeSpan.FromMinutes(4);
         public TimeSpan? ExpectedCountdownEnd = null;
+
+        public TimeSpan LastCallTime { get; private set; }
+
+        public TimeSpan CallCooldown { get; } = TimeSpan.FromSeconds(30);
 
         public delegate void RoundEndCountdownStarted();
         public event RoundEndCountdownStarted OnRoundEndCountdownStarted;
@@ -34,18 +39,42 @@ namespace Content.Server.GameObjects.EntitySystems
         public delegate void RoundEndCountdownFinished();
         public event RoundEndCountdownFinished OnRoundEndCountdownFinished;
 
+        public delegate void CallCooldownEnded();
+        public event CallCooldownEnded OnCallCooldownEnded;
+
         void IResettingEntitySystem.Reset()
         {
             IsRoundEndCountdownStarted = false;
             _roundEndCancellationTokenSource.Cancel();
             _roundEndCancellationTokenSource = new CancellationTokenSource();
+            _callCooldownEndedTokenSource.Cancel();
+            _callCooldownEndedTokenSource = new CancellationTokenSource();
             ExpectedCountdownEnd = null;
+            LastCallTime = default;
+        }
+
+        public bool CanCall()
+        {
+            return _gameTiming.CurTime >= LastCallTime + CallCooldown;
+        }
+
+        private void ActivateCooldown()
+        {
+            _callCooldownEndedTokenSource.Cancel();
+            _callCooldownEndedTokenSource = new CancellationTokenSource();
+            LastCallTime = _gameTiming.CurTime;
+            Timer.Spawn(CallCooldown, () => OnCallCooldownEnded?.Invoke(), _callCooldownEndedTokenSource.Token);
         }
 
         public void RequestRoundEnd()
         {
             if (IsRoundEndCountdownStarted)
                 return;
+
+            if (!CanCall())
+            {
+                return;
+            }
 
             IsRoundEndCountdownStarted = true;
 
@@ -55,6 +84,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
             ExpectedCountdownEnd = _gameTiming.CurTime + RoundEndCountdownTime;
             Timer.Spawn(RoundEndCountdownTime, EndRound, _roundEndCancellationTokenSource.Token);
+
+            ActivateCooldown();
+
             OnRoundEndCountdownStarted?.Invoke();
         }
 
@@ -62,6 +94,11 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             if (!IsRoundEndCountdownStarted)
                 return;
+
+            if (!CanCall())
+            {
+                return;
+            }
 
             IsRoundEndCountdownStarted = false;
 
@@ -73,6 +110,8 @@ namespace Content.Server.GameObjects.EntitySystems
             _roundEndCancellationTokenSource = new CancellationTokenSource();
 
             ExpectedCountdownEnd = null;
+
+            ActivateCooldown();
 
             OnRoundEndCountdownCancelled?.Invoke();
         }

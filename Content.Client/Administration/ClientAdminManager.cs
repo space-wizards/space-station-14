@@ -21,6 +21,11 @@ namespace Content.Client.Administration
 
         public event Action? AdminStatusUpdated;
 
+        public bool IsActive()
+        {
+            return _adminData?.Active ?? false;
+        }
+
         public bool HasFlag(AdminFlags flag)
         {
             return _adminData?.HasFlag(flag) ?? false;

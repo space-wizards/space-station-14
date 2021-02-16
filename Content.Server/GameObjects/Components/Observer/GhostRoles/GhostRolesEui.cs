@@ -1,10 +1,10 @@
 using Content.Server.Eui;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Eui;
-using Content.Shared.GameObjects.Components.Observer;
+using Content.Shared.GameObjects.Components.Observer.GhostRoles;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Observer
+namespace Content.Server.GameObjects.Components.Observer.GhostRoles
 {
     public class GhostRolesEui : BaseEui
     {

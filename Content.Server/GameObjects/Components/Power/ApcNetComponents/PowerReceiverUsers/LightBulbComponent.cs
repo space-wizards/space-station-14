@@ -120,18 +120,21 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         void ILand.Land(LandEventArgs eventArgs)
         {
-
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("GlassBreak");
-            var file = _random.Pick(soundCollection.PickFiles);
-
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner);
-
+            PlayBreakSound();
             State = LightBulbState.Broken;
         }
 
         public void OnBreak(BreakageEventArgs eventArgs)
         {
             State = LightBulbState.Broken;
+        }
+
+        public void PlayBreakSound()
+        {
+            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("GlassBreak");
+            var file = _random.Pick(soundCollection.PickFiles);
+
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner);
         }
     }
 }
