@@ -137,7 +137,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 var canDrag = false;
                 foreach (var draggable in entity.GetAllComponents<IDraggable>())
                 {
-                    var dragEventArgs = new StartDragDropEventArgs(dragger!, entity);
+                    var dragEventArgs = new StartDragDropEventArgs(dragger, entity);
                     if (draggable.CanStartDrag(dragEventArgs))
                     {
                         _draggables.Add(draggable);

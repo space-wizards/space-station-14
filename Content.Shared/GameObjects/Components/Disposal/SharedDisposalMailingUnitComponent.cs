@@ -38,10 +38,10 @@ namespace Content.Shared.GameObjects.Components.Disposal
             public readonly bool Engaged;
             public readonly string Tag;
             public readonly List<string> Tags;
-            public readonly string Target;
+            public readonly string? Target;
 
             public DisposalMailingUnitBoundUserInterfaceState(string unitName, string unitState, float pressure, bool powered,
-                bool engaged, string tag, List<string> tags, string target)
+                bool engaged, string tag, List<string> tags, string? target)
             {
                 UnitName = unitName;
                 UnitState = unitState;
@@ -92,9 +92,9 @@ namespace Content.Shared.GameObjects.Components.Disposal
         [Serializable, NetSerializable]
         public class UiTargetUpdateMessage : BoundUserInterfaceMessage
         {
-            public readonly string Target;
+            public readonly string? Target;
 
-            public UiTargetUpdateMessage(string target)
+            public UiTargetUpdateMessage(string? target)
             {
                 Target = target;
             }

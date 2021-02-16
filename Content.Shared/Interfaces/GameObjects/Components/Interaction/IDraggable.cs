@@ -65,7 +65,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         /// <param name="user">The entity doing the drag and drop.</param>
         /// <param name="dragged">The entity that is being dragged and dropped.</param>
-        public StartDragDropEventArgs(IEntity user, IEntity dragged)
+        public StartDragDropEventArgs(IEntity? user, IEntity dragged)
         {
             User = user;
             Dragged = dragged;
@@ -74,7 +74,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         ///     The entity doing the drag and drop.
         /// </summary>
-        public IEntity User { get; }
+        public IEntity? User { get; }
 
         /// <summary>
         ///     The entity that is being dragged.

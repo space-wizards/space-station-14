@@ -55,7 +55,7 @@ namespace Content.Client.GameObjects.Components.Disposal
 
         private void TargetSelected(ItemList.ItemListSelectedEventArgs item)
         {
-            SendMessage(new UiTargetUpdateMessage(_window?.TargetList[item.ItemIndex]!));
+            SendMessage(new UiTargetUpdateMessage(_window?.TargetList[item.ItemIndex]));
             //(ノ°Д°）ノ︵ ┻━┻
             if (_window != null) _window.Engage.Disabled = false;
         }
