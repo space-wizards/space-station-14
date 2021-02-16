@@ -51,7 +51,7 @@
   name: clarissa
   parent: PistolBase
   id: PistolClarissa
-  description:
+  description: A small, easily concealable, but somewhat underpowered gun.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
@@ -76,7 +76,7 @@
   name: colt M1911
   parent: PistolBase
   id: PistolColt
-  description:
+  description: An outdated but classic pistol.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/colt.rsi
@@ -380,7 +380,7 @@
   name: paco
   parent: PistolBase
   id: PistolPaco
-  description: A modern and reliable sidearm for the soldier in the field. 
+  description: A modern and reliable sidearm for the soldier in the field.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/paco.rsi
