@@ -1,6 +1,5 @@
 ﻿- type: Tag
   id: Cigarette
-
 - type: entity
   name: "Base Cigarette"
   id: BaseCigarette
@@ -61,4 +60,3 @@
             - cigarette_4
             - cigarette_5
             - cigarette_6
-
