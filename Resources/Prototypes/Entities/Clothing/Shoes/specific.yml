@@ -49,8 +49,8 @@
 - type: entity
   parent: ClothingShoesBase
   id: ClothingShoesSNinja
-  name: S ninja shoes
-  description: A pair of nano-enhanced oots with built-in magnetic suction cups.
+  name: space ninja shoes
+  description: A pair of nano-enhanced boots with built-in magnetic suction cups.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Specific/spaceninja.rsi

@@ -25,6 +25,12 @@
   beginMonth: February
 
 - type: holiday
+  id: TravisScottDay
+  name: Travis Scott Day
+  beginDay: 10
+  beginMonth: February
+
+- type: holiday
   id: ValentinesDay
   name: Valentine's Day
   beginDay: 13

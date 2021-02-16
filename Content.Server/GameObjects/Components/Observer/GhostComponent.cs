@@ -71,7 +71,8 @@ namespace Content.Server.GameObjects.Components.Observer
 
             switch (message)
             {
-                case ReturnToBodyComponentMessage _:
+                case ReturnToBodyComponentMessage:
+                {
                     if (!Owner.TryGetComponent(out IActorComponent? actor) ||
                         !CanReturnToBody)
                     {
@@ -85,6 +86,7 @@ namespace Content.Server.GameObjects.Components.Observer
                         Owner.Delete();
                     }
                     break;
+                }
                 case ReturnToCloneComponentMessage _:
 
                     if (Owner.TryGetComponent(out VisitingMindComponent? mind))
@@ -93,16 +95,31 @@ namespace Content.Server.GameObjects.Components.Observer
                     }
                     break;
                 case GhostWarpRequestMessage warp:
+                {
+                    if (session?.AttachedEntity != Owner)
+                    {
+                        break;
+                    }
+
                     if (warp.PlayerTarget != default)
                     {
-                        foreach (var player in _playerManager.GetAllPlayers())
+                        if (!Owner.EntityManager.TryGetEntity(warp.PlayerTarget, out var entity))
                         {
-                            if (player.AttachedEntity != null && warp.PlayerTarget == player.AttachedEntity.Uid)
-                            {
-                                session!.AttachedEntity!.Transform.Coordinates =
-                                    player.AttachedEntity.Transform.Coordinates;
-                            }
+                            break;
                         }
+
+                        if (!entity.TryGetComponent(out IActorComponent? actor))
+                        {
+                            break;
+                        }
+
+                        if (!_playerManager.TryGetSessionByChannel(actor.playerSession.ConnectedClient, out var player) ||
+                            player.AttachedEntity != entity)
+                        {
+                            break;
+                        }
+
+                        Owner.Transform.Coordinates = entity.Transform.Coordinates;
                     }
                     else
                     {
@@ -110,11 +127,12 @@ namespace Content.Server.GameObjects.Components.Observer
                         {
                             if (warp.WarpName == warpPoint.Location)
                             {
-                                session!.AttachedEntity!.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates ;
+                                Owner.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates;
                             }
                         }
                     }
                     break;
+                }
                 case GhostRequestPlayerNameData _:
                     var playerNames = new Dictionary<EntityUid, string>();
                     foreach (var names in _playerManager.GetAllPlayers())

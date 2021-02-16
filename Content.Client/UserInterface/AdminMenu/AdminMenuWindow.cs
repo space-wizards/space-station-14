@@ -33,6 +33,10 @@ namespace Content.Client.UserInterface.AdminMenu
 
         protected override Vector2? CustomSize => (500, 250);
 
+        public delegate void PlayerListRefresh();
+
+        public event PlayerListRefresh? OnPlayerListRefresh;
+
         private readonly List<CommandButton> _adminButtons = new()
         {
             new KickCommandButton(),
@@ -94,15 +98,14 @@ namespace Content.Client.UserInterface.AdminMenu
             }
         }
 
-        private void RefreshPlayerList(ButtonEventArgs args)
+        public void RefreshPlayerList(Dictionary<string, string> namesToPlayers)
         {
             PlayerList.RemoveAllChildren();
             var playerManager = IoCManager.Resolve<IPlayerManager>();
-            var sessions = playerManager.Sessions;
             PlayerCount.Text = $"Players: {playerManager.PlayerCount}";
 
-            Color altColor = Color.FromHex("#292B38");
-            Color defaultColor = Color.FromHex("#2F2F3B");
+            var altColor = Color.FromHex("#292B38");
+            var defaultColor = Color.FromHex("#2F2F3B");
 
             var header = new HBoxContainer
             {
@@ -117,15 +120,6 @@ namespace Content.Client.UserInterface.AdminMenu
                         new Label { Text = "Player",
                             SizeFlagsStretchRatio = 2f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand },
-                        new VSeperator(),
-                        new Label { Text = "Status",
-                            SizeFlagsStretchRatio = 1f,
-                            SizeFlagsHorizontal = SizeFlags.FillExpand },
-                        new VSeperator(),
-                        new Label { Text = "Ping",
-                            SizeFlagsStretchRatio = 1f,
-                            SizeFlagsHorizontal = SizeFlags.FillExpand,
-                            Align = Label.AlignMode.Right },
                     }
             };
             PlayerList.AddChild(new PanelContainer
@@ -142,36 +136,25 @@ namespace Content.Client.UserInterface.AdminMenu
             PlayerList.AddChild(new HSeparator());
 
             var useAltColor = false;
-            foreach (var player in sessions)
+            foreach (var (name, player) in namesToPlayers)
             {
-                var hbox = new HBoxContainer
+                var hBox = new HBoxContainer
                 {
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
                     SeparationOverride = 4,
                     Children =
                     {
                         new Label {
-                            Text = player.Name,
+                            Text = name,
                             SizeFlagsStretchRatio = 2f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand,
                             ClipText = true },
                         new VSeperator(),
                         new Label {
-                            Text = player.AttachedEntity?.Name,
+                            Text = player,
                             SizeFlagsStretchRatio = 2f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand,
                             ClipText = true },
-                        new VSeperator(),
-                        new Label {
-                            Text = player.Status.ToString(),
-                            SizeFlagsStretchRatio = 1f,
-                            SizeFlagsHorizontal = SizeFlags.FillExpand },
-                        new VSeperator(),
-                        new Label {
-                            Text = player.Ping.ToString(),
-                            SizeFlagsStretchRatio = 1f,
-                            SizeFlagsHorizontal = SizeFlags.FillExpand,
-                            Align = Label.AlignMode.Right },
                     }
                 };
                 PlayerList.AddChild(new PanelContainer
@@ -182,7 +165,7 @@ namespace Content.Client.UserInterface.AdminMenu
                     },
                     Children =
                     {
-                        hbox
+                        hBox
                     }
                 });
                 useAltColor ^= true;
@@ -234,7 +217,7 @@ namespace Content.Client.UserInterface.AdminMenu
                 SizeFlagsStretchRatio = 0.3f,
                 Text = "Refresh",
             };
-            refreshButton.OnPressed += RefreshPlayerList;
+            refreshButton.OnPressed += (_) => OnPlayerListRefresh?.Invoke();
 
             PlayerList = new VBoxContainer();
 
@@ -265,7 +248,7 @@ namespace Content.Client.UserInterface.AdminMenu
                 }
             };
             playerTabContainer.AddChild(playerVBox);
-            RefreshPlayerList(null!);
+            OnPlayerListRefresh?.Invoke();
             #endregion PlayerList
 
             #region Admin Tab
