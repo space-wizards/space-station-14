@@ -31,8 +31,8 @@ namespace Content.Client.GameObjects.Components.Access
 
         private readonly Dictionary<string, Button> _accessButtons = new();
 
-        private string _lastFullName;
-        private string _lastJobTitle;
+        private string? _lastFullName;
+        private string? _lastJobTitle;
 
         protected override Vector2? CustomSize => (650, 270);
 

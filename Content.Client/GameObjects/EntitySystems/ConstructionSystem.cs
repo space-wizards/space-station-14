@@ -28,7 +28,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private int _nextId;
         private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new();
-        private ConstructionMenu _constructionMenu;
+        private ConstructionMenu? _constructionMenu;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -90,27 +90,26 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private bool HandleOpenCraftingMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (_playerManager.LocalPlayer.ControlledEntity == null)
+            if (_playerManager.LocalPlayer?.ControlledEntity == null ||
+                _constructionMenu == null)
             {
                 return false;
             }
 
-            var menu = _constructionMenu;
-
-            if (menu.IsOpen)
+            if (_constructionMenu.IsOpen)
             {
-                if (menu.IsAtFront())
+                if (_constructionMenu.IsAtFront())
                 {
-                    SetOpenValue(menu, false);
+                    SetOpenValue(_constructionMenu, false);
                 }
                 else
                 {
-                    menu.MoveToFront();
+                    _constructionMenu.MoveToFront();
                 }
             }
             else
             {
-                SetOpenValue(menu, true);
+                SetOpenValue(_constructionMenu, true);
             }
 
             return true;
@@ -123,10 +122,10 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var entity = EntityManager.GetEntity(args.EntityUid);
 
-            if (!entity.TryGetComponent(out ConstructionGhostComponent ghostComp))
+            if (!entity.TryGetComponent(out ConstructionGhostComponent? ghostComp))
                 return false;
 
-            TryStartConstruction(ghostComp.GhostID);
+            TryStartConstruction(ghostComp.GhostId);
             return true;
 
         }
@@ -167,9 +166,9 @@ namespace Content.Client.GameObjects.EntitySystems
             var ghost = EntityManager.SpawnEntity("constructionghost", loc);
             var comp = ghost.GetComponent<ConstructionGhostComponent>();
             comp.Prototype = prototype;
-            comp.GhostID = _nextId++;
+            comp.GhostId = _nextId++;
             ghost.Transform.LocalRotation = dir.ToAngle();
-            _ghosts.Add(comp.GhostID, comp);
+            _ghosts.Add(comp.GhostId, comp);
             var sprite = ghost.GetComponent<SpriteComponent>();
             sprite.Color = new Color(48, 255, 48, 128);
             sprite.AddBlankLayer(0); // There is no way to actually check if this already exists, so we blindly insert a new one
@@ -198,7 +197,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             var ghost = _ghosts[ghostId];
             var transform = ghost.Owner.Transform;
-            var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
+            var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype?.ID, transform.LocalRotation, ghostId);
             RaiseNetworkEvent(msg);
         }
 

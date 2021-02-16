@@ -10,9 +10,9 @@ namespace Content.Client.GameObjects.Components.Storage
     [UsedImplicitly]
     public sealed class StorageVisualizer : AppearanceVisualizer
     {
-        private string _stateBase;
-        private string _stateOpen;
-        private string _stateClosed;
+        private string? _stateBase;
+        private string? _stateOpen;
+        private string? _stateClosed;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -36,7 +36,7 @@ namespace Content.Client.GameObjects.Components.Storage
 
         public override void InitializeEntity(IEntity entity)
         {
-            if (!entity.TryGetComponent(out ISpriteComponent sprite))
+            if (!entity.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -51,7 +51,7 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -75,12 +75,11 @@ namespace Content.Client.GameObjects.Components.Storage
                 }
             }
 
-            if (component.TryGetData(StorageVisuals.CanWeld, out bool canWeld) && canWeld)
+            if (component.TryGetData(StorageVisuals.CanWeld, out bool canWeld) &&
+                canWeld &&
+                component.TryGetData(StorageVisuals.Welded, out bool weldedVal))
             {
-                if (component.TryGetData(StorageVisuals.Welded, out bool weldedVal))
-                {
-                    sprite.LayerSetVisible(StorageVisualLayers.Welded, weldedVal);
-                }
+                sprite.LayerSetVisible(StorageVisualLayers.Welded, weldedVal);
             }
         }
     }

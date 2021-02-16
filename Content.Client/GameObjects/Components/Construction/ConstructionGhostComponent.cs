@@ -16,11 +16,13 @@ namespace Content.Client.GameObjects.Components.Construction
 
         public override string Name => "ConstructionGhost";
 
-        [ViewVariables] public ConstructionPrototype Prototype { get; set; }
-        [ViewVariables] public int GhostID { get; set; }
+        [ViewVariables] public ConstructionPrototype? Prototype { get; set; }
+        [ViewVariables] public int GhostId { get; set; }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
+            if (Prototype == null) return;
+
             message.AddMarkup(Loc.GetString("Building: [color=cyan]{0}[/color]\n", Prototype.Name));
 
             if (!_prototypeManager.TryIndex(Prototype.Graph, out ConstructionGraphPrototype graph)) return;

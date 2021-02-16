@@ -26,7 +26,7 @@ namespace Content.Client.UserInterface
 
         protected override Vector2? CustomSize => (360, 560);
 
-        public event Action<string> SelectedId;
+        public event Action<string>? SelectedId;
 
         private readonly Dictionary<string, JobButton> _jobButtons = new();
         private readonly Dictionary<string, VBoxContainer> _jobCategories = new();
@@ -97,10 +97,7 @@ namespace Content.Client.UserInterface
                         jobList.AddChild(category);
                     }
 
-                    var jobButton = new JobButton
-                    {
-                        JobId = job.ID
-                    };
+                    var jobButton = new JobButton(job.ID);
 
                     var jobSelector = new HBoxContainer
                     {
@@ -177,9 +174,11 @@ namespace Content.Client.UserInterface
 
     class JobButton : ContainerButton
     {
-        public string JobId { get; set; }
-        public JobButton()
+        public string JobId { get; }
+
+        public JobButton(string jobId)
         {
+            JobId = jobId;
             AddStyleClass(StyleClassButton);
         }
     }

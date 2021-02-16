@@ -11,13 +11,13 @@ namespace Content.Client.GameObjects.Components.Disposal
     [UsedImplicitly]
     public class DisposalVisualizer : AppearanceVisualizer
     {
-        private string _stateFree;
-        private string _stateAnchored;
-        private string _stateBroken;
+        private string? _stateFree;
+        private string? _stateAnchored;
+        private string? _stateBroken;
 
         private void ChangeState(AppearanceComponent appearance)
         {
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!appearance.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }

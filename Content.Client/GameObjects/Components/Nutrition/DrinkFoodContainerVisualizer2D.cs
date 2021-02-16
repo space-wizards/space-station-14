@@ -12,7 +12,7 @@ namespace Content.Client.GameObjects.Components.Nutrition
     [UsedImplicitly]
     public sealed class FoodContainerVisualizer : AppearanceVisualizer
     {
-        private string _baseState;
+        private string? _baseState;
         private int _steps;
         private FoodContainerVisualMode _mode;
 

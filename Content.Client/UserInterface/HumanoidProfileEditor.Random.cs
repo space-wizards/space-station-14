@@ -21,7 +21,7 @@ namespace Content.Client.UserInterface
 
         private void RandomizeName()
         {
-            var firstName = _random.Pick(Profile.Sex == Sex.Male
+            var firstName = _random.Pick(Profile?.Sex == Sex.Male
                 ? Names.MaleFirstNames
                 : Names.FemaleFirstNames);
             var lastName = _random.Pick(Names.LastNames);

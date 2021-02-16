@@ -10,14 +10,13 @@ using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Atmos
+namespace Content.Client.GameObjects.Components.Atmos.Piping
 {
     [UsedImplicitly]
     public class PipeVisualizer : AppearanceVisualizer
     {
-        private string _rsiString;
-
-        private RSI _pipeRSI;
+        private string? _rsiString;
+        private RSI? _pipeRSI;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -25,6 +24,8 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             var serializer = YamlObjectSerializer.NewReader(node);
             serializer.DataField(ref _rsiString, "rsiString", "Constructible/Atmos/pipe.rsi");
+
+            if (_rsiString == null) return;
 
             var rsiPath = SharedSpriteComponent.TextureRoot / _rsiString;
             try
@@ -42,18 +43,22 @@ namespace Content.Client.GameObjects.Components.Atmos
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
-            if (!entity.TryGetComponent(out ISpriteComponent sprite)) return;
+
+            if (!entity.TryGetComponent(out ISpriteComponent? sprite)) return;
+
             sprite.LayerMapReserveBlank(Layer.PipeBase);
             var pipeBaseLayer = sprite.LayerMapGet(Layer.PipeBase);
-            sprite.LayerSetRSI(pipeBaseLayer, _pipeRSI);
+            if (_pipeRSI != null) sprite.LayerSetRSI(pipeBaseLayer, _pipeRSI);
             sprite.LayerSetVisible(pipeBaseLayer, true);
         }
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite)) return;
+
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
             if (!component.TryGetData(PipeVisuals.VisualState, out PipeVisualState pipeVisualState)) return;
+
             var pipeBase = sprite.LayerMapGet(Layer.PipeBase);
             var pipeBaseStateId = GetPipeBaseStateId(pipeVisualState);
             sprite.LayerSetState(pipeBase, pipeBaseStateId);

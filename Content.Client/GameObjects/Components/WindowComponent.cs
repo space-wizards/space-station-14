@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.GameObjects;
@@ -12,28 +13,36 @@ namespace Content.Client.GameObjects.Components
     [ComponentReference(typeof(SharedWindowComponent))]
     public sealed class WindowComponent : SharedWindowComponent
     {
-        private string _stateBase;
-        private ISpriteComponent _sprite;
-        private SnapGridComponent _snapGrid;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _sprite = Owner.GetComponent<ISpriteComponent>();
-            _snapGrid = Owner.GetComponent<SnapGridComponent>();
-        }
+        private string? _stateBase;
+        [ComponentDependency(nameof(OnSpriteAdded))] private readonly ISpriteComponent? _sprite = default!;
+        [ComponentDependency(nameof(OnSnapGridAdded))] private readonly SnapGridComponent? _snapGrid = default!;
 
         /// <inheritdoc />
         protected override void Startup()
         {
             base.Startup();
 
-            _snapGrid.OnPositionChanged += SnapGridOnPositionChanged;
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new WindowSmoothDirtyEvent(Owner));
+        }
+
+        /// <inheritdoc />
+        protected override void Shutdown()
+        {
+            if (_snapGrid != null)
+            {
+                _snapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
+            }
+
+            base.Shutdown();
+        }
+
+        private void OnSpriteAdded()
+        {
+            Debug.Assert(_sprite != null, nameof(_sprite) + " != null");
 
             var state0 = $"{_stateBase}0";
             const string cracksRSIPath = "/Textures/Constructible/Structures/Windows/cracks.rsi";
+
             _sprite.LayerMapSet(CornerLayers.SE, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.SE, SpriteComponent.DirectionOffset.None);
             _sprite.LayerMapSet(WindowDamageLayers.DamageSE, _sprite.AddLayerState("0_1", cracksRSIPath));
@@ -62,12 +71,10 @@ namespace Content.Client.GameObjects.Components
             _sprite.LayerSetVisible(WindowDamageLayers.DamageSW, false);
         }
 
-        /// <inheritdoc />
-        protected override void Shutdown()
+        private void OnSnapGridAdded()
         {
-            _snapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
-
-            base.Shutdown();
+            Debug.Assert(_snapGrid != null, nameof(_snapGrid) + " != null");
+            _snapGrid.OnPositionChanged += SnapGridOnPositionChanged;
         }
 
         private void SnapGridOnPositionChanged()
@@ -77,11 +84,11 @@ namespace Content.Client.GameObjects.Components
 
         public void UpdateSprite()
         {
+            if (_sprite == null) return;
+
             var lowWall = FindLowWall();
-            if (lowWall == null)
-            {
-                return;
-            }
+
+            if (lowWall == null) return;
 
             _sprite.LayerSetState(CornerLayers.NE, $"{_stateBase}{(int) lowWall.LastCornerNE}");
             _sprite.LayerSetState(CornerLayers.SE, $"{_stateBase}{(int) lowWall.LastCornerSE}");
@@ -89,11 +96,13 @@ namespace Content.Client.GameObjects.Components
             _sprite.LayerSetState(CornerLayers.NW, $"{_stateBase}{(int) lowWall.LastCornerNW}");
         }
 
-        private LowWallComponent FindLowWall()
+        private LowWallComponent? FindLowWall()
         {
+            if (_snapGrid == null) return null;
+
             foreach (var entity in _snapGrid.GetLocal())
             {
-                if (entity.TryGetComponent(out LowWallComponent lowWall))
+                if (entity.TryGetComponent(out LowWallComponent? lowWall))
                 {
                     return lowWall;
                 }

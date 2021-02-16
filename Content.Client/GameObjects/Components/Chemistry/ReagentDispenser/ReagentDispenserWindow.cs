@@ -254,8 +254,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
         /// </summary>
         /// <param name="state">State data for the dispenser.</param>
         /// <param name="highlightedReagentId">Prototype id of the reagent whose dispense button is currently being mouse hovered.</param>
-        public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state,
-            string highlightedReagentId = null)
+        public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state, string highlightedReagentId = "")
         {
             ContainerInfo.Children.Clear();
 

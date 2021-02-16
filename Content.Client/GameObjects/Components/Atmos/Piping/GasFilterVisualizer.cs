@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Atmos
+namespace Content.Client.GameObjects.Components.Atmos.Piping
 {
     [UsedImplicitly]
     public class GasFilterVisualizer : AppearanceVisualizer

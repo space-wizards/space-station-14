@@ -9,8 +9,8 @@ namespace Content.Client.GameObjects.Components.Fluids
     [UsedImplicitly]
     public class SprayVisualizer : AppearanceVisualizer
     {
-        private string _safetyOnState;
-        private string _safetyOffState;
+        private string? _safetyOnState;
+        private string? _safetyOffState;
 
         public override void LoadData(YamlMappingNode node)
         {

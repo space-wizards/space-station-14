@@ -93,7 +93,7 @@ namespace Content.Client.UserInterface
                     }
                 });
 
-                contents.AddChild(new Placeholder(resourceCache)
+                contents.AddChild(new Placeholder()
                 {
                     SizeFlagsVertical = SizeFlags.FillExpand,
                     PlaceholderText = "Viewport settings"

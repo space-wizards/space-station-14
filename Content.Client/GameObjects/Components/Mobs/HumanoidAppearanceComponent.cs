@@ -12,7 +12,7 @@ namespace Content.Client.GameObjects.Components.Mobs
     [RegisterComponent]
     public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent, IBodyPartAdded, IBodyPartRemoved
     {
-        public override HumanoidCharacterAppearance Appearance
+        public override HumanoidCharacterAppearance? Appearance
         {
             get => base.Appearance;
             set
@@ -42,16 +42,16 @@ namespace Content.Client.GameObjects.Components.Mobs
         private void UpdateLooks()
         {
             if (Appearance is null ||
-                !Owner.TryGetComponent(out SpriteComponent sprite))
+                !Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (Owner.TryGetComponent(out IBody body))
+            if (Owner.TryGetComponent(out IBody? body))
             {
                 foreach (var part in body.Parts.Values)
                 {
-                    if (!part.Owner.TryGetComponent(out SpriteComponent partSprite))
+                    if (!part.Owner.TryGetComponent(out SpriteComponent? partSprite))
                     {
                         continue;
                     }
@@ -92,12 +92,12 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         public void BodyPartAdded(BodyPartAddedEventArgs args)
         {
-            if (!Owner.TryGetComponent(out SpriteComponent sprite))
+            if (!Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (!args.Part.Owner.TryGetComponent(out SpriteComponent partSprite))
+            if (!args.Part.Owner.TryGetComponent(out SpriteComponent? partSprite))
             {
                 return;
             }
@@ -115,12 +115,12 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         public void BodyPartRemoved(BodyPartRemovedEventArgs args)
         {
-            if (!Owner.TryGetComponent(out SpriteComponent sprite))
+            if (!Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (!args.Part.Owner.TryGetComponent(out SpriteComponent partSprite))
+            if (!args.Part.Owner.TryGetComponent(out SpriteComponent? partSprite))
             {
                 return;
             }

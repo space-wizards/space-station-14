@@ -18,8 +18,8 @@ namespace Content.Client.UserInterface.AdminMenu
         [Dependency] private readonly IClientAdminManager _clientAdminManager = default!;
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
 
-        private SS14Window _window;
-        private List<SS14Window> _commandWindows;
+        private SS14Window? _window;
+        private List<SS14Window> _commandWindows = new();
 
         public void Initialize()
         {

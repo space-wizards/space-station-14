@@ -12,7 +12,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
     public sealed class MagVisualizer : AppearanceVisualizer
     {
         private bool _magLoaded;
-        private string _magState;
+        private string? _magState;
         private int _magSteps;
         private bool _zeroVisible;
 

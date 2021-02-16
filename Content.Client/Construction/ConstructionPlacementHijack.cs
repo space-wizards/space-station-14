@@ -41,7 +41,7 @@ namespace Content.Client.Construction
         {
             if (entity.TryGetComponent(out ConstructionGhostComponent? ghost))
             {
-                _constructionSystem.ClearGhost(ghost.GhostID);
+                _constructionSystem.ClearGhost(ghost.GhostId);
             }
             return true;
         }

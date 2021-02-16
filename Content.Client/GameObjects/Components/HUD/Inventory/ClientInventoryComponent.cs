@@ -264,7 +264,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
         }
 
-        public bool TryGetSlot(Slots slot, out IEntity? item)
+        public bool TryGetSlot(Slots slot, [NotNullWhen(true)] out IEntity? item)
         {
             return _slots.TryGetValue(slot, out item);
         }

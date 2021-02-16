@@ -19,7 +19,7 @@ namespace Content.Client.State
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
 
-        [ViewVariables] private ChatBox _gameChat;
+        [ViewVariables] private ChatBox _gameChat = default!;
 
         public override void Startup()
         {

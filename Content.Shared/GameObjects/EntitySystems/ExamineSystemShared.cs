@@ -163,9 +163,14 @@ namespace Content.Shared.GameObjects.EntitySystems
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static FormattedMessage GetExamineText(IEntity entity, IEntity examiner)
+        public static FormattedMessage GetExamineText(IEntity entity, IEntity? examiner)
         {
             var message = new FormattedMessage();
+
+            if (examiner == null)
+            {
+                return message;
+            }
 
             var doNewline = false;
 

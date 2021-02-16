@@ -25,8 +25,8 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            _gameHud.OnCombatModeChanged = OnCombatModeChanged;
-            _gameHud.OnTargetingZoneChanged = OnTargetingZoneChanged;
+            _gameHud.CombatModeChanged = OnCombatModeChanged;
+            _gameHud.TargetingZoneChanged = OnTargetingZoneChanged;
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ToggleCombatMode,
@@ -40,7 +40,7 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        private void CombatModeToggled(ICommonSession session)
+        private void CombatModeToggled(ICommonSession? session)
         {
             if (_gameTiming.IsFirstTimePredicted)
             {
@@ -51,8 +51,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public bool IsInCombatMode()
         {
-            var entity = _playerManager.LocalPlayer.ControlledEntity;
-            if (entity == null || !entity.TryGetComponent(out CombatModeComponent combatMode))
+            var entity = _playerManager.LocalPlayer?.ControlledEntity;
+            if (entity == null || !entity.TryGetComponent(out CombatModeComponent? combatMode))
             {
                 return false;
             }

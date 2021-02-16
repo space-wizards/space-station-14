@@ -13,7 +13,7 @@ namespace Content.Client.GameObjects.Components.Atmos
     public class VaporVisualizer : AppearanceVisualizer
     {
         private const string AnimationKey = "flick_animation";
-        private Animation VaporFlick;
+        private Animation? _vaporFlick;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -32,10 +32,10 @@ namespace Content.Client.GameObjects.Components.Atmos
                 state = stateNode.AsString();
             }
 
-            VaporFlick = new Animation {Length = TimeSpan.FromSeconds(delay)};
+            _vaporFlick = new Animation {Length = TimeSpan.FromSeconds(delay)};
             {
                 var flick = new AnimationTrackSpriteFlick();
-                VaporFlick.AnimationTracks.Add(flick);
+                _vaporFlick.AnimationTracks.Add(flick);
                 flick.LayerKey = VaporVisualLayers.Base;
                 flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(state, 0f));
             }
@@ -72,8 +72,10 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
 
-            if(!animPlayer.HasRunningAnimation(AnimationKey))
-                animPlayer.Play(VaporFlick, AnimationKey);
+            if (_vaporFlick != null && !animPlayer.HasRunningAnimation(AnimationKey))
+            {
+                animPlayer.Play(_vaporFlick, AnimationKey);
+            }
         }
 
         private void SetRotation(AppearanceComponent component, Angle rotation)

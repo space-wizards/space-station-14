@@ -53,7 +53,7 @@ namespace Content.Client.GameObjects.EntitySystems
             // This is simpler to implement. If you want to optimize it be my guest.
             var senderEnt = ev.Sender;
             if (senderEnt.IsValid() &&
-                senderEnt.TryGetComponent(out IconSmoothComponent iconSmooth)
+                senderEnt.TryGetComponent(out IconSmoothComponent? iconSmooth)
                 && iconSmooth.Running)
             {
                 var snapGrid = senderEnt.GetComponent<SnapGridComponent>();
@@ -114,7 +114,7 @@ namespace Content.Client.GameObjects.EntitySystems
             // As it stands now, it's totally possible for something to get queued twice.
             // Generation on the component is set after an update so we can cull updates that happened this generation.
             if (!entity.IsValid()
-                || !entity.TryGetComponent(out IconSmoothComponent smoothing)
+                || !entity.TryGetComponent(out IconSmoothComponent? smoothing)
                 || smoothing.UpdateGeneration == _generation)
             {
                 return;

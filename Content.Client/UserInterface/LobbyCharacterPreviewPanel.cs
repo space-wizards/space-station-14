@@ -6,7 +6,6 @@ using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -15,6 +14,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Client.UserInterface
 {
@@ -87,7 +87,7 @@ namespace Content.Client.UserInterface
 
             if (!disposing) return;
             _previewDummy.Delete();
-            _previewDummy = null;
+            _previewDummy = null!;
         }
 
         private static SpriteView MakeSpriteView(IEntity entity, Direction direction)
@@ -111,7 +111,7 @@ namespace Content.Client.UserInterface
             {
                 _loaded.Visible = true;
                 _unloaded.Visible = false;
-                if (_preferencesManager.Preferences.SelectedCharacter is not HumanoidCharacterProfile selectedCharacter)
+                if (_preferencesManager.Preferences?.SelectedCharacter is not HumanoidCharacterProfile selectedCharacter)
                 {
                     _summaryLabel.Text = string.Empty;
                 }

@@ -23,21 +23,21 @@ namespace Content.Client.GameObjects.Components.Items
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
 
-        [ViewVariables] protected ResourcePath RsiPath;
+        [ViewVariables] protected ResourcePath? RsiPath;
 
         [ViewVariables(VVAccess.ReadWrite)] protected Color Color;
 
-        private string _equippedPrefix;
+        private string? _equippedPrefix;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string EquippedPrefix
+        public string? EquippedPrefix
         {
             get => _equippedPrefix;
             set
             {
                 _equippedPrefix = value;
-                if (!Owner.TryGetContainer(out IContainer container)) return;
-                if(container.Owner.TryGetComponent(out HandsComponent hands))
+                if (!Owner.TryGetContainer(out var container)) return;
+                if(container.Owner.TryGetComponent(out HandsComponent? hands))
                     hands.RefreshInHands();
             }
         }
@@ -49,8 +49,14 @@ namespace Content.Client.GameObjects.Components.Items
                 return null;
             }
 
-            var handName = hand.ToString().ToLowerInvariant();
             var rsi = GetRSI();
+
+            if (rsi == null)
+            {
+                return null;
+            }
+
+            var handName = hand.ToString().ToLowerInvariant();
             var stateId = EquippedPrefix != null ? $"{EquippedPrefix}-inhand-{handName}" : $"inhand-{handName}";
             if (rsi.TryGetState(stateId, out _))
             {
@@ -69,12 +75,14 @@ namespace Content.Client.GameObjects.Components.Items
             serializer.DataFieldCached(ref _equippedPrefix, "HeldPrefix", null);
         }
 
-        protected RSI GetRSI()
+        protected RSI? GetRSI()
         {
+            if (RsiPath == null) return null;
+
             return _resourceCache.GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / RsiPath).RSI;
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if(curState == null)
                 return;

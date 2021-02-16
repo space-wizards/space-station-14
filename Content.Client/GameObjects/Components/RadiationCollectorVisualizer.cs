@@ -13,8 +13,8 @@ namespace Content.Client.GameObjects.Components
     {
         private const string AnimationKey = "radiationcollector_animation";
 
-        private Animation ActivateAnimation;
-        private Animation DeactiveAnimation;
+        private Animation ActivateAnimation = default!;
+        private Animation DeactiveAnimation = default!;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -50,7 +50,6 @@ namespace Content.Client.GameObjects.Components
                 entity.AddComponent<AnimationPlayerComponent>();
             }
         }
-
 
         public override void OnChangeData(AppearanceComponent component)
         {
@@ -91,8 +90,8 @@ namespace Content.Client.GameObjects.Components
                     break;
             }
         }
-
     }
+
     public enum RadiationCollectorVisualLayers : byte
     {
         Main

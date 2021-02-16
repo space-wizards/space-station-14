@@ -13,14 +13,18 @@ namespace Content.Client.GameObjects.Components.Research
         /// <summary>
         ///     Event called when the database is updated.
         /// </summary>
-        public event Action OnDatabaseUpdated;
+        public event Action? OnDatabaseUpdated;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
+
             if (curState is not TechnologyDatabaseState state) return;
+
             _technologies.Clear();
+
             var protoManager = IoCManager.Resolve<IPrototypeManager>();
+
             foreach (var techID in state.Technologies)
             {
                 if (!protoManager.TryIndex(techID, out TechnologyPrototype technology)) continue;
@@ -28,7 +32,6 @@ namespace Content.Client.GameObjects.Components.Research
             }
 
             OnDatabaseUpdated?.Invoke();
-
         }
     }
 }

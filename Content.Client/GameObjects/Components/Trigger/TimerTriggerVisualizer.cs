@@ -14,14 +14,13 @@ namespace Content.Client.GameObjects.Components.Trigger
     {
         private const string AnimationKey = "priming_animation";
 
-        private Animation PrimingAnimation;
+        private Animation PrimingAnimation = default!;
 
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
 
             var countdownSound = node.GetNode("countdown_sound").AsString();
-
 
             PrimingAnimation = new Animation { Length = TimeSpan.MaxValue };
             {

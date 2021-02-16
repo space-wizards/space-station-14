@@ -535,7 +535,7 @@ namespace Content.Client.UserInterface
         private bool OnBeginActionDrag()
         {
             // only initiate the drag if the slot has an action in it
-            if (Locked || DragDropHelper.Dragged.Action == null) return false;
+            if (Locked || DragDropHelper.Dragged?.Action == null) return false;
 
             _dragShadow.Texture = DragDropHelper.Dragged.Action.Icon.Frame0();
             LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
@@ -546,7 +546,7 @@ namespace Content.Client.UserInterface
         private bool OnContinueActionDrag(float frameTime)
         {
             // stop if there's no action in the slot
-            if (Locked || DragDropHelper.Dragged.Action == null) return false;
+            if (Locked || DragDropHelper.Dragged?.Action == null) return false;
 
             // keep dragged entity centered under mouse
             LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));

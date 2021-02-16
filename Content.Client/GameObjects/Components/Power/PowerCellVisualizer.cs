@@ -10,7 +10,7 @@ namespace Content.Client.GameObjects.Components.Power
     [UsedImplicitly]
     public class PowerCellVisualizer : AppearanceVisualizer
     {
-        private string _prefix;
+        private string _prefix = default!;
 
         public override void LoadData(YamlMappingNode node)
         {

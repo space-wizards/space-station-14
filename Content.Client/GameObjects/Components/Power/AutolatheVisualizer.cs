@@ -13,11 +13,11 @@ namespace Content.Client.GameObjects.Components.Power
     {
         private const string AnimationKey = "autolathe_animation";
 
-        private Animation _buildingAnimation;
-        private Animation _insertingMetalAnimation;
-        private Animation _insertingGlassAnimation;
-        private Animation _insertingGoldAnimation;
-        private Animation _insertingPlasmaAnimation;
+        private Animation _buildingAnimation = default!;
+        private Animation _insertingMetalAnimation = default!;
+        private Animation _insertingGlassAnimation = default!;
+        private Animation _insertingGoldAnimation = default!;
+        private Animation _insertingPlasmaAnimation = default!;
 
         public override void LoadData(YamlMappingNode node)
         {

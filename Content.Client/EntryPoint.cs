@@ -2,6 +2,7 @@
 using Content.Client.Administration;
 using Content.Client.Eui;
 using Content.Client.GameObjects.Components.Actor;
+using Content.Client.Graphics.Overlays;
 using Content.Client.Input;
 using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
@@ -13,8 +14,8 @@ using Content.Client.StationEvents;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.AdminMenu;
 using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Graphics.Overlays;
 using Content.Shared.Actions;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
@@ -25,7 +26,6 @@ using Content.Shared.GameObjects.Components.Power.AME;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.Kitchen;
-using Content.Shared.Alert;
 using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -111,10 +111,13 @@ namespace Content.Client
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public void SubscribePlayerAttachmentEvents(object sender, EventArgs args)
+        public void SubscribePlayerAttachmentEvents(object? sender, EventArgs args)
         {
-            _playerManager.LocalPlayer.EntityAttached += AttachPlayerToEntity;
-            _playerManager.LocalPlayer.EntityDetached += DetachPlayerFromEntity;
+            if (_playerManager.LocalPlayer != null)
+            {
+                _playerManager.LocalPlayer.EntityAttached += AttachPlayerToEntity;
+                _playerManager.LocalPlayer.EntityDetached += DetachPlayerFromEntity;
+            }
         }
 
         /// <summary>

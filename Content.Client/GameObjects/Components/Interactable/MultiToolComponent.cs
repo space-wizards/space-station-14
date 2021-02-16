@@ -30,7 +30,7 @@ namespace Content.Client.GameObjects.Components.Interactable
             serializer.DataField(ref _statusShowBehavior, "statusShowBehavior", true);
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 

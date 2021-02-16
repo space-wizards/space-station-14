@@ -7,7 +7,7 @@ namespace Content.Client.GameObjects.Components.Movement
     [ComponentReference(typeof(SharedClimbingComponent))]
     public class ClimbingComponent : SharedClimbingComponent
     {
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 

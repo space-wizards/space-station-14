@@ -13,7 +13,7 @@ namespace Content.Client.GameObjects.Components
         public override string Name => "ReinforcedWall";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private string _reinforcedStateBase;
+        private string? _reinforcedStateBase;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -27,20 +27,29 @@ namespace Content.Client.GameObjects.Components
             base.Startup();
 
             var state0 = $"{_reinforcedStateBase}0";
-            Sprite.LayerMapSet(ReinforcedCornerLayers.SE, Sprite.AddLayerState(state0));
-            Sprite.LayerSetDirOffset(ReinforcedCornerLayers.SE, DirectionOffset.None);
-            Sprite.LayerMapSet(ReinforcedCornerLayers.NE, Sprite.AddLayerState(state0));
-            Sprite.LayerSetDirOffset(ReinforcedCornerLayers.NE, DirectionOffset.CounterClockwise);
-            Sprite.LayerMapSet(ReinforcedCornerLayers.NW, Sprite.AddLayerState(state0));
-            Sprite.LayerSetDirOffset(ReinforcedCornerLayers.NW, DirectionOffset.Flip);
-            Sprite.LayerMapSet(ReinforcedCornerLayers.SW, Sprite.AddLayerState(state0));
-            Sprite.LayerSetDirOffset(ReinforcedCornerLayers.SW, DirectionOffset.Clockwise);
-            Sprite.LayerMapSet(ReinforcedWallVisualLayers.Deconstruction, Sprite.AddBlankLayer());
+
+            if (Sprite != null)
+            {
+                Sprite.LayerMapSet(ReinforcedCornerLayers.SE, Sprite.AddLayerState(state0));
+                Sprite.LayerSetDirOffset(ReinforcedCornerLayers.SE, DirectionOffset.None);
+                Sprite.LayerMapSet(ReinforcedCornerLayers.NE, Sprite.AddLayerState(state0));
+                Sprite.LayerSetDirOffset(ReinforcedCornerLayers.NE, DirectionOffset.CounterClockwise);
+                Sprite.LayerMapSet(ReinforcedCornerLayers.NW, Sprite.AddLayerState(state0));
+                Sprite.LayerSetDirOffset(ReinforcedCornerLayers.NW, DirectionOffset.Flip);
+                Sprite.LayerMapSet(ReinforcedCornerLayers.SW, Sprite.AddLayerState(state0));
+                Sprite.LayerSetDirOffset(ReinforcedCornerLayers.SW, DirectionOffset.Clockwise);
+                Sprite.LayerMapSet(ReinforcedWallVisualLayers.Deconstruction, Sprite.AddBlankLayer());
+            }
         }
 
         internal override void CalculateNewSprite()
         {
             base.CalculateNewSprite();
+
+            if (Sprite == null)
+            {
+                return;
+            }
 
             var (cornerNE, cornerNW, cornerSW, cornerSE) = CalculateCornerFill();
 

@@ -15,9 +15,9 @@ namespace Content.Client.GameObjects.Components.Cargo
         /// <summary>
         ///     Event called when the database is updated.
         /// </summary>
-        public event Action OnDatabaseUpdated;
+        public event Action? OnDatabaseUpdated;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
             if (curState is not GalacticMarketState state)

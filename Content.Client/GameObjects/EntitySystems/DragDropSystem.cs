@@ -279,7 +279,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
-                // now when ending the drag, we will not replay the click because
+            // now when ending the drag, we will not replay the click because
             // by this time we've determined the input was actually a drag attempt
             var range = (args.Coordinates.ToMapPos(EntityManager) - _dragger.Transform.MapPosition.Position).Length + 0.01f;
             // tell the server we are dropping if we are over a valid drop target in range.
@@ -328,7 +328,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     if (!draggable.CanDrop(dropArgs)) continue;
 
                     // tell the server about the drop attempt
-                    RaiseNetworkEvent(new DragDropMessage(args.Coordinates, _dragDropHelper.Dragged.Uid,
+                    RaiseNetworkEvent(new DragDropMessage(args.Coordinates, _dragDropHelper.Dragged!.Uid,
                         entity.Uid));
 
                     draggable.Drop(dropArgs);

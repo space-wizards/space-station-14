@@ -9,8 +9,8 @@ namespace Content.Client.GameObjects.Components.Atmos
     [UsedImplicitly]
     public class GasAnalyzerVisualizer : AppearanceVisualizer
     {
-        private string _stateOff;
-        private string _stateWorking;
+        private string? _stateOff;
+        private string? _stateWorking;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -29,7 +29,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                 return;
             }
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -43,8 +43,6 @@ namespace Content.Client.GameObjects.Components.Atmos
                         break;
                     case GasAnalyzerVisualState.Working:
                         sprite.LayerSetState(0, _stateWorking);
-                        break;
-                    default:
                         break;
                 }
             }

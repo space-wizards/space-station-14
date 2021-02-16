@@ -36,7 +36,7 @@ namespace Content.Client.UserInterface
             }
         }
 
-        public event Action<TargetingZone> OnZoneChanged;
+        public event Action<TargetingZone>? OnZoneChanged;
 
         public TargetingDoll(IResourceCache resourceCache)
         {

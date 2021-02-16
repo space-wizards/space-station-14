@@ -14,7 +14,7 @@ namespace Content.Client.Research
 {
     public class ResearchConsoleMenu : SS14Window
     {
-        public ResearchConsoleBoundUserInterface Owner { get; set; }
+        public ResearchConsoleBoundUserInterface Owner { get; }
 
         protected override Vector2? CustomSize => (800, 400);
 
@@ -36,9 +36,9 @@ namespace Content.Client.Research
         public Button ServerSelectionButton { get; private set; }
         public Button ServerSyncButton { get; private set; }
 
-        public TechnologyPrototype TechnologySelected;
+        public TechnologyPrototype? TechnologySelected;
 
-        public ResearchConsoleMenu(ResearchConsoleBoundUserInterface owner = null)
+        public ResearchConsoleMenu(ResearchConsoleBoundUserInterface owner)
         {
             IoCManager.InjectDependencies(this);
 

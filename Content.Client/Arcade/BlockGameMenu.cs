@@ -28,35 +28,35 @@ namespace Content.Client.Arcade
 
         private readonly PanelContainer _mainPanel;
 
-        private VBoxContainer _gameRootContainer;
-        private GridContainer _gameGrid;
-        private GridContainer _nextBlockGrid;
-        private GridContainer _holdBlockGrid;
-        private Label _pointsLabel;
-        private Label _levelLabel;
-        private Button _pauseButton;
+        private VBoxContainer? _gameRootContainer;
+        private GridContainer? _gameGrid;
+        private GridContainer? _nextBlockGrid;
+        private GridContainer? _holdBlockGrid;
+        private Label? _pointsLabel;
+        private Label? _levelLabel;
+        private Button? _pauseButton;
 
-        private PanelContainer _menuRootContainer;
-        private Button _unpauseButton;
-        private Control _unpauseButtonMargin;
-        private Button _newGameButton;
-        private Button _scoreBoardButton;
+        private PanelContainer? _menuRootContainer;
+        private Button? _unpauseButton;
+        private Control? _unpauseButtonMargin;
+        private Button? _newGameButton;
+        private Button? _scoreBoardButton;
 
-        private PanelContainer _gameOverRootContainer;
-        private Label _finalScoreLabel;
-        private Button _finalNewGameButton;
+        private PanelContainer? _gameOverRootContainer;
+        private Label? _finalScoreLabel;
+        private Button? _finalNewGameButton;
 
-        private PanelContainer _highscoresRootContainer;
-        private Label _localHighscoresLabel;
-        private Label _globalHighscoresLabel;
-        private Button _highscoreBackButton;
+        private PanelContainer? _highscoresRootContainer;
+        private Label? _localHighscoresLabel;
+        private Label? _globalHighscoresLabel;
+        private Button? _highscoreBackButton;
 
-        private bool _isPlayer = false;
-        private bool _gameOver = false;
+        private bool _isPlayer;
+        private bool _gameOver;
 
         public BlockGameMenu(BlockGameBoundUserInterface owner)
         {
-            Title = Loc.GetString("Nanotrasen Block Game");
+            Title = Loc.GetString("NanoTrasen Block Game");
             _owner = owner;
 
             var resourceCache = IoCManager.Resolve<IResourceCache>();
@@ -65,7 +65,6 @@ namespace Content.Client.Arcade
             _mainPanel = new PanelContainer();
 
             SetupGameMenu(backgroundTexture);
-            _mainPanel.AddChild(_gameRootContainer);
 
             SetupPauseMenu(backgroundTexture);
 
@@ -77,7 +76,6 @@ namespace Content.Client.Arcade
 
             CanKeyboardFocus = true;
         }
-
 
         private void SetupHighScoreScreen(Texture backgroundTexture)
         {
@@ -283,20 +281,34 @@ namespace Content.Client.Arcade
             UpdateUsability();
         }
 
+        private IEnumerable<Button?> GetButtons()
+        {
+            yield return _pauseButton;
+            yield return _newGameButton;
+            yield return _scoreBoardButton;
+            yield return _unpauseButton;
+            yield return _finalNewGameButton;
+            yield return _highscoreBackButton;
+        }
+
         private void UpdateUsability()
         {
-            _pauseButton.Disabled = !_isPlayer;
-            _newGameButton.Disabled = !_isPlayer;
-            _scoreBoardButton.Disabled = !_isPlayer;
-            _unpauseButton.Disabled = !_isPlayer;
-            _finalNewGameButton.Disabled = !_isPlayer;
-            _highscoreBackButton.Disabled = !_isPlayer;
+            foreach (var button in GetButtons())
+            {
+                if (button == null)
+                {
+                    continue;
+                }
+
+                button.Disabled = !_isPlayer;
+            }
         }
 
         private void SetupGameMenu(Texture backgroundTexture)
         {
             // building the game container
             _gameRootContainer = new VBoxContainer();
+            _mainPanel.AddChild(_gameRootContainer);
 
             _levelLabel = new Label
             {
@@ -472,8 +484,16 @@ namespace Content.Client.Arcade
         public void SetStarted()
         {
             _gameOver = false;
-            _unpauseButton.Visible = true;
-            _unpauseButtonMargin.Visible = true;
+
+            if (_unpauseButton != null)
+            {
+                _unpauseButton.Visible = true;
+            }
+
+            if (_unpauseButtonMargin != null)
+            {
+                _unpauseButtonMargin.Visible = true;
+            }
         }
 
         public void SetScreen(BlockGameMessages.BlockGameScreen screen)
@@ -485,52 +505,62 @@ namespace Content.Client.Arcade
                 case BlockGameMessages.BlockGameScreen.Game:
                     GrabKeyboardFocus();
                     CloseMenus();
-                    _pauseButton.Disabled = !_isPlayer;
+                    if (_pauseButton != null) _pauseButton.Disabled = !_isPlayer;
                     break;
                 case BlockGameMessages.BlockGameScreen.Pause:
                     //ReleaseKeyboardFocus();
                     CloseMenus();
-                    _mainPanel.AddChild(_menuRootContainer);
-                    _pauseButton.Disabled = true;
+                    if (_menuRootContainer != null) _mainPanel.AddChild(_menuRootContainer);
+                    if (_pauseButton != null) _pauseButton.Disabled = true;
                     break;
                 case BlockGameMessages.BlockGameScreen.Gameover:
                     _gameOver = true;
-                    _pauseButton.Disabled = true;
+                    if (_pauseButton != null) _pauseButton.Disabled = true;
                     //ReleaseKeyboardFocus();
                     CloseMenus();
-                    _mainPanel.AddChild(_gameOverRootContainer);
+                    if (_gameOverRootContainer != null) _mainPanel.AddChild(_gameOverRootContainer);
                     break;
                 case BlockGameMessages.BlockGameScreen.Highscores:
                     //ReleaseKeyboardFocus();
                     CloseMenus();
-                    _mainPanel.AddChild(_highscoresRootContainer);
+                    if (_highscoresRootContainer != null) _mainPanel.AddChild(_highscoresRootContainer);
                     break;
             }
         }
 
         private void CloseMenus()
         {
-            if(_mainPanel.Children.Contains(_menuRootContainer)) _mainPanel.RemoveChild(_menuRootContainer);
-            if(_mainPanel.Children.Contains(_gameOverRootContainer)) _mainPanel.RemoveChild(_gameOverRootContainer);
-            if(_mainPanel.Children.Contains(_highscoresRootContainer)) _mainPanel.RemoveChild(_highscoresRootContainer);
+            if (_menuRootContainer != null && _mainPanel.Children.Contains(_menuRootContainer))
+                _mainPanel.RemoveChild(_menuRootContainer);
+
+            if (_gameOverRootContainer != null && _mainPanel.Children.Contains(_gameOverRootContainer))
+                _mainPanel.RemoveChild(_gameOverRootContainer);
+
+            if (_highscoresRootContainer != null && _mainPanel.Children.Contains(_highscoresRootContainer))
+                _mainPanel.RemoveChild(_highscoresRootContainer);
         }
 
-        public void SetGameoverInfo(int amount, int? localPlacement, int? globalPlacement)
+        public void SetGameOverInfo(int amount, int? localPlacement, int? globalPlacement)
         {
             var globalPlacementText = globalPlacement == null ? "-" : $"#{globalPlacement}";
             var localPlacementText = localPlacement == null ? "-" : $"#{localPlacement}";
-            _finalScoreLabel.Text =
-                Loc.GetString("Global: {0}\nLocal: {1}\nPoints: {2}", globalPlacementText, localPlacementText, amount);
+
+            if (_finalScoreLabel != null)
+            {
+                _finalScoreLabel.Text =
+                    Loc.GetString("Global: {0}\nLocal: {1}\nPoints: {2}", globalPlacementText, localPlacementText,
+                        amount);
+            }
         }
 
         public void UpdatePoints(int points)
         {
-            _pointsLabel.Text = Loc.GetString("Points: {0}", points);
+            if (_pointsLabel != null) _pointsLabel.Text = Loc.GetString("Points: {0}", points);
         }
 
         public void UpdateLevel(int level)
         {
-            _levelLabel.Text = Loc.GetString("Level {0}", level + 1);
+            if (_levelLabel != null) _levelLabel.Text = Loc.GetString("Level {0}", level + 1);
         }
 
         public void UpdateHighscores(List<BlockGameMessages.HighScoreEntry> localHighscores,
@@ -551,8 +581,8 @@ namespace Content.Client.Arcade
                     globalHighscoreText.AppendLine(Loc.GetString("#{0}: ??? - 0", i + 1));
             }
 
-            _localHighscoresLabel.Text = localHighscoreText.ToString();
-            _globalHighscoresLabel.Text = globalHighscoreText.ToString();
+            if (_localHighscoresLabel != null) _localHighscoresLabel.Text = localHighscoreText.ToString();
+            if (_globalHighscoresLabel != null) _globalHighscoresLabel.Text = globalHighscoreText.ToString();
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -612,14 +642,22 @@ namespace Content.Client.Arcade
 
         public void UpdateNextBlock(BlockGameBlock[] blocks)
         {
+            if (_nextBlockGrid == null)
+            {
+                return;
+            }
+
             _nextBlockGrid.RemoveAllChildren();
+
             if (blocks.Length == 0) return;
+
             var columnCount = blocks.Max(b => b.Position.X) + 1;
             var rowCount = blocks.Max(b => b.Position.Y) + 1;
             _nextBlockGrid.Columns = columnCount;
-            for (int y = 0; y < rowCount; y++)
+
+            for (var y = 0; y < rowCount; y++)
             {
-                for (int x = 0; x < columnCount; x++)
+                for (var x = 0; x < columnCount; x++)
                 {
                     var c = GetColorForPosition(blocks, x, y);
                     _nextBlockGrid.AddChild(new PanelContainer
@@ -634,14 +672,22 @@ namespace Content.Client.Arcade
 
         public void UpdateHeldBlock(BlockGameBlock[] blocks)
         {
+            if (_holdBlockGrid == null)
+            {
+                return;
+            }
+
             _holdBlockGrid.RemoveAllChildren();
+
             if (blocks.Length == 0) return;
+
             var columnCount = blocks.Max(b => b.Position.X) + 1;
             var rowCount = blocks.Max(b => b.Position.Y) + 1;
             _holdBlockGrid.Columns = columnCount;
-            for (int y = 0; y < rowCount; y++)
+
+            for (var y = 0; y < rowCount; y++)
             {
-                for (int x = 0; x < columnCount; x++)
+                for (var x = 0; x < columnCount; x++)
                 {
                     var c = GetColorForPosition(blocks, x, y);
                     _holdBlockGrid.AddChild(new PanelContainer
@@ -656,10 +702,16 @@ namespace Content.Client.Arcade
 
         public void UpdateBlocks(BlockGameBlock[] blocks)
         {
-            _gameGrid.RemoveAllChildren();
-            for (int y = 0; y < 20; y++)
+            if (_gameGrid == null)
             {
-                for (int x = 0; x < 10; x++)
+                return;
+            }
+
+            _gameGrid.RemoveAllChildren();
+
+            for (var y = 0; y < 20; y++)
+            {
+                for (var x = 0; x < 10; x++)
                 {
                     var c = GetColorForPosition(blocks, x, y);
                     _gameGrid.AddChild(new PanelContainer
@@ -674,8 +726,9 @@ namespace Content.Client.Arcade
 
         private Color GetColorForPosition(BlockGameBlock[] blocks, int x, int y)
         {
-            Color c = Color.Transparent;
+            var c = Color.Transparent;
             var matchingBlock = blocks.FirstOrNull(b => b.Position.X == x && b.Position.Y == y);
+
             if (matchingBlock.HasValue)
             {
                 c = matchingBlock.Value.GameBlockColor switch

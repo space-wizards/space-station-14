@@ -11,23 +11,16 @@ namespace Content.Client.GameObjects.Components.Weapons.Melee
     {
         public override string Name => "MeleeWeaponArcAnimation";
 
-        private MeleeWeaponAnimationPrototype _meleeWeaponAnimation;
+        private MeleeWeaponAnimationPrototype? _meleeWeaponAnimation;
 
         private float _timer;
-        private SpriteComponent _sprite;
+        [ComponentDependency] private SpriteComponent? _sprite = default!;
         private Angle _baseAngle;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _sprite = Owner.GetComponent<SpriteComponent>();
-        }
 
         public void SetData(MeleeWeaponAnimationPrototype prototype, Angle baseAngle, IEntity attacker, bool followAttacker = true)
         {
             _meleeWeaponAnimation = prototype;
-            _sprite.AddLayer(new RSI.StateId(prototype.State));
+            _sprite?.AddLayer(new RSI.StateId(prototype.State));
             _baseAngle = baseAngle;
             if(followAttacker)
                 Owner.Transform.AttachParent(attacker);
@@ -44,7 +37,8 @@ namespace Content.Client.GameObjects.Components.Weapons.Melee
 
             var (r, g, b, a) =
                 Vector4.Clamp(_meleeWeaponAnimation.Color + _meleeWeaponAnimation.ColorDelta * _timer, Vector4.Zero, Vector4.One);
-            _sprite.Color = new Color(r, g, b, a);
+
+            if (_sprite != null) _sprite.Color = new Color(r, g, b, a);
 
             switch (_meleeWeaponAnimation.ArcType)
             {
@@ -56,10 +50,10 @@ namespace Content.Client.GameObjects.Components.Weapons.Melee
 
                 case WeaponArcType.Poke:
                     Owner.Transform.WorldRotation = _baseAngle;
-                    _sprite.Offset += (_meleeWeaponAnimation.Speed * frameTime, 0);
+
+                    if (_sprite != null) _sprite.Offset += (_meleeWeaponAnimation.Speed * frameTime, 0);
                     break;
             }
-
 
             if (_meleeWeaponAnimation.Length.TotalSeconds <= _timer)
             {

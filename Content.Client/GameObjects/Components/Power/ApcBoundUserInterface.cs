@@ -14,10 +14,10 @@ namespace Content.Client.GameObjects.Components.Power
     [UsedImplicitly]
     public class ApcBoundUserInterface : BoundUserInterface
     {
-        private ApcWindow _window;
-        private BaseButton _breakerButton;
-        private Label _externalPowerStateLabel;
-        private ProgressBar _chargeBar;
+        private ApcWindow? _window;
+        private BaseButton? _breakerButton;
+        private Label? _externalPowerStateLabel;
+        private ProgressBar? _chargeBar;
 
         protected override void Open()
         {
@@ -44,33 +44,52 @@ namespace Content.Client.GameObjects.Components.Power
 
             var castState = (ApcBoundInterfaceState) state;
 
-            _breakerButton.Pressed = castState.MainBreaker;
-            switch (castState.ApcExternalPower)
+            if (_breakerButton != null)
             {
-                case ApcExternalPowerState.None:
-                    _externalPowerStateLabel.Text = "None";
-                    _externalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
-                    break;
-                case ApcExternalPowerState.Low:
-                    _externalPowerStateLabel.Text = "Low";
-                    _externalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateLow);
-                    break;
-                case ApcExternalPowerState.Good:
-                    _externalPowerStateLabel.Text = "Good";
-                    _externalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                _breakerButton.Pressed = castState.MainBreaker;
             }
 
-            _chargeBar.Value = castState.Charge;
-            UpdateChargeBarColor(castState.Charge);
-            var chargePercentage = (castState.Charge / _chargeBar.MaxValue) * 100.0f;
-            _window.ChargePercentage.Text = " " + chargePercentage.ToString("0.00") + "%";
+            if (_externalPowerStateLabel != null)
+            {
+                switch (castState.ApcExternalPower)
+                {
+                    case ApcExternalPowerState.None:
+                        _externalPowerStateLabel.Text = "None";
+                        _externalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
+                        break;
+                    case ApcExternalPowerState.Low:
+                        _externalPowerStateLabel.Text = "Low";
+                        _externalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateLow);
+                        break;
+                    case ApcExternalPowerState.Good:
+                        _externalPowerStateLabel.Text = "Good";
+                        _externalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            if (_chargeBar != null)
+            {
+                _chargeBar.Value = castState.Charge;
+                UpdateChargeBarColor(castState.Charge);
+
+                if (_window != null)
+                {
+                    var chargePercentage = (castState.Charge / _chargeBar.MaxValue) * 100.0f;
+                    _window.ChargePercentage.Text = " " + chargePercentage.ToString("0.00") + "%";
+                }
+            }
         }
 
         private void UpdateChargeBarColor(float charge)
         {
+            if (_chargeBar == null)
+            {
+                return;
+            }
+
             var normalizedCharge = charge / _chargeBar.MaxValue;
 
             const float leftHue = 0.0f; // Red
@@ -97,10 +116,7 @@ namespace Content.Client.GameObjects.Components.Power
             }
 
             // Check if null first to avoid repeatedly creating this.
-            if (_chargeBar.ForegroundStyleBoxOverride == null)
-            {
-                _chargeBar.ForegroundStyleBoxOverride = new StyleBoxFlat();
-            }
+            _chargeBar.ForegroundStyleBoxOverride ??= new StyleBoxFlat();
 
             var foregroundStyleBoxOverride = (StyleBoxFlat) _chargeBar.ForegroundStyleBoxOverride;
             foregroundStyleBoxOverride.BackgroundColor =
@@ -113,7 +129,7 @@ namespace Content.Client.GameObjects.Components.Power
 
             if (disposing)
             {
-                _window.Dispose();
+                _window?.Dispose();
             }
         }
 

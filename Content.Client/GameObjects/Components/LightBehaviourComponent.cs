@@ -24,8 +24,8 @@ namespace Content.Client.GameObjects.Components
     [Serializable]
     public abstract class LightBehaviourAnimationTrack : AnimationTrackProperty, IExposeData
     {
-        [ViewVariables] public string ID { get; set; }
-        [ViewVariables] public string Property { get; protected set; }
+        [ViewVariables] public string ID { get; set; } = string.Empty;
+        [ViewVariables] public string Property { get; protected set; } = "Radius";
         [ViewVariables] public bool IsLooped { get; set; }
         [ViewVariables] public bool Enabled { get; set; }
         [ViewVariables] public float StartValue { get; set; }
@@ -35,8 +35,8 @@ namespace Content.Client.GameObjects.Components
         [ViewVariables] public AnimationInterpolationMode InterpolateMode { get; set; }
 
         [ViewVariables] protected float MaxTime { get; set; }
-        protected PointLightComponent Light = default;
-        protected IRobustRandom RobustRandom = default;
+        protected PointLightComponent Light = default!;
+        protected IRobustRandom RobustRandom = default!;
 
         private float _maxTime = default;
 
@@ -197,7 +197,6 @@ namespace Content.Client.GameObjects.Components
                     ApplyProperty(InterpolateCubic(EndValue, StartValue, EndValue, StartValue, interpolateValue));
                     break;
                 default:
-                case AnimationInterpolationMode.Nearest:
                     ApplyProperty(interpolateValue < 0.5f ? StartValue : EndValue);
                     break;
             }
@@ -212,10 +211,10 @@ namespace Content.Client.GameObjects.Components
     [UsedImplicitly]
     public class RandomizeBehaviour : LightBehaviourAnimationTrack
     {
-        private object _randomValue1 = default;
-        private object _randomValue2 = default;
-        private object _randomValue3 = default;
-        private object _randomValue4 = default;
+        private object _randomValue1 = default!;
+        private object _randomValue2 = default!;
+        private object _randomValue3 = default!;
+        private object _randomValue4 = default!;
 
         public override void OnInitialize()
         {
@@ -277,9 +276,9 @@ namespace Content.Client.GameObjects.Components
     [UsedImplicitly]
     public class ColorCycleBehaviour : LightBehaviourAnimationTrack
     {
-        public List<Color> ColorsToCycle { get; set; }
+        public List<Color> ColorsToCycle { get; set; } = new();
 
-        private int _colorIndex = 0;
+        private int _colorIndex;
 
         public override void OnStart()
         {
@@ -366,13 +365,13 @@ namespace Content.Client.GameObjects.Components
         [ViewVariables(VVAccess.ReadOnly)]
         private readonly List<AnimationContainer> _animations = new();
 
-        private float _originalRadius = default;
-        private float _originalEnergy = default;
-        private Angle _originalRotation = default;
-        private Color _originalColor = default;
-        private bool _originalEnabled = default;
-        private PointLightComponent _lightComponent = default;
-        private AnimationPlayerComponent _animationPlayer = default;
+        private float _originalRadius;
+        private float _originalEnergy;
+        private Angle _originalRotation;
+        private Color _originalColor;
+        private bool _originalEnabled;
+        private PointLightComponent? _lightComponent;
+        private AnimationPlayerComponent _animationPlayer = default!;
 
         protected override void Startup()
         {
@@ -380,11 +379,14 @@ namespace Content.Client.GameObjects.Components
 
             CopyLightSettings();
             _animationPlayer = Owner.EnsureComponent<AnimationPlayerComponent>();
-            _animationPlayer.AnimationCompleted += s => OnAnimationCompleted(s);
+            _animationPlayer.AnimationCompleted += OnAnimationCompleted;
 
-            foreach (var container in _animations)
+            if (_lightComponent != null)
             {
-                container.LightBehaviour.Initialize(_lightComponent);
+                foreach (var container in _animations)
+                {
+                    container.LightBehaviour.Initialize(_lightComponent);
+                }
             }
 
             // we need to initialize all behaviours before starting any
@@ -401,7 +403,7 @@ namespace Content.Client.GameObjects.Components
         {
             var container = _animations.FirstOrDefault(x => x.FullKey == key);
 
-            if (container.LightBehaviour.IsLooped)
+            if (container != null && container.LightBehaviour.IsLooped)
             {
                 container.LightBehaviour.UpdatePlaybackValues(container.Animation);
                 _animationPlayer.Play(container.Animation, container.FullKey);
@@ -480,7 +482,7 @@ namespace Content.Client.GameObjects.Components
                 _animations.Remove(container);
             }
 
-            if (resetToOriginalSettings)
+            if (_lightComponent != null && resetToOriginalSettings)
             {
                 _lightComponent.Color = _originalColor;
                 _lightComponent.Enabled = _originalEnabled;
@@ -495,7 +497,7 @@ namespace Content.Client.GameObjects.Components
         /// </summary>
         public void AddNewLightBehaviour(LightBehaviourAnimationTrack behaviour, bool playImmediately = true)
         {
-            int key = 0;
+            var key = 0;
 
             while (_animations.Any(x => x.Key == key))
             {
@@ -507,7 +509,11 @@ namespace Content.Client.GameObjects.Components
                 AnimationTracks = { behaviour }
             };
 
-            behaviour.Initialize(_lightComponent);
+            if (_lightComponent != null)
+            {
+                behaviour.Initialize(_lightComponent);
+            }
+
             var container = new AnimationContainer(key, animation, behaviour);
             _animations.Add(container);
 

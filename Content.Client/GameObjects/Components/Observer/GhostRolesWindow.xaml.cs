@@ -9,7 +9,7 @@ namespace Content.Client.GameObjects.Components.Observer
     [GenerateTypedNameReferences]
     public partial class GhostRolesWindow : SS14Window
     {
-        public event Action<uint> RoleRequested;
+        public event Action<uint>? RoleRequested;
 
         protected override Vector2 CalculateMinimumSize() => (350, 275);
 

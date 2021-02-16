@@ -15,7 +15,7 @@ namespace Content.Client.GameObjects.Components.Weapons
         private TimeSpan _startTime;
         private double _duration;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState == null)
             {
@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Weapons
             }
 
             var playerManager = IoCManager.Resolve<IPlayerManager>();
-            if (playerManager?.LocalPlayer != null && playerManager.LocalPlayer.ControlledEntity != Owner)
+            if (playerManager.LocalPlayer != null && playerManager.LocalPlayer.ControlledEntity != Owner)
             {
                 return;
             }

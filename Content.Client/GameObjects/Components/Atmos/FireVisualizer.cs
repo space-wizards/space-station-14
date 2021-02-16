@@ -11,9 +11,9 @@ namespace Content.Client.GameObjects.Components.Atmos
     public class FireVisualizer : AppearanceVisualizer
     {
         private int _fireStackAlternateState = 3;
-        private string _normalState;
-        private string _alternateState;
-        private string _sprite;
+        private string? _normalState;
+        private string? _alternateState;
+        private string? _sprite;
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -69,10 +69,10 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
 
-            sprite.LayerSetRSI(FireVisualLayers.Fire, _sprite);
+            if (_sprite != null) sprite.LayerSetRSI(FireVisualLayers.Fire, _sprite);
             sprite.LayerSetVisible(FireVisualLayers.Fire, onFire);
 
-            if(fireStacks > _fireStackAlternateState && !string.IsNullOrEmpty(_alternateState))
+            if (fireStacks > _fireStackAlternateState && !string.IsNullOrEmpty(_alternateState))
                 sprite.LayerSetState(FireVisualLayers.Fire, _alternateState);
             else
                 sprite.LayerSetState(FireVisualLayers.Fire, _normalState);

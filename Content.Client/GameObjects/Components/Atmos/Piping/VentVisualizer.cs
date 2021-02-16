@@ -1,16 +1,16 @@
+using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Shared.GameObjects;
-using YamlDotNet.RepresentationModel;
 using Robust.Shared.Serialization;
+using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Atmos
+namespace Content.Client.GameObjects.Components.Atmos.Piping
 {
     [UsedImplicitly]
     public class VentVisualizer : AppearanceVisualizer
     {
-        private string _ventOnstate;
+        private string? _ventOnstate;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -24,7 +24,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent(out ISpriteComponent sprite)) return;
+            if (!entity.TryGetComponent(out ISpriteComponent? sprite)) return;
 
             sprite.LayerMapReserveBlank(Layer.VentEnabled);
             var layer = sprite.LayerMapGet(Layer.VentEnabled);
@@ -35,7 +35,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite)) return;
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
             if (!component.TryGetData(VentVisuals.VisualState, out VentVisualState ventVisualState)) return;
 
             var layer = sprite.LayerMapGet(Layer.VentEnabled);

@@ -1,6 +1,4 @@
-﻿
-using Content.Client.GameObjects.Components.Cargo;
-using Robust.Client.UserInterface.Controls;
+﻿using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -11,14 +9,12 @@ namespace Content.Client.UserInterface.Cargo
     public class GalacticBankSelectionMenu : SS14Window
     {
         private readonly ItemList _accounts;
-        private int _accountCount = 0;
+        private int _accountCount;
         private string[] _accountNames = new string[] { };
         private int[] _accountIds = new int[] { };
         private int _selectedAccountId = -1;
 
         protected override Vector2? CustomSize => (300, 300);
-
-        public CargoConsoleBoundUserInterface Owner;
 
         public GalacticBankSelectionMenu()
         {

@@ -10,8 +10,8 @@ namespace Content.Client.GameObjects.Components.Recycling
     [UsedImplicitly]
     public class RecyclerVisualizer : AppearanceVisualizer
     {
-        private string _stateClean;
-        private string _stateBloody;
+        private string? _stateClean;
+        private string? _stateBloody;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -32,8 +32,8 @@ namespace Content.Client.GameObjects.Components.Recycling
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent(out ISpriteComponent sprite) ||
-                !entity.TryGetComponent(out AppearanceComponent appearance))
+            if (!entity.TryGetComponent(out ISpriteComponent? sprite) ||
+                !entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -48,7 +48,7 @@ namespace Content.Client.GameObjects.Components.Recycling
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }

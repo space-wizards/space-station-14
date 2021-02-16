@@ -11,13 +11,13 @@ namespace Content.Client.GameObjects.Components.Conveyor
     [UsedImplicitly]
     public class ConveyorVisualizer : AppearanceVisualizer
     {
-        private string _stateRunning;
-        private string _stateStopped;
-        private string _stateReversed;
+        private string? _stateRunning;
+        private string? _stateStopped;
+        private string? _stateReversed;
 
         private void ChangeState(AppearanceComponent appearance)
         {
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!appearance.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }

@@ -13,7 +13,7 @@ namespace Content.Client.Research
     {
         protected override Vector2? CustomSize => (300, 450);
 
-        public LatheBoundUserInterface Owner { get; set; }
+        public LatheBoundUserInterface Owner { get; }
 
         [ViewVariables]
         private readonly ItemList _queueList;
@@ -21,9 +21,10 @@ namespace Content.Client.Research
         private readonly Label _description;
         private readonly TextureRect _icon;
 
-        public LatheQueueMenu()
+        public LatheQueueMenu(LatheBoundUserInterface owner)
         {
-                        Title = "Lathe Queue";
+            Owner = owner;
+            Title = "Lathe Queue";
 
             var margin = new MarginContainer()
             {
@@ -77,7 +78,6 @@ namespace Content.Client.Research
                 RectClipContent = true,
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 SizeFlagsHorizontal = SizeFlags.Fill,
-
             };
 
             _queueList = new ItemList()

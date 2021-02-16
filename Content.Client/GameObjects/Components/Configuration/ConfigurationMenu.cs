@@ -7,7 +7,7 @@ using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.SharedConfigurationComponent;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.GameObjects.Components.Wires
+namespace Content.Client.GameObjects.Components.Configuration
 {
     public class ConfigurationMenu : SS14Window
     {

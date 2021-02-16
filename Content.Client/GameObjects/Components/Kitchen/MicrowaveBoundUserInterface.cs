@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        private MicrowaveMenu _menu;
+        private MicrowaveMenu? _menu;
 
         private readonly Dictionary<int, EntityUid> _solids = new();
         private readonly Dictionary<int, Solution.ReagentQuantity> _reagents =new();
@@ -38,8 +38,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
             _menu = new MicrowaveMenu(this);
             _menu.OpenCentered();
             _menu.OnClose += Close;
-            _menu.StartButton.OnPressed += args => SendMessage(new SharedMicrowaveComponent.MicrowaveStartCookMessage());
-            _menu.EjectButton.OnPressed += args => SendMessage(new SharedMicrowaveComponent.MicrowaveEjectMessage());
+            _menu.StartButton.OnPressed += _ => SendMessage(new SharedMicrowaveComponent.MicrowaveStartCookMessage());
+            _menu.EjectButton.OnPressed += _ => SendMessage(new SharedMicrowaveComponent.MicrowaveEjectMessage());
             _menu.IngredientsList.OnItemSelected += args =>
             {
                 SendMessage(new SharedMicrowaveComponent.MicrowaveEjectSolidIndexedMessage(_solids[args.ItemIndex]));
@@ -55,20 +55,20 @@ namespace Content.Client.GameObjects.Components.Kitchen
             _menu.OnCookTimeSelected += (args,buttonIndex) =>
             {
                 var actualButton = (MicrowaveMenu.MicrowaveCookTimeButton) args.Button ;
-                var newTime = actualButton.CookTime;
                 SendMessage(new SharedMicrowaveComponent.MicrowaveSelectCookTimeMessage(buttonIndex,actualButton.CookTime));
             };
-
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+
             if (!disposing)
             {
                 return;
             }
-            _solids?.Clear();
+
+            _solids.Clear();
             _menu?.Dispose();
         }
 
@@ -80,17 +80,25 @@ namespace Content.Client.GameObjects.Components.Kitchen
             {
                 return;
             }
-            _menu.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy);
+
+            _menu?.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy);
             RefreshContentsDisplay(cState.ReagentQuantities, cState.ContainedSolids);
-            var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex);
-            currentlySelectedTimeButton.Pressed = true;
-            var label = cState.ActiveButtonIndex <= 0 ? Loc.GetString("INSTANT") : cState.CurrentCookTime.ToString();
-            _menu._cookTimeInfoLabel.Text = $"{Loc.GetString("COOK TIME")}: {label}";
+
+            if (_menu != null)
+            {
+                var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex);
+                currentlySelectedTimeButton.Pressed = true;
+                var label = cState.ActiveButtonIndex <= 0 ? Loc.GetString("INSTANT") : cState.CurrentCookTime.ToString();
+                _menu._cookTimeInfoLabel.Text = $"{Loc.GetString("COOK TIME")}: {label}";
+            }
         }
 
         private void RefreshContentsDisplay(Solution.ReagentQuantity[] reagents, EntityUid[] containedSolids)
         {
             _reagents.Clear();
+
+            if (_menu == null) return;
+
             _menu.IngredientsListReagents.Clear();
             for (var i = 0; i < reagents.Length; i++)
             {
@@ -108,42 +116,44 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 {
                     return;
                 }
+
                 if (entity.Deleted)
                 {
                     continue;
                 }
 
-                Texture texture;
-                if (entity.TryGetComponent(out IconComponent iconComponent))
+                Texture? texture;
+                if (entity.TryGetComponent(out IconComponent? iconComponent))
                 {
                     texture = iconComponent.Icon?.Default;
-                }else if (entity.TryGetComponent(out SpriteComponent spriteComponent))
+                }
+                else if (entity.TryGetComponent(out SpriteComponent? spriteComponent))
                 {
                     texture = spriteComponent.Icon?.Default;
-                }else{continue;}
+                }
+                else
+                {
+                    continue;
+                }
 
                 var solidItem = _menu.IngredientsList.AddItem(entity.Name, texture);
                 var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
                 _solids.Add(solidIndex, containedSolids[j]);
-
             }
-
         }
 
         public class MicrowaveMenu : SS14Window
         {
-
             public class MicrowaveCookTimeButton : Button
             {
                 public uint CookTime;
             }
 
-
             protected override Vector2? CustomSize => (512, 256);
 
             private MicrowaveBoundUserInterface Owner { get; set; }
 
-            public event Action<BaseButton.ButtonEventArgs, int> OnCookTimeSelected;
+            public event Action<BaseButton.ButtonEventArgs, int>? OnCookTimeSelected;
 
             public Button StartButton { get; }
             public Button EjectButton { get; }
@@ -151,19 +161,19 @@ namespace Content.Client.GameObjects.Components.Kitchen
             public PanelContainer TimerFacePlate { get; }
 
             public ButtonGroup CookTimeButtonGroup { get; }
+
             public VBoxContainer CookTimeButtonVbox { get; }
 
             private VBoxContainer ButtonGridContainer { get; }
 
             private PanelContainer DisableCookingPanelOverlay { get; }
 
-
             public ItemList IngredientsList { get; }
 
             public ItemList IngredientsListReagents { get; }
             public Label _cookTimeInfoLabel { get; }
 
-            public MicrowaveMenu(MicrowaveBoundUserInterface owner = null)
+            public MicrowaveMenu(MicrowaveBoundUserInterface owner)
             {
                 Owner = owner;
                 Title = Loc.GetString("Microwave");
@@ -174,7 +184,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     SizeFlagsHorizontal = SizeFlags.Fill,
                     SizeFlagsVertical = SizeFlags.Fill,
                 };
-
 
                 var hSplit = new HBoxContainer
                 {
@@ -254,7 +263,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     Align = BoxContainer.AlignMode.Center,
                 };
 
-
                 var index = 0;
                 for (var i = 0; i <= 6; i++)
                 {
@@ -277,7 +285,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
                 var cookTimeOneSecondButton = (Button) CookTimeButtonVbox.GetChild(0);
                 cookTimeOneSecondButton.Pressed = true;
-
 
                 _cookTimeInfoLabel = new Label
                 {

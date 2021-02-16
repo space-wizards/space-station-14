@@ -14,16 +14,16 @@ namespace Content.Client.GameObjects.Components.Disposal
     {
         private const string AnimationKey = "disposal_unit_animation";
 
-        private string _stateAnchored;
-        private string _stateUnAnchored;
-        private string _stateCharging;
-        private string _overlayCharging;
-        private string _overlayReady;
-        private string _overlayFull;
-        private string _overlayEngaged;
-        private string _stateFlush;
+        private string? _stateAnchored;
+        private string? _stateUnAnchored;
+        private string? _stateCharging;
+        private string? _overlayCharging;
+        private string? _overlayReady;
+        private string? _overlayFull;
+        private string? _overlayEngaged;
+        private string? _stateFlush;
 
-        private Animation _flushAnimation;
+        private Animation? _flushAnimation;
 
         private void ChangeState(AppearanceComponent appearance)
         {
@@ -32,7 +32,7 @@ namespace Content.Client.GameObjects.Components.Disposal
                 return;
             }
 
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!appearance.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -53,7 +53,7 @@ namespace Content.Client.GameObjects.Components.Disposal
 
                     var animPlayer = appearance.Owner.GetComponent<AnimationPlayerComponent>();
 
-                    if (!animPlayer.HasRunningAnimation(AnimationKey))
+                    if (_flushAnimation != null && !animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(_flushAnimation, AnimationKey);
                     }

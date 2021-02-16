@@ -10,11 +10,12 @@ namespace Content.Client.GameObjects.Components.Explosion
     // ReSharper disable once InconsistentNaming
     public class ClusterFlashVisualizer : AppearanceVisualizer
     {
-        private string _state;
+        private string? _state;
 
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
+
             if (node.TryGetNode("state", out var state))
             {
                 _state = state.AsString();

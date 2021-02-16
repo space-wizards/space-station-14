@@ -10,10 +10,10 @@ namespace Content.Client.UserInterface
     {
         private readonly IClientConsoleHost _consoleHost;
 
-        private BaseButton DisconnectButton;
-        private BaseButton QuitButton;
-        private BaseButton OptionsButton;
-        private OptionsMenu optionsMenu;
+        private BaseButton? DisconnectButton;
+        private BaseButton? QuitButton;
+        private BaseButton? OptionsButton;
+        private OptionsMenu? optionsMenu;
 
         public EscapeMenu(IClientConsoleHost consoleHost)
         {
@@ -62,15 +62,16 @@ namespace Content.Client.UserInterface
 
         private void OnOptionsButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            optionsMenu.OpenCentered();
+            optionsMenu?.OpenCentered();
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+
             if (disposing)
             {
-                optionsMenu.Dispose();
+                optionsMenu?.Dispose();
             }
         }
     }

@@ -38,7 +38,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 offset *= (ResetTime - _time) / ResetTime;
             }
 
-            if (Owner.TryGetComponent(out ISpriteComponent spriteComponent))
+            if (Owner.TryGetComponent(out ISpriteComponent? spriteComponent))
             {
                 // We have to account for rotation so the offset still checks out.
                 // SpriteComponent.Offset is applied before transform rotation (as expected).

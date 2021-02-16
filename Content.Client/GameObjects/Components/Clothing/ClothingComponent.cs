@@ -68,6 +68,12 @@ namespace Content.Client.GameObjects.Components.Clothing
             }
 
             var rsi = GetRSI();
+
+            if (rsi == null)
+            {
+                return null;
+            }
+
             var prefix = ClothingEquippedPrefix ?? EquippedPrefix;
             var stateId = prefix != null ? $"{prefix}-equipped-{slot}" : $"equipped-{slot}";
             if (rsi.TryGetState(stateId, out _))

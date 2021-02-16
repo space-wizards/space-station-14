@@ -20,13 +20,15 @@ namespace Content.Client.VendingMachines
         protected override Vector2? CustomSize => (300, 450);
 
         private readonly ItemList _items;
-        private List<VendingMachineInventoryEntry> _cachedInventory;
+        private List<VendingMachineInventoryEntry> _cachedInventory = new();
 
-        public VendingMachineBoundUserInterface Owner { get; set; }
+        public VendingMachineBoundUserInterface Owner { get; }
 
-        public VendingMachineMenu()
+        public VendingMachineMenu(VendingMachineBoundUserInterface owner)
         {
             IoCManager.InjectDependencies(this);
+
+            Owner = owner;
 
             _items = new ItemList()
             {
@@ -46,10 +48,10 @@ namespace Content.Client.VendingMachines
             {
                 var itemName = _prototypeManager.Index<EntityPrototype>(entry.ID).Name;
 
-                Texture icon = null;
+                Texture? icon = null;
                 if(_prototypeManager.TryIndex(entry.ID, out EntityPrototype prototype))
                 {
-                    icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache)?.Default;
+                    icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache).Default;
                 }
                 _items.AddItem($"{itemName} ({entry.Amount} left)", icon);
             }

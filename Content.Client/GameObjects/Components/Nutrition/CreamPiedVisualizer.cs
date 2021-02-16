@@ -10,7 +10,7 @@ namespace Content.Client.GameObjects.Components.Nutrition
     [UsedImplicitly]
     public class CreamPiedVisualizer : AppearanceVisualizer
     {
-        private string _state;
+        private string? _state;
 
         public override void InitializeEntity(IEntity entity)
         {

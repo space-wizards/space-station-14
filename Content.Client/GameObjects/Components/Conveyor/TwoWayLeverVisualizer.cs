@@ -10,13 +10,13 @@ namespace Content.Client.GameObjects.Components.Conveyor
     [UsedImplicitly]
     public class TwoWayLeverVisualizer : AppearanceVisualizer
     {
-        private string _stateForward;
-        private string _stateOff;
-        private string _stateReversed;
+        private string? _stateForward;
+        private string? _stateOff;
+        private string? _stateReversed;
 
         private void ChangeState(AppearanceComponent appearance)
         {
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!appearance.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }

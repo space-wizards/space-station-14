@@ -1,6 +1,5 @@
 ﻿using Content.Client.Arcade;
 using Content.Shared.Arcade;
-using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
@@ -8,9 +7,9 @@ namespace Content.Client.GameObjects.Components.Arcade
 {
     public class BlockGameBoundUserInterface : BoundUserInterface
     {
-        private BlockGameMenu _menu;
+        private BlockGameMenu? _menu;
 
-        public BlockGameBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] object uiKey) : base(owner, uiKey)
+        public BlockGameBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
 
@@ -51,7 +50,7 @@ namespace Content.Client.GameObjects.Components.Arcade
                     if (statusMessage.isStarted) _menu?.SetStarted();
                     _menu?.SetScreen(statusMessage.Screen);
                     if (statusMessage is BlockGameMessages.BlockGameGameOverScreenMessage gameOverScreenMessage)
-                        _menu?.SetGameoverInfo(gameOverScreenMessage.FinalScore, gameOverScreenMessage.LocalPlacement, gameOverScreenMessage.GlobalPlacement);
+                        _menu?.SetGameOverInfo(gameOverScreenMessage.FinalScore, gameOverScreenMessage.LocalPlacement, gameOverScreenMessage.GlobalPlacement);
                     break;
                 case BlockGameMessages.BlockGameHighScoreUpdateMessage highScoreUpdateMessage:
                     _menu?.UpdateHighscores(highScoreUpdateMessage.LocalHighscores,

@@ -13,7 +13,7 @@ namespace Content.Client.GameObjects.Components.Command
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        [ViewVariables] private CommunicationsConsoleMenu _menu;
+        [ViewVariables] private CommunicationsConsoleMenu? _menu;
 
         public bool CountdownStarted { get; private set; }
 
