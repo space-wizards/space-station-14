@@ -84,13 +84,13 @@
   - type: Sprite
     sprite: Objects/Misc/torch.rsi
     layers:
-      - state: torch
-      - state: torch_on
+      - state: unlit-torch
+      - state: lit-torch
         shader: unshaded
         visible: false
   - type: Item
     sprite: Objects/Misc/torch.rsi
-    HeldPrefix: off
+    HeldPrefix: unlit
   - type: PointLight
     enabled: false
     radius: 1
