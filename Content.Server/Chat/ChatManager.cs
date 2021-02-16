@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
+using Content.Shared;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -15,6 +16,7 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -29,10 +31,17 @@ namespace Content.Server.Chat
     /// </summary>
     internal sealed class ChatManager : IChatManager
     {
+        [Dependency] private readonly IServerNetManager _netManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IMoMMILink _mommiLink = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+
         /// <summary>
         /// The maximum length a player-sent message can be sent
         /// </summary>
-        public int MaxMessageLength = 1000;
+        public const int MaxMessageLength = 1000;
 
         private const int VoiceRange = 7; // how far voice goes in world units
 
@@ -43,12 +52,8 @@ namespace Content.Server.Chat
 
         //TODO: make prio based?
         private List<TransformChat> _chatTransformHandlers;
-
-        [Dependency] private readonly IServerNetManager _netManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IMoMMILink _mommiLink = default!;
-        [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
+        private bool _oocEnabled = true;
+        private bool _adminOocEnabled = true;
 
         public void Initialize()
         {
@@ -61,6 +66,21 @@ namespace Content.Server.Chat
             _netManager.ServerSendToAll(msg);
 
             _chatTransformHandlers = new List<TransformChat>();
+
+            _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
+            _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
+        }
+
+        private void OnOocEnabledChanged(bool val)
+        {
+            _oocEnabled = val;
+            DispatchServerAnnouncement(val ? "OOC chat has been enabled." : "OOC chat has been disabled.");
+        }
+
+        private void OnAdminOocEnabledChanged(bool val)
+        {
+            _adminOocEnabled = val;
+            DispatchServerAnnouncement(val ? "Admin OOC chat has been enabled." : "Admin OOC chat has been disabled.");
         }
 
         public void DispatchServerAnnouncement(string message)
@@ -166,15 +186,17 @@ namespace Content.Server.Chat
             }
 
             // Check if entity is a player
-            IPlayerSession playerSession = source.GetComponent<IActorComponent>().playerSession;
+            if (!source.TryGetComponent(out IActorComponent actor))
+            {
+                return;
+            }
 
             // Check if message exceeds the character limit
-            if (playerSession != null)
-                if (action.Length > MaxMessageLength)
-                {
-                    DispatchServerMessage(playerSession, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
-                    return;
-                }
+            if (actor.playerSession != null && action.Length > MaxMessageLength)
+            {
+                DispatchServerMessage(actor.playerSession, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
+                return;
+            }
 
             var pos = source.Transform.Coordinates;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
@@ -189,6 +211,18 @@ namespace Content.Server.Chat
 
         public void SendOOC(IPlayerSession player, string message)
         {
+            if (_adminManager.IsAdmin(player))
+            {
+                if (!_adminOocEnabled)
+                {
+                    return;
+                }
+            }
+            else if (!_oocEnabled)
+            {
+                return;
+            }
+
             // Check if message exceeds the character limit
             if (message.Length > MaxMessageLength)
             {
@@ -202,7 +236,7 @@ namespace Content.Server.Chat
             msg.MessageWrap = $"OOC: {player.Name}: {{0}}";
             if (_adminManager.HasAdminFlag(player, AdminFlags.Admin))
             {
-                var prefs = _preferencesManager.GetPreferences((player.UserId));
+                var prefs = _preferencesManager.GetPreferences(player.UserId);
                 msg.MessageColorOverride = prefs.AdminOOCColor;
             }
             //TODO: player.Name color, this will need to change the structure of the MsgChatMessage
