@@ -150,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 }
             }
 
-            foreach (var entity in tile.GetEntitiesInTileFast())
+            foreach (var entity in tile.GetEntitiesInTileFast().ToArray())
             {
                 ReactWithEntity(entity, solutionFraction);
             }
