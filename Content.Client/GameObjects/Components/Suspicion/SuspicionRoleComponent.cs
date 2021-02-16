@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Suspicion;
 using Content.Shared.GameObjects.Components.Suspicion;

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Mobs.Actions;
 using Content.Client.UserInterface.Controls;

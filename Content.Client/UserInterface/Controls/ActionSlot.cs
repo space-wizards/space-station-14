@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;

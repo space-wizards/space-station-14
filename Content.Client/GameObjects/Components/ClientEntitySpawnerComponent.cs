@@ -1,7 +1,6 @@
-#nullable enable
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using System.Collections.Generic;
 
 namespace Content.Client.GameObjects.Components
 {

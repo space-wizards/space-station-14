@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.GameObjects.Components.Movement;
+﻿using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.Physics;

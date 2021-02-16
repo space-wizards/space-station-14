@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Shared.GameObjects.Components.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.Animations;

@@ -1,8 +1,7 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Client.Atmos;
-using Content.Shared.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Atmos;
+using Content.Shared.GameObjects.EntitySystems.Atmos;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;

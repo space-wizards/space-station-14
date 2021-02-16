@@ -6,8 +6,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 
-#nullable enable
-
 namespace Content.Client.UserInterface
 {
     public sealed partial class OptionsMenu : SS14Window

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Client.GameObjects.Components.HUD.Inventory;
+﻿using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.GameObjects.Components.Items;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;

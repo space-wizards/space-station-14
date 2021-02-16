@@ -15,8 +15,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using static Content.Shared.Administration.PermissionsEuiMsg;
 
-#nullable enable
-
 namespace Content.Client.UserInterface.Permissions
 {
     [UsedImplicitly]

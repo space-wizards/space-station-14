@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;

@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;

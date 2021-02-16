@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Client.GameObjects.Components.Wires;
 using Content.Shared.Audio;

@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;

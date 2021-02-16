@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
