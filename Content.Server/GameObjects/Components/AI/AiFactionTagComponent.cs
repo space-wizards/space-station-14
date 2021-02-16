@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.EntitySystems.AI;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -34,16 +35,5 @@ namespace Content.Server.GameObjects.Components.AI
                     return writeFactions;
                 });
         }
-    }
-
-    [Flags]
-    public enum Faction
-    {
-        None = 0,
-        NanoTrasen = 1 << 0,
-        SimpleHostile = 1 << 1,
-        SimpleNeutral = 1 << 2,
-        Syndicate = 1 << 3,
-        Xeno = 1 << 4,
     }
 }
