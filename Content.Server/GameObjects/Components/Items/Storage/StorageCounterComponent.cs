@@ -5,7 +5,7 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -38,6 +38,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             base.ExposeData(serializer);
 
             serializer.DataField(ref _countTag, "countTag", null);
+            if (_countTag == null)
+            {
+                Logger.Warning("StorageCounterComponent without a `countTag` is useless");
+            }
             serializer.DataField(ref _maxAmount, "amount", null);
         }
 

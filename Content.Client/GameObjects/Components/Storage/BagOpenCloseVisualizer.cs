@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -22,6 +23,10 @@ namespace Content.Client.GameObjects.Components.Storage
             if (node.TryGetNode<YamlScalarNode>(OpenIcon, out var openIconNode))
             {
                 _openIcon = openIconNode.Value;
+            }
+            else
+            {
+                Logger.Warning("BagOpenCloseVisualizer is useless with no `openIcon`");
             }
         }
 

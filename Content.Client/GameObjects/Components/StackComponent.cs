@@ -29,8 +29,8 @@ namespace Content.Client.GameObjects.Components
             {
                 var valueChanged = value != Count;
                 base.Count = value;
-
-                if (!Owner.Deleted && valueChanged)
+                
+                if (valueChanged)
                 {
                     _appearanceComponent?.SetData(StackVisuals.Actual, Count);
                  
