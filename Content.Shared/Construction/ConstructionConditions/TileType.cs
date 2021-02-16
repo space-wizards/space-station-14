@@ -1,4 +1,5 @@
-﻿using Content.Shared.Maps;
+﻿#nullable enable
+using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -12,11 +13,11 @@ namespace Content.Shared.Construction.ConstructionConditions
     public class TileType : IConstructionCondition
     {
 
-        public List<string> TargetTiles { get; private set; }
+        public List<string> TargetTiles { get; private set; } = new();
 
         void IExposeData.ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(this, x => x.TargetTiles, "targets", null);
+            serializer.DataField(this, x => x.TargetTiles, "targets", new List<string>());
         }
 
         public bool Condition(IEntity user, EntityCoordinates location, Direction direction)

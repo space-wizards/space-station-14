@@ -39,7 +39,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
                 public readonly string Key;
                 public readonly string Category;
                 public readonly SpriteSpecifier Icon;
-                public readonly SpriteSpecifier CategoryIcon;
+                public readonly SpriteSpecifier? CategoryIcon;
                 public readonly bool Available;
 
                 public NetVerbData(VerbData data, string key)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -33,10 +34,12 @@ namespace Content.Shared.Prototypes.Cargo
             {
                 if (_name.Trim().Length != 0)
                     return _name;
-                EntityPrototype prototype = null;
-                IoCManager.Resolve<IPrototypeManager>().TryIndex(_product, out prototype);
-                if (prototype?.Name != null)
+
+                if (IoCManager.Resolve<IPrototypeManager>().TryIndex(_product, out EntityPrototype prototype))
+                {
                     _name = prototype.Name;
+                }
+
                 return _name;
             }
         }
@@ -51,10 +54,12 @@ namespace Content.Shared.Prototypes.Cargo
             {
                 if (_description.Trim().Length != 0)
                     return _description;
-                EntityPrototype prototype = null;
-                IoCManager.Resolve<IPrototypeManager>().TryIndex(_product, out prototype);
-                if (prototype?.Description != null)
+
+                if (IoCManager.Resolve<IPrototypeManager>().TryIndex(_product, out EntityPrototype prototype))
+                {
                     _description = prototype.Description;
+                }
+
                 return _description;
             }
         }

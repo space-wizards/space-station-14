@@ -714,6 +714,11 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
+            if (eventArgs.User == null)
+            {
+                return false;
+            }
+
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return false;

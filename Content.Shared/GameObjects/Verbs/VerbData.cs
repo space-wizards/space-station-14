@@ -32,7 +32,7 @@ namespace Content.Shared.GameObjects.Verbs
         /// <summary>
         ///     Sprite of the icon that the user sees on the verb button.
         /// </summary>
-        public SpriteSpecifier CategoryIcon { get; set; } = SpriteSpecifier.Invalid;
+        public SpriteSpecifier? CategoryIcon { get; set; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         ///     Whether this verb is visible, disabled (greyed out) or hidden.

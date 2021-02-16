@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -21,6 +22,9 @@ namespace Content.Shared.Text
         private static string[] ResourceToLines(string resourceName)
         {
             using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
+
+            if (stream == null) throw new NullReferenceException("Failed to load preset character names.");
+
             using var reader = new StreamReader(stream);
             return reader
                 .ReadToEnd()
