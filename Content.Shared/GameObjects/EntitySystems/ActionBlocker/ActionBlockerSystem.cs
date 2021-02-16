@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Mobs.Speech;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Mobs.Speech;
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -24,8 +25,13 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
             return canMove;
         }
 
-        public static bool CanInteract(IEntity entity)
+        public static bool CanInteract(IEntity? entity)
         {
+            if (entity == null)
+            {
+                return false;
+            }
+
             var canInteract = true;
 
             foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
@@ -36,8 +42,13 @@ namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
             return canInteract;
         }
 
-        public static bool CanUse(IEntity entity)
+        public static bool CanUse(IEntity? entity)
         {
+            if (entity == null)
+            {
+                return false;
+            }
+            
             var canUse = true;
 
             foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
