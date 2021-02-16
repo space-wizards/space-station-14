@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Mobs.Speech;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Mobs.Speech;
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

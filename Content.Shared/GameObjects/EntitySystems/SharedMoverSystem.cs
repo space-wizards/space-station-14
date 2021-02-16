@@ -156,7 +156,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 foreach (var comp in owner.GetAllComponents<IRelayMoveInput>())
                 {
-                    comp.MoveInputPressed(session);
+                    comp.MoveInputPressed(session!);
                 }
             }
 

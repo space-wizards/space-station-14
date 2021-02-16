@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.Alert;
 using Robust.Shared.GameObjects;
@@ -23,7 +24,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         [ViewVariables] private Dictionary<AlertKey, AlertState> _alerts = new();
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 

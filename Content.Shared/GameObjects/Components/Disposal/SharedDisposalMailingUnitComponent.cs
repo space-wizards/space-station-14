@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -57,7 +58,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
                 return new DisposalMailingUnitBoundUserInterfaceState(UnitName, UnitState, Pressure, Powered, Engaged, Tag, (List<string>)Tags.Clone(), Target);
             }
 
-            public bool Equals(DisposalMailingUnitBoundUserInterfaceState other)
+            public bool Equals(DisposalMailingUnitBoundUserInterfaceState? other)
             {
                 if (other is null) return false;
                 if (ReferenceEquals(this, other)) return true;

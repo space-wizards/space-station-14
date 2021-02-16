@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Shared.GameObjects;

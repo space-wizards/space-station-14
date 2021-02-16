@@ -53,7 +53,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                     if (_physics != null)
                     {
-                        var message = new PullStoppedMessage(oldPullerPhysics, _physics);
+                        var message = new PullStoppedMessage(oldPullerPhysics!, _physics);
 
                         oldPuller.SendMessage(null, message);
                         Owner.SendMessage(null, message);

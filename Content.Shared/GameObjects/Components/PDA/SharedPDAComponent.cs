@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -51,8 +52,8 @@ namespace Content.Shared.GameObjects.Components.PDA
         public bool FlashlightEnabled;
         public bool HasPen;
         public PDAIdInfoText PDAOwnerInfo;
-        public UplinkAccountData Account;
-        public UplinkListingData[] Listings;
+        public UplinkAccountData Account = default!;
+        public UplinkListingData[] Listings = default!;
 
         public PDAUpdateState(bool isFlashlightOn, bool hasPen, PDAIdInfoText ownerInfo)
         {
@@ -127,7 +128,7 @@ namespace Content.Shared.GameObjects.Components.PDA
 
     public class UplinkAccount
     {
-        public event Action<UplinkAccount> BalanceChanged;
+        public event Action<UplinkAccount> BalanceChanged = default!;
         public EntityUid AccountHolder;
         private int _balance;
         [ViewVariables]
@@ -146,7 +147,7 @@ namespace Content.Shared.GameObjects.Components.PDA
                 return false;
             }
             _balance = newBalance;
-            BalanceChanged?.Invoke(this);
+            BalanceChanged.Invoke(this);
             return true;
 
         }
@@ -185,7 +186,7 @@ namespace Content.Shared.GameObjects.Components.PDA
             ItemId = itemId;
         }
 
-        public bool Equals(UplinkListingData other)
+        public bool Equals(UplinkListingData? other)
         {
             if (other == null)
             {

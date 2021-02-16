@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
@@ -45,7 +46,7 @@ namespace Content.Shared.GameObjects.Components.Observer
     {
         public EntityUid PlayerTarget;
         public string WarpName;
-        public GhostWarpRequestMessage(EntityUid playerTarget = default, string warpTarget = default)
+        public GhostWarpRequestMessage(EntityUid playerTarget = default, string warpTarget = default!)
         {
             WarpName = warpTarget;
             PlayerTarget = playerTarget;
