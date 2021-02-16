@@ -12,6 +12,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Mobs.State
