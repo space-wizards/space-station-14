@@ -8,7 +8,10 @@
   },
   "states": [
     {
-      "name": "lit-torch",
+      "name": "icon"
+    },
+    {
+      "name": "lit_overlay",
       "delays": [
         [
           0.1,
@@ -21,10 +24,10 @@
       ]
     },
     {
-      "name": "unlit-torch"
+      "name": "torch_unlit"
     },
     {
-      "name": "empty-torch"
+      "name": "torch_spent"
     },
     {
       "name": "lit-inhand-left",

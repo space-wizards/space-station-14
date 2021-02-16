@@ -1,4 +1,4 @@
-﻿
+
 using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Sound;
@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (Owner.TryGetComponent<ItemComponent>(out var item))
             {
-                item.EquippedPrefix = "off";
+                item.EquippedPrefix = "unlit";
             }
 
             CurrentState = ExpendableLightState.BrandNew;
@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 if (Owner.TryGetComponent<ItemComponent>(out var item))
                 {
-                    item.EquippedPrefix = "on";
+                    item.EquippedPrefix = "lit";
                 }
 
                 CurrentState = ExpendableLightState.Lit;
@@ -178,7 +178,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                         if (Owner.TryGetComponent<ItemComponent>(out var item))
                         {
-                            item.EquippedPrefix = "off";
+                            item.EquippedPrefix = "unlit";
                         }
 
                         break;
