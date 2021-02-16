@@ -48,7 +48,7 @@ namespace Content.Shared.Preferences
 
         public int FirstEmptySlot()
         {
-            var firstEmpty = IndexOfCharacter(null);
+            var firstEmpty = IndexOfCharacter(null!);
             return firstEmpty == -1 ? _characters.Count : firstEmpty;
         }
 

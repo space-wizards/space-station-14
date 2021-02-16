@@ -58,8 +58,8 @@ namespace Content.Shared.Roles
             srz.DataField(this, p => p.SpawnPositions, "spawnPositions", TotalPositions);
             srz.DataField(this, p => p.IsHead, "head", false);
             srz.DataField(this, p => p.Access, "access", Array.Empty<string>());
-            srz.DataField(this, p => p.Icon, "icon", null);
-            srz.DataField(this, p => p.Special, "special", null);
+            srz.DataField(this, p => p.Icon, "icon", string.Empty);
+            srz.DataField(this, p => p.Special, "special", null!);
         }
     }
 }

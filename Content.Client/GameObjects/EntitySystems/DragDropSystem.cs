@@ -137,7 +137,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 var canDrag = false;
                 foreach (var draggable in entity.GetAllComponents<IDraggable>())
                 {
-                    var dragEventArgs = new StartDragDropEventArgs(dragger, entity);
+                    var dragEventArgs = new StartDragDropEventArgs(dragger!, entity);
                     if (draggable.CanStartDrag(dragEventArgs))
                     {
                         _draggables.Add(draggable);
@@ -384,7 +384,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
                 var valid = (bool?) null;
                 // check if it's able to be dropped on by current dragged entity
-                var dropArgs = new DragDropEventArgs(_dragger, pvsEntity.Transform.Coordinates, _dragDropHelper.Dragged, pvsEntity);
+                var dropArgs = new DragDropEventArgs(_dragger!, pvsEntity.Transform.Coordinates, _dragDropHelper.Dragged, pvsEntity);
 
                 foreach (var comp in pvsEntity.GetAllComponents<IDragDropOn>())
                 {

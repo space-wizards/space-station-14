@@ -29,7 +29,7 @@ namespace Content.Shared.GameObjects.Components.Research
         {
             get
             {
-                var ID = material.ID;
+                string ID = material.ID!;
                 if (!Storage.ContainsKey(ID!))
                     return 0;
                 return Storage[ID];

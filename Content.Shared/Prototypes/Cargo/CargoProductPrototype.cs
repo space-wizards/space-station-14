@@ -51,7 +51,7 @@ namespace Content.Shared.Prototypes.Cargo
             {
                 if (_description.Trim().Length != 0)
                     return _description;
-                EntityPrototype? prototype = null;
+                EntityPrototype prototype = null;
                 IoCManager.Resolve<IPrototypeManager>().TryIndex(_product, out prototype);
                 if (prototype?.Description != null)
                     _description = prototype.Description;
