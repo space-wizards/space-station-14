@@ -1,10 +1,13 @@
+using Content.Client.Administration;
 using Content.Client.Chat;
 using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
+using Content.Shared;
 using Content.Shared.Input;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -18,8 +21,13 @@ namespace Content.Client.State
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
         [ViewVariables] private ChatBox _gameChat;
+
+        private bool _oocEnabled;
+        private bool _adminOocEnabled;
 
         public override void Startup()
         {
@@ -39,13 +47,17 @@ namespace Content.Client.State
             _gameChat.Input.PlaceHolder = Loc.GetString("Say something! [ for OOC");
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
-                InputCmdHandler.FromDelegate(s => FocusChat(_gameChat)));
+                InputCmdHandler.FromDelegate(_ => FocusChat(_gameChat)));
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
-                InputCmdHandler.FromDelegate(s => FocusOOC(_gameChat)));
+                InputCmdHandler.FromDelegate(_ => FocusOOC(_gameChat)));
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
-                InputCmdHandler.FromDelegate(s => FocusAdminChat(_gameChat)));
+                InputCmdHandler.FromDelegate(_ => FocusAdminChat(_gameChat)));
+
+            _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
+            _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
+            _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
         }
 
         public override void Shutdown()
@@ -54,6 +66,37 @@ namespace Content.Client.State
 
             _gameChat.Dispose();
             _gameHud.RootControl.Orphan();
+        }
+
+        private void OnOocEnabledChanged(bool val)
+        {
+            _oocEnabled = val;
+
+            if (_adminManager.IsActive())
+            {
+                return;
+            }
+
+            _gameChat.Input.PlaceHolder = Loc.GetString(_oocEnabled ? "Say something! [ for OOC" : "Say something!");
+        }
+
+        private void OnAdminOocEnabledChanged(bool val)
+        {
+            _adminOocEnabled = val;
+
+            if (!_adminManager.IsActive())
+            {
+                return;
+            }
+
+            _gameChat.Input.PlaceHolder = Loc.GetString(_adminOocEnabled ? "Say something! [ for OOC" : "Say something!");
+        }
+
+        private void OnAdminStatusUpdated()
+        {
+            _gameChat.Input.PlaceHolder = _adminManager.IsActive()
+                ? Loc.GetString(_adminOocEnabled ? "Say something! [ for OOC" : "Say something!")
+                : Loc.GetString(_oocEnabled ? "Say something! [ for OOC" : "Say something!");
         }
 
         internal static void FocusChat(ChatBox chat)

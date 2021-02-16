@@ -53,6 +53,11 @@ namespace Content.Server.Administration
         private readonly HashSet<string> _anyCommands = new();
         private readonly Dictionary<string, AdminFlags[]> _adminCommands = new();
 
+        public bool IsAdmin(IPlayerSession session, bool includeDeAdmin = false)
+        {
+            return GetAdminData(session, includeDeAdmin) != null;
+        }
+
         public AdminData? GetAdminData(IPlayerSession session, bool includeDeAdmin = false)
         {
             if (_admins.TryGetValue(session, out var reg) && (reg.Data.Active || includeDeAdmin))
