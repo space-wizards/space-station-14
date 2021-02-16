@@ -73,11 +73,57 @@
     contents:
       - name: BoxSurvival
 
-#- type: entity
-#  abstract: true
-#  parent: ClothingBackpackDuffelChemistry
-#  id: ClothingBackpackDuffelChemistryFilled
-#  components:
-#  - type: StorageFill
-#    contents:
-#      - name: BoxSurvival
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffelChemistry
+  id: ClothingBackpackDuffelChemistryFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffelVirology
+  id: ClothingBackpackDuffelVirologyFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+      
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffelGenetics
+  id: ClothingBackpackDuffelGeneticsFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffelToxins
+  id: ClothingBackpackDuffelToxinsFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffelExplorer
+  id: ClothingBackpackDuffelExplorerFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+
+#antag roles below
+- type: entity
+  abstract: true
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
