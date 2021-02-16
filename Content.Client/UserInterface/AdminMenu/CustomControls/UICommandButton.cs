@@ -17,11 +17,5 @@ namespace Content.Client.UserInterface.AdminMenu.CustomControls
             _window = (SS14Window) IoCManager.Resolve<IDynamicTypeFactory>().CreateInstance(WindowType);
             _window?.OpenCentered();
         }
-
-        protected override void ExitedTree()
-        {
-            base.ExitedTree();
-            _window?.Close();
-        }
     }
 }

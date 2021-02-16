@@ -39,14 +39,10 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs.AdminTab
         {
             if (_data == null)
                 return;
-            // Find the value
             var dataList = _data.ToList();
             var session = dataList[PlayerOptions.SelectedId];
-            // Execute command
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
                 $"ban \"{session.Name}\" \"{CommandParsing.Escape(ReasonLine.Text)}\" {MinutesLine.Text}");
-            // Close window
-            Close();
         }
     }
 }

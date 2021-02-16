@@ -43,7 +43,6 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs.AdminTab
             var session = dataList[PlayerOptions.SelectedId];
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
                 $"kick \"{session.Name}\" \"{CommandParsing.Escape(ReasonLine.Text)}\"");
-            Close();
         }
     }
 }
