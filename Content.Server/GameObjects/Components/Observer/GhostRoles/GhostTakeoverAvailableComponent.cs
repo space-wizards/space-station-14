@@ -5,7 +5,7 @@ using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Observer
+namespace Content.Server.GameObjects.Components.Observer.GhostRoles
 {
     /// <summary>
     ///     Allows a ghost to take over the Owner entity.
