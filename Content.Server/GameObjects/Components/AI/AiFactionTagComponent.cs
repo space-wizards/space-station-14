@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems.AI;

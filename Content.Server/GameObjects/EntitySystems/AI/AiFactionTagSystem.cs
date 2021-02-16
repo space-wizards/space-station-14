@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.AI;
@@ -55,7 +56,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         public Faction GetHostileFactions(Faction faction) => _hostileFactions.TryGetValue(faction, out var hostiles) ? hostiles : Faction.None;
 
         public Faction GetFactions(IEntity entity) =>
-            entity.TryGetComponent(out AiFactionTagComponent factionTags)
+            entity.TryGetComponent(out AiFactionTagComponent? factionTags)
             ? factionTags.Factions
             : Faction.None;
 
