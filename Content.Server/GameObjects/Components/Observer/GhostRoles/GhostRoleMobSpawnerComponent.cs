@@ -8,7 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Observer
+namespace Content.Server.GameObjects.Components.Observer.GhostRoles
 {
     /// <summary>
     ///     Allows a ghost to take this role, spawning a new entity.

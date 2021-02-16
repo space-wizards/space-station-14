@@ -10,6 +10,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Administration;
+using Content.Shared.Administration.AdminMenu;
 using Content.Shared.Network.NetMessages;
 using Robust.Server.Console;
 using Robust.Server.Player;
@@ -167,6 +168,8 @@ namespace Content.Server.Administration
         public void Initialize()
         {
             _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>(MsgUpdateAdminStatus.NAME);
+            _netMgr.RegisterNetMessage<AdminMenuPlayerListRequest>(AdminMenuPlayerListRequest.NAME, HandlePlayerListRequest);
+            _netMgr.RegisterNetMessage<AdminMenuPlayerListMessage>(AdminMenuPlayerListMessage.NAME);
 
             // Cache permissions for loaded console commands with the requisite attributes.
             foreach (var (cmdName, cmd) in _consoleHost.RegisteredCommands)
@@ -225,6 +228,31 @@ namespace Content.Server.Administration
                     }
                 }
             }
+        }
+
+        private void HandlePlayerListRequest(AdminMenuPlayerListRequest message)
+        {
+            var senderSession = _playerManager.GetSessionByChannel(message.MsgChannel);
+
+            if (!_admins.ContainsKey(senderSession))
+            {
+                return;
+            }
+
+            var netMsg = _netMgr.CreateNetMessage<AdminMenuPlayerListMessage>();
+            var namesToPlayers = new Dictionary<string, string>();
+
+            foreach (var session in _playerManager.GetAllPlayers())
+            {
+                var name = session.Name;
+                var player = session.AttachedEntity?.Name ?? "";
+
+                namesToPlayers.Add(name, player);
+            }
+
+            netMsg.NamesToPlayers = namesToPlayers;
+
+            _netMgr.ServerSendMessage(netMsg, senderSession.ConnectedClient);
         }
 
         public void PromoteHost(IPlayerSession player)

@@ -7,7 +7,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Command
@@ -16,11 +15,9 @@ namespace Content.Server.GameObjects.Components.Command
     [ComponentReference(typeof(IActivate))]
     public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent, IActivate
     {
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
-        private RoundEndSystem RoundEndSystem => _entitySystemManager.GetEntitySystem<RoundEndSystem>();
+        private RoundEndSystem RoundEndSystem => EntitySystem.Get<RoundEndSystem>();
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CommunicationsConsoleUiKey.Key);
 
@@ -36,12 +33,24 @@ namespace Content.Server.GameObjects.Components.Command
             RoundEndSystem.OnRoundEndCountdownStarted += UpdateBoundInterface;
             RoundEndSystem.OnRoundEndCountdownCancelled += UpdateBoundInterface;
             RoundEndSystem.OnRoundEndCountdownFinished += UpdateBoundInterface;
+            RoundEndSystem.OnCallCooldownEnded += UpdateBoundInterface;
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            UpdateBoundInterface();
         }
 
         private void UpdateBoundInterface()
         {
             if (!Deleted)
-                UserInterface?.SetState(new CommunicationsConsoleInterfaceState(RoundEndSystem.ExpectedCountdownEnd));
+            {
+                var system = RoundEndSystem;
+
+                UserInterface?.SetState(new CommunicationsConsoleInterfaceState(system.CanCall(), system.ExpectedCountdownEnd));
+            }
         }
 
         public override void OnRemove()

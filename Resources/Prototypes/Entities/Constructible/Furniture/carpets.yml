@@ -34,7 +34,6 @@
   id: Carpet
   parent: CarpetBase
   name: "carpet"
-  description:
   components:
   - type: Sprite
     sprite: Constructible/Carpets/red_carpet.rsi
@@ -45,7 +44,6 @@
   id: CarpetBlack
   parent: CarpetBase
   name: "black carpet"
-  description:
   components:
   - type: Clickable
   - type: Sprite
@@ -57,7 +55,6 @@
   id: CarpetGay
   parent: CarpetBase
   name: "pink carpet"
-  description:
   components:
   - type: Clickable
   - type: Sprite
@@ -69,7 +66,6 @@
   id: CarpetBlue
   parent: CarpetBase
   name: "blue carpet"
-  description:
   components:
   - type: Clickable
   - type: Sprite
@@ -81,7 +77,6 @@
   id: CarpetGreen
   parent: CarpetBase
   name: "green carpet"
-  description:
   components:
   - type: Clickable
   - type: Sprite
@@ -93,7 +88,6 @@
   id: CarpetOrange
   parent: CarpetBase
   name: "orange carpet"
-  description:
   components:
   - type: Clickable
   - type: Sprite
@@ -105,7 +99,6 @@
   id: CarpetSBlue
   parent: CarpetBase
   name: "skyblue carpet"
-  description:
   components:
   - type: Clickable
   - type: Sprite
@@ -117,7 +110,6 @@
   id: CarpetPurple
   parent: CarpetBase
   name: "purple carpet"
-  description:
   components:
   - type: Clickable
   - type: Sprite

@@ -80,7 +80,6 @@ namespace Content.Client.UserInterface.Stylesheets
             var notoSansBold16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 16);
             var notoSansBold18 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 18);
             var notoSansBold20 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 20);
-            var textureCloseButton = resCache.GetTexture("/Textures/Interface/Nano/cross.svg.png");
             var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
             {
@@ -427,31 +426,6 @@ namespace Content.Client.UserInterface.Stylesheets
                     new[]
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, windowHeader),
-                    }),
-                // Window close button base texture.
-                new StyleRule(
-                    new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
-                        null),
-                    new[]
-                    {
-                        new StyleProperty(TextureButton.StylePropertyTexture, textureCloseButton),
-                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#4B596A")),
-                    }),
-                // Window close button hover.
-                new StyleRule(
-                    new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
-                        new[] {TextureButton.StylePseudoClassHover}),
-                    new[]
-                    {
-                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
-                    }),
-                // Window close button pressed.
-                new StyleRule(
-                    new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
-                        new[] {TextureButton.StylePseudoClassPressed}),
-                    new[]
-                    {
-                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
                     }),
 
                 // Shapes for the buttons.
@@ -1061,7 +1035,12 @@ namespace Content.Client.UserInterface.Stylesheets
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new []{ ClassHighDivider}, null, null), new []
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = NanoGold, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2}),
-                })
+                }),
+
+                Element<PanelContainer>().Class(ClassAngleRect)
+                    .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
+
             }).ToList());
         }
     }
