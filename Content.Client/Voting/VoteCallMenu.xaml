@@ -1,0 +1,39 @@
+﻿<v:VoteCallMenu xmlns="https://spacestation14.io"
+                xmlns:cuic="clr-namespace:Content.Client.UserInterface.Controls"
+                xmlns:v="clr-namespace:Content.Client.Voting"
+                MouseFilter="Stop" CustomMinimumSize="350 150">
+    <PanelContainer StyleClasses="AngleRect" />
+    <VBoxContainer>
+        <HBoxContainer>
+            <MarginContainer MarginLeftOverride="8" SizeFlagsHorizontal="FillExpand">
+                <Label Text="{Loc 'Call Vote'}" VAlign="Center" StyleClasses="LabelHeading" />
+            </MarginContainer>
+            <MarginContainer MarginRightOverride="8">
+                <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"
+                               SizeFlagsVertical="ShrinkCenter" />
+            </MarginContainer>
+        </HBoxContainer>
+        <cuic:HighDivider />
+
+        <MarginContainer SizeFlagsHorizontal="Fill" SizeFlagsVertical="Expand"
+                         MarginLeftOverride="8" MarginRightOverride="8" MarginTopOverride="2">
+            <HBoxContainer>
+                <OptionButton Name="VoteTypeButton" SizeFlagsHorizontal="FillExpand" />
+                <Control SizeFlagsHorizontal="FillExpand">
+                    <OptionButton Name="VoteSecondButton" Visible="False" />
+                </Control>
+            </HBoxContainer>
+        </MarginContainer>
+
+        <MarginContainer SizeFlagsHorizontal="Fill"
+                         MarginLeftOverride="8" MarginRightOverride="8" MarginBottomOverride="2">
+            <Button Name="CreateButton" Text="{Loc 'Call Vote'}" />
+        </MarginContainer>
+
+        <PanelContainer StyleClasses="LowDivider" />
+        <MarginContainer MarginLeftOverride="12">
+            <Label StyleClasses="LabelSubText" Text="{Loc 'Powered by Robust™ Anti-Tamper Technology'}" />
+        </MarginContainer>
+
+    </VBoxContainer>
+</v:VoteCallMenu>
