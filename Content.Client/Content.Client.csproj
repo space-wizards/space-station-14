@@ -32,9 +32,6 @@
     <Compile Update="UserInterface\OptionsMenu.Audio.cs">
       <DependentUpon>OptionsMenu.cs</DependentUpon>
     </Compile>
-    <Compile Update="UserInterface\AdminMenu\Tabs\AtmosTab\AddAtmosWindow.xaml.cs">
-      <DependentUpon>AddAtmosWindow.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
