@@ -32,13 +32,9 @@
     <Compile Update="UserInterface\OptionsMenu.Audio.cs">
       <DependentUpon>OptionsMenu.cs</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="UserInterface\AdminMenu\CustomControls\ButtonGrid.xaml" />
-    <Page Include="UserInterface\AdminMenu\Tabs\AdminbusTab.xaml" />
-    <Page Include="UserInterface\AdminMenu\Tabs\AdminTab.xaml" />
-    <Page Include="UserInterface\AdminMenu\Tabs\AtmosTab.xaml" />
-    <Page Include="UserInterface\AdminMenu\Tabs\RoundTab.xaml" />
+    <Compile Update="UserInterface\AdminMenu\Tabs\AtmosTab\AddAtmosWindow.xaml.cs">
+      <DependentUpon>AddAtmosWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
