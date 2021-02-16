@@ -67,13 +67,6 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        /// <summary>
-        /// The amount of time the door has been open. Used to automatically close the door if it autocloses.
-        /// </summary>
-        [ViewVariables]
-        private float _openTimeCounter;
-        [ViewVariables(VVAccess.ReadWrite)]
-
         private static readonly TimeSpan AutoCloseDelay = TimeSpan.FromSeconds(5);
 
         private CancellationTokenSource? _stateChangeCancelTokenSource;
@@ -441,7 +434,6 @@ namespace Content.Server.GameObjects.Components.Doors
         public void Close()
         {
             State = DoorState.Closing;
-            _openTimeCounter = 0;
 
             // no more autoclose; we ARE closed
             _autoCloseCancelTokenSource?.Cancel();
@@ -573,7 +565,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             var realCloseTime = _doorCheck.GetCloseSpeed() ?? AutoCloseDelay;
 
-            Owner.SpawnTimer(realCloseTime, async () =>
+            Owner.SpawnRepeatingTimer(realCloseTime, async () =>
             {
                 if (CanCloseGeneric())
                 {
@@ -628,6 +620,12 @@ namespace Content.Server.GameObjects.Components.Doors
                     _beingWelded = true;
                     if(await welder.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Welding, 3f, () => CanWeldShut))
                     {
+                        // just in case
+                        if (!CanWeldShut)
+                        {
+                            return false;
+                        }
+
                         _beingWelded = false;
                         IsWeldedShut = !IsWeldedShut;
                         return true;
