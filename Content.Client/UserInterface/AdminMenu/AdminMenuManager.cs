@@ -29,10 +29,10 @@ namespace Content.Client.UserInterface.AdminMenu
 
             _commandWindows = new List<SS14Window>();
             // Reset the AdminMenu Window on disconnect
-            _netManager.Disconnect += (sender, channel) => ResetWindow();
+            _netManager.Disconnect += (_, _) => ResetWindow();
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
-                InputCmdHandler.FromDelegate(session => Toggle()));
+                InputCmdHandler.FromDelegate(_ => Toggle()));
 
             _clientAdminManager.AdminStatusUpdated += () =>
             {
@@ -68,7 +68,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
         private void HandlePlayerListMessage(AdminMenuPlayerListMessage msg)
         {
-            _window.RefreshPlayerList(msg.NamesToPlayers);
+            _window?.RefreshPlayerList(msg.NamesToPlayers);
         }
 
         public void ResetWindow()

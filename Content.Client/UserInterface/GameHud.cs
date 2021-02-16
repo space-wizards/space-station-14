@@ -465,7 +465,7 @@ namespace Content.Client.UserInterface
 
         public Action<bool>? SandboxButtonToggled { get; set; }
 
-        public Control VoteContainer { get; private set; }
+        public Control VoteContainer { get; private set; } = default!;
 
         public sealed class TopButton : ContainerButton
         {

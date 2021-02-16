@@ -14,6 +14,7 @@ using Content.Client.StationEvents;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.AdminMenu;
 using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Voting;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components;
@@ -100,7 +101,7 @@ namespace Content.Client
 
             _escapeMenuOwner.Initialize();
 
-            _baseClient.PlayerJoinedServer += (sender, args) =>
+            _baseClient.PlayerJoinedServer += (_, _) =>
             {
                 IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
             };
@@ -166,7 +167,7 @@ namespace Content.Client
             IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<IVoteManager>().Initialize();
 
-            _baseClient.RunLevelChanged += (sender, args) =>
+            _baseClient.RunLevelChanged += (_, args) =>
             {
                 if (args.NewLevel == ClientRunLevel.Initialize)
                 {
