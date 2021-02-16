@@ -50,7 +50,7 @@
   - type: Clothing
     sprite: Clothing/Back/Duffels/medical.rsi
 
--- type: entity
+- type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelMedicalSurgery
   name: surgical duffel bag
