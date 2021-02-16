@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Globalization;
 using Content.Shared.Interfaces;
 using Robust.Shared.IoC;
@@ -29,17 +30,17 @@ namespace Content.Shared.Alert
         /// to get the correct icon path for a particular severity level.
         /// </summary>
         [ViewVariables]
-        public SpriteSpecifier Icon { get; private set; }
+        public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         /// Name to show in tooltip window. Accepts formatting.
         /// </summary>
-        public FormattedMessage Name { get; private set; }
+        public FormattedMessage Name { get; private set; } = new();
 
         /// <summary>
         /// Description to show in tooltip window. Accepts formatting.
         /// </summary>
-        public FormattedMessage Description { get; private set; }
+        public FormattedMessage Description { get; private set; } = new();
 
         /// <summary>
         /// Category the alert belongs to. Only one alert of a given category
@@ -83,7 +84,7 @@ namespace Content.Shared.Alert
         /// Defines what to do when the alert is clicked.
         /// This will always be null on clientside.
         /// </summary>
-        public IAlertClick OnClick { get; private set; }
+        public IAlertClick? OnClick { get; private set; }
 
         public void LoadFrom(YamlMappingNode mapping)
         {
@@ -192,7 +193,7 @@ namespace Content.Shared.Alert
             return AlertType == other.AlertType && AlertCategory == other.AlertCategory;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is AlertKey other && Equals(other);
         }

@@ -43,7 +43,7 @@ namespace Content.Shared.Maps
                 IsSubFloor = node.AsBool();
             }
 
-            if (mapping.TryGetNode("base_turfs", out YamlSequenceNode baseTurfNode))
+            if (mapping.TryGetNode("base_turfs", out YamlSequenceNode? baseTurfNode))
                 BaseTurfs = baseTurfNode.Select(i => i.ToString()).ToList();
             else
                 BaseTurfs = new List<string>();

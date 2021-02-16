@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.Interfaces;
 using Robust.Shared.IoC;
@@ -13,11 +14,11 @@ namespace Content.Shared.Construction
     public class ConstructionGraphEdge : IExposeData
     {
         private List<ConstructionGraphStep> _steps = new();
-        private List<IEdgeCondition> _conditions;
-        private List<IGraphAction> _completed;
+        private List<IEdgeCondition> _conditions = new();
+        private List<IGraphAction> _completed = new();
 
         [ViewVariables]
-        public string Target { get; private set; }
+        public string Target { get; private set; } = string.Empty;
 
         [ViewVariables]
         public IReadOnlyList<IEdgeCondition> Conditions => _conditions;
@@ -48,7 +49,7 @@ namespace Content.Shared.Construction
             var serializer = YamlObjectSerializer.NewReader(mapping);
             InternalExposeData(serializer);
 
-            if (!mapping.TryGetNode("steps", out YamlSequenceNode stepsMapping)) return;
+            if (!mapping.TryGetNode("steps", out YamlSequenceNode? stepsMapping)) return;
 
             foreach (var yamlNode in stepsMapping)
             {

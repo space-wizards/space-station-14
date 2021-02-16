@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;

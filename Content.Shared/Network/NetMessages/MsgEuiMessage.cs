@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.IO;
 using Content.Shared.Eui;
 using Lidgren.Network;
@@ -20,7 +21,7 @@ namespace Content.Shared.Network.NetMessages
         #endregion
 
         public uint Id;
-        public EuiMessageBase Message;
+        public EuiMessageBase Message = default!;
 
         public override void ReadFromBuffer(NetIncomingMessage buffer)
         {

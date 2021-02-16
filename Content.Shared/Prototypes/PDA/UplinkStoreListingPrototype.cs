@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -9,12 +10,12 @@ namespace Content.Shared.Prototypes.PDA
     public class UplinkStoreListingPrototype : IPrototype, IIndexedPrototype
     {
 
-        private string _id;
-        private string _itemId;
+        private string _id = string.Empty;
+        private string _itemId = string.Empty;
         private int _price;
         private UplinkCategory _category;
-        private string _desc;
-        private string _name;
+        private string _desc = string.Empty;
+        private string _name = string.Empty;
 
         public string ID => _id;
 

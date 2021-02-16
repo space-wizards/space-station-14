@@ -1,3 +1,4 @@
+#nullable enable
 namespace Content.Shared.Preferences
 {
     /// <summary>

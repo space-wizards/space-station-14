@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 

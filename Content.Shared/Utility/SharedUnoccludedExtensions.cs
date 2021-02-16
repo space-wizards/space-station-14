@@ -1,4 +1,5 @@
 ﻿#nullable enable
+#nullable enable
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
