@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using Content.Shared.Atmos;
 
 namespace Content.Shared.Atmos
 {

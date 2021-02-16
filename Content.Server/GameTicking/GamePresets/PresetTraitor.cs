@@ -14,9 +14,8 @@ using Content.Shared;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Prototypes;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Random;
+using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -26,9 +25,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.GamePresets
 {
+    [GamePreset("traitor")]
     public class PresetTraitor : GamePreset
     {
-        [Dependency] private readonly IGameTicker _gameticker = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -155,7 +155,7 @@ namespace Content.Server.GameTicking.GamePresets
                 traitor.GreetTraitor(codewords);
             }
 
-            _gameticker.AddGameRule<RuleTraitor>();
+            _gameTicker.AddGameRule<RuleTraitor>();
             return true;
         }
 

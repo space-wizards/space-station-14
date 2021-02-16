@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Input;
 using Robust.Client.Input;
-using Robust.Client.Interfaces.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;

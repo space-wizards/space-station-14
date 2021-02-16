@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects
 {
     // Starting from 1000 to avoid crossover with engine.
     public static class ContentNetIDs
@@ -90,6 +90,9 @@
         public const uint ACTIONS = 1083;
         public const uint DAMAGEABLE = 1084;
         public const uint MAGBOOTS = 1085;
+        public const uint TAG = 1086;
+        // Used for clientside fake prediction of doors.
+        public const uint DOOR = 1087;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

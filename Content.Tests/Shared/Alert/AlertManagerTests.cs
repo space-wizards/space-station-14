@@ -1,13 +1,9 @@
-﻿using System.IO;
+using System.IO;
 using Content.Shared.Alert;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.Log;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using Robust.UnitTesting;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Tests.Shared.Alert
 {

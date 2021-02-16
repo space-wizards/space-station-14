@@ -1,7 +1,7 @@
 ﻿using Content.Shared.GameObjects.Verbs;
 using Robust.Client.Console;
 using Robust.Client.ViewVariables;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Client.GlobalVerbs

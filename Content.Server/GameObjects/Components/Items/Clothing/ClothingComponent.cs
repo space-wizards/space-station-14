@@ -8,7 +8,6 @@ using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -72,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
             return new ClothingComponentState(ClothingEquippedPrefix, EquippedPrefix);
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!_quickEquipEnabled) return false;
             if (!eventArgs.User.TryGetComponent(out InventoryComponent inv)

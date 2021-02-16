@@ -54,9 +54,9 @@
       amount: 10
 
 - type: entity
-  id: ShardGlassPhoron
-  name: phoron glass shard
-  description: A small piece of phoron glass. It looks sharp, you wouldn't want to step on it barefoot.
+  id: ShardGlassPlasma
+  name: plasma glass shard
+  description: A small piece of plasma glass. It looks sharp, you wouldn't want to step on it barefoot.
   parent: ShardBase
   components:
     - type: Sprite
@@ -66,6 +66,6 @@
     - type: WelderRefinable
       refineResult:
       - GlassStack
-      - PhoronStack
+      - PlasmaStack
     - type: DamageOtherOnHit
       amount: 15

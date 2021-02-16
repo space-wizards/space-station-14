@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         public bool Send(int frequency, string address, Dictionary<string, string> payload)
         {
-            return Send(frequency, address, payload);
+            return Send(frequency, address, payload, new Metadata());
         }
 
         public bool Send(string address, Dictionary<string, string> payload)
@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         public bool Broadcast(int frequency, Dictionary<string, string> payload)
         {
-            return Broadcast(frequency, payload);
+            return Broadcast(frequency, payload, new Metadata());
         }
 
         public bool Broadcast(Dictionary<string, string> payload)

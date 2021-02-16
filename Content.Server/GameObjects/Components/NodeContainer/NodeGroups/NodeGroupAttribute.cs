@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {

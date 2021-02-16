@@ -1,7 +1,6 @@
 #nullable enable
 using Content.Shared.GameObjects.Components.Watercloset;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 
 namespace Content.Client.GameObjects.Components.Watercloset
 {

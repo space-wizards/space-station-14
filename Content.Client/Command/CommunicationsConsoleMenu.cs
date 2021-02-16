@@ -16,7 +16,7 @@ namespace Content.Client.Command
 
         private CommunicationsConsoleBoundUserInterface Owner { get; set; }
         private readonly CancellationTokenSource _timerCancelTokenSource = new();
-        private readonly Button _emergencyShuttleButton;
+        public readonly Button EmergencyShuttleButton;
         private readonly RichTextLabel _countdownLabel;
 
         public CommunicationsConsoleMenu(CommunicationsConsoleBoundUserInterface owner)
@@ -27,13 +27,14 @@ namespace Content.Client.Command
             Owner = owner;
 
             _countdownLabel = new RichTextLabel(){CustomMinimumSize = new Vector2(0, 200)};
-            _emergencyShuttleButton = new Button();
-            _emergencyShuttleButton.OnPressed += (e) => Owner.EmergencyShuttleButtonPressed();
+            EmergencyShuttleButton = new Button();
+            EmergencyShuttleButton.OnPressed += (_) => Owner.EmergencyShuttleButtonPressed();
+            EmergencyShuttleButton.Disabled = !owner.CanCall;
 
             var vbox = new VBoxContainer() {SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsVertical = SizeFlags.FillExpand};
 
             vbox.AddChild(_countdownLabel);
-            vbox.AddChild(_emergencyShuttleButton);
+            vbox.AddChild(EmergencyShuttleButton);
 
             var hbox = new HBoxContainer() {SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsVertical = SizeFlags.FillExpand};
             hbox.AddChild(new Control(){CustomMinimumSize = new Vector2(100,0), SizeFlagsHorizontal = SizeFlags.FillExpand});
@@ -51,11 +52,11 @@ namespace Content.Client.Command
             if (!Owner.CountdownStarted)
             {
                 _countdownLabel.SetMessage("");
-                _emergencyShuttleButton.Text = Loc.GetString("Call emergency shuttle");
+                EmergencyShuttleButton.Text = Loc.GetString("Call emergency shuttle");
                 return;
             }
 
-            _emergencyShuttleButton.Text = Loc.GetString("Recall emergency shuttle");
+            EmergencyShuttleButton.Text = Loc.GetString("Recall emergency shuttle");
             _countdownLabel.SetMessage($"Time remaining\n{Owner.Countdown.ToString()}s");
         }
 

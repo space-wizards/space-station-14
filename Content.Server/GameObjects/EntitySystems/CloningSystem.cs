@@ -3,7 +3,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Medical;
 using Content.Server.Mobs;
 using Content.Shared.GameTicking;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<CloningPodComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<CloningPodComponent>(true))
             {
                 comp.Update(frameTime);
             }
@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             if (!Minds.ContainsValue(mind))
             {
-                Minds.Add(Minds.Count(), mind);
+                Minds.Add(Minds.Count, mind);
             }
         }
 

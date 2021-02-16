@@ -1,0 +1,19 @@
+﻿<ui:Control xmlns:ui="clr-namespace:Robust.Client.UserInterface;assembly=Robust.Client"
+            xmlns:uic="clr-namespace:Robust.Client.UserInterface.Controls;assembly=Robust.Client">
+    <uic:PanelContainer StyleClasses="AngleRect" />
+    <uic:MarginContainer MarginLeftOverride="4" MarginRightOverride="4" MarginTopOverride="4" MarginBottomOverride="4">
+        <uic:VBoxContainer>
+            <uic:Label Name="VoteCaller" />
+            <uic:Label Name="VoteTitle" />
+
+            <uic:GridContainer Columns="3" Name="VoteOptionsContainer" />
+            <uic:HBoxContainer>
+                <uic:MarginContainer SizeFlagsHorizontal="FillExpand" MarginLeftOverride="2" MarginRightOverride="2"
+                                     MarginTopOverride="2" MarginBottomOverride="2">
+                    <uic:ProgressBar Name="TimeLeftBar" MinValue="0" MaxValue="1" />
+                </uic:MarginContainer>
+                <uic:Label Name="TimeLeftText" />
+            </uic:HBoxContainer>
+        </uic:VBoxContainer>
+    </uic:MarginContainer>
+</ui:Control>

@@ -1,6 +1,6 @@
 #nullable enable
 using System.Collections.Generic;
-using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {

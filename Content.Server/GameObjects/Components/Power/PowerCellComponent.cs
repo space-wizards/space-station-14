@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Power;
@@ -10,8 +11,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-
-#nullable enable
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -105,8 +104,8 @@ namespace Content.Server.GameObjects.Components.Power
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
         {
             IsRigged = Owner.TryGetComponent(out SolutionContainerComponent? solution)
-                       && solution.Solution.ContainsReagent("chem.Phoron", out var phoron)
-                       && phoron >= 5;
+                       && solution.Solution.ContainsReagent("chem.Plasma", out var plasma)
+                       && plasma >= 5;
         }
     }
 

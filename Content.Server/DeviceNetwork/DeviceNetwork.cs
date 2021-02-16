@@ -1,8 +1,8 @@
 ﻿using System;
 using Content.Server.Interfaces;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using System.Collections.Generic;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 {

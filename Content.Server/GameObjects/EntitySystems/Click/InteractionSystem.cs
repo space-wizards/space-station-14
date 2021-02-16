@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Pulling;
@@ -17,14 +16,11 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -205,7 +201,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private bool HandleClientUseItemInHand(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        public bool HandleClientUseItemInHand(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!coords.IsValid(_entityManager))
@@ -416,13 +412,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            var afterInteracts = weapon.GetAllComponents<IAfterInteract>().ToList();
             var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, null, canReach);
-
-            foreach (var afterInteract in afterInteracts)
-            {
-                await afterInteract.AfterInteract(afterInteractEventArgs);
-            }
+            await DoAfterInteract(weapon, afterInteractEventArgs);
         }
 
         /// <summary>
@@ -465,13 +456,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
-            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
             var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: true);
 
-            foreach (var afterAttack in afterAttacks)
-            {
-                await afterAttack.AfterInteract(afterAttackEventArgs);
-            }
+            await DoAfterInteract(weapon, afterAttackEventArgs);
         }
 
         /// <summary>
@@ -835,13 +822,21 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (afterAtkMsg.Handled)
                 return;
 
-            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
+            // See if we have a ranged attack interaction
             var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: false);
+            await DoAfterInteract(weapon, afterAttackEventArgs);
+        }
 
-            //See if we have a ranged attack interaction
+        private static async Task DoAfterInteract(IEntity weapon, AfterInteractEventArgs afterAttackEventArgs)
+        {
+            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().OrderByDescending(x => x.Priority).ToList();
+
             foreach (var afterAttack in afterAttacks)
             {
-                await afterAttack.AfterInteract(afterAttackEventArgs);
+                if (await afterAttack.AfterInteract(afterAttackEventArgs))
+                {
+                    return;
+                }
             }
         }
 

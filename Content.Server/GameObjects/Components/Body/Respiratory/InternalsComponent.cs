@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Atmos;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Respiratory
@@ -57,6 +56,16 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
 
             GasTankEntity = tankEntity;
             return true;
+        }
+
+        public bool AreInternalsWorking()
+        {
+            return BreathToolEntity != null &&
+                   GasTankEntity != null &&
+                   BreathToolEntity.TryGetComponent(out BreathToolComponent? breathTool) &&
+                   breathTool.IsFunctional &&
+                   GasTankEntity.TryGetComponent(out GasTankComponent? gasTank) &&
+                   gasTank.Air != null;
         }
 
     }

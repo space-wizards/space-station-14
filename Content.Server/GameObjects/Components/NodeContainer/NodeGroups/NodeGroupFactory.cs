@@ -1,11 +1,12 @@
-﻿﻿using System;
+#nullable enable
+ using System;
  using System.Collections.Generic;
  using System.Reflection;
  using Content.Server.GameObjects.Components.NodeContainer.Nodes;
- using Robust.Shared.Interfaces.Reflection;
  using Robust.Shared.IoC;
+ using Robust.Shared.Reflection;
 
- namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
+namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
     public interface INodeGroupFactory
     {

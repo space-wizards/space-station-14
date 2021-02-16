@@ -15,15 +15,10 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -166,14 +161,14 @@ namespace Content.Server.GameObjects.Components.Atmos
             return air;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return false;
             OpenInterface(actor.playerSession);
             return true;
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return;
             OpenInterface(actor.playerSession);
@@ -323,7 +318,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 _integrity++;
         }
 
-        public void Dropped(DroppedEventArgs eventArgs)
+        void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
             DisconnectFromInternals(eventArgs.User);
         }
@@ -363,7 +358,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     [UsedImplicitly]
     public class ToggleInternalsAction : IToggleItemAction
     {
-        public void ExposeData(ObjectSerializer serializer) {}
+        void IExposeData.ExposeData(ObjectSerializer serializer) {}
 
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {

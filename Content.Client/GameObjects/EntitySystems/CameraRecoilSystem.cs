@@ -1,6 +1,6 @@
 using Content.Client.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -11,7 +11,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.FrameUpdate(frameTime);
 
-            foreach (var recoil in EntityManager.ComponentManager.EntityQuery<CameraRecoilComponent>())
+            foreach (var recoil in EntityManager.ComponentManager.EntityQuery<CameraRecoilComponent>(true))
             {
                 recoil.FrameUpdate(frameTime);
             }

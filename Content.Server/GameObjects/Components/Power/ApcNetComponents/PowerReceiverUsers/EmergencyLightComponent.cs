@@ -1,9 +1,9 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         /// </summary>
         public void UpdateState()
         {
-            if (!Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            if (!Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
                 return;
             }
@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         public void OnUpdate(float frameTime)
         {
-            if (Owner.Deleted || !Owner.TryGetComponent(out BatteryComponent battery))
+            if (Owner.Deleted || !Owner.TryGetComponent(out BatteryComponent? battery))
             {
                 return;
             }
@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 battery.CurrentCharge += _chargingWattage * frameTime * _chargingEfficiency;
                 if (battery.BatteryState == BatteryState.Full)
                 {
-                    if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+                    if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
                     {
                         receiver.Load = 1;
                     }
@@ -113,12 +113,12 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private void TurnOff()
         {
-            if (Owner.TryGetComponent(out SpriteComponent sprite))
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 sprite.LayerSetState(0, "emergency_light_off");
             }
 
-            if (Owner.TryGetComponent(out PointLightComponent light))
+            if (Owner.TryGetComponent(out PointLightComponent? light))
             {
                 light.Enabled = false;
             }
@@ -126,18 +126,18 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private void TurnOn()
         {
-            if (Owner.TryGetComponent(out SpriteComponent sprite))
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 sprite.LayerSetState(0, "emergency_light_on");
             }
 
-            if (Owner.TryGetComponent(out PointLightComponent light))
+            if (Owner.TryGetComponent(out PointLightComponent? light))
             {
                 light.Enabled = true;
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)

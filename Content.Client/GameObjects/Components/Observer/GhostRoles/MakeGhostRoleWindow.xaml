@@ -1,0 +1,27 @@
+﻿<cc:SS14Window Title="Make Ghost Role"
+               xmlns:cc="clr-namespace:Robust.Client.UserInterface.CustomControls;assembly=Robust.Client"
+               xmlns:c="clr-namespace:Robust.Client.UserInterface.Controls;assembly=Robust.Client">
+
+    <c:VBoxContainer>
+        <c:HBoxContainer>
+            <c:Label Name="RoleEntityLabel" Text="Entity" />
+            <c:Label Name="RoleEntity" Text="" />
+        </c:HBoxContainer>
+        <c:HBoxContainer>
+            <c:Label Name="RoleNameLabel" Text="Role Name" />
+            <c:LineEdit Name="RoleName" SizeFlagsHorizontal="FillExpand"/>
+        </c:HBoxContainer>
+        <c:HBoxContainer>
+            <c:Label Name="RoleDescriptionLabel" Text="Role Description" />
+            <c:LineEdit Name="RoleDescription" SizeFlagsHorizontal="FillExpand"/>
+        </c:HBoxContainer>
+        <c:HBoxContainer>
+            <c:Label Name="MakeSentientLabel" Text="Make Sentient" />
+            <c:CheckBox Name="MakeSentientCheckbox" />
+        </c:HBoxContainer>
+        <c:HBoxContainer>
+            <c:Button Name="MakeButton" Text="Make" />
+        </c:HBoxContainer>
+    </c:VBoxContainer>
+
+</cc:SS14Window>

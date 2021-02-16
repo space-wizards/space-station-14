@@ -1,20 +1,20 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Client.Animations;
 using Content.Client.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.Storage
@@ -77,6 +77,9 @@ namespace Content.Client.GameObjects.Components.Storage
                 case CloseStorageUIMessage _:
                     CloseUI();
                     break;
+                case AnimateInsertingEntitiesMessage msg:
+                    HandleAnimatingInsertingEntities(msg);
+                    break;
             }
         }
 
@@ -90,6 +93,24 @@ namespace Content.Client.GameObjects.Components.Storage
             StorageSizeUsed = storageState.StorageSizeUsed;
             StorageCapacityMax = storageState.StorageSizeMax;
             Window.BuildEntityList();
+        }
+
+        /// <summary>
+        /// Animate the newly stored entities in <paramref name="msg"/> flying towards this storage's position
+        /// </summary>
+        /// <param name="msg"></param>
+        private void HandleAnimatingInsertingEntities(AnimateInsertingEntitiesMessage msg)
+        {
+            for (var i = 0; msg.StoredEntities.Count > i; i++)
+            {
+                var entityId = msg.StoredEntities[i];
+                var initialPosition = msg.EntityPositions[i];
+
+                if (Owner.EntityManager.TryGetEntity(entityId, out var entity))
+                {
+                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, Owner.Transform.WorldPosition);
+                }
+            }
         }
 
         /// <summary>

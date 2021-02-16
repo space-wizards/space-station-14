@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -107,9 +104,10 @@ namespace Content.Server.GameObjects.Components.Culinary
             serializer.DataField(ref _breakSound, "breakSound", "/Audio/Items/snap.ogg");
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             TryUseUtensil(eventArgs.User, eventArgs.Target);
+            return true;
         }
 
         private void TryUseUtensil(IEntity user, IEntity? target)

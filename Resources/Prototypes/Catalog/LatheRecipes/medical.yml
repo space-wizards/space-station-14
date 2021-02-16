@@ -74,3 +74,11 @@
   completetime: 500
   materials:
     steel: 50
+
+- type: latheRecipe
+  id: BodyBag_Item
+  icon: Objects/Specific/Morgue/bodybags.rsi
+  result: BodyBag_Item
+  completetime: 300
+  materials:
+    glass: 20

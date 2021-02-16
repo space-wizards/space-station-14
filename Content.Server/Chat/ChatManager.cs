@@ -8,18 +8,18 @@ using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
+using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
+using Robust.Shared.Network;
 using static Content.Server.Interfaces.Chat.IChatManager;
 
 namespace Content.Server.Chat
@@ -48,6 +48,7 @@ namespace Content.Server.Chat
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMoMMILink _mommiLink = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
 
         public void Initialize()
         {
@@ -69,6 +70,7 @@ namespace Content.Server.Chat
             msg.Message = message;
             msg.MessageWrap = "SERVER: {0}";
             _netManager.ServerSendToAll(msg);
+            Logger.InfoS("SERVER", message);
         }
 
         public void DispatchStationAnnouncement(string message, string sender = "CentComm")
@@ -187,7 +189,7 @@ namespace Content.Server.Chat
 
         public void SendOOC(IPlayerSession player, string message)
         {
-            // Check if message exceeds the character limi
+            // Check if message exceeds the character limit
             if (message.Length > MaxMessageLength)
             {
                 DispatchServerMessage(player, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
@@ -198,6 +200,12 @@ namespace Content.Server.Chat
             msg.Channel = ChatChannel.OOC;
             msg.Message = message;
             msg.MessageWrap = $"OOC: {player.Name}: {{0}}";
+            if (_adminManager.HasAdminFlag(player, AdminFlags.Admin))
+            {
+                var prefs = _preferencesManager.GetPreferences((player.UserId));
+                msg.MessageColorOverride = prefs.AdminOOCColor;
+            }
+            //TODO: player.Name color, this will need to change the structure of the MsgChatMessage
             _netManager.ServerSendToAll(msg);
 
             _mommiLink.SendOOCMessage(player.Name, message);

@@ -8,6 +8,7 @@ namespace Content.Server.Database
 {
     public sealed class ServerBanDef
     {
+        public int? Id { get; }
         public NetUserId? UserId { get; }
         public (IPAddress address, int cidrMask)? Address { get; }
 
@@ -15,8 +16,17 @@ namespace Content.Server.Database
         public DateTimeOffset? ExpirationTime { get; }
         public string Reason { get; }
         public NetUserId? BanningAdmin { get; }
+        public ServerUnbanDef? Unban { get; }
 
-        public ServerBanDef(NetUserId? userId, (IPAddress, int)? address, DateTimeOffset banTime, DateTimeOffset? expirationTime, string reason, NetUserId? banningAdmin)
+        public ServerBanDef(
+            int? id,
+            NetUserId? userId,
+            (IPAddress, int)? address,
+            DateTimeOffset banTime,
+            DateTimeOffset? expirationTime,
+            string reason,
+            NetUserId? banningAdmin,
+            ServerUnbanDef? unban)
         {
             if (userId == null && address == null)
             {
@@ -30,12 +40,14 @@ namespace Content.Server.Database
                 address = (addr.Item1.MapToIPv4(), addr.Item2 - 96);
             }
 
+            Id = id;
             UserId = userId;
             Address = address;
             BanTime = banTime;
             ExpirationTime = expirationTime;
             Reason = reason;
             BanningAdmin = banningAdmin;
+            Unban = unban;
         }
     }
 }
