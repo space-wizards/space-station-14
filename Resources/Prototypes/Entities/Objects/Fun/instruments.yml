@@ -3,7 +3,7 @@
   parent: BaseItem
   id: BaseHandheldInstrument
   abstract: true
-  description: That's an Instrument.
+  description: That's an instrument.
   components:
   - type: Instrument
     handheld: true

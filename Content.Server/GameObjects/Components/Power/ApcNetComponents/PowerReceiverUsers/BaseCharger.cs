@@ -229,7 +229,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         /// </summary>
         protected abstract bool IsEntityCompatible(IEntity entity);
 
-        protected abstract BatteryComponent GetBatteryFrom(IEntity entity);
+        protected abstract BatteryComponent? GetBatteryFrom(IEntity entity);
 
         private void UpdateStatus()
         {

@@ -164,6 +164,7 @@ namespace Content.Client
             IoCManager.Resolve<EuiManager>().Initialize();
             IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<ActionManager>().Initialize();
+            IoCManager.Resolve<IVoteManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {

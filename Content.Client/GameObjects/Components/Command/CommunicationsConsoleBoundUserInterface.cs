@@ -15,6 +15,8 @@ namespace Content.Client.GameObjects.Components.Command
 
         [ViewVariables] private CommunicationsConsoleMenu? _menu;
 
+        public bool CanCall { get; private set; }
+
         public bool CountdownStarted { get; private set; }
 
         public int Countdown => _expectedCountdownTime == null
@@ -30,15 +32,13 @@ namespace Content.Client.GameObjects.Components.Command
             base.Open();
 
             _menu = new CommunicationsConsoleMenu(this);
-
             _menu.OnClose += Close;
-
             _menu.OpenCentered();
         }
 
         public void EmergencyShuttleButtonPressed()
         {
-            if(CountdownStarted)
+            if (CountdownStarted)
                 RecallShuttle();
             else
                 CallShuttle();
@@ -61,10 +61,15 @@ namespace Content.Client.GameObjects.Components.Command
             if (state is not CommunicationsConsoleInterfaceState commsState)
                 return;
 
+            CanCall = commsState.CanCall;
             _expectedCountdownTime = commsState.ExpectedCountdownEnd;
             CountdownStarted = commsState.CountdownStarted;
-            _menu?.UpdateCountdown();
 
+            if (_menu != null)
+            {
+                _menu.UpdateCountdown();
+                _menu.EmergencyShuttleButton.Disabled = !CanCall;
+            }
         }
 
         protected override void Dispose(bool disposing)

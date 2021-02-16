@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Actions;
@@ -39,7 +40,23 @@ namespace Content.Server.Actions
         {
             var disarmedActs = args.Target.GetAllComponents<IDisarmedAct>().ToArray();
 
-            if (disarmedActs.Length == 0 || !args.Performer.InRangeUnobstructed(args.Target)) return;
+            if (!args.Performer.InRangeUnobstructed(args.Target)) return;
+
+            if (disarmedActs.Length == 0)
+            {
+                if (args.Performer.TryGetComponent(out IActorComponent? actor))
+                {
+                    // Fall back to a normal interaction with the entity
+                    var player = actor.playerSession;
+                    var coordinates = args.Target.Transform.Coordinates;
+                    var target = args.Target.Uid;
+                    EntitySystem.Get<InteractionSystem>().HandleClientUseItemInHand(player, coordinates, target);
+                    return;
+                }
+
+                return;
+            }
+
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
             if (args.Target == args.Performer || !args.Performer.CanAttack()) return;
 

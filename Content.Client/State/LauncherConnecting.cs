@@ -31,14 +31,6 @@ namespace Content.Client.State
 
         public override void Startup()
         {
-            var panelTex = ResC.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
-            var back = new StyleBoxTexture
-            {
-                Texture = panelTex,
-                Modulate = new Color(32, 32, 48),
-            };
-            back.SetPatchMargin(StyleBox.Margin.All, 10);
-
             Button exitButton;
             Button reconnectButton;
             Button retryButton;
@@ -50,10 +42,7 @@ namespace Content.Client.State
                 Stylesheet = _stylesheetManager.SheetSpace,
                 Children =
                 {
-                    new PanelContainer
-                    {
-                        PanelOverride = back
-                    },
+                    new PanelContainer {StyleClasses = {StyleBase.ClassAngleRect}},
                     new VBoxContainer
                     {
                         SeparationOverride = 0,
