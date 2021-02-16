@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Shared.GameTicking;
 using Content.Shared.Prototypes;
 using Content.Shared.Roles;
+using Content.Shared.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Localization.Macros;
@@ -95,7 +96,7 @@ namespace Content.Shared.Preferences
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var firstName = random.Pick(sex.FirstNames(prototypeManager).Values);
-            var lastName = random.Pick(prototypeManager.Index<DatasetPrototype>("names_last").Values);
+            var lastName = random.Pick(prototypeManager.Index<DatasetPrototype>("names_last"));
             var name = $"{firstName} {lastName}";
             var age = random.Next(MinimumAge, MaximumAge);
 
