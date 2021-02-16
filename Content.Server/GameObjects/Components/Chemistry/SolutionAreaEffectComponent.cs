@@ -144,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 reagent.ReactionTile(tile, reagentQuantity.Quantity * solutionFraction);
 
                 // Touch every entity on the tile
-                foreach (var entity in tile.GetEntitiesInTileFast())
+                foreach (var entity in tile.GetEntitiesInTileFast().ToArray())
                 {
                     reagent.ReactionEntity(entity, ReactionMethod.Touch, reagentQuantity.Quantity * solutionFraction);
                 }
