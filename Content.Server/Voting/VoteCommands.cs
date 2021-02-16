@@ -58,7 +58,7 @@ namespace Content.Server.Voting
     {
         public string Command => "customvote";
         public string Description => "Creates a custom vote";
-        public string Help => "createvote <title> <option1> <option2> [option3...]";
+        public string Help => "customvote <title> <option1> <option2> [option3...]";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -184,7 +184,7 @@ namespace Content.Server.Voting
     [AdminCommand(AdminFlags.Admin)]
     public sealed class CancelVoteCommand : IConsoleCommand
     {
-        public string Command => "cancelvotes";
+        public string Command => "cancelvote";
         public string Description => "Cancels an active vote";
         public string Help => "Usage: cancelvote <id>\nYou can get the ID from the listvotes command.";
 
