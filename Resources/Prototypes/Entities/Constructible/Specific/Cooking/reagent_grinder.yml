@@ -1,7 +1,7 @@
 - type: entity
   id: KitchenReagentGrinder
   name: reagent grinder
-  description: From BlenderTech. Will It Blend? Let's test it out!
+  description: "From BlenderTech. Will It Blend? Let's test it out!"
   suffix: grinder/juicer
   placement:
     mode: SnapgridCenter
