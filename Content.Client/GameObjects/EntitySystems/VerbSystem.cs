@@ -24,6 +24,7 @@ using Robust.Client.Utility;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -37,50 +38,40 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public sealed partial class VerbSystem : SharedVerbSystem, IResettingEntitySystem
+    public sealed class VerbSystem : SharedVerbSystem, IResettingEntitySystem
     {
-        [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        private MapCoordinates _clickedHere;
-        private Dictionary<IEntity, ContextMenuElement> _entityMenuElements;
-        private Stack<ContextMenuPopup> _stackContextMenus = new();
-        private CancellationTokenSource _cancellationTokenSource;
+        private ContextMenuPresenter _contextMenuPresenter;
+        public event EventHandler<PointerInputCmdHandler.PointerInputCmdArgs> ToggleContextMenu;
+        public event EventHandler<bool> ToggleContainerVisibility;
 
         private VerbPopup _currentVerbListRoot;
         private VerbPopup _currentGroupList;
-
         private EntityUid _currentEntity;
-
-        private bool _playerCanSeeThroughContainers;
 
         public override void Initialize()
         {
             base.Initialize();
+            IoCManager.InjectDependencies(this);
 
             SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
             SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
 
-            SubscribeLocalEvent<MoveEvent>(HandleMoveEvent);
-
-            _cfg.OnValueChanged(CCVars.ContextMenuGroupingType, OnGroupingContextMenuChanged, true);
-
-            IoCManager.InjectDependencies(this);
+            _contextMenuPresenter = new ContextMenuPresenter(this);
+            SubscribeLocalEvent<MoveEvent>(_contextMenuPresenter.HandleMoveEvent);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.OpenContextMenu,
-                    new PointerInputCmdHandler(OnOpenContextMenu))
+                    new PointerInputCmdHandler(HandleOpenContextMenu))
                 .Register<VerbSystem>();
         }
 
         public override void Shutdown()
         {
             UnsubscribeLocalEvent<MoveEvent>();
+            _contextMenuPresenter?.Dispose();
 
             CommandBinds.Unregister<VerbSystem>();
             base.Shutdown();
@@ -88,17 +79,26 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public void Reset()
         {
-            _playerCanSeeThroughContainers = false;
+            ToggleContainerVisibility?.Invoke(this, false);
         }
 
-        private bool IsAnyContextMenuOpen()
+        private bool HandleOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            return _currentVerbListRoot != null || _stackContextMenus.Count > 0;
+            if (args.State == BoundKeyState.Down)
+            {
+                ToggleContextMenu?.Invoke(this, args);
+            }
+            return true;
         }
-
         private void HandleContainerVisibilityMessage(PlayerContainerVisibilityMessage ev)
         {
-            _playerCanSeeThroughContainers = ev.CanSeeThrough;
+            ToggleContainerVisibility?.Invoke(this, ev.CanSeeThrough);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            _contextMenuPresenter?.Update();
         }
 
         public void OpenContextMenu(IEntity entity, ScreenCoordinates screenCoordinates)
@@ -121,135 +121,6 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var box = UIBox2.FromDimensions(screenCoordinates.Position, (1, 1));
             _currentVerbListRoot.Open(box);
-        }
-
-        public bool CanSeeOnContextMenu(IEntity entity)
-        {
-            if (!entity.TryGetComponent(out SpriteComponent sprite) || !sprite.Visible)
-            {
-                return false;
-            }
-
-            if (entity.GetAllComponents<IShowContextMenu>().Any(s => !s.ShowContextMenu(entity)))
-            {
-                return false;
-            }
-
-            if (!_playerCanSeeThroughContainers &&
-                entity.TryGetContainer(out var container) &&
-                !container.ShowContents)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private void RemoveFromUI(IEntity entity)
-        {
-            var contextMenuElement = _entityMenuElements[entity];
-            _entityMenuElements.Remove(entity);
-
-            var parent = contextMenuElement.ParentMenu;
-            parent.RemoveEntityFrom(contextMenuElement, entity);
-            if (_entityMenuElements.Count == 0)
-            {
-                CloseContextPopups();
-            }
-        }
-
-        private void AddToUI(IEntity e, ContextMenuElement control)
-        {
-            if (_entityMenuElements.ContainsKey(e))
-            {
-                _entityMenuElements[e] = control;
-            }
-            else
-            {
-                _entityMenuElements.Add(e, control);
-            }
-        }
-
-        private void HandleMoveEvent(MoveEvent ev)
-        {
-            if (_entityMenuElements == null || _entityMenuElements.Count == 0) return;
-
-            var entity = ev.Sender;
-            if (_entityMenuElements.ContainsKey(entity))
-            {
-                if (!entity.Transform.MapPosition.InRange(_clickedHere, 1.0f))
-                {
-                    RemoveFromUI(entity);
-                }
-            }
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-            if (_entityMenuElements == null || _entityMenuElements.Count == 0) return;
-
-            foreach (var (k, v) in _entityMenuElements)
-            {
-                if (k.Deleted || k.IsInContainer())
-                {
-                    RemoveFromUI(k);
-                }
-            }
-        }
-
-        private bool OnOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
-        {
-            if (IsAnyContextMenuOpen())
-            {
-                CloseAllMenus();
-                return true;
-            }
-
-            if (_stateManager.CurrentState is not GameScreenBase)
-            {
-                return false;
-            }
-
-            var mapCoordinates = args.Coordinates.ToMap(EntityManager);
-            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
-
-            if (playerEntity == null || !TryGetContextEntities(playerEntity, mapCoordinates, out var entities))
-            {
-                return false;
-            }
-
-            _clickedHere = mapCoordinates;
-
-            entities = entities.Where(e => CanSeeOnContextMenu(e) && e.Prototype != null).ToList();
-            var entitySpriteStates = GroupEntities(entities);
-
-            if (entitySpriteStates.Count == 0)
-            {
-                return false;
-            }
-
-            var orderedStates = entitySpriteStates.ToList();
-            orderedStates.Sort((x, y) =>
-                string.CompareOrdinal(x.First().Prototype!.Name, y.First().Prototype!.Name));
-
-            _entityMenuElements = new();
-            _stackContextMenus = new();
-
-            var rootContextMenu = new ContextMenuPopup();
-            rootContextMenu.OnPopupHide += CloseAllMenus;
-
-            var debugEnabled = _userInterfaceManager.DebugMonitors.Visible;
-            rootContextMenu.FillContextMenuPopup(orderedStates, null, this, debugEnabled);
-
-            _stackContextMenus.Push(rootContextMenu);
-            _userInterfaceManager.ModalRoot.AddChild(rootContextMenu);
-
-            var size = rootContextMenu.List.CombinedMinimumSize;
-            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled, size);
-            rootContextMenu.Open(box);
-
-            return true;
         }
 
         public void OnContextButtonPressed(IEntity entity)
@@ -436,39 +307,21 @@ namespace Content.Client.GameObjects.EntitySystems
             };
         }
 
-        private void CloseVerbMenu()
+        public void CloseVerbMenu()
         {
             _currentVerbListRoot?.Dispose();
             _currentVerbListRoot = null;
             _currentEntity = EntityUid.Invalid;
         }
 
-        private void CloseContextPopups()
-        {
-            while (_stackContextMenus.Count > 0)
-            {
-                _stackContextMenus.Pop()?.Dispose();
-            }
-            _entityMenuElements?.Clear();
-            _entityMenuElements = null;
-        }
-
-        private void CloseContextPopups(int depth)
-        {
-            while (_stackContextMenus.Count > 0 && _stackContextMenus.Peek().Depth > depth)
-            {
-                _stackContextMenus.Pop()?.Dispose();
-            }
-        }
-
         private void CloseAllMenus()
         {
             CloseVerbMenu();
-            CloseContextPopups();
+            // CloseContextPopups();
             CloseGroupMenu();
         }
 
-        private void CloseGroupMenu()
+        public void CloseGroupMenu()
         {
             _currentGroupList?.Dispose();
             _currentGroupList = null;

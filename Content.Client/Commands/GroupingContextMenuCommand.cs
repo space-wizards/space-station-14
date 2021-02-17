@@ -4,6 +4,7 @@ using Content.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
+using ContextMenuView = Content.Client.UserInterface.ContextMenu.ContextMenuView;
 
 namespace Content.Client.Commands
 {
@@ -13,7 +14,7 @@ namespace Content.Client.Commands
 
         public string Description => "???.";
 
-        public string Help => ($"Usage: contextmenug <0:{VerbSystem.GroupingTypes-1}>");
+        public string Help => ($"Usage: contextmenug <0:{ContextMenuView.GroupingTypesCount}>");
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
@@ -28,7 +29,7 @@ namespace Content.Client.Commands
                 return;
             }
 
-            if (id < 0 ||id > VerbSystem.GroupingTypes - 1)
+            if (id < 0 ||id > ContextMenuView.GroupingTypesCount - 1)
             {
                 shell.WriteLine($"{args[0]} is not a valid integer.");
                 return;
