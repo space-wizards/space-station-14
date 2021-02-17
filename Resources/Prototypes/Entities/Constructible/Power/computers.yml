@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: ComputerFrame
   name: computer frame
+  description: A computer under construction. It needs a circuit board.
   placement:
     mode: SnapgridCenter
   components:
