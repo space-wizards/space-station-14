@@ -1,9 +1,7 @@
-﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.Components.Construction;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.GameObjects.Components;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
@@ -26,8 +24,6 @@ namespace Content.Server.GameObjects.Components
 
             if (Owner.TryGetComponent(out PowerReceiverComponent powerReceiver))
             {
-                powerReceiver.OnPowerStateChanged += PowerReceiverOnOnPowerStateChanged;
-
                 if (Owner.TryGetComponent(out AppearanceComponent appearance))
                 {
                     appearance.SetData(ComputerVisuals.Powered, powerReceiver.Powered);
@@ -42,17 +38,18 @@ namespace Content.Server.GameObjects.Components
             CreateComputerBoard();
         }
 
-        public override void OnRemove()
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent powerReceiver))
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                powerReceiver.OnPowerStateChanged -= PowerReceiverOnOnPowerStateChanged;
+                case PowerChangedMessage powerChanged:
+                    PowerReceiverOnOnPowerStateChanged(powerChanged);
+                    break;
             }
-
-            base.OnRemove();
         }
 
-        private void PowerReceiverOnOnPowerStateChanged(object sender, PowerStateEventArgs e)
+        private void PowerReceiverOnOnPowerStateChanged(PowerChangedMessage e)
         {
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
@@ -84,6 +81,9 @@ namespace Content.Server.GameObjects.Components
 
             if(!container.Insert(board))
                 Logger.Warning($"Couldn't insert board {board} to computer {Owner}!");
+
+            if (Owner.TryGetComponent(out ConstructionComponent construction))
+                construction.AddContainer("board");
         }
 
         public void MapInit()

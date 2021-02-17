@@ -3,12 +3,9 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Renderable;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -89,7 +86,7 @@ namespace Content.Client.GameObjects.Components.Items
             return args.Target.HasComponent<DisposalUnitComponent>();
         }
 
-        public bool Drop(DragDropEventArgs args)
+        bool IDraggable.Drop(DragDropEventArgs args)
         {
             // TODO: Shared item class
             return false;

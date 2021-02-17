@@ -1,13 +1,9 @@
 #nullable enable
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
 using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Cargo
@@ -25,22 +21,15 @@ namespace Content.Server.GameObjects.Components.Cargo
         private List<CargoProductPrototype> _teleportQueue = new List<CargoProductPrototype>();
         private CargoTelepadState _currentState = CargoTelepadState.Unpowered;
 
-
-        public override void OnAdd()
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
-            base.OnAdd();
-
-            var receiver = Owner.EnsureComponent<PowerReceiverComponent>();
-            receiver.OnPowerStateChanged += PowerUpdate;
-        }
-
-        public override void OnRemove()
-        {
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                receiver.OnPowerStateChanged -= PowerUpdate;
+                case PowerChangedMessage powerChanged:
+                    PowerUpdate(powerChanged);
+                    break;
             }
-            base.OnRemove();
         }
 
         public void QueueTeleport(CargoProductPrototype product)
@@ -49,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Cargo
             TeleportLoop();
         }
 
-        private void PowerUpdate(object? sender, PowerStateEventArgs args)
+        private void PowerUpdate(PowerChangedMessage args)
         {
             if (args.Powered && _currentState == CargoTelepadState.Unpowered) {
                 _currentState = CargoTelepadState.Idle;

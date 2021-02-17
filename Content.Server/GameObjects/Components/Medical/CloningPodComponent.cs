@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using Content.Server.Eui;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
@@ -7,20 +8,13 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
 using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
@@ -37,6 +31,7 @@ namespace Content.Server.GameObjects.Components.Medical
     {
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly IPlayerManager _playerManager = null!;
+        [Dependency] private readonly EuiManager _euiManager = null!;
 
         [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
@@ -132,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Medical
             }
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!Powered ||
                 !eventArgs.User.TryGetComponent(out IActorComponent? actor))
@@ -175,9 +170,11 @@ namespace Content.Server.GameObjects.Components.Medical
                     _bodyContainer.Insert(mob);
                     _capturedMind = mind;
 
-                    Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local,
-                        new CloningStartedMessage(_capturedMind));
                     _status = CloningPodStatus.NoMind;
+
+                    var acceptMessage = new AcceptCloningEui(mob);
+                    _euiManager.OpenEui(acceptMessage, client);
+
                     UpdateAppearance();
 
                     break;
@@ -196,17 +193,6 @@ namespace Content.Server.GameObjects.Components.Medical
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        public class CloningStartedMessage : EntitySystemMessage
-        {
-            public CloningStartedMessage(Mind capturedMind)
-            {
-                CapturedMind = capturedMind;
-            }
-
-            public Mind CapturedMind { get; }
-        }
-
 
         private HumanoidCharacterProfile GetPlayerProfileAsync(NetUserId userId)
         {

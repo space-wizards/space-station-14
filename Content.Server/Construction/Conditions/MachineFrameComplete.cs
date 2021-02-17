@@ -2,7 +2,7 @@
 using Content.Server.GameObjects.Components.Construction;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Conditions
     [UsedImplicitly]
     public class MachineFrameComplete : IEdgeCondition
     {
-        public void ExposeData(ObjectSerializer serializer) { }
+        void IExposeData.ExposeData(ObjectSerializer serializer) { }
 
         public async Task<bool> Condition(IEntity entity)
         {

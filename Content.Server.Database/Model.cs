@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -80,6 +80,7 @@ namespace Content.Server.Database
         [Column("preference_id")] public int Id { get; set; }
         [Column("user_id")] public Guid UserId { get; set; }
         [Column("selected_character_slot")] public int SelectedCharacterSlot { get; set; }
+        [Column("admin_ooc_color")] public string AdminOOCColor { get; set; } = null!;
         public List<Profile> Profiles { get; } = new();
     }
 
@@ -99,6 +100,7 @@ namespace Content.Server.Database
         [Column("eye_color")] public string EyeColor { get; set; } = null!;
         [Column("skin_color")] public string SkinColor { get; set; } = null!;
         [Column("clothing")] public string Clothing { get; set; } = null!;
+        [Column("backpack")] public string Backpack { get; set; } = null!;
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
 

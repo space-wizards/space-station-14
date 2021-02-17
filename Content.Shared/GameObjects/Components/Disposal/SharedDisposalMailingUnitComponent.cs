@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.Components.Disposal
 {
-    public abstract class SharedDisposalMailingUnitComponent : SharedDisposalUnitComponent, ICollideSpecial
+    public abstract class SharedDisposalMailingUnitComponent : SharedDisposalUnitComponent
     {
         public override string Name => "DisposalMailingUnit";
 

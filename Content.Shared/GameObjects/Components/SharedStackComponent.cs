@@ -1,8 +1,7 @@
 ﻿using System;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using Robust.Shared.Reflection;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
@@ -33,10 +32,6 @@ namespace Content.Shared.GameObjects.Components
                 _count = value;
                 if (_count <= 0)
                 {
-                    if (Owner.TryGetContainerMan(out var containerManager))
-                    {
-                        containerManager.Remove(Owner);
-                    }
                     Owner.Delete();
                 }
 
@@ -105,7 +100,7 @@ namespace Content.Shared.GameObjects.Components
         MVCable,
         HVCable,
         Gold,
-        Phoron,
+        Plasma,
         Ointment,
         Gauze,
         Brutepack,

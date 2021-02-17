@@ -3,7 +3,6 @@ using System;
 using System.Threading;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
-using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;

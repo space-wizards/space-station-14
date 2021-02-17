@@ -1,14 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.GameObjects.Components.Disposal;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Content.Client.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
 
 namespace Content.Client.GameObjects.Components.Atmos

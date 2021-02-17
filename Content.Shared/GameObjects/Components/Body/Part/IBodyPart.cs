@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Surgery;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.GameObjects.Components.Body.Part
@@ -116,5 +116,10 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         ///     false otherwise.
         /// </returns>
         bool DeleteMechanism(IMechanism mechanism);
+
+        /// <summary>
+        ///     Gibs the body part.
+        /// </summary>
+        void Gib();
     }
 }

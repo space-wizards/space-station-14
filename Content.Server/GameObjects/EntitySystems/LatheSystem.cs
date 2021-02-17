@@ -1,6 +1,6 @@
 using Content.Server.GameObjects.Components.Research;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<LatheComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<LatheComponent>(true))
             {
                 if (comp.Producing == false && comp.Queue.Count > 0)
                 {

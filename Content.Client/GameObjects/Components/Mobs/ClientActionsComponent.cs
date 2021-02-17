@@ -8,14 +8,10 @@ using Content.Client.UserInterface.Controls;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.EntitySystems;
-using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
@@ -184,8 +180,10 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             // only do something for actual target-based actions
             if (_ui?.SelectingTargetFor?.Action == null ||
-                (_ui.SelectingTargetFor.Action.BehaviorType != BehaviorType.TargetEntity &&
-                 _ui.SelectingTargetFor.Action.BehaviorType != BehaviorType.TargetPoint)) return false;
+                (!_ui.SelectingTargetFor.Action.IsTargetAction)) return false;
+
+            // do nothing if we know it's on cooldown
+            if (_ui.SelectingTargetFor.IsOnCooldown) return false;
 
             var attempt = _ui.SelectingTargetFor.ActionAttempt();
             if (attempt == null)
@@ -216,6 +214,13 @@ namespace Content.Client.GameObjects.Components.Mobs
                         _ui.StopTargeting();
                     }
                     return true;
+                }
+                // we are supposed to target an entity but we didn't click it
+                case BehaviorType.TargetEntity when args.EntityUid == EntityUid.Invalid:
+                {
+                    if (attempt.Action.DeselectWhenEntityNotClicked)
+                        _ui.StopTargeting();
+                    return false;
                 }
                 default:
                     _ui.StopTargeting();

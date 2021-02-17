@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterArmorReflective
-  name: armor (reflective)
+  name: reflective vest
   description: An armored vest with advanced shielding to protect against energy weapons.
   components:
   - type: Sprite
@@ -12,7 +12,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterArmorBulletproof
-  name: bulletproof
+  name: bulletproof vest
   description: An armored vest with heavy plates to protect against ballistic projectiles.
   components:
   - type: Sprite
@@ -23,7 +23,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterArmorCult
-  name: cult armor
+  name: acolyte armor
   description: An evil-looking cult armor, made of bones.
   components:
   - type: Sprite
@@ -34,7 +34,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterArmorHeavy
-  name: heavy
+  name: heavy armor suit
   description: A heavily armored suit that protects against excessive damage.
   components:
   - type: Sprite
@@ -45,7 +45,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterArmorHeavyGreen
-  name: heavy
+  name: green heavy armor suit
   description: A heavily armored suit with green accents that protects against excessive damage.
   components:
   - type: Sprite
@@ -56,7 +56,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterArmorHeavyRed
-  name: heavy
+  name: red heavy armor suit
   description: A heavily armored suit with red accents that protects against excessive damage.
   components:
   - type: Sprite
@@ -89,8 +89,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterArmorRiot
-  name: riot
-  description: An armored vest with heavy padding to protect against melee attacks.
+  name: riot suit
+  description: An armored vest with heavy padding to protect against melee attacks, perfect for fighting delinquents around the station.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/riot.rsi
@@ -100,7 +100,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterArmorScaf
-  name: scaf
+  name: scaf suit
   description: A green and brown tactical suit for combat situations.
   components:
   - type: Sprite

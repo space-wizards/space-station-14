@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.Botany;
 using Content.Shared.Interfaces.Chemistry;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Serialization;
@@ -18,7 +19,7 @@ namespace Content.Server.Chemistry.PlantMetabolism
         public float Amount { get; protected set; }
         public float Prob { get; protected set; }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Amount, "amount", 1f);
             serializer.DataField(this, x => x.Prob, "prob", 1f);

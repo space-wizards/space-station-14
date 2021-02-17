@@ -10,12 +10,11 @@
       - ReagentId: chem.Nutriment
         Quantity: 10
     maxVol: 11 # needs room for water
-    caps: AddTo
+    caps: Refillable
   - type: Sprite
     sprite: Objects/Consumable/Food/monkeycube.rsi
   - type: Rehydratable
     target: MonkeyMob_Content
-  - type: Grindable
 
 - type: entity
   parent: PlushieCarp
@@ -29,6 +28,6 @@
       - ReagentId: chem.Nutriment
         Quantity: 10
     maxVol: 11 # needs room for water
-    caps: AddTo
+    caps: Refillable
   - type: Rehydratable
     target: CarpMob_Content

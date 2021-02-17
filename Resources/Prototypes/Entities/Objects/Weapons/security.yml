@@ -1,8 +1,8 @@
 - type: entity
   name: stun baton
-  description: A stun baton for incapacitating people with.
   parent: BaseItem
   id: Stunbaton
+  description: A stun baton for incapacitating people with. Actively harming with this is considered bad tone.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/stunbaton.rsi
@@ -28,6 +28,7 @@
   name: flash
   parent: BaseItem
   id: Flash
+  description: An ultrabright flashbulb with a trigger, causes the victum to be dazed and lose their eyesight for a moment. Useless when burnt out.
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/flash.rsi

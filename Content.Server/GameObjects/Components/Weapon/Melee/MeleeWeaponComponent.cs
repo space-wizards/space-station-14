@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
@@ -6,23 +6,22 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.EntitySystems;
+using Content.Shared.Physics;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     [RegisterComponent]
-    public class MeleeWeaponComponent : Component, IAttack
+    public class MeleeWeaponComponent : Component, IAttack, IHandSelected
     {
         [Dependency] private readonly IPhysicsManager _physicsManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -33,10 +32,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         [YamlField("hitSound")]
         private string _hitSound = "/Audio/Weapons/genhit1.ogg";
+
         [YamlField("missSound")]
         private string _missSound = "/Audio/Weapons/punchmiss.ogg";
+
         [YamlField("arcCooldownTime")]
         public float ArcCooldownTime { get; private set; } = 1f;
+
         [YamlField("cooldownTime")]
         public float CooldownTime { get; private set; } = 1f;
 
@@ -119,11 +121,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             _lastAttackTime = curTime;
             _cooldownEnd = _lastAttackTime + TimeSpan.FromSeconds(ArcCooldownTime);
 
-            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
-            {
-                cooldown.CooldownStart = _lastAttackTime;
-                cooldown.CooldownEnd = _cooldownEnd;
-            }
+            RefreshItemCooldown();
 
             return true;
         }
@@ -173,11 +171,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             _lastAttackTime = curTime;
             _cooldownEnd = _lastAttackTime + TimeSpan.FromSeconds(CooldownTime);
 
-            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
-            {
-                cooldown.CooldownStart = _lastAttackTime;
-                cooldown.CooldownEnd = _cooldownEnd;
-            }
+            RefreshItemCooldown();
 
             return true;
         }
@@ -195,7 +189,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = _physicsManager.IntersectRay(mapId, new CollisionRay(position, castAngle.ToVec(), 23), Range, ignore).FirstOrDefault();
+                var res = _physicsManager.IntersectRay(mapId, new CollisionRay(position, castAngle.ToVec(), (int) (CollisionGroup.Impassable|CollisionGroup.MobImpassable)), Range, ignore).FirstOrDefault();
                 if (res.HitEntity != null)
                 {
                     resSet.Add(res.HitEntity);
@@ -203,6 +197,39 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             }
 
             return resSet;
+        }
+
+        void IHandSelected.HandSelected(HandSelectedEventArgs eventArgs)
+        {
+            var curTime = _gameTiming.CurTime;
+            var cool = TimeSpan.FromSeconds(CooldownTime * 0.5f);
+
+            if (curTime < _cooldownEnd)
+            {
+                if (_cooldownEnd - curTime < cool)
+                {
+                    _lastAttackTime = curTime;
+                    _cooldownEnd += cool;
+                }
+                else
+                    return;
+            }
+            else
+            {
+                _lastAttackTime = curTime;
+                _cooldownEnd = curTime + cool;
+            }
+
+            RefreshItemCooldown();
+        }
+
+        private void RefreshItemCooldown()
+        {
+            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
+            {
+                cooldown.CooldownStart = _lastAttackTime;
+                cooldown.CooldownEnd = _cooldownEnd;
+            }
         }
     }
 

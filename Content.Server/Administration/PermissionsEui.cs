@@ -6,7 +6,7 @@ using Content.Server.Database;
 using Content.Server.Eui;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Network;

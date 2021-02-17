@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Maps;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Utility
 {

@@ -6,17 +6,19 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.GameObjects.Components.Destructible;
+using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -24,8 +26,15 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(SharedWindowComponent))]
     public class WindowComponent : SharedWindowComponent, IExamine, IInteractHand
     {
-        [YamlField("maxDamage")]
-        private int _maxDamage = 100;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
+        [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _lastKnockTime;
+
+        [YamlField("knockDelay")] [ViewVariables(VVAccess.ReadWrite)]
+        private TimeSpan _knockDelay = TimeSpan.FromSeconds(0.5);
+
+        [YamlField("rateLimitedKnocking")]
+        [ViewVariables(VVAccess.ReadWrite)] private bool _rateLimitedKnocking = true;
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
@@ -44,20 +53,52 @@ namespace Content.Server.GameObjects.Components
 
         private void UpdateVisuals(int currentDamage)
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
+                Owner.TryGetComponent(out DestructibleComponent? destructible))
             {
-                appearance.SetData(WindowVisuals.Damage, (float) currentDamage / _maxDamage);
+                foreach (var threshold in destructible.Thresholds)
+                {
+                    if (threshold.Trigger is not DamageTrigger trigger)
+                    {
+                        continue;
+                    }
+
+                    appearance.SetData(WindowVisuals.Damage, (float) currentDamage / trigger.Damage);
+                }
             }
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var damage = Owner.GetComponentOrNull<IDamageableComponent>()?.TotalDamage;
-            if (damage == null) return;
-            var fraction = ((damage == 0 || _maxDamage == 0)
+            if (!Owner.TryGetComponent(out IDamageableComponent? damageable) ||
+                !Owner.TryGetComponent(out DestructibleComponent? destructible))
+            {
+                return;
+            }
+
+            var damage = damageable.TotalDamage;
+            DamageTrigger? trigger = null;
+
+            // TODO: Pretend this does not exist until https://github.com/space-wizards/space-station-14/pull/2783 is merged
+            foreach (var threshold in destructible.Thresholds)
+            {
+                if ((trigger = threshold.Trigger as DamageTrigger) != null)
+                {
+                    break;
+                }
+            }
+
+            if (trigger == null)
+            {
+                return;
+            }
+
+            var damageThreshold = trigger.Damage;
+            var fraction = damage == 0 || damageThreshold == 0
                 ? 0f
-                : (float) damage / _maxDamage);
-            var level = Math.Min(ContentHelpers.RoundToLevels(fraction, 1, 7), 5);
+                : (float) damage / damageThreshold;
+            var level = Math.Min(ContentHelpers.RoundToLevels((double) fraction, 1, 7), 5);
+
             switch (level)
             {
                 case 0:
@@ -83,9 +124,17 @@ namespace Content.Server.GameObjects.Components
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
+            if (_rateLimitedKnocking && _gameTiming.CurTime < _lastKnockTime + _knockDelay)
+            {
+                return false;
+            }
+
             EntitySystem.Get<AudioSystem>()
                 .PlayAtCoords("/Audio/Effects/glass_knock.ogg", eventArgs.Target.Transform.Coordinates, AudioHelpers.WithVariation(0.05f));
             eventArgs.Target.PopupMessageEveryone(Loc.GetString("*knock knock*"));
+
+            _lastKnockTime = _gameTiming.CurTime;
+
             return true;
         }
     }

@@ -1,11 +1,11 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Gravity;
 using Robust.Client.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Gravity

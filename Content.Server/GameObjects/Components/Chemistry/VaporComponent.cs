@@ -4,9 +4,6 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -131,12 +128,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
                 return;
 
-            foreach (var reagentQuantity in contents.ReagentList.ToArray())
-            {
-                if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
-                var reagent = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
-                contents.TryRemoveReagent(reagentQuantity.ReagentId, reagent.ReactionEntity(collidedWith, ReactionMethod.Touch, reagentQuantity.Quantity * 0.125f));
-            }
+            contents.Solution.DoEntityReaction(collidedWith, ReactionMethod.Touch);
 
             // Check for collision with a impassable object (e.g. wall) and stop
             if (collidedWith.TryGetComponent(out IPhysicsComponent physics))

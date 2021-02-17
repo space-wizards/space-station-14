@@ -20,7 +20,16 @@ namespace Content.Server.GameObjects.Components.Damage
         [YamlField("ignoreResistances")]
         private bool _ignoreResistances;
 
-        public void Land(LandEventArgs eventArgs)
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _damageType, "damageType", DamageType.Blunt);
+            serializer.DataField(ref _amount, "amount", 1);
+            serializer.DataField(ref _ignoreResistances, "ignoreResistances", false);
+        }
+
+        void ILand.Land(LandEventArgs eventArgs)
         {
             if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
@@ -23,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             var holder = Owner.EntityManager.SpawnEntity(HolderPrototypeId, Owner.Transform.MapPosition);
             var holderComponent = holder.GetComponent<DisposalHolderComponent>();
 
-            foreach (var entity in from.ContainedEntities)
+            foreach (var entity in from.ContainedEntities.ToArray())
             {
                 holderComponent.TryInsert(entity);
             }

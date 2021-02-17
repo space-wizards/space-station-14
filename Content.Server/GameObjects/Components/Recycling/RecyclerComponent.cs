@@ -1,19 +1,23 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Shared.Construction;
+using Content.Server.Interfaces.Chat;
+using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameTicking;
+using Content.Server.Players;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Recycling;
+using Content.Shared.Interfaces;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Map;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -24,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 {
     // TODO: Add sound and safe beep
     [RegisterComponent]
-    public class RecyclerComponent : Component, ICollideBehavior
+    public class RecyclerComponent : Component, ICollideBehavior, ISuicideAct
     {
         public override string Name => "Recycler";
 
@@ -33,16 +37,14 @@ namespace Content.Server.GameObjects.Components.Recycling
         /// <summary>
         ///     Whether or not sentient beings will be recycled
         /// </summary>
-        [ViewVariables]
-        [YamlField("safe")]
+        [ViewVariables(VVAccess.ReadWrite)] [YamlField("safe")]
         private bool _safe = true;
 
         /// <summary>
         ///     The percentage of material that will be recovered
         /// </summary>
-        [ViewVariables]
-        [YamlField("efficiency")]
-        private int _efficiency = 25; // TODO
+        [ViewVariables(VVAccess.ReadWrite)] [YamlField("efficiency")]
+        private float _efficiency = 0.25f;
 
         private bool Powered =>
             !Owner.TryGetComponent(out PowerReceiverComponent? receiver) ||
@@ -66,16 +68,8 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private bool CanGib(IEntity entity)
         {
+            // We suppose this entity has a Recyclable component.
             return entity.HasComponent<IBody>() && !_safe && Powered;
-        }
-
-        private bool CanRecycle(IEntity entity, [NotNullWhen(true)] out ConstructionPrototype? prototype)
-        {
-            prototype = null;
-
-            // TODO CONSTRUCTION fix this
-
-            return Powered;
         }
 
         private void Recycle(IEntity entity)
@@ -86,21 +80,19 @@ namespace Content.Server.GameObjects.Components.Recycling
             }
 
             // TODO: Prevent collision with recycled items
+
+            // Can only recycle things that are recyclable... And also check the safety of the thing to recycle.
+            if (!entity.TryGetComponent(out RecyclableComponent? recyclable) || !recyclable.Safe && _safe) return;
+
+            // Mobs are a special case!
             if (CanGib(entity))
             {
-                entity.Delete(); // TODO: Gib
+                entity.GetComponent<IBody>().Gib(true);
                 Bloodstain();
                 return;
             }
 
-            if (!CanRecycle(entity, out var prototype))
-            {
-                return;
-            }
-
-            // TODO CONSTRUCTION fix this
-
-            entity.Delete();
+            recyclable.Recycle(_efficiency);
         }
 
         private bool CanRun()
@@ -181,6 +173,28 @@ namespace Content.Server.GameObjects.Components.Recycling
         void ICollideBehavior.CollideWith(IEntity collidedWith)
         {
             Recycle(collidedWith);
+        }
+
+        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
+        {
+            var mind = victim.PlayerSession()?.ContentData()?.Mind;
+
+            if (mind != null)
+            {
+                IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, false);
+                mind.OwnedEntity.PopupMessage(Loc.GetString("You recycle yourself!"));
+            }
+
+            victim.PopupMessageOtherClients(Loc.GetString("{0:theName} tries to recycle {0:themself}!", victim));
+
+            if (victim.TryGetComponent<IBody>(out var body))
+            {
+                body.Gib(true);
+            }
+
+            Bloodstain();
+
+            return SuicideKind.Bloodloss;
         }
     }
 }

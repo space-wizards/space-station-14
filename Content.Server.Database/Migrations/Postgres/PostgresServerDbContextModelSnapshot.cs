@@ -358,6 +358,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnName("preference_id")
                         .UseIdentityByDefaultColumn();
 
+                    b.Property<string>("AdminOOCColor")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("admin_ooc_color");
+
                     b.Property<int>("SelectedCharacterSlot")
                         .HasColumnType("integer")
                         .HasColumnName("selected_character_slot");
@@ -385,6 +390,11 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<int>("Age")
                         .HasColumnType("integer")
                         .HasColumnName("age");
+
+                    b.Property<string>("Backpack")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("backpack");
 
                     b.Property<string>("CharacterName")
                         .IsRequired()

@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 // ReSharper disable UnassignedReadonlyField
 

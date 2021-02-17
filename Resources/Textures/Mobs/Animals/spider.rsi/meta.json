@@ -165,7 +165,6 @@
     },
     {
       "name": "hunter_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -174,7 +173,6 @@
     },
     {
       "name": "midwife_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -183,7 +181,6 @@
     },
     {
       "name": "viper_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -192,7 +189,6 @@
     },
     {
       "name": "tarantula_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -201,7 +197,6 @@
     },
     {
       "name": "nurse_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -210,7 +205,6 @@
     },
     {
       "name": "guard_dead",
-      "directions": 1,
       "delays": [
         [
           1

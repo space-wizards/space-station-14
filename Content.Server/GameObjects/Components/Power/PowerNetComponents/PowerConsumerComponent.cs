@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using System.Diagnostics;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
@@ -38,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public int ReceivedPower { get => _receivedPower; set => SetReceivedPower(value); }
         private int _receivedPower;
 
-        public event EventHandler<ReceivedPowerChangedEventArgs> OnReceivedPowerChanged;
+        public event EventHandler<ReceivedPowerChangedEventArgs>? OnReceivedPowerChanged;
 
         protected override void AddSelfToNet(IPowerNet powerNet)
         {

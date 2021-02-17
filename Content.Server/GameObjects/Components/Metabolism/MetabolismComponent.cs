@@ -12,19 +12,14 @@ using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -47,6 +42,8 @@ namespace Content.Server.GameObjects.Components.Metabolism
         private bool _isSweating;
 
         [ViewVariables(VVAccess.ReadWrite)] [YamlField("suffocationDamage")] private int _suffocationDamage = 1;
+
+        [ViewVariables(VVAccess.ReadWrite)] YamlField("suffocationDamageRecovery")] private int _suffocationDamageRecovery = 1;
 
         [ViewVariables] [YamlField("needsGases")] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
@@ -196,10 +193,13 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
                 if (bloodstreamAmount < amountNeeded)
                 {
-                    // Panic inhale
-                    foreach (var lung in lungs)
+                    if (!Owner.GetComponent<IMobStateComponent>().IsCritical())
                     {
-                        lung.Gasp();
+                        // Panic inhale
+                        foreach (var lung in lungs)
+                        {
+                            lung.Gasp();
+                        }
                     }
 
                     bloodstreamAmount = bloodstream.Air.GetMoles(gas);
@@ -391,12 +391,17 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 return;
             }
 
-            damageable.ChangeDamage(DamageClass.Airloss, _suffocationDamage, false);
+            damageable.ChangeDamage(DamageType.Asphyxiation, _suffocationDamage, false);
         }
 
         private void StopSuffocation()
         {
             Suffocating = false;
+
+            if (Owner.TryGetComponent(out IDamageableComponent? damageable))
+            {
+                damageable.ChangeDamage(DamageType.Asphyxiation, -_suffocationDamageRecovery, false);
+            }
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
             {

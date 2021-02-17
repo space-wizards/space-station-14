@@ -12,10 +12,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      5:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/decals.rsi
@@ -198,6 +200,7 @@
     state: direction_supply
 
 # Regular Signs
+# Descriptions intentionally left empty.
 
 - type: entity
   parent: BaseSign
@@ -683,7 +686,6 @@
   parent: BaseSign
   id: SignPrison
   name: prison sign
-  description:
   components:
   - type: Physics
     shapes:
@@ -889,8 +891,8 @@
 
 - type: entity
   parent: BaseSign
-  id: WarningPhoron
-  name: phoron waste sign
+  id: WarningPlasma
+  name: plasma waste sign
   description: WARNING! Plasma flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
@@ -905,7 +907,7 @@
       - SmallImpassable
       - Clickable
   - type: Sprite
-    state: atmos_phoron
+    state: atmos_plasma
 
 
 - type: entity

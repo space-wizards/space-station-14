@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Portal;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Timers;

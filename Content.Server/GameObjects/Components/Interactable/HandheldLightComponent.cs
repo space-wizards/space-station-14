@@ -1,13 +1,9 @@
-﻿#nullable enable
+#nullable enable
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Power;
 using Content.Shared.Actions;
-using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
@@ -18,12 +14,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -40,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing
     {
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("wattage")] public float Wattage { get; set; } = 10f;
+        [ViewVariables(VVAccess.ReadWrite)] [YamlField("wattage")] public float Wattage { get; set; } = 3f;
         [ViewVariables] private PowerCellSlotComponent _cellSlot = default!;
         private PowerCellComponent? Cell => _cellSlot.Cell;
 
@@ -71,6 +62,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             _cellSlot = Owner.EnsureComponent<PowerCellSlotComponent>();
 
             Dirty();
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -118,6 +115,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetState(false);
             Activated = false;
             UpdateLightAction();
+            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
 
             if (makeNoise)
             {
@@ -156,6 +154,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             Activated = true;
             UpdateLightAction();
             SetState(true);
+            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new ActivateHandheldLightMessage(this));
 
             if (TurnOnSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnSound, Owner);
             return true;
@@ -267,13 +266,33 @@ namespace Content.Server.GameObjects.Components.Interactable
     [UsedImplicitly]
     public class ToggleLightAction : IToggleItemAction
     {
-        public void ExposeData(ObjectSerializer serializer) {}
+        void IExposeData.ExposeData(ObjectSerializer serializer) {}
 
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
             if (!args.Item.TryGetComponent<HandheldLightComponent>(out var lightComponent)) return false;
             if (lightComponent.Activated == args.ToggledOn) return false;
             return lightComponent.ToggleStatus(args.Performer);
+        }
+    }
+
+    internal sealed class ActivateHandheldLightMessage : EntitySystemMessage
+    {
+        public HandheldLightComponent Component { get; }
+
+        public ActivateHandheldLightMessage(HandheldLightComponent component)
+        {
+            Component = component;
+        }
+    }
+
+    internal sealed class DeactivateHandheldLightMessage : EntitySystemMessage
+    {
+        public HandheldLightComponent Component { get; }
+
+        public DeactivateHandheldLightMessage(HandheldLightComponent component)
+        {
+            Component = component;
         }
     }
 }

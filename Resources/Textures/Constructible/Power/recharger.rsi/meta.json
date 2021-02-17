@@ -9,25 +9,14 @@
     "states": [
         {
             "name": "empty",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "full",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "light-off",
-            "directions": 1,
             "delays": [
                 [
                     1
@@ -36,7 +25,6 @@
         },
         {
             "name": "light-empty",
-            "directions": 1,
             "delays": [
                 [
                     1,
@@ -46,7 +34,6 @@
         },
         {
             "name": "light-charging",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -62,7 +49,6 @@
         },
         {
             "name": "light-charged",
-            "directions": 1,
             "delays": [
                 [
                     0.2,

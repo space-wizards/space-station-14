@@ -13,19 +13,12 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Interfaces.PDA;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.PDA;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -38,7 +31,7 @@ namespace Content.Server.GameObjects.Components.PDA
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IAccess))]
-    public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse, IAccess
+    public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse, IAccess, IMapInit
     {
         [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -81,6 +74,11 @@ namespace Content.Server.GameObjects.Components.PDA
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
             }
 
+            UpdatePDAAppearance();
+        }
+
+        public void MapInit()
+        {
             if (!string.IsNullOrEmpty(_startingIdCard))
             {
                 var idCard = _entityManager.SpawnEntity(_startingIdCard, Owner.Transform.Coordinates);
@@ -94,8 +92,6 @@ namespace Content.Server.GameObjects.Components.PDA
                 var pen = _entityManager.SpawnEntity(_startingPen, Owner.Transform.Coordinates);
                 _penSlot.Insert(pen);
             }
-
-            UpdatePDAAppearance();
         }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -127,11 +123,19 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 case PDAUplinkBuyListingMessage buyMsg:
                 {
-                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId))
+                    if (message.Session.AttachedEntity == null)
+                        break;
+
+                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId,
+                        message.Session.AttachedEntity.Transform.Coordinates, out var entity))
                     {
                         SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
                         break;
                     }
+
+                    HandsComponent.PutInHandOrDropStatic(
+                        message.Session.AttachedEntity,
+                        entity.GetComponent<ItemComponent>());
 
                     SendNetworkMessage(new PDAUplinkBuySuccessMessage(), message.Session.ConnectedClient);
                     break;
@@ -244,7 +248,7 @@ namespace Content.Server.GameObjects.Components.PDA
             return true;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var item = eventArgs.Using;
 
@@ -272,7 +276,7 @@ namespace Content.Server.GameObjects.Components.PDA
             UpdatePDAAppearance();
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
@@ -429,6 +433,7 @@ namespace Content.Server.GameObjects.Components.PDA
         }
 
         ISet<string> IAccess.Tags => _accessSet;
+
         bool IAccess.IsReadOnly => true;
 
         void IAccess.SetTags(IEnumerable<string> newTags)

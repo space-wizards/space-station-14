@@ -1,26 +1,27 @@
-﻿using Content.Client.GameObjects.Components;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Localization.Macros;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Robust.Shared.Localization.Macros;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Content.Client.UserInterface
 {
@@ -43,6 +44,7 @@ namespace Content.Client.UserInterface
         private readonly Button _sexMaleButton;
         private readonly OptionButton _genderButton;
         private readonly OptionButton _clothingButton;
+        private readonly OptionButton _backpackButton;
         private readonly HairStylePicker _hairPicker;
         private readonly FacialHairStylePicker _facialHairPicker;
 
@@ -64,6 +66,7 @@ namespace Content.Client.UserInterface
         public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager, IEntityManager entityManager)
         {
             _random = IoCManager.Resolve<IRobustRandom>();
+            _prototypeManager = prototypeManager;
 
             _preferencesManager = preferencesManager;
 
@@ -126,7 +129,7 @@ namespace Content.Client.UserInterface
                 {
                     Text = Loc.GetString("Randomize"),
                 };
-                nameRandomButton.OnPressed += args => RandomizeName();
+                nameRandomButton.OnPressed += _ => RandomizeName();
                 hBox.AddChild(nameLabel);
                 hBox.AddChild(_nameEdit);
                 hBox.AddChild(nameRandomButton);
@@ -328,6 +331,33 @@ namespace Content.Client.UserInterface
 
                     hBox.AddChild(clothingLabel);
                     hBox.AddChild(_clothingButton);
+                    panel.AddChild(hBox);
+                    appearanceVBox.AddChild(panel);
+                }
+
+                #endregion Clothing
+
+                #region Backpack
+
+                {
+                    var panel = HighlightedContainer();
+                    var hBox = new HBoxContainer();
+                    var backpackLabel = new Label { Text = Loc.GetString("Backpack:") };
+
+                    _backpackButton = new OptionButton();
+
+                    _backpackButton.AddItem(Loc.GetString("Backpack"), (int) BackpackPreference.Backpack);
+                    _backpackButton.AddItem(Loc.GetString("Satchel"), (int) BackpackPreference.Satchel);
+                    _backpackButton.AddItem(Loc.GetString("Duffelbag"), (int) BackpackPreference.Duffelbag);
+
+                    _backpackButton.OnItemSelected += args =>
+                    {
+                        _backpackButton.SelectId(args.Id);
+                        SetBackpack((BackpackPreference) args.Id);
+                    };
+
+                    hBox.AddChild(backpackLabel);
+                    hBox.AddChild(_backpackButton);
                     panel.AddChild(hBox);
                     appearanceVBox.AddChild(panel);
                 }
@@ -669,6 +699,12 @@ namespace Content.Client.UserInterface
             IsDirty = true;
         }
 
+        private void SetBackpack(BackpackPreference newBackpack)
+        {
+            Profile = Profile?.WithBackpackPreference(newBackpack);
+            IsDirty = true;
+        }
+
         public void Save()
         {
             IsDirty = false;
@@ -723,6 +759,11 @@ namespace Content.Client.UserInterface
             _clothingButton.SelectId((int) Profile.Clothing);
         }
 
+        private void UpdateBackpackControls()
+        {
+            _backpackButton.SelectId((int) Profile.Backpack);
+        }
+
         private void UpdateHairPickers()
         {
             _hairPicker.SetData(
@@ -754,6 +795,7 @@ namespace Content.Client.UserInterface
             UpdateSexControls();
             UpdateGenderControls();
             UpdateClothingControls();
+            UpdateBackpackControls();
             UpdateAgeEdit();
             UpdateHairPickers();
             UpdateSaveButton();
@@ -780,12 +822,12 @@ namespace Content.Client.UserInterface
         private class JobPrioritySelector : Control
         {
             public JobPrototype Job { get; }
-            private readonly OptionButton _optionButton;
+            private readonly RadioOptions<int> _optionButton;
 
             public JobPriority Priority
             {
-                get => (JobPriority) _optionButton.SelectedId;
-                set => _optionButton.SelectId((int) value);
+                get => (JobPriority) _optionButton.SelectedValue;
+                set => _optionButton.SelectByValue((int) value);
             }
 
             public event Action<JobPriority> PriorityChanged;
@@ -793,7 +835,14 @@ namespace Content.Client.UserInterface
             public JobPrioritySelector(JobPrototype job)
             {
                 Job = job;
-                _optionButton = new OptionButton();
+                _optionButton = new RadioOptions<int>(RadioOptionsLayout.Horizontal);
+
+                _optionButton.FirstButtonStyle = StyleBase.ButtonOpenRight;
+                _optionButton.ButtonStyle = StyleBase.ButtonOpenBoth;
+                _optionButton.LastButtonStyle = StyleBase.ButtonOpenLeft;
+
+
+                // Text, Value
                 _optionButton.AddItem(Loc.GetString("High"), (int) JobPriority.High);
                 _optionButton.AddItem(Loc.GetString("Medium"), (int) JobPriority.Medium);
                 _optionButton.AddItem(Loc.GetString("Low"), (int) JobPriority.Low);
@@ -801,7 +850,7 @@ namespace Content.Client.UserInterface
 
                 _optionButton.OnItemSelected += args =>
                 {
-                    _optionButton.SelectId(args.Id);
+                    _optionButton.Select(args.Id);
                     PriorityChanged?.Invoke(Priority);
                 };
 

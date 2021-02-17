@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -8,7 +9,7 @@ using Content.Server.Preferences;
 using Content.Server.Utility;
 using Content.Shared;
 using Microsoft.EntityFrameworkCore;
-using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
@@ -45,6 +46,18 @@ namespace Content.Server.Database
             }
         }
 
+        public override async Task<ServerBanDef?> GetServerBanAsync(int id)
+        {
+            await using var db = await GetDbImpl();
+
+            var ban = await db.SqliteDbContext.Ban
+                .Include(p => p.Unban)
+                .Where(p => p.Id == id)
+                .SingleOrDefaultAsync();
+
+            return ConvertBan(ban);
+        }
+
         public override async Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId)
         {
             await using var db = await GetDbImpl();
@@ -72,6 +85,42 @@ namespace Content.Server.Database
             return null;
         }
 
+        public override async Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId)
+        {
+            await using var db = await GetDbImpl();
+
+            // SQLite can't do the net masking stuff we need to match IP address ranges.
+            // So just pull down the whole list into memory.
+            var queryBans = await db.SqliteDbContext.Ban
+                .Include(p => p.Unban)
+                .ToListAsync();
+
+            var bans = new List<ServerBanDef>();
+
+            foreach (var ban in queryBans)
+            {
+                ServerBanDef? banDef = null;
+
+                if (address != null && ban.Address != null && address.IsInSubnet(ban.Address))
+                {
+                    banDef = ConvertBan(ban);
+                }
+                else if (userId is { } id && ban.UserId == id.UserId)
+                {
+                    banDef = ConvertBan(ban);
+                }
+
+                if (banDef == null)
+                {
+                    continue;
+                }
+
+                bans.Add(banDef);
+            }
+
+            return bans;
+        }
+
         public override async Task AddServerBanAsync(ServerBanDef serverBan)
         {
             await using var db = await GetDbImpl();
@@ -90,6 +139,20 @@ namespace Content.Server.Database
                 BanTime = serverBan.BanTime.UtcDateTime,
                 ExpirationTime = serverBan.ExpirationTime?.UtcDateTime,
                 UserId = serverBan.UserId?.UserId
+            });
+
+            await db.SqliteDbContext.SaveChangesAsync();
+        }
+
+        public override async Task AddServerUnbanAsync(ServerUnbanDef serverUnban)
+        {
+            await using var db = await GetDbImpl();
+
+            db.SqliteDbContext.Unban.Add(new SqliteServerUnban
+            {
+                BanId = serverUnban.BanId,
+                UnbanningAdmin = serverUnban.UnbanningAdmin?.UserId,
+                UnbanTime = serverUnban.UnbanTime.UtcDateTime
             });
 
             await db.SqliteDbContext.SaveChangesAsync();
@@ -181,13 +244,36 @@ namespace Content.Server.Database
                     int.Parse(ban.Address.AsSpan(idx + 1), provider: CultureInfo.InvariantCulture));
             }
 
+            var unban = ConvertUnban(ban.Unban);
+
             return new ServerBanDef(
+                ban.Id,
                 uid,
                 addrTuple,
                 ban.BanTime,
                 ban.ExpirationTime,
                 ban.Reason,
-                aUid);
+                aUid,
+                unban);
+        }
+
+        private static ServerUnbanDef? ConvertUnban(SqliteServerUnban? unban)
+        {
+            if (unban == null)
+            {
+                return null;
+            }
+
+            NetUserId? aUid = null;
+            if (unban.UnbanningAdmin is {} aGuid)
+            {
+                aUid = new NetUserId(aGuid);
+            }
+
+            return new ServerUnbanDef(
+                unban.Id,
+                aUid,
+                unban.UnbanTime);
         }
 
         public override async Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address)

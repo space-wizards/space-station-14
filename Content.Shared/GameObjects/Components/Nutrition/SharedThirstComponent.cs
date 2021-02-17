@@ -2,6 +2,7 @@ using System;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Nutrition
 {
@@ -11,6 +12,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
 
         public sealed override uint? NetID => ContentNetIDs.THIRST;
 
+        [ViewVariables]
         public abstract ThirstThreshold CurrentThirstThreshold { get; }
 
         float IMoveSpeedModifier.SprintSpeedModifier
@@ -19,7 +21,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
             {
                 if (CurrentThirstThreshold == ThirstThreshold.Parched)
                 {
-                    return 0.25f;
+                    return 0.75f;
                 }
                 return 1.0f;
             }
@@ -30,7 +32,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
             {
                 if (CurrentThirstThreshold == ThirstThreshold.Parched)
                 {
-                    return 0.5f;
+                    return 0.75f;
                 }
                 return 1.0f;
             }
@@ -49,6 +51,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
 
     }
 
+    [NetSerializable, Serializable]
     public enum ThirstThreshold : byte
     {
         // Hydrohomies

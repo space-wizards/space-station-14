@@ -30,6 +30,7 @@
     sprite: Constructible/Power/power.rsi
     state: generator
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: HVPower
@@ -37,6 +38,9 @@
     supplyRate: 3000
   - type: Anchorable
   - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
 
 - type: entity
   id: BaseSmes
@@ -80,6 +84,7 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: HVPower
@@ -91,6 +96,9 @@
     activeSupplyRate: 1000
   - type: Anchorable
   - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
 
 - type: entity
   id: BaseSubstation
@@ -131,6 +139,7 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: HVPower
@@ -145,6 +154,10 @@
     activeSupplyRate: 1000
   - type: Anchorable
   - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
+    - MVDummyWire
 
 - type: entity
   id: BaseApc
@@ -177,6 +190,7 @@
     maxCharge: 10000
     startingCharge: 10000
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: MVPower
@@ -197,6 +211,10 @@
   - type: Construction
     graph: apc
     node: apc
+  - type: ClientEntitySpawner
+    prototypes:
+    - MVDummyWire
+    - LVDummyWire
 
 - type: entity
   id: SolarPanel
@@ -226,6 +244,7 @@
     sprite: Constructible/Power/solar_panel.rsi
     state: normal
   - type: NodeContainer
+    examinable: true
     nodes:
     - !type:AdjacentNode
       nodeGroupID: HVPower
@@ -238,9 +257,14 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Breakage"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Anchorable
   - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire

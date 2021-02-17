@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using Content.Server.Atmos;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;

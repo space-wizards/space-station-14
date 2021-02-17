@@ -25,4 +25,5 @@
     <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />
     <ProjectReference Include="..\RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj" />
   </ItemGroup>
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 </Project>

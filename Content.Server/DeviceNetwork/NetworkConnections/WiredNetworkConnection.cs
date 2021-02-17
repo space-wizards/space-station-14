@@ -1,8 +1,8 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Robust.Shared.Interfaces.GameObjects;
 using System.Collections.Generic;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 {

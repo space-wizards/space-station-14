@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.ActionBlocking
 {
-    public class SharedHandcuffComponent : Component
+    public abstract class SharedHandcuffComponent : Component
     {
         public override string Name => "Handcuff";
         public override uint? NetID => ContentNetIDs.HANDCUFFS;

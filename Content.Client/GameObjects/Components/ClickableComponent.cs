@@ -1,9 +1,8 @@
 #nullable enable
 using System;
-using Robust.Client.Graphics.ClientEye;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -82,6 +81,8 @@ namespace Content.Client.GameObjects.Components
             {
                 foreach (var layer in sprite.AllLayers)
                 {
+                    if (!layer.Visible) continue;
+
                     if (layer.Texture != null)
                     {
                         if (_clickMapManager.IsOccluding(layer.Texture,
@@ -127,6 +128,15 @@ namespace Content.Client.GameObjects.Components
             [ViewVariables] [YamlField("west")] public Box2 West;
 
             public static DirBoundData Default { get; } = new();
+
+            void IExposeData.ExposeData(ObjectSerializer serializer)
+            {
+                serializer.DataField(ref All, "all", default);
+                serializer.DataField(ref North, "north", default);
+                serializer.DataField(ref South, "south", default);
+                serializer.DataField(ref East, "east", default);
+                serializer.DataField(ref West, "west", default);
+            }
         }
     }
 }

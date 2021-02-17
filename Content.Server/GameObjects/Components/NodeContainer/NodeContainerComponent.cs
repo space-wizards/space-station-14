@@ -1,8 +1,13 @@
-﻿using System.Collections.Generic;
+#nullable enable
+using System.Collections.Generic;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -12,7 +17,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer
     ///     Creates and maintains a set of <see cref="Node"/>s.
     /// </summary>
     [RegisterComponent]
-    public class NodeContainerComponent : Component
+    public class NodeContainerComponent : Component, IExamine
     {
         public override string Name => "NodeContainer";
 
@@ -20,6 +25,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer
         public IReadOnlyList<Node> Nodes => _nodes;
         [YamlField("nodes")]
         private List<Node> _nodes = new();
+        [YamlField("examinable")]
+        private bool _examinable;
 
         public override void Initialize()
         {
@@ -39,6 +46,17 @@ namespace Content.Server.GameObjects.Components.NodeContainer
             }
         }
 
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case AnchoredChangedMessage:
+                    AnchorUpdate();
+                    break;
+            }
+        }
+
         public override void OnRemove()
         {
             foreach (var node in _nodes)
@@ -46,6 +64,43 @@ namespace Content.Server.GameObjects.Components.NodeContainer
                 node.OnContainerRemove();
             }
             base.OnRemove();
+        }
+
+        private void AnchorUpdate()
+        {
+            foreach (var node in Nodes)
+            {
+                node.AnchorUpdate();
+            }
+        }
+
+        public void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            if (!_examinable || !inDetailsRange) return;
+
+            for (var i = 0; i < Nodes.Count; i++)
+            {
+                var node = Nodes[i];
+                if (node == null) continue;
+                switch (node.NodeGroupID)
+                {
+                    case NodeGroupID.HVPower:
+                        message.AddMarkup(
+                            Loc.GetString("It has a connector for [color=orange]HV cables[/color]."));
+                        break;
+                    case NodeGroupID.MVPower:
+                        message.AddMarkup(
+                            Loc.GetString("It has a connector for [color=yellow]MV cables[/color]."));
+                        break;
+                    case NodeGroupID.Apc:
+                        message.AddMarkup(
+                            Loc.GetString("It has a connector for [color=green]APC cables[/color]."));
+                        break;
+                }
+
+                if(i != Nodes.Count - 1)
+                    message.AddMarkup("\n");
+            }
         }
     }
 }

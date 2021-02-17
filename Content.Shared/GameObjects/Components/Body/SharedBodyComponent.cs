@@ -12,8 +12,6 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Prototypes.DataClasses.Attributes;
@@ -21,6 +19,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using Component = Robust.Shared.GameObjects.Component;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
@@ -590,6 +589,17 @@ namespace Content.Shared.GameObjects.Components.Body
                 {
                     TryAddPart(slot, newPart, true);
                 }
+            }
+        }
+
+        public virtual void Gib(bool gibParts = false)
+        {
+            foreach (var (_, part) in Parts)
+            {
+                RemovePart(part);
+
+                if (gibParts)
+                    part.Gib();
             }
         }
     }

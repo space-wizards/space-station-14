@@ -1,11 +1,10 @@
-﻿using System;
+#nullable enable
+using System;
 using Content.Shared.Audio;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -33,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     ///     Component that represents a light bulb. Can be broken, or burned, which turns them mostly useless.
     /// </summary>
     [RegisterComponent]
-    public class LightBulbComponent : Component, ILand
+    public class LightBulbComponent : Component, ILand, IBreakAct
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -41,8 +40,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         /// <summary>
         ///     Invoked whenever the state of the light bulb changes.
         /// </summary>
-        public event EventHandler<EventArgs> OnLightBulbStateChange;
-        public event EventHandler<EventArgs> OnLightColorChange;
+        public event EventHandler<EventArgs>? OnLightBulbStateChange;
+        public event EventHandler<EventArgs?>? OnLightColorChange;
 
         [YamlField("color")]
         private Color _color = Color.White;
@@ -102,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         public void UpdateColor()
         {
-            if (!Owner.TryGetComponent(out SpriteComponent sprite))
+            if (!Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 return;
             }
@@ -116,17 +115,23 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             UpdateColor();
         }
 
-        public void Land(LandEventArgs eventArgs)
+        void ILand.Land(LandEventArgs eventArgs)
         {
-            if (State == LightBulbState.Broken)
-                return;
+            PlayBreakSound();
+            State = LightBulbState.Broken;
+        }
 
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("glassbreak");
+        public void OnBreak(BreakageEventArgs eventArgs)
+        {
+            State = LightBulbState.Broken;
+        }
+
+        public void PlayBreakSound()
+        {
+            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("GlassBreak");
             var file = _random.Pick(soundCollection.PickFiles);
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner);
-
-            State = LightBulbState.Broken;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Damage
         [YamlField("ignoreResistances")]
         private bool _ignoreResistances;
 
-        public void DoHit(ThrowCollideEventArgs eventArgs)
+        void IThrowCollide.DoHit(ThrowCollideEventArgs eventArgs)
         {
             if (!eventArgs.Target.TryGetComponent(out IDamageableComponent damageable)) return;
 

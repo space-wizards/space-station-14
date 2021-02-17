@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
                 return false;
             }
 
-            _internalSolution.TryAddSolution(solution, false, true);
+            _internalSolution.TryAddSolution(solution);
             return true;
         }
 

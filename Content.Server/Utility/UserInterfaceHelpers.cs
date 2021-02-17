@@ -1,6 +1,6 @@
 ﻿#nullable enable
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Utility
 {

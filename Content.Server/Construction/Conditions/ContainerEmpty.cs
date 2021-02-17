@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Conditions
         public string Container { get; private set; } = string.Empty;
         public string Text { get; private set; } = string.Empty;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Container, "container", string.Empty);
             serializer.DataField(this, x => x.Text, "text", string.Empty);

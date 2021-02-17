@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,15 +14,8 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Kitchen;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -90,12 +83,18 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
             }
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += OnPowerStateChanged;
-            }
-
             _audioSystem = EntitySystem.Get<AudioSystem>();
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerChangedMessage powerChanged:
+                    OnPowerStateChanged(powerChanged);
+                    break;
+            }
         }
 
         public override void OnRemove()
@@ -104,11 +103,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage -= UserInterfaceOnReceiveMessage;
-            }
-
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged -= OnPowerStateChanged;
             }
         }
 
@@ -161,7 +155,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
         }
 
-        private void OnPowerStateChanged(object? sender, PowerStateEventArgs e)
+        private void OnPowerStateChanged(PowerChangedMessage e)
         {
             _uiDirty = true;
         }
@@ -263,7 +257,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             UserInterface?.Toggle(actor.playerSession);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
