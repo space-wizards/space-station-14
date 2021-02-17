@@ -1,7 +1,7 @@
-﻿# TODO: Add description (1)
-- type: entity
+﻿- type: entity
   id: ComputerFrame
   name: computer frame
+  description: Used to construct a computer. Needs a circuit board.
   placement:
     mode: SnapgridCenter
   components:
@@ -66,6 +66,7 @@
 - type: entity
   id: ComputerBase
   name: computer
+  description: A general purpose computer. 
   abstract: true
   placement:
     mode: SnapgridCenter

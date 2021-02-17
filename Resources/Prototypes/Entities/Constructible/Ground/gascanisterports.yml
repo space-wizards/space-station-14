@@ -1,4 +1,3 @@
-# TODO: Add description (1)
 - type: entity
   abstract: true
   id: GasCanisterPortBase
@@ -32,6 +31,7 @@
   parent: GasCanisterPortBase
   id: GasCanisterPort
   name: Gas Canister Port
+  description: To connect gas canisters to a system. Use a wrench.
   components:
   - type: NodeContainer
     nodes:

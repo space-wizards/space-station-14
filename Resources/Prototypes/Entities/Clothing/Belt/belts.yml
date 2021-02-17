@@ -2,7 +2,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltAssault
   name: assault belt
-  description: "A tactical assault belt."
+  description: A tactical assault belt.
   components:
   - type: Sprite
     sprite: Clothing/Belt/assault.rsi
@@ -15,7 +15,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltBandolier
   name: assault belt
-  description: "A bandolier for holding shotgun ammunition."
+  description: A bandolier for holding shotgun ammunition.
   components:
   - type: Sprite
     sprite: Clothing/Belt/bandolier.rsi
@@ -28,7 +28,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltChiefEngineer
   name:  chief's toolbelt
-  description: "Holds tools, looks snazzy."
+  description: Holds tools, looks snazzy.
   components:
   - type: Sprite
     sprite: Clothing/Belt/ce.rsi
@@ -41,7 +41,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltChampion
   name:  championship belt
-  description: "Proves to the world that you are the strongest!"
+  description: Proves to the world that you are the strongest!
   components:
   - type: Sprite
     sprite: Clothing/Belt/champion.rsi
@@ -52,7 +52,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltHolster
   name:  shoulder holster
-  description: "A holster to carry a handgun and ammo. WARNING: Badasses only."
+  description: A holster to carry a handgun and ammo. WARNING: Badasses only.
   components:
   - type: Sprite
     sprite: Clothing/Belt/holster.rsi
@@ -65,7 +65,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltJanitor
   name:  janibelt
-  description: "A belt used to hold most janitorial supplies."
+  description: A belt used to hold most janitorial supplies.
   components:
   - type: Sprite
     sprite: Clothing/Belt/janitor.rsi
@@ -78,7 +78,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltMedical
   name:  medical belt
-  description: "Can hold various medical equipment."
+  description: Can hold various medical equipment.
   components:
   - type: Sprite
     sprite: Clothing/Belt/medical.rsi
@@ -91,7 +91,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltSecurity
   name:  security belt
-  description: "Can hold security gear like handcuffs and flashes."
+  description: Can hold security gear like handcuffs and flashes.
   components:
   - type: Sprite
     sprite: Clothing/Belt/security.rsi
@@ -104,7 +104,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltSecurityWebbing
   name:  security webbing
-  description: "Unique and versatile chest rig, can hold security gear."
+  description: Unique and versatile chest rig, can hold security gear.
   components:
   - type: Sprite
     sprite: Clothing/Belt/securitywebbing.rsi
@@ -117,7 +117,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltMilitaryWebbing
   name:  chest rig
-  description: "A set of tactical webbing worn by Syndicate boarding parties."
+  description: A set of tactical webbing worn by Syndicate boarding parties.
   components:
   - type: Sprite
     sprite: Clothing/Belt/militarywebbing.rsi
@@ -130,7 +130,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltSheath
   name:  sabre sheath
-  description: "An ornate sheath designed to hold an officer's blade."
+  description: An ornate sheath designed to hold an officer's blade.
   components:
   - type: Sprite
     sprite: Clothing/Belt/sheath.rsi
@@ -144,7 +144,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltSuspenders
   name: suspenders
-  description: "For holding your pants up."
+  description: For holding your pants up.
   components:
   - type: Sprite
     sprite: Clothing/Belt/suspenders.rsi
@@ -156,7 +156,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltUtility
   name: utility belt
-  description: "Can hold various things."
+  description: Can hold various things.
   components:
   - type: Sprite
     sprite: Clothing/Belt/utility.rsi

@@ -1,5 +1,4 @@
-﻿# TODO: Add description (1)
-- type: entity
+﻿- type: entity
   abstract: true
   id: ScrubberBase
   placement:
@@ -35,6 +34,7 @@
   parent: ScrubberBase
   id: Scrubber
   name: Scrubber
+  description: Filters impurities out of the air.
   components:
   - type: NodeContainer
     nodes:

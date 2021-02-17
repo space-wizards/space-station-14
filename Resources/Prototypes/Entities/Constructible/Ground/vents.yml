@@ -1,5 +1,4 @@
-﻿# TODO: Add description (1)
-- type: entity
+﻿- type: entity
   abstract: true
   id: VentBase
   placement:
@@ -35,6 +34,7 @@
   parent: VentBase
   id: Vent
   name: Vent
+  description: An open vent for releasing gasses.
   components:
   - type: NodeContainer
     nodes:
