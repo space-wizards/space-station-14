@@ -140,6 +140,8 @@ namespace Content.Server.AI.Utility
                     npc.AvailableActions.Add(action);
                 }
             }
+
+            SortActions(npc);
         }
 
         private IEnumerable<IAiUtility> GetActions(string behaviorSet)
@@ -163,7 +165,7 @@ namespace Content.Server.AI.Utility
             public override int Compare(IAiUtility? x, IAiUtility? y)
             {
                 if (x == null || y == null) return 0;
-                return x.Bonus.CompareTo(y.Bonus);
+                return y.Bonus.CompareTo(x.Bonus);
             }
         }
     }
