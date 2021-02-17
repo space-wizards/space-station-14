@@ -1,4 +1,7 @@
-﻿- type: entity
+- type: Tag
+  id: Cigarette
+
+- type: entity
   description: "If you want to get cancer, might as well do it in style."
   id: BaseSmokeable
   parent: BaseItem
@@ -20,6 +23,9 @@
       sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
       netsync: false
       state: unlit-icon
+    - type: Tag
+      tags:
+        - Cigarette
     - type: Clothing
       sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
       Slots: [ mask ]
