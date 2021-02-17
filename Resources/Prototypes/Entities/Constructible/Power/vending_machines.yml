@@ -1,4 +1,5 @@
-﻿- type: entity
+﻿# Vending machine descriptions are stored in vendingMachineInventory YAML files.
+- type: entity
   id: VendingMachine
   name: vending machine
   abstract: true
