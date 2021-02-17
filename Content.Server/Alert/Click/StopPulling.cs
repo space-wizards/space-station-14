@@ -3,9 +3,7 @@ using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
- using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Alert.Click
 {
@@ -13,10 +11,9 @@ namespace Content.Server.Alert.Click
     /// Stop pulling something
     /// </summary>
     [UsedImplicitly]
+    [DataDefinition]
     public class StopPulling : IAlertClick
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer) { }
-
         public void AlertClicked(ClickAlertEventArgs args)
         {
             EntitySystem

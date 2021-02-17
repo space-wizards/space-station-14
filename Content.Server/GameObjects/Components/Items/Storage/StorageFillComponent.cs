@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Server.GameObjects;
@@ -7,6 +8,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using YamlDotNet.Serialization;
 using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -26,11 +28,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            if (!Owner.TryGetComponent(out IStorageComponent storage))
+            if (!Owner.TryGetComponent(out IStorageComponent? storage))
             {
                 Logger.Error($"StorageFillComponent couldn't find any StorageComponent ({Owner})");
                 return;
             }
+
             var random = IoCManager.Resolve<IRobustRandom>();
 
             var alreadySpawnedGroups = new List<string>();
@@ -54,9 +57,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         [Serializable]
-        public struct StorageFillEntry : IExposeData
+        [DataDefinition]
+        public struct StorageFillEntry
         {
-            public string PrototypeName;
+            public string? PrototypeName;
             public float SpawnProbability;
             public string GroupId;
             public int Amount;

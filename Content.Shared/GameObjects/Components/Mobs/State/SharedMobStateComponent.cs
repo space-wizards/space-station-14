@@ -7,9 +7,6 @@ using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -22,7 +19,6 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
     ///     Additionally, it handles sending effects to clients
     ///     (such as blur effect for unconsciousness) and managing the health HUD.
     /// </summary>
-    [DataClass(typeof(SharedMobStateComponentDataClass))]
     public abstract class SharedMobStateComponent : Component, IMobStateComponent, IActionBlocker
     {
         public override string Name => "MobState";
@@ -37,8 +33,8 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         ///     Ordered from lowest to highest.
         /// </summary>
         [ViewVariables]
-        [DataClassTarget("states")]
-        private SortedDictionary<int, IMobState> _lowestToHighestStates = default!;
+        [DataField("states")]
+        private readonly SortedDictionary<int, IMobState> _lowestToHighestStates = default!;
 
         // TODO Remove Nullability?
         [ViewVariables]

@@ -9,37 +9,36 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Chemistry
 {
     [Prototype("reagent")]
+    [DataDefinition]
     public class ReagentPrototype : IPrototype, IIndexedPrototype
     {
         [Dependency] private readonly IModuleManager _moduleManager = default!;
 
-        [DataField("id")]
-        private string _id;
+        [DataField("id", required: true)]
+        private readonly string _id = default!;
         [DataField("name")]
-        private string _name;
+        private readonly string _name = default!;
         [DataField("desc")]
-        private string _description;
+        private readonly string _description = default!;
         [DataField("physicalDesc")]
-        private string _physicalDescription;
+        private readonly string _physicalDescription = default!;
         [DataField("color")]
-        private Color _substanceColor;
+        private readonly Color _substanceColor = default!;
         [DataField("spritePath")]
-        private string _spritePath;
+        private readonly string _spritePath = default!;
         [DataField("metabolism", serverOnly: true)]
-        private List<IMetabolizable> _metabolism = new(){new DefaultMetabolizable()};
+        private readonly List<IMetabolizable> _metabolism = new() {new DefaultMetabolizable()};
         [DataField("tileReactions", serverOnly: true)]
-        private List<ITileReaction> _tileReactions = new(0);
+        private readonly List<ITileReaction> _tileReactions = new(0);
         [DataField("plantMetabolism", serverOnly: true)]
-        private List<IPlantMetabolizable> _plantMetabolism = new(0);
+        private readonly List<IPlantMetabolizable> _plantMetabolism = new(0);
         [DataField("customPlantMetabolism")]
-        private float _customPlantMetabolism = 1f;
+        private readonly float _customPlantMetabolism = 1f;
 
         public string ID => _id;
         public string Name => _name;

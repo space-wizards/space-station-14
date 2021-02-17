@@ -7,6 +7,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -15,25 +16,36 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     /// Logic for secret single slot stash, like plant pot or toilet cistern
     /// </summary>
     [RegisterComponent]
-    public class SecretStashComponent : Component, IDestroyAct
+    public class SecretStashComponent : Component, IDestroyAct, ISerializationHooks
     {
         public override string Name => "SecretStash";
 
-        [ViewVariables] private int _maxItemSize;
-        [ViewVariables] private string _secretPartName = "";
+        [ViewVariables] [DataField("maxItemSize")]
+        private int _maxItemSize = (int) ReferenceSizes.Pocket;
+        [ViewVariables] [DataField("secretPartName")] private string _secretPartName = string.Empty;
 
         [ViewVariables] private ContainerSlot _itemContainer = default!;
+
+        public void BeforeSerialization()
+        {
+            if (_secretPartName == Loc.GetString("{0:theName}", Owner))
+            {
+                _secretPartName = string.Empty;
+            }
+        }
+
+        public void AfterDeserialization()
+        {
+            if (_secretPartName == string.Empty)
+            {
+                _secretPartName = Loc.GetString("{0:theName}", Owner);
+            }
+        }
 
         public override void Initialize()
         {
             base.Initialize();
             _itemContainer = ContainerManagerComponent.Ensure<ContainerSlot>("stash", Owner, out _);
-        }
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _maxItemSize, "maxItemSize", (int) ReferenceSizes.Pocket);
-            serializer.DataField(ref _secretPartName, "secretPartName", Loc.GetString("{0:theName}"));
         }
 
         /// <summary>

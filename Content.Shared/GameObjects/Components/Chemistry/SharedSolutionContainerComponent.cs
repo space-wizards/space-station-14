@@ -1,4 +1,6 @@
 #nullable enable
+using System;
+using System.Collections.Generic;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -8,11 +10,9 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
 
 namespace Content.Shared.GameObjects.Components.Chemistry
 {
@@ -34,7 +34,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("maxVol")]
-        public ReagentUnit MaxVolume { get; set; } = new ReagentUnit.New(0);
+        public ReagentUnit MaxVolume { get; set; } = ReagentUnit.Zero;
 
         [ViewVariables]
         public ReagentUnit CurrentVolume => Solution.TotalVolume;

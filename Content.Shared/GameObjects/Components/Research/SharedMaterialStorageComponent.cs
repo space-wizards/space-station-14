@@ -25,7 +25,7 @@ namespace Content.Shared.GameObjects.Components.Research
             }
         }
 
-        public int this[Material material]
+        public int this[MaterialPrototype material]
         {
             get
             {

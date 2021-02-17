@@ -5,10 +5,6 @@ using Content.Shared.GameObjects.Components.Trigger;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Trigger.TimerTrigger
@@ -21,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Trigger.TimerTrigger
         [DataField("delay")]
         private float _delay = 0f;
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        public void Trigger(IEntity user)
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);

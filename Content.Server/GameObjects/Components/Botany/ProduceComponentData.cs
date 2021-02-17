@@ -7,20 +7,19 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Botany
 {
-    public partial class ProduceComponentData
+    public partial class ProduceComponentData : ISerializationHooks
     {
+        [DataField("seed")]
+        private string? _seedName;
+
         [DataClassTarget("Seed")] public Seed? Seed;
 
-        public void ExposeData(ObjectSerializer serializer)
+        public void AfterDeserialization()
         {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-            serializer.DataReadFunction<string?>("seed", null,
-                (s) =>
-                {
-                    if(!string.IsNullOrEmpty(s))
-                        Seed = prototypeManager.Index<Seed>(s);
-                });
+            if (_seedName != null)
+            {
+                Seed = IoCManager.Resolve<IPrototypeManager>().Index<Seed>(_seedName);
+            }
         }
     }
 }

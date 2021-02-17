@@ -9,10 +9,6 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Prototypes.DataClasses.Attributes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -24,20 +20,19 @@ namespace Content.Server.GameObjects.Components.Access
     /// </summary>
     [PublicAPI]
     [RegisterComponent]
-    [DataClass(typeof(AccessReaderComponentData))]
     public class AccessReader : Component
     {
         public override string Name => "AccessReader";
 
-        [DataClassTarget("accessList")]
-        private readonly List<ISet<string>> _accessLists = new();
         private readonly HashSet<string> _denyTags = new();
 
         /// <summary>
         ///     List of access lists to check allowed against. For an access check to pass
         ///     there has to be an access list that is a subset of the access in the checking list.
         /// </summary>
-        [ViewVariables] public IList<ISet<string>> AccessLists => _accessLists;
+        [DataField("accessList")]
+        [ViewVariables]
+        public List<HashSet<string>> AccessLists { get; } = new();
 
         /// <summary>
         ///     The set of tags that will automatically deny an allowed check, if any of them are present.
@@ -71,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Access
                 return false;
             }
 
-            return _accessLists.Count == 0 || _accessLists.Any(a => a.IsSubsetOf(accessTags));
+            return AccessLists.Count == 0 || AccessLists.Any(a => a.IsSubsetOf(accessTags));
         }
 
         public static ICollection<string> FindAccessTags(IEntity entity)

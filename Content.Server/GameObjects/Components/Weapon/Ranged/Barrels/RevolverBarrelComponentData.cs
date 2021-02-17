@@ -1,25 +1,25 @@
-#nullable enable
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Prototypes;
+﻿#nullable enable
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
-    public partial class RevolverBarrelComponentData
+    public partial class RevolverBarrelComponentData : ISerializationHooks
     {
+        [DataField("capacity")] private int? _capacity = 6;
+
         [DataClassTarget("ammoSlots")]
         public IEntity[]? AmmoSlots;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void BeforeSerialization()
         {
-            base.ExposeData(serializer);
+            _capacity = AmmoSlots?.Length;
+        }
 
-            serializer.DataReadWriteFunction(
-                "capacity",
-                6,
-                cap => AmmoSlots = cap != null ? new IEntity[(int)cap] : null,
-                () => AmmoSlots?.Length);
+        public void AfterDeserialization()
+        {
+            AmmoSlots = _capacity != null ? new IEntity[_capacity.Value] : null;
         }
     }
 }

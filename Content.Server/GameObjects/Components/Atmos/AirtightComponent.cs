@@ -5,8 +5,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -20,13 +18,16 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public override string Name => "Airtight";
 
+        [DataFieldWithFlag("airBlockedDirection", typeof(AtmosDirectionFlags))]
         [ViewVariables]
-        [DataField("airBlockedDirection", flagType:typeof(AtmosDirectionFlags))]
-        private int _initialAirBlockedDirection = (int)AtmosDirection.All;
+        private int _initialAirBlockedDirection = (int) AtmosDirection.All;
+
         [ViewVariables]
         private int _currentAirBlockedDirection;
+
         [DataField("airBlocked")]
         private bool _airBlocked = true;
+
         [DataField("fixVacuum")]
         private bool _fixVacuum = true;
 

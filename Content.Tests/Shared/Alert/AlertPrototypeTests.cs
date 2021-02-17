@@ -2,6 +2,9 @@
 using System.IO;
 using Content.Shared.Alert;
 using NUnit.Framework;
+using Robust.Shared.IoC;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown.YAML;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -69,7 +72,9 @@ namespace Content.Tests.Shared.Alert
             var proto = (YamlMappingNode) rootNode[0];
 
             var newReagent = new AlertPrototype();
-            newReagent.LoadFrom(proto);
+            var serMan = IoCManager.Resolve<IServ3Manager>();
+            serMan.Initialize();
+            serMan.ReadValue<AlertPrototype>(new YamlMappingDataNode(proto));
 
             return newReagent;
         }

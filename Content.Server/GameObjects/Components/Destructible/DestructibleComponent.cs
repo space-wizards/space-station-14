@@ -4,11 +4,6 @@ using Content.Server.GameObjects.Components.Destructible.Thresholds;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Prototypes.DataClasses.Attributes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -19,7 +14,6 @@ namespace Content.Server.GameObjects.Components.Destructible
     ///     and triggers thresholds when reached.
     /// </summary>
     [RegisterComponent]
-    [DataClass(typeof(DestructibleComponentData))]
     public class DestructibleComponent : Component
     {
         private DestructibleSystem _destructibleSystem = default!;
@@ -27,8 +21,8 @@ namespace Content.Server.GameObjects.Components.Destructible
         public override string Name => "Destructible";
 
         [ViewVariables]
-        [DataClassTarget("thresholds")]
-        private SortedDictionary<int, Threshold> _lowestToHighestThresholds = new();
+        [DataField("thresholds")]
+        private List<Threshold> _thresholds = new();
 
         public IReadOnlyList<Threshold> Thresholds => _thresholds;
 

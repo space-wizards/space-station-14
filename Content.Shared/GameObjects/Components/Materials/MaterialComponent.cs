@@ -2,12 +2,9 @@ using System.Collections.Generic;
 using Content.Shared.Materials;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
-using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.Components.Materials
 {
@@ -22,31 +19,31 @@ namespace Content.Shared.GameObjects.Components.Materials
         public const string SerializationCache = "mat";
         public override string Name => "Material";
 
-        public Dictionary<object, Material> MaterialTypes => _materialTypes;
+        public Dictionary<object, MaterialPrototype> MaterialTypes => _materialTypes;
         [DataClassTarget("materials")]
-        private Dictionary<object, Material> _materialTypes;
+        private Dictionary<object, MaterialPrototype> _materialTypes;
 
-        public class MaterialDataEntry : IExposeData
+        public class MaterialDataEntry : ISerializationHooks
         {
             public object Key;
+
+            [DataField("key")]
+            public string StringKey;
+
+            [DataField("mat")]
             public string Value;
 
-            void IExposeData.ExposeData(ObjectSerializer serializer)
+            public void AfterDeserialization()
             {
-                if (serializer.Writing)
-                {
-                    return;
-                }
-
                 var refl = IoCManager.Resolve<IReflectionManager>();
-                Value = serializer.ReadDataField<string>("mat");
-                var key = serializer.ReadDataField<string>("key");
-                if (refl.TryParseEnumReference(key, out var @enum))
+
+                if (refl.TryParseEnumReference(StringKey, out var @enum))
                 {
                     Key = @enum;
                     return;
                 }
-                Key = key;
+
+                Key = StringKey;
             }
         }
     }

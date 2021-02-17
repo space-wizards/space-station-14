@@ -7,7 +7,6 @@ using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -230,22 +229,23 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// <summary>
     /// Configuration for an item action provided by an item.
     /// </summary>
-    public class ItemActionConfig : IExposeData
+    [DataDefinition]
+    public class ItemActionConfig : ISerializationHooks
     {
-        public ItemActionType ActionType { get; private set; }
+        [DataField("actionType", required: true)]
+        public ItemActionType ActionType { get; private set; } = ItemActionType.Error;
+
         /// <summary>
         /// Whether action is initially enabled on this item. Defaults to true.
         /// </summary>
         public bool Enabled { get; private set; }
 
-        void IExposeData.ExposeData(ObjectSerializer serializer)
+        public void AfterDeserialization()
         {
-            serializer.DataField(this, x => x.ActionType, "actionType", ItemActionType.Error);
             if (ActionType == ItemActionType.Error)
             {
                 Logger.ErrorS("action", "invalid or missing actionType");
             }
-            serializer.DataField(this, x => x.Enabled, "enabled", true);
         }
     }
 }

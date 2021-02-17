@@ -7,40 +7,36 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
-    public partial class SharedLatheDatabaseComponentData
+    public partial class SharedLatheDatabaseComponentData : ISerializationHooks
     {
+        [DataField("recipes")] private List<string> _recipeIds = new();
+
         [DataClassTarget("recipes")]
         private readonly List<LatheRecipePrototype> _recipes = new();
 
-        public void ExposeData(ObjectSerializer serializer)
+        public void BeforeSerialization()
         {
-            serializer.DataReadWriteFunction(
-                "recipes",
-                new List<string>(),
-                recipes =>
+            var list = new List<string>();
+
+            foreach (var recipe in _recipes)
+            {
+                list.Add(recipe.ID);
+            }
+
+            _recipeIds = list;
+        }
+
+        public void AfterDeserialization()
+        {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            foreach (var id in _recipeIds)
+            {
+                if (prototypeManager.TryIndex(id, out LatheRecipePrototype recipe))
                 {
-                    var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-                    foreach (var id in recipes)
-                    {
-                        if (prototypeManager.TryIndex(id, out LatheRecipePrototype recipe))
-                        {
-                            _recipes.Add(recipe);
-                        }
-                    }
-                },
-                () =>
-                {
-                    var list = new List<string>();
-
-                    foreach (var recipe in _recipes)
-                    {
-                        list.Add(recipe.ID);
-                    }
-
-                    return list;
-                });
-
+                    _recipes.Add(recipe);
+                }
+            }
         }
     }
 }

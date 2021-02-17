@@ -1,7 +1,6 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Actions
 {
@@ -9,7 +8,7 @@ namespace Content.Shared.Actions
     /// Currently just a marker interface delineating the different possible
     /// types of item action behaviors.
     /// </summary>
-    public interface IItemActionBehavior : IExposeData
+    public interface IItemActionBehavior
     {
 
     }

@@ -1,24 +1,26 @@
 #nullable enable
 using System.Collections.Generic;
 using Robust.Client.Animations;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components
 {
-    public partial class LightBehaviourComponentData
+    public partial class LightBehaviourComponentData : ISerializationHooks
     {
+        [DataField("behaviours")]
+        public List<LightBehaviourAnimationTrack> Behaviours = new();
+
         [DataClassTarget("animations")]
         public List<LightBehaviourComponent.AnimationContainer>? Animations;
 
-        public void ExposeData(ObjectSerializer serializer)
+        public void AfterDeserialization()
         {
-            var behaviours = serializer.ReadDataField("behaviours", new List<LightBehaviourAnimationTrack>());
             var key = 0;
 
             Animations = new List<LightBehaviourComponent.AnimationContainer>();
-            foreach (var behaviour in behaviours)
+
+            foreach (var behaviour in Behaviours)
             {
                 var animation = new Animation()
                 {

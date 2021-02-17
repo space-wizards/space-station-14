@@ -3,52 +3,37 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Behavior;
-using Content.Shared.Interfaces;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Body.Mechanism
 {
-    public partial class SharedMechanismComponentDataClass
+    public partial class SharedMechanismComponentDataClass : ISerializationHooks
     {
-        [DataClassTarget("behaviours")]
-        public Dictionary<Type, IMechanismBehavior>? _behaviors;
+        [DataField("behaviours", serverOnly: true)] private HashSet<IMechanismBehavior> _behaviorTypes = new();
 
-        public void ExposeData(ObjectSerializer serializer)
+        [DataClassTarget("behaviours")] public Dictionary<Type, IMechanismBehavior> _behaviors = new();
+
+        public void BeforeSerialization()
         {
-            var moduleManager = IoCManager.Resolve<IModuleManager>();
+            _behaviorTypes = _behaviors.Values.ToHashSet();
+        }
 
-            if (moduleManager.IsServerModule)
+        public void AfterDeserialization()
+        {
+            foreach (var behavior in _behaviorTypes)
             {
-                _behaviors ??= new();
-                serializer.DataReadWriteFunction(
-                    "behaviors",
-                    null!,
-                    behaviors =>
-                    {
-                        if (behaviors == null)
-                        {
-                            return;
-                        }
+                var type = behavior.GetType();
 
-                        foreach (var behavior in behaviors)
-                        {
-                            var type = behavior.GetType();
+                if (!_behaviors.TryAdd(type, behavior))
+                {
+                    Logger.Warning($"Duplicate behavior in {nameof(SharedMechanismComponent)}: {type}.");
+                    continue;
+                }
 
-                            if (!_behaviors.TryAdd(type, behavior))
-                            {
-                                Logger.Warning($"Duplicate behavior in {nameof(SharedMechanismComponent)}: {type}.");
-                                continue;
-                            }
-
-                            IoCManager.InjectDependencies(behavior);
-                        }
-                    },
-                    () => _behaviors.Values.ToList());
-                if (_behaviors.Count == 0) _behaviors = null;
+                IoCManager.InjectDependencies(behavior);
             }
         }
     }

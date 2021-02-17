@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using Content.Server.Interfaces;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Prototypes.DataClasses.Attributes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -15,13 +12,12 @@ namespace Content.Server.GameObjects.Components.Access
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IAccess))]
-    [DataClass(typeof(AccessComponentData))]
     public class AccessComponent : Component, IAccess
     {
         public override string Name => "Access";
 
+        [DataField("tags")]
         [ViewVariables]
-        [DataClassTarget("tags")]
         private readonly HashSet<string> _tags = new();
 
         public ISet<string> Tags => _tags;

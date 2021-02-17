@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Alert
 {
@@ -10,27 +10,43 @@ namespace Content.Shared.Alert
     /// Defines the order of alerts so they show up in a consistent order.
     /// </summary>
     [Prototype("alertOrder")]
-    public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>
+    [DataDefinition]
+    public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>, ISerializationHooks
     {
+        [DataField("order")] private readonly Dictionary<string, string> _order = new();
+
         private readonly Dictionary<AlertType, int> _typeToIdx = new();
         private readonly Dictionary<AlertCategory, int> _categoryToIdx = new();
 
-        public void LoadFrom(YamlMappingNode mapping)
+        public void BeforeSerialization()
         {
-            if (!mapping.TryGetNode("order", out YamlSequenceNode orderMapping)) return;
-
-            int i = 0;
-            foreach (var entryYaml in orderMapping)
+            foreach (var type in _typeToIdx.Keys)
             {
-                var orderEntry = (YamlMappingNode) entryYaml;
-                var serializer = YamlObjectSerializer.NewReader(orderEntry);
-                if (serializer.TryReadDataField("category", out AlertCategory alertCategory))
+                _order["alertType"] = type.ToString();
+            }
+
+            foreach (var type in _categoryToIdx.Keys)
+            {
+                _order["category"] = type.ToString();
+            }
+        }
+
+        public void AfterDeserialization()
+        {
+            var i = 0;
+
+            foreach (var (type, alert) in _order)
+            {
+                switch (type)
                 {
-                    _categoryToIdx[alertCategory] = i++;
-                }
-                else if (serializer.TryReadDataField("alertType", out AlertType alertType))
-                {
-                    _typeToIdx[alertType] = i++;
+                    case "alertType":
+                        _typeToIdx[Enum.Parse<AlertType>(alert)] = i++;
+                        break;
+                    case "category":
+                        _categoryToIdx[Enum.Parse<AlertCategory>(alert)] = i++;
+                        break;
+                    default:
+                        throw new ArgumentException();
                 }
             }
         }

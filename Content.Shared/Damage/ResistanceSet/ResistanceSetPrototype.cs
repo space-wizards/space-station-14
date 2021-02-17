@@ -4,7 +4,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Damage.ResistanceSet
 {
@@ -13,7 +12,7 @@ namespace Content.Shared.Damage.ResistanceSet
     /// </summary>
     [Prototype("resistanceSet")]
     [Serializable, NetSerializable]
-    public class ResistanceSetPrototype : IPrototype, IIndexedPrototype
+    public class ResistanceSetPrototype : IPrototype, IIndexedPrototype, ISerializationHooks
     {
         [DataField("coefficients")]
         private Dictionary<DamageType, float> _coefficients;
@@ -30,10 +29,8 @@ namespace Content.Shared.Damage.ResistanceSet
 
         [ViewVariables] public string ID => _id;
 
-        public virtual void LoadFrom(YamlMappingNode mapping)
+        public void AfterDeserialization()
         {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
             Resistances = new Dictionary<DamageType, ResistanceSetSettings>();
             foreach (var damageType in (DamageType[]) Enum.GetValues(typeof(DamageType)))
             {

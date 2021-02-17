@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -11,8 +10,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -25,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     /// </summary>
     [RegisterComponent]
     [DataClass(typeof(PumpBarrelComponentData))]
-    public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit, IExamine
+    public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit, ISerializationHooks
     {
         public override string Name => "PumpBarrel";
         public override uint? NetID => ContentNetIDs.PUMP_BARREL;
@@ -94,6 +91,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 FireRateSelector,
                 count,
                 SoundGunshot);
+        }
+
+        public void AfterDeserialization()
+        {
+            _spawnedAmmo = new Stack<IEntity>(Capacity - 1);
         }
 
         public override void Initialize()

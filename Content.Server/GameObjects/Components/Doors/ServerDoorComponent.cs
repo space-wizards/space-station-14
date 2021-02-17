@@ -24,8 +24,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -107,7 +105,9 @@ namespace Content.Server.GameObjects.Components.Doors
         /// Whether the airlock is welded shut. Can be set by the prototype, although this will fail if the door isn't weldable.
         /// When set by prototype, handled in Startup().
         /// </summary>
+        [DataField("welded")]
         private bool _isWeldedShut;
+
         /// <summary>
         /// Whether the airlock is welded shut.
         /// </summary>
@@ -126,13 +126,12 @@ namespace Content.Server.GameObjects.Components.Doors
                 SetAppearance(_isWeldedShut ? DoorVisualState.Welded : DoorVisualState.Closed);
             }
         }
-        [DataField("welded")]
-        private bool _isWeldedShut;
 
         /// <summary>
         /// Whether the door can ever be welded shut.
         /// </summary>
         private bool _weldable;
+
         /// <summary>
         /// Whether the door can currently be welded.
         /// </summary>

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Culinary;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Culinary;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.Interfaces;
@@ -18,9 +18,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Prototypes.DataClasses.Attributes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -28,7 +25,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
     [ComponentReference(typeof(IAfterInteract))]
-    [DataClass(typeof(FoodComponentData))]
     public class FoodComponent : Component, IUse, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
@@ -38,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables] [DataField("useSound")] private string _useSound = "/Audio/Items/eatfood.ogg";
         [ViewVariables] [DataField("trash")] private string? _trashPrototype;
         [ViewVariables] [DataField("transferAmount")] private ReagentUnit _transferAmount = ReagentUnit.New(5);
-        [DataClassTarget("utensilsNeeded")] private UtensilType _utensilsNeeded;
+        [DataField("utensilsNeeded")] private UtensilType _utensilsNeeded = UtensilType.None;
 
         [ViewVariables]
         public int UsesRemaining

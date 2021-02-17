@@ -3,14 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Damage;
-using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -28,22 +26,25 @@ namespace Content.Shared.GameObjects.Components.Damage
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-
         public override string Name => "Damageable";
 
         public override uint? NetID => ContentNetIDs.DAMAGEABLE;
 
         private readonly Dictionary<DamageType, int> _damageList = DamageTypeExtensions.ToNewDictionary();
+
         [DataClassTarget("supportedTypes")]
         private readonly HashSet<DamageType> _supportedTypes = new();
+
         [DataClassTarget("supportedClasses")]
         private readonly HashSet<DamageClass> _supportedClasses = new();
+
+        [DataField("flags")]
         private DamageFlag _flags;
 
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
         [ViewVariables] [DataClassTarget("damageContainer")] public string DamageContainerId { get; set; } = default!;
 
-        [ViewVariables] [DataClassTarget("resistances")] private ResistanceSet Resistances { get; set; } = new ResistanceSet();
+        [ViewVariables] [DataClassTarget("resistances")] private ResistanceSet Resistances { get; set; } = new();
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();

@@ -1,4 +1,5 @@
 #nullable enable
+// ReSharper disable once RedundantUsingDirective
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,15 +14,14 @@ using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Prototypes.DataClasses.Attributes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using static Content.Server.GameObjects.Components.Atmos.GridAtmosphereComponentData;
+using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -48,12 +48,12 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public override string Name => "GridAtmosphere";
 
-        private bool _paused = false;
-        private float _timer = 0f;
+        private bool _paused;
+        private float _timer;
         private Stopwatch _stopwatch = new();
         private GridId _gridId;
 
-        [ComponentDependency] private IMapGridComponent? _mapGridComponent = default!;
+        [ComponentDependency] private IMapGridComponent? _mapGridComponent;
 
         [ViewVariables]
         public int UpdateCounter { get; private set; } = 0;
@@ -73,17 +73,17 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables]
         protected readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new(1000);
 
-        [DataClassTarget("Tiles")]
-        private List<GridAtmosphereComponentData.IntermediateTileAtmosphere> TilesReceiver
+        [DataClassTarget("tiles")]
+        private List<IntermediateTileAtmosphere> TilesReceiver
         {
             get
             {
-                var intermediateTiles = new List<GridAtmosphereComponentData.IntermediateTileAtmosphere>();
+                var intermediateTiles = new List<IntermediateTileAtmosphere>();
                 foreach (var (indices, tile) in Tiles)
                 {
                     if (tile.Air == null) continue;
 
-                    intermediateTiles.Add(new GridAtmosphereComponentData.IntermediateTileAtmosphere(indices, tile.Air));
+                    intermediateTiles.Add(new IntermediateTileAtmosphere(indices, tile.Air));
                 }
 
                 return intermediateTiles;
@@ -97,9 +97,9 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     foreach (var intermediateTileAtmosphere in value)
                     {
-                        Tiles.Add(intermediateTileAtmosphere.Indicies, new TileAtmosphere(this, gridId, intermediateTileAtmosphere.Indicies, intermediateTileAtmosphere.GasMixture));
+                        Tiles.Add(intermediateTileAtmosphere.Indices, new TileAtmosphere(this, gridId, intermediateTileAtmosphere.Indices, intermediateTileAtmosphere.GasMixture));
 
-                        Invalidate(intermediateTileAtmosphere.Indicies);
+                        Invalidate(intermediateTileAtmosphere.Indices);
                     }
                 }
             }
@@ -173,6 +173,11 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         [ViewVariables]
         private ProcessState _state = ProcessState.TileEqualize;
+
+        public GridAtmosphereComponent()
+        {
+            _paused = false;
+        }
 
         private enum ProcessState
         {

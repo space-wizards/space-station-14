@@ -20,7 +20,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -41,10 +40,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private bool _opened;
 
         [ViewVariables]
-        private string _useSound = string.Empty;
-
         [DataField("useSound")]
         private string _useSound = "/Audio/Items/drink.ogg";
+
         [ViewVariables]
         [DataField("isOpen")]
         private bool _defaultToOpened;
@@ -71,7 +69,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables]
         public bool Empty => Owner.GetComponentOrNull<ISolutionInteractionsComponent>()?.DrainAvailable <= 0;
 
-        private AppearanceComponent _appearanceComponent;
         [DataField("openSounds")]
         private string _soundCollection = "canOpenSounds";
         [DataField("pressurized")]
