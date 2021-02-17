@@ -16,11 +16,9 @@ namespace Content.Client.GameObjects.Components.Atmos
     [UsedImplicitly]
     public class PipeConnectorVisualizer : AppearanceVisualizer
     {
-        private string _baseState = default!;
+        private string _baseState = string.Empty;
 
-        private RSI _connectorRsi = default!;
-
-        private const string DefaultRsiString = "Constructible/Atmos/pipe.rsi";
+        private RSI? _connectorRsi;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -42,6 +40,9 @@ namespace Content.Client.GameObjects.Components.Atmos
             base.InitializeEntity(entity);
 
             if (!entity.TryGetComponent<ISpriteComponent>(out var sprite))
+                return;
+
+            if (_connectorRsi == null)
                 return;
 
             foreach (Layer layerKey in Enum.GetValues(typeof(Layer)))
