@@ -18,6 +18,7 @@
     transferAmount: 5.0
   - type: Spillable
   - type: Drink
+    isOpen: true
   - type: GlassBeaker
 
 - type: entity
@@ -40,6 +41,7 @@
     transferAmount: 5.0
   - type: Spillable
   - type: Drink
+    isOpen: true
   - type: GlassBeaker
 
 - type: entity
