@@ -4,11 +4,8 @@ using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects.Components.Renderable;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
@@ -32,12 +29,7 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             serializer.DataField(ref _baseState, "baseState", "pipeConnector");
 
-            serializer.DataReadWriteFunction("rsi", DefaultRsiString,
-                value => { }
-                () => _connectorRsi.Path.ToRelativePath
-                );
-
-            var rsiString = SharedSpriteComponent.TextureRoot + "/" + serializer.ReadDataField("rsi", );
+            var rsiString = SharedSpriteComponent.TextureRoot / serializer.ReadDataField("rsi", "Constructible/Atmos/pipe.rsi");
             var resourceCache = IoCManager.Resolve<IResourceCache>();
             if (resourceCache.TryGetResource(rsiString, out RSIResource? rsi))
                 _connectorRsi = rsi.RSI;

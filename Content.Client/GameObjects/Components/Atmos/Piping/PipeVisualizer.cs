@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             base.LoadData(node);
             var serializer = YamlObjectSerializer.NewReader(node);
 
-            var rsiString = SharedSpriteComponent.TextureRoot + "/" + serializer.ReadDataField("rsi", "Constructible/Atmos/pipe.rsi");
+            var rsiString = SharedSpriteComponent.TextureRoot / serializer.ReadDataField("rsi", "Constructible/Atmos/pipe.rsi");
             var resourceCache = IoCManager.Resolve<IResourceCache>();
             if (resourceCache.TryGetResource(rsiString, out RSIResource? rsi))
                 _pipeRSI = rsi.RSI;
