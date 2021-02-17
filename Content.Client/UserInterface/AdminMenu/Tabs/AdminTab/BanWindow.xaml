@@ -1,0 +1,21 @@
+﻿<SS14Window
+    xmlns="https://spacestation14.io" Title="{Loc Ban}">
+    <VBoxContainer>
+        <HBoxContainer>
+            <Label Text="{Loc Player}" CustomMinimumSize="100 0" />
+            <Control CustomMinimumSize="50 0" />
+            <OptionButton Name="PlayerOptions" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+        </HBoxContainer>
+        <HBoxContainer>
+            <Label Text="{Loc Reason}" CustomMinimumSize="100 0" />
+            <Control CustomMinimumSize="50 0" />
+            <LineEdit Name="ReasonLine" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+        </HBoxContainer>
+        <HBoxContainer>
+            <Label Text="{Loc Minutes}" CustomMinimumSize="100 0" />
+            <Control CustomMinimumSize="50 0" />
+            <LineEdit Name="MinutesLine" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+        </HBoxContainer>
+        <Button Name="SubmitButton" Text="{Loc Ban}" />
+    </VBoxContainer>
+</SS14Window>
