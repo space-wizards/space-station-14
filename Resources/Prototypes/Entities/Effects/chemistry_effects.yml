@@ -132,6 +132,7 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
 
+# TODO: Add descriptions (2)
 - type: entity
   id: FoamedIronMetal
   name: foamed iron metal

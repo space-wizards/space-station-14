@@ -1,4 +1,5 @@
-﻿- type: entity
+﻿# TODO: Add descriptions (many)
+- type: entity
   id: WallLight
   name: "unpowered light"
   components:
