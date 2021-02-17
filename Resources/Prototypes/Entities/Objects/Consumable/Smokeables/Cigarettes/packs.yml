@@ -7,7 +7,27 @@
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
       layers:
         - state: closed
+    - type: Storage
+      capacity: 6
+    - type: Item
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
+      size: 6
     - type: StorageFill
       contents:
         - name: Cigarette
           amount: 6
+    - type: StorageCounter
+      countTag: Cigarette
+    - type: Appearance
+      visuals:
+        - type: BagOpenCloseVisualizer
+          openIcon: open
+        - type: StackVisualizer
+          composite: true
+          stackLayers:
+            - cig1
+            - cig2
+            - cig3
+            - cig4
+            - cig5
+            - cig6

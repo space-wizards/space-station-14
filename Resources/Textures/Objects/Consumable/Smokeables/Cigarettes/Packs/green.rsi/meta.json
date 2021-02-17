@@ -8,28 +8,31 @@
   },
   "states": [
     {
-      "name": "packet0"
+      "name": "cig1"
     },
     {
-      "name": "packet1"
+      "name": "cig2"
     },
     {
-      "name": "packet2"
+      "name": "cig3"
     },
     {
-      "name": "packet3"
+      "name": "cig4"
     },
     {
-      "name": "packet4"
+      "name": "cig5"
     },
     {
-      "name": "packet5"
-    },
-    {
-      "name": "packet6"
+      "name": "cig6"
     },
     {
       "name": "closed"
+    },
+    {
+      "name": "open"
+    },
+    {
+      "name": "trash"
     },
     {
       "name": "inhand-left",
