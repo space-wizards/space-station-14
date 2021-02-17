@@ -17,26 +17,9 @@ namespace Content.Server.GameObjects.Components.Movement
     [RegisterComponent, ComponentReference(typeof(IMoverComponent))]
     public class AiControllerComponent : Component, IMoverComponent
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
-
-        private string? _logicName;
         private float _visionRadius;
 
         public override string Name => "AiController";
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string? LogicName
-        {
-            get => _logicName;
-            set
-            {
-                _logicName = value;
-                Processor = null!;
-            }
-        }
-
-        public UtilityAi? Processor { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? StartingGearPrototype { get; set; }
@@ -55,8 +38,6 @@ namespace Content.Server.GameObjects.Components.Movement
 
             // This component requires a physics component.
             Owner.EnsureComponent<PhysicsComponent>();
-
-            EntitySystem.Get<AiSystem>().ProcessorInitialize(this);
         }
 
         protected override void Startup()
@@ -65,10 +46,12 @@ namespace Content.Server.GameObjects.Components.Movement
 
             if (StartingGearPrototype != null)
             {
-                var startingGear = _prototypeManager.Index<StartingGearPrototype>(StartingGearPrototype);
-                _gameTicker.EquipStartingGear(Owner, startingGear, null);
-            }
+                var gameTicker = IoCManager.Resolve<IGameTicker>();
+                var protoManager = IoCManager.Resolve<IPrototypeManager>();
 
+                var startingGear = protoManager.Index<StartingGearPrototype>(StartingGearPrototype);
+                gameTicker.EquipStartingGear(Owner, startingGear, null);
+            }
         }
 
         /// <inheritdoc />
@@ -76,19 +59,12 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _logicName, "logic", null);
             serializer.DataReadWriteFunction(
                 "startingGear",
                 null,
                 startingGear => StartingGearPrototype = startingGear,
                 () => StartingGearPrototype);
             serializer.DataField(ref _visionRadius, "vision", 8.0f);
-        }
-
-        protected override void Shutdown()
-        {
-            base.Shutdown();
-            Processor?.Shutdown();
         }
 
         /// <summary>
@@ -155,5 +131,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled) { }
         public void SetSprinting(ushort subTick, bool walking) { }
+
+        public virtual void Update(float frameTime) {}
     }
 }

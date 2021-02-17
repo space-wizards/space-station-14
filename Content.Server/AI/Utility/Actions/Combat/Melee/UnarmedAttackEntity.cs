@@ -19,40 +19,34 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
     public sealed class UnarmedAttackEntity : UtilityAction
     {
-        private readonly IEntity _entity;
-
-        public UnarmedAttackEntity(IEntity owner, IEntity entity, float weight) : base(owner)
-        {
-            _entity = entity;
-            Bonus = weight;
-        }
+        public IEntity Target { get; set; }
 
         public override void SetupOperators(Blackboard context)
         {
             MoveToEntityOperator moveOperator;
             if (Owner.TryGetComponent(out UnarmedCombatComponent unarmedCombatComponent))
             {
-                moveOperator = new MoveToEntityOperator(Owner, _entity, unarmedCombatComponent.Range - 0.01f);
+                moveOperator = new MoveToEntityOperator(Owner, Target, unarmedCombatComponent.Range - 0.01f);
             }
             // I think it's possible for this to happen given planning is time-sliced?
             // TODO: At this point we should abort
             else
             {
-                moveOperator = new MoveToEntityOperator(Owner, _entity);
+                moveOperator = new MoveToEntityOperator(Owner, Target);
             }
 
             ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 moveOperator,
-                new UnarmedCombatOperator(Owner, _entity),
+                new UnarmedCombatOperator(Owner, Target),
             });
         }
 
         protected override void UpdateBlackboard(Blackboard context)
         {
             base.UpdateBlackboard(context);
-            context.GetState<TargetEntityState>().SetValue(_entity);
-            context.GetState<MoveTargetState>().SetValue(_entity);
+            context.GetState<TargetEntityState>().SetValue(Target);
+            context.GetState<MoveTargetState>().SetValue(Target);
             // Can just set ourselves as entity given unarmed just inherits from meleeweapon
             context.GetState<WeaponEntityState>().SetValue(Owner);
         }
