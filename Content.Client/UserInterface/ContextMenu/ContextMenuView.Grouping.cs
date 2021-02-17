@@ -5,17 +5,35 @@ using System.Linq;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.UserInterface.ContextMenu
 {
-    public sealed partial class VerbSystem
+    public partial class ContextMenuView
     {
-        public const int GroupingTypes = 2;
-        private static int GroupingContextMenuType { get; set; }
-
-        private void OnGroupingContextMenuChanged(int obj)
+        public static int GroupingTypesCount = 2;
+        private int GroupingContextMenuType { get; set; }
+        public void OnGroupingContextMenuChanged(int obj)
         {
-            CloseAllMenus();
+            CloseContextPopups();
+            // CloseAllMenus();
             GroupingContextMenuType = obj;
+        }
+
+        private List<List<IEntity>> GroupEntities(IEnumerable<IEntity> entities, int depth = 0)
+        {
+            if (GroupingContextMenuType == 0)
+            {
+                var newEntities = entities.GroupBy(e => e, new PrototypeContextMenuComparer()).ToList();
+                return newEntities.Select(grp => grp.ToList()).ToList();
+            }
+            else
+            {
+                var newEntities = entities.GroupBy(e => e, new PrototypeAndStatesContextMenuComparer(depth)).ToList();
+                while (newEntities.Count <= entities.Count() && depth + 1 < PrototypeAndStatesContextMenuComparer.Count)
+                {
+                    newEntities = entities.GroupBy(e => e, new PrototypeAndStatesContextMenuComparer(++depth)).ToList();
+                }
+                return newEntities.Select(grp => grp.ToList()).ToList();
+            }
         }
 
         private sealed class PrototypeAndStatesContextMenuComparer : IEqualityComparer<IEntity>
@@ -103,6 +121,5 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
         }
-
     }
 }
