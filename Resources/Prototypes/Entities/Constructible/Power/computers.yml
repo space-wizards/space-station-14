@@ -37,7 +37,6 @@
   id: ComputerBroken
   name: broken computer
   description: "This computer has seen better days."
-  abstract: true # We don't want this to show up in the entity spawner menu.
   components:
   - type: Physics
     mass: 25
