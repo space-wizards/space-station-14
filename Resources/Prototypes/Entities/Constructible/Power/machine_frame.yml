@@ -1,5 +1,4 @@
-﻿# TODO: Add description (unfinished machine frame)
-- type: entity
+﻿- type: entity
   id: UnfinishedMachineFrame
   name: machine frame
   description: "A machine under construction. Needs more parts."
@@ -49,7 +48,6 @@
 - type: entity
   id: MachineFrame
   name: machine frame
-  description: "A ready to use machine frame. Just needs a circuit board."
   suffix: Ready
   placement:
     mode: SnapgridCenter

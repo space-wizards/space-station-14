@@ -1,5 +1,4 @@
-﻿# TODO: Add description (1)
-- type: entity
+﻿- type: entity
   abstract: true
   id: ScrubberBase
   placement:
