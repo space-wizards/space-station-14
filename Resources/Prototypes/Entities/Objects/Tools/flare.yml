@@ -31,7 +31,7 @@
     - type: Item
       sprite: Objects/Misc/flare.rsi
       color: "#FF0000"
-      HeldPrefix: off
+      HeldPrefix: unlit
     - type: LoopingSound
     - type: Appearance
       visuals:

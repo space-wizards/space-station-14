@@ -181,12 +181,12 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (Owner.TryGetComponent(out ClothingComponent? clothing))
             {
-                clothing.ClothingEquippedPrefix = on ? "lit" : "unlit";
+                clothing.ClothingEquippedPrefix = on ? "on" : "off";
             }
 
             if (Owner.TryGetComponent(out ItemComponent? item))
             {
-                item.EquippedPrefix = on ? "lit" : "unlit";
+                item.EquippedPrefix = on ? "on" : "off";
             }
         }
 

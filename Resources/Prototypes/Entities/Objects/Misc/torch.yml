@@ -2,7 +2,7 @@
   name: torch # todo: we need some sort of IgnitionSourceComponent we can add to this, so when it's lit it will cause fires when touching fuel
   parent: BaseItem
   id: Torch
-  description: A torch fashioned from some leaves and a log.
+  description: A torch fashioned from some wood.
   components:
     - type: ExpendableLight
       spentName: burnt torch
@@ -30,6 +30,9 @@
       sprite: Objects/Misc/torch.rsi
       HeldPrefix: unlit
     - type: LoopingSound
+    - type: Construction
+      graph: lightTorch
+      node: torch
     - type: Appearance
       visuals:
         - type: ExpendableLightVisualizer
