@@ -7,6 +7,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 using Content.Shared.Preferences;
+using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.Roles

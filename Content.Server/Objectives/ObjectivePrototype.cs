@@ -4,6 +4,7 @@ using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 

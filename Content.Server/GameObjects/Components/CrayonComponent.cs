@@ -19,6 +19,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Linq;
 using System.Threading.Tasks;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components
 {

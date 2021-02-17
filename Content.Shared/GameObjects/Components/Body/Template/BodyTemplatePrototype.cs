@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
