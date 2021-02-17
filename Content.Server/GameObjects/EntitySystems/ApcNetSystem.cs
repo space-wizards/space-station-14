@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var apcNet in _apcNets)
             {
                 var gridId = apcNet.GridId;
-                if (gridId != null && !_pauseManager.IsGridPaused((GridId) gridId))
+                if (gridId != null && !_pauseManager.IsGridPaused(gridId.Value))
                     apcNet.Update(frameTime);
             }
         }
