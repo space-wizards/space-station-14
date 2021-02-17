@@ -8,6 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components
@@ -116,24 +117,16 @@ namespace Content.Client.GameObjects.Components
             return found;
         }
 
-        public sealed class DirBoundData : IExposeData
+        [YamlDefinition]
+        public sealed class DirBoundData
         {
-            [ViewVariables] public Box2 All;
-            [ViewVariables] public Box2 North;
-            [ViewVariables] public Box2 South;
-            [ViewVariables] public Box2 East;
-            [ViewVariables] public Box2 West;
+            [ViewVariables] [YamlField("all")] public Box2 All;
+            [ViewVariables] [YamlField("north")] public Box2 North;
+            [ViewVariables] [YamlField("south")] public Box2 South;
+            [ViewVariables] [YamlField("east")] public Box2 East;
+            [ViewVariables] [YamlField("west")] public Box2 West;
 
             public static DirBoundData Default { get; } = new();
-
-            public void ExposeData(ObjectSerializer serializer)
-            {
-                serializer.DataField(ref All, "all", default);
-                serializer.DataField(ref North, "north", default);
-                serializer.DataField(ref South, "south", default);
-                serializer.DataField(ref East, "east", default);
-                serializer.DataField(ref West, "west", default);
-            }
         }
     }
 }
