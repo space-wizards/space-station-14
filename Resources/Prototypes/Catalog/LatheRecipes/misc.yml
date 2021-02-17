@@ -57,7 +57,6 @@
   completetime: 500
   materials:
     steel: 80
-    glass: 30
 
 - type: latheRecipe
   id: Matchbox
@@ -65,4 +64,4 @@
   result: Matchbox
   completetime: 10
   materials:
-    glass: 10
+    wood: 10

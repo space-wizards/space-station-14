@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: material stack
   id: MaterialStack
   abstract: true
@@ -199,7 +199,12 @@
   parent: MaterialStack
   suffix: Full
   components:
-    # TODO: Specify a material.
+    - type: Material
+      materials:
+      - key:  enum.MaterialKeys.Stack
+        mat:  wood
+    - type: Stack
+      stacktype:  enum.StackType.Wood 
     - type: Sprite
       sprite: Objects/Materials/materials.rsi
       state: wood_plank

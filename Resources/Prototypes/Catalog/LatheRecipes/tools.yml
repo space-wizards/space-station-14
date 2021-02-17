@@ -24,8 +24,7 @@
   result: Welder
   completetime: 500
   materials:
-    steel: 70
-    glass: 30
+    steel: 90
 
 - type: latheRecipe
   id: Wrench
@@ -34,7 +33,6 @@
   completetime: 500
   materials:
     steel: 70
-    glass: 30
 
 - type: latheRecipe
   id: CableStack
@@ -81,8 +79,7 @@
   result: PowerDrill
   completetime: 500
   materials:
-    steel: 80
-    glass: 20
+    steel: 90
 
 - type: latheRecipe
   id: RCD

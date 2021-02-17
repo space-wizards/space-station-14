@@ -5,7 +5,7 @@
   completetime: 500
   materials:
     steel: 10
-    glass: 40
+    wood: 40
 
 - type: latheRecipe
   id: MopBucket
