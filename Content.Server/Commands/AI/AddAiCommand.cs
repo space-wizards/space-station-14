@@ -17,9 +17,9 @@ namespace Content.Server.Commands.AI
     {
         public string Command => "addai";
         public string Description => "Add an ai component with a given processor to an entity.";
-        public string Help => "Usage: addai <entityId> <behaviorset1> <behaviorset2>..."
-                              + "\n    processorId: Class that inherits AiLogicProcessor and has an AiLogicProcessor attribute."
-                              + "\n    entityID: Uid of entity to add the AiControllerComponent to. Open its VV menu to find this.";
+        public string Help => "Usage: addai <entityId> <behaviorSet1> <behaviorSet2>..."
+                              + "\n    entityID: Uid of entity to add the AiControllerComponent to. Open its VV menu to find this."
+                              + "\n    behaviorSet: Name of a behaviorset to add to the component on initialize.";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
