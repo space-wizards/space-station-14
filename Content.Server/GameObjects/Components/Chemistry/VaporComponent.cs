@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables]
-        [YamlField("transferAmount")]
+        [DataField("transferAmount")]
         private ReagentUnit _transferAmount = ReagentUnit.New(0.5);
 
         private bool _reached;

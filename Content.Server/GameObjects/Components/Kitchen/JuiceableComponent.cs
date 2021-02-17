@@ -14,6 +14,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
     public class JuiceableComponent : Component
     {
         public override string Name => "Juiceable";
-        [ViewVariables] [YamlField("result")] public Solution JuiceResultSolution = new();
+        [ViewVariables] [DataField("result")] public Solution JuiceResultSolution = new();
     }
 }

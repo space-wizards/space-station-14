@@ -19,15 +19,15 @@ namespace Content.Server.GameObjects.Components.Markers
         public override string Name => "TrashSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("rarePrototypes")]
+        [DataField("rarePrototypes")]
         public List<string> RarePrototypes { get; set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("rareChance")]
+        [DataField("rareChance")]
         public float RareChance { get; set; } = 0.05f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("offset")]
+        [DataField("offset")]
         public float Offset { get; set; } = 0.2f;
 
         public override void Spawn()

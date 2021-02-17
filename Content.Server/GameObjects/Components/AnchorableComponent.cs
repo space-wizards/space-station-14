@@ -23,14 +23,14 @@ namespace Content.Server.GameObjects.Components
         public override string Name => "Anchorable";
 
         [ViewVariables]
-        [YamlField("tool")]
+        [DataField("tool")]
         public ToolQuality Tool { get; private set; } = ToolQuality.Anchoring;
 
         [ViewVariables]
         int IInteractUsing.Priority => 1;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("snap")]
+        [DataField("snap")]
         public bool Snap { get; private set; }
 
         /// <summary>

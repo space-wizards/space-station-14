@@ -13,13 +13,13 @@ namespace Content.Server.GameObjects.Components.Explosion
     {
         public override string Name => "Explosive";
 
-        [YamlField("devastationRange")]
+        [DataField("devastationRange")]
         public int DevastationRange;
-        [YamlField("heavyImpactRange")]
+        [DataField("heavyImpactRange")]
         public int HeavyImpactRange;
-        [YamlField("lightImpactRange")]
+        [DataField("lightImpactRange")]
         public int LightImpactRange;
-        [YamlField("flashRange")]
+        [DataField("flashRange")]
         public int FlashRange;
 
         public bool Exploding { get; private set; } = false;

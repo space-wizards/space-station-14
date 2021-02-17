@@ -40,24 +40,24 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private TimeSpan _lastInternalOpenAttempt;
 
         [ViewVariables]
-        [YamlField("Capacity")]
+        [DataField("Capacity")]
         private int _storageCapacityMax = 30;
         [ViewVariables]
-        [YamlField("IsCollidableWhenOpen")]
+        [DataField("IsCollidableWhenOpen")]
         private bool _isCollidableWhenOpen;
         [ViewVariables]
         protected IEntityQuery? EntityQuery;
-        [YamlField("showContents")]
+        [DataField("showContents")]
         private bool _showContents;
-        [YamlField("occludesLight")]
+        [DataField("occludesLight")]
         private bool _occludesLight = true;
-        [YamlField("open")]
+        [DataField("open")]
         private bool _open;
         private bool _canWeldShut = true;
         private bool _isWeldedShut;
-        [YamlField("closeSound")]
+        [DataField("closeSound")]
         private string _closeSound = "/Audio/Machines/closetclose.ogg";
-        [YamlField("openSound")]
+        [DataField("openSound")]
         private string _openSound = "/Audio/Machines/closetopen.ogg";
 
         [ViewVariables]
@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("IsWeldedShut")]
+        [DataField("IsWeldedShut")]
         public bool IsWeldedShut
         {
             get => _isWeldedShut;
@@ -114,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private bool _beingWelded;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("CanWeldShut")]
+        [DataField("CanWeldShut")]
         public bool CanWeldShut {
             get => _canWeldShut;
             set

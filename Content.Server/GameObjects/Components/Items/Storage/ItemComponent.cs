@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
 
-        [YamlField("HeldPrefix")]
+        [DataField("HeldPrefix")]
         private string _equippedPrefix;
 
         public string EquippedPrefix

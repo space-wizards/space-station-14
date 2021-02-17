@@ -12,19 +12,19 @@ namespace Content.Shared.Research
     [NetSerializable, Serializable, Prototype("technology")]
     public class TechnologyPrototype : IPrototype, IIndexedPrototype
     {
-        [YamlField("name")]
+        [DataField("name")]
         private string _name;
-        [YamlField("id")]
+        [DataField("id")]
         private string _id;
-        [YamlField("icon")]
+        [DataField("icon")]
         private SpriteSpecifier _icon;
-        [YamlField("description")]
+        [DataField("description")]
         private string _description;
-        [YamlField("requiredPoints")]
+        [DataField("requiredPoints")]
         private int _requiredPoints;
-        [YamlField("requiredTechnologies")]
+        [DataField("requiredTechnologies")]
         private List<string> _requiredTechnologies = new();
-        [YamlField("unlockedRecipes")]
+        [DataField("unlockedRecipes")]
         private List<string> _unlockedRecipes = new();
 
         /// <summary>

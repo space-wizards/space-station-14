@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Access
     {
         public override string Name => "PresetIdCard";
 
-        [YamlField("job")]
+        [DataField("job")]
         private string? _jobName;
 
         void IMapInit.MapInit()

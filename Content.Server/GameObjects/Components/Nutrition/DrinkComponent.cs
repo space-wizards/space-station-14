@@ -43,10 +43,10 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables]
         private string _useSound = string.Empty;
 
-        [YamlField("useSound")]
+        [DataField("useSound")]
         private string _useSound = "/Audio/Items/drink.ogg";
         [ViewVariables]
-        [YamlField("isOpen")]
+        [DataField("isOpen")]
         private bool _defaultToOpened;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -72,11 +72,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public bool Empty => Owner.GetComponentOrNull<ISolutionInteractionsComponent>()?.DrainAvailable <= 0;
 
         private AppearanceComponent _appearanceComponent;
-        [YamlField("openSounds")]
+        [DataField("openSounds")]
         private string _soundCollection = "canOpenSounds";
-        [YamlField("pressurized")]
+        [DataField("pressurized")]
         private bool _pressurized = default;
-        [YamlField("burstSound")]
+        [DataField("burstSound")]
         private string _burstSound = "/Audio/Effects/flash_bang.ogg";
 
         public override void Initialize()

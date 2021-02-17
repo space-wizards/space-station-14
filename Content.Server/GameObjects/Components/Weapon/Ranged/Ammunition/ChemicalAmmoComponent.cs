@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     {
         public override string Name => "ChemicalAmmo";
 
-        [YamlField("fractionTransfered")]
+        [DataField("fractionTransfered")]
         private float _fractionTransfered = 1;
 
         public override void HandleMessage(ComponentMessage message, IComponent component)

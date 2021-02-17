@@ -13,11 +13,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override string Name => "PressureProtection";
 
         [ViewVariables]
-        [YamlField("highPressureMultiplier")]
+        [DataField("highPressureMultiplier")]
         public float HighPressureMultiplier { get; private set; } = 1f;
 
         [ViewVariables]
-        [YamlField("lowPressureMultiplier")]
+        [DataField("lowPressureMultiplier")]
         public float LowPressureMultiplier { get; private set; } = 1f;
     }
 }

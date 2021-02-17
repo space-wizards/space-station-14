@@ -15,18 +15,18 @@ namespace Content.Shared.Maps
     {
         string IIndexedPrototype.ID => Name;
 
-        [YamlField("name")] public string Name { get; private set; }
+        [DataField("name")] public string Name { get; private set; }
         public ushort TileId { get; private set; }
-        [YamlField("display_name")] public string DisplayName { get; private set; }
-        [YamlField("texture")] public string SpriteName { get; private set; }
-        [YamlField("is_subfloor")] public bool IsSubFloor { get; private set; }
-        [YamlField("base_turfs")] public List<string> BaseTurfs { get; private set; } = new();
-        [YamlField("can_crowbar")] public bool CanCrowbar { get; private set; }
-        [YamlField("footstep_sounds")] public string FootstepSounds { get; private set; }
-        [YamlField("friction")] public float Friction { get; set; }
-        [YamlField("thermalConductivity")] public float ThermalConductivity { get; set; } = 0.05f;
-        [YamlField("item_drop")] public string ItemDropPrototypeName { get; private set; } = "FloorTileItemSteel";
-        [YamlField("is_space")] public bool IsSpace { get; private set; }
+        [DataField("display_name")] public string DisplayName { get; private set; }
+        [DataField("texture")] public string SpriteName { get; private set; }
+        [DataField("is_subfloor")] public bool IsSubFloor { get; private set; }
+        [DataField("base_turfs")] public List<string> BaseTurfs { get; private set; } = new();
+        [DataField("can_crowbar")] public bool CanCrowbar { get; private set; }
+        [DataField("footstep_sounds")] public string FootstepSounds { get; private set; }
+        [DataField("friction")] public float Friction { get; set; }
+        [DataField("thermalConductivity")] public float ThermalConductivity { get; set; } = 0.05f;
+        [DataField("item_drop")] public string ItemDropPrototypeName { get; private set; } = "FloorTileItemSteel";
+        [DataField("is_space")] public bool IsSpace { get; private set; }
 
         public void AssignTileId(ushort id)
         {

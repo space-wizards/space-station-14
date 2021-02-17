@@ -14,9 +14,9 @@ namespace Content.Server.GameObjects.Components.Research
     {
         public override string Name => "ResearchPointSource";
 
-        [YamlField("pointspersecond")]
+        [DataField("pointspersecond")]
         private int _pointsPerSecond;
-        [YamlField("active")]
+        [DataField("active")]
         private bool _active;
         private PowerReceiverComponent _powerReceiver;
 

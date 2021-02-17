@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Trigger.TimerTrigger
     {
         public override string Name => "OnUseTimerTrigger";
 
-        [YamlField("delay")]
+        [DataField("delay")]
         private float _delay = 0f;
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)

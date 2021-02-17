@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// What <see cref="GasMixture"/> the canister contains.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("gasMixture")]
+        [DataField("gasMixture")]
         public GasMixture Air { get; set; } = new (DefaultVolume);
 
         [ViewVariables]

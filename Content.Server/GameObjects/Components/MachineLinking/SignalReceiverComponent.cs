@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
         private List<SignalTransmitterComponent> _transmitters;
 
-        [YamlField("maxTransmitters")]
+        [DataField("maxTransmitters")]
         private int? _maxTransmitters = default;
 
         public override void Initialize()

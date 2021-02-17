@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Power
         public override string Name => "Wire";
 
         [ViewVariables]
-        [YamlField("wireDroppedOnCutPrototype")]
+        [DataField("wireDroppedOnCutPrototype")]
         private string? _wireDroppedOnCutPrototype = "HVWireStack1";
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         [ViewVariables]
         public WireType WireType => _wireType;
-        [YamlField("wireType")]
+        [DataField("wireType")]
         private WireType _wireType = WireType.HighVoltage;
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

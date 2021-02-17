@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components
         public override string Name => "ExtinguisherCabinet";
 
         private bool _opened = false;
-        [YamlField("doorSound")]
+        [DataField("doorSound")]
         private string _doorSound = "/Audio/Machines/machine_switch.ogg";
 
         [ViewVariables] protected ContainerSlot ItemContainer;

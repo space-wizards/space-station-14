@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Movement
         /// <summary>
         ///     ID of the alert to show when piloting
         /// </summary>
-        [YamlField("pilotingAlertType")]
+        [DataField("pilotingAlertType")]
         private AlertType _pilotingAlertType = AlertType.PilotingShuttle;
 
         /// <summary>

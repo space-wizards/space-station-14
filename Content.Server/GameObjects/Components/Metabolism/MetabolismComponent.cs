@@ -41,62 +41,62 @@ namespace Content.Server.GameObjects.Components.Metabolism
         private bool _isShivering;
         private bool _isSweating;
 
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("suffocationDamage")] private int _suffocationDamage = 1;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] private int _suffocationDamage = 1;
 
         [ViewVariables(VVAccess.ReadWrite)] YamlField("suffocationDamageRecovery")] private int _suffocationDamageRecovery = 1;
 
-        [ViewVariables] [YamlField("needsGases")] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
+        [ViewVariables] [DataField("needsGases")] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
-        [ViewVariables] [YamlField("producesGases")] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
+        [ViewVariables] [DataField("producesGases")] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
 
-        [ViewVariables] [YamlField("deficitGases")] public Dictionary<Gas, float> DeficitGases { get; set; } = new();
+        [ViewVariables] [DataField("deficitGases")] public Dictionary<Gas, float> DeficitGases { get; set; } = new();
 
         /// <summary>
         /// Heat generated due to metabolism. It's generated via metabolism
         /// </summary>
         [ViewVariables]
-        [YamlField("metabolismHeat")]
+        [DataField("metabolismHeat")]
         public float MetabolismHeat { get; private set; }
 
         /// <summary>
         /// Heat output via radiation.
         /// </summary>
         [ViewVariables]
-        [YamlField("radiatedHeat")]
+        [DataField("radiatedHeat")]
         public float RadiatedHeat { get; private set; }
 
         /// <summary>
         /// Maximum heat regulated via sweat
         /// </summary>
         [ViewVariables]
-        [YamlField("sweatHeatRegulation")]
+        [DataField("sweatHeatRegulation")]
         public float SweatHeatRegulation { get; private set; }
 
         /// <summary>
         /// Maximum heat regulated via shivering
         /// </summary>
         [ViewVariables]
-        [YamlField("shiveringHeatRegulation")]
+        [DataField("shiveringHeatRegulation")]
         public float ShiveringHeatRegulation { get; private set; }
 
         /// <summary>
         /// Amount of heat regulation that represents thermal regulation processes not
         /// explicitly coded.
         /// </summary>
-        [YamlField("implicitHeatRegulation")]
+        [DataField("implicitHeatRegulation")]
         public float ImplicitHeatRegulation { get; private set; }
 
         /// <summary>
         /// Normal body temperature
         /// </summary>
         [ViewVariables]
-        [YamlField("normalBodyTemperature")]
+        [DataField("normalBodyTemperature")]
         public float NormalBodyTemperature { get; private set; }
 
         /// <summary>
         /// Deviation from normal temperature for body to start thermal regulation
         /// </summary>
-        [YamlField("thermalRegulationTemperatureThreshold")]
+        [DataField("thermalRegulationTemperatureThreshold")]
         public float ThermalRegulationTemperatureThreshold { get; private set; }
 
         [ViewVariables] public bool Suffocating { get; private set; }

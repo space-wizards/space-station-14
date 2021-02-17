@@ -26,38 +26,38 @@ namespace Content.Server.Atmos.Reactions
     [Prototype("gasReaction")]
     public class GasReactionPrototype : IPrototype, IIndexedPrototype
     {
-        [YamlField("id")]
+        [DataField("id")]
         public string ID { get; private set; }
 
         /// <summary>
         ///     Minimum gas amount requirements.
         /// </summary>
-        [YamlField("minimumRequirements")]
+        [DataField("minimumRequirements")]
         public float[] MinimumRequirements { get; private set; } = new float[Atmospherics.TotalNumberOfGases];
 
         /// <summary>
         ///     Minimum temperature requirement.
         /// </summary>
-        [YamlField("minimumTemperature")]
+        [DataField("minimumTemperature")]
         public float MinimumTemperatureRequirement { get; private set; } = Atmospherics.TCMB;
 
         /// <summary>
         ///     Minimum energy requirement.
         /// </summary>
-        [YamlField("minimumEnergy")]
+        [DataField("minimumEnergy")]
         public float MinimumEnergyRequirement { get; private set; }
 
         /// <summary>
         ///     Lower numbers are checked/react later than higher numbers.
         ///     If two reactions have the same priority, they may happen in either order.
         /// </summary>
-        [YamlField("priority")]
+        [DataField("priority")]
         public int Priority { get; private set; }
 
         /// <summary>
         ///     A list of effects this will produce.
         /// </summary>
-        [YamlField("effects")]
+        [DataField("effects")]
         private List<IGasReactionEffect> _effects;
 
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder holder, GridTileLookupSystem gridLookup)

@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
             get => _ventPressureTarget;
             set => _ventPressureTarget = Math.Clamp(value, 0, MaxVentPressureTarget);
         }
-        [YamlField("startingVentPressureTarget")]
+        [DataField("startingVentPressureTarget")]
         private float _ventPressureTarget = Atmospherics.OneAtmosphere;
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
             get => _maxVentPressureTarget;
             set => Math.Max(value, 0);
         }
-        [YamlField("maxVentPressureTarget")]
+        [DataField("maxVentPressureTarget")]
         private float _maxVentPressureTarget = Atmospherics.OneAtmosphere * 2;
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
             get => _transferRatio;
             set => _transferRatio = Math.Clamp(value, 0, 1);
         }
-        [YamlField("transferRatio")]
+        [DataField("transferRatio")]
         private float _transferRatio = 0.5f;
 
         protected override void VentGas(GasMixture inletGas, GasMixture outletGas)

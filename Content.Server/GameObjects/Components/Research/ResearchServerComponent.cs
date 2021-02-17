@@ -20,12 +20,12 @@ namespace Content.Server.GameObjects.Components.Research
 
         [ViewVariables(VVAccess.ReadWrite)] public string ServerName => _serverName;
 
-        [YamlField("servername")]
+        [DataField("servername")]
         private string _serverName = "RDSERVER";
         private float _timer = 0f;
         public TechnologyDatabaseComponent Database { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("points")] private int _points = 0;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("points")] private int _points = 0;
 
         [ViewVariables(VVAccess.ReadOnly)] public int Id { get; private set; }
 

@@ -28,70 +28,70 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         ///     The time it takes to apply a <see cref="CuffedComponent"/> to an entity.
         /// </summary>
         [ViewVariables]
-        [YamlField("cuffTime")]
+        [DataField("cuffTime")]
         public float CuffTime { get; set; } = 5f;
 
         /// <summary>
         ///     The time it takes to remove a <see cref="CuffedComponent"/> from an entity.
         /// </summary>
         [ViewVariables]
-        [YamlField("uncuffTime")]
+        [DataField("uncuffTime")]
         public float UncuffTime { get; set; } = 5f;
 
         /// <summary>
         ///     The time it takes for a cuffed entity to remove <see cref="CuffedComponent"/> from itself.
         /// </summary>
         [ViewVariables]
-        [YamlField("breakoutTime")]
+        [DataField("breakoutTime")]
         public float BreakoutTime { get; set; } = 30f;
 
         /// <summary>
         ///     If an entity being cuffed is stunned, this amount of time is subtracted from the time it takes to add/remove their cuffs.
         /// </summary>
         [ViewVariables]
-        [YamlField("stunBonus")]
+        [DataField("stunBonus")]
         public float StunBonus { get; set; } = 2f;
 
         /// <summary>
         ///     Will the cuffs break when removed?
         /// </summary>
         [ViewVariables]
-        [YamlField("breakOnRemove")]
+        [DataField("breakOnRemove")]
         public bool BreakOnRemove { get; set; }
 
         /// <summary>
         ///     The path of the RSI file used for the player cuffed overlay.
         /// </summary>
         [ViewVariables]
-        [YamlField("cuffedRSI")]
+        [DataField("cuffedRSI")]
         public string? CuffedRSI { get; set; } = "Objects/Misc/handcuffs.rsi";
 
         /// <summary>
         ///     The iconstate used with the RSI file for the player cuffed overlay.
         /// </summary>
         [ViewVariables]
-        [YamlField("bodyIconState")]
+        [DataField("bodyIconState")]
         public string? OverlayIconState { get; set; } = "body-overlay";
 
         /// <summary>
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
-        [YamlField("brokenIconState")]
+        [DataField("brokenIconState")]
         public string? BrokenState { get; set; }
 
         /// <summary>
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
-        [YamlField("brokenName")]
+        [DataField("brokenName")]
         public string BrokenName { get; set; } = default!;
 
         /// <summary>
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
-        [YamlField("brokenDesc")]
+        [DataField("brokenDesc")]
         public string BrokenDesc { get; set; } = default!;
 
         [ViewVariables]
@@ -112,20 +112,20 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             }
         }
 
-        [YamlField("startCuffSound")]
+        [DataField("startCuffSound")]
         public string StartCuffSound { get; set; } = "/Audio/Items/Handcuffs/cuff_start.ogg";
 
-        [YamlField("endCuffSound")] public string EndCuffSound { get; set; } = "/Audio/Items/Handcuffs/cuff_end.ogg";
+        [DataField("endCuffSound")] public string EndCuffSound { get; set; } = "/Audio/Items/Handcuffs/cuff_end.ogg";
 
-        [YamlField("startBreakoutSound")]
+        [DataField("startBreakoutSound")]
         public string StartBreakoutSound { get; set; } = "/Audio/Items/Handcuffs/cuff_breakout_start.ogg";
 
-        [YamlField("startUncuffSound")]
+        [DataField("startUncuffSound")]
         public string StartUncuffSound { get; set; } = "/Audio/Items/Handcuffs/cuff_takeoff_start.ogg";
 
-        [YamlField("endUncuffSound")]
+        [DataField("endUncuffSound")]
         public string EndUncuffSound { get; set; } = "/Audio/Items/Handcuffs/cuff_takeoff_end.ogg";
-        [YamlField("color")]
+        [DataField("color")]
         public Color Color { get; set; } = Color.White;
 
         // Non-exposed data fields

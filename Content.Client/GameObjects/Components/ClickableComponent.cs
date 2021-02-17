@@ -19,7 +19,7 @@ namespace Content.Client.GameObjects.Components
 
         [Dependency] private readonly IClickMapManager _clickMapManager = default!;
 
-        [ViewVariables] [YamlField("bounds")] private DirBoundData _data = DirBoundData.Default;
+        [ViewVariables] [DataField("bounds")] private DirBoundData _data = DirBoundData.Default;
 
         /// <summary>
         /// Used to check whether a click worked.
@@ -118,14 +118,14 @@ namespace Content.Client.GameObjects.Components
             return found;
         }
 
-        [YamlDefinition]
+        [DataDefinition]
         public sealed class DirBoundData
         {
-            [ViewVariables] [YamlField("all")] public Box2 All;
-            [ViewVariables] [YamlField("north")] public Box2 North;
-            [ViewVariables] [YamlField("south")] public Box2 South;
-            [ViewVariables] [YamlField("east")] public Box2 East;
-            [ViewVariables] [YamlField("west")] public Box2 West;
+            [ViewVariables] [DataField("all")] public Box2 All;
+            [ViewVariables] [DataField("north")] public Box2 North;
+            [ViewVariables] [DataField("south")] public Box2 South;
+            [ViewVariables] [DataField("east")] public Box2 East;
+            [ViewVariables] [DataField("west")] public Box2 West;
 
             public static DirBoundData Default { get; } = new();
 

@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing
     {
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("wattage")] public float Wattage { get; set; } = 3f;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("wattage")] public float Wattage { get; set; } = 3f;
         [ViewVariables] private PowerCellSlotComponent _cellSlot = default!;
         private PowerCellComponent? Cell => _cellSlot.Cell;
 
@@ -43,9 +43,9 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         [ViewVariables] protected override bool HasCell => _cellSlot.HasCell;
 
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("turnOnSound")] public string? TurnOnSound = "/Audio/Items/flashlight_toggle.ogg";
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("turnOnFailSound")] public string? TurnOnFailSound = "/Audio/Machines/button.ogg";
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("turnOffSound")] public string? TurnOffSound = "/Audio/Items/flashlight_toggle.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnSound")] public string? TurnOnSound = "/Audio/Items/flashlight_toggle.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnFailSound")] public string? TurnOnFailSound = "/Audio/Machines/button.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOffSound")] public string? TurnOffSound = "/Audio/Items/flashlight_toggle.ogg";
 
         [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
 

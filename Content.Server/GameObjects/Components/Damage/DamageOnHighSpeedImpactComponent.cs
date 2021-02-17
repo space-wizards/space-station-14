@@ -22,23 +22,23 @@ namespace Content.Server.GameObjects.Components.Damage
 
         public override string Name => "DamageOnHighSpeedImpact";
 
-        [YamlField("damage")]
+        [DataField("damage")]
         public DamageType Damage { get; set; } = DamageType.Blunt;
-        [YamlField("minimumSpeed")]
+        [DataField("minimumSpeed")]
         public float MinimumSpeed { get; set; } = 20f;
-        [YamlField("baseDamage")]
+        [DataField("baseDamage")]
         public int BaseDamage { get; set; } = 5;
-        [YamlField("factor")]
+        [DataField("factor")]
         public float Factor { get; set; } = 1f;
-        [YamlField("soundHit")]
+        [DataField("soundHit")]
         public string SoundHit { get; set; } = "";
-        [YamlField("stunChance")]
+        [DataField("stunChance")]
         public float StunChance { get; set; } = 0.25f;
-        [YamlField("stunMinimumDamage")]
+        [DataField("stunMinimumDamage")]
         public int StunMinimumDamage { get; set; } = 10;
-        [YamlField("stunSeconds")]
+        [DataField("stunSeconds")]
         public float StunSeconds { get; set; } = 1f;
-        [YamlField("damageCooldown")]
+        [DataField("damageCooldown")]
         public float DamageCooldown { get; set; } = 2f;
         private TimeSpan _lastHit = TimeSpan.Zero;
 

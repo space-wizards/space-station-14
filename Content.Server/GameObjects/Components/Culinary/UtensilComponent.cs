@@ -45,14 +45,14 @@ namespace Content.Server.GameObjects.Components.Culinary
         /// A value of 0 means that it is unbreakable.
         /// </summary>
         [ViewVariables]
-        [YamlField("breakChance")]
+        [DataField("breakChance")]
         private float _breakChance = default;
 
         /// <summary>
         /// The sound to be played if the utensil breaks.
         /// </summary>
         [ViewVariables]
-        [YamlField("breakSound")]
+        [DataField("breakSound")]
         private string? _breakSound = "/Audio/Items/snap.ogg";
 
         public void AddType(UtensilType type)

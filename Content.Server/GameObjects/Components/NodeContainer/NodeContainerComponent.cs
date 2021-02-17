@@ -23,9 +23,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer
 
         [ViewVariables]
         public IReadOnlyList<Node> Nodes => _nodes;
-        [YamlField("nodes")]
+        [DataField("nodes")]
         private List<Node> _nodes = new();
-        [YamlField("examinable")]
+        [DataField("examinable")]
         private bool _examinable;
 
         public override void Initialize()

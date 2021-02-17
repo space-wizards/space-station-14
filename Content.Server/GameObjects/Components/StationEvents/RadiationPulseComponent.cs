@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
         ///     Whether the entity will delete itself after a certain duration defined by
         ///     <see cref="MinPulseLifespan"/> and <see cref="MaxPulseLifespan"/>
         /// </summary>
-        [YamlField("decay")]
+        [DataField("decay")]
         public override bool Decay
         {
             get => _decay;
@@ -40,13 +40,13 @@ namespace Content.Server.GameObjects.Components.StationEvents
             }
         }
 
-        [YamlField("minPulseLifespan")]
+        [DataField("minPulseLifespan")]
         public float MinPulseLifespan { get; set; } = 0.8f;
 
-        [YamlField("maxPulseLifespan")]
+        [DataField("maxPulseLifespan")]
         public float MaxPulseLifespan { get; set; } = 2.5f;
 
-        [YamlField("dps")]
+        [DataField("dps")]
         public override float RadsPerSecond
         {
             get => _radsPerSecond;
@@ -57,9 +57,9 @@ namespace Content.Server.GameObjects.Components.StationEvents
             }
         }
 
-        [YamlField("sound")] public string Sound { get; set; } = "/Audio/Weapons/Guns/Gunshots/laser3.ogg";
+        [DataField("sound")] public string Sound { get; set; } = "/Audio/Weapons/Guns/Gunshots/laser3.ogg";
 
-        [YamlField("range")]
+        [DataField("range")]
         public override float Range
         {
             get => _range;
@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
             }
         }
 
-        [YamlField("draw")]
+        [DataField("draw")]
         public override bool Draw
         {
             get => _draw;

@@ -29,22 +29,22 @@ namespace Content.Server.GameObjects.Components.Portal
 
         public override string Name => "ItemTeleporter";
 
-        [YamlField("charge_time")]
+        [DataField("charge_time")]
         [ViewVariables] private float _chargeTime = 0.2f;
-        [YamlField("cooldown")]
+        [DataField("cooldown")]
         [ViewVariables] private float _cooldown = 2f;
-        [YamlField("range")]
+        [DataField("range")]
         [ViewVariables] private int _range = 15;
         [ViewVariables] private ItemTeleporterState _state;
-        [YamlField("teleporter_type")]
+        [DataField("teleporter_type")]
         [ViewVariables] private TeleporterType _teleporterType = TeleporterType.Random;
-        [ViewVariables] [YamlField("departure_sound")] private string _departureSound = "/Audio/Effects/teleport_departure.ogg";
-        [ViewVariables] [YamlField("arrival_sound")] private string _arrivalSound = "/Audio/Effects/teleport_arrival.ogg";
-        [ViewVariables] [YamlField("cooldown_sound")] private string? _cooldownSound = default;
+        [ViewVariables] [DataField("departure_sound")] private string _departureSound = "/Audio/Effects/teleport_departure.ogg";
+        [ViewVariables] [DataField("arrival_sound")] private string _arrivalSound = "/Audio/Effects/teleport_arrival.ogg";
+        [ViewVariables] [DataField("cooldown_sound")] private string? _cooldownSound = default;
         // If the direct OR random teleport will try to avoid hitting collidables
-        [YamlField("avoid_walls")] [ViewVariables]
+        [DataField("avoid_walls")] [ViewVariables]
         private bool _avoidCollidable = true;
-        [YamlField("portal_alive_time")]
+        [DataField("portal_alive_time")]
         [ViewVariables] private float _portalAliveTime = 5f;
 
         private void SetState(ItemTeleporterState newState)

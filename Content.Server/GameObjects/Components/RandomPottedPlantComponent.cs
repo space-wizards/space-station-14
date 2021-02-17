@@ -18,9 +18,9 @@ namespace Content.Server.GameObjects.Components
         private static readonly string[] RegularPlantStates;
         private static readonly string[] PlasticPlantStates;
 
-        [YamlField("selected")]
+        [DataField("selected")]
         private string _selectedState;
-        [YamlField("plastic")]
+        [DataField("plastic")]
         private bool _plastic;
 
         // for shared string dict, since we don't define these anywhere in content

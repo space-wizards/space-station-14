@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int ActiveDrawRate { get => _activeDrawRate; set => SetActiveDrawRate(value); }
-        [YamlField("activeDrawRate")]
+        [DataField("activeDrawRate")]
         private int _activeDrawRate = 100;
 
         [ViewVariables]

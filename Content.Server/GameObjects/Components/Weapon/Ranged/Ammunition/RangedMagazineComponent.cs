@@ -28,20 +28,20 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         public int ShotsLeft => _spawnedAmmo.Count + _unspawnedCount;
         public int Capacity => _capacity;
-        [YamlField("capacity")]
+        [DataField("capacity")]
         private int _capacity = 20;
 
         public MagazineType MagazineType => _magazineType;
-        [YamlField("magazineType")]
+        [DataField("magazineType")]
         private MagazineType _magazineType = MagazineType.Unspecified;
         public BallisticCaliber Caliber => _caliber;
-        [YamlField("caliber")]
+        [DataField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
 
         private AppearanceComponent _appearanceComponent;
 
         // If there's anything already in the magazine
-        [YamlField("fillPrototype")]
+        [DataField("fillPrototype")]
         private string _fillPrototype;
         // By default the magazine won't spawn the entity until needed so we need to keep track of how many left we can spawn
         // Generally you probablt don't want to use this

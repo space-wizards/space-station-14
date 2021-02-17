@@ -26,14 +26,14 @@ namespace Content.Client.GameObjects.Components.Items
         public override uint? NetID => ContentNetIDs.ITEM;
 
         [ViewVariables]
-        [YamlField("sprite")]
+        [DataField("sprite")]
         protected ResourcePath RsiPath;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("color")]
+        [DataField("color")]
         protected Color Color = Color.White;
 
-        [YamlField("HeldPrefix")]
+        [DataField("HeldPrefix")]
         private string _equippedPrefix;
 
         [ViewVariables(VVAccess.ReadWrite)]

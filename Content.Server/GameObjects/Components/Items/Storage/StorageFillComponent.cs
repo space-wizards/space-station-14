@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     {
         public override string Name => "StorageFill";
 
-        [YamlField("contents")]
+        [DataField("contents")]
         private List<StorageFillEntry> _contents = new ();
 
         void IMapInit.MapInit()

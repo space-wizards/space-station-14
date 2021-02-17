@@ -47,7 +47,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// of the status of the entity.
         /// </summary>
         public IEnumerable<ActionType> InnateActions => _innateActions ?? Enumerable.Empty<ActionType>();
-        [YamlField("innateActions")]
+        [DataField("innateActions")]
         private List<ActionType>? _innateActions = null;
 
 

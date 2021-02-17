@@ -72,20 +72,20 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
         public IReadOnlyDictionary<Type, IMechanismBehavior> Behaviors => _behaviors;
 
-        [YamlField("maxDurability")] public int MaxDurability { get; set; } = 10;
+        [DataField("maxDurability")] public int MaxDurability { get; set; } = 10;
 
-        [YamlField("currentDurability")] public int CurrentDurability { get; set; } = 10;
+        [DataField("currentDurability")] public int CurrentDurability { get; set; } = 10;
 
-        [YamlField("destroyThreshold")] public int DestroyThreshold { get; set; } = -10;
+        [DataField("destroyThreshold")] public int DestroyThreshold { get; set; } = -10;
 
         // TODO BODY: Surgery description and adding a message to the examine tooltip of the entity that owns this mechanism
         // TODO BODY
-        [YamlField("resistance")] public int Resistance { get; set; } = 0;
+        [DataField("resistance")] public int Resistance { get; set; } = 0;
 
         // TODO BODY OnSizeChanged
-        [YamlField("size")] public int Size { get; set; } = 1;
+        [DataField("size")] public int Size { get; set; } = 1;
 
-        [YamlField("compatibility")]
+        [DataField("compatibility")]
         public BodyPartCompatibility Compatibility { get; set; } = BodyPartCompatibility.Universal;
 
         public override void Initialize()

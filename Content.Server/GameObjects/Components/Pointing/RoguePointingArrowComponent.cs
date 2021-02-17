@@ -26,19 +26,19 @@ namespace Content.Server.GameObjects.Components.Pointing
         private IEntity? _chasing;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("turningDelay")]
+        [DataField("turningDelay")]
         private float _turningDelay = 2;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("chasingDelay")]
+        [DataField("chasingDelay")]
         private float _chasingDelay = 1;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("chasingSpeed")]
+        [DataField("chasingSpeed")]
         private float _chasingSpeed = 5;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("chasingTime")]
+        [DataField("chasingTime")]
         private float _chasingTime = 1;
 
         private IEntity? RandomNearbyPlayer()

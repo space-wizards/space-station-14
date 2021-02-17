@@ -16,17 +16,17 @@ namespace Content.Shared.Prototypes.Kitchen
     public class FoodRecipePrototype : IPrototype, IIndexedPrototype
     {
 
-        [YamlField("id")]
+        [DataField("id")]
         private string _id;
-        [YamlField("name")]
+        [DataField("name")]
         private string _name;
-        [YamlField("result")]
+        [DataField("result")]
         private string _result;
-        [YamlField("time")]
+        [DataField("time")]
         private int _cookTime = 5;
 
-        [YamlField("reagents")] private Dictionary<string, int> _ingsReagents = new();
-        [YamlField("solids")]
+        [DataField("reagents")] private Dictionary<string, int> _ingsReagents = new();
+        [DataField("solids")]
         private Dictionary<string, int> _ingsSolids = new ();
 
         public string Name => Loc.GetString(_name);

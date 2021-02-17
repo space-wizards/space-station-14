@@ -28,20 +28,20 @@ namespace Content.Server.GameObjects.Components.Strap
 
         [DataClassTarget("list")]
         private HashSet<IEntity> _buckledEntities = null!;
-        [YamlField("position")]
+        [DataField("position")]
         private StrapPosition _position = StrapPosition.None;
-        [YamlField("buckleSound")]
+        [DataField("buckleSound")]
         private string _buckleSound = "/Audio/Effects/buckle.ogg";
-        [YamlField("unbuckleSound")]
+        [DataField("unbuckleSound")]
         private string _unbuckleSound = "/Audio/Effects/unbuckle.ogg";
-        [YamlField("buckledAlertType")]
+        [DataField("buckledAlertType")]
         private AlertType _buckledAlertType = AlertType.Buckled;
 
         /// <summary>
         /// The angle in degrees to rotate the player by when they get strapped
         /// </summary>
         [ViewVariables]
-        [YamlField("rotation")]
+        [DataField("rotation")]
         private int _rotation;
 
         /// <summary>

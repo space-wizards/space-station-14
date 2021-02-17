@@ -14,21 +14,21 @@ namespace Content.Shared.Prototypes.Cargo
     [NetSerializable, Serializable, Prototype("cargoProduct")]
     public class CargoProductPrototype : IPrototype, IIndexedPrototype
     {
-        [YamlField("id")]
+        [DataField("id")]
         private string _id;
-        [YamlField("name")]
+        [DataField("name")]
         private string _name;
-        [YamlField("description")]
+        [DataField("description")]
         private string _description;
-        [YamlField("icon")]
+        [DataField("icon")]
         private SpriteSpecifier _icon;
-        [YamlField("product")]
+        [DataField("product")]
         private string _product;
-        [YamlField("cost")]
+        [DataField("cost")]
         private int _pointCost;
-        [YamlField("category")]
+        [DataField("category")]
         private string _category;
-        [YamlField("group")]
+        [DataField("group")]
         private string _group;
 
         [ViewVariables]

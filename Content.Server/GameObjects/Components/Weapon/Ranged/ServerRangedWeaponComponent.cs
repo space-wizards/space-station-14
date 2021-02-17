@@ -36,11 +36,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
         private TimeSpan _lastFireTime;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("clumsyCheck")]
+        [DataField("clumsyCheck")]
         public bool ClumsyCheck { get; set; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("clumsyExplodeChance")]
+        [DataField("clumsyExplodeChance")]
         public float ClumsyExplodeChance { get; set; } = 0.5f;
 
         public Func<bool> WeaponCanFireHandler;

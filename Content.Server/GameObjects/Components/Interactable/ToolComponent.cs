@@ -45,13 +45,13 @@ namespace Content.Server.GameObjects.Components.Interactable
         ///     For tool interactions that have a delay before action this will modify the rate, time to wait is divided by this value
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("speed")]
+        [DataField("speed")]
         public float SpeedModifier { get; set; } = 1;
 
-        [YamlField("useSound")]
+        [DataField("useSound")]
         public string UseSound { get; set; }
 
-        [YamlField("useSoundCollection")]
+        [DataField("useSoundCollection")]
         public string UseSoundCollection { get; set; }
 
         public void AddQuality(ToolQuality quality)

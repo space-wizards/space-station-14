@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         public event EventHandler<EventArgs>? OnLightBulbStateChange;
         public event EventHandler<EventArgs?>? OnLightColorChange;
 
-        [YamlField("color")]
+        [DataField("color")]
         private Color _color = Color.White;
 
         [ViewVariables(VVAccess.ReadWrite)] public Color Color
@@ -59,14 +59,14 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         public override string Name => "LightBulb";
 
-        [YamlField("bulb")]
+        [DataField("bulb")]
         public LightBulbType Type = LightBulbType.Tube;
 
-        [YamlField("BurningTemperature")]
+        [DataField("BurningTemperature")]
         private int _burningTemperature = 1400;
         public int BurningTemperature => _burningTemperature;
 
-        [YamlField("PowerUse")]
+        [DataField("PowerUse")]
         private int _powerUse = 40;
         public int PowerUse => _powerUse;
 

@@ -35,19 +35,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private PowerCellComponent? Cell => _cellSlot.Cell;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("paralyzeChanceNoSlowdown")]
+        [DataField("paralyzeChanceNoSlowdown")]
         private float _paralyzeChanceNoSlowdown = 0.35f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("paralyzeChanceWithSlowdown")]
+        [DataField("paralyzeChanceWithSlowdown")]
         private float _paralyzeChanceWithSlowdown = 0.85f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("paralyzeTime")]
+        [DataField("paralyzeTime")]
         private float _paralyzeTime = 10f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("slowdownTime")]
+        [DataField("slowdownTime")]
         private float _slowdownTime = 5f;
 
         [ViewVariables(VVAccess.ReadWrite)] public float EnergyPerUse { get; set; } = 50;

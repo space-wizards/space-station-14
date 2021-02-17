@@ -27,14 +27,14 @@ namespace Content.Server.GameObjects.Components.Radio
         private RadioSystem _radioSystem = default!;
 
         private bool _radioOn;
-        [YamlField("channels")]
+        [DataField("channels")]
         private List<int> _channels = new(){1459};
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("broadcastChannel")]
+        [DataField("broadcastChannel")]
         private int BroadcastFrequency { get; set; } = 1459;
 
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("listenRange")] public int ListenRange { get; private set; } = 7;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("listenRange")] public int ListenRange { get; private set; } = 7;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool RadioOn

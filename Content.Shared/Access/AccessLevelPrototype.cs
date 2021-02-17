@@ -13,12 +13,12 @@ namespace Content.Shared.Access
     [Prototype("accessLevel")]
     public class AccessLevelPrototype : IPrototype, IIndexedPrototype
     {
-        [YamlField("id")] public string ID { get; private set; } = "";
+        [DataField("id")] public string ID { get; private set; } = "";
 
         /// <summary>
         ///     The player-visible name of the access level, in the ID card console and such.
         /// </summary>
-        [YamlField("name")]
+        [DataField("name")]
         public string Name
         {
             get => _name ?? ID;

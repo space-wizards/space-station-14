@@ -21,10 +21,10 @@ namespace Content.Server.GameObjects.Components.Construction
     public class WelderRefinableComponent : Component, IInteractUsing
     {
         [ViewVariables]
-        [YamlField("refineResult")]
+        [DataField("refineResult")]
         private HashSet<string>? _refineResult = new() { "GlassStack" };
         [ViewVariables]
-        [YamlField("refineTime")]
+        [DataField("refineTime")]
         private float _refineTime = 2f;
 
         private bool _beingWelded;

@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.BarSign
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        [YamlField("current")]
+        [DataField("current")]
         private string? _currentSign;
 
         [ViewVariables(VVAccess.ReadWrite)]

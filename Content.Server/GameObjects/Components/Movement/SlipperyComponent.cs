@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     Path to the sound to be played when a mob slips.
         /// </summary>
         [ViewVariables]
-        [YamlField("slipSound")]
+        [DataField("slipSound")]
         private string SlipSound { get; set; } = "/Audio/Effects/slip.ogg";
 
         /// <summary>

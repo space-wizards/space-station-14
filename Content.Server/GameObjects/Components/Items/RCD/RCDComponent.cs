@@ -32,9 +32,9 @@ namespace Content.Server.GameObjects.Components.Items.RCD
         public override string Name => "RCD";
         private RcdMode _mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
         private readonly RcdMode[] _modes = (RcdMode[])  Enum.GetValues(typeof(RcdMode));
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("maxAmmo")] public int maxAmmo = 5;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("maxAmmo")] public int maxAmmo = 5;
         public int _ammo; //How much "ammo" we have left. You can refill this with RCD ammo.
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("delay")] private float _delay = 2f;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("delay")] private float _delay = 2f;
         private DoAfterSystem doAfterSystem;
 
 

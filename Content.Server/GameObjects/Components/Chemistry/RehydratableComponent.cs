@@ -24,10 +24,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override string Name => "Rehydratable";
 
         [ViewVariables]
-        [YamlField("catalyst")]
+        [DataField("catalyst")]
         private string _catalystPrototype = "chem.Water";
         [ViewVariables]
-        [YamlField("target")]
+        [DataField("target")]
         private string? _targetPrototype;
 
         private bool _expanding;

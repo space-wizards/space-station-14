@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components.PA
     public class ParticleAcceleratorEmitterComponent : ParticleAcceleratorPartComponent
     {
         public override string Name => "ParticleAcceleratorEmitter";
-        [YamlField("emitterType")]
+        [DataField("emitterType")]
         public ParticleAcceleratorEmitterType Type = ParticleAcceleratorEmitterType.Center;
 
         public void Fire(ParticleAcceleratorPowerState strength)

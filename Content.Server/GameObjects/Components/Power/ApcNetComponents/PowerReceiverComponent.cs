@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int PowerReceptionRange { get => _powerReceptionRange; set => SetPowerReceptionRange(value); }
-        [YamlField("powerReceptionRange")]
+        [DataField("powerReceptionRange")]
         private int _powerReceptionRange = 3;
 
         [ViewVariables]
@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int Load { get => _load; set => SetLoad(value); }
-        [YamlField("powerLoad")]
+        [DataField("powerLoad")]
         private int _load = 5;
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public bool NeedsPower { get => _needsPower; set => SetNeedsPower(value); }
-        [YamlField("needsPower")]
+        [DataField("needsPower")]
         private bool _needsPower = true;
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public bool PowerDisabled { get => _powerDisabled; set => SetPowerDisabled(value); }
-        [YamlField("powerDisabled")]
+        [DataField("powerDisabled")]
         private bool _powerDisabled;
 
         protected override void Startup()
@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             }
         }
 
-        public override void OnRemove() 
+        public override void OnRemove()
         {
             _provider.RemoveReceiver(this);
             base.OnRemove();

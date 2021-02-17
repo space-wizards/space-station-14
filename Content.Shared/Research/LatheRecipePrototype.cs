@@ -13,19 +13,19 @@ namespace Content.Shared.Research
     [NetSerializable, Serializable, Prototype("latheRecipe")]
     public class LatheRecipePrototype : IPrototype, IIndexedPrototype
     {
-        [YamlField("name")]
+        [DataField("name")]
         private string _name;
-        [YamlField("id")]
+        [DataField("id")]
         private string _id;
-        [YamlField("icon")]
+        [DataField("icon")]
         private SpriteSpecifier _icon = SpriteSpecifier.Invalid;
-        [YamlField("description")]
+        [DataField("description")]
         private string _description;
-        [YamlField("result")]
+        [DataField("result")]
         private string _result;
-        [YamlField("completetime")]
+        [DataField("completetime")]
         private int _completeTime = 2500;
-        [YamlField("materials")]
+        [DataField("materials")]
         private Dictionary<string, int> _requiredMaterials = new();
 
         [ViewVariables]

@@ -10,17 +10,17 @@ namespace Content.Shared.Prototypes.PDA
     public class UplinkStoreListingPrototype : IPrototype, IIndexedPrototype
     {
 
-        [YamlField("id")]
+        [DataField("id")]
         private string _id;
-        [YamlField("itemId")]
+        [DataField("itemId")]
         private string _itemId;
-        [YamlField("price")]
+        [DataField("price")]
         private int _price = 5;
-        [YamlField("category")]
+        [DataField("category")]
         private UplinkCategory _category = UplinkCategory.Utility;
-        [YamlField("description")]
+        [DataField("description")]
         private string _desc;
-        [YamlField("listingName")]
+        [DataField("listingName")]
         private string _name;
 
         public string ID => _id;

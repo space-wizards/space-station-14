@@ -20,7 +20,7 @@ namespace Content.Shared.Damage.DamageContainer
         private bool _supportAll;
         private HashSet<DamageClass> _supportedClasses;
         private HashSet<DamageType> _supportedTypes;
-        [YamlField("id")]
+        [DataField("id")]
         private string _id;
 
         // TODO NET 5 IReadOnlySet

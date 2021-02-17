@@ -12,28 +12,28 @@ namespace Content.Server.GameObjects.Components.BarSign
         private string _description;
         private string _name;
 
-        [YamlField("id")]
+        [DataField("id")]
         public string ID { get; private set; }
-        [YamlField("icon")]
+        [DataField("icon")]
         public string Icon { get; private set; }
 
-        [YamlField("name")]
+        [DataField("name")]
         public string Name
         {
             get => _name;
             private set => _name = Loc.GetString(value);
         }
 
-        [YamlField("description")]
+        [DataField("description")]
         public string Description
         {
             get => _description;
             private set => _description = Loc.GetString(value);
         }
 
-        [YamlField("renameArea")]
+        [DataField("renameArea")]
         public bool RenameArea { get; private set; } = true;
-        [YamlField("hidden")]
+        [DataField("hidden")]
         public bool Hidden { get; private set; }
     }
 }

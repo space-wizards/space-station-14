@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
         public override string Name => "RCDAmmo";
 
         //How much ammo we refill
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("refillAmmo")] private int refillAmmo = 5;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("refillAmmo")] private int refillAmmo = 5;
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {

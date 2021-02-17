@@ -41,8 +41,8 @@ namespace Content.Server.GameObjects.Components.PDA
 
         [ViewVariables] private bool _lightOn;
 
-        [ViewVariables] [YamlField("idCard")] private string? _startingIdCard = "AssistantIDCard";
-        [ViewVariables] [YamlField("pen")] private string? _startingPen = "Pen";
+        [ViewVariables] [DataField("idCard")] private string? _startingIdCard = "AssistantIDCard";
+        [ViewVariables] [DataField("pen")] private string? _startingPen = "Pen";
 
         [ViewVariables] public string? OwnerName { get; private set; }
 

@@ -23,10 +23,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     {
         public override string Name => "SpeedLoader";
 
-        [YamlField("caliber")]
+        [DataField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
         public int Capacity => _capacity;
-        [YamlField("capacity")]
+        [DataField("capacity")]
         private int _capacity = 6;
         private Container _ammoContainer;
         private Stack<IEntity> _spawnedAmmo = new();
@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
 
-        [YamlField("fillPrototype")]
+        [DataField("fillPrototype")]
         private string _fillPrototype = default;
 
         public override void Initialize()

@@ -43,15 +43,15 @@ namespace Content.Server.GameObjects.Components.Temperature
 
         [ViewVariables] public float SpecificHeat => _specificHeat;
 
-        [YamlField("heatDamageThreshold")]
+        [DataField("heatDamageThreshold")]
         private float _heatDamageThreshold = default;
-        [YamlField("coldDamageThreshold")]
+        [DataField("coldDamageThreshold")]
         private float _coldDamageThreshold = default;
-        [YamlField("tempDamageCoefficient")]
+        [DataField("tempDamageCoefficient")]
         private float _tempDamageCoefficient = 1;
-        [YamlField("currentTemperature")]
+        [DataField("currentTemperature")]
         private float _currentTemperature = Atmospherics.T20C;
-        [YamlField("specificHeat")]
+        [DataField("specificHeat")]
         private float _specificHeat = Atmospherics.MinimumHeatCapacity;
 
         public void Update()

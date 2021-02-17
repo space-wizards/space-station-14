@@ -15,13 +15,13 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override string Name => "MovedByPressure";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("enabled")]
+        [DataField("enabled")]
         public bool Enabled { get; set; } = true;
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("pressureResistance")]
+        [DataField("pressureResistance")]
         public float PressureResistance { get; set; } = 1f;
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("moveResist")]
+        [DataField("moveResist")]
         public float MoveResist { get; set; } = 100f;
         [ViewVariables(VVAccess.ReadWrite)]
         public int LastHighPressureMovementAirCycle { get; set; } = 0;

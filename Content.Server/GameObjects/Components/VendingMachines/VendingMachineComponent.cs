@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
         private bool _ejecting;
         private TimeSpan _animationDuration = TimeSpan.Zero;
-        [YamlField("pack")]
+        [DataField("pack")]
         private string _packPrototypeId = string.Empty;
         private string? _description;
         private string _spriteName = "";
@@ -41,10 +41,10 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
         private bool _broken;
 
-        [YamlField("soundVend")]
+        [DataField("soundVend")]
         // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
         private string _soundVend = "/Audio/Machines/machine_vend.ogg";
-        [YamlField("soundDeny")]
+        [DataField("soundDeny")]
         // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
         private string _soundDeny = "/Audio/Machines/custom_deny.ogg";
 

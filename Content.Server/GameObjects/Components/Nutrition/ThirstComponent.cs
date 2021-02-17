@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             get => _baseDecayRate;
             set => _baseDecayRate = value;
         }
-        [YamlField("base_decay_rate")]
+        [DataField("base_decay_rate")]
         private float _baseDecayRate = 0.1f;
 
         [ViewVariables(VVAccess.ReadWrite)]

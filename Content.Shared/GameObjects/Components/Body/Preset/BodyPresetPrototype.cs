@@ -16,11 +16,11 @@ namespace Content.Shared.GameObjects.Components.Body.Preset
     [Serializable, NetSerializable]
     public class BodyPresetPrototype : IPrototype, IIndexedPrototype
     {
-        [YamlField("id")]
+        [DataField("id")]
         private string _id;
-        [YamlField("name")]
+        [DataField("name")]
         private string _name;
-        [YamlField("partIDs")]
+        [DataField("partIDs")]
         private Dictionary<string, string> _partIDs = new();
 
         [ViewVariables] public string ID => _id;

@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
             get => _siphonPressureTarget;
             set => _siphonPressureTarget = Math.Max(value, 0);
         }
-        [YamlField("startingSiphonPressureTarget")]
+        [DataField("startingSiphonPressureTarget")]
         private float _siphonPressureTarget = Atmospherics.OneAtmosphere * 2;
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
             get => _transferRatio;
             set => _transferRatio = Math.Clamp(value, 0, 1);
         }
-        [YamlField("transferRatio")]
+        [DataField("transferRatio")]
         private float _transferRatio = 0.5f;
 
         protected override void ScrubGas(GasMixture inletGas, GasMixture outletGas)

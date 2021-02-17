@@ -71,7 +71,7 @@ namespace Content.Server.Botany
     {
         private const string SeedPrototype = "SeedBase";
 
-        [YamlField("id")]
+        [DataField("id")]
         public string ID { get; private set; }
 
         /// <summary>
@@ -80,77 +80,77 @@ namespace Content.Server.Botany
         public int Uid { get; internal set; } = -1;
 
         #region Tracking
-        [ViewVariables] [YamlField("name")] public string Name { get; set; }
-        [ViewVariables] [YamlField("seedName")] public string SeedName { get; set; }
+        [ViewVariables] [DataField("name")] public string Name { get; set; }
+        [ViewVariables] [DataField("seedName")] public string SeedName { get; set; }
 
         [ViewVariables]
-        [YamlField("seedNoun")]
+        [DataField("seedNoun")]
         public string SeedNoun { get; set; } = "seeds";
-        [ViewVariables] [YamlField("displayName")] public string DisplayName { get; set; }
+        [ViewVariables] [DataField("displayName")] public string DisplayName { get; set; }
 
         [ViewVariables]
-        [YamlField("roundStart")]
+        [DataField("roundStart")]
         public bool RoundStart { get; private set; } = true;
-        [ViewVariables] [YamlField("mysterious")] public bool Mysterious { get; set; }
-        [ViewVariables] [YamlField("immutable")] public bool Immutable { get; set; }
+        [ViewVariables] [DataField("mysterious")] public bool Mysterious { get; set; }
+        [ViewVariables] [DataField("immutable")] public bool Immutable { get; set; }
         #endregion
 
         #region Output
 
         [ViewVariables]
-        [YamlField("productPrototypes")]
+        [DataField("productPrototypes")]
         public List<string> ProductPrototypes { get; set; } = new();
 
         [ViewVariables]
-        [YamlField("chemicals")]
+        [DataField("chemicals")]
         public Dictionary<string, SeedChemQuantity> Chemicals { get; set; } = new();
-        [ViewVariables] [YamlField("consumeGasses")] public Dictionary<Gas, float> ConsumeGasses { get; set; }
-        [ViewVariables] [YamlField("exudeGasses")] public Dictionary<Gas, float> ExudeGasses { get; set; }
+        [ViewVariables] [DataField("consumeGasses")] public Dictionary<Gas, float> ConsumeGasses { get; set; }
+        [ViewVariables] [DataField("exudeGasses")] public Dictionary<Gas, float> ExudeGasses { get; set; }
         #endregion
 
         #region Tolerances
 
         [ViewVariables]
-        [YamlField("nutrientConsumption")]
+        [DataField("nutrientConsumption")]
         public float NutrientConsumption { get; set; } = 0.25f;
 
-        [ViewVariables] [YamlField("waterConsumption")] public float WaterConsumption { get; set; } = 3f;
-        [ViewVariables] [YamlField("idealHeat")] public float IdealHeat { get; set; } = 293f;
-        [ViewVariables] [YamlField("heatTolerance")] public float HeatTolerance { get; set; } = 20f;
-        [ViewVariables] [YamlField("idealLight")] public float IdealLight { get; set; } = 7f;
-        [ViewVariables] [YamlField("lightTolerance")] public float LightTolerance { get; set; } = 5f;
-        [ViewVariables] [YamlField("toxinsTolerance")] public float ToxinsTolerance { get; set; } = 4f;
+        [ViewVariables] [DataField("waterConsumption")] public float WaterConsumption { get; set; } = 3f;
+        [ViewVariables] [DataField("idealHeat")] public float IdealHeat { get; set; } = 293f;
+        [ViewVariables] [DataField("heatTolerance")] public float HeatTolerance { get; set; } = 20f;
+        [ViewVariables] [DataField("idealLight")] public float IdealLight { get; set; } = 7f;
+        [ViewVariables] [DataField("lightTolerance")] public float LightTolerance { get; set; } = 5f;
+        [ViewVariables] [DataField("toxinsTolerance")] public float ToxinsTolerance { get; set; } = 4f;
 
         [ViewVariables]
-        [YamlField("lowPressureTolerance")]
+        [DataField("lowPressureTolerance")]
         public float LowPressureTolerance { get; set; } = 25f;
 
         [ViewVariables]
-        [YamlField("highPressureTolerance")]
+        [DataField("highPressureTolerance")]
         public float HighPressureTolerance { get; set; } = 200f;
 
         [ViewVariables]
-        [YamlField("pestTolerance")]
+        [DataField("pestTolerance")]
         public float PestTolerance { get; set; } = 5f;
 
         [ViewVariables]
-        [YamlField("weedTolerance")]
+        [DataField("weedTolerance")]
         public float WeedTolerance { get; set; } = 5f;
         #endregion
 
         #region General traits
 
         [ViewVariables]
-        [YamlField("endurance")]
+        [DataField("endurance")]
         public float Endurance { get; set; } = 100f;
-        [ViewVariables] [YamlField("yield")] public int Yield { get; set; }
-        [ViewVariables] [YamlField("lifespan")] public float Lifespan { get; set; }
-        [ViewVariables] [YamlField("maturation")] public float Maturation { get; set; }
-        [ViewVariables] [YamlField("production")] public float Production { get; set; }
-        [ViewVariables] [YamlField("growthStages")] public int GrowthStages { get; set; } = 6;
-        [ViewVariables] [YamlField("harvestRepeat")] public HarvestType HarvestRepeat { get; set; } = HarvestType.NoRepeat;
+        [ViewVariables] [DataField("yield")] public int Yield { get; set; }
+        [ViewVariables] [DataField("lifespan")] public float Lifespan { get; set; }
+        [ViewVariables] [DataField("maturation")] public float Maturation { get; set; }
+        [ViewVariables] [DataField("production")] public float Production { get; set; }
+        [ViewVariables] [DataField("growthStages")] public int GrowthStages { get; set; } = 6;
+        [ViewVariables] [DataField("harvestRepeat")] public HarvestType HarvestRepeat { get; set; } = HarvestType.NoRepeat;
 
-        [ViewVariables] [YamlField("potency")] public float Potency { get; set; } = 1f;
+        [ViewVariables] [DataField("potency")] public float Potency { get; set; } = 1f;
         // No, I'm not removing these.
         //public PlantSpread Spread { get; set; }
         //public PlantMutation Mutation { get; set; }
@@ -160,18 +160,18 @@ namespace Content.Server.Botany
         //public bool Hematophage { get; set; }
         //public bool Thorny { get; set; }
         //public bool Stinging { get; set; }
-        [YamlField("ligneous")]
+        [DataField("ligneous")]
         public bool Ligneous { get; set; }
         // public bool Teleporting { get; set; }
         // public PlantJuicy Juicy { get; set; }
         #endregion
 
         #region Cosmetics
-        [ViewVariables] [YamlField("plantRsi")] public ResourcePath PlantRsi { get; set; }
-        [ViewVariables] [YamlField("plantIconState")] public string PlantIconState { get; set; } = "produce";
-        [ViewVariables] [YamlField("bioluminescent")] public bool Bioluminescent { get; set; }
-        [ViewVariables] [YamlField("bioluminescentColor")] public Color BioluminescentColor { get; set; } = Color.White;
-        [ViewVariables] [YamlField("splatPrototype")] public string SplatPrototype { get; set; }
+        [ViewVariables] [DataField("plantRsi")] public ResourcePath PlantRsi { get; set; }
+        [ViewVariables] [DataField("plantIconState")] public string PlantIconState { get; set; } = "produce";
+        [ViewVariables] [DataField("bioluminescent")] public bool Bioluminescent { get; set; }
+        [ViewVariables] [DataField("bioluminescentColor")] public Color BioluminescentColor { get; set; } = Color.White;
+        [ViewVariables] [DataField("splatPrototype")] public string SplatPrototype { get; set; }
         #endregion
 
         public Seed Clone()

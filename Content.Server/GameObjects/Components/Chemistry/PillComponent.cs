@@ -28,15 +28,15 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override string Name => "Pill";
 
         [ViewVariables]
-        [YamlField("useSound")]
+        [DataField("useSound")]
         private string _useSound = default;
         [ViewVariables]
-        [YamlField("trash")]
+        [DataField("trash")]
         private string _trashPrototype = default;
         [ViewVariables]
         private SolutionContainerComponent _contents;
         [ViewVariables]
-        [YamlField("transferAmount")]
+        [DataField("transferAmount")]
         private ReagentUnit _transferAmount = ReagentUnit.New(1000);
 
         public override void Initialize()

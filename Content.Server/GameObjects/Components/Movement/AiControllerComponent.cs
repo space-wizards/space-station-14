@@ -21,9 +21,9 @@ namespace Content.Server.GameObjects.Components.Movement
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTicker _gameTicker = default!;
 
-        [YamlField("logic")]
+        [DataField("logic")]
         private string? _logicName;
-        [YamlField("vision")]
+        [DataField("vision")]
         private float _visionRadius = 8.0f;
 
         public override string Name => "AiController";
@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Movement
         public UtilityAi? Processor { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("startingGear")]
+        [DataField("startingGear")]
         public string? StartingGearPrototype { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]

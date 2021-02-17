@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
-        [ViewVariables] [YamlField("pack")] private string _packPrototypeId = "";
+        [ViewVariables] [DataField("pack")] private string _packPrototypeId = "";
 
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
         [ViewVariables] private ReagentUnit _dispenseAmount = ReagentUnit.New(10);

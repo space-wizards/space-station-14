@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Timing
 
         private TimeSpan _lastUseTime;
 
-        [YamlField("delay")]
+        [DataField("delay")]
         private float _delay = 1;
         /// <summary>
         /// The time, in seconds, between an object's use and when it can be used again

@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         public override string Name => "MorgueEntityStorage";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("trayPrototype")]
+        [DataField("trayPrototype")]
         private string? _trayPrototypeId;
 
         [ViewVariables]
@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         public ContainerSlot? TrayContainer { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("doSoulBeep")]
+        [DataField("doSoulBeep")]
         public bool DoSoulBeep = true;
 
         [ViewVariables]

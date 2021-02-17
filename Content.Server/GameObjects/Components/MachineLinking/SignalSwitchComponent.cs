@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
     {
         public override string Name => "SignalSwitch";
 
-        [YamlField("on")]
+        [DataField("on")]
         private bool _on;
 
         public override void Initialize()

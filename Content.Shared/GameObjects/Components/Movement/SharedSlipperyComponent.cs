@@ -31,35 +31,35 @@ namespace Content.Shared.GameObjects.Components.Movement
         ///     How many seconds the mob will be paralyzed for.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("paralyzeTime")]
+        [DataField("paralyzeTime")]
         public virtual float ParalyzeTime { get; set; } = 3f;
 
         /// <summary>
         ///     Percentage of shape intersection for a slip to occur.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("intersectPercentage")]
+        [DataField("intersectPercentage")]
         public virtual float IntersectPercentage { get; set; } = 0.3f;
 
         /// <summary>
         ///     Entities will only be slipped if their speed exceeds this limit.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("requiredSlipSpeed")]
+        [DataField("requiredSlipSpeed")]
         public virtual float RequiredSlipSpeed { get; set; } = 0.1f;
 
         /// <summary>
         ///     The entity's speed will be multiplied by this to slip it forwards.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("launchForwardsMultiplier")]
+        [DataField("launchForwardsMultiplier")]
         public virtual float LaunchForwardsMultiplier { get; set; } = 1f;
 
         /// <summary>
         ///     Whether or not this component will try to slip entities.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("slippery")]
+        [DataField("slippery")]
         public virtual bool Slippery { get; set; } = true;
 
         private bool TrySlip(IEntity entity)

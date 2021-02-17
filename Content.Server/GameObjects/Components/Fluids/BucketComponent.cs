@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             ? solution.CurrentVolume
             : ReagentUnit.Zero;
 
-        [YamlField("sound")]
+        [DataField("sound")]
         private string? _sound = "/Audio/Effects/Fluids/watersplash.ogg";
 
         /// <inheritdoc />

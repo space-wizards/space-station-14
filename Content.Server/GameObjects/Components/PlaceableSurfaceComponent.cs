@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components
         private bool _isPlaceable;
         private bool _placeCentered;
         private Vector2 _positionOffset;
-        [YamlField("IsPlaceable")]
+        [DataField("IsPlaceable")]
         private bool _isPlaceable = true;
 
         [ViewVariables(VVAccess.ReadWrite)]

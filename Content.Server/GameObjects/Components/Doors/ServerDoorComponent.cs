@@ -80,27 +80,27 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         /// Whether the door will ever crush.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("inhibitCrush")]
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("inhibitCrush")]
         private bool _inhibitCrush;
 
         /// <summary>
         /// Whether the door blocks light.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("occludes")]
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("occludes")]
         private bool _occludes = true;
         public bool Occludes => _occludes;
 
         /// <summary>
         /// Whether the door will open when it is bumped into.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("bumpOpen")]
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("bumpOpen")]
         private bool _bumpOpen = true;
 
         /// <summary>
         /// Whether the door starts open when it's first loaded from prototype. A door won't start open if its prototype is also welded shut.
         /// Handled in Startup().
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("startOpen")]
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("startOpen")]
         private bool _startOpen;
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 SetAppearance(_isWeldedShut ? DoorVisualState.Welded : DoorVisualState.Closed);
             }
         }
-        [YamlField("welded")]
+        [DataField("welded")]
         private bool _isWeldedShut;
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Doors
         private bool _beingWelded;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("canCrush")]
+        [DataField("canCrush")]
         private bool _canCrush = true;
 
         protected override void Startup()

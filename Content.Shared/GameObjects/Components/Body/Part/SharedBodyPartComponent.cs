@@ -24,7 +24,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         private IBody? _body;
 
         // TODO BODY Remove
-        [YamlField("mechanisms")]
+        [DataField("mechanisms")]
         private List<string> _mechanismIds = new();
         public IReadOnlyList<string> MechanismIds => _mechanismIds;
 
@@ -58,10 +58,10 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         }
 
         [ViewVariables]
-        [YamlField("partType")]
+        [DataField("partType")]
         public BodyPartType PartType { get; private set; } = BodyPartType.Other;
 
-        [ViewVariables] [YamlField("size")] public int Size { get; private set; } = 1;
+        [ViewVariables] [DataField("size")] public int Size { get; private set; } = 1;
 
         [ViewVariables] public int SizeUsed { get; private set; }
 
@@ -74,7 +74,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         ///     attach between types.
         /// </summary>
         [ViewVariables]
-        [YamlField("compatibility")]
+        [DataField("compatibility")]
         public BodyPartCompatibility Compatibility { get; private set; } = BodyPartCompatibility.Universal;
 
         /// <summary>
@@ -90,11 +90,11 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         ///     If the last vital body part is removed creature dies
         /// </summary>
         [ViewVariables]
-        [YamlField("vital")]
+        [DataField("vital")]
         public bool IsVital { get; private set; } = false;
 
         [ViewVariables]
-        [YamlField("symmetry")]
+        [DataField("symmetry")]
         public BodyPartSymmetry Symmetry { get; private set; } = BodyPartSymmetry.None;
 
         [ViewVariables]

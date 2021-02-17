@@ -13,11 +13,11 @@ namespace Content.Server.GameObjects.Components.Damage
     {
         public override string Name => "DamageOnLand";
 
-        [YamlField("damageType")]
+        [DataField("damageType")]
         private DamageType _damageType = DamageType.Blunt;
-        [YamlField("amount")]
+        [DataField("amount")]
         private int _amount = 1;
-        [YamlField("ignoreResistances")]
+        [DataField("ignoreResistances")]
         private bool _ignoreResistances;
 
         public override void ExposeData(ObjectSerializer serializer)

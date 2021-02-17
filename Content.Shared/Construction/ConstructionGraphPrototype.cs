@@ -17,17 +17,17 @@ namespace Content.Shared.Construction
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
         private readonly Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]> _paths = new();
         private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode>> _pathfinding = new();
-        [YamlField("start")]
+        [DataField("start")]
         private readonly string _start;
 
         [ViewVariables]
-        [YamlField("id")]
+        [DataField("id")]
         public string ID { get; private set; }
 
         [ViewVariables]
         public string Start => _start;
 
-        [YamlField("graph", priority: 2)]
+        [DataField("graph", priority: 2)]
         private List<ConstructionGraphNode> _nodeYamlInterface
         {
             get => _nodes.Values.ToList();

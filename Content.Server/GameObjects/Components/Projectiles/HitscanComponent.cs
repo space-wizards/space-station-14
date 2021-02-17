@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         public override string Name => "Hitscan";
         public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
 
-        [YamlField("layers")] //todo  WithFormat.Flags<CollisionLayer>()
+        [DataField("layers")] //todo  WithFormat.Flags<CollisionLayer>()
         private int _collisionMask = (int) CollisionGroup.Opaque;
 
         public float Damage
@@ -34,10 +34,10 @@ namespace Content.Server.GameObjects.Components.Projectiles
             get => _damage;
             set => _damage = value;
         }
-        [YamlField("damage")]
+        [DataField("damage")]
         private float _damage = 10f;
         public DamageType DamageType => _damageType;
-        [YamlField("damageType")]
+        [DataField("damageType")]
         private DamageType _damageType = DamageType.Heat;
         public float MaxLength => 20.0f;
 
@@ -45,13 +45,13 @@ namespace Content.Server.GameObjects.Components.Projectiles
         private TimeSpan _deathTime;
 
         public float ColorModifier { get; set; } = 1.0f;
-        [YamlField("spriteName")]
+        [DataField("spriteName")]
         private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
-        [YamlField("muzzleFlash")]
+        [DataField("muzzleFlash")]
         private string _muzzleFlash;
-        [YamlField("impactFlash")]
+        [DataField("impactFlash")]
         private string _impactFlash;
-        [YamlField("soundHitWall")]
+        [DataField("soundHitWall")]
         private string _soundHitWall = "/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg";
 
         public void FireEffects(IEntity user, float distance, Angle angle, IEntity hitEntity = null)

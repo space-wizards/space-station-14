@@ -9,10 +9,10 @@ namespace Content.Shared.Audio
     [Prototype("soundCollection")]
     public sealed class SoundCollectionPrototype : IPrototype, IIndexedPrototype
     {
-        [YamlField("id")]
+        [DataField("id")]
         public string ID { get; private set; }
 
-        [YamlField("files")] private List<string> _pickFiles;
+        [DataField("files")] private List<string> _pickFiles;
 
         public List<string> PickFiles
         {

@@ -14,30 +14,30 @@ namespace Content.Server.Objectives
     public class ObjectivePrototype : IPrototype, IIndexedPrototype
     {
         [ViewVariables]
-        [YamlField("id")]
+        [DataField("id")]
         public string ID { get; private set; }
 
-        [ViewVariables] [YamlField("issuer")] public string Issuer { get; private set; } = "Unknown";
+        [ViewVariables] [DataField("issuer")] public string Issuer { get; private set; } = "Unknown";
 
-        [ViewVariables] [YamlField("prob")] public float Probability { get; private set; } = 0.3f;
+        [ViewVariables] [DataField("prob")] public float Probability { get; private set; } = 0.3f;
 
         [ViewVariables]
         public float Difficulty => _difficultyOverride ?? _conditions.Sum(c => c.Difficulty);
 
-        [YamlField("conditions")]
+        [DataField("conditions")]
         private List<IObjectiveCondition> _conditions = new();
-        [YamlField("requirements")]
+        [DataField("requirements")]
         private List<IObjectiveRequirement> _requirements = new();
 
         [ViewVariables]
         public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
 
         [ViewVariables]
-        [YamlField("canBeDuplicate")]
+        [DataField("canBeDuplicate")]
         public bool CanBeDuplicateAssignment { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("difficultyOverride")]
+        [DataField("difficultyOverride")]
         private float? _difficultyOverride = null;
 
         public bool CanBeAssigned(Mind mind)

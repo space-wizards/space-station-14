@@ -34,11 +34,11 @@ namespace Content.Server.GameObjects.Components.Construction
         private bool _handling = false;
 
         private TaskCompletionSource<object>? _handlingTask = null;
-        [YamlField("graph")]
+        [DataField("graph")]
         private string _graphIdentifier = string.Empty;
-        [YamlField("node")]
+        [DataField("node")]
         private string _startingNodeIdentifier = string.Empty;
-        [YamlField("defaultTarget")]
+        [DataField("defaultTarget")]
         private string _startingTargetNodeIdentifier = string.Empty;
 
         [ViewVariables]
@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Construction
         public int EdgeStep { get; private set; } = 0;
 
         [ViewVariables]
-        [YamlField("deconstructionTarget")]
+        [DataField("deconstructionTarget")]
         public string DeconstructionNodeIdentifier { get; private set; } = "start";
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace Content.Shared.GameObjects.Components.Storage
         public override string Name => "Storable";
         public override uint? NetID => ContentNetIDs.STORABLE;
 
-        [YamlField("size")] public virtual int Size { get; set; } = 1;
+        [DataField("size")] public virtual int Size { get; set; } = 1;
     }
 
     [Serializable, NetSerializable]

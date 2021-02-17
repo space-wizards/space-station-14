@@ -33,14 +33,14 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
         [DataClassTarget("slotFlags")]
         public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
 
-        [YamlField("QuickEquip")]
+        [DataField("QuickEquip")]
         private bool _quickEquipEnabled = true;
-        [YamlField("HeatResistance")]
+        [DataField("HeatResistance")]
         private int _heatResistance = 323;
         [ViewVariables(VVAccess.ReadWrite)]
         public int HeatResistance => _heatResistance;
 
-        [YamlField("ClothingPrefix")]
+        [DataField("ClothingPrefix")]
         private string _clothingEquippedPrefix;
         [ViewVariables(VVAccess.ReadWrite)]
         public string ClothingEquippedPrefix

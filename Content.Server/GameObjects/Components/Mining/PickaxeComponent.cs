@@ -10,9 +10,9 @@ namespace Content.Server.GameObjects.Components.Mining
 
     {
         public override string Name => "Pickaxe";
-        [YamlField("miningSound")]
+        [DataField("miningSound")]
         public string MiningSound = "/Audio/Items/Mining/pickaxe.ogg";
-        [YamlField("miningSpeedMultiplier")]
+        [DataField("miningSpeedMultiplier")]
         public float MiningSpeedMultiplier = 1f;
     }
 }

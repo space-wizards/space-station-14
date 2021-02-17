@@ -21,15 +21,15 @@ namespace Content.Server.GameObjects.Components.Markers
         public override string Name => "TimedSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("prototypes")]
+        [DataField("prototypes")]
         public List<string> Prototypes { get; set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("chance")]
+        [DataField("chance")]
         public float Chance { get; set; } = 1.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("intervalSeconds")]
+        [DataField("intervalSeconds")]
         public int IntervalSeconds { get; set; } = 60;
 
         [ViewVariables(VVAccess.ReadWrite)]

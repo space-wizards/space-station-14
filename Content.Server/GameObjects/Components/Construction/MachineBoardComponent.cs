@@ -18,19 +18,19 @@ namespace Content.Server.GameObjects.Components.Construction
     {
         public override string Name => "MachineBoard";
 
-        [ViewVariables] [YamlField("requirements")]
+        [ViewVariables] [DataField("requirements")]
         private Dictionary<MachinePart, int> _requirements = new();
 
         [ViewVariables]
-        [YamlField("materialRequirements")]
+        [DataField("materialRequirements")]
         private Dictionary<StackType, int> _materialRequirements = new();
 
         [ViewVariables]
-        [YamlField("componentRequirements")]
+        [DataField("componentRequirements")]
         private Dictionary<string, ComponentPartInfo> _componentRequirements = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("prototype")]
+        [DataField("prototype")]
         public string Prototype { get; private set; }
         public IReadOnlyDictionary<MachinePart, int> Requirements => _requirements;
         public IReadOnlyDictionary<StackType, int> MaterialRequirements => _materialRequirements;

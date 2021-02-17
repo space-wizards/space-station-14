@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         private EntityUid _shooter = EntityUid.Invalid;
 
-        [YamlField("damages")] private Dictionary<DamageType, int> _damages = new();
+        [DataField("damages")] private Dictionary<DamageType, int> _damages = new();
 
         [ViewVariables]
         public Dictionary<DamageType, int> Damages
@@ -32,13 +32,13 @@ namespace Content.Server.GameObjects.Components.Projectiles
         }
 
         public bool DeleteOnCollide => _deleteOnCollide;
-        [YamlField("delete_on_collide")]
+        [DataField("delete_on_collide")]
         private bool _deleteOnCollide = true;
 
         // Get that juicy FPS hit sound
-        [YamlField("soundHit")]
+        [DataField("soundHit")]
         private string _soundHit = default;
-        [YamlField("soundHitSpecies")]
+        [DataField("soundHitSpecies")]
         private string _soundHitSpecies = default;
 
         private bool _damagedEntity;

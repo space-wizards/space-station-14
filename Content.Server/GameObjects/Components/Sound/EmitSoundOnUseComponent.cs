@@ -21,9 +21,9 @@ namespace Content.Server.GameObjects.Components.Sound
         ///
         public override string Name => "EmitSoundOnUse";
 
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("sound")] public string _soundName;
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("variation")] public float _pitchVariation;
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("semitoneVariation")] public int _semitoneVariation;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("sound")] public string _soundName;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("variation")] public float _pitchVariation;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("semitoneVariation")] public int _semitoneVariation;
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {

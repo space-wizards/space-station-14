@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         public string? MeatPrototype => _meatPrototype;
 
         [ViewVariables]
-        [YamlField("meat")]
+        [DataField("meat")]
         private string? _meatPrototype;
     }
 }

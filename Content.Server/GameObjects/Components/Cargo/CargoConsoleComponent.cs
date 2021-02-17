@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Cargo
             }
         }
 
-        [YamlField("requestOnly")]
+        [DataField("requestOnly")]
         private bool _requestOnly = false;
 
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;

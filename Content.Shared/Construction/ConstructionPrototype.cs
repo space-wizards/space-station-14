@@ -10,66 +10,66 @@ namespace Content.Shared.Construction
     [Prototype("construction")]
     public class ConstructionPrototype : IPrototype, IIndexedPrototype
     {
-        [YamlField("conditions")]
+        [DataField("conditions")]
         private List<IConstructionCondition> _conditions;
 
         /// <summary>
         ///     Friendly name displayed in the construction GUI.
         /// </summary>
-        [YamlField("name")]
+        [DataField("name")]
         public string Name { get; private set; }
 
         /// <summary>
         ///     "Useful" description displayed in the construction GUI.
         /// </summary>
-        [YamlField("description")]
+        [DataField("description")]
         public string Description { get; private set; }
 
         /// <summary>
         ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
         /// </summary>
-        [YamlField("graph")]
+        [DataField("graph")]
         public string Graph { get; private set; }
 
         /// <summary>
         ///     The target <see cref="ConstructionGraphNode"/> this construction will guide the user to.
         /// </summary>
-        [YamlField("targetNode")]
+        [DataField("targetNode")]
         public string TargetNode { get; private set; }
 
         /// <summary>
         ///     The starting <see cref="ConstructionGraphNode"/> this construction will start at.
         /// </summary>
-        [YamlField("startNode")]
+        [DataField("startNode")]
         public string StartNode { get; private set; }
 
         /// <summary>
         ///     Texture path inside the construction GUI.
         /// </summary>
-        [YamlField("icon")]
+        [DataField("icon")]
         public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         ///     If you can start building or complete steps on impassable terrain.
         /// </summary>
-        [YamlField("canBuildInImpassable")]
+        [DataField("canBuildInImpassable")]
         public bool CanBuildInImpassable { get; private set; }
 
-        [YamlField("category")]
+        [DataField("category")]
         public string Category { get; private set; }
 
-        [YamlField("objectType")] public ConstructionType Type { get; private set; } = ConstructionType.Structure;
+        [DataField("objectType")] public ConstructionType Type { get; private set; } = ConstructionType.Structure;
 
-        [YamlField("id")]
+        [DataField("id")]
         public string ID { get; private set; }
 
-        [YamlField("placementMode")]
+        [DataField("placementMode")]
         public string PlacementMode { get; private set; } = "PlaceFree";
 
         /// <summary>
         ///     Whether this construction can be constructed rotated or not.
         /// </summary>
-        [YamlField("canRotate")]
+        [DataField("canRotate")]
         public bool CanRotate { get; private set; } = true;
 
         public IReadOnlyList<IConstructionCondition> Conditions => _conditions;

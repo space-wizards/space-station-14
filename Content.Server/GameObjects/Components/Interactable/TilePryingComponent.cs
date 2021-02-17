@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "TilePrying";
-        [YamlField("toolComponentNeeded")]
+        [DataField("toolComponentNeeded")]
         private bool _toolComponentNeeded = true;
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)

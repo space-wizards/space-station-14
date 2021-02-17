@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Items
         public override string Name => "Toys";
 
         [ViewVariables]
-        [YamlField("toySqueak")]
+        [DataField("toySqueak")]
         public string _soundCollectionName = "ToySqueak";
 
         public void Squeak()

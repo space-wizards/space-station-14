@@ -20,25 +20,25 @@ namespace Content.Shared.Chemistry
     {
         [Dependency] private readonly IModuleManager _moduleManager = default!;
 
-        [YamlField("id")]
+        [DataField("id")]
         private string _id;
-        [YamlField("name")]
+        [DataField("name")]
         private string _name;
-        [YamlField("desc")]
+        [DataField("desc")]
         private string _description;
-        [YamlField("physicalDesc")]
+        [DataField("physicalDesc")]
         private string _physicalDescription;
-        [YamlField("color")]
+        [DataField("color")]
         private Color _substanceColor;
-        [YamlField("spritePath")]
+        [DataField("spritePath")]
         private string _spritePath;
-        [YamlField("metabolism", serverOnly: true)]
+        [DataField("metabolism", serverOnly: true)]
         private List<IMetabolizable> _metabolism = new(){new DefaultMetabolizable()};
-        [YamlField("tileReactions", serverOnly: true)]
+        [DataField("tileReactions", serverOnly: true)]
         private List<ITileReaction> _tileReactions = new(0);
-        [YamlField("plantMetabolism", serverOnly: true)]
+        [DataField("plantMetabolism", serverOnly: true)]
         private List<IPlantMetabolizable> _plantMetabolism = new(0);
-        [YamlField("customPlantMetabolism")]
+        [DataField("customPlantMetabolism")]
         private float _customPlantMetabolism = 1f;
 
         public string ID => _id;

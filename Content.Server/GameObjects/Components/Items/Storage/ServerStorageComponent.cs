@@ -42,19 +42,19 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private Container? _storage;
         private readonly Dictionary<IEntity, int> _sizeCache = new();
 
-        [YamlField("occludesLight")]
+        [DataField("occludesLight")]
         private bool _occludesLight = true;
-        [YamlField("quickInsert")]
+        [DataField("quickInsert")]
         private bool _quickInsert; //Can insert storables by "attacking" them with the storage entity
-        [YamlField("areaInsert")]
+        [DataField("areaInsert")]
         private bool _areaInsert;  //"Attacking" with the storage entity causes it to insert all nearby storables after a delay
         private bool _storageInitialCalculated;
         private int _storageUsed;
-        [YamlField("capacity")]
+        [DataField("capacity")]
         private int _storageCapacityMax = 10000;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
-        [YamlField("storageSoundCollection")]
+        [DataField("storageSoundCollection")]
         public string? StorageSoundCollection { get; set; }
 
         [ViewVariables]

@@ -21,12 +21,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     {
         public override string Name => "Flash";
 
-        [YamlField("duration")] [ViewVariables(VVAccess.ReadWrite)] private int _flashDuration = 5000;
-        [YamlField("uses")] [ViewVariables(VVAccess.ReadWrite)] private int _uses = 5;
-        [YamlField("range")] [ViewVariables(VVAccess.ReadWrite)] private float _range = 7f;
+        [DataField("duration")] [ViewVariables(VVAccess.ReadWrite)] private int _flashDuration = 5000;
+        [DataField("uses")] [ViewVariables(VVAccess.ReadWrite)] private int _uses = 5;
+        [DataField("range")] [ViewVariables(VVAccess.ReadWrite)] private float _range = 7f;
         [ViewVariables(VVAccess.ReadWrite)] private int _aoeFlashDuration => _internalAoeFlashDuration ?? _flashDuration / 3;
-        [YamlField("aoeFlashDuration")] private int? _internalAoeFlashDuration;
-        [YamlField("slowTo")] [ViewVariables(VVAccess.ReadWrite)] private float _slowTo = 0.75f;
+        [DataField("aoeFlashDuration")] private int? _internalAoeFlashDuration;
+        [DataField("slowTo")] [ViewVariables(VVAccess.ReadWrite)] private float _slowTo = 0.75f;
         private bool _flashing;
 
         private int Uses

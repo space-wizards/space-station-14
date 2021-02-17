@@ -18,9 +18,9 @@ namespace Content.Shared.GameObjects.Components
         public sealed override string Name => "Stack";
         public sealed override uint? NetID => ContentNetIDs.STACK;
 
-        [YamlField("count")]
+        [DataField("count")]
         private int _count = 50;
-        [YamlField("max")]
+        [DataField("max")]
         private int _maxCount = 50;
 
         [ViewVariables(VVAccess.ReadWrite)]

@@ -89,7 +89,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         [ViewVariables]
         public (int count, int max)? MagazineCount { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("lmg_alarm_animation")] private bool _isLmgAlarmAnimation = default;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("lmg_alarm_animation")] private bool _isLmgAlarmAnimation = default;
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {

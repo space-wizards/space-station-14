@@ -22,11 +22,11 @@ namespace Content.Server.GameObjects.Components.Power
         public override string Name => "WirePlacer";
 
         [ViewVariables]
-        [YamlField("wirePrototypeID")]
+        [DataField("wirePrototypeID")]
         private string? _wirePrototypeID = "HVWire";
 
         [ViewVariables]
-        [YamlField("blockingWireType")]
+        [DataField("blockingWireType")]
         private WireType _blockingWireType = WireType.HighVoltage;
 
         /// <inheritdoc />

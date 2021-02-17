@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Sound
         /// <inheritdoc />
         public override string Name => "FootstepModifier";
 
-        [YamlField("footstepSoundCollection")]
+        [DataField("footstepSoundCollection")]
         public string _soundCollectionName;
 
         public void PlayFootstep()

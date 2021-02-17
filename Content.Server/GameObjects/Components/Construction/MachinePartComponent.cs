@@ -33,10 +33,10 @@ namespace Content.Server.GameObjects.Components.Construction
 
         public override string Name => "MachinePart";
 
-        [ViewVariables] [YamlField("part")] public MachinePart PartType { get; private set; } = MachinePart.Capacitor;
+        [ViewVariables] [DataField("part")] public MachinePart PartType { get; private set; } = MachinePart.Capacitor;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("rating")]
+        [DataField("rating")]
         public int Rating { get; private set; } = 1;
 
         public void Examine(FormattedMessage message, bool inDetailsRange)

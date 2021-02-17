@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override string Name => "Puddle";
 
         private CancellationTokenSource _evaporationToken;
-        [YamlField("evaporate_threshold")]
+        [DataField("evaporate_threshold")]
         private ReagentUnit _evaporateThreshold = ReagentUnit.New(20); // How few <Solution Quantity> we can hold prior to self-destructing
         public ReagentUnit EvaporateThreshold
         {
@@ -64,10 +64,10 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <summary>
         ///     The time that it will take this puddle to evaporate, in seconds.
         /// </summary>
-        [YamlField("evaporate_time")]
+        [DataField("evaporate_time")]
         public float EvaporateTime { get; private set; } = 5f;
 
-        [YamlField("spill_sound")]
+        [DataField("spill_sound")]
         private string _spillSound = "/Audio/Effects/Fluids/splat.ogg";
 
         /// <summary>
@@ -91,16 +91,16 @@ namespace Content.Server.GameObjects.Components.Fluids
         // Currently a random number, potentially change
         public ReagentUnit OverflowVolume => _overflowVolume;
         [ViewVariables]
-        [YamlField("overflow_volume")]
+        [DataField("overflow_volume")]
         private ReagentUnit _overflowVolume = ReagentUnit.New(20);
         private ReagentUnit OverflowLeft => CurrentVolume - OverflowVolume;
 
         private SolutionContainerComponent _contents;
         public bool EmptyHolder => _contents.ReagentList.Count == 0;
-        [YamlField("variants")]
+        [DataField("variants")]
         private int _spriteVariants = 1;
         // Whether the underlying solution color should be used
-        [YamlField("recolor")]
+        [DataField("recolor")]
         private bool _recolor = default;
 
         private bool Slippery => Owner.TryGetComponent(out SlipperyComponent slippery) && slippery.Slippery;

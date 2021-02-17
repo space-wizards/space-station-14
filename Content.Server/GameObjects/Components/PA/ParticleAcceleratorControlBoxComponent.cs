@@ -80,10 +80,10 @@ namespace Content.Server.GameObjects.Components.PA
         // So the *actual* effective firing delay of the PA is 6 seconds, not 5 as listed in the code.
         // So...
         // I have reflected that here to be authentic.
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("fireDelay")] private TimeSpan _firingDelay = TimeSpan.FromSeconds(6);
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireDelay")] private TimeSpan _firingDelay = TimeSpan.FromSeconds(6);
 
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("powerDrawBase")] private int _powerDrawBase = 500;
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("powerDrawMult")] private int _powerDrawMult = 1500;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("powerDrawBase")] private int _powerDrawBase = 500;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("powerDrawMult")] private int _powerDrawMult = 1500;
 
         [ViewVariables] private bool ConsolePowered => _powerReceiverComponent?.Powered ?? true;
 

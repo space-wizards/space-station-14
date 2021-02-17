@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     public sealed class AtmosPlaqueComponent : Component, IMapInit
     {
-        [YamlField("plaqueType")]
+        [DataField("plaqueType")]
         private PlaqueType _type = PlaqueType.Unset;
         public override string Name => "AtmosPlaque";
 

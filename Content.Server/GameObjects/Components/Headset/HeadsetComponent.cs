@@ -28,15 +28,15 @@ namespace Content.Server.GameObjects.Components.Headset
 
         private RadioSystem _radioSystem = default!;
 
-        [YamlField("channels")]
+        [DataField("channels")]
         private List<int> _channels = new(){1459};
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("broadcastChannel")]
+        [DataField("broadcastChannel")]
         private int BroadcastFrequency { get; set; } = 1459;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("listenRange")]
+        [DataField("listenRange")]
         public int ListenRange { get; private set; }
 
         public IReadOnlyList<int> Channels => _channels;

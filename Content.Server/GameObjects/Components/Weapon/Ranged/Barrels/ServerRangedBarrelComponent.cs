@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override FireRateSelector FireRateSelector => _fireRateSelector;
-        [YamlField("currentSelector")]
+        [DataField("currentSelector")]
         private FireRateSelector _fireRateSelector = FireRateSelector.Safety;
         public override FireRateSelector AllRateSelectors => _fireRateSelector;
         [DataClassTarget("allRateSelectors")]
@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private float _spreadRatio = 1f;
 
         public bool CanMuzzleFlash => _canMuzzleFlash;
-        [YamlField("canMuzzleFlash")]
+        [DataField("canMuzzleFlash")]
         private bool _canMuzzleFlash = true;
 
         // Sounds
@@ -88,10 +88,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             get => _soundGunshot;
             set => _soundGunshot = value;
         }
-        [YamlField("soundGunshot")]
+        [DataField("soundGunshot")]
         private string _soundGunshot;
         public string SoundEmpty => _soundEmpty;
-        [YamlField("soundEmpty")]
+        [DataField("soundEmpty")]
         private string _soundEmpty = "/Audio/Weapons/Guns/Empty/empty.ogg";
 
         public override void OnAdd()

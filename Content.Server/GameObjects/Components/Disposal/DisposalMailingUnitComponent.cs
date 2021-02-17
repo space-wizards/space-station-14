@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Prevents it from flushing if it is not equal to or bigger than 1.
         /// </summary>
         [ViewVariables]
-        [YamlField("pressure")]
+        [DataField("pressure")]
         private float _pressure = 1f;
 
         private bool _engaged;
@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         private TimeSpan _flushDelay = default;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("entryDelay")]
+        [DataField("entryDelay")]
         private float _entryDelay = 0.5f;
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         private string _target = "";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("Tag")]
+        [DataField("Tag")]
         private string _tag = "";
 
         [ViewVariables]

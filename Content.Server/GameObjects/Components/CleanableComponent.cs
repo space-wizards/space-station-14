@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components
     {
         public override string Name => "Cleanable";
 
-        [YamlField("cleanAmount")]
+        [DataField("cleanAmount")]
         private ReagentUnit _cleanAmount = ReagentUnit.Zero;
         [ViewVariables(VVAccess.ReadWrite)]
         public ReagentUnit CleanAmount => _cleanAmount;

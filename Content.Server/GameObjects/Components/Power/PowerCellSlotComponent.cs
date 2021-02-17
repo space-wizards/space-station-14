@@ -30,21 +30,21 @@ namespace Content.Server.GameObjects.Components.Power
         /// What size of cell fits into this component.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("slotSize")]
+        [DataField("slotSize")]
         public PowerCellSize SlotSize { get; set; } = PowerCellSize.Small;
 
         /// <summary>
         /// Can the cell be removed ?
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("canRemoveCell")]
+        [DataField("canRemoveCell")]
         public bool CanRemoveCell { get; set; } = true;
 
         /// <summary>
         /// Should the "Remove cell" verb be displayed on this component?
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("showVerb")]
+        [DataField("showVerb")]
         public bool ShowVerb { get; set; } = true;
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// Use null to show no text.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("descFormatString")]
+        [DataField("descFormatString")]
         public string? DescFormatString { get; set; } = "It uses size {0} power cells.";
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         /// <example>"/Audio/Items/pistol_magout.ogg"</example>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("cellRemoveSound")]
+        [DataField("cellRemoveSound")]
         public string? CellRemoveSound { get; set; } = "/Audio/Items/pistol_magin.ogg";
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         /// <example>"/Audio/Items/pistol_magin.ogg"</example>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("cellInsertSound")]
+        [DataField("cellInsertSound")]
         public string? CellInsertSound { get; set; } = "/Audio/Items/pistol_magout.ogg";
 
         [ViewVariables] private ContainerSlot _cellContainer = default!;
@@ -89,13 +89,13 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// True if we don't want a cell inserted during map init.
         /// </summary>
-        [YamlField("startEmpty")]
+        [DataField("startEmpty")]
         private bool _startEmpty = false;
 
         /// <summary>
         /// If not null, this cell type will be inserted at MapInit instead of the default Standard cell.
         /// </summary>
-        [YamlField("startingCellType")]
+        [DataField("startingCellType")]
         private string? _startingCellType = null;
 
         public override void Initialize()

@@ -16,7 +16,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part.Property
         /// <summary>
         ///     Whether this property is currently active.
         /// </summary>
-        [YamlField("active")]
+        [DataField("active")]
         public bool Active { get; set; } = true;
     }
 }

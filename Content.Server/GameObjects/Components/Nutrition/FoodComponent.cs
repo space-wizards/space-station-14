@@ -35,9 +35,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public override string Name => "Food";
 
-        [ViewVariables] [YamlField("useSound")] private string _useSound = "/Audio/Items/eatfood.ogg";
-        [ViewVariables] [YamlField("trash")] private string? _trashPrototype;
-        [ViewVariables] [YamlField("transferAmount")] private ReagentUnit _transferAmount = ReagentUnit.New(5);
+        [ViewVariables] [DataField("useSound")] private string _useSound = "/Audio/Items/eatfood.ogg";
+        [ViewVariables] [DataField("trash")] private string? _trashPrototype;
+        [ViewVariables] [DataField("transferAmount")] private ReagentUnit _transferAmount = ReagentUnit.New(5);
         [DataClassTarget("utensilsNeeded")] private UtensilType _utensilsNeeded;
 
         [ViewVariables]

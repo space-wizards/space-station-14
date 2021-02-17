@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// Maximum charge of the battery in joules (ie. watt seconds)
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] public int MaxCharge { get => _maxCharge; set => SetMaxCharge(value); }
-        [YamlField("maxCharge")]
+        [DataField("maxCharge")]
         private int _maxCharge = 1000;
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentCharge { get => _currentCharge; set => SetCurrentCharge(value); }
-        [YamlField("startingCharge")]
+        [DataField("startingCharge")]
         private float _currentCharge = 500;
 
         /// <summary>
@@ -34,9 +34,9 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         [ViewVariables] public bool IsFullyCharged => MathHelper.CloseTo(CurrentCharge, MaxCharge);
 
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("autoRecharge")] public bool AutoRecharge { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRecharge")] public bool AutoRecharge { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("autoRechargeRate")] public float AutoRechargeRate { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRechargeRate")] public float AutoRechargeRate { get; set; }
 
         [ViewVariables] public BatteryState BatteryState { get; private set; }
 

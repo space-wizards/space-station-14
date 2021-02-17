@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int SupplyRate { get => _supplyRate; set => SetSupplyRate(value); }
-        [YamlField("supplyRate")]
+        [DataField("supplyRate")]
         private int _supplyRate;
 
         protected override void AddSelfToNet(IPowerNet powerNet)

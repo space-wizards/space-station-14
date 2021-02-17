@@ -12,18 +12,18 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Construction
 {
     [Serializable]
-    [YamlDefinition]
+    [DataDefinition]
     public class ConstructionGraphEdge
     {
-        [YamlField("steps")]
+        [DataField("steps")]
         private List<ConstructionGraphStep> _steps = new();
-        [YamlField("conditions", serverOnly: true)]
+        [DataField("conditions", serverOnly: true)]
         private List<IEdgeCondition> _conditions;
-        [YamlField("completed", serverOnly: true)]
+        [DataField("completed", serverOnly: true)]
         private List<IGraphAction> _completed;
 
         [ViewVariables]
-        [YamlField("to")]
+        [DataField("to")]
         public string Target { get; private set; }
 
         [ViewVariables]

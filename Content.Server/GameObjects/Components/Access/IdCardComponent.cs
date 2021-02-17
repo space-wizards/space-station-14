@@ -13,10 +13,10 @@ namespace Content.Server.GameObjects.Components.Access
         public override string Name => "IdCard";
 
         /// See <see cref="UpdateEntityName"/>.
-        [YamlField("originalOwnerName")]
+        [DataField("originalOwnerName")]
         private string _ownerOriginalName;
 
-        [YamlField("fullName")]
+        [DataField("fullName")]
         private string _fullName;
         [ViewVariables(VVAccess.ReadWrite)]
         public string FullName
@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Access
             }
         }
 
-        [YamlField("jobTitle")]
+        [DataField("jobTitle")]
         private string _jobTitle;
         [ViewVariables(VVAccess.ReadWrite)]
         public string JobTitle

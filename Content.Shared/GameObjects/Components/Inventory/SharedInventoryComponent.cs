@@ -27,7 +27,7 @@ namespace Content.Shared.GameObjects.Components.Inventory
         protected Inventory InventoryInstance { get; private set; }
 
         [ViewVariables]
-        [YamlField("Template")]
+        [DataField("Template")]
         private string _templateName = "HumanInventory"; //stored for serialization purposes
 
         public override void Initialize()

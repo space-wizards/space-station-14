@@ -30,41 +30,41 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private TimeSpan _lastAttackTime;
         private TimeSpan _cooldownEnd;
 
-        [YamlField("hitSound")]
+        [DataField("hitSound")]
         private string _hitSound = "/Audio/Weapons/genhit1.ogg";
 
-        [YamlField("missSound")]
+        [DataField("missSound")]
         private string _missSound = "/Audio/Weapons/punchmiss.ogg";
 
-        [YamlField("arcCooldownTime")]
+        [DataField("arcCooldownTime")]
         public float ArcCooldownTime { get; private set; } = 1f;
 
-        [YamlField("cooldownTime")]
+        [DataField("cooldownTime")]
         public float CooldownTime { get; private set; } = 1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("clickArc")]
+        [DataField("clickArc")]
         public string ClickArc { get; set; } = "punch";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("arc")]
+        [DataField("arc")]
         public string Arc { get; set; } = "default";
 
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("arcwidth")] public float ArcWidth { get; set; } = 90;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("arcwidth")] public float ArcWidth { get; set; } = 90;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("range")]
+        [DataField("range")]
         public float Range { get; set; } = 1;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("damage")]
+        [DataField("damage")]
         public int Damage { get; set; } = 5;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("damageType")]
+        [DataField("damageType")]
         public DamageType DamageType { get; set; } = DamageType.Blunt;
 
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("clickAttackEffect")] public bool ClickAttackEffect { get; set; } = true;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("clickAttackEffect")] public bool ClickAttackEffect { get; set; } = true;
 
         protected virtual bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
         {

@@ -17,9 +17,9 @@ namespace Content.Server.GameObjects.Components.Damage
     {
         public override string Name => "DamageOnToolInteract";
 
-        [YamlField("damage")]
+        [DataField("damage")]
         protected int Damage;
-        [YamlField("tools")]
+        [DataField("tools")]
         private List<ToolQuality> _tools = new();
 
         public override void ExposeData(ObjectSerializer serializer)

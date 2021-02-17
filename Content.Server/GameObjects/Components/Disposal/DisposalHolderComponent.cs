@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         public HashSet<string> Tags { get; set; } = new();
 
         [ViewVariables]
-        [YamlField("air")]
+        [DataField("air")]
         public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
 
         public override void Initialize()

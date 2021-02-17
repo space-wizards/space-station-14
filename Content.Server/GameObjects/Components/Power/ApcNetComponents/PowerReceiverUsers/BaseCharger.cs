@@ -33,11 +33,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         private CellChargerStatus _status;
 
         [ViewVariables]
-        [YamlField("chargeRate")]
+        [DataField("chargeRate")]
         private int _chargeRate = 100;
 
         [ViewVariables]
-        [YamlField("transferEfficiency")]
+        [DataField("transferEfficiency")]
         private float _transferEfficiency = 0.85f;
 
         public override void Initialize()

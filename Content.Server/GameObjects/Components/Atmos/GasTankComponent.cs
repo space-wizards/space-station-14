@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
-        [YamlField("pressureResistance")]
+        [DataField("pressureResistance")]
         private float _pressureResistance = Atmospherics.OneAtmosphere * 5f;
 
         private int _integrity = 3;
@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         ///     Distributed pressure.
         /// </summary>
         [ViewVariables]
-        [YamlField("outputPressure")]
+        [DataField("outputPressure")]
         public float OutputPressure { get; private set; } = DefaultOutputPressure;
 
         /// <summary>
@@ -68,25 +68,25 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <summary>
         ///     Pressure at which tanks start leaking.
         /// </summary>
-        [YamlField("tankLeakPressure")]
+        [DataField("tankLeakPressure")]
         public float TankLeakPressure { get; set; }     = 30 * Atmospherics.OneAtmosphere;
 
         /// <summary>
         ///     Pressure at which tank spills all contents into atmosphere.
         /// </summary>
-        [YamlField("tankRupturePressure")]
+        [DataField("tankRupturePressure")]
         public float TankRupturePressure { get; set; }  = 40 * Atmospherics.OneAtmosphere;
 
         /// <summary>
         ///     Base 3x3 explosion.
         /// </summary>
-        [YamlField("tankFragmentPressure")]
+        [DataField("tankFragmentPressure")]
         public float TankFragmentPressure { get; set; } = 50 * Atmospherics.OneAtmosphere;
 
         /// <summary>
         ///     Increases explosion for each scale kPa above threshold.
         /// </summary>
-        [YamlField("tankFragmentScale")]
+        [DataField("tankFragmentScale")]
         public float TankFragmentScale { get; set; }    = 10 * Atmospherics.OneAtmosphere;
 
         public override void Initialize()

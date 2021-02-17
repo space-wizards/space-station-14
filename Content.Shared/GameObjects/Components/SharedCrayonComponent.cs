@@ -15,7 +15,7 @@ namespace Content.Shared.GameObjects.Components
         public override uint? NetID => ContentNetIDs.CRAYONS;
 
         public string SelectedState { get; set; }
-        [YamlField("color")]
+        [DataField("color")]
         protected Color _color = Color.White;
 
         [Serializable, NetSerializable]
@@ -75,11 +75,11 @@ namespace Content.Shared.GameObjects.Components
     [Serializable, NetSerializable, Prototype("crayonDecal")]
     public class CrayonDecalPrototype : IPrototype
     {
-        [YamlField("spritePath")]
+        [DataField("spritePath")]
         private string _spritePath;
         public string SpritePath => _spritePath;
 
-        [YamlField("decals")]
+        [DataField("decals")]
         private List<string> _decals;
         public List<string> Decals => _decals;
     }

@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Interactable
     public class MultiToolComponent : Component, IItemStatus
     {
         private ToolQuality _behavior;
-        [YamlField("statusShowBehavior")]
+        [DataField("statusShowBehavior")]
         private bool _statusShowBehavior = true;
 
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;

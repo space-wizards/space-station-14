@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         public override string Name => "Ammo";
         public BallisticCaliber Caliber => _caliber;
-        [YamlField("caliber")]
+        [DataField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
         public bool Spent
         {
@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         public int ProjectilesFired => _projectilesFired;
         [DataClassTarget("projectilesFired")]
         private int _projectilesFired = 1;
-        [YamlField("projectile")]
+        [DataField("projectile")]
         private string _projectileId;
         // How far apart each entity is if multiple are shot
         public float EvenSpreadAngle => _evenSpreadAngle;
@@ -76,14 +76,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         /// How fast the shot entities travel
         /// </summary>
         public float Velocity => _velocity;
-        [YamlField("ammoVelocity")]
+        [DataField("ammoVelocity")]
         private float _velocity = 20f;
 
-        [YamlField("muzzleFlash")]
+        [DataField("muzzleFlash")]
         private string _muzzleFlashSprite = "Objects/Weapons/Guns/Projectiles/bullet_muzzle.png";
 
         public string SoundCollectionEject => _soundCollectionEject;
-        [YamlField("soundCollectionEject")]
+        [DataField("soundCollectionEject")]
         private string _soundCollectionEject = "CasingEject";
 
         public IEntity TakeBullet(EntityCoordinates spawnAt)

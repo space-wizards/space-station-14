@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
         public override int Capacity => _capacity;
-        [YamlField("capacity")]
+        [DataField("capacity")]
         private int _capacity = 6;
 
         private ContainerSlot _chamberContainer;
@@ -51,11 +51,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private Container _ammoContainer;
 
         [ViewVariables]
-        [YamlField("caliber")]
+        [DataField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
 
         [ViewVariables]
-        [YamlField("fillPrototype")]
+        [DataField("fillPrototype")]
         private string _fillPrototype;
         [ViewVariables]
         private int _unspawnedCount;
@@ -95,18 +95,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
         private bool _boltOpen;
-        [YamlField("autoCycle")]
+        [DataField("autoCycle")]
         private bool _autoCycle;
 
         private AppearanceComponent _appearanceComponent;
         // Sounds
-        [YamlField("soundCycle")]
+        [DataField("soundCycle")]
         private string _soundCycle = "/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg";
-        [YamlField("soundBoltOpen")]
+        [DataField("soundBoltOpen")]
         private string _soundBoltOpen = "/Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg";
-        [YamlField("soundBoltClosed")]
+        [DataField("soundBoltClosed")]
         private string _soundBoltClosed = "/Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg";
-        [YamlField("soundInsert")]
+        [DataField("soundInsert")]
         private string _soundInsert = "/Audio/Weapons/Guns/MagIn/bullet_insert.ogg";
 
         void IMapInit.MapInit()

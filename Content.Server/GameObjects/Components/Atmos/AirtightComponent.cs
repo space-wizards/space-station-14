@@ -21,21 +21,21 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override string Name => "Airtight";
 
         [ViewVariables]
-        [YamlField("airBlockedDirection", flagType:typeof(AtmosDirectionFlags))]
+        [DataField("airBlockedDirection", flagType:typeof(AtmosDirectionFlags))]
         private int _initialAirBlockedDirection = (int)AtmosDirection.All;
         [ViewVariables]
         private int _currentAirBlockedDirection;
-        [YamlField("airBlocked")]
+        [DataField("airBlocked")]
         private bool _airBlocked = true;
-        [YamlField("fixVacuum")]
+        [DataField("fixVacuum")]
         private bool _fixVacuum = true;
 
         [ViewVariables]
-        [YamlField("rotateAirBlocked")]
+        [DataField("rotateAirBlocked")]
         private bool _rotateAirBlocked = true;
 
         [ViewVariables]
-        [YamlField("fixAirBlockedDirectionInitialize")]
+        [DataField("fixAirBlockedDirectionInitialize")]
         private bool _fixAirBlockedDirectionInitialize = true;
 
         [ViewVariables(VVAccess.ReadWrite)]

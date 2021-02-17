@@ -28,14 +28,14 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     The range from which this entity can be climbed.
         /// </summary>
         [ViewVariables]
-        [YamlField("range")]
+        [DataField("range")]
         private float _range = SharedInteractionSystem.InteractionRange / 1.4f;
 
         /// <summary>
         ///     The time it takes to climb onto the entity.
         /// </summary>
         [ViewVariables]
-        [YamlField("delay")]
+        [DataField("delay")]
         private float _climbDelay = 0.8f;
 
         public override void Initialize()

@@ -20,13 +20,13 @@ namespace Content.Server.GameObjects.Components.Explosion
     {
         public override string Name => "FlashExplosive";
 
-        [YamlField("range")]
+        [DataField("range")]
         private float _range = 7.0f;
-        [YamlField("duration")]
+        [DataField("duration")]
         private float _duration = 8.0f;
-        [YamlField("sound")]
+        [DataField("sound")]
         private string _sound = "/Audio/Effects/flash_bang.ogg";
-        [YamlField("deleteOnFlash")]
+        [DataField("deleteOnFlash")]
         private bool _deleteOnFlash = true;
 
         public bool Explode()

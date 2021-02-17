@@ -27,14 +27,14 @@ namespace Content.Server.GameObjects.Components.Conveyor
         ///     The angle to move entities by in relation to the owner's rotation.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("angle")]
+        [DataField("angle")]
         private Angle _angle;
 
         /// <summary>
         ///     The amount of units to move the entity by per second.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("speed")]
+        [DataField("speed")]
         private float _speed = 2f;
 
         private ConveyorState _state;

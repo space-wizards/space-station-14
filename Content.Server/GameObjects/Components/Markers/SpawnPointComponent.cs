@@ -16,10 +16,10 @@ namespace Content.Server.GameObjects.Components.Markers
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("spawn_type")]
+        [DataField("spawn_type")]
         private SpawnPointType _spawnType = SpawnPointType.Unset;
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("job_id")]
+        [DataField("job_id")]
         private string _jobId;
         public SpawnPointType SpawnType => _spawnType;
         public JobPrototype Job => string.IsNullOrEmpty(_jobId) ? null

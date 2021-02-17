@@ -35,14 +35,14 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
 
         private readonly Dictionary<int, object> _optionsCache = new();
 
-        [YamlField("baseOperateTime")]
+        [DataField("baseOperateTime")]
         private float _baseOperateTime = 5;
 
         private ISurgeon.MechanismRequestCallback? _callbackCache;
 
         private int _idHash;
 
-        [YamlField("surgeryType")]
+        [DataField("surgeryType")]
         private SurgeryType _surgeryType = SurgeryType.Incision;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);

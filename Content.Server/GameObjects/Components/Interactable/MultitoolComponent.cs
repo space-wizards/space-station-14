@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public override string Name => "MultiTool";
         public override uint? NetID => ContentNetIDs.MULTITOOLS;
-        [YamlField("tools")] private List<ToolEntry> _tools = new();
+        [DataField("tools")] private List<ToolEntry> _tools = new();
         private int _currentTool = 0;
 
         private AudioSystem _audioSystem;

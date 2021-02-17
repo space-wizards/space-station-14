@@ -42,14 +42,14 @@ namespace Content.Server.GameObjects.Components.Buckle
         [ComponentDependency] private readonly StunnableComponent? _stunnable = null;
         [ComponentDependency] private readonly MobStateComponent? _mobState = null;
 
-        [YamlField("size")]
+        [DataField("size")]
         private int _size = 100;
 
         /// <summary>
         ///     The range from which this entity can buckle to a <see cref="StrapComponent"/>.
         /// </summary>
         [ViewVariables]
-        [YamlField("range")]
+        [DataField("range")]
         private float _range = SharedInteractionSystem.InteractionRange / 1.4f;
         /// <summary>
         ///     The amount of time that must pass for this entity to

@@ -11,23 +11,23 @@ namespace Content.Shared.GameObjects.Components.Weapons.Melee
     [Prototype("MeleeWeaponAnimation")]
     public sealed class MeleeWeaponAnimationPrototype : IPrototype, IIndexedPrototype
     {
-        [YamlField("prototype")]
+        [DataField("prototype")]
         private string _prototype = "WeaponArc";
-        [YamlField("state")]
+        [DataField("state")]
         private string _state;
-        [YamlField("id")]
+        [DataField("id")]
         private string _id;
-        [YamlField("colorDelta")]
+        [DataField("colorDelta")]
         private Vector4 _colorDelta = Vector4.Zero;
-        [YamlField("color")]
+        [DataField("color")]
         private Vector4 _color = new Vector4(1,1,1,1);
-        [YamlField("length")]
+        [DataField("length")]
         private TimeSpan _length = TimeSpan.FromSeconds(0.5f);
-        [YamlField("speed")]
+        [DataField("speed")]
         private float _speed = 1;
-        [YamlField("width")]
+        [DataField("width")]
         private float _width = 90;
-        [YamlField("arcType")]
+        [DataField("arcType")]
         private WeaponArcType _arcType = WeaponArcType.Slash;
 
         [ViewVariables] public string ID => _id;

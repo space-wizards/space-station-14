@@ -14,13 +14,13 @@ namespace Content.Shared.Roles
     {
         private string _name;
 
-        [YamlField("id")]
+        [DataField("id")]
         public string ID { get; private set; }
 
         /// <summary>
         ///     The name of this antag as displayed to players.
         /// </summary>
-        [YamlField("name")]
+        [DataField("name")]
         public string Name
         {
             get => _name;
@@ -30,19 +30,19 @@ namespace Content.Shared.Roles
         /// <summary>
         ///     The antag's objective, displayed at round-start to the player.
         /// </summary>
-        [YamlField("objective")]
+        [DataField("objective")]
         public string Objective { get; private set; }
 
         /// <summary>
         ///     Whether or not the antag role is one of the bad guys.
         /// </summary>
-        [YamlField("antagonist")]
+        [DataField("antagonist")]
         public bool Antagonist { get; private set; }
 
         /// <summary>
         ///     Whether or not the player can set the antag role in antag preferences.
         /// </summary>
-        [YamlField("setPreference")]
+        [DataField("setPreference")]
         public bool SetPreference { get; private set; }
     }
 }

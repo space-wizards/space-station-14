@@ -30,47 +30,47 @@ namespace Content.Shared.GameObjects.Components
         protected ExpendableLightState CurrentState { get; set; }
 
         [ViewVariables]
-        [YamlField("turnOnBehaviourID")]
+        [DataField("turnOnBehaviourID")]
         protected string TurnOnBehaviourID { get; set; } = string.Empty;
 
         [ViewVariables]
-        [YamlField("fadeOutBehaviourID")]
+        [DataField("fadeOutBehaviourID")]
         protected string FadeOutBehaviourID { get; set; } = string.Empty;
 
         [ViewVariables]
-        [YamlField("glowDuration")]
+        [DataField("glowDuration")]
         protected float GlowDuration { get; set; } = 60 * 15f;
 
         [ViewVariables]
-        [YamlField("fadeOutDuration")]
+        [DataField("fadeOutDuration")]
         protected float FadeOutDuration { get; set; } = 60 * 5f;
 
         [ViewVariables]
-        [YamlField("spentDesc")]
+        [DataField("spentDesc")]
         protected string SpentDesc { get; set; } = string.Empty;
 
         [ViewVariables]
-        [YamlField("spentName")]
+        [DataField("spentName")]
         protected string SpentName { get; set; } = string.Empty;
 
         [ViewVariables]
-        [YamlField("iconStateSpent")]
+        [DataField("iconStateSpent")]
         protected string IconStateSpent { get; set; } = string.Empty;
 
         [ViewVariables]
-        [YamlField("iconStateOn")]
+        [DataField("iconStateOn")]
         protected string IconStateLit { get; set; } = string.Empty;
 
         [ViewVariables]
-        [YamlField("litSound")]
+        [DataField("litSound")]
         protected string LitSound { get; set; } = string.Empty;
 
         [ViewVariables]
-        [YamlField("loopedSound")]
+        [DataField("loopedSound")]
         protected string LoopedSound { get; set; } = string.Empty;
 
         [ViewVariables]
-        [YamlField("dieSound")]
+        [DataField("dieSound")]
         protected string DieSound { get; set; } = string.Empty;
     }
 }

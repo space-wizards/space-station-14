@@ -13,6 +13,6 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         public override string Name => "GasMixtureHolder";
 
-        [ViewVariables] [YamlField("air")] public GasMixture Air { get; set; } = new GasMixture();
+        [ViewVariables] [DataField("air")] public GasMixture Air { get; set; } = new GasMixture();
     }
 }

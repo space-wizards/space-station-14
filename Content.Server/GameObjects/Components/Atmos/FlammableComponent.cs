@@ -36,11 +36,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         public float FireStacks { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("fireSpread")]
+        [DataField("fireSpread")]
         public bool FireSpread { get; private set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("canResistFire")]
+        [DataField("canResistFire")]
         public bool CanResistFire { get; private set; } = false;
 
         public void Ignite()

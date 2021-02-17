@@ -25,10 +25,10 @@ namespace Content.Server.GameObjects.Components.Gravity
     {
         [ComponentDependency] private readonly AppearanceComponent? _appearance = default!;
 
-        [YamlField("switchedOn")]
+        [DataField("switchedOn")]
         private bool _switchedOn = true;
 
-        [YamlField("intact")]
+        [DataField("intact")]
         private bool _intact = true;
 
         private GravityGeneratorStatus _status;

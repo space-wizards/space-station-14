@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <summary>
         /// Tool is functional only in allowed slots
         /// </summary>
-        [YamlField("allowedSlots")]
+        [DataField("allowedSlots")]
         private EquipmentSlotDefines.SlotFlags _allowedSlots = EquipmentSlotDefines.SlotFlags.MASK;
 
         public override string Name => "BreathMask";

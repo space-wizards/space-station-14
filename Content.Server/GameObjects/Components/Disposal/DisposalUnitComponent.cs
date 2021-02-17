@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Prevents it from flushing if it is not equal to or bigger than 1.
         /// </summary>
         [ViewVariables]
-        [YamlField("pressure")]
+        [DataField("pressure")]
         private float _pressure;
 
         private bool _engaged;
@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Delay from trying to enter disposals ourselves.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("entryDelay")]
+        [DataField("entryDelay")]
         private float _entryDelay = 0.5f;
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         private (PressureState State, string Localized) _locState;
 
-        [YamlField("air")]
+        [DataField("air")]
         public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
 
         public override bool CanInsert(IEntity entity)

@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Research
         /// </summary>
         [ViewVariables]
         public bool Static => _static;
-        [YamlField("static")]
+        [DataField("static")]
         private bool _static = false;
 
         public override ComponentState GetComponentState()

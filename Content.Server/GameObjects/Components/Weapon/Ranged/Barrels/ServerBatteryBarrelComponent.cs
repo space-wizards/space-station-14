@@ -30,21 +30,21 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override uint? NetID => ContentNetIDs.BATTERY_BARREL;
 
         // The minimum change we need before we can fire
-        [YamlField("lowerChargeLimit")]
+        [DataField("lowerChargeLimit")]
         [ViewVariables] private float _lowerChargeLimit = 10;
-        [YamlField("fireCost")]
+        [DataField("fireCost")]
         [ViewVariables] private int _baseFireCost = 300;
         // What gets fired
-        [YamlField("ammoPrototype")]
+        [DataField("ammoPrototype")]
         [ViewVariables] private string _ammoPrototype;
 
         [ViewVariables] public IEntity PowerCellEntity => _powerCellContainer.ContainedEntity;
         public BatteryComponent PowerCell => _powerCellContainer.ContainedEntity?.GetComponent<BatteryComponent>();
         private ContainerSlot _powerCellContainer;
         private ContainerSlot _ammoContainer;
-        [YamlField("powerCellPrototype")]
+        [DataField("powerCellPrototype")]
         private string _powerCellPrototype = default;
-        [YamlField("powerCellRemovable")]
+        [DataField("powerCellRemovable")]
         [ViewVariables] private bool _powerCellRemovable = default;
 
         public override int ShotsLeft
@@ -80,9 +80,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private AppearanceComponent _appearanceComponent;
 
         // Sounds
-        [YamlField("soundPowerCellInsert")]
+        [DataField("soundPowerCellInsert")]
         private string _soundPowerCellInsert = default;
-        [YamlField("soundPowerCellEject")]
+        [DataField("soundPowerCellEject")]
         private string _soundPowerCellEject = default;
 
         public override ComponentState GetComponentState()

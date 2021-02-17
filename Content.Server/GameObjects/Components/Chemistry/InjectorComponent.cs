@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// device that can only inject.
         /// </summary>
         [ViewVariables]
-        [YamlField("injectOnly")]
+        [DataField("injectOnly")]
         private bool _injectOnly;
 
         /// <summary>
@@ -37,14 +37,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// attempt to inject it's entire contents upon use.
         /// </summary>
         [ViewVariables]
-        [YamlField("transferAmount")]
+        [DataField("transferAmount")]
         private ReagentUnit _transferAmount = ReagentUnit.New(5);
 
         /// <summary>
         /// Initial storage volume of the injector
         /// </summary>
         [ViewVariables]
-        [YamlField("initialMaxVolume")]
+        [DataField("initialMaxVolume")]
         private ReagentUnit _initialMaxVolume = ReagentUnit.New(15);
 
         private InjectorToggleMode _toggleState;

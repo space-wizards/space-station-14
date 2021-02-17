@@ -15,12 +15,12 @@ namespace Content.Server.GameObjects.Components
     {
         public override string Name => "RandomSpriteColor";
 
-        [YamlField("selected")]
+        [DataField("selected")]
         private string _selectedColor;
-        [YamlField("state")]
+        [DataField("state")]
         private string _baseState = "error";
 
-        [YamlField("colors")] private Dictionary<string, Color> _colors = new();
+        [DataField("colors")] private Dictionary<string, Color> _colors = new();
 
         void IMapInit.MapInit()
         {

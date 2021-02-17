@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components
     public sealed class ComputerComponent : SharedComputerComponent, IMapInit
     {
         [ViewVariables]
-        [YamlField("board")]
+        [DataField("board")]
         private string _boardPrototype;
 
         public override void Initialize()

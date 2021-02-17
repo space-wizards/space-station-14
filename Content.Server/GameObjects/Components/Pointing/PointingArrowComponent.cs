@@ -17,14 +17,14 @@ namespace Content.Server.GameObjects.Components.Pointing
         ///     The current amount of seconds left on this arrow.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("duration")]
+        [DataField("duration")]
         private float _duration = 4;
 
         /// <summary>
         ///     The amount of seconds before the arrow changes movement direction.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("step")]
+        [DataField("step")]
         private float _step = 0.5f;
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Pointing
         ///     by the frame time.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("speed")]
+        [DataField("speed")]
         private float _speed = 1;
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Pointing
         ///     <see cref="RoguePointingArrowComponent"/> when its duration runs out.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("rogue")]
+        [DataField("rogue")]
         private bool _rogue = default;
 
         protected override void Startup()

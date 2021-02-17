@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             get => _volumePumpRate;
             set => _volumePumpRate = Math.Clamp(value, 0, MaxVolumePumpRate);
         }
-        [YamlField("startingVolumePumpRate")]
+        [DataField("startingVolumePumpRate")]
         private int _volumePumpRate;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             get => _maxVolumePumpRate;
             set => Math.Max(value, 0);
         }
-        [YamlField("maxVolumePumpRate")]
+        [DataField("maxVolumePumpRate")]
         private int _maxVolumePumpRate = 100;
 
         public override string Name => "VolumePump";

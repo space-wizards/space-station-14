@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Power
         public override string Name => "PowerCell";
 
         [ViewVariables] public PowerCellSize CellSize => _cellSize;
-        [YamlField("cellSize")]
+        [DataField("cellSize")]
         private PowerCellSize _cellSize = PowerCellSize.Small;
 
         [ViewVariables] public bool IsRigged { get; private set; }

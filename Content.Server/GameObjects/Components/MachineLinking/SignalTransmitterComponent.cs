@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
         private List<SignalReceiverComponent> _unresolvedReceivers;
         private List<SignalReceiverComponent> _receivers;
-        [YamlField("range")]
+        [DataField("range")]
         [ViewVariables] private float _range = 10;
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             }
         }
 
-        [YamlField("signalReceivers")]
+        [DataField("signalReceivers")]
         private List<EntityUid> signalReceiversReceiver
         {
             get

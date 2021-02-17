@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             get => _pressurePumpTarget;
             set => _pressurePumpTarget = Math.Clamp(value, 0, MaxPressurePumpTarget);
         }
-        [YamlField("startingPressurePumpTarget")]
+        [DataField("startingPressurePumpTarget")]
         private int _pressurePumpTarget;
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             get => _maxPressurePumpTarget;
             set => Math.Max(value, 0);
         }
-        [YamlField("maxPressurePumpTarget")]
+        [DataField("maxPressurePumpTarget")]
         private int _maxPressurePumpTarget = 100;
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             get => _transferRatio;
             set => _transferRatio = Math.Clamp(value, 0, 1);
         }
-        [YamlField("transferRatio")]
+        [DataField("transferRatio")]
         private float _transferRatio = 0.5f;
 
         protected override void PumpGas(GasMixture inletGas, GasMixture outletGas)

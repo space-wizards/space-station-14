@@ -15,10 +15,10 @@ namespace Content.Server.GameObjects.Components
         [Dependency] private readonly IRobustRandom _random = default!;
         public override string Name => "RandomSpriteState";
 
-        [YamlField("spriteStates")]
+        [DataField("spriteStates")]
         private List<string> _spriteStates;
 
-        [YamlField("spriteLayer")]
+        [DataField("spriteLayer")]
         private int _spriteLayer;
 
         public override void Initialize()

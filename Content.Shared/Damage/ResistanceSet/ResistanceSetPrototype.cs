@@ -15,11 +15,11 @@ namespace Content.Shared.Damage.ResistanceSet
     [Serializable, NetSerializable]
     public class ResistanceSetPrototype : IPrototype, IIndexedPrototype
     {
-        [YamlField("coefficients")]
+        [DataField("coefficients")]
         private Dictionary<DamageType, float> _coefficients;
-        [YamlField("flatReductions")]
+        [DataField("flatReductions")]
         private Dictionary<DamageType, int> _flatReductions;
-        [YamlField("id")]
+        [DataField("id")]
         private string _id;
 
         [ViewVariables] public Dictionary<DamageType, float> Coefficients => _coefficients;

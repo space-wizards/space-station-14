@@ -20,7 +20,7 @@ namespace Content.Client.GameObjects.Components.Clothing
     [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent
     {
-        [YamlField("femaleMask")]
+        [DataField("femaleMask")]
         private FemaleClothingMask _femaleMask = FemaleClothingMask.UniformFull;
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
@@ -28,7 +28,7 @@ namespace Content.Client.GameObjects.Components.Clothing
         private string? _clothingEquippedPrefix;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("ClothingPrefix")]
+        [DataField("ClothingPrefix")]
         public string? ClothingEquippedPrefix
         {
             get => _clothingEquippedPrefix;

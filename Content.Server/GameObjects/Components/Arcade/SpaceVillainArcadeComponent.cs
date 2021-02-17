@@ -38,18 +38,18 @@ namespace Content.Server.GameObjects.Components.Arcade
         [ViewVariables] private bool _enemyInvincibilityFlag;
         [ViewVariables] private SpaceVillainGame _game = null!;
 
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("possibleFightVerbs")] private List<string> _possibleFightVerbs = new List<string>()
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleFightVerbs")] private List<string> _possibleFightVerbs = new List<string>()
             {"Defeat", "Annihilate", "Save", "Strike", "Stop", "Destroy", "Robust", "Romance", "Pwn", "Own"};
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("possibleFirstEnemyNames")] private List<string> _possibleFirstEnemyNames = new List<string>(){
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleFirstEnemyNames")] private List<string> _possibleFirstEnemyNames = new List<string>(){
             "the Automatic", "Farmer", "Lord", "Professor", "the Cuban", "the Evil", "the Dread King",
             "the Space", "Lord", "the Great", "Duke", "General"
         };
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("possibleLastEnemyNames")] private List<string> _possibleLastEnemyNames = new List<string>()
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleLastEnemyNames")] private List<string> _possibleLastEnemyNames = new List<string>()
         {
             "Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid",
             "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn"
         };
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("possibleRewards")] private List<string> _possibleRewards = new List<string>()
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleRewards")] private List<string> _possibleRewards = new List<string>()
         {
             "ToyMouse", "ToyAi", "ToyNuke", "ToyAssistant", "ToyGriffin", "ToyHonk", "ToyIan",
             "ToyMarauder", "ToyMauler", "ToyGygax", "ToyOdysseus", "ToyOwlman", "ToyDeathRipley",

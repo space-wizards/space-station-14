@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Research
         /// </summary>
         [ViewVariables]
         public int StorageLimit => _storageLimit;
-        [YamlField("StorageLimit")]
+        [DataField("StorageLimit")]
         private int _storageLimit = -1;
 
         public override ComponentState GetComponentState()

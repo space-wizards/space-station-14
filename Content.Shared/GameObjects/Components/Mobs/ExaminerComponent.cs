@@ -15,7 +15,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public override string Name => "Examiner";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("DoRangeCheck")]
+        [DataField("DoRangeCheck")]
         private bool _doRangeCheck = true;
 
         /// <summary>

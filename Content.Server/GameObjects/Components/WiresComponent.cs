@@ -132,19 +132,19 @@ namespace Content.Server.GameObjects.Components
         private readonly List<WireLetter> _availableLetters =
             new((WireLetter[]) Enum.GetValues(typeof(WireLetter)));
 
-        [YamlField("BoardName")]
+        [DataField("BoardName")]
         private string _boardName = "Wires";
 
-        [YamlField("SerialNumber")]
+        [DataField("SerialNumber")]
         private string? _serialNumber;
 
         // Used to generate wire appearance randomization client side.
         // We honestly don't care what it is or such but do care that it doesn't change between UI re-opens.
         [ViewVariables]
-        [YamlField("WireSeed")]
+        [DataField("WireSeed")]
         private int _wireSeed;
         [ViewVariables]
-        [YamlField("LayoutId")]
+        [DataField("LayoutId")]
         private string? _layoutId = default;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(WiresUiKey.Key);

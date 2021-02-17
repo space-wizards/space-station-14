@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private bool _connected;
         private bool _broken;
-        [YamlField("clangSound")]
+        [DataField("clangSound")]
         private string _clangSound = "/Audio/Effects/clang.ogg";
 
         /// <summary>

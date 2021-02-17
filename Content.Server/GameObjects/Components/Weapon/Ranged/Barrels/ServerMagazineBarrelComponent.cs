@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [DataClassTarget("types")]
         private MagazineType _magazineTypes = default;
         [ViewVariables] public BallisticCaliber Caliber => _caliber;
-        [YamlField("caliber")]
+        [DataField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
 
         public override int ShotsLeft
@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
 
-        [YamlField("magFillPrototype")]
+        [DataField("magFillPrototype")]
         private string _magFillPrototype;
 
         public bool BoltOpen
@@ -121,27 +121,27 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         }
         private bool _boltOpen = true;
 
-        [YamlField("autoEjectMag")]
+        [DataField("autoEjectMag")]
         private bool _autoEjectMag;
         // If the bolt needs to be open before we can insert / remove the mag (i.e. for LMGs)
         public bool MagNeedsOpenBolt => _magNeedsOpenBolt;
-        [YamlField("magNeedsOpenBolt")]
+        [DataField("magNeedsOpenBolt")]
         private bool _magNeedsOpenBolt = default;
 
         private AppearanceComponent _appearanceComponent;
 
         // Sounds
-        [YamlField("soundBoltOpen")]
+        [DataField("soundBoltOpen")]
         private string _soundBoltOpen = default;
-        [YamlField("soundBoltClosed")]
+        [DataField("soundBoltClosed")]
         private string _soundBoltClosed = default;
-        [YamlField("soundRack")]
+        [DataField("soundRack")]
         private string _soundRack = default;
-        [YamlField("soundMagInsert")]
+        [DataField("soundMagInsert")]
         private string _soundMagInsert = default;
-        [YamlField("soundMagEject")]
+        [DataField("soundMagEject")]
         private string _soundMagEject = default;
-        [YamlField("soundAutoEject")]
+        [DataField("soundAutoEject")]
         private string _soundAutoEject = "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg";
 
         private List<MagazineType> GetMagazineTypes()

@@ -10,12 +10,12 @@ namespace Content.Shared.VendingMachines
     [Serializable, NetSerializable, Prototype("vendingMachineInventory")]
     public class VendingMachineInventoryPrototype : IPrototype, IIndexedPrototype
     {
-        [YamlField("id")] private string _id;
-        [YamlField("name")] private string _name;
-        [YamlField("description")] private string _description;
-        [YamlField("animationDuration")] private double _animationDuration;
-        [YamlField("spriteName")] private string _spriteName;
-        [YamlField("startingInventory")] private Dictionary<string, uint> _startingInventory = new();
+        [DataField("id")] private string _id;
+        [DataField("name")] private string _name;
+        [DataField("description")] private string _description;
+        [DataField("animationDuration")] private double _animationDuration;
+        [DataField("spriteName")] private string _spriteName;
+        [DataField("startingInventory")] private Dictionary<string, uint> _startingInventory = new();
 
         public string ID => _id;
         public string Name => _name;

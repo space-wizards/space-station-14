@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Markers
     {
         public override string Name => "WarpPoint";
 
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("location")] public string Location { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("location")] public string Location { get; set; }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {

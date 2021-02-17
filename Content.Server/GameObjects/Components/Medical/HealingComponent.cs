@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Medical
     {
         public override string Name => "Healing";
 
-        [YamlField("heal")] public Dictionary<DamageType, int> Heal { get; private set; } = new();
+        [DataField("heal")] public Dictionary<DamageType, int> Heal { get; private set; } = new();
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {

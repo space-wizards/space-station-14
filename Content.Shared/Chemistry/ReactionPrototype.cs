@@ -19,11 +19,11 @@ namespace Content.Shared.Chemistry
     {
         [Dependency] private readonly IModuleManager _moduleManager = default!;
 
-        [YamlField("id")] private string _id = default!;
-        [YamlField("name")] private string _name = default!;
-        [YamlField("reactants")] private Dictionary<string, ReactantPrototype> _reactants = default!;
-        [YamlField("products")] private Dictionary<string, ReagentUnit> _products = default!;
-        [YamlField("effects")] private List<IReactionEffect> _effects = default!;
+        [DataField("id")] private string _id = default!;
+        [DataField("name")] private string _name = default!;
+        [DataField("reactants")] private Dictionary<string, ReactantPrototype> _reactants = default!;
+        [DataField("products")] private Dictionary<string, ReagentUnit> _products = default!;
+        [DataField("effects")] private List<IReactionEffect> _effects = default!;
 
         public string ID => _id;
         public string Name => _name;
@@ -41,18 +41,18 @@ namespace Content.Shared.Chemistry
         public IReadOnlyList<IReactionEffect> Effects => _effects;
 
         // TODO SERV3: Empty on the client, (de)serialize on the server with module manager is server module
-        [YamlField("sound")] public string? Sound { get; private set; } = "/Audio/Effects/Chemistry/bubbles.ogg";
+        [DataField("sound")] public string? Sound { get; private set; } = "/Audio/Effects/Chemistry/bubbles.ogg";
     }
 
     /// <summary>
     /// Prototype for chemical reaction reactants.
     /// </summary>
-    [YamlDefinition]
+    [DataDefinition]
     public class ReactantPrototype
     {
-        [YamlField("amount")]
+        [DataField("amount")]
         private ReagentUnit _amount = ReagentUnit.New(1);
-        [YamlField("catalyst")]
+        [DataField("catalyst")]
         private bool _catalyst;
 
         /// <summary>

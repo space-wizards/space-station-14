@@ -16,7 +16,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part.Property
         /// <summary>
         ///     Speed in tiles per second.
         /// </summary>
-        [YamlField("speed")]
+        [DataField("speed")]
         public float Speed { get; set; } = 2.6f;
     }
 }

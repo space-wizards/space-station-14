@@ -17,18 +17,18 @@ namespace Content.Shared.GameObjects.Components.Body.Template
     [Serializable, NetSerializable]
     public class BodyTemplatePrototype : IPrototype, IIndexedPrototype
     {
-        [YamlField("id")]
+        [DataField("id")]
         private string _id;
-        [YamlField("name")]
+        [DataField("name")]
         private string _name;
-        [YamlField("centerSlot")]
+        [DataField("centerSlot")]
         private string _centerSlot;
-        [YamlField("slots")]
+        [DataField("slots")]
         private Dictionary<string, BodyPartType> _slots;
         private Dictionary<string, List<string>> _connections;
-        [YamlField("layers")]
+        [DataField("layers")]
         private Dictionary<string, string> _layers;
-        [YamlField("mechanismLayers")]
+        [DataField("mechanismLayers")]
         private Dictionary<string, string> _mechanismLayers;
 
         [ViewVariables] public string ID => _id;
@@ -40,7 +40,7 @@ namespace Content.Shared.GameObjects.Components.Body.Template
         [ViewVariables] public Dictionary<string, BodyPartType> Slots => new(_slots);
 
         [ViewVariables]
-        [YamlField("connections", priority: 2)]
+        [DataField("connections", priority: 2)]
         public Dictionary<string, List<string>> Connections
         {
             get => _connections.ToDictionary(x => x.Key, x => x.Value.ToList());

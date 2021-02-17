@@ -40,15 +40,15 @@ namespace Content.Server.GameObjects.Components.Kitchen
         [Dependency] private readonly RecipeManager _recipeManager = default!;
 
         #region YAMLSERIALIZE
-        [YamlField("cookTime")]
+        [DataField("cookTime")]
         private int _cookTimeDefault = 5;
-        [YamlField("cookTimeMultiplier")]
+        [DataField("cookTimeMultiplier")]
         private int _cookTimeMultiplier = 1000; //For upgrades and stuff I guess?
-        [YamlField("failureResult")]
+        [DataField("failureResult")]
         private string _badRecipeName = "FoodBadRecipe";
-        [YamlField("beginCookingSound")]
+        [DataField("beginCookingSound")]
         private string _startCookingSound = "/Audio/Machines/microwave_start_beep.ogg";
-        [YamlField("foodDoneSound")]
+        [DataField("foodDoneSound")]
         private string _cookingCompleteSound = "/Audio/Machines/microwave_done_beep.ogg";
 #endregion
 

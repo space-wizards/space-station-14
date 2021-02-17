@@ -53,7 +53,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         // cached actions component of the holder, since we'll need to access it frequently
         private SharedActionsComponent? _holderActionsComponent;
 
-        [YamlField("actions")]
+        [DataField("actions")]
         private List<ItemActionConfig> _actionConfigs
         {
             get => internalActionConfigs;

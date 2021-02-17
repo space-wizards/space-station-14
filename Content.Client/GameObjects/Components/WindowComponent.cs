@@ -15,7 +15,7 @@ namespace Content.Client.GameObjects.Components
     [ComponentReference(typeof(SharedWindowComponent))]
     public sealed class WindowComponent : SharedWindowComponent
     {
-        [YamlField("base")]
+        [DataField("base")]
         private string _stateBase = default;
         private ISpriteComponent _sprite;
         private SnapGridComponent _snapGrid;

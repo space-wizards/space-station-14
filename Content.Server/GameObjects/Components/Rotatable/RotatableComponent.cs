@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
         ///     If true, this entity can be rotated even while anchored.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("rotateWhileAnchored")]
+        [DataField("rotateWhileAnchored")]
         public bool RotateWhileAnchored { get; private set; }
 
         private void TryRotate(IEntity user, Angle angle)

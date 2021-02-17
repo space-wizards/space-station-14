@@ -7,16 +7,16 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Construction
 {
     [Serializable]
-    [YamlDefinition]
+    [DataDefinition]
     public class ConstructionGraphNode
     {
-        [YamlField("actions", serverOnly: true)]
+        [DataField("actions", serverOnly: true)]
         private List<IGraphAction> _actions = new();
-        [YamlField("edges")]
+        [DataField("edges")]
         private List<ConstructionGraphEdge> _edges = new();
 
         [ViewVariables]
-        [YamlField("node")]
+        [DataField("node")]
         public string Name { get; private set; }
 
         [ViewVariables]
@@ -26,7 +26,7 @@ namespace Content.Shared.Construction
         public IReadOnlyList<IGraphAction> Actions => _actions;
 
         [ViewVariables]
-        [YamlField("entity")]
+        [DataField("entity")]
         public string Entity { get; private set; }
 
         public ConstructionGraphEdge GetEdge(string target)

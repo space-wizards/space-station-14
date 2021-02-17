@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     The angles to connect to.
         /// </summary>
         [ViewVariables]
-        [YamlField("degrees")]
+        [DataField("degrees")]
         private List<Angle> _degrees;
 
         public override string Name => "DisposalJunction";

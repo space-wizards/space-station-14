@@ -44,10 +44,10 @@ namespace Content.Server.GameObjects.Components.Fluids
         // Dumping in a bucket requires 1 click
         // Long-term you'd probably use a cooldown and start the pickup once we have some form of global cooldown
         public ReagentUnit PickupAmount => _pickupAmount;
-        [YamlField("pickup_amount")]
+        [DataField("pickup_amount")]
         private ReagentUnit _pickupAmount = ReagentUnit.New(5);
 
-        [YamlField("pickup_sound")]
+        [DataField("pickup_sound")]
         private string _pickupSound = "/Audio/Effects/Fluids/slosh.ogg";
 
         public override void Initialize()

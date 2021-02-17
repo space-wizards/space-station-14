@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     [RegisterComponent]
     public class MindComponent : Component, IExamine
     {
-        [YamlField("show_examine_info")]
+        [DataField("show_examine_info")]
         private bool _showExamineInfo;
 
         /// <inheritdoc />
@@ -46,14 +46,14 @@ namespace Content.Server.GameObjects.Components.Mobs
         ///     Whether examining should show information about the mind or not.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("showExamineInfo")]
+        [DataField("showExamineInfo")]
         public bool ShowExamineInfo { get; set; }
 
         /// <summary>
         ///     Whether the mind will be put on a ghost after this component is shutdown.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("ghostOnShutdown")]
+        [DataField("ghostOnShutdown")]
         public bool GhostOnShutdown { get; set; } = true;
 
         /// <summary>

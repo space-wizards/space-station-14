@@ -35,12 +35,12 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
         private TimeSpan _lastThunk;
-        [YamlField("hasLampOnSpawn")]
+        [DataField("hasLampOnSpawn")]
         private bool _hasLampOnSpawn = true;
 
-        [ViewVariables] [YamlField("on")] private bool _on = true;
+        [ViewVariables] [DataField("on")] private bool _on = true;
 
-        [YamlField("bulb")]
+        [DataField("bulb")]
         private LightBulbType BulbType = LightBulbType.Tube;
         [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
 

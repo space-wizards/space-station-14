@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Construction
     {
         public override string Name => "Machine";
 
-        [YamlField("board")]
+        [DataField("board")]
         public string BoardPrototype { get; private set; }
 
         private Container _boardContainer;

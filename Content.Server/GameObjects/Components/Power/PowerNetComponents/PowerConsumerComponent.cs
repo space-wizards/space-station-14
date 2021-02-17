@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int DrawRate { get => _drawRate; set => SetDrawRate(value); }
-        [YamlField("drawRate")]
+        [DataField("drawRate")]
         private int _drawRate;
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public Priority Priority { get => _priority; set => SetPriority(value); }
-        [YamlField("priority")]
+        [DataField("priority")]
         private Priority _priority = Priority.First;
 
         /// <summary>

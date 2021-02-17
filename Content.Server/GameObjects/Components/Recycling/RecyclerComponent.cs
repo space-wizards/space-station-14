@@ -37,13 +37,13 @@ namespace Content.Server.GameObjects.Components.Recycling
         /// <summary>
         ///     Whether or not sentient beings will be recycled
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("safe")]
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("safe")]
         private bool _safe = true;
 
         /// <summary>
         ///     The percentage of material that will be recovered
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("efficiency")]
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("efficiency")]
         private float _efficiency = 0.25f;
 
         private bool Powered =>

@@ -15,7 +15,7 @@ namespace Content.Client.GameObjects.Components
         public override string Name => "ReinforcedWall";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("reinforcedBase")]
+        [DataField("reinforcedBase")]
         private string _reinforcedStateBase = default;
 
         protected override void Startup()

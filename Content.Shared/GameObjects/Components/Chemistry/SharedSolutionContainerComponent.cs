@@ -27,13 +27,13 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public sealed override uint? NetID => ContentNetIDs.SOLUTION;
 
         [ViewVariables]
-        [YamlField("contents")]
+        [DataField("contents")]
         public Solution Solution { get; private set; } = new();
 
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("maxVol")]
+        [DataField("maxVol")]
         public ReagentUnit MaxVolume { get; set; } = new ReagentUnit.New(0);
 
         [ViewVariables]
@@ -52,11 +52,11 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ///     If reactions will be checked for when adding reagents to the container.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("canReact")]
+        [DataField("canReact")]
         public bool CanReact { get; set; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("caps")]
+        [DataField("caps")]
         public SolutionContainerCaps Capabilities { get; set; }
 
         public bool CanExamineContents => Capabilities.HasCap(SolutionContainerCaps.CanExamine);

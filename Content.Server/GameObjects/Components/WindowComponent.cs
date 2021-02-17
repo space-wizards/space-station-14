@@ -30,10 +30,10 @@ namespace Content.Server.GameObjects.Components
 
         [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _lastKnockTime;
 
-        [YamlField("knockDelay")] [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("knockDelay")] [ViewVariables(VVAccess.ReadWrite)]
         private TimeSpan _knockDelay = TimeSpan.FromSeconds(0.5);
 
-        [YamlField("rateLimitedKnocking")]
+        [DataField("rateLimitedKnocking")]
         [ViewVariables(VVAccess.ReadWrite)] private bool _rateLimitedKnocking = true;
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)

@@ -50,13 +50,13 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         [ViewVariables(VVAccess.ReadWrite)] private int _fireShotCounter;
 
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("fireSound")] private string _fireSound = "/Audio/Weapons/emitter.ogg";
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("boltType")] private string _boltType = "EmitterBolt";
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("powerUseActive")] private int _powerUseActive = 500;
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("fireBurstSize")] private int _fireBurstSize = 3;
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("fireInterval")] private TimeSpan _fireInterval = TimeSpan.FromSeconds(2);
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("fireBurstDelayMin")] private TimeSpan _fireBurstDelayMin = TimeSpan.FromSeconds(2);
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("fireBurstDelayMax")] private TimeSpan _fireBurstDelayMax = TimeSpan.FromSeconds(10);
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireSound")] private string _fireSound = "/Audio/Weapons/emitter.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("boltType")] private string _boltType = "EmitterBolt";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("powerUseActive")] private int _powerUseActive = 500;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstSize")] private int _fireBurstSize = 3;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireInterval")] private TimeSpan _fireInterval = TimeSpan.FromSeconds(2);
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstDelayMin")] private TimeSpan _fireBurstDelayMin = TimeSpan.FromSeconds(2);
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstDelayMax")] private TimeSpan _fireBurstDelayMax = TimeSpan.FromSeconds(10);
 
         public override void Initialize()
         {

@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     public class SecureEntityStorageComponent : EntityStorageComponent
     {
         public override string Name => "SecureEntityStorage";
-        [YamlField("locked")]
+        [DataField("locked")]
         private bool _locked = true;
 
         [ViewVariables(VVAccess.ReadWrite)]

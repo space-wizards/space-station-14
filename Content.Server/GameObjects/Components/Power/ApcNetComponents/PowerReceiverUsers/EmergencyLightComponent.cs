@@ -38,13 +38,13 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         private EmergencyLightState _state = EmergencyLightState.Empty;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("wattage")]
+        [DataField("wattage")]
         private float _wattage = 5;
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("chargingWattage")]
+        [DataField("chargingWattage")]
         private float _chargingWattage = 60;
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("chargingEfficiency")]
+        [DataField("chargingEfficiency")]
         private float _chargingEfficiency = 0.85f;
 
         /// <summary>

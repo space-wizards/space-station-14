@@ -34,21 +34,21 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             }
         }
 
-        [YamlField("pumpEnabled")]
+        [DataField("pumpEnabled")]
         private bool _pumpEnabled;
 
         /// <summary>
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="PipeNode"/> on this entity.
         /// </summary>
         [ViewVariables]
-        [YamlField("initialInletDirection")]
+        [DataField("initialInletDirection")]
         private PipeDirection _initialInletDirection = PipeDirection.None;
 
         /// <summary>
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="PipeNode"/> on this entity.
         /// </summary>
         [ViewVariables]
-        [YamlField("initialOutletDirection")]
+        [DataField("initialOutletDirection")]
         private PipeDirection _initialOutletDirection = PipeDirection.None;
 
         [ViewVariables]

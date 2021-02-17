@@ -16,9 +16,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
     {
         public override string Name => "FlashProjectile";
 
-        [YamlField("range")]
+        [DataField("range")]
         private float _range = 1.0f;
-        [YamlField("duration")]
+        [DataField("duration")]
         private float _duration = 8.0f;
 
         private bool _flashed;

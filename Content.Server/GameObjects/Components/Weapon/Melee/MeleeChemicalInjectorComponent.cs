@@ -18,12 +18,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         public override string Name => "MeleeChemicalInjector";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("transferAmount")]
+        [DataField("transferAmount")]
         public ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(1);
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float TransferEfficiency { get => _transferEfficiency; set => _transferEfficiency = Math.Clamp(value, 0, 1); }
-        [YamlField("transferEfficiency")]
+        [DataField("transferEfficiency")]
         private float _transferEfficiency = 1f;
 
         public override void HandleMessage(ComponentMessage message, IComponent component)

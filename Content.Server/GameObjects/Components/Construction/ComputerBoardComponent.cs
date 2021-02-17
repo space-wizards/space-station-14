@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Construction
         public override string Name => "ComputerBoard";
 
         [ViewVariables]
-        [YamlField("prototype")]
+        [DataField("prototype")]
         public string Prototype { get; private set; }
     }
 }

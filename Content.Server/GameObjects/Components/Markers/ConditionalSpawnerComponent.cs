@@ -25,15 +25,15 @@ namespace Content.Server.GameObjects.Components.Markers
         public override string Name => "ConditionalSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("prototypes")]
+        [DataField("prototypes")]
         public List<string> Prototypes { get; set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("gameRules")]
+        [DataField("gameRules")]
         private readonly List<string> _gameRules = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("chance")]
+        [DataField("chance")]
         public float Chance { get; set; } = 1.0f;
 
         public IEnumerable<Type> GameRules

@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Sound
         private readonly Dictionary<ScheduledSound, IPlayingAudioStream> _audioStreams = new();
         private AudioSystem _audioSystem;
 
-        [YamlField("schedules", true)]
+        [DataField("schedules", true)]
         private List<ScheduledSound> _scheduledSounds
         {
             set

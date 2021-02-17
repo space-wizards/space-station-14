@@ -24,11 +24,11 @@ namespace Content.Server.GameObjects.Components
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         //TODO: useSound
-        [YamlField("useSound")]
+        [DataField("useSound")]
         private string? _useSound;
         [ViewVariables(VVAccess.ReadWrite)]
         public int Charges { get; set; }
-        [YamlField("capacity")]
+        [DataField("capacity")]
         private int _capacity = 30;
         [ViewVariables(VVAccess.ReadWrite)]
         public int Capacity { get => _capacity; set => _capacity = value; }

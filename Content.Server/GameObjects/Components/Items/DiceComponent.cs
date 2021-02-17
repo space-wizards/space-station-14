@@ -23,17 +23,17 @@ namespace Content.Server.GameObjects.Components.Items
 
         public override string Name => "Dice";
 
-        [YamlField("step")]
+        [DataField("step")]
         private int _step = 1;
         private int _sides = 20;
         private int _currentSide = 20;
         [ViewVariables]
-        [YamlField("diceSoundCollection")]
+        [DataField("diceSoundCollection")]
         public string _soundCollectionName = "dice";
         [ViewVariables]
         public int Step => _step;
         [ViewVariables]
-        [YamlField("sides")]
+        [DataField("sides")]
         public int Sides
         {
             get => _sides;

@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int PowerTransferRange { get => _powerTransferRange; set => SetPowerTransferRange(value); }
-        [YamlField("powerTransferRange")]
+        [DataField("powerTransferRange")]
         private int _powerTransferRange = 3;
 
         [ViewVariables]

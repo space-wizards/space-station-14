@@ -27,9 +27,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override string Name => "FoodContainer";
 
         private AppearanceComponent _appearance;
-        [YamlField("prototypes")]
+        [DataField("prototypes")]
         private Dictionary<string, int> _prototypes = default;
-        [YamlField("capacity")]
+        [DataField("capacity")]
         private uint _capacity = 5;
 
         public int Capacity => (int)_capacity;

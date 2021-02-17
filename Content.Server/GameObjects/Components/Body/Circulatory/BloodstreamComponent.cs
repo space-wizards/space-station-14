@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
         /// <summary>
         ///     Max volume of internal solution storage
         /// </summary>
-        [YamlField("maxVolume")]
+        [DataField("maxVolume")]
         [ViewVariables] private ReagentUnit _initialMaxVolume = ReagentUnit.New(250);
 
         /// <summary>

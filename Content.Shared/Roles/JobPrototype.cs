@@ -18,13 +18,13 @@ namespace Content.Shared.Roles
     {
         private string _name = string.Empty;
 
-        [YamlField("id")]
+        [DataField("id")]
         public string ID { get; private set; } = string.Empty;
 
         /// <summary>
         ///     The name of this job as displayed to players.
         /// </summary>
-        [YamlField("name")]
+        [DataField("name")]
         public string Name
         {
             get => _name;
@@ -35,32 +35,32 @@ namespace Content.Shared.Roles
         ///     Whether this job is a head.
         ///     The job system will try to pick heads before other jobs on the same priority level.
         /// </summary>
-        [YamlField("IsHead")]
+        [DataField("IsHead")]
         public bool IsHead { get; private set; }
 
         /// <summary>
         ///     The total amount of people that can start with this job round-start.
         /// </summary>
-        [YamlField("spawnPositions")]
+        [DataField("spawnPositions")]
         public int SpawnPositions { get; private set; }
 
         /// <summary>
         ///     The total amount of positions available.
         /// </summary>
-        [YamlField("positions")]
+        [DataField("positions")]
         public int TotalPositions { get; private set; }
 
-        [YamlField("startingGear")]
+        [DataField("startingGear")]
         public string? StartingGear { get; private set; }
 
-        [YamlField("icon")]
+        [DataField("icon")]
         public string? Icon { get; private set; }
 
-        [YamlField("special")]
+        [DataField("special")]
         public JobSpecial? Special { get; private set; }
 
-        [YamlField("departments")] public IReadOnlyCollection<string> Departments { get; private set; } = Array.Empty<string>();
-        [YamlField("access")]
+        [DataField("departments")] public IReadOnlyCollection<string> Departments { get; private set; } = Array.Empty<string>();
+        [DataField("access")]
         public IReadOnlyCollection<string> Access { get; private set; } = ImmutableArray<string>.Empty;
     }
 }

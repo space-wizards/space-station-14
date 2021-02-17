@@ -50,24 +50,24 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private Container _ammoContainer;
 
         [ViewVariables]
-        [YamlField("caliber")]
+        [DataField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
 
         [ViewVariables]
-        [YamlField("fillPrototype")]
+        [DataField("fillPrototype")]
         private string _fillPrototype;
         [ViewVariables]
         private int _unspawnedCount;
 
-        [YamlField("manualCycle")]
+        [DataField("manualCycle")]
         private bool _manualCycle = true;
 
         private AppearanceComponent _appearanceComponent;
 
         // Sounds
-        [YamlField("soundCycle")]
+        [DataField("soundCycle")]
         private string _soundCycle = "/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg";
-        [YamlField("soundInsert")]
+        [DataField("soundInsert")]
         private string _soundInsert = "/Audio/Weapons/Guns/MagIn/bullet_insert.ogg";
 
         void IMapInit.MapInit()

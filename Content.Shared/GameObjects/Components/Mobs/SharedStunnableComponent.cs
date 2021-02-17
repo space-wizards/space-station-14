@@ -32,21 +32,21 @@ namespace Content.Shared.GameObjects.Components.Mobs
               (TimeSpan.FromSeconds(Math.Max(StunnedTimer, Math.Max(KnockdownTimer, SlowdownTimer))));
 
         private bool _canHelp = true;
-        [YamlField("stunCap")]
+        [DataField("stunCap")]
         protected float _stunCap = 20f;
-        [YamlField("knockdownCap")]
+        [DataField("knockdownCap")]
         protected float _knockdownCap = 20f;
-        [YamlField("slowdownCap")]
+        [DataField("slowdownCap")]
         protected float _slowdownCap = 20f;
         private float _helpKnockdownRemove = 1f;
-        [YamlField("helpInterval")]
+        [DataField("helpInterval")]
         private float _helpInterval = 1f;
 
         protected float StunnedTimer;
         protected float KnockdownTimer;
         protected float SlowdownTimer;
 
-        [YamlField("stunAlertId")]
+        [DataField("stunAlertId")]
         private string _stunAlertId = "stun";
 
         protected CancellationTokenSource StatusRemoveCancellation = new();

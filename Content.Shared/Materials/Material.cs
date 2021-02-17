@@ -115,7 +115,7 @@ namespace Content.Shared.Materials
     [Prototype("material")]
     public class MaterialPrototype : IPrototype, IIndexedPrototype, IExposeData
     {
-        [YamlField("id")]
+        [DataField("id")]
         public string ID { get; private set; }
 
         public Material Material { get; private set; }

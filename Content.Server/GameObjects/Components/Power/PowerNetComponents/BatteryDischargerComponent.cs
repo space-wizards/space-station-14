@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         [ViewVariables(VVAccess.ReadWrite)]
         public int ActiveSupplyRate { get => _activeSupplyRate; set => SetActiveSupplyRate(value); }
 
-        [YamlField("activeSupplyRate")]
+        [DataField("activeSupplyRate")]
         private int _activeSupplyRate = 50;
 
         public override void Initialize()

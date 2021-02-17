@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override uint? NetID => ContentNetIDs.REVOLVER_BARREL;
 
         [ViewVariables]
-        [YamlField("caliber")]
+        [DataField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
         private Container _ammoContainer;
         [ViewVariables]
@@ -45,17 +45,17 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         private AppearanceComponent _appearanceComponent;
         [ViewVariables]
-        [YamlField("fillPrototype")]
+        [DataField("fillPrototype")]
         private string _fillPrototype;
         [ViewVariables]
         private int _unspawnedCount;
 
         // Sounds
-        [YamlField("soundEject")]
+        [DataField("soundEject")]
         private string _soundEject = "/Audio/Weapons/Guns/MagOut/revolver_magout.ogg";
-        [YamlField("soundInsert")]
+        [DataField("soundInsert")]
         private string _soundInsert = "/Audio/Weapons/Guns/MagIn/revolver_magin.ogg";
-        [YamlField("soundSpin")]
+        [DataField("soundSpin")]
         private string _soundSpin = "/Audio/Weapons/Guns/Misc/revolver_spin.ogg";
 
         public override ComponentState GetComponentState()

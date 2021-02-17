@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
 
         private string? _entity => _internalEntity ?? Owner.Prototype?.ID;
 
-        [YamlField("entity")]
+        [DataField("entity")]
         private string? _internalEntity;
 
         private void TryFlip(IEntity user)

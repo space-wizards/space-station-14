@@ -16,9 +16,9 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
     [Serializable, NetSerializable, Prototype("reagentDispenserInventory")]
     public class ReagentDispenserInventoryPrototype : IPrototype, IIndexedPrototype
     {
-        [YamlField("id")]
+        [DataField("id")]
         private string _id;
-        [YamlField("inventory")]
+        [DataField("inventory")]
         private List<string> _inventory = new();
 
         public string ID => _id;

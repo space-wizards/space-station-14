@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     {
         public override string Name => "AmmoBox";
 
-        [YamlField("caliber")]
+        [DataField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
         public int Capacity
         {
@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
         }
 
-        [YamlField("capacity")]
+        [DataField("capacity")]
         private int _capacity = 30;
 
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         private Container _ammoContainer;
         private int _unspawnedCount;
 
-        [YamlField("fillPrototype")]
+        [DataField("fillPrototype")]
         private string _fillPrototype;
 
         public override void Initialize()

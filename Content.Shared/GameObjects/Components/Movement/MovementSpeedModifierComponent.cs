@@ -38,11 +38,11 @@ namespace Content.Shared.GameObjects.Components.Movement
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("baseWalkSpeed")]
+        [DataField("baseWalkSpeed")]
         public float BaseWalkSpeed { get; set; } = 4;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("baseSprintSpeed")]
+        [DataField("baseSprintSpeed")]
         public float BaseSprintSpeed { get; set; } = 7;
 
         [ViewVariables]

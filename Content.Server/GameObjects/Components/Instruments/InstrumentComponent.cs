@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Instruments
         [ViewVariables]
         private IPlayerSession? _instrumentPlayer;
 
-        [YamlField("handheld")]
+        [DataField("handheld")]
         private bool _handheld;
 
         [ViewVariables]
@@ -63,15 +63,15 @@ namespace Content.Server.GameObjects.Components.Instruments
         [ViewVariables]
         private int _midiEventCount = 0;
 
-        [YamlField("program")]
+        [DataField("program")]
         private byte _instrumentProgram = 1;
-        [YamlField("bank")]
+        [DataField("bank")]
         private byte _instrumentBank;
-        [YamlField("allowPercussion")]
+        [DataField("allowPercussion")]
         private bool _allowPercussion;
-        [YamlField("allowProgramChange")]
+        [DataField("allowProgramChange")]
         private bool _allowProgramChange;
-        [YamlField("respectMidiLimits")]
+        [DataField("respectMidiLimits")]
         private bool _respectMidiLimits = true;
 
         public override byte InstrumentProgram { get => _instrumentProgram;

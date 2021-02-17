@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalBendComponent : DisposalTubeComponent
     {
-        [YamlField("sideDegrees")]
+        [DataField("sideDegrees")]
         private int _sideDegrees = -90;
 
         public override string Name => "DisposalBend";

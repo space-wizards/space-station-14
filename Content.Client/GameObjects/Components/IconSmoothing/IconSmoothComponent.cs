@@ -27,11 +27,11 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
     [RegisterComponent]
     public class IconSmoothComponent : Component
     {
-        [YamlField("key")]
+        [DataField("key")]
         private string _smoothKey = default;
-        [YamlField("base")]
+        [DataField("base")]
         private string _stateBase = "";
-        [YamlField("mode")]
+        [DataField("mode")]
         private IconSmoothingMode _mode = IconSmoothingMode.Corners;
 
         public override string Name => "IconSmooth";

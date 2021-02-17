@@ -38,23 +38,23 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         private InstrumentSystem _instrumentSystem = default!;
 
-        [YamlField("program")]
+        [DataField("program")]
         private byte _instrumentProgram = 1;
 
-        [YamlField("bank")]
+        [DataField("bank")]
         private byte _instrumentBank;
 
         private uint _sequenceDelay;
 
         private uint _sequenceStartTick;
 
-        [YamlField("allowPercussion")]
+        [DataField("allowPercussion")]
         private bool _allowPercussion;
 
-        [YamlField("allowProgramChange")]
+        [DataField("allowProgramChange")]
         private bool _allowProgramChange;
 
-        [YamlField("respectMidiLimits")]
+        [DataField("respectMidiLimits")]
         private bool _respectMidiLimits = true;
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         ///     Whether this instrument is handheld or not.
         /// </summary>
         [ViewVariables]
-        [YamlField("handheld")]
+        [DataField("handheld")]
         public bool Handheld { get; set; } // TODO: Replace this by simply checking if the entity has an ItemComponent.
 
         /// <summary>

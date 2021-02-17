@@ -15,26 +15,26 @@ namespace Content.Shared.Roles
     [Prototype("startingGear")]
     public class StartingGearPrototype : IPrototype, IIndexedPrototype
     {
-        [YamlField("id")]
+        [DataField("id")]
         private string _id = string.Empty;
 
-        [YamlField("equipment")] private Dictionary<Slots, string> _equipment = new();
+        [DataField("equipment")] private Dictionary<Slots, string> _equipment = new();
 
         /// <summary>
         /// if empty, there is no skirt override - instead the uniform provided in equipment is added.
         /// </summary>
-        [YamlField("innerclothingskirt")]
+        [DataField("innerclothingskirt")]
         private string _innerClothingSkirt = default!;
-        [YamlField("satchel")]
+        [DataField("satchel")]
         private string _satchel = string.Empty;
-        [YamlField("duffelbag")]
+        [DataField("duffelbag")]
         private string _duffelbag = string.Empty;
 
         public IReadOnlyDictionary<string, string> Inhand => _inHand;
         /// <summary>
         /// hand index, item prototype
         /// </summary>
-        [YamlField("inhand")]
+        [DataField("inhand")]
         private Dictionary<string, string> _inHand = new(0);
 
         [ViewVariables] public string ID => _id;

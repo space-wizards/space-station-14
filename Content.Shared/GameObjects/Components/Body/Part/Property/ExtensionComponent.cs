@@ -16,7 +16,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part.Property
         /// <summary>
         ///     Current distance in tiles.
         /// </summary>
-        [YamlField("distance")]
+        [DataField("distance")]
         public float Distance { get; set; } = 3f;
     }
 }

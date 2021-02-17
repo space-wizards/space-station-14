@@ -64,8 +64,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private bool _busy = false;
 
         //YAML serialization vars
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("chamberCapacity")] private int _storageCap = 16;
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("workTime")] private int _workTime = 3500; //3.5 seconds, completely arbitrary for now.
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("chamberCapacity")] private int _storageCap = 16;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("workTime")] private int _workTime = 3500; //3.5 seconds, completely arbitrary for now.
 
         public override void Initialize()
         {

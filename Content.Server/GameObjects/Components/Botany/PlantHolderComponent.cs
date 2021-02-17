@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Botany
         [ViewVariables(VVAccess.ReadWrite)] private bool _updateSpriteAfterUpdate;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [YamlField("drawWarnings")]
+        [DataField("drawWarnings")]
         public bool DrawWarnings { get; private set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]

@@ -30,27 +30,27 @@ namespace Content.Server.GameObjects.Components.Fluids
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
-        [YamlField("transferAmount")]
+        [DataField("transferAmount")]
         private ReagentUnit _transferAmount = ReagentUnit.New(10);
-        [YamlField("spraySound")]
+        [DataField("spraySound")]
         private string _spraySound;
-        [YamlField("sprayVelocity")]
+        [DataField("sprayVelocity")]
         private float _sprayVelocity = 1.5f;
-        [YamlField("sprayAliveTime")]
+        [DataField("sprayAliveTime")]
         private float _sprayAliveTime = 0.75f;
         private TimeSpan _lastUseTime;
         private TimeSpan _cooldownEnd;
-        [YamlField("cooldownTime")]
+        [DataField("cooldownTime")]
         private float _cooldownTime = 0.5f;
-        [YamlField("sprayedPrototype")]
+        [DataField("sprayedPrototype")]
         private string _vaporPrototype = "Vapor";
-        [YamlField("vaporAmount")]
+        [DataField("vaporAmount")]
         private int _vaporAmount = 1;
-        [YamlField("vaporSpread")]
+        [DataField("vaporSpread")]
         private float _vaporSpread = 90f;
-        [YamlField("hasSafety")]
+        [DataField("hasSafety")]
         private bool _hasSafety;
-        [YamlField("safety")]
+        [DataField("safety")]
         private bool _safety = true;
 
         /// <summary>

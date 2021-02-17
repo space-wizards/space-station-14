@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         /// <summary>
         /// Maximum supply output by this panel (coverage = 1)
         /// </summary>
-        [YamlField("maxsupply")]
+        [DataField("maxsupply")]
         private int _maxSupply = 1500;
         [ViewVariables(VVAccess.ReadWrite)]
         public int MaxSupply

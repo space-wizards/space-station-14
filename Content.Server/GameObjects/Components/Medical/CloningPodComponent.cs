@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Medical
         private Mind? _capturedMind;
         private CloningPodStatus _status;
         private float _cloningProgress = 0;
-        [YamlField("cloningTime")]
+        [DataField("cloningTime")]
         private float _cloningTime = 10f;
 
         public override void Initialize()

@@ -27,13 +27,13 @@ namespace Content.Server.GameObjects.Components.Portal
 
         private IEntity? _connectingTeleporter;
         private PortalState _state = PortalState.Pending;
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("individual_cooldown")] private float _individualPortalCooldown = 2.1f;
-        [ViewVariables] [YamlField("overall_cooldown")] private float _overallPortalCooldown = 2.0f;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("individual_cooldown")] private float _individualPortalCooldown = 2.1f;
+        [ViewVariables] [DataField("overall_cooldown")] private float _overallPortalCooldown = 2.0f;
         [ViewVariables] private bool _onCooldown;
-        [ViewVariables] [YamlField("departure_sound")] private string _departureSound = "/Audio/Effects/teleport_departure.ogg";
-        [ViewVariables] [YamlField("arrival_sound")] private string _arrivalSound = "/Audio/Effects/teleport_arrival.ogg";
+        [ViewVariables] [DataField("departure_sound")] private string _departureSound = "/Audio/Effects/teleport_departure.ogg";
+        [ViewVariables] [DataField("arrival_sound")] private string _arrivalSound = "/Audio/Effects/teleport_arrival.ogg";
         public readonly List<IEntity> ImmuneEntities = new(); // K
-        [ViewVariables(VVAccess.ReadWrite)] [YamlField("alive_time")] private float _aliveTime = 10f;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("alive_time")] private float _aliveTime = 10f;
 
         public override void OnAdd()
         {

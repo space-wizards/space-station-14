@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         private SolutionContainerComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
 
-        [YamlField("weldSoundCollection")]
+        [DataField("weldSoundCollection")]
         public string? WeldSoundCollection { get; set; }
 
         [ViewVariables]

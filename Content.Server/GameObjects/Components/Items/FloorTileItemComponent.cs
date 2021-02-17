@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Items
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
         public override string Name => "FloorTile";
-        [YamlField("outputs")]
+        [DataField("outputs")]
         private List<string> _outputTiles;
 
         public override void Initialize()
