@@ -1,33 +1,15 @@
-- type: Tag
-  id: Cigarette
-
 - type: entity
-  description: "If you want to get cancer, might as well do it in style."
-  id: BaseSmokeable
-  parent: BaseItem
-  abstract: true
-  components:
-    - type: Smoking
-      duration: 30
-    - type: Appearance
-      visuals:
-        - type: BurnStateVisualizer
-
-- type: entity
-  id: Cigarette
+  id: SmokingPipe
   parent: BaseSmokeable
-  name: cigarette
-  description: "A roll of tobacco and nicotine."
+  name: smoking pipe
+  description: "A pipe, for smoking. Probably made of meershaum or something."
   components:
     - type: Sprite
-      sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
+      sprite: Objects/Consumable/Smokeables/Pipes/pipe.rsi
       netsync: false
       state: unlit-icon
-    - type: Tag
-      tags:
-        - Cigarette
     - type: Clothing
-      sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
+      sprite: Objects/Consumable/Smokeables/Pipes/pipe.rsi
       Slots: [ mask ]
       HeldPrefix: unlit
       size: 1

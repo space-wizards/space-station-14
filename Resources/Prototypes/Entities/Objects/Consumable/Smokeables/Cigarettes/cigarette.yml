@@ -8,7 +8,7 @@
   abstract: true
   components:
     - type: Smoking
-      duration: 30
+      duration: 60
     - type: Appearance
       visuals:
         - type: BurnStateVisualizer
