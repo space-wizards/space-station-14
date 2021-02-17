@@ -10,7 +10,7 @@
     state: plantbgone
   - type: SolutionContainer
     maxVol: 100
-    caps: RemoveFrom
+    caps: Drainable
     contents:
       reagents:
         - ReagentId: chem.PlantBGone
@@ -31,13 +31,11 @@
     state: weedspray
   - type: SolutionContainer
     maxVol: 50
-    caps: RemoveFrom
+    caps: Drainable
     contents:
       reagents:
         - ReagentId: chem.WeedKiller
           Quantity: 50
-  - type: Pourable
-    transferAmount: 1.0
   - type: Spillable
   - type: ItemCooldown
   - type: Spray
@@ -56,7 +54,7 @@
     state: pestspray
   - type: SolutionContainer
     maxVol: 50
-    caps: RemoveFrom
+    caps: Drainable
     contents:
       reagents:
         - ReagentId: chem.PestKiller
