@@ -34,7 +34,7 @@
   parent: ScrubberBase
   id: Scrubber
   name: Scrubber
-  description: Scrubs unwanted gasses out of the air.
+  description: Filters unwanted gasses out of the air.
   components:
   - type: NodeContainer
     nodes:
