@@ -21,7 +21,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -31,7 +30,6 @@ namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    [DataClass(typeof(GasTankComponentData))]
     public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
     {
         private const float MaxExplosionRange = 14f;
@@ -46,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         [ViewVariables] private BoundUserInterface? _userInterface;
 
-        [ViewVariables] [DataClassTarget("air")] public GasMixture? Air { get; set; } = null!;
+        [ViewVariables] [DataField("air")] public GasMixture? Air { get; set; } = new();
 
         /// <summary>
         ///     Distributed pressure.
