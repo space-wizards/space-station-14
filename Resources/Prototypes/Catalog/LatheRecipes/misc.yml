@@ -63,6 +63,5 @@
   icon: Objects/Tools/matches.rsi
   result: Matchbox
   completetime: 10
-  materials
+  materials:
     wood: 10
-
