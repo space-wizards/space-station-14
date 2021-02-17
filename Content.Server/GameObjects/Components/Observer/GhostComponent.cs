@@ -1,22 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Markers;
-using Content.Server.Players;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Mobs;
+using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Observer;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Players;
-using Robust.Shared.ViewVariables;
-using Content.Shared.GameObjects.EntitySystems;
-using Robust.Shared.Utility;
 using Robust.Shared.Localization;
-using System;
-using Robust.Server.Player;
 using Robust.Shared.Network;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 #nullable enable
 namespace Content.Server.GameObjects.Components.Observer
@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Observer
             _timeOfDeath = _gameTimer.RealTime;
         }
 
-        public override ComponentState GetComponentState() => new GhostComponentState(CanReturnToBody);
+        public override ComponentState GetComponentState(ICommonSession player) => new GhostComponentState(CanReturnToBody);
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {

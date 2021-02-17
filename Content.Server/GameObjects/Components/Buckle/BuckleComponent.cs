@@ -21,6 +21,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -408,7 +409,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             UpdateBuckleStatus();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             int? drawDepth = null;
 
