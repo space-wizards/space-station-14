@@ -1,14 +1,10 @@
 ﻿using System;
-using Content.Client.Animations;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Graphics.Shaders;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -437,7 +433,7 @@ namespace Content.Client.ParticleAccelerator
             _shouldContinueAnimating = false;
             _alarmControl.StopAnimation("warningAnim");
             _alarmControl.Visible = false;
-            if (maxState == ParticleAcceleratorPowerState.Level3 && enabled == true && assembled == true)
+            if (maxState == ParticleAcceleratorPowerState.Level3 && enabled && assembled)
             {
                 _shouldContinueAnimating = true;
                 _alarmControl.PlayAnimation(_alarmControlAnimation, "warningAnim");

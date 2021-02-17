@@ -7,7 +7,6 @@ using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {

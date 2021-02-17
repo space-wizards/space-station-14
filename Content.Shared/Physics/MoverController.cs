@@ -1,6 +1,6 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Movement;
-using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 

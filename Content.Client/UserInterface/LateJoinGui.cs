@@ -4,7 +4,7 @@ using System.Linq;
 using Content.Client.Interfaces;
 using Content.Shared.Roles;
 using Robust.Client.Console;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;

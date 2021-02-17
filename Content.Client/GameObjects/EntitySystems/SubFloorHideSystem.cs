@@ -1,9 +1,7 @@
 ﻿using Content.Client.GameObjects.Components;
 using Content.Shared.Maps;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Map;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;

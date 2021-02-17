@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.AI;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems.AI
 {

@@ -4,10 +4,7 @@ using Content.Shared.Audio;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -123,18 +120,21 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         void ILand.Land(LandEventArgs eventArgs)
         {
-
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("GlassBreak");
-            var file = _random.Pick(soundCollection.PickFiles);
-
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner);
-
+            PlayBreakSound();
             State = LightBulbState.Broken;
         }
 
         public void OnBreak(BreakageEventArgs eventArgs)
         {
             State = LightBulbState.Broken;
+        }
+
+        public void PlayBreakSound()
+        {
+            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("GlassBreak");
+            var file = _random.Pick(soundCollection.PickFiles);
+
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Graphics.Shaders;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;

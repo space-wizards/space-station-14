@@ -29,7 +29,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: MiniHoe
+      - name: HydroponicsToolMiniHoe
         amount: 1
       - name: PlantBGoneSpray
         amount: 1
@@ -37,9 +37,9 @@
         amount: 1
       - name: PestSpray
         amount: 1
-      - name: Scythe
+      - name: HydroponicsToolScythe
         amount: 1
-      - name: Hatchet
+      - name: HydroponicsToolHatchet
         amount: 1
       - name: ClothingOuterApronBotanist
         amount: 1

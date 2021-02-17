@@ -2,7 +2,6 @@
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.MachineLinking

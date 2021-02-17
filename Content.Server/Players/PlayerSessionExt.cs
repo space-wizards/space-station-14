@@ -1,5 +1,5 @@
 ﻿using Content.Shared.Network.NetMessages;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 
 namespace Content.Server.Players
 {

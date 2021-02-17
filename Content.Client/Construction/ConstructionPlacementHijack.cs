@@ -6,7 +6,7 @@ using Content.Shared.Construction;
 using Robust.Client.Graphics;
 using Robust.Client.Placement;
 using Robust.Client.Utility;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Client.Construction

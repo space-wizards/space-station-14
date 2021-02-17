@@ -3,7 +3,7 @@ using Content.Server.AI.Utility.ExpandableActions.Clothing.Gloves;
 using Content.Server.AI.Utility.ExpandableActions.Clothing.Head;
 using Content.Server.AI.Utility.ExpandableActions.Clothing.OuterClothing;
 using Content.Server.AI.Utility.ExpandableActions.Clothing.Shoes;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Utility.BehaviorSets
 {

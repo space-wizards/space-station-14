@@ -1,12 +1,11 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Shared.Utility;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
@@ -15,7 +14,7 @@ namespace Content.IntegrationTests.Tests
     [TestFixture]
     public class PowerTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: GeneratorDummy
   id: GeneratorDummy
@@ -118,7 +117,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task PowerNetTest()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             PowerSupplierComponent supplier = null;
@@ -169,7 +168,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task ApcChargingTest()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             BatteryComponent apcBattery = null;
@@ -217,7 +216,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task ApcNetTest()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             PowerReceiverComponent receiver = null;
@@ -226,8 +225,9 @@ namespace Content.IntegrationTests.Tests
             {
                 var mapMan = IoCManager.Resolve<IMapManager>();
                 var entityMan = IoCManager.Resolve<IEntityManager>();
-                mapMan.CreateMap(new MapId(1));
-                var grid = mapMan.CreateGrid(new MapId(1));
+                var mapId = new MapId(1);
+                mapMan.CreateMap(mapId);
+                var grid = mapMan.CreateGrid(mapId);
 
                 var apcEnt = entityMan.SpawnEntity("ApcDummy", grid.ToCoordinates(0, 0));
                 var apcExtensionEnt = entityMan.SpawnEntity("ApcExtensionCableDummy", grid.ToCoordinates(0, 1));

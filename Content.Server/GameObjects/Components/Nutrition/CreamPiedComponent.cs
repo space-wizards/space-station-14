@@ -8,7 +8,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
-using Serilog;
 
 namespace Content.Server.GameObjects.Components.Nutrition
 {

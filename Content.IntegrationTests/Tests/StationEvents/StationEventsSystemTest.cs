@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
 using NUnit.Framework;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.StationEvents
 {

@@ -3,7 +3,7 @@ using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Roles;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;

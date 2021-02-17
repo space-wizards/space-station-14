@@ -2,8 +2,8 @@
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Damage;
 using JetBrains.Annotations;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Mobs

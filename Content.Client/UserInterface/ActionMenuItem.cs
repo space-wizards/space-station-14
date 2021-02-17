@@ -1,7 +1,6 @@
 ﻿#nullable enable
 
 using System;
-using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
 using Robust.Client.UserInterface;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Content.Shared.Prototypes.Tag;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.GameObjects.Components.Tag
