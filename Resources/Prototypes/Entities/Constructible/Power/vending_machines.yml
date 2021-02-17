@@ -56,7 +56,7 @@
   parent: VendingMachine
   id: VendingMachineBooze
   name: Booze-O-Mat
-  description: A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one.
+  description: "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
   components:
   - type: VendingMachine
     pack: Booze-O-Mat
@@ -83,6 +83,7 @@
   parent: VendingMachine
   id: VendingMachineCart
   name: PTech
+  description: "PTech vending! Providing a ROBUST selection of PDA cartridges."
   components:
   - type: VendingMachine
     pack: PTech
@@ -109,6 +110,7 @@
   parent: VendingMachine
   id: VendingMachineChapel
   name: PietyVend
+  description: "Spreading faith far and wide... for a fee."
   components:
   - type: VendingMachine
     pack: PietyVend
@@ -134,7 +136,7 @@
   parent: VendingMachine
   id: VendingMachineCigs
   name: cigarette machine
-  description: If you want to smoke, might as well do it in style.
+  description: "If you want to smoke, might as well do it in style."
   components:
   - type: VendingMachine
     pack: Cigarette machine
@@ -161,6 +163,7 @@
   parent: VendingMachine
   id: VendingMachineCoffee
   name: hot drinks machine
+  description: "Served boiling so it stays hot all shift!"
   components:
   - type: VendingMachine
     pack: Hot Drinks machine
@@ -191,6 +194,7 @@
   parent: VendingMachine
   id: VendingMachineCola
   name: Robust Softdrinks
+  description: "It's a softdrink vendor provided by Robust Industries, LLC."
   components:
   - type: VendingMachine
     pack: Robust Softdrinks
@@ -217,6 +221,7 @@
   parent: VendingMachine
   id: VendingMachineDinnerware
   name: Dinnerware
+  description: "It's a kitchen and restaurant equipment vendor."
   components:
   - type: VendingMachine
     pack: Dinnerware
@@ -244,6 +249,7 @@
   parent: VendingMachine
   id: VendingMachineDiscount
   name: Discount Dan's
+  description: "It's a vending machine containing discount snacks from the infamous 'Discount Dan' franchise."
   components:
   - type: VendingMachine
     pack: Discount Dan's
@@ -268,6 +274,7 @@
   parent: VendingMachine
   id: VendingMachineEngivend
   name: Engi-Vend
+  description: "Spare tool vending. What? Did you expect some witty description?"
   components:
   - type: VendingMachine
     pack: Engi-Vend
@@ -296,7 +303,7 @@
   parent: VendingMachine
   id: VendingMachineHats
   name: Hatlord 9000
-  description: Hats for the hatlord. Skulls for the hat-throne!
+  description: "Hats for the hatlord. Skulls for the hat-throne!"
   components:
   - type: VendingMachine
     pack: Hatlord 9000
@@ -321,6 +328,7 @@
   parent: VendingMachine
   id: VendingMachineMagivend
   name: MagiVend
+  description: "It's a vending machine containing magical garments and supplies."
   components:
   - type: VendingMachine
     pack: MagiVend
@@ -345,6 +353,7 @@
   parent: VendingMachine
   id: VendingMachineMedical
   name: NanoMed Plus
+  description: "It's a Medical drug dispenser. Natural chemicals only!"
   components:
   - type: VendingMachine
     pack: NanoMed Plus
@@ -373,6 +382,7 @@
   parent: VendingMachine
   id: VendingMachineMining
   name: Dwarven Mining Equipment
+  description: "Get your mining equipment here, and above all keep digging!"
   components:
   - type: VendingMachine
     pack: Dwarven Mining Equipment
@@ -398,6 +408,7 @@
   parent: VendingMachine
   id: VendingMachineNutri
   name: NutriMax
+  description: "It's a plant nutrients vendor."
   components:
   - type: VendingMachine
     pack: NutriMax
@@ -426,6 +437,7 @@
   parent: VendingMachine
   id: VendingMachineRobotics
   name: Robotech Deluxe
+  description: "All the tools you need to create your own robot army."
   components:
   - type: VendingMachine
     pack: Robotech Deluxe
@@ -453,6 +465,7 @@
   parent: VendingMachine
   id: VendingMachineSales
   name: Sales
+  description: "Buy, sell, repeat."
   components:
   - type: VendingMachine
     pack: Sales
@@ -478,6 +491,7 @@
   parent: VendingMachine
   id: VendingMachineSec
   name: SecTech
+  description: "It's a security equipment vendor."
   components:
   - type: VendingMachine
     pack: SecTech
@@ -505,6 +519,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSeeds
+  description: "When you need seeds fast!"
   name: MegaSeed Servitor
   components:
   - type: VendingMachine
@@ -534,7 +549,7 @@
   parent: VendingMachine
   id: VendingMachineShoes
   name: Shoelord 9000
-  description: Finest shoes on all of station.
+  description: "Finest shoes on all of station."
   components:
   - type: VendingMachine
     pack: Shoelord 9000
@@ -585,7 +600,7 @@
   parent: VendingMachine
   id: VendingMachineSnack
   name: Getmore Chocolate Corp
-  description: A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars.
+  description: "It's a snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars."
   components:
   - type: VendingMachine
     pack: Getmore Chocolate Corp
@@ -613,6 +628,7 @@
   parent: VendingMachine
   id: VendingMachineSovietSoda
   name: BODA
+  description: "Old sweet water vending machine."
   components:
   - type: VendingMachine
     pack: BODA
@@ -640,7 +656,7 @@
   parent: VendingMachine
   id: VendingMachineSuits
   name: Suitlord 9000
-  description: Suits for every ocassion!
+  description: "Suits for every ocassion!"
   components:
   - type: VendingMachine
     pack: Suitlord 9000
@@ -666,7 +682,7 @@
   parent: VendingMachine
   id: VendingMachineTheater
   name: AutoDrobe
-  description: Enchance RP with costumes!
+  description: "Enchance RP with costumes!"
   components:
   - type: VendingMachine
     pack: AutoDrobe
@@ -698,7 +714,7 @@
   parent: VendingMachine
   id: VendingMachineVendomat
   name: Vendomat
-  description: Only the finest robust equipment in space!
+  description: "Only the finest robust equipment in space!"
   components:
   - type: VendingMachine
     pack: Vendomat
@@ -752,6 +768,7 @@
   parent: VendingMachine
   id: VendingMachineWallMedical
   name: NanoMed
+  description: "It's a wall-mounted medical equipment dispenser. Natural chemicals only!"
   components:
   - type: VendingMachine
     pack: NanoMed
@@ -780,6 +797,7 @@
   parent: VendingMachine
   id: VendingMachineYouTool
   name: YouTool
+  description: "Tools for tools."
   components:
   - type: VendingMachine
     pack: YouTool

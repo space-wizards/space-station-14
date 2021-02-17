@@ -136,6 +136,7 @@
 - type: entity
   id: FoamedIronMetal
   name: foamed iron metal
+  description: For sealing hull breaches.
   parent: BaseFoamedMetal
   components:
     - type: Sprite
@@ -145,6 +146,7 @@
 - type: entity
   id: FoamedAluminiumMetal
   name: foamed aluminium metal
+  description: For sealing hull breaches.
   parent: BaseFoamedMetal
   components:
     - type: Sprite

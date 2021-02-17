@@ -35,6 +35,7 @@
   parent: VentBase
   id: Vent
   name: Vent
+  description: "A vent that releases gas."
   components:
   - type: NodeContainer
     nodes:

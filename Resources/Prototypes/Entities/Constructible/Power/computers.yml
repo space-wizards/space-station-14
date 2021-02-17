@@ -2,6 +2,7 @@
 - type: entity
   id: ComputerFrame
   name: computer frame
+  description: "A computer under construction. It needs a circuit board."
   placement:
     mode: SnapgridCenter
   components:
@@ -35,7 +36,7 @@
 - type: entity
   id: ComputerBroken
   name: broken computer
-  description: This computer has seen better days.
+  description: "This computer has seen better days."
   abstract: true # We don't want this to show up in the entity spawner menu.
   components:
   - type: Physics
@@ -130,7 +131,7 @@
   id: ComputerAlert
   parent: ComputerBase
   name: alerts computer
-  description: Used to access the station's automated alert system.
+  description: "Used to access the station's automated alert system."
   components:
   - type: Appearance
     visuals:
@@ -142,7 +143,7 @@
   id: ComputerPowerMonitoring
   parent: ComputerBase
   name: power monitoring computer
-  description: It monitors power levels across the station.
+  description: "It monitors power levels across the station."
   components:
   - type: Appearance
     visuals:
@@ -154,7 +155,7 @@
   id: ComputerMedicalRecords
   parent: ComputerBase
   name: medical records computer
-  description: This can be used to check medical records.
+  description: "This can be used to check medical records."
   components:
   - type: Appearance
     visuals:
@@ -166,7 +167,7 @@
   id: ComputerResearchAndDevelopment
   parent: ComputerBase
   name: R&D computer
-  description: 'A computer used to interface with R&D tools.'
+  description: "A computer used to interface with R&D tools."
   components:
   - type: Appearance
     visuals:
@@ -192,7 +193,7 @@
   id: ComputerId
   parent: ComputerBase
   name: ID card computer
-  description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
+  description: "Terminal for programming Nanotrasen employee ID cards to access parts of the station."
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
@@ -213,7 +214,7 @@
   id: computerBodyScanner
   parent: ComputerBase
   name: body scanner computer
-  description: That's a body scanner.
+  description: "That's a body scanner."
   components:
   - type: BodyScanner
   - type: UserInterface
@@ -232,7 +233,7 @@
   id: ComputerComms
   parent: ComputerBase
   name: communications computer
-  description: This can be used for various important functions. Still under developement.
+  description: "This can be used for various important functions. Still under developement."
   components:
   - type: Appearance
     visuals:
@@ -251,7 +252,7 @@
   id: ComputerSolarControl
   parent: ComputerBase
   name: Solar Control Computer
-  description: A controller for solar panel arrays.
+  description: "A controller for solar panel arrays."
   components:
   - type: Appearance
     visuals:
