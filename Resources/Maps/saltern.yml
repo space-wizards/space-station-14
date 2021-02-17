@@ -13892,14 +13892,14 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1107
-  type: Scythe
+  type: HydroponicsToolScythe
   components:
   - parent: 853
     pos: -20.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1108
-  type: Hatchet
+  type: HydroponicsToolHatchet
   components:
   - parent: 853
     pos: -20.5,-2.5
@@ -13997,7 +13997,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1122
-  type: MiniHoe
+  type: HydroponicsToolMiniHoe
   components:
   - parent: 853
     pos: -20.5,-1.5
