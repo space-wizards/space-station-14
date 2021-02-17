@@ -1,7 +1,6 @@
 ﻿- type: entity
   id: Smoke
   name: smoke
-  description: Causes a smoke reaction.
   abstract: true
   components:
     - type: Sprite
@@ -23,7 +22,6 @@
 - type: entity
   id: Foam
   name: foam
-  description: Causes a foam reaction.
   abstract: true
   components:
     - type: Sprite
@@ -57,7 +55,6 @@
 - type: entity
   id: IronMetalFoam
   name: iron metal foam
-  description: Causes an iron metal foam reaction.
   abstract: true
   parent: Foam
   components:
@@ -77,7 +74,6 @@
 - type: entity
   id: AluminiumMetalFoam
   name: aluminium metal foam
-  description: Causes an aluminium metal foam reaction.
   abstract: true
   parent: Foam
   components:

@@ -1,7 +1,7 @@
 - type: entity
   id: Rack
   name: rack
-  desription: A rack for storing things on.
+  desription: "A rack for storing things on."
   placement:
     mode: SnapgridCenter
   components:
@@ -49,7 +49,7 @@
 - type: entity
   id: Shelf
   name: shelf
-  description: A shelf for storing things on.
+  description: "A shelf for storing things on."
   placement:
     mode: SnapgridCenter
   components:

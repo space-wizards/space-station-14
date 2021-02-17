@@ -31,7 +31,7 @@
   parent: GasCanisterPortBase
   id: GasCanisterPort
   name: Gas Canister Port
-  description: Connect a gas canister here to release gasses into a system. Use a wrench.
+  description: "Connect a gas canister here to release gasses into a system."
   components:
   - type: NodeContainer
     nodes:
