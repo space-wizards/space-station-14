@@ -1,4 +1,5 @@
-﻿- type: entity
+﻿# TODO: Add description (unfinished machine frame)
+- type: entity
   id: UnfinishedMachineFrame
   name: machine frame
   suffix: Unfinished

@@ -1,4 +1,5 @@
-﻿- type: entity
+﻿# TODO: Add descriptions (3)
+- type: entity
   abstract: true
   id: WireBase
   description: A flexible superconducting cable for heavy-duty power transfer.

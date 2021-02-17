@@ -1,3 +1,4 @@
+# TODO: Add descriptions (2)
 - type: entity
   parent: BaseItem
   id: FoodContainerBase
