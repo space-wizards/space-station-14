@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: Smoke
   name: smoke
+  description: Causes a smoke reaction.
   abstract: true
   components:
     - type: Sprite
@@ -22,6 +23,7 @@
 - type: entity
   id: Foam
   name: foam
+  description: Causes a foam reaction.
   abstract: true
   components:
     - type: Sprite
@@ -55,6 +57,7 @@
 - type: entity
   id: IronMetalFoam
   name: iron metal foam
+  description: Causes an iron metal foam reaction.
   abstract: true
   parent: Foam
   components:
@@ -74,6 +77,7 @@
 - type: entity
   id: AluminiumMetalFoam
   name: aluminium metal foam
+  description: Causes an aluminium metal foam reaction.
   abstract: true
   parent: Foam
   components:
@@ -135,6 +139,7 @@
 - type: entity
   id: FoamedIronMetal
   name: foamed iron metal
+  description: For sealing hull breaches.
   parent: BaseFoamedMetal
   components:
     - type: Sprite
@@ -144,6 +149,7 @@
 - type: entity
   id: FoamedAluminiumMetal
   name: foamed aluminium metal
+  description: For sealing hull breaches.
   parent: BaseFoamedMetal
   components:
     - type: Sprite
