@@ -25,14 +25,17 @@ namespace Content.Shared.Utility
             {
                 throw new ArgumentException("Levels must be greater than 0.", nameof(levels));
             }
+
             if (actual >= max)
             {
                 return levels - 1;
             }
+
             if (actual <= 0)
             {
                 return 0;
             }
+
             var toOne = actual / max;
             double threshold;
             if (levels % 2 == 0)
@@ -49,11 +52,11 @@ namespace Content.Shared.Utility
             var preround = toOne * (levels - 1);
             if (toOne <= threshold || levels <= 2)
             {
-                return (int)Math.Ceiling(preround);
+                return (int) Math.Ceiling(preround);
             }
             else
             {
-                return (int)Math.Floor(preround);
+                return (int) Math.Floor(preround);
             }
         }
 
@@ -81,28 +84,18 @@ namespace Content.Shared.Utility
             {
                 throw new ArgumentException("Levels must be greater than 1.", nameof(levels));
             }
+
             if (actual >= max)
             {
                 return levels;
             }
+
             if (actual <= 0)
             {
                 return 0;
             }
-            double step = max / levels;
 
-            int nearest = 0;
-            double nearestDiff = actual;
-            for (var i = 1; i <= levels; i++)
-            {
-                var diff = Math.Abs(actual - i * step);
-                if (diff < nearestDiff)
-                {
-                    nearestDiff = diff;
-                    nearest = i;
-                }
-            }
-            return nearest;
+            return (int) Math.Round(actual / max * levels, MidpointRounding.AwayFromZero);
         }
     }
 }

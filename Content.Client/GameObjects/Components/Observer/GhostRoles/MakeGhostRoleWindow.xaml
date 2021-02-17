@@ -1,27 +1,26 @@
-﻿<cc:SS14Window Title="Make Ghost Role"
-               xmlns:cc="clr-namespace:Robust.Client.UserInterface.CustomControls;assembly=Robust.Client"
-               xmlns:c="clr-namespace:Robust.Client.UserInterface.Controls;assembly=Robust.Client">
+﻿<SS14Window Title="Make Ghost Role"
+            xmlns="https://spacestation14.io">
 
-    <c:VBoxContainer>
-        <c:HBoxContainer>
-            <c:Label Name="RoleEntityLabel" Text="Entity" />
-            <c:Label Name="RoleEntity" Text="" />
-        </c:HBoxContainer>
-        <c:HBoxContainer>
-            <c:Label Name="RoleNameLabel" Text="Role Name" />
-            <c:LineEdit Name="RoleName" SizeFlagsHorizontal="FillExpand"/>
-        </c:HBoxContainer>
-        <c:HBoxContainer>
-            <c:Label Name="RoleDescriptionLabel" Text="Role Description" />
-            <c:LineEdit Name="RoleDescription" SizeFlagsHorizontal="FillExpand"/>
-        </c:HBoxContainer>
-        <c:HBoxContainer>
-            <c:Label Name="MakeSentientLabel" Text="Make Sentient" />
-            <c:CheckBox Name="MakeSentientCheckbox" />
-        </c:HBoxContainer>
-        <c:HBoxContainer>
-            <c:Button Name="MakeButton" Text="Make" />
-        </c:HBoxContainer>
-    </c:VBoxContainer>
+    <VBoxContainer>
+        <HBoxContainer>
+            <Label Name="RoleEntityLabel" Text="Entity" />
+            <Label Name="RoleEntity" Text="" />
+        </HBoxContainer>
+        <HBoxContainer>
+            <Label Name="RoleNameLabel" Text="Role Name" />
+            <LineEdit Name="RoleName" SizeFlagsHorizontal="FillExpand" />
+        </HBoxContainer>
+        <HBoxContainer>
+            <Label Name="RoleDescriptionLabel" Text="Role Description" />
+            <LineEdit Name="RoleDescription" SizeFlagsHorizontal="FillExpand" />
+        </HBoxContainer>
+        <HBoxContainer>
+            <Label Name="MakeSentientLabel" Text="Make Sentient" />
+            <CheckBox Name="MakeSentientCheckbox" />
+        </HBoxContainer>
+        <HBoxContainer>
+            <Button Name="MakeButton" Text="Make" />
+        </HBoxContainer>
+    </VBoxContainer>
 
-</cc:SS14Window>
+</SS14Window>
