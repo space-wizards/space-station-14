@@ -20,7 +20,6 @@ namespace Content.Client.GameObjects.EntitySystems.HealthOverlay
         private IEntity? _attachedEntity;
         private bool _enabled;
 
-
         public bool Enabled
         {
             get => _enabled;
