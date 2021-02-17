@@ -1,5 +1,4 @@
-﻿# TODO: Add descriptions (many)
-- type: entity
+﻿- type: entity
   id: WallLight
   name: unpowered light
   description: "An unpowered light."
@@ -61,6 +60,7 @@
 
 - type: entity
   id: PoweredlightEmpty
+  description: "A wall light. It's empty."
   suffix: Empty
   parent: Poweredlight
   components:
@@ -102,7 +102,7 @@
       node: bulbLight
 
 - type: entity
-  name: small light   
+  name: small light
   description: "A powered wall light emitting... light."
   id: PoweredSmallLight
   parent: SmallLight
