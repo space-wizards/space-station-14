@@ -1,12 +1,10 @@
-<cc:SS14Window Title="Ghost Roles"
-    xmlns:cc="clr-namespace:Robust.Client.UserInterface.CustomControls;assembly=Robust.Client"
-    xmlns:uic="clr-namespace:Robust.Client.UserInterface.Controls;assembly=Robust.Client">
+<SS14Window Title="Ghost Roles"
+            xmlns="https://spacestation14.io">
+    <CenterContainer Name="NoRolesMessage" SizeFlagsVertical="FillExpand" SizeFlagsHorizontal="FillExpand">
+        <Label Text="There are currently no available ghost roles." />
+    </CenterContainer>
+    <ScrollContainer SizeFlagsHorizontal="FillExpand" SizeFlagsVertical="FillExpand">
+        <VBoxContainer Name="EntryContainer" SizeFlagsHorizontal="FillExpand" SizeFlagsVertical="FillExpand" />
+    </ScrollContainer>
 
-    <uic:CenterContainer Name="NoRolesMessage" SizeFlagsVertical="FillExpand" SizeFlagsHorizontal="FillExpand">
-        <uic:Label Text="There are currently no available ghost roles."/>
-    </uic:CenterContainer>
-    <uic:ScrollContainer SizeFlagsHorizontal="FillExpand" SizeFlagsVertical="FillExpand">
-        <uic:VBoxContainer Name="EntryContainer" SizeFlagsHorizontal="FillExpand" SizeFlagsVertical="FillExpand" />
-    </uic:ScrollContainer>
-
-</cc:SS14Window>
+</SS14Window>
