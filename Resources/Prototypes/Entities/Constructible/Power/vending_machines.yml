@@ -193,7 +193,7 @@
   parent: VendingMachine
   id: VendingMachineCola
   name: Robust Softdrinks
-  description: "A softdrink vendor provided by Robust Industries, LLC."
+  description: "It's a softdrink vendor provided by Robust Industries, LLC."
   components:
   - type: VendingMachine
     pack: Robust Softdrinks
@@ -220,7 +220,7 @@
   parent: VendingMachine
   id: VendingMachineDinnerware
   name: Dinnerware
-  description: "A kitchen and restaurant equipment vendor."
+  description: "It's a kitchen and restaurant equipment vendor."
   components:
   - type: VendingMachine
     pack: Dinnerware
@@ -248,7 +248,7 @@
   parent: VendingMachine
   id: VendingMachineDiscount
   name: Discount Dan's
-  description: "A vending machine containing discount snacks from the infamous 'Discount Dan' franchise."
+  description: "It's a vending machine containing discount snacks from the infamous 'Discount Dan' franchise."
   components:
   - type: VendingMachine
     pack: Discount Dan's
@@ -327,7 +327,7 @@
   parent: VendingMachine
   id: VendingMachineMagivend
   name: MagiVend
-  description: "A vending machine containing magical garments and supplies."
+  description: "It's a vending machine containing magical garments and supplies."
   components:
   - type: VendingMachine
     pack: MagiVend
@@ -352,7 +352,7 @@
   parent: VendingMachine
   id: VendingMachineMedical
   name: NanoMed Plus
-  description: "A medical drug dispenser."
+  description: "It's a Medical drug dispenser. Natural chemicals only!"
   components:
   - type: VendingMachine
     pack: NanoMed Plus
@@ -407,7 +407,7 @@
   parent: VendingMachine
   id: VendingMachineNutri
   name: NutriMax
-  description: "A plant nutrients vendor."
+  description: "It's a plant nutrients vendor."
   components:
   - type: VendingMachine
     pack: NutriMax
@@ -490,7 +490,7 @@
   parent: VendingMachine
   id: VendingMachineSec
   name: SecTech
-  description: "A security equipment vendor."
+  description: "It's a security equipment vendor."
   components:
   - type: VendingMachine
     pack: SecTech
@@ -599,7 +599,7 @@
   parent: VendingMachine
   id: VendingMachineSnack
   name: Getmore Chocolate Corp
-  description: "A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars."
+  description: "It's a snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars."
   components:
   - type: VendingMachine
     pack: Getmore Chocolate Corp
@@ -767,7 +767,7 @@
   parent: VendingMachine
   id: VendingMachineWallMedical
   name: NanoMed
-  description: "Wall-mounted Medical Equipment dispenser."
+  description: "It's a wall-mounted medical equipment dispenser. Natural chemicals only!"
   components:
   - type: VendingMachine
     pack: NanoMed
