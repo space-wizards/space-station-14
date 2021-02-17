@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: WallLight
-  name: "unpowered light"
+  name: unpowered light
+  description: An unpowered light. Find the switch or APC.
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -44,6 +45,7 @@
 
 - type: entity
   name: light
+  description: A powered wall light emitting...light.
   id: Poweredlight
   parent: WallLight
   components:
@@ -68,6 +70,7 @@
 
 - type: entity
   name: unpowered small light
+  description: An unpowered light. Find the switch or APC.
   id: SmallLight
   parent: WallLight
   components:
@@ -98,7 +101,8 @@
       node: bulbLight
 
 - type: entity
-  name: small light
+  name: small light   
+  description: A powered wall light emitting...light.
   id: PoweredSmallLight
   parent: SmallLight
   components:
