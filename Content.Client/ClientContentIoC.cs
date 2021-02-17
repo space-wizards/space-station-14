@@ -12,6 +12,7 @@ using Content.Client.UserInterface;
 using Content.Client.UserInterface.AdminMenu;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
+using Content.Client.Voting;
 using Content.Shared.Actions;
 using Content.Shared.Interfaces;
 using Content.Shared.Alert;
@@ -43,6 +44,7 @@ namespace Content.Client
             IoCManager.Register<ActionManager, ActionManager>();
             IoCManager.Register<IClientAdminManager, ClientAdminManager>();
             IoCManager.Register<EuiManager, EuiManager>();
+            IoCManager.Register<IVoteManager, VoteManager>();
         }
     }
 }

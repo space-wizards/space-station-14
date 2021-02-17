@@ -297,7 +297,7 @@
   name: Science PDA
   parent: BasePDA
   id: SciencePDA
-  description:
+  description: It's covered with an unknown gooey substance.
   components:
   - type: PDA
     idCard: ResearchIDCard

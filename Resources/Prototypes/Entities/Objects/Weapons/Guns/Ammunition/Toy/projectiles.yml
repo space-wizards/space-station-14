@@ -12,7 +12,7 @@
   id: BulletDonkSoft
   name: foam dart
   parent: BulletDonkSoftBase
-  description:
+  description: I hope you're wearing eye protection.
   components:
   - type: Ammo
     caliber: Rocket

@@ -49,6 +49,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     var oldPullerPhysics = _pullerPhysics;
 
                     _puller = null;
+                    Dirty();
                     _pullerPhysics = null;
 
                     if (_physics != null)
@@ -130,6 +131,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     // Pull start confirm
 
                     _puller = value;
+                    Dirty();
                     _pullerPhysics = valuePhysics;
 
                     _physics.EnsureController<PullController>().Manager = this;
