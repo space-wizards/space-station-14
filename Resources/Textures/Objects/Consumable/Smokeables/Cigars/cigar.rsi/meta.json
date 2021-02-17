@@ -61,10 +61,10 @@
       "name": "butt"
     },
     {
-      "name": "unlit"
+      "name": "unlit-icon"
     },
     {
-      "name": "lit"
+      "name": "lit-icon"
     }
   ]
 }

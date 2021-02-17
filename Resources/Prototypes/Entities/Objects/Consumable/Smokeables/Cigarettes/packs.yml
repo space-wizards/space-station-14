@@ -1,0 +1,13 @@
+- type: entity
+  id: CigPackBase
+  name: cigarette pack
+  description: "Pack of cigarettes"
+  components:
+    - type: Sprite
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
+      layers:
+        - state: closed
+    - type: StorageFill
+      contents:
+        - name: Cigarette
+          amount: 6
