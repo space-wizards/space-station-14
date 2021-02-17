@@ -1,27 +1,19 @@
 #nullable enable
 using System;
 using System.Linq;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -48,7 +40,23 @@ namespace Content.Server.Actions
         {
             var disarmedActs = args.Target.GetAllComponents<IDisarmedAct>().ToArray();
 
-            if (disarmedActs.Length == 0 || !args.Performer.InRangeUnobstructed(args.Target)) return;
+            if (!args.Performer.InRangeUnobstructed(args.Target)) return;
+
+            if (disarmedActs.Length == 0)
+            {
+                if (args.Performer.TryGetComponent(out IActorComponent? actor))
+                {
+                    // Fall back to a normal interaction with the entity
+                    var player = actor.playerSession;
+                    var coordinates = args.Target.Transform.Coordinates;
+                    var target = args.Target.Uid;
+                    EntitySystem.Get<InteractionSystem>().HandleClientUseItemInHand(player, coordinates, target);
+                    return;
+                }
+
+                return;
+            }
+
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
             if (args.Target == args.Performer || !args.Performer.CanAttack()) return;
 

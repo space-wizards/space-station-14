@@ -1,10 +1,5 @@
 ﻿#nullable enable
-using Robust.Server.GameObjects;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Utility;
 using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;
 

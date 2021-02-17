@@ -31,7 +31,6 @@ namespace Content.Client
             "MeleeChemicalInjector",
             "Dice",
             "Construction",
-            "Door",
             "PoweredLight",
             "Smes",
             "LightBulb",

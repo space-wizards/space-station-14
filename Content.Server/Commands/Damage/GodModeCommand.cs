@@ -2,11 +2,9 @@
 using Content.Server.Administration;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Damage

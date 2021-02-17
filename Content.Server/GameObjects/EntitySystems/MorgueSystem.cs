@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Morgue;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

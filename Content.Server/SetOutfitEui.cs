@@ -1,13 +1,10 @@
 using Content.Server.Administration;
-using Content.Server.Database;
 using Content.Server.Eui;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
-using System;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server
 {

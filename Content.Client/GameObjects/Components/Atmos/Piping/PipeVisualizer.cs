@@ -3,15 +3,11 @@ using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects.Components.Renderable;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Atmos

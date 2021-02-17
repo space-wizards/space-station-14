@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Destructible;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Destructible
 {

@@ -1,5 +1,4 @@
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Access
 {

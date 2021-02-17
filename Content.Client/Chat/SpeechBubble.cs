@@ -1,9 +1,9 @@
 ﻿using System;
 using Content.Client.Interfaces.Chat;
-using Robust.Client.Interfaces.Graphics.ClientEye;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Timers;
 using Robust.Shared.Timing;

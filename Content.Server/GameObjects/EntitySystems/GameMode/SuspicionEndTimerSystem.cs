@@ -4,12 +4,11 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
-using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 
 #nullable enable
 
@@ -19,8 +18,6 @@ namespace Content.Server.GameObjects.EntitySystems.GameMode
     public sealed class SuspicionEndTimerSystem : EntitySystem, IResettingEntitySystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = null!;
-        [Dependency] private readonly IGameTiming _timing = null!;
-        [Dependency] private readonly IGameTicker _gameTicker = null!;
 
         private TimeSpan? _endTime;
 

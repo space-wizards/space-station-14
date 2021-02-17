@@ -3,12 +3,10 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using NUnit.Framework;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.DoAfter
 {
@@ -16,7 +14,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
     [TestOf(typeof(DoAfterComponent))]
     public class DoAfterServerTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: Dummy
   id: Dummy
@@ -28,7 +26,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
         public async Task TestFinished()
         {
             Task<DoAfterStatus> task = null;
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             // That it finishes successfully
@@ -52,7 +50,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
         public async Task TestCancelled()
         {
             Task<DoAfterStatus> task = null;
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             server.Post(() =>

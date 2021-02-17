@@ -6,6 +6,7 @@
   - type: Utensil
     types:
       - Knife
+  - type: ItemCooldown
   - type: MeleeWeapon
     hitSound: /Audio/Weapons/bladeslice.ogg
     damage: 12

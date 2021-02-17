@@ -5,17 +5,15 @@ using System.Linq;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.StationEvents;
 using Content.Shared.Atmos;
-using Content.Shared.Roles;
 using Robust.Client.Console;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.Placement;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.Graphics;
+using Robust.Client.Placement;
 using Robust.Client.Player;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
@@ -35,9 +33,14 @@ namespace Content.Client.UserInterface.AdminMenu
 
         protected override Vector2? CustomSize => (500, 250);
 
+        public delegate void PlayerListRefresh();
+
+        public event PlayerListRefresh? OnPlayerListRefresh;
+
         private readonly List<CommandButton> _adminButtons = new()
         {
             new KickCommandButton(),
+            new BanCommandButton(),
             new DirectCommandButton("Admin Ghost", "aghost"),
             new TeleportCommandButton(),
             new DirectCommandButton("Permissions Panel", "permissions"),
@@ -48,10 +51,12 @@ namespace Content.Client.UserInterface.AdminMenu
             new SpawnTilesCommandButton(),
             new StationEventsCommandButton()
         };
-        private readonly List<CommandButton> _debugButtons = new()
+        private readonly List<CommandButton> _atmosButtons = new()
         {
             new AddAtmosCommandButton(),
+            new AddGasCommandButton(),
             new FillGasCommandButton(),
+            new SetTempCommandButton(),
         };
         private readonly List<CommandButton> _roundButtons = new()
         {
@@ -93,15 +98,14 @@ namespace Content.Client.UserInterface.AdminMenu
             }
         }
 
-        private void RefreshPlayerList(ButtonEventArgs args)
+        public void RefreshPlayerList(Dictionary<string, string> namesToPlayers)
         {
             PlayerList.RemoveAllChildren();
             var playerManager = IoCManager.Resolve<IPlayerManager>();
-            var sessions = playerManager.Sessions;
             PlayerCount.Text = $"Players: {playerManager.PlayerCount}";
 
-            Color altColor = Color.FromHex("#292B38");
-            Color defaultColor = Color.FromHex("#2F2F3B");
+            var altColor = Color.FromHex("#292B38");
+            var defaultColor = Color.FromHex("#2F2F3B");
 
             var header = new HBoxContainer
             {
@@ -116,15 +120,6 @@ namespace Content.Client.UserInterface.AdminMenu
                         new Label { Text = "Player",
                             SizeFlagsStretchRatio = 2f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand },
-                        new VSeperator(),
-                        new Label { Text = "Status",
-                            SizeFlagsStretchRatio = 1f,
-                            SizeFlagsHorizontal = SizeFlags.FillExpand },
-                        new VSeperator(),
-                        new Label { Text = "Ping",
-                            SizeFlagsStretchRatio = 1f,
-                            SizeFlagsHorizontal = SizeFlags.FillExpand,
-                            Align = Label.AlignMode.Right },
                     }
             };
             PlayerList.AddChild(new PanelContainer
@@ -141,36 +136,25 @@ namespace Content.Client.UserInterface.AdminMenu
             PlayerList.AddChild(new HSeparator());
 
             var useAltColor = false;
-            foreach (var player in sessions)
+            foreach (var (name, player) in namesToPlayers)
             {
-                var hbox = new HBoxContainer
+                var hBox = new HBoxContainer
                 {
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
                     SeparationOverride = 4,
                     Children =
                     {
                         new Label {
-                            Text = player.Name,
+                            Text = name,
                             SizeFlagsStretchRatio = 2f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand,
                             ClipText = true },
                         new VSeperator(),
                         new Label {
-                            Text = player.AttachedEntity?.Name,
+                            Text = player,
                             SizeFlagsStretchRatio = 2f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand,
                             ClipText = true },
-                        new VSeperator(),
-                        new Label {
-                            Text = player.Status.ToString(),
-                            SizeFlagsStretchRatio = 1f,
-                            SizeFlagsHorizontal = SizeFlags.FillExpand },
-                        new VSeperator(),
-                        new Label {
-                            Text = player.Ping.ToString(),
-                            SizeFlagsStretchRatio = 1f,
-                            SizeFlagsHorizontal = SizeFlags.FillExpand,
-                            Align = Label.AlignMode.Right },
                     }
                 };
                 PlayerList.AddChild(new PanelContainer
@@ -181,7 +165,7 @@ namespace Content.Client.UserInterface.AdminMenu
                     },
                     Children =
                     {
-                        hbox
+                        hBox
                     }
                 });
                 useAltColor ^= true;
@@ -233,7 +217,7 @@ namespace Content.Client.UserInterface.AdminMenu
                 SizeFlagsStretchRatio = 0.3f,
                 Text = "Refresh",
             };
-            refreshButton.OnPressed += RefreshPlayerList;
+            refreshButton.OnPressed += (_) => OnPlayerListRefresh?.Invoke();
 
             PlayerList = new VBoxContainer();
 
@@ -264,7 +248,7 @@ namespace Content.Client.UserInterface.AdminMenu
                 }
             };
             playerTabContainer.AddChild(playerVBox);
-            RefreshPlayerList(null!);
+            OnPlayerListRefresh?.Invoke();
             #endregion PlayerList
 
             #region Admin Tab
@@ -303,9 +287,9 @@ namespace Content.Client.UserInterface.AdminMenu
             adminbusTabContainer.AddChild(adminbusButtonGrid);
             #endregion
 
-            #region Debug
-            // Debug // Mostly dev tools, like addatmos
-            var debugTabContainer = new MarginContainer
+            #region Atmos
+            // Atmos // Commands to add, modify, or remove gases.
+            var atmosTabContainer = new MarginContainer
             {
                 MarginLeftOverride = 4,
                 MarginTopOverride = 4,
@@ -313,12 +297,12 @@ namespace Content.Client.UserInterface.AdminMenu
                 MarginBottomOverride = 4,
                 CustomMinimumSize = (50, 50),
             };
-            var debugButtonGrid = new GridContainer
+            var atmosButtonGrid = new GridContainer
             {
                 Columns = 4,
             };
-            AddCommandButton(_debugButtons, debugButtonGrid);
-            debugTabContainer.AddChild(debugButtonGrid);
+            AddCommandButton(_atmosButtons, atmosButtonGrid);
+            atmosTabContainer.AddChild(atmosButtonGrid);
             #endregion
 
             #region Round
@@ -366,8 +350,8 @@ namespace Content.Client.UserInterface.AdminMenu
             MasterTabContainer.SetTabTitle(0, Loc.GetString("Admin"));
             MasterTabContainer.AddChild(adminbusTabContainer);
             MasterTabContainer.SetTabTitle(1, Loc.GetString("Adminbus"));
-            MasterTabContainer.AddChild(debugTabContainer);
-            MasterTabContainer.SetTabTitle(2, Loc.GetString("Debug"));
+            MasterTabContainer.AddChild(atmosTabContainer);
+            MasterTabContainer.SetTabTitle(2, Loc.GetString("Atmos"));
             MasterTabContainer.AddChild(roundTabContainer);
             MasterTabContainer.SetTabTitle(3, Loc.GetString("Round"));
             MasterTabContainer.AddChild(serverTabContainer);
@@ -552,6 +536,42 @@ namespace Content.Client.UserInterface.AdminMenu
             }
         }
 
+        private class BanCommandButton : UICommandButton
+        {
+            public override string Name => "Ban";
+            public override string RequiredCommand => "ban";
+
+            private readonly CommandUIDropDown _playerDropDown = new()
+            {
+                Name = "Player",
+                GetData = () => IoCManager.Resolve<IPlayerManager>().Sessions.ToList<object>(),
+                GetDisplayName = (obj) => $"{((IPlayerSession) obj).Name} ({((IPlayerSession) obj).AttachedEntity?.Name})",
+                GetValueFromData = (obj) => ((IPlayerSession) obj).Name,
+            };
+
+            private readonly CommandUILineEdit _reason = new()
+            {
+                Name = "Reason"
+            };
+
+            private readonly CommandUILineEdit _minutes = new()
+            {
+                Name = "Minutes"
+            };
+
+            public override List<CommandUIControl> UI => new()
+            {
+                _playerDropDown,
+                _reason,
+                _minutes
+            };
+
+            public override void Submit()
+            {
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"ban \"{_playerDropDown.GetValue()}\" \"{CommandParsing.Escape(_reason.GetValue())}\" \"{_minutes.GetValue()}");
+            }
+        }
+
         private class TeleportCommandButton : UICommandButton
         {
             public override string Name => "Teleport";
@@ -600,6 +620,61 @@ namespace Content.Client.UserInterface.AdminMenu
             }
         }
 
+        private class AddGasCommandButton : UICommandButton
+        {
+            public override string Name => "Add Gas";
+            public override string RequiredCommand => "addgas";
+
+            private readonly CommandUIDropDown _grid = new()
+            {
+                Name = "Grid",
+                GetData = () => IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0).ToList<object>(),
+                GetDisplayName = (obj) => $"{((IMapGrid) obj).Index}{(IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID == ((IMapGrid) obj).Index ? " (Current)" : "")}",
+                GetValueFromData = (obj) => ((IMapGrid) obj).Index.ToString(),
+            };
+
+            private readonly CommandUISpinBox _tileX = new()
+            {
+                Name = "TileX",
+            };
+
+            private readonly CommandUISpinBox _tileY = new()
+            {
+                Name = "TileY",
+            };
+
+            private readonly CommandUIDropDown _gas = new()
+            {
+                Name = "Gas",
+                GetData = () =>
+                {
+                    var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
+                    return atmosSystem.Gases.ToList<object>();
+                },
+                GetDisplayName = (obj) => $"{((GasPrototype) obj).Name} ({((GasPrototype) obj).ID})",
+                GetValueFromData = (obj) => ((GasPrototype) obj).ID.ToString(),
+            };
+
+            private readonly CommandUISpinBox _amount = new()
+            {
+                Name = "Amount"
+            };
+
+            public override List<CommandUIControl> UI => new()
+            {
+                _grid,
+                _gas,
+                _tileX,
+                _tileY,
+                _amount,
+            };
+
+            public override void Submit()
+            {
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"addgas {_tileX.GetValue()} {_tileY.GetValue()} {_grid.GetValue()} {_gas.GetValue()} {_amount.GetValue()}");
+            }
+        }
+
         private class FillGasCommandButton : UICommandButton
         {
             public override string Name => "Fill Gas";
@@ -640,6 +715,48 @@ namespace Content.Client.UserInterface.AdminMenu
             public override void Submit()
             {
                 IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"fillgas {_grid.GetValue()} {_gas.GetValue()} {_amount.GetValue()}");
+            }
+        }
+
+        private class SetTempCommandButton : UICommandButton
+        {
+            public override string Name => "Set temperature";
+            public override string RequiredCommand => "settemp";
+
+            private readonly CommandUIDropDown _grid = new()
+            {
+                Name = "Grid",
+                GetData = () => IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0).ToList<object>(),
+                GetDisplayName = (obj) => $"{((IMapGrid) obj).Index}{(IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID == ((IMapGrid) obj).Index ? " (Current)" : "")}",
+                GetValueFromData = (obj) => ((IMapGrid) obj).Index.ToString(),
+            };
+
+            private readonly CommandUISpinBox _tileX = new()
+            {
+                Name = "TileX",
+            };
+
+            private readonly CommandUISpinBox _tileY = new()
+            {
+                Name = "TileY",
+            };
+
+            private readonly CommandUISpinBox _temperature = new()
+            {
+                Name = "Temperature"
+            };
+
+            public override List<CommandUIControl> UI => new()
+            {
+                _grid,
+                _tileX,
+                _tileY,
+                _temperature,
+            };
+
+            public override void Submit()
+            {
+                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"settemp {_tileX.GetValue()} {_tileY.GetValue()} {_grid.GetValue()} {_temperature.GetValue()}");
             }
         }
         #endregion

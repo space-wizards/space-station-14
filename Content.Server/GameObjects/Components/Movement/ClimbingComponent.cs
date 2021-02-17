@@ -3,7 +3,6 @@ using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Movement

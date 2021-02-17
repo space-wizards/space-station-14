@@ -13,10 +13,9 @@ using Content.Shared;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Roles;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -25,6 +24,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.GamePresets
 {
+    [GamePreset("suspicion")]
     public class PresetSuspicion : GamePreset
     {
         [Dependency] private readonly IChatManager _chatManager = default!;

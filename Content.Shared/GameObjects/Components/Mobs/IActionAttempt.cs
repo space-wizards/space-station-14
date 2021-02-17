@@ -3,7 +3,6 @@
 using Content.Shared.Actions;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.GameObjects.Components.Mobs

@@ -2,7 +2,7 @@
 using Content.Server.Administration;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Players;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;

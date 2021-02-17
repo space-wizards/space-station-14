@@ -17,7 +17,6 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
         private readonly Menu _window;
-        private bool _closed;
 
         public AdminAddReagentEui()
         {
@@ -32,8 +31,6 @@ namespace Content.Client.UserInterface
 
         public override void Closed()
         {
-            _closed = true;
-
             _window.Close();
         }
 

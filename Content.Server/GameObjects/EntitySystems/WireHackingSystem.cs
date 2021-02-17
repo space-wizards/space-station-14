@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Content.Shared.GameTicking;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 

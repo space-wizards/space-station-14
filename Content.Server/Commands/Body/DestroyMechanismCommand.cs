@@ -2,9 +2,8 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Body;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 

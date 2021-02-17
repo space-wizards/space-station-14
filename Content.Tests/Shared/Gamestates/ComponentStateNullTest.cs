@@ -4,8 +4,6 @@ using System.Reflection;
 using NUnit.Framework;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Reflection;
 
 namespace Content.Tests.Shared.Gamestates

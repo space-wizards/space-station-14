@@ -1,8 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components.Nutrition;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 

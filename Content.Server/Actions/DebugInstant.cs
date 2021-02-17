@@ -2,7 +2,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Actions

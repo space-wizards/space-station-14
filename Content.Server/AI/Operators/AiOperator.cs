@@ -1,6 +1,4 @@
 
-using System;
-
 namespace Content.Server.AI.Operators
 {
     public abstract class AiOperator

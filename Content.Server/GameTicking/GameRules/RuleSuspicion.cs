@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using Content.Server.GameObjects.Components.Suspicion;
 using Content.Server.GameObjects.EntitySystems;
@@ -9,15 +9,14 @@ using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameTicking.GameRules
@@ -54,7 +53,7 @@ namespace Content.Server.GameTicking.GameRules
             EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Misc/tatoralert.ogg", AudioParams.Default, Predicate);
             EntitySystem.Get<SuspicionEndTimerSystem>().EndTime = _endTime;
 
-            EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.AllowAllNoExternal;
+            EntitySystem.Get<ServerDoorSystem>().AccessType = ServerDoorSystem.AccessTypes.AllowAllNoExternal;
 
             Timer.SpawnRepeating(DeadCheckDelay, CheckWinConditions, _checkTimerCancel.Token);
         }
@@ -63,7 +62,7 @@ namespace Content.Server.GameTicking.GameRules
         {
             base.Removed();
 
-            EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.Id;
+            EntitySystem.Get<ServerDoorSystem>().AccessType = ServerDoorSystem.AccessTypes.Id;
             EntitySystem.Get<SuspicionEndTimerSystem>().EndTime = null;
 
             _checkTimerCancel.Cancel();
