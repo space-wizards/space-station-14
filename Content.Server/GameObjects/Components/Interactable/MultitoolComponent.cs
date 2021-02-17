@@ -3,7 +3,6 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Serialization;
@@ -36,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             public string SoundCollection => _soundCollection;
             public string ChangeSound => _changeSound;
 
-            public void ExposeData(ObjectSerializer serializer)
+            void IExposeData.ExposeData(ObjectSerializer serializer)
             {
                 serializer.DataField(this, x => x.Behavior, "behavior", ToolQuality.None);
                 serializer.DataField(ref _state, "state", string.Empty);
@@ -100,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             Dirty();
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             Cycle();
             return true;

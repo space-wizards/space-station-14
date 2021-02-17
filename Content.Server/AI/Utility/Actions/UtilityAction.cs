@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Utility.Actions
@@ -62,7 +62,7 @@ namespace Content.Server.AI.Utility.Actions
         {
             Owner = owner;
         }
-        
+
         public virtual void Shutdown() {}
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Content.Server.AI.Utility.Actions
                 return Outcome.Success;
             }
 
-            op.TryStartup();
+            op.Startup();
             var outcome = op.Execute(frameTime);
 
             switch (outcome)
@@ -116,7 +116,7 @@ namespace Content.Server.AI.Utility.Actions
             // Overall structure is based on Building a better centaur
             // Ideally we should early-out each action as cheaply as possible if it's not valid, thus
             // the finalScore can only go down over time.
-            
+
             var finalScore = 1.0f;
             var minThreshold = min / Bonus;
             context.GetState<ConsiderationState>().SetValue(considerations.Count);

@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
@@ -6,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -65,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         private void UpdateSupply()
         {
-            if (Owner.TryGetComponent(out PowerSupplierComponent supplier))
+            if (Owner.TryGetComponent<PowerSupplierComponent>(out var supplier))
             {
                 supplier.SupplyRate = (int) (_maxSupply * _coverage);
             }
@@ -75,14 +77,16 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         {
             base.Initialize();
 
-            Owner.EnsureComponentWarn(out PowerSupplierComponent _);
+            Owner.EnsureComponentWarn<PowerSupplierComponent>();
 
             UpdateSupply();
         }
 
         public void OnBreak(BreakageEventArgs args)
         {
-            var sprite = Owner.GetComponent<SpriteComponent>();
+            if (!Owner.TryGetComponent<SpriteComponent>(out var sprite))
+                return;
+
             sprite.LayerSetState(0, "broken");
             MaxSupply = 0;
         }

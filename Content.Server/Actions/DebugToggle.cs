@@ -11,7 +11,7 @@ namespace Content.Server.Actions
         public string MessageOn { get; private set; }
         public string MessageOff { get; private set; }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.MessageOn, "messageOn", "on!");
             serializer.DataField(this, x => x.MessageOff, "messageOff", "off!");

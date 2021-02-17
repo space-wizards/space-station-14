@@ -1,10 +1,8 @@
-﻿using System;
-using Content.Client.Arcade;
+﻿using Content.Client.Arcade;
 using Content.Shared.Arcade;
-using Content.Shared.GameObjects.Components.Arcade;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Arcade
 {
@@ -21,7 +19,6 @@ namespace Content.Client.GameObjects.Components.Arcade
             base.Open();
 
             _menu = new BlockGameMenu(this);
-            _menu.OnClose += () => SendMessage(new BlockGameMessages.BlockGameUserUnregisterMessage());
             _menu.OnClose += Close;
             _menu.OpenCentered();
         }

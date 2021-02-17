@@ -22,7 +22,16 @@ namespace Content.Server.GameObjects.Components.Damage
         [YamlField("tools")]
         private List<ToolQuality> _tools = new();
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref Damage, "damage", 0);
+
+            serializer.DataField(ref _tools, "tools", new List<ToolQuality>());
+        }
+
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
             {

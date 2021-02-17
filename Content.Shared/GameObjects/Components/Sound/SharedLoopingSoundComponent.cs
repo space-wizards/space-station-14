@@ -2,7 +2,6 @@ using System;
 using System.Reflection;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Sound
@@ -107,7 +106,7 @@ namespace Content.Shared.GameObjects.Components.Sound
         /// </summary>
         public bool Play = true;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             if (serializer.Writing)
                 return;

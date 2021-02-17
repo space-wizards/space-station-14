@@ -27,7 +27,6 @@
     },
     {
       "name": "fox_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -36,7 +35,6 @@
     },
     {
       "name": "fox_deadcollar",
-      "directions": 1,
       "delays": [
         [
           1
@@ -45,7 +43,6 @@
     },
     {
       "name": "fox_deadtag",
-      "directions": 1,
       "delays": [
         [
           1

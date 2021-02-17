@@ -6,8 +6,7 @@ using Content.Client.Utility;
 using Content.Shared.Arcade;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -458,7 +457,7 @@ namespace Content.Client.Arcade
             return grid;
         }
 
-        protected override void FocusExited()
+        protected override void KeyboardFocusExited()
         {
             if (!IsOpen) return;
             if(_gameOver) return;

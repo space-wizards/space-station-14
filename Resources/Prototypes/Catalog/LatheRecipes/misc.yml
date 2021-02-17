@@ -58,3 +58,11 @@
   materials:
     steel: 80
     glass: 30
+
+- type: latheRecipe
+  id: Matchbox
+  icon: Objects/Tools/matches.rsi
+  result: Matchbox
+  completetime: 10
+  materials:
+    glass: 10

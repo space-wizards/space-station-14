@@ -13,10 +13,11 @@ using Content.Client.StationEvents;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.AdminMenu;
 using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Graphics.Overlays;
+using Content.Client.Voting;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Cargo;
-using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
 using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
 using Content.Shared.GameObjects.Components.Gravity;
@@ -27,15 +28,12 @@ using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.Kitchen;
 using Content.Shared.Alert;
 using Robust.Client;
-using Robust.Client.Interfaces;
-using Robust.Client.Interfaces.Graphics.Overlays;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.State;
+using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Client.Player;
+using Robust.Client.State;
 using Robust.Shared.ContentPack;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -81,7 +79,7 @@ namespace Content.Client
             prototypes.RegisterIgnore("seed"); // Seeds prototypes are server-only.
             prototypes.RegisterIgnore("barSign");
             prototypes.RegisterIgnore("objective");
-            prototypes.RegisterIgnore("dataset");
+            prototypes.RegisterIgnore("holiday");
 
             ClientContentIoC.Register();
 
@@ -150,7 +148,12 @@ namespace Content.Client
             IoCManager.Resolve<IGameHud>().Initialize();
             IoCManager.Resolve<IClientNotifyManager>().Initialize();
             IoCManager.Resolve<IClientGameTicker>().Initialize();
-            IoCManager.Resolve<IOverlayManager>().AddOverlay(new ParallaxOverlay());
+            var overlayMgr = IoCManager.Resolve<IOverlayManager>();
+            overlayMgr.AddOverlay(new ParallaxOverlay());
+            overlayMgr.AddOverlay(new GradientCircleMaskOverlay());
+            overlayMgr.AddOverlay(new CircleMaskOverlay());
+            overlayMgr.AddOverlay(new FlashOverlay());
+            overlayMgr.AddOverlay(new RadiationPulseOverlay());
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
@@ -159,6 +162,7 @@ namespace Content.Client
             IoCManager.Resolve<EuiManager>().Initialize();
             IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<ActionManager>().Initialize();
+            IoCManager.Resolve<IVoteManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {

@@ -1,13 +1,16 @@
+using Robust.Shared.Analyzers;
+
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
     ///     This interface allows the component's entity to be dragged and dropped
     ///     onto by another entity and gives it behavior when that occurs.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IDragDropOn
     {
         /// <summary>
-        ///     Invoked server-side when another entity is being dragged and dropped
+        ///     Invoked when another entity is being dragged and dropped
         ///     onto this one before invoking <see cref="DragDropOn"/>.
         ///     Note that other drag and drop interactions may be attempted if
         ///     this one fails.

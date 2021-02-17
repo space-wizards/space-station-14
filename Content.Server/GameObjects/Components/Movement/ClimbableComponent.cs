@@ -1,22 +1,15 @@
 ﻿using System;
-using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -29,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Movement
 {
     [RegisterComponent]
     [ComponentReference(typeof(IClimbable))]
-    public class ClimbableComponent : SharedClimbableComponent, IDragDropOn
+    public class ClimbableComponent : SharedClimbableComponent
     {
         /// <summary>
         ///     The range from which this entity can be climbed.
@@ -45,19 +38,29 @@ namespace Content.Server.GameObjects.Components.Movement
         [YamlField("delay")]
         private float _climbDelay = 0.8f;
 
-        private DoAfterSystem _doAfterSystem;
-
         public override void Initialize()
         {
             base.Initialize();
 
-            Owner.EnsureComponentWarn(out PhysicsComponent _);
-
-            _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            if (!Owner.EnsureComponent(out PhysicsComponent _))
+            {
+                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PhysicsComponent)}");
+            }
         }
 
-        bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
+        public override void ExposeData(ObjectSerializer serializer)
         {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _range, "range", SharedInteractionSystem.InteractionRange / 1.4f);
+            serializer.DataField(ref _climbDelay, "delay", 0.8f);
+        }
+
+        public override bool CanDragDropOn(DragDropEventArgs eventArgs)
+        {
+            if (!base.CanDragDropOn(eventArgs))
+                return false;
+
             string reason;
             bool canVault;
 
@@ -101,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 return false;
             }
 
-            if (!user.InRangeUnobstructed(target, _range))
+            if (!user.InRangeUnobstructed(target, Range))
             {
                 reason = Loc.GetString("You can't reach there!");
                 return false;
@@ -135,8 +138,8 @@ namespace Content.Server.GameObjects.Components.Movement
 
             bool Ignored(IEntity entity) => entity == target || entity == user || entity == dragged;
 
-            if (!user.InRangeUnobstructed(target, _range, predicate: Ignored) ||
-                !user.InRangeUnobstructed(dragged, _range, predicate: Ignored))
+            if (!user.InRangeUnobstructed(target, Range, predicate: Ignored) ||
+                !user.InRangeUnobstructed(dragged, Range, predicate: Ignored))
             {
                 reason = Loc.GetString("You can't reach there!");
                 return false;
@@ -146,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Movement
             return true;
         }
 
-        bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEventArgs eventArgs)
         {
             if (eventArgs.User == eventArgs.Dragged)
             {
@@ -170,7 +173,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 BreakOnStun = true
             };
 
-            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
 
             if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
             {
@@ -215,7 +218,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 BreakOnStun = true
             };
 
-            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
 
             if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
             {

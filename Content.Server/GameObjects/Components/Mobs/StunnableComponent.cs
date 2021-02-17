@@ -1,23 +1,23 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.Alert;
-using Content.Shared.Chemistry;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.Interfaces.GameObjects.Components;
-using NFluidsynth;
+using Content.Shared.Interfaces;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Timers;
-using Logger = Robust.Shared.Log.Logger;
+using Robust.Shared.Localization;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStunnableComponent))]
-    public class StunnableComponent : SharedStunnableComponent
+    public class StunnableComponent : SharedStunnableComponent, IDisarmedAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -44,6 +44,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             KnockdownTimer = 0f;
+            Dirty();
         }
 
         public void Update(float delta)
@@ -108,10 +109,34 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
 
+        protected override void OnInteractHand()
+        {
+            EntitySystem.Get<AudioSystem>()
+                .PlayFromEntity("/Audio/Effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.05f));
+        }
+
         public override ComponentState GetComponentState()
         {
             return new StunnableComponentState(StunnedTimer, KnockdownTimer, SlowdownTimer, WalkModifierOverride,
                 RunModifierOverride);
+        }
+
+        bool IDisarmedAct.Disarmed(DisarmedActEventArgs eventArgs)
+        {
+            if (!IoCManager.Resolve<IRobustRandom>().Prob(eventArgs.PushProbability))
+                return false;
+
+            Paralyze(4f);
+
+            var source = eventArgs.Source;
+
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/thudswoosh.ogg", source,
+                AudioHelpers.WithVariation(0.025f));
+
+            source.PopupMessageOtherClients(Loc.GetString("{0} pushes {1}!", source.Name, eventArgs.Target.Name));
+            source.PopupMessageCursor(Loc.GetString("You push {0}!", eventArgs.Target.Name));
+
+            return true;
         }
     }
 }

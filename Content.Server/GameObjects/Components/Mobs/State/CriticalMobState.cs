@@ -1,11 +1,8 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Mobs.State
 {
@@ -20,11 +17,6 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                 appearance.SetData(DamageStateVisuals.State, DamageState.Critical);
             }
 
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))
-            {
-                overlay.AddOverlay(SharedOverlayID.GradientCircleMaskOverlay);
-            }
-
             if (entity.TryGetComponent(out StunnableComponent stun))
             {
                 stun.CancelAll();
@@ -36,11 +28,6 @@ namespace Content.Server.GameObjects.Components.Mobs.State
         public override void ExitState(IEntity entity)
         {
             base.ExitState(entity);
-
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))
-            {
-                overlay.ClearOverlays();
-            }
         }
     }
 }

@@ -2,9 +2,9 @@
 using System.Linq;
 using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser.SharedReagentDispenserComponent;
 
@@ -48,7 +48,10 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
             _window.DispenseButton1.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount1);
             _window.DispenseButton5.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount5);
             _window.DispenseButton10.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount10);
+            _window.DispenseButton15.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount15);
+            _window.DispenseButton20.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount20);
             _window.DispenseButton25.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount25);
+            _window.DispenseButton30.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount30);
             _window.DispenseButton50.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount50);
             _window.DispenseButton100.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount100);
         }

@@ -2,7 +2,6 @@
 using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Npgsql.TypeHandlers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
@@ -33,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             DisconnectInternals();
         }
 
-        public void Equipped(EquippedEventArgs eventArgs)
+        void IEquipped.Equipped(EquippedEventArgs eventArgs)
         {
             if ((EquipmentSlotDefines.SlotMasks[eventArgs.Slot] & _allowedSlots) != _allowedSlots) return;
             IsFunctional = true;
@@ -45,10 +44,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        public void Unequipped(UnequippedEventArgs eventArgs)
+        void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
         {
             DisconnectInternals();
-
         }
 
         public void DisconnectInternals()

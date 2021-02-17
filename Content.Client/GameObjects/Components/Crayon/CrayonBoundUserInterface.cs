@@ -1,9 +1,9 @@
 ﻿using Content.Shared.GameObjects.Components;
-using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Crayon
 {

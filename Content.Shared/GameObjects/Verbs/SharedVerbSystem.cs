@@ -5,9 +5,6 @@ using System.Linq;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Eye;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 

@@ -6,18 +6,14 @@ using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Prototypes.Cargo;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
+using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 using System.Linq;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -28,7 +24,6 @@ namespace Content.Server.GameObjects.Components.Cargo
     [ComponentReference(typeof(IActivate))]
     public class CargoConsoleComponent : SharedCargoConsoleComponent, IActivate
     {
-        [Dependency] private readonly ICargoOrderDataManager _cargoOrderDataManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         [ViewVariables]
@@ -91,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Cargo
         {
             if (UserInterface != null)
             {
-                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+                UserInterface.OnReceiveMessage -= UserInterfaceOnOnReceiveMessage;
             }
 
             base.OnRemove();
@@ -118,12 +113,12 @@ namespace Content.Server.GameObjects.Components.Cargo
                             break;
                         }
 
-                        _cargoOrderDataManager.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
+                        _cargoConsoleSystem.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
                         break;
                     }
                 case CargoConsoleRemoveOrderMessage msg:
                     {
-                        _cargoOrderDataManager.RemoveOrder(orders.Database.Id, msg.OrderNumber);
+                        _cargoConsoleSystem.RemoveOrder(orders.Database.Id, msg.OrderNumber);
                         break;
                     }
                 case CargoConsoleApproveOrderMessage msg:
@@ -138,12 +133,12 @@ namespace Content.Server.GameObjects.Components.Cargo
                         PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
                         if (product == null!)
                             break;
-                        var capacity = _cargoOrderDataManager.GetCapacity(orders.Database.Id);
+                        var capacity = _cargoConsoleSystem.GetCapacity(orders.Database.Id);
                         if (capacity.CurrentCapacity == capacity.MaxCapacity)
                             break;
                         if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                             break;
-                        _cargoOrderDataManager.ApproveOrder(orders.Database.Id, msg.OrderNumber);
+                        _cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber);
                         UpdateUIState();
                         break;
                     }
@@ -179,7 +174,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                         {
                             if (cargoTelepad.TryGetComponent<CargoTelepadComponent>(out var telepadComponent))
                             {
-                                var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(orders.Database);
+                                var approvedOrders = _cargoConsoleSystem.RemoveAndGetApprovedOrders(orders.Database.Id);
                                 orders.Database.ClearOrderCapacity();
                                 foreach (var order in approvedOrders)
                                 {
@@ -219,7 +214,7 @@ namespace Content.Server.GameObjects.Components.Cargo
             var id = _bankAccount.Id;
             var name = _bankAccount.Name;
             var balance = _bankAccount.Balance;
-            var capacity = _cargoOrderDataManager.GetCapacity(id);
+            var capacity = _cargoConsoleSystem.GetCapacity(id);
             UserInterface?.SetState(new CargoConsoleInterfaceState(_requestOnly, id, name, balance, capacity));
         }
     }

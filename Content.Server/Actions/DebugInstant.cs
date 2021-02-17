@@ -15,7 +15,7 @@ namespace Content.Server.Actions
         public string Message { get; private set; }
         public float Cooldown { get; private set; }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Message, "message", "Instant action used.");
             serializer.DataField(this, x => x.Cooldown, "cooldown", 0);

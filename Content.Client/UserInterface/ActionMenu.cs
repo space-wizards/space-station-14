@@ -56,6 +56,7 @@ namespace Content.Client.UserInterface
         private readonly Button _clearButton;
         private readonly GridContainer _resultsGrid;
         private readonly TextureRect _dragShadow;
+        private readonly IGameHud _gameHud;
         private readonly DragDropHelper<ActionMenuItem> _dragDropHelper;
 
 
@@ -64,6 +65,8 @@ namespace Content.Client.UserInterface
             _actionsComponent = actionsComponent;
             _actionsUI = actionsUI;
             _actionManager = IoCManager.Resolve<ActionManager>();
+            _gameHud = IoCManager.Resolve<IGameHud>();
+
             Title = Loc.GetString("Actions");
             CustomMinimumSize = (300, 300);
 
@@ -143,14 +146,13 @@ namespace Content.Client.UserInterface
             _dragDropHelper = new DragDropHelper<ActionMenuItem>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
         }
 
-
         protected override void EnteredTree()
         {
             base.EnteredTree();
             _clearButton.OnPressed += OnClearButtonPressed;
             _searchBar.OnTextChanged += OnSearchTextChanged;
             _filterButton.OnItemSelected += OnFilterItemSelected;
-
+            _gameHud.ActionsButtonDown = true;
             foreach (var actionMenuControl in _resultsGrid.Children)
             {
                 var actionMenuItem = (actionMenuControl as ActionMenuItem);
@@ -167,7 +169,7 @@ namespace Content.Client.UserInterface
             _clearButton.OnPressed -= OnClearButtonPressed;
             _searchBar.OnTextChanged -= OnSearchTextChanged;
             _filterButton.OnItemSelected -= OnFilterItemSelected;
-
+            _gameHud.ActionsButtonDown = false;
             foreach (var actionMenuControl in _resultsGrid.Children)
             {
                 var actionMenuItem = (actionMenuControl as ActionMenuItem);
@@ -277,6 +279,12 @@ namespace Content.Client.UserInterface
                 _actionsUI.UpdateUI();
             }
 
+            _dragDropHelper.EndDrag();
+        }
+
+        private void OnItemFocusExited(ActionMenuItem item)
+        {
+            // lost focus, cancel the drag if one is in progress
             _dragDropHelper.EndDrag();
         }
 
@@ -402,8 +410,7 @@ namespace Content.Client.UserInterface
                 ItemTag => action is ItemActionPrototype,
                 NotItemTag => action is ActionPrototype,
                 InstantActionTag => action.BehaviorType == BehaviorType.Instant,
-                TargetActionTag => action.BehaviorType == BehaviorType.TargetEntity ||
-                                   action.BehaviorType == BehaviorType.TargetPoint,
+                TargetActionTag => action.IsTargetAction,
                 ToggleActionTag => action.BehaviorType == BehaviorType.Toggle,
                 _ => action.Filters.Contains(tag)
             };
@@ -462,10 +469,9 @@ namespace Content.Client.UserInterface
             _actionList = actions.ToArray();
             foreach (var action in _actionList.OrderBy(act => act.Name.ToString()))
             {
-                var actionItem = new ActionMenuItem(action);
+                var actionItem = new ActionMenuItem(action, OnItemFocusExited);
                 _resultsGrid.Children.Add(actionItem);
                 actionItem.SetActionState(_actionsComponent.IsGranted(action));
-
                 actionItem.OnButtonDown += OnItemButtonDown;
                 actionItem.OnButtonUp += OnItemButtonUp;
                 actionItem.OnPressed += OnItemPressed;

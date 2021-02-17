@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Content.Shared.Construction;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Conditions
@@ -24,7 +24,7 @@ namespace Content.Server.Construction.Conditions
             IoCManager.InjectDependencies(this);
         }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Component, "component", string.Empty);
             serializer.DataField(this, x => x.HasEntity, "hasEntity", true);

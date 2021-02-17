@@ -1,12 +1,10 @@
 ﻿using System;
+using Content.Client.UserInterface.Stylesheets;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Shaders;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface
 {
@@ -26,11 +24,11 @@ namespace Content.Client.UserInterface
 
         public bool EntityHover => HoverSpriteView.Sprite != null;
         public bool MouseIsHovering = false;
-        private readonly ShaderInstance _highlightShader;
+
+        private readonly PanelContainer _highlightRect;
 
         public ItemSlotButton(Texture texture, Texture storageTexture)
         {
-            _highlightShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>(HighlightShader).Instance();
             CustomMinimumSize = (64, 64);
 
             AddChild(Button = new TextureRect
@@ -38,6 +36,13 @@ namespace Content.Client.UserInterface
                 Texture = texture,
                 TextureScale = (2, 2),
                 MouseFilter = MouseFilterMode.Stop
+            });
+
+            AddChild(_highlightRect = new PanelContainer
+            {
+                StyleClasses = { StyleNano.StyleClassHandSlotHighlight },
+                CustomMinimumSize = (32, 32),
+                Visible = false
             });
 
             Button.OnKeyBindDown += OnButtonPressed;
@@ -102,18 +107,16 @@ namespace Content.Client.UserInterface
             }
         }
 
-        public void Highlight(bool on)
+        public virtual void Highlight(bool highlight)
         {
-            // I make no claim that this actually looks good but it's a start.
-            if (on)
+            if (highlight)
             {
-                Button.ShaderOverride = _highlightShader;
+                _highlightRect.Visible = true;
             }
             else
             {
-                Button.ShaderOverride = null;
+                _highlightRect.Visible = false;
             }
-
         }
 
         private void OnButtonPressed(GUIBoundKeyEventArgs args)

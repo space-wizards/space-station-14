@@ -38,14 +38,17 @@
       - SmallImpassable
   - type: EntityStorage
   - type: PlaceableSurface
+    placeCentered: true
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: StorageVisualizer

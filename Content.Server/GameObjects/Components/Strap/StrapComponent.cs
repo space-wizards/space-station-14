@@ -4,15 +4,12 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Strap;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Prototypes.DataClasses.Attributes;
@@ -122,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Strap
 
             _occupiedSize += buckle.Size;
 
-            buckle.AppearanceComponent?.SetData(StrapVisuals.RotationAngle, _rotation);
+            buckle.Appearance?.SetData(StrapVisuals.RotationAngle, _rotation);
 
             SendMessage(new StrapMessage(buckle.Owner, Owner));
 
@@ -200,14 +197,13 @@ namespace Content.Server.GameObjects.Components.Strap
                     parent = parent.Parent;
                 }
 
-                var range = SharedInteractionSystem.InteractionRange / 2;
-
-                if (!user.InRangeUnobstructed(component, range))
+                if (!user.InRangeUnobstructed(component, buckle.Range))
                 {
                     return;
                 }
 
                 data.Visibility = VerbVisibility.Visible;
+                data.IconTexture = buckle.BuckledTo == null ? "/Textures/Interface/VerbIcons/buckle.svg.96dpi.png" : "/Textures/Interface/VerbIcons/unbuckle.svg.96dpi.png";
                 data.Text = Loc.GetString(buckle.BuckledTo == null ? "Buckle" : "Unbuckle");
             }
 
@@ -220,6 +216,12 @@ namespace Content.Server.GameObjects.Components.Strap
 
                 buckle.ToggleBuckle(user, component.Owner);
             }
+        }
+
+        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        {
+            if (!eventArgs.Dragged.TryGetComponent(out BuckleComponent? buckleComponent)) return false;
+            return buckleComponent.TryBuckle(eventArgs.User, Owner);
         }
     }
 }

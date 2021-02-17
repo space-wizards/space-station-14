@@ -35,6 +35,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+  - type: Door
   - type: Airlock
   - type: Appearance
     visuals:
@@ -60,10 +61,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      500:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     mode: NoSprite
@@ -75,7 +78,7 @@
   parent: Airlock
   name: glass airlock
   components:
-  - type: Airlock
+  - type: Door
     occludes: false
   - type: Occluder
     enabled: false

@@ -6,25 +6,17 @@ using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Fluids;
 using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -97,34 +89,34 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
-                return;
+                return false;
 
             if (_hasSafety && _safety)
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("Its safety is on!"));
-                return;
+                return true;
             }
 
             if (CurrentVolume <= 0)
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("It's empty!"));
-                return;
+                return true;
             }
 
             var curTime = _gameTiming.CurTime;
 
             if(curTime < _cooldownEnd)
-                return;
+                return true;
 
             var playerPos = eventArgs.User.Transform.Coordinates;
             if (eventArgs.ClickLocation.GetGridId(_serverEntityManager) != playerPos.GetGridId(_serverEntityManager))
-                return;
+                return true;
 
             if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
-                return;
+                return true;
 
             var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
             var threeQuarters = direction * 0.75f;
@@ -158,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 if (vapor.TryGetComponent(out AppearanceComponent appearance)) // Vapor sprite should face down.
                 {
                     appearance.SetData(VaporVisuals.Rotation, -Angle.South + rotation);
-                    appearance.SetData(VaporVisuals.Color, contents.SubstanceColor.WithAlpha(1f));
+                    appearance.SetData(VaporVisuals.Color, contents.Color.WithAlpha(1f));
                     appearance.SetData(VaporVisuals.State, true);
                 }
 
@@ -180,15 +172,17 @@ namespace Content.Server.GameObjects.Components.Fluids
                 cooldown.CooldownStart = _lastUseTime;
                 cooldown.CooldownEnd = _cooldownEnd;
             }
+
+            return true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             ToggleSafety(eventArgs.User);
             return true;
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             ToggleSafety(eventArgs.User);
         }
@@ -209,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 appearance.SetData(SprayVisuals.Safety, _safety);
         }
 
-        public void Dropped(DroppedEventArgs eventArgs)
+        void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
             if(_hasSafety && Owner.TryGetComponent(out AppearanceComponent appearance))
                 appearance.SetData(SprayVisuals.Safety, _safety);

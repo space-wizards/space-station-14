@@ -1,6 +1,6 @@
 using Content.Server.GameObjects.Components.Projectiles;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var component in ComponentManager.EntityQuery<ProjectileComponent>())
+            foreach (var component in ComponentManager.EntityQuery<ProjectileComponent>(true))
             {
                 component.TimeLeft -= frameTime;
 

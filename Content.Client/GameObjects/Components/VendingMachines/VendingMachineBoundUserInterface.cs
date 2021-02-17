@@ -1,7 +1,7 @@
 ﻿using Content.Client.VendingMachines;
 using Content.Shared.GameObjects.Components.VendingMachines;
-using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.VendingMachines

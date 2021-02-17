@@ -1,22 +1,13 @@
 #nullable enable
-using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.MachineLinking;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.GameObjects.Components.Conveyor;
-using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.MachineLinking;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
-using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Map;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -61,25 +52,18 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
-        public override void OnAdd()
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
-            base.OnAdd();
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                receiver.OnPowerStateChanged += OnPowerChanged;
+                case PowerChangedMessage powerChanged:
+                    OnPowerChanged(powerChanged);
+                    break;
             }
         }
 
-        public override void OnRemove()
-        {
-            base.OnRemove();
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged -= OnPowerChanged;
-            }
-        }
-
-        private void OnPowerChanged(object? sender, PowerStateEventArgs e)
+        private void OnPowerChanged(PowerChangedMessage e)
         {
             UpdateAppearance();
         }

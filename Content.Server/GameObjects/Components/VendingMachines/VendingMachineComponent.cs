@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +10,8 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -57,7 +50,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
@@ -114,24 +107,24 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
-                receiver.OnPowerStateChanged += UpdatePower;
                 TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
             }
 
             InitializeFromPrototype();
         }
 
-        public override void OnRemove()
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                receiver.OnPowerStateChanged -= UpdatePower;
+                case PowerChangedMessage powerChanged:
+                    UpdatePower(powerChanged);
+                    break;
             }
-
-            base.OnRemove();
         }
 
-        private void UpdatePower(object? sender, PowerStateEventArgs args)
+        private void UpdatePower(PowerChangedMessage args)
         {
             var state = args.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off;
             TrySetVisualState(state);

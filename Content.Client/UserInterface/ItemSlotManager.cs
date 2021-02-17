@@ -3,19 +3,16 @@ using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.EntitySystems;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.Input;
+using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface
 {
@@ -25,6 +22,7 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _uiMgr = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -61,7 +59,7 @@ namespace Content.Client.UserInterface
             else if (args.Function == ContentKeyFunctions.OpenContextMenu)
             {
                 _entitySystemManager.GetEntitySystem<VerbSystem>()
-                                    .OpenContextMenu(item, new ScreenCoordinates(args.PointerLocation.Position));
+                                    .OpenContextMenu(item, new ScreenCoordinates(_uiMgr.ScreenToUIPosition(args.PointerLocation)));
             }
             else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
             {

@@ -1,11 +1,10 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
@@ -16,14 +15,9 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects.Verbs;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -73,13 +67,19 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _beakerContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += OnPowerChanged;
-            }
-
             InitializeFromPrototype();
             UpdateUserInterface();
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerChangedMessage powerChanged:
+                    OnPowerChanged(powerChanged);
+                    break;
+            }
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        private void OnPowerChanged(object? sender, PowerStateEventArgs e)
+        private void OnPowerChanged(PowerChangedMessage e)
         {
             UpdateUserInterface();
         }
@@ -145,8 +145,17 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 case UiButton.SetDispenseAmount10:
                     _dispenseAmount = ReagentUnit.New(10);
                     break;
+                case UiButton.SetDispenseAmount15:
+                    _dispenseAmount = ReagentUnit.New(15);
+                    break;
+                case UiButton.SetDispenseAmount20:
+                    _dispenseAmount = ReagentUnit.New(20);
+                    break;
                 case UiButton.SetDispenseAmount25:
                     _dispenseAmount = ReagentUnit.New(25);
+                    break;
+                case UiButton.SetDispenseAmount30:
+                    _dispenseAmount = ReagentUnit.New(30);
                     break;
                 case UiButton.SetDispenseAmount50:
                     _dispenseAmount = ReagentUnit.New(50);

@@ -25,6 +25,10 @@ namespace Content.Shared.Roles
         /// </summary>
         [YamlField("innerclothingskirt")]
         private string _innerClothingSkirt = default!;
+        [YamlField("satchel")]
+        private string _satchel = string.Empty;
+        [YamlField("duffelbag")]
+        private string _duffelbag = string.Empty;
 
         public IReadOnlyDictionary<string, string> Inhand => _inHand;
         /// <summary>
@@ -41,6 +45,10 @@ namespace Content.Shared.Roles
             {
                 if ((slot == Slots.INNERCLOTHING) && (profile.Clothing == ClothingPreference.Jumpskirt) && (_innerClothingSkirt != ""))
                     return _innerClothingSkirt;
+                if ((slot == Slots.BACKPACK) && (profile.Backpack == BackpackPreference.Satchel) && (_satchel != ""))
+                    return _satchel;
+                if ((slot == Slots.BACKPACK) && (profile.Backpack == BackpackPreference.Duffelbag) && (_duffelbag != ""))
+                    return _duffelbag;
             }
 
             if (_equipment.ContainsKey(slot))

@@ -6,8 +6,6 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -75,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Radio
             return true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             return Use(eventArgs.User);
         }
@@ -105,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Radio
             _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             Use(eventArgs.User);
         }

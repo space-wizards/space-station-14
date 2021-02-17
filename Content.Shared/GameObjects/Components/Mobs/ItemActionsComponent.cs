@@ -6,8 +6,6 @@ using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -185,7 +183,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             GrantOrUpdate(actionType, toggleOn: toggleOn);
         }
 
-        public void EquippedHand(EquippedHandEventArgs eventArgs)
+        void IEquippedHand.EquippedHand(EquippedHandEventArgs eventArgs)
         {
             // this entity cannot be granted actions if no actions component
             if (!eventArgs.User.TryGetComponent<SharedActionsComponent>(out var actionsComponent))
@@ -197,7 +195,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             GrantOrUpdateAllToHolder();
         }
 
-        public void Equipped(EquippedEventArgs eventArgs)
+        void IEquipped.Equipped(EquippedEventArgs eventArgs)
         {
             // this entity cannot be granted actions if no actions component
             if (!eventArgs.User.TryGetComponent<SharedActionsComponent>(out var actionsComponent))
@@ -209,7 +207,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             GrantOrUpdateAllToHolder();
         }
 
-        public void Unequipped(UnequippedEventArgs eventArgs)
+        void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
         {
             RevokeAllFromHolder();
             Holder = null;
@@ -219,7 +217,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         }
 
-        public void UnequippedHand(UnequippedHandEventArgs eventArgs)
+        void IUnequippedHand.UnequippedHand(UnequippedHandEventArgs eventArgs)
         {
             RevokeAllFromHolder();
             Holder = null;
@@ -240,7 +238,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// </summary>
         public bool Enabled { get; private set; }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.ActionType, "actionType", ItemActionType.Error);
             if (ActionType == ItemActionType.Error)

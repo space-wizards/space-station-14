@@ -117,7 +117,6 @@
     },
     {
       "name": "coil-30",
-      "directions": 1,
       "delays": [
         [
           1
@@ -126,7 +125,6 @@
     },
     {
       "name": "coil-20",
-      "directions": 1,
       "delays": [
         [
           1
@@ -135,7 +133,6 @@
     },
     {
       "name": "coil-10",
-      "directions": 1,
       "delays": [
         [
           1
@@ -144,7 +141,6 @@
     },
     {
       "name": "coilhv-30",
-      "directions": 1,
       "delays": [
         [
           1
@@ -153,7 +149,6 @@
     },
     {
       "name": "coilhv-20",
-      "directions": 1,
       "delays": [
         [
           1
@@ -162,7 +157,6 @@
     },
     {
       "name": "coilhv-10",
-      "directions": 1,
       "delays": [
         [
           1
@@ -171,7 +165,6 @@
     },
     {
       "name": "coilmv-30",
-      "directions": 1,
       "delays": [
         [
           1
@@ -180,7 +173,6 @@
     },
     {
       "name": "coilmv-20",
-      "directions": 1,
       "delays": [
         [
           1
@@ -189,7 +181,6 @@
     },
     {
       "name": "coilmv-10",
-      "directions": 1,
       "delays": [
         [
           1
@@ -198,7 +189,6 @@
     },
     {
       "name": "coillv-30",
-      "directions": 1,
       "delays": [
         [
           1
@@ -207,7 +197,6 @@
     },
     {
       "name": "coillv-20",
-      "directions": 1,
       "delays": [
         [
           1
@@ -216,7 +205,6 @@
     },
     {
       "name": "coillv-10",
-      "directions": 1,
       "delays": [
         [
           1
@@ -225,7 +213,6 @@
     },
     {
       "name": "coilall-30",
-      "directions": 1,
       "delays": [
         [
           1

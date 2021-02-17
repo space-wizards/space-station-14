@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -21,39 +20,41 @@ namespace Content.Server.GameObjects.Components.Medical
 
         [YamlField("heal")] public Dictionary<DamageType, int> Heal { get; private set; } = new();
 
-        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {
-                return;
+                return false;
             }
 
             if (!eventArgs.Target.TryGetComponent(out IDamageableComponent damageable))
             {
-                return;
+                return true;
             }
 
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
             {
-                return;
+                return true;
             }
 
             if (eventArgs.User != eventArgs.Target &&
                 !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
-                return;
+                return true;
             }
 
             if (Owner.TryGetComponent(out StackComponent stack) &&
                 !stack.Use(1))
             {
-                return;
+                return true;
             }
 
             foreach (var (type, amount) in Heal)
             {
                 damageable.ChangeDamage(type, -amount, true);
             }
+
+            return true;
         }
     }
 }

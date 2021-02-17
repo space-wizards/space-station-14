@@ -30,9 +30,7 @@ namespace Content.Server.GameObjects.Components.Destructible
         [DataClassTarget("thresholds")]
         private SortedDictionary<int, Threshold> _lowestToHighestThresholds = new();
 
-        [ViewVariables] private int PreviousTotalDamage { get; set; }
-
-        public IReadOnlyDictionary<int, Threshold> LowestToHighestThresholds => _lowestToHighestThresholds;
+        public IReadOnlyList<Threshold> Thresholds => _thresholds;
 
         public override void Initialize()
         {
@@ -54,31 +52,16 @@ namespace Content.Server.GameObjects.Components.Destructible
                         break;
                     }
 
-                    foreach (var (damage, threshold) in _lowestToHighestThresholds)
+                    foreach (var threshold in _thresholds)
                     {
-                        if (threshold.Triggered)
+                        if (threshold.Reached(msg.Damageable, _destructibleSystem))
                         {
-                            if (threshold.TriggersOnce)
-                            {
-                                continue;
-                            }
-
-                            if (PreviousTotalDamage >= damage)
-                            {
-                                continue;
-                            }
-                        }
-
-                        if (msg.Damageable.TotalDamage >= damage)
-                        {
-                            var thresholdMessage = new DestructibleThresholdReachedMessage(this, threshold, msg.Damageable.TotalDamage, damage);
+                            var thresholdMessage = new DestructibleThresholdReachedMessage(this, threshold);
                             SendMessage(thresholdMessage);
 
-                            threshold.Trigger(Owner, _destructibleSystem);
+                            threshold.Execute(Owner, _destructibleSystem);
                         }
                     }
-
-                    PreviousTotalDamage = msg.Damageable.TotalDamage;
 
                     break;
                 }

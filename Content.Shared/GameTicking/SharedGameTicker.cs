@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using Lidgren.Network;
-using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameTicking
 {
@@ -92,7 +91,7 @@ namespace Content.Shared.GameTicking
             public bool IsRoundStarted { get; set; }
             public bool YouAreReady { get; set; }
             // UTC.
-            public DateTime StartTime { get; set; }
+            public TimeSpan StartTime { get; set; }
             public bool Paused { get; set; }
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
@@ -105,7 +104,7 @@ namespace Content.Shared.GameTicking
                 }
 
                 YouAreReady = buffer.ReadBoolean();
-                StartTime = new DateTime(buffer.ReadInt64(), DateTimeKind.Utc);
+                StartTime = new TimeSpan(buffer.ReadInt64());
                 Paused = buffer.ReadBoolean();
             }
 
@@ -158,9 +157,9 @@ namespace Content.Shared.GameTicking
             #endregion
 
             /// <summary>
-            /// The total amount of seconds to go until the countdown finishes
+            /// The game time that the game will start at.
             /// </summary>
-            public DateTime StartTime { get; set; }
+            public TimeSpan StartTime { get; set; }
 
             /// <summary>
             /// Whether or not the countdown is paused
@@ -169,7 +168,7 @@ namespace Content.Shared.GameTicking
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
-                StartTime = new DateTime(buffer.ReadInt64(), DateTimeKind.Utc);
+                StartTime = new TimeSpan(buffer.ReadInt64());
                 Paused = buffer.ReadBoolean();
             }
 

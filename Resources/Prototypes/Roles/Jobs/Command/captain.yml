@@ -48,3 +48,5 @@
     outerclothing: ClothingOuterHardsuitCap
     idcard: CaptainPDA
     ears: ClothingHeadsetAltCommand
+  satchel: ClothingBackpackSatchelCaptainFilled
+  duffelbag: ClothingBackpackDuffelCaptainFilled

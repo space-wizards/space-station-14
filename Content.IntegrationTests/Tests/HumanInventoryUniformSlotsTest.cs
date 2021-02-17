@@ -1,8 +1,7 @@
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -16,7 +15,7 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(HumanInventoryControllerComponent))]
     public class HumanInventoryUniformSlotsTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: HumanDummy
   id: HumanDummy
@@ -59,7 +58,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             IEntity human = null;

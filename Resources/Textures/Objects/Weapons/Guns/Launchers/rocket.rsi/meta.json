@@ -8,16 +8,13 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/e1d495c3faf4642b6ec1c4be8acc7cd5bc51d785/icons/obj/guns/projectile/rocket.dmi",
     "states": [
         {
-            "name": "icon",
-            "directions": 1
+            "name": "icon"
         },
         {
-            "name": "base",
-            "directions": 1
+            "name": "base"
         },
         {
-            "name": "mag-0",
-            "directions": 1
+            "name": "mag-0"
         },
         {
             "name": "rocket0-inhand-left",

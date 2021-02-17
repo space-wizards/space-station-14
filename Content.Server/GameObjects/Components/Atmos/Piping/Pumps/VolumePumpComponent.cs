@@ -1,5 +1,7 @@
-﻿using System;
+#nullable enable
+using System;
 using Content.Server.Atmos;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -10,6 +12,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
 {
     [RegisterComponent]
     [ComponentReference(typeof(BasePumpComponent))]
+    [ComponentReference(typeof(IActivate))]
     public class VolumePumpComponent : BasePumpComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]

@@ -1,6 +1,6 @@
 using Content.Server.GameObjects.Components.Singularity;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var shouldUpdate = curTimeSingulo >= 1f;
             var shouldPull = curTimePull >= 0.2f;
             if (!shouldUpdate && !shouldPull) return;
-            var singulos = ComponentManager.EntityQuery<SingularityComponent>();
+            var singulos = ComponentManager.EntityQuery<SingularityComponent>(true);
 
             if (curTimeSingulo >= 1f)
             {

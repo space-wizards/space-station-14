@@ -9,7 +9,8 @@ namespace Content.Server.Objectives.Requirements
     public class IncompatibleConditionsRequirement : IObjectiveRequirement
     {
         private List<string> _incompatibleConditions = new();
-        public void ExposeData(ObjectSerializer serializer)
+
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x=>x._incompatibleConditions, "conditions", new List<string>());
         }

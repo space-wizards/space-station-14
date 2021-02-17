@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Trigger;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -15,8 +16,6 @@ namespace Content.Server.GameObjects.Components.Trigger.TimerTrigger
     [RegisterComponent]
     public class OnUseTimerTriggerComponent : Component, IUse
     {
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-
         public override string Name => "OnUseTimerTrigger";
 
         [YamlField("delay")]
@@ -24,11 +23,15 @@ namespace Content.Server.GameObjects.Components.Trigger.TimerTrigger
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            var triggerSystem = _entitySystemManager.GetEntitySystem<TriggerSystem>();
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance)) {
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);
-            }
-            triggerSystem.HandleTimerTrigger(TimeSpan.FromSeconds(_delay), eventArgs.User, Owner);
+
+            EntitySystem.Get<TriggerSystem>().HandleTimerTrigger(TimeSpan.FromSeconds(_delay), user, Owner);
+        }
+
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        {
+            Trigger(eventArgs.User);
             return true;
         }
     }

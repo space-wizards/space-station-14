@@ -1,14 +1,10 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Maths;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -23,12 +19,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         [ViewVariables]
         public PipeDirection PipeDirection { get => _pipeDirection; set => SetPipeDirection(value); }
         private PipeDirection _pipeDirection;
-
-        /// <summary>
-        ///     Controls what visuals are applied in <see cref="PipeVisualizer"/>.
-        /// </summary>
-        public ConduitLayer ConduitLayer => _conduitLayer;
-        private ConduitLayer _conduitLayer;
 
         [ViewVariables]
         private IPipeNet _pipeNet = PipeNet.NullNet;
@@ -71,7 +61,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             base.ExposeData(serializer);
             serializer.DataField(ref _pipeDirection, "pipeDirection", PipeDirection.None);
             serializer.DataField(this, x => x.LocalAir, "gasMixture", new GasMixture(DefaultVolume));
-            serializer.DataField(ref _conduitLayer, "conduitLayer", ConduitLayer.Two);
         }
 
         public override void Initialize(IEntity owner)
@@ -107,17 +96,30 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
                 var ownNeededConnection = pipeDirection;
                 var theirNeededConnection = ownNeededConnection.GetOpposite();
-                if (!_pipeDirection.HasFlag(ownNeededConnection))
+                if (!_pipeDirection.HasDirection(ownNeededConnection))
                 {
                     continue;
                 }
-                var pipeNodesInDirection = Owner.GetComponent<SnapGridComponent>()
-                    .GetInDir(pipeDirection.ToDirection())
-                    .Select(entity => entity.TryGetComponent<NodeContainerComponent>(out var container) ? container : null)
-                    .Where(container => container != null)
-                    .SelectMany(container => container.Nodes)
-                    .OfType<PipeNode>()
-                    .Where(pipeNode => pipeNode._pipeDirection.HasFlag(theirNeededConnection));
+
+                var pipeNodesInDirection = new List<PipeNode>();
+
+                var entities = Owner.GetComponent<SnapGridComponent>()
+                    .GetInDir(pipeDirection.ToDirection());
+
+                foreach (var entity in entities)
+                {
+                    if (entity.TryGetComponent<NodeContainerComponent>(out var container))
+                    {
+                        foreach (var node in container.Nodes)
+                        {
+                            if (node is PipeNode pipeNode && pipeNode._pipeDirection.HasDirection(theirNeededConnection))
+                            {
+                                pipeNodesInDirection.Add(pipeNode);
+                            }
+                        }
+                    }
+                }
+
                 foreach (var pipeNode in pipeNodesInDirection)
                 {
                     yield return pipeNode;
@@ -127,7 +129,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private void UpdateAppearance()
         {
-            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection, ConduitLayer));
+            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection));
         }
 
         private void SetPipeDirection(PipeDirection pipeDirection)

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using Nett;
 using Robust.Client.Utility;
-using Robust.Shared.Interfaces.Log;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Noise;
 using Robust.Shared.Random;

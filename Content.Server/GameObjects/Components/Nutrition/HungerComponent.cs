@@ -8,9 +8,9 @@ using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -174,14 +174,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public void OnUpdate(float frametime)
         {
             _currentHunger -= frametime * ActualDecayRate;
-            var calculatedHungerThreshold = GetHungerThreshold(_currentHunger);
-            // _trySound(calculatedThreshold);
-            if (calculatedHungerThreshold != _currentHungerThreshold)
-            {
-                _currentHungerThreshold = calculatedHungerThreshold;
-                HungerThresholdEffect();
-                Dirty();
-            }
+            UpdateCurrentThreshold();
 
             if (_currentHungerThreshold != HungerThreshold.Dead)
                 return;
@@ -198,11 +191,22 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
         }
 
+        private void UpdateCurrentThreshold()
+        {
+            var calculatedHungerThreshold = GetHungerThreshold(_currentHunger);
+            // _trySound(calculatedThreshold);
+            if (calculatedHungerThreshold != _currentHungerThreshold)
+            {
+                _currentHungerThreshold = calculatedHungerThreshold;
+                HungerThresholdEffect();
+                Dirty();
+            }
+        }
+
         public void ResetFood()
         {
-            _currentHungerThreshold = HungerThreshold.Okay;
-            _currentHunger = HungerThresholds[_currentHungerThreshold];
-            HungerThresholdEffect();
+            _currentHunger = HungerThresholds[HungerThreshold.Okay];
+            UpdateCurrentThreshold();
         }
 
         public override ComponentState GetComponentState()

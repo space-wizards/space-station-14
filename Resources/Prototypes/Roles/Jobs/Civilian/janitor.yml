@@ -9,6 +9,10 @@
   access:
   - Janitor
   - Maintenance
+  special:
+    !type:JanitorSpecial
+    holiday: GarbageDay
+    prototype: RevolverInspector
 
 - type: startingGear
   id: JanitorGear
@@ -21,4 +25,5 @@
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
   innerclothingskirt: ClothingUniformJumpskirtJanitor
-
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

@@ -24,5 +24,6 @@
     <ProjectReference Include="..\RobustToolbox\Robust.Server\Robust.Server.csproj" />
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
   <Import Project="..\RobustToolbox\MSBuild\Robust.Generators.targets" />
 </Project>

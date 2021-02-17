@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using Content.Client.GameObjects.Components;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -148,6 +147,16 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             var doAfters = doAfterComponent.DoAfters;
             if (doAfters.Count == 0)
                 return;
+
+            if (_eyeManager.CurrentMap != AttachedEntity.Transform.MapID)
+            {
+                Visible = false;
+                return;
+            }
+            else
+            {
+                Visible = true;
+            }
 
             // Set position ready for 2nd+ frames.
             var screenCoordinates = _eyeManager.CoordinatesToScreen(AttachedEntity.Transform.Coordinates);

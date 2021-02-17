@@ -1,23 +1,17 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.Medical;
 using Content.Server.GameObjects.Components.Observer;
+using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
-using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -52,53 +46,15 @@ namespace Content.Server.GameObjects.Components.Mobs
         ///     Whether examining should show information about the mind or not.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool ShowExamineInfo
-        {
-            get => _showExamineInfo;
-            set => _showExamineInfo = value;
-        }
+        [YamlField("showExamineInfo")]
+        public bool ShowExamineInfo { get; set; }
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.GetUIOrNull(SharedAcceptCloningComponent.AcceptCloningUiKey.Key);
-
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            Owner.EntityManager.EventBus.SubscribeEvent<CloningPodComponent.CloningStartedMessage>(
-                EventSource.Local, this,
-                HandleCloningStartedMessage);
-
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += OnUiAcceptCloningMessage;
-            }
-        }
-
-        private void HandleCloningStartedMessage(CloningPodComponent.CloningStartedMessage ev)
-        {
-            if (ev.CapturedMind == Mind)
-            {
-                UserInterface?.Open(Mind.Session);
-            }
-        }
-
-        private void OnUiAcceptCloningMessage(ServerBoundUserInterfaceMessage obj)
-        {
-            if (obj.Message is not SharedAcceptCloningComponent.UiButtonPressedMessage) return;
-            if (Mind != null)
-            {
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostComponent.GhostReturnMessage(Mind));
-            }
-        }
-
-        public override void OnRemove()
-        {
-            base.OnRemove();
-            Owner.EntityManager.EventBus.UnsubscribeEvent<CloningPodComponent.CloningStartedMessage>(EventSource.Local, this);
-            if (UserInterface != null) UserInterface.OnReceiveMessage -= OnUiAcceptCloningMessage;
-        }
+        /// <summary>
+        ///     Whether the mind will be put on a ghost after this component is shutdown.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [YamlField("ghostOnShutdown")]
+        public bool GhostOnShutdown { get; set; } = true;
 
         /// <summary>
         ///     Don't call this unless you know what the hell you're doing.
@@ -124,6 +80,10 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             base.Shutdown();
 
+            // Let's not create ghosts if not in the middle of the round.
+            if (IoCManager.Resolve<IGameTicker>().RunLevel != GameRunLevel.InRound)
+                return;
+
             if (HasMind)
             {
                 var visiting = Mind?.VisitingEntity;
@@ -136,10 +96,11 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                     Mind!.TransferTo(visiting);
                 }
-                else
+                else if(GhostOnShutdown)
                 {
                     var spawnPosition = Owner.Transform.Coordinates;
-                    Owner.SpawnTimer(0, () =>
+                    // Use a regular timer here because the entity has probably been deleted.
+                    Timer.Spawn(0, () =>
                     {
                         // Async this so that we don't throw if the grid we're on is being deleted.
                         var mapMan = IoCManager.Resolve<IMapManager>();

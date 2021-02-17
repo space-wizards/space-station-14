@@ -5,17 +5,15 @@ using System.Threading.Tasks;
 using Content.Shared.GameObjects;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameStates;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
+using System;
+using Robust.Client.GameStates;
+using Robust.Server.Player;
+using Robust.Shared.Serialization;
 
 namespace Content.IntegrationTests.Tests.Networking
 {
@@ -415,6 +413,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 return new PredictionComponentState(Foo);
             }
 
+            [Serializable, NetSerializable]
             private sealed class PredictionComponentState : ComponentState
             {
                 public bool Foo { get; }

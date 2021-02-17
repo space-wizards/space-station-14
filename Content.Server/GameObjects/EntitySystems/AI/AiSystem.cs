@@ -2,23 +2,16 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.AI.Utility.AiLogic;
-using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared;
-using Content.Shared.Administration;
-using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
 using Robust.Server.AI;
-using Robust.Server.Interfaces.Console;
-using Robust.Server.Interfaces.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Reflection;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI
@@ -110,15 +103,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI
 
             foreach (var processor in _awakeAi)
             {
-                if (count >= maxUpdates)
-                {
-                    break;
-                }
-
-                if (processor.SelfEntity.Deleted)
+                if (processor.SelfEntity.Deleted ||
+                    !processor.SelfEntity.HasComponent<AiControllerComponent>())
                 {
                     toRemove.Add(processor);
                     continue;
+                }
+
+                if (count >= maxUpdates)
+                {
+                    break;
                 }
 
                 processor.Update(frameTime);

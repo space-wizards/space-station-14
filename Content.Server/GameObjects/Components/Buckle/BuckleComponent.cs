@@ -10,20 +10,14 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Strap;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -31,20 +25,22 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Prototypes.DataClasses.Attributes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Buckle
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedBuckleComponent))]
     [DataClass(typeof(BuckleComponentData))]
     public class BuckleComponent : SharedBuckleComponent, IInteractHand
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        [ComponentDependency] public readonly AppearanceComponent? AppearanceComponent = null;
-        [ComponentDependency] private readonly ServerAlertsComponent? _serverAlertsComponent = null;
-        [ComponentDependency] private readonly StunnableComponent? _stunnableComponent = null;
-        [ComponentDependency] private readonly MobStateComponent? _mobStateComponent = null;
+        [ComponentDependency] public readonly AppearanceComponent? Appearance = null;
+        [ComponentDependency] private readonly ServerAlertsComponent? _serverAlerts = null;
+        [ComponentDependency] private readonly StunnableComponent? _stunnable = null;
+        [ComponentDependency] private readonly MobStateComponent? _mobState = null;
 
         [YamlField("size")]
         private int _size = 100;
@@ -75,7 +71,6 @@ namespace Content.Server.GameObjects.Components.Buckle
         public Vector2 BuckleOffset { get; private set; }
 
         private StrapComponent? _buckledTo;
-
 
         /// <summary>
         ///     The strap that this component is buckled to.
@@ -108,21 +103,20 @@ namespace Content.Server.GameObjects.Components.Buckle
         /// </summary>
         private void UpdateBuckleStatus()
         {
-            if (_serverAlertsComponent == null)
+            if (_serverAlerts == null)
             {
                 return;
             }
 
             if (Buckled)
             {
-                _serverAlertsComponent.ShowAlert(BuckledTo?.BuckledAlertType ?? AlertType.Buckled);
+                _serverAlerts.ShowAlert(BuckledTo?.BuckledAlertType ?? AlertType.Buckled);
             }
             else
             {
-                _serverAlertsComponent.ClearAlertCategory(AlertCategory.Buckled);
+                _serverAlerts.ClearAlertCategory(AlertCategory.Buckled);
             }
         }
-
 
         /// <summary>
         ///     Reattaches this entity to the strap, modifying its position and rotation.
@@ -191,7 +185,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             var component = strap;
             bool Ignored(IEntity entity) => entity == Owner || entity == user || entity == component.Owner;
 
-            if (!Owner.InRangeUnobstructed(strap, _range, predicate: Ignored, popup: true))
+            if (!Owner.InRangeUnobstructed(strap, Range, predicate: Ignored, popup: true))
             {
                 return false;
             }
@@ -270,7 +264,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 return false;
             }
 
-            AppearanceComponent?.SetData(BuckleVisuals.Buckled, true);
+            Appearance?.SetData(BuckleVisuals.Buckled, true);
 
             BuckledTo = strap;
             LastEntityBuckledTo = BuckledTo.Owner.Uid;
@@ -281,11 +275,20 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             SendMessage(new BuckleMessage(Owner, to));
 
-            if (Owner.TryGetComponent(out PullableComponent? pullableComponent))
+            if (Owner.TryGetComponent(out PullableComponent? ownerPullable))
             {
-                if (pullableComponent.Puller != null)
+                if (ownerPullable.Puller != null)
                 {
-                    pullableComponent.TryStopPull();
+                    ownerPullable.TryStopPull();
+                }
+            }
+
+            if (to.TryGetComponent(out PullableComponent? toPullable))
+            {
+                if (toPullable.Puller == Owner)
+                {
+                    // can't pull it and buckle to it at the same time
+                    toPullable.TryStopPull();
                 }
             }
 
@@ -326,7 +329,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                     return false;
                 }
 
-                if (!user.InRangeUnobstructed(oldBuckledTo, _range, popup: true))
+                if (!user.InRangeUnobstructed(oldBuckledTo, Range, popup: true))
                 {
                     return false;
                 }
@@ -340,9 +343,9 @@ namespace Content.Server.GameObjects.Components.Buckle
                 Owner.Transform.WorldRotation = oldBuckledTo.Owner.Transform.WorldRotation;
             }
 
-            AppearanceComponent?.SetData(BuckleVisuals.Buckled, false);
+            Appearance?.SetData(BuckleVisuals.Buckled, false);
 
-            if (_stunnableComponent != null && _stunnableComponent.KnockedDown)
+            if (_stunnable != null && _stunnable.KnockedDown)
             {
                 EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }
@@ -351,7 +354,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 EntitySystem.Get<StandingStateSystem>().Standing(Owner);
             }
 
-            _mobStateComponent?.CurrentState?.EnterState(Owner);
+            _mobState?.CurrentState?.EnterState(Owner);
 
             UpdateBuckleStatus();
 
@@ -415,7 +418,6 @@ namespace Content.Server.GameObjects.Components.Buckle
                 drawDepth = BuckledTo.SpriteComponent.DrawDepth - 1;
             }
 
-
             return new BuckleComponentState(Buckled, drawDepth, LastEntityBuckledTo, DontCollide);
         }
 
@@ -424,13 +426,12 @@ namespace Content.Server.GameObjects.Components.Buckle
             return TryUnbuckle(eventArgs.User);
         }
 
-
         public void Update()
         {
-            if (!DontCollide || Body == null)
+            if (!DontCollide || Physics == null)
                 return;
 
-            Body.WakeBody();
+            Physics.WakeBody();
 
             if (!IsOnStrapEntityThisFrame && DontCollide)
             {

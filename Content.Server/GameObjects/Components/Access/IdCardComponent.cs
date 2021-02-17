@@ -13,6 +13,7 @@ namespace Content.Server.GameObjects.Components.Access
         public override string Name => "IdCard";
 
         /// See <see cref="UpdateEntityName"/>.
+        [YamlField("originalOwnerName")]
         private string _ownerOriginalName;
 
         [YamlField("fullName")]
@@ -71,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Access
         public override void Initialize()
         {
             base.Initialize();
-            _ownerOriginalName = Owner.Name;
+            _ownerOriginalName ??= Owner.Name;
             UpdateEntityName();
         }
     }

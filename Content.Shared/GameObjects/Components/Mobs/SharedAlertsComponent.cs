@@ -93,6 +93,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
                     return;
                 }
 
+                // In the case we're changing the alert type but not the category, we need to remove it first.
+                _alerts.Remove(alert.AlertKey);
+
                 _alerts[alert.AlertKey] = new AlertState
                     {Cooldown = cooldown, Severity = severity};
 

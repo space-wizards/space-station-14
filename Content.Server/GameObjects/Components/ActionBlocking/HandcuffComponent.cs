@@ -1,20 +1,17 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components.ActionBlocking;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -24,6 +21,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.ActionBlocking
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedHandcuffComponent))]
     public class HandcuffComponent : SharedHandcuffComponent, IAfterInteract
     {
         /// <summary>
@@ -66,35 +64,35 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         /// </summary>
         [ViewVariables]
         [YamlField("cuffedRSI")]
-        public string CuffedRSI { get; set; } = "Objects/Misc/handcuffs.rsi";
+        public string? CuffedRSI { get; set; } = "Objects/Misc/handcuffs.rsi";
 
         /// <summary>
         ///     The iconstate used with the RSI file for the player cuffed overlay.
         /// </summary>
         [ViewVariables]
         [YamlField("bodyIconState")]
-        public string OverlayIconState { get; set; } = "body-overlay";
+        public string? OverlayIconState { get; set; } = "body-overlay";
 
         /// <summary>
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
         [YamlField("brokenIconState")]
-        public string BrokenState { get; set; }
+        public string? BrokenState { get; set; }
 
         /// <summary>
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
         [YamlField("brokenName")]
-        public string BrokenName { get; set; }
+        public string BrokenName { get; set; } = default!;
 
         /// <summary>
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
         [YamlField("brokenDesc")]
-        public string BrokenDesc { get; set; }
+        public string BrokenDesc { get; set; } = default!;
 
         [ViewVariables]
         public bool Broken
@@ -132,64 +130,64 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
         // Non-exposed data fields
         private bool _isBroken = false;
-        private float _interactRange;
-        private AudioSystem _audioSystem;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _audioSystem = EntitySystem.Get<AudioSystem>();
-            _interactRange = SharedInteractionSystem.InteractionRange / 2;
-        }
+        /// <summary>
+        ///     Used to prevent DoAfter getting spammed.
+        /// </summary>
+        private bool _cuffing;
 
         public override ComponentState GetComponentState()
         {
             return new HandcuffedComponentState(Broken ? BrokenState : string.Empty);
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            if (_cuffing) return true;
+
             if (eventArgs.Target == null || !ActionBlockerSystem.CanUse(eventArgs.User) || !eventArgs.Target.TryGetComponent<CuffableComponent>(out var cuffed))
             {
-                return;
+                return false;
             }
 
             if (eventArgs.Target == eventArgs.User)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("You can't cuff yourself!"));
-                return;
+                return true;
             }
 
             if (Broken)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("The cuffs are broken!"));
-                return;
+                return true;
             }
 
             if (!eventArgs.Target.TryGetComponent<HandsComponent>(out var hands))
             {
                 eventArgs.User.PopupMessage(Loc.GetString("{0:theName} has no hands!", eventArgs.Target));
-                return;
+                return true;
             }
 
             if (cuffed.CuffedHandCount == hands.Count)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("{0:theName} has no free hands to handcuff!", eventArgs.Target));
-                return;
+                return true;
             }
 
-            if (!eventArgs.InRangeUnobstructed(_interactRange, ignoreInsideBlocker: true))
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true))
             {
                 eventArgs.User.PopupMessage(Loc.GetString("You are too far away to use the cuffs!"));
-                return;
+                return true;
             }
 
             eventArgs.User.PopupMessage(Loc.GetString("You start cuffing {0:theName}.", eventArgs.Target));
             eventArgs.User.PopupMessage(eventArgs.Target, Loc.GetString("{0:theName} starts cuffing you!", eventArgs.User));
-            _audioSystem.PlayFromEntity(StartCuffSound, Owner);
+
+            if (StartCuffSound != null)
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(StartCuffSound, Owner);
 
             TryUpdateCuff(eventArgs.User, eventArgs.Target, cuffed);
+            return true;
         }
 
         /// <summary>
@@ -213,22 +211,21 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 NeedHand = true
             };
 
+            _cuffing = true;
+
             var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
+
+            _cuffing = false;
 
             if (result != DoAfterStatus.Cancelled)
             {
-                _audioSystem.PlayFromEntity(EndCuffSound, Owner);
-                user.PopupMessage(Loc.GetString("You successfully cuff {0:theName}.", target));
-                target.PopupMessage(Loc.GetString("You have been cuffed by {0:theName}!", user));
+                if (cuffs.TryAddNewCuffs(user, Owner))
+                {
+                    if (EndCuffSound != null)
+                        EntitySystem.Get<AudioSystem>().PlayFromEntity(EndCuffSound, Owner);
 
-                if (user.TryGetComponent<HandsComponent>(out var hands))
-                {
-                    hands.Drop(Owner);
-                    cuffs.AddNewCuffs(Owner);
-                }
-                else
-                {
-                    Logger.Warning("Unable to remove handcuffs from player's hands! This should not happen!");
+                    user.PopupMessage(Loc.GetString("You successfully cuff {0:theName}.", target));
+                    target.PopupMessage(Loc.GetString("You have been cuffed by {0:theName}!", user));
                 }
             }
             else

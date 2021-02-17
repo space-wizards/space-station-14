@@ -4,14 +4,13 @@ using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -53,8 +52,10 @@ namespace Content.Client.UserInterface.Controls
 
         /// <summary>
         /// Is there an action in the slot that can currently be used?
+        /// Target-basedActions on cooldown can still be selected / deselected if they've been configured as such
         /// </summary>
-        public bool CanUseAction => HasAssignment && ActionEnabled && !IsOnCooldown;
+        public bool CanUseAction => Action != null && ActionEnabled &&
+                                    (!IsOnCooldown || (Action.IsTargetAction && !Action.DeselectOnCooldown));
 
         /// <summary>
         /// Item the action is provided by, only valid if Action is an ItemActionPrototype. May be null
@@ -325,6 +326,14 @@ namespace Content.Client.UserInterface.Controls
             DrawModeChanged();
         }
 
+        protected override void ControlFocusExited()
+        {
+            // lost focus for some reason, cancel the drag if there is one.
+            base.ControlFocusExited();
+            _actionsUI.DragDropHelper.EndDrag();
+            DrawModeChanged();
+        }
+
         /// <summary>
         /// Cancel current press without triggering the action
         /// </summary>
@@ -340,7 +349,9 @@ namespace Content.Client.UserInterface.Controls
         /// </summary>
         public void Depress(bool depress)
         {
+            // action can still be toggled if it's allowed to stay selected
             if (!CanUseAction) return;
+
 
             if (_depressed && !depress)
             {

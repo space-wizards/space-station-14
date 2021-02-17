@@ -1,0 +1,90 @@
+- type: entity
+  save: false
+  abstract: true
+  id: SimpleMobBase
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: AiController
+    logic: Civilian
+  - type: AiFactionTag
+    factions:
+    - SimpleNeutral
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 4
+  - type: MovedByPressure
+  - type: Barotrauma
+  - type: DamageOnHighSpeedImpact
+    soundHit: /Audio/Effects/hit_kick.ogg
+  - type: InteractionOutline
+  - type: Sprite
+    drawdepth: Mobs
+  - type: Clickable
+  - type: Physics
+    anchored: false
+    mass: 50
+    shapes:
+    - !type:PhysShapeAabb
+      mask:
+      - Impassable
+#      - MobImpassable Turns these off for now since humans don't have collisions either.
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+#      - MobImpassable
+  - type: Bloodstream
+    max_volume: 100
+  - type: Damageable
+    damageContainer: biologicalDamageContainer
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
+    canResistFire: true
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 260
+    currentTemperature: 310.15
+    specificHeat: 42
+    tempDamageCoefficient: 0.1
+  - type: Metabolism
+    metabolismHeat: 5000
+    radiatedHeat: 400
+    implicitHeatRegulation: 5000
+    sweatHeatRegulation: 5000
+    shiveringHeatRegulation: 5000
+    normalBodyTemperature: 310.15
+    thermalRegulationTemperatureThreshold: 25
+    needsGases:
+      Oxygen: 0.00060763888
+    producesGases:
+      Oxygen: 0.00045572916
+      CarbonDioxide: 0.00015190972
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      50: !type:CriticalMobState {}
+      100: !type:DeadMobState {}
+  - type: HeatResistance
+  - type: CombatMode
+  - type: Teleportable
+  - type: Internals
+  - type: Stunnable
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage: 50
+  - type: Appearance
+    visuals:
+    - type: BuckleVisualizer
+    - type: FireVisualizer
+      sprite: Mobs/Effects/onfire.rsi
+      normalState: Generic_mob_burning
+  - type: Pullable
+  - type: Buckle
+  - type: Butcherable
+    meat: FoodMeat
+  - type: Recyclable
+    safe: false
