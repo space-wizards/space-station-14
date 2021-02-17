@@ -1,7 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Movement;
  using Content.Shared.Alert;
  using JetBrains.Annotations;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Alert.Click

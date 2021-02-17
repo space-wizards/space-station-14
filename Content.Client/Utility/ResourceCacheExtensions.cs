@@ -1,6 +1,5 @@
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Utility;
 

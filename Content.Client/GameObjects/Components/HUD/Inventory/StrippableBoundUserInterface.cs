@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.GUI;
-using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;

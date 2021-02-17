@@ -1,7 +1,7 @@
 #nullable enable
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.EntitySystems

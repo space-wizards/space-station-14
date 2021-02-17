@@ -1,6 +1,6 @@
 ﻿using System;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 
 namespace Content.Server.Administration
 {

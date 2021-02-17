@@ -4,8 +4,7 @@ using System.Threading.Tasks;
 using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Prototypes.Tag;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 

@@ -1,0 +1,59 @@
+- type: entity
+  name: mini hoe
+  parent: BaseItem
+  id: HydroponicsToolMiniHoe
+  description: It's used for removing weeds or scratching your back.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/hoe.rsi
+    state: icon
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/hoe.rsi
+  - type: Hoe
+
+- type: entity
+  name: scythe
+  parent: BaseItem
+  id: HydroponicsToolScythe
+  description: A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/scythe.rsi
+    state: icon
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: BotanySharp
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/scythe.rsi
+
+- type: entity
+  name: hatchet
+  parent: BaseItem
+  id: HydroponicsToolHatchet
+  description: A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/hatchet.rsi
+    state: icon
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: BotanySharp
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/hatchet.rsi
+
+- type: entity
+  name: spade
+  parent: BaseItem
+  id: Spade
+  description: A small tool for digging and moving dirt.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/spade.rsi
+    state: spade
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: Shovel
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/spade.rsi

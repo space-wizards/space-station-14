@@ -1,13 +1,10 @@
 ﻿using System;
 using Content.Client.UserInterface.Stylesheets;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Shaders;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface
 {

@@ -4,15 +4,12 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Strap;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -111,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Strap
 
             _occupiedSize += buckle.Size;
 
-            buckle.AppearanceComponent?.SetData(StrapVisuals.RotationAngle, _rotation);
+            buckle.Appearance?.SetData(StrapVisuals.RotationAngle, _rotation);
 
             SendMessage(new StrapMessage(buckle.Owner, Owner));
 

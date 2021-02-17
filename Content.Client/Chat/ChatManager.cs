@@ -5,14 +5,11 @@ using Content.Client.Interfaces.Chat;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Robust.Client.Console;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -208,23 +205,21 @@ namespace Content.Client.Chat
                 messageText = string.Format(message.MessageWrap, messageText);
             }
 
-            switch (message.Channel)
+            if (message.MessageColorOverride != Color.Transparent)
             {
-                case ChatChannel.Server:
-                    color = Color.Orange;
-                    break;
-                case ChatChannel.Radio:
-                    color = Color.Green;
-                    break;
-                case ChatChannel.OOC:
-                    color = Color.LightSkyBlue;
-                    break;
-                case ChatChannel.Dead:
-                    color = Color.MediumPurple;
-                    break;
-                case ChatChannel.AdminChat:
-                    color = Color.Red;
-                    break;
+                color = message.MessageColorOverride;
+            }
+            else
+            {
+                color = message.Channel switch
+                {
+                    ChatChannel.Server => Color.Orange,
+                    ChatChannel.Radio => Color.Green,
+                    ChatChannel.OOC => Color.LightSkyBlue,
+                    ChatChannel.Dead => Color.MediumPurple,
+                    ChatChannel.AdminChat => Color.Red,
+                    _ => color
+                };
             }
 
             _currentChatBox?.AddLine(messageText, message.Channel, color);
@@ -355,6 +350,7 @@ namespace Content.Client.Chat
                     chatBox.OOCButton.Pressed ^= true;
                     if (chatBox.AdminButton != null)
                         chatBox.AdminButton.Pressed ^= true;
+                    chatBox.DeadButton.Pressed ^= true;
                     _allState = !_allState;
                     break;
             }

@@ -1,8 +1,8 @@
 using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Paper
 {

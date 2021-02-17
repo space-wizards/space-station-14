@@ -11,14 +11,11 @@ using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -36,6 +33,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "Drink";
+
+        int IAfterInteract.Priority => 10;
 
         [ViewVariables]
         private bool _opened;
@@ -143,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return true;
             }
 
-            return TryUseDrink(args.User);
+            return TryUseDrink(args.User, args.User);
         }
 
         //Force feeding a drink to someone.
@@ -154,9 +153,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return false;
             }
 
-            TryUseDrink(eventArgs.Target, true);
-
-            return true;
+            return TryUseDrink(eventArgs.User, eventArgs.Target, true);
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
@@ -170,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             message.AddMarkup(Loc.GetString("[color={0}]{1}[/color]", color, openedText));
         }
 
-        private bool TryUseDrink(IEntity target, bool forced = false)
+        private bool TryUseDrink(IEntity user, IEntity target, bool forced = false)
         {
             if (!Opened)
             {
@@ -194,6 +191,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
                 target.PopupMessage(Loc.GetString("You can't drink {0:theName}!", Owner));
+                return false;
+            }
+
+
+            if (user != target &&
+                !user.InRangeUnobstructed(target, popup: true))
+            {
                 return false;
             }
 

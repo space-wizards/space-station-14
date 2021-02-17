@@ -64,7 +64,7 @@
   id: Multitool
   icon:
     sprite: Objects/Tools/multitool.rsi
-    state: multitool
+    state: icon
   result: Multitool
   completetime: 500
   materials:
@@ -102,3 +102,14 @@
   materials:
     steel: 90
     glass: 80
+
+- type: latheRecipe
+  id: Shovel
+  icon:
+    sprite: Objects/Tools/Hydroponics/hatchet.rsi
+    state: icon
+  result: Shovel
+  completetime: 500
+  materials:
+    steel: 60
+    glass: 10

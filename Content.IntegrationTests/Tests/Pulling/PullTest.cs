@@ -3,9 +3,7 @@ using Content.Server.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.Physics.Pull;
 using NUnit.Framework;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Pulling
@@ -16,7 +14,7 @@ namespace Content.IntegrationTests.Tests.Pulling
     [TestOf(typeof(PullController))]
     public class PullTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string Prototypes = @"
 - type: entity
   name: PullTestPullerDummy
   id: PullTestPullerDummy
@@ -35,7 +33,7 @@ namespace Content.IntegrationTests.Tests.Pulling
         [Test]
         public async Task AnchoredNoPullTest()
         {
-            var options = new ServerContentIntegrationOption {ExtraPrototypes = PROTOTYPES};
+            var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             await server.WaitIdleAsync();

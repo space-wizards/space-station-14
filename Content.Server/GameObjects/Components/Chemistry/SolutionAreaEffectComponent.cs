@@ -6,12 +6,9 @@ using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
@@ -147,13 +144,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 reagent.ReactionTile(tile, reagentQuantity.Quantity * solutionFraction);
 
                 // Touch every entity on the tile
-                foreach (var entity in tile.GetEntitiesInTileFast())
+                foreach (var entity in tile.GetEntitiesInTileFast().ToArray())
                 {
                     reagent.ReactionEntity(entity, ReactionMethod.Touch, reagentQuantity.Quantity * solutionFraction);
                 }
             }
 
-            foreach (var entity in tile.GetEntitiesInTileFast())
+            foreach (var entity in tile.GetEntitiesInTileFast().ToArray())
             {
                 ReactWithEntity(entity, solutionFraction);
             }

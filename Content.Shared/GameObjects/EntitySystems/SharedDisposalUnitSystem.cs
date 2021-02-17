@@ -1,6 +1,6 @@
 ﻿using Content.Shared.GameObjects.Components.Disposal;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {

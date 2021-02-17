@@ -60,7 +60,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterSuitSpaceninja
-  name: S ninja
+  name: space ninja suit
   description: This black technologically advanced, cybernetically-enhanced suit provides good protection and many abilities like invisibility or teleportation.
   components:
   - type: Sprite

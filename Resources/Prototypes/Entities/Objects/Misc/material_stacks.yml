@@ -4,9 +4,9 @@
   abstract: true
   parent: BaseItem
   components:
-  - type: Stack
-  - type: Material
-  - type: ItemStatus
+    - type: Stack
+    - type: Material
+    - type: ItemStatus
 
 - type: entity
   name: steel sheet
@@ -14,21 +14,21 @@
   parent: MaterialStack
   suffix: Full
   components:
-  - type: Material
-    materials:
-    - key: enum.MaterialKeys.Stack
-      mat: steel
-  - type: Stack
-    stacktype: enum.StackType.Metal
-  - type: Sprite
-    sprite: Objects/Materials/sheets.rsi
-    state: metal
-  - type: Item
-    sprite: Objects/Materials/sheets.rsi
-    HeldPrefix: metal
-  - type: FloorTile
-    outputs:
-      - underplating
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: steel
+    - type: Stack
+      stacktype: enum.StackType.Metal
+    - type: Sprite
+      sprite: Objects/Materials/sheets.rsi
+      state: metal
+    - type: Item
+      sprite: Objects/Materials/sheets.rsi
+      HeldPrefix: metal
+    - type: FloorTile
+      outputs:
+        - underplating
 
 - type: entity
   id: SteelSheet1
@@ -36,9 +36,9 @@
   parent: MetalStack
   suffix: 1
   components:
-  - type: Stack
-    stacktype: enum.StackType.Metal
-    count: 1
+    - type: Stack
+      stacktype: enum.StackType.Metal
+      count: 1
 
 - type: entity
   name: glass sheet
@@ -46,18 +46,18 @@
   parent: MaterialStack
   suffix: Full
   components:
-  - type: Material
-    materials:
-    - key: enum.MaterialKeys.Stack
-      mat: glass
-  - type: Stack
-    stacktype: enum.StackType.Glass
-  - type: Sprite
-    sprite: Objects/Materials/sheets.rsi
-    state: glass
-  - type: Item
-    sprite: Objects/Materials/sheets.rsi
-    HeldPrefix: glass
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: glass
+    - type: Stack
+      stacktype: enum.StackType.Glass
+    - type: Sprite
+      sprite: Objects/Materials/sheets.rsi
+      state: glass
+    - type: Item
+      sprite: Objects/Materials/sheets.rsi
+      HeldPrefix: glass
 
 - type: entity
   id: GlassSheet1
@@ -65,9 +65,9 @@
   parent: GlassStack
   suffix: 1
   components:
-  - type: Stack
-    stacktype: enum.StackType.Glass
-    count: 1
+    - type: Stack
+      stacktype: enum.StackType.Glass
+      count: 1
 
 - type: entity
   name: Reinforced Glass
@@ -94,9 +94,9 @@
   parent: rglass
   suffix: 1
   components:
-  - type: Stack
-    StackType: enum.StackType.ReinforcedGlass
-    count: 1
+    - type: Stack
+      StackType: enum.StackType.ReinforcedGlass
+      count: 1
 
 
 - type: entity
@@ -134,15 +134,23 @@
   parent: MaterialStack
   suffix: Full
   components:
-  - type: Material
-    materials:
-    - key: enum.MaterialKeys.Stack
-      mat: gold
-  - type: Stack
-    stacktype: enum.StackType.Gold
-  - type: Sprite
-    sprite: Objects/Materials/materials.rsi
-    state: goldbar_30
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: gold
+    - type: Stack
+      stacktype: enum.StackType.Gold
+    - type: Sprite
+      sprite: Objects/Materials/materials.rsi
+      state: goldbar_30
+      netsync: false
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - goldbar_10
+            - goldbar_20
+            - goldbar_30
 
 - type: entity
   id: GoldStack1
@@ -150,11 +158,11 @@
   parent: GoldStack
   suffix: 1
   components:
-  - type: Sprite
-    sprite: Objects/Materials/materials.rsi
-    state: goldbar_10
-  - type: Stack
-    count: 1
+    - type: Sprite
+      sprite: Objects/Materials/materials.rsi
+      state: goldbar_10
+    - type: Stack
+      count: 1
 
 - type: entity
   name: plasma ore

@@ -1,9 +1,7 @@
-﻿using System;
-using Content.Shared.GameObjects.Components;
+﻿using Content.Shared.GameObjects.Components;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;

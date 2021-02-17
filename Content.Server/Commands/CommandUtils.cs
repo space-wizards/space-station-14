@@ -1,10 +1,9 @@
 ﻿#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Robust.Server.Console;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 

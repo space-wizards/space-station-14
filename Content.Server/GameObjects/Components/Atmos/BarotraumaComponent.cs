@@ -6,7 +6,6 @@ using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Atmos

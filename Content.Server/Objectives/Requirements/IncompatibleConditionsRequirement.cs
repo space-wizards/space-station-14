@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Objectives.Requirements

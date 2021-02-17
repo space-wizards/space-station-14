@@ -1,5 +1,5 @@
-using Robust.Client.Graphics.Shaders;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;

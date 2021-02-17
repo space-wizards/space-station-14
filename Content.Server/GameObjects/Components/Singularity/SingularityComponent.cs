@@ -6,20 +6,15 @@ using Content.Server.GameObjects.Components.Observer;
 using Content.Shared.GameObjects;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Map;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Random;
 using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.Singularity

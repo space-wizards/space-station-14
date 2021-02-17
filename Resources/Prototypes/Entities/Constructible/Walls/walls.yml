@@ -494,8 +494,6 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: BreakableConstruction
-    node: girder
     destroySound: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
