@@ -65,6 +65,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <param name="entity"></param>
         void ICollideBehavior.CollideWith(IEntity entity)
         {
+
+
             if (_damagedEntity)
             {
                 return;

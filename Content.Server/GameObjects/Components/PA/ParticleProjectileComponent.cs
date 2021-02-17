@@ -81,7 +81,6 @@ namespace Content.Server.GameObjects.Components.PA
             spriteComponent.LayerSetState(0, $"particle{suffix}");
 
             physicsComponent
-                .EnsureController<BulletController>()
                 .LinearVelocity = angle.ToVec() * 20f;
 
             Owner.Transform.LocalRotation = new Angle(angle + Angle.FromDegrees(180));

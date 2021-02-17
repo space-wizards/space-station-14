@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
@@ -33,6 +34,8 @@ namespace Content.Shared.Physics.Controllers
                 var vel = body.LinearVelocity;
                 var speed = vel.Length;
 
+                if (speed <= 0.0f) continue;
+
                 var drop = 0.0f;
                 float control;
 
@@ -42,14 +45,16 @@ namespace Content.Shared.Physics.Controllers
                  * (or mobs when stunned).
                  */
 
-                var useMobMovement = body.Owner.HasComponent<IBody>() &&
+                var useMobMovement = body.Owner.HasComponent<IMobStateComponent>() &&
                                      ActionBlockerSystem.CanMove(body.Owner) &&
                                      (!body.Owner.IsWeightless() ||
                                       body.Owner.TryGetComponent(out IMoverComponent? mover) && IsAroundCollider(body.Owner.Transform, mover, body));
 
-                var surfaceFriction = useMobMovement ? 1.0f : GetTileFriction(body);
+                if (useMobMovement || body.Status == BodyStatus.InAir) continue;
+
+                var surfaceFriction = GetTileFriction(body);
                 // TODO: Make cvar
-                var frictionModifier = useMobMovement ? 40.0f : 10.0f;
+                var frictionModifier = 10.0f;
                 var friction = frictionModifier * surfaceFriction;
 
                 if (friction > 0.0f)
