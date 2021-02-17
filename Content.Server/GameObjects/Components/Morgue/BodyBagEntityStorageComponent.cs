@@ -17,6 +17,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Threading.Tasks;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Robust.Shared.Containers;
 
 namespace Content.Server.GameObjects.Components.Morgue
 {
