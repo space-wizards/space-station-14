@@ -16,12 +16,15 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 
     public class DroppedEventArgs : EventArgs
     {
-        public DroppedEventArgs(IEntity user)
+        public DroppedEventArgs(IEntity user, bool intentional)
         {
             User = user;
+            Intentional = intentional;
         }
 
         public IEntity User { get; }
+
+        public bool Intentional { get; }
     }
 
     /// <summary>
@@ -54,7 +57,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         {
             User = user;
             Dropped = dropped;
-            intentional = intentional;
+            Intentional = intentional;
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (Owner.TryGetComponent(out ISolutionInteractionsComponent solutionComponent))
+            if (!eventArgs.Intentional && Owner.TryGetComponent(out ISolutionInteractionsComponent solutionComponent))
             {
                 solutionComponent.Drain(solutionComponent.DrainAvailable).SpillAt(Owner.Transform.Coordinates, "PuddleSmear");
             }

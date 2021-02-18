@@ -742,7 +742,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
             {
-                comp.Dropped(new DroppedEventArgs(user));
+                comp.Dropped(new DroppedEventArgs(user, intentional));
             }
         }
 
