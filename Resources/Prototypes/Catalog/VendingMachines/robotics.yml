@@ -3,3 +3,20 @@
   name: Robotech Deluxe
   description: All the fine parts you need in one vending machine!
   spriteName: robotics
+  startingInventory:
+    ClothingOuterCoatLab: 4
+    #roboticist under
+    CableStack: 4
+    Flash: 4
+    PowerCellLargeHigh: 12
+    #proximity sensor
+    #signaller
+    #health anaylzer
+    Scalpel: 2
+    #circular saw
+    #bonesetter
+    #anaesthetic
+    #medical mask
+    Screwdriver: 5
+    Crowbar: 5
+    
