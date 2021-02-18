@@ -385,7 +385,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             public override int Compare(ReagentDispenserInventoryEntry x, ReagentDispenserInventoryEntry y)
             {
-                return string.Compare(x.ID, y.ID, StringComparison.CurrentCulture);
+                return string.Compare(x.ID, y.ID, StringComparison.InvariantCultureIgnoreCase);
             }
         }
     }
