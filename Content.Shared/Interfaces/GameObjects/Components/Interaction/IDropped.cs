@@ -46,7 +46,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         public IEntity Dropped { get; }
 
         /// <summary>
-        ///     If item was dropped intentionally.
+        ///     If the item was dropped intentionally.
         /// </summary>
         public bool Intentional { get; }
 
