@@ -1,5 +1,7 @@
-﻿using Content.Server.Interfaces.GameObjects.Components.Items;
+﻿using Content.Server.GameObjects.Components.Fluids;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Rotation;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
@@ -57,6 +59,10 @@ namespace Content.Server.GameObjects.EntitySystems
 
             foreach (var heldItem in hands.GetAllHeldItems())
             {
+                if (heldItem.Owner.TryGetComponent(out SpillableComponent spillable) && heldItem.Owner.TryGetComponent(out ISolutionInteractionsComponent solutionComponent))
+                {
+                    solutionComponent.Drain(solutionComponent.DrainAvailable).SpillAt(entity.Transform.Coordinates, "PuddleSmear");
+                }
                 hands.Drop(heldItem.Owner, doMobChecks);
             }
         }
