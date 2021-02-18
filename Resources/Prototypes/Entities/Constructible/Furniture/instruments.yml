@@ -10,6 +10,9 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Anchorable
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
   - type: Physics
     shapes:
       - !type:PhysShapeAabb

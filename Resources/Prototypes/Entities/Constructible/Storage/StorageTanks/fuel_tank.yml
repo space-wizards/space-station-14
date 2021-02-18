@@ -7,6 +7,9 @@
   - type: Sprite
     sprite: Constructible/Misc/tanks.rsi
     state: fueltank
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
   - type: Explosive
     devastationRange: 0
     heavyImpactRange: 2

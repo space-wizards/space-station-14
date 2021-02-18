@@ -536,6 +536,9 @@
     sprite: Constructible/Structures/Walls/wood.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/wood.rsi
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

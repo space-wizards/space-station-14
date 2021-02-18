@@ -15,6 +15,9 @@
   - type: IconSmooth
     key: full
     base: carpet_
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
   - type: Physics
     shapes:
       - !type:PhysShapeAabb

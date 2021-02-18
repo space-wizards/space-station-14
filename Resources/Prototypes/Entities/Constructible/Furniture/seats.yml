@@ -61,6 +61,9 @@
   - type: Sprite
     state: stool_base
     color: "#8e9799"
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
@@ -78,6 +81,9 @@
   - type: Sprite
     state: bar_stool
     color: "white"
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
@@ -94,6 +100,9 @@
   components:
   - type: Rotatable
     rotateWhileAnchored: true
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
   - type: Sprite
     state: officechair_white
   - type: Physics
@@ -112,6 +121,9 @@
   components:
   - type: Sprite
     state: officechair_dark
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
 
 - type: entity
   name: comfy chair
@@ -121,6 +133,9 @@
   components:
   - type: Sprite
     state: comfychair_preview
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
@@ -138,6 +153,9 @@
   - type: Sprite
     state: wooden_chair
     color: "white"
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
   - type: Physics
     shapes:
     - !type:PhysShapeAabb

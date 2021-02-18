@@ -94,6 +94,9 @@
     sprite: Constructible/Structures/Tables/bar.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/bar.rsi
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -246,6 +249,9 @@
     sprite: Constructible/Structures/Tables/wood.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/wood.rsi
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -277,6 +283,9 @@
     sprite: Constructible/Structures/Tables/carpet.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/carpet.rsi
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
