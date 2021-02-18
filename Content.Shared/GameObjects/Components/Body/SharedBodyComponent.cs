@@ -13,11 +13,11 @@ using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Component = Robust.Shared.GameObjects.Component;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
@@ -653,7 +653,7 @@ namespace Content.Shared.GameObjects.Components.Body
             Connections = cleanedConnections;
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             var parts = new (string slot, EntityUid partId)[_parts.Count];
 
