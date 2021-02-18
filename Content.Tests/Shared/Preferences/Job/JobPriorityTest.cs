@@ -3,7 +3,7 @@ using Content.Server.Database;
 using Content.Shared.Preferences;
 using NUnit.Framework;
 
-namespace Content.IntegrationTests.Tests.Job
+namespace Content.Tests.Shared.Preferences.Job
 {
     [TestFixture]
     [TestOf(typeof(JobPriority))]

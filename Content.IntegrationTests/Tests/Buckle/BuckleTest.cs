@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -10,6 +11,7 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Utility;
 using NUnit.Framework;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -52,8 +54,9 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task BuckleUnbuckleCooldownRangeTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
-            var server = StartServer(options);
+            var cOptions = new ClientIntegrationOptions {ExtraPrototypes = Prototypes};
+            var sOptions = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
+            var (client, server) = await StartConnectedServerClientPair(cOptions, sOptions);
 
             IEntity human = null;
             IEntity chair = null;
@@ -91,7 +94,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.TryBuckle(human, chair));
                 Assert.NotNull(buckle.BuckledTo);
                 Assert.True(buckle.Buckled);
-                Assert.True(((BuckleComponentState) buckle.GetComponentState()).Buckled);
+
+                var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
+                Assert.True(((BuckleComponentState) buckle.GetComponentState(player)).Buckled);
                 Assert.False(ActionBlockerSystem.CanMove(human));
                 Assert.False(ActionBlockerSystem.CanChangeDirection(human));
                 Assert.False(EffectBlockerSystem.CanFall(human));

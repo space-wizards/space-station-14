@@ -10,6 +10,7 @@ using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -213,7 +214,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             UpdateCurrentThreshold();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new HungerComponentState(_currentHungerThreshold);
         }
