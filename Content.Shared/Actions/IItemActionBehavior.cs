@@ -35,14 +35,14 @@ namespace Content.Shared.Actions
         /// <summary>
         /// Item actions component of the item.
         /// </summary>
-        public readonly ItemActionsComponent ItemActions;
+        public readonly ItemActionsComponent? ItemActions;
 
         public ItemActionEventArgs(IEntity performer, IEntity item, ItemActionType actionType)
         {
             Performer = performer;
             ActionType = actionType;
             Item = item;
-            if (!Item.TryGetComponent(out ItemActions!))
+            if (!Item.TryGetComponent(out ItemActions))
             {
                 throw new InvalidOperationException($"performer {performer.Name} tried to perform item action {actionType} " +
                                                     $" for item {Item.Name} but the item had no ItemActionsComponent," +

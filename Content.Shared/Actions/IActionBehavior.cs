@@ -28,13 +28,13 @@ namespace Content.Shared.Actions
         /// <summary>
         /// Actions component of the performer.
         /// </summary>
-        public readonly SharedActionsComponent PerformerActions;
+        public readonly SharedActionsComponent? PerformerActions;
 
         public ActionEventArgs(IEntity performer, ActionType actionType)
         {
             Performer = performer;
             ActionType = actionType;
-            if (!Performer.TryGetComponent(out PerformerActions!))
+            if (!Performer.TryGetComponent(out PerformerActions))
             {
                 throw new InvalidOperationException($"performer {performer.Name} tried to perform action {actionType} " +
                                                     $" but the performer had no actions component," +
