@@ -25,7 +25,7 @@ namespace Content.Shared.Maps
         public string FootstepSounds { get; private set; } = string.Empty;
         public float Friction { get; set; }
         public float ThermalConductivity { get; set; }
-        public string ItemDropPrototypeName { get; private set; } = "FloorTileItemSteel";
+        public string ItemDropPrototypeName { get; private set; } = string.Empty;
         public bool IsSpace { get; private set; }
 
         public void AssignTileId(ushort id)
