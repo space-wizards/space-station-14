@@ -99,7 +99,7 @@ namespace Content.Client.GameObjects.Components.Observer
 
         public void SendReturnToBodyMessage() => SendNetworkMessage(new ReturnToBodyComponentMessage());
 
-        public void SendGhostWarpRequestMessage(string warpName) => SendNetworkMessage(new GhostWarpToNameRequestMessage(warpName));
+        public void SendGhostWarpRequestMessage(string warpName) => SendNetworkMessage(new GhostWarpToLocationRequestMessage(warpName));
 
         public void SendGhostWarpRequestMessage(EntityUid target) => SendNetworkMessage(new GhostWarpToTargetRequestMessage(target));
 

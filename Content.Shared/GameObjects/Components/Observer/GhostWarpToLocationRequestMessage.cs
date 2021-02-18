@@ -5,14 +5,14 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GameObjects.Components.Observer
 {
     [Serializable, NetSerializable]
-    public class GhostWarpToNameRequestMessage : ComponentMessage
+    public class GhostWarpToLocationRequestMessage : ComponentMessage
     {
-        public GhostWarpToNameRequestMessage(string warpTarget = default)
+        public GhostWarpToLocationRequestMessage(string name)
         {
-            WarpName = warpTarget;
+            Name = name;
             Directed = true;
         }
 
-        public string WarpName { get; }
+        public string Name { get; }
     }
 }

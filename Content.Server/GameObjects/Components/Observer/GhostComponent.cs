@@ -12,6 +12,7 @@ using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
@@ -94,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Observer
                         Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
                     }
                     break;
-                case GhostWarpToNameRequestMessage warp:
+                case GhostWarpToLocationRequestMessage warp:
                 {
                     if (session?.AttachedEntity != Owner)
                     {
@@ -103,12 +104,14 @@ namespace Content.Server.GameObjects.Components.Observer
 
                     foreach (var warpPoint in FindWaypoints())
                     {
-                        if (warp.WarpName == warpPoint.Location)
+                        if (warp.Name == warpPoint.Location)
                         {
                             Owner.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates;
                             break;
                         }
                     }
+
+                    Logger.Warning($"User {session.Name} tried to warp to an invalid warp: {warp.Name}");
 
                     break;
                 }
@@ -119,13 +122,14 @@ namespace Content.Server.GameObjects.Components.Observer
                         break;
                     }
 
-                    if (!Owner.EntityManager.TryGetEntity(target.Target, out var entity))
+                    if (!Owner.TryGetComponent(out IActorComponent? actor))
                     {
                         break;
                     }
 
-                    if (!entity.TryGetComponent(out IActorComponent? actor))
+                    if (!Owner.EntityManager.TryGetEntity(target.Target, out var entity))
                     {
+                        Logger.Warning($"User {session.Name} tried to warp to an invalid entity id: {target.Target}");
                         break;
                     }
 
