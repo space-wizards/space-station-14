@@ -20,9 +20,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override string Name => "SecretStash";
 
         [ViewVariables] private int _maxItemSize;
-        [ViewVariables] private string _secretPartName = "";
+        [ViewVariables] private string? _secretPartName;
 
         [ViewVariables] private ContainerSlot _itemContainer = default!;
+
+        public string SecretPartName => _secretPartName ?? Loc.GetString("{0:theName}", Owner);
 
         public override void Initialize()
         {
@@ -32,8 +34,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
             serializer.DataField(ref _maxItemSize, "maxItemSize", (int) ReferenceSizes.Pocket);
-            serializer.DataField(ref _secretPartName, "secretPartName", Loc.GetString("{0:theName}"));
+            serializer.DataField(ref _secretPartName, "secretPartName", null);
         }
 
         /// <summary>
