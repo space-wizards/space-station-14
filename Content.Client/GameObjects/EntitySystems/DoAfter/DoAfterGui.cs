@@ -198,6 +198,8 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 RemoveDoAfter(id);
             }
 
+            toRemove.Clear();
+
             // Update 0 -> 1.0f of the things
             foreach (var (id, message) in doAfters)
             {
@@ -208,6 +210,17 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 var ratio = (currentTime - message.StartTime).TotalSeconds;
                 doAfterBar.Ratio = MathF.Min(1.0f,
                     (float) ratio / message.Delay);
+
+                // Just in case it doesn't get cleaned up by the system for whatever reason.
+                if (ratio > message.Delay + DoAfterSystem.ExcessTime)
+                {
+                    toRemove.Add(id);
+                }
+            }
+
+            foreach (var id in toRemove)
+            {
+                RemoveDoAfter(id);
             }
         }
     }
