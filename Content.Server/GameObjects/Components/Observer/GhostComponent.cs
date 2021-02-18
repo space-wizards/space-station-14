@@ -94,43 +94,48 @@ namespace Content.Server.GameObjects.Components.Observer
                         Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
                     }
                     break;
-                case GhostWarpRequestMessage warp:
+                case GhostWarpToNameRequestMessage warp:
                 {
                     if (session?.AttachedEntity != Owner)
                     {
                         break;
                     }
 
-                    if (warp.PlayerTarget != default)
+                    foreach (var warpPoint in FindWaypoints())
                     {
-                        if (!Owner.EntityManager.TryGetEntity(warp.PlayerTarget, out var entity))
+                        if (warp.WarpName == warpPoint.Location)
                         {
+                            Owner.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates;
                             break;
-                        }
-
-                        if (!entity.TryGetComponent(out IActorComponent? actor))
-                        {
-                            break;
-                        }
-
-                        if (!_playerManager.TryGetSessionByChannel(actor.playerSession.ConnectedClient, out var player) ||
-                            player.AttachedEntity != entity)
-                        {
-                            break;
-                        }
-
-                        Owner.Transform.Coordinates = entity.Transform.Coordinates;
-                    }
-                    else
-                    {
-                        foreach (var warpPoint in FindWaypoints())
-                        {
-                            if (warp.WarpName == warpPoint.Location)
-                            {
-                                Owner.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates;
-                            }
                         }
                     }
+
+                    break;
+                }
+                case GhostWarpToTargetRequestMessage target:
+                {
+                    if (session?.AttachedEntity != Owner)
+                    {
+                        break;
+                    }
+
+                    if (!Owner.EntityManager.TryGetEntity(target.Target, out var entity))
+                    {
+                        break;
+                    }
+
+                    if (!entity.TryGetComponent(out IActorComponent? actor))
+                    {
+                        break;
+                    }
+
+                    if (!_playerManager.TryGetSessionByChannel(actor.playerSession.ConnectedClient, out var player) ||
+                        player.AttachedEntity != entity)
+                    {
+                        break;
+                    }
+
+                    Owner.Transform.Coordinates = entity.Transform.Coordinates;
                     break;
                 }
                 case GhostRequestPlayerNameData _:

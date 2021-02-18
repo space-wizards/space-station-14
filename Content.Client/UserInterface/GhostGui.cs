@@ -17,7 +17,7 @@ namespace Content.Client.UserInterface
         private readonly Button _ghostRoles = new() {Text = Loc.GetString("Ghost Roles")};
         private readonly GhostComponent _owner;
 
-        public GhostTargetWindow? TargetWindow { get; private set; }
+        public GhostTargetWindow? TargetWindow { get; }
 
         public GhostGui(GhostComponent owner)
         {
@@ -114,7 +114,7 @@ namespace Content.Client.UserInterface
                     ClipText = true,
                 };
 
-                currentButtonRef.OnPressed += (args) =>
+                currentButtonRef.OnPressed += (_) =>
                 {
                     _owner.SendGhostWarpRequestMessage(key);
                 };
@@ -138,9 +138,9 @@ namespace Content.Client.UserInterface
                     ClipText = true,
                 };
 
-                currentButtonRef.OnPressed += (args) =>
+                currentButtonRef.OnPressed += (_) =>
                 {
-                    _owner.SendGhostWarpRequestMessage(default,name);
+                    _owner.SendGhostWarpRequestMessage(name);
                 };
 
                 _buttonContainer.AddChild(currentButtonRef);
