@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (item.Size > _maxItemSize)
             {
                 Owner.PopupMessage(user,
-                    Loc.GetString("{0:TheName} is too big to fit in {1}!", itemToHide, _secretPartName));
+                    Loc.GetString("{0:TheName} is too big to fit in {1}!", itemToHide, SecretPartName));
                 return false;
             }
 
@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (!hands.Drop(itemToHide, _itemContainer))
                 return false;
 
-            Owner.PopupMessage(user, Loc.GetString("You hide {0:theName} in {1}.", itemToHide, _secretPartName));
+            Owner.PopupMessage(user, Loc.GetString("You hide {0:theName} in {1}.", itemToHide, SecretPartName));
             return true;
         }
 
@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (_itemContainer.ContainedEntity == null)
                 return false;
 
-            Owner.PopupMessage(user, Loc.GetString("There was something inside {0}!", _secretPartName));
+            Owner.PopupMessage(user, Loc.GetString("There was something inside {0}!", SecretPartName));
 
             if (user.TryGetComponent(out HandsComponent? hands))
             {
