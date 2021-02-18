@@ -7,12 +7,12 @@ namespace Content.Shared.GameObjects.Components.Observer
     [Serializable, NetSerializable]
     public class GhostWarpToLocationRequestMessage : ComponentMessage
     {
+        public string Name { get; }
+
         public GhostWarpToLocationRequestMessage(string name)
         {
             Name = name;
             Directed = true;
         }
-
-        public string Name { get; }
     }
 }
