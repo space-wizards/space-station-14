@@ -243,7 +243,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
             if (!HasBeaker || _heldBeaker == null || _busy)
                 return;
 
-            _beakerContainer.Remove(_beakerContainer.ContainedEntity);
+            var beaker = _beakerContainer.ContainedEntity;
+            if(beaker is null)
+                return;
+
+            _beakerContainer.Remove(beaker);
 
             if (user == null || !user.TryGetComponent<HandsComponent>(out var hands) || !_heldBeaker.Owner.TryGetComponent<ItemComponent>(out var item))
                 return;

@@ -1994,7 +1994,7 @@ entities:
     type: PowerReceiver
   - containers:
       light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+        type: Robust.Shared.Containers.ContainerSlot
     type: ContainerContainer
 - uid: 238
   type: Poweredlight
@@ -2007,7 +2007,7 @@ entities:
     type: PowerReceiver
   - containers:
       light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+        type: Robust.Shared.Containers.ContainerSlot
     type: ContainerContainer
 - uid: 239
   type: ApcExtensionCable

@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
         [ViewVariables] private ReagentUnit _dispenseAmount = ReagentUnit.New(10);
-        [UsedImplicitly] [ViewVariables] private SolutionContainerComponent? Solution => _beakerContainer.ContainedEntity.GetComponent<SolutionContainerComponent>();
+        [UsedImplicitly] [ViewVariables] private SolutionContainerComponent? Solution => _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
 
         [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
@@ -247,7 +247,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
 
             var beaker = _beakerContainer.ContainedEntity;
-            _beakerContainer.Remove(_beakerContainer.ContainedEntity);
+            if(beaker is null)
+                return;
+
+            _beakerContainer.Remove(beaker);
             UpdateUserInterface();
 
             if(!user.TryGetComponent<HandsComponent>(out var hands) || !beaker.TryGetComponent<ItemComponent>(out var item))
@@ -262,7 +265,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private void TryClear()
         {
             if (!HasBeaker) return;
-            var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionContainerComponent>();
+            var solution = _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
+            if(solution is null)
+                return;
+
             solution.RemoveAllSolution();
 
             UpdateUserInterface();
@@ -276,7 +282,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (!HasBeaker) return;
 
-            var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionContainerComponent>();
+            var solution = _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
+            if (solution is null)
+                return;
+
             solution.TryAddReagent(Inventory[dispenseIndex].ID, _dispenseAmount, out _);
 
             UpdateUserInterface();

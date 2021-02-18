@@ -85,7 +85,11 @@ namespace Content.Server.GameObjects.Components.Power.AME
                 return;
             }
 
-            _jarSlot.ContainedEntity.TryGetComponent<AMEFuelContainerComponent>(out var fuelJar);
+            var jar = _jarSlot.ContainedEntity;
+            if(jar is null)
+                return;
+
+            jar.TryGetComponent<AMEFuelContainerComponent>(out var fuelJar);
             if(fuelJar != null && _powerSupplier != null)
             {
                 var availableInject = fuelJar.FuelAmount >= InjectionAmount ? InjectionAmount : fuelJar.FuelAmount;
@@ -223,7 +227,10 @@ namespace Content.Server.GameObjects.Components.Power.AME
                 return;
 
             var jar = _jarSlot.ContainedEntity;
-            _jarSlot.Remove(_jarSlot.ContainedEntity);
+            if(jar is null)
+                return;
+
+            _jarSlot.Remove(jar);
             UpdateUserInterface();
 
             if (!user.TryGetComponent<HandsComponent>(out var hands) || !jar.TryGetComponent<ItemComponent>(out var item))

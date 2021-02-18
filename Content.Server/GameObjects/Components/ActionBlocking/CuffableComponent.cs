@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         {
             base.Initialize();
 
-            _container = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
+            Container = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
             Owner.EnsureComponentWarn<HandsComponent>();
         }
 
