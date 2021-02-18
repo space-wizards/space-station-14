@@ -43,7 +43,7 @@ namespace Content.Shared.Actions
         /// Requirements message to show in UI. Accepts formatting, but generally should be avoided
         /// so the requirements message isn't too prominent in the tooltip.
         /// </summary>
-        public string Requires { get; private set; } = null!;
+        public string Requires { get; private set; } = string.Empty;
 
         /// <summary>
         /// The type of behavior this action has. This is valid clientside and serverside.
@@ -94,7 +94,7 @@ namespace Content.Shared.Actions
             serializer.DataReadFunction("description", string.Empty,
                 s => Description = FormattedMessage.FromMarkup(s));
 
-            serializer.DataField(this, x => x.Requires,"requires", null!);
+            serializer.DataField(this, x => x.Requires,"requires", string.Empty);
             serializer.DataField(this, x => x.Icon,"icon", SpriteSpecifier.Invalid);
             serializer.DataField(this, x => x.IconOn,"iconOn", SpriteSpecifier.Invalid);
 

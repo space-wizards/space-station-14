@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         private readonly List<string> _targetList = new();
 
         [ViewVariables]
-        private string? _target = string.Empty;
+        private string? _target;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private string _tag = string.Empty;
