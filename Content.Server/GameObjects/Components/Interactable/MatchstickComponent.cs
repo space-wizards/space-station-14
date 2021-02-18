@@ -12,7 +12,6 @@ namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
     [ComponentReference(typeof(IHotItem))]
-    [DataDefinition]
     public class MatchstickComponent : Component, IHotItem, IInteractUsing
     {
         public override string Name => "Matchstick";
