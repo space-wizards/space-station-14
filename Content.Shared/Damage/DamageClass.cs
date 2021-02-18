@@ -25,7 +25,7 @@ namespace Content.Shared.Damage
             return DamageSystem.ClassToType[@class];
         }
 
-        public static Dictionary<DamageClass, T?> ToNewDictionary<T>()
+        public static Dictionary<DamageClass, T> ToNewDictionary<T>() where T : struct
         {
             return Enum.GetValues(typeof(DamageClass))
                 .Cast<DamageClass>()
