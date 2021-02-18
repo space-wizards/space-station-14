@@ -4,6 +4,8 @@
   name: smoking pipe
   description: "A pipe, for smoking. Probably made of meershaum or something."
   components:
+    - type: Smoking
+      duration: 60
     - type: Sprite
       sprite: Objects/Consumable/Smokeables/Pipes/pipe.rsi
       netsync: false

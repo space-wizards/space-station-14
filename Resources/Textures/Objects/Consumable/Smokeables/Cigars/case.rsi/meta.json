@@ -8,28 +8,31 @@
   },
   "states": [
     {
-      "name": "cigarcase0"
+      "name": "cigar1"
     },
     {
-      "name": "cigarcase1"
+      "name": "cigar2"
     },
     {
-      "name": "cigarcase2"
+      "name": "cigar3"
     },
     {
-      "name": "cigarcase3"
+      "name": "cigar4"
     },
     {
-      "name": "cigarcase4"
+      "name": "cigar5"
     },
     {
-      "name": "cigarcase5"
+      "name": "cigar6"
     },
     {
-      "name": "cigarcase6"
+      "name": "cigar7"
     },
     {
-      "name": "cigarcase7"
+      "name": "cigar8"
+    },
+    {
+      "name": "open"
     },
     {
       "name": "closed"
