@@ -9,7 +9,6 @@ namespace Content.Client.GameObjects.Components
     ///     Spawns a set of entities on the client only, and removes them when this component is removed.
     /// </summary>
     [RegisterComponent]
-    [DataDefinition]
     public class ClientEntitySpawnerComponent : Component
     {
         public override string Name => "ClientEntitySpawner";
