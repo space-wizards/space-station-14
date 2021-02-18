@@ -4,6 +4,7 @@ using System.Globalization;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -98,7 +99,7 @@ namespace Content.Shared.Alert
 
             AlertKey = new AlertKey(AlertType, Category);
             // TODO PAUL SERV3
-            HasOnClick = serializer.TryReadDataField("onClick", out string _);
+            // HasOnClick = serializer.TryReadDataField("onClick", out string _);
         }
 
         /// <param name="severity">severity level, if supported by this alert</param>
@@ -151,9 +152,9 @@ namespace Content.Shared.Alert
     /// falls back to the id.
     /// </summary>
     [Serializable, NetSerializable]
-    public struct AlertKey : ISerializationHooks
+    public struct AlertKey : ISerializationHooks, IPopulateDefaultValues
     {
-        [DataField("alertType")] public readonly AlertType? AlertType = Alert.AlertType.Error;
+        [DataField("alertType")] public AlertType? AlertType { get; private set; }
         [DataField("category")] public readonly AlertCategory? AlertCategory;
 
         /// NOTE: if the alert has a category you must pass the category for this to work
@@ -186,6 +187,11 @@ namespace Content.Shared.Alert
             // use only alert category if we have one
             if (AlertCategory.HasValue) return AlertCategory.GetHashCode();
             return AlertType.GetHashCode();
+        }
+
+        public void PopulateDefaultValues()
+        {
+            AlertType = Alert.AlertType.Error;
         }
 
         /// <param name="category">alert category, must not be null</param>

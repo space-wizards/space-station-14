@@ -18,9 +18,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Prototypes.DataClasses.Attributes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -28,7 +25,6 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
     [RegisterComponent]
-    [DataClass(typeof(ServerMagazineBarrelComponentData))]
     public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IExamine
     {
         public override string Name => "MagazineBarrel";
@@ -40,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private ContainerSlot _magazineContainer;
 
         [ViewVariables] public MagazineType MagazineTypes => _magazineTypes;
-        [DataClassTarget("types")]
+        [DataField("types")]
         private MagazineType _magazineTypes = default;
         [ViewVariables] public BallisticCaliber Caliber => _caliber;
         [DataField("caliber")]
@@ -529,7 +525,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     [Flags]
     public enum MagazineType
     {
-
         Unspecified = 0,
         LPistol = 1 << 0, // Placeholder?
         Pistol = 1 << 1,

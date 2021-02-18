@@ -4,12 +4,10 @@ using System.Collections.Generic;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Log;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
-using YamlDotNet.Serialization;
-using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
@@ -58,19 +56,24 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         [Serializable]
         [DataDefinition]
-        public struct StorageFillEntry
+        public struct StorageFillEntry : IPopulateDefaultValues
         {
+            [DataField("name")]
             public string? PrototypeName;
+
+            [DataField("null")]
             public float SpawnProbability;
+
+            [DataField("orGroup")]
             public string GroupId;
+
+            [DataField("amount")]
             public int Amount;
 
-            void IExposeData.ExposeData(ObjectSerializer serializer)
+            public void PopulateDefaultValues()
             {
-                serializer.DataField(ref PrototypeName, "name", null);
-                serializer.DataField(ref Amount, "amount", 1);
-                serializer.DataField(ref SpawnProbability, "prob", 1f);
-                serializer.DataField(ref GroupId, "orGroup", null);
+                Amount = 1;
+                SpawnProbability = 1;
             }
         }
     }
