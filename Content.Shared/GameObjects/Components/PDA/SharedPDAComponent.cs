@@ -128,7 +128,7 @@ namespace Content.Shared.GameObjects.Components.PDA
 
     public class UplinkAccount
     {
-        public event Action<UplinkAccount> BalanceChanged = default!;
+        public event Action<UplinkAccount>? BalanceChanged;
         public EntityUid AccountHolder;
         private int _balance;
         [ViewVariables]
@@ -147,9 +147,8 @@ namespace Content.Shared.GameObjects.Components.PDA
                 return false;
             }
             _balance = newBalance;
-            BalanceChanged.Invoke(this);
+            BalanceChanged?.Invoke(this);
             return true;
-
         }
     }
 
