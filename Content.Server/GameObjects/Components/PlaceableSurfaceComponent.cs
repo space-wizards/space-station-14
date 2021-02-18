@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -82,7 +83,7 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _positionOffset, "positionOffset", Vector2.Zero);
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new PlaceableSurfaceComponentState(_isPlaceable,_placeCentered,_positionOffset);
         }

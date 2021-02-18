@@ -16,6 +16,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.ActionBlocking
@@ -55,7 +56,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             Owner.EnsureComponentWarn<HandsComponent>();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             // there are 2 approaches i can think of to handle the handcuff overlay on players
             // 1 - make the current RSI the handcuff type that's currently active. all handcuffs on the player will appear the same.

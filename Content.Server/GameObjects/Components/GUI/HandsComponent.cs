@@ -497,7 +497,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return _hands.Any(hand => hand.Name == name);
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             var hands = new SharedHand[_hands.Count];
 

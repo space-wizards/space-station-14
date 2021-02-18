@@ -175,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             serializer.DataField(ref _respectMidiLimits, "respectMidiLimits", true);
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new InstrumentState(Playing, InstrumentProgram, InstrumentBank, AllowPercussion, AllowProgramChange, RespectMidiLimits, _lastSequencerTick);
         }

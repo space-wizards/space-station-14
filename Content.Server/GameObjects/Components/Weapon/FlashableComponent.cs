@@ -4,6 +4,7 @@ using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Weapon
@@ -23,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Weapon
             Dirty();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new FlashComponentState(_duration, _lastFlash);
         }
