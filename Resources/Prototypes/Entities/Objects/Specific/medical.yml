@@ -78,9 +78,9 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/medical.rsi
     state: gauze
-#  - type: Healing
-#    heal:
-#      Blunt: 10
+  - type: Healing
+    heal:
+      Blunt: 10
   - type: Stack
     max: 5
     count: 5
