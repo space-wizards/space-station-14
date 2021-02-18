@@ -10,6 +10,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Strap;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -21,8 +22,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -31,7 +30,6 @@ namespace Content.Server.GameObjects.Components.Buckle
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBuckleComponent))]
-    [DataClass(typeof(BuckleComponentData))]
     public class BuckleComponent : SharedBuckleComponent, IInteractHand
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -54,8 +52,8 @@ namespace Content.Server.GameObjects.Components.Buckle
         ///     The amount of time that must pass for this entity to
         ///     be able to unbuckle after recently buckling.
         /// </summary>
+        [DataField("delay")]
         [ViewVariables]
-        [DataClassTarget("delay")]
         private TimeSpan _unbuckleDelay  = TimeSpan.FromSeconds(0.25f);
 
         /// <summary>

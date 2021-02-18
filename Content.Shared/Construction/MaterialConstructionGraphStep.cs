@@ -3,25 +3,18 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction
 {
+    [DataDefinition]
     public class MaterialConstructionGraphStep : EntityInsertConstructionGraphStep
     {
         // TODO: Make this use the material system.
         // TODO TODO: Make the material system not shit.
-        public StackType Material { get; private set; }
-        public int Amount { get; private set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.Material, "material", StackType.Metal);
-            serializer.DataField(this, x => x.Amount, "amount", 1);
-        }
+        [DataField("material")] public StackType Material { get; private set; } = StackType.Metal;
+        [DataField("amount")] public int Amount { get; private set; } = 1;
 
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {

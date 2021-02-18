@@ -1,38 +1,27 @@
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components
 {
-    public partial class SharedStackComponentDataClass
+    public partial class SharedStackComponentDataClass : ISerializationHooks
     {
-        [DataClassTarget("stacktype")]
-        public object StackType;
+        [DataField("stacktype")] public string StackTypeId;
 
-        public void ExposeData(ObjectSerializer serializer)
+        [DataClassTarget("stacktype")] public object StackType;
+
+        public void AfterDeserialization()
         {
-            if (serializer.Writing)
-            {
-                return;
-            }
+            var refl = IoCManager.Resolve<IReflectionManager>();
 
-            if (serializer.TryReadDataFieldCached("stacktype", out string raw))
+            if (refl.TryParseEnumReference(StackTypeId, out var @enum))
             {
-                var refl = IoCManager.Resolve<IReflectionManager>();
-                if (refl.TryParseEnumReference(raw, out var @enum))
-                {
-                    StackType = @enum;
-                }
-                else
-                {
-                    StackType = raw;
-                }
+                StackType = @enum;
             }
             else
             {
-                StackType = null;
+                StackType = StackTypeId;
             }
         }
     }

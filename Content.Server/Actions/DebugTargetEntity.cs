@@ -1,17 +1,14 @@
 ﻿using Content.Server.Utility;
 using Content.Shared.Actions;
 using JetBrains.Annotations;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Actions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class DebugTargetEntity : ITargetEntityAction, ITargetEntityItemAction
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-        }
-
         public void DoTargetEntityAction(TargetEntityItemActionEventArgs args)
         {
             args.Performer.PopupMessageEveryone(args.Item.Name + ": Clicked " +

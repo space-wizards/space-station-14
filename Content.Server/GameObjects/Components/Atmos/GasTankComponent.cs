@@ -20,8 +20,6 @@ using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -44,13 +42,13 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         [ViewVariables] private BoundUserInterface? _userInterface;
 
-        [ViewVariables] [DataField("air")] public GasMixture? Air { get; set; } = new();
+        [DataField("air")] [ViewVariables] public GasMixture? Air { get; set; } = new();
 
         /// <summary>
         ///     Distributed pressure.
         /// </summary>
-        [ViewVariables]
         [DataField("outputPressure")]
+        [ViewVariables]
         public float OutputPressure { get; private set; } = DefaultOutputPressure;
 
         /// <summary>
@@ -352,10 +350,9 @@ namespace Content.Server.GameObjects.Components.Atmos
     }
 
     [UsedImplicitly]
+    [DataDefinition]
     public class ToggleInternalsAction : IToggleItemAction
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer) {}
-
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
             if (!args.Item.TryGetComponent<GasTankComponent>(out var gasTankComponent)) return false;

@@ -4,19 +4,16 @@ using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
 {
-    [DataClass(typeof(BaseNetConnectorComponentData))]
     public abstract class BaseNetConnectorComponent<TNetType> : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public Voltage Voltage { get => _voltage; set => SetVoltage(value); }
-        [DataClassTarget("voltage")]
+        [DataField("voltage")]
         private Voltage _voltage = Voltage.High;
 
         [ViewVariables]

@@ -1,11 +1,9 @@
 using System;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.Holiday.Interfaces
 {
-    public interface IHolidayShouldCelebrate : IExposeData
+    public interface IHolidayShouldCelebrate
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer) {}
         bool ShouldCelebrate(DateTime date, HolidayPrototype holiday);
     }
 }

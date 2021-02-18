@@ -1,13 +1,13 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Globalization;
-using Content.Shared.Interfaces;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Alert
 {
@@ -15,7 +15,7 @@ namespace Content.Shared.Alert
     /// An alert popup with associated icon, tooltip, and other data.
     /// </summary>
     [Prototype("alert")]
-    public class AlertPrototype : IPrototype
+    public class AlertPrototype : IPrototype, ISerializationHooks
     {
         /// <summary>
         /// Type of alert, no 2 alert prototypes should have the same one.
@@ -29,17 +29,20 @@ namespace Content.Shared.Alert
         /// to get the correct icon path for a particular severity level.
         /// </summary>
         [ViewVariables]
-        public SpriteSpecifier Icon { get; private set; }
+        [DataField("icon")]
+        public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         /// Name to show in tooltip window. Accepts formatting.
         /// </summary>
-        public FormattedMessage Name { get; private set; }
+        [DataField("name")]
+        public FormattedMessage Name { get; private set; } = new();
 
         /// <summary>
         /// Description to show in tooltip window. Accepts formatting.
         /// </summary>
-        public FormattedMessage Description { get; private set; }
+        [DataField("description")]
+        public FormattedMessage Description { get; private set; } = new();
 
         /// <summary>
         /// Category the alert belongs to. Only one alert of a given category
@@ -61,13 +64,14 @@ namespace Content.Shared.Alert
         /// </summary>
         public short MinSeverity => MaxSeverity == -1 ? (short) -1 : _minSeverity;
 
-        private short _minSeverity;
+        [DataField("minSeverity")] private short _minSeverity = 1;
 
         /// <summary>
         /// Maximum severity level supported by this state. -1 (default) indicates
         /// no severity levels are supported by the state.
         /// </summary>
-        public short MaxSeverity { get; private set; }
+        [DataField("maxSeverity")]
+        public short MaxSeverity { get; private set; } = -1;
 
         /// <summary>
         /// Indicates whether this state support severity levels
@@ -77,44 +81,25 @@ namespace Content.Shared.Alert
         /// <summary>
         /// Whether this alert is clickable. This is valid clientside.
         /// </summary>
-        public bool HasOnClick { get; private set; }
+        public bool HasOnClick => OnClick != null;
 
         /// <summary>
         /// Defines what to do when the alert is clicked.
         /// This will always be null on clientside.
         /// </summary>
-        public IAlertClick OnClick { get; private set; }
+        [DataField("onClick", serverOnly: true)]
+        public IAlertClick? OnClick { get; private set; }
 
-        public void LoadFrom(YamlMappingNode mapping)
+        public void AfterDeserialization()
         {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(this, x => x.Icon, "icon", SpriteSpecifier.Invalid);
-            serializer.DataField(this, x => x.MaxSeverity, "maxSeverity", (short) -1);
-            serializer.DataField(ref _minSeverity, "minSeverity", (short) 1);
-
-            serializer.DataReadFunction("name", string.Empty,
-                s => Name = FormattedMessage.FromMarkup(s));
-            serializer.DataReadFunction("description", string.Empty,
-                s => Description = FormattedMessage.FromMarkup(s));
-
-            serializer.DataField(this, x => x.AlertType, "alertType", AlertType.Error);
             if (AlertType == AlertType.Error)
             {
                 Logger.ErrorS("alert", "missing or invalid alertType for alert with name {0}", Name);
             }
 
-            if (serializer.TryReadDataField("category", out AlertCategory alertCategory))
-            {
-                Category = alertCategory;
-            }
-
             AlertKey = new AlertKey(AlertType, Category);
-
-            HasOnClick = serializer.TryReadDataField("onClick", out string _);
-
-            if (IoCManager.Resolve<IModuleManager>().IsClientModule) return;
-            serializer.DataField(this, x => x.OnClick, "onClick", null);
+            // TODO PAUL SERV3
+            // HasOnClick = serializer.TryReadDataField("onClick", out string _);
         }
 
         /// <param name="severity">severity level, if supported by this alert</param>
@@ -167,10 +152,10 @@ namespace Content.Shared.Alert
     /// falls back to the id.
     /// </summary>
     [Serializable, NetSerializable]
-    public struct AlertKey
+    public struct AlertKey : ISerializationHooks, IPopulateDefaultValues
     {
-        public readonly AlertType? AlertType;
-        public readonly AlertCategory? AlertCategory;
+        [DataField("alertType")] public AlertType? AlertType { get; private set; }
+        [DataField("category")] public readonly AlertCategory? AlertCategory;
 
         /// NOTE: if the alert has a category you must pass the category for this to work
         /// properly as a key. I.e. if the alert has a category and you pass only the alert type, and you
@@ -192,7 +177,7 @@ namespace Content.Shared.Alert
             return AlertType == other.AlertType && AlertCategory == other.AlertCategory;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is AlertKey other && Equals(other);
         }
@@ -202,6 +187,11 @@ namespace Content.Shared.Alert
             // use only alert category if we have one
             if (AlertCategory.HasValue) return AlertCategory.GetHashCode();
             return AlertType.GetHashCode();
+        }
+
+        public void PopulateDefaultValues()
+        {
+            AlertType = Alert.AlertType.Error;
         }
 
         /// <param name="category">alert category, must not be null</param>

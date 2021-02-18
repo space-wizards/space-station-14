@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -35,7 +33,7 @@ namespace Content.Shared.GameObjects.Components.Research
         /// <returns>Whether it could be added or not</returns>
         public virtual void AddRecipe(LatheRecipePrototype recipe)
         {
-            if(!Contains(recipe))
+            if (!Contains(recipe))
                 _recipes.Add(recipe);
         }
 

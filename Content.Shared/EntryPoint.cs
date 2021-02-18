@@ -29,9 +29,6 @@ namespace Content.Shared
 
             _textMacroFactory.DoAutoRegistrations();
 
-            YamlObjectSerializer.RegisterTypeSerializer(typeof(ConstructionGraphStep),
-                new ConstructionGraphStepTypeSerializer());
-
             // Default to en-US.
             Loc.LoadCulture(_resourceManager, _textMacroFactory, new CultureInfo(Culture));
         }

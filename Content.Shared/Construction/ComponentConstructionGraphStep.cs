@@ -1,20 +1,14 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction
 {
+    [DataDefinition]
     public class ComponentConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
-        public string Component { get; private set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.Component, "component", string.Empty);
-        }
+        [DataField("component")] public string Component { get; private set; } = string.Empty;
 
         public override bool EntityValid(IEntity entity)
         {

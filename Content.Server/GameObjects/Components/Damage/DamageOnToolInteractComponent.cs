@@ -6,8 +6,6 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Damage
@@ -19,17 +17,9 @@ namespace Content.Server.GameObjects.Components.Damage
 
         [DataField("damage")]
         protected int Damage;
+
         [DataField("tools")]
         private List<ToolQuality> _tools = new();
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref Damage, "damage", 0);
-
-            serializer.DataField(ref _tools, "tools", new List<ToolQuality>());
-        }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {

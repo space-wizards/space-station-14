@@ -6,16 +6,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
@@ -29,10 +29,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Random;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -41,7 +39,6 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    [DataClass(typeof(DisposalUnitComponentData))]
     public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IThrowCollide, IGasMixtureHolder
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -70,12 +67,12 @@ namespace Content.Server.GameObjects.Components.Disposal
         private bool _engaged;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataClassTarget("autoEngageTime")]
-        private TimeSpan _automaticEngageTime;
+        [DataField("autoEngageTime")]
+        private readonly TimeSpan _automaticEngageTime = TimeSpan.FromSeconds(30);
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataClassTarget("flushDelay")]
-        private TimeSpan _flushDelay;
+        [DataField("flushDelay")]
+        private readonly TimeSpan _flushDelay = TimeSpan.FromSeconds(3);
 
         /// <summary>
         ///     Delay from trying to enter disposals ourselves.

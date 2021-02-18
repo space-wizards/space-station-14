@@ -4,8 +4,6 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -15,9 +13,12 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(SharedPlaceableSurfaceComponent))]
     public class PlaceableSurfaceComponent : SharedPlaceableSurfaceComponent, IInteractUsing
     {
-        private bool _isPlaceable;
+        [DataField("placeCentered")]
         private bool _placeCentered;
+
+        [DataField("positionOffset")]
         private Vector2 _positionOffset;
+
         [DataField("IsPlaceable")]
         private bool _isPlaceable = true;
 
@@ -76,15 +77,6 @@ namespace Content.Server.GameObjects.Components
 
         [ViewVariables]
         int IInteractUsing.Priority => -10;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _isPlaceable, "IsPlaceable", true);
-            serializer.DataField(ref _placeCentered, "placeCentered", false);
-            serializer.DataField(ref _positionOffset, "positionOffset", Vector2.Zero);
-        }
 
         public override ComponentState GetComponentState()
         {

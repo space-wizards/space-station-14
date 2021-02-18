@@ -1,23 +1,20 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
+﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.Console;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -32,7 +29,7 @@ namespace Content.Server.GameObjects.Components
         [DataClassTarget("config")]
         private readonly Dictionary<string, string> _config = new();
 
-        [DataClassTarget("validation")]
+        [DataField("validation")]
         private Regex _validation = new ("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
 
         public override void OnAdd()

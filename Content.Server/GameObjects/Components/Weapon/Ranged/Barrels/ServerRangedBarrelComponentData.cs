@@ -1,88 +1,71 @@
 using System;
-using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
-    public partial class ServerRangedBarrelComponentData
+    public partial class ServerRangedBarrelComponentData : ISerializationHooks
     {
+        [DataField("ammoSpreadRatio")]
         [DataClassTarget("spreadRatio")]
         public float SpreadRatio = 1f;
+
+        [DataField("minAngle")]
+        public float MinAngleDegrees;
 
         [DataClassTarget("minAngle")]
         public Angle MinAngle;
 
+        [DataField("maxAngle")]
+        public float MaxAngleDegrees = 45;
+
         [DataClassTarget("maxAngle")]
         public Angle MaxAngle;
 
+        [DataField("fireRate")]
         [DataClassTarget("fireRate")]
         public float FireRate = 2f;
+
+        [DataField("angleIncrease")]
+        public float? AngleIncreaseDegrees;
 
         [DataClassTarget("angleIncrease")]
         public float AngleIncrease;
 
+        [DataField("angleDecay")]
+        public float AngleDecayDegrees = 20;
+
         [DataClassTarget("angleDecay")]
         public float AngleDecay;
 
+        [DataField("allRateSelectors")]
         [DataClassTarget("allRateSelectors")]
         public FireRateSelector AllRateSelectors;
 
-        public virtual void ExposeData(ObjectSerializer serializer)
+        public void BeforeSerialization()
         {
-            serializer.DataField(ref FireRate, "fireRate", 2f);
+            MinAngleDegrees = (float) (MinAngle.Degrees * 2);
+            MaxAngleDegrees = (float) (MaxAngle.Degrees * 2);
+            AngleIncreaseDegrees = MathF.Round(AngleIncrease / ((float) Math.PI / 180f), 2);
+            AngleDecay = MathF.Round(AngleDecay / ((float) Math.PI / 180f), 2);
+        }
 
+        public void AfterDeserialization()
+        {
             // This hard-to-read area's dealing with recoil
             // Use degrees in yaml as it's easier to read compared to "0.0125f"
-            serializer.DataReadWriteFunction(
-                "minAngle",
-                0,
-                angle => MinAngle = Angle.FromDegrees(angle / 2f),
-                () => MinAngle.Degrees * 2);
+            MinAngle = Angle.FromDegrees(MinAngleDegrees / 2f);
 
             // Random doubles it as it's +/- so uhh we'll just half it here for readability
-            serializer.DataReadWriteFunction(
-                "maxAngle",
-                45,
-                angle => MaxAngle = Angle.FromDegrees(angle / 2f),
-                () => MaxAngle.Degrees * 2);
+            MaxAngle = Angle.FromDegrees(MaxAngleDegrees / 2f);
 
-            serializer.DataReadWriteFunction(
-                "angleIncrease",
-                40 / FireRate,
-                angle => AngleIncrease = angle * (float) Math.PI / 180f,
-                () => MathF.Round(AngleIncrease / ((float) Math.PI / 180f), 2));
+            AngleIncreaseDegrees ??= 40 / FireRate;
+            AngleIncrease = AngleIncreaseDegrees.Value * (float) Math.PI / 180f;
 
-            serializer.DataReadWriteFunction(
-                "angleDecay",
-                20f,
-                angle => AngleDecay = angle * (float) Math.PI / 180f,
-                () => MathF.Round(AngleDecay / ((float) Math.PI / 180f), 2));
-
-            serializer.DataField(ref SpreadRatio, "ammoSpreadRatio", 1.0f);
-
-            serializer.DataReadWriteFunction(
-                "allSelectors",
-                new List<FireRateSelector>(),
-                selectors => selectors.ForEach(selector => AllRateSelectors |= selector),
-                () =>
-                {
-                    var types = new List<FireRateSelector>();
-
-                    foreach (FireRateSelector selector in Enum.GetValues(typeof(FireRateSelector)))
-                    {
-                        if ((AllRateSelectors & selector) != 0)
-                        {
-                            types.Add(selector);
-                        }
-                    }
-
-                    return types;
-                });
+            AngleDecay = AngleDecayDegrees * (float) Math.PI / 180f;
 
             // For simplicity we'll enforce it this way; ammo determines max spread
             if (SpreadRatio > 1.0f)
@@ -91,6 +74,5 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 throw new InvalidOperationException();
             }
         }
-
     }
 }

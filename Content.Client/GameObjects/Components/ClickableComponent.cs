@@ -5,8 +5,6 @@ using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -128,15 +126,6 @@ namespace Content.Client.GameObjects.Components
             [ViewVariables] [DataField("west")] public Box2 West;
 
             public static DirBoundData Default { get; } = new();
-
-            void IExposeData.ExposeData(ObjectSerializer serializer)
-            {
-                serializer.DataField(ref All, "all", default);
-                serializer.DataField(ref North, "north", default);
-                serializer.DataField(ref South, "south", default);
-                serializer.DataField(ref East, "east", default);
-                serializer.DataField(ref West, "west", default);
-            }
         }
     }
 }

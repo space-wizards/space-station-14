@@ -1,6 +1,5 @@
 ﻿using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Mobs.State
 {
@@ -9,7 +8,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
     ///     (i.e. Normal, Critical, Dead) and what effects to apply upon entering or
     ///     exiting the state.
     /// </summary>
-    public interface IMobState : IExposeData, IActionBlocker
+    public interface IMobState : IActionBlocker
     {
         bool IsAlive();
 

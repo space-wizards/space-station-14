@@ -6,8 +6,6 @@ using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Part.Property;
-using Content.Shared.GameObjects.Components.Body.Preset;
-using Content.Shared.GameObjects.Components.Body.Template;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
@@ -18,7 +16,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Component = Robust.Shared.GameObjects.Component;
 
 namespace Content.Shared.GameObjects.Components.Body
 {

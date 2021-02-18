@@ -1,24 +1,20 @@
 using System;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Markers
 {
-    public partial class TimedSpawnerComponentData
+    public partial class TimedSpawnerComponentData : ISerializationHooks
     {
-        [DataClassTarget("MinimumEntitiesSpawned")]
-        public int MinimumEntitiesSpawned;
+        [DataField("MinimumEntitiesSpawned")] [DataClassTarget("MinimumEntitiesSpawned")]
+        public int MinimumEntitiesSpawned = 1;
 
-        [DataClassTarget("MaximumEntitiesSpawned")]
-        public int MaximumEntitiesSpawned;
+        [DataField("MaximumEntitiesSpawned")] [DataClassTarget("MaximumEntitiesSpawned")]
+        public int MaximumEntitiesSpawned = 1;
 
-        public void ExposeData(ObjectSerializer serializer)
+        public void AfterDeserialization()
         {
-            serializer.DataField(this, x => x.MinimumEntitiesSpawned, "minimumEntitiesSpawned", 1);
-            serializer.DataField(this, x => x.MaximumEntitiesSpawned, "maximumEntitiesSpawned", 1);
-
-            if(MinimumEntitiesSpawned > MaximumEntitiesSpawned)
+            if (MinimumEntitiesSpawned > MaximumEntitiesSpawned)
                 throw new ArgumentException("MaximumEntitiesSpawned can't be lower than MinimumEntitiesSpawned!");
         }
     }

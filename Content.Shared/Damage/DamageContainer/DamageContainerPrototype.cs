@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Damage.DamageContainer
 {
@@ -15,13 +12,12 @@ namespace Content.Shared.Damage.DamageContainer
     /// </summary>
     [Prototype("damageContainer")]
     [Serializable, NetSerializable]
-    public class DamageContainerPrototype : IPrototype, IIndexedPrototype, IExposeData
+    public class DamageContainerPrototype : IPrototype, IIndexedPrototype, ISerializationHooks
     {
-        private bool _supportAll;
-        private HashSet<DamageClass> _supportedClasses;
-        private HashSet<DamageType> _supportedTypes;
-        [DataField("id")]
-        private string _id;
+        [DataField("supportAll")] private bool _supportAll;
+        [DataField("supportedClasses")] private HashSet<DamageClass> _supportedClasses;
+        [DataField("supportedTypes")] private HashSet<DamageType> _supportedTypes;
+        [DataField("id")] private string _id;
 
         // TODO NET 5 IReadOnlySet
         [ViewVariables] public IReadOnlyCollection<DamageClass> SupportedClasses => _supportedClasses;
@@ -30,12 +26,8 @@ namespace Content.Shared.Damage.DamageContainer
 
         [ViewVariables] public string ID => _id;
 
-        public void ExposeData(ObjectSerializer serializer)
+        public void AfterDeserialization()
         {
-            serializer.DataField(ref _supportAll, "supportAll", false);
-            serializer.DataField(ref _supportedClasses, "supportedClasses", new HashSet<DamageClass>());
-            serializer.DataField(ref _supportedTypes, "supportedTypes", new HashSet<DamageType>());
-
             if (_supportAll)
             {
                 _supportedClasses.UnionWith(Enum.GetValues<DamageClass>());

@@ -7,40 +7,37 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
-    public partial class SharedProtoLatheDatabaseComponentData
+    public partial class SharedProtoLatheDatabaseComponentData : ISerializationHooks
     {
+        [DataField("protolatherecipes")]
+        public List<string> RecipeIds { get; private set; }
+
         [DataClassTarget("protolatherecipes")]
-        public List<LatheRecipePrototype> ProtolatheRecipes = new();
+        public readonly List<LatheRecipePrototype> ProtolatheRecipes = new();
 
-        public void ExposeData(ObjectSerializer serializer)
+        public void BeforeSerialization()
         {
-            serializer.DataReadWriteFunction(
-                "protolatherecipes",
-                new List<string>(),
-                recipes =>
-                {
-                    var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var list = new List<string>();
 
-                    foreach (var id in recipes)
-                    {
-                        if (prototypeManager.TryIndex(id, out LatheRecipePrototype recipe))
-                        {
-                            ProtolatheRecipes.Add(recipe);
-                        }
-                    }
-                },
-                () =>
-                {
-                    var list = new List<string>();
+            foreach (var recipe in ProtolatheRecipes)
+            {
+                list.Add(recipe.ID);
+            }
 
-                    foreach (var recipe in ProtolatheRecipes)
-                    {
-                        list.Add(recipe.ID);
-                    }
-
-                    return list;
-                });
+            RecipeIds = list;
         }
 
+        public void AfterDeserialization()
+        {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            foreach (var id in RecipeIds)
+            {
+                if (prototypeManager.TryIndex(id, out LatheRecipePrototype recipe))
+                {
+                    ProtolatheRecipes.Add(recipe);
+                }
+            }
+        }
     }
 }

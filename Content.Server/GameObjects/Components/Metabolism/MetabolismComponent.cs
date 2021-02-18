@@ -21,7 +21,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -43,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] private int _suffocationDamage = 1;
 
-        [ViewVariables(VVAccess.ReadWrite)] YamlField("suffocationDamageRecovery")] private int _suffocationDamageRecovery = 1;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamageRecovery")] private int _suffocationDamageRecovery = 1;
 
         [ViewVariables] [DataField("needsGases")] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 

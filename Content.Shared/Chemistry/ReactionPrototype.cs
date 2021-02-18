@@ -1,13 +1,10 @@
 #nullable enable
-using System;
 using System.Collections.Generic;
-using Content.Server.Interfaces.Chemistry;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Chemistry
 {

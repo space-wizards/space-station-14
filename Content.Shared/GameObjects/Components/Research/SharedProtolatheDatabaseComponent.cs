@@ -2,14 +2,11 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
-
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
     [DataClass(typeof(SharedProtoLatheDatabaseComponentData))]
     public class SharedProtolatheDatabaseComponent : SharedLatheDatabaseComponent

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Server.GameObjects.Components.GUI;
+﻿using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
@@ -8,9 +6,6 @@ using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -22,14 +17,13 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
     [ComponentReference(typeof(StorableComponent))]
     [ComponentReference(typeof(SharedStorableComponent))]
     [ComponentReference(typeof(IItemComponent))]
-    [DataClass(typeof(ClothingComponentData))]
     public class ClothingComponent : ItemComponent, IUse
     {
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
 
         [ViewVariables]
-        [DataClassTarget("slotFlags")]
+        [DataField("slotFlags")]
         public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
 
         [DataField("QuickEquip")]
@@ -44,10 +38,7 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
         [ViewVariables(VVAccess.ReadWrite)]
         public string ClothingEquippedPrefix
         {
-            get
-            {
-                return _clothingEquippedPrefix;
-            }
+            get => _clothingEquippedPrefix;
             set
             {
                 Dirty();

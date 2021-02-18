@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Mobs.State
 {
@@ -32,8 +31,6 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         public virtual void ExitState(IEntity entity) { }
 
         public virtual void UpdateState(IEntity entity, int threshold) { }
-
-        public virtual void ExposeData(ObjectSerializer serializer) { }
 
         public virtual bool CanInteract()
         {

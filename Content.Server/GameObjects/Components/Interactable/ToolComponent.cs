@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Audio;
@@ -7,10 +6,6 @@ using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -23,9 +18,9 @@ namespace Content.Server.GameObjects.Components.Interactable
 
     [RegisterComponent]
     [ComponentReference(typeof(IToolComponent))]
-    [DataClass(typeof(ToolComponentData))]
     public class ToolComponent : SharedToolComponent, IToolComponent
     {
+        [DataField("qualities")]
         protected ToolQuality _qualities = ToolQuality.None;
 
         [ViewVariables]

@@ -2,20 +2,18 @@
 using System.IO;
 using System.Linq;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Construction
 {
-    public class NestedConstructionGraphStep : ConstructionGraphStep
+    [DataDefinition]
+    public class NestedConstructionGraphStep : ConstructionGraphStep, ISerializationHooks
     {
-        public List<List<ConstructionGraphStep>> Steps { get; private set; } = new();
+        [DataField("steps")] public List<List<ConstructionGraphStep>> Steps { get; private set; } = new();
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void AfterDeserialization()
         {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.Steps, "steps", new());
-
             if (Steps.Any(inner => inner.Any(step => step is NestedConstructionGraphStep)))
             {
                 throw new InvalidDataException("Can't have nested construction steps inside nested construction steps!");

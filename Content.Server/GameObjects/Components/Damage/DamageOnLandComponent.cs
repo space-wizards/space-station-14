@@ -2,8 +2,6 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Damage
@@ -15,19 +13,12 @@ namespace Content.Server.GameObjects.Components.Damage
 
         [DataField("damageType")]
         private DamageType _damageType = DamageType.Blunt;
+
         [DataField("amount")]
         private int _amount = 1;
+
         [DataField("ignoreResistances")]
         private bool _ignoreResistances;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _damageType, "damageType", DamageType.Blunt);
-            serializer.DataField(ref _amount, "amount", 1);
-            serializer.DataField(ref _ignoreResistances, "ignoreResistances", false);
-        }
 
         void ILand.Land(LandEventArgs eventArgs)
         {

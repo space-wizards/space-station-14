@@ -9,7 +9,7 @@ using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -23,48 +23,27 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         [ViewVariables] private TimeSpan _lastGaspPopupTime;
 
-        [ViewVariables] public GasMixture Air { get; set; } = default!;
+        [DataField("air")]
+        [ViewVariables]
+        public GasMixture Air { get; set; } = new()
+        {
+            Volume = 6,
+            Temperature = Atmospherics.NormalBodyTemperature
+        };
 
-        [ViewVariables] public float Temperature => Air.Temperature;
-
-        [ViewVariables] public float Volume => Air.Volume;
-
-        [ViewVariables] public TimeSpan GaspPopupCooldown { get; private set; }
+        [DataField("gaspPopupCooldown")]
+        [ViewVariables]
+        public TimeSpan GaspPopupCooldown { get; private set; } = TimeSpan.FromSeconds(8);
 
         [ViewVariables] public LungStatus Status { get; set; }
 
-        [ViewVariables] public float CycleDelay { get; set; }
+        [DataField("cycleDelay")]
+        [ViewVariables]
+        public float CycleDelay { get; set; } = 2;
 
         public LungBehavior()
         {
             IoCManager.InjectDependencies(this);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            Air = new GasMixture {Temperature = Atmospherics.NormalBodyTemperature};
-
-            serializer.DataField(this, l => l.CycleDelay, "cycleDelay", 2);
-
-            serializer.DataReadWriteFunction(
-                "volume",
-                6,
-                vol => Air.Volume = vol,
-                () => Air.Volume);
-
-            serializer.DataReadWriteFunction(
-                "temperature",
-                Atmospherics.NormalBodyTemperature,
-                temp => Air.Temperature = temp,
-                () => Air.Temperature);
-
-            serializer.DataReadWriteFunction(
-                "gaspPopupCooldown",
-                8f,
-                delay => GaspPopupCooldown = TimeSpan.FromSeconds(delay),
-                () => GaspPopupCooldown.TotalSeconds);
         }
 
         public void Gasp()

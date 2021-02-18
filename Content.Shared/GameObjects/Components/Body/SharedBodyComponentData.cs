@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Preset;
@@ -7,13 +7,13 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
-    public partial class SharedBodyComponentData
+    public partial class SharedBodyComponentData : ISerializationHooks
     {
-        [DataClassTarget("templateName")] public string? TemplateName;
+        [DataField("template", required: true)] [DataClassTarget("templateName")]
+        public string TemplateName = default!;
 
         [DataClassTarget("connections")]
         public Dictionary<string, List<string>>? Connections;
@@ -27,104 +27,36 @@ namespace Content.Shared.GameObjects.Components.Body
         [DataClassTarget("partIds")]
         public Dictionary<string, string>? _partIds;
 
-        [DataClassTarget("presetName")]
-        public string? PresetName { get; private set; }
+        [DataField("preset", required: true)]
+        [DataClassTarget("preset")]
+        public string PresetName { get; private set; } = default!;
 
-        public void ExposeData(ObjectSerializer serializer)
+        public void BeforeSerialization()
         {
+            throw new System.NotImplementedException();
+        }
+
+        public void AfterDeserialization()
+        {
+            // TODO BODY Move to template or somewhere else
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
-            serializer.DataReadWriteFunction(
-                "template",
-                null,
-                name =>
-                {
-                    if (string.IsNullOrEmpty(name))
-                    {
-                        return;
-                    }
+            var template = prototypeManager.Index<BodyTemplatePrototype>(TemplateName);
 
-                    var template = prototypeManager.Index<BodyTemplatePrototype>(name);
+            Connections = template.Connections;
+            Slots = template.Slots;
+            _centerSlot = template.CenterSlot;
 
-                    Connections = template.Connections;
-                    Slots = template.Slots;
-                    _centerSlot = template.CenterSlot;
+            var preset = prototypeManager.Index<BodyPresetPrototype>(PresetName);
 
-                    TemplateName = name;
-                },
-                () => TemplateName);
-
-            serializer.DataReadWriteFunction(
-                "preset",
-                null,
-                name =>
-                {
-                    if (string.IsNullOrEmpty(name))
-                    {
-                        return;
-                    }
-
-                    var preset = prototypeManager.Index<BodyPresetPrototype>(name);
-
-                    _partIds = preset.PartIDs;
-                    PresetName = preset.Name;
-                },
-                () => PresetName);
-
-            Connections ??= new();
-            serializer.DataReadWriteFunction(
-                "connections",
-                new Dictionary<string, List<string>>(),
-                connections =>
-                {
-                    foreach (var (from, to) in connections)
-                    {
-                        Connections.GetOrNew(from).AddRange(to);
-                    }
-                },
-                () => Connections);
-            if (Connections.Count == 0) Connections = null;
-
-            Slots ??= new();
-            serializer.DataReadWriteFunction(
-                "slots",
-                new Dictionary<string, BodyPartType>(),
-                slots =>
-                {
-                    foreach (var (part, type) in slots)
-                    {
-                        Slots[part] = type;
-                    }
-                },
-                () => Slots);
-            if (Slots.Count == 0) Slots = null;
-
-            // TODO BODY Move to template or somewhere else
-            serializer.DataReadWriteFunction(
-                "centerSlot",
-                null,
-                slot => _centerSlot = slot,
-                () => _centerSlot);
-
-            _partIds ??= new();
-            serializer.DataReadWriteFunction(
-                "partIds",
-                new Dictionary<string, string>(),
-                partIds =>
-                {
-                    foreach (var (slot, part) in partIds)
-                    {
-                        _partIds[slot] = part;
-                    }
-                },
-                () => _partIds);
-            if (_partIds.Count == 0) _partIds = null;
+            _partIds = preset.PartIDs;
 
             // Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
             // The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
             var cleanedConnections = new Dictionary<string, List<string>>();
-            Slots ??= new();
-            Connections ??= new();
+            Slots ??= new Dictionary<string, BodyPartType>();
+            Connections ??= new Dictionary<string, List<string>>();
+
             foreach (var targetSlotName in Slots.Keys)
             {
                 var tempConnections = new List<string>();

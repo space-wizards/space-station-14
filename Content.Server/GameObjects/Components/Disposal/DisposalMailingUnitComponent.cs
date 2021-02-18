@@ -26,10 +26,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -39,8 +37,6 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalMailingUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalMailingUnitComponent : SharedDisposalMailingUnitComponent, IInteractHand, IActivate, IInteractUsing
-    [DataClass(typeof(DisposalMailingUnitComponentData))]
     public class DisposalMailingUnitComponent : SharedDisposalMailingUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -71,12 +67,12 @@ namespace Content.Server.GameObjects.Components.Disposal
         private bool _engaged;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataClassTarget("autoEngageTime")]
-        private TimeSpan _automaticEngageTime = default;
+        [DataField("autoEngageTime")]
+        private readonly TimeSpan _automaticEngageTime = TimeSpan.FromSeconds(30);
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataClassTarget("flushDelay")]
-        private TimeSpan _flushDelay = default;
+        [DataField("flushDelay")]
+        private readonly TimeSpan _flushDelay = TimeSpan.FromSeconds(3);
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("entryDelay")]

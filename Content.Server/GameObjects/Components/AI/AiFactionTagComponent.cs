@@ -1,19 +1,15 @@
 using System;
-using System.Collections.Generic;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.AI
 {
     [RegisterComponent]
-    [DataClass(typeof(AiFactionTagComponentData))]
     public sealed class AiFactionTagComponent : Component
     {
         public override string Name => "AiFactionTag";
 
-        [DataClassTarget("factions")]
+        [DataField("factions")]
         public Faction Factions { get; private set; } = Faction.None;
     }
 
