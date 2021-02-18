@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         [ViewVariables] private BoundUserInterface? _userInterface;
 
-        [DataField("air")] [ViewVariables] public GasMixture? Air { get; set; } = null!;
+        [DataField("air")] [ViewVariables] public GasMixture? Air { get; set; } = new();
 
         /// <summary>
         ///     Distributed pressure.
