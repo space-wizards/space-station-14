@@ -59,11 +59,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             foreach (var heldItem in hands.GetAllHeldItems())
             {
-                if (heldItem.Owner.TryGetComponent(out SpillableComponent spillable) && heldItem.Owner.TryGetComponent(out ISolutionInteractionsComponent solutionComponent))
-                {
-                    solutionComponent.Drain(solutionComponent.DrainAvailable).SpillAt(entity.Transform.Coordinates, "PuddleSmear");
-                }
-                hands.Drop(heldItem.Owner, doMobChecks);
+                hands.Drop(heldItem.Owner, doMobChecks, intentional:false);
             }
         }
 

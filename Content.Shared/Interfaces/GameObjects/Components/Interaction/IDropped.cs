@@ -45,10 +45,16 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public IEntity Dropped { get; }
 
-        public DroppedMessage(IEntity user, IEntity dropped)
+        /// <summary>
+        ///     If item was dropped intentionally.
+        /// </summary>
+        public bool Intentional { get; }
+
+        public DroppedMessage(IEntity user, IEntity dropped, bool intentional)
         {
             User = user;
             Dropped = dropped;
+            intentional = intentional;
         }
     }
 }
