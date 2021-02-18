@@ -37,10 +37,6 @@ namespace Content.Shared.GameObjects.Components.Kitchen
             return false;
         }
 
-        public virtual bool DragDropOn(DragDropEventArgs eventArgs)
-        {
-            return true;
-        }
-
+        public abstract bool DragDropOn(DragDropEventArgs eventArgs);
     }
 }

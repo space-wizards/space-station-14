@@ -99,11 +99,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             if (user != victim)
             {
-                Owner.PopupMessage(victim, Loc.GetString("{0:theName} begins dragging you onto {1:theName}!", user, Owner.Name));
+                Owner.PopupMessage(victim, Loc.GetString("{0:theName} begins dragging you onto {1:theName}!", user, Owner));
             }
             else
             {
-                Owner.PopupMessage(user, Loc.GetString("You begin dragging yourself onto {1:theName}!", user, Owner.Name));
+                Owner.PopupMessage(user, Loc.GetString("You begin dragging yourself onto {0:theName}!", Owner));
             }
 
             var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
