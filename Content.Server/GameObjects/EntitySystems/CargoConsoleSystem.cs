@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Robust.Shared.GameObjects.Systems;
 using Content.Shared.Prototypes.Cargo;
 using Content.Shared.GameTicking;
 using Content.Server.Cargo;
 using Content.Server.GameObjects.Components.Cargo;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -180,7 +180,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void SyncComponentsWithId(int id)
         {
-            foreach (var comp in ComponentManager.EntityQuery<CargoOrderDatabaseComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<CargoOrderDatabaseComponent>(true))
             {
                 if (!comp.ConnectedToDatabase || comp.Database.Id != id)
                     continue;

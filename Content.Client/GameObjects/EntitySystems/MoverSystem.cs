@@ -4,7 +4,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.Physics;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Client.GameObjects.EntitySystems

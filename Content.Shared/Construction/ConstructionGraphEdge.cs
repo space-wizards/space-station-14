@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -31,7 +28,12 @@ namespace Content.Shared.Construction
         [ViewVariables]
         public IReadOnlyList<ConstructionGraphStep> Steps => _steps;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
+        {
+            InternalExposeData(serializer);
+        }
+
+        private void InternalExposeData(ObjectSerializer serializer)
         {
             var moduleManager = IoCManager.Resolve<IModuleManager>();
 
@@ -44,7 +46,7 @@ namespace Content.Shared.Construction
         public void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
-            ExposeData(serializer);
+            InternalExposeData(serializer);
 
             if (!mapping.TryGetNode("steps", out YamlSequenceNode stepsMapping)) return;
 

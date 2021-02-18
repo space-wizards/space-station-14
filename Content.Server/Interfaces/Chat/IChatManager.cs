@@ -1,5 +1,5 @@
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Interfaces.Chat
 {

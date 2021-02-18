@@ -1,0 +1,12 @@
+﻿<SS14Window xmlns="https://spacestation14.io"
+            xmlns:voting="clr-namespace:Content.Client.Voting"
+            Title="{Loc 'Esc Menu'}"
+            Resizable="False">
+
+    <VBoxContainer SeparationOverride="4">
+        <voting:VoteCallMenuButton />
+        <Button Name="OptionsButton" Text="{Loc 'Options'}" />
+        <Button Name="DisconnectButton" Text="{Loc 'Disconnect'}" />
+        <Button Name="QuitButton" Text="{Loc 'Quit game'}" />
+    </VBoxContainer>
+</SS14Window>

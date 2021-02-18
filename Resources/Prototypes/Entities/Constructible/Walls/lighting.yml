@@ -4,6 +4,9 @@
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Construction
+    graph: lightFixture
+    node: tubeLight
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
@@ -19,6 +22,22 @@
     offset: "0.5, 0"
     color: "#DCDCC6"
   - type: SignalReceiver
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SteelSheet1:
+            min: 2
+            max: 2
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   placement:
     snap:
     - Wallmount
@@ -36,19 +55,52 @@
   - type: PoweredLight
     bulb: Tube
   - type: PowerReceiver
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-      50:
+
+- type: entity
+  id: PoweredlightEmpty
+  suffix: Empty
+  parent: Poweredlight
+  components:
+  - type: Sprite
+    state: empty
+  - type: PoweredLight
+    hasLampOnSpawn: False
+
+- type: entity
+  name: unpowered small light
+  id: SmallLight
+  parent: WallLight
+  components:
+    - type: Sprite
+      sprite: Constructible/Lighting/light_small.rsi
+      state: on
+    - type: PointLight
+      energy: 1.0
+      enabled: true
+      offset: "0.5, 0"
+    - type: Damageable
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 25
         behaviors:
+        - !type:EmptyAllContainersBehaviour
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 1
+              max: 1
         - !type:DoActsBehavior
           acts: ["Destruction"]
+    - type: Construction
+      graph: lightFixture
+      node: bulbLight
 
 - type: entity
   name: small light
   id: PoweredSmallLight
-  parent: WallLight
+  parent: SmallLight
   components:
   - type: Sprite
     sprite: Constructible/Lighting/light_small.rsi
@@ -56,7 +108,7 @@
   - type: PointLight
     energy: 1.0
     enabled: false
-    offset: "-0.5, 0"
+    offset: "0.5, 0"
   - type: Physics
     shapes:
       - !type:PhysShapeAabb
@@ -65,32 +117,13 @@
   - type: PoweredLight
     bulb: Bulb
   - type: PowerReceiver
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-      25:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
 
 - type: entity
-  name: unpowered small light
-  id: SmallLight
-  parent: WallLight
+  id: PoweredSmallLightEmpty
+  suffix: Empty
+  parent: PoweredSmallLight
   components:
   - type: Sprite
-    sprite: Constructible/Lighting/light_small.rsi
-    state: on
-  - type: PointLight
-    energy: 1.0
-    enabled: true
-    offset: "-0.5, 0"
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-      25:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    state: empty
+  - type: PoweredLight
+    hasLampOnSpawn: False

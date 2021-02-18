@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Body.Surgery
 {

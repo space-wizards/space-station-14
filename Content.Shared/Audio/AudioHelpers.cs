@@ -1,6 +1,5 @@
 using System;
 using Robust.Shared.Audio;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;

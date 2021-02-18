@@ -3,17 +3,17 @@ using System.Linq;
 using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
+using Content.Client.Voting;
 using Content.Shared.Input;
+using Robust.Client;
 using Robust.Client.Console;
-using Robust.Client.Interfaces;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Input;
 using Robust.Client.Player;
+using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -26,7 +26,7 @@ namespace Content.Client.State
     public class LobbyState : Robust.Client.State.State
     {
         [Dependency] private readonly IBaseClient _baseClient = default!;
-        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -37,6 +37,7 @@ namespace Content.Client.State
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IVoteManager _voteManager = default!;
 
         [ViewVariables] private CharacterSetupGui _characterSetup;
         [ViewVariables] private LobbyGui _lobby;
@@ -59,12 +60,14 @@ namespace Content.Client.State
                 _lobby.CharacterPreview.UpdateUI();
             };
 
-            _lobby = new LobbyGui(_entityManager, _resourceCache, _preferencesManager);
+            _lobby = new LobbyGui(_entityManager, _preferencesManager);
             _userInterfaceManager.StateRoot.AddChild(_lobby);
 
             LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
 
             _chatManager.SetChatBox(_lobby.Chat);
+            _voteManager.SetPopupContainer(_lobby.VoteContainer);
+
             _lobby.Chat.DefaultChatFormat = "ooc \"{0}\"";
 
             _lobby.ServerName.Text = _baseClient.GameInfo.ServerName;
@@ -87,7 +90,7 @@ namespace Content.Client.State
                 _userInterfaceManager.StateRoot.AddChild(_characterSetup);
             };
 
-            _lobby.ObserveButton.OnPressed += args => _console.ProcessCommand("observe");
+            _lobby.ObserveButton.OnPressed += args => _consoleHost.ExecuteCommand("observe");
             _lobby.ReadyButton.OnPressed += args =>
             {
                 if (!_clientGameTicker.IsGameStarted)
@@ -104,7 +107,7 @@ namespace Content.Client.State
                 SetReady(args.Pressed);
             };
 
-            _lobby.LeaveButton.OnPressed += args => _console.ProcessCommand("disconnect");
+            _lobby.LeaveButton.OnPressed += args => _consoleHost.ExecuteCommand("disconnect");
             _lobby.OptionsButton.OnPressed += args => new OptionsMenu().Open();
 
             UpdatePlayerList();
@@ -259,7 +262,7 @@ namespace Content.Client.State
                 return;
             }
 
-            _console.ProcessCommand($"toggleready {newReady}");
+            _consoleHost.ExecuteCommand($"toggleready {newReady}");
             UpdatePlayerList();
         }
     }

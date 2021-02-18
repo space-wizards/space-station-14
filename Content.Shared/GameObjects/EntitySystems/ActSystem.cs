@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.GameObjects.EntitySystems

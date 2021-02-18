@@ -1,15 +1,10 @@
-
-#nullable enable
+﻿#nullable enable
 using JetBrains.Annotations;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Server.Interfaces.GameTicking;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
-using Robust.Server.Interfaces.Timing;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Random;
+using Robust.Server.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
@@ -52,25 +47,11 @@ namespace Content.Server.StationEvents
         public override void Startup()
         {
             ResetTimeUntilPulse();
-
-            var componentManager = IoCManager.Resolve<IComponentManager>();
-
-            foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
-            {
-                overlay.AddNewOverlay(OverlayType.RadiationPulseOverlay);
-            }
-
             base.Startup();
         }
 
         public override void Shutdown()
         {
-            var componentManager = IoCManager.Resolve<IComponentManager>();
-
-            foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
-            {
-                overlay.RemoveOverlaysOfType(OverlayType.RadiationPulseOverlay);
-            }
             base.Shutdown();
         }
 

@@ -1,12 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using Content.Shared.Maps;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 

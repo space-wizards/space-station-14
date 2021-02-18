@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Eui;
 using Content.Shared.Network.NetMessages;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 #nullable enable
 

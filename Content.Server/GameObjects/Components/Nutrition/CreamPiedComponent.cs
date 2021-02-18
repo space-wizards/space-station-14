@@ -8,7 +8,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
-using Serilog;
 
 namespace Content.Server.GameObjects.Components.Nutrition
 {
@@ -37,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 CreamPied = false;
         }
 
-        public ReagentUnit ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
+        ReagentUnit IReagentReaction.ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
         {
             switch (reagent.ID)
             {
@@ -50,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             return ReagentUnit.Zero;
         }
 
-        public void HitBy(ThrowCollideEventArgs eventArgs)
+        void IThrowCollide.HitBy(ThrowCollideEventArgs eventArgs)
         {
             if (!eventArgs.Thrown.HasComponent<CreamPieComponent>() || CreamPied) return;
 

@@ -1,4 +1,4 @@
-﻿using Robust.Server.GameObjects.Components.Container;
+﻿using Robust.Server.GameObjects;
 
 namespace Content.Server.GameObjects.Components.ContainerExt
 {

@@ -14,7 +14,7 @@
       size: 10
     - type: SolutionContainer
       maxVol: 100
-      caps: AddTo, RemoveFrom
+      caps: Refillable, Drainable
       contents:
         reagents:
           - ReagentId: chem.Water

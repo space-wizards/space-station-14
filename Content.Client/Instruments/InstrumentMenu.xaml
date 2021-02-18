@@ -1,0 +1,21 @@
+<SS14Window xmlns="https://spacestation14.io">
+    <MarginContainer Name="Margin" SizeFlagsVertical="FillExpand" SizeFlagsHorizontal="Fill">
+        <VBoxContainer SizeFlagsVertical="FillExpand" SizeFlagsHorizontal="FillExpand" SeparationOverride="5">
+            <HBoxContainer SizeFlagsVertical="FillExpand" SizeFlagsHorizontal="FillExpand">
+                <Button Name="InputButton" ToggleMode="True" Text="MIDI Input" TextAlign="Center" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="1"/>
+                <Control SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="2" />
+                <Button Name="FileButton" Text="Play MIDI File" TextAlign="Center" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="1"/>
+            </HBoxContainer>
+            <HBoxContainer SizeFlagsVertical="FillExpand" SizeFlagsHorizontal="Fill">
+                <Button Name="LoopButton" ToggleMode="True" Text="Loop" TextAlign="Center" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="1"/>
+                <Control SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="2" />
+                <Button Name="StopButton" Text="Stop" TextAlign="Center" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="1"/>
+            </HBoxContainer>
+            <HBoxContainer SizeFlagsVertical="ShrinkEnd" SizeFlagsHorizontal="FillExpand">
+                <Control SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.125"/>
+                <Slider Name="PlaybackSlider" SizeFlagsHorizontal="FillExpand" />
+                <Control SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.125"/>
+            </HBoxContainer>
+        </VBoxContainer>
+    </MarginContainer>
+</SS14Window>

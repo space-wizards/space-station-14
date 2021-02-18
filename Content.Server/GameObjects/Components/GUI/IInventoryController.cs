@@ -1,4 +1,4 @@
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameObjects.Components.GUI

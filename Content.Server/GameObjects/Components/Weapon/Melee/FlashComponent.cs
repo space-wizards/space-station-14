@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -76,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             return true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!Use(eventArgs.User))
             {
@@ -129,23 +121,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         }
 
         // TODO: Check if target can be flashed (e.g. things like sunglasses would block a flash)
+        // TODO: Merge with the code in FlashableComponent
         private void Flash(IEntity entity, IEntity user, int flashDuration)
         {
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
+            if (entity.TryGetComponent(out FlashableComponent flashable))
             {
-                if (overlayEffectsComponent.TryGetOverlaysOfType(OverlayType.FlashOverlay, out List<Guid> flashIDs)) {
-                    foreach (Guid id in flashIDs) {
-                        overlayEffectsComponent.TryModifyOverlay(id, overlay => {
-                            if (overlay.TryGetOverlayParameter<TimedOverlayParameter>(out var timed))
-                            {
-                                timed.Length += flashDuration;
-                            }
-                        });
-                    }
-                }
-                else {
-                    overlayEffectsComponent.AddNewOverlay(OverlayType.FlashOverlay, new TimedOverlayParameter(flashDuration));
-                }
+                flashable.Flash(flashDuration / 1000d);
             }
 
             if (entity.TryGetComponent(out StunnableComponent stunnableComponent))

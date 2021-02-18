@@ -1,4 +1,6 @@
-﻿- type: entity
+﻿- type: Tag
+  id: Cigarette
+- type: entity
   name: "Base Cigarette"
   id: BaseCigarette
   parent: BaseItem
@@ -13,6 +15,9 @@
       Slots: [ mask ]
       HeldPrefix: unlit
       size: 1
+    - type: Tag
+      tags:
+        - Cigarette
     - type: Smoking
       duration: 30
     - type: Appearance
@@ -33,10 +38,25 @@
   components:
     - type: Sprite
       sprite: Objects/Consumable/Fancy/cigarettes.rsi
+      netsync: false
       layers:
         - state: cig
     - type: StorageFill
       contents:
         - name: Cigarette
           amount: 6
-
+    - type: StorageCounter
+      countTag: Cigarette
+    - type: Appearance
+      visuals:
+        - type: BagOpenCloseVisualizer
+          openIcon: cig_open
+        - type: StackVisualizer
+          composite: true
+          stackLayers:
+            - cigarette_1
+            - cigarette_2
+            - cigarette_3
+            - cigarette_4
+            - cigarette_5
+            - cigarette_6

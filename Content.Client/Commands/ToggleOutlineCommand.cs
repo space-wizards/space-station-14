@@ -1,6 +1,6 @@
 using Content.Shared;
-using Robust.Client.Interfaces.Console;
-using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
@@ -13,16 +13,14 @@ namespace Content.Client.Commands
 
         public string Help => "";
 
-        public bool Execute(IDebugConsole console, params string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var configurationManager = IoCManager.Resolve<IConfigurationManager>();
             var cvar = CCVars.OutlineEnabled;
             var old = configurationManager.GetCVar(cvar);
 
             configurationManager.SetCVar(cvar, !old);
-            console.AddLine($"Draw outlines set to: {configurationManager.GetCVar(cvar)}");
-
-            return false;
+            shell.WriteLine($"Draw outlines set to: {configurationManager.GetCVar(cvar)}");
         }
     }
 }

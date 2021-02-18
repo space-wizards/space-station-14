@@ -5,3 +5,35 @@
   completetime: 500
   materials:
     steel: 90
+
+- type: latheRecipe
+  id: KitchenKnife
+  icon: Objects/Weapons/Melee/kitchen_knife.rsi
+  result: KitchenKnife
+  completetime: 400
+  materials:
+    steel: 30
+
+- type: latheRecipe
+  id: DrinkMug
+  icon: Objects/Consumable/Drinks/mug.rsi
+  result: DrinkMug
+  completetime: 200
+  materials:
+    glass: 20
+
+- type: latheRecipe
+  id: DrinkMugMetal
+  icon: Objects/Consumable/Drinks/mug_metal.rsi
+  result: DrinkMugMetal
+  completetime: 200
+  materials:
+    steel: 20
+
+- type: latheRecipe
+  id: DrinkGlass
+  icon: Objects/Consumable/Drinks/glass_clear.rsi
+  result: DrinkGlass
+  completetime: 200
+  materials:
+    glass: 15

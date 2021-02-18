@@ -4,7 +4,7 @@ using System.Linq;
 using Content.Client.Interfaces;
 using Content.Shared.Roles;
 using Robust.Client.Console;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -21,7 +21,7 @@ namespace Content.Client.UserInterface
     public sealed class LateJoinGui : SS14Window
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IClientGameTicker _gameTicker = default!;
 
         protected override Vector2? CustomSize => (360, 560);
@@ -147,7 +147,7 @@ namespace Content.Client.UserInterface
             SelectedId += jobId =>
             {
                 Logger.InfoS("latejoin", $"Late joining as ID: {jobId}");
-                _console.ProcessCommand($"joingame {CommandParsing.Escape(jobId)}");
+                _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)}");
                 Close();
             };
 

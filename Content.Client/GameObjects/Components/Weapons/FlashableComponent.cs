@@ -1,29 +1,24 @@
 ﻿using System;
-using System.Threading;
+using Content.Client.Graphics.Overlays;
 using Content.Shared.GameObjects.Components.Weapons;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Graphics.Overlays;
-using Robust.Client.Interfaces.Graphics;
-using Robust.Client.Interfaces.Graphics.Overlays;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Utility;
-using Timer = Robust.Shared.Timers.Timer;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.Components.Weapons
 {
     [RegisterComponent]
     public sealed class FlashableComponent : SharedFlashableComponent
     {
-        private CancellationTokenSource _cancelToken;
         private TimeSpan _startTime;
         private double _duration;
+<<<<<<< HEAD
         private Guid? _overlayID;
+=======
+>>>>>>> 8640f342b5444c9209d41af53bb00180e2f3896e
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
@@ -58,13 +53,13 @@ namespace Content.Client.GameObjects.Components.Weapons
 
             if (currentTime > newEndTime)
             {
-                DisableOverlay();
                 return;
             }
 
             _startTime = newState.Time;
             _duration = newState.Duration;
 
+<<<<<<< HEAD
             EnableOverlay(newEndTime - currentTime);
         }
 
@@ -146,6 +141,11 @@ namespace Content.Client.GameObjects.Components.Weapons
             var result = (float) MathHelper.Clamp(slope * (float) Math.Pow(ratio - xOffset, exponent) + yOffset, 0.0, 1.0);
             DebugTools.Assert(!float.IsNaN(result));
             return result;
+=======
+            var overlayManager = IoCManager.Resolve<IOverlayManager>();
+            var overlay = overlayManager.GetOverlay<FlashOverlay>(nameof(FlashOverlay));
+            overlay.ReceiveFlash(_duration);
+>>>>>>> 8640f342b5444c9209d41af53bb00180e2f3896e
         }
     }
 }

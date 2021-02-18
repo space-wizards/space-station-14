@@ -3,16 +3,16 @@ using Content.Client.UserInterface;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.Placement;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.Input;
+using Robust.Client.Placement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Sandbox
@@ -102,7 +102,7 @@ namespace Content.Client.Sandbox
 
     internal class SandboxManager : SharedSandboxManager, ISandboxManager
     {
-        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
@@ -314,37 +314,37 @@ namespace Content.Client.Sandbox
 
         private void ToggleLight()
         {
-            _console.ProcessCommand("togglelight");
+            _consoleHost.ExecuteCommand("togglelight");
         }
 
         private void ToggleFov()
         {
-            _console.ProcessCommand("togglefov");
+            _consoleHost.ExecuteCommand("togglefov");
         }
 
         private void ToggleShadows()
         {
-            _console.ProcessCommand("toggleshadows");
+            _consoleHost.ExecuteCommand("toggleshadows");
         }
 
         private void ToggleSubFloor()
         {
-            _console.ProcessCommand("showsubfloor");
+            _consoleHost.ExecuteCommand("showsubfloor");
         }
 
         private void ShowMarkers()
         {
-            _console.ProcessCommand("showmarkers");
+            _consoleHost.ExecuteCommand("showmarkers");
         }
 
         private void ShowBb()
         {
-            _console.ProcessCommand("showbb");
+            _consoleHost.ExecuteCommand("showbb");
         }
 
         private void LinkMachines()
         {
-            _console.ProcessCommand("signallink");
+            _consoleHost.ExecuteCommand("signallink");
         }
     }
 }

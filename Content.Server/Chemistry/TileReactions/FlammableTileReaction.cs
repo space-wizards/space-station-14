@@ -1,6 +1,5 @@
 ﻿using System;
 using Content.Server.Atmos;
-using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using JetBrains.Annotations;
@@ -14,7 +13,7 @@ namespace Content.Server.Chemistry.TileReactions
     {
         private float _temperatureMultiplier = 1.25f;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _temperatureMultiplier, "temperatureMultiplier", 1.15f);
         }

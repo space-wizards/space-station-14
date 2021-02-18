@@ -1,6 +1,6 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Mobs.State
 {

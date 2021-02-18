@@ -2,15 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.AI;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Graphics.Overlays;
-using Robust.Client.Graphics.Shaders;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.Graphics.Overlays;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.Enums;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Random;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -26,7 +20,6 @@ namespace Content.Client.GameObjects.EntitySystems.AI
         private PathfindingDebugMode _modes = PathfindingDebugMode.None;
         private float _routeDuration = 4.0f; // How long before we remove a route from the overlay
         private DebugPathfindingOverlay _overlay;
-        private Guid _overlayID;
 
         public override void Initialize()
         {
@@ -101,20 +94,19 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
             _overlay = new DebugPathfindingOverlay {Modes = _modes};
-            _overlayID = Guid.NewGuid();
-            overlayManager.AddOverlay(_overlayID, _overlay);
+            overlayManager.AddOverlay(_overlay);
         }
 
         private void DisableOverlay()
         {
-            if (_overlay == null || _overlayID == null)
+            if (_overlay == null)
             {
                 return;
             }
 
             _overlay.Modes = 0;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            overlayManager.RemoveOverlay(_overlayID);
+            overlayManager.RemoveOverlay(_overlay.ID);
             _overlay = null;
         }
 
@@ -204,7 +196,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
         public readonly List<SharedAiDebug.AStarRouteMessage> AStarRoutes = new();
         public readonly List<SharedAiDebug.JpsRouteMessage> JpsRoutes = new();
 
-        public DebugPathfindingOverlay()
+        public DebugPathfindingOverlay() : base(nameof(DebugPathfindingOverlay))
         {
             _shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
             _eyeManager = IoCManager.Resolve<IEyeManager>();

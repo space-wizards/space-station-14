@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Damage

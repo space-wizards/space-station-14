@@ -1,7 +1,6 @@
 using Content.Client.GameObjects.EntitySystems;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Client.GameObjects.Components.Markers
 {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
@@ -88,7 +87,10 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
             SetDispenseAmount1,
             SetDispenseAmount5,
             SetDispenseAmount10,
+            SetDispenseAmount15,
+            SetDispenseAmount20,
             SetDispenseAmount25,
+            SetDispenseAmount30,
             SetDispenseAmount50,
             SetDispenseAmount100,
             /// <summary>

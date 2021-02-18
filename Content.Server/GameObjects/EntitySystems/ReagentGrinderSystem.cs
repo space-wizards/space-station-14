@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Kitchen;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var comp in ComponentManager.EntityQuery<ReagentGrinderComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<ReagentGrinderComponent>(true))
             {
                 comp.OnUpdate();
             }
