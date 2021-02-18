@@ -46,12 +46,6 @@ namespace Content.Shared.Preferences
 
         public Color AdminOOCColor { get; set; }
 
-        public int FirstEmptySlot()
-        {
-            var firstEmpty = IndexOfCharacter(null!);
-            return firstEmpty == -1 ? _characters.Count : firstEmpty;
-        }
-
         public int IndexOfCharacter(ICharacterProfile profile)
         {
             return _characters.FirstOrNull(p => p.Value == profile)?.Key ?? -1;
