@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components
             base.Initialize();
 
             ItemContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>("extinguisher_cabinet", Owner, out _);
+                ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "extinguisher_cabinet", out _);
         }
 
         public override void ExposeData(ObjectSerializer serializer)

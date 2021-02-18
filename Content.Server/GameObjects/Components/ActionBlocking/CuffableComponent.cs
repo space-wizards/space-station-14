@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         {
             base.Initialize();
 
-            Container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
+            _container = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
             Owner.EnsureComponentWarn<HandsComponent>();
         }
 

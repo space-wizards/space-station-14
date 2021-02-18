@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Power
         public override void Initialize()
         {
             base.Initialize();
-            _cellContainer = ContainerManagerComponent.Ensure<ContainerSlot>("cellslot_cell_container", Owner, out _);
+            _cellContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "cellslot_cell_container", out _);
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)

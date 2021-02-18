@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             base.Initialize();
             _appearance?.SetData(BodyBagVisuals.Label, false);
-            LabelContainer = ContainerManagerComponent.Ensure<ContainerSlot>("body_bag_label", Owner, out _);
+            LabelContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "body_bag_label", out _);
         }
 
         protected override bool AddToContents(IEntity entity)

@@ -41,8 +41,8 @@ namespace Content.Server.GameObjects.Components.Access
         {
             base.Initialize();
 
-            _privilegedIdContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-privilegedId", Owner);
-            _targetIdContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-targetId", Owner);
+            _privilegedIdContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-privilegedId");
+            _targetIdContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-targetId");
 
             Owner.EnsureComponentWarn<AccessReader>();
             Owner.EnsureComponentWarn<ServerUserInterfaceComponent>();

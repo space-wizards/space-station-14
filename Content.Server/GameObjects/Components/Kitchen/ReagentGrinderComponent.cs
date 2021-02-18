@@ -79,11 +79,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
             base.Initialize();
             //A slot for the beaker where the grounds/juices will go.
             _beakerContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
+                ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
 
             //A container for the things that WILL be ground/juiced. Useful for ejecting them instead of deleting them from the hands of the user.
             _chamber =
-                ContainerManagerComponent.Ensure<Container>($"{Name}-entityContainerContainer", Owner);
+                ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-entityContainerContainer");
 
             if (UserInterface != null)
             {

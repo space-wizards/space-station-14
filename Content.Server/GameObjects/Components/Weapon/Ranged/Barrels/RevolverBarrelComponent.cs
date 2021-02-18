@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             base.Initialize();
             _unspawnedCount = Capacity;
             int idx = 0;
-            _ammoContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-ammoContainer", Owner, out var existing);
+            _ammoContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-ammoContainer", out var existing);
             if (existing)
             {
                 foreach (var entity in _ammoContainer.ContainedEntities)

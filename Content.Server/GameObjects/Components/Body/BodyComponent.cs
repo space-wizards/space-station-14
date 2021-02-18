@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Body
         {
             base.Initialize();
 
-            _partContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-{nameof(BodyComponent)}", Owner);
+            _partContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-{nameof(BodyComponent)}");
 
             foreach (var (slot, partId) in PartIds)
             {

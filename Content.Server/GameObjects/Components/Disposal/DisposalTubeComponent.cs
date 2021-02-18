@@ -223,7 +223,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Initialize();
 
-            Contents = ContainerManagerComponent.Ensure<Container>(Name, Owner);
+            Contents = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
             Owner.EnsureComponent<AnchorableComponent>();
         }
 

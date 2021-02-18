@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             base.Initialize();
             Appearance?.SetData(MorgueVisuals.Open, false);
-            TrayContainer = ContainerManagerComponent.Ensure<ContainerSlot>("morgue_tray", Owner, out _);
+            TrayContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "morgue_tray", out _);
         }
 
         /// <inheritdoc />

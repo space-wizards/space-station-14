@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
             _injecting = false;
             InjectionAmount = 2;
-            _jarSlot = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-fuelJarContainer", Owner);
+            _jarSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-fuelJarContainer");
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)

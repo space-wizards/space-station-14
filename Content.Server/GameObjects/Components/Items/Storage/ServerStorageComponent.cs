@@ -351,7 +351,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             base.Initialize();
 
             // ReSharper disable once StringLiteralTypo
-            _storage = ContainerManagerComponent.Ensure<Container>("storagebase", Owner);
+            _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "storagebase");
             _storage.OccludesLight = _occludesLight;
         }
 

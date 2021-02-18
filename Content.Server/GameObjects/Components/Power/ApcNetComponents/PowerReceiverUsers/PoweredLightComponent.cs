@@ -220,7 +220,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             base.Initialize();
 
-            _lightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner);
+            _lightBulbContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "light_bulb");
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)

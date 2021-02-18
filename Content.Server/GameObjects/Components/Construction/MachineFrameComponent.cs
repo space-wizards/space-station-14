@@ -87,8 +87,8 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             base.Initialize();
 
-            _boardContainer = ContainerManagerComponent.Ensure<Container>(BoardContainer, Owner);
-            _partContainer = ContainerManagerComponent.Ensure<Container>(PartContainer, Owner);
+            _boardContainer = ContainerHelpers.EnsureContainer<Container>(Owner, BoardContainer);
+            _partContainer = ContainerHelpers.EnsureContainer<Container>(Owner, PartContainer);
         }
 
         protected override void Startup()

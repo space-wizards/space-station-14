@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Explosives
         {
             base.Initialize();
 
-            _grenadesContainer = ContainerManagerComponent.Ensure<Container>("cluster-flash", Owner);
+            _grenadesContainer = ContainerHelpers.EnsureContainer<Container>(Owner, "cluster-flash");
 
         }
 

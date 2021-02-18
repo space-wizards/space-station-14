@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         public override void Initialize()
         {
             base.Initialize();
-            _ammoContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-container", Owner, out var existing);
+            _ammoContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-container", out var existing);
 
             if (existing)
             {

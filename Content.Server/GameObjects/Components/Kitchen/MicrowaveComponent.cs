@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             Owner.EnsureComponent<SolutionContainerComponent>();
 
-            _storage = ContainerManagerComponent.Ensure<Container>("microwave_entity_container", Owner, out var existed);
+            _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "microwave_entity_container", out var existed);
             _audioSystem = EntitySystem.Get<AudioSystem>();
 
             if (UserInterface != null)
