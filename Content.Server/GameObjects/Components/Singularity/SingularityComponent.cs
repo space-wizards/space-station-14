@@ -1,12 +1,10 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Effects;
 using Content.Server.GameObjects.Components.Observer;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Shared.GameObjects;
 using Content.Shared.Physics;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -17,6 +15,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Timers;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -71,6 +70,8 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _level = value;
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
+
+                /* //TODO: FIX THIS
                 if (_shaderComponent != null)
                 {
                     _shaderComponent.SetSingularityTexture("Effects/Singularity/singularity_" + _level + ".rsi", "singularity_" + _level);
@@ -99,6 +100,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                             break;
                     }
                 }
+                */
 
                 if (_collidableComponent != null && _collidableComponent.PhysicsShapes.Any() && _collidableComponent.PhysicsShapes[0] is PhysShapeCircle circle)
                 {
@@ -122,7 +124,6 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         private SingularityController? _singularityController;
         private PhysicsComponent? _collidableComponent;
-        private SingularityShaderAuraComponent? _shaderComponent;
         private RadiationPulseComponent? _radiationPulseComponent;
         private AudioSystem _audioSystem = null!;
         private AudioSystem.AudioSourceServer? _playingSound;
@@ -147,11 +148,6 @@ namespace Content.Server.GameObjects.Components.Singularity
             else
             {
                 _collidableComponent.Hard = false;
-            }
-
-            if (!Owner.TryGetComponent(out _shaderComponent))
-            {
-                Logger.Error("SingularityComponent was spawned without SingularityShaderAuraComponent");
             }
 
             _singularityController = _collidableComponent?.EnsureController<SingularityController>();

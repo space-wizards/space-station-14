@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Client.Administration;
 using Content.Client.Eui;
 using Content.Client.GameObjects.Components.Actor;
@@ -148,16 +148,14 @@ namespace Content.Client
             IoCManager.Resolve<IGameHud>().Initialize();
             IoCManager.Resolve<IClientNotifyManager>().Initialize();
             IoCManager.Resolve<IClientGameTicker>().Initialize();
-<<<<<<< HEAD
-            IoCManager.Resolve<IOverlayManager>().AddOverlay(new Guid(), new ParallaxOverlay());
-=======
+
             var overlayMgr = IoCManager.Resolve<IOverlayManager>();
             overlayMgr.AddOverlay(new ParallaxOverlay());
-            overlayMgr.AddOverlay(new GradientCircleMaskOverlay());
+            overlayMgr.AddOverlay(new GradientCircleMaskOverlay()); //Why do we need to init these here... (other than Parallax)?
             overlayMgr.AddOverlay(new CircleMaskOverlay());
             overlayMgr.AddOverlay(new FlashOverlay());
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
->>>>>>> 8640f342b5444c9209d41af53bb00180e2f3896e
+
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();

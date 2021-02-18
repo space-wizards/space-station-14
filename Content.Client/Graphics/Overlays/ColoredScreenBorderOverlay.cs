@@ -1,8 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Graphics.Overlays;
-using Robust.Client.Graphics.Shaders;
-using Robust.Client.Interfaces.Graphics.ClientEye;
+using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -17,7 +13,6 @@ namespace Content.Client.Graphics.Overlays
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
-        public override OverlayPriority Priority => OverlayPriority.P7;
         private readonly ShaderInstance _shader;
 
         public ColoredScreenBorderOverlay()

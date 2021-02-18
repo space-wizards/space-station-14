@@ -68,14 +68,14 @@ namespace Content.Client.GameObjects.Components.Suspicion
 
         private void AddTraitorOverlay()
         {
-            if (_overlayManager.HasOverlayOfType<TraitorOverlay>())
+            if (_overlayManager.HasOverlay<TraitorOverlay>())
             {
                 return;
             }
 
             _overlayActive = true;
             var overlay = new TraitorOverlay(Owner.EntityManager, _resourceCache, _eyeManager);
-            _overlayManager.AddOverlay(System.Guid.NewGuid(), overlay);
+            _overlayManager.AddOverlay(overlay);
         }
 
         private void RemoveTraitorOverlay()
@@ -85,7 +85,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 return;
             }
 
-            _overlayManager.RemoveOverlaysOfClass(nameof(TraitorOverlay));
+            _overlayManager.RemoveOverlay<TraitorOverlay>();
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)

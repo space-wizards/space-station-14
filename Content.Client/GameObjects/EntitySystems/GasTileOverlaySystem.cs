@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Client.Atmos;
@@ -88,8 +88,8 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlayOfClass(nameof(GasTileOverlay)))
-                overlayManager.AddOverlay(Guid.NewGuid(), new GasTileOverlay());
+            if(!overlayManager.HasOverlay<GasTileOverlay>())
+                overlayManager.AddOverlay(new GasTileOverlay());
         }
 
         private void HandleGasOverlayMessage(GasOverlayMessage message)
@@ -126,8 +126,8 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Shutdown();
             _mapManager.OnGridRemoved -= OnGridRemoved;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlayOfClass(nameof(GasTileOverlay)))
-                overlayManager.RemoveOverlaysOfClass(nameof(GasTileOverlay));
+            if(!overlayManager.HasOverlay<GasTileOverlay>())
+                overlayManager.RemoveOverlay<GasTileOverlay>();
         }
 
         private void OnGridRemoved(GridId gridId)

@@ -1,5 +1,6 @@
-﻿using Robust.Client.Graphics;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -15,7 +16,7 @@ namespace Content.Client.Graphics.Overlays
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _shader;
 
-        public CircleMaskOverlay() : base(nameof(CircleMaskOverlay))
+        public CircleMaskOverlay()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("CircleMask").Instance();

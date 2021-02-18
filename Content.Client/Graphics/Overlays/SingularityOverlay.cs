@@ -1,9 +1,5 @@
 using Content.Shared.GameObjects.Components.Mobs;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Graphics.Overlays;
-using Robust.Client.Graphics.Shaders;
 using Robust.Client.Graphics.Clyde;
-using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -11,19 +7,16 @@ using OpenToolkit.Graphics.OpenGL4;
 using Content.Shared.Interfaces;
 using System.Collections.Generic;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Log;
-using Robust.Shared.GameObjects.Components.Renderable;
 using System;
 using Robust.Shared.Utility;
 using Robust.Client.Utility;
 using Content.Client.GameObjects.Components.Mobs;
 using System.Linq;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.Enums;
-using Robust.Client.Interfaces.Graphics;
 
+/*
 namespace Content.Client.Graphics.Overlays
 {
     public class SingularityOverlay : Overlay, IConfigurableOverlay
@@ -82,3 +75,4 @@ namespace Content.Client.Graphics.Overlays
         }
     }
 }
+*/

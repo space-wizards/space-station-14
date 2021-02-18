@@ -1,6 +1,7 @@
-﻿using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -16,7 +17,7 @@ namespace Content.Client.Graphics.Overlays
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _shader;
 
-        public GradientCircleMaskOverlay() : base(nameof(GradientCircleMaskOverlay))
+        public GradientCircleMaskOverlay()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").Instance();

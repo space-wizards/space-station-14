@@ -7,19 +7,11 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public class SingularitySystem : EntitySystem
     {
-        private float curTimeSingulo;
+        private float curTimeSingulo, curTimePull;
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
             curTimeSingulo += frameTime;
-<<<<<<< HEAD
-            var singulos = ComponentManager.EntityQuery<SingularityComponent>();
-            foreach (var singulo in singulos)
-            {
-                singulo.PullUpdate();
-                singulo.FrameUpdate(frameTime);
-            }
-=======
             curTimePull += frameTime;
 
             var shouldUpdate = curTimeSingulo >= 1f;
@@ -27,7 +19,6 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!shouldUpdate && !shouldPull) return;
             var singulos = ComponentManager.EntityQuery<SingularityComponent>(true);
 
->>>>>>> 8640f342b5444c9209d41af53bb00180e2f3896e
             if (curTimeSingulo >= 1f)
             {
                 curTimeSingulo -= 1f;
