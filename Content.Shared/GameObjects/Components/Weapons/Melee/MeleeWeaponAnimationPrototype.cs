@@ -11,7 +11,7 @@ namespace Content.Shared.GameObjects.Components.Weapons.Melee
     [Prototype("MeleeWeaponAnimation")]
     public sealed class MeleeWeaponAnimationPrototype : IPrototype, IIndexedPrototype
     {
-        private string _prototype = "WeaponArt";
+        private string _prototype = "WeaponArc";
         private string _state = string.Empty;
         private string _id = string.Empty;
         private Vector4 _colorDelta;

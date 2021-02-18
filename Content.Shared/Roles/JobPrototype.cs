@@ -39,9 +39,9 @@ namespace Content.Shared.Roles
 
         public string StartingGear { get; private set; } = string.Empty;
 
-        public string Icon { get; private set; } = null!;
+        public string Icon { get; private set; } = string.Empty;
 
-        public JobSpecial Special { get; private set; } = null!;
+        public JobSpecial? Special { get; private set; } = null;
 
         public IReadOnlyCollection<string> Departments { get; private set; } = Array.Empty<string>();
         public IReadOnlyCollection<string> Access { get; private set; } = Array.Empty<string>();
@@ -59,7 +59,7 @@ namespace Content.Shared.Roles
             srz.DataField(this, p => p.IsHead, "head", false);
             srz.DataField(this, p => p.Access, "access", Array.Empty<string>());
             srz.DataField(this, p => p.Icon, "icon", string.Empty);
-            srz.DataField(this, p => p.Special, "special", null!);
+            srz.DataField(this, p => p.Special, "special", null);
         }
     }
 }
