@@ -11,6 +11,16 @@
       node: frame1
     - type: Clickable
     - type: InteractionOutline
+    - type: Damageable
+      resistances: metallicResistances
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 500
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
     - type: Physics
       shapes:
         - !type:PhysShapeAabb
