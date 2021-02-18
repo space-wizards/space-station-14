@@ -19,6 +19,8 @@ namespace Content.Shared.Physics.Controllers
             base.UpdateBeforeSolve(prediction, map, frameTime);
             foreach (var body in map.AwakeBodies)
             {
+                // TODO: Disable or not idfk
+                continue;
                 var useMobMovement = body.Owner.HasComponent<IMobStateComponent>() &&
                                      ActionBlockerSystem.CanMove(body.Owner) &&
                                      (!body.Owner.IsWeightless() ||

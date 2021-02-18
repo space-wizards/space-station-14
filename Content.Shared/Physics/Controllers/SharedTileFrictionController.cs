@@ -7,6 +7,7 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -34,8 +35,9 @@ namespace Content.Shared.Physics.Controllers
                 var vel = body.LinearVelocity;
                 var speed = vel.Length;
 
-                if (speed <= 0.0f) continue;
+                if (speed <= 0.0f || body.Status == BodyStatus.InAir) continue;
 
+                // This is the *actual* amount that speed will drop by, we just do some multiplication around it to be easier.
                 var drop = 0.0f;
                 float control;
 
@@ -50,11 +52,9 @@ namespace Content.Shared.Physics.Controllers
                                      (!body.Owner.IsWeightless() ||
                                       body.Owner.TryGetComponent(out IMoverComponent? mover) && IsAroundCollider(body.Owner.Transform, mover, body));
 
-                if (useMobMovement || body.Status == BodyStatus.InAir) continue;
-
                 var surfaceFriction = GetTileFriction(body);
                 // TODO: Make cvar
-                var frictionModifier = 10.0f;
+                var frictionModifier = useMobMovement ? 40 : 10.0f;
                 var friction = frictionModifier * surfaceFriction;
 
                 if (friction > 0.0f)
@@ -69,15 +69,14 @@ namespace Content.Shared.Physics.Controllers
                         control = speed;
                     }
 
-                    drop += control * friction * frameTime;
+                    drop += friction * frameTime;
                 }
 
                 var newSpeed = MathF.Max(0.0f, speed - drop);
 
-                if (speed <= 0.0f) continue;
-
                 newSpeed /= speed;
                 body.LinearVelocity *= newSpeed;
+                Logger.DebugS("physics", $"speed: {body.LinearVelocity.Length}. drop: {drop}. frametime: {frameTime}");
             }
         }
 

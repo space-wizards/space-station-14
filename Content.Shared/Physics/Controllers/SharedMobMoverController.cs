@@ -40,43 +40,6 @@ namespace Content.Shared.Physics.Controllers
             _broadPhaseSystem = EntitySystem.Get<SharedBroadPhaseSystem>();
         }
 
-        protected void UpdateKinematics(float frameTime, ITransformComponent transform, IMoverComponent mover,
-            PhysicsComponent physicsComponent)
-        {
-            if (!ActionBlockerSystem.CanMove(mover.Owner)) return;
-
-            var (walkDir, sprintDir) = mover.VelocityDir;
-
-            var weightless = transform.Owner.IsWeightless();
-
-            // Handle wall-pushes.
-            if (weightless)
-            {
-                // No gravity: is our entity touching anything?
-                var touching = IsAroundCollider(transform, mover, physicsComponent);
-
-                if (!touching)
-                {
-                    transform.LocalRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
-                    return;
-                }
-            }
-
-            // Regular movement.
-            var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed);
-
-            if (total != Vector2.Zero)
-            {
-                transform.LocalRotation = total.ToAngle();
-            }
-
-            physicsComponent.LinearVelocity = total;
-
-            DebugTools.Assert(!float.IsNaN(physicsComponent.LinearVelocity.Length));
-            HandleFootsteps(mover);
-        }
-
-        /* TODO: Potentially better version that needs work to actually fucking work at low tickrate
         protected void UpdateKinematics(float frameTime, ITransformComponent transform, IMoverComponent mover, PhysicsComponent physicsComponent)
         {
             if (!ActionBlockerSystem.CanMove(mover.Owner)) return;
@@ -141,7 +104,6 @@ namespace Content.Shared.Physics.Controllers
 
             body.LinearVelocity += wishDir * accelSpeed;
         }
-        */
 
         private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
             IPhysicsComponent collider)
