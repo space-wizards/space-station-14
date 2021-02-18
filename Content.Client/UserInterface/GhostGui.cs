@@ -29,8 +29,8 @@ namespace Content.Client.UserInterface
 
             MouseFilter = MouseFilterMode.Ignore;
 
-            _ghostWarp.OnPressed += args => TargetWindow.Populate();
-            _returnToBody.OnPressed += args => owner.SendReturnToBodyMessage();
+            _ghostWarp.OnPressed += _ => TargetWindow.Populate();
+            _returnToBody.OnPressed += _ => owner.SendReturnToBodyMessage();
             _ghostRoles.OnPressed += _ => IoCManager.Resolve<IClientConsoleHost>().RemoteExecuteCommand(null, "ghostroles");
 
             AddChild(new HBoxContainer
