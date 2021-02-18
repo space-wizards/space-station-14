@@ -5,9 +5,9 @@
   animationDuration: 2.1
   spriteName: cigs
   startingInventory:
-    CigPackGreen: 3
-    CigPackRed: 3
-    CigPackBlue: 3
-    CigPackBlack: 3
+    CigPackGreen: 2
+    CigPackRed: 2
+    CigPackBlue: 2
+    CigPackBlack: 2
     CigarCase: 1
     Matchbox: 5
