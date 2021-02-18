@@ -1,0 +1,26 @@
+﻿<SS14Window
+    xmlns="https://spacestation14.io" Title="{Loc Set Temperature}">
+    <VBoxContainer>
+        <HBoxContainer>
+            <Label Text="{Loc Grid}" CustomMinimumSize="100 0" />
+            <Control CustomMinimumSize="50 0" />
+            <OptionButton Name="GridOptions" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+        </HBoxContainer>
+        <HBoxContainer>
+            <Label Text="{Loc TileX}" CustomMinimumSize="100 0" />
+            <Control CustomMinimumSize="50 0" />
+            <SpinBox Name="TileXSpin" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+        </HBoxContainer>
+        <HBoxContainer>
+            <Label Text="{Loc TileY}" CustomMinimumSize="100 0" />
+            <Control CustomMinimumSize="50 0" />
+            <SpinBox Name="TileYSpin" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+        </HBoxContainer>
+        <HBoxContainer>
+            <Label Text="{Loc Temperature}" CustomMinimumSize="100 0" />
+            <Control CustomMinimumSize="50 0" />
+            <SpinBox Name="TemperatureSpin" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+        </HBoxContainer>
+        <Button Name="SubmitButton" Text="{Loc Set Temperature}" />
+    </VBoxContainer>
+</SS14Window>

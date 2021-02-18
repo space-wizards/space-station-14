@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
@@ -225,8 +225,9 @@ namespace Content.IntegrationTests.Tests
             {
                 var mapMan = IoCManager.Resolve<IMapManager>();
                 var entityMan = IoCManager.Resolve<IEntityManager>();
-                mapMan.CreateMap(new MapId(1));
-                var grid = mapMan.CreateGrid(new MapId(1));
+                var mapId = new MapId(1);
+                mapMan.CreateMap(mapId);
+                var grid = mapMan.CreateGrid(mapId);
 
                 var apcEnt = entityMan.SpawnEntity("ApcDummy", grid.ToCoordinates(0, 0));
                 var apcExtensionEnt = entityMan.SpawnEntity("ApcExtensionCableDummy", grid.ToCoordinates(0, 1));

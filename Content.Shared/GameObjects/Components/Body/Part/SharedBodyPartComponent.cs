@@ -7,6 +7,7 @@ using Content.Shared.GameObjects.Components.Body.Surgery;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -134,7 +135,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             serializer.DataField(ref _mechanismIds, "mechanisms", new List<string>());
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             var mechanismIds = new EntityUid[_mechanisms.Count];
 

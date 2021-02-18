@@ -1,0 +1,19 @@
+﻿<MarginContainer
+    xmlns="https://spacestation14.io"
+    xmlns:amc="clr-namespace:Content.Client.UserInterface.AdminMenu.CustomControls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:at="clr-namespace:Content.Client.UserInterface.AdminMenu.Tabs.AdminTab"
+    MarginLeftOverride="4"
+    MarginTopOverride="4" MarginRightOverride="4"
+    MarginBottomOverride="4"
+    CustomMinimumSize="50 50">
+    <VBoxContainer>
+        <GridContainer Columns="4">
+            <amc:UICommandButton Command="kick" Text="{Loc Kick}" WindowType="{x:Type at:KickWindow}" />
+            <amc:UICommandButton Command="ban" Text="{Loc Ban}" WindowType="{x:Type at:BanWindow}" />
+            <amc:CommandButton Command="aghost" Text="{Loc Admin Ghost}" />
+            <amc:UICommandButton Command="tpto" Text="{Loc Teleport}" WindowType="{x:Type at:TeleportWindow}" />
+            <amc:CommandButton Command="permissions" Text="{Loc Permissions Panel}" />
+        </GridContainer>
+    </VBoxContainer>
+</MarginContainer>

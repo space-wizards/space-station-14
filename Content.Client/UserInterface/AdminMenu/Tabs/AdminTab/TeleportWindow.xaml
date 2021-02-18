@@ -1,0 +1,11 @@
+﻿<SS14Window
+    xmlns="https://spacestation14.io" Title="{Loc Teleport}">
+    <VBoxContainer>
+        <HBoxContainer>
+            <Label Text="{Loc Player}" CustomMinimumSize="100 0" />
+            <Control CustomMinimumSize="50 0" />
+            <OptionButton Name="PlayerOptions" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+        </HBoxContainer>
+        <Button Name="SubmitButton" Text="{Loc Teleport}" />
+    </VBoxContainer>
+</SS14Window>

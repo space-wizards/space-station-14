@@ -3,6 +3,7 @@ using System;
 using Content.Shared.Preferences;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization.Macros;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -50,7 +51,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             }
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new HumanoidAppearanceComponentState(Appearance, Sex, Gender);
         }

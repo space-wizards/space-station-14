@@ -1,8 +1,8 @@
 - type: latheRecipe
   id: MiniHoe
   icon:
-    sprite: Constructible/Hydroponics/hydro_tools.rsi
-    state: hoe
+    sprite: Objects/Tools/Hydroponics/hoe.rsi
+    state: icon
   result: MiniHoe
   completetime: 500
   materials:
@@ -12,8 +12,8 @@
 - type: latheRecipe
   id: Scythe
   icon:
-    sprite: Constructible/Hydroponics/hydro_tools.rsi
-    state: scythe
+    sprite: Objects/Tools/Hydroponics/scythe.rsi
+    state: icon
   result: Scythe
   completetime: 500
   materials:
@@ -23,20 +23,9 @@
 - type: latheRecipe
   id: Hatchet
   icon:
-    sprite: Constructible/Hydroponics/hydro_tools.rsi
-    state: hatchet
+    sprite: Objects/Tools/Hydroponics/hatchet.rsi
+    state: icon
   result: Hatchet
-  completetime: 500
-  materials:
-    steel: 60
-    glass: 10
-
-- type: latheRecipe
-  id: Shovel
-  icon:
-    sprite: Constructible/Hydroponics/hydro_tools.rsi
-    state: shovel
-  result: Shovel
   completetime: 500
   materials:
     steel: 60
@@ -45,11 +34,10 @@
 - type: latheRecipe
   id: Spade
   icon:
-    sprite: Constructible/Hydroponics/hydro_tools.rsi
-    state: spade
+    sprite: Objects/Tools/Hydroponics/spade.rsi
+    state: icon
   result: Spade
   completetime: 500
   materials:
     steel: 30
     glass: 10
-

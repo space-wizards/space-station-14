@@ -123,10 +123,10 @@
   - type: FoodContainer
     capacity: 1
     prototypes:
-      FoodContainerMeatPizza: 25
-      FoodContainerMargheritaPizza: 25
-      FoodContainerMushroomPizza: 25
-      FoodContainerVegetablePizza: 25
+      FoodMeatPizza: 25
+      FoodMargheritaPizza: 25
+      FoodMushroomPizza: 25
+      FoodVegetablePizza: 25
   - type: Sprite
     sprite: Objects/Consumable/FoodContainers/pizzabox.rsi
 

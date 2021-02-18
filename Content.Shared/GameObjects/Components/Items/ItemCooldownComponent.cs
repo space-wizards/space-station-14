@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -52,7 +53,7 @@ namespace Content.Shared.GameObjects.Components.Items
             }
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new ItemCooldownComponentState
             {

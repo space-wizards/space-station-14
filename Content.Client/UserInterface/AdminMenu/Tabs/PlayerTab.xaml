@@ -1,0 +1,15 @@
+﻿<MarginContainer
+    xmlns="https://spacestation14.io">
+    <VBoxContainer SizeFlagsVertical="Fill">
+        <HBoxContainer SizeFlagsVertical="Fill">
+            <Label Name="PlayerCount" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.7"
+                   Text="{Loc Player Count}" />
+            <Button Name="RefreshButton" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.3"
+                    Text="{Loc Refresh}" />
+        </HBoxContainer>
+        <Control CustomMinimumSize="0 5" />
+        <ScrollContainer SizeFlagsHorizontal="FillExpand" SizeFlagsVertical="FillExpand">
+            <VBoxContainer Name="PlayerList" />
+        </ScrollContainer>
+    </VBoxContainer>
+</MarginContainer>

@@ -1,4 +1,6 @@
 ﻿#nullable enable
+using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;
@@ -10,11 +12,10 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -83,7 +84,7 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new CrayonComponentState(_color, SelectedState, Charges, Capacity);
         }
