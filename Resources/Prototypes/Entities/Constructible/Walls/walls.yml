@@ -554,3 +554,10 @@
   - type: IconSmooth
     key: walls
     base: wood
+  - type: Flammable
+  - type: AtmosExposed
+  - type: Appearance
+    visuals:
+      - type: FireVisualizer
+        sprite: Mobs/Effects/onfire.rsi
+        normalState: Monkey_burning
