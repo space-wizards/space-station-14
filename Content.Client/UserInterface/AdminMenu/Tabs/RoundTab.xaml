@@ -1,0 +1,14 @@
+﻿<MarginContainer
+    xmlns="https://spacestation14.io"
+    xmlns:amc="clr-namespace:Content.Client.UserInterface.AdminMenu.CustomControls"
+    MarginLeftOverride="4"
+    MarginTopOverride="4" MarginRightOverride="4"
+    MarginBottomOverride="4"
+    CustomMinimumSize="50 50">
+    <GridContainer
+        Columns="4">
+        <amc:CommandButton Command="startround" Text="{Loc Start Round}" />
+        <amc:CommandButton Command="endround" Text="{Loc End Round}" />
+        <amc:CommandButton Command="restartround" Text="{Loc Restart Round}" />
+    </GridContainer>
+</MarginContainer>

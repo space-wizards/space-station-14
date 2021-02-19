@@ -397,7 +397,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 }
             }
 
-            if (args.Action == Mend)
+            else if (args.Action == Mend)
             {
                 switch (args.Identifier)
                 {
@@ -420,7 +420,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 }
             }
 
-            if (args.Action == Cut)
+            else if (args.Action == Cut)
             {
                 switch (args.Identifier)
                 {

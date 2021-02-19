@@ -1,27 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Localization.Macros;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using Robust.Shared.Localization.Macros;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Client.UserInterface.Stylesheets;
-using Robust.Client.Graphics;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface
 {
@@ -66,6 +66,7 @@ namespace Content.Client.UserInterface
         public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager, IEntityManager entityManager)
         {
             _random = IoCManager.Resolve<IRobustRandom>();
+            _prototypeManager = prototypeManager;
 
             _preferencesManager = preferencesManager;
 
@@ -128,7 +129,7 @@ namespace Content.Client.UserInterface
                 {
                     Text = Loc.GetString("Randomize"),
                 };
-                nameRandomButton.OnPressed += args => RandomizeName();
+                nameRandomButton.OnPressed += _ => RandomizeName();
                 hBox.AddChild(nameLabel);
                 hBox.AddChild(_nameEdit);
                 hBox.AddChild(nameRandomButton);

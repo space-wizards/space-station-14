@@ -39,7 +39,7 @@ namespace Content.Client
 
         public void SelectCharacter(int slot)
         {
-            Preferences = new PlayerPreferences(Preferences.Characters, slot);
+            Preferences = new PlayerPreferences(Preferences.Characters, slot, Preferences.AdminOOCColor);
             var msg = _netManager.CreateNetMessage<MsgSelectCharacter>();
             msg.SelectedCharacterIndex = slot;
             _netManager.ClientSendMessage(msg);
@@ -48,7 +48,7 @@ namespace Content.Client
         public void UpdateCharacter(ICharacterProfile profile, int slot)
         {
             var characters = new Dictionary<int, ICharacterProfile>(Preferences.Characters) {[slot] = profile};
-            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex);
+            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
             var msg = _netManager.CreateNetMessage<MsgUpdateCharacter>();
             msg.Profile = profile;
             msg.Slot = slot;
@@ -69,7 +69,7 @@ namespace Content.Client
 
             var l = lowest.Value;
             characters.Add(l, profile);
-            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex);
+            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
 
             UpdateCharacter(profile, l);
         }
@@ -82,7 +82,7 @@ namespace Content.Client
         public void DeleteCharacter(int slot)
         {
             var characters = Preferences.Characters.Where(p => p.Key != slot);
-            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex);
+            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
             var msg = _netManager.CreateNetMessage<MsgDeleteCharacter>();
             msg.Slot = slot;
             _netManager.ClientSendMessage(msg);

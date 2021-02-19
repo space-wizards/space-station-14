@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Client.GameObjects.Components.Observer;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
@@ -16,18 +17,20 @@ namespace Content.Client.UserInterface
         private readonly Button _ghostRoles = new() {Text = Loc.GetString("Ghost Roles")};
         private readonly GhostComponent _owner;
 
+        public GhostTargetWindow? TargetWindow { get; }
+
         public GhostGui(GhostComponent owner)
         {
             IoCManager.InjectDependencies(this);
 
             _owner = owner;
 
-            var targetMenu = new GhostTargetWindow(owner);
+            TargetWindow = new GhostTargetWindow(owner);
 
             MouseFilter = MouseFilterMode.Ignore;
 
-            _ghostWarp.OnPressed += args => targetMenu.Populate();
-            _returnToBody.OnPressed += args => owner.SendReturnToBodyMessage();
+            _ghostWarp.OnPressed += _ => TargetWindow.Populate();
+            _returnToBody.OnPressed += _ => owner.SendReturnToBodyMessage();
             _ghostRoles.OnPressed += _ => IoCManager.Resolve<IClientConsoleHost>().RemoteExecuteCommand(null, "ghostroles");
 
             AddChild(new HBoxContainer
@@ -49,7 +52,7 @@ namespace Content.Client.UserInterface
         }
     }
 
-    internal class GhostTargetWindow : SS14Window
+    public class GhostTargetWindow : SS14Window
     {
         protected override Vector2? CustomSize => (300, 450);
         private readonly GhostComponent _owner;
@@ -111,7 +114,7 @@ namespace Content.Client.UserInterface
                     ClipText = true,
                 };
 
-                currentButtonRef.OnPressed += (args) =>
+                currentButtonRef.OnPressed += (_) =>
                 {
                     _owner.SendGhostWarpRequestMessage(key);
                 };
@@ -135,9 +138,9 @@ namespace Content.Client.UserInterface
                     ClipText = true,
                 };
 
-                currentButtonRef.OnPressed += (args) =>
+                currentButtonRef.OnPressed += (_) =>
                 {
-                    _owner.SendGhostWarpRequestMessage(default,name);
+                    _owner.SendGhostWarpRequestMessage(name);
                 };
 
                 _buttonContainer.AddChild(currentButtonRef);

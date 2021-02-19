@@ -42,6 +42,8 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
         [ViewVariables(VVAccess.ReadWrite)] private int _suffocationDamage;
 
+        [ViewVariables(VVAccess.ReadWrite)] private int _suffocationDamageRecovery;
+
         [ViewVariables] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
         [ViewVariables] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
@@ -107,6 +109,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
             serializer.DataField(this, b => b.ThermalRegulationTemperatureThreshold,
                 "thermalRegulationTemperatureThreshold", 0);
             serializer.DataField(ref _suffocationDamage, "suffocationDamage", 1);
+            serializer.DataField(ref _suffocationDamageRecovery, "suffocationDamageRecovery", 1);
         }
 
         private Dictionary<Gas, float> NeedsAndDeficit(float frameTime)
@@ -399,12 +402,17 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 return;
             }
 
-            damageable.ChangeDamage(DamageClass.Airloss, _suffocationDamage, false);
+            damageable.ChangeDamage(DamageType.Asphyxiation, _suffocationDamage, false);
         }
 
         private void StopSuffocation()
         {
             Suffocating = false;
+
+            if (Owner.TryGetComponent(out IDamageableComponent? damageable))
+            {
+                damageable.ChangeDamage(DamageType.Asphyxiation, -_suffocationDamageRecovery, false);
+            }
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
             {

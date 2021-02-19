@@ -15,7 +15,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
-using Robust.Shared.Timers;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {

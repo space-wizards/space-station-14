@@ -11,6 +11,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;
 using Content.Server.Sandbox;
+using Content.Server.Voting;
 using Content.Shared.Actions;
 using Content.Shared.Kitchen;
 using Content.Shared.Alert;
@@ -28,6 +29,7 @@ namespace Content.Server
         private IGameTicker _gameTicker;
         private EuiManager _euiManager;
         private StatusShell _statusShell;
+        private IVoteManager _voteManager;
 
         /// <inheritdoc />
         public override void Init()
@@ -55,6 +57,7 @@ namespace Content.Server
 
             _gameTicker = IoCManager.Resolve<IGameTicker>();
             _euiManager = IoCManager.Resolve<EuiManager>();
+            _voteManager = IoCManager.Resolve<IVoteManager>();
 
             IoCManager.Resolve<IServerNotifyManager>().Initialize();
             IoCManager.Resolve<IChatManager>().Initialize();
@@ -73,6 +76,7 @@ namespace Content.Server
             IoCManager.Resolve<INodeGroupFactory>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IAccentManager>().Initialize();
+            _voteManager.Initialize();
         }
 
         public override void PostInit()
@@ -105,6 +109,7 @@ namespace Content.Server
                 case ModUpdateLevel.PostEngine:
                 {
                     _euiManager.SendUpdates();
+                    _voteManager.Update();
                     break;
                 }
             }

@@ -21,6 +21,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -263,11 +264,20 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             SendMessage(new BuckleMessage(Owner, to));
 
-            if (Owner.TryGetComponent(out PullableComponent? pullableComponent))
+            if (Owner.TryGetComponent(out PullableComponent? ownerPullable))
             {
-                if (pullableComponent.Puller != null)
+                if (ownerPullable.Puller != null)
                 {
-                    pullableComponent.TryStopPull();
+                    ownerPullable.TryStopPull();
+                }
+            }
+
+            if (to.TryGetComponent(out PullableComponent? toPullable))
+            {
+                if (toPullable.Puller == Owner)
+                {
+                    // can't pull it and buckle to it at the same time
+                    toPullable.TryStopPull();
                 }
             }
 
@@ -399,7 +409,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             UpdateBuckleStatus();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             int? drawDepth = null;
 

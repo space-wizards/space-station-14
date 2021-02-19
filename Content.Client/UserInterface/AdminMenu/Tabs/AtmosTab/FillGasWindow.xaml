@@ -1,0 +1,21 @@
+﻿<SS14Window
+    xmlns="https://spacestation14.io" Title="{Loc Fill Gas}">
+    <VBoxContainer>
+        <HBoxContainer>
+            <Label Text="{Loc Grid}" CustomMinimumSize="100 0" />
+            <Control CustomMinimumSize="50 0" />
+            <OptionButton Name="GridOptions" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+        </HBoxContainer>
+        <HBoxContainer>
+            <Label Text="{Loc Gas}" CustomMinimumSize="100 0" />
+            <Control CustomMinimumSize="50 0" />
+            <OptionButton Name="GasOptions" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+        </HBoxContainer>
+        <HBoxContainer>
+            <Label Text="{Loc Amount}" CustomMinimumSize="100 0" />
+            <Control CustomMinimumSize="50 0" />
+            <SpinBox Name="AmountSpin" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+        </HBoxContainer>
+        <Button Name="SubmitButton" Text="{Loc Fill Gas}" />
+    </VBoxContainer>
+</SS14Window>

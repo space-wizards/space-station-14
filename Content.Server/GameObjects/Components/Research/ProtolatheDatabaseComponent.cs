@@ -2,6 +2,7 @@ using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Research
@@ -14,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         public override string Name => "ProtolatheDatabase";
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new ProtolatheDatabaseState(GetRecipeIdList());
         }

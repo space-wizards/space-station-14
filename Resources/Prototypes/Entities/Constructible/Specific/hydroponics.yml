@@ -34,7 +34,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Sprite
-    sprite: Constructible/Hydroponics/hydro_tools.rsi
+    sprite: Constructible/Hydroponics/misc.rsi
     state: soil
   - type: PlantHolder
     drawWarnings: false
@@ -60,7 +60,7 @@
     snap: true
   - type: Pullable
   - type: Sprite
-    sprite: Constructible/Hydroponics/hydro_tools.rsi
+    sprite: Constructible/Hydroponics/containers.rsi
     state: hydrotray3
   - type: PlantHolder
     drawWarnings: true
