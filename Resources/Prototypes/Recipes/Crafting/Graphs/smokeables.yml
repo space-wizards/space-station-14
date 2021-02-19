@@ -1,0 +1,67 @@
+﻿- type: constructionGraph
+  id: smokeableRollie
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: rollie
+          steps:
+            - material: PaperRolling
+              amount: 1
+              doAfter: 1
+            - material: CigaretteFilter
+              amount: 1
+              doAfter: 1
+            - material: GroundCannabis
+              amount: 1
+              doAfter: 1
+    - node: rollie
+      entity: Rollie
+
+- type: constructionGraph
+  id: smokeableCigarette
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: cigarette
+          steps:
+            - material: PaperRolling
+              amount: 1
+              doAfter: 1
+            - material: CigaretteFilter
+              amount: 1
+              doAfter: 1
+            - material: GroundTobacco
+              amount: 1
+              doAfter: 1
+    - node: cigarette
+      entity: Cigarette
+
+- type: constructionGraph
+  id: smokeableGroundCannabis
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ground
+          steps:
+            - material: LeavesCannabisDried
+              amount: 2
+              doAfter: 5
+    - node: ground
+      entity: GroundCannabis
+
+- type: constructionGraph
+  id: smokeableGroundTobacco
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ground
+          steps:
+            - material: LeavesTobaccoDried
+              amount: 2
+              doAfter: 5
+    - node: ground
+      entity: GroundTobacco

@@ -19,3 +19,6 @@
       Slots: [ mask ]
       HeldPrefix: unlit
       size: 1
+    - type: Construction
+      graph: smokeableCigarette
+      node: cigarette

@@ -248,23 +248,74 @@
     - type: Produce
       seed: chanterelle
 
-# Can't eat
+# Leaves
 
 - type: entity
   name: cannabis leaves
   parent: ProduceBase
   id: LeavesCannabis
-  description: "Cantharellus Cibarius: These jolly yellow little shrooms sure look tasty!"
+  description: "Recently legalized in most galaxies."
   components:
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/cannabis.rsi
+    - type: Produce
+      seed: cannabis
+    - type: Food
+    - type: SolutionContainer
+      contents:
+        reagents:
+          - ReagentId: chem.THCOil
+            Quantity: 5
+
+- type: entity
+  name: dried cannabis leaves
+  parent: BaseItem
+  id: LeavesCannabisDried
+  description: "Dried cannabis leaves, ready to be ground."
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: leavescannabisdried
+    - type: Stack
+      stacktype: enum.StackType.LeavesCannabisDried
+      max: 5
+      count: 1
     - type: SolutionContainer
       contents:
         reagents:
           - ReagentId: chem.THC
             Quantity: 2
     - type: Sprite
-      sprite: Objects/Specific/Hydroponics/cannabis.rsi
-    - type: Produce
-      seed: cannabis
+      sprite: Objects/Specific/Hydroponics/tobacco.rsi
+      state: dried
+
+- type: entity
+  name: ground cannabis
+  parent: BaseItem
+  id: GroundCannabis
+  description: "Ground cannabis, ready to take you on a trip."
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: groundcannabis
+    - type: Stack
+      stacktype: enum.StackType.GroundCannabis
+      max: 5
+      count: 1
+    - type: SolutionContainer
+      contents:
+        reagents:
+          - ReagentId: chem.THC
+            Quantity: 10
+    - type: Sprite
+      sprite: Objects/Misc/reageant_fillings.rsi
+      color: darkgreen
+      state: powderpile
+    - type: Construction
+      graph: smokeableGroundCannabis
+      node: ground
 
 - type: entity
   name: tobacco leaves
@@ -283,6 +334,14 @@
   id: LeavesTobaccoDried
   description: "Dried tobacco leaves, ready to be ground."
   components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: leavestobaccodried
+    - type: Stack
+      stacktype: enum.StackType.LeavesTobaccoDried
+      max: 5
+      count: 1
     - type: SolutionContainer
       contents:
         reagents:
@@ -295,9 +354,17 @@
 - type: entity
   name: ground tobacco
   parent: BaseItem
-  id: LeavesTobaccoDriedGround
+  id: GroundTobacco
   description: "Ground tobacco, perfect for hand-rolled cigarettes."
   components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: groundtobacco
+    - type: Stack
+      stacktype: enum.StackType.GroundTobacco
+      max: 5
+      count: 1
     - type: SolutionContainer
       contents:
         reagents:
@@ -307,3 +374,6 @@
       sprite: Objects/Misc/reageant_fillings.rsi
       color: brown
       state: powderpile
+    - type: Construction
+      graph: smokeableGroundTobacco
+      node: ground
