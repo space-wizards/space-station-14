@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"license": "Taken / modified from https://github.com/tgstation/tgstation/tree/727eb0a445bccbdc2d472e158e96b87fc0e997a1 by peptide",
+	"copyright": "CC-BY-SA-3.0",
+	"states": [
+		{
+			"name": "firstaid"
+		},
+		{
+			"name": "firstaid_brute"
+		},
+		{
+			"name": "firstaid_fire"
+		},
+		{
+			"name": "firstaid_o2"
+		},
+		{
+			"name": "firstaid_rad"
+		},
+		{
+			"name": "firstaid_toxin"
+		},
+        {
+			"name": "firstaid_purple"
+		}
+	]
+}
