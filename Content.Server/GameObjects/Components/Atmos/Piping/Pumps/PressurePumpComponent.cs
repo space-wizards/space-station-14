@@ -26,6 +26,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             get => _pressurePumpTarget;
             set => _pressurePumpTarget = Math.Clamp(value, 0, MaxPressurePumpTarget);
         }
+
         [DataField("startingPressurePumpTarget")]
         private int _pressurePumpTarget;
 
