@@ -6,6 +6,8 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.MachineLinking;
 using Content.Server.GameObjects.Components.MachineLinking.Signals;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Observer;
+using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
@@ -16,6 +18,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -26,7 +29,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>
+    [ComponentReference(typeof(IGhostBooAffected))]
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>, IGhostBooAffected
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -264,6 +268,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             _on = !_on;
             UpdateLight();
+        }
+
+        public void AffectedByGhostBoo(InstantActionEventArgs args)
+        {
+            Logger.Debug("Boooo!");
         }
     }
 }

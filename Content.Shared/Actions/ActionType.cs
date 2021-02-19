@@ -8,6 +8,7 @@
         Error,
         HumanScream,
         Disarm,
+        GhostBoo,
         DebugInstant,
         DebugToggle,
         DebugTargetPoint,

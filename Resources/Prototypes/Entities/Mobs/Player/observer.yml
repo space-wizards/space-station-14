@@ -42,3 +42,6 @@
   - type: MovementIgnoreGravity
   - type: Grammar
     proper: true
+  - type: Actions
+    innateActions:
+      - GhostBoo

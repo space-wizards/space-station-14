@@ -8,7 +8,8 @@ namespace Content.Shared.GameObjects.Components.Power.ApcNetComponents.PowerRece
     public enum PoweredLightVisuals
     {
         BulbState,
-        BulbColor
+        BulbColor,
+        Blinking
     }
 
     [Serializable, NetSerializable]
