@@ -3,19 +3,46 @@ using System.Collections;
 using System.Collections.Generic;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
-    [DataClass(typeof(SharedLatheDatabaseComponentData))]
-    public class SharedLatheDatabaseComponent : Component, IEnumerable<LatheRecipePrototype>
+    public class SharedLatheDatabaseComponent : Component, IEnumerable<LatheRecipePrototype>, ISerializationHooks
     {
         public override string Name => "LatheDatabase";
         public override uint? NetID => ContentNetIDs.LATHE_DATABASE;
 
-        [DataClassTarget("recipesTarget")]
+        [DataField("recipes")] private List<string> _recipeIds = new();
+
         private readonly List<LatheRecipePrototype> _recipes = new();
+
+        void ISerializationHooks.BeforeSerialization()
+        {
+            var list = new List<string>();
+
+            foreach (var recipe in _recipes)
+            {
+                list.Add(recipe.ID);
+            }
+
+            _recipeIds = list;
+        }
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            foreach (var id in _recipeIds)
+            {
+                if (prototypeManager.TryIndex(id, out LatheRecipePrototype recipe))
+                {
+                    _recipes.Add(recipe);
+                }
+            }
+        }
 
         /// <summary>
         ///     Removes all recipes from the database if it's not static.

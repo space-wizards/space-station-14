@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Damage;
+using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -21,30 +22,31 @@ namespace Content.Shared.GameObjects.Components.Damage
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
-    [DataClass(typeof(DamageableComponentData))]
-    public class DamageableComponent : Component, IDamageableComponent, IRadiationAct
+    public class DamageableComponent : Component, IDamageableComponent, IRadiationAct, ISerializationHooks
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         public override string Name => "Damageable";
 
         public override uint? NetID => ContentNetIDs.DAMAGEABLE;
 
+        // TODO define these in yaml?
+        public const string DefaultResistanceSet = "defaultResistances";
+        public const string DefaultDamageContainer = "metallicDamageContainer";
+
         private readonly Dictionary<DamageType, int> _damageList = DamageTypeExtensions.ToNewDictionary();
 
-        [DataClassTarget("supportedTypes")]
         private readonly HashSet<DamageType> _supportedTypes = new();
 
-        [DataClassTarget("supportedClasses")]
         private readonly HashSet<DamageClass> _supportedClasses = new();
 
         [DataField("flags")]
         private DamageFlag _flags;
 
-        // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
-        [ViewVariables] [DataClassTarget("damageContainer")] public string DamageContainerId { get; set; } = default!;
+        [DataField("resistances")] public string ResistanceSetId = DefaultResistanceSet;
 
-        [ViewVariables] [DataClassTarget("resistancesTarget")] private ResistanceSet Resistances { get; set; } = new();
+        // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
+        [ViewVariables] [DataField("damageContainer")] public string DamageContainerId { get; set; } = DefaultDamageContainer;
+
+        [ViewVariables] private ResistanceSet Resistances { get; set; } = new();
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
@@ -68,6 +70,24 @@ namespace Content.Shared.GameObjects.Components.Damage
                 _flags = value;
                 Dirty();
             }
+        }
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            // TODO DAMAGE Serialize damage done and resistance changes
+            var damagePrototype = prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
+
+            _supportedClasses.Clear();
+            _supportedTypes.Clear();
+
+            DamageContainerId = damagePrototype.ID;
+            _supportedClasses.UnionWith(damagePrototype.SupportedClasses);
+            _supportedTypes.UnionWith(damagePrototype.SupportedTypes);
+
+            var resistancePrototype = prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
+            Resistances = new ResistanceSet(resistancePrototype);
         }
 
         public void AddFlag(DamageFlag flag)

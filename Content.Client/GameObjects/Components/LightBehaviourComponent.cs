@@ -346,8 +346,7 @@ namespace Content.Client.GameObjects.Components
     /// A component which applies a specific behaviour to a PointLightComponent on its owner.
     /// </summary>
     [RegisterComponent]
-    [DataClass(typeof(LightBehaviourComponentData))]
-    public class LightBehaviourComponent : SharedLightBehaviourComponent
+    public class LightBehaviourComponent : SharedLightBehaviourComponent, ISerializationHooks
     {
         private const string KeyPrefix = nameof(LightBehaviourComponent);
 
@@ -367,7 +366,11 @@ namespace Content.Client.GameObjects.Components
         }
 
         [ViewVariables(VVAccess.ReadOnly)]
-        [DataClassTarget("animations")]
+        [DataField("behaviours")]
+        public readonly List<LightBehaviourAnimationTrack> Behaviours = new();
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        [DataField("animations")]
         private readonly List<AnimationContainer> _animations = new();
 
         private float _originalRadius;
@@ -378,13 +381,29 @@ namespace Content.Client.GameObjects.Components
         private PointLightComponent _lightComponent;
         private AnimationPlayerComponent _animationPlayer;
 
+        public void AfterDeserialization()
+        {
+            var key = 0;
+
+            foreach (var behaviour in Behaviours)
+            {
+                var animation = new Animation()
+                {
+                    AnimationTracks = { behaviour }
+                };
+
+                _animations.Add(new AnimationContainer(key, animation, behaviour));
+                key++;
+            }
+        }
+
         protected override void Startup()
         {
             base.Startup();
 
             CopyLightSettings();
             _animationPlayer = Owner.EnsureComponent<AnimationPlayerComponent>();
-            _animationPlayer.AnimationCompleted += s => OnAnimationCompleted(s);
+            _animationPlayer.AnimationCompleted += OnAnimationCompleted;
 
             foreach (var container in _animations)
             {

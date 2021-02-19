@@ -14,14 +14,14 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
     [RegisterComponent]
-    [DataClass(typeof(RevolverBarrelComponentData))]
-    public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent
+    public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent, ISerializationHooks
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -31,29 +31,48 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [ViewVariables]
         [DataField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
+
         private Container _ammoContainer;
+
         [ViewVariables]
-        private int _currentSlot = 0;
+        private int _currentSlot;
+
         public override int Capacity => _ammoSlots.Length;
-        [DataClassTarget("ammoSlots")]
+
+        [DataField("capacity")]
+        private int _serializedCapacity = 6;
+
+        [DataField("ammoSlots", readOnly: true)]
         private IEntity[] _ammoSlots = Array.Empty<IEntity>();
 
         public override int ShotsLeft => _ammoContainer.ContainedEntities.Count;
 
-        private AppearanceComponent _appearanceComponent;
         [ViewVariables]
         [DataField("fillPrototype")]
         private string _fillPrototype;
+
         [ViewVariables]
         private int _unspawnedCount;
 
         // Sounds
         [DataField("soundEject")]
         private string _soundEject = "/Audio/Weapons/Guns/MagOut/revolver_magout.ogg";
+
         [DataField("soundInsert")]
         private string _soundInsert = "/Audio/Weapons/Guns/MagIn/revolver_magin.ogg";
+
         [DataField("soundSpin")]
         private string _soundSpin = "/Audio/Weapons/Guns/Misc/revolver_spin.ogg";
+
+        void ISerializationHooks.BeforeSerialization()
+        {
+            _serializedCapacity = _ammoSlots.Length;
+        }
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            _ammoSlots = new IEntity[_serializedCapacity];
+        }
 
         public override ComponentState GetComponentState()
         {
@@ -99,21 +118,21 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 idx++;
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
-            {
-                _appearanceComponent = appearanceComponent;
-            }
-
             UpdateAppearance();
             Dirty();
         }
 
         private void UpdateAppearance()
         {
+            if (!Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                return;
+            }
+
             // Placeholder, at this stage it's just here for the RPG
-            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, ShotsLeft > 0);
-            _appearanceComponent?.SetData(AmmoVisuals.AmmoCount, ShotsLeft);
-            _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
+            appearance.SetData(MagazineBarrelVisuals.MagLoaded, ShotsLeft > 0);
+            appearance.SetData(AmmoVisuals.AmmoCount, ShotsLeft);
+            appearance.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
         public bool TryInsertBullet(IEntity user, IEntity entity)

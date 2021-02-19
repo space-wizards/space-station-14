@@ -6,6 +6,8 @@ using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Part.Property;
+using Content.Shared.GameObjects.Components.Body.Preset;
+using Content.Shared.GameObjects.Components.Body.Template;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
@@ -20,8 +22,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.GameObjects.Components.Body
 {
     // TODO BODY Damage methods for collections of IDamageableComponents
-    [DataClass(typeof(SharedBodyComponentData))]
-    public abstract class SharedBodyComponent : Component, IBody
+    public abstract class SharedBodyComponent : Component, IBody, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -29,28 +30,25 @@ namespace Content.Shared.GameObjects.Components.Body
 
         public override uint? NetID => ContentNetIDs.BODY;
 
-        [DataClassTarget("centerSlot")]
+        [DataField("centerSlot", required: true)]
         private string? _centerSlot;
 
-        [DataClassTarget("partIds")]
         private Dictionary<string, string> _partIds = new();
 
         private readonly Dictionary<string, IBodyPart> _parts = new();
 
         [ViewVariables]
-        [DataClassTarget("templateName")]
-        public string? TemplateName { get; private set; }
+        [DataField("templateName", required: true)]
+        public string TemplateName { get; private set; } = default!;
 
         [ViewVariables]
-        [DataClassTarget("presetName")]
-        public string? PresetName { get; private set; }
+        [DataField("presetName", required: true)]
+        public string PresetName { get; private set; } = default!;
 
         [ViewVariables]
-        [DataClassTarget("slots")]
         public Dictionary<string, BodyPartType> Slots { get; private set; } = new();
 
         [ViewVariables]
-        [DataClassTarget("connections")]
         public Dictionary<string, List<string>> Connections { get; private set; } = new();
 
         /// <summary>
@@ -62,6 +60,58 @@ namespace Content.Shared.GameObjects.Components.Body
         public IReadOnlyDictionary<string, string> PartIds => _partIds;
 
         [ViewVariables] public IReadOnlyDictionary<string, string> PartIDs => _partIds;
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            // TODO BODY BeforeDeserialization
+            // TODO BODY Move to template or somewhere else
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            var template = prototypeManager.Index<BodyTemplatePrototype>(TemplateName);
+
+            Connections = template.Connections;
+            Slots = template.Slots;
+            _centerSlot = template.CenterSlot;
+
+            var preset = prototypeManager.Index<BodyPresetPrototype>(PresetName);
+
+            _partIds = preset.PartIDs;
+
+            // Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
+            // The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
+            var cleanedConnections = new Dictionary<string, List<string>>();
+            Slots ??= new Dictionary<string, BodyPartType>();
+            Connections ??= new Dictionary<string, List<string>>();
+
+            foreach (var targetSlotName in Slots.Keys)
+            {
+                var tempConnections = new List<string>();
+                foreach (var (slotName, slotConnections) in Connections)
+                {
+                    if (slotName == targetSlotName)
+                    {
+                        foreach (var connection in slotConnections)
+                        {
+                            if (!tempConnections.Contains(connection))
+                            {
+                                tempConnections.Add(connection);
+                            }
+                        }
+                    }
+                    else if (slotConnections.Contains(targetSlotName))
+                    {
+                        tempConnections.Add(slotName);
+                    }
+                }
+
+                if (tempConnections.Count > 0)
+                {
+                    cleanedConnections.Add(targetSlotName, tempConnections);
+                }
+            }
+
+            Connections = cleanedConnections;
+        }
 
         protected virtual bool CanAddPart(string slot, IBodyPart part)
         {

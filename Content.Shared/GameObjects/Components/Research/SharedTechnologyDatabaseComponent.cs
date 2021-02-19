@@ -10,19 +10,45 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
-    [DataClass(typeof(SharedTechnologyDatabaseComponentDataClass))]
-    public class SharedTechnologyDatabaseComponent : Component, IEnumerable<TechnologyPrototype>
+    public class SharedTechnologyDatabaseComponent : Component, IEnumerable<TechnologyPrototype>, ISerializationHooks
     {
         public override string Name => "TechnologyDatabase";
         public override uint? NetID => ContentNetIDs.TECHNOLOGY_DATABASE;
 
-        [DataClassTarget("technologiesTarget")]
+        [DataField("technologies")]
+        private List<string> _technologyIds;
+
         protected List<TechnologyPrototype> _technologies = new();
 
         /// <summary>
         ///     A read-only list of unlocked technologies.
         /// </summary>
         public IReadOnlyList<TechnologyPrototype> Technologies => _technologies;
+
+        void ISerializationHooks.BeforeSerialization()
+        {
+            var techIds = new List<string>();
+
+            foreach (var tech in _technologies)
+            {
+                techIds.Add(tech.ID);
+            }
+
+            _technologyIds = techIds;
+        }
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            foreach (var id in _technologyIds)
+            {
+                if (prototypeManager.TryIndex(id, out TechnologyPrototype tech))
+                {
+                    _technologies.Add(tech);
+                }
+            }
+        }
 
         public IEnumerator<TechnologyPrototype> GetEnumerator()
         {
