@@ -22,7 +22,7 @@
   result: Gauze
   completetime: 500
   materials:
-    glass: 40
+    plastic: 40
 
 - type: latheRecipe
   id: Scalpel
@@ -78,4 +78,4 @@
   result: BodyBag_Item
   completetime: 300
   materials:
-    glass: 20
+    plastic: 20

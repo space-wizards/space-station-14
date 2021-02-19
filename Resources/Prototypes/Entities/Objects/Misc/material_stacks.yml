@@ -228,3 +228,31 @@
   components:
     - type: Stack
       count: 1
+
+- type: entity
+  name: plastic sheet
+  id: PlasticSheet
+  parent: MaterialStack
+  suffix: Full
+  components:
+    - type: Material
+      materials:
+      - key:  enum.MaterialKeys.Stack
+        mat:  plastic
+    - type: Stack
+      stacktype: enum.StackType.Plastic 
+    - type: Sprite
+      sprite: Objects/Materials/sheets.rsi/plastic.png
+      state: plastic
+    - type: Item
+      sprite: Objects/Materials/sheets.rsi/plastic.png
+      HeldPrefix: plastic
+
+- type: entity
+  id: PlasticSheet1
+  name: plastic sheet
+  parent: PlasticSheet
+  suffix: 1
+  components:
+    - type: Stack
+      count: 1

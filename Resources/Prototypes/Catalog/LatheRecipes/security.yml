@@ -13,7 +13,7 @@
   completetime: 500
   materials:
     steel: 70
-    glass: 30
+    plastic: 30
 
 - type: latheRecipe
   id: Flash
@@ -21,4 +21,5 @@
   result: Flash
   completetime: 500
   materials:
-    glass: 60
+    glass: 30
+    plastic: 30

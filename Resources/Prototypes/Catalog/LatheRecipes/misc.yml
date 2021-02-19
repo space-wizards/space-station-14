@@ -31,7 +31,7 @@
   result: GlowStickRed
   completetime: 500
   materials:
-    glass: 20
+    plastic: 20
 
 - type: latheRecipe
   id: FlareBase
@@ -39,7 +39,7 @@
   result: FlareBase
   completetime: 500
   materials:
-    glass: 40
+    plastic: 40
 
 - type: latheRecipe
   id: FlashLightLantern

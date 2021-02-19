@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/37f849fb17014f689346f7a9a49fab5f5562cf18",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/37f849fb17014f689346f7a9a49fab5f5562cf18. plastic.png taken from tgstation at commit https://github.com/tgstation/tgstation/pull/24257/commits/0615ad4947b172b528c7fd12b6c3e7024b877183",
     "size": {
         "x": 32,
         "y": 32
@@ -75,6 +75,9 @@
         },
         {
             "name": "rods"
+        },
+        {
+            "name": "plastic"
         }
     ]
 }
