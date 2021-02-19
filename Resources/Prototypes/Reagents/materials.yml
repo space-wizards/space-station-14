@@ -54,31 +54,3 @@
   electricResistivity: 6.9e-7
   thermalConductivity: 18
   specificHeat: 200
-
-# I don't feel so good...
-
-- type: material
-  id: paperrolling
-  name: rolling paper
-  icon: Objects/Consumable/Smokeables/Cigarettes/paper.rsi/cigpaper.png
-
-- type: material
-  id: cigarettefilter
-  name: cigarette filter
-  icon: Objects/Consumable/Smokeables/Cigarettes/paper.rsi/filter.png
-
-- type: material
-  id: groundcannabis
-  name: ground cannabis
-
-- type: material
-  id: groundtobacco
-  name: ground tobacco
-
-- type: material
-  id: leavescannabisdried
-  name: dried cannabis leaves
-
-- type: material
-  id: leavestobaccodried
-  name: dried tobacco leaves

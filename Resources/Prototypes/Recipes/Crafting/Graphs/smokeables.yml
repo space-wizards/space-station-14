@@ -6,13 +6,13 @@
       edges:
         - to: rollie
           steps:
-            - material: PaperRolling
+            - prototype: PaperRolling
               amount: 1
               doAfter: 1
-            - material: CigaretteFilter
+            - prototype: CigaretteFilter
               amount: 1
               doAfter: 1
-            - material: GroundCannabis
+            - prototype: GroundCannabis
               amount: 1
               doAfter: 1
     - node: rollie
@@ -26,13 +26,9 @@
       edges:
         - to: cigarette
           steps:
-            - material: PaperRolling
-              amount: 1
-              doAfter: 1
-            - material: CigaretteFilter
-              amount: 1
-              doAfter: 1
-            - material: GroundTobacco
+          - - prototype: PaperRolling
+            - prototype: CigaretteFilter
+            - prototype: PaperRolling
               amount: 1
               doAfter: 1
     - node: cigarette
@@ -46,7 +42,7 @@
       edges:
         - to: ground
           steps:
-            - material: LeavesCannabisDried
+            - prototype: LeavesCannabisDried
               amount: 2
               doAfter: 5
     - node: ground
@@ -60,7 +56,7 @@
       edges:
         - to: ground
           steps:
-            - material: LeavesTobaccoDried
+            - prototype: LeavesTobaccoDried
               amount: 2
               doAfter: 5
     - node: ground
