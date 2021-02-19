@@ -11,6 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -129,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             Dirty();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             if (_solution == null)
                 return new HyposprayComponentState(ReagentUnit.Zero, ReagentUnit.Zero);

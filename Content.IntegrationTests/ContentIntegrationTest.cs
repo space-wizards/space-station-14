@@ -7,11 +7,11 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Shared;
 using NUnit.Framework;
 using Robust.Server.Maps;
-using Robust.Server.Timing;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 using Robust.UnitTesting;
 
 namespace Content.IntegrationTests

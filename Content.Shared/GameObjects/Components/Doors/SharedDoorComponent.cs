@@ -100,19 +100,19 @@ namespace Content.Shared.GameObjects.Components.Doors
                 "closeTimeTwo",
                 0.2f,
                 seconds => CloseTimeTwo = TimeSpan.FromSeconds(seconds),
-                () => CloseTimeOne.TotalSeconds);
+                () => CloseTimeTwo.TotalSeconds);
 
             serializer.DataReadWriteFunction(
                 "openTimeOne",
                 0.4f,
                 seconds => OpenTimeOne = TimeSpan.FromSeconds(seconds),
-                () => CloseTimeOne.TotalSeconds);
+                () => OpenTimeOne.TotalSeconds);
 
             serializer.DataReadWriteFunction(
                 "openTimeTwo",
                 0.2f,
                 seconds => OpenTimeTwo = TimeSpan.FromSeconds(seconds),
-                () => CloseTimeOne.TotalSeconds);
+                () => OpenTimeTwo.TotalSeconds);
         }
 
         protected void SetAppearance(DoorVisualState state)

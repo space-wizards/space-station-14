@@ -1,31 +1,29 @@
-<customControls:SS14Window xmlns:customControls="clr-namespace:Robust.Client.UserInterface.CustomControls;assembly=Robust.Client"
-                           xmlns:controls="clr-namespace:Robust.Client.UserInterface.Controls;assembly=Robust.Client"
-                           xmlns:userInterface="clr-namespace:Robust.Client.UserInterface;assembly=Robust.Client">
-    <controls:HBoxContainer SizeFlagsHorizontal="FillExpand">
-        <controls:VBoxContainer SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.45">
-            <controls:HBoxContainer SizeFlagsHorizontal="FillExpand" SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.1">
-                <controls:LineEdit Name="SearchBar" PlaceHolder="Search" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.6"/>
-                <controls:OptionButton Name="Category" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.4"/>
-            </controls:HBoxContainer>
-            <controls:ItemList Name="RecipesList" SelectMode="Single" SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.9"/>
-        </controls:VBoxContainer>
-        <userInterface:Control SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.05"/>
-        <controls:VBoxContainer SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.45">
-            <controls:HBoxContainer Align="Center" SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.25">
-                <controls:TextureRect Name="TargetTexture" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.15" Stretch="KeepCentered"/>
-                <controls:VBoxContainer SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.85">
-                    <controls:RichTextLabel Name="TargetName" SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.1"/>
-                    <controls:RichTextLabel Name="TargetDesc" SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.9"/>
-                </controls:VBoxContainer>
-            </controls:HBoxContainer>
-            <controls:ItemList Name="StepList" SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.1"/>
-            <controls:VBoxContainer SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.1">
-                <controls:Button Name="BuildButton" Disabled="True" ToggleMode="True" SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.5"/>
-                <controls:HBoxContainer SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.5">
-                    <controls:Button Name="EraseButton" ToggleMode="True" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.7"/>
-                    <controls:Button Name="ClearButton" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.3"/>
-                </controls:HBoxContainer>
-            </controls:VBoxContainer>
-        </controls:VBoxContainer>
-    </controls:HBoxContainer>
-</customControls:SS14Window>
+<SS14Window xmlns="https://spacestation14.io">
+    <HBoxContainer SizeFlagsHorizontal="FillExpand">
+        <VBoxContainer SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.45">
+            <HBoxContainer SizeFlagsHorizontal="FillExpand" SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.1">
+                <LineEdit Name="SearchBar" PlaceHolder="Search" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.6"/>
+                <OptionButton Name="Category" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.4"/>
+            </HBoxContainer>
+            <ItemList Name="RecipesList" SelectMode="Single" SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.9"/>
+        </VBoxContainer>
+        <Control SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.05"/>
+        <VBoxContainer SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.45">
+            <HBoxContainer Align="Center" SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.25">
+                <TextureRect Name="TargetTexture" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.15" Stretch="KeepCentered"/>
+                <VBoxContainer SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.85">
+                    <RichTextLabel Name="TargetName" SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.1"/>
+                    <RichTextLabel Name="TargetDesc" SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.9"/>
+                </VBoxContainer>
+            </HBoxContainer>
+            <ItemList Name="StepList" SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.1"/>
+            <VBoxContainer SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.1">
+                <Button Name="BuildButton" Disabled="True" ToggleMode="True" SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.5"/>
+                <HBoxContainer SizeFlagsVertical="FillExpand" SizeFlagsStretchRatio="0.5">
+                    <Button Name="EraseButton" ToggleMode="True" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.7"/>
+                    <Button Name="ClearButton" SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.3"/>
+                </HBoxContainer>
+            </VBoxContainer>
+        </VBoxContainer>
+    </HBoxContainer>
+</SS14Window>

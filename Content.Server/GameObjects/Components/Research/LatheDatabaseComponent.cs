@@ -1,6 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -17,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Research
         public bool Static => _static;
         private bool _static = false;
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new LatheDatabaseState(GetRecipeIdList());
         }

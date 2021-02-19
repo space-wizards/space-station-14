@@ -7,6 +7,7 @@ using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -27,6 +28,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         /// <summary>
         ///     States that this <see cref="SharedMobStateComponent"/> mapped to
         ///     the amount of damage at which they are triggered.
+        ///     A threshold is reached when the total damage of an entity is equal
         ///     A threshold is reached when the total damage of an entity is equal
         ///     to or higher than the int key, but lower than the next threshold.
         ///     Ordered from lowest to highest.
@@ -75,7 +77,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             base.OnRemove();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new MobStateComponentState(CurrentThreshold);
         }
