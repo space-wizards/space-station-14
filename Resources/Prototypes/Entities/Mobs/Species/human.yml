@@ -113,13 +113,14 @@
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
   - type: Physics
+    bodyType: Kinematic
     anchored: false
     mass: 70
     fixtures:
     - shape:
         !type:PhysShapeCircle
           radius: 0.35
-      restitution: 0.2
+      restitution: 0.0
       mask:
       - Impassable
       - MobImpassable

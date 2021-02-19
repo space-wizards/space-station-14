@@ -25,14 +25,7 @@ namespace Content.Shared.Physics.Controllers
     /// </summary>
     public abstract class SharedMobMoverController : AetherController
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-
         private SharedBroadPhaseSystem _broadPhaseSystem = default!;
-
-        private const float MobAcceleration = 10.0f;
-
-        private const float MobFriction = 6.0f;
 
         public override void Initialize()
         {
@@ -42,13 +35,8 @@ namespace Content.Shared.Physics.Controllers
 
         protected void UpdateKinematics(float frameTime, ITransformComponent transform, IMoverComponent mover, PhysicsComponent physicsComponent)
         {
+            // TODO: Look at https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Manual/CharacterControllers.html?highlight=controller as it has some adviceo n kinematic controllersx
             if (!ActionBlockerSystem.CanMove(mover.Owner)) return;
-
-            // TODO: Fuck it's a hack but I want collisions working first
-            if (mover.Owner.Prototype?.ID == "AdminObserver")
-            {
-                physicsComponent.LinearVelocity = Vector2.Zero;
-            }
 
             var (walkDir, sprintDir) = mover.VelocityDir;
 
@@ -58,7 +46,7 @@ namespace Content.Shared.Physics.Controllers
             if (weightless)
             {
                 // No gravity: is our entity touching anything?
-                var touching = IsAroundCollider(transform, mover, physicsComponent);
+                var touching = IsAroundCollider(_broadPhaseSystem, transform, mover, physicsComponent);
 
                 if (!touching)
                 {
@@ -68,7 +56,17 @@ namespace Content.Shared.Physics.Controllers
             }
 
             // Regular movement.
+            // Target velocity.
             var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed);
+
+            if (total != Vector2.Zero)
+            {
+                transform.LocalRotation = total.GetDir().ToAngle();
+            }
+
+            physicsComponent.LinearVelocity = total;
+            HandleFootsteps(mover);
+            return;
             var wishSpeed = total.Length;
             var wishDir = wishSpeed > 0 ? total.Normalized : Vector2.Zero;
 
@@ -105,12 +103,19 @@ namespace Content.Shared.Physics.Controllers
             body.LinearVelocity += wishDir * accelSpeed;
         }
 
-        private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
-            IPhysicsComponent collider)
+        /// <summary>
+        ///     Used for weightlessness to determine if we are near a wall.
+        /// </summary>
+        /// <param name="broadPhaseSystem"></param>
+        /// <param name="transform"></param>
+        /// <param name="mover"></param>
+        /// <param name="collider"></param>
+        /// <returns></returns>
+        public static bool IsAroundCollider(SharedBroadPhaseSystem broadPhaseSystem, ITransformComponent transform, IMoverComponent mover, IPhysicsComponent collider)
         {
             var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
 
-            foreach (var otherCollider in _broadPhaseSystem.GetCollidingEntities(transform.MapID, enlargedAABB))
+            foreach (var otherCollider in broadPhaseSystem.GetCollidingEntities(transform.MapID, enlargedAABB))
             {
                 if (otherCollider == collider) continue; // Don't try to push off of yourself!
 
