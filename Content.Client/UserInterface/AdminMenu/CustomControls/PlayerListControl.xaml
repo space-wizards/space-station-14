@@ -1,0 +1,13 @@
+﻿<VBoxContainer
+    xmlns="https://spacestation14.io">
+    <Control CustomMinimumSize="0 5" />
+    <HBoxContainer>
+        <!-- <Label Text="{Loc Search}" CustomMinimumSize="100 0" /> -->
+        <!-- <Control CustomMinimumSize="50 0" /> -->
+        <LineEdit Name="FilterLineEdit" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" PlaceHolder="{Loc Filter}"/>
+    </HBoxContainer>
+    <!-- <Control CustomMinimumSize="0 5" /> -->
+    <ItemList
+        Name="PlayerItemList" SelectMode="Single" SizeFlagsVertical="FillExpand" SizeFlagsHorizontal="FillExpand"
+        CustomMinimumSize="100 100" />
+</VBoxContainer>
