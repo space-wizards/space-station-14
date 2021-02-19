@@ -48,7 +48,7 @@
   completetime: 500
   materials:
     steel: 50
-    glass: 60
+    glass: 40
 
 - type: latheRecipe
   id:  FireExtinguisher

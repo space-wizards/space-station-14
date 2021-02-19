@@ -64,7 +64,7 @@
   id: Shovel
   icon:
     sprite: Objects/Tools/shovel.rsi
-    state: shovel
+    state: icon
   result: Shovel
   completetime: 500
   materials:
