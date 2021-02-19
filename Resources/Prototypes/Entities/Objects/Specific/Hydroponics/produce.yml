@@ -247,3 +247,63 @@
       sprite: Objects/Specific/Hydroponics/chanterelle.rsi
     - type: Produce
       seed: chanterelle
+
+# Can't eat
+
+- type: entity
+  name: cannabis leaves
+  parent: ProduceBase
+  id: LeavesCannabis
+  description: "Cantharellus Cibarius: These jolly yellow little shrooms sure look tasty!"
+  components:
+    - type: SolutionContainer
+      contents:
+        reagents:
+          - ReagentId: chem.THC
+            Quantity: 2
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/cannabis.rsi
+    - type: Produce
+      seed: cannabis
+
+- type: entity
+  name: tobacco leaves
+  parent: ProduceBase
+  id: LeavesTobacco
+  description: "Dry them out to make some smokes."
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/tobacco.rsi
+    - type: Produce
+      seed: tobacco
+
+- type: entity
+  name: dried tobacco leaves
+  parent: BaseItem
+  id: LeavesTobaccoDried
+  description: "Dried tobacco leaves, ready to be ground."
+  components:
+    - type: SolutionContainer
+      contents:
+        reagents:
+          - ReagentId: chem.Nicotine
+            Quantity: 2
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/tobacco.rsi
+      state: dried
+
+- type: entity
+  name: ground tobacco
+  parent: BaseItem
+  id: LeavesTobaccoDriedGround
+  description: "Ground tobacco, perfect for hand-rolled cigarettes."
+  components:
+    - type: SolutionContainer
+      contents:
+        reagents:
+          - ReagentId: chem.Nicotine
+            Quantity: 10
+    - type: Sprite
+      sprite: Objects/Misc/reageant_fillings.rsi
+      color: brown
+      state: powderpile
