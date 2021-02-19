@@ -214,10 +214,10 @@
     - type: Stack
       stacktype: enum.StackType.Wood 
     - type: Sprite
-      sprite: Objects/Materials/materials.rsi/wood_plank.png
+      sprite: Objects/Materials/materials.rsi
       state: wood
     - type: Item
-      sprite: Objects/Materials/materials.rsi/wood_plank.png
+      sprite: Objects/Materials/materials.rsi
       HeldPrefix: wood
 
 - type: entity
