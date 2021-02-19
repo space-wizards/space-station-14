@@ -102,14 +102,3 @@
   materials:
     steel: 90
     plastic: 80
-
-- type: latheRecipe
-  id: Shovel
-  icon:
-    sprite: Objects/Tools/Hydroponics/hatchet.rsi
-    state: icon
-  result: Shovel
-  completetime: 500
-  materials:
-    steel: 60
-    wood: 20
