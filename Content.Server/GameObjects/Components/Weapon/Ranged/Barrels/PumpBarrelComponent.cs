@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         // Even a point having a chamber? I guess it makes some of the below code cleaner
         private ContainerSlot _chamberContainer;
-        [DataClassTarget("spawnedAmmo")]
+        //todo paul wat [DataClassTarget("spawnedAmmo")]
         private Stack<IEntity> _spawnedAmmo = default;
         private Container _ammoContainer;
 

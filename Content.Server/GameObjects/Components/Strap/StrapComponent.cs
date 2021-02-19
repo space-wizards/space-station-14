@@ -46,28 +46,28 @@ namespace Content.Server.GameObjects.Components.Strap
         /// <summary>
         /// The change in position to the strapped mob
         /// </summary>
-        [DataField("position")]
+        [field: DataField("position")]
         public StrapPosition Position { get; } = StrapPosition.None;
 
         /// <summary>
         /// The sound to be played when a mob is buckled
         /// </summary>
         [ViewVariables]
-        [DataField("buckleSound")]
+        [field: DataField("buckleSound")]
         public string BuckleSound { get; } = "/Audio/Effects/buckle.ogg";
 
         /// <summary>
         /// The sound to be played when a mob is unbuckled
         /// </summary>
         [ViewVariables]
-        [DataField("unbuckleSound")]
+        [field: DataField("unbuckleSound")]
         public string UnbuckleSound { get; } = "/Audio/Effects/unbuckle.ogg";
 
         /// <summary>
         /// ID of the alert to show when buckled
         /// </summary>
         [ViewVariables]
-        [DataField("buckledAlertType")]
+        [field: DataField("buckledAlertType")]
         public AlertType BuckledAlertType { get; } = AlertType.Buckled;
 
         /// <summary>

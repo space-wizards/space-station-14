@@ -4,7 +4,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
     public partial class PumpBarrelComponentData
     {
-        [DataField("capacity")] [DataClassTarget("capacity")]
+        [DataField("capacity")]
         public int Capacity = 6;
     }
 }

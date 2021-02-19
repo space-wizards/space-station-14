@@ -49,7 +49,7 @@ namespace Content.Shared.GameObjects.Components
         [ViewVariables] public int AvailableSpace => MaxCount - Count;
 
         [ViewVariables]
-        [DataClassTarget("stacktype")]
+        [DataField("stacktype")]
         public object StackType { get => _stackType == null ? Owner.Prototype.ID : _stackType; private set => _stackType = value; }
 
         private object _stackType;

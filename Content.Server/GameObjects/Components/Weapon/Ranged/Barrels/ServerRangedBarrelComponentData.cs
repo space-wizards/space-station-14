@@ -10,39 +10,36 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     public partial class ServerRangedBarrelComponentData : ISerializationHooks
     {
         [DataField("ammoSpreadRatio")]
-        [DataClassTarget("spreadRatio")]
         public float SpreadRatio = 1f;
 
         [DataField("minAngle")]
         public float MinAngleDegrees;
 
-        [DataClassTarget("minAngle")]
+        [DataClassTarget("minAngleTarget")]
         public Angle MinAngle;
 
         [DataField("maxAngle")]
         public float MaxAngleDegrees = 45;
 
-        [DataClassTarget("maxAngle")]
+        [DataClassTarget("maxAngleTarget")]
         public Angle MaxAngle;
 
         [DataField("fireRate")]
-        [DataClassTarget("fireRate")]
         public float FireRate = 2f;
 
         [DataField("angleIncrease")]
         public float? AngleIncreaseDegrees;
 
-        [DataClassTarget("angleIncrease")]
+        [DataClassTarget("angleIncreaseTarget")]
         public float AngleIncrease;
 
         [DataField("angleDecay")]
         public float AngleDecayDegrees = 20;
 
-        [DataClassTarget("angleDecay")]
+        [DataClassTarget("angleDecayTarget")]
         public float AngleDecay;
 
         [DataField("allRateSelectors")]
-        [DataClassTarget("allRateSelectors")]
         public FireRateSelector AllRateSelectors;
 
         public void BeforeSerialization()

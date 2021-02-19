@@ -56,23 +56,23 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public abstract IEntity TakeProjectile(EntityCoordinates spawnAt);
 
         // Recoil / spray control
-        [DataClassTarget("minAngle")]
+        [DataClassTarget("minAngleTarget")]
         private Angle _minAngle = default;
-        [DataClassTarget("maxAngle")]
+        [DataClassTarget("maxAngleTarget")]
         private Angle _maxAngle = default;
         private Angle _currentAngle = Angle.Zero;
         /// <summary>
         /// How slowly the angle's theta decays per second in radians
         /// </summary>
-        [DataClassTarget("angleDecay")]
+        [DataClassTarget("angleDecayTarget")]
         private float _angleDecay = default;
         /// <summary>
         /// How quickly the angle's theta builds for every shot fired in radians
         /// </summary>
-        [DataClassTarget("angleIncrease")]
+        [DataClassTarget("angleIncreaseTarget")]
         private float _angleIncrease = default;
         // Multiplies the ammo spread to get the final spread of each pellet
-        [DataClassTarget("spreadRatio")]
+        [DataClassTarget("ammoSpreadRatio")]
         private float _spreadRatio = 1f;
 
         public bool CanMuzzleFlash => _canMuzzleFlash;

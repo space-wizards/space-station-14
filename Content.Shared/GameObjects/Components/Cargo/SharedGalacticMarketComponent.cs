@@ -16,7 +16,7 @@ namespace Content.Shared.GameObjects.Components.Cargo
         public sealed override string Name => "GalacticMarket";
         public sealed override uint? NetID => ContentNetIDs.GALACTIC_MARKET;
 
-        [DataClassTarget("products")]
+        [DataClassTarget("productsTarget")]
         protected List<CargoProductPrototype> _products = new();
 
         /// <summary>

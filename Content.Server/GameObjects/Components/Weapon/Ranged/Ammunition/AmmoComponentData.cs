@@ -8,16 +8,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 {
     public partial class AmmoComponentData : ISerializationHooks
     {
-        [DataField("projectilesFired")] [DataClassTarget("projectilesFired")]
+        [DataField("projectilesFired")]
         public int? ProjectilesFired;
 
-        [DataField("ammoSpread")] [DataClassTarget("ammoSpread")]
+        [DataField("ammoSpread")]
         public float? EvenSpreadAngle;
 
-        [DataField("isProjectile")] [DataClassTarget("isProjectile")]
+        [DataField("isProjectile")]
         public bool? AmmoIsProjectile;
 
-        [DataField("caseless")] [DataClassTarget("caseless")]
+        [DataField("caseless")]
         private bool? Caseless;
 
         public void AfterDeserialization()
