@@ -55,7 +55,7 @@ namespace Content.Shared.GameObjects.Components
         [DataField("stacktype")]
         public object StackType
         {
-            get => _stackType ?? Owner.Prototype?.ID;
+            get => _stackType ?? Owner?.Prototype?.ID;
             private set => _stackType = value;
         }
 
