@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.MachineLinking.Signals;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -163,13 +164,13 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         public void UpdateLight()
         {
             var powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
-            var sprite = Owner.GetComponent<SpriteComponent>();
-            var light = Owner.GetComponent<PointLightComponent>();
+            var appearance = Owner.GetComponentOrNull<AppearanceComponent>();
+
+
             if (LightBulb == null) // No light bulb.
             {
                 powerReceiver.Load = 0;
-                sprite.LayerSetState(0, "empty");
-                light.Enabled = false;
+                appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
                 return;
             }
 
@@ -179,9 +180,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     if (powerReceiver.Powered && _on)
                     {
                         powerReceiver.Load = LightBulb.PowerUse;
-                        sprite.LayerSetState(0, "on");
-                        light.Enabled = true;
-                        light.Color = LightBulb.Color;
+                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
+                        appearance?.SetData(PoweredLightVisuals.BulbColor, LightBulb.Color);
                         var time = _gameTiming.CurTime;
                         if (time > _lastThunk + _thunkDelay)
                         {
@@ -191,17 +191,14 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     }
                     else
                     {
-                        sprite.LayerSetState(0, "off");
-                        light.Enabled = false;
+                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
                     }
                     break;
                 case LightBulbState.Broken:
-                    sprite.LayerSetState(0, "broken");
-                    light.Enabled = false;
+                    appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
                     break;
                 case LightBulbState.Burned:
-                    sprite.LayerSetState(0, "burned");
-                    light.Enabled = false;
+                    appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                     break;
             }
         }
