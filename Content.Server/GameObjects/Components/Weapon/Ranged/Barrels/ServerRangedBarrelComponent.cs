@@ -78,7 +78,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// <summary>
         /// How slowly the angle's theta decays per second in radians
         /// </summary>
-        [DataField("angleDecayTarget")]
         public float AngleDecay { get; private set; }
 
         [DataField("angleIncrease")]
@@ -87,7 +86,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// <summary>
         /// How quickly the angle's theta builds for every shot fired in radians
         /// </summary>
-        [DataField("angleIncreaseTarget")]
         public float AngleIncrease { get; private set; }
 
         // Multiplies the ammo spread to get the final spread of each pellet
