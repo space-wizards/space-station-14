@@ -14,7 +14,7 @@ namespace Content.Shared.GameObjects.Components.Materials
         [DataField("materials")]
         private List<MaterialDataEntry>? _materials;
 
-        [DataClassTarget("materials")]
+        [DataClassTarget("materialsTarget")]
         public Dictionary<object, MaterialPrototype> MaterialTypes = new Dictionary<object, MaterialPrototype>();
 
         public void AfterDeserialization()

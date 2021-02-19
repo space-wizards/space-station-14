@@ -12,7 +12,7 @@ namespace Content.Shared.GameObjects.Components.Research
         [DataField("technologies")]
         private List<string> _technologyIds;
 
-        [DataClassTarget("technologies")]
+        [DataClassTarget("technologiesTarget")]
         protected readonly List<TechnologyPrototype> _technologies = new();
 
         public void BeforeSerialization()

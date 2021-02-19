@@ -44,7 +44,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
         [ViewVariables] [DataClassTarget("damageContainer")] public string DamageContainerId { get; set; } = default!;
 
-        [ViewVariables] [DataClassTarget("resistances")] private ResistanceSet Resistances { get; set; } = new();
+        [ViewVariables] [DataClassTarget("resistancesTarget")] private ResistanceSet Resistances { get; set; } = new();
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
@@ -55,7 +55,6 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         [ViewVariables] public IReadOnlyDictionary<DamageType, int> DamageTypes => _damageList;
 
-        [DataClassTarget("flags")]
         public DamageFlag Flags
         {
             get => _flags;

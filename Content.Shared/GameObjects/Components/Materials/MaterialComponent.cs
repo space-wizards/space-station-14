@@ -20,7 +20,7 @@ namespace Content.Shared.GameObjects.Components.Materials
         public override string Name => "Material";
 
         public Dictionary<object, MaterialPrototype> MaterialTypes => _materialTypes;
-        [DataClassTarget("materials")]
+        [DataClassTarget("materialsTarget")]
         private Dictionary<object, MaterialPrototype> _materialTypes;
 
         public class MaterialDataEntry : ISerializationHooks

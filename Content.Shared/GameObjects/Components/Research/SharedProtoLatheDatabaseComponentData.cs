@@ -12,7 +12,7 @@ namespace Content.Shared.GameObjects.Components.Research
         [DataField("protolatherecipes")]
         public List<string> RecipeIds { get; private set; }
 
-        [DataClassTarget("protolatherecipes")]
+        [DataClassTarget("protolatherecipesTarget")]
         public readonly List<LatheRecipePrototype> ProtolatheRecipes = new();
 
         public void BeforeSerialization()

@@ -18,7 +18,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         [DataField("resistances")] public string? ResistanceSetId;
 
-        [DataField("resistances")] [DataClassTarget("resistances")]
+        [DataClassTarget("resistancesTarget")]
         public ResistanceSet? Resistances { get; set; }
 
         [DataField("damageContainer")] [DataClassTarget("damageContainer")]

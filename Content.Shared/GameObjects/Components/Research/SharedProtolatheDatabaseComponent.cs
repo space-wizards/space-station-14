@@ -14,7 +14,7 @@ namespace Content.Shared.GameObjects.Components.Research
         public override string Name => "ProtolatheDatabase";
         public sealed override uint? NetID => ContentNetIDs.PROTOLATHE_DATABASE;
 
-        [DataClassTarget("protolatherecipes")]
+        [DataClassTarget("protolatherecipesTarget")]
         private readonly List<LatheRecipePrototype> _protolatheRecipes = new();
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace Content.Shared.GameObjects.Components.Research
     {
         [DataField("recipes")] private List<string> _recipeIds = new();
 
-        [DataClassTarget("recipes")]
+        [DataClassTarget("recipesTarget")]
         private readonly List<LatheRecipePrototype> _recipes = new();
 
         public void BeforeSerialization()
