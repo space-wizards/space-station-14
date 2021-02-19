@@ -38,9 +38,18 @@ namespace Content.Client.UserInterface
 
             var rootContainer = new TabContainer();
 
-            var patronsList = new ScrollContainer();
-            var ss14ContributorsList = new ScrollContainer();
-            var licensesList = new ScrollContainer();
+            var patronsList = new ScrollContainer
+            {
+                HScrollEnabled = false
+            };
+            var ss14ContributorsList = new ScrollContainer
+            {
+                HScrollEnabled = false
+            };
+            var licensesList = new ScrollContainer
+            {
+                HScrollEnabled = false
+            };
 
             rootContainer.AddChild(ss14ContributorsList);
             rootContainer.AddChild(patronsList);
@@ -56,7 +65,7 @@ namespace Content.Client.UserInterface
 
             Contents.AddChild(rootContainer);
 
-            CustomMinimumSize = (650, 450);
+            SetSize = (650, 650);
         }
 
         private void PopulateLicenses(ScrollContainer licensesList)
