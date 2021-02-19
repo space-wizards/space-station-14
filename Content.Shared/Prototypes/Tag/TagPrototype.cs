@@ -12,7 +12,7 @@ namespace Content.Shared.Prototypes.Tag
     ///     gets saved in TagComponent.
     /// </summary>
     [Prototype("Tag")]
-    public class TagPrototype : IPrototype, IIndexedPrototype
+    public class TagPrototype : IPrototype
     {
         public string ID { get; [UsedImplicitly] private set; } = default!;
 
