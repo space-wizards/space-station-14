@@ -10,7 +10,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Server.Objectives
 {
     [Prototype("objective")]
-    public class ObjectivePrototype : IPrototype
+    public class ObjectivePrototype : IPrototype, IIndexedPrototype
     {
         [ViewVariables]
         public string ID { get; private set; }

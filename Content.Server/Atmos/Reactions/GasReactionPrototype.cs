@@ -23,7 +23,7 @@ namespace Content.Server.Atmos.Reactions
     }
 
     [Prototype("gasReaction")]
-    public class GasReactionPrototype : IPrototype
+    public class GasReactionPrototype : IPrototype, IIndexedPrototype
     {
         public string ID { get; private set; }
 

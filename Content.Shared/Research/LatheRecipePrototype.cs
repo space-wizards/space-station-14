@@ -10,7 +10,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Research
 {
     [NetSerializable, Serializable, Prototype("latheRecipe")]
-    public class LatheRecipePrototype : IPrototype
+    public class LatheRecipePrototype : IPrototype, IIndexedPrototype
     {
         private string _name;
         private string _id;

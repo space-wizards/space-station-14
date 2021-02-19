@@ -7,7 +7,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Construction
 {
     [Prototype("construction")]
-    public class ConstructionPrototype : IPrototype
+    public class ConstructionPrototype : IPrototype, IIndexedPrototype
     {
         private List<IConstructionCondition> _conditions;
 

@@ -64,10 +64,5 @@ namespace Content.Shared.Administration
         {
             return HasFlag(AdminFlags.Admin);
         }
-
-        public bool CanAdminReloadPrototypes()
-        {
-            return HasFlag(AdminFlags.Host);
-        }
     }
 }

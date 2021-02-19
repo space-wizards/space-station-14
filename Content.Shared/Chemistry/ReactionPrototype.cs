@@ -14,7 +14,7 @@ namespace Content.Shared.Chemistry
     /// Prototype for chemical reaction definitions
     /// </summary>
     [Prototype("reaction")]
-    public class ReactionPrototype : IPrototype
+    public class ReactionPrototype : IPrototype, IIndexedPrototype
     {
         private string _id = default!;
         private string _name = default!;

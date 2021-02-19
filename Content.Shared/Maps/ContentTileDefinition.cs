@@ -10,9 +10,9 @@ namespace Content.Shared.Maps
 {
     [UsedImplicitly]
     [Prototype("tile")]
-    public sealed class ContentTileDefinition : IPrototype, ITileDefinition
+    public sealed class ContentTileDefinition : IPrototype, IIndexedPrototype, ITileDefinition
     {
-        string IPrototype.ID => Name;
+        string IIndexedPrototype.ID => Name;
 
         public string Name { get; private set; }
         public ushort TileId { get; private set; }

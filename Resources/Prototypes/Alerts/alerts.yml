@@ -2,7 +2,6 @@
   # Defines ordering in alert tab, higher up = higher in tab.
   # List below can contain alert type or category, if both are present the id will take precedence.
   # If item is not in list it will go at the bottom (ties broken by alert type enum value)
-  id: BaseAlertOrder
   order:
     - category: Health
     - alertType: Fire
@@ -198,35 +197,35 @@
 - type: alert
   alertType: Debug1
   icon: /Textures/Interface/Alerts/Human/human1.png
-  name: Debug1
+  name: Debug
   description: Debug
 
 - type: alert
   alertType: Debug2
   icon: /Textures/Interface/Alerts/Human/human2.png
-  name: Debug2
+  name: Debug
   description: Debug
 
 - type: alert
   alertType: Debug3
   icon: /Textures/Interface/Alerts/Human/human3.png
-  name: Debug3
+  name: Debug
   description: Debug
 
 - type: alert
   alertType: Debug4
   icon: /Textures/Interface/Alerts/Human/human4.png
-  name: Debug4
+  name: Debug
   description: Debug
 
 - type: alert
   alertType: Debug5
   icon: /Textures/Interface/Alerts/Human/human5.png
-  name: Debug5
+  name: Debug
   description: Debug
 
 - type: alert
   alertType: Debug6
   icon: /Textures/Interface/Alerts/Human/human6.png
-  name: Debug6
+  name: Debug
   description: Debug

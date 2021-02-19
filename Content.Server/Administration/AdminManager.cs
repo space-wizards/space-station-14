@@ -490,11 +490,6 @@ namespace Content.Server.Administration
             return GetAdminData(session)?.CanAdminMenu() ?? false;
         }
 
-        public bool CanAdminReloadPrototypes(IPlayerSession session)
-        {
-            return GetAdminData(session)?.CanAdminReloadPrototypes() ?? false;
-        }
-
         private void SendPermsChangedEvent(IPlayerSession session)
         {
             var flags = GetAdminData(session)?.Flags;

@@ -12,7 +12,7 @@ using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefine
 namespace Content.Shared.Roles
 {
     [Prototype("startingGear")]
-    public class StartingGearPrototype : IPrototype
+    public class StartingGearPrototype : IPrototype, IIndexedPrototype
     {
         private string _id = default!;
         private Dictionary<Slots, string> _equipment = default!;

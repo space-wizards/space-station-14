@@ -15,8 +15,6 @@ namespace Content.Shared.Actions
     /// </summary>
     public abstract class BaseActionPrototype : IPrototype
     {
-        public string ID { get; private set; }
-
         /// <summary>
         /// Icon representing this action in the UI.
         /// </summary>
@@ -91,11 +89,7 @@ namespace Content.Shared.Actions
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
             serializer.DataReadFunction("name", string.Empty,
-                s =>
-                {
-                    ID = s;
-                    Name = FormattedMessage.FromMarkup(s);
-                });
+                s => Name = FormattedMessage.FromMarkup(s));
             serializer.DataReadFunction("description", string.Empty,
                 s => Description = FormattedMessage.FromMarkup(s));
 

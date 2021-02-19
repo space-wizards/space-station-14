@@ -112,7 +112,7 @@ namespace Content.Shared.Materials
     }
 
     [Prototype("material")]
-    public class MaterialPrototype : IPrototype
+    public class MaterialPrototype : IPrototype, IIndexedPrototype
     {
         public string ID { get; private set; }
 
