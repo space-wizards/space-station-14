@@ -30,17 +30,6 @@
     steel: 60
 
 - type: latheRecipe
-  id: Shovel
-  icon:
-    sprite: Constructible/Hydroponics/hydro_tools.rsi
-    state: shovel
-  result: Shovel
-  completetime: 500
-  materials:
-    steel: 50
-    wood: 30
-
-- type: latheRecipe
   id: Spade
   icon:
     sprite: Objects/Tools/Hydroponics/spade.rsi

@@ -61,6 +61,17 @@
     steel: 80
 
 - type: latheRecipe
+  id: Shovel
+  icon:
+    sprite: Objects/Tools/shovel.rsi
+    state: shovel
+  result: Shovel
+  completetime: 500
+  materials:
+    steel: 50
+    wood: 30
+
+- type: latheRecipe
   id: Multitool
   icon:
     sprite: Objects/Tools/multitool.rsi
