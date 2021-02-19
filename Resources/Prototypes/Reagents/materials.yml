@@ -64,7 +64,7 @@
   thermalConductivity: 1.5
   specificHeat: 600
 
-- type:  material
+- type: material
   id: plastic
   name: plastic
   icon: Objects/Materials/sheets.rsi/plastic.png
