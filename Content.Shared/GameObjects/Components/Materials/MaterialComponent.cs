@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Shared.Materials;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -13,15 +14,29 @@ namespace Content.Shared.GameObjects.Components.Materials
     ///     This is not a storage system for say smelteries.
     /// </summary>
     [RegisterComponent]
-    [DataClass(typeof(MaterialComponentDataClass))]
-    public class MaterialComponent : Component
+    public class MaterialComponent : Component, ISerializationHooks
     {
         public const string SerializationCache = "mat";
+
         public override string Name => "Material";
 
-        public Dictionary<object, MaterialPrototype> MaterialTypes => _materialTypes;
-        [DataClassTarget("materialsTarget")]
-        private Dictionary<object, MaterialPrototype> _materialTypes;
+        [DataField("materials")] private List<MaterialDataEntry> _materials = new();
+
+        public Dictionary<object, MaterialPrototype> MaterialTypes { get; }
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            if (_materials != null)
+            {
+                var protoMan = IoCManager.Resolve<IPrototypeManager>();
+
+                foreach (var entry in _materials)
+                {
+                    var proto = protoMan.Index<MaterialPrototype>(entry.Value);
+                    MaterialTypes[entry.Key] = proto;
+                }
+            }
+        }
 
         public class MaterialDataEntry : ISerializationHooks
         {
@@ -33,7 +48,7 @@ namespace Content.Shared.GameObjects.Components.Materials
             [DataField("mat")]
             public string Value;
 
-            public void AfterDeserialization()
+            void ISerializationHooks.AfterDeserialization()
             {
                 var refl = IoCManager.Resolve<IReflectionManager>();
 

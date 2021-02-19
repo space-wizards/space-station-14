@@ -1,17 +1,19 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.Components.Body.Mechanism
 {
-    [DataClass(typeof(SharedMechanismComponentDataClass))]
-    public abstract class SharedMechanismComponent : Component, IMechanism
+    public abstract class SharedMechanismComponent : Component, IMechanism, ISerializationHooks
     {
         public override string Name => "Mechanism";
 
@@ -20,7 +22,9 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         protected int IdHash;
         protected IEntity? PerformerCache;
         private IBodyPart? _part;
-        [DataClassTarget("behaviours")]
+
+        [DataField("behaviours", serverOnly: true)] private HashSet<IMechanismBehavior> _behaviorTypes = new();
+
         private readonly Dictionary<Type, IMechanismBehavior> _behaviors = new();
 
         public IBody? Body => Part?.Body;
@@ -81,6 +85,27 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
         [DataField("compatibility")]
         public BodyPartCompatibility Compatibility { get; set; } = BodyPartCompatibility.Universal;
+
+        void ISerializationHooks.BeforeSerialization()
+        {
+            _behaviorTypes = _behaviors.Values.ToHashSet();
+        }
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            foreach (var behavior in _behaviorTypes)
+            {
+                var type = behavior.GetType();
+
+                if (!_behaviors.TryAdd(type, behavior))
+                {
+                    Logger.Warning($"Duplicate behavior in {nameof(SharedMechanismComponent)}: {type}.");
+                    continue;
+                }
+
+                IoCManager.InjectDependencies(behavior);
+            }
+        }
 
         public override void Initialize()
         {

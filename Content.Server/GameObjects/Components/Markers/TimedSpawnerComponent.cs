@@ -4,14 +4,14 @@ using System.Threading;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Markers
 {
     [RegisterComponent]
-    [DataClass(typeof(TimedSpawnerComponentData))]
-    public class TimedSpawnerComponent : Component
+    public class TimedSpawnerComponent : Component, ISerializationHooks
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -30,14 +30,20 @@ namespace Content.Server.GameObjects.Components.Markers
         public int IntervalSeconds { get; set; } = 60;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataClassTarget("MinimumEntitiesSpawned")]
+        [DataField("MinimumEntitiesSpawned")]
         public int MinimumEntitiesSpawned { get; set; } = 1;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataClassTarget("MaximumEntitiesSpawned")]
+        [DataField("MaximumEntitiesSpawned")]
         public int MaximumEntitiesSpawned { get; set; } = 1;
 
         private CancellationTokenSource TokenSource;
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            if (MinimumEntitiesSpawned > MaximumEntitiesSpawned)
+                throw new ArgumentException("MaximumEntitiesSpawned can't be lower than MinimumEntitiesSpawned!");
+        }
 
         public override void Initialize()
         {

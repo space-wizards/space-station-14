@@ -5,8 +5,10 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -18,15 +20,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     /// Generally used for bullets but can be used for other things like bananas
     /// </summary>
     [RegisterComponent]
-    [DataClass(typeof(AmmoComponentData))]
-    public class AmmoComponent : Component, IExamine
+    public class AmmoComponent : Component, IExamine, ISerializationHooks
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "Ammo";
-        public BallisticCaliber Caliber => _caliber;
-        [DataField("caliber")]
-        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
+
+        [field: DataField("caliber")]
+        public BallisticCaliber Caliber { get; } = BallisticCaliber.Unspecified;
+
         public bool Spent
         {
             get
@@ -39,48 +41,65 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 return _spent;
             }
         }
+
         private bool _spent;
 
         /// <summary>
         /// Used for anything without a case that fires itself
         /// </summary>
-        [DataClassTarget("isProjectile")]
+        [DataField("isProjectile")]
         private bool _ammoIsProjectile;
 
         /// <summary>
         /// Used for something that is deleted when the projectile is retrieved
         /// </summary>
-        public bool Caseless => _caseless;
-        [DataClassTarget("caseless")]
-        private bool _caseless;
+        [field: DataField("caseless")]
+        public bool Caseless { get; }
+
         // Rather than managing bullet / case state seemed easier to just have 2 toggles
         // ammoIsProjectile being for a beanbag for example and caseless being for ClRifle rounds
 
         /// <summary>
         /// For shotguns where they might shoot multiple entities
         /// </summary>
-        public int ProjectilesFired => _projectilesFired;
-        [DataClassTarget("projectilesFired")]
-        private int _projectilesFired = 1;
+        [field: DataField("projectilesFired")]
+        public int ProjectilesFired { get; } = 1;
+
         [DataField("projectile")]
         private string _projectileId;
+
         // How far apart each entity is if multiple are shot
-        public float EvenSpreadAngle => _evenSpreadAngle;
-        [DataClassTarget("ammoSpread")]
-        private float _evenSpreadAngle = default;
+        [field: DataField("ammoSpread")]
+        public float EvenSpreadAngle { get; } = default;
+
         /// <summary>
         /// How fast the shot entities travel
         /// </summary>
-        public float Velocity => _velocity;
-        [DataField("ammoVelocity")]
-        private float _velocity = 20f;
+        [field: DataField("ammoVelocity")]
+        public float Velocity { get; } = 20f;
 
         [DataField("muzzleFlash")]
         private string _muzzleFlashSprite = "Objects/Weapons/Guns/Projectiles/bullet_muzzle.png";
 
-        public string SoundCollectionEject => _soundCollectionEject;
-        [DataField("soundCollectionEject")]
-        private string _soundCollectionEject = "CasingEject";
+        [field: DataField("soundCollectionEject")]
+        public string SoundCollectionEject { get; } = "CasingEject";
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            // Being both caseless and shooting yourself doesn't make sense
+            DebugTools.Assert(!(_ammoIsProjectile == true && Caseless == true));
+
+            if (ProjectilesFired < 1)
+            {
+                Logger.Error("Ammo can't have less than 1 projectile");
+            }
+
+            if (EvenSpreadAngle > 0 && ProjectilesFired == 1)
+            {
+                Logger.Error("Can't have an even spread if only 1 projectile is fired");
+                throw new InvalidOperationException();
+            }
+        }
 
         public IEntity TakeBullet(EntityCoordinates spawnAt)
         {

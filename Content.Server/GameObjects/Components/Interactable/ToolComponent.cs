@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         protected ToolQuality _qualities = ToolQuality.None;
 
         [ViewVariables]
-        [DataClassTarget("qualities")]
+        [DataField("qualities")]
         public override ToolQuality Qualities
         {
             get => _qualities;

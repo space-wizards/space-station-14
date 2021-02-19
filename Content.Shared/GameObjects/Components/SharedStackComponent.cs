@@ -1,13 +1,14 @@
 ﻿using System;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components
 {
-    [DataClass(typeof(SharedStackComponentDataClass))]
-    public abstract class SharedStackComponent : Component
+    public abstract class SharedStackComponent : Component, ISerializationHooks
     {
         private const string SerializationCache = "stack";
 
@@ -48,11 +49,31 @@ namespace Content.Shared.GameObjects.Components
 
         [ViewVariables] public int AvailableSpace => MaxCount - Count;
 
+        [DataField("stacktype")] public string StackTypeId;
+
         [ViewVariables]
         [DataField("stacktype")]
-        public object StackType { get => _stackType == null ? Owner.Prototype.ID : _stackType; private set => _stackType = value; }
+        public object StackType
+        {
+            get => _stackType ?? Owner.Prototype?.ID;
+            private set => _stackType = value;
+        }
 
         private object _stackType;
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            var reflection = IoCManager.Resolve<IReflectionManager>();
+
+            if (reflection.TryParseEnumReference(StackTypeId, out var @enum))
+            {
+                StackType = @enum;
+            }
+            else
+            {
+                StackType = StackTypeId;
+            }
+        }
 
         public override ComponentState GetComponentState()
         {

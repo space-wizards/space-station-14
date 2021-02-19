@@ -1,9 +1,11 @@
-﻿using Content.Server.Botany;
+﻿#nullable enable
+using Content.Server.Botany;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -11,15 +13,25 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Botany
 {
     [RegisterComponent]
-    [DataClass(typeof(SeedComponentData))]
-    public class SeedComponent : Component, IExamine
+    public class SeedComponent : Component, IExamine, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Seed";
+
+        [DataField("seed")]
+        private string? _seedName;
+
         [ViewVariables]
-        [DataClassTarget("Seed")]
-        public Seed Seed { get; set; } = null;
+        public Seed? Seed { get; set; }
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            if (_seedName != null)
+            {
+                Seed = IoCManager.Resolve<IPrototypeManager>().Index<Seed>(_seedName);
+            }
+        }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {

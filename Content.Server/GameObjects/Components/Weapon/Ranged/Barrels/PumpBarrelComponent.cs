@@ -21,7 +21,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     /// Bolt-action rifles
     /// </summary>
     [RegisterComponent]
-    [DataClass(typeof(PumpBarrelComponentData))]
     public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit, ISerializationHooks
     {
         public override string Name => "PumpBarrel";
@@ -36,14 +35,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
 
-        public override int Capacity => _capacity;
-        [DataClassTarget("capacity")]
-        private int _capacity = 6;
+        [field: DataField("capacity")]
+        public override int Capacity { get; } = 6;
 
         // Even a point having a chamber? I guess it makes some of the below code cleaner
         private ContainerSlot _chamberContainer;
         //todo paul wat [DataClassTarget("spawnedAmmo")]
-        private Stack<IEntity> _spawnedAmmo = default;
+        private Stack<IEntity> _spawnedAmmo;
         private Container _ammoContainer;
 
         [ViewVariables]
@@ -64,6 +62,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         // Sounds
         [DataField("soundCycle")]
         private string _soundCycle = "/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg";
+
         [DataField("soundInsert")]
         private string _soundInsert = "/Audio/Weapons/Guns/MagIn/bullet_insert.ogg";
 

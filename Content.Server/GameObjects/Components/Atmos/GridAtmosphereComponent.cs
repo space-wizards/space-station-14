@@ -20,7 +20,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using static Content.Server.GameObjects.Components.Atmos.GridAtmosphereComponentData;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.GameObjects.Components.Atmos
@@ -30,12 +29,11 @@ namespace Content.Server.GameObjects.Components.Atmos
     /// </summary>
     [ComponentReference(typeof(IGridAtmosphereComponent))]
     [RegisterComponent, Serializable]
-    [DataClass(typeof(GridAtmosphereComponentData))]
     public class GridAtmosphereComponent : Component, IGridAtmosphereComponent
     {
-        [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
-        [Robust.Shared.IoC.Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
-        [Robust.Shared.IoC.Dependency] private IServerEntityManager _serverEntityManager = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private IServerEntityManager _serverEntityManager = default!;
 
         public GridTileLookupSystem GridTileLookupSystem { get; private set; } = default!;
         internal GasTileOverlaySystem GasTileOverlaySystem { get; private set; } = default!;
@@ -73,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables]
         protected readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new(1000);
 
-        [DataClassTarget("tiles")]
+        [DataField("tiles")]
         private List<IntermediateTileAtmosphere> TilesReceiver
         {
             get
@@ -895,6 +893,18 @@ namespace Content.Server.GameObjects.Components.Atmos
         public virtual void BurnTile(Vector2i gridIndices)
         {
             // TODO ATMOS
+        }
+    }
+
+    public struct IntermediateTileAtmosphere
+    {
+        public readonly Vector2i Indices;
+        public readonly GasMixture GasMixture;
+
+        public IntermediateTileAtmosphere(Vector2i indices, GasMixture gasMixture)
+        {
+            Indices = indices;
+            GasMixture = gasMixture;
         }
     }
 }
