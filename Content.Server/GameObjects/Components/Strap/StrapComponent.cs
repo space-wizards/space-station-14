@@ -35,7 +35,6 @@ namespace Content.Server.GameObjects.Components.Strap
         /// The size of the strap which is compared against when buckling entities
         /// </summary>
         [ViewVariables] [DataField("size")] private int _size = 100;
-
         private int _occupiedSize;
 
         /// <summary>
