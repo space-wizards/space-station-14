@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private SoundCollectionPrototype _ambientCollection = default!;
 
-        private AudioParams _ambientParams = new(-8f, 1, "Master", 0, 0, AudioMixTarget.Stereo, true, 0f);
+        private AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, AudioMixTarget.Stereo, true, 0f);
 
         private IPlayingAudioStream? _ambientStream;
 
