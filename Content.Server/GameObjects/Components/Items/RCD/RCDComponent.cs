@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                     Loc.GetString(
                         "rcd-component-examine-detail-count",
                         ("mode", _mode),
-                        ("ammo-count", _ammo)
+                        ("ammoCount", _ammo)
                     )
                 );
             }
