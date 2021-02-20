@@ -37,7 +37,6 @@ namespace Content.Server.Actions
                     boo.AffectedByGhostBoo(args);
             }
 
-
             actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(_cooldown));
         }
     }

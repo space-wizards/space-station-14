@@ -36,10 +36,15 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         public override string Name => "PoweredLight";
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
+
+        // time to blink light when ghost made boo nearby
+        private static readonly TimeSpan ghostBlinkingTime = TimeSpan.FromSeconds(2);
+
         private TimeSpan _lastThunk;
         private bool _hasLampOnSpawn;
 
         [ViewVariables] private bool _on;
+        [ViewVariables] private bool _isBlinking;
 
         private LightBulbType BulbType = LightBulbType.Tube;
         [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
@@ -269,9 +274,26 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             UpdateLight();
         }
 
+        public void ToggleBlinkingLight(bool isNowBlinking)
+        {
+            if (_isBlinking == isNowBlinking)
+                return;
+
+            _isBlinking = isNowBlinking;
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(PoweredLightVisuals.Blinking, _isBlinking);
+            }
+        }
+
         public void AffectedByGhostBoo(InstantActionEventArgs args)
         {
-            Logger.Debug("Boooo!");
+            ToggleBlinkingLight(true);
+
+            Owner.SpawnTimer(ghostBlinkingTime, () => {
+                ToggleBlinkingLight(false);
+            });   
         }
     }
 }

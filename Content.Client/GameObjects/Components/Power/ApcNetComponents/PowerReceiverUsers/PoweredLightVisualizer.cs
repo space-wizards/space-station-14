@@ -34,6 +34,8 @@ namespace Content.Client.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     light.Enabled = true;
                     if (component.TryGetData(PoweredLightVisuals.BulbColor, out Color color))
                         light.Color = color;
+                    if (component.TryGetData(PoweredLightVisuals.Blinking, out bool isBlinking))
+
                     break;
                 case PoweredLightState.Broken:
                     sprite.LayerSetState(0, "broken");
