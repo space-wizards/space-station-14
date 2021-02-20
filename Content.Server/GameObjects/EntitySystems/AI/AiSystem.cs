@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.AI.Utility.Actions;
@@ -7,7 +7,6 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared;
 using JetBrains.Annotations;
-using Robust.Server.AI;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

@@ -6,7 +6,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Server.AI.Utility
 {
     [Prototype("behaviorSet")]
-    public class BehaviorSetPrototype : IIndexedPrototype, IPrototype
+    public class BehaviorSetPrototype : IPrototype
     {
         /// <summary>
         ///     Name of the BehaviorSet.
