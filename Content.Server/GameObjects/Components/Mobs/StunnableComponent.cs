@@ -68,7 +68,8 @@ namespace Content.Server.GameObjects.Components.Mobs
             {
                 KnockdownTimer -= delta;
 
-                if (KnockdownTimer <= 0f)
+                if (KnockdownTimer <= 0f
+                    && Owner.TryGetComponent(out IMobStateComponent? mobState) && !mobState.IsIncapacitated())
                 {
                     EntitySystem.Get<StandingStateSystem>().Standing(Owner);
 
