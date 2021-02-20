@@ -1,5 +1,5 @@
 ﻿- type: entity
-  name: Emitter
+  name: emitter
   description: "A machine that fires bolts of energy, used for powering containment fields at a safe distance."
   id: Emitter
   placement:
@@ -42,34 +42,29 @@
     nodes:
     - !type:AdjacentNode
       nodeGroupID: MVPower
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 5
+              max: 5
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+
   - type: Anchorable
   - type: Pullable
+  - type: Rotatable
   - type: Appearance
-#  - type: Rotatable
-# Idk why but the emitter breaks when I apply this.
     visuals:
     - type: EmitterVisualizer
   - type: AccessReader
     access: [[ "Engineering" ]]
-
-
-- type: entity
-  name: Emitter Bolt
-  description: "A bolt of energy."
-  id: EmitterBolt
-  parent: BulletBase
-  components:
-  - type: Sprite
-    sprite: Constructible/Power/emitter.rsi
-    state: ''
-    layers:
-    - state: emitter_projectile
-      shader: unshaded
-  - type: Icon
-    sprite: Constructible/Power/emitter.rsi
-    state: emitter_projectile
-  - type: EmitterBoltComponent
-  - type: Projectile
-    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
-    damages:
-      Heat: 20
