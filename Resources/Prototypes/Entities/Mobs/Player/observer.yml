@@ -40,5 +40,3 @@
     baseSprintSpeed: 14
     baseWalkSpeed: 7
   - type: MovementIgnoreGravity
-  - type: Grammar
-    proper: true

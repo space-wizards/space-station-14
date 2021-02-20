@@ -326,5 +326,3 @@
     - type: Appearance
       visuals:
       - type: RotationVisualizer
-    - type: Grammar
-      proper: true
