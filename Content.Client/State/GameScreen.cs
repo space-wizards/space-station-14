@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Client.Administration;
 using Content.Client.Chat;
 using Content.Client.Construction;
@@ -14,8 +15,6 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
-
-#nullable enable
 
 namespace Content.Client.State
 {
@@ -106,6 +105,9 @@ namespace Content.Client.State
                 return;
             }
 
+            if(_gameChat is null)
+                return;
+
             _gameChat.Input.PlaceHolder = Loc.GetString(_oocEnabled ? "Say something! [ for OOC" : "Say something!");
         }
 
@@ -118,11 +120,17 @@ namespace Content.Client.State
                 return;
             }
 
+            if (_gameChat is null)
+                return;
+
             _gameChat.Input.PlaceHolder = Loc.GetString(_adminOocEnabled ? "Say something! [ for OOC" : "Say something!");
         }
 
         private void OnAdminStatusUpdated()
         {
+            if (_gameChat is null)
+                return;
+
             _gameChat.Input.PlaceHolder = _adminManager.IsActive()
                 ? Loc.GetString(_adminOocEnabled ? "Say something! [ for OOC" : "Say something!")
                 : Loc.GetString(_oocEnabled ? "Say something! [ for OOC" : "Say something!");

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +9,15 @@ using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.Placement;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.Placement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-
-#nullable enable
 
 namespace Content.Client.Construction
 {
@@ -140,6 +138,7 @@ namespace Content.Client.Construction
             }
 
             _selected = (ConstructionPrototype) item.Metadata!;
+            if (_placementManager.IsActive && !_placementManager.Eraser) UpdateGhostPlacement();
             PopulateInfo(_selected);
         }
 
@@ -320,7 +319,7 @@ namespace Content.Client.Construction
                         case StackType.Plasteel:
                             return resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/plasteel.png");
 
-                        case StackType.Phoron:
+                        case StackType.Plasma:
                             return resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/phoron.png");
 
                         case StackType.Cable:
@@ -401,6 +400,8 @@ namespace Content.Client.Construction
                     IsTile = false,
                     PlacementOption = _selected.PlacementMode
                 }, new ConstructionPlacementHijack(_constructionSystem, _selected));
+
+                UpdateGhostPlacement();
             }
             else
                 _placementManager.Clear();
@@ -408,6 +409,21 @@ namespace Content.Client.Construction
             _constructionView.BuildButtonPressed = pressed;
         }
 
+        private void UpdateGhostPlacement()
+        {
+            if (_selected == null || _selected.Type != ConstructionType.Structure) return;
+
+            var constructSystem = EntitySystem.Get<ConstructionSystem>();
+
+            _placementManager.BeginPlacing(new PlacementInformation()
+            {
+                IsTile = false,
+                PlacementOption = _selected.PlacementMode,
+            }, new ConstructionPlacementHijack(constructSystem, _selected));
+
+            _constructionView.BuildButtonPressed = true;
+        }
+        
         private void OnSystemLoaded(object? sender, SystemChangedArgs args)
         {
             if (args.System is ConstructionSystem system) SystemBindingChanged(system);
