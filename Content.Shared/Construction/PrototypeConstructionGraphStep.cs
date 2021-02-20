@@ -26,11 +26,11 @@ namespace Content.Shared.Construction
             message.AddMarkup(string.IsNullOrEmpty(Name)
                 ? Loc.GetString(
                     "construction-insert-prototype-no-name",
-                    ("entity-component-name", Prototype) // Terrible.
+                    ("prototypeName", Prototype) // Terrible.
                 )
                 : Loc.GetString(
                     "construction-insert-prototype",
-                    ("entity-name", Name)
+                    ("entityName", Name)
                 ));
         }
     }

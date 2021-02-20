@@ -33,10 +33,10 @@ namespace Content.Shared.Construction
             message.AddMarkup(string.IsNullOrEmpty(Name)
                 ? Loc.GetString(
                     "construction-insert-entity-with-component",
-                    ("entity-component-name", Component))// Terrible.
+                    ("componentName", Component))// Terrible.
                 : Loc.GetString(
                     "construction-insert-exact-entity",
-                    ("entity-name", Name)));
+                    ("entityName", Name)));
         }
     }
 }
