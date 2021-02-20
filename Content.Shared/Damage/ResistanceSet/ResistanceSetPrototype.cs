@@ -12,7 +12,7 @@ namespace Content.Shared.Damage.ResistanceSet
     /// </summary>
     [Prototype("resistanceSet")]
     [Serializable, NetSerializable]
-    public class ResistanceSetPrototype : IPrototype, IIndexedPrototype
+    public class ResistanceSetPrototype : IPrototype
     {
         private Dictionary<DamageType, float> _coefficients;
         private Dictionary<DamageType, int> _flatReductions;

@@ -1,41 +1,41 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.AiLogic;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared;
 using JetBrains.Annotations;
-using Robust.Server.AI;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI
 {
+    /// <summary>
+    ///     Handles NPCs running every tick.
+    /// </summary>
     [UsedImplicitly]
     internal class AiSystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
-        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
-
-        private readonly Dictionary<string, Type> _processorTypes = new();
 
         /// <summary>
         ///     To avoid iterating over dead AI continuously they can wake and sleep themselves when necessary.
         /// </summary>
-        private readonly HashSet<AiLogicProcessor> _awakeAi = new();
+        private readonly HashSet<AiControllerComponent> _awakeAi = new();
 
         // To avoid modifying awakeAi while iterating over it.
         private readonly List<SleepAiMessage> _queuedSleepMessages = new();
 
         private readonly List<MobStateChangedMessage> _queuedMobStateMessages = new();
 
-        public bool IsAwake(AiLogicProcessor processor) => _awakeAi.Contains(processor);
+        public bool IsAwake(AiControllerComponent npc) => _awakeAi.Contains(npc);
 
         /// <inheritdoc />
         public override void Initialize()
@@ -43,15 +43,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI
             base.Initialize();
             SubscribeLocalEvent<SleepAiMessage>(HandleAiSleep);
             SubscribeLocalEvent<MobStateChangedMessage>(MobStateChanged);
-
-            var processors = _reflectionManager.GetAllChildren<UtilityAi>();
-            foreach (var processor in processors)
-            {
-                var att = (AiLogicProcessorAttribute) Attribute.GetCustomAttribute(processor, typeof(AiLogicProcessorAttribute))!;
-                // Tests should pick this up
-                DebugTools.AssertNotNull(att);
-                _processorTypes.Add(att.SerializeName, processor);
-            }
         }
 
         /// <inheritdoc />
@@ -63,13 +54,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI
 
             foreach (var message in _queuedMobStateMessages)
             {
+                // TODO: Need to generecise this but that will be part of a larger cleanup later anyway.
                 if (message.Entity.Deleted ||
-                    !message.Entity.TryGetComponent(out AiControllerComponent? controller))
+                    !message.Entity.TryGetComponent(out UtilityAi? controller))
                 {
                     continue;
                 }
 
-                controller.Processor?.MobStateChanged(message);
+                controller.MobStateChanged(message);
             }
 
             _queuedMobStateMessages.Clear();
@@ -79,14 +71,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                 switch (message.Sleep)
                 {
                     case true:
-                        if (_awakeAi.Count == cvarMaxUpdates && _awakeAi.Contains(message.Processor))
+                        if (_awakeAi.Count == cvarMaxUpdates && _awakeAi.Contains(message.Component))
                         {
                             Logger.Warning($"Under AI limit again: {_awakeAi.Count - 1} / {cvarMaxUpdates}");
                         }
-                        _awakeAi.Remove(message.Processor);
+                        _awakeAi.Remove(message.Component);
                         break;
                     case false:
-                        _awakeAi.Add(message.Processor);
+                        _awakeAi.Add(message.Component);
 
                         if (_awakeAi.Count > cvarMaxUpdates)
                         {
@@ -97,16 +89,17 @@ namespace Content.Server.GameObjects.EntitySystems.AI
             }
 
             _queuedSleepMessages.Clear();
-            var toRemove = new List<AiLogicProcessor>();
+            var toRemove = new List<AiControllerComponent>();
             var maxUpdates = Math.Min(_awakeAi.Count, cvarMaxUpdates);
             var count = 0;
 
-            foreach (var processor in _awakeAi)
+            foreach (var npc in _awakeAi)
             {
-                if (processor.SelfEntity.Deleted ||
-                    !processor.SelfEntity.HasComponent<AiControllerComponent>())
+                if (npc.Paused) continue;
+
+                if (npc.Deleted)
                 {
-                    toRemove.Add(processor);
+                    toRemove.Add(npc);
                     continue;
                 }
 
@@ -115,7 +108,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                     break;
                 }
 
-                processor.Update(frameTime);
+                npc.Update(frameTime);
                 count++;
             }
 
@@ -139,32 +132,5 @@ namespace Content.Server.GameObjects.EntitySystems.AI
 
             _queuedMobStateMessages.Add(message);
         }
-
-        /// <summary>
-        ///     Will start up the controller's processor if not already done so.
-        ///     Also add them to the awakeAi for updates.
-        /// </summary>
-        /// <param name="controller"></param>
-        public void ProcessorInitialize(AiControllerComponent controller)
-        {
-            if (controller.Processor != null || controller.LogicName == null) return;
-            controller.Processor = CreateProcessor(controller.LogicName);
-            controller.Processor.SelfEntity = controller.Owner;
-            controller.Processor.Setup();
-            _awakeAi.Add(controller.Processor);
-        }
-
-        private UtilityAi CreateProcessor(string name)
-        {
-            if (_processorTypes.TryGetValue(name, out var type))
-            {
-                return (UtilityAi)_typeFactory.CreateInstance(type);
-            }
-
-            // processor needs to inherit AiLogicProcessor, and needs an AiLogicProcessorAttribute to define the YAML name
-            throw new ArgumentException($"Processor type {name} could not be found.", nameof(name));
-        }
-
-        public bool ProcessorTypeExists(string name) => _processorTypes.ContainsKey(name);
     }
 }

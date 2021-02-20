@@ -428,7 +428,7 @@ namespace Content.Client.UserInterface.ParticleAccelerator
             _shouldContinueAnimating = false;
             _alarmControl.StopAnimation("warningAnim");
             _alarmControl.Visible = false;
-            if (maxState == ParticleAcceleratorPowerState.Level3 && enabled == true && assembled == true)
+            if (maxState == ParticleAcceleratorPowerState.Level3 && enabled && assembled)
             {
                 _shouldContinueAnimating = true;
                 _alarmControl.PlayAnimation(_alarmControlAnimation, "warningAnim");

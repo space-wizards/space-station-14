@@ -1,8 +1,12 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -23,6 +27,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         void UpdatePowerProviderReceivers(PowerProviderComponent provider, int oldLoad, int newLoad);
 
         void Update(float frameTime);
+
+        GridId? GridId { get; }
     }
 
     [NodeGroup(NodeGroupID.Apc)]
@@ -44,9 +50,51 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         [ViewVariables]
         private int TotalPowerReceiverLoad { get => _totalPowerReceiverLoad; set => SetTotalPowerReceiverLoad(value); }
+
+        GridId? IApcNet.GridId => GridId;
+
         private int _totalPowerReceiverLoad = 0;
 
         public static readonly IApcNet NullNet = new NullApcNet();
+
+        public override void Initialize(Node sourceNode)
+        {
+            base.Initialize(sourceNode);
+
+            EntitySystem.Get<ApcNetSystem>().AddApcNet(this);
+        }
+
+        protected override void AfterRemake(IEnumerable<INodeGroup> newGroups)
+        {
+            base.AfterRemake(newGroups);
+
+            foreach (var group in newGroups)
+            {
+                if (group is not ApcNetNodeGroup apcNet)
+                    continue;
+
+                apcNet.Powered = Powered;
+            }
+
+            StopUpdates();
+        }
+
+        protected override void OnGivingNodesForCombine(INodeGroup newGroup)
+        {
+            base.OnGivingNodesForCombine(newGroup);
+
+            if (newGroup is ApcNetNodeGroup apcNet)
+            {
+                apcNet.Powered = Powered;
+            }
+
+            StopUpdates();
+        }
+
+        private void StopUpdates()
+        {
+            EntitySystem.Get<ApcNetSystem>().RemoveApcNet(this);
+        }
 
         #region IApcNet Methods
 
@@ -57,7 +105,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public void AddApc(ApcComponent apc)
         {
-            if (!apc.Owner.TryGetComponent<BatteryComponent>(out var battery))
+            if (!apc.Owner.TryGetComponent(out BatteryComponent? battery))
             {
                 return;
             }
@@ -162,7 +210,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             ///     It is important that this returns false, so <see cref="PowerProviderComponent"/>s with a <see cref="NullApcNet"/> have no power.
             /// </summary>
             public bool Powered => false;
-
+            public GridId? GridId => default;
             public void AddApc(ApcComponent apc) { }
             public void AddPowerProvider(PowerProviderComponent provider) { }
             public void RemoveApc(ApcComponent apc) { }

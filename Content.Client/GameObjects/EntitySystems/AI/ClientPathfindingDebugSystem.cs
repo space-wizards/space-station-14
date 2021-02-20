@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.AI;
@@ -10,7 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timers;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.EntitySystems.AI
 {

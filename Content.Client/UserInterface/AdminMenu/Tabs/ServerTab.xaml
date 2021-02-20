@@ -1,0 +1,13 @@
+﻿<MarginContainer
+    xmlns="https://spacestation14.io"
+    xmlns:amc="clr-namespace:Content.Client.UserInterface.AdminMenu.CustomControls"
+    MarginLeftOverride="4"
+    MarginTopOverride="4" MarginRightOverride="4"
+    MarginBottomOverride="4"
+    CustomMinimumSize="50 50">
+    <GridContainer
+        Columns="4" >
+        <amc:CommandButton Command="restart" Text="{Loc Reboot}"></amc:CommandButton>
+        <amc:CommandButton Command="shutdown" Text="{Loc Shutdown}"></amc:CommandButton>
+    </GridContainer>
+</MarginContainer>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -31,8 +30,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using static Content.Shared.GameObjects.EntitySystemMessages.VerbSystemMessages;
-using Timer = Robust.Shared.Timers.Timer;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -46,9 +44,9 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
-        private EntityList ?_currentEntityList;
-        private VerbPopup? _currentVerbListRoot;
-        private VerbPopup? _currentGroupList;
+        private EntityList _currentEntityList;
+        private VerbPopup _currentVerbListRoot;
+        private VerbPopup _currentGroupList;
 
         private EntityUid _currentEntity;
 
@@ -60,7 +58,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeNetworkEvent<VerbsResponseMessage>(FillEntityPopup);
+            SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
             SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
 
             IoCManager.InjectDependencies(this);
@@ -102,7 +100,7 @@ namespace Content.Client.GameObjects.EntitySystems
             if (!entity.Uid.IsClientSide())
             {
                 _currentVerbListRoot.List.AddChild(new Label {Text = "Waiting on Server..."});
-                RaiseNetworkEvent(new RequestVerbsMessage(_currentEntity));
+                RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
             }
 
             var box = UIBox2.FromDimensions(screenCoordinates.Position, (1, 1));
@@ -111,7 +109,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public bool CanSeeOnContextMenu(IEntity entity)
         {
-            if (!entity.TryGetComponent(out SpriteComponent? sprite) || !sprite.Visible)
+            if (!entity.TryGetComponent(out SpriteComponent sprite) || !sprite.Visible)
             {
                 return false;
             }
@@ -190,14 +188,14 @@ namespace Content.Client.GameObjects.EntitySystems
             OpenContextMenu(entity, new ScreenCoordinates(_userInterfaceManager.MousePositionScaled));
         }
 
-        private void FillEntityPopup(VerbsResponseMessage msg)
+        private void FillEntityPopup(VerbSystemMessages.VerbsResponseMessage msg)
         {
             if (_currentEntity != msg.Entity || !EntityManager.TryGetEntity(_currentEntity, out var entity))
             {
                 return;
             }
 
-            Debug.Assert(_currentVerbListRoot != null, nameof(_currentVerbListRoot) + " != null");
+            DebugTools.AssertNotNull(_currentVerbListRoot);
 
             var buttons = new Dictionary<string, List<ListedVerbData>>();
             var groupIcons = new Dictionary<string, SpriteSpecifier>();
@@ -217,9 +215,9 @@ namespace Content.Client.GameObjects.EntitySystems
                     groupIcons.Add(data.Category, data.CategoryIcon);
                 }
 
-                list.Add(new ListedVerbData(data.Text, !data.Available, data.Key, entity.ToString()!, () =>
+                list.Add(new ListedVerbData(data.Text, !data.Available, data.Key, entity.ToString(), () =>
                 {
-                    RaiseNetworkEvent(new UseVerbMessage(curEntity, data.Key));
+                    RaiseNetworkEvent(new VerbSystemMessages.UseVerbMessage(curEntity, data.Key));
                     CloseAllMenus();
                 }, data.Icon));
             }
@@ -245,13 +243,8 @@ namespace Content.Client.GameObjects.EntitySystems
                     groupIcons.Add(verbData.Category, verbData.CategoryIcon);
                 }
 
-                list.Add(new ListedVerbData(
-                    verbData.Text,
-                    verbData.IsDisabled,
-                    verb.ToString()!,
-                    entity.ToString()!,
-                    () => verb.Activate(user, component),
-                    verbData.Icon));
+                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, verb.ToString(), entity.ToString(),
+                    () => verb.Activate(user, component), verbData.Icon));
             }
 
             //Get global verbs. Visible for all entities regardless of their components.
@@ -274,13 +267,9 @@ namespace Content.Client.GameObjects.EntitySystems
                     groupIcons.Add(verbData.Category, verbData.CategoryIcon);
                 }
 
-                list.Add(new ListedVerbData(
-                    verbData.Text,
-                    verbData.IsDisabled,
-                    globalVerb.ToString()!,
-                    entity.ToString()!,
-                    () => globalVerb.Activate(user, entity),
-                    verbData.Icon));
+                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, globalVerb.ToString(),
+                    entity.ToString(),
+                    () => globalVerb.Activate(user, entity), verbData.Icon));
             }
 
             if (buttons.Count > 0)
@@ -302,10 +291,9 @@ namespace Content.Client.GameObjects.EntitySystems
 
                     first = false;
 
-                    if (groupIcons.TryGetValue(category, out var icon))
-                    {
-                        vBox.AddChild(CreateCategoryButton(category, verbs, icon));
-                    }
+                    groupIcons.TryGetValue(category, out var icon);
+
+                    vBox.AddChild(CreateCategoryButton(category, verbs, icon));
                 }
 
                 if (buttons.ContainsKey(""))
@@ -405,9 +393,9 @@ namespace Content.Client.GameObjects.EntitySystems
             _currentGroupList = null;
         }
 
-        private IEntity? GetUserEntity()
+        private IEntity GetUserEntity()
         {
-            return _playerManager.LocalPlayer?.ControlledEntity;
+            return _playerManager.LocalPlayer.ControlledEntity;
         }
 
         private sealed class EntityList : Popup
@@ -451,7 +439,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 MouseFilter = MouseFilterMode.Stop;
 
                 var control = new HBoxContainer {SeparationOverride = 6};
-                if (entity.TryGetComponent(out ISpriteComponent? sprite))
+                if (entity.TryGetComponent(out ISpriteComponent sprite))
                 {
                     control.AddChild(new SpriteView {Sprite = sprite});
                 }
@@ -503,12 +491,8 @@ namespace Content.Client.GameObjects.EntitySystems
                         args.PointerLocation, _entity.Uid);
 
                     // client side command handlers will always be sent the local player session.
-                    var session = _master._playerManager.LocalPlayer?.Session;
-
-                    if (session != null)
-                    {
-                        inputSys.HandleInputCommand(session, func, message);
-                    }
+                    var session = _master._playerManager.LocalPlayer.Session;
+                    inputSys.HandleInputCommand(session, func, message);
 
                     _master.CloseAllMenus();
                     return;
@@ -542,13 +526,13 @@ namespace Content.Client.GameObjects.EntitySystems
             private readonly Label _label;
             private readonly TextureRect _icon;
 
-            public Texture? Icon
+            public Texture Icon
             {
                 get => _icon.Texture;
                 set => _icon.Texture = value;
             }
 
-            public string? Text
+            public string Text
             {
                 get => _label.Text;
                 set => _label.Text = value;
@@ -592,15 +576,15 @@ namespace Content.Client.GameObjects.EntitySystems
             private readonly Label _label;
             private readonly TextureRect _icon;
 
-            private CancellationTokenSource? _openCancel;
+            private CancellationTokenSource _openCancel;
 
-            public string? Text
+            public string Text
             {
                 get => _label.Text;
                 set => _label.Text = value;
             }
 
-            public Texture? Icon
+            public Texture Icon
             {
                 get => _icon.Texture;
                 set => _icon.Texture = value;

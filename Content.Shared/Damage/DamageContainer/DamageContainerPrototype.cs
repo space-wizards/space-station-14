@@ -12,7 +12,7 @@ namespace Content.Shared.Damage.DamageContainer
     /// </summary>
     [Prototype("damageContainer")]
     [Serializable, NetSerializable]
-    public class DamageContainerPrototype : IPrototype, IIndexedPrototype
+    public class DamageContainerPrototype : IPrototype
     {
         private bool _supportAll;
         private HashSet<DamageClass> _supportedClasses;

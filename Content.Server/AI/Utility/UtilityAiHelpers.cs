@@ -14,7 +14,7 @@ namespace Content.Server.AI.Utility
                 return null;
             }
 
-            if (aiControllerComponent.Processor is UtilityAi utilityAi)
+            if (aiControllerComponent is UtilityAi utilityAi)
             {
                 return utilityAi.Blackboard;
             }

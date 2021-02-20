@@ -1,4 +1,6 @@
 #nullable enable
+using System;
+using System.Collections.Generic;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -6,12 +8,11 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
 
 namespace Content.Shared.GameObjects.Components.Chemistry
 {
@@ -261,7 +262,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             return new SolutionContainerVisualState(Color, filledVolumeFraction);
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new SolutionContainerComponentState(Solution);
         }

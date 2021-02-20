@@ -7,8 +7,12 @@
   drawdepth: Mobs
   suffix: AI
   components:
-  - type: AiController
-    logic: Civilian
+  - type: UtilityAI
+    behaviorSets:
+    - Clothing
+    - Hunger
+    - Thirst
+    - Idle
     startingGear: AssistantGear
   - type: AiFactionTag
     factions:
@@ -22,5 +26,10 @@
   description: Yarr!
   suffix: AI
   components:
-  - type: AiController
-    logic: Spirate
+  - type: UtilityAI
+    behaviorSets:
+    - Clothing
+    - Hunger
+    - Thirst
+    - Idle
+    - Spirate

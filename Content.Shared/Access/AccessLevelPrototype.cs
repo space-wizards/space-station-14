@@ -9,7 +9,7 @@ namespace Content.Shared.Access
     ///     Defines a single access level that can be stored on ID cards and checked for.
     /// </summary>
     [Prototype("accessLevel")]
-    public class AccessLevelPrototype : IPrototype, IIndexedPrototype
+    public class AccessLevelPrototype : IPrototype
     {
         public void LoadFrom(YamlMappingNode mapping)
         {

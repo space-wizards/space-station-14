@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             foreach (var heldItem in hands.GetAllHeldItems())
             {
-                hands.Drop(heldItem.Owner, doMobChecks);
+                hands.Drop(heldItem.Owner, doMobChecks, intentional:false);
             }
         }
 
