@@ -15,11 +15,13 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
     {
         const string PROTOTYPES = @"
 - type: alert
+  name: AlertLowPressure
   alertType: LowPressure
   category: Pressure
   icon: /Textures/Interface/Alerts/Pressure/lowpressure.png
 
 - type: alert
+  name: AlertHighPressure
   alertType: HighPressure
   category: Pressure
   icon: /Textures/Interface/Alerts/Pressure/highpressure.png

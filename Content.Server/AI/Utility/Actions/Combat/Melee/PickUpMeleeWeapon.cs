@@ -15,24 +15,18 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
     public sealed class PickUpMeleeWeapon : UtilityAction
     {
-        private readonly IEntity _entity;
-
-        public PickUpMeleeWeapon(IEntity owner, IEntity entity, float weight) : base(owner)
-        {
-            _entity = entity;
-            Bonus = weight;
-        }
+        public IEntity Target { get; set; }
 
         public override void SetupOperators(Blackboard context)
         {
-            ActionOperators = new GoPickupEntitySequence(Owner, _entity).Sequence;
+            ActionOperators = new GoPickupEntitySequence(Owner, Target).Sequence;
         }
 
         protected override void UpdateBlackboard(Blackboard context)
         {
             base.UpdateBlackboard(context);
-            context.GetState<TargetEntityState>().SetValue(_entity);
-            context.GetState<WeaponEntityState>().SetValue(_entity);
+            context.GetState<TargetEntityState>().SetValue(Target);
+            context.GetState<WeaponEntityState>().SetValue(Target);
         }
 
         protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
