@@ -1,5 +1,6 @@
 ﻿using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Rotation;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
@@ -38,6 +39,12 @@ namespace Content.Server.GameObjects.EntitySystems
         protected override bool OnStand(IEntity entity)
         {
             if (!entity.TryGetComponent(out AppearanceComponent appearance)) return false;
+
+            if (entity.TryGetComponent(out IMobStateComponent mobState)
+                && mobState.IsIncapacitated())
+            {
+                return false; // the dead cannot be allowed to walk
+            }
 
             appearance.TryGetData<RotationState>(RotationVisuals.RotationState, out var oldState);
             var newState = RotationState.Vertical;
