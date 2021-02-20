@@ -32,8 +32,6 @@ namespace Content.Client.Construction
         [Dependency] private readonly IEntitySystemManager _systemManager = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
 
-        protected override Vector2? CustomSize => (720, 320);
-
         private ConstructionPrototype? _selected;
         private string[] _categories = Array.Empty<string>();
 
@@ -62,6 +60,8 @@ namespace Content.Client.Construction
 
             PopulateCategories();
             PopulateAll();
+
+            SetSize = (720, 320);
         }
 
         private void PlacementChanged(object? sender, EventArgs e)

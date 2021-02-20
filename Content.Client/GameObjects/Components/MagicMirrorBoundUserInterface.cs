@@ -136,8 +136,8 @@ namespace Content.Client.GameObjects.Components
 
             Items = new ItemList
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                CustomMinimumSize = (300, 250)
+                VerticalExpand = true,
+                MinSize = (300, 250)
             };
             vBox.AddChild(Items);
             Items.OnItemSelected += ItemSelected;
@@ -202,13 +202,13 @@ namespace Content.Client.GameObjects.Components
                 _slider = new Slider
                 {
                     StyleClasses = {styleClass},
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                    HorizontalExpand = true,
+                    VerticalAlignment = VAlignment.Center,
                     MaxValue = byte.MaxValue
                 };
                 _textBox = new LineEdit
                 {
-                    CustomMinimumSize = (50, 0)
+                    MinSize = (50, 0)
                 };
 
                 AddChild(new HBoxContainer
@@ -261,18 +261,17 @@ namespace Content.Client.GameObjects.Components
         private readonly HairStylePicker _hairStylePicker;
         private readonly FacialHairStylePicker _facialHairStylePicker;
 
-        protected override Vector2? CustomSize => (500, 360);
-
         public MagicMirrorWindow(MagicMirrorBoundUserInterface owner)
         {
+            SetSize = MinSize = (500, 360);
             Title = Loc.GetString("Magic Mirror");
 
-            _hairStylePicker = new HairStylePicker {SizeFlagsHorizontal = SizeFlags.FillExpand};
+            _hairStylePicker = new HairStylePicker {HorizontalExpand = true};
             _hairStylePicker.Populate();
             _hairStylePicker.OnHairStylePicked += newStyle => owner.HairSelected(newStyle, false);
             _hairStylePicker.OnHairColorPicked += newColor => owner.HairColorSelected(newColor, false);
 
-            _facialHairStylePicker = new FacialHairStylePicker {SizeFlagsHorizontal = SizeFlags.FillExpand};
+            _facialHairStylePicker = new FacialHairStylePicker {HorizontalExpand = true};
             _facialHairStylePicker.Populate();
             _facialHairStylePicker.OnHairStylePicked += newStyle => owner.HairSelected(newStyle, true);
             _facialHairStylePicker.OnHairColorPicked += newColor => owner.HairColorSelected(newColor, true);

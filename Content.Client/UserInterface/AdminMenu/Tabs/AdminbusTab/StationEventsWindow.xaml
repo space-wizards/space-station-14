@@ -2,9 +2,9 @@
     xmlns="https://spacestation14.io" Title="Kick">
     <VBoxContainer>
         <HBoxContainer>
-            <Label Text="{Loc Event}" CustomMinimumSize="100 0" />
-            <Control CustomMinimumSize="50 0" />
-            <OptionButton Name="EventsOptions" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+            <Label Text="{Loc Event}" MinSize="100 0" />
+            <Control MinSize="50 0" />
+            <OptionButton Name="EventsOptions" MinSize="100 0" HorizontalExpand="True" />
         </HBoxContainer>
         <Button Name="PauseButton" Text="{Loc Pause}" />
         <Button Name="ResumeButton" Text="{Loc Resume}" />
