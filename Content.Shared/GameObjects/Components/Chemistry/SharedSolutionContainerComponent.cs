@@ -214,6 +214,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ReagentUnit ISolutionInteractionsComponent.InjectSpaceAvailable => EmptyVolume;
         ReagentUnit ISolutionInteractionsComponent.DrawAvailable => CurrentVolume;
         ReagentUnit ISolutionInteractionsComponent.DrainAvailable => CurrentVolume;
+        ReagentUnit ISolutionInteractionsComponent.Spillability => MaxVolume / ReagentUnit.New(4);
 
         void ISolutionInteractionsComponent.Refill(Solution solution)
         {
