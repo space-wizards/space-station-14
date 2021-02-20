@@ -303,8 +303,8 @@
             Quantity: 10
     - type: Sprite
       sprite: Objects/Misc/reageant_fillings.rsi
-      color: darkgreen
       state: powderpile
+      color: darkgreen
     - type: Construction
       graph: smokeableGroundCannabis
       node: ground
@@ -356,8 +356,8 @@
             Quantity: 10
     - type: Sprite
       sprite: Objects/Misc/reageant_fillings.rsi
-      color: brown
       state: powderpile
+      color: brown
     - type: Construction
       graph: smokeableGroundTobacco
       node: ground

@@ -7,14 +7,22 @@
         - to: rollie
           steps:
             - prototype: PaperRolling
-              amount: 1
-              doAfter: 1
+              icon:
+                sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+                state: cigpaper
+              name: rolling paper
             - prototype: CigaretteFilter
-              amount: 1
-              doAfter: 1
+              icon:
+                sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+                state: cigfilter
+              name: cigarette filter
             - prototype: GroundCannabis
-              amount: 1
-              doAfter: 1
+              icon:
+                sprite: Objects/Misc/reageant_fillings.rsi
+                state: powderpile
+#                color: darkgreen
+              name: ground cannabis
+              doAfter: 2
     - node: rollie
       entity: Rollie
 
@@ -26,11 +34,23 @@
       edges:
         - to: cigarette
           steps:
-          - - prototype: PaperRolling
-            - prototype: CigaretteFilter
             - prototype: PaperRolling
-              amount: 1
-              doAfter: 1
+              icon:
+                sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+                state: cigpaper
+              name: rolling paper
+            - prototype: CigaretteFilter
+              icon:
+                sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+                state: cigfilter
+              name: cigarette filter
+            - prototype: GroundTobacco
+              icon:
+                sprite: Objects/Misc/reageant_fillings.rsi
+                state: powderpile
+#                color: brown
+              name: ground tobacco
+              doAfter: 2
     - node: cigarette
       entity: Cigarette
 
@@ -43,7 +63,15 @@
         - to: ground
           steps:
             - prototype: LeavesCannabisDried
-              amount: 2
+              icon:
+                sprite: Objects/Specific/Hydroponics/cannabis.rsi
+                state: dried
+              name: dried cannabis leaves
+            - prototype: LeavesCannabisDried
+              icon:
+                sprite: Objects/Specific/Hydroponics/cannabis.rsi
+                state: dried
+              name: dried cannabis leaves
               doAfter: 5
     - node: ground
       entity: GroundCannabis
@@ -56,8 +84,17 @@
       edges:
         - to: ground
           steps:
-            - prototype: LeavesTobaccoDried
-              amount: 2
-              doAfter: 5
+          -  - prototype: LeavesTobaccoDried
+               icon:
+                 sprite: Objects/Specific/Hydroponics/tobacco.rsi
+                 state: dried
+               name: dried tobacco leaves
+          -  - prototype: LeavesTobaccoDried
+               icon:
+                 sprite: Objects/Specific/Hydroponics/tobacco.rsi
+                 state: dried
+               name: dried tobacco leaves
+               doAfter: 5
+
     - node: ground
       entity: GroundTobacco

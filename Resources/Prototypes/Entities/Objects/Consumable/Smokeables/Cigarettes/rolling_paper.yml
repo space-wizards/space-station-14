@@ -21,10 +21,6 @@
   description: "A thin piece of paper used to make fine smokeables."
   parent: BaseItem
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: paperrolling
     - type: Stack
       stacktype: enum.StackType.PaperRolling
       max: 5
@@ -42,17 +38,13 @@
   description: "A strip of firm paper used as a filter for handmade cigarettes."
   parent: BaseItem
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: cigarettefilter
     - type: Stack
       stacktype: enum.StackType.CigaretteFilter
       max: 5
       count: 1
     - type: Sprite
       sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-      state: filter
+      state: cigfilter
     - type: Item
       sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-      state: filter
+      state: cigfilter

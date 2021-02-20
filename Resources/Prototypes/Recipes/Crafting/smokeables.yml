@@ -31,6 +31,7 @@
   category: Misc
   description: "Ground cannabis, ready to take you on a trip."
   icon: Objects/Misc/reageant_fillings.rsi/powderpile.png
+#    color: darkgreen
   objectType: Item
 
 - type: construction
@@ -42,4 +43,5 @@
   category: Misc
   description: "Ground tobacco, perfect for hand-rolled cigarettes."
   icon: Objects/Misc/reageant_fillings.rsi/powderpile.png
+#    color: brown
   objectType: Item
