@@ -85,7 +85,7 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
                     {
                         new Label
                         {
-                            Text = player,
+                            Text = name,
                             SizeFlagsStretchRatio = 2f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand,
                             ClipText = true

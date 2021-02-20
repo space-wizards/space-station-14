@@ -2,7 +2,7 @@
 using System.Linq;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Timers;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

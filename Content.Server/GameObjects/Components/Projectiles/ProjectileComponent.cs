@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Projectiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -114,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             if (collideCount > 0 && DeleteOnCollide && _internalDeleteOnCollide) Owner.Delete();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new ProjectileComponentState(NetID!.Value, _shooter, IgnoreShooter);
         }
