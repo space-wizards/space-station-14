@@ -73,6 +73,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             serializer.DataField(this, x => x.MaxVolume, "maxVol", ReagentUnit.New(0));
             serializer.DataField(this, x => x.Solution, "contents", new Solution());
             serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.None);
+            serializer.DataField(this, x => x.Spillability, "spillability", MaxVolume / ReagentUnit.New(4));
         }
 
         public void RemoveAllSolution()
@@ -214,7 +215,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ReagentUnit ISolutionInteractionsComponent.InjectSpaceAvailable => EmptyVolume;
         ReagentUnit ISolutionInteractionsComponent.DrawAvailable => CurrentVolume;
         ReagentUnit ISolutionInteractionsComponent.DrainAvailable => CurrentVolume;
-        ReagentUnit ISolutionInteractionsComponent.Spillability => MaxVolume / ReagentUnit.New(4);
+        public ReagentUnit Spillability { get; set; }
 
         void ISolutionInteractionsComponent.Refill(Solution solution)
         {
