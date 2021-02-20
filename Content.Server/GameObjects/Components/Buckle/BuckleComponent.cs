@@ -28,6 +28,9 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Buckle
 {
+    /// <summary>
+    ///     Component that handles sitting entities into <see cref="StrapComponent"/>s.
+    /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedBuckleComponent))]
     public class BuckleComponent : SharedBuckleComponent, IInteractHand
