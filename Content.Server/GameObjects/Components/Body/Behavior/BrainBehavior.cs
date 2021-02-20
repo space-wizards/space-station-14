@@ -21,14 +21,14 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         {
             base.OnAddedToPart(part);
 
-            HandleMind(part.Owner, Owner);
+            HandleMind(part.Owner, Owner, true);
         }
 
         protected override void OnAddedToPartInBody(IBody body, IBodyPart part)
         {
             base.OnAddedToPartInBody(body, part);
 
-            HandleMind(body.Owner, Owner);
+            HandleMind(body.Owner, Owner, true);
         }
 
         protected override void OnRemovedFromBody(IBody old)
@@ -52,10 +52,11 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
             HandleMind(oldBody.Owner, Owner);
         }
 
-        private void HandleMind(IEntity newEntity, IEntity oldEntity)
+        private void HandleMind(IEntity newEntity, IEntity oldEntity, bool forceReturn = false)
         {
-            newEntity.EnsureComponent<MindComponent>();
+            var newMind = newEntity.EnsureComponent<MindComponent>();
             var oldMind = oldEntity.EnsureComponent<MindComponent>();
+            var visitingEntity = oldMind.Mind?.VisitingEntity;
 
             if (!newEntity.HasComponent<IGhostOnMove>())
                 newEntity.AddComponent<GhostOnMoveComponent>();
@@ -64,7 +65,22 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
             if (!newEntity.HasComponent<IMoverComponent>())
                 newEntity.AddComponent<SharedDummyInputMoverComponent>();
 
-            oldMind.Mind?.TransferTo(newEntity);
+            if (forceReturn)
+            {
+                if (visitingEntity?.HasComponent<GhostComponent>() == true)
+                    visitingEntity.Delete();
+                visitingEntity = null;
+            }
+
+            if (visitingEntity == null)
+            {
+                oldMind.Mind?.TransferTo(newEntity);
+                return;
+            }
+
+            oldMind.Mind?.UnVisit(true);
+            oldMind.Mind?.TransferTo(newEntity, true);
+            newMind.Mind?.Visit(visitingEntity, true);
         }
     }
 }

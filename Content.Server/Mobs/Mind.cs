@@ -189,10 +189,13 @@ namespace Content.Server.Mobs
         ///     The entity to control.
         ///     Can be null, in which case it will simply detach the mind from any entity.
         /// </param>
+        /// <param name="silent">
+        ///     Whether should we reassign player session to an entity or not
+        /// </param>
         /// <exception cref="ArgumentException">
         ///     Thrown if <paramref name="entity"/> is already owned by another mind.
         /// </exception>
-        public void TransferTo(IEntity entity)
+        public void TransferTo(IEntity entity, bool silent = false)
         {
             MindComponent component = null;
             bool alreadyAttached = false;
@@ -225,7 +228,7 @@ namespace Content.Server.Mobs
             OwnedMob?.InternalAssignMind(this);
 
             // Player is CURRENTLY connected.
-            if (Session != null && OwnedMob != null && !alreadyAttached)
+            if (Session != null && OwnedMob != null && !alreadyAttached && !silent)
             {
                 Session.AttachToEntity(entity);
             }
@@ -271,28 +274,28 @@ namespace Content.Server.Mobs
             newOwnerData.Mind = this;
         }
 
-        public void Visit(IEntity entity)
+        public void Visit(IEntity entity, bool silent = false)
         {
-            Session?.AttachToEntity(entity);
+            if (!silent) Session?.AttachToEntity(entity);
             VisitingEntity = entity;
 
-            var comp = entity.AddComponent<VisitingMindComponent>();
+            var comp = entity.EnsureComponent<VisitingMindComponent>();
             comp.Mind = this;
         }
 
-        public void UnVisit()
+        public void UnVisit(bool silent = false)
         {
             if (!IsVisitingEntity)
             {
                 return;
             }
 
-            Session?.AttachToEntity(OwnedEntity);
+            if (!silent) Session?.AttachToEntity(OwnedEntity);
             var oldVisitingEnt = VisitingEntity;
             // Null this before removing the component to avoid any infinite loops.
             VisitingEntity = null;
 
-            if (oldVisitingEnt.HasComponent<VisitingMindComponent>())
+            if (oldVisitingEnt.HasComponent<VisitingMindComponent>() && !silent)
             {
                 oldVisitingEnt.RemoveComponent<VisitingMindComponent>();
             }
