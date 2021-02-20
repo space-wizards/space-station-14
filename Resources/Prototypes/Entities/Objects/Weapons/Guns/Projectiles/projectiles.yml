@@ -96,6 +96,10 @@
       bounds: "-0.2,-0.2,0.2,0.2"
       layer: 32
       mask: 30
+  - type: Ammo
+    isProjectile: true
+    ammoVelocity: 20
+    caliber: Energy
   - type: Projectile
     soundHitSpecies: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     damages:
