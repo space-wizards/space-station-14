@@ -13,7 +13,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
 {
-    public sealed class UnarmedAttackNearbyPlayerExp : ExpandableUtilityAction
+    public sealed class UnarmedAttackNearbyHostilesExp : ExpandableUtilityAction
     {
         public override float Bonus => UtilityAction.CombatBonus;
 
@@ -39,7 +39,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
             foreach (var target in EntitySystem.Get<AiFactionTagSystem>()
                 .GetNearbyHostiles(owner, controller.VisionRadius))
             {
-                yield return new UnarmedAttackEntity(owner, target, Bonus);
+                yield return new UnarmedAttackEntity() {Owner = owner, Target = target, Bonus = Bonus};
             }
         }
     }

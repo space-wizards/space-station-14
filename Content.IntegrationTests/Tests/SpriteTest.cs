@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-namespace Content.IntegrationTests.Tests.AI
+namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
     public sealed class SpriteTest : ContentIntegrationTest
@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests.AI
             var (client, server) = await StartConnectedServerClientPair();
             await client.WaitIdleAsync();
             await server.WaitIdleAsync();
-            
+
             var resc = client.ResolveDependency<IResourceCache>();
             var entityManager = client.ResolveDependency<IEntityManager>();
             var mapManager = client.ResolveDependency<IMapManager>();
