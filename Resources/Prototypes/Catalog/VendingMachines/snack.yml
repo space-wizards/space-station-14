@@ -1,6 +1,7 @@
 - type: vendingMachineInventory
   id: Getmore Chocolate Corp
   name: Getmore Chocolate Corp
+  description: "A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars."
   animationDuration: 0.5
   spriteName: snack
   startingInventory:

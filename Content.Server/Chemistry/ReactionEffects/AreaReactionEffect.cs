@@ -129,7 +129,7 @@ namespace Content.Server.Chemistry.ReactionEffects
                     solutionFraction = amount * (1 - _reagentMaxConcentrationFactor) / _reagentDilutionStart +
                                        _reagentMaxConcentrationFactor;
                 }
-                solution.RemoveSolution(solution.TotalVolume*(1-solutionFraction));
+                solution.RemoveSolution(solution.TotalVolume * solutionFraction);
             }
 
             if (!_mapManager.TryFindGridAt(solutionEntity.Transform.MapPosition, out var grid)) return;

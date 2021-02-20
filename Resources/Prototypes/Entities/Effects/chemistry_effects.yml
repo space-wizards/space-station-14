@@ -93,7 +93,6 @@
 - type: entity
   id: BaseFoamedMetal
   name: base foamed metal
-  description: Keeps the air in and the greytide out.
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -135,6 +134,7 @@
 - type: entity
   id: FoamedIronMetal
   name: foamed iron metal
+  description: "For sealing hull breaches."
   parent: BaseFoamedMetal
   components:
     - type: Sprite
@@ -144,6 +144,7 @@
 - type: entity
   id: FoamedAluminiumMetal
   name: foamed aluminium metal
+  description: "For sealing hull breaches."
   parent: BaseFoamedMetal
   components:
     - type: Sprite

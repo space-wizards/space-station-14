@@ -1,6 +1,11 @@
+#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.AI;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.EntitySystems.AI
 {
@@ -14,27 +19,44 @@ namespace Content.Server.GameObjects.EntitySystems.AI
          *    This may change where specified friendly factions are listed. (e.g. to get number of friendlies in area).
          */
 
+        private readonly Dictionary<Faction, Faction> _hostileFactions = new();
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            var protoManager = IoCManager.Resolve<IPrototypeManager>();
+
+            foreach (var faction in protoManager.EnumeratePrototypes<AiFactionPrototype>())
+            {
+                if (Enum.TryParse(faction.ID,  out Faction @enum))
+                {
+                    var parsedFaction = Faction.None;
+
+                    foreach (var hostile in faction.Hostile)
+                    {
+                        if (Enum.TryParse(hostile, out Faction parsedHostile))
+                        {
+                            parsedFaction |= parsedHostile;
+                        }
+                        else
+                        {
+                            Logger.Error($"Unable to parse hostile faction {hostile} for {faction.ID}");
+                        }
+                    }
+
+                    _hostileFactions[@enum] = parsedFaction;
+                }
+                else
+                {
+                    Logger.Error($"Unable to parse AI faction {faction.ID}");
+                }
+            }
+        }
+
         public Faction GetHostileFactions(Faction faction) => _hostileFactions.TryGetValue(faction, out var hostiles) ? hostiles : Faction.None;
 
-        private readonly Dictionary<Faction, Faction> _hostileFactions = new()
-        {
-            {Faction.NanoTrasen,
-                Faction.SimpleHostile | Faction.Syndicate | Faction.Xeno},
-            {Faction.SimpleHostile,
-                Faction.NanoTrasen | Faction.Syndicate
-            },
-            // What makes a man turn neutral?
-            {Faction.SimpleNeutral,
-                Faction.None
-            },
-            {Faction.Syndicate,
-                Faction.NanoTrasen | Faction.SimpleHostile | Faction.Xeno},
-            {Faction.Xeno,
-                Faction.NanoTrasen | Faction.Syndicate},
-        };
-
         public Faction GetFactions(IEntity entity) =>
-            entity.TryGetComponent(out AiFactionTagComponent factionTags)
+            entity.TryGetComponent(out AiFactionTagComponent? factionTags)
             ? factionTags.Factions
             : Faction.None;
 
@@ -82,5 +104,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI
             hostileFactions |= target;
             _hostileFactions[source] = hostileFactions;
         }
+    }
+
+    [Flags]
+    public enum Faction
+    {
+        None = 0,
+        NanoTrasen = 1 << 0,
+        SimpleHostile = 1 << 1,
+        SimpleNeutral = 1 << 2,
+        Syndicate = 1 << 3,
+        Xeno = 1 << 4,
     }
 }
