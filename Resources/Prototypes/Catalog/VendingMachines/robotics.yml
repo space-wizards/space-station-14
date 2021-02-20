@@ -4,6 +4,7 @@
   description: All the fine parts you need in one vending machine!
   spriteName: robotics
   startingInventory:
+    #TO DO: add missing prototypes
     ClothingOuterCoatLab: 4
     #roboticist under
     CableStack: 4
@@ -13,7 +14,7 @@
     #signaller
     #health anaylzer
     Scalpel: 2
-    #circular saw
+    BoneSaw
     #bonesetter
     #anaesthetic
     #medical mask
