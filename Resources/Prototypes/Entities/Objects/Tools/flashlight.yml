@@ -2,7 +2,7 @@
   name: flashlight
   parent: BaseItem
   id: FlashlightLantern
-  description: They light the way to freedom.
+  description: It lights the way to freedom.
   components:
     - type: HandheldLight
     - type: ItemActions

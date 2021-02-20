@@ -1,4 +1,5 @@
-﻿- type: entity
+﻿# TODO: Add description (1)
+- type: entity
   parent: BaseItem
   id: BaseLightbulb
   abstract: true
