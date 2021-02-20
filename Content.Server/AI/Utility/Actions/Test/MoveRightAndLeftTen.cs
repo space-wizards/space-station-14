@@ -17,8 +17,6 @@ namespace Content.Server.AI.Utility.Actions.Test
     {
         public override bool CanOverride => false;
 
-        public MoveRightAndLeftTen(IEntity owner) : base(owner) {}
-
         public override void SetupOperators(Blackboard context)
         {
             var currentPosition = Owner.Transform.Coordinates;
