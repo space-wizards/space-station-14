@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -44,9 +45,9 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
-        private EntityList _currentEntityList;
-        private VerbPopup _currentVerbListRoot;
-        private VerbPopup _currentGroupList;
+        private EntityList? _currentEntityList;
+        private VerbPopup? _currentVerbListRoot;
+        private VerbPopup? _currentGroupList;
 
         private EntityUid _currentEntity;
 
@@ -109,7 +110,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public bool CanSeeOnContextMenu(IEntity entity)
         {
-            if (!entity.TryGetComponent(out SpriteComponent sprite) || !sprite.Visible)
+            if (!entity.TryGetComponent(out SpriteComponent? sprite) || !sprite.Visible)
             {
                 return false;
             }
@@ -200,7 +201,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var buttons = new Dictionary<string, List<ListedVerbData>>();
             var groupIcons = new Dictionary<string, SpriteSpecifier>();
 
-            var vBox = _currentVerbListRoot.List;
+            var vBox = _currentVerbListRoot!.List;
             vBox.DisposeAllChildren();
 
             // Local variable so that scope capture ensures this is the correct value.
@@ -215,7 +216,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     groupIcons.Add(data.Category, data.CategoryIcon);
                 }
 
-                list.Add(new ListedVerbData(data.Text, !data.Available, data.Key, entity.ToString(), () =>
+                list.Add(new ListedVerbData(data.Text, !data.Available, data.Key, entity.ToString()!, () =>
                 {
                     RaiseNetworkEvent(new VerbSystemMessages.UseVerbMessage(curEntity, data.Key));
                     CloseAllMenus();
@@ -243,7 +244,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     groupIcons.Add(verbData.Category, verbData.CategoryIcon);
                 }
 
-                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, verb.ToString(), entity.ToString(),
+                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, verb.ToString()!, entity.ToString()!,
                     () => verb.Activate(user, component), verbData.Icon));
             }
 
@@ -267,8 +268,8 @@ namespace Content.Client.GameObjects.EntitySystems
                     groupIcons.Add(verbData.Category, verbData.CategoryIcon);
                 }
 
-                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, globalVerb.ToString(),
-                    entity.ToString(),
+                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, globalVerb.ToString()!,
+                    entity.ToString()!,
                     () => globalVerb.Activate(user, entity), verbData.Icon));
             }
 
@@ -291,9 +292,10 @@ namespace Content.Client.GameObjects.EntitySystems
 
                     first = false;
 
-                    groupIcons.TryGetValue(category, out var icon);
-
-                    vBox.AddChild(CreateCategoryButton(category, verbs, icon));
+                    if (groupIcons.TryGetValue(category, out var icon))
+                    {
+                        vBox.AddChild(CreateCategoryButton(category, verbs, icon));
+                    }
                 }
 
                 if (buttons.ContainsKey(""))
@@ -395,7 +397,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private IEntity GetUserEntity()
         {
-            return _playerManager.LocalPlayer.ControlledEntity;
+            DebugTools.AssertNull(_playerManager.LocalPlayer?.ControlledEntity);
+            return _playerManager.LocalPlayer!.ControlledEntity!;
         }
 
         private sealed class EntityList : Popup
@@ -439,7 +442,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 MouseFilter = MouseFilterMode.Stop;
 
                 var control = new HBoxContainer {SeparationOverride = 6};
-                if (entity.TryGetComponent(out ISpriteComponent sprite))
+                if (entity.TryGetComponent(out ISpriteComponent? sprite))
                 {
                     control.AddChild(new SpriteView {Sprite = sprite});
                 }
@@ -491,7 +494,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         args.PointerLocation, _entity.Uid);
 
                     // client side command handlers will always be sent the local player session.
-                    var session = _master._playerManager.LocalPlayer.Session;
+                    var session = _master._playerManager.LocalPlayer?.Session;
                     inputSys.HandleInputCommand(session, func, message);
 
                     _master.CloseAllMenus();
@@ -526,13 +529,13 @@ namespace Content.Client.GameObjects.EntitySystems
             private readonly Label _label;
             private readonly TextureRect _icon;
 
-            public Texture Icon
+            public Texture? Icon
             {
                 get => _icon.Texture;
                 set => _icon.Texture = value;
             }
 
-            public string Text
+            public string? Text
             {
                 get => _label.Text;
                 set => _label.Text = value;
@@ -576,15 +579,15 @@ namespace Content.Client.GameObjects.EntitySystems
             private readonly Label _label;
             private readonly TextureRect _icon;
 
-            private CancellationTokenSource _openCancel;
+            private CancellationTokenSource? _openCancel;
 
-            public string Text
+            public string? Text
             {
                 get => _label.Text;
                 set => _label.Text = value;
             }
 
-            public Texture Icon
+            public Texture? Icon
             {
                 get => _icon.Texture;
                 set => _icon.Texture = value;

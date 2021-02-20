@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.AI;
@@ -19,7 +19,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
     {
         private PathfindingDebugMode _modes = PathfindingDebugMode.None;
         private float _routeDuration = 4.0f; // How long before we remove a route from the overlay
-        private DebugPathfindingOverlay _overlay;
+        private DebugPathfindingOverlay _overlay = default!;
 
         public override void Initialize()
         {
@@ -107,7 +107,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
             _overlay.Modes = 0;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
             overlayManager.RemoveOverlay(_overlay.ID);
-            _overlay = null;
+            _overlay = null!;
         }
 
         public void Disable()

@@ -35,16 +35,14 @@ namespace Content.Client
 
         public void SelectCharacter(ICharacterProfile profile)
         {
-            Debug.Assert(Preferences != null, nameof(Preferences) + " != null");
-
-            SelectCharacter(Preferences.IndexOfCharacter(profile));
+            DebugTools.AssertNotNull(Preferences);
+            SelectCharacter(Preferences!.IndexOfCharacter(profile));
         }
 
         public void SelectCharacter(int slot)
         {
-            Debug.Assert(Preferences != null, nameof(Preferences) + " != null");
-
-            Preferences = new PlayerPreferences(Preferences.Characters, slot, Preferences.AdminOOCColor);
+            DebugTools.AssertNotNull(Preferences);
+            Preferences = new PlayerPreferences(Preferences!.Characters, slot, Preferences.AdminOOCColor);
             var msg = _netManager.CreateNetMessage<MsgSelectCharacter>();
             msg.SelectedCharacterIndex = slot;
             _netManager.ClientSendMessage(msg);
@@ -52,9 +50,8 @@ namespace Content.Client
 
         public void UpdateCharacter(ICharacterProfile profile, int slot)
         {
-            Debug.Assert(Preferences != null, nameof(Preferences) + " != null");
-
-            var characters = new Dictionary<int, ICharacterProfile>(Preferences.Characters) {[slot] = profile};
+            DebugTools.AssertNotNull(Preferences);
+            var characters = new Dictionary<int, ICharacterProfile>(Preferences!.Characters) {[slot] = profile};
             Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
             var msg = _netManager.CreateNetMessage<MsgUpdateCharacter>();
             msg.Profile = profile;
@@ -64,11 +61,11 @@ namespace Content.Client
 
         public void CreateCharacter(ICharacterProfile profile)
         {
-            Debug.Assert(Preferences != null, nameof(Preferences) + " != null");
-            Debug.Assert(Settings != null, nameof(Settings) + " != null");
+            DebugTools.AssertNotNull(Preferences);
+            DebugTools.AssertNotNull(Settings);
 
-            var characters = new Dictionary<int, ICharacterProfile>(Preferences.Characters);
-            var lowest = Enumerable.Range(0, Settings.MaxCharacterSlots)
+            var characters = new Dictionary<int, ICharacterProfile>(Preferences!.Characters);
+            var lowest = Enumerable.Range(0, Settings!.MaxCharacterSlots)
                 .Except(characters.Keys)
                 .FirstOrNull();
 
@@ -86,16 +83,14 @@ namespace Content.Client
 
         public void DeleteCharacter(ICharacterProfile profile)
         {
-            Debug.Assert(Preferences != null, nameof(Preferences) + " != null");
-
-            DeleteCharacter(Preferences.IndexOfCharacter(profile));
+            DebugTools.AssertNotNull(Preferences);
+            DeleteCharacter(Preferences!.IndexOfCharacter(profile));
         }
 
         public void DeleteCharacter(int slot)
         {
-            Debug.Assert(Preferences != null, nameof(Preferences) + " != null");
-
-            var characters = Preferences.Characters.Where(p => p.Key != slot);
+            DebugTools.AssertNotNull(Preferences);
+            var characters = Preferences!.Characters.Where(p => p.Key != slot);
             Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
             var msg = _netManager.CreateNetMessage<MsgDeleteCharacter>();
             msg.Slot = slot;

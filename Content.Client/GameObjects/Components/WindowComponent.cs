@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using static Content.Client.GameObjects.Components.IconSmoothing.IconSmoothComponent;
 
 namespace Content.Client.GameObjects.Components
@@ -38,12 +39,12 @@ namespace Content.Client.GameObjects.Components
 
         private void OnSpriteAdded()
         {
-            Debug.Assert(_sprite != null, nameof(_sprite) + " != null");
+            DebugTools.AssertNotNull(_sprite);
 
             var state0 = $"{_stateBase}0";
             const string cracksRSIPath = "/Textures/Constructible/Structures/Windows/cracks.rsi";
 
-            _sprite.LayerMapSet(CornerLayers.SE, _sprite.AddLayerState(state0));
+            _sprite!.LayerMapSet(CornerLayers.SE, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.SE, SpriteComponent.DirectionOffset.None);
             _sprite.LayerMapSet(WindowDamageLayers.DamageSE, _sprite.AddLayerState("0_1", cracksRSIPath));
             _sprite.LayerSetShader(WindowDamageLayers.DamageSE, "unshaded");
@@ -73,8 +74,8 @@ namespace Content.Client.GameObjects.Components
 
         private void OnSnapGridAdded()
         {
-            Debug.Assert(_snapGrid != null, nameof(_snapGrid) + " != null");
-            _snapGrid.OnPositionChanged += SnapGridOnPositionChanged;
+            DebugTools.AssertNotNull(_snapGrid);
+            _snapGrid!.OnPositionChanged += SnapGridOnPositionChanged;
         }
 
         private void SnapGridOnPositionChanged()

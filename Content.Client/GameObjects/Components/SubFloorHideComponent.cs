@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -53,9 +54,8 @@ namespace Content.Client.GameObjects.Components
 
         private void OnAddSnapGrid()
         {
-            Debug.Assert(_snapGridComponent != null, nameof(_snapGridComponent) + " != null");
-
-            _snapGridComponent.OnPositionChanged += SnapGridOnPositionChanged;
+            DebugTools.AssertNotNull(_snapGridComponent);
+            _snapGridComponent!.OnPositionChanged += SnapGridOnPositionChanged;
         }
 
         private void SnapGridOnPositionChanged()

@@ -60,8 +60,8 @@ namespace Content.Client.UserInterface
 
         private bool _isDirty;
         public int CharacterSlot;
-        public HumanoidCharacterProfile Profile;
-        public event Action<HumanoidCharacterProfile> OnProfileChanged;
+        public HumanoidCharacterProfile? Profile;
+        public event Action<HumanoidCharacterProfile>? OnProfileChanged;
 
         public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager, IEntityManager entityManager)
         {
@@ -173,7 +173,7 @@ namespace Content.Client.UserInterface
                     _sexMaleButton.OnPressed += args =>
                     {
                         SetSex(Sex.Male);
-                        if (Profile.Gender == Gender.Female)
+                        if (Profile?.Gender == Gender.Female)
                         {
                             SetGender(Gender.Male);
                             UpdateGenderControls();
@@ -188,7 +188,7 @@ namespace Content.Client.UserInterface
                     _sexFemaleButton.OnPressed += args =>
                     {
                         SetSex(Sex.Female);
-                        if (Profile.Gender == Gender.Male)
+                        if (Profile?.Gender == Gender.Male)
                         {
                             SetGender(Gender.Female);
                             UpdateGenderControls();
@@ -404,7 +404,7 @@ namespace Content.Client.UserInterface
                 {
                     _preferenceUnavailableButton.SelectId(args.Id);
 
-                    Profile = Profile.WithPreferenceUnavailable((PreferenceUnavailableMode) args.Id);
+                    Profile = Profile?.WithPreferenceUnavailable((PreferenceUnavailableMode) args.Id);
                     IsDirty = true;
                 };
 
@@ -459,7 +459,7 @@ namespace Content.Client.UserInterface
 
                         selector.PriorityChanged += priority =>
                         {
-                            Profile = Profile.WithJobPriority(job.ID, priority);
+                            Profile = Profile?.WithJobPriority(job.ID, priority);
                             IsDirty = true;
 
                             foreach (var jobSelector in _jobPriorities)
@@ -476,7 +476,7 @@ namespace Content.Client.UserInterface
                                     if (jobSelector.Job != selector.Job && jobSelector.Priority == JobPriority.High)
                                     {
                                         jobSelector.Priority = JobPriority.Medium;
-                                        Profile = Profile.WithJobPriority(jobSelector.Job.ID, JobPriority.Medium);
+                                        Profile = Profile?.WithJobPriority(jobSelector.Job.ID, JobPriority.Medium);
                                     }
                                 }
                             }
@@ -525,7 +525,7 @@ namespace Content.Client.UserInterface
 
                     selector.PreferenceChanged += preference =>
                     {
-                        Profile = Profile.WithAntagPreference(antag.ID, preference);
+                        Profile = Profile?.WithAntagPreference(antag.ID, preference);
                         IsDirty = true;
                     };
                 }
@@ -664,8 +664,8 @@ namespace Content.Client.UserInterface
 
         private void LoadServerData()
         {
-            Profile = (HumanoidCharacterProfile) _preferencesManager.Preferences.SelectedCharacter;
-            CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
+            Profile = (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter;
+            CharacterSlot = _preferencesManager.Preferences?.SelectedCharacterIndex ?? 0;
             UpdateControls();
         }
 
@@ -708,7 +708,7 @@ namespace Content.Client.UserInterface
         public void Save()
         {
             IsDirty = false;
-            _preferencesManager.UpdateCharacter(Profile, CharacterSlot);
+            _preferencesManager.UpdateCharacter(Profile ?? throw new InvalidOperationException(), CharacterSlot);
             OnProfileChanged?.Invoke(Profile);
         }
 
@@ -733,17 +733,17 @@ namespace Content.Client.UserInterface
 
         private void UpdateNameEdit()
         {
-            _nameEdit.Text = Profile.Name;
+            _nameEdit.Text = Profile?.Name ?? "";
         }
 
         private void UpdateAgeEdit()
         {
-            _ageEdit.Text = Profile.Age.ToString();
+            _ageEdit.Text = Profile?.Age.ToString() ?? "";
         }
 
         private void UpdateSexControls()
         {
-            if (Profile.Sex == Sex.Male)
+            if (Profile?.Sex == Sex.Male)
                 _sexMaleButton.Pressed = true;
             else
                 _sexFemaleButton.Pressed = true;
@@ -751,21 +751,26 @@ namespace Content.Client.UserInterface
 
         private void UpdateGenderControls()
         {
+            if (Profile == null) return;
             _genderButton.SelectId((int) Profile.Gender);
         }
 
         private void UpdateClothingControls()
         {
+            if (Profile == null) return;
             _clothingButton.SelectId((int) Profile.Clothing);
         }
 
         private void UpdateBackpackControls()
         {
+            if (Profile == null) return;
             _backpackButton.SelectId((int) Profile.Backpack);
         }
 
         private void UpdateHairPickers()
         {
+            if (Profile == null) return;
+
             _hairPicker.SetData(
                 Profile.Appearance.HairColor,
                 Profile.Appearance.HairStyleName);
@@ -813,7 +818,7 @@ namespace Content.Client.UserInterface
             {
                 var jobId = prioritySelector.Job.ID;
 
-                var priority = Profile.JobPriorities.GetValueOrDefault(jobId, JobPriority.Never);
+                var priority = Profile?.JobPriorities.GetValueOrDefault(jobId, JobPriority.Never) ?? JobPriority.Never;
 
                 prioritySelector.Priority = priority;
             }
@@ -830,17 +835,17 @@ namespace Content.Client.UserInterface
                 set => _optionButton.SelectByValue((int) value);
             }
 
-            public event Action<JobPriority> PriorityChanged;
+            public event Action<JobPriority>? PriorityChanged;
 
             public JobPrioritySelector(JobPrototype job)
             {
                 Job = job;
-                _optionButton = new RadioOptions<int>(RadioOptionsLayout.Horizontal);
-
-                _optionButton.FirstButtonStyle = StyleBase.ButtonOpenRight;
-                _optionButton.ButtonStyle = StyleBase.ButtonOpenBoth;
-                _optionButton.LastButtonStyle = StyleBase.ButtonOpenLeft;
-
+                _optionButton = new RadioOptions<int>(RadioOptionsLayout.Horizontal)
+                {
+                    FirstButtonStyle = StyleBase.ButtonOpenRight,
+                    ButtonStyle = StyleBase.ButtonOpenBoth,
+                    LastButtonStyle = StyleBase.ButtonOpenLeft
+                };
 
                 // Text, Value
                 _optionButton.AddItem(Loc.GetString("High"), (int) JobPriority.High);
@@ -884,7 +889,7 @@ namespace Content.Client.UserInterface
             {
                 var antagId = preferenceSelector.Antag.ID;
 
-                var preference = Profile.AntagPreferences.Contains(antagId);
+                var preference = Profile?.AntagPreferences.Contains(antagId) ?? false;
 
                 preferenceSelector.Preference = preference;
             }
@@ -901,7 +906,7 @@ namespace Content.Client.UserInterface
                 set => _checkBox.Pressed = value;
             }
 
-            public event Action<bool> PreferenceChanged;
+            public event Action<bool>? PreferenceChanged;
 
             public AntagPreferenceSelector(AntagPrototype antag)
             {
