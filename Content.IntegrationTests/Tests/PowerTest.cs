@@ -237,13 +237,13 @@ namespace Content.IntegrationTests.Tests
                 var apc = apcEnt.GetComponent<ApcComponent>();
                 var provider = apcExtensionEnt.GetComponent<PowerProviderComponent>();
                 receiver = powerReceiverEnt.GetComponent<PowerReceiverComponent>();
-                Assert.That(apc.Battery, Is.Not.Null);
+                var battery = apcEnt.GetComponent<BatteryComponent>();
 
                 provider.PowerTransferRange = 5; //arbitrary range to reach receiver
                 receiver.PowerReceptionRange = 5; //arbitrary range to reach provider
 
-                apc.Battery.MaxCharge = 10000; //arbitrary nonzero amount of charge
-                apc.Battery.CurrentCharge = apc.Battery.MaxCharge; //fill battery
+                battery.MaxCharge = 10000; //arbitrary nonzero amount of charge
+                battery.CurrentCharge = battery.MaxCharge; //fill battery
 
                 receiver.Load = 1; //arbitrary small amount of power
             });
