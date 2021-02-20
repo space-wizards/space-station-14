@@ -1,4 +1,5 @@
-﻿using Content.Server.Interfaces.GameObjects.Components.Items;
+﻿#nullable enable
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Rotation;
@@ -14,7 +15,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         protected override bool OnDown(IEntity entity, bool playSound = true, bool dropItems = true, bool force = false)
         {
-            if (!entity.TryGetComponent(out AppearanceComponent appearance))
+            if (!entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 return false;
             }
@@ -38,13 +39,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         protected override bool OnStand(IEntity entity)
         {
-            if (!entity.TryGetComponent(out AppearanceComponent appearance)) return false;
-
-            if (entity.TryGetComponent(out IMobStateComponent mobState)
-                && mobState.IsIncapacitated())
-            {
-                return false; // the dead cannot be allowed to walk
-            }
+            if (!entity.TryGetComponent(out AppearanceComponent? appearance)) return false;
 
             appearance.TryGetData<RotationState>(RotationVisuals.RotationState, out var oldState);
             var newState = RotationState.Vertical;
@@ -60,7 +55,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.DropAllItemsInHands(entity, doMobChecks);
 
-            if (!entity.TryGetComponent(out IHandsComponent hands)) return;
+            if (!entity.TryGetComponent(out IHandsComponent? hands)) return;
 
             foreach (var heldItem in hands.GetAllHeldItems())
             {
