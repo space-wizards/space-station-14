@@ -1,9 +1,11 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -56,6 +58,15 @@ namespace Content.Shared.GameObjects.EntitySystems
                 foreach (var comp in owner.GetAllComponents<IRelayMoveInput>())
                 {
                     comp.MoveInputPressed(session);
+                }
+
+                // For stuff like "Moving out of locker" or the likes
+                if (owner.IsInContainer() &&
+                    (!owner.TryGetComponent(out IMobStateComponent? mobState) ||
+                     mobState.IsAlive()))
+                {
+                    var relayEntityMoveMessage = new RelayMovementEntityMessage(owner);
+                    owner.Transform.Parent!.Owner.SendMessage(owner.Transform, relayEntityMoveMessage);
                 }
             }
 
