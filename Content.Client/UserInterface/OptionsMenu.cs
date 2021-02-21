@@ -15,10 +15,9 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IClydeAudio _clydeAudio = default!;
 
-        protected override Vector2? CustomSize => (800, 450);
-
         public OptionsMenu()
         {
+            SetSize = MinSize = (800, 450);
             IoCManager.InjectDependencies(this);
 
             Title = Loc.GetString("Game Options");

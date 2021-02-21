@@ -63,7 +63,8 @@ namespace Content.Client.UserInterface
         public HumanoidCharacterProfile Profile;
         public event Action<HumanoidCharacterProfile> OnProfileChanged;
 
-        public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager, IEntityManager entityManager)
+        public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager,
+            IEntityManager entityManager)
         {
             _random = IoCManager.Resolve<IRobustRandom>();
             _prototypeManager = prototypeManager;
@@ -74,17 +75,9 @@ namespace Content.Client.UserInterface
             AddChild(hbox);
 
             #region Left
-            var margin = new MarginContainer
-            {
-                MarginTopOverride = 10,
-                MarginBottomOverride = 10,
-                MarginLeftOverride = 10,
-                MarginRightOverride = 10
-            };
-            hbox.AddChild(margin);
 
-            var vBox = new VBoxContainer();
-            margin.AddChild(vBox);
+            var vBox = new VBoxContainer {Margin = new Thickness(10)};
+            hbox.AddChild(vBox);
 
             var middleContainer = new HBoxContainer
             {
@@ -116,13 +109,13 @@ namespace Content.Client.UserInterface
                 var panel = HighlightedContainer();
                 var hBox = new HBoxContainer
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand
+                    VerticalExpand = true
                 };
-                var nameLabel = new Label { Text = Loc.GetString("Name:") };
+                var nameLabel = new Label {Text = Loc.GetString("Name:")};
                 _nameEdit = new LineEdit
                 {
-                    CustomMinimumSize = (270, 0),
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter
+                    MinSize = (270, 0),
+                    VerticalAlignment = VAlignment.Center
                 };
                 _nameEdit.OnTextChanged += args => { SetName(args.Text); };
                 var nameRandomButton = new Button
@@ -139,7 +132,7 @@ namespace Content.Client.UserInterface
 
             #endregion Name
 
-            var tabContainer = new TabContainer { SizeFlagsVertical = SizeFlags.FillExpand };
+            var tabContainer = new TabContainer {VerticalExpand = true};
             vBox.AddChild(tabContainer);
 
             #region Appearance
@@ -161,7 +154,7 @@ namespace Content.Client.UserInterface
                 {
                     var panel = HighlightedContainer();
                     var hBox = new HBoxContainer();
-                    var sexLabel = new Label { Text = Loc.GetString("Sex:") };
+                    var sexLabel = new Label {Text = Loc.GetString("Sex:")};
 
                     var sexButtonGroup = new ButtonGroup();
 
@@ -209,8 +202,8 @@ namespace Content.Client.UserInterface
                 {
                     var panel = HighlightedContainer();
                     var hBox = new HBoxContainer();
-                    var ageLabel = new Label { Text = Loc.GetString("Age:") };
-                    _ageEdit = new LineEdit { CustomMinimumSize = (40, 0) };
+                    var ageLabel = new Label {Text = Loc.GetString("Age:")};
+                    _ageEdit = new LineEdit {MinSize = (40, 0)};
                     _ageEdit.OnTextChanged += args =>
                     {
                         if (!int.TryParse(args.Text, out var newAge))
@@ -230,7 +223,7 @@ namespace Content.Client.UserInterface
                 {
                     var panel = HighlightedContainer();
                     var hBox = new HBoxContainer();
-                    var genderLabel = new Label { Text = Loc.GetString("Pronouns:") };
+                    var genderLabel = new Label {Text = Loc.GetString("Pronouns:")};
 
                     _genderButton = new OptionButton();
 
@@ -257,7 +250,7 @@ namespace Content.Client.UserInterface
 
                 {
                     var panel = HighlightedContainer();
-                    panel.SizeFlagsHorizontal = SizeFlags.None;
+                    panel.HorizontalAlignment = HAlignment.Left;
                     var hairHBox = new HBoxContainer();
 
                     _hairPicker = new HairStylePicker();
@@ -316,7 +309,7 @@ namespace Content.Client.UserInterface
                 {
                     var panel = HighlightedContainer();
                     var hBox = new HBoxContainer();
-                    var clothingLabel = new Label { Text = Loc.GetString("Clothing:") };
+                    var clothingLabel = new Label {Text = Loc.GetString("Clothing:")};
 
                     _clothingButton = new OptionButton();
 
@@ -342,7 +335,7 @@ namespace Content.Client.UserInterface
                 {
                     var panel = HighlightedContainer();
                     var hBox = new HBoxContainer();
-                    var backpackLabel = new Label { Text = Loc.GetString("Backpack:") };
+                    var backpackLabel = new Label {Text = Loc.GetString("Backpack:")};
 
                     _backpackButton = new OptionButton();
 
@@ -379,7 +372,7 @@ namespace Content.Client.UserInterface
                         (_preferenceUnavailableButton = new OptionButton()),
                         new ScrollContainer
                         {
-                            SizeFlagsVertical = SizeFlags.FillExpand,
+                            VerticalExpand = true,
                             Children =
                             {
                                 jobList
@@ -433,7 +426,7 @@ namespace Content.Client.UserInterface
                             {
                                 category.AddChild(new Control
                                 {
-                                    CustomMinimumSize = new Vector2(0, 23),
+                                    MinSize = new Vector2(0, 23),
                                 });
                             }
 
@@ -498,7 +491,7 @@ namespace Content.Client.UserInterface
                     {
                         new ScrollContainer
                         {
-                            SizeFlagsVertical = SizeFlags.FillExpand,
+                            VerticalExpand = true,
                             Children =
                             {
                                 antagList
@@ -519,6 +512,7 @@ namespace Content.Client.UserInterface
                     {
                         continue;
                     }
+
                     var selector = new AntagPreferenceSelector(antag);
                     antagList.AddChild(selector);
                     _antagPreferences.Add(selector);
@@ -568,7 +562,7 @@ namespace Content.Client.UserInterface
                 _saveButton = new Button
                 {
                     Text = Loc.GetString("Save"),
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                    HorizontalAlignment = HAlignment.Center
                 };
                 _saveButton.OnPressed += args => { Save(); };
                 panel.AddChild(_saveButton);
@@ -581,19 +575,10 @@ namespace Content.Client.UserInterface
 
             #region Right
 
-            margin = new MarginContainer
-            {
-                MarginTopOverride = 10,
-                MarginBottomOverride = 10,
-                MarginLeftOverride = 10,
-                MarginRightOverride = 10
-            };
-            hbox.AddChild(margin);
-
             vBox = new VBoxContainer()
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                VerticalExpand = true,
+                HorizontalExpand = true,
             };
             hbox.AddChild(vBox);
 
@@ -605,8 +590,7 @@ namespace Content.Client.UserInterface
             // Front
             var box = new Control()
             {
-                SizeFlagsHorizontal = SizeFlags.Fill,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 1f,
             };
             vBox.AddChild(box);
@@ -615,7 +599,7 @@ namespace Content.Client.UserInterface
                 Sprite = sprite,
                 Scale = (6, 6),
                 OverrideDirection = Direction.South,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                VerticalAlignment = VAlignment.Center,
                 SizeFlagsStretchRatio = 1
             };
             box.AddChild(_previewSprite);
@@ -623,8 +607,7 @@ namespace Content.Client.UserInterface
             // Side
             box = new Control()
             {
-                SizeFlagsHorizontal = SizeFlags.Fill,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 1f,
             };
             vBox.AddChild(box);
@@ -633,7 +616,7 @@ namespace Content.Client.UserInterface
                 Sprite = sprite,
                 Scale = (6, 6),
                 OverrideDirection = Direction.East,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                VerticalAlignment = VAlignment.Center,
                 SizeFlagsStretchRatio = 1
             };
             box.AddChild(_previewSpriteSide);
@@ -862,7 +845,8 @@ namespace Content.Client.UserInterface
 
                 if (job.Icon != null)
                 {
-                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), job.Icon);
+                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"),
+                        job.Icon);
                     icon.Texture = specifier.Frame0();
                 }
 
@@ -871,7 +855,7 @@ namespace Content.Client.UserInterface
                     Children =
                     {
                         icon,
-                        new Label {Text = job.Name, CustomMinimumSize = (175, 0)},
+                        new Label {Text = job.Name, MinSize = (175, 0)},
                         _optionButton
                     }
                 });
@@ -918,6 +902,7 @@ namespace Content.Client.UserInterface
                     }
                 });
             }
+
             private void OnCheckBoxToggled(BaseButton.ButtonToggledEventArgs args)
             {
                 PreferenceChanged?.Invoke(Preference);

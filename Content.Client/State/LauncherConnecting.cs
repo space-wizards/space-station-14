@@ -46,31 +46,26 @@ namespace Content.Client.State
                     new VBoxContainer
                     {
                         SeparationOverride = 0,
-                        CustomMinimumSize = (300, 200),
+                        MinSize = (300, 200),
                         Children =
                         {
                             new HBoxContainer
                             {
                                 Children =
                                 {
-                                    new MarginContainer
+                                    new Label
                                     {
-                                        MarginLeftOverride = 8,
-                                        Children =
-                                        {
-                                            new Label
-                                            {
-                                                Text = Loc.GetString("Space Station 14"),
-                                                StyleClasses = {StyleBase.StyleClassLabelHeading},
-                                                VAlign = Label.VAlignMode.Center
-                                            },
-                                        }
+                                        Margin = new Thickness(8, 0, 0, 0),
+                                        Text = Loc.GetString("Space Station 14"),
+                                        StyleClasses = {StyleBase.StyleClassLabelHeading},
+                                        VAlign = Label.VAlignMode.Center
                                     },
 
                                     (exitButton = new Button
                                     {
                                         Text = Loc.GetString("Exit"),
-                                        SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd | Control.SizeFlags.Expand
+                                        HorizontalAlignment = Control.HAlignment.Right,
+                                        HorizontalExpand = true,
                                     }),
                                 }
                             },
@@ -78,103 +73,93 @@ namespace Content.Client.State
                             // Line
                             new HighDivider(),
 
-                            new MarginContainer
+                            new VBoxContainer
                             {
-                                SizeFlagsVertical = Control.SizeFlags.FillExpand,
-                                MarginLeftOverride = 4,
-                                MarginRightOverride = 4,
-                                MarginTopOverride = 4,
+                                VerticalExpand = true,
+                                Margin = new Thickness(4, 4, 4, 0),
+                                SeparationOverride = 0,
                                 Children =
                                 {
-                                    new VBoxContainer
+                                    new Control
                                     {
-                                        SeparationOverride = 0,
+                                        VerticalExpand = true,
                                         Children =
                                         {
-                                            new Control
+                                            (_connectingStatus = new VBoxContainer
                                             {
-                                                SizeFlagsVertical = Control.SizeFlags.FillExpand,
+                                                SeparationOverride = 0,
                                                 Children =
                                                 {
-                                                    (_connectingStatus = new VBoxContainer
+                                                    new Label
                                                     {
-                                                        SeparationOverride = 0,
-                                                        Children =
-                                                        {
-                                                            new Label
-                                                            {
-                                                                Text = Loc.GetString("Connecting to server..."),
-                                                                Align = Label.AlignMode.Center,
-                                                            },
+                                                        Text = Loc.GetString("Connecting to server..."),
+                                                        Align = Label.AlignMode.Center,
+                                                    },
 
-                                                            (_connectStatus = new Label
-                                                            {
-                                                                StyleClasses = {StyleBase.StyleClassLabelSubText},
-                                                                Align = Label.AlignMode.Center,
-                                                            }),
-                                                        }
+                                                    (_connectStatus = new Label
+                                                    {
+                                                        StyleClasses = {StyleBase.StyleClassLabelSubText},
+                                                        Align = Label.AlignMode.Center,
                                                     }),
-                                                    (_connectFail = new VBoxContainer
+                                                }
+                                            }),
+                                            (_connectFail = new VBoxContainer
+                                            {
+                                                Visible = false,
+                                                SeparationOverride = 0,
+                                                Children =
+                                                {
+                                                    (_connectFailReason = new Label
                                                     {
-                                                        Visible = false,
-                                                        SeparationOverride = 0,
-                                                        Children =
-                                                        {
-                                                            (_connectFailReason = new Label
-                                                            {
-                                                                Align = Label.AlignMode.Center
-                                                            }),
-
-                                                            (retryButton = new Button
-                                                            {
-                                                                Text = "Retry",
-                                                                SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter,
-                                                                SizeFlagsVertical =
-                                                                    Control.SizeFlags.Expand |
-                                                                    Control.SizeFlags.ShrinkEnd
-                                                            })
-                                                        }
+                                                        Align = Label.AlignMode.Center
                                                     }),
 
-                                                    (_disconnected = new VBoxContainer
+                                                    (retryButton = new Button
                                                     {
-                                                        SeparationOverride = 0,
-                                                        Children =
-                                                        {
-                                                            new Label
-                                                            {
-                                                                Text = "Disconnected from server:",
-                                                                Align = Label.AlignMode.Center
-                                                            },
-                                                            new Label
-                                                            {
-                                                                Text = _baseClient.LastDisconnectReason,
-                                                                Align = Label.AlignMode.Center
-                                                            },
-                                                            (reconnectButton = new Button
-                                                            {
-                                                                Text = "Reconnect",
-                                                                SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter,
-                                                                SizeFlagsVertical =
-                                                                    Control.SizeFlags.Expand |
-                                                                    Control.SizeFlags.ShrinkEnd
-                                                            })
-                                                        }
+                                                        Text = "Retry",
+                                                        HorizontalAlignment = Control.HAlignment.Center,
+                                                        VerticalExpand = true,
+                                                        VerticalAlignment = Control.VAlignment.Bottom,
                                                     })
                                                 }
-                                            },
+                                            }),
 
-                                            // Padding.
-                                            new Control {CustomMinimumSize = (0, 8)},
-
-                                            new Label
+                                            (_disconnected = new VBoxContainer
                                             {
-                                                Text = address,
-                                                StyleClasses = {StyleBase.StyleClassLabelSubText},
-                                                SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter,
-                                            }
+                                                SeparationOverride = 0,
+                                                Children =
+                                                {
+                                                    new Label
+                                                    {
+                                                        Text = "Disconnected from server:",
+                                                        Align = Label.AlignMode.Center
+                                                    },
+                                                    new Label
+                                                    {
+                                                        Text = _baseClient.LastDisconnectReason,
+                                                        Align = Label.AlignMode.Center
+                                                    },
+                                                    (reconnectButton = new Button
+                                                    {
+                                                        Text = "Reconnect",
+                                                        HorizontalAlignment = Control.HAlignment.Center,
+                                                        VerticalExpand = true,
+                                                        VerticalAlignment = Control.VAlignment.Bottom,
+                                                    })
+                                                }
+                                            })
                                         }
                                     },
+
+                                    // Padding.
+                                    new Control {MinSize = (0, 8)},
+
+                                    new Label
+                                    {
+                                        Text = address,
+                                        StyleClasses = {StyleBase.StyleClassLabelSubText},
+                                        HorizontalAlignment = Control.HAlignment.Center
+                                    }
                                 }
                             },
 
@@ -187,31 +172,23 @@ namespace Content.Client.State
                                     ContentMarginTopOverride = 2
                                 },
                             },
-
-                            new MarginContainer
+                            new HBoxContainer
                             {
-                                MarginLeftOverride = 12,
-                                MarginRightOverride = 4,
+                                Margin = new Thickness(12, 0, 4, 0),
+                                VerticalAlignment = Control.VAlignment.Bottom,
                                 Children =
                                 {
-                                    new HBoxContainer
+                                    new Label
                                     {
-                                        SizeFlagsVertical = Control.SizeFlags.ShrinkEnd,
-                                        Children =
-                                        {
-                                            new Label
-                                            {
-                                                Text = Loc.GetString("Don't die!"),
-                                                StyleClasses = {StyleBase.StyleClassLabelSubText}
-                                            },
-                                            new Label
-                                            {
-                                                Text = "ver 0.1",
-                                                SizeFlagsHorizontal =
-                                                    Control.SizeFlags.Expand | Control.SizeFlags.ShrinkEnd,
-                                                StyleClasses = {StyleBase.StyleClassLabelSubText}
-                                            }
-                                        }
+                                        Text = Loc.GetString("Don't die!"),
+                                        StyleClasses = {StyleBase.StyleClassLabelSubText}
+                                    },
+                                    new Label
+                                    {
+                                        Text = "ver 0.1",
+                                        HorizontalExpand = true,
+                                        HorizontalAlignment = Control.HAlignment.Right,
+                                        StyleClasses = {StyleBase.StyleClassLabelSubText}
                                     }
                                 }
                             },

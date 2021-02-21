@@ -6,7 +6,6 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 
 #nullable enable
 
@@ -57,8 +56,6 @@ namespace Content.Client.Construction
     [GenerateTypedNameReferences]
     public partial class ConstructionMenu : SS14Window, IConstructionMenuView
     {
-        protected override Vector2? CustomSize => (720, 320);
-
         public bool BuildButtonPressed
         {
             get => BuildButton.Pressed;
@@ -82,11 +79,13 @@ namespace Content.Client.Construction
 
         public ConstructionMenu()
         {
+            SetSize = MinSize = (720, 320);
+
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
 
             Title = Loc.GetString("Construction");
-            
+
             BuildButton.Text = Loc.GetString("Place construction ghost");
             RecipesList.OnItemSelected += obj => RecipeSelected?.Invoke(this, obj.ItemList[obj.ItemIndex]);
             RecipesList.OnItemDeselected += _ => RecipeSelected?.Invoke(this, null);

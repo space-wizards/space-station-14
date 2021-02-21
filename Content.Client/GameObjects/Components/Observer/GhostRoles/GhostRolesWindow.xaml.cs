@@ -12,8 +12,6 @@ namespace Content.Client.GameObjects.Components.Observer.GhostRoles
     {
         public event Action<uint> RoleRequested;
 
-        protected override Vector2 CalculateMinimumSize() => (350, 275);
-
         public void ClearEntries()
         {
             EntryContainer.DisposeAllChildren();

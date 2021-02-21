@@ -13,7 +13,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.UserInterface.AdminMenu.Tabs
 {
     [GenerateTypedNameReferences]
-    public partial class PlayerTab : MarginContainer
+    public partial class PlayerTab : Control
     {
         public delegate void PlayerListRefresh();
 
@@ -42,7 +42,7 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
 
             var header = new HBoxContainer
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SeparationOverride = 4,
                 Children =
                 {
@@ -50,14 +50,14 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
                     {
                         Text = "Name",
                         SizeFlagsStretchRatio = 2f,
-                        SizeFlagsHorizontal = SizeFlags.FillExpand
+                        HorizontalExpand = true
                     },
                     new VSeparator(),
                     new Label
                     {
                         Text = "Player",
                         SizeFlagsStretchRatio = 2f,
-                        SizeFlagsHorizontal = SizeFlags.FillExpand
+                        HorizontalExpand = true
                     }
                 }
             };
@@ -79,7 +79,7 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
             {
                 var hBox = new HBoxContainer
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    HorizontalExpand = true,
                     SeparationOverride = 4,
                     Children =
                     {
@@ -87,7 +87,7 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
                         {
                             Text = name,
                             SizeFlagsStretchRatio = 2f,
-                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                            HorizontalExpand = true,
                             ClipText = true
                         },
                         new VSeparator(),
@@ -95,7 +95,7 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
                         {
                             Text = player,
                             SizeFlagsStretchRatio = 2f,
-                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                            HorizontalExpand = true,
                             ClipText = true
                         }
                     }
@@ -121,7 +121,7 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
         {
             public VSeparator()
             {
-                CustomMinimumSize = (2, 5);
+                MinSize = (2, 5);
                 AddChild(new PanelContainer
                 {
                     PanelOverride = new StyleBoxFlat

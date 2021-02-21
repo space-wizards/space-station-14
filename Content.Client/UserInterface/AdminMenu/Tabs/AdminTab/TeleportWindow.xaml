@@ -1,8 +1,8 @@
 ﻿<SS14Window
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.UserInterface.AdminMenu.CustomControls"
-    Title="{Loc Teleport}" CustomMinimumSize="425 230">
-    <VBoxContainer SizeFlagsVertical="FillExpand">
+    Title="{Loc Teleport}" MinSize="425 230">
+    <VBoxContainer>
         <cc:PlayerListControl Name="PlayerList" />
         <Button Name="SubmitButton" Text="{Loc Teleport}" />
     </VBoxContainer>

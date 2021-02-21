@@ -1,16 +1,14 @@
-﻿<MarginContainer
+﻿<Control
     xmlns="https://spacestation14.io"
     xmlns:amc="clr-namespace:Content.Client.UserInterface.AdminMenu.CustomControls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:abt="clr-namespace:Content.Client.UserInterface.AdminMenu.Tabs.AdminbusTab"
-    MarginLeftOverride="4"
-    MarginTopOverride="4" MarginRightOverride="4"
-    MarginBottomOverride="4"
-    CustomMinimumSize="50 50">
+    Margin="4"
+    MinSize="50 50">
     <GridContainer
         Columns="4">
         <amc:CommandButton Name="SpawnEntitiesButton" Text="{Loc Spawn Entities}" />
         <amc:CommandButton Name="SpawnTilesButton" Text="{Loc Spawn Tiles} " />
         <amc:UICommandButton Command="events" Text="{Loc Station Events}" WindowType="{x:Type abt:StationEventsWindow}" />
     </GridContainer>
-</MarginContainer>
+</Control>

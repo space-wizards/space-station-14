@@ -63,9 +63,7 @@ namespace Content.Benchmarks
             // Initialize N entities with one component.
             for (var i = 0; i < N; i++)
             {
-                var entity = new Entity();
-                entity.SetManagers(entityManager);
-                entity.SetUid(new EntityUid(i + 1));
+                var entity = new Entity(entityManager, new EntityUid(i + 1));
                 _entities.Add(entity);
 
                 _componentManager.AddComponent<DummyComponent>(entity);
