@@ -149,6 +149,15 @@ namespace Content.Client.GameObjects.Components.Power.AME
                 ToggleInjection.Disabled = true;
             }
 
+            if (!castState.Injecting)
+            {
+                InjectionStatus.Text = Loc.GetString("Not Injecting");
+            }
+            else
+            {
+                InjectionStatus.Text = Loc.GetString("Injecting...");
+            }
+
             RefreshPartsButton.Disabled = castState.Injecting;
 
             CoreCount.Text = $"{castState.CoreCount}";
