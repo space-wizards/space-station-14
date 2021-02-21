@@ -347,7 +347,8 @@ namespace Content.Client.GameObjects.Components.Storage
                 var hBoxContainer = new HBoxContainer();
                 EntitySpriteView = new SpriteView
                 {
-                    MinSize = new Vector2(32.0f, 32.0f)
+                    MinSize = new Vector2(32.0f, 32.0f),
+                    OverrideDirection = Direction.South
                 };
                 EntityName = new Label
                 {
