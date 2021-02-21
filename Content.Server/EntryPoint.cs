@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration;
+using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
 using Content.Server.Database;
@@ -92,6 +93,7 @@ namespace Content.Server
             IoCManager.Resolve<ConsiderationsManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();
             IoCManager.Resolve<IAdminManager>().Initialize();
+            IoCManager.Resolve<INpcBehaviorManager>().Initialize();
             _euiManager.Initialize();
         }
 

@@ -16,12 +16,15 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 
     public class DroppedEventArgs : EventArgs
     {
-        public DroppedEventArgs(IEntity user)
+        public DroppedEventArgs(IEntity user, bool intentional)
         {
             User = user;
+            Intentional = intentional;
         }
 
         public IEntity User { get; }
+
+        public bool Intentional { get; }
     }
 
     /// <summary>
@@ -45,10 +48,16 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public IEntity Dropped { get; }
 
-        public DroppedMessage(IEntity user, IEntity dropped)
+        /// <summary>
+        ///     If the item was dropped intentionally.
+        /// </summary>
+        public bool Intentional { get; }
+
+        public DroppedMessage(IEntity user, IEntity dropped, bool intentional)
         {
             User = user;
             Dropped = dropped;
+            Intentional = intentional;
         }
     }
 }

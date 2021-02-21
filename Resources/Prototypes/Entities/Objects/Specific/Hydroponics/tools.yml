@@ -51,7 +51,7 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/spade.rsi
-    state: spade
+    state: icon
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Shovel

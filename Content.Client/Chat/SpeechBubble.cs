@@ -5,7 +5,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
-using Robust.Shared.Timers;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Chat

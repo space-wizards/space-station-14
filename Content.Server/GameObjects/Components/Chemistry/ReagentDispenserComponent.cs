@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
@@ -37,6 +38,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [ComponentReference(typeof(IInteractUsing))]
     public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IInteractUsing, ISolutionChange
     {
+        private static ReagentInventoryComparer _comparer = new();
+
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
@@ -109,6 +112,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 Inventory.Add(new ReagentDispenserInventoryEntry(entry));
             }
+
+            Inventory.Sort(_comparer);
         }
 
         private void OnPowerChanged(PowerChangedMessage e)
@@ -373,6 +378,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
             protected override void Activate(IEntity user, ReagentDispenserComponent component)
             {
                 component.TryEject(user);
+            }
+        }
+
+        private class ReagentInventoryComparer : Comparer<ReagentDispenserInventoryEntry>
+        {
+            public override int Compare(ReagentDispenserInventoryEntry x, ReagentDispenserInventoryEntry y)
+            {
+                return string.Compare(x.ID, y.ID, StringComparison.InvariantCultureIgnoreCase);
             }
         }
     }
