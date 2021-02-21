@@ -42,8 +42,8 @@
     - ghost
   behaviorType: Instant
   behavior: !type:GhostBoo
-    radius: 5
-    cooldown: 10
+    radius: 3
+    cooldown: 60
 
 - type: action
   actionType: DebugInstant

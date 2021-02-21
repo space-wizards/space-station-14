@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
