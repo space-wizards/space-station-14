@@ -105,7 +105,7 @@ namespace Content.Client.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     new AnimationTrackComponentProperty
                     {
                         ComponentType = typeof(PointLightComponent),
-                        InterpolationMode = AnimationInterpolationMode.Previous,
+                        InterpolationMode = AnimationInterpolationMode.Nearest,
                         Property = nameof(PointLightComponent.Enabled),
                         KeyFrames =
                         {
@@ -119,7 +119,7 @@ namespace Content.Client.GameObjects.Components.Power.ApcNetComponents.PowerRece
                         KeyFrames =
                         {
                             new AnimationTrackSpriteFlick.KeyFrame("off", 0),
-                            new AnimationTrackSpriteFlick.KeyFrame("on", 1)
+                            new AnimationTrackSpriteFlick.KeyFrame("on", 0.5)
                         }
                     }
                 }
