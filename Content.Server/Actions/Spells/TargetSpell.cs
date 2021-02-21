@@ -1,13 +1,10 @@
-using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.Utility;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Physics;
+using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using System;
@@ -56,7 +53,16 @@ namespace Content.Server.Actions
             RegisteredInduceType = registrationInducer.Type;
             var caster = args.Performer;
             var target = args.Target;
+            //For the range of the spell
+            var casterCoords = caster.Transform.WorldPosition;
+            var targetCoords = target.Transform.WorldPosition;
+            var effectiveRange = (casterCoords - targetCoords).Length;
             if (!caster.TryGetComponent<SharedActionsComponent>(out var actions)) return;
+            if (CastRange < effectiveRange)
+            {
+                caster.PopupMessage("Target out of range!");
+                return;
+            }
 
 
             //caster.PopupMessageEveryone(CastMessage); //Speak the cast message out loud
@@ -64,7 +70,6 @@ namespace Content.Server.Actions
             if (!target.TryGetComponent(RegisteredTargetType, out var component)) return;
             if (target.HasComponent(RegisteredInduceType)) return;
             actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown)); //Set the spell on cooldown
-            caster.PopupMessageEveryone(CastMessage);
             var componentInduced = compFactory.GetComponent(RegisteredInduceType);
             Component compInducedFinal = (Component)componentInduced;
             compInducedFinal.Owner = target;
