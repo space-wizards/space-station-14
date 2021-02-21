@@ -68,7 +68,7 @@
   id: plastic
   name: plastic
   icon: Objects/Materials/sheets.rsi/plastic.png
-  density:  6500
+  density: 6500
   electricResistivity: 1.0e+13
   thermalConductivity: 1.5
   specificHeat: 600

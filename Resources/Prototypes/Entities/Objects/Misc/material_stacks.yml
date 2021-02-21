@@ -209,8 +209,8 @@
   components:
     - type: Material
       materials:
-      - key:  enum.MaterialKeys.Stack
-        mat:  wood
+      - key: enum.MaterialKeys.Stack
+        mat: wood
     - type: Stack
       stacktype: enum.StackType.Wood 
     - type: Sprite
@@ -237,8 +237,8 @@
   components:
     - type: Material
       materials:
-      - key:  enum.MaterialKeys.Stack
-        mat:  plastic
+      - key: enum.MaterialKeys.Stack
+        mat: plastic
     - type: Stack
       stacktype: enum.StackType.Plastic 
     - type: Sprite
