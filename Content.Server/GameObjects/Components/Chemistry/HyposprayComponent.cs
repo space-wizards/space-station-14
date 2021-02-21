@@ -86,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 target.PopupMessage(Loc.GetString("You feel a tiny prick!"));
                 var meleeSys = EntitySystem.Get<MeleeWeaponSystem>();
-                var angle = new Angle(target.Transform.WorldPosition - user.Transform.WorldPosition);
+                var angle = Angle.FromWorldVec(target.Transform.WorldPosition - user.Transform.WorldPosition);
                 meleeSys.SendLunge(angle, user);
             }
 

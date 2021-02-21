@@ -395,7 +395,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 var diff = coordinates.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
                 if (diff.LengthSquared > 0.01f)
                 {
-                    player.Transform.LocalRotation = new Angle(diff);
+                    player.Transform.LocalRotation = Angle.FromWorldVec(diff);
                 }
             }
         }
