@@ -1,6 +1,6 @@
 using System;
 using Content.Shared.Preferences;
-using Robust.Shared;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;

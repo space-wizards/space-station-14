@@ -6,7 +6,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Prototypes;
 using Content.Shared.Roles;
 using Content.Shared.Utility;
-using Robust.Shared;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
