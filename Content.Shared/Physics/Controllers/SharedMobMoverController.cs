@@ -1,4 +1,5 @@
 #nullable enable
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
@@ -27,7 +28,7 @@ namespace Content.Shared.Physics.Controllers
         protected void UpdateKinematics(float frameTime, ITransformComponent transform, IMoverComponent mover, PhysicsComponent physicsComponent)
         {
             // TODO: Look at https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Manual/CharacterControllers.html?highlight=controller as it has some adviceo n kinematic controllersx
-            if (!ActionBlockerSystem.CanMove(mover.Owner)) return;
+            if (!UseMobMovement(_broadPhaseSystem, physicsComponent)) return;
 
             var (walkDir, sprintDir) = mover.VelocityDir;
 
@@ -98,6 +99,14 @@ namespace Content.Shared.Physics.Controllers
             */
         }
 
+        public static bool UseMobMovement(SharedBroadPhaseSystem broadPhaseSystem, PhysicsComponent body)
+        {
+            return body.Owner.HasComponent<IMobStateComponent>() &&
+                   ActionBlockerSystem.CanMove(body.Owner) &&
+                   (!body.Owner.IsWeightless() ||
+                    body.Owner.TryGetComponent(out IMoverComponent? mover) &&
+                    IsAroundCollider(broadPhaseSystem, body.Owner.Transform, mover, body));
+        }
 
         /// <summary>
         ///     Used for weightlessness to determine if we are near a wall.

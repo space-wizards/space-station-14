@@ -43,14 +43,8 @@ namespace Content.Shared.Physics.Controllers
                 var drop = 0.0f;
                 float control;
 
-                // Only apply friction when the player has no control
-                var useMobMovement = body.Owner.HasComponent<IMobStateComponent>() &&
-                                     ActionBlockerSystem.CanMove(body.Owner) &&
-                                     (!body.Owner.IsWeightless() ||
-                                      body.Owner.TryGetComponent(out IMoverComponent? mover) &&
-                                      SharedMobMoverController.IsAroundCollider(_broadPhaseSystem, body.Owner.Transform, mover, body));
-
-                if (useMobMovement) continue;
+                // Only apply friction when it's not a mob (or the mob doesn't have control).
+                if (SharedMobMoverController.UseMobMovement(_broadPhaseSystem, body)) continue;
 
                 var surfaceFriction = GetTileFriction(body);
                 // TODO: Make cvar

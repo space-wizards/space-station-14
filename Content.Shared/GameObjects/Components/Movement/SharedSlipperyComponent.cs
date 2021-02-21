@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Physics;
 using Robust.Shared.Containers;
@@ -83,8 +84,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
             if (entity.TryGetComponent(out IPhysicsComponent physics))
             {
-                var controller = physics.EnsureController<SlipController>();
-                controller.LinearVelocity = physics.LinearVelocity * LaunchForwardsMultiplier;
+                physics.LinearVelocity *= LaunchForwardsMultiplier;
             }
 
             stun.Paralyze(5);
