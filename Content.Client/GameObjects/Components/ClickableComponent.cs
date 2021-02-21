@@ -2,6 +2,7 @@
 using System;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -43,21 +44,14 @@ namespace Content.Client.GameObjects.Components
                 return false;
             }
 
-            var localPos = Owner.Transform.InvWorldMatrix.Transform(worldPos);
+            var transform = Owner.Transform;
+            var localPos = transform.InvWorldMatrix.Transform(worldPos);
+            var spriteMatrix = Matrix3.Invert(sprite.GetLocalMatrix());
 
-            var worldRotation = new Angle(Owner.Transform.WorldRotation - sprite.Rotation);
-            if (sprite.Directional)
-            {
-                localPos = new Angle(worldRotation).RotateVec(localPos);
-            }
-            else
-            {
-                localPos = new Angle(MathHelper.PiOver2).RotateVec(localPos);
-            }
-
-            var localOffset = localPos * EyeManager.PixelsPerMeter * (1, -1);
+            localPos = spriteMatrix.Transform(localPos);
 
             var found = false;
+            var worldRotation = transform.WorldRotation;
 
             if (_data.All.Contains(localPos))
             {
@@ -66,7 +60,14 @@ namespace Content.Client.GameObjects.Components
             else
             {
                 // TODO: diagonal support?
-                var dir = sprite.Directional ? worldRotation.GetCardinalDir() : Direction.South;
+
+                var modAngle = sprite.NoRotation ? SpriteComponent.CalcRectWorldAngle(worldRotation, 4) : Angle.Zero;
+                var dir = sprite.EnableDirectionOverride ? sprite.DirectionOverride : worldRotation.GetCardinalDir();
+
+                modAngle += dir.ToAngle();
+
+                var layerPos = modAngle.RotateVec(localPos);
+
                 var boundsForDir = dir switch
                 {
                     Direction.East => _data.East,
@@ -76,7 +77,7 @@ namespace Content.Client.GameObjects.Components
                     _ => throw new InvalidOperationException()
                 };
 
-                if (boundsForDir.Contains(localPos))
+                if (boundsForDir.Contains(layerPos))
                 {
                     found = true;
                 }
@@ -88,6 +89,14 @@ namespace Content.Client.GameObjects.Components
                 {
                     if (!layer.Visible) continue;
 
+                    var dirCount = sprite.GetLayerDirectionCount(layer);
+                    var dir = layer.EffectiveDirection(worldRotation);
+                    var modAngle = sprite.NoRotation ? SpriteComponent.CalcRectWorldAngle(worldRotation, dirCount) : Angle.Zero;
+                    modAngle += dir.Convert().ToAngle();
+
+                    var layerPos = modAngle.RotateVec(localPos);
+
+                    var localOffset = layerPos * EyeManager.PixelsPerMeter * (1, -1);
                     if (layer.Texture != null)
                     {
                         if (_clickMapManager.IsOccluding(layer.Texture,
@@ -107,7 +116,6 @@ namespace Content.Client.GameObjects.Components
 
                         var (mX, mY) = localOffset + rsi.Size / 2;
 
-                        var dir = layer.EffectiveDirection(worldRotation);
                         if (_clickMapManager.IsOccluding(rsi, layer.RsiState, dir,
                             layer.AnimationFrame, ((int) mX, (int) mY)))
                         {
