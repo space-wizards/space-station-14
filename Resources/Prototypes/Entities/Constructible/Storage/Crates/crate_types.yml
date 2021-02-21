@@ -375,7 +375,7 @@
   parent: CrateGeneric
   components:
   - type: AccessReader
-    access: [["Science"]]
+    access: [["Research"]]
   - type: SecureEntityStorage
   - type: Sprite
     sprite: Constructible/Storage/Crates/scicrate_secure.rsi
