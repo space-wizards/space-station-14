@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 var entity = container.ContainedEntities[^1];
 
                 container.Remove(entity);
-                entity.Transform.WorldPosition = owner.Transform.Coordinates.Position;
+                entity.Transform.WorldPosition = owner.Transform.WorldPosition;
             }
 
             if (dirty)
