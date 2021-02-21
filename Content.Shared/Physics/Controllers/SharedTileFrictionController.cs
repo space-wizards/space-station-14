@@ -44,7 +44,7 @@ namespace Content.Shared.Physics.Controllers
                 float control;
 
                 // Only apply friction when it's not a mob (or the mob doesn't have control).
-                if (SharedMobMoverController.UseMobMovement(_broadPhaseSystem, body)) continue;
+                if (SharedMoverController.UseMobMovement(_broadPhaseSystem, body)) continue;
 
                 var surfaceFriction = GetTileFriction(body);
                 // TODO: Make cvar

@@ -12,7 +12,7 @@ namespace Content.Shared.GameObjects
         public const uint STORAGE = 1005;
         public const uint INVENTORY = 1006;
         public const uint POWER_DEBUG_TOOL = 1007;
-        // 1008
+        public const uint PLAYER_MOB_MOVER = 1008;
         // 1009
         public const uint RANGED_WEAPON = 1010;
         public const uint CAMERA_RECOIL = 1011;

@@ -23,7 +23,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Physics.Controllers
 {
-    public class MobMoverController : SharedMobMoverController
+    public class MoverController : SharedMoverController
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
@@ -45,38 +45,40 @@ namespace Content.Server.Physics.Controllers
         {
             base.UpdateBeforeSolve(prediction, map, frameTime);
 
-            foreach (var (mover, physics) in ComponentManager.EntityQuery<SharedPlayerInputMoverComponent, PhysicsComponent>(false))
+            foreach (var (mobMover, mover, physics) in ComponentManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
             {
+                // TODO: Shitcodey and should just be run before all maps
                 if (mover.Owner.Transform.MapID != map.MapId) continue;
 
-                UpdateKinematics(frameTime, mover.Owner.Transform, mover, physics);
+                HandleMobMovement(mover, physics, mobMover);
             }
 
-            foreach (var (mover, physics) in ComponentManager.EntityQuery<AiControllerComponent, PhysicsComponent>(false))
+            foreach (var (mover, physics) in ComponentManager.EntityQuery<IMoverComponent, PhysicsComponent>())
             {
+                // TODO: Shitcodey and should just be run before all maps
                 if (mover.Owner.Transform.MapID != map.MapId) continue;
 
-                UpdateKinematics(frameTime, mover.Owner.Transform, mover, physics);
+                HandleKinematicMovement(mover, physics);
             }
         }
 
-        protected override void HandleFootsteps(IMoverComponent mover)
+        protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)
         {
             var transform = mover.Owner.Transform;
             // Handle footsteps.
-            if (_mapManager.GridExists(mover.LastPosition.GetGridId(EntityManager)))
+            if (_mapManager.GridExists(mobMover.LastPosition.GetGridId(EntityManager)))
             {
                 // Can happen when teleporting between grids.
-                if (!transform.Coordinates.TryDistance(EntityManager, mover.LastPosition, out var distance))
+                if (!transform.Coordinates.TryDistance(EntityManager, mobMover.LastPosition, out var distance))
                 {
-                    mover.LastPosition = transform.Coordinates;
+                    mobMover.LastPosition = transform.Coordinates;
                     return;
                 }
 
-                mover.StepSoundDistance += distance;
+                mobMover.StepSoundDistance += distance;
             }
 
-            mover.LastPosition = transform.Coordinates;
+            mobMover.LastPosition = transform.Coordinates;
             float distanceNeeded;
             if (mover.Sprinting)
             {
@@ -87,9 +89,9 @@ namespace Content.Server.Physics.Controllers
                 distanceNeeded = StepSoundMoveDistanceWalking;
             }
 
-            if (mover.StepSoundDistance > distanceNeeded)
+            if (mobMover.StepSoundDistance > distanceNeeded)
             {
-                mover.StepSoundDistance = 0;
+                mobMover.StepSoundDistance = 0;
 
                 if (!mover.Owner.HasComponent<FootstepSoundComponent>())
                 {

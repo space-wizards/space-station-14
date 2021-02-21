@@ -15,7 +15,7 @@ namespace Content.Shared.Physics.Controllers
     ///     Handles player and NPC mob movement.
     ///     NPCs are handled server-side only.
     /// </summary>
-    public abstract class SharedMobMoverController : AetherController
+    public abstract class SharedMoverController : AetherController
     {
         private SharedBroadPhaseSystem _broadPhaseSystem = default!;
 
@@ -25,11 +25,45 @@ namespace Content.Shared.Physics.Controllers
             _broadPhaseSystem = EntitySystem.Get<SharedBroadPhaseSystem>();
         }
 
-        protected void UpdateKinematics(float frameTime, ITransformComponent transform, IMoverComponent mover, PhysicsComponent physicsComponent)
+        /// <summary>
+        ///     A generic kinematic mover for entities.
+        /// </summary>
+        protected void HandleKinematicMovement(IMoverComponent mover, PhysicsComponent physicsComponent)
+        {
+            var (walkDir, sprintDir) = mover.VelocityDir;
+
+            // Regular movement.
+            // Target velocity.
+            var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed);
+
+            if (total != Vector2.Zero)
+            {
+                mover.Owner.Transform.LocalRotation = total.GetDir().ToAngle();
+            }
+
+            physicsComponent.LinearVelocity = total;
+        }
+
+        // TODO: Shuttle mover here
+        /*
+         * Some thoughts:
+         * Unreal actually doesn't predict vehicle movement at all, it's purely server-side which I thought was interesting
+         * The reason for this is that vehicles change direction very slowly compared to players so you don't really have the requirement for quick movement anyway
+         * As such could probably just look at applying a force / impulse to the shuttle server-side only so it controls like the titanic.
+         */
+
+        /// <summary>
+        ///     Movement while considering actionblockers, weightlessness, etc.
+        /// </summary>
+        /// <param name="transform"></param>
+        /// <param name="mover"></param>
+        /// <param name="physicsComponent"></param>
+        protected void HandleMobMovement(IMoverComponent mover, PhysicsComponent physicsComponent, IMobMoverComponent mobMover)
         {
             // TODO: Look at https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Manual/CharacterControllers.html?highlight=controller as it has some adviceo n kinematic controllersx
             if (!UseMobMovement(_broadPhaseSystem, physicsComponent)) return;
 
+            var transform = mover.Owner.Transform;
             var (walkDir, sprintDir) = mover.VelocityDir;
 
             var weightless = transform.Owner.IsWeightless();
@@ -38,7 +72,7 @@ namespace Content.Shared.Physics.Controllers
             if (weightless)
             {
                 // No gravity: is our entity touching anything?
-                var touching = IsAroundCollider(_broadPhaseSystem, transform, mover, physicsComponent);
+                var touching = IsAroundCollider(_broadPhaseSystem, transform, mobMover, physicsComponent);
 
                 if (!touching)
                 {
@@ -57,46 +91,7 @@ namespace Content.Shared.Physics.Controllers
             }
 
             physicsComponent.LinearVelocity = total;
-            HandleFootsteps(mover);
-            return;
-
-            /*
-            var wishSpeed = total.Length;
-            var wishDir = wishSpeed > 0 ? total.Normalized : Vector2.Zero;
-
-            // Clamp to server-max speed?
-            var accelerate = 40.0f;
-
-            Accelerate(frameTime, physicsComponent, wishDir, wishSpeed, accelerate);
-
-            if (wishSpeed != 0f)
-            {
-                transform.LocalRotation = total.GetDir().ToAngle();
-            }
-
-            // TODO: Conveyors should probably be a separate controller that adds to the basevelocity of the body (which gets reset every tick I think?)
-
-            DebugTools.Assert(!float.IsNaN(physicsComponent.LinearVelocity.Length));
-            HandleFootsteps(mover);
-
-        }
-
-        // Okay Touma
-        private void Accelerate(float frameTime, PhysicsComponent body, Vector2 wishDir, float wishSpeed, float accel)
-        {
-            if (!ActionBlockerSystem.CanMove(body.Owner)) return;
-
-            var currentSpeed = Vector2.Dot(body.LinearVelocity, wishDir);
-            var addSpeed = wishSpeed - currentSpeed;
-
-            if (addSpeed <= 0f) return;
-
-            // TODO Look at source for dis.
-            var accelSpeed = accel * frameTime * wishSpeed;
-            accelSpeed = MathF.Min(accelSpeed, addSpeed);
-
-            body.LinearVelocity += wishDir * accelSpeed;
-            */
+            HandleFootsteps(mover, mobMover);
         }
 
         public static bool UseMobMovement(SharedBroadPhaseSystem broadPhaseSystem, PhysicsComponent body)
@@ -104,7 +99,7 @@ namespace Content.Shared.Physics.Controllers
             return body.Owner.HasComponent<IMobStateComponent>() &&
                    ActionBlockerSystem.CanMove(body.Owner) &&
                    (!body.Owner.IsWeightless() ||
-                    body.Owner.TryGetComponent(out IMoverComponent? mover) &&
+                    body.Owner.TryGetComponent(out SharedPlayerMobMoverComponent? mover) &&
                     IsAroundCollider(broadPhaseSystem, body.Owner.Transform, mover, body));
         }
 
@@ -116,7 +111,7 @@ namespace Content.Shared.Physics.Controllers
         /// <param name="mover"></param>
         /// <param name="collider"></param>
         /// <returns></returns>
-        public static bool IsAroundCollider(SharedBroadPhaseSystem broadPhaseSystem, ITransformComponent transform, IMoverComponent mover, IPhysicsComponent collider)
+        public static bool IsAroundCollider(SharedBroadPhaseSystem broadPhaseSystem, ITransformComponent transform, IMobMoverComponent mover, IPhysicsComponent collider)
         {
             var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
 
@@ -140,6 +135,7 @@ namespace Content.Shared.Physics.Controllers
             return false;
         }
 
-        protected virtual void HandleFootsteps(IMoverComponent mover) {}
+        // TODO: Need a predicted client version that only plays for our own entity and then have server-side ignore our session (for that entity only)
+        protected virtual void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover) {}
     }
 }
