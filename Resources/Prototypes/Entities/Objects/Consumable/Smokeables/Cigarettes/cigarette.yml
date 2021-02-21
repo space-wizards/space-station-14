@@ -15,6 +15,7 @@
       tags:
         - Cigarette
     - type: Clothing
+      netsync: false
       sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
       Slots: [ mask ]
       HeldPrefix: unlit

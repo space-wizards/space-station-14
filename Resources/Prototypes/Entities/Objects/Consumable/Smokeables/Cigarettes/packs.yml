@@ -5,6 +5,7 @@
   abstract: true
   components:
     - type: Sprite
+      netsync: false
       state: closed
     - type: Storage
       capacity: 6
