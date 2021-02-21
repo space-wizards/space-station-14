@@ -8,6 +8,7 @@ namespace Content.Server
     // Mapping tools
     // Uncomment if you need them, I guess.
 
+    /*
     [GlobalVerb]
     public sealed class HardRotateCcwVerb : GlobalVerb
     {
@@ -42,5 +43,5 @@ namespace Content.Server
         {
             target.Transform.LocalRotation -= Math.PI / 2;
         }
-    }
+    }*/
 }
