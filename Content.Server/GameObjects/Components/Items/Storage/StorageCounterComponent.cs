@@ -38,7 +38,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             base.ExposeData(serializer);
 
             serializer.DataField(ref _countTag, "countTag", null);
-            if (_countTag == null)
+            // We only print this message if YAML config doesn't have the countTag
+            if (serializer is YamlObjectSerializer && _countTag == null)
             {
                 Logger.Warning("StorageCounterComponent without a `countTag` is useless");
             }
