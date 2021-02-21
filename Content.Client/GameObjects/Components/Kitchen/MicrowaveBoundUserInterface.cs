@@ -13,6 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.GameObjects.Components.Kitchen
 {
@@ -149,11 +150,10 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 public uint CookTime;
             }
 
-            protected override Vector2? CustomSize => (512, 256);
 
             private MicrowaveBoundUserInterface Owner { get; set; }
 
-            public event Action<BaseButton.ButtonEventArgs, int>? OnCookTimeSelected;
+            public event Action<ButtonEventArgs, int>? OnCookTimeSelected;
 
             public Button StartButton { get; }
             public Button EjectButton { get; }
@@ -175,53 +175,49 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
             public MicrowaveMenu(MicrowaveBoundUserInterface owner)
             {
+                SetSize = MinSize = (512, 256);
+
                 Owner = owner;
                 Title = Loc.GetString("Microwave");
                 DisableCookingPanelOverlay = new PanelContainer
                 {
                     MouseFilter = MouseFilterMode.Stop,
                     PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.60f)},
-                    SizeFlagsHorizontal = SizeFlags.Fill,
-                    SizeFlagsVertical = SizeFlags.Fill,
                 };
 
-                var hSplit = new HBoxContainer
-                {
-                    SizeFlagsHorizontal = SizeFlags.Fill,
-                    SizeFlagsVertical = SizeFlags.Fill
-                };
+                var hSplit = new HBoxContainer();
 
                 IngredientsListReagents = new ItemList
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    VerticalExpand = true,
+                    HorizontalExpand = true,
                     SelectMode = ItemList.ItemListSelectMode.Button,
                     SizeFlagsStretchRatio = 2,
-                    CustomMinimumSize = (100, 128)
+                    MinSize = (100, 128)
                 };
 
                 IngredientsList = new ItemList
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    VerticalExpand = true,
+                    HorizontalExpand = true,
                     SelectMode = ItemList.ItemListSelectMode.Button,
                     SizeFlagsStretchRatio = 2,
-                    CustomMinimumSize = (100, 128)
+                    MinSize = (100, 128)
                 };
 
                 hSplit.AddChild(IngredientsListReagents);
                 //Padding between the lists.
                 hSplit.AddChild(new Control
                 {
-                    CustomMinimumSize = (0, 5),
+                    MinSize = (0, 5),
                 });
 
                 hSplit.AddChild(IngredientsList);
 
                 var vSplit = new VBoxContainer
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    VerticalExpand = true,
+                    HorizontalExpand = true,
                 };
 
                 hSplit.AddChild(vSplit);
@@ -252,14 +248,13 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 //Padding
                 vSplit.AddChild(new Control
                 {
-                    CustomMinimumSize = (0, 15),
-                    SizeFlagsVertical = SizeFlags.Fill,
+                    MinSize = (0, 15),
                 });
 
                 CookTimeButtonGroup = new ButtonGroup();
                 CookTimeButtonVbox = new VBoxContainer
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    VerticalExpand = true,
                     Align = BoxContainer.AlignMode.Center,
                 };
 
@@ -291,14 +286,14 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     Text = Loc.GetString("COOK TIME: 1"),
                     Align = Label.AlignMode.Center,
                     Modulate = Color.White,
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter
+                    VerticalAlignment = VAlignment.Center
                 };
 
                 var innerTimerPanel = new PanelContainer
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    VerticalExpand = true,
                     ModulateSelfOverride = Color.Red,
-                    CustomMinimumSize = (100, 128),
+                    MinSize = (100, 128),
                     PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.5f)},
 
                     Children =
@@ -319,7 +314,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
                                 new ScrollContainer()
                                 {
-                                    SizeFlagsVertical = SizeFlags.FillExpand,
+                                    VerticalExpand = true,
 
                                     Children =
                                     {
@@ -333,8 +328,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
                 TimerFacePlate = new PanelContainer()
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    VerticalExpand = true,
+                    HorizontalExpand = true,
                     Children =
                     {
                         innerTimerPanel

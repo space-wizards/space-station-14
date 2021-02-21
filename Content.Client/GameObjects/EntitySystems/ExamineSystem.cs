@@ -90,10 +90,11 @@ namespace Content.Client.GameObjects.EntitySystems
             hBox.AddChild(new Label
             {
                 Text = entity.Name,
-                SizeFlagsHorizontal = Control.SizeFlags.FillExpand,
+                HorizontalExpand = true,
             });
 
-            var size = Vector2.ComponentMax((minWidth, 0), panel.CombinedMinimumSize);
+            panel.Measure(Vector2.Infinity);
+            var size = Vector2.ComponentMax((minWidth, 0), panel.DesiredSize);
 
             _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos, size));
 

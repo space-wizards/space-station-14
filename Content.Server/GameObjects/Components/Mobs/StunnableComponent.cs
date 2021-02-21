@@ -1,9 +1,11 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿#nullable enable
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Alert;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
@@ -39,7 +41,8 @@ namespace Content.Server.GameObjects.Components.Mobs
             StunnedTimer = 0f;
             SlowdownTimer = 0f;
 
-            if (KnockedDown)
+            if (KnockedDown &&
+                Owner.TryGetComponent(out IMobStateComponent? mobState) && !mobState.IsIncapacitated())
             {
                 EntitySystem.Get<StandingStateSystem>().Standing(Owner);
             }
@@ -65,7 +68,8 @@ namespace Content.Server.GameObjects.Components.Mobs
             {
                 KnockdownTimer -= delta;
 
-                if (KnockdownTimer <= 0f)
+                if (KnockdownTimer <= 0f
+                    && Owner.TryGetComponent(out IMobStateComponent? mobState) && !mobState.IsIncapacitated())
                 {
                     EntitySystem.Get<StandingStateSystem>().Standing(Owner);
 
@@ -82,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 {
                     SlowdownTimer = 0f;
 
-                    if (Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
+                    if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movement))
                     {
                         movement.RefreshMovementSpeedModifiers();
                     }
@@ -92,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             if (!StunStart.HasValue || !StunEnd.HasValue ||
-                !Owner.TryGetComponent(out ServerAlertsComponent status))
+                !Owner.TryGetComponent(out ServerAlertsComponent? status))
             {
                 return;
             }

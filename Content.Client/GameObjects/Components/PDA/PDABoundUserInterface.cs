@@ -226,8 +226,6 @@ namespace Content.Client.GameObjects.Components.PDA
 
         private class PDAMenu : SS14Window
         {
-            protected override Vector2? CustomSize => (512, 256);
-
             private PDABoundUserInterface _owner { get; }
 
             public Button FlashLightToggleButton { get; }
@@ -278,6 +276,8 @@ namespace Content.Client.GameObjects.Components.PDA
 
             public PDAMenu(PDABoundUserInterface owner, IPrototypeManager prototypeManager)
             {
+                MinSize = SetSize = (512, 256);
+
                 _owner = owner;
                 _prototypeManager = prototypeManager;
                 Title = Loc.GetString("PDA");
@@ -290,20 +290,20 @@ namespace Content.Client.GameObjects.Components.PDA
 
                 IDInfoLabel = new RichTextLabel()
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    HorizontalExpand = true,
                 };
 
                 EjectIDButton = new Button
                 {
                     Text = Loc.GetString("Eject ID"),
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter
+                    HorizontalAlignment = HAlignment.Center,
+                    VerticalAlignment = VAlignment.Center
                 };
                 EjectPenButton = new Button
                 {
                     Text = Loc.GetString("Eject Pen"),
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter
+                    HorizontalAlignment = HAlignment.Center,
+                    VerticalAlignment = VAlignment.Center
                 };
 
                 var innerHBoxContainer = new HBoxContainer
@@ -318,7 +318,6 @@ namespace Content.Client.GameObjects.Components.PDA
 
                 IDInfoContainer = new PanelContainer
                 {
-                    SizeFlagsHorizontal = SizeFlags.Fill,
                     Children =
                     {
                         innerHBoxContainer,
@@ -333,9 +332,9 @@ namespace Content.Client.GameObjects.Components.PDA
 
                 var mainMenuTabContainer = new VBoxContainer
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    CustomMinimumSize = (50, 50),
+                    VerticalExpand = true,
+                    HorizontalExpand = true,
+                    MinSize = (50, 50),
 
                     Children =
                     {
@@ -355,36 +354,36 @@ namespace Content.Client.GameObjects.Components.PDA
 
                 BalanceInfo = new RichTextLabel
                 {
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                    HorizontalAlignment = HAlignment.Center,
                 };
 
                 //Red background container.
                 var masterPanelContainer = new PanelContainer
                 {
                     PanelOverride = new StyleBoxFlat { BackgroundColor = Color.Black },
-                    SizeFlagsVertical = SizeFlags.FillExpand
+                    VerticalExpand = true
                 };
 
                 //This contains both the panel of the category buttons and the listings box.
                 CategoryAndListingsContainer = new HSplitContainer
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    VerticalExpand = true,
                 };
 
 
                 var uplinkShopScrollContainer = new ScrollContainer
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    HorizontalExpand = true,
+                    VerticalExpand = true,
                     SizeFlagsStretchRatio = 2,
-                    CustomMinimumSize = (100, 256)
+                    MinSize = (100, 256)
                 };
 
                 //Add the category list to the left side. The store items to center.
                 var categoryListContainerBackground = new PanelContainer
                 {
                     PanelOverride = new StyleBoxFlat { BackgroundColor = Color.Gray.WithAlpha(0.02f) },
-                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    VerticalExpand = true,
                     Children =
                     {
                         CategoryListContainer
@@ -398,16 +397,16 @@ namespace Content.Client.GameObjects.Components.PDA
                 //Actual list of buttons for buying a listing from the uplink.
                 UplinkListingsContainer = new VBoxContainer
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    HorizontalExpand = true,
+                    VerticalExpand = true,
                     SizeFlagsStretchRatio = 2,
-                    CustomMinimumSize = (100, 256),
+                    MinSize = (100, 256),
                 };
                 uplinkShopScrollContainer.AddChild(UplinkListingsContainer);
 
                 var innerVboxContainer = new VBoxContainer
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    VerticalExpand = true,
 
                     Children =
                     {
@@ -475,7 +474,7 @@ namespace Content.Client.GameObjects.Components.PDA
                 {
                     Text = listing.ListingName == string.Empty ? prototype.Name : listing.ListingName,
                     ToolTip = listing.Description == string.Empty ? prototype.Description : listing.Description,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    HorizontalExpand = true,
                     Modulate = _loggedInUplinkAccount?.DataBalance >= listing.Price
                     ? Color.White
                     : Color.Gray.WithAlpha(0.30f)
@@ -484,7 +483,7 @@ namespace Content.Client.GameObjects.Components.PDA
                 var priceLabel = new Label
                 {
                     Text = $"{listing.Price} TC",
-                    SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                    HorizontalAlignment = HAlignment.Right,
                     Modulate = _loggedInUplinkAccount?.DataBalance >= listing.Price
                     ? weightedColor
                     : Color.Gray.WithAlpha(0.30f)
@@ -493,8 +492,7 @@ namespace Content.Client.GameObjects.Components.PDA
                 //Padding for the price lable.
                 var pricePadding = new HBoxContainer
                 {
-                    CustomMinimumSize = (32, 1),
-                    SizeFlagsHorizontal = SizeFlags.Fill,
+                    MinSize = (32, 1),
                 };
 
                 //Contains the name of the item and its price. Used for spacing item name and price.
@@ -518,7 +516,7 @@ namespace Content.Client.GameObjects.Components.PDA
 
                 var pdaUplinkListingButton = new PDAUplinkItemButton(listing)
                 {
-                    SizeFlagsVertical = SizeFlags.Fill,
+                    ButtonListing = listing,
                     Children =
                     {
                         listingButtonPanelContainer

@@ -1,4 +1,5 @@
-﻿- type: entity
+﻿# Vending machine descriptions are stored in vendingMachineInventory YAML files.
+- type: entity
   id: VendingMachine
   name: vending machine
   abstract: true
@@ -55,7 +56,6 @@
   parent: VendingMachine
   id: VendingMachineBooze
   name: Booze-O-Mat
-  description: A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one.
   components:
   - type: VendingMachine
     pack: Booze-O-Mat
@@ -133,7 +133,6 @@
   parent: VendingMachine
   id: VendingMachineCigs
   name: cigarette machine
-  description: If you want to smoke, might as well do it in style.
   components:
   - type: VendingMachine
     pack: Cigarette machine
@@ -295,7 +294,6 @@
   parent: VendingMachine
   id: VendingMachineHats
   name: Hatlord 9000
-  description: Hats for the hatlord. Skulls for the hat-throne!
   components:
   - type: VendingMachine
     pack: Hatlord 9000
@@ -533,7 +531,6 @@
   parent: VendingMachine
   id: VendingMachineShoes
   name: Shoelord 9000
-  description: Finest shoes on all of station.
   components:
   - type: VendingMachine
     pack: Shoelord 9000
@@ -584,7 +581,6 @@
   parent: VendingMachine
   id: VendingMachineSnack
   name: Getmore Chocolate Corp
-  description: A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars.
   components:
   - type: VendingMachine
     pack: Getmore Chocolate Corp
@@ -639,7 +635,6 @@
   parent: VendingMachine
   id: VendingMachineSuits
   name: Suitlord 9000
-  description: Suits for every ocassion!
   components:
   - type: VendingMachine
     pack: Suitlord 9000
@@ -665,7 +660,6 @@
   parent: VendingMachine
   id: VendingMachineTheater
   name: AutoDrobe
-  description: Enchance RP with costumes!
   components:
   - type: VendingMachine
     pack: AutoDrobe
@@ -697,7 +691,6 @@
   parent: VendingMachine
   id: VendingMachineVendomat
   name: Vendomat
-  description: Only the finest robust equipment in space!
   components:
   - type: VendingMachine
     pack: Vendomat

@@ -88,8 +88,8 @@ namespace Content.Client.Arcade
             _highscoresRootContainer = new PanelContainer
             {
                 PanelOverride = rootBack,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                VerticalAlignment = VAlignment.Center,
+                HorizontalAlignment = HAlignment.Center
             };
 
             var c = new Color(OverlayBackgroundColor.R,OverlayBackgroundColor.G,OverlayBackgroundColor.B,220);
@@ -102,20 +102,20 @@ namespace Content.Client.Arcade
             var menuInnerPanel = new PanelContainer
             {
                 PanelOverride = innerBack,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                VerticalAlignment = VAlignment.Center,
+                HorizontalAlignment = HAlignment.Center
             };
 
             _highscoresRootContainer.AddChild(menuInnerPanel);
 
             var menuContainer = new VBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter
+                HorizontalAlignment = HAlignment.Center,
+                VerticalAlignment = VAlignment.Center
             };
 
             menuContainer.AddChild(new Label{Text = Loc.GetString("Highscores")});
-            menuContainer.AddChild(new Control{CustomMinimumSize = new Vector2(1,10)});
+            menuContainer.AddChild(new Control{MinSize = new Vector2(1,10)});
 
             var highScoreBox = new HBoxContainer();
 
@@ -124,14 +124,14 @@ namespace Content.Client.Arcade
                 Align = Label.AlignMode.Center
             };
             highScoreBox.AddChild(_localHighscoresLabel);
-            highScoreBox.AddChild(new Control{CustomMinimumSize = new Vector2(40,1)});
+            highScoreBox.AddChild(new Control{MinSize = new Vector2(40,1)});
             _globalHighscoresLabel = new Label
             {
                 Align = Label.AlignMode.Center
             };
             highScoreBox.AddChild(_globalHighscoresLabel);
             menuContainer.AddChild(highScoreBox);
-            menuContainer.AddChild(new Control{CustomMinimumSize = new Vector2(1,10)});
+            menuContainer.AddChild(new Control{MinSize = new Vector2(1,10)});
             _highscoreBackButton = new Button
             {
                 Text = Loc.GetString("Back"),
@@ -154,8 +154,8 @@ namespace Content.Client.Arcade
             _gameOverRootContainer = new PanelContainer
             {
                 PanelOverride = rootBack,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                VerticalAlignment = VAlignment.Center,
+                HorizontalAlignment = HAlignment.Center
             };
 
             var innerBack = new StyleBoxTexture
@@ -167,25 +167,25 @@ namespace Content.Client.Arcade
             var menuInnerPanel = new PanelContainer
             {
                 PanelOverride = innerBack,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                VerticalAlignment = VAlignment.Center,
+                HorizontalAlignment = HAlignment.Center
             };
 
             _gameOverRootContainer.AddChild(menuInnerPanel);
 
             var menuContainer = new VBoxContainer
             {
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter
+                HorizontalAlignment = HAlignment.Center,
+                VerticalAlignment = VAlignment.Center
             };
 
             menuContainer.AddChild(new Label{Text = Loc.GetString("Gameover!"),Align = Label.AlignMode.Center});
-            menuContainer.AddChild(new Control{CustomMinimumSize = new Vector2(1,10)});
+            menuContainer.AddChild(new Control{MinSize = new Vector2(1,10)});
 
 
             _finalScoreLabel = new Label{Align = Label.AlignMode.Center};
             menuContainer.AddChild(_finalScoreLabel);
-            menuContainer.AddChild(new Control{CustomMinimumSize = new Vector2(1,10)});
+            menuContainer.AddChild(new Control{MinSize = new Vector2(1,10)});
 
             _finalNewGameButton = new Button
             {
@@ -212,8 +212,8 @@ namespace Content.Client.Arcade
             _menuRootContainer = new PanelContainer
             {
                 PanelOverride = rootBack,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                VerticalAlignment = VAlignment.Center,
+                HorizontalAlignment = HAlignment.Center
             };
 
             var innerBack = new StyleBoxTexture
@@ -225,8 +225,8 @@ namespace Content.Client.Arcade
             var menuInnerPanel = new PanelContainer
             {
                 PanelOverride = innerBack,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                VerticalAlignment = VAlignment.Center,
+                HorizontalAlignment = HAlignment.Center
             };
 
             _menuRootContainer.AddChild(menuInnerPanel);
@@ -234,8 +234,8 @@ namespace Content.Client.Arcade
 
             var menuContainer = new VBoxContainer
             {
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter
+                HorizontalAlignment = HAlignment.Center,
+                VerticalAlignment = VAlignment.Center
             };
 
             _newGameButton = new Button
@@ -248,7 +248,7 @@ namespace Content.Client.Arcade
                 _owner.SendAction(BlockGamePlayerAction.NewGame);
             };
             menuContainer.AddChild(_newGameButton);
-            menuContainer.AddChild(new Control{CustomMinimumSize = new Vector2(1,10)});
+            menuContainer.AddChild(new Control{MinSize = new Vector2(1,10)});
 
             _scoreBoardButton = new Button
             {
@@ -257,7 +257,7 @@ namespace Content.Client.Arcade
             };
             _scoreBoardButton.OnPressed += (e) => _owner.SendAction(BlockGamePlayerAction.ShowHighscores);
             menuContainer.AddChild(_scoreBoardButton);
-            _unpauseButtonMargin = new Control {CustomMinimumSize = new Vector2(1, 10), Visible = false};
+            _unpauseButtonMargin = new Control {MinSize = new Vector2(1, 10), Visible = false};
             menuContainer.AddChild(_unpauseButtonMargin);
 
             _unpauseButton = new Button
@@ -313,35 +313,35 @@ namespace Content.Client.Arcade
             _levelLabel = new Label
             {
                 Align = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.FillExpand
+                HorizontalExpand = true
             };
             _gameRootContainer.AddChild(_levelLabel);
             _gameRootContainer.AddChild(new Control
             {
-                CustomMinimumSize = new Vector2(1,5)
+                MinSize = new Vector2(1,5)
             });
 
             _pointsLabel = new Label
             {
                 Align = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.FillExpand
+                HorizontalExpand = true
             };
             _gameRootContainer.AddChild(_pointsLabel);
             _gameRootContainer.AddChild(new Control
             {
-                CustomMinimumSize = new Vector2(1,10)
+                MinSize = new Vector2(1,10)
             });
 
             var gameBox = new HBoxContainer();
             gameBox.AddChild(SetupHoldBox(backgroundTexture));
             gameBox.AddChild(new Control
             {
-                CustomMinimumSize = new Vector2(10,1)
+                MinSize = new Vector2(10,1)
             });
             gameBox.AddChild(SetupGameGrid(backgroundTexture));
             gameBox.AddChild(new Control
             {
-                CustomMinimumSize = new Vector2(10,1)
+                MinSize = new Vector2(10,1)
             });
             gameBox.AddChild(SetupNextBox(backgroundTexture));
 
@@ -349,7 +349,7 @@ namespace Content.Client.Arcade
 
             _gameRootContainer.AddChild(new Control
             {
-                CustomMinimumSize = new Vector2(1,10)
+                MinSize = new Vector2(1,10)
             });
 
             _pauseButton = new Button
@@ -381,7 +381,7 @@ namespace Content.Client.Arcade
             var gamePanel = new PanelContainer
             {
                 PanelOverride = back,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SizeFlagsStretchRatio = 60
             };
             var backgroundPanel = new PanelContainer
@@ -405,16 +405,16 @@ namespace Content.Client.Arcade
             var grid = new GridContainer
             {
                 Columns = 1,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SizeFlagsStretchRatio = 20
             };
 
             var nextBlockPanel = new PanelContainer
             {
                 PanelOverride = previewBack,
-                CustomMinimumSize = BlockSize * 6.5f,
-                SizeFlagsHorizontal = SizeFlags.None,
-                SizeFlagsVertical = SizeFlags.None
+                MinSize = BlockSize * 6.5f,
+                HorizontalAlignment = HAlignment.Left,
+                VerticalAlignment = VAlignment.Top
             };
             var nextCenterContainer = new CenterContainer();
             _nextBlockGrid = new GridContainer
@@ -443,16 +443,16 @@ namespace Content.Client.Arcade
             var grid = new GridContainer
             {
                 Columns = 1,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SizeFlagsStretchRatio = 20
             };
 
             var holdBlockPanel = new PanelContainer
             {
                 PanelOverride = previewBack,
-                CustomMinimumSize = BlockSize * 6.5f,
-                SizeFlagsHorizontal = SizeFlags.None,
-                SizeFlagsVertical = SizeFlags.None
+                MinSize = BlockSize * 6.5f,
+                HorizontalAlignment = HAlignment.Left,
+                VerticalAlignment = VAlignment.Top
             };
             var holdCenterContainer = new CenterContainer();
             _holdBlockGrid = new GridContainer
@@ -663,7 +663,7 @@ namespace Content.Client.Arcade
                     _nextBlockGrid.AddChild(new PanelContainer
                     {
                         PanelOverride = new StyleBoxFlat {BackgroundColor = c},
-                        CustomMinimumSize = BlockSize,
+                        MinSize = BlockSize,
                         RectDrawClipMargin = 0
                     });
                 }
@@ -693,7 +693,7 @@ namespace Content.Client.Arcade
                     _holdBlockGrid.AddChild(new PanelContainer
                     {
                         PanelOverride = new StyleBoxFlat {BackgroundColor = c},
-                        CustomMinimumSize = BlockSize,
+                        MinSize = BlockSize,
                         RectDrawClipMargin = 0
                     });
                 }
@@ -717,7 +717,7 @@ namespace Content.Client.Arcade
                     _gameGrid.AddChild(new PanelContainer
                     {
                         PanelOverride = new StyleBoxFlat {BackgroundColor = c},
-                        CustomMinimumSize = BlockSize,
+                        MinSize = BlockSize,
                         RectDrawClipMargin = 0
                     });
                 }

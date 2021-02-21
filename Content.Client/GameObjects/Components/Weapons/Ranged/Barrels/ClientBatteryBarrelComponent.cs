@@ -63,23 +63,24 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 
             public StatusControl(ClientBatteryBarrelComponent parent)
             {
+                MinHeight = 15;
                 _parent = parent;
-                SizeFlagsHorizontal = SizeFlags.FillExpand;
-                SizeFlagsVertical = SizeFlags.ShrinkCenter;
+                HorizontalExpand = true;
+                VerticalAlignment = VAlignment.Center;
 
                 AddChild(new HBoxContainer
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    HorizontalExpand = true,
                     Children =
                     {
                         new Control
                         {
-                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                            HorizontalExpand = true,
                             Children =
                             {
                                 (_bulletsList = new HBoxContainer
                                 {
-                                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                                    VerticalAlignment = VAlignment.Center,
                                     SeparationOverride = 4
                                 }),
                                 (_noBatteryLabel = new Label
@@ -89,11 +90,11 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                                 })
                             }
                         },
-                        new Control() { CustomMinimumSize = (5,0) },
+                        new Control() { MinSize = (5,0) },
                         (_ammoCount = new Label
                         {
                             StyleClasses = {StyleNano.StyleClassItemStatus},
-                            SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                            HorizontalAlignment = HAlignment.Right,
                         }),
                     }
                 });
@@ -134,7 +135,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                         {
                             BackgroundColor = colorGone,
                         },
-                        CustomMinimumSize = (10, 15),
+                        MinSize = (10, 15),
                     });
                 }
 
@@ -148,14 +149,9 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                         {
                             BackgroundColor = color,
                         },
-                        CustomMinimumSize = (10, 15),
+                        MinSize = (10, 15),
                     });
                 }
-            }
-
-            protected override Vector2 CalculateMinimumSize()
-            {
-                return Vector2.ComponentMax((0, 15), base.CalculateMinimumSize());
             }
         }
     }

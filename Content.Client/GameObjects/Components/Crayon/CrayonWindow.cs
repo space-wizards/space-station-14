@@ -21,10 +21,9 @@ namespace Content.Client.GameObjects.Components.Crayon
         private string? _selected;
         private Color _color;
 
-        protected override Vector2? CustomSize => (250, 300);
-
         public CrayonWindow(CrayonBoundUserInterface owner)
         {
+            MinSize = SetSize = (250, 300);
             Title = Loc.GetString("Crayon");
             Owner = owner;
 
@@ -41,7 +40,7 @@ namespace Content.Client.GameObjects.Components.Crayon
             };
             var gridScroll = new ScrollContainer()
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 Children =
                 {
                     _grid

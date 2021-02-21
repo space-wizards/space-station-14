@@ -101,7 +101,8 @@ namespace Content.Client
             };
 
             _userInterfaceManager.PopupRoot.AddChild(label);
-            var minimumSize = label.CombinedMinimumSize;
+            label.Measure(Vector2.Infinity);
+            var minimumSize = label.DesiredSize;
 
             label.InitialPos = (coordinates.Position / _userInterfaceManager.UIScale) - minimumSize / 2;
             LayoutContainer.SetPosition(label, label.InitialPos);
@@ -148,7 +149,7 @@ namespace Content.Client
 
                 var position = Entity == null
                     ? InitialPos
-                    : (_eyeManager.CoordinatesToScreen(Entity.Transform.Coordinates).Position / UIScale) - CombinedMinimumSize / 2;
+                    : (_eyeManager.CoordinatesToScreen(Entity.Transform.Coordinates).Position / UIScale) - DesiredSize / 2;
 
                 LayoutContainer.SetPosition(this, position - (0, 20 * (TimeLeft * TimeLeft + TimeLeft)));
 

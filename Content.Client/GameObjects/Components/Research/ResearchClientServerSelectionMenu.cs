@@ -14,11 +14,11 @@ namespace Content.Client.GameObjects.Components.Research
         private int[] _serverIds = new int[]{};
         private int _selectedServerId = -1;
 
-        protected override Vector2? CustomSize => (300, 300);
         public ResearchClientBoundUserInterface Owner { get; }
 
         public ResearchClientServerSelectionMenu(ResearchClientBoundUserInterface owner)
         {
+            MinSize = SetSize = (300, 300);
             IoCManager.InjectDependencies(this);
 
             Owner = owner;
@@ -29,19 +29,7 @@ namespace Content.Client.GameObjects.Components.Research
             _servers.OnItemSelected += OnItemSelected;
             _servers.OnItemDeselected += OnItemDeselected;
 
-            var margin = new MarginContainer()
-            {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                /*MarginTop = 5f,
-                MarginLeft = 5f,
-                MarginRight = -5f,
-                MarginBottom = -5f,*/
-            };
-
-            margin.AddChild(_servers);
-
-            Contents.AddChild(margin);
+            Contents.AddChild(_servers);
         }
 
         public void OnItemSelected(ItemList.ItemListSelectedEventArgs itemListSelectedEventArgs)

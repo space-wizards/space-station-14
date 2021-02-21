@@ -165,7 +165,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 {
                     _currentEntityList.List.AddChild(new PanelContainer
                     {
-                        CustomMinimumSize = (0, 2),
+                        MinSize = (0, 2),
                         PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
                     });
                 }
@@ -177,7 +177,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _userInterfaceManager.ModalRoot.AddChild(_currentEntityList);
 
-            var size = _currentEntityList.List.CombinedMinimumSize;
+            _currentEntityList.List.Measure(Vector2.Infinity);
+            var size = _currentEntityList.List.DesiredSize;
             var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled, size);
             _currentEntityList.Open(box);
 
@@ -285,7 +286,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     {
                         vBox.AddChild(new PanelContainer
                         {
-                            CustomMinimumSize = (0, 2),
+                            MinSize = (0, 2),
                             PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
                         });
                     }
@@ -308,7 +309,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         {
                             vBox.AddChild(new PanelContainer
                             {
-                                CustomMinimumSize = (0, 2),
+                                MinSize = (0, 2),
                                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
                             });
                         }
@@ -452,11 +453,11 @@ namespace Content.Client.GameObjects.EntitySystems
                 {
                     text = $"{text} ({entity.Uid})";
                 }
-                control.AddChild(new MarginContainer
+
+                control.AddChild(new Label
                 {
-                    MarginLeftOverride = 4,
-                    MarginRightOverride = 4,
-                    Children = {new Label {Text = text}}
+                    Margin = new Thickness(4, 0),
+                    Text = text
                 });
 
                 AddChild(control);
@@ -489,7 +490,8 @@ namespace Content.Client.GameObjects.EntitySystems
                     var func = args.Function;
                     var funcId = _master._inputManager.NetworkBindMap.KeyFunctionID(args.Function);
 
-                    var message = new FullInputCmdMessage(_master._gameTiming.CurTick, _master._gameTiming.TickFraction, funcId, BoundKeyState.Down,
+                    var message = new FullInputCmdMessage(_master._gameTiming.CurTick, _master._gameTiming.TickFraction,
+                        funcId, BoundKeyState.Down,
                         _entity.Transform.Coordinates,
                         args.PointerLocation, _entity.Uid);
 
@@ -549,12 +551,12 @@ namespace Content.Client.GameObjects.EntitySystems
                     {
                         (_icon = new TextureRect
                         {
-                            CustomMinimumSize = (32, 32),
+                            MinSize = (32, 32),
                             Stretch = TextureRect.StretchMode.KeepCentered
                         }),
                         (_label = new Label()),
                         // Padding
-                        new Control {CustomMinimumSize = (8, 0)}
+                        new Control {MinSize = (8, 0)}
                     }
                 });
             }
@@ -606,17 +608,17 @@ namespace Content.Client.GameObjects.EntitySystems
                     {
                         (_icon = new TextureRect
                         {
-                            CustomMinimumSize = (32, 32),
+                            MinSize = (32, 32),
                             Stretch = TextureRect.StretchMode.KeepCentered
                         }),
 
                         (_label = new Label
                         {
-                            SizeFlagsHorizontal = SizeFlags.FillExpand
+                            HorizontalExpand = true
                         }),
 
                         // Padding
-                        new Control {CustomMinimumSize = (8, 0)},
+                        new Control {MinSize = (8, 0)},
 
                         new TextureRect
                         {
@@ -665,7 +667,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         {
                             popup.List.AddChild(new PanelContainer
                             {
-                                CustomMinimumSize = (0, 2),
+                                MinSize = (0, 2),
                                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
                             });
                         }

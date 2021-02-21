@@ -244,7 +244,8 @@ namespace Content.Client.UserInterface.Permissions
                 al.AddChild(new Label
                 {
                     Text = flagsText,
-                    SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter | Control.SizeFlags.Expand
+                    HorizontalExpand = true,
+                    HorizontalAlignment = Control.HAlignment.Center,
                 });
 
                 var editButton = new Button {Text = Loc.GetString("Edit")};
@@ -267,7 +268,8 @@ namespace Content.Client.UserInterface.Permissions
                 _menu.AdminRanksList.AddChild(new Label
                 {
                     Text = flagsText,
-                    SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter | Control.SizeFlags.Expand
+                    HorizontalExpand = true,
+                    HorizontalAlignment = Control.HAlignment.Center,
                 });
                 var editButton = new Button {Text = Loc.GetString("Edit")};
                 editButton.OnPressed += _ => OnEditRankPressed(kv);
@@ -304,16 +306,16 @@ namespace Content.Client.UserInterface.Permissions
                 AddAdminButton = new Button
                 {
                     Text = Loc.GetString("Add Admin"),
-                    SizeFlagsHorizontal = SizeFlags.ShrinkEnd
+                    HorizontalAlignment = HAlignment.Right
                 };
 
                 AddAdminRankButton = new Button
                 {
                     Text = Loc.GetString("Add Admin Rank"),
-                    SizeFlagsHorizontal = SizeFlags.ShrinkEnd
+                    HorizontalAlignment = HAlignment.Right
                 };
 
-                AdminsList = new GridContainer {Columns = 5, SizeFlagsVertical = SizeFlags.FillExpand};
+                AdminsList = new GridContainer {Columns = 5, VerticalExpand = true};
                 var adminVBox = new VBoxContainer
                 {
                     Children = {AdminsList, AddAdminButton},
@@ -350,6 +352,7 @@ namespace Content.Client.UserInterface.Permissions
 
             public EditAdminWindow(PermissionsEui ui, PermissionsEuiState.AdminData? data)
             {
+                SetSize = MinSize = (600, 400);
                 SourceData = data;
 
                 Control nameControl;
@@ -370,7 +373,7 @@ namespace Content.Client.UserInterface.Permissions
 
                 TitleEdit = new LineEdit {PlaceHolder = Loc.GetString("Custom title, leave blank to inherit rank title.")};
                 RankButton = new OptionButton();
-                SaveButton = new Button {Text = Loc.GetString("Save"), SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand};
+                SaveButton = new Button {Text = Loc.GetString("Save"), HorizontalAlignment = HAlignment.Right};
 
                 RankButton.AddItem(Loc.GetString("No rank"), NoRank);
                 foreach (var (rId, rank) in ui._ranks)
@@ -468,7 +471,7 @@ namespace Content.Client.UserInterface.Permissions
                             {
                                 new VBoxContainer
                                 {
-                                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                    HorizontalExpand = true,
                                     Children =
                                     {
                                         nameControl,
@@ -478,7 +481,7 @@ namespace Content.Client.UserInterface.Permissions
                                 },
                                 permGrid
                             },
-                            SizeFlagsVertical = SizeFlags.FillExpand
+                            VerticalExpand = true
                         },
                         bottomButtons
                     }
@@ -507,8 +510,6 @@ namespace Content.Client.UserInterface.Permissions
                     }
                 }
             }
-
-            protected override Vector2? CustomSize => (600, 400);
         }
 
         private sealed class EditAdminRankWindow : SS14Window
@@ -521,6 +522,7 @@ namespace Content.Client.UserInterface.Permissions
 
             public EditAdminRankWindow(PermissionsEui ui, KeyValuePair<int, PermissionsEuiState.AdminRankData>? data)
             {
+                MinSize = SetSize = (600, 400);
                 SourceId = data?.Key;
 
                 NameEdit = new LineEdit
@@ -533,7 +535,11 @@ namespace Content.Client.UserInterface.Permissions
                     NameEdit.Text = data.Value.Value.Name;
                 }
 
-                SaveButton = new Button {Text = Loc.GetString("Save"), SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand};
+                SaveButton = new Button {
+                    Text = Loc.GetString("Save"),
+                    HorizontalAlignment = HAlignment.Right,
+                    HorizontalExpand = true
+                };
                 var flagsBox = new VBoxContainer();
 
                 foreach (var flag in AdminFlagsHelper.AllFlags)
@@ -592,8 +598,6 @@ namespace Content.Client.UserInterface.Permissions
 
                 return flags;
             }
-
-            protected override Vector2? CustomSize => (600, 400);
         }
     }
 }

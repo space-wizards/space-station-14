@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -38,25 +39,15 @@ namespace Content.Client.UserInterface
                 IoCManager.InjectDependencies(this);
 
                 Button resetAllButton;
-                var vBox = new VBoxContainer();
+                var vBox = new VBoxContainer {Margin = new Thickness(2, 0, 0, 0)};
                 AddChild(new VBoxContainer
                 {
                     Children =
                     {
                         new ScrollContainer
                         {
-                            SizeFlagsVertical = SizeFlags.FillExpand,
-                            Children =
-                            {
-                                new MarginContainer
-                                {
-                                    MarginLeftOverride = 2,
-                                    Children =
-                                    {
-                                        vBox
-                                    }
-                                }
-                            }
+                            VerticalExpand = true,
+                            Children = {vBox}
                         },
 
                         new StripeBack
@@ -69,7 +60,7 @@ namespace Content.Client.UserInterface
                                 {
                                     Children =
                                     {
-                                        new Control {CustomMinimumSize = (2, 0)},
+                                        new Control {MinSize = (2, 0)},
                                         new Label
                                         {
                                             StyleClasses = {StyleBase.StyleClassLabelSubText},
@@ -79,7 +70,7 @@ namespace Content.Client.UserInterface
                                         {
                                             Text = "Reset ALL keybinds",
                                             StyleClasses = {StyleBase.ButtonCaution},
-                                            SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand
+                                            HorizontalAlignment = HAlignment.Right
                                         })
                                     }
                                 }
@@ -88,7 +79,7 @@ namespace Content.Client.UserInterface
                     }
                 });
 
-                resetAllButton.OnPressed += args =>
+                resetAllButton.OnPressed += _ =>
                 {
                     _deferCommands.Add(() =>
                     {
@@ -103,7 +94,7 @@ namespace Content.Client.UserInterface
                 {
                     if (!first)
                     {
-                        vBox.AddChild(new Control {CustomMinimumSize = (0, 8)});
+                        vBox.AddChild(new Control {MinSize = (0, 8)});
                     }
 
                     first = false;
@@ -408,22 +399,23 @@ namespace Content.Client.UserInterface
                     var name = new Label
                     {
                         Text = Loc.GetString(niceName),
-                        SizeFlagsHorizontal = SizeFlags.Expand
+                        HorizontalExpand = true,
+                        HorizontalAlignment = HAlignment.Left
                     };
 
                     BindButton1 = new BindButton(parent, this, StyleBase.ButtonOpenRight);
                     BindButton2 = new BindButton(parent, this, StyleBase.ButtonOpenLeft);
-                    ResetButton = new Button {Text = "Reset", StyleClasses = {StyleBase.ButtonCaution}};
+                    ResetButton = new Button {Text = Loc.GetString("Reset"), StyleClasses = {StyleBase.ButtonCaution}};
 
                     var hBox = new HBoxContainer
                     {
                         Children =
                         {
-                            new Control {CustomMinimumSize = (5, 0)},
+                            new Control {MinSize = (5, 0)},
                             name,
                             BindButton1,
                             BindButton2,
-                            new Control {CustomMinimumSize = (10, 0)},
+                            new Control {MinSize = (10, 0)},
                             ResetButton
                         }
                     };
@@ -463,7 +455,7 @@ namespace Content.Client.UserInterface
 
                     Button.OnKeyBindDown += ButtonOnOnKeyBindDown;
 
-                    CustomMinimumSize = (200, 0);
+                    MinSize = (200, 0);
                 }
 
                 private void ButtonOnOnKeyBindDown(GUIBoundKeyEventArgs args)

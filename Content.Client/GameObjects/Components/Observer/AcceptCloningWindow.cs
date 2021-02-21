@@ -39,7 +39,7 @@ namespace Content.Client.GameObjects.Components.Observer
 
                                     (new Control()
                                     {
-                                        CustomMinimumSize = (20, 0)
+                                        MinSize = (20, 0)
                                     }),
 
                                     (DenyButton = new Button
