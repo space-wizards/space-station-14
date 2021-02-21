@@ -84,17 +84,17 @@
       edges:
         - to: ground
           steps:
-          -  - prototype: LeavesTobaccoDried
-               icon:
-                 sprite: Objects/Specific/Hydroponics/tobacco.rsi
-                 state: dried
-               name: dried tobacco leaves
-          -  - prototype: LeavesTobaccoDried
-               icon:
-                 sprite: Objects/Specific/Hydroponics/tobacco.rsi
-                 state: dried
-               name: dried tobacco leaves
-               doAfter: 5
+          - prototype: LeavesTobaccoDried
+            icon:
+              sprite: Objects/Specific/Hydroponics/tobacco.rsi
+              state: dried
+            name: dried tobacco leaves
+          - prototype: LeavesTobaccoDried
+            icon:
+              sprite: Objects/Specific/Hydroponics/tobacco.rsi
+              state: dried
+            name: dried tobacco leaves
+            doAfter: 5
 
     - node: ground
       entity: GroundTobacco
