@@ -1,5 +1,5 @@
 - type: vendingMachineInventory
   id: PTech
   name: PTech
-  description: A vending machine containing Personal Data Assistant cartridges.
+  description: "PTech vending! Providing a ROBUST selection of PDA cartridges."
   spriteName: cart

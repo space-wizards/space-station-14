@@ -86,6 +86,7 @@
   id: CrayonBox
   parent: BaseItem
   name: crayon box
+  description: "It's a box of crayons."
   components:
   - type: Sprite
     sprite: Objects/Misc/crayons.rsi
@@ -108,4 +109,4 @@
       - name: CrayonPurple
       - name: CrayonRed
       - name: CrayonWhite
-      - name: CrayonYellow 
+      - name: CrayonYellow

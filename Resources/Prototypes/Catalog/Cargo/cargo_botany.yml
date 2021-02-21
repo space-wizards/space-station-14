@@ -15,8 +15,8 @@
   id: cargo.hydroponics
   description: "Supplies for growing a great garden! Contains two bottles of ammonia, two Plant-B-Gone spray bottles, a hatchet, cultivator, plant analyzer, as well as a pair of leather gloves and a botanist's apron."
   icon:
-    sprite: Constructible/Hydroponics/hydro_tools.rsi
-    state: hoe
+    sprite: Objects/Tools/Hydroponics/hoe.rsi
+    state: icon
   product: CrateHydroponicsTools
   cost: 1500
   category: Hydroponics

@@ -2,6 +2,7 @@
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -102,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Movement
             }
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new SlipperyComponentState(_paralyzeTime, _intersectPercentage, _requiredSlipSpeed, _launchForwardsMultiplier, _slippery);
         }

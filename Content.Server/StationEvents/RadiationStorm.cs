@@ -1,14 +1,14 @@
-﻿#nullable enable
+#nullable enable
 using JetBrains.Annotations;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Utility;
-using Robust.Server.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.StationEvents
 {
