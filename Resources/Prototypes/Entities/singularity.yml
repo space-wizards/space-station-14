@@ -9,10 +9,16 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle {}
+      hard: false
       radius: 0.5
       layer: [Impassable]
       mask:
       - AllMask
+    - shape:
+        !type: PhysShapeCircle {}
+      hard: false
+      radius: 10
+      layer:
     mass: 5
   - type: Singularity
   - type: RadiationPulse

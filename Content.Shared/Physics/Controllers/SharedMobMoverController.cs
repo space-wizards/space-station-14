@@ -1,21 +1,12 @@
 #nullable enable
-using System;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Physics.Pull;
-using JetBrains.Annotations;
-using NFluidsynth;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Physics.Controllers;
-using Robust.Shared.Timing;
-using Robust.Shared.Utility;
-using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Shared.Physics.Controllers
 {
@@ -67,6 +58,8 @@ namespace Content.Shared.Physics.Controllers
             physicsComponent.LinearVelocity = total;
             HandleFootsteps(mover);
             return;
+
+            /*
             var wishSpeed = total.Length;
             var wishDir = wishSpeed > 0 ? total.Normalized : Vector2.Zero;
 
@@ -84,6 +77,7 @@ namespace Content.Shared.Physics.Controllers
 
             DebugTools.Assert(!float.IsNaN(physicsComponent.LinearVelocity.Length));
             HandleFootsteps(mover);
+
         }
 
         // Okay Touma
@@ -101,7 +95,9 @@ namespace Content.Shared.Physics.Controllers
             accelSpeed = MathF.Min(accelSpeed, addSpeed);
 
             body.LinearVelocity += wishDir * accelSpeed;
+            */
         }
+
 
         /// <summary>
         ///     Used for weightlessness to determine if we are near a wall.

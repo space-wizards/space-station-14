@@ -83,7 +83,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                         return;
                     }
 
-                    if (!value.TryGetComponent<PhysicsComponent>(out var valuePhysics))
+                    if (!value.TryGetComponent<PhysicsComponent>(out var pullerPhysics))
                     {
                         return;
                     }
@@ -113,7 +113,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                     // Continue with pulling process.
 
-                    var pullAttempt = new PullAttemptMessage(valuePhysics, _physics);
+                    var pullAttempt = new PullAttemptMessage(pullerPhysics, _physics);
 
                     value.SendMessage(null, pullAttempt);
 
@@ -132,7 +132,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     // Pull start confirm
 
                     _puller = value;
-                    _pullerPhysics = valuePhysics;
+                    _pullerPhysics = pullerPhysics;
 
                     var message = new PullStartedMessage(_pullerPhysics, _physics);
 
@@ -141,8 +141,10 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                     _puller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
+
                     _physics.WakeBody();
-                    _pullJoint = valuePhysics.CreateDistanceJoint(_physics);
+                    _pullJoint = pullerPhysics.CreateDistanceJoint(_physics);
+                    _physics.BodyType = BodyType.Kinematic; // TODO: Need to consider their original bodytype
                     _pullJoint.CollideConnected = true;
                     _pullJoint.MaxLength = 2.0f; // TODO hacky, we should consider ours and their bb
                     _pullJoint.MinLength = 1.0f;
