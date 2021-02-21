@@ -41,9 +41,6 @@
             max: 2
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Appearance
-    visuals:
-    - type: PoweredLightVisualizer
   placement:
     snap:
     - Wallmount
@@ -61,6 +58,10 @@
   - type: PoweredLight
     bulb: Tube
   - type: PowerReceiver
+  - type: Appearance
+    visuals:
+    - type: PoweredLightVisualizer
+      blinkingSound: "/Audio/Machines/light_tube_on.ogg"
 
 - type: entity
   id: PoweredlightEmpty
@@ -123,6 +124,9 @@
   - type: PoweredLight
     bulb: Bulb
   - type: PowerReceiver
+  - type: Appearance
+    visuals:
+    - type: PoweredLightVisualizer
 
 - type: entity
   id: PoweredSmallLightEmpty

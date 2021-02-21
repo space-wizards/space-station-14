@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
@@ -9,26 +10,38 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
 {
     [UsedImplicitly]
     public class PoweredLightVisualizer : AppearanceVisualizer
     {
-        private static readonly float MinBlinkingTime = 1f;
-        private static readonly float MaxBlinkingTime = 2f;
+        private float _minBlinkingTime;
+        private float _maxBlinkingTime;
+        private string? _blinkingSound;
 
         private bool _wasBlinking;
+
         private Action<string>? _blinkingCallback;
+
+        public override void LoadData(YamlMappingNode node)
+        {
+            base.LoadData(node);
+
+            var serializer = YamlObjectSerializer.NewReader(node);
+            serializer.DataField(ref _minBlinkingTime, "minBlinkingTime", 0.5f);
+            serializer.DataField(ref _maxBlinkingTime, "maxBlinkingTime", 2.0f);
+            serializer.DataField(ref _blinkingSound, "blinkingSound", null);
+        }
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
             if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
-
             if (!component.Owner.TryGetComponent(out PointLightComponent? light)) return;
-
             if (!component.TryGetData(PoweredLightVisuals.BulbState, out PoweredLightState state)) return;
 
             switch (state)
@@ -94,10 +107,9 @@ namespace Content.Client.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             var random = IoCManager.Resolve<IRobustRandom>();
             var randomTime = random.NextFloat() *
-                (MaxBlinkingTime - MinBlinkingTime) + MinBlinkingTime;
+                (_maxBlinkingTime - _minBlinkingTime) + _minBlinkingTime;
 
-
-            return new()
+            var blinkingAnim =  new Animation()
             {
                 Length = TimeSpan.FromSeconds(randomTime),
                 AnimationTracks =
@@ -119,11 +131,24 @@ namespace Content.Client.GameObjects.Components.Power.ApcNetComponents.PowerRece
                         KeyFrames =
                         {
                             new AnimationTrackSpriteFlick.KeyFrame("off", 0),
-                            new AnimationTrackSpriteFlick.KeyFrame("on", 0.5)
+                            new AnimationTrackSpriteFlick.KeyFrame("on", 0.5f)
                         }
                     }
                 }
-            };
+             };
+
+            if (_blinkingSound != null)
+            {
+                blinkingAnim.AnimationTracks.Add(new AnimationTrackPlaySound()
+                {
+                    KeyFrames =
+                        {
+                            new AnimationTrackPlaySound.KeyFrame(_blinkingSound, 0.5f)
+                        }
+                });
+            }
+
+            return blinkingAnim;
         }
     }
 }
