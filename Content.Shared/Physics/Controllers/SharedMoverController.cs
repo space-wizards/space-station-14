@@ -88,15 +88,16 @@ namespace Content.Shared.Physics.Controllers
             if (total != Vector2.Zero)
             {
                 transform.LocalRotation = total.GetDir().ToAngle();
+                HandleFootsteps(mover, mobMover);
             }
 
             physicsComponent.LinearVelocity = total;
-            HandleFootsteps(mover, mobMover);
         }
 
         public static bool UseMobMovement(SharedBroadPhaseSystem broadPhaseSystem, PhysicsComponent body)
         {
-            return body.Owner.HasComponent<IMobStateComponent>() &&
+            return (body.Status == BodyStatus.OnGround) &
+                   body.Owner.HasComponent<IMobStateComponent>() &&
                    ActionBlockerSystem.CanMove(body.Owner) &&
                    (!body.Owner.IsWeightless() ||
                     body.Owner.TryGetComponent(out SharedPlayerMobMoverComponent? mover) &&
