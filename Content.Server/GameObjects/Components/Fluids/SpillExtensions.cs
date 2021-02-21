@@ -1,5 +1,6 @@
 #nullable enable
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
@@ -115,18 +116,19 @@ namespace Content.Server.GameObjects.Components.Fluids
             PuddleComponent? puddle = null;
             var spilt = false;
 
-            foreach (var spillEntity in entityManager.GetEntitiesIntersecting(mapGrid.ParentMapId, spillGridCoords.Position))
+            var spillEntities = entityManager.GetEntitiesIntersecting(mapGrid.ParentMapId, spillGridCoords.Position).ToArray();
+            foreach (var spillEntity in spillEntities)
             {
                 if (spillEntity.TryGetComponent(out ISolutionInteractionsComponent? solutionContainerComponent) &&
                     solutionContainerComponent.CanRefill)
                 {
                     solutionContainerComponent.Refill(
-                        solution.SplitSolution(ReagentUnit.Min(solutionContainerComponent.RefillSpaceAvailable, solutionContainerComponent.Spillability))
+                        solution.SplitSolution(ReagentUnit.Min(solutionContainerComponent.RefillSpaceAvailable, solutionContainerComponent.MaxSpillRefill))
                         );
                 }
             }
 
-            foreach (var spillEntity in entityManager.GetEntitiesAt(mapGrid.ParentMapId, spillGridCoords.Position))
+            foreach (var spillEntity in spillEntities)
             {
                 if (!spillEntity.TryGetComponent(out PuddleComponent? puddleComponent)) continue;
 
