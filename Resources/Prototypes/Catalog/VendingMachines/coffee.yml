@@ -1,7 +1,7 @@
 ﻿- type: vendingMachineInventory
   id: Hot Drinks machine
   name: hot drinks machine
-  description: A vending machine that dispenses hot drinks.
+  description: "Served boiling so it stays hot all shift!"
   animationDuration: 3.4
   spriteName: coffee
   startingInventory:

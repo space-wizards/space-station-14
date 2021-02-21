@@ -20,23 +20,13 @@ namespace Content.Client.UserInterface
             };
             AddChild(_panel);
 
-            SizeFlagsHorizontal = SizeFlags.None;
+            HorizontalAlignment = HAlignment.Left;
         }
 
         public string Text
         {
             get => _label.Text;
             set => _label.Text = value;
-        }
-
-        protected override Vector2 CalculateMinimumSize()
-        {
-            return _panel.CombinedMinimumSize;
-        }
-
-        protected override void LayoutUpdateOverride()
-        {
-            FitChildInBox(_panel, SizeBox);
         }
     }
 }

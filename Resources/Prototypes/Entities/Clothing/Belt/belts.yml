@@ -144,7 +144,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltSuspenders
   name: suspenders
-  description: For holding your pants up.
+  description: "For holding your pants up."
   components:
   - type: Sprite
     sprite: Clothing/Belt/suspenders.rsi

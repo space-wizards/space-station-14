@@ -131,8 +131,8 @@ namespace Content.Client.UserInterface.Controls
             SlotIndex = slotIndex;
             MouseFilter = MouseFilterMode.Stop;
 
-            CustomMinimumSize = (64, 64);
-            SizeFlagsVertical = SizeFlags.None;
+            MinSize = (64, 64);
+            VerticalAlignment = VAlignment.Top;
             TooltipDelay = CustomTooltipDelay;
             TooltipSupplier = SupplyTooltip;
 
@@ -144,29 +144,29 @@ namespace Content.Client.UserInterface.Controls
 
             _bigActionIcon = new TextureRect
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 Stretch = TextureRect.StretchMode.Scale,
                 Visible = false
             };
             _bigItemSpriteView = new SpriteView
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 Scale = (2,2),
                 Visible = false
             };
             _smallActionIcon = new TextureRect
             {
-                SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
-                SizeFlagsVertical = SizeFlags.ShrinkEnd,
+                HorizontalAlignment = HAlignment.Right,
+                VerticalAlignment = VAlignment.Bottom,
                 Stretch = TextureRect.StretchMode.Scale,
                 Visible = false
             };
             _smallItemSpriteView = new SpriteView
             {
-                SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
-                SizeFlagsVertical = SizeFlags.ShrinkEnd,
+                HorizontalAlignment = HAlignment.Right,
+                VerticalAlignment = VAlignment.Bottom,
                 Visible = false
             };
 
@@ -175,28 +175,26 @@ namespace Content.Client.UserInterface.Controls
             // padding to the left of the number to shift it right
             var paddingBox = new HBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                CustomMinimumSize = (64, 64)
+                HorizontalExpand = true,
+                VerticalExpand = true,
+                MinSize = (64, 64)
             };
             paddingBox.AddChild(new Control()
             {
-                CustomMinimumSize = (4, 4),
-                SizeFlagsVertical = SizeFlags.Fill
+                MinSize = (4, 4),
             });
             paddingBox.AddChild(_number);
 
             // padding to the left of the small icon
             var paddingBoxItemIcon = new HBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                CustomMinimumSize = (64, 64)
+                HorizontalExpand = true,
+                VerticalExpand = true,
+                MinSize = (64, 64)
             };
             paddingBoxItemIcon.AddChild(new Control()
             {
-                CustomMinimumSize = (32, 32),
-                SizeFlagsVertical = SizeFlags.Fill
+                MinSize = (32, 32),
             });
             paddingBoxItemIcon.AddChild(new Control
             {

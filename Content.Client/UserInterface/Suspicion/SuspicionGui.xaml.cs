@@ -35,7 +35,7 @@ namespace Content.Client.UserInterface.Suspicion
             IoCManager.InjectDependencies(this);
 
             RoleButton.OnPressed += RoleButtonPressed;
-            RoleButton.CustomMinimumSize = (200, 60);
+            RoleButton.MinSize = (200, 60);
         }
 
         private void RoleButtonPressed(ButtonEventArgs obj)

@@ -7,7 +7,7 @@
 
             <GridContainer Columns="3" Name="VoteOptionsContainer" />
             <HBoxContainer>
-                <MarginContainer SizeFlagsHorizontal="FillExpand" MarginLeftOverride="2" MarginRightOverride="2"
+                <MarginContainer HorizontalExpand="True" MarginLeftOverride="2" MarginRightOverride="2"
                                      MarginTopOverride="2" MarginBottomOverride="2">
                     <ProgressBar Name="TimeLeftBar" MinValue="0" MaxValue="1" />
                 </MarginContainer>

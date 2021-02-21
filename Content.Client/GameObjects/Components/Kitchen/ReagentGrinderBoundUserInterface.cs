@@ -156,7 +156,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
              */
 
             private ReagentGrinderBoundUserInterface Owner { get; set; }
-            protected override Vector2? CustomSize => (512, 256);
 
             //We'll need 4 buttons, grind, juice, eject beaker, eject the chamber contents.
             //The other 2 are referenced in the Open function.
@@ -202,11 +201,11 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     AddChild(vSplit);
                     BoxContents = new ItemList
                     {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        VerticalExpand = true,
+                        HorizontalExpand = true,
                         SelectMode = ItemList.ItemListSelectMode.Button,
                         SizeFlagsStretchRatio = 2,
-                        CustomMinimumSize = (100, 128)
+                        MinSize = (100, 128)
                     };
                     AddChild(BoxContents);
                 }
@@ -214,47 +213,44 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
             public GrinderMenu(ReagentGrinderBoundUserInterface owner = null)
             {
+                SetSize = MinSize = (512, 256);
                 Owner = owner;
                 Title = Loc.GetString("All-In-One Grinder 3000");
 
-                var hSplit = new HBoxContainer
-                {
-                    SizeFlagsHorizontal = SizeFlags.Fill,
-                    SizeFlagsVertical = SizeFlags.Fill
-                };
+                var hSplit = new HBoxContainer();
 
                 var vBoxGrindJuiceButtonPanel = new VBoxContainer
                 {
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter
+                    VerticalAlignment = VAlignment.Center
                 };
 
                 GrindButton = new Button
                 {
                     Text = Loc.GetString("Grind"),
                     TextAlign = Label.AlignMode.Center,
-                    CustomMinimumSize = (64, 64)
+                    MinSize = (64, 64)
                 };
 
                 JuiceButton = new Button
                 {
                     Text = Loc.GetString("Juice"),
                     TextAlign = Label.AlignMode.Center,
-                    CustomMinimumSize = (64, 64)
+                    MinSize = (64, 64)
                 };
 
                 vBoxGrindJuiceButtonPanel.AddChild(GrindButton);
                 //inner button padding
                 vBoxGrindJuiceButtonPanel.AddChild(new Control
                 {
-                    CustomMinimumSize = (0, 16),
+                    MinSize = (0, 16),
                 });
                 vBoxGrindJuiceButtonPanel.AddChild(JuiceButton);
 
                 ChamberContentBox = new LabelledContentBox(Loc.GetString("Chamber"), Loc.GetString("Eject Contents"))
                 {
                     //Modulate = Color.Red,
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    VerticalExpand = true,
+                    HorizontalExpand = true,
                     SizeFlagsStretchRatio = 2,
 
                 };
@@ -262,8 +258,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 BeakerContentBox = new LabelledContentBox(Loc.GetString("Beaker"), Loc.GetString("Eject Beaker"))
                 {
                     //Modulate = Color.Blue,
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    VerticalExpand = true,
+                    HorizontalExpand = true,
                     SizeFlagsStretchRatio = 2,
                 };
 
@@ -272,14 +268,14 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 //Padding between the g/j buttons panel and the itemlist boxes panel.
                 hSplit.AddChild(new Control
                 {
-                    CustomMinimumSize = (16, 0),
+                    MinSize = (16, 0),
                 });
                 hSplit.AddChild(ChamberContentBox);
 
                 //Padding between the two itemlists.
                 hSplit.AddChild(new Control
                 {
-                    CustomMinimumSize = (8, 0),
+                    MinSize = (8, 0),
                 });
                 hSplit.AddChild(BeakerContentBox);
                 Contents.AddChild(hSplit);

@@ -16,10 +16,9 @@ namespace Content.Client.GameObjects.Components.Disposal
         public readonly LineEdit TagInput;
         public readonly Button Confirm;
 
-        protected override Vector2? CustomSize => (400, 80);
-
         public DisposalRouterWindow()
         {
+            MinSize = SetSize = (400, 80);
             Title = Loc.GetString("Disposal Router");
 
             Contents.AddChild(new VBoxContainer
@@ -27,14 +26,19 @@ namespace Content.Client.GameObjects.Components.Disposal
                 Children =
                 {
                     new Label {Text = Loc.GetString("Tags:")},
-                    new Control {CustomMinimumSize = (0, 10)},
+                    new Control {MinSize = (0, 10)},
                     new HBoxContainer
                     {
                         Children =
                         {
-                            (TagInput = new LineEdit {SizeFlagsHorizontal = SizeFlags.Expand, CustomMinimumSize = (320, 0),
-                                ToolTip = Loc.GetString("A comma separated list of tags"), IsValid = tags => TagRegex.IsMatch(tags)}),
-                            new Control {CustomMinimumSize = (10, 0)},
+                            (TagInput = new LineEdit
+                            {
+                                HorizontalExpand = true,
+                                MinSize = (320, 0),
+                                ToolTip = Loc.GetString("A comma separated list of tags"),
+                                IsValid = tags => TagRegex.IsMatch(tags)
+                            }),
+                            new Control {MinSize = (10, 0)},
                             (Confirm = new Button {Text = Loc.GetString("Confirm")})
                         }
                     }
