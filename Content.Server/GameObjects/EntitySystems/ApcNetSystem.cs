@@ -38,7 +38,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public void Reset()
         {
-            _apcNets = new HashSet<IApcNet>();
+            // NodeGroupSystem does not remake ApcNets affected during restarting until a frame later,
+            // when their grid is invalid. So, we are clearing them on round restart.
+            _apcNets.Clear();
         }
     }
 }
