@@ -8,16 +8,16 @@
     anchored: false
     fixtures:
     - shape:
-        !type:PhysShapeCircle {}
+        !type:PhysShapeCircle:
+          radius: 0.5
       hard: false
-      radius: 0.5
       layer: [Impassable]
       mask:
       - AllMask
     - shape:
-        !type: PhysShapeCircle {}
+        !type:PhysShapeCircle:
+          radius: 10
       hard: false
-      radius: 10
       layer:
     mass: 5
   - type: Singularity
