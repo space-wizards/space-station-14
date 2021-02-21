@@ -4,12 +4,13 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using System.Collections.Generic;
+using Content.Shared.GameTicking;
 using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class ApcNetSystem : EntitySystem
+    internal sealed class ApcNetSystem : EntitySystem, IResettingEntitySystem
     {
         [Dependency] private readonly IPauseManager _pauseManager = default!;
 
@@ -33,6 +34,11 @@ namespace Content.Server.GameObjects.EntitySystems
         public void RemoveApcNet(ApcNetNodeGroup apcNet)
         {
             _apcNets.Remove(apcNet);
+        }
+
+        public void Reset()
+        {
+            _apcNets = new HashSet<IApcNet>();
         }
     }
 }
