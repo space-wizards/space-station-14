@@ -15,6 +15,9 @@
   - type: LoopingSound
   - type: Sprite
     sprite: Constructible/Lighting/light_tube.rsi
+    layers:
+    - state: on
+      map: ["enum.PoweredLightLayers.Base"]
     state: on
   - type: PointLight
     radius: 8

@@ -1,4 +1,5 @@
 #nullable enable
+using System.Linq;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -29,10 +30,10 @@ namespace Content.Server.Actions
 
             // find all IGhostBooAffected nearby and do boo on them
             var entityMan = args.Performer.EntityManager;
-            var ents = entityMan.GetEntitiesInRange(args.Performer, _radius, false);
+            var ents = entityMan.GetEntitiesInRange(args.Performer, _radius, false).ToList();
             foreach (var ent in ents)
             {
-                var boos = ent.GetAllComponents<IGhostBooAffected>();
+                var boos = ent.GetAllComponents<IGhostBooAffected>().ToList();
                 foreach (var boo in boos)
                     boo.AffectedByGhostBoo(args);
             }

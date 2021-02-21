@@ -21,4 +21,9 @@ namespace Content.Shared.GameObjects.Components.Power.ApcNetComponents.PowerRece
         Broken,
         Burned
     }
+
+    public enum PoweredLightLayers : byte
+    {
+        Base
+    }
 }

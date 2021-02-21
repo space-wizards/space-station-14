@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
 
         // time to blink light when ghost made boo nearby
-        private static readonly TimeSpan ghostBlinkingTime = TimeSpan.FromSeconds(2);
+        private static readonly TimeSpan ghostBlinkingTime = TimeSpan.FromSeconds(10);
 
         private TimeSpan _lastThunk;
         private bool _hasLampOnSpawn;
