@@ -119,6 +119,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
         public void CuffedStateChanged()
         {
+            UpdateAlert();
             OnCuffedStateChanged?.Invoke();
         }
 
@@ -181,6 +182,11 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (cuffsToRemove == null)
             {
+                if (Container.ContainedEntities.Count == 0)
+                {
+                    return;
+                }
+
                 cuffsToRemove = LastAddedCuffs;
             }
             else
