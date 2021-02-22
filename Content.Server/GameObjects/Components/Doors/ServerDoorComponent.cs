@@ -419,16 +419,14 @@ namespace Content.Server.GameObjects.Components.Doors
         {
             var safety = SafetyCheck();
 
-            if (safety && PhysicsComponent != null)
+            if (safety && Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
-                foreach(var e in EntitySystem.Get<SharedBroadPhaseSystem>().GetCollidingEntities(Owner.Transform.MapID, PhysicsComponent.GetWorldAABB()))
+                var broadPhaseSystem = EntitySystem.Get<SharedBroadPhaseSystem>();
+
+                // Use this version so we can ignore the CanCollide being false
+                foreach(var e in broadPhaseSystem.GetCollidingEntities(physicsComponent.Entity.Transform.MapID, physicsComponent.GetWorldAABB()))
                 {
-                    if (e.CanCollide &&
-                       ((PhysicsComponent.CollisionMask & e.CollisionLayer) != 0x0 ||
-                        (PhysicsComponent.CollisionLayer & e.CollisionMask) != 0x0))
-                    {
-                        return true;
-                    }
+                    if ((physicsComponent.CollisionMask & e.CollisionLayer) != 0 && broadPhaseSystem.IntersectionPercent(physicsComponent, e) > 0.01f) return true;
                 }
             }
             return false;
