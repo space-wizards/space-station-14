@@ -2073,7 +2073,6 @@ entities:
   components:
   - parent: 853
     pos: 34.5,-4.5
-    rot: 6.283185350890976 rad
     type: Transform
   - containers:
       DisposalUnit:
@@ -2564,7 +2563,6 @@ entities:
   components:
   - parent: 853
     pos: -2.5,29.5
-    rot: 6.283185350890976 rad
     type: Transform
   - containers:
       DisposalUnit:
@@ -2828,7 +2826,6 @@ entities:
   components:
   - parent: 853
     pos: 11.5,-11.5
-    rot: 6.283185350890976 rad
     type: Transform
   - containers:
       DisposalUnit:
@@ -2894,7 +2891,6 @@ entities:
   components:
   - parent: 853
     pos: 12.5,-2.5
-    rot: 6.283185350890976 rad
     type: Transform
   - containers:
       DisposalUnit:
@@ -3664,7 +3660,6 @@ entities:
   components:
   - parent: 853
     pos: -22.5,6.5
-    rot: 4.71238902409608 rad
     type: Transform
   - containers:
       DisposalUnit:
@@ -3972,7 +3967,6 @@ entities:
   components:
   - parent: 853
     pos: -27.5,-8.5
-    rot: 6.283185350890976 rad
     type: Transform
   - containers:
       DisposalUnit:
@@ -18467,7 +18461,6 @@ entities:
   components:
   - parent: 853
     pos: 33.5,12.5
-    rot: 3.141592697301183 rad
     type: Transform
 - uid: 1544
   type: MedicalScanner
@@ -35646,7 +35639,6 @@ entities:
   components:
   - parent: 853
     pos: 45.585052,4.6
-    rot: 6.283185350890976 rad
     type: Transform
   - IsPlaceable: False
     type: PlaceableSurface
@@ -37000,21 +36992,18 @@ entities:
   components:
   - parent: 853
     pos: -27.5,-1.5
-    rot: 6.283185350890976 rad
     type: Transform
 - uid: 4113
   type: Bed
   components:
   - parent: 853
     pos: -27.5,1.5
-    rot: 6.283185350890976 rad
     type: Transform
 - uid: 4114
   type: Bed
   components:
   - parent: 853
     pos: -27.5,-4.5
-    rot: 6.283185350890976 rad
     type: Transform
 - uid: 4115
   type: PoweredSmallLight
@@ -38055,7 +38044,6 @@ entities:
   components:
   - parent: 853
     pos: -7.5,14.5
-    rot: 6.283185350890976 rad
     type: Transform
   - powerLoad: 0
     type: PowerReceiver
@@ -38116,7 +38104,6 @@ entities:
   components:
   - parent: 853
     pos: -7.5,-28.5
-    rot: 6.283185350890976 rad
     type: Transform
   - containers:
       microwave_entity_container:
@@ -38193,7 +38180,6 @@ entities:
   components:
   - parent: 853
     pos: 14.594889,-13.278449
-    rot: 6.283185350890976 rad
     type: Transform
   - containers:
       EntityStorageComponent:
@@ -38206,7 +38192,6 @@ entities:
   components:
   - parent: 853
     pos: 15.594889,-13.262824
-    rot: 6.283185350890976 rad
     type: Transform
   - containers:
       EntityStorageComponent:
