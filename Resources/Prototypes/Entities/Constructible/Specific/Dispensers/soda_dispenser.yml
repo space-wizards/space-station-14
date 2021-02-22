@@ -13,9 +13,9 @@
 - type: reagentDispenserInventory
   id: SodaDispenserInventory
   inventory:
-  - chem.Cola
   - chem.Coffee
-  - chem.Tea
-  - chem.Ice
-  - chem.Water
+  - chem.Cola
   - chem.Cream
+  - chem.Ice
+  - chem.Tea
+  - chem.Water

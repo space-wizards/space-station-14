@@ -3,23 +3,28 @@ using System.Collections.Generic;
 using System.Threading;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Utility.Actions;
-using Content.Server.AI.Utility.BehaviorSets;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Server.GameObjects.EntitySystems.AI.LoadBalancer;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Robust.Server.AI;
+using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Utility;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.AI.Utility.AiLogic
 {
-    public abstract class UtilityAi : AiLogicProcessor
+    // TODO: Need to split out the IMover stuff for NPC to a generic one that can be used for hoomans as well.
+    [RegisterComponent]
+    [ComponentReference(typeof(AiControllerComponent)), ComponentReference(typeof(IMoverComponent))]
+    internal sealed class UtilityAi : AiControllerComponent
     {
+        public override string Name => "UtilityAI";
+
         // TODO: Look at having ParallelOperators (probably no more than that as then you'd have a full-blown BT)
         // Also RepeatOperators (e.g. if we're following an entity keep repeating MoveToEntity)
         private AiActionSystem _planner;
@@ -27,10 +32,11 @@ namespace Content.Server.AI.Utility.AiLogic
         private Blackboard _blackboard;
 
         /// <summary>
-        /// The sum of all BehaviorSets gives us what actions the AI can take
+        ///     The sum of all BehaviorSets gives us what actions the AI can take
         /// </summary>
-        public Dictionary<Type, BehaviorSet> BehaviorSets { get; } = new();
-        private readonly List<IAiUtility> _availableActions = new();
+        public HashSet<string> BehaviorSets { get; } = new();
+
+        public List<IAiUtility> AvailableActions { get; set; } = new();
 
         /// <summary>
         /// The currently running action; most importantly are the operators.
@@ -52,86 +58,39 @@ namespace Content.Server.AI.Utility.AiLogic
         private CancellationTokenSource _actionCancellation;
 
         /// <summary>
-        /// If we can't do anything then stop thinking; should probably use ActionBlocker instead
+        ///     If we can't do anything then stop thinking; should probably use ActionBlocker instead
         /// </summary>
-        private bool _isDead = false;
+        private bool _isDead;
 
-        // These 2 methods will be used eventually if / when we get a director AI
-        public void AddBehaviorSet<T>(T behaviorSet, bool sort = true) where T : BehaviorSet
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            if (BehaviorSets.TryAdd(typeof(T), behaviorSet) && sort)
-            {
-                SortActions();
-            }
+            base.ExposeData(serializer);
+            var bSets = serializer.ReadDataField("behaviorSets", new List<string>());
 
-            if (BehaviorSets.Count == 1 && !EntitySystem.Get<AiSystem>().IsAwake(this))
+            if (bSets.Count > 0)
             {
-                IoCManager.Resolve<IEntityManager>()
-                    .EventBus
-                    .RaiseEvent(EventSource.Local, new SleepAiMessage(this, false));
-            }
-        }
+                var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
 
-        public void RemoveBehaviorSet(Type behaviorSet)
-        {
-            DebugTools.Assert(behaviorSet.IsAssignableFrom(typeof(BehaviorSet)));
-
-            if (BehaviorSets.ContainsKey(behaviorSet))
-            {
-                BehaviorSets.Remove(behaviorSet);
-                SortActions();
-            }
-
-            if (BehaviorSets.Count == 0)
-            {
-                IoCManager.Resolve<IEntityManager>()
-                    .EventBus
-                    .RaiseEvent(EventSource.Local, new SleepAiMessage(this, true));
-            }
-        }
-
-        /// <summary>
-        /// Whenever the behavior sets are changed we'll re-sort the actions by bonus
-        /// </summary>
-        protected void SortActions()
-        {
-            _availableActions.Clear();
-            foreach (var set in BehaviorSets.Values)
-            {
-                foreach (var action in set.Actions)
+                foreach (var bSet in bSets)
                 {
-                    var found = false;
-
-                    for (var i = 0; i < _availableActions.Count; i++)
-                    {
-                        if (_availableActions[i].Bonus < action.Bonus)
-                        {
-                            _availableActions.Insert(i, action);
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    if (!found)
-                    {
-                        _availableActions.Add(action);
-                    }
+                    behaviorManager.AddBehaviorSet(this, bSet, false);
                 }
+
+                behaviorManager.RebuildActions(this);
             }
-
-            _availableActions.Reverse();
         }
 
-        public override void Setup()
+        public override void Initialize()
         {
-            base.Setup();
+            base.Initialize();
             _planCooldownRemaining = PlanCooldown;
-            _blackboard = new Blackboard(SelfEntity);
-            _planner = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiActionSystem>();
+            _blackboard = new Blackboard(Owner);
+            _planner = EntitySystem.Get<AiActionSystem>();
         }
 
-        public override void Shutdown()
+        public override void OnRemove()
         {
+            base.OnRemove();
             var currentOp = CurrentAction?.ActionOperators.Peek();
             currentOp?.Shutdown(Outcome.Failed);
             CurrentAction?.Shutdown();
@@ -190,6 +149,8 @@ namespace Content.Server.AI.Utility.AiLogic
 
         public override void Update(float frameTime)
         {
+            base.Update(frameTime);
+
             // If we asked for a new action we don't want to dump the existing one.
             if (_actionRequest != null)
             {
@@ -210,7 +171,7 @@ namespace Content.Server.AI.Utility.AiLogic
             {
                 _planCooldownRemaining = PlanCooldown;
                 _actionCancellation = new CancellationTokenSource();
-                _actionRequest = _planner.RequestAction(new AiActionRequest(SelfEntity.Uid, _blackboard, _availableActions), _actionCancellation);
+                _actionRequest = _planner.RequestAction(new AiActionRequest(Owner.Uid, _blackboard, AvailableActions), _actionCancellation);
 
                 return;
             }

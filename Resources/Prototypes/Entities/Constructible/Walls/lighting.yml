@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: WallLight
-  name: "unpowered light"
+  name: unpowered light
+  description: "An unpowered light."
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -22,7 +23,7 @@
   - type: PointLight
     radius: 8
     energy: 1.2
-    offset: "0.5, 0"
+    offset: "0, -0.5"
     color: "#DCDCC6"
   - type: SignalReceiver
   - type: Damageable
@@ -47,6 +48,7 @@
 
 - type: entity
   name: light
+  description: "A powered wall light emitting... light."
   id: Poweredlight
   parent: WallLight
   components:
@@ -65,6 +67,7 @@
 
 - type: entity
   id: PoweredlightEmpty
+  description: "A wall light. It's empty."
   suffix: Empty
   parent: Poweredlight
   components:
@@ -75,6 +78,7 @@
 
 - type: entity
   name: unpowered small light
+  description: "An unpowered light."
   id: SmallLight
   parent: WallLight
   components:
@@ -84,7 +88,7 @@
     - type: PointLight
       energy: 1.0
       enabled: true
-      offset: "0.5, 0"
+      offset: "0, -0.5"
     - type: Damageable
     - type: Destructible
       thresholds:
@@ -106,6 +110,7 @@
 
 - type: entity
   name: small light
+  description: "A powered wall light emitting... light."
   id: PoweredSmallLight
   parent: SmallLight
   components:
@@ -115,7 +120,7 @@
   - type: PointLight
     energy: 1.0
     enabled: false
-    offset: "0.5, 0"
+    offset: "0, -0.5"
   - type: Physics
     shapes:
       - !type:PhysShapeAabb

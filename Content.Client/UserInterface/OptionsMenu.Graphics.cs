@@ -38,7 +38,11 @@ namespace Content.Client.UserInterface
                 _cfg = cfg;
                 var vBox = new VBoxContainer();
 
-                var contents = new VBoxContainer();
+                var contents = new VBoxContainer
+                {
+                    Margin = new Thickness(2, 2, 2, 0),
+                    VerticalExpand = true,
+                };
 
                 VSyncCheckBox = new CheckBox {Text = Loc.GetString("VSync")};
                 contents.AddChild(VSyncCheckBox);
@@ -48,7 +52,7 @@ namespace Content.Client.UserInterface
                 contents.AddChild(FullscreenCheckBox);
                 FullscreenCheckBox.OnToggled += OnCheckBoxToggled;
 
-                LightingPresetOption = new OptionButton {CustomMinimumSize = (100, 0)};
+                LightingPresetOption = new OptionButton {MinSize = (100, 0)};
                 LightingPresetOption.AddItem(Loc.GetString("Very Low"));
                 LightingPresetOption.AddItem(Loc.GetString("Low"));
                 LightingPresetOption.AddItem(Loc.GetString("Medium"));
@@ -60,7 +64,7 @@ namespace Content.Client.UserInterface
                     Children =
                     {
                         new Label {Text = Loc.GetString("Lighting Quality:")},
-                        new Control {CustomMinimumSize = (4, 0)},
+                        new Control {MinSize = (4, 0)},
                         LightingPresetOption
                     }
                 });
@@ -68,7 +72,7 @@ namespace Content.Client.UserInterface
                 ApplyButton = new Button
                 {
                     Text = Loc.GetString("Apply"), TextAlign = Label.AlignMode.Center,
-                    SizeFlagsHorizontal = SizeFlags.ShrinkEnd
+                    HorizontalAlignment = HAlignment.Right
                 };
 
                 var resourceCache = IoCManager.Resolve<IResourceCache>();
@@ -88,28 +92,18 @@ namespace Content.Client.UserInterface
                     Children =
                     {
                         new Label {Text = Loc.GetString("UI Scale:")},
-                        new Control {CustomMinimumSize = (4, 0)},
+                        new Control {MinSize = (4, 0)},
                         _uiScaleOption
                     }
                 });
 
                 contents.AddChild(new Placeholder(resourceCache)
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    VerticalExpand = true,
                     PlaceholderText = "Viewport settings"
                 });
 
-                vBox.AddChild(new MarginContainer
-                {
-                    MarginLeftOverride = 2,
-                    MarginTopOverride = 2,
-                    MarginRightOverride = 2,
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    Children =
-                    {
-                        contents
-                    }
-                });
+                vBox.AddChild(contents);
 
                 vBox.AddChild(new StripeBack
                 {

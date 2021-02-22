@@ -13,12 +13,12 @@
 - type: reagentDispenserInventory
   id: BoozeDispenserInventory
   inventory:
-  - chem.Whiskey
   - chem.Ale
-  - chem.Wine
-  - chem.Ice
   - chem.Beer
-  - chem.Vodka
   - chem.Cognac
+  - chem.Ice
   - chem.Kahlua
   - chem.Rum
+  - chem.Vodka
+  - chem.Whiskey
+  - chem.Wine

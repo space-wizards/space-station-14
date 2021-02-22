@@ -17,7 +17,7 @@ namespace Content.Client.UserInterface
         private readonly Button _ghostRoles = new() {Text = Loc.GetString("Ghost Roles")};
         private readonly GhostComponent _owner;
 
-        public GhostTargetWindow? TargetWindow { get; private set; }
+        public GhostTargetWindow? TargetWindow { get; }
 
         public GhostGui(GhostComponent owner)
         {
@@ -29,8 +29,8 @@ namespace Content.Client.UserInterface
 
             MouseFilter = MouseFilterMode.Ignore;
 
-            _ghostWarp.OnPressed += args => TargetWindow.Populate();
-            _returnToBody.OnPressed += args => owner.SendReturnToBodyMessage();
+            _ghostWarp.OnPressed += _ => TargetWindow.Populate();
+            _returnToBody.OnPressed += _ => owner.SendReturnToBodyMessage();
             _ghostRoles.OnPressed += _ => IoCManager.Resolve<IClientConsoleHost>().RemoteExecuteCommand(null, "ghostroles");
 
             AddChild(new HBoxContainer
@@ -54,41 +54,33 @@ namespace Content.Client.UserInterface
 
     public class GhostTargetWindow : SS14Window
     {
-        protected override Vector2? CustomSize => (300, 450);
         private readonly GhostComponent _owner;
         private readonly VBoxContainer _buttonContainer;
 
         public GhostTargetWindow(GhostComponent owner)
         {
+            MinSize = SetSize = (300, 450);
             Title = "Ghost Warp";
             _owner = owner;
             _owner.GhostRequestWarpPoint();
             _owner.GhostRequestPlayerNames();
 
-            var margin = new MarginContainer()
-            {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-            };
-
             _buttonContainer = new VBoxContainer()
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.Fill,
+                VerticalExpand = true,
                 SeparationOverride = 5,
 
             };
 
             var scrollBarContainer = new ScrollContainer()
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.FillExpand
+                VerticalExpand = true,
+                HorizontalExpand = true
             };
 
-            margin.AddChild(scrollBarContainer);
             scrollBarContainer.AddChild(_buttonContainer);
 
-            Contents.AddChild(margin);
+            Contents.AddChild(scrollBarContainer);
         }
 
         public void Populate()
@@ -107,14 +99,14 @@ namespace Content.Client.UserInterface
                 {
                     Text = value,
                     TextAlign = Label.AlignMode.Right,
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                    HorizontalAlignment = HAlignment.Center,
+                    VerticalAlignment = VAlignment.Center,
                     SizeFlagsStretchRatio = 1,
-                    CustomMinimumSize = (230, 20),
+                    MinSize = (230, 20),
                     ClipText = true,
                 };
 
-                currentButtonRef.OnPressed += (args) =>
+                currentButtonRef.OnPressed += (_) =>
                 {
                     _owner.SendGhostWarpRequestMessage(key);
                 };
@@ -131,16 +123,16 @@ namespace Content.Client.UserInterface
                 {
                     Text = $"Warp: {name}",
                     TextAlign = Label.AlignMode.Right,
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                    HorizontalAlignment = HAlignment.Center,
+                    VerticalAlignment = VAlignment.Center,
                     SizeFlagsStretchRatio = 1,
-                    CustomMinimumSize = (230,20),
+                    MinSize = (230,20),
                     ClipText = true,
                 };
 
-                currentButtonRef.OnPressed += (args) =>
+                currentButtonRef.OnPressed += (_) =>
                 {
-                    _owner.SendGhostWarpRequestMessage(default,name);
+                    _owner.SendGhostWarpRequestMessage(name);
                 };
 
                 _buttonContainer.AddChild(currentButtonRef);

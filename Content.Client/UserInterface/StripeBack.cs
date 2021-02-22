@@ -21,8 +21,8 @@ namespace Content.Client.UserInterface
             get => _hasTopEdge;
             set
             {
-                MinimumSizeChanged();
                 _hasTopEdge = value;
+                InvalidateMeasure();
             }
         }
 
@@ -32,7 +32,7 @@ namespace Content.Client.UserInterface
             set
             {
                 _hasBottomEdge = value;
-                MinimumSizeChanged();
+                InvalidateMeasure();
             }
         }
 
@@ -42,37 +42,36 @@ namespace Content.Client.UserInterface
             set
             {
                 _hasMargins = value;
-                MinimumSizeChanged();
+                InvalidateMeasure();
             }
         }
 
-        protected override Vector2 CalculateMinimumSize()
+        protected override Vector2 MeasureOverride(Vector2 availableSize)
         {
+            var padSize = HasMargins ? PadSize : 0;
+            var padSizeTotal = 0f;
+
+            if (HasBottomEdge)
+                padSizeTotal += padSize + EdgeSize;
+            if (HasTopEdge)
+                padSizeTotal += padSize + EdgeSize;
+
             var size = Vector2.Zero;
+
+            availableSize.Y -= padSizeTotal;
 
             foreach (var child in Children)
             {
-                size = Vector2.ComponentMax(size, child.CombinedMinimumSize);
+                child.Measure(availableSize);
+                size = Vector2.ComponentMax(size, child.DesiredSize);
             }
 
-            var padSize = HasMargins ? PadSize : 0;
-
-            if (HasBottomEdge)
-            {
-                size += (0, padSize + EdgeSize);
-            }
-
-            if (HasTopEdge)
-            {
-                size += (0, padSize + EdgeSize);
-            }
-
-            return size;
+            return size + (0, padSizeTotal);
         }
 
-        protected override void LayoutUpdateOverride()
+        protected override Vector2 ArrangeOverride(Vector2 finalSize)
         {
-            var box = SizeBox;
+            var box = new UIBox2(Vector2.Zero, finalSize);
 
             var padSize = HasMargins ? PadSize : 0;
 
@@ -88,9 +87,12 @@ namespace Content.Client.UserInterface
 
             foreach (var child in Children)
             {
-                FitChildInBox(child, box);
+                child.Arrange(box);
             }
+
+            return finalSize;
         }
+
 
         protected override void Draw(DrawingHandleScreen handle)
         {
@@ -107,7 +109,8 @@ namespace Content.Client.UserInterface
             if (HasBottomEdge)
             {
                 centerBox += (0, 0, 0, -((padSize + EdgeSize) * UIScale));
-                handle.DrawRect(new UIBox2(0, centerBox.Bottom, PixelWidth, PixelHeight - padSize * UIScale), EdgeColor);
+                handle.DrawRect(new UIBox2(0, centerBox.Bottom, PixelWidth, PixelHeight - padSize * UIScale),
+                    EdgeColor);
             }
 
             GetActualStyleBox()?.Draw(handle, centerBox);

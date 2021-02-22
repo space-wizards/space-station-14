@@ -12,23 +12,29 @@ namespace Content.Shared.Alert
     [Prototype("alertOrder")]
     public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>
     {
+        public string ID { get; private set; }
+
         private readonly Dictionary<AlertType, int> _typeToIdx = new();
         private readonly Dictionary<AlertCategory, int> _categoryToIdx = new();
 
         public void LoadFrom(YamlMappingNode mapping)
         {
+            var serializer = YamlObjectSerializer.NewReader(mapping);
+
+            serializer.DataField(this, x => x.ID, "id", string.Empty);
+
             if (!mapping.TryGetNode("order", out YamlSequenceNode orderMapping)) return;
 
-            int i = 0;
+            var i = 0;
             foreach (var entryYaml in orderMapping)
             {
                 var orderEntry = (YamlMappingNode) entryYaml;
-                var serializer = YamlObjectSerializer.NewReader(orderEntry);
-                if (serializer.TryReadDataField("category", out AlertCategory alertCategory))
+                var orderSerializer = YamlObjectSerializer.NewReader(orderEntry);
+                if (orderSerializer.TryReadDataField("category", out AlertCategory alertCategory))
                 {
                     _categoryToIdx[alertCategory] = i++;
                 }
-                else if (serializer.TryReadDataField("alertType", out AlertType alertType))
+                else if (orderSerializer.TryReadDataField("alertType", out AlertType alertType))
                 {
                     _typeToIdx[alertType] = i++;
                 }

@@ -16,12 +16,12 @@ namespace Content.Client.GameObjects.Components.Observer.GhostRoles
         {
             RobustXamlLoader.Load(this);
 
-            MakeSentientLabel.CustomMinimumSize = (150, 0);
-            RoleEntityLabel.CustomMinimumSize = (150, 0);
-            RoleNameLabel.CustomMinimumSize = (150, 0);
-            RoleName.CustomMinimumSize = (300, 0);
-            RoleDescriptionLabel.CustomMinimumSize = (150, 0);
-            RoleDescription.CustomMinimumSize = (300, 0);
+            MakeSentientLabel.MinSize = (150, 0);
+            RoleEntityLabel.MinSize = (150, 0);
+            RoleNameLabel.MinSize = (150, 0);
+            RoleName.MinSize = (300, 0);
+            RoleDescriptionLabel.MinSize = (150, 0);
+            RoleDescription.MinSize = (300, 0);
 
             MakeButton.OnPressed += OnPressed;
         }

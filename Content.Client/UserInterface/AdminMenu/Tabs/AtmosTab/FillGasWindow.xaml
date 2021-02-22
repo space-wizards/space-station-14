@@ -2,19 +2,19 @@
     xmlns="https://spacestation14.io" Title="{Loc Fill Gas}">
     <VBoxContainer>
         <HBoxContainer>
-            <Label Text="{Loc Grid}" CustomMinimumSize="100 0" />
-            <Control CustomMinimumSize="50 0" />
-            <OptionButton Name="GridOptions" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+            <Label Text="{Loc Grid}" MinSize="100 0" />
+            <Control MinSize="50 0" />
+            <OptionButton Name="GridOptions" MinSize="100 0" HorizontalExpand="True" />
         </HBoxContainer>
         <HBoxContainer>
-            <Label Text="{Loc Gas}" CustomMinimumSize="100 0" />
-            <Control CustomMinimumSize="50 0" />
-            <OptionButton Name="GasOptions" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+            <Label Text="{Loc Gas}" MinSize="100 0" />
+            <Control MinSize="50 0" />
+            <OptionButton Name="GasOptions" MinSize="100 0" HorizontalExpand="True" />
         </HBoxContainer>
         <HBoxContainer>
-            <Label Text="{Loc Amount}" CustomMinimumSize="100 0" />
-            <Control CustomMinimumSize="50 0" />
-            <SpinBox Name="AmountSpin" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+            <Label Text="{Loc Amount}" MinSize="100 0" />
+            <Control MinSize="50 0" />
+            <SpinBox Name="AmountSpin" MinSize="100 0" HorizontalExpand="True" />
         </HBoxContainer>
         <Button Name="SubmitButton" Text="{Loc Fill Gas}" />
     </VBoxContainer>

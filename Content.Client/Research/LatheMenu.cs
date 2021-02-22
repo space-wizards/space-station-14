@@ -23,7 +23,6 @@ namespace Content.Client.Research
         public Button QueueButton;
         public Button ServerConnectButton;
         public Button ServerSyncButton;
-        protected override Vector2? CustomSize => (300, 450);
 
         public LatheBoundUserInterface Owner { get; set; }
 
@@ -31,28 +30,23 @@ namespace Content.Client.Research
 
         public LatheMenu(LatheBoundUserInterface owner = null)
         {
+            SetSize = MinSize = (300, 450);
             IoCManager.InjectDependencies(this);
 
             Owner = owner;
 
             Title = "Lathe Menu";
 
-            var margin = new MarginContainer()
-            {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-            };
-
             var vBox = new VBoxContainer()
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SeparationOverride = 5,
             };
 
             var hBoxButtons = new HBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
             };
 
@@ -60,7 +54,6 @@ namespace Content.Client.Research
             {
                 Text = "Queue",
                 TextAlign = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
             };
 
@@ -68,7 +61,6 @@ namespace Content.Client.Research
             {
                 Text = "Server list",
                 TextAlign = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
             };
 
@@ -76,27 +68,26 @@ namespace Content.Client.Research
             {
                 Text = "Sync",
                 TextAlign = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
             };
 
             var spacer = new Control()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SizeFlagsStretchRatio = 3,
             };
 
             var hBoxFilter = new HBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 1
             };
 
             _searchBar = new LineEdit()
             {
                 PlaceHolder = "Search Designs",
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SizeFlagsStretchRatio = 3
             };
 
@@ -106,7 +97,6 @@ namespace Content.Client.Research
             {
                 Text = "Filter",
                 TextAlign = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
                 Disabled = true,
             };
@@ -114,7 +104,7 @@ namespace Content.Client.Research
             _items = new ItemList()
             {
                 SizeFlagsStretchRatio = 8,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SelectMode = ItemList.ItemListSelectMode.Button,
             };
 
@@ -124,14 +114,14 @@ namespace Content.Client.Research
             {
                 PlaceHolder = "Amount",
                 Text = "1",
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
             };
 
             _amountLineEdit.OnTextChanged += PopulateDisabled;
 
             _materials = new ItemList()
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 3
             };
 
@@ -153,9 +143,7 @@ namespace Content.Client.Research
             vBox.AddChild(_amountLineEdit);
             vBox.AddChild(_materials);
 
-            margin.AddChild(vBox);
-
-            Contents.AddChild(margin);
+            Contents.AddChild(vBox);
         }
 
         public void ItemSelected(ItemList.ItemListSelectedEventArgs args)

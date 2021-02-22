@@ -24,7 +24,7 @@ namespace Content.Server.AI.Utility.Actions
         /// Threshold doesn't necessarily mean we'll do an action at a higher threshold;
         /// if it's really un-optimal (i.e. low score) then we'll also check lower tiers
         /// </summary>
-        public virtual float Bonus { get; protected set; } = IdleBonus;
+        public virtual float Bonus { get; set; } = IdleBonus;
         // For GW2 they had the bonuses close together but IMO it feels better when they're more like discrete tiers.
 
         // These are just baselines to make mass-updates easier; actions can do whatever
@@ -36,7 +36,7 @@ namespace Content.Server.AI.Utility.Actions
         public const float CombatBonus = 30.0f;
         public const float DangerBonus = 50.0f;
 
-        protected IEntity Owner { get; }
+        public IEntity Owner { get; set; }
 
         /// <summary>
         /// All the considerations are multiplied together to get the final score; a consideration of 0.0 means the action is not possible.
@@ -58,10 +58,8 @@ namespace Content.Server.AI.Utility.Actions
         /// <param name="context"></param>
         protected virtual void UpdateBlackboard(Blackboard context) {}
 
-        protected UtilityAction(IEntity owner)
-        {
-            Owner = owner;
-        }
+        // Needs to be able to be instantiated without args via typefactory.
+        public UtilityAction() {}
 
         public virtual void Shutdown() {}
 

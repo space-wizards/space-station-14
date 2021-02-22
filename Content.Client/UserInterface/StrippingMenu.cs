@@ -9,17 +9,16 @@ namespace Content.Client.UserInterface
 {
     public class StrippingMenu : SS14Window
     {
-        protected override Vector2? CustomSize => new Vector2(400, 600);
-
         private readonly VBoxContainer _vboxContainer;
 
         public StrippingMenu(string title)
         {
+            MinSize = SetSize = (400, 600);
             Title = title;
 
             _vboxContainer = new VBoxContainer()
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SeparationOverride = 5,
             };
 
@@ -43,7 +42,7 @@ namespace Content.Client.UserInterface
 
             _vboxContainer.AddChild(new HBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SeparationOverride = 5,
                 Children =
                 {
@@ -53,7 +52,7 @@ namespace Content.Client.UserInterface
                     },
                     new Control()
                     {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand
+                        HorizontalExpand = true
                     },
                     button,
                 }

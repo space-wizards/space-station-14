@@ -244,6 +244,7 @@ namespace Content.Client
             "SolutionTransfer",
             "Shovel",
             "ReagentTank",
+            "UtilityAI",
         };
     }
 }
