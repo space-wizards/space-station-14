@@ -305,3 +305,10 @@
   desc: An illegal compound which induces a number of effects such as loss of balance and visual artefacts.
   physicalDesc: syrupy
   color: "#63806e"
+
+- type: reagent
+  id: chem.THCOil
+  name: THC oil
+  desc: Pure THC oil, extracted from the leaves of the cannabis plant. Much stronger than in it's natural form and can be used to numb chronic pain in patients.
+  physicalDesc: skunky
+  color: "#DAA520"
