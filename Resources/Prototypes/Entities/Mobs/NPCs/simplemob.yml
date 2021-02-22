@@ -23,6 +23,8 @@
     soundHit: /Audio/Effects/hit_kick.ogg
   - type: InteractionOutline
   - type: Sprite
+    netsync: false
+    noRot: true
     drawdepth: Mobs
   - type: Clickable
   - type: Physics
