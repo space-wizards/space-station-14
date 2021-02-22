@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components;
@@ -92,6 +92,8 @@ namespace Content.Client.GameObjects.Components
             {
                 _isComposite = transparent.AsBool();
             }
+
+            if (mapping.TryGetNode<YamlScalarNode>("sprite", out var rsiPath));
         }
 
         public override void InitializeEntity(IEntity entity)
