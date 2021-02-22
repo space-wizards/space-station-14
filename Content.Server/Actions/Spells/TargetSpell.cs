@@ -37,7 +37,7 @@ namespace Content.Server.Actions
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.CastMessage, "castmessage", "Instant action used."); //What player says upon casting the spell
-            serializer.DataField(this, x => x.CastRange, "castrange", 5f); //The rage at which the spell is cast (leave at below 0 for unlimited range, 0 for touch, etc)
+            serializer.DataField(this, x => x.CastRange, "castrange", 5f); //The rage at which the spell is cast (leave at 0 for unlimited range)
             serializer.DataField(this, x => x.CoolDown, "cooldown", 0f); //Cooldown of the spell
             serializer.DataField(this, x => x.TargetType, "NeedComponent", "SharedActionsComponent"); //Needed component the target must posess
             serializer.DataField(this, x => x.InduceComponent, "AddedComponent", "SharedActionsComponent"); //The component the spell adds onto the target
@@ -58,22 +58,31 @@ namespace Content.Server.Actions
             var targetCoords = target.Transform.WorldPosition;
             var effectiveRange = (casterCoords - targetCoords).Length;
             if (!caster.TryGetComponent<SharedActionsComponent>(out var actions)) return;
-            if (CastRange < effectiveRange)
+            if (CastRange < effectiveRange && CastRange != 0)
             {
-                caster.PopupMessage("Target out of range!");
+                caster.PopupMessage("This spell cannot reach this far!");
                 return;
             }
 
 
             //caster.PopupMessageEveryone(CastMessage); //Speak the cast message out loud
             //Now the fun part, actually applying the spell component to the caster
-            if (!target.TryGetComponent(RegisteredTargetType, out var component)) return;
-            if (target.HasComponent(RegisteredInduceType)) return;
+            if (!target.TryGetComponent(RegisteredTargetType, out var component))
+            {
+                caster.PopupMessage("Your hands fizzle, your target is invalid!");
+                return;
+            }
+            if (target.HasComponent(RegisteredInduceType))
+            {
+                caster.PopupMessage("This poor soul is already cursed!");
+                return;
+            }
+            caster.PopupMessageEveryone(CastMessage);
             actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown)); //Set the spell on cooldown
             var componentInduced = compFactory.GetComponent(RegisteredInduceType);
             Component compInducedFinal = (Component)componentInduced;
             compInducedFinal.Owner = target;
-            target.EntityManager.ComponentManager.AddComponent(target, compInducedFinal);
+            target.EntityManager.ComponentManager.EnsureComponent<compInducedFinal>(target, out compInducedFinal);
 
         }
 

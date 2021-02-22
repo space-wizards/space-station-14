@@ -49,14 +49,14 @@
 - type: action
   actionType: DebugTarget
   icon: Mobs/Species/Human/organs.rsi/brain.png
-  name: "Mind and ass"
+  name: "Mind to ass"
   filters:
     - human
-  description: "Burden a sentient creature with a hunched seat back"
+  description: "Instantly give a sentient creature a hunched seatable back"
   behaviorType: TargetEntity
   behavior: !type:TargetSpell
-   castrange: 2
+   castrange: 5
    castmessage: ASE'N'MRE!
    cooldown: 1
-   NeedComponent: Actions
-   AddedComponent: RadiationPulse
+   NeedComponent: Mind
+   AddedComponent: Strap
