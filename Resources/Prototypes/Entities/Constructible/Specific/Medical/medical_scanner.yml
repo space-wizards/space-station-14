@@ -22,11 +22,10 @@
     anchored: true
     shapes:
     - !type:PhysShapeAabb
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
+      mask:
+        - Impassable
+        - VaultImpassable
+        - SmallImpassable
   - type: SnapGrid
     offset: Center
   - type: MedicalScanner
