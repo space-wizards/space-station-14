@@ -52,7 +52,6 @@
         - type: BagOpenCloseVisualizer
           openIcon: cig_open
         - type: StackVisualizer
-          sprite: Objects/Consumable/Fancy/test.rsi
           composite: true
           stackLayers:
             - cigarette_1
