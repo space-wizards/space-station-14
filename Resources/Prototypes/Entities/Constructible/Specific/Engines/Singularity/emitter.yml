@@ -59,8 +59,8 @@
               max: 5
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-
   - type: Anchorable
+    snap: true
   - type: Pullable
   - type: Rotatable
   - type: Appearance
