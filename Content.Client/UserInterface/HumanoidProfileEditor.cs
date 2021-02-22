@@ -536,7 +536,7 @@ namespace Content.Client.UserInterface
                 IsDirty = true;
             };
 
-            //eyesList.AddChild(_eyesPicker);
+            eyesList.AddChild(_eyesPicker);
 
             #endregion Eyes
 
