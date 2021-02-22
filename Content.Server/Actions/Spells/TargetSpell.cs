@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -27,7 +28,9 @@ namespace Content.Server.Actions
 
         public Type RegisteredInduceType;
 
-        public IComponent CheckedComponent; 
+        public IComponent CheckedComponent;
+
+        private string castSound = "";
 
         public TargetSpell()
         {
@@ -41,6 +44,7 @@ namespace Content.Server.Actions
             serializer.DataField(this, x => x.CoolDown, "cooldown", 0f); //Cooldown of the spell
             serializer.DataField(this, x => x.TargetType, "NeedComponent", "SharedActionsComponent"); //Needed component the target must posess
             serializer.DataField(this, x => x.InduceComponent, "AddedComponent", "SharedActionsComponent"); //The component the spell adds onto the target
+            serializer.DataFieldCached(ref castSound, "pickup_sound", "/Audio/Effects/Fluids/slosh.ogg");
         }
 
         public void DoTargetEntityAction(TargetEntityActionEventArgs args)
@@ -82,8 +86,8 @@ namespace Content.Server.Actions
             var componentInduced = compFactory.GetComponent(RegisteredInduceType);
             Component compInducedFinal = (Component)componentInduced;
             compInducedFinal.Owner = target;
-            target.EntityManager.ComponentManager.EnsureComponent<compInducedFinal>(target, out compInducedFinal);
-
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(castSound, caster);
+            target.EntityManager.ComponentManager.AddComponent(target, compInducedFinal);
         }
 
     }
