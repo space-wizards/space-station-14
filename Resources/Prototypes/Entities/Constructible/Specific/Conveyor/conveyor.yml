@@ -48,7 +48,7 @@
   components:
     - type: Tag
       tags:
-        - ConveyorAssembly
+      - ConveyorAssembly
     - type: Sprite
       netsync: false
       sprite: Constructible/Power/conveyor.rsi

@@ -6,7 +6,7 @@
   components:
   - type: Tag
     tags:
-      - Grindable
+    - Grindable
   - type: Food
   - type: LoopingSound
   - type: SolutionContainer

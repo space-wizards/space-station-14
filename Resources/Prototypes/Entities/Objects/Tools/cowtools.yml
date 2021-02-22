@@ -6,7 +6,7 @@
   components:
     - type: Tag
       tags:
-        - PlantSampleTaker
+      - PlantSampleTaker
     - type: Sprite
       sprite: Objects/Tools/Cowtools/haycutters.rsi
       state: haycutters

@@ -6,7 +6,7 @@
   components:
   - type: Tag
     tags:
-      - PlantSampleTaker
+    - PlantSampleTaker
   - type: Sprite
     sprite: Objects/Tools/wirecutters.rsi
     layers:
@@ -205,7 +205,7 @@
   components:
     - type: Tag
       tags:
-        - Shovel
+      - Shovel
     - type: Sprite
       sprite: Objects/Tools/Hydroponics/shovel.rsi
       state: icon

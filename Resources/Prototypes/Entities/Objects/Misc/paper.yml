@@ -23,7 +23,7 @@
   components:
   - type: Tag
     tags:
-      - Write
+    - Write
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen
