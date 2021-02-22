@@ -25,6 +25,7 @@ namespace Content.Shared
 
         public override void PreInit()
         {
+            new PrototypeManager().TestMethod();
             IoCManager.InjectDependencies(this);
 
             _textMacroFactory.DoAutoRegistrations();
