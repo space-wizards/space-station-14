@@ -5,6 +5,9 @@
   description: Used to contain a moderate amount of chemicals and solutions.
   id: Beaker
   components:
+  - type: Tag
+    tags:
+    - GlassBeaker
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beakers.rsi
     state: beaker
@@ -18,28 +21,22 @@
   - type: SolutionTransfer
     transferAmount: 5.0
   - type: Spillable
-  - type: GlassBeaker
 
 - type: entity
   name: large beaker
-  parent: BaseItem
+  parent: Beaker
   description: Used to contain a large amount of chemicals or solutions.
   id: LargeBeaker
   components:
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/beakers.rsi
     state: beakerlarge
   - type: Item
-    sprite: Objects/Specific/Chemistry/beakers.rsi
     HeldPrefix: beaker
   - type: SolutionContainer
     fillingState: beakerlarge
     maxVol: 100
     caps: OpenContainer, FitsInDispenser
   - type: SolutionTransfer
-    transferAmount: 5.0
-  - type: Spillable
-  - type: GlassBeaker
 
 - type: entity
   name: dropper

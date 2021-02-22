@@ -3,3 +3,9 @@
 
 - type: Tag
   id: Wall
+
+- type: Tag
+  id: GlassBeaker
+
+- type: Tag
+  id: FirelockElectronics
