@@ -4,6 +4,9 @@
   parent: SimpleMobBase
   description: Surprise. # When this gets a proper write this should use the object's actual description >:)
   components:
+  - type: Tag
+    tags:
+    - FootstepSound
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -33,7 +36,6 @@
       - Opaque
       - MobImpassable
   - type: CharacterInfo
-  - type: FootstepSound
   - type: HumanoidAppearance
   - type: AnimationPlayer
   - type: UnarmedCombat

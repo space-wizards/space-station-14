@@ -6,3 +6,6 @@
 
 - type: Tag
   id: Teleportable
+
+- type: Tag
+  id: FootstepSound

@@ -10,6 +10,7 @@
   - type: Tag
     tags:
     - Teleportable
+    - FootstepSound
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
@@ -189,7 +190,6 @@
   - type: Climbing
   - type: Cuffable
   - type: CharacterInfo
-  - type: FootstepSound
   - type: AnimationPlayer
   - type: Buckle
   - type: UnarmedCombat
