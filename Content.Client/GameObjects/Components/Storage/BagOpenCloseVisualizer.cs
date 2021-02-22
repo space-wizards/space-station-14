@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
+using static Robust.Shared.Utility.SpriteSpecifier;
 
 namespace Content.Client.GameObjects.Components.Storage
 {
@@ -34,11 +35,12 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             base.InitializeEntity(entity);
 
-            if (_openIcon != null && entity.TryGetComponent<SpriteComponent>(out var spriteComponent))
+            if (_openIcon != null &&
+                entity.TryGetComponent<SpriteComponent>(out var spriteComponent) &&
+                spriteComponent.BaseRSI?.Path != null)
             {
-                var rsiPath = spriteComponent.BaseRSI!.Path!;
                 spriteComponent.LayerMapReserveBlank(OpenIcon);
-                spriteComponent.LayerSetSprite(OpenIcon, new SpriteSpecifier.Rsi(rsiPath, _openIcon));
+                spriteComponent.LayerSetSprite(OpenIcon, new Rsi(spriteComponent.BaseRSI.Path, _openIcon));
                 spriteComponent.LayerSetVisible(OpenIcon, false);
             }
         }
