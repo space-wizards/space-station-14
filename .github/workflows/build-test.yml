@@ -2,9 +2,9 @@ name: Build & Test
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, test-pr-puller ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, test-pr-puller ]
 
 jobs:
   build:
