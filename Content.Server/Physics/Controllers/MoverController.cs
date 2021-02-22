@@ -55,6 +55,8 @@ namespace Content.Server.Physics.Controllers
 
             foreach (var (mover, physics) in ComponentManager.EntityQuery<IMoverComponent, PhysicsComponent>())
             {
+                if (mover.Owner.HasComponent<IMobMoverComponent>()) continue;
+
                 // TODO: Shitcodey and should just be run before all maps
                 if (mover.Owner.Transform.MapID != map.MapId) continue;
 
