@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;
-using Robust.Shared.Localization.Macros;
+using Robust.Shared.Enums;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 

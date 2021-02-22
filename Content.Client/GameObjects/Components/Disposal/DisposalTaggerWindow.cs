@@ -16,10 +16,9 @@ namespace Content.Client.GameObjects.Components.Disposal
         public readonly LineEdit TagInput;
         public readonly Button Confirm;
 
-        protected override Vector2? CustomSize => (400, 80);
-
         public DisposalTaggerWindow()
         {
+            MinSize = SetSize = (400, 80);
             Title = Loc.GetString("Disposal Tagger");
 
             Contents.AddChild(new VBoxContainer
@@ -27,14 +26,18 @@ namespace Content.Client.GameObjects.Components.Disposal
                 Children =
                 {
                     new Label {Text = Loc.GetString("Tag:")},
-                    new Control {CustomMinimumSize = (0, 10)},
+                    new Control {MinSize = (0, 10)},
                     new HBoxContainer
                     {
                         Children =
                         {
-                            (TagInput = new LineEdit {SizeFlagsHorizontal = SizeFlags.Expand, CustomMinimumSize = (320, 0),
-                                IsValid = tag => TagRegex.IsMatch(tag)}),
-                            new Control {CustomMinimumSize = (10, 0)},
+                            (TagInput = new LineEdit
+                            {
+                                HorizontalExpand = true,
+                                MinSize = (320, 0),
+                                IsValid = tag => TagRegex.IsMatch(tag)
+                            }),
+                            new Control {MinSize = (10, 0)},
                             (Confirm = new Button {Text = Loc.GetString("Confirm")})
                         }
                     }

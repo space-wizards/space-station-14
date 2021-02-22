@@ -30,8 +30,6 @@ namespace Content.Client.Instruments
 
         private readonly InstrumentBoundUserInterface _owner;
 
-        protected override Vector2? CustomSize => (400, 150);
-
         public InstrumentMenu(InstrumentBoundUserInterface owner)
         {
             RobustXamlLoader.Load(this);
@@ -50,23 +48,7 @@ namespace Content.Client.Instruments
 
             if (!_midiManager.IsAvailable)
             {
-                Margin.AddChild(new PanelContainer
-                {
-                    MouseFilter = MouseFilterMode.Stop,
-                    PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.90f)},
-                    Children =
-                    {
-                        new Label
-                        {
-                            Align = Label.AlignMode.Center,
-                            SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                            SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                            StyleClasses = {StyleNano.StyleClassLabelBig},
-                            Text = Loc.GetString("MIDI support is currently\nnot available on your platform.")
-                        }
-                    }
-                });
-
+                UnavailableOverlay.Visible = true;
                 // We return early as to not give the buttons behavior.
                 return;
             }
@@ -77,6 +59,8 @@ namespace Content.Client.Instruments
             StopButton.OnPressed += MidiStopButtonOnPressed;
             PlaybackSlider.OnValueChanged += PlaybackSliderSeek;
             PlaybackSlider.OnKeyBindUp += PlaybackSliderKeyUp;
+
+            MinSize = SetSize = (400, 150);
         }
 
         private void InstrumentOnMidiPlaybackEnded()

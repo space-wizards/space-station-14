@@ -26,14 +26,14 @@ namespace Content.Client.GameObjects.EntitySystems.HealthOverlay
             CritBar = new HealthOverlayBar
             {
                 Visible = false,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                VerticalAlignment = VAlignment.Center,
                 Color = Color.Red
             };
 
             HealthBar = new HealthOverlayBar
             {
                 Visible = false,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                VerticalAlignment = VAlignment.Center,
                 Color = Color.Green
             };
 
@@ -45,7 +45,7 @@ namespace Content.Client.GameObjects.EntitySystems.HealthOverlay
                     {
                         Texture = StaticIoC.ResC.GetTexture("/Textures/Interface/Misc/health_bar.rsi/icon.png"),
                         TextureScale = Vector2.One * HealthOverlayBar.HealthBarScale,
-                        SizeFlagsVertical = SizeFlags.ShrinkCenter
+                        VerticalAlignment = VAlignment.Center,
                     },
                     CritBar,
                     HealthBar

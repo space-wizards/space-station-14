@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Utility;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using static Content.Shared.GameTicking.SharedGameTicker;
 
 namespace Content.Client.UserInterface
@@ -16,10 +14,10 @@ namespace Content.Client.UserInterface
         private VBoxContainer RoundEndSummaryTab { get; }
         private VBoxContainer PlayerManifestoTab { get; }
         private TabContainer RoundEndWindowTabs { get; }
-        protected override Vector2? CustomSize => (520, 580);
 
         public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, List<RoundEndPlayerInfo> info)
         {
+            MinSize = SetSize = (520, 580);
 
             Title = Loc.GetString("Round End Summary");
 
@@ -66,7 +64,7 @@ namespace Content.Client.UserInterface
 
             //Initialize what will be the list of players display.
             var scrollContainer = new ScrollContainer();
-            scrollContainer.SizeFlagsVertical = SizeFlags.FillExpand;
+            scrollContainer.VerticalExpand = true;
             var innerScrollContainer = new VBoxContainer();
 
             //Put observers at the bottom of the list. Put antags on top.
@@ -74,10 +72,7 @@ namespace Content.Client.UserInterface
             //Create labels for each player info.
             foreach (var playerInfo in manifestSortedList)
             {
-                var playerInfoText = new RichTextLabel()
-                {
-                    SizeFlagsVertical = SizeFlags.Fill,
-                };
+                var playerInfoText = new RichTextLabel();
 
                 if (playerInfo.Observer)
                 {
@@ -100,22 +95,10 @@ namespace Content.Client.UserInterface
             scrollContainer.AddChild(innerScrollContainer);
             //Attach the entire ScrollContainer that holds all the playerinfo.
             PlayerManifestoTab.AddChild(scrollContainer);
-            // TODO: 1240 Overlap, remove once it's fixed. Temp Hack to make the lines not overlap
-            PlayerManifestoTab.OnVisibilityChanged += PlayerManifestoTab_OnVisibilityChanged;
 
             //Finally, display the window.
             OpenCentered();
             MoveToFront();
-        }
-
-        private void PlayerManifestoTab_OnVisibilityChanged(Control obj)
-        {
-            if (obj.Visible)
-            {
-                // For some reason the lines get not properly drawn with the right height
-                // so we just force a update
-                ForceRunLayoutUpdate();
-            }
         }
     }
 

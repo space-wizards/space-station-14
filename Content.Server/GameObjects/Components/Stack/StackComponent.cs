@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
@@ -107,12 +107,21 @@ namespace Content.Server.GameObjects.Components.Stack
 
                 if (stack.AvailableSpace == 0)
                 {
-                    eventArgs.Using.SpawnTimer(300, () => popupPos.PopupMessage(eventArgs.User, "Stack is now full."));
+                    eventArgs.Using.SpawnTimer(
+                        300,
+                        () => popupPos.PopupMessage(
+                            eventArgs.User,
+                            Loc.GetString("stack-component-becomes-full")
+                        )
+                    );
                 }
             }
             else if (toTransfer == 0 && stack.AvailableSpace == 0)
             {
-                popupPos.PopupMessage(eventArgs.User, "Stack is already full.");
+                popupPos.PopupMessage(
+                    eventArgs.User,
+                    Loc.GetString("stack-component-already-full")
+                );
             }
 
             return true;
@@ -122,9 +131,13 @@ namespace Content.Server.GameObjects.Components.Stack
         {
             if (inDetailsRange)
             {
-                message.AddMarkup(Loc.GetPluralString(
-                    "There is [color=lightgray]1[/color] thing in the stack",
-                    "There are [color=lightgray]{0}[/color] things in the stack.", Count, Count));
+                message.AddMarkup(
+                    Loc.GetString(
+                        "stack-component-examine-detail-count",
+                        ("count", Count),
+                        ("markupCountColor", "lightgray")
+                    )
+                );
             }
         }
     }

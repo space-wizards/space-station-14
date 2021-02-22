@@ -83,7 +83,7 @@ namespace Content.Server.Throw
 
                 if (ActionBlockerSystem.CanChangeDirection(throwSourceEnt))
                 {
-                    throwSourceEnt.Transform.LocalRotation = angle.GetCardinalDir().ToAngle();
+                    throwSourceEnt.Transform.LocalRotation = (angle + MathHelper.PiOver2).GetCardinalDir().ToAngle();
                 }
             }
 
@@ -112,7 +112,7 @@ namespace Content.Server.Throw
         /// <summary>
         ///     Throw an entity at the position of <paramref name="targetLoc"/> from <paramref name="sourceLoc"/>,
         ///     without overshooting.
-        /// </summary>
+        /// </summary>cl
         /// <param name="thrownEnt">The entity to throw.</param>
         /// <param name="throwForceMax">
         /// The MAXIMUM force to throw the entity with.

@@ -19,8 +19,7 @@ namespace Content.Client.UserInterface
         {
             _label = new Label
             {
-                SizeFlagsHorizontal = SizeFlags.Fill,
-                SizeFlagsVertical = SizeFlags.Fill,
+                VerticalAlignment = VAlignment.Stretch,
                 Align = Label.AlignMode.Center,
                 VAlign = Label.VAlignMode.Center
             };

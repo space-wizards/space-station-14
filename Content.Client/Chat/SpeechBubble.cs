@@ -74,16 +74,12 @@ namespace Content.Client.Chat
 
             ForceRunStyleUpdate();
 
-            ContentHeight = bubble.CombinedMinimumSize.Y;
+            bubble.Measure(Vector2.Infinity);
+            ContentHeight = bubble.DesiredSize.Y;
             _verticalOffsetAchieved = -ContentHeight;
         }
 
         protected abstract Control BuildBubble(string text);
-
-        protected override Vector2 CalculateMinimumSize()
-        {
-            return (base.CalculateMinimumSize().X, 0);
-        }
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
@@ -122,7 +118,7 @@ namespace Content.Client.Chat
             LayoutContainer.SetPosition(this, screenPos);
 
             var height = MathHelper.Clamp(lowerCenter.Y - screenPos.Y, 0, ContentHeight);
-            LayoutContainer.SetSize(this, (Size.X, height));
+            SetHeight = height;
         }
 
         private void Die()

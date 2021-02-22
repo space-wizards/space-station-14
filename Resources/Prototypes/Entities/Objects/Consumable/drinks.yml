@@ -49,6 +49,7 @@
 # Transformable container - normal glass
 - type: entity
   name: Drinking glass
+  description: A drinking glass.
   parent: DrinkGlassBase
   id: DrinkGlass
   components:

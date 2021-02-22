@@ -1,4 +1,5 @@
-﻿- type: entity
+﻿# TODO: Add descriptions (3)
+- type: entity
   id: BaseMachineCircuitboard
   parent: BaseItem
   name: machine board
