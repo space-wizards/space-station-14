@@ -198,8 +198,6 @@ namespace Content.Server.Atmos
                     || entity.IsInContainer())
                     continue;
 
-                physics.WakeBody();
-
                 var pressureMovements = physics.Entity.EnsureComponent<MovedByPressureComponent>();
                 if (pressure.LastHighPressureMovementAirCycle < _gridAtmosphereComponent.UpdateCounter)
                 {

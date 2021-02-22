@@ -49,6 +49,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (!Owner.TryGetComponent(out PhysicsComponent? physics))
                 return;
 
+            physics.WakeBody();
             // TODO ATMOS stuns?
 
             var transform = physics.Owner.Transform;
@@ -69,19 +70,17 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (physics.Owner.HasComponent<IMobStateComponent>())
                 {
                     physics.Status = BodyStatus.InAir;
-
-                }
-
-                Owner.SpawnTimer(2000, () =>
-                {
-                    if (Deleted || !Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
-
-                    // Uhh if you get race conditions good luck buddy.
-                    if (physicsComponent.Owner.HasComponent<IMobStateComponent>())
+                    Owner.SpawnTimer(2000, () =>
                     {
-                        physicsComponent.Status = BodyStatus.OnGround;
-                    }
-                });
+                        if (Deleted || !Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
+
+                        // Uhh if you get race conditions good luck buddy.
+                        if (physicsComponent.Owner.HasComponent<IMobStateComponent>())
+                        {
+                            physicsComponent.Status = BodyStatus.OnGround;
+                        }
+                    });
+                }
 
                 if (maxForce > ThrowForce)
                 {
