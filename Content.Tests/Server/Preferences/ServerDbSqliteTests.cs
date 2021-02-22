@@ -10,6 +10,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Robust.Shared;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
