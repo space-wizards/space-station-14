@@ -20,7 +20,7 @@
   - type: PointLight
     radius: 8
     energy: 1.2
-    offset: "0.5, 0"
+    offset: "0, -0.5"
     color: "#DCDCC6"
   - type: SignalReceiver
   - type: Damageable
@@ -81,7 +81,7 @@
     - type: PointLight
       energy: 1.0
       enabled: true
-      offset: "0.5, 0"
+      offset: "0, -0.5"
     - type: Damageable
     - type: Destructible
       thresholds:
@@ -113,7 +113,7 @@
   - type: PointLight
     energy: 1.0
     enabled: false
-    offset: "0.5, 0"
+    offset: "0, -0.5"
   - type: Physics
     shapes:
       - !type:PhysShapeAabb

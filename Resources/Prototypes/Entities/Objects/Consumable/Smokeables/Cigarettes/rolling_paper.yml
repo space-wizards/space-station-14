@@ -1,0 +1,50 @@
+- type: entity
+  parent: BaseItem
+  name: pack of rolling paper
+  id: PackPaperRolling
+  description: "A pack of thin pieces of paper used to make fine smokeables."
+  components:
+    # I know but it just works.
+  - type: FoodContainer
+    prototypes:
+      PaperRolling: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+    state: cigpapers
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+    state: cigpapers
+
+- type: entity
+  id: PaperRolling
+  name: rolling paper
+  description: "A thin piece of paper used to make fine smokeables."
+  parent: BaseItem
+  components:
+    - type: Stack
+      stacktype: enum.StackType.PaperRolling
+      max: 5
+      count: 1
+    - type: Sprite
+      sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+      state: cigpaper
+    - type: Item
+      sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+      state: cigpaper
+
+- type: entity
+  id: CigaretteFilter
+  name: cigarette filter
+  description: "A strip of firm paper used as a filter for handmade cigarettes."
+  parent: BaseItem
+  components:
+    - type: Stack
+      stacktype: enum.StackType.CigaretteFilter
+      max: 5
+      count: 1
+    - type: Sprite
+      sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+      state: cigfilter
+    - type: Item
+      sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+      state: cigfilter

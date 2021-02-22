@@ -86,7 +86,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return true;
 
             var location = eventArgs.User.Transform.Coordinates;
-            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager));
+            var diff = eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager);
+            var angle = Angle.FromWorldVec(diff);
 
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
             var entities = ArcRayCast(eventArgs.User.Transform.WorldPosition, angle, eventArgs.User);
@@ -143,7 +144,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             var target = eventArgs.TargetEntity;
 
             var location = eventArgs.User.Transform.Coordinates;
-            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager));
+            var diff = eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager);
+            var angle = Angle.FromWorldVec(diff);
 
             var audioSystem = EntitySystem.Get<AudioSystem>();
             if (target != null)
@@ -194,7 +196,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = _physicsManager.IntersectRay(mapId, new CollisionRay(position, castAngle.ToVec(), (int) (CollisionGroup.Impassable|CollisionGroup.MobImpassable)), Range, ignore).FirstOrDefault();
+                var res = _physicsManager.IntersectRay(mapId, new CollisionRay(position, castAngle.ToWorldVec(), (int) (CollisionGroup.Impassable|CollisionGroup.MobImpassable)), Range, ignore).FirstOrDefault();
                 if (res.HitEntity != null)
                 {
                     resSet.Add(res.HitEntity);
