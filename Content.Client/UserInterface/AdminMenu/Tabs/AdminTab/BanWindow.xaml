@@ -1,24 +1,24 @@
 ﻿<SS14Window
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.UserInterface.AdminMenu.CustomControls"
-    Title="{Loc Ban}" CustomMinimumSize="425 162">
+    Title="{Loc Ban}" MinSize="425 162">
     <VBoxContainer>
         <HBoxContainer>
-            <Label Text="{Loc Player}" CustomMinimumSize="100 0" />
-            <Control CustomMinimumSize="50 0" />
-            <LineEdit Name="PlayerNameLine" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+            <Label Text="{Loc Player}" MinWidth="100" />
+            <Control MinWidth="50" />
+            <LineEdit Name="PlayerNameLine" MinWidth="100" HorizontalExpand="True" />
         </HBoxContainer>
         <HBoxContainer>
-            <Label Text="{Loc Reason}" CustomMinimumSize="100 0" />
-            <Control CustomMinimumSize="50 0" />
-            <LineEdit Name="ReasonLine" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+            <Label Text="{Loc Reason}" MinSize="100 0" />
+            <Control MinSize="50 0" />
+            <LineEdit Name="ReasonLine" MinSize="100 0" HorizontalExpand="True" />
         </HBoxContainer>
         <HBoxContainer>
-            <Label Text="{Loc Minutes}" CustomMinimumSize="100 0" />
-            <Control CustomMinimumSize="50 0" />
-            <LineEdit Name="MinutesLine" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" PlaceHolder="{Loc 0 minutes for a permanent ban}" />
+            <Label Text="{Loc Minutes}" MinWidth="100" />
+            <Control MinWidth="50" />
+            <LineEdit Name="MinutesLine" MinWidth="100" HorizontalExpand="True" PlaceHolder="{Loc 0 minutes for a permanent ban}" />
         </HBoxContainer>
-        <Control CustomMinimumSize="50 0" />
+        <Control MinWidth="50" />
         <Button Name="SubmitButton" Text="{Loc Ban}" />
     </VBoxContainer>
 </SS14Window>

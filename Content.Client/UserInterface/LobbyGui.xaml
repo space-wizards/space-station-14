@@ -13,7 +13,7 @@
         <PanelContainer StyleClasses="AngleRect" />
         <VBoxContainer>
             <!-- Top row -->
-            <HBoxContainer CustomMinimumSize="0 40">
+            <HBoxContainer MinSize="0 40">
                 <MarginContainer MarginLeftOverride="8">
                     <Label StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'Lobby'}" />
                 </MarginContainer>
@@ -30,9 +30,9 @@
                 </PanelContainer.PanelOverride>
             </PanelContainer>
             <!-- Middle section with the two vertical panels -->
-            <HBoxContainer SizeFlagsVertical="FillExpand">
+            <HBoxContainer VerticalExpand="True">
                 <!-- Left panel -->
-                <VBoxContainer Name="CLeftPanelContainer" SizeFlagsHorizontal="FillExpand">
+                <VBoxContainer Name="CLeftPanelContainer" HorizontalExpand="True">
                     <cui:StripeBack>
                         <MarginContainer MarginLeftOverride="3" MarginRightOverride="3" MarginBottomOverride="3"
                                          MarginTopOverride="3">
@@ -40,39 +40,39 @@
                                 <Button Name="CObserveButton" Text="{Loc 'Observe'}" StyleClasses="ButtonBig" />
                                 <Label Name="CStartTime" Align="Right"
                                        FontColorOverride="{x:Static maths:Color.DarkGray}"
-                                       StyleClasses="LabelBig" SizeFlagsHorizontal="FillExpand" />
+                                       StyleClasses="LabelBig" HorizontalExpand="True" />
                                 <Button Name="CReadyButton" ToggleMode="True" Text="{Loc 'Ready Up'}"
                                         StyleClasses="ButtonBig" />
                             </HBoxContainer>
                         </MarginContainer>
                     </cui:StripeBack>
-                    <MarginContainer SizeFlagsVertical="FillExpand" MarginLeftOverride="3" MarginRightOverride="3"
+                    <MarginContainer VerticalExpand="True" MarginLeftOverride="3" MarginRightOverride="3"
                                      MarginBottomOverride="3"
                                      MarginTopOverride="3">
                         <chat:ChatBox Name="CChat" />
                     </MarginContainer>
                 </VBoxContainer>
                 <!-- Gold line -->
-                <PanelContainer CustomMinimumSize="2 0">
+                <PanelContainer MinSize="2 0">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" />
                     </PanelContainer.PanelOverride>
                 </PanelContainer>
                 <!-- Right panel -->
-                <Control SizeFlagsHorizontal="FillExpand">
+                <Control HorizontalExpand="True">
                     <VBoxContainer>
                         <!-- Player list -->
                         <cui:NanoHeading Text="{Loc 'Online Players'}" />
-                        <MarginContainer SizeFlagsVertical="FillExpand"
+                        <MarginContainer VerticalExpand="True"
                                          MarginRightOverride="3" MarginLeftOverride="3"
                                          MarginBottomOverride="3" MarginTopOverride="3">
                             <cui:LobbyPlayerList Name="COnlinePlayerList"
-                                                 SizeFlagsHorizontal="FillExpand"
-                                                 SizeFlagsVertical="FillExpand" />
+                                                 HorizontalExpand="True"
+                                                 VerticalExpand="True" />
                         </MarginContainer>
                         <!-- Server info -->
                         <cui:NanoHeading Text="{Loc 'Server Info'}" />
-                        <MarginContainer SizeFlagsVertical="FillExpand"
+                        <MarginContainer VerticalExpand="True"
                                          MarginRightOverride="3" MarginLeftOverride="3"
                                          MarginBottomOverride="2" MarginTopOverride="3">
                             <cui:ServerInfo Name="CServerInfo" />

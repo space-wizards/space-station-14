@@ -6,7 +6,6 @@ using Content.Shared.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Localization.Macros;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -20,17 +19,14 @@ namespace Content.Shared
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly ITextMacroFactory _textMacroFactory = default!;
         [Dependency] private readonly IResourceManager _resourceManager = default!;
 
         public override void PreInit()
         {
             IoCManager.InjectDependencies(this);
 
-            _textMacroFactory.DoAutoRegistrations();
-
             // Default to en-US.
-            Loc.LoadCulture(_resourceManager, _textMacroFactory, new CultureInfo(Culture));
+            Loc.LoadCulture(_resourceManager, new CultureInfo(Culture));
         }
 
         public override void Init()

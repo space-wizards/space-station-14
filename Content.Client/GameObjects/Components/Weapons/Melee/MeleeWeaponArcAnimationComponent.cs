@@ -56,7 +56,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Melee
 
                 case WeaponArcType.Poke:
                     Owner.Transform.WorldRotation = _baseAngle;
-                    _sprite.Offset += (_meleeWeaponAnimation.Speed * frameTime, 0);
+                    _sprite.Offset -= (0, _meleeWeaponAnimation.Speed * frameTime);
                     break;
             }
 

@@ -1,15 +1,15 @@
 <SS14Window
     xmlns="https://spacestation14.io">
-    <HBoxContainer SizeFlagsHorizontal="FillExpand">
-        <VBoxContainer SizeFlagsHorizontal="FillExpand" SizeFlagsStretchRatio="0.45">
-            <HBoxContainer SizeFlagsHorizontal="FillExpand" SizeFlagsVertical="FillExpand"
+    <HBoxContainer HorizontalExpand="True">
+        <VBoxContainer HorizontalExpand="True" SizeFlagsStretchRatio="0.45">
+            <HBoxContainer HorizontalExpand="True" VerticalExpand="True"
                                     SizeFlagsStretchRatio="0.1">
-                <LineEdit Name="SearchBar" PlaceHolder="Search" SizeFlagsHorizontal="FillExpand"
+                <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True"
                                    SizeFlagsStretchRatio="0.6" />
             </HBoxContainer>
-            <ItemList Name="OutfitList" SelectMode="Single" SizeFlagsVertical="FillExpand"
+            <ItemList Name="OutfitList" SelectMode="Single" VerticalExpand="True"
                                SizeFlagsStretchRatio="0.9" />
-            <Button Name="ConfirmButton" SizeFlagsHorizontal="FillExpand" />
+            <Button Name="ConfirmButton" HorizontalExpand="True" />
         </VBoxContainer>
     </HBoxContainer>
 </SS14Window>

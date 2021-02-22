@@ -167,6 +167,14 @@ namespace Content.Shared
 
 
         /*
+         * Ambience
+         */
+
+        public static readonly CVarDef<bool> AmbienceBasicEnabled =
+            CVarDef.Create("ambience.basicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+
+        /*
          * AI
          */
 

@@ -8,7 +8,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface
 {
-    public class ItemSlotButton : MarginContainer
+    public class ItemSlotButton : Control
     {
         private const string HighlightShader = "SelectionOutlineInrange";
 
@@ -29,7 +29,7 @@ namespace Content.Client.UserInterface
 
         public ItemSlotButton(Texture texture, Texture storageTexture)
         {
-            CustomMinimumSize = (64, 64);
+            MinSize = (64, 64);
 
             AddChild(Button = new TextureRect
             {
@@ -41,7 +41,7 @@ namespace Content.Client.UserInterface
             AddChild(_highlightRect = new PanelContainer
             {
                 StyleClasses = { StyleNano.StyleClassHandSlotHighlight },
-                CustomMinimumSize = (32, 32),
+                MinSize = (32, 32),
                 Visible = false
             });
 
@@ -63,8 +63,8 @@ namespace Content.Client.UserInterface
             {
                 TextureNormal = storageTexture,
                 Scale = (0.75f, 0.75f),
-                SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
-                SizeFlagsVertical = SizeFlags.ShrinkEnd,
+                HorizontalAlignment = HAlignment.Right,
+                VerticalAlignment = VAlignment.Bottom,
                 Visible = false,
             });
 
@@ -92,8 +92,6 @@ namespace Content.Client.UserInterface
 
             AddChild(CooldownDisplay = new CooldownGraphic
             {
-                SizeFlagsHorizontal = SizeFlags.Fill,
-                SizeFlagsVertical = SizeFlags.Fill,
                 Visible = false,
             });
         }
