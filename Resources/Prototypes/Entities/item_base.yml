@@ -19,6 +19,11 @@
           bounds: "-0.25,-0.25,0.25,0.25"
       layer:
       - Clickable
+      mask:
+      - Impassable
+      - SmallImpassable
+      restitution: 0.5  # We want them items B O U N C Y
+      friction: 0.2
   - type: Sprite
     drawdepth: Items
   - type: Pullable
