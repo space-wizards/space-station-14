@@ -9,3 +9,6 @@
 
 - type: Tag
   id: FirelockElectronics
+
+- type: Tag
+  id: Teleportable
