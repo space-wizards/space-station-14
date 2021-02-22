@@ -5,10 +5,4 @@
   id: Wall
 
 - type: Tag
-  id: GlassBeaker
-
-- type: Tag
-  id: FirelockElectronics
-
-- type: Tag
   id: Teleportable

@@ -2,13 +2,10 @@
 #1D2L3U4R
 
 - type: entity
-  save: false
   name: corgi
   parent: SimpleMobBase
   id: CorgiMob_Content
   description: Finally, a space corgi!
-  drawdepth: Mobs
-  suffix: AI
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -34,13 +31,10 @@
       dead: corgi_dead
 
 - type: entity
-  save: false
   name: ian
-  parent: SimpleMobBase
+  parent: CorgiMob_Content
   id: IanMob_Content
   description: Favorite pet corgi.
-  drawdepth: Mobs
-  suffix: AI
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -48,17 +42,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ian
-  - type: Physics
-    mass: 10
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.50,-0.25,0.30,0.25"
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -66,13 +49,10 @@
       dead: ian_dead
 
 - type: entity
-  save: false
   name: cat
   parent: SimpleMobBase
   id: CatMob_Content
   description: Feline pet, very funny.
-  drawdepth: Mobs
-  suffix: AI
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -98,13 +78,10 @@
       dead: cat_dead
 
 - type: entity
-  save: false
   name: calico cat
-  parent: SimpleMobBase
   id: CatCalicoMob_Content
+  parent: CatMob_Content
   description: Feline pet, very funny.
-  drawdepth: Mobs
-  suffix: AI
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -112,16 +89,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat2
-  - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.50,-0.25,0.30,0.25"
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -129,13 +96,10 @@
       dead: cat2_dead
 
 - type: entity
-  save: false
   name: sloth
   parent: SimpleMobBase
   id: SlothMob_Content
   description: Very slow animal. For people with low energy.
-  drawdepth: Mobs
-  suffix: AI
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 1
