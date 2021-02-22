@@ -9,3 +9,24 @@
 
 - type: Tag
   id: FirelockElectronics
+
+- type: Tag
+  id: Hoe
+
+- type: Tag
+  id: BotanySharp
+
+- type: Tag
+  id: Shovel
+
+- type: Tag
+  id: PlantSampleTaker
+
+- type: Tag
+  id: Write
+
+- type: Tag
+  id: Grindable
+
+- type: Tag
+  id: ConveyorAssembly
