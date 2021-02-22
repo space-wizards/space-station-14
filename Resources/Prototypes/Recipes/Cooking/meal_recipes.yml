@@ -334,12 +334,20 @@
   solids:
     FoodMiloSoup: 1
 
-#Handy template for copy **pasta**. Get it? Pasta? Aw whatever fuck you.
-# - type: microwaveMealRecipe
-#   id:
-#   name:
-#   result:
-#   time: 5
-#   reagents:
+# NOT ACTUAL FOOD
 
-#   solids:
+- type: microwaveMealRecipe
+  id: RecipeDriedCannabis
+  name: dried cannabis leaves recipe
+  result: LeavesTobaccoDried
+  time: 10
+  solids:
+    LeavesTobacco: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDriedTobacco
+  name: dried tobacco leaves recipe
+  result: LeavesCannabisDried
+  time: 10
+  solids:
+    LeavesCannabis: 1

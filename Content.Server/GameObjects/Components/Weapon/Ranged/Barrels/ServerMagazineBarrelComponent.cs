@@ -18,6 +18,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -155,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return types;
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             (int, int)? count = null;
             var magazine = _magazineContainer.ContainedEntity;

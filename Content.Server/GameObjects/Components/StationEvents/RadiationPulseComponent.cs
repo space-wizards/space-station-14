@@ -3,9 +3,8 @@ using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Players;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -98,7 +97,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
             Dirty();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new RadiationPulseState(_radsPerSecond, _range, Draw, Decay, _endTime);
         }

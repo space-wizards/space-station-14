@@ -7,7 +7,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Server.GameObjects.Components.BarSign
 {
     [Prototype("barSign")]
-    public class BarSignPrototype : IPrototype, IIndexedPrototype
+    public class BarSignPrototype : IPrototype
     {
         private string _description;
         private string _name;

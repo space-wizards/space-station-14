@@ -23,13 +23,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private int _maxItemSize = (int) ReferenceSizes.Pocket;
 
         [ViewVariables] [DataField("secretPartName")]
-        private readonly string _secretPartNameOverride = string.Empty;
-
-        public string SecretPartName => !string.IsNullOrEmpty(_secretPartNameOverride)
-            ? _secretPartNameOverride
-            : Loc.GetString("{0:theName}", Owner);
+        private readonly string? _secretPartNameOverride = null;
 
         [ViewVariables] private ContainerSlot _itemContainer = default!;
+
+        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("{0:theName}", Owner);
 
         public override void Initialize()
         {

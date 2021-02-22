@@ -1,8 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -16,11 +15,10 @@ namespace Content.Server.GameObjects.Components.Research
         ///     Whether new recipes can be added to this database or not.
         /// </summary>
         [ViewVariables]
-        public bool Static => _static;
-        [DataField("static")]
-        private bool _static = false;
+        [field: DataField("static")]
+        public bool Static { get; private set; } = false;
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new LatheDatabaseState(GetRecipeIdList());
         }

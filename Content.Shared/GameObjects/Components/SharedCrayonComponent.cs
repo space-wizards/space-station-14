@@ -75,6 +75,9 @@ namespace Content.Shared.GameObjects.Components
     [Serializable, NetSerializable, Prototype("crayonDecal")]
     public class CrayonDecalPrototype : IPrototype
     {
+        [DataField("id", required: true)]
+        public string ID { get; private set; }
+
         [DataField("spritePath")]
         private string _spritePath;
         public string SpritePath => _spritePath;

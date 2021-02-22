@@ -87,7 +87,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                     _hudButtonPocket1,
                     _hudButtonPocket2,
                     // keeps this "balanced" with the left, so the hands will appear perfectly in the center
-                    new Control{CustomMinimumSize = (64, 64)}
+                    new Control{MinSize = (64, 64)}
                 },
                 SeparationOverride = 5
             };
@@ -226,7 +226,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 const int width = ButtonSize * 4 + ButtonSeparation * 3 + RightSeparation;
                 const int height = ButtonSize * 4 + ButtonSeparation * 3;
 
-                var windowContents = new LayoutContainer {CustomMinimumSize = (width, height)};
+                var windowContents = new LayoutContainer {MinSize = (width, height)};
                 Contents.AddChild(windowContents);
 
                 void AddButton(Slots slot, string textureName, Vector2 position)

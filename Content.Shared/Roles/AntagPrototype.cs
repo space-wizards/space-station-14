@@ -10,7 +10,7 @@ namespace Content.Shared.Roles
     ///     Describes information for a single antag.
     /// </summary>
     [Prototype("antag")]
-    public class AntagPrototype : IPrototype, IIndexedPrototype
+    public class AntagPrototype : IPrototype
     {
         private string _name;
 

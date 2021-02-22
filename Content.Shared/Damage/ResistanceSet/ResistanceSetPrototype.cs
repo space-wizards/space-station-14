@@ -12,13 +12,15 @@ namespace Content.Shared.Damage.ResistanceSet
     /// </summary>
     [Prototype("resistanceSet")]
     [Serializable, NetSerializable]
-    public class ResistanceSetPrototype : IPrototype, IIndexedPrototype, ISerializationHooks
+    public class ResistanceSetPrototype : IPrototype, ISerializationHooks
     {
         [DataField("coefficients")]
         private Dictionary<DamageType, float> _coefficients;
+
         [DataField("flatReductions")]
         private Dictionary<DamageType, int> _flatReductions;
-        [DataField("id")]
+
+        [DataField("id", required: true)]
         private string _id;
 
         [ViewVariables] public Dictionary<DamageType, float> Coefficients => _coefficients;

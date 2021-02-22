@@ -377,7 +377,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     .EnsureController<BulletController>()
                     .LinearVelocity = projectileAngle.ToVec() * velocity;
 
-                projectile.Transform.LocalRotation = projectileAngle.Theta;
+                projectile.Transform.LocalRotation = projectileAngle + MathHelper.PiOver2;
             }
             ammo.SendMessage(this, new BarrelFiredMessage(firedProjectiles));
         }

@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
 using Content.Server.Chat;
@@ -60,6 +61,7 @@ namespace Content.Server
             IoCManager.Register<EuiManager, EuiManager>();
             IoCManager.Register<IHolidayManager, HolidayManager>();
             IoCManager.Register<IVoteManager, VoteManager>();
+            IoCManager.Register<INpcBehaviorManager, NpcBehaviorManager>();
         }
     }
 }

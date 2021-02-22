@@ -151,7 +151,7 @@ namespace Content.Client.GameObjects.Components.Power
                 var chargeLabel = new Label {Text = "Charge:"};
                 ChargeBar = new ProgressBar
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    HorizontalExpand = true,
                     MinValue = 0.0f,
                     MaxValue = 1.0f,
                     Page = 0.0f,

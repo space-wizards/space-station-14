@@ -26,7 +26,11 @@ namespace Content.IntegrationTests.Tests
                 {
                     if (!proto.Components.ContainsKey("Sprite")) continue;
 
-                    var _ = SpriteComponent.GetPrototypeTextures(proto, resourceCache).ToList();
+                    Assert.DoesNotThrow(() =>
+                    {
+                        var _ = SpriteComponent.GetPrototypeTextures(proto, resourceCache).ToList();
+                    }, "Prototype {0} threw an exception when getting its textures.",
+                        proto.ID);
                 }
             });
         }

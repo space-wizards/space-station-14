@@ -12,7 +12,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Construction
 {
     [Prototype("constructionGraph")]
-    public class ConstructionGraphPrototype : IPrototype, IIndexedPrototype
+    public class ConstructionGraphPrototype : IPrototype
     {
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
         private readonly Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]> _paths = new();

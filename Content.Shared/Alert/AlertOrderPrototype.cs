@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Alert
@@ -13,6 +11,8 @@ namespace Content.Shared.Alert
     [DataDefinition]
     public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>, ISerializationHooks
     {
+        [DataField("id", required: true)] public string ID { get; private set; } = default!;
+
         [DataField("order")] private readonly Dictionary<string, string> _order = new();
 
         private readonly Dictionary<AlertType, int> _typeToIdx = new();

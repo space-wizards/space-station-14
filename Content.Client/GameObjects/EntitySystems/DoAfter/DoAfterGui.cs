@@ -69,7 +69,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
 
             var doAfterBar = new DoAfterBar
             {
-                SizeFlagsVertical = SizeFlags.ShrinkCenter
+                VerticalAlignment = VAlignment.Center
             };
 
             _doAfterBars[message.ID] = doAfterBar;
@@ -82,7 +82,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                     {
                         Texture = StaticIoC.ResC.GetTexture("/Textures/Interface/Misc/progress_bar.rsi/icon.png"),
                         TextureScale = Vector2.One * DoAfterBar.DoAfterBarScale,
-                        SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                        VerticalAlignment = VAlignment.Center,
                     },
 
                     doAfterBar

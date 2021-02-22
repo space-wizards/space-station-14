@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -75,7 +76,7 @@ namespace Content.Shared.GameObjects.Components
             }
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new StackComponentState(Count, MaxCount);
         }
@@ -126,6 +127,12 @@ namespace Content.Shared.GameObjects.Components
         FloorTileWhite,
         FloorTileDark,
         FloorTileWood,
-        MetalRod
+        MetalRod,
+        PaperRolling,
+        CigaretteFilter,
+        GroundTobacco,
+        GroundCannabis,
+        LeavesTobaccoDried,
+        LeavesCannabisDried
     }
 }

@@ -20,12 +20,11 @@ namespace Content.Client.UserInterface.AdminMenu.SetOutfit
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
         public EntityUid? TargetEntityId { get; set; }
-        protected override Vector2? CustomSize => (250, 320);
-
         private StartingGearPrototype? _selectedOutfit;
 
         public SetOutfitMenu()
         {
+            MinSize = SetSize = (250, 320);
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
 

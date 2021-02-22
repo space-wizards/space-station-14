@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             _instrumentSystem = EntitySystem.Get<InstrumentSystem>();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new InstrumentState(Playing, InstrumentProgram, InstrumentBank, AllowPercussion, AllowProgramChange, RespectMidiLimits, _lastSequencerTick);
         }
@@ -350,13 +350,16 @@ namespace Content.Server.GameObjects.Components.Instruments
 
                 UserInterface?.CloseAll();
 
-                if(Handheld)
-                    EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
-
-                if (mob != null && mob.TryGetComponent(out StunnableComponent? stun))
+                if (mob != null)
                 {
-                    stun.Stun(1);
-                    Clean();
+                    if (Handheld)
+                        EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
+
+                    if (mob.TryGetComponent(out StunnableComponent? stun))
+                    {
+                        stun.Stun(1);
+                        Clean();
+                    }
                 }
 
                 InstrumentPlayer = null;

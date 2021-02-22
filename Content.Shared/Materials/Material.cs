@@ -13,7 +13,7 @@ namespace Content.Shared.Materials
     [DataDefinition]
     public class MaterialPrototype : IPrototype, IIndexedPrototype
     {
-        [DataField("id")]
+        [DataField("id", required: true)]
         public string ID { get; private set; }
 
         [DataField("name")] public string Name { get; private set; } = "unobtanium";

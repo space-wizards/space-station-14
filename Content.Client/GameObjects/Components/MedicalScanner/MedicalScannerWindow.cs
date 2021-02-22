@@ -14,10 +14,10 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
     {
         public readonly Button ScanButton;
         private readonly Label _diagnostics;
-        protected override Vector2? CustomSize => (485, 90);
-
         public MedicalScannerWindow()
         {
+            MinSize = SetSize = (485, 90);
+
             Contents.AddChild(new VBoxContainer
             {
                 Children =

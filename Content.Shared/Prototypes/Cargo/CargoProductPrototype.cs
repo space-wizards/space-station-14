@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Prototypes.Cargo
 {
     [NetSerializable, Serializable, Prototype("cargoProduct")]
-    public class CargoProductPrototype : IPrototype, IIndexedPrototype
+    public class CargoProductPrototype : IPrototype
     {
         [DataField("id")]
         private string _id;

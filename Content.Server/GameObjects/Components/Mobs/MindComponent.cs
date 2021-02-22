@@ -11,6 +11,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Timers;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;

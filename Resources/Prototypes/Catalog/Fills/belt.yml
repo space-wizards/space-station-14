@@ -1,7 +1,6 @@
 - type: entity
   id: ClothingBeltUtilityFilled
   parent: ClothingBeltUtility
-  description: "Holds tools."
   suffix: Filled
   components:
   - type: StorageFill

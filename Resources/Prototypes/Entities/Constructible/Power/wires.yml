@@ -1,7 +1,6 @@
 ﻿- type: entity
   abstract: true
   id: WireBase
-  description: A flexible superconducting cable for heavy-duty power transfer.
   placement:
     mode: SnapgridCenter
   components:
@@ -34,6 +33,7 @@
   parent: WireBase
   id: HVWire
   name: HV Wire
+  decription: "An orange high voltage power cable."
   components:
   - type: Sprite
     sprite: Constructible/Power/hv_cable.rsi
@@ -71,6 +71,7 @@
   parent: WireBase
   id: MVWire
   name: MV Wire
+  description: "A medium voltage power cable."
   components:
   - type: Sprite
     color: Yellow
@@ -110,6 +111,7 @@
   parent: WireBase
   id: ApcExtensionCable
   name: Apc Extension Cable
+  description: "A cable used to connect machines to an APC." #ACPs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
   components:
   - type: Sprite
     color: Green

@@ -15,7 +15,7 @@ namespace Content.Shared.Chemistry
 {
     [Prototype("reagent")]
     [DataDefinition]
-    public class ReagentPrototype : IPrototype, IIndexedPrototype
+    public class ReagentPrototype : IPrototype
     {
         [Dependency] private readonly IModuleManager _moduleManager = default!;
 

@@ -15,6 +15,8 @@ namespace Content.Shared.Actions
     [DataDefinition]
     public abstract class BaseActionPrototype : IPrototype, ISerializationHooks
     {
+        [DataField("name", required: true)] public string ID { get; private set; } = default!;
+
         /// <summary>
         /// Icon representing this action in the UI.
         /// </summary>
