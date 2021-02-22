@@ -9,6 +9,7 @@
   - type: InteractionOutline
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
+  - type: CollisionWake
   - type: Physics
     anchored: false
     mass: 5

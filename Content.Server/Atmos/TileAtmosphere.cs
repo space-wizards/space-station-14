@@ -200,7 +200,7 @@ namespace Content.Server.Atmos
 
                 physics.WakeBody();
 
-                var pressureMovements = physics.EnsureController<HighPressureMovementController>();
+                var pressureMovements = physics.Entity.EnsureComponent<MovedByPressureComponent>();
                 if (pressure.LastHighPressureMovementAirCycle < _gridAtmosphereComponent.UpdateCounter)
                 {
                     pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToEntityCoordinates(GridIndex, _mapManager) ?? EntityCoordinates.Invalid);

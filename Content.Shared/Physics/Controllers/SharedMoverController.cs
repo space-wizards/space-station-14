@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
@@ -55,13 +56,17 @@ namespace Content.Shared.Physics.Controllers
         /// <summary>
         ///     Movement while considering actionblockers, weightlessness, etc.
         /// </summary>
-        /// <param name="transform"></param>
         /// <param name="mover"></param>
         /// <param name="physicsComponent"></param>
+        /// <param name="mobMover"></param>
         protected void HandleMobMovement(IMoverComponent mover, PhysicsComponent physicsComponent, IMobMoverComponent mobMover)
         {
             // TODO: Look at https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Manual/CharacterControllers.html?highlight=controller as it has some adviceo n kinematic controllersx
-            if (!UseMobMovement(_broadPhaseSystem, physicsComponent)) return;
+            if (!UseMobMovement(_broadPhaseSystem, physicsComponent))
+            {
+                Logger.DebugS("physics", $"Not using mob movement for {physicsComponent.Owner.Uid}");
+                return;
+            }
 
             var transform = mover.Owner.Transform;
             var (walkDir, sprintDir) = mover.VelocityDir;
