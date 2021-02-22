@@ -58,7 +58,8 @@ namespace Content.Server.Actions
             var audio = EntitySystem.Get<AudioSystem>();
             var system = EntitySystem.Get<MeleeWeaponSystem>();
 
-            var angle = new Angle(args.Target.Transform.MapPosition.Position - args.Performer.Transform.MapPosition.Position);
+            var diff = args.Target.Transform.MapPosition.Position - args.Performer.Transform.MapPosition.Position;
+            var angle = Angle.FromWorldVec(diff);
 
             actions.Cooldown(ActionType.Disarm, Cooldowns.SecondsFromNow(_cooldown));
 

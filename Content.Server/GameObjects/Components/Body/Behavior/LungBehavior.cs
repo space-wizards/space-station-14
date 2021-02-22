@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -44,6 +45,12 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         public LungBehavior()
         {
             IoCManager.InjectDependencies(this);
+        }
+
+        protected override void OnAddedToBody(IBody body)
+        {
+            base.OnAddedToBody(body);
+            Inhale(CycleDelay);
         }
 
         public void Gasp()

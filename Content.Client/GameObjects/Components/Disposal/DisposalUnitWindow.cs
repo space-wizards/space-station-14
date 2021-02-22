@@ -21,10 +21,10 @@ namespace Content.Client.GameObjects.Components.Disposal
         public readonly Button Eject;
         public readonly Button Power;
 
-        protected override Vector2? CustomSize => (300, 200);
-
         public DisposalUnitWindow()
         {
+            MinSize = SetSize = (300, 200);
+
             Contents.AddChild(new VBoxContainer
             {
                 Children =
@@ -37,7 +37,7 @@ namespace Content.Client.GameObjects.Components.Disposal
                             (_unitState = new Label {Text = Loc.GetString("Ready")})
                         }
                     },
-                    new Control {CustomMinimumSize = (0, 10)},
+                    new Control {MinSize = (0, 10)},
                     new HBoxContainer
                     {
                         Children =
@@ -45,8 +45,8 @@ namespace Content.Client.GameObjects.Components.Disposal
                             new Label {Text = Loc.GetString("Pressure:")},
                             (_pressureBar = new ProgressBar
                             {
-                                CustomMinimumSize = (200, 20),
-                                SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                                MinSize = (200, 20),
+                                HorizontalAlignment = HAlignment.Right,
                                 MinValue = 0,
                                 MaxValue = 1,
                                 Page = 0,
@@ -58,7 +58,7 @@ namespace Content.Client.GameObjects.Components.Disposal
                             })
                         }
                     },
-                    new Control {CustomMinimumSize = (0, 10)},
+                    new Control {MinSize = (0, 10)},
                     new HBoxContainer
                     {
                         Children =
@@ -71,7 +71,7 @@ namespace Content.Client.GameObjects.Components.Disposal
                             })
                         }
                     },
-                    new Control {CustomMinimumSize = (0, 10)},
+                    new Control {MinSize = (0, 10)},
                     new HBoxContainer
                     {
                         Children =
@@ -80,7 +80,7 @@ namespace Content.Client.GameObjects.Components.Disposal
                             (Eject = new Button {Text = Loc.GetString("Eject Contents")})
                         }
                     },
-                    new Control {CustomMinimumSize = (0, 10)},
+                    new Control {MinSize = (0, 10)},
                     new HBoxContainer
                     {
                         Children =

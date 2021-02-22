@@ -1,15 +1,13 @@
 using System;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.GameObjects.Components.Weapons.Melee
 {
     [Prototype("MeleeWeaponAnimation")]
-    public sealed class MeleeWeaponAnimationPrototype : IPrototype, IIndexedPrototype
+    public sealed class MeleeWeaponAnimationPrototype : IPrototype
     {
         [DataField("prototype")]
         private string _prototype = "WeaponArc";

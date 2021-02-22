@@ -67,7 +67,7 @@ namespace Content.Server.Botany
     }
 
     [Prototype("seed")]
-    public class Seed : IPrototype, IIndexedPrototype
+    public class Seed : IPrototype
     {
         private const string SeedPrototype = "SeedBase";
 

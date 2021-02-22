@@ -31,3 +31,29 @@
         amount: 1
       - name: BoxLightbulb
         amount: 1
+
+- type: entity
+  id: CrateServiceSmokeables
+  name: smokeables crate
+  description: "Tired of a quick death on the station? Order this crate and chain-smoke your way to a coughy demise!"
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - name: CigCartonGreen
+        prob: 0.50
+        orGroup: CigCarton1
+      - name: CigCartonRed
+        orGroup: CigCarton1
+      - name: CigCartonBlue
+        prob: 0.50
+        orGroup: CigCarton2
+      - name: CigCartonBlack
+        orGroup: CigCarton2
+      - name: CigarGoldCase
+        prob: 0.05
+        orGroup: Cigars
+      - name: CigarCase
+        orGroup: Cigars
+      - name: Matchbox
+        amount: 2

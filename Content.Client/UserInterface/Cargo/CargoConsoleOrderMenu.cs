@@ -35,7 +35,7 @@ namespace Content.Client.UserInterface.Cargo
             var amountLabel = new Label { Text = Loc.GetString("Amount:") };
             Amount = new SpinBox
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 Value = 1
             };
             Amount.SetButtons(new List<int>() { -100, -10, -1 }, new List<int>() { 1, 10, 100 });

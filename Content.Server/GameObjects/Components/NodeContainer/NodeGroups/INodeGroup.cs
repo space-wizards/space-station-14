@@ -36,6 +36,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         [ViewVariables]
         public int NodeCount => Nodes.Count;
 
+        /// <summary>
+        ///     Debug variable to indicate that this NodeGroup should not be being used by anything.
+        /// </summary>
+        [ViewVariables]
+        public bool Removed { get; private set; } = false;
+
         public static readonly INodeGroup NullGroup = new NullNodeGroup();
 
         protected GridId GridId { get; private set;}
@@ -70,6 +76,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 node.NodeGroup = newGroup;
             }
+            Removed = true;
         }
 
         /// <summary>
@@ -92,6 +99,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 }
             }
             AfterRemake(newGroups);
+            Removed = true;
         }
 
         protected virtual void OnAddNode(Node node) { }

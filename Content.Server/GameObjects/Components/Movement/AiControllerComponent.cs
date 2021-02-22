@@ -1,6 +1,4 @@
 ﻿#nullable enable
-using Content.Server.AI.Utility.AiLogic;
-using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Roles;
@@ -9,7 +7,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -18,28 +15,9 @@ namespace Content.Server.GameObjects.Components.Movement
     [RegisterComponent, ComponentReference(typeof(IMoverComponent))]
     public class AiControllerComponent : Component, IMoverComponent
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
-
-        [DataField("logic")]
-        private string? _logicName;
-        [DataField("vision")]
-        private float _visionRadius = 8.0f;
+        [DataField("logic")] private float _visionRadius = 8.0f;
 
         public override string Name => "AiController";
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string? LogicName
-        {
-            get => _logicName;
-            set
-            {
-                _logicName = value;
-                Processor = null!;
-            }
-        }
-
-        public UtilityAi? Processor { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("startingGear")]
@@ -59,8 +37,6 @@ namespace Content.Server.GameObjects.Components.Movement
 
             // This component requires a physics component.
             Owner.EnsureComponent<PhysicsComponent>();
-
-            EntitySystem.Get<AiSystem>().ProcessorInitialize(this);
         }
 
         protected override void Startup()
@@ -69,16 +45,12 @@ namespace Content.Server.GameObjects.Components.Movement
 
             if (StartingGearPrototype != null)
             {
-                var startingGear = _prototypeManager.Index<StartingGearPrototype>(StartingGearPrototype);
-                _gameTicker.EquipStartingGear(Owner, startingGear, null);
+                var gameTicker = IoCManager.Resolve<IGameTicker>();
+                var protoManager = IoCManager.Resolve<IPrototypeManager>();
+
+                var startingGear = protoManager.Index<StartingGearPrototype>(StartingGearPrototype);
+                gameTicker.EquipStartingGear(Owner, startingGear, null);
             }
-
-        }
-
-        protected override void Shutdown()
-        {
-            base.Shutdown();
-            Processor?.Shutdown();
         }
 
         /// <summary>
@@ -145,5 +117,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled) { }
         public void SetSprinting(ushort subTick, bool walking) { }
+
+        public virtual void Update(float frameTime) {}
     }
 }

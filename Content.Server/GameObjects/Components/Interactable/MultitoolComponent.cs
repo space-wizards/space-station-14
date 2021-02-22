@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Interactable
@@ -96,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return true;
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new MultiToolComponentState(_tool.Qualities);
         }

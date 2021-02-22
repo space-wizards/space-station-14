@@ -30,13 +30,14 @@ namespace Content.Client.UserInterface
         {
             RobustXamlLoader.Load(this);
 
-            ServerName.SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.ShrinkCenter;
+            ServerName.HorizontalExpand = true;
+            ServerName.HorizontalAlignment = HAlignment.Center;
 
             CharacterPreview = new LobbyCharacterPreviewPanel(
                 entityManager,
                 preferencesManager)
             {
-                SizeFlagsHorizontal = SizeFlags.None
+                HorizontalAlignment = HAlignment.Left
             };
 
             CLeftPanelContainer.AddChild(CharacterPreview);
@@ -67,7 +68,7 @@ namespace Content.Client.UserInterface
         {
             var hbox = new HBoxContainer
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
             };
 
             // Player Name
@@ -88,7 +89,7 @@ namespace Content.Client.UserInterface
                         Text = name
                     }
                 },
-                SizeFlagsHorizontal = SizeFlags.FillExpand
+                HorizontalExpand = true
             });
             // Status
             hbox.AddChild(new PanelContainer()
@@ -108,7 +109,7 @@ namespace Content.Client.UserInterface
                         Text = status
                     }
                 },
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SizeFlagsStretchRatio = 0.2f,
             });
 

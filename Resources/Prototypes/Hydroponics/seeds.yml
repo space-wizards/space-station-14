@@ -286,3 +286,49 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+
+- type: seed
+  id: cannabis
+  name: cannabis
+  seedName: cannabis
+  displayName: cannabis
+  plantRsi: Objects/Specific/Hydroponics/cannabis.rsi
+  productPrototypes:
+    - LeavesCannabis
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 8
+  production: 12
+  yield: 2
+  potency: 20
+  growthStages: 3
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    chem.THC:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: tobacco
+  name: tobacco
+  seedName: tobacco
+  displayName: tobacco plant
+  plantRsi: Objects/Specific/Hydroponics/tobacco.rsi
+  productPrototypes:
+    - LeavesTobacco
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 5
+  production: 5
+  yield: 2
+  potency: 20
+  growthStages: 3
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    chem.Nicotine:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10

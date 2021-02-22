@@ -24,7 +24,7 @@ namespace Content.Server.Atmos.Reactions
     }
 
     [Prototype("gasReaction")]
-    public class GasReactionPrototype : IPrototype, IIndexedPrototype
+    public class GasReactionPrototype : IPrototype
     {
         [DataField("id")]
         public string ID { get; private set; }

@@ -12,7 +12,7 @@ namespace Content.Shared.Chemistry
     /// Prototype for chemical reaction definitions
     /// </summary>
     [Prototype("reaction")]
-    public class ReactionPrototype : IPrototype, IIndexedPrototype
+    public class ReactionPrototype : IPrototype
     {
         [Dependency] private readonly IModuleManager _moduleManager = default!;
 

@@ -17,6 +17,8 @@ namespace Content.Shared.Alert
     [Prototype("alert")]
     public class AlertPrototype : IPrototype, ISerializationHooks
     {
+        [DataField("name", required: true)] public string ID { get; private set; } = default!;
+
         /// <summary>
         /// Type of alert, no 2 alert prototypes should have the same one.
         /// </summary>

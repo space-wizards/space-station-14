@@ -14,7 +14,7 @@ namespace Content.Shared.GameObjects.Components.Body.Preset
     /// </summary>
     [Prototype("bodyPreset")]
     [Serializable, NetSerializable]
-    public class BodyPresetPrototype : IPrototype, IIndexedPrototype
+    public class BodyPresetPrototype : IPrototype
     {
         [DataField("id")]
         private string _id;

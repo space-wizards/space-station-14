@@ -11,7 +11,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Research
 {
     [NetSerializable, Serializable, Prototype("latheRecipe")]
-    public class LatheRecipePrototype : IPrototype, IIndexedPrototype
+    public class LatheRecipePrototype : IPrototype
     {
         [DataField("name")]
         private string _name;

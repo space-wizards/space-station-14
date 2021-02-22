@@ -31,10 +31,9 @@ namespace Content.Client.GameObjects.Components.Atmos
 
         public List<ReleasePressureButton> ReleasePressureButtons { get; private set; }
 
-        protected override Vector2? CustomSize => (300, 200);
-
         public GasCanisterWindow()
         {
+            SetSize = MinSize = (300, 200);
             HBoxContainer releasePressureButtons;
 
             Contents.AddChild(new VBoxContainer
@@ -51,7 +50,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                                         {
                                             new Label(){ Text = Loc.GetString("Label: ") },
                                             (LabelInput = new LineEdit() { Text = Name, Editable = false,
-                                                CustomMinimumSize = new Vector2(200, 30)}),
+                                                MinSize = new Vector2(200, 30)}),
                                             (EditLabelBtn = new Button()),
                                         }
                                     },

@@ -194,3 +194,18 @@
     - type: Sprite
       sprite: Objects/Tools/rcd.rsi
       state: rcd_ammo
+
+- type: entity
+  name: shovel
+  parent: BaseItem
+  id: Shovel
+  description: A large tool for digging and moving dirt.
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/Hydroponics/shovel.rsi
+      state: icon
+    - type: ItemCooldown
+    - type: MeleeWeapon
+    - type: Shovel
+    - type: Item
+      sprite: Objects/Tools/Hydroponics/shovel.rsi

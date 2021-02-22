@@ -8,7 +8,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.VendingMachines
 {
     [Serializable, NetSerializable, Prototype("vendingMachineInventory")]
-    public class VendingMachineInventoryPrototype : IPrototype, IIndexedPrototype
+    public class VendingMachineInventoryPrototype : IPrototype
     {
         [DataField("id")] private string _id;
         [DataField("name")] private string _name;

@@ -1,15 +1,12 @@
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Prototypes.PDA
 {
     [Prototype("uplinkListing")]
-    public class UplinkStoreListingPrototype : IPrototype, IIndexedPrototype
+    public class UplinkStoreListingPrototype : IPrototype
     {
-
         [DataField("id")]
         private string _id;
         [DataField("itemId")]

@@ -13,7 +13,7 @@ using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefine
 namespace Content.Shared.Roles
 {
     [Prototype("startingGear")]
-    public class StartingGearPrototype : IPrototype, IIndexedPrototype
+    public class StartingGearPrototype : IPrototype
     {
         [DataField("id")]
         private string _id = string.Empty;

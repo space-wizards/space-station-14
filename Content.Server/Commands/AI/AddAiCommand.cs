@@ -1,5 +1,7 @@
 ﻿#nullable enable
 using Content.Server.Administration;
+using Content.Server.AI.Utility;
+using Content.Server.AI.Utility.AiLogic;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Shared.Administration;
@@ -15,41 +17,48 @@ namespace Content.Server.Commands.AI
     {
         public string Command => "addai";
         public string Description => "Add an ai component with a given processor to an entity.";
-        public string Help => "Usage: addai <processorId> <entityId>"
-                              + "\n    processorId: Class that inherits AiLogicProcessor and has an AiLogicProcessor attribute."
-                              + "\n    entityID: Uid of entity to add the AiControllerComponent to. Open its VV menu to find this.";
+        public string Help => "Usage: addai <entityId> <behaviorSet1> <behaviorSet2>..."
+                              + "\n    entityID: Uid of entity to add the AiControllerComponent to. Open its VV menu to find this."
+                              + "\n    behaviorSet: Name of a behaviorset to add to the component on initialize.";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if(args.Length != 2)
+            if(args.Length < 1)
             {
                 shell.WriteLine("Wrong number of args.");
                 return;
             }
 
-            var processorId = args[0];
-            var entId = new EntityUid(int.Parse(args[1]));
-            var ent = IoCManager.Resolve<IEntityManager>().GetEntity(entId);
-            var aiSystem = EntitySystem.Get<AiSystem>();
+            var entId = new EntityUid(int.Parse(args[0]));
 
-            if (!aiSystem.ProcessorTypeExists(processorId))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(entId, out var ent))
             {
-                shell.WriteLine("Invalid processor type. Processor must inherit AiLogicProcessor and have an AiLogicProcessor attribute.");
+                shell.WriteLine($"Unable to find entity with uid {entId}");
                 return;
             }
+
             if (ent.HasComponent<AiControllerComponent>())
             {
                 shell.WriteLine("Entity already has an AI component.");
                 return;
             }
 
+            // TODO: IMover refffaaccctttooorrr
             if (ent.HasComponent<IMoverComponent>())
             {
                 ent.RemoveComponent<IMoverComponent>();
             }
 
-            var comp = ent.AddComponent<AiControllerComponent>();
-            comp.LogicName = processorId;
+            var comp = ent.AddComponent<UtilityAi>();
+            var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
+
+            for (var i = 1; i < args.Length; i++)
+            {
+                var bSet = args[i];
+                behaviorManager.AddBehaviorSet(comp, bSet, false);
+            }
+
+            behaviorManager.RebuildActions(comp);
             shell.WriteLine("AI component added.");
         }
     }

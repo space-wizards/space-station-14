@@ -8,6 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -209,6 +210,9 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ReagentUnit ISolutionInteractionsComponent.DrawAvailable => CurrentVolume;
         ReagentUnit ISolutionInteractionsComponent.DrainAvailable => CurrentVolume;
 
+        [DataField("maxSpillRefill")]
+        public ReagentUnit MaxSpillRefill { get; set; }
+
         void ISolutionInteractionsComponent.Refill(Solution solution)
         {
             if (!CanRefill)
@@ -256,7 +260,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             return new SolutionContainerVisualState(Color, filledVolumeFraction);
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new SolutionContainerComponentState(Solution);
         }

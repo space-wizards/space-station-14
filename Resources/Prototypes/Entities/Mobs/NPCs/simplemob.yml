@@ -5,8 +5,12 @@
   drawdepth: Mobs
   suffix: AI
   components:
-  - type: AiController
-    logic: Civilian
+  - type: UtilityAI
+    behaviorSets:
+    - Clothing
+    - Hunger
+    - Thirst
+    - Idle
   - type: AiFactionTag
     factions:
     - SimpleNeutral

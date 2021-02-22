@@ -39,7 +39,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.OuterClothing
                 if (entity.TryGetComponent(out ClothingComponent clothing) &&
                     (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.OUTERCLOTHING) != 0)
                 {
-                    yield return new PickUpOuterClothing(owner, entity, Bonus);
+                    yield return new PickUpOuterClothing() {Owner = owner, Target = entity, Bonus = Bonus};
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -23,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Research
         [DataField("StorageLimit")]
         private int _storageLimit = -1;
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new MaterialStorageState(Storage);
         }
