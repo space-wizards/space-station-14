@@ -21,3 +21,15 @@
   cost: 1000
   category: Service
   group: market
+
+- type: cargoProduct
+  name: "lung cancer crate"
+  id: cargo.servicesmokeables
+  description: "Tired of a quick death on the station? Order this crate and chain-smoke your way to a coughy demise!"
+  icon:
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
+    state: closed
+  product: CrateServiceSmokeables
+  cost: 2000
+  category: Service
+  group: market

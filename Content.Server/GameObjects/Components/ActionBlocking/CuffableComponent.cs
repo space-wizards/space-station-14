@@ -28,17 +28,17 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         /// How many of this entity's hands are currently cuffed.
         /// </summary>
         [ViewVariables]
-        public int CuffedHandCount => _container.ContainedEntities.Count * 2;
+        public int CuffedHandCount => Container.ContainedEntities.Count * 2;
 
-        protected IEntity LastAddedCuffs => _container.ContainedEntities[_container.ContainedEntities.Count - 1];
+        protected IEntity LastAddedCuffs => Container.ContainedEntities[^1];
 
-        public IReadOnlyList<IEntity> StoredEntities => _container.ContainedEntities;
+        public IReadOnlyList<IEntity> StoredEntities => Container.ContainedEntities;
 
         /// <summary>
         ///     Container of various handcuffs currently applied to the entity.
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
-        private Container _container = default!;
+        public Container Container { get; set; } = default!;
 
         // TODO: Make a component message
         public event Action? OnCuffedStateChanged;
@@ -49,10 +49,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         {
             base.Initialize();
 
-            _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
-
-            Owner.EntityManager.EventBus.SubscribeEvent<HandCountChangedEvent>(EventSource.Local, this, HandleHandCountChange);
-
+            Container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
             Owner.EnsureComponentWarn<HandsComponent>();
         }
 
@@ -110,7 +107,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 handsComponent.Drop(handcuff);
             }
 
-            _container.Insert(handcuff);
+            Container.Insert(handcuff);
             CanStillInteract = Owner.TryGetComponent(out HandsComponent? ownerHands) && ownerHands.Hands.Count() > CuffedHandCount;
 
             OnCuffedStateChanged?.Invoke();
@@ -120,37 +117,10 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             return true;
         }
 
-        /// <summary>
-        /// Check the current amount of hands the owner has, and if there's less hands than active cuffs we remove some cuffs.
-        /// </summary>
-        private void UpdateHandCount()
+        public void CuffedStateChanged()
         {
-            var dirty = false;
-            var handCount = Owner.TryGetComponent(out HandsComponent? handsComponent) ? handsComponent.Hands.Count() : 0;
-
-            while (CuffedHandCount > handCount && CuffedHandCount > 0)
-            {
-                dirty = true;
-
-                var entity = _container.ContainedEntities[_container.ContainedEntities.Count - 1];
-                _container.Remove(entity);
-                entity.Transform.WorldPosition = Owner.Transform.Coordinates.Position;
-            }
-
-            if (dirty)
-            {
-                CanStillInteract = handCount > CuffedHandCount;
-                OnCuffedStateChanged?.Invoke();
-                Dirty();
-            }
-        }
-
-        private void HandleHandCountChange(HandCountChangedEvent message)
-        {
-            if (message.Sender == Owner)
-            {
-                UpdateHandCount();
-            }
+            UpdateAlert();
+            OnCuffedStateChanged?.Invoke();
         }
 
         /// <summary>
@@ -212,11 +182,16 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (cuffsToRemove == null)
             {
+                if (Container.ContainedEntities.Count == 0)
+                {
+                    return;
+                }
+
                 cuffsToRemove = LastAddedCuffs;
             }
             else
             {
-                if (!_container.ContainedEntities.Contains(cuffsToRemove))
+                if (!Container.ContainedEntities.Contains(cuffsToRemove))
                 {
                     Logger.Warning("A user is trying to remove handcuffs that aren't in the owner's container. This should never happen!");
                 }
@@ -282,7 +257,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 if (cuff.EndUncuffSound != null)
                     audio.PlayFromEntity(cuff.EndUncuffSound, Owner);
 
-                _container.ForceRemove(cuffsToRemove);
+                Container.ForceRemove(cuffsToRemove);
                 cuffsToRemove.Transform.AttachToGridOrMap();
                 cuffsToRemove.Transform.WorldPosition = Owner.Transform.WorldPosition;
 

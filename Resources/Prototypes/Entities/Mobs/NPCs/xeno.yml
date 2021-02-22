@@ -7,8 +7,10 @@
   drawdepth: Mobs
   suffix: AI
   components:
-  - type: AiController
-    logic: Xeno
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
+    - UnarmedAttackHostiles
   - type: AiFactionTag
     factions:
     - Xeno

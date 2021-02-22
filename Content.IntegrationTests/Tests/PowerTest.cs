@@ -1,3 +1,4 @@
+#nullable enable
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Power;
@@ -120,9 +121,9 @@ namespace Content.IntegrationTests.Tests
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
-            PowerSupplierComponent supplier = null;
-            PowerConsumerComponent consumer1 = null;
-            PowerConsumerComponent consumer2 = null;
+            PowerSupplierComponent supplier = default!;
+            PowerConsumerComponent consumer1 = default!;
+            PowerConsumerComponent consumer2 = default!;
 
             server.Assert(() =>
             {
@@ -135,14 +136,14 @@ namespace Content.IntegrationTests.Tests
                 var consumerEnt1 = entityMan.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 1));
                 var consumerEnt2 = entityMan.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 2));
 
-                if (generatorEnt.TryGetComponent(out AnchorableComponent anchorable))
+                if (generatorEnt.TryGetComponent(out PhysicsComponent? physics))
                 {
-                    anchorable.TryAnchor(null, force:true);
+                    physics.Anchored = true;
                 }
 
-                Assert.That(generatorEnt.TryGetComponent(out supplier));
-                Assert.That(consumerEnt1.TryGetComponent(out consumer1));
-                Assert.That(consumerEnt2.TryGetComponent(out consumer2));
+                supplier = generatorEnt.GetComponent<PowerSupplierComponent>();
+                consumer1 = consumerEnt1.GetComponent<PowerConsumerComponent>();
+                consumer2 = consumerEnt2.GetComponent<PowerConsumerComponent>();
 
                 var supplyRate = 1000; //arbitrary amount of power supply
 
@@ -171,8 +172,8 @@ namespace Content.IntegrationTests.Tests
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
-            BatteryComponent apcBattery = null;
-            PowerSupplierComponent substationSupplier = null;
+            BatteryComponent apcBattery = default!;
+            PowerSupplierComponent substationSupplier = default!;
 
             server.Assert(() =>
             {
@@ -185,14 +186,14 @@ namespace Content.IntegrationTests.Tests
                 var substationEnt = entityMan.SpawnEntity("SubstationDummy", grid.ToCoordinates(0, 1));
                 var apcEnt = entityMan.SpawnEntity("ApcDummy", grid.ToCoordinates(0, 2));
 
-                Assert.That(generatorEnt.TryGetComponent<PowerSupplierComponent>(out var generatorSupplier));
+                var generatorSupplier = generatorEnt.GetComponent<PowerSupplierComponent>();
 
-                Assert.That(substationEnt.TryGetComponent(out substationSupplier));
-                Assert.That(substationEnt.TryGetComponent<BatteryStorageComponent>(out var substationStorage));
-                Assert.That(substationEnt.TryGetComponent<BatteryDischargerComponent>(out var substationDischarger));
+                substationSupplier = substationEnt.GetComponent<PowerSupplierComponent>();
+                var substationStorage = substationEnt.GetComponent<BatteryStorageComponent>();
+                var substationDischarger = substationEnt.GetComponent<BatteryDischargerComponent>();
 
-                Assert.That(apcEnt.TryGetComponent(out apcBattery));
-                Assert.That(apcEnt.TryGetComponent<BatteryStorageComponent>(out var apcStorage));
+                apcBattery = apcEnt.GetComponent<BatteryComponent>();
+                var apcStorage = apcEnt.GetComponent<BatteryStorageComponent>();
 
                 generatorSupplier.SupplyRate = 1000; //arbitrary nonzero amount of power
                 substationStorage.ActiveDrawRate = 1000; //arbitrary nonzero power draw
@@ -219,7 +220,7 @@ namespace Content.IntegrationTests.Tests
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
-            PowerReceiverComponent receiver = null;
+            PowerReceiverComponent receiver = default!;
 
             server.Assert(() =>
             {
@@ -233,16 +234,16 @@ namespace Content.IntegrationTests.Tests
                 var apcExtensionEnt = entityMan.SpawnEntity("ApcExtensionCableDummy", grid.ToCoordinates(0, 1));
                 var powerReceiverEnt = entityMan.SpawnEntity("PowerReceiverDummy", grid.ToCoordinates(0, 2));
 
-                Assert.That(apcEnt.TryGetComponent<ApcComponent>(out var apc));
-                Assert.That(apcExtensionEnt.TryGetComponent<PowerProviderComponent>(out var provider));
-                Assert.That(powerReceiverEnt.TryGetComponent(out receiver));
-                Assert.NotNull(apc.Battery);
+                var apc = apcEnt.GetComponent<ApcComponent>();
+                var provider = apcExtensionEnt.GetComponent<PowerProviderComponent>();
+                receiver = powerReceiverEnt.GetComponent<PowerReceiverComponent>();
+                var battery = apcEnt.GetComponent<BatteryComponent>();
 
                 provider.PowerTransferRange = 5; //arbitrary range to reach receiver
                 receiver.PowerReceptionRange = 5; //arbitrary range to reach provider
 
-                apc.Battery.MaxCharge = 10000; //arbitrary nonzero amount of charge
-                apc.Battery.CurrentCharge = apc.Battery.MaxCharge; //fill battery
+                battery.MaxCharge = 10000; //arbitrary nonzero amount of charge
+                battery.CurrentCharge = battery.MaxCharge; //fill battery
 
                 receiver.Load = 1; //arbitrary small amount of power
             });

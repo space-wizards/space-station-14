@@ -1,12 +1,10 @@
-﻿<MarginContainer
+﻿<Control
     xmlns="https://spacestation14.io"
     xmlns:amc="clr-namespace:Content.Client.UserInterface.AdminMenu.CustomControls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:at="clr-namespace:Content.Client.UserInterface.AdminMenu.Tabs.AtmosTab"
-    MarginLeftOverride="4"
-    MarginTopOverride="4" MarginRightOverride="4"
-    MarginBottomOverride="4"
-    CustomMinimumSize="50 50">
+    Margin="4"
+    MinSize="50 50">
     <GridContainer Columns="4">
         <amc:UICommandButton Text="{Loc Add Atmos}" Command="addatmos" WindowType="{x:Type at:AddAtmosWindow}" />
         <amc:UICommandButton Text="{Loc Add Gas}" Command="addgas" WindowType="{x:Type at:AddGasWindow}" />
@@ -14,4 +12,4 @@
         <amc:UICommandButton Text="{Loc Set Temperature}" Command="settemp"
                              WindowType="{x:Type at:SetTemperatureWindow}" />
     </GridContainer>
-</MarginContainer>
+</Control>

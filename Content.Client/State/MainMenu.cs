@@ -249,7 +249,7 @@ namespace Content.Client.State
                 UserNameBox = new LineEdit
                 {
                     Text = currentUserName, PlaceHolder = "Username",
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
+                    HorizontalExpand = true
                 };
 
                 userNameHBox.AddChild(UserNameBox);
@@ -268,13 +268,13 @@ namespace Content.Client.State
                 vBox.AddChild(JoinPublicServerButton);
 
                 // Separator.
-                vBox.AddChild(new Control {CustomMinimumSize = (0, 2)});
+                vBox.AddChild(new Control {MinSize = (0, 2)});
 
                 AddressBox = new LineEdit
                 {
                     Text = "localhost",
                     PlaceHolder = "server address:port",
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
+                    HorizontalExpand = true
                 };
 
                 vBox.AddChild(AddressBox);
@@ -289,7 +289,7 @@ namespace Content.Client.State
                 vBox.AddChild(DirectConnectButton);
 
                 // Separator.
-                vBox.AddChild(new Control {CustomMinimumSize = (0, 2)});
+                vBox.AddChild(new Control {MinSize = (0, 2)});
 
                 OptionsButton = new Button
                 {

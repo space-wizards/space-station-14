@@ -61,14 +61,13 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
         /// <summary>A grid of buttons for each reagent which can be dispensed.</summary>
         public GridContainer ChemicalList { get; }
 
-        protected override Vector2? CustomSize => (500, 600);
-
         /// <summary>
         /// Create and initialize the dispenser UI client-side. Creates the basic layout,
         /// actual data isn't filled in until the server sends data about the dispenser.
         /// </summary>
         public ReagentDispenserWindow()
         {
+            SetSize = MinSize = (500, 600);
             IoCManager.InjectDependencies(this);
 
             var dispenseAmountGroup = new ButtonGroup();
@@ -84,7 +83,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
                         {
                             new Label {Text = Loc.GetString("Amount")},
                             //Padding
-                            new Control {CustomMinimumSize = (20, 0)},
+                            new Control {MinSize = (20, 0)},
                             (DispenseButton1 = new Button {Text = "1", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenRight }}),
                             (DispenseButton5 = new Button {Text = "5", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
                             (DispenseButton10 = new Button {Text = "10", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
@@ -97,14 +96,14 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
                         }
                     },
                     //Padding
-                    new Control {CustomMinimumSize = (0.0f, 10.0f)},
+                    new Control {MinSize = (0.0f, 10.0f)},
                     //Grid of which reagents can be dispensed.
                     (ChemicalList = new GridContainer
                     {
                         Columns = 5
                     }),
                     //Padding
-                    new Control {CustomMinimumSize = (0.0f, 10.0f)},
+                    new Control {MinSize = (0.0f, 10.0f)},
                     new HBoxContainer
                     {
                         Children =
@@ -117,9 +116,9 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
                     //Wrap the container info in a PanelContainer so we can color it's background differently.
                     new PanelContainer
                     {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
+                        VerticalExpand = true,
                         SizeFlagsStretchRatio = 6,
-                        CustomMinimumSize = (0, 150),
+                        MinSize = (0, 150),
                         PanelOverride = new StyleBoxFlat
                         {
                             BackgroundColor = new Color(27, 27, 30)
@@ -129,7 +128,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
                             //Currently empty, when server sends state data this will have container contents and fill volume.
                             (ContainerInfo = new VBoxContainer
                             {
-                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                HorizontalExpand = true,
                                 Children =
                                 {
                                     new Label

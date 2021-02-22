@@ -51,8 +51,8 @@
               anchored: true
           steps:
             - component: FirelockElectronics
-              store: Firelock Electornics
-              name: Firelock Electornics
+              store: Firelock Electronics
+              name: Firelock Electronics
               icon:
                 sprite: "Constructible/Misc/module.rsi"
                 state: "mainboard"
@@ -152,7 +152,7 @@
           steps:
             - tool: Screwing
               doAfter: 1
-      
+
 
     - node: FirelockGlass
       entity: FirelockGlass

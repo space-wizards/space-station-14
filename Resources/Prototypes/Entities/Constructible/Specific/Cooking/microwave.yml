@@ -33,7 +33,7 @@
   - type: Sprite
     netsync: false
     sprite: Constructible/Power/microwave.rsi
-    drawdepth: Items
+    drawdepth: WallMountedItems
     layers:
     - state: mw0
       map: ["enum.MicrowaveVisualizerLayers.Base"]
@@ -41,4 +41,3 @@
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
   - type: PowerReceiver
-

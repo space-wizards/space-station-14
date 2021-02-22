@@ -34,6 +34,7 @@
     state: full
   - type: Sprite
     netsync: false
+    noRot: true
     drawdepth: Mobs
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
@@ -194,8 +195,6 @@
     range: 0.8
     arcwidth: 30
     arc: fist
-  - type: Grammar
-    proper: true
   - type: Pullable
   - type: DoAfter
   - type: CreamPied
@@ -326,5 +325,3 @@
     - type: Appearance
       visuals:
       - type: RotationVisualizer
-    - type: Grammar
-      proper: true
