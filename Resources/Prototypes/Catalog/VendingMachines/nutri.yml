@@ -3,3 +3,15 @@
   name: NutriMax
   description: A vending machine containing nutritional substances for plants and botanical tools.
   spriteName: nutri
+  startingInventory:
+    Spade: 3
+    PlantBGoneSpray: 20
+    WeedSpray: 20
+    PestSpray: 20
+    Syringe: 5
+    #TO DO:
+    #cultivator
+    #secateurs
+    #plant analyzer
+    #plant bag
+

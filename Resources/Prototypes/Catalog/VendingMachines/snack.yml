@@ -5,9 +5,9 @@
   animationDuration: 0.5
   spriteName: snack
   startingInventory:
-    FoodSpaceTwinkie: 8
+    Food4NoRaisins: 4
     FoodCandy: 4
-    FoodSyndiCakes: 4
     FoodCandyCorn: 4
     FoodPopcorn: 4
-    Food4NoRaisins: 4
+    FoodSpaceTwinkie: 8
+    FoodSyndiCakes: 4

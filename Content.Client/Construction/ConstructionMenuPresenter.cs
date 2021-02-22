@@ -109,7 +109,12 @@ namespace Content.Client.Construction
             PopulateCategories();
             OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
 
-            _gameHud.CraftingButtonToggled += b => WindowOpen = b;
+            _gameHud.CraftingButtonToggled += OnHudCraftingButtonToggled;
+        }
+
+        private void OnHudCraftingButtonToggled(bool b)
+        {
+            WindowOpen = b;
         }
 
         /// <inheritdoc />
@@ -121,6 +126,8 @@ namespace Content.Client.Construction
             _systemManager.SystemUnloaded -= OnSystemUnloaded;
 
             _placementManager.PlacementChanged -= OnPlacementChanged;
+
+            _gameHud.CraftingButtonToggled -= OnHudCraftingButtonToggled;
         }
 
         private void OnPlacementChanged(object? sender, EventArgs e)
