@@ -195,8 +195,6 @@
     range: 0.8
     arcwidth: 30
     arc: fist
-  - type: Grammar
-    proper: true
   - type: Pullable
   - type: DoAfter
   - type: CreamPied
