@@ -50,8 +50,8 @@
             - !type:EntityAnchored
               anchored: true
           steps:
-            - component: FirelockElectronics
-              store: Firelock Electronics
+            - prototype: FirelockElectronics
+              amount: 1
               name: Firelock Electronics
               icon:
                 sprite: "Constructible/Misc/module.rsi"
