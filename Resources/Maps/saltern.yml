@@ -3664,7 +3664,7 @@ entities:
   components:
   - parent: 853
     pos: -22.5,6.5
-    rot: 4.71238902409608 rad
+    rot: 6.283185350890976 rad
     type: Transform
   - containers:
       DisposalUnit:
@@ -18467,7 +18467,7 @@ entities:
   components:
   - parent: 853
     pos: 33.5,12.5
-    rot: 3.141592697301183 rad
+    rot: 6.283185350890976 rad
     type: Transform
 - uid: 1544
   type: MedicalScanner
