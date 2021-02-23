@@ -11,7 +11,7 @@ namespace Content.Shared.Materials
     /// </summary>
     [Prototype("material")]
     [DataDefinition]
-    public class MaterialPrototype : IPrototype, IIndexedPrototype
+    public class MaterialPrototype : IPrototype
     {
         [DataField("id", required: true)]
         public string ID { get; private set; }
