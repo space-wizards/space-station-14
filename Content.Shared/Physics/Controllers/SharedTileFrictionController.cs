@@ -8,6 +8,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
@@ -20,6 +21,7 @@ namespace Content.Shared.Physics.Controllers
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
         private SharedBroadPhaseSystem _broadPhaseSystem = default!;
@@ -51,7 +53,7 @@ namespace Content.Shared.Physics.Controllers
                 float control;
 
                 // Only apply friction when it's not a mob (or the mob doesn't have control).
-                if (SharedMoverController.UseMobMovement(_broadPhaseSystem, body)) continue;
+                if (SharedMoverController.UseMobMovement(_broadPhaseSystem, body, _physicsManager)) continue;
 
                 var surfaceFriction = GetTileFriction(body);
                 var friction = _frictionModifier * surfaceFriction;

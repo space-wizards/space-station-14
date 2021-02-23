@@ -39,6 +39,8 @@ namespace Content.Shared.GameObjects.Components.Movement
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
+        [ComponentDependency] private readonly MovementSpeedModifierComponent? _movementSpeed = default!;
+
         public override string Name => "PlayerInputMover";
         public override uint? NetID => ContentNetIDs.PLAYER_INPUT_MOVER;
 
@@ -49,31 +51,9 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         private MoveButtons _heldMoveButtons = MoveButtons.None;
 
-        public float CurrentWalkSpeed
-        {
-            get
-            {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
-                {
-                    return component.CurrentWalkSpeed;
-                }
+        public float CurrentWalkSpeed => _movementSpeed?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
 
-                return MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
-            }
-        }
-
-        public float CurrentSprintSpeed
-        {
-            get
-            {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
-                {
-                    return component.CurrentSprintSpeed;
-                }
-
-                return MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
-            }
-        }
+        public float CurrentSprintSpeed => _movementSpeed?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
         public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
 
