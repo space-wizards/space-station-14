@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components;
@@ -75,6 +75,7 @@ namespace Content.Client.GameObjects.Components
         /// 
         /// </summary>
         private bool _isComposite;
+        private ResourcePath? _spritePath;
 
         public override void LoadData(YamlMappingNode mapping)
         {
@@ -92,6 +93,11 @@ namespace Content.Client.GameObjects.Components
             {
                 _isComposite = transparent.AsBool();
             }
+
+            if (mapping.TryGetNode<YamlScalarNode>("sprite", out var spritePath))
+            {
+                _spritePath = spritePath.AsResourcePath();
+            }
         }
 
         public override void InitializeEntity(IEntity entity)
@@ -102,9 +108,11 @@ namespace Content.Client.GameObjects.Components
                 && _spriteLayers.Count > 0
                 && entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
             {
+                _spritePath ??= spriteComponent.BaseRSI!.Path!;
+
                 foreach (var sprite in _spriteLayers)
                 {
-                    var rsiPath = spriteComponent.BaseRSI!.Path!;
+                    var rsiPath = _spritePath;
                     spriteComponent.LayerMapReserveBlank(sprite);
                     spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(rsiPath, sprite));
                     spriteComponent.LayerSetVisible(sprite, false);
