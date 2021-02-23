@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Observer.GhostRoles
         [ViewVariables(VVAccess.ReadWrite)] [DataField("availableTakeovers")]
         private int _availableTakeovers = 1;
 
-        [ViewVariables] [DataField("deleteOnSpawn")]
+        [ViewVariables]
         private int _currentTakeovers = 0;
 
         [CanBeNull]

@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         /// <summary>
         ///     What gas is being generated.
         /// </summary>
-        [DataField("generatorEnabled")]
+        [DataField("generatedGas")]
         [ViewVariables(VVAccess.ReadWrite)]
         public Gas GeneratedGas { get; set; } = Gas.Oxygen;
 

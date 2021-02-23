@@ -14,7 +14,6 @@ namespace Content.Shared.GameObjects.Components.Movement
 {
     public abstract class SharedSlipperyComponent : Component, ICollideBehavior
     {
-
         public sealed override string Name => "Slippery";
 
         /// <summary>

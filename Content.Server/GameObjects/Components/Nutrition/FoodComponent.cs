@@ -31,9 +31,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public override string Name => "Food";
 
-        [ViewVariables] [DataField("useSound")] private string _useSound = "/Audio/Items/eatfood.ogg";
-        [ViewVariables] [DataField("trash")] private string? _trashPrototype;
-        [ViewVariables] [DataField("transferAmount")] private ReagentUnit _transferAmount = ReagentUnit.New(5);
+        [ViewVariables] [DataField("useSound")] protected virtual string UseSound { get; set; } = "/Audio/Items/eatfood.ogg";
+
+        [ViewVariables] [DataField("trash")] protected virtual string? TrashPrototype { get; set; }
+
+        [ViewVariables] [DataField("transferAmount")] protected virtual ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
+
         [DataField("utensilsNeeded")] private UtensilType _utensilsNeeded = UtensilType.None;
 
         [ViewVariables]
@@ -48,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 return solution.CurrentVolume == 0
                     ? 0
-                    : Math.Max(1, (int)Math.Ceiling((solution.CurrentVolume / _transferAmount).Float()));
+                    : Math.Max(1, (int)Math.Ceiling((solution.CurrentVolume / TransferAmount).Float()));
             }
         }
 
@@ -142,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return false;
             }
 
-            var transferAmount = ReagentUnit.Min(_transferAmount, solution.CurrentVolume);
+            var transferAmount = ReagentUnit.Min(TransferAmount, solution.CurrentVolume);
             var split = solution.SplitSolution(transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
 
@@ -159,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             firstStomach.TryTransferSolution(split);
 
             _entitySystem.GetEntitySystem<AudioSystem>()
-                .PlayFromEntity(_useSound, trueTarget, AudioParams.Default.WithVolume(-1f));
+                .PlayFromEntity(UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
             trueTarget.PopupMessage(user, Loc.GetString("Nom"));
 
             // If utensils were used
@@ -176,7 +179,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return true;
             }
 
-            if (string.IsNullOrEmpty(_trashPrototype))
+            if (string.IsNullOrEmpty(TrashPrototype))
             {
                 Owner.Delete();
                 return true;
@@ -184,7 +187,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             //We're empty. Become trash.
             var position = Owner.Transform.Coordinates;
-            var finisher = Owner.EntityManager.SpawnEntity(_trashPrototype, position);
+            var finisher = Owner.EntityManager.SpawnEntity(TrashPrototype, position);
 
             // If the user is holding the item
             if (user.TryGetComponent(out HandsComponent? handsComponent) &&

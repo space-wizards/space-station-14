@@ -6,28 +6,61 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.MachineLinking
 {
     [RegisterComponent]
-    public class SignalTransmitterComponent : Component, IInteractUsing
+    public class SignalTransmitterComponent : Component, IInteractUsing, ISerializationHooks
     {
         public override string Name => "SignalTransmitter";
 
         private List<SignalReceiverComponent> _unresolvedReceivers;
         private List<SignalReceiverComponent> _receivers;
-        [DataField("range")]
-        [ViewVariables] private float _range = 10;
 
         /// <summary>
         /// 0 is unlimited range
         /// </summary>
-        public float Range { get => _range; private set => _range = value; }
+        [ViewVariables]
+        [field: DataField("range")]
+        public float Range { get; private set; } = 10;
+
+        [DataField("signalReceivers")] private List<EntityUid> _receiverIds = new();
+
+        public void BeforeSerialization()
+        {
+            var entityList = new List<EntityUid>();
+
+            foreach (var receiver in _receivers)
+            {
+                if (receiver.Deleted)
+                {
+                    continue;
+                }
+
+                entityList.Add(receiver.Owner.Uid);
+            }
+
+            _receiverIds = entityList;
+        }
+
+        public void AfterDeserialization()
+        {
+            _unresolvedReceivers = new List<SignalReceiverComponent>();
+
+            foreach (var id in _receiverIds)
+            {
+                if (!Owner.EntityManager.TryGetEntity(id, out var entity) ||
+                    !entity.TryGetComponent<SignalReceiverComponent>(out var receiver))
+                {
+                    continue;
+                }
+
+                _unresolvedReceivers.Add(receiver);
+            }
+        }
 
         public override void Initialize()
         {
@@ -42,40 +75,6 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                     receiver.Subscribe(this);
                 }
                 _unresolvedReceivers = null;
-            }
-        }
-
-        [DataField("signalReceivers")]
-        private List<EntityUid> signalReceiversReceiver
-        {
-            get
-            {
-                var entityList = new List<EntityUid>();
-                foreach (var receiver in _receivers)
-                {
-                    if (receiver.Deleted)
-                    {
-                        continue;
-                    }
-
-                    entityList.Add(receiver.Owner.Uid);
-                }
-
-                return entityList;
-            }
-            set
-            {
-                _unresolvedReceivers = new List<SignalReceiverComponent>();
-                foreach (var entityUid in value)
-                {
-                    if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity)
-                        || !entity.TryGetComponent<SignalReceiverComponent>(out var receiver))
-                    {
-                        continue;
-                    }
-
-                    _unresolvedReceivers.Add(receiver);
-                }
             }
         }
 
