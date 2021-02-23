@@ -186,9 +186,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 {
                     case MaterialConstructionGraphStep _:
                     case ToolConstructionGraphStep _:
-                    case PrototypeConstructionGraphStep _:
-                    case ComponentConstructionGraphStep _:
-                    case TagConstructionGraphStep _:
+                    case ArbitraryInsertConstructionGraphStep _:
                         if (await HandleStep(eventArgs, edge, firstStep))
                         {
                             if(edge.Steps.Count > 1)

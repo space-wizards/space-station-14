@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction
 {
     public class TagConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
-        private List<string>? _tags = null;
+        private string? _tag = null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _tags, "tags", new List<string>());
+            serializer.DataField(ref _tag, "tag", null);
         }
 
         public override bool EntityValid(IEntity entity)
         {
-            return _tags != null && entity.HasAllTags(_tags);
+            return !string.IsNullOrEmpty(_tag) && entity.HasTag(_tag);
         }
     }
 }
