@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Power
@@ -11,6 +11,7 @@ namespace Content.Shared.GameObjects.Components.Power
         InsertingMetal,
         InsertingGlass,
         InsertingGold,
-        InsertingPlasma
+        InsertingPlasma,
+        InsertingPlastic
     }
 }

@@ -28,6 +28,7 @@
     - state: ventOff
   - type: Appearance
     visuals:
+    - type: PipeConnectorVisualizer
     - type: VentVisualizer
 
 - type: entity

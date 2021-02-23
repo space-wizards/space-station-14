@@ -125,6 +125,7 @@ namespace Content.Shared.GameObjects.Components
         Plasteel,
         Cable,
         Wood,
+        Plastic,
         MVCable,
         HVCable,
         Gold,
