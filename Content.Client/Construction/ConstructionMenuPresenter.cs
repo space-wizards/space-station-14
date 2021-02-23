@@ -251,8 +251,8 @@ namespace Content.Client.Construction
                             stepList.AddItem(
                                 !firstNode
                                     ? Loc.GetString(
-                                        "{0}. Add {1}x {2}.", stepNumber++, materialStep.Amount, materialStep.MaterialPrototype.ID)
-                                    : Loc.GetString("      {0}x {1}", materialStep.Amount, materialStep.MaterialPrototype.ID), icon);
+                                        "{0}. Add {1}x {2}.", stepNumber++, materialStep.Amount, materialStep.MaterialPrototype.Name)
+                                    : Loc.GetString("      {0}x {1}", materialStep.Amount, materialStep.MaterialPrototype.Name), icon);
 
                             break;
 
@@ -283,7 +283,7 @@ namespace Content.Client.Construction
                                     switch (subStep)
                                     {
                                         case MaterialConstructionGraphStep materialStep:
-                                            if (!(prototype.Type == ConstructionType.Item)) stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}x {4}.", stepNumber, parallelNumber, subStepNumber++, materialStep.Amount, materialStep.MaterialPrototype.ID), icon);
+                                            if (prototype.Type != ConstructionType.Item) stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}x {4}.", stepNumber, parallelNumber, subStepNumber++, materialStep.Amount, materialStep.MaterialPrototype.Name), icon);
                                             break;
 
                                         case ToolConstructionGraphStep toolStep:
