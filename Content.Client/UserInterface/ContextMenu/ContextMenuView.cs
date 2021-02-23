@@ -185,7 +185,7 @@ namespace Content.Client.UserInterface.ContextMenu
             {
                 case SingleContextElement singleContextElement:
                     RemoveFromUI(singleContextElement);
-                    UpdateAGraph(entity, singleContextElement.Pre);
+                    UpdateBranch(entity, singleContextElement.Pre);
                     break;
                 case StackContextElement stackContextElement:
                     stackContextElement.RemoveEntity(entity);
@@ -193,14 +193,14 @@ namespace Content.Client.UserInterface.ContextMenu
                     {
                         RemoveFromUI(stackContextElement);
                     }
-                    UpdateAGraph(entity, stackContextElement.Pre);
+                    UpdateBranch(entity, stackContextElement.Pre);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(element));
             }
             Elements.Remove(entity);
         }
-        private void UpdateAGraph(IEntity entity, StackContextElement? stack)
+        private void UpdateBranch(IEntity entity, StackContextElement? stack)
         {
             while (stack != null)
             {
