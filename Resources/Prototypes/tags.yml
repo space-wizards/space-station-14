@@ -9,7 +9,7 @@
 
 - type: Tag
   id: FirelockElectronics
-  
+
 - type: Tag
   id: FootstepSound
 
@@ -27,8 +27,8 @@
 
 - type: Tag
   id: Shovel
-  
-  - type: Tag
+
+- type: Tag
   id: Teleportable
 
 - type: Tag
