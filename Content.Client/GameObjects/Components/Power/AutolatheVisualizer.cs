@@ -67,7 +67,7 @@ namespace Content.Client.GameObjects.Components.Power
             {
                 state = LatheVisualState.Idle;
             }
-
+            sprite.LayerSetVisible(AutolatheVisualLayers.AnimationLayer, true);
             switch (state)
             {
                 case LatheVisualState.Idle:
@@ -78,6 +78,7 @@ namespace Content.Client.GameObjects.Components.Power
 
                     sprite.LayerSetState(AutolatheVisualLayers.Base, "icon");
                     sprite.LayerSetState(AutolatheVisualLayers.BaseUnlit, "unlit");
+                    sprite.LayerSetVisible(AutolatheVisualLayers.AnimationLayer, false);
                     break;
                 case LatheVisualState.Producing:
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
@@ -125,7 +126,8 @@ namespace Content.Client.GameObjects.Components.Power
         public enum AutolatheVisualLayers : byte
         {
             Base,
-            BaseUnlit
+            BaseUnlit,
+            AnimationLayer
         }
     }
 }
