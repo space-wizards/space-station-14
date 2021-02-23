@@ -78,7 +78,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public void DoInstantAction(IEntity player)
         {
-            _action.InstantAction?.DoInstantAction(new InstantActionEventArgs(player, _action.ActionType));
+            _action.InstantAction.DoInstantAction(new InstantActionEventArgs(player, _action.ActionType));
         }
 
         public bool DoToggleAction(IEntity player, bool on)

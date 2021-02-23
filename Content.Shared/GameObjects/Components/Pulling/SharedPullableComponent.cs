@@ -74,7 +74,8 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     return;
                 }
 
-                if (value != null) {
+                if (value != null)
+                {
                     // Pulling a new object : Perform sanity checks.
 
                     if (!_canStartPull(value))

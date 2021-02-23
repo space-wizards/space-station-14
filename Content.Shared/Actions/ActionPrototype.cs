@@ -25,7 +25,7 @@ namespace Content.Shared.Actions
         /// action. Null if this is not an Instant ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public IInstantAction? InstantAction { get; private set; }
+        public IInstantAction InstantAction { get; private set; } = default!;
 
         /// <summary>
         /// The IToggleAction that should be invoked when performing this

@@ -1,4 +1,4 @@
-﻿#nullable  enable
+﻿#nullable enable
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Interfaces.GameObjects.Components;
