@@ -11,7 +11,7 @@ namespace Content.Shared.GameObjects.Components
 {
     public abstract class SharedStackComponent : Component
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private const string SerializationCache = "stack";
 
