@@ -4,7 +4,7 @@
   description: A vending machine containing nutritional substances for plants and botanical tools.
   spriteName: nutri
   startingInventory:
-    Spade: 3
+    HydroponicsToolSpade: 3
     PlantBGoneSpray: 20
     WeedSpray: 20
     PestSpray: 20

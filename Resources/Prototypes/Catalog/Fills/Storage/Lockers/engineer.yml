@@ -1,0 +1,96 @@
+- type: entity
+  id: LockerToolFilled
+  parent: LockerTool
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingOuterVestHazard
+        prob: 0.4
+      - name: FlashlightLantern
+        prob: 0.7
+      - name: Screwdriver
+        prob: 0.7
+      - name: Wrench
+        prob: 0.7
+      - name: Welder
+        prob: 0.7
+      - name: Crowbar
+        prob: 0.7
+      - name: Wirecutter
+        prob: 0.7
+      - name: Multitool
+        prob: 0.2
+      - name: ClothingBeltUtility
+        prob: 0.2
+      - name: ClothingHandsGlovesColorYellow
+        prob: 0.05
+      - name: ClothingHeadHatHardhatRed
+        prob: 0.4
+      - name: ApcExtensionCableStack
+        prob: 0.3
+      - name: ApcExtensionCableStack
+        prob: 0.3
+      - name: ApcExtensionCableStack
+        prob: 0.3
+
+- type: entity
+  id: LockerElectricalSuppliesFilled
+  suffix: Filled
+  parent: LockerElectricalSupplies
+  components:
+  - type: StorageFill
+    contents:
+      - name: ToolboxElectricalFilled
+        prob: 0.7
+      - name: FirelockElectronics
+        prob: 0.05
+      - name: APCElectronics
+        prob: 0.1
+      - name: MVWireStack
+        prob: 0.2
+      - name: ApcExtensionCableStack
+        prob: 0.3
+
+- type: entity
+  id: LockerWeldingSuppliesFilled
+  suffix: Filled
+  parent: LockerWeldingSupplies
+  components:
+  - type: StorageFill
+    contents:
+      - name: WelderMini
+        prob: 1
+      - name: Welder
+        prob: 0.1
+      - name: ClothingHeadHatWelding
+        prob: 0.5
+
+- type: entity
+  id: LockerAtmosphericsFilled
+  suffix: Filled
+  parent: LockerAtmospherics
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHeadHelmetHardsuitAtmos
+      - name: ClothingOuterHardsuitAtmos
+      - name: ClothingMaskBreath
+      - name: OxygenTankFilled
+
+- type: entity
+  id: LockerEngineerFilled
+  suffix: Filled
+  parent: LockerEngineer
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHeadHelmetHardsuitEngineering
+      - name: ClothingOuterHardsuitEngineering
+      - name: ClothingMaskBreath
+      - name: OxygenTankFilled
+
+- type: entity
+  id: LockerRadiationSuitFilled
+  parent: LockerRadiationSuit
+  suffix: Filled

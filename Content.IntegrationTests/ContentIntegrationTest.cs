@@ -9,6 +9,7 @@ using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
@@ -42,6 +43,7 @@ namespace Content.IntegrationTests
                         }
 
                         IoCManager.Register<IParallaxManager, DummyParallaxManager>(true);
+                        IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
                     }
                 });
             };
@@ -74,6 +76,8 @@ namespace Content.IntegrationTests
                         }
                     }
                 });
+
+                IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
             };
 
             // Avoid funny race conditions with the database.

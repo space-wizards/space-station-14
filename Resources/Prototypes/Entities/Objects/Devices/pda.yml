@@ -122,20 +122,20 @@
 #    - type: Icon
 #      state: pda-chaplain
 
-- type: entity
-  name: Quartermaster PDA
-  parent: BasePDA
-  id: QuartermasterPDA
-  description: PDA for the guy that orders the guns.
-  components:
-    - type: PDA
-      idCard: QuartermasterIDCard
-    - type: Appearance
-      visuals:
-        - type: PDAVisualizer
-          state: pda-qm
-    - type: Icon
-      state: pda-qm
+#- type: entity
+#  name: Quartermaster PDA
+#  parent: BasePDA
+#  id: QuartermasterPDA
+#  description: PDA for the guy that orders the guns.
+#  components:
+#    - type: PDA
+#      idCard: QuartermasterIDCard
+#    - type: Appearance
+#      visuals:
+#        - type: PDAVisualizer
+#          state: pda-qm
+#    - type: Icon
+#      state: pda-qm
 
 - type: entity
   name: Cargo PDA

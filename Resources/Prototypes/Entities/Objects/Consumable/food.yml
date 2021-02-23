@@ -4,6 +4,9 @@
   id: FoodBase
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - Grindable
   - type: Food
   - type: LoopingSound
   - type: SolutionContainer
@@ -11,7 +14,6 @@
   - type: Sprite
     state: icon
     netsync: false
-  - type: Grindable
 
   # Only use visualizer if there's multiple steps available
 # - type: Appearance
