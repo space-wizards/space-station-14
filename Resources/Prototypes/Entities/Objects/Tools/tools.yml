@@ -4,6 +4,9 @@
   id: Wirecutter
   description: This kills the wire.
   components:
+  - type: Tag
+    tags:
+    - PlantSampleTaker
   - type: Sprite
     sprite: Objects/Tools/wirecutters.rsi
     layers:
@@ -27,7 +30,6 @@
       yellow: "#d58c18"
   - type: Item
     sprite: Objects/Tools/wirecutters.rsi
-  - type: PlantSampleTaker
 
 - type: entity
   name: screwdriver
@@ -201,11 +203,13 @@
   id: Shovel
   description: A large tool for digging and moving dirt.
   components:
+    - type: Tag
+      tags:
+      - Shovel
     - type: Sprite
       sprite: Objects/Tools/Hydroponics/shovel.rsi
       state: icon
     - type: ItemCooldown
     - type: MeleeWeapon
-    - type: Shovel
     - type: Item
       sprite: Objects/Tools/Hydroponics/shovel.rsi

@@ -1,6 +1,6 @@
 - type: entity
   name: explosive grenade
-  description: Grenade that creates small devastating explosion
+  description: Grenade that creates a small but devastating explosion.
   parent: BaseItem
   id: ExGrenade
   components:

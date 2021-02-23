@@ -4,15 +4,13 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
-using Robust.Shared.Maths;
+using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Research
 {
     public class LatheQueueMenu : SS14Window
     {
-        protected override Vector2? CustomSize => (300, 450);
-
         public LatheBoundUserInterface Owner { get; set; }
 
         [ViewVariables]
@@ -23,67 +21,45 @@ namespace Content.Client.Research
 
         public LatheQueueMenu()
         {
-                        Title = "Lathe Queue";
-
-            var margin = new MarginContainer()
-            {
-                /*MarginTop = 5f,
-                MarginLeft = 5f,
-                MarginRight = -5f,
-                MarginBottom = -5f,*/
-            };
-
-//            margin.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+            SetSize = MinSize = (300, 450);
+            Title = Loc.GetString("Lathe Queue");
 
             var vBox = new VBoxContainer();
 
-  //          vBox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
-
-            var descMargin = new MarginContainer()
-            {
-                /*MarginTop = 5f,
-                MarginLeft = 5f,
-                MarginRight = -5f,
-                MarginBottom = -5f,*/
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsStretchRatio = 2,
-            };
-
             var hBox = new HBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                SizeFlagsStretchRatio = 2,
             };
 
             _icon = new TextureRect()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SizeFlagsStretchRatio = 2,
             };
 
             var vBoxInfo = new VBoxContainer()
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 3,
             };
 
             _nameLabel = new Label()
             {
                 RectClipContent = true,
-                SizeFlagsHorizontal = SizeFlags.Fill,
             };
 
             _description = new Label()
             {
                 RectClipContent = true,
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.Fill,
+                VerticalAlignment = VAlignment.Stretch,
+                VerticalExpand = true
 
             };
 
             _queueList = new ItemList()
             {
-                SizeFlagsHorizontal = SizeFlags.Fill,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 3,
                 SelectMode = ItemList.ItemListSelectMode.None
             };
@@ -94,14 +70,10 @@ namespace Content.Client.Research
             hBox.AddChild(_icon);
             hBox.AddChild(vBoxInfo);
 
-            descMargin.AddChild(hBox);
-
-            vBox.AddChild(descMargin);
+            vBox.AddChild(hBox);
             vBox.AddChild(_queueList);
 
-            margin.AddChild(vBox);
-
-            Contents.AddChild(margin);
+            Contents.AddChild(vBox);
 
             ClearInfo();
         }

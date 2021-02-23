@@ -53,6 +53,7 @@ namespace Content.Client.ParticleAccelerator
 
         public ParticleAcceleratorControlMenu(ParticleAcceleratorBoundUserInterface owner)
         {
+            SetSize = (400, 300);
             _greyScaleShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("Greyscale").Instance();
 
             Owner = owner;
@@ -128,13 +129,14 @@ namespace Content.Client.ParticleAccelerator
             var closeButton = new TextureButton
             {
                 StyleClasses = {"windowCloseButton"},
-                SizeFlagsHorizontal = SizeFlags.ShrinkEnd
+                HorizontalAlignment = HAlignment.Right,
+                Margin = new Thickness(0, 0, 8, 0)
             };
             closeButton.OnPressed += args => Close();
 
             var serviceManual = new Label
             {
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                HorizontalAlignment = HAlignment.Center,
                 StyleClasses = {StyleBase.StyleClassLabelSubText},
                 Text = Loc.GetString("Refer to p.132 of service manual")
             };
@@ -144,10 +146,9 @@ namespace Content.Client.ParticleAccelerator
             {
                 Children =
                 {
-                    new MarginContainer
+                    new Control
                     {
-                        MarginLeftOverride = 2,
-                        MarginTopOverride = 2,
+                        Margin = new Thickness(2, 2, 0, 0),
                         Children =
                         {
                             new Label
@@ -156,185 +157,154 @@ namespace Content.Client.ParticleAccelerator
                                 FontOverride = font,
                                 FontColorOverride = StyleNano.NanoGold,
                             },
-                            new MarginContainer
-                            {
-                                MarginRightOverride = 8,
-                                Children =
-                                {
-                                    closeButton
-                                }
-                            }
+                            closeButton
                         }
                     },
                     new PanelContainer
                     {
                         PanelOverride = new StyleBoxFlat {BackgroundColor = StyleNano.NanoGold},
-                        CustomMinimumSize = (0, 2),
+                        MinSize = (0, 2),
                     },
                     new Control
                     {
-                        CustomMinimumSize = (0, 4)
+                        MinSize = (0, 4)
                     },
 
                     new HBoxContainer
                     {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
+                        VerticalExpand = true,
                         Children =
                         {
-                            new MarginContainer
+                            new VBoxContainer
                             {
-                                MarginLeftOverride = 4,
-                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                Margin = new Thickness(4, 0, 0, 0),
+                                HorizontalExpand = true,
                                 Children =
                                 {
-                                    new VBoxContainer
+                                    new HBoxContainer
                                     {
                                         Children =
                                         {
-                                            new HBoxContainer
+                                            new Label
                                             {
-                                                Children =
-                                                {
-                                                    new Label
-                                                    {
-                                                        Text = Loc.GetString("Power: "),
-                                                        SizeFlagsHorizontal = SizeFlags.Expand
-                                                    },
-                                                    _offButton,
-                                                    _onButton
-                                                }
+                                                Text = Loc.GetString("Power: "),
+                                                HorizontalExpand = true,
+                                                HorizontalAlignment = HAlignment.Left,
                                             },
-                                            new HBoxContainer
-                                            {
-                                                Children =
-                                                {
-                                                    new Label
-                                                    {
-                                                        Text = Loc.GetString("Strength: "),
-                                                        SizeFlagsHorizontal = SizeFlags.Expand
-                                                    },
-                                                    _stateSpinBox
-                                                }
-                                            },
-                                            new Control
-                                            {
-                                                CustomMinimumSize = (0, 10),
-                                            },
-                                            _drawLabel,
-                                            new Control
-                                            {
-                                                SizeFlagsVertical = SizeFlags.Expand
-                                            },
-                                            (_alarmControl = new VBoxContainer
-                                            {
-                                                Children =
-                                                {
-                                                    new Label
-                                                    {
-                                                        Text = Loc.GetString("PARTICLE STRENGTH\nLIMITER FAILURE"),
-                                                        FontColorOverride = Color.Red,
-                                                        Align = Label.AlignMode.Center
-                                                    },
-                                                    serviceManual
-                                                }
-                                            }),
+                                            _offButton,
+                                            _onButton
                                         }
-                                    }
-                                }
-                            },
-                            new MarginContainer
-                            {
-                                CustomMinimumSize = (186, 0),
-                                Children =
-                                {
-                                    new VBoxContainer
+                                    },
+                                    new HBoxContainer
                                     {
                                         Children =
                                         {
-                                            (_statusLabel = new Label
+                                            new Label
                                             {
-                                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
-                                            }),
-                                            new Control
-                                            {
-                                                CustomMinimumSize = (0, 20)
+                                                Text = Loc.GetString("Strength: "),
+                                                HorizontalExpand = true,
+                                                HorizontalAlignment = HAlignment.Left,
                                             },
-                                            new PanelContainer
-                                            {
-                                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                                                PanelOverride = back2,
-                                                Children =
-                                                {
-                                                    new GridContainer
-                                                    {
-                                                        Columns = 3,
-                                                        VSeparationOverride = 0,
-                                                        HSeparationOverride = 0,
-                                                        Children =
-                                                        {
-                                                            new Control {CustomMinimumSize = imgSize},
-                                                            (_endCapTexture = Segment("end_cap")),
-                                                            new Control {CustomMinimumSize = imgSize},
-                                                            (_controlBoxTexture = Segment("control_box")),
-                                                            (_fuelChamberTexture = Segment("fuel_chamber")),
-                                                            new Control {CustomMinimumSize = imgSize},
-                                                            new Control {CustomMinimumSize = imgSize},
-                                                            (_powerBoxTexture = Segment("power_box")),
-                                                            new Control {CustomMinimumSize = imgSize},
-                                                            (_emitterLeftTexture = Segment("emitter_left")),
-                                                            (_emitterCenterTexture = Segment("emitter_center")),
-                                                            (_emitterRightTexture = Segment("emitter_right")),
-                                                        }
-                                                    }
-                                                }
-                                            },
-                                            (_scanButton = new Button
-                                            {
-                                                Text = Loc.GetString("Scan Parts"),
-                                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
-                                            })
+                                            _stateSpinBox
                                         }
-                                    }
+                                    },
+                                    new Control
+                                    {
+                                        MinSize = (0, 10),
+                                    },
+                                    _drawLabel,
+                                    new Control
+                                    {
+                                        VerticalExpand = true,
+                                    },
+                                    (_alarmControl = new VBoxContainer
+                                    {
+                                        Children =
+                                        {
+                                            new Label
+                                            {
+                                                Text = Loc.GetString("PARTICLE STRENGTH\nLIMITER FAILURE"),
+                                                FontColorOverride = Color.Red,
+                                                Align = Label.AlignMode.Center
+                                            },
+                                            serviceManual
+                                        }
+                                    }),
                                 }
                             },
+                            new VBoxContainer
+                            {
+                                MinSize = (186, 0),
+                                Children =
+                                {
+                                    (_statusLabel = new Label
+                                    {
+                                        HorizontalAlignment = HAlignment.Center
+                                    }),
+                                    new Control
+                                    {
+                                        MinSize = (0, 20)
+                                    },
+                                    new PanelContainer
+                                    {
+                                        HorizontalAlignment = HAlignment.Center,
+                                        PanelOverride = back2,
+                                        Children =
+                                        {
+                                            new GridContainer
+                                            {
+                                                Columns = 3,
+                                                VSeparationOverride = 0,
+                                                HSeparationOverride = 0,
+                                                Children =
+                                                {
+                                                    new Control {MinSize = imgSize},
+                                                    (_endCapTexture = Segment("end_cap")),
+                                                    new Control {MinSize = imgSize},
+                                                    (_controlBoxTexture = Segment("control_box")),
+                                                    (_fuelChamberTexture = Segment("fuel_chamber")),
+                                                    new Control {MinSize = imgSize},
+                                                    new Control {MinSize = imgSize},
+                                                    (_powerBoxTexture = Segment("power_box")),
+                                                    new Control {MinSize = imgSize},
+                                                    (_emitterLeftTexture = Segment("emitter_left")),
+                                                    (_emitterCenterTexture = Segment("emitter_center")),
+                                                    (_emitterRightTexture = Segment("emitter_right")),
+                                                }
+                                            }
+                                        }
+                                    },
+                                    (_scanButton = new Button
+                                    {
+                                        Text = Loc.GetString("Scan Parts"),
+                                        HorizontalAlignment = HAlignment.Center
+                                    })
+                                }
+                            }
                         }
                     },
                     new StripeBack
                     {
                         Children =
                         {
-                            new MarginContainer
+                            new Label
                             {
-                                MarginLeftOverride = 4,
-                                MarginTopOverride = 4,
-                                MarginBottomOverride = 4,
-                                Children =
-                                {
-                                    new Label
-                                    {
-                                        Text = Loc.GetString("Ensure containment field is active before operation"),
-                                        SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                                        StyleClasses = {StyleBase.StyleClassLabelSubText},
-                                    }
-                                }
+                                Margin = new Thickness(4, 4, 0, 4),
+                                Text = Loc.GetString("Ensure containment field is active before operation"),
+                                HorizontalAlignment = HAlignment.Center,
+                                StyleClasses = {StyleBase.StyleClassLabelSubText},
                             }
                         }
                     },
-                    new MarginContainer
+                    new HBoxContainer
                     {
-                        MarginLeftOverride = 12,
+                        Margin = new Thickness(12, 0, 0, 0),
                         Children =
                         {
-                            new HBoxContainer
+                            new Label
                             {
-                                Children =
-                                {
-                                    new Label
-                                    {
-                                        Text = "FOO-BAR-BAZ",
-                                        StyleClasses = {StyleBase.StyleClassLabelSubText}
-                                    }
-                                }
+                                Text = "FOO-BAR-BAZ",
+                                StyleClasses = {StyleBase.StyleClassLabelSubText}
                             }
                         }
                     },
@@ -396,11 +366,6 @@ namespace Content.Client.ParticleAccelerator
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
         {
             return DragMode.Move;
-        }
-
-        protected override Vector2 CalculateMinimumSize()
-        {
-            return (400, 300);
         }
 
         public void DataUpdate(ParticleAcceleratorUIState uiState)
@@ -504,6 +469,7 @@ namespace Content.Client.ParticleAccelerator
 
                 AddChild(_base = new TextureRect {Texture = _rsi[$"{name}c"].Frame0});
                 AddChild(_unlit = new TextureRect());
+                MinSize = _rsi.Size;
             }
 
             public void SetPowerState(ParticleAcceleratorUIState state, bool exists)
@@ -536,11 +502,6 @@ namespace Content.Client.ParticleAccelerator
                 }
 
                 _unlit.Texture = rState.Frame0;
-            }
-
-            protected override Vector2 CalculateMinimumSize()
-            {
-                return _rsi.Size;
             }
         }
     }

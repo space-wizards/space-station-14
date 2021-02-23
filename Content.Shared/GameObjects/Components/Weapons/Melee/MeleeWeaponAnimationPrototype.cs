@@ -8,7 +8,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.GameObjects.Components.Weapons.Melee
 {
     [Prototype("MeleeWeaponAnimation")]
-    public sealed class MeleeWeaponAnimationPrototype : IPrototype, IIndexedPrototype
+    public sealed class MeleeWeaponAnimationPrototype : IPrototype
     {
         private string _prototype;
         private string _state;
@@ -19,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Weapons.Melee
         private float _speed;
         private float _width;
         private WeaponArcType _arcType;
-        
+
         [ViewVariables] public string ID => _id;
         [ViewVariables] public string State => _state;
         [ViewVariables] public string Prototype => _prototype;

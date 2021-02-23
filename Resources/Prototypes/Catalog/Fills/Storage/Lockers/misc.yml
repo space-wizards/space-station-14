@@ -1,0 +1,34 @@
+# - type: entity
+#   id: LockerSyndicatePersonalFilled
+#   suffix: Filled
+#   parent: LockerSyndicatePersonal
+
+- type: entity
+  id: LockerEmergencyFilledRandom
+  parent: LockerEmergency
+  suffix: Filled, Random
+  components:
+  - type: StorageFill
+    contents:
+      - name: ToolboxEmergencyFilled
+        prob: 0.4
+      - name: ClothingMaskBreath
+        prob: 0.4
+      - name: ClothingMaskBreath
+        prob: 0.25
+      - name: EmergencyOxygenTankFilled
+        prob: 0.4
+      - name: OxygenTankFilled
+        prob: 0.2
+
+- type: entity
+  id: LockerFireFilled
+  parent: LockerFire
+  suffix: Filled
+  components:
+    - type: StorageFill
+      contents:
+        - name: RedOxygenTankFilled
+          prob: 0.6
+        - name: ClothingOuterSuitFire
+          prob: 0.75
