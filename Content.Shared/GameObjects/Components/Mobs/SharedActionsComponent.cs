@@ -5,11 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Actions;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Mobs
@@ -77,7 +77,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
 
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new ActionComponentState(_actions, _itemActions);
         }

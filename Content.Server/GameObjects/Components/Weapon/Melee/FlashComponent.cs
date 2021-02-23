@@ -1,20 +1,13 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -75,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             return true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!Use(eventArgs.User))
             {
@@ -98,8 +91,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 if (--Uses == 0)
                 {
                     sprite.LayerSetState(0, "burnt");
-
-                    Owner.PopupMessage(user, Loc.GetString("The flash burns out!"));
+                    Owner.PopupMessage(user, Loc.GetString("flash-component-becomes-empty"));
                 }
                 else if (!_flashing)
                 {
@@ -128,22 +120,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         }
 
         // TODO: Check if target can be flashed (e.g. things like sunglasses would block a flash)
+        // TODO: Merge with the code in FlashableComponent
         private void Flash(IEntity entity, IEntity user, int flashDuration)
         {
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
+            if (entity.TryGetComponent(out FlashableComponent flashable))
             {
-                if (!overlayEffectsComponent.TryModifyOverlay(nameof(SharedOverlayID.FlashOverlay),
-                    overlay =>
-                    {
-                        if (overlay.TryGetOverlayParameter<TimedOverlayParameter>(out var timed))
-                        {
-                            timed.Length += flashDuration;
-                        }
-                    }))
-                {
-                    var container = new OverlayContainer(SharedOverlayID.FlashOverlay, new TimedOverlayParameter(flashDuration));
-                    overlayEffectsComponent.AddOverlay(container);
-                }
+                flashable.Flash(flashDuration / 1000d);
             }
 
             if (entity.TryGetComponent(out StunnableComponent stunnableComponent))
@@ -153,7 +135,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (entity != user)
             {
-                user.PopupMessage(entity, Loc.GetString("{0:TheName} blinds you with {1:theName}", user, Owner));
+                user.PopupMessage(entity,
+                    Loc.GetString(
+                        "flash-component-user-blinds-you",
+                        ("user", user)
+                    )
+                );
             }
         }
 
@@ -161,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             if (!HasUses)
             {
-                message.AddText("It's burnt out.");
+                message.AddText(Loc.GetString("flash-component-examine-empty"));
                 return;
             }
 
@@ -169,9 +156,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 message.AddMarkup(
                     Loc.GetString(
-                        "The flash has [color=green]{0}[/color] {1} remaining.",
-                        Uses,
-                        Loc.GetPluralString("use", "uses", Uses)
+                        "flash-component-examine-detail-count",
+                        ("count", Uses),
+                        ("markupCountColor", "green")
                     )
                 );
             }

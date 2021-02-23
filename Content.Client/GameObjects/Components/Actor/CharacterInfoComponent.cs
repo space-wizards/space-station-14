@@ -3,16 +3,16 @@ using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components.Actor;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.Actor
@@ -76,13 +76,13 @@ namespace Content.Client.GameObjects.Components.Actor
                         (SpriteView = new SpriteView { Scale = (2, 2)}),
                         new VBoxContainer
                         {
-                            SizeFlagsVertical = SizeFlags.None,
+                            VerticalAlignment = VAlignment.Top,
                             Children =
                             {
                                 (NameLabel = new Label()),
                                 (SubText = new Label
                                 {
-                                    SizeFlagsVertical = SizeFlags.None,
+                                    VerticalAlignment = VAlignment.Top,
                                     StyleClasses = {StyleNano.StyleClassLabelSubText},
 
                                 })
@@ -99,7 +99,7 @@ namespace Content.Client.GameObjects.Components.Actor
                 AddChild(new Label
                 {
                     Text = Loc.GetString("Objectives"),
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                    HorizontalAlignment = HAlignment.Center
                 });
                 ObjectivesContainer = new VBoxContainer();
                 AddChild(ObjectivesContainer);
@@ -135,11 +135,11 @@ namespace Content.Client.GameObjects.Components.Actor
                         {
                             Texture = objectiveCondition.SpriteSpecifier.Frame0(),
                             Progress = objectiveCondition.Progress,
-                            SizeFlagsVertical = SizeFlags.ShrinkCenter
+                            VerticalAlignment = VAlignment.Center
                         });
                         hbox.AddChild(new Control
                         {
-                            CustomMinimumSize = (10,0)
+                            MinSize = (10,0)
                         });
                         hbox.AddChild(new VBoxContainer
                             {

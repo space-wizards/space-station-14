@@ -11,7 +11,7 @@ namespace Content.Client.Interfaces
         string ServerInfoBlob { get; }
         bool AreWeReady { get; }
         bool DisallowedLateJoin { get; }
-        DateTime StartTime { get; }
+        TimeSpan StartTime { get; }
         bool Paused { get; }
         Dictionary<NetUserId, PlayerStatus> Status { get; }
         IReadOnlyList<string> JobsAvailable { get; }

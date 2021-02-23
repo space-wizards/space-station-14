@@ -4,7 +4,7 @@ using System.Linq;
 using Content.Client.Interfaces;
 using Content.Shared.Roles;
 using Robust.Client.Console;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -21,10 +21,8 @@ namespace Content.Client.UserInterface
     public sealed class LateJoinGui : SS14Window
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IClientGameTicker _gameTicker = default!;
-
-        protected override Vector2? CustomSize => (360, 560);
 
         public event Action<string> SelectedId;
 
@@ -33,6 +31,7 @@ namespace Content.Client.UserInterface
 
         public LateJoinGui()
         {
+            MinSize = SetSize = (360, 560);
             IoCManager.InjectDependencies(this);
 
             Title = Loc.GetString("Late Join");
@@ -44,7 +43,7 @@ namespace Content.Client.UserInterface
                 {
                     new ScrollContainer
                     {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
+                        VerticalExpand = true,
                         Children =
                         {
                             jobList
@@ -77,7 +76,7 @@ namespace Content.Client.UserInterface
                         {
                             category.AddChild(new Control
                             {
-                                CustomMinimumSize = new Vector2(0, 23),
+                                MinSize = new Vector2(0, 23),
                             });
                         }
 
@@ -104,7 +103,7 @@ namespace Content.Client.UserInterface
 
                     var jobSelector = new HBoxContainer
                     {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand
+                        HorizontalExpand = true
                     };
 
                     var icon = new TextureRect
@@ -147,7 +146,7 @@ namespace Content.Client.UserInterface
             SelectedId += jobId =>
             {
                 Logger.InfoS("latejoin", $"Late joining as ID: {jobId}");
-                _console.ProcessCommand($"joingame {CommandParsing.Escape(jobId)}");
+                _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)}");
                 Close();
             };
 

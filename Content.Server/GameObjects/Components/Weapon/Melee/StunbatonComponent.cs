@@ -1,25 +1,16 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Power;
-using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Random;
@@ -189,14 +180,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             _activated = true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             ToggleStatus(eventArgs.User);
 
             return true;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User)) return false;
             if (!_cellSlot.InsertCell(eventArgs.Using)) return false;
@@ -212,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             }
         }
 
-        public void DoHit(ThrowCollideEventArgs eventArgs)
+        void IThrowCollide.DoHit(ThrowCollideEventArgs eventArgs)
         {
             if (!Activated || Cell == null || !Cell.TryUseCharge(EnergyPerUse) || !eventArgs.Target.TryGetComponent(out StunnableComponent? stunnable))
                 return;

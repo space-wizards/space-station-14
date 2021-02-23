@@ -35,15 +35,17 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      50:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            chem_master_broken:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          chem_master_broken:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key
@@ -53,7 +55,7 @@
 - type: entity
   id: chem_master_broken
   name: ChemMaster 4000 [Broken]
-  description: A broken industrial grade chemical manipulator.
+  description: "An industrial grade chemical manipulator with pill and bottle production included. It's broken."
   abstract: true
   components:
   - type: Sprite
@@ -84,15 +86,17 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      25:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SteelSheet1:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SteelSheet1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key

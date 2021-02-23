@@ -56,6 +56,7 @@ namespace Content.Client.UserInterface
         private readonly Button _clearButton;
         private readonly GridContainer _resultsGrid;
         private readonly TextureRect _dragShadow;
+        private readonly IGameHud _gameHud;
         private readonly DragDropHelper<ActionMenuItem> _dragDropHelper;
 
 
@@ -64,8 +65,10 @@ namespace Content.Client.UserInterface
             _actionsComponent = actionsComponent;
             _actionsUI = actionsUI;
             _actionManager = IoCManager.Resolve<ActionManager>();
+            _gameHud = IoCManager.Resolve<IGameHud>();
+
             Title = Loc.GetString("Actions");
-            CustomMinimumSize = (300, 300);
+            MinSize = (300, 300);
 
             Contents.AddChild(new VBoxContainer
             {
@@ -78,7 +81,7 @@ namespace Content.Client.UserInterface
                             (_searchBar = new LineEdit
                             {
                                 StyleClasses = { StyleNano.StyleClassActionSearchBox },
-                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                HorizontalExpand = true,
                                 PlaceHolder = Loc.GetString("Search")
                             }),
                             (_filterButton = new MultiselectOptionButton<string>()
@@ -94,14 +97,14 @@ namespace Content.Client.UserInterface
                     (_filterLabel = new Label()),
                     new ScrollContainer
                     {
-                        //TODO: needed? CustomMinimumSize = new Vector2(200.0f, 0.0f),
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        //TODO: needed? MinSize = new Vector2(200.0f, 0.0f),
+                        VerticalExpand = true,
+                        HorizontalExpand = true,
                         Children =
                         {
                             (_resultsGrid = new GridContainer
                             {
-                                MaxWidth = 300
+                                MaxGridWidth = 300
                             })
                         }
                     }
@@ -133,16 +136,15 @@ namespace Content.Client.UserInterface
 
             _dragShadow = new TextureRect
             {
-                CustomMinimumSize = (64, 64),
+                MinSize = (64, 64),
                 Stretch = TextureRect.StretchMode.Scale,
-                Visible = false
+                Visible = false,
+                SetSize = (64, 64)
             };
             UserInterfaceManager.PopupRoot.AddChild(_dragShadow);
-            LayoutContainer.SetSize(_dragShadow, (64, 64));
 
             _dragDropHelper = new DragDropHelper<ActionMenuItem>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
         }
-
 
         protected override void EnteredTree()
         {
@@ -150,7 +152,7 @@ namespace Content.Client.UserInterface
             _clearButton.OnPressed += OnClearButtonPressed;
             _searchBar.OnTextChanged += OnSearchTextChanged;
             _filterButton.OnItemSelected += OnFilterItemSelected;
-
+            _gameHud.ActionsButtonDown = true;
             foreach (var actionMenuControl in _resultsGrid.Children)
             {
                 var actionMenuItem = (actionMenuControl as ActionMenuItem);
@@ -167,7 +169,7 @@ namespace Content.Client.UserInterface
             _clearButton.OnPressed -= OnClearButtonPressed;
             _searchBar.OnTextChanged -= OnSearchTextChanged;
             _filterButton.OnItemSelected -= OnFilterItemSelected;
-
+            _gameHud.ActionsButtonDown = false;
             foreach (var actionMenuControl in _resultsGrid.Children)
             {
                 var actionMenuItem = (actionMenuControl as ActionMenuItem);
@@ -188,7 +190,7 @@ namespace Content.Client.UserInterface
             base.Resized();
             // TODO: Can rework this once https://github.com/space-wizards/RobustToolbox/issues/1392 is done,
             // currently no good way to let the grid know what size it has to "work with", so must manually resize
-            _resultsGrid.MaxWidth = Width;
+            _resultsGrid.MaxGridWidth = Width;
         }
 
         private bool OnBeginActionDrag()
@@ -277,6 +279,12 @@ namespace Content.Client.UserInterface
                 _actionsUI.UpdateUI();
             }
 
+            _dragDropHelper.EndDrag();
+        }
+
+        private void OnItemFocusExited(ActionMenuItem item)
+        {
+            // lost focus, cancel the drag if one is in progress
             _dragDropHelper.EndDrag();
         }
 
@@ -402,8 +410,7 @@ namespace Content.Client.UserInterface
                 ItemTag => action is ItemActionPrototype,
                 NotItemTag => action is ActionPrototype,
                 InstantActionTag => action.BehaviorType == BehaviorType.Instant,
-                TargetActionTag => action.BehaviorType == BehaviorType.TargetEntity ||
-                                   action.BehaviorType == BehaviorType.TargetPoint,
+                TargetActionTag => action.IsTargetAction,
                 ToggleActionTag => action.BehaviorType == BehaviorType.Toggle,
                 _ => action.Filters.Contains(tag)
             };
@@ -462,10 +469,9 @@ namespace Content.Client.UserInterface
             _actionList = actions.ToArray();
             foreach (var action in _actionList.OrderBy(act => act.Name.ToString()))
             {
-                var actionItem = new ActionMenuItem(action);
+                var actionItem = new ActionMenuItem(action, OnItemFocusExited);
                 _resultsGrid.Children.Add(actionItem);
                 actionItem.SetActionState(_actionsComponent.IsGranted(action));
-
                 actionItem.OnButtonDown += OnItemButtonDown;
                 actionItem.OnButtonUp += OnItemButtonUp;
                 actionItem.OnPressed += OnItemPressed;

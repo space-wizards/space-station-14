@@ -1,6 +1,7 @@
 - type: entity
   id: Rack
-  name: "rack"
+  name: rack
+  desription: "A rack for storing things on."
   placement:
     mode: SnapgridCenter
   components:
@@ -31,21 +32,24 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      30:
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound: /Audio/Effects/metalbreak.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SteelSheet1:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SteelSheet1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   id: Shelf
-  name: "shelf"
+  name: shelf
+  description: "A shelf for storing things on."
   placement:
     mode: SnapgridCenter
   components:
@@ -76,14 +80,16 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      30:
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound: /Audio/Effects/metalbreak.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SteelSheet1:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SteelSheet1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

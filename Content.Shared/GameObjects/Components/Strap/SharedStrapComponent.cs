@@ -1,6 +1,8 @@
 ﻿using System;
+using Content.Shared.GameObjects.Components.Buckle;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Strap
@@ -23,11 +25,21 @@ namespace Content.Shared.GameObjects.Components.Strap
         Down
     }
 
-    public abstract class SharedStrapComponent : Component
+    public abstract class SharedStrapComponent : Component, IDragDropOn
     {
         public sealed override string Name => "Strap";
 
         public sealed override uint? NetID => ContentNetIDs.STRAP;
+
+        bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
+        {
+            if (!eventArgs.Dragged.TryGetComponent(out SharedBuckleComponent buckleComponent)) return false;
+            bool Ignored(IEntity entity) => entity == eventArgs.User || entity == eventArgs.Dragged || entity == eventArgs.Target;
+
+            return eventArgs.Target.InRangeUnobstructed(eventArgs.Dragged, buckleComponent.Range, predicate: Ignored);
+        }
+
+        public abstract bool DragDropOn(DragDropEventArgs eventArgs);
     }
 
     [Serializable, NetSerializable]

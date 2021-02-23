@@ -1,6 +1,5 @@
 ﻿using Robust.Client.Graphics;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -37,10 +36,9 @@ namespace Content.Client.UserInterface
 [color=#a4885c]AlignWall[/color] snaps to vertical halftiles.
 [color=#a4885c]AlignWallProper[/color] snaps the entity to the middle of the tile edges";
 
-        protected override Vector2? CustomSize => (520, 580);
-
         public TutorialWindow()
         {
+            MinSize = SetSize = (520, 580);
             Title = "The Tutorial!";
 
             //Get section header font

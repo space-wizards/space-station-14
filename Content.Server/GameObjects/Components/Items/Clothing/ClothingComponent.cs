@@ -8,7 +8,7 @@ using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -67,12 +67,12 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
             serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new ClothingComponentState(ClothingEquippedPrefix, EquippedPrefix);
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!_quickEquipEnabled) return false;
             if (!eventArgs.User.TryGetComponent(out InventoryComponent inv)

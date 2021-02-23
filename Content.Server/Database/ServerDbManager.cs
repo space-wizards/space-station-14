@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -9,13 +10,14 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Npgsql;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Log;
-using Robust.Shared.Interfaces.Resources;
+using Robust.Shared.Configuration;
+using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 using LogLevel = Robust.Shared.Log.LogLevel;
+using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 #nullable enable
 
@@ -31,6 +33,8 @@ namespace Content.Server.Database
 
         Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot);
 
+        Task SaveAdminOOCColorAsync(NetUserId userId, Color color);
+
         // Single method for two operations for transaction.
         Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
         Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId);
@@ -40,8 +44,36 @@ namespace Content.Server.Database
         Task<NetUserId?> GetAssignedUserIdAsync(string name);
 
         // Ban stuff
+        /// <summary>
+        ///     Looks up a ban by id.
+        ///     This will return a pardoned ban as well.
+        /// </summary>
+        /// <param name="id">The ban id to look for.</param>
+        /// <returns>The ban with the given id or null if none exist.</returns>
+        Task<ServerBanDef?> GetServerBanAsync(int id);
+
+        /// <summary>
+        ///     Looks up an user's most recent received un-pardoned ban.
+        ///     This will NOT return a pardoned ban.
+        ///     One of <see cref="address"/> or <see cref="userId"/> need to not be null.
+        /// </summary>
+        /// <param name="address">The ip address of the user.</param>
+        /// <param name="userId">The id of the user.</param>
+        /// <returns>The user's latest received un-pardoned ban, or null if none exist.</returns>
         Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
+
+        /// <summary>
+        ///     Looks up an user's ban history.
+        ///     This will return pardoned bans as well.
+        ///     One of <see cref="address"/> or <see cref="userId"/> need to not be null.
+        /// </summary>
+        /// <param name="address">The ip address of the user.</param>
+        /// <param name="userId">The id of the user.</param>
+        /// <returns>The user's ban history.</returns>
+        Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId);
+
         Task AddServerBanAsync(ServerBanDef serverBan);
+        Task AddServerUnbanAsync(ServerUnbanDef serverBan);
 
         // Player records
         Task UpdatePlayerRecordAsync(NetUserId userId, string userName, IPAddress address);
@@ -122,6 +154,11 @@ namespace Content.Server.Database
             return _db.DeleteSlotAndSetSelectedIndex(userId, deleteSlot, newSlot);
         }
 
+        public Task SaveAdminOOCColorAsync(NetUserId userId, Color color)
+        {
+            return _db.SaveAdminOOCColorAsync(userId, color);
+        }
+
         public Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
         {
             return _db.GetPlayerPreferencesAsync(userId);
@@ -137,14 +174,29 @@ namespace Content.Server.Database
             return _db.GetAssignedUserIdAsync(name);
         }
 
+        public Task<ServerBanDef?> GetServerBanAsync(int id)
+        {
+            return _db.GetServerBanAsync(id);
+        }
+
         public Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId)
         {
             return _db.GetServerBanAsync(address, userId);
         }
 
+        public Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId)
+        {
+            return _db.GetServerBansAsync(address, userId);
+        }
+
         public Task AddServerBanAsync(ServerBanDef serverBan)
         {
             return _db.AddServerBanAsync(serverBan);
+        }
+
+        public Task AddServerUnbanAsync(ServerUnbanDef serverUnban)
+        {
+            return _db.AddServerUnbanAsync(serverUnban);
         }
 
         public Task UpdatePlayerRecordAsync(NetUserId userId, string userName, IPAddress address)

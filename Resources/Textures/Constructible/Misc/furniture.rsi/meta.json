@@ -61,7 +61,6 @@
     },
     {
       "name": "bar_stool",
-      "directions": 1,
       "delays": [
         [
           1
@@ -70,7 +69,6 @@
     },
     {
       "name": "bed",
-      "directions": 1,
       "delays": [
         [
           1
@@ -259,7 +257,6 @@
     },
     {
       "name": "psychbed",
-      "directions": 1,
       "delays": [
         [
           1
@@ -268,7 +265,6 @@
     },
     {
       "name": "psychbed_padding",
-      "directions": 1,
       "delays": [
         [
           1
@@ -295,7 +291,6 @@
     },
     {
       "name": "stool_base",
-      "directions": 1,
       "delays": [
         [
           1
@@ -304,7 +299,6 @@
     },
     {
       "name": "stool_padded_preview",
-      "directions": 1,
       "delays": [
         [
           1
@@ -313,7 +307,6 @@
     },
     {
       "name": "stool_padding",
-      "directions": 1,
       "delays": [
         [
           1
@@ -322,7 +315,6 @@
     },
     {
       "name": "stool_preview",
-      "directions": 1,
       "delays": [
         [
           1
@@ -421,7 +413,6 @@
     },
     {
       "name": "shelf",
-      "directions": 1,
       "delays": [
         [
           1
@@ -430,7 +421,6 @@
     },
     {
       "name": "rack",
-      "directions": 1,
       "delays": [
         [
           1

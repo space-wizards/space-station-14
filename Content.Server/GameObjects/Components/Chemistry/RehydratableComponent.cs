@@ -1,7 +1,7 @@
 #nullable enable
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -67,7 +67,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
             Owner.PopupMessageEveryone(Loc.GetString("{0:TheName} expands!", Owner));
             if (!string.IsNullOrEmpty(_targetPrototype))
             {
-                Owner.EntityManager.SpawnEntity(_targetPrototype, Owner.Transform.Coordinates);
+                var ent = Owner.EntityManager.SpawnEntity(_targetPrototype, Owner.Transform.Coordinates);
+                ent.Transform.AttachToGridOrMap();
             }
             Owner.Delete();
         }

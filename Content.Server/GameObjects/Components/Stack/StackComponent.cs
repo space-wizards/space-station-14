@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
@@ -7,12 +7,8 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -84,53 +80,64 @@ namespace Content.Server.GameObjects.Components.Stack
             return false;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.Using.TryGetComponent<StackComponent>(out var stack))
+            if (!eventArgs.Using.TryGetComponent<StackComponent>(out var stack))
+                return false;
+
+            if (!stack.StackType.Equals(StackType))
             {
-                if (!stack.StackType.Equals(StackType))
-                {
-                    return false;
-                }
-
-                var toTransfer = Math.Min(Count, stack.AvailableSpace);
-                Count -= toTransfer;
-                stack.Add(toTransfer);
-
-                var popupPos = eventArgs.ClickLocation;
-                if (popupPos == EntityCoordinates.Invalid)
-                {
-                    popupPos = eventArgs.User.Transform.Coordinates;
-                }
-
-
-                if (toTransfer > 0)
-                {
-                    popupPos.PopupMessage(eventArgs.User, $"+{toTransfer}");
-
-                    if (stack.AvailableSpace == 0)
-                    {
-                        Owner.SpawnTimer(300, () => popupPos.PopupMessage(eventArgs.User, "Stack is now full."));
-                    }
-
-                    return true;
-                }
-                else if (toTransfer == 0 && stack.AvailableSpace == 0)
-                {
-                    popupPos.PopupMessage(eventArgs.User, "Stack is already full.");
-                }
+                return false;
             }
 
-            return false;
+            var toTransfer = Math.Min(Count, stack.AvailableSpace);
+            Count -= toTransfer;
+            stack.Add(toTransfer);
+
+            var popupPos = eventArgs.ClickLocation;
+            if (popupPos == EntityCoordinates.Invalid)
+            {
+                popupPos = eventArgs.User.Transform.Coordinates;
+            }
+
+
+            if (toTransfer > 0)
+            {
+                popupPos.PopupMessage(eventArgs.User, $"+{toTransfer}");
+
+                if (stack.AvailableSpace == 0)
+                {
+                    eventArgs.Using.SpawnTimer(
+                        300,
+                        () => popupPos.PopupMessage(
+                            eventArgs.User,
+                            Loc.GetString("stack-component-becomes-full")
+                        )
+                    );
+                }
+            }
+            else if (toTransfer == 0 && stack.AvailableSpace == 0)
+            {
+                popupPos.PopupMessage(
+                    eventArgs.User,
+                    Loc.GetString("stack-component-already-full")
+                );
+            }
+
+            return true;
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             if (inDetailsRange)
             {
-                message.AddMarkup(Loc.GetPluralString(
-                    "There is [color=lightgray]1[/color] thing in the stack",
-                    "There are [color=lightgray]{0}[/color] things in the stack.", Count, Count));
+                message.AddMarkup(
+                    Loc.GetString(
+                        "stack-component-examine-detail-count",
+                        ("count", Count),
+                        ("markupCountColor", "lightgray")
+                    )
+                );
             }
         }
     }

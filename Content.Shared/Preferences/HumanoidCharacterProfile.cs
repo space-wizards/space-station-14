@@ -3,15 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameTicking;
+using Content.Shared.Prototypes;
 using Content.Shared.Roles;
-using Content.Shared.Text;
-using Robust.Shared.Interfaces.Random;
+using Content.Shared.Utility;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Localization.Macros;
-using Robust.Shared.Localization;
 
 namespace Content.Shared.Preferences
 {
@@ -19,7 +19,7 @@ namespace Content.Shared.Preferences
     /// Character profile. Looks immutable, but uses non-immutable semantics internally for serialization/code sanity purposes.
     /// </summary>
     [Serializable, NetSerializable]
-    public class HumanoidCharacterProfile : ICharacterProfile, IGenderable
+    public class HumanoidCharacterProfile : ICharacterProfile
     {
         private readonly Dictionary<string, JobPriority> _jobPriorities;
         private readonly List<string> _antagPreferences;
@@ -94,10 +94,9 @@ namespace Content.Shared.Preferences
             var sex = random.Prob(0.5f) ? Sex.Male : Sex.Female;
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 
-            var firstName = random.Pick(sex == Sex.Male
-                ? Names.MaleFirstNames
-                : Names.FemaleFirstNames);
-            var lastName = random.Pick(Names.LastNames);
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var firstName = random.Pick(sex.FirstNames(prototypeManager).Values);
+            var lastName = random.Pick(prototypeManager.Index<DatasetPrototype>("names_last"));
             var name = $"{firstName} {lastName}";
             var age = random.Next(MinimumAge, MaximumAge);
 
@@ -228,7 +227,7 @@ namespace Content.Shared.Preferences
             string name;
             if (string.IsNullOrEmpty(profile.Name))
             {
-                name = "John Doe";
+                name = "Urist McHands";
             }
             else if (profile.Name.Length > MaxNameLength)
             {
@@ -287,7 +286,12 @@ namespace Content.Shared.Preferences
         }
 
         public string Summary =>
-            Loc.GetString("{0}, {1} years old human. {2:Their} pronouns are {2:they}/{2:them}.", Name, Age, this);
+             Loc.GetString(
+                 "humanoid-character-profile-summary",
+                 ("name", Name),
+                 ("gender", Gender.ToString().ToLowerInvariant()),
+                 ("age", Age)
+            );
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {

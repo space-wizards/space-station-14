@@ -24,7 +24,6 @@
   - type: StorageFill
     contents:
       - name: BoxSurvival
-      - name: Stunbaton
       - name: Flash
 
 - type: entity
@@ -60,6 +59,15 @@
   abstract: true
   parent: ClothingBackpackSatchelScience
   id: ClothingBackpackSatchelScienceFilled
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSurvival
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpackSatchelHydroponics
+  id: ClothingBackpackSatchelHydroponicsFilled
   components:
   - type: StorageFill
     contents:

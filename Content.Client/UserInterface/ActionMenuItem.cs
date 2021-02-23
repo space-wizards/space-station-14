@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
 using Robust.Client.UserInterface;
@@ -19,23 +20,32 @@ namespace Content.Client.UserInterface
 
         public BaseActionPrototype Action { get; private set; }
 
-        public ActionMenuItem(BaseActionPrototype action)
+        private Action<ActionMenuItem> _onControlFocusExited;
+
+        public ActionMenuItem(BaseActionPrototype action, Action<ActionMenuItem> onControlFocusExited)
         {
+            _onControlFocusExited = onControlFocusExited;
             Action = action;
 
-            CustomMinimumSize = (64, 64);
-            SizeFlagsVertical = SizeFlags.None;
+            MinSize = (64, 64);
+            VerticalAlignment = VAlignment.Top;
 
             AddChild(new TextureRect
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 Stretch = TextureRect.StretchMode.Scale,
                 Texture = action.Icon.Frame0()
             });
 
             TooltipDelay = CustomTooltipDelay;
             TooltipSupplier = SupplyTooltip;
+        }
+
+        protected override void ControlFocusExited()
+        {
+            base.ControlFocusExited();
+            _onControlFocusExited.Invoke(this);
         }
 
         private Control SupplyTooltip(Control? sender)

@@ -3,11 +3,11 @@ using System.Linq;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
 using JetBrains.Annotations;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -30,7 +30,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         private ItemSlotButton _hudButtonBelt;
         private ItemSlotButton _hudButtonBack;
         private ItemSlotButton _hudButtonId;
-        private Control _quickButtonsContainer;
+        private Control _rightQuickButtonsContainer;
+        private Control _leftQuickButtonsContainer;
 
         public HumanInventoryInterfaceController(ClientInventoryComponent owner) : base(owner)
         {
@@ -69,16 +70,26 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             AddButton(out _hudButtonBelt, Slots.BELT, "belt");
             AddButton(out _hudButtonId, Slots.IDCARD, "id");
 
-            _quickButtonsContainer = new HBoxContainer
+            _leftQuickButtonsContainer = new HBoxContainer
             {
                 Children =
                 {
                     _hudButtonId,
-                    _hudButtonBelt,
                     _hudButtonBack,
+                    _hudButtonBelt,
+                },
+                SeparationOverride = 5
+            };
+            _rightQuickButtonsContainer = new HBoxContainer
+            {
+                Children =
+                {
                     _hudButtonPocket1,
                     _hudButtonPocket2,
-                }
+                    // keeps this "balanced" with the left, so the hands will appear perfectly in the center
+                    new Control{MinSize = (64, 64)}
+                },
+                SeparationOverride = 5
             };
         }
 
@@ -161,7 +172,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.PlayerAttached();
 
-            GameHud.InventoryQuickButtonContainer.AddChild(_quickButtonsContainer);
+            GameHud.RightInventoryQuickButtonContainer.AddChild(_rightQuickButtonsContainer);
+            GameHud.LeftInventoryQuickButtonContainer.AddChild(_leftQuickButtonsContainer);
 
             // Update all the buttons to make sure they check out.
 
@@ -183,7 +195,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.PlayerDetached();
 
-            GameHud.InventoryQuickButtonContainer.RemoveChild(_quickButtonsContainer);
+            GameHud.RightInventoryQuickButtonContainer.RemoveChild(_rightQuickButtonsContainer);
+            GameHud.LeftInventoryQuickButtonContainer.RemoveChild(_leftQuickButtonsContainer);
 
             foreach (var (slot, list) in _inventoryButtons)
             {
@@ -197,7 +210,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         private class HumanInventoryWindow : SS14Window
         {
             private const int ButtonSize = 64;
-            private const int ButtonSeparation = 2;
+            private const int ButtonSeparation = 4;
             private const int RightSeparation = 2;
 
             public IReadOnlyDictionary<Slots, ItemSlotButton> Buttons { get; }
@@ -213,7 +226,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 const int width = ButtonSize * 4 + ButtonSeparation * 3 + RightSeparation;
                 const int height = ButtonSize * 4 + ButtonSeparation * 3;
 
-                var windowContents = new LayoutContainer {CustomMinimumSize = (width, height)};
+                var windowContents = new LayoutContainer {MinSize = (width, height)};
                 Contents.AddChild(windowContents);
 
                 void AddButton(Slots slot, string textureName, Vector2 position)

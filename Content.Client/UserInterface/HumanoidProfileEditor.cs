@@ -1,26 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Enums;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Robust.Shared.Localization.Macros;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Content.Client.UserInterface
 {
@@ -63,9 +64,11 @@ namespace Content.Client.UserInterface
         public HumanoidCharacterProfile Profile;
         public event Action<HumanoidCharacterProfile> OnProfileChanged;
 
-        public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager, IEntityManager entityManager)
+        public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager,
+            IEntityManager entityManager)
         {
             _random = IoCManager.Resolve<IRobustRandom>();
+            _prototypeManager = prototypeManager;
 
             _preferencesManager = preferencesManager;
 
@@ -73,17 +76,9 @@ namespace Content.Client.UserInterface
             AddChild(hbox);
 
             #region Left
-            var margin = new MarginContainer
-            {
-                MarginTopOverride = 10,
-                MarginBottomOverride = 10,
-                MarginLeftOverride = 10,
-                MarginRightOverride = 10
-            };
-            hbox.AddChild(margin);
 
-            var vBox = new VBoxContainer();
-            margin.AddChild(vBox);
+            var vBox = new VBoxContainer {Margin = new Thickness(10)};
+            hbox.AddChild(vBox);
 
             var middleContainer = new HBoxContainer
             {
@@ -133,7 +128,7 @@ namespace Content.Client.UserInterface
 
             #endregion Name
 
-            var tabContainer = new TabContainer { SizeFlagsVertical = SizeFlags.FillExpand };
+            var tabContainer = new TabContainer {VerticalExpand = true};
             vBox.AddChild(tabContainer);
 
             #region Appearance
@@ -351,21 +346,21 @@ namespace Content.Client.UserInterface
 
             var jobList = new VBoxContainer();
 
-            var jobVBox = new VBoxContainer
-            {
-                Children =
+                var jobVBox = new VBoxContainer
                 {
-                    (_preferenceUnavailableButton = new OptionButton()),
-                    new ScrollContainer
+                    Children =
                     {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                        Children =
+                        (_preferenceUnavailableButton = new OptionButton()),
+                        new ScrollContainer
                         {
-                            jobList
+                            VerticalExpand = true,
+                            Children =
+                            {
+                                jobList
+                            }
                         }
                     }
-                }
-            };
+                };
 
             tabContainer.AddChild(jobVBox);
 
@@ -404,17 +399,17 @@ namespace Content.Client.UserInterface
                             ToolTip = Loc.GetString("Jobs in the {0} department", department)
                         };
 
-                        if (firstCategory)
-                        {
-                            firstCategory = false;
-                        }
-                        else
-                        {
-                            category.AddChild(new Control
+                            if (firstCategory)
                             {
-                                CustomMinimumSize = new Vector2(0, 23),
-                            });
-                        }
+                                firstCategory = false;
+                            }
+                            else
+                            {
+                                category.AddChild(new Control
+                                {
+                                    MinSize = new Vector2(0, 23),
+                                });
+                            }
 
                         category.AddChild(new PanelContainer
                         {
@@ -469,20 +464,20 @@ namespace Content.Client.UserInterface
 
             var antagList = new VBoxContainer();
 
-            var antagVBox = new VBoxContainer
-            {
-                Children =
+                var antagVBox = new VBoxContainer
                 {
-                    new ScrollContainer
+                    Children =
                     {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                        Children =
+                        new ScrollContainer
                         {
-                            antagList
+                            VerticalExpand = true,
+                            Children =
+                            {
+                                antagList
+                            }
                         }
                     }
-                }
-            };
+                };
 
             tabContainer.AddChild(antagVBox);
 
@@ -490,15 +485,16 @@ namespace Content.Client.UserInterface
 
             _antagPreferences = new List<AntagPreferenceSelector>();
 
-            foreach (var antag in prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => a.Name))
-            {
-                if (!antag.SetPreference)
+                foreach (var antag in prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => a.Name))
                 {
-                    continue;
-                }
-                var selector = new AntagPreferenceSelector(antag);
-                antagList.AddChild(selector);
-                _antagPreferences.Add(selector);
+                    if (!antag.SetPreference)
+                    {
+                        continue;
+                    }
+
+                    var selector = new AntagPreferenceSelector(antag);
+                    antagList.AddChild(selector);
+                    _antagPreferences.Add(selector);
 
                 selector.PreferenceChanged += preference =>
                 {
@@ -568,15 +564,17 @@ namespace Content.Client.UserInterface
 
             #region Save
 
-            var savePanel = HighlightedContainer();
-            _saveButton = new Button
             {
-                Text = Loc.GetString("Save"),
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
-            };
-            _saveButton.OnPressed += args => { Save(); };
-            savePanel.AddChild(_saveButton);
-            rightColumn.AddChild(savePanel);
+                var panel = HighlightedContainer();
+                _saveButton = new Button
+                {
+                    Text = Loc.GetString("Save"),
+                    HorizontalAlignment = HAlignment.Center
+                };
+                _saveButton.OnPressed += args => { Save(); };
+                panel.AddChild(_saveButton);
+                rightColumn.AddChild(panel);
+            }
 
             #endregion Save
 
@@ -584,19 +582,10 @@ namespace Content.Client.UserInterface
 
             #region Right
 
-            margin = new MarginContainer
-            {
-                MarginTopOverride = 10,
-                MarginBottomOverride = 10,
-                MarginLeftOverride = 10,
-                MarginRightOverride = 10
-            };
-            hbox.AddChild(margin);
-
             vBox = new VBoxContainer()
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                VerticalExpand = true,
+                HorizontalExpand = true,
             };
             hbox.AddChild(vBox);
 
@@ -608,8 +597,7 @@ namespace Content.Client.UserInterface
             // Front
             var box = new Control()
             {
-                SizeFlagsHorizontal = SizeFlags.Fill,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 1f,
             };
             vBox.AddChild(box);
@@ -618,7 +606,7 @@ namespace Content.Client.UserInterface
                 Sprite = sprite,
                 Scale = (6, 6),
                 OverrideDirection = Direction.South,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                VerticalAlignment = VAlignment.Center,
                 SizeFlagsStretchRatio = 1
             };
             box.AddChild(_previewSprite);
@@ -626,8 +614,7 @@ namespace Content.Client.UserInterface
             // Side
             box = new Control()
             {
-                SizeFlagsHorizontal = SizeFlags.Fill,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 1f,
             };
             vBox.AddChild(box);
@@ -636,7 +623,7 @@ namespace Content.Client.UserInterface
                 Sprite = sprite,
                 Scale = (6, 6),
                 OverrideDirection = Direction.East,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                VerticalAlignment = VAlignment.Center,
                 SizeFlagsStretchRatio = 1
             };
             box.AddChild(_previewSpriteSide);
@@ -831,12 +818,12 @@ namespace Content.Client.UserInterface
         private class JobPrioritySelector : Control
         {
             public JobPrototype Job { get; }
-            private readonly OptionButton _optionButton;
+            private readonly RadioOptions<int> _optionButton;
 
             public JobPriority Priority
             {
-                get => (JobPriority) _optionButton.SelectedId;
-                set => _optionButton.SelectId((int) value);
+                get => (JobPriority) _optionButton.SelectedValue;
+                set => _optionButton.SelectByValue((int) value);
             }
 
             public event Action<JobPriority> PriorityChanged;
@@ -844,7 +831,14 @@ namespace Content.Client.UserInterface
             public JobPrioritySelector(JobPrototype job)
             {
                 Job = job;
-                _optionButton = new OptionButton();
+                _optionButton = new RadioOptions<int>(RadioOptionsLayout.Horizontal);
+
+                _optionButton.FirstButtonStyle = StyleBase.ButtonOpenRight;
+                _optionButton.ButtonStyle = StyleBase.ButtonOpenBoth;
+                _optionButton.LastButtonStyle = StyleBase.ButtonOpenLeft;
+
+
+                // Text, Value
                 _optionButton.AddItem(Loc.GetString("High"), (int) JobPriority.High);
                 _optionButton.AddItem(Loc.GetString("Medium"), (int) JobPriority.Medium);
                 _optionButton.AddItem(Loc.GetString("Low"), (int) JobPriority.Low);
@@ -852,7 +846,7 @@ namespace Content.Client.UserInterface
 
                 _optionButton.OnItemSelected += args =>
                 {
-                    _optionButton.SelectId(args.Id);
+                    _optionButton.Select(args.Id);
                     PriorityChanged?.Invoke(Priority);
                 };
 
@@ -864,7 +858,8 @@ namespace Content.Client.UserInterface
 
                 if (job.Icon != null)
                 {
-                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), job.Icon);
+                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"),
+                        job.Icon);
                     icon.Texture = specifier.Frame0();
                 }
 
@@ -873,7 +868,7 @@ namespace Content.Client.UserInterface
                     Children =
                     {
                         icon,
-                        new Label {Text = job.Name, CustomMinimumSize = (175, 0)},
+                        new Label {Text = job.Name, MinSize = (175, 0)},
                         _optionButton
                     }
                 });
@@ -920,6 +915,7 @@ namespace Content.Client.UserInterface
                     }
                 });
             }
+
             private void OnCheckBoxToggled(BaseButton.ButtonToggledEventArgs args)
             {
                 PreferenceChanged?.Invoke(Preference);

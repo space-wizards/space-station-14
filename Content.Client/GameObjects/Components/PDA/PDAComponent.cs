@@ -1,9 +1,8 @@
 using Content.Shared.GameObjects.Components.PDA;
-using Robust.Client.GameObjects.EntitySystems;
+using Robust.Client.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.PDA

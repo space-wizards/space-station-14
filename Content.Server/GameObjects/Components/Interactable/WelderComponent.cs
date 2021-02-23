@@ -1,7 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
+using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
@@ -10,15 +11,16 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -28,7 +30,8 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     [ComponentReference(typeof(ToolComponent))]
     [ComponentReference(typeof(IToolComponent))]
-    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange
+    [ComponentReference(typeof(IHotItem))]
+    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange, IHotItem, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -73,6 +76,11 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
+        bool IHotItem.IsCurrentlyHot()
+        {
+            return WelderLit;
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -91,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             serializer.DataField(this, collection => WeldSoundCollection, "weldSoundCollection", string.Empty);
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new WelderComponentState(FuelCapacity, Fuel, WelderLit);
         }
@@ -207,7 +215,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             return ToggleWelderStatus(eventArgs.User);
         }
@@ -251,7 +259,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         }
 
-        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             string othersMessage;
             string selfMessage;
@@ -284,6 +292,41 @@ namespace Content.Server.GameObjects.Components.Interactable
         public void SolutionChanged(SolutionChangeEventArgs eventArgs)
         {
             Dirty();
+        }
+
+
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        {
+            if (eventArgs.Target == null || !eventArgs.CanReach)
+            {
+                return false;
+            }
+
+            if (eventArgs.Target.TryGetComponent(out ReagentTankComponent? tank)
+                && tank.TankType == ReagentTankType.Fuel
+                && eventArgs.Target.TryGetComponent(out ISolutionInteractionsComponent? targetSolution)
+                && targetSolution.CanDrain
+                && _solutionComponent != null)
+            {
+                if (WelderLit)
+                {
+                    // Oh no no
+                    eventArgs.Target.SpawnExplosion();
+                    return true;
+                }
+
+                var trans = ReagentUnit.Min(_solutionComponent.EmptyVolume, targetSolution.DrainAvailable);
+                if (trans > 0)
+                {
+                    var drained = targetSolution.Drain(trans);
+                    _solutionComponent.TryAddSolution(drained);
+
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/refill.ogg", Owner);
+                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("Welder refueled"));
+                }
+            }
+
+            return true;
         }
     }
 }

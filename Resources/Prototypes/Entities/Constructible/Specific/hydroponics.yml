@@ -27,19 +27,20 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      50:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Sprite
-    sprite: Constructible/Hydroponics/hydro_tools.rsi
+    sprite: Constructible/Hydroponics/misc.rsi
     state: soil
   - type: PlantHolder
     drawWarnings: false
   - type: SolutionContainer
     maxVol: 200
-    caps: AddTo, NoExamine
-  - type: Pourable
+    caps: Refillable
   - type: SnapGrid
     offset: Center
   - type: Appearance
@@ -59,7 +60,7 @@
     snap: true
   - type: Pullable
   - type: Sprite
-    sprite: Constructible/Hydroponics/hydro_tools.rsi
+    sprite: Constructible/Hydroponics/containers.rsi
     state: hydrotray3
   - type: PlantHolder
     drawWarnings: true

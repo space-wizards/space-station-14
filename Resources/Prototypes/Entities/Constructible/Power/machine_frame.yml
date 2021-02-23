@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: UnfinishedMachineFrame
   name: machine frame
+  description: "A machine under construction. Needs more parts."
   suffix: Unfinished
   placement:
     mode: SnapgridCenter
@@ -28,8 +29,18 @@
     - type: Construction
       graph: machine
       node: missingWires
-    - type: BreakableConstruction
-      node: start
+    - type: Damageable
+      resistances: metallicResistances
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:ChangeConstructionNodeBehavior
+          node: start
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
     - type: Sprite
       sprite: "Constructible/Misc/stock_parts.rsi"
       state: "box_0"
@@ -64,8 +75,18 @@
     - type: Construction
       graph: machine
       node: machineFrame
-    - type: BreakableConstruction
-      node: missingWires
+    - type: Damageable
+      resistances: metallicResistances
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:ChangeConstructionNodeBehavior
+          node: missingWires
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
     - type: MachineFrame
     - type: Sprite
       netsync: false

@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.TileReactions
     {
         private float _coolingTemperature = 2f;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _coolingTemperature, "coolingTemperature", 2f);
         }

@@ -1,3 +1,4 @@
+// ReSharper disable ArrangeTrailingCommaInMultilineLists
 namespace Content.Client
 {
     public static class IgnoredComponents
@@ -6,7 +7,6 @@ namespace Content.Client
         {
             "Anchorable",
             "AmmoBox",
-            "Breakable",
             "Pickaxe",
             "Interactable",
             "CloningPod",
@@ -31,7 +31,6 @@ namespace Content.Client
             "MeleeChemicalInjector",
             "Dice",
             "Construction",
-            "Door",
             "PoweredLight",
             "Smes",
             "LightBulb",
@@ -165,17 +164,19 @@ namespace Content.Client
             "Firelock",
             "AtmosPlaque",
             "Spillable",
+            "StorageCounter",
             "SpaceVillainArcade",
             "Flammable",
             "CreamPie",
             "CreamPied",
+            "Smoking",
+            "Matchstick",
+            "Matchbox",
             "BlockGameArcade",
-            "KitchenSpike",
             "Butcherable",
             "Rehydratable",
             "Headset",
             "ComputerBoard",
-            "BreakableConstruction",
             "GasCanister",
             "GasCanisterPort",
             "Cleanable",
@@ -229,8 +230,21 @@ namespace Content.Client
             "CargoTelepad",
             "TraitorDeathMatchRedemption",
             "GlassBeaker",
+            "SliceableFood",
             "DamageOtherOnHit",
-            "DamageOnLand"
+            "DamageOnLand",
+            "SmokeSolutionAreaEffect",
+            "FoamSolutionAreaEffect",
+            "GasFilter",
+            "Recyclable",
+            "SecretStash",
+            "Toilet",
+            "ClusterFlash",
+            "GasGenerator",
+            "SolutionTransfer",
+            "Shovel",
+            "ReagentTank",
+            "UtilityAI",
         };
     }
 }

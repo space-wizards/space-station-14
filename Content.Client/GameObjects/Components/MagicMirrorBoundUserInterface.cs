@@ -3,13 +3,12 @@ using System.Linq;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Preferences.Appearance;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects.Components.Renderable;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.SharedMagicMirrorComponent;
@@ -142,8 +141,8 @@ namespace Content.Client.GameObjects.Components
 
             Items = new ItemList
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                CustomMinimumSize = (300, 250)
+                VerticalExpand = true,
+                MinSize = (300, 250)
             };
             vBox.AddChild(Items);
             Items.OnItemSelected += ItemSelected;
@@ -208,13 +207,13 @@ namespace Content.Client.GameObjects.Components
                 _slider = new Slider
                 {
                     StyleClasses = {styleClass},
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                    HorizontalExpand = true,
+                    VerticalAlignment = VAlignment.Center,
                     MaxValue = byte.MaxValue
                 };
                 _textBox = new LineEdit
                 {
-                    CustomMinimumSize = (50, 0)
+                    MinSize = (50, 0)
                 };
 
                 AddChild(new HBoxContainer
@@ -396,18 +395,17 @@ namespace Content.Client.GameObjects.Components
         private readonly FacialHairStylePicker _facialHairStylePicker;
         private readonly EyeColorPicker _eyeColorPicker;
 
-        protected override Vector2? CustomSize => (500, 360);
-
         public MagicMirrorWindow(MagicMirrorBoundUserInterface owner)
         {
+            SetSize = MinSize = (500, 360);
             Title = Loc.GetString("Magic Mirror");
 
-            _hairStylePicker = new HairStylePicker {SizeFlagsHorizontal = SizeFlags.FillExpand};
+            _hairStylePicker = new HairStylePicker {HorizontalExpand = true};
             _hairStylePicker.Populate();
             _hairStylePicker.OnHairStylePicked += newStyle => owner.HairSelected(newStyle, false);
             _hairStylePicker.OnHairColorPicked += newColor => owner.HairColorSelected(newColor, false);
 
-            _facialHairStylePicker = new FacialHairStylePicker {SizeFlagsHorizontal = SizeFlags.FillExpand};
+            _facialHairStylePicker = new FacialHairStylePicker {HorizontalExpand = true};
             _facialHairStylePicker.Populate();
             _facialHairStylePicker.OnHairStylePicked += newStyle => owner.HairSelected(newStyle, true);
             _facialHairStylePicker.OnHairColorPicked += newColor => owner.HairColorSelected(newColor, true);

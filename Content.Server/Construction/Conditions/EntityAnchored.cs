@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -13,7 +12,7 @@ namespace Content.Server.Construction.Conditions
     {
         public bool Anchored { get; private set; }
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Anchored, "anchored", true);
         }

@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Morgue

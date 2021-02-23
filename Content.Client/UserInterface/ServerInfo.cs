@@ -14,7 +14,7 @@ namespace Content.Client.UserInterface
         {
             _richTextLabel = new RichTextLabel
             {
-                SizeFlagsVertical = SizeFlags.FillExpand
+                VerticalExpand = true
             };
             AddChild(_richTextLabel);
 

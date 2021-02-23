@@ -2,7 +2,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Combat.Melee
@@ -22,9 +22,9 @@ namespace Content.Server.AI.Operators.Combat.Melee
             _burstTime = burstTime;
         }
 
-        public override bool TryStartup()
+        public override bool Startup()
         {
-            if (!base.TryStartup())
+            if (!base.Startup())
             {
                 return true;
             }
@@ -42,13 +42,17 @@ namespace Content.Server.AI.Operators.Combat.Melee
             return true;
         }
 
-        public override void Shutdown(Outcome outcome)
+        public override bool Shutdown(Outcome outcome)
         {
-            base.Shutdown(outcome);
+            if (!base.Shutdown(outcome))
+                return false;
+
             if (_owner.TryGetComponent(out CombatModeComponent combatModeComponent))
             {
                 combatModeComponent.IsInCombatMode = false;
             }
+
+            return true;
         }
 
         public override Outcome Execute(float frameTime)

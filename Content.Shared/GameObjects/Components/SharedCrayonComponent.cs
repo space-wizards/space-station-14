@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -74,6 +73,8 @@ namespace Content.Shared.GameObjects.Components
     [Serializable, NetSerializable, Prototype("crayonDecal")]
     public class CrayonDecalPrototype : IPrototype
     {
+        public string ID { get; private set; }
+
         private string _spritePath;
         public string SpritePath => _spritePath;
 
@@ -84,6 +85,7 @@ namespace Content.Shared.GameObjects.Components
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
+            serializer.DataField(this, x => x.ID, "id", string.Empty);
             serializer.DataField(ref _spritePath, "spritePath", "");
             serializer.DataField(ref _decals, "decals", new List<string>());
         }

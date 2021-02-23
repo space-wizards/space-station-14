@@ -9,7 +9,6 @@
   "states": [
     {
       "name": "bike_horn",
-      "directions": 1,
       "delays": [
         [
           1
@@ -18,16 +17,6 @@
     },
     {
       "name": "drum",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "trumpet",
-      "directions": 1,
       "delays": [
         [
           1
@@ -36,7 +25,6 @@
     },
     {
       "name": "drum_bongo",
-      "directions": 1,
       "delays": [
         [
           1
@@ -45,7 +33,6 @@
     },
     {
       "name": "drum_makeshift",
-      "directions": 1,
       "delays": [
         [
           1

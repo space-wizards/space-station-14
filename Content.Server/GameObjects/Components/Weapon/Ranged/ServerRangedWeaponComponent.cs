@@ -5,27 +5,21 @@ using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged
@@ -35,7 +29,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
 
         private TimeSpan _lastFireTime;
 
@@ -126,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             }
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new RangedWeaponComponentState(FireRateSelector);
         }
@@ -161,9 +154,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
             _lastFireTime = curTime;
 
-            if (ClumsyCheck &&
-                user.HasComponent<ClumsyComponent>() &&
-                _random.Prob(ClumsyExplodeChance))
+            if (ClumsyCheck && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
                 var soundSystem = EntitySystem.Get<AudioSystem>();
                 soundSystem.PlayAtCoords("/Audio/Items/bikehorn.ogg",

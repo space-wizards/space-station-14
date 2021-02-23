@@ -8,8 +8,7 @@
   components:
   - type: SolutionContainer
     maxVol: 50
-    caps: AddTo, RemoveFrom
-  - type: Pourable
+  - type: SolutionTransfer
     transferAmount: 5
   - type: Drink
   - type: Sprite
@@ -27,17 +26,20 @@
   - type: Damageable
   - type: Destructible
     thresholds:
-      5:
-        behaviors:
-        - !type:PlaySoundCollectionBehavior
-          soundCollection: WindowBreak
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            ShardGlass:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: DamageOnLand
     amount: 5
   - type: DamageOtherOnHit
@@ -47,6 +49,7 @@
 # Transformable container - normal glass
 - type: entity
   name: Drinking glass
+  description: A drinking glass.
   parent: DrinkGlassBase
   id: DrinkGlass
   components:
@@ -55,8 +58,7 @@
   - type: SolutionContainer
     fillingState: glass
     maxVol: 50
-    caps: AddTo, RemoveFrom
-  - type: Pourable
+  - type: SolutionTransfer
     transferAmount: 5
   - type: TransformableContainer
 

@@ -39,7 +39,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
                 if (entity.TryGetComponent(out ClothingComponent clothing) &&
                     (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.HEAD) != 0)
                 {
-                    yield return new EquipHead(owner, entity, Bonus);
+                    yield return new EquipHead {Owner = owner, Target = entity, Bonus = Bonus};
                 }
             }
         }

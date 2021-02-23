@@ -2,18 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Botany;
-using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
@@ -72,7 +66,7 @@ namespace Content.Server.Botany
     }
 
     [Prototype("seed")]
-    public class Seed : IPrototype, IIndexedPrototype, IExposeData
+    public class Seed : IPrototype, IExposeData
     {
         private const string SeedPrototype = "SeedBase";
 
@@ -146,7 +140,12 @@ namespace Content.Server.Botany
         #endregion
 
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
+        {
+            InternalExposeData(serializer);
+        }
+
+        public void InternalExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.ID, "id", string.Empty);
             serializer.DataField(this, x => x.Name, "name", string.Empty);
@@ -190,7 +189,7 @@ namespace Content.Server.Botany
         public void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
-            ExposeData(serializer);
+            InternalExposeData(serializer);
         }
 
         public Seed Clone()

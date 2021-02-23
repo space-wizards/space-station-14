@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Random;

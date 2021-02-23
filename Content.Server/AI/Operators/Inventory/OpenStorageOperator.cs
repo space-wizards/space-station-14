@@ -5,7 +5,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Shared.Containers;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Operators.Inventory
 {

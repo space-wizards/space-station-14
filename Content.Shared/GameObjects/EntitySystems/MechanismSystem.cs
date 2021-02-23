@@ -1,7 +1,6 @@
-﻿using Content.Shared.GameObjects.Components.Body.Behavior;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
+﻿using Content.Shared.GameObjects.Components.Body.Mechanism;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -12,7 +11,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var mechanism in ComponentManager.EntityQuery<IMechanism>())
+            foreach (var mechanism in ComponentManager.EntityQuery<IMechanism>(true))
             {
                 mechanism.Update(frameTime);
             }

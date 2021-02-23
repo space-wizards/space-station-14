@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
@@ -10,9 +10,9 @@ namespace Content.Shared.Maps
 {
     [UsedImplicitly]
     [Prototype("tile")]
-    public sealed class ContentTileDefinition : IPrototype, IIndexedPrototype, ITileDefinition
+    public sealed class ContentTileDefinition : IPrototype, ITileDefinition
     {
-        string IIndexedPrototype.ID => Name;
+        string IPrototype.ID => Name;
 
         public string Name { get; private set; }
         public ushort TileId { get; private set; }

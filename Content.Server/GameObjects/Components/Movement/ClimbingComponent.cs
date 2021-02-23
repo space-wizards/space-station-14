@@ -3,12 +3,13 @@ using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedClimbingComponent))]
     public class ClimbingComponent : SharedClimbingComponent
     {
         private bool _isClimbing;
@@ -79,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Movement
             IsOnClimbableThisFrame = false;
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new ClimbModeComponentState(_isClimbing);
         }

@@ -9,14 +9,9 @@ using Content.Shared.Arcade;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
@@ -53,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             }
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
@@ -119,6 +114,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+                UserInterface.OnClosed += UnRegisterPlayerSession;
             }
             _game = new BlockGame(this);
         }
@@ -136,9 +132,6 @@ namespace Content.Server.GameObjects.Components.Arcade
         {
             switch (obj.Message)
             {
-                case BlockGameMessages.BlockGameUserUnregisterMessage unregisterMessage:
-                    UnRegisterPlayerSession(obj.Session);
-                    break;
                 case BlockGameMessages.BlockGamePlayerActionMessage playerActionMessage:
                     if (obj.Session != _player) break;
 

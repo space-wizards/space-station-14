@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Storage;
@@ -12,24 +14,14 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.EntitySystemMessages;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -41,13 +33,16 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct
+    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
     {
         private const string LoggerName = "Storage";
 
         private Container? _storage;
+        private readonly Dictionary<IEntity, int> _sizeCache = new();
 
         private bool _occludesLight;
+        private bool _quickInsert; //Can insert storables by "attacking" them with the storage entity
+        private bool _areaInsert;  //"Attacking" with the storage entity causes it to insert all nearby storables after a delay
         private bool _storageInitialCalculated;
         private int _storageUsed;
         private int _storageCapacityMax;
@@ -149,7 +144,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
 
-            _storageUsed += message.Entity.GetComponent<StorableComponent>().Size;
+            var size = 0;
+            if (message.Entity.TryGetComponent(out StorableComponent? storable))
+                size = storable.Size;
+
+            _storageUsed += size;
+            _sizeCache[message.Entity] = size;
 
             UpdateClientInventories();
         }
@@ -165,15 +165,15 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner}) had entity (UID {message.Entity}) removed from it.");
 
-            if (!message.Entity.TryGetComponent(out StorableComponent? storable))
+            if (!_sizeCache.TryGetValue(message.Entity, out var size))
             {
-                Logger.WarningS(LoggerName, $"Removed entity {message.Entity} without a StorableComponent from storage {Owner} at {Owner.Transform.MapPosition}");
+                Logger.WarningS(LoggerName, $"Removed entity {message.Entity} without a cached size from storage {Owner} at {Owner.Transform.MapPosition}");
 
                 RecalculateStorageUsed();
                 return;
             }
 
-            _storageUsed -= storable.Size;
+            _storageUsed -= size;
 
             UpdateClientInventories();
         }
@@ -183,7 +183,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         /// </summary>
         /// <param name="player">The player to insert an entity from</param>
         /// <returns>true if inserted, false otherwise</returns>
-        public bool PlayerInsertEntity(IEntity player)
+        public bool PlayerInsertHeldEntity(IEntity player)
         {
             EnsureInitialCalculated();
 
@@ -208,6 +208,24 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return false;
             }
 
+            return true;
+        }
+
+        /// <summary>
+        ///     Inserts an Entity (<paramref name="toInsert"/>) in the world into storage, informing <paramref name="player"/> if it fails.
+        ///     <paramref name="toInsert"/> is *NOT* held, see <see cref="PlayerInsertHeldEntity(IEntity)"/>.
+        /// </summary>
+        /// <param name="player">The player to insert an entity with</param>
+        /// <returns>true if inserted, false otherwise</returns>
+        public bool PlayerInsertEntityInWorld(IEntity player, IEntity toInsert)
+        {
+            EnsureInitialCalculated();
+
+            if (!Insert(toInsert))
+            {
+                Owner.PopupMessage(player, "Can't insert.");
+                return false;
+            }
             return true;
         }
 
@@ -342,6 +360,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             serializer.DataField(ref _storageCapacityMax, "capacity", 10000);
             serializer.DataField(ref _occludesLight, "occludesLight", true);
+            serializer.DataField(ref _quickInsert, "quickInsert", false);
+            serializer.DataField(ref _areaInsert, "areaInsert", false);
             serializer.DataField(this, x => x.StorageSoundCollection, "storageSoundCollection", string.Empty);
             //serializer.DataField(ref StorageUsed, "used", 0);
         }
@@ -417,7 +437,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                         break;
                     }
 
-                    PlayerInsertEntity(player);
+                    PlayerInsertHeldEntity(player);
 
                     break;
                 }
@@ -448,7 +468,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return false;
             }
 
-            return PlayerInsertEntity(eventArgs.User);
+            return PlayerInsertHeldEntity(eventArgs.User);
         }
 
         /// <summary>
@@ -466,6 +486,97 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             ((IUse) this).UseEntity(new UseEntityEventArgs { User = eventArgs.User });
+        }
+
+        /// <summary>
+        /// Allows a user to pick up entities by clicking them, or pick up all entities in a certain radius
+        /// arround a click.
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        /// <returns></returns>
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        {
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return false;
+
+            // Pick up all entities in a radius around the clicked location.
+            // The last half of the if is because carpets exist and this is terrible
+            if(_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<StorableComponent>()))
+            {
+                var validStorables = new List<IEntity>();
+                foreach (var entity in Owner.EntityManager.GetEntitiesInRange(eventArgs.ClickLocation, 1))
+                {
+                    if (!entity.Transform.IsMapTransform
+                        || entity == eventArgs.User
+                        || !entity.HasComponent<StorableComponent>())
+                        continue;
+                    validStorables.Add(entity);
+                }
+
+                //If there's only one then let's be generous
+                if (validStorables.Count > 1)
+                {
+                    var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+                    var doAfterArgs = new DoAfterEventArgs(eventArgs.User, 0.2f * validStorables.Count, CancellationToken.None, Owner)
+                    {
+                        BreakOnStun = true,
+                        BreakOnDamage = true,
+                        BreakOnUserMove = true,
+                        NeedHand = true,
+                    };
+                    var result = await doAfterSystem.DoAfter(doAfterArgs);
+                    if (result != DoAfterStatus.Finished) return true;
+                }
+
+                var successfullyInserted = new List<EntityUid>();
+                var successfullyInsertedPositions = new List<EntityCoordinates>();
+                foreach (var entity in validStorables)
+                {
+                    // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
+                    if (!entity.Transform.IsMapTransform
+                        || entity == eventArgs.User
+                        || !entity.HasComponent<StorableComponent>())
+                        continue;
+                    var coords = entity.Transform.Coordinates;
+                    if (PlayerInsertEntityInWorld(eventArgs.User, entity))
+                    {
+                        successfullyInserted.Add(entity.Uid);
+                        successfullyInsertedPositions.Add(coords);
+                    }
+                }
+
+                // If we picked up atleast one thing, play a sound and do a cool animation!
+                if (successfullyInserted.Count>0)
+                {
+                    PlaySoundCollection(StorageSoundCollection);
+                    SendNetworkMessage(
+                        new AnimateInsertingEntitiesMessage(
+                            successfullyInserted,
+                            successfullyInsertedPositions
+                        )
+                    );
+                }
+                return true;
+            }
+            // Pick up the clicked entity
+            else if(_quickInsert)
+            {
+                if (eventArgs.Target == null
+                    || !eventArgs.Target.Transform.IsMapTransform
+                    || eventArgs.Target == eventArgs.User
+                    || !eventArgs.Target.HasComponent<StorableComponent>())
+                    return false;
+                var position = eventArgs.Target.Transform.Coordinates;
+                if(PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
+                {
+                    SendNetworkMessage(new AnimateInsertingEntitiesMessage(
+                        new List<EntityUid>() { eventArgs.Target.Uid },
+                        new List<EntityCoordinates>() { position }
+                    ));
+                    return true;
+                }
+                return true;
+            }
+            return false;
         }
 
         void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)

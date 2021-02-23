@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Maths;
+using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
+using System;
 
 namespace Content.Shared.Atmos
 {
@@ -166,16 +168,16 @@ namespace Content.Shared.Atmos
         public const float FireMinimumTemperatureToExist = T0C + 100f;
         public const float FireMinimumTemperatureToSpread = T0C + 150f;
         public const float FireSpreadRadiosityScale = 0.85f;
-        public const float FirePhoronEnergyReleased = 3000000f;
+        public const float FirePlasmaEnergyReleased = 3000000f;
         public const float FireGrowthRate = 40000f;
 
         public const float SuperSaturationThreshold = 96f;
 
         public const float OxygenBurnRateBase = 1.4f;
-        public const float PhoronMinimumBurnTemperature = (100f+T0C);
-        public const float PhoronUpperTemperature = (1370f+T0C);
-        public const float PhoronOxygenFullburn = 10f;
-        public const float PhoronBurnRateDelta = 9f;
+        public const float PlasmaMinimumBurnTemperature = (100f+T0C);
+        public const float PlasmaUpperTemperature = (1370f+T0C);
+        public const float PlasmaOxygenFullburn = 10f;
+        public const float PlasmaBurnRateDelta = 9f;
 
         /// <summary>
         ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
@@ -246,12 +248,13 @@ namespace Content.Shared.Atmos
     /// <summary>
     ///     Gases to Ids. Keep these updated with the prototypes!
     /// </summary>
+    [Serializable, NetSerializable]
     public enum Gas : sbyte
     {
         Oxygen = 0,
         Nitrogen = 1,
         CarbonDioxide = 2,
-        Phoron = 3,
+        Plasma = 3,
         Tritium = 4,
         WaterVapor = 5,
     }

@@ -34,10 +34,9 @@ namespace Content.Client.GameObjects.Components.Access
         private string _lastFullName;
         private string _lastJobTitle;
 
-        protected override Vector2? CustomSize => (650, 270);
-
         public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager)
         {
+            MinSize = SetSize = (650, 270);
             _owner = owner;
             var vBox = new VBoxContainer();
 
@@ -60,7 +59,7 @@ namespace Content.Client.GameObjects.Components.Access
             _targetIdButton.OnPressed += _ => _owner.ButtonPressed(UiButton.TargetId);
 
             // Separator
-            vBox.AddChild(new Control {CustomMinimumSize = (0, 8)});
+            vBox.AddChild(new Control {MinSize = (0, 8)});
 
             // Name and job title line edits.
             vBox.AddChild(new GridContainer
@@ -76,7 +75,7 @@ namespace Content.Client.GameObjects.Components.Access
                     }),
                     (_fullNameLineEdit = new LineEdit
                     {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        HorizontalExpand = true,
                     }),
                     (_fullNameSaveButton = new Button
                     {
@@ -91,7 +90,7 @@ namespace Content.Client.GameObjects.Components.Access
                     }),
                     (_jobTitleLineEdit = new LineEdit
                     {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand
+                        HorizontalExpand = true
                     }),
                     (_jobTitleSaveButton = new Button
                     {
@@ -116,13 +115,13 @@ namespace Content.Client.GameObjects.Components.Access
             _jobTitleSaveButton.OnPressed += _ => SubmitData();
 
             // Separator
-            vBox.AddChild(new Control {CustomMinimumSize = (0, 8)});
+            vBox.AddChild(new Control {MinSize = (0, 8)});
 
             {
                 var grid = new GridContainer
                 {
                     Columns = 5,
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                    HorizontalAlignment = HAlignment.Center
                 };
                 vBox.AddChild(grid);
 

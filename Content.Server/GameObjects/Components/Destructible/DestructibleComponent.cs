@@ -4,8 +4,6 @@ using Content.Server.GameObjects.Components.Destructible.Thresholds;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -22,22 +20,15 @@ namespace Content.Server.GameObjects.Components.Destructible
 
         public override string Name => "Destructible";
 
-        [ViewVariables]
-        private SortedDictionary<int, Threshold> _lowestToHighestThresholds = new();
+        [ViewVariables] private List<Threshold> _thresholds = new();
 
-        [ViewVariables] private int PreviousTotalDamage { get; set; }
-
-        public IReadOnlyDictionary<int, Threshold> LowestToHighestThresholds => _lowestToHighestThresholds;
+        public IReadOnlyList<Threshold> Thresholds => _thresholds;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataReadWriteFunction(
-                "thresholds",
-                new Dictionary<int, Threshold>(),
-                thresholds => _lowestToHighestThresholds = new SortedDictionary<int, Threshold>(thresholds),
-                () => new Dictionary<int, Threshold>(_lowestToHighestThresholds));
+            serializer.DataField(ref _thresholds, "thresholds", new List<Threshold>());
         }
 
         public override void Initialize()
@@ -60,31 +51,16 @@ namespace Content.Server.GameObjects.Components.Destructible
                         break;
                     }
 
-                    foreach (var (damage, threshold) in _lowestToHighestThresholds)
+                    foreach (var threshold in _thresholds)
                     {
-                        if (threshold.Triggered)
+                        if (threshold.Reached(msg.Damageable, _destructibleSystem))
                         {
-                            if (threshold.TriggersOnce)
-                            {
-                                continue;
-                            }
-
-                            if (PreviousTotalDamage >= damage)
-                            {
-                                continue;
-                            }
-                        }
-
-                        if (msg.Damageable.TotalDamage >= damage)
-                        {
-                            var thresholdMessage = new DestructibleThresholdReachedMessage(this, threshold, msg.Damageable.TotalDamage, damage);
+                            var thresholdMessage = new DestructibleThresholdReachedMessage(this, threshold);
                             SendMessage(thresholdMessage);
 
-                            threshold.Trigger(Owner, _destructibleSystem);
+                            threshold.Execute(Owner, _destructibleSystem);
                         }
                     }
-
-                    PreviousTotalDamage = msg.Damageable.TotalDamage;
 
                     break;
                 }

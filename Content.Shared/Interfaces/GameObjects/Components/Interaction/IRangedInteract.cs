@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
@@ -10,6 +10,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     /// This interface gives components behavior when being clicked on by a user with an object
     /// outside the range of direct use
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IRangedInteract
     {
         /// <summary>

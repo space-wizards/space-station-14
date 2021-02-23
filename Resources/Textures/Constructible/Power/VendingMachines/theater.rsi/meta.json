@@ -8,16 +8,13 @@
     "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/commit/a7290010020e541ed6b57817a07023ca6bef26fe",
     "states": [
         {
-            "name": "normal-unshaded",
-            "directions": 1
+            "name": "normal-unshaded"
         },
         {
-            "name": "broken",
-            "directions": 1
+            "name": "broken"
         },
         {
             "name": "deny-unshaded",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -27,12 +24,10 @@
             ]
         },
         {
-            "name": "off",
-            "directions": 1
+            "name": "off"
         },
         {
             "name": "screen",
-            "directions": 1,
             "delays": [
                 [
                     3.0,
@@ -41,12 +36,10 @@
             ]
         },
         {
-            "name": "panel",
-            "directions": 1
+            "name": "panel"
         },
         {
             "name": "eject-unshaded",
-            "directions": 1,
             "delays": [
                 [
                     0.1,

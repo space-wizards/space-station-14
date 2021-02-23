@@ -1,6 +1,6 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 
@@ -50,7 +50,11 @@ namespace Content.Shared.GameObjects.Components
 
             public override string ToString()
             {
-                return Loc.GetString("{0}: {1:0.##} mol", Name, Amount);
+                // e.g. "Plasma: 2000 mol"
+                return Loc.GetString(
+                    "gas-entry-info",
+                     ("gasName", Name),
+                     ("gasAmount", Amount));
             }
         }
 

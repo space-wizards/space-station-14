@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -6,13 +7,12 @@ using Content.Server.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Buckle;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Utility;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
@@ -23,10 +23,14 @@ namespace Content.IntegrationTests.Tests.Buckle
     [TestOf(typeof(StrapComponent))]
     public class BuckleTest : ContentIntegrationTest
     {
-        private const string PROTOTYPES = @"
+        private const string BuckleDummyId = "BuckleDummy";
+        private const string StrapDummyId = "StrapDummy";
+        private const string ItemDummyId = "ItemDummy";
+
+        private static readonly string Prototypes = $@"
 - type: entity
-  name: BuckleDummy
-  id: BuckleDummy
+  name: {BuckleDummyId}
+  id: {BuckleDummyId}
   components:
   - type: Buckle
   - type: Hands
@@ -36,16 +40,23 @@ namespace Content.IntegrationTests.Tests.Buckle
     centerSlot: torso
 
 - type: entity
-  name: StrapDummy
-  id: StrapDummy
+  name: {StrapDummyId}
+  id: {StrapDummyId}
   components:
   - type: Strap
+
+- type: entity
+  name: {ItemDummyId}
+  id: {ItemDummyId}
+  components:
+  - type: Item
 ";
         [Test]
         public async Task BuckleUnbuckleCooldownRangeTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
-            var server = StartServerDummyTicker(options);
+            var cOptions = new ClientIntegrationOptions {ExtraPrototypes = Prototypes};
+            var sOptions = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
+            var (client, server) = await StartConnectedServerClientPair(cOptions, sOptions);
 
             IEntity human = null;
             IEntity chair = null;
@@ -55,13 +66,14 @@ namespace Content.IntegrationTests.Tests.Buckle
             await server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
-
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
-
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                human = entityManager.SpawnEntity("BuckleDummy", MapCoordinates.Nullspace);
-                chair = entityManager.SpawnEntity("StrapDummy", MapCoordinates.Nullspace);
+                var gridId = new GridId(1);
+                var grid = mapManager.GetGrid(gridId);
+                var coordinates = grid.GridEntityId.ToCoordinates();
+
+                human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
+                chair = entityManager.SpawnEntity(StrapDummyId, coordinates);
 
                 // Default state, unbuckled
                 Assert.True(human.TryGetComponent(out buckle));
@@ -82,7 +94,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.TryBuckle(human, chair));
                 Assert.NotNull(buckle.BuckledTo);
                 Assert.True(buckle.Buckled);
-                Assert.True(((BuckleComponentState) buckle.GetComponentState()).Buckled);
+
+                var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
+                Assert.True(((BuckleComponentState) buckle.GetComponentState(player)).Buckled);
                 Assert.False(ActionBlockerSystem.CanMove(human));
                 Assert.False(ActionBlockerSystem.CanChangeDirection(human));
                 Assert.False(EffectBlockerSystem.CanFall(human));
@@ -194,34 +208,27 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task BuckledDyingDropItemsTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
-            IEntity human;
-            IEntity chair;
+            IEntity human = null;
             BuckleComponent buckle = null;
             HandsComponent hands = null;
             IBody body = null;
 
+            await server.WaitIdleAsync();
+
             await server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
-
-                var mapId = new MapId(1);
-                mapManager.CreateNewMapEntity(mapId);
-
                 var entityManager = IoCManager.Resolve<IEntityManager>();
+
                 var gridId = new GridId(1);
-                var grid = mapManager.CreateGrid(mapId, gridId);
+                var grid = mapManager.GetGrid(gridId);
                 var coordinates = grid.GridEntityId.ToCoordinates();
-                var tileManager = IoCManager.Resolve<ITileDefinitionManager>();
-                var tileId = tileManager["underplating"].TileId;
-                var tile = new Tile(tileId);
 
-                grid.SetTile(coordinates, tile);
-
-                human = entityManager.SpawnEntity("BuckleDummy", coordinates);
-                chair = entityManager.SpawnEntity("StrapDummy", coordinates);
+                human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
+                IEntity chair = entityManager.SpawnEntity(StrapDummyId, coordinates);
 
                 // Component sanity check
                 Assert.True(human.TryGetComponent(out buckle));
@@ -237,7 +244,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // Put an item into every hand
                 for (var i = 0; i < hands.Count; i++)
                 {
-                    var akms = entityManager.SpawnEntity("RifleAk", coordinates);
+                    var akms = entityManager.SpawnEntity(ItemDummyId, coordinates);
 
                     // Equip items
                     Assert.True(akms.TryGetComponent(out ItemComponent item));
@@ -279,13 +286,15 @@ namespace Content.IntegrationTests.Tests.Buckle
                 {
                     Assert.Null(hands.GetItem(slot));
                 }
+
+                buckle.TryUnbuckle(human, true);
             });
         }
 
         [Test]
         public async Task ForceUnbuckleBuckleTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = PROTOTYPES};
+            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
             IEntity human = null;
@@ -295,22 +304,14 @@ namespace Content.IntegrationTests.Tests.Buckle
             await server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
-
-                var mapId = new MapId(1);
-                mapManager.CreateNewMapEntity(mapId);
-
                 var entityManager = IoCManager.Resolve<IEntityManager>();
+
                 var gridId = new GridId(1);
-                var grid = mapManager.CreateGrid(mapId, gridId);
+                var grid = mapManager.GetGrid(gridId);
                 var coordinates = grid.GridEntityId.ToCoordinates();
-                var tileManager = IoCManager.Resolve<ITileDefinitionManager>();
-                var tileId = tileManager["underplating"].TileId;
-                var tile = new Tile(tileId);
 
-                grid.SetTile(coordinates, tile);
-
-                human = entityManager.SpawnEntity("BuckleDummy", coordinates);
-                chair = entityManager.SpawnEntity("StrapDummy", coordinates);
+                human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
+                chair = entityManager.SpawnEntity(StrapDummyId, coordinates);
 
                 // Component sanity check
                 Assert.True(human.TryGetComponent(out buckle));

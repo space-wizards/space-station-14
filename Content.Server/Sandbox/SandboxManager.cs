@@ -9,14 +9,12 @@ using Content.Shared.Access;
 using Content.Shared.Sandbox;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
-using Robust.Server.Interfaces.Console;
-using Robust.Server.Interfaces.Placement;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Placement;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -31,7 +29,7 @@ namespace Content.Server.Sandbox
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IConGroupController _conGroupController = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IConsoleShell _shell = default!;
+        [Dependency] private readonly IServerConsoleHost _host = default!;
 
         private bool _isSandboxEnabled;
 
@@ -183,7 +181,7 @@ namespace Content.Server.Sandbox
 
             var player = _playerManager.GetSessionByChannel(message.MsgChannel);
 
-            _shell.ExecuteCommand(player, _conGroupController.CanCommand(player, "aghost") ? "aghost" : "ghost");
+            _host.ExecuteCommand(player, _conGroupController.CanCommand(player, "aghost") ? "aghost" : "ghost");
         }
 
         private void SandboxSuicideReceived(MsgSandboxSuicide message)
@@ -194,7 +192,7 @@ namespace Content.Server.Sandbox
             }
 
             var player = _playerManager.GetSessionByChannel(message.MsgChannel);
-            _shell.ExecuteCommand(player, "suicide");
+            _host.ExecuteCommand(player, "suicide");
         }
 
         private void UpdateSandboxStatusForAll()

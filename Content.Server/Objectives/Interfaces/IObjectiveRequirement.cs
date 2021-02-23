@@ -1,5 +1,5 @@
 ﻿using Content.Server.Mobs;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Objectives.Interfaces
 {

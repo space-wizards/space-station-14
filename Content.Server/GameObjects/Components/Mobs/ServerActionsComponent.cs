@@ -2,16 +2,14 @@
 using System;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Mobs
@@ -191,7 +189,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             var diff = targetWorldPos - player.Transform.WorldPosition;
             if (diff.LengthSquared > 0.01f)
             {
-                player.Transform.LocalRotation = new Angle(diff);
+                player.Transform.LocalRotation = Angle.FromWorldVec(diff);
             }
 
             return true;

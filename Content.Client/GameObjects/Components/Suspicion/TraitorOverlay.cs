@@ -1,13 +1,8 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Graphics.Overlays;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -64,18 +59,18 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 // Otherwise the entity can not exist yet
                 if (!_entityManager.TryGetEntity(uid, out var ally))
                 {
-                    return;
+                    continue;
                 }
 
                 if (!ally.TryGetComponent(out IPhysicsComponent physics))
                 {
-                    return;
+                    continue;
                 }
 
                 if (!ExamineSystemShared.InRangeUnOccluded(ent.Transform.MapPosition, ally.Transform.MapPosition, 15,
                     entity => entity == ent || entity == ally))
                 {
-                    return;
+                    continue;
                 }
 
                 // all entities have a TransformComponent

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -8,7 +7,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Construction
 {
     [Prototype("construction")]
-    public class ConstructionPrototype : IPrototype, IIndexedPrototype
+    public class ConstructionPrototype : IPrototype
     {
         private List<IConstructionCondition> _conditions;
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Client.Animations;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects;
@@ -11,8 +10,8 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -147,30 +146,31 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 
             public StatusControl(ClientMagazineBarrelComponent parent)
             {
+                MinHeight = 15;
                 _parent = parent;
-                SizeFlagsHorizontal = SizeFlags.FillExpand;
-                SizeFlagsVertical = SizeFlags.ShrinkCenter;
+                HorizontalExpand = true;
+                VerticalAlignment = VAlignment.Center;
 
                 AddChild(new HBoxContainer
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    HorizontalExpand = true,
                     Children =
                     {
                         (_chamberedBullet = new TextureRect
                         {
                             Texture = StaticIoC.ResC.GetTexture("/Textures/Interface/ItemStatus/Bullets/chambered_rotated.png"),
-                            SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                            SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Fill,
+                            VerticalAlignment = VAlignment.Center,
+                            HorizontalAlignment = HAlignment.Right,
                         }),
-                        new Control() { CustomMinimumSize = (5,0) },
+                        new Control() { MinSize = (5,0) },
                         new Control
                         {
-                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                            HorizontalExpand = true,
                             Children =
                             {
                                 (_bulletsList = new HBoxContainer
                                 {
-                                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                                    VerticalAlignment = VAlignment.Center,
                                     SeparationOverride = 0
                                 }),
                                 (_noMagazineLabel = new Label
@@ -180,11 +180,11 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                                 })
                             }
                         },
-                        new Control() { CustomMinimumSize = (5,0) },
+                        new Control() { MinSize = (5,0) },
                         (_ammoCount = new Label
                         {
                             StyleClasses = {StyleNano.StyleClassItemStatus},
-                            SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                            HorizontalAlignment = HAlignment.Right,
                         }),
                     }
                 });
@@ -233,8 +233,6 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                     {
                         Texture = texture,
                         ModulateSelfOverride = altColor ? colorGoneA : colorGoneB,
-                        SizeFlagsHorizontal = SizeFlags.Fill,
-                        SizeFlagsVertical = SizeFlags.Fill,
                         Stretch = TextureRect.StretchMode.KeepCentered
                     });
 
@@ -249,18 +247,11 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                     {
                         Texture = texture,
                         ModulateSelfOverride = altColor ? colorA : colorB,
-                        SizeFlagsHorizontal = SizeFlags.Fill,
-                        SizeFlagsVertical = SizeFlags.Fill,
                         Stretch = TextureRect.StretchMode.KeepCentered
                     });
 
                     altColor ^= true;
                 }
-            }
-
-            protected override Vector2 CalculateMinimumSize()
-            {
-                return Vector2.ComponentMax((0, 15), base.CalculateMinimumSize());
             }
 
             public void PlayAlarmAnimation()

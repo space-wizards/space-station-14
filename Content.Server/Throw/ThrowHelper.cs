@@ -1,19 +1,15 @@
 using System;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Throw
 {
@@ -87,7 +83,7 @@ namespace Content.Server.Throw
 
                 if (ActionBlockerSystem.CanChangeDirection(throwSourceEnt))
                 {
-                    throwSourceEnt.Transform.LocalRotation = angle.GetCardinalDir().ToAngle();
+                    throwSourceEnt.Transform.LocalRotation = (angle + MathHelper.PiOver2).GetCardinalDir().ToAngle();
                 }
             }
 
@@ -116,7 +112,7 @@ namespace Content.Server.Throw
         /// <summary>
         ///     Throw an entity at the position of <paramref name="targetLoc"/> from <paramref name="sourceLoc"/>,
         ///     without overshooting.
-        /// </summary>
+        /// </summary>cl
         /// <param name="thrownEnt">The entity to throw.</param>
         /// <param name="throwForceMax">
         /// The MAXIMUM force to throw the entity with.

@@ -1,9 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
-using Robust.Shared.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
@@ -24,7 +23,7 @@ namespace Content.Server.Atmos.Reactions
     }
 
     [Prototype("gasReaction")]
-    public class GasReactionPrototype : IPrototype, IIndexedPrototype
+    public class GasReactionPrototype : IPrototype
     {
         public string ID { get; private set; }
 

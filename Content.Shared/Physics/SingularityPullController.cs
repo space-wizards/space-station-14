@@ -1,5 +1,5 @@
 ﻿#nullable enable
-using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 

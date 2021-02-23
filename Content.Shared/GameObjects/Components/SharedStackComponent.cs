@@ -1,8 +1,8 @@
-﻿using System;
-using Robust.Shared.Containers;
+using System;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -27,10 +27,6 @@ namespace Content.Shared.GameObjects.Components
                 _count = value;
                 if (_count <= 0)
                 {
-                    if (Owner.TryGetContainerMan(out var containerManager))
-                    {
-                        containerManager.Remove(Owner);
-                    }
                     Owner.Delete();
                 }
 
@@ -90,7 +86,7 @@ namespace Content.Shared.GameObjects.Components
             StackType = stackType;
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new StackComponentState(Count, MaxCount);
         }
@@ -132,7 +128,7 @@ namespace Content.Shared.GameObjects.Components
         MVCable,
         HVCable,
         Gold,
-        Phoron,
+        Plasma,
         Ointment,
         Gauze,
         Brutepack,
@@ -141,6 +137,12 @@ namespace Content.Shared.GameObjects.Components
         FloorTileWhite,
         FloorTileDark,
         FloorTileWood,
-        MetalRod
+        MetalRod,
+        PaperRolling,
+        CigaretteFilter,
+        GroundTobacco,
+        GroundCannabis,
+        LeavesTobaccoDried,
+        LeavesCannabisDried
     }
 }

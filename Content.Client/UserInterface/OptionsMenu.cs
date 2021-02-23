@@ -1,7 +1,7 @@
-﻿using Robust.Client.Interfaces.Graphics;
+﻿using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -15,10 +15,9 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IClydeAudio _clydeAudio = default!;
 
-        protected override Vector2? CustomSize => (800, 450);
-
         public OptionsMenu()
         {
+            SetSize = MinSize = (800, 450);
             IoCManager.InjectDependencies(this);
 
             Title = Loc.GetString("Game Options");

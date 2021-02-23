@@ -2,16 +2,13 @@ using System;
 using System.Threading;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Shared.GameObjects.Components.Mobs
 {
@@ -231,6 +228,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
             Owner.SpawnTimer((int) _helpInterval * 1000, () => _canHelp = true);
 
             KnockdownTimer -= _helpKnockdownRemove;
+
+            OnInteractHand();
 
             SetAlert();
             Dirty();

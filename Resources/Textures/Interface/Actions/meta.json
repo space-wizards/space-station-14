@@ -8,16 +8,16 @@
     "copyright": "Taken from https://github.com/tgstation/tgstation/commit/3d049e69fe71a0be2133005e65ea469135d648c8",
     "states": [
         {
-            "name": "internal0",
-            "directions": 1
+            "name": "internal0"
         },
         {
-            "name": "internal1",
-            "directions": 1
+            "name": "internal1"
         },
         {
-            "name": "scream",
-            "directions": 1
+            "name": "scream"
+        },
+        {
+            "name": "disarm"
         }
     ]
 }

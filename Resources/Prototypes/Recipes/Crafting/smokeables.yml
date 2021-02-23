@@ -1,0 +1,47 @@
+﻿- type: construction
+  name: rollie
+  id: smokeableRollie
+  graph: smokeableRollie
+  startNode: start
+  targetNode: rollie
+  category: Misc
+  description: "A roll of dried plant matter wrapped in thin paper."
+  icon: Objects/Consumable/Smokeables/Cigarettes/blunt.rsi/unlit-icon.png
+  objectType: Item
+
+- type: construction
+  name: cigarette
+  id: smokeableCigarette
+  graph: smokeableCigarette
+  startNode: start
+  targetNode: cigarette
+  category: Misc
+  description: "A roll of tobacco and nicotine."
+  icon: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi/unlit-icon.png
+  objectType: Item
+
+# I wanted to put a hand-grinder here but we need construction graphs that use non-consumed catalysts first.
+
+- type: construction
+  name: ground cannabis
+  id: smokeableGroundCannabis
+  graph: smokeableGroundCannabis
+  startNode: start
+  targetNode: ground
+  category: Misc
+  description: "Ground cannabis, ready to take you on a trip."
+  icon: Objects/Misc/reageant_fillings.rsi/powderpile.png
+#    color: darkgreen
+  objectType: Item
+
+- type: construction
+  name: ground tobacco
+  id: smokeableGroundTobacco
+  graph: smokeableGroundTobacco
+  startNode: start
+  targetNode: ground
+  category: Misc
+  description: "Ground tobacco, perfect for hand-rolled cigarettes."
+  icon: Objects/Misc/reageant_fillings.rsi/powderpile.png
+#    color: brown
+  objectType: Item

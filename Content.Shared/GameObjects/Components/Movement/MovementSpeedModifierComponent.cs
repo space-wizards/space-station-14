@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -52,6 +53,15 @@ namespace Content.Shared.GameObjects.Components.Movement
         public void RefreshMovementSpeedModifiers()
         {
             _movespeedModifiersNeedRefresh = true;
+        }
+
+        public static void RefreshItemModifiers(IEntity item)
+        {
+            if (item.TryGetContainer(out var container) &&
+                container.Owner.TryGetComponent(out MovementSpeedModifierComponent mod))
+            {
+                mod.RefreshMovementSpeedModifiers();
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)

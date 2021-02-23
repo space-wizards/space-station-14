@@ -1,4 +1,5 @@
-﻿- type: entity
+# TODO: Add description (1)
+- type: entity
   parent: BaseItem
   name: mop
   id: MopItem
@@ -13,7 +14,6 @@
   - type: Mop
   - type: SolutionContainer
     maxVol: 10
-    caps: AddTo, RemoveFrom
   - type: LoopingSound
 
 - type: entity
@@ -33,7 +33,6 @@
   - type: LoopingSound
   - type: SolutionContainer
     maxVol: 500
-    caps: AddTo, RemoveFrom
   - type: Physics
     mass: 5
     anchored: false
@@ -65,7 +64,6 @@
   - type: LoopingSound
   - type: SolutionContainer
     maxVol: 500
-    caps: AddTo, RemoveFrom
   - type: Physics
     mass: 5
     anchored: false
@@ -112,7 +110,7 @@
   name: soap
   id: SoapNT
   parent: Soap
-  description: A Nanotrasen brand bar of soap. Smells of phoron.
+  description: A Nanotrasen brand bar of soap. Smells of plasma.
   components:
     - type: Sprite
       state: soapnt
@@ -201,8 +199,8 @@
     state: cleaner
   - type: SolutionContainer
     maxVol: 100
-    caps: AddTo, RemoveFrom
-  - type: Pourable
+    caps: Refillable, Drainable
+  - type: SolutionTransfer
     transferAmount: 5.0
   - type: Spillable
   - type: ItemCooldown
@@ -219,7 +217,6 @@
   components:
     - type: SolutionContainer
       maxVol: 100
-      caps: AddTo, RemoveFrom
       contents:
         reagents:
           - ReagentId: chem.Water
@@ -234,8 +231,22 @@
   components:
     - type: SolutionContainer
       maxVol: 100
-      caps: AddTo, RemoveFrom
       contents:
         reagents:
           - ReagentId: chem.SpaceCleaner
             Quantity: 100
+
+
+- type: entity
+  name: trash bag
+  id: TrashBag
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+    state: icon
+  - type: Storage
+    capacity: 125
+    quickInsert: true
+    areaInsert: true
+    storageSoundCollection: trashBagRustle

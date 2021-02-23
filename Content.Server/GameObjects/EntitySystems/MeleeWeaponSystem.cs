@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.EntitySystemMessages;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -13,6 +12,11 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             RaiseNetworkEvent(new MeleeWeaponSystemMessages.PlayMeleeWeaponAnimationMessage(arc, angle, attacker.Uid, source.Uid,
                 hits.Select(e => e.Uid).ToList(), textureEffect, arcFollowAttacker));
+        }
+
+        public void SendLunge(Angle angle, IEntity source)
+        {
+            RaiseNetworkEvent(new MeleeWeaponSystemMessages.PlayLungeAnimationMessage(angle, source.Uid));
         }
     }
 }

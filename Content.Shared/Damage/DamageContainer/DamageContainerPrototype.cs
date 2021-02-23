@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -13,7 +12,7 @@ namespace Content.Shared.Damage.DamageContainer
     /// </summary>
     [Prototype("damageContainer")]
     [Serializable, NetSerializable]
-    public class DamageContainerPrototype : IPrototype, IIndexedPrototype
+    public class DamageContainerPrototype : IPrototype
     {
         private bool _supportAll;
         private HashSet<DamageClass> _supportedClasses;

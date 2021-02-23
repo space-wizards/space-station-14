@@ -2,7 +2,7 @@
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;

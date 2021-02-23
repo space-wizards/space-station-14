@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -11,7 +10,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Research
 {
     [NetSerializable, Serializable, Prototype("latheRecipe")]
-    public class LatheRecipePrototype : IPrototype, IIndexedPrototype
+    public class LatheRecipePrototype : IPrototype
     {
         private string _name;
         private string _id;

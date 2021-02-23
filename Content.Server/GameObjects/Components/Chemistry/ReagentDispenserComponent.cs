@@ -1,11 +1,11 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
@@ -16,14 +16,9 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects.Verbs;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -43,6 +38,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [ComponentReference(typeof(IInteractUsing))]
     public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IInteractUsing, ISolutionChange
     {
+        private static ReagentInventoryComparer _comparer = new();
+
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
@@ -115,6 +112,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 Inventory.Add(new ReagentDispenserInventoryEntry(entry));
             }
+
+            Inventory.Sort(_comparer);
         }
 
         private void OnPowerChanged(PowerChangedMessage e)
@@ -161,8 +160,17 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 case UiButton.SetDispenseAmount10:
                     _dispenseAmount = ReagentUnit.New(10);
                     break;
+                case UiButton.SetDispenseAmount15:
+                    _dispenseAmount = ReagentUnit.New(15);
+                    break;
+                case UiButton.SetDispenseAmount20:
+                    _dispenseAmount = ReagentUnit.New(20);
+                    break;
                 case UiButton.SetDispenseAmount25:
                     _dispenseAmount = ReagentUnit.New(25);
+                    break;
+                case UiButton.SetDispenseAmount30:
+                    _dispenseAmount = ReagentUnit.New(30);
                     break;
                 case UiButton.SetDispenseAmount50:
                     _dispenseAmount = ReagentUnit.New(50);
@@ -370,6 +378,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
             protected override void Activate(IEntity user, ReagentDispenserComponent component)
             {
                 component.TryEject(user);
+            }
+        }
+
+        private class ReagentInventoryComparer : Comparer<ReagentDispenserInventoryEntry>
+        {
+            public override int Compare(ReagentDispenserInventoryEntry x, ReagentDispenserInventoryEntry y)
+            {
+                return string.Compare(x.ID, y.ID, StringComparison.InvariantCultureIgnoreCase);
             }
         }
     }

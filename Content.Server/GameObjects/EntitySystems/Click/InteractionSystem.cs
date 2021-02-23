@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Pulling;
@@ -17,14 +16,11 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -71,6 +67,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var interactionArgs = new DragDropEventArgs(performer, msg.DropLocation, dropped, target);
 
             // must be in range of both the target and the object they are drag / dropping
+            // Client also does this check but ya know we gotta validate it.
             if (!interactionArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             // trigger dragdrops on the dropped entity
@@ -204,7 +201,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private bool HandleClientUseItemInHand(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        public bool HandleClientUseItemInHand(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!coords.IsValid(_entityManager))
@@ -314,14 +311,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             var item = hands.GetActiveHand?.Owner;
 
-            if (ActionBlockerSystem.CanChangeDirection(player))
-            {
-                var diff = coordinates.ToMapPos(EntityManager) - playerTransform.MapPosition.Position;
-                if (diff.LengthSquared > 0.01f)
-                {
-                    playerTransform.LocalRotation = new Angle(diff);
-                }
-            }
+            ClickFace(player, coordinates);
 
             if (!ActionBlockerSystem.CanInteract(player))
             {
@@ -398,10 +388,22 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
+        private void ClickFace(IEntity player, EntityCoordinates coordinates)
+        {
+            if (ActionBlockerSystem.CanChangeDirection(player))
+            {
+                var diff = coordinates.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
+                if (diff.LengthSquared > 0.01f)
+                {
+                    player.Transform.LocalRotation = Angle.FromWorldVec(diff);
+                }
+            }
+        }
+
         /// <summary>
         ///     We didn't click on any entity, try doing an AfterInteract on the click location
         /// </summary>
-        private void InteractAfter(IEntity user, IEntity weapon, EntityCoordinates clickLocation, bool canReach)
+        private async void InteractAfter(IEntity user, IEntity weapon, EntityCoordinates clickLocation, bool canReach)
         {
             var message = new AfterInteractMessage(user, weapon, null, clickLocation, canReach);
             RaiseLocalEvent(message);
@@ -410,13 +412,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            var afterInteracts = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterInteractEventArgs = new AfterInteractEventArgs { User = user, ClickLocation = clickLocation, CanReach = canReach };
-
-            foreach (var afterInteract in afterInteracts)
-            {
-                afterInteract.AfterInteract(afterInteractEventArgs);
-            }
+            var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, null, canReach);
+            await DoAfterInteract(weapon, afterInteractEventArgs);
         }
 
         /// <summary>
@@ -459,16 +456,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
-            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterAttackEventArgs = new AfterInteractEventArgs
-            {
-                User = user, ClickLocation = clickLocation, Target = attacked, CanReach = true
-            };
+            var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: true);
 
-            foreach (var afterAttack in afterAttacks)
-            {
-                await afterAttack.AfterInteract(afterAttackEventArgs);
-            }
+            await DoAfterInteract(weapon, afterAttackEventArgs);
         }
 
         /// <summary>
@@ -726,11 +716,11 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// Activates the Dropped behavior of an object
         /// Verifies that the user is capable of doing the drop interaction first
         /// </summary>
-        public bool TryDroppedInteraction(IEntity user, IEntity item)
+        public bool TryDroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
             if (user == null || item == null || !ActionBlockerSystem.CanDrop(user)) return false;
 
-            DroppedInteraction(user, item);
+            DroppedInteraction(user, item, intentional);
             return true;
         }
 
@@ -738,9 +728,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         ///     Calls Dropped on all components that implement the IDropped interface
         ///     on an entity that has been dropped.
         /// </summary>
-        public void DroppedInteraction(IEntity user, IEntity item)
+        public void DroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
-            var dropMsg = new DroppedMessage(user, item);
+            var dropMsg = new DroppedMessage(user, item, intentional);
             RaiseLocalEvent(dropMsg);
             if (dropMsg.Handled)
             {
@@ -752,7 +742,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
             {
-                comp.Dropped(new DroppedEventArgs(user));
+                comp.Dropped(new DroppedEventArgs(user, intentional));
             }
         }
 
@@ -804,7 +794,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// Will have two behaviors, either "uses" the weapon at range on the entity if it is capable of accepting that action
         /// Or it will use the weapon itself on the position clicked, regardless of what was there
         /// </summary>
-        public void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
+        public async void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
         {
             var rangedMsg = new RangedInteractMessage(user, weapon, attacked, clickLocation);
             RaiseLocalEvent(rangedMsg);
@@ -832,16 +822,21 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (afterAtkMsg.Handled)
                 return;
 
-            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterAttackEventArgs = new AfterInteractEventArgs
-            {
-                User = user, ClickLocation = clickLocation, Target = attacked, CanReach = false
-            };
+            // See if we have a ranged attack interaction
+            var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: false);
+            await DoAfterInteract(weapon, afterAttackEventArgs);
+        }
 
-            //See if we have a ranged attack interaction
+        private static async Task DoAfterInteract(IEntity weapon, AfterInteractEventArgs afterAttackEventArgs)
+        {
+            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().OrderByDescending(x => x.Priority).ToList();
+
             foreach (var afterAttack in afterAttacks)
             {
-                afterAttack.AfterInteract(afterAttackEventArgs);
+                if (await afterAttack.AfterInteract(afterAttackEventArgs))
+                {
+                    return;
+                }
             }
         }
 
@@ -854,6 +849,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     $"Player named {player.Name} clicked on a map he isn't located on");
                 return;
             }
+
+            ClickFace(player, coordinates);
 
             if (!ActionBlockerSystem.CanAttack(player) ||
                 (!wideAttack && !player.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true)))

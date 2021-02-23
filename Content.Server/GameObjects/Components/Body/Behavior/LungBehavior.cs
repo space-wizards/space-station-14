@@ -1,17 +1,17 @@
 ﻿#nullable enable
 using System;
-using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects.Components.Body.Behavior;
-using Robust.Shared.Interfaces.Timing;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Behavior
@@ -63,6 +63,12 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
                 () => GaspPopupCooldown.TotalSeconds);
         }
 
+        protected override void OnAddedToBody(IBody body)
+        {
+            base.OnAddedToBody(body);
+            Inhale(CycleDelay);
+        }
+
         public void Gasp()
         {
             if (_gameTiming.CurTime >= _lastGaspPopupTime + GaspPopupCooldown)
@@ -99,6 +105,11 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public override void Update(float frameTime)
         {
+            if (Body != null && Body.Owner.TryGetComponent(out IMobStateComponent? mobState) && mobState.IsCritical())
+            {
+                return;
+            }
+
             if (Status == LungStatus.None)
             {
                 Status = LungStatus.Inhaling;

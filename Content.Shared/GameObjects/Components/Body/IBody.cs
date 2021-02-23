@@ -6,7 +6,7 @@ using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Part.Property;
 using Content.Shared.GameObjects.Components.Body.Preset;
 using Content.Shared.GameObjects.Components.Body.Template;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
@@ -247,5 +247,10 @@ namespace Content.Shared.GameObjects.Components.Body
         /// <param name="index">The index to look in.</param>
         /// <returns>A pair of the part name and body part occupying it.</returns>
         KeyValuePair<string, IBodyPart> PartAt(int index);
+
+        /// <summary>
+        ///     Gibs this body.
+        /// </summary>
+        void Gib(bool gibParts = false);
     }
 }
