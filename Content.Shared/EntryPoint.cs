@@ -14,9 +14,6 @@ namespace Content.Shared
 {
     public class EntryPoint : GameShared
     {
-        // If you want to change your codebase's language, do it here.
-        private const string Culture = "en-US";
-
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IResourceManager _resourceManager = default!;
@@ -25,8 +22,7 @@ namespace Content.Shared
         {
             IoCManager.InjectDependencies(this);
 
-            // Default to en-US.
-            Loc.LoadCulture(_resourceManager, new CultureInfo(Culture));
+            Localization.Init();
         }
 
         public override void Init()
