@@ -359,6 +359,7 @@ namespace Content.Client.UserInterface
 
             var eyesPanel = HighlightedContainer();
             var eyesVBox = new VBoxContainer();
+            var eyesLabel = new Label { Text = Loc.GetString("Eye color:") };
 
             _eyesPicker = new EyeColorPicker();
 
@@ -371,8 +372,8 @@ namespace Content.Client.UserInterface
                 IsDirty = true;
             };
 
+            eyesVBox.AddChild(eyesLabel);
             eyesVBox.AddChild(_eyesPicker);
-
             eyesPanel.AddChild(eyesVBox);
             appearanceList.AddChild(eyesPanel);
 
