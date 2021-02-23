@@ -16,7 +16,7 @@ namespace Content.Shared.Actions
     /// </summary>
     public abstract class BaseActionPrototype : IPrototype
     {
-        public string ID { get; private set; }
+        public string ID { get; private set; } = string.Empty;
 
         /// <summary>
         /// Icon representing this action in the UI.

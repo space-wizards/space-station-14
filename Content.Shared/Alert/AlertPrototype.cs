@@ -18,7 +18,7 @@ namespace Content.Shared.Alert
     [Prototype("alert")]
     public class AlertPrototype : IPrototype
     {
-        public string ID { get; private set; }
+        public string ID { get; private set; } = string.Empty;
 
         /// <summary>
         /// Type of alert, no 2 alert prototypes should have the same one.

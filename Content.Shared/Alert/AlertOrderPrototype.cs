@@ -13,7 +13,7 @@ namespace Content.Shared.Alert
     [Prototype("alertOrder")]
     public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>
     {
-        public string ID { get; private set; }
+        public string ID { get; private set; } = string.Empty;
 
         private readonly Dictionary<AlertType, int> _typeToIdx = new();
         private readonly Dictionary<AlertCategory, int> _categoryToIdx = new();

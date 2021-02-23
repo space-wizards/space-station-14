@@ -74,7 +74,7 @@ namespace Content.Shared.GameObjects.Components
     [Serializable, NetSerializable, Prototype("crayonDecal")]
     public class CrayonDecalPrototype : IPrototype
     {
-        public string ID { get; private set; }
+        public string ID { get; private set; } = string.Empty;
 
         private string _spritePath = string.Empty;
         public string SpritePath => _spritePath;
