@@ -1,19 +1,20 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.GameObjects;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
+using Robust.Client.GameStates;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Reflection;
-using Robust.Shared.Timing;
-using System;
-using Robust.Client.GameStates;
-using Robust.Server.Player;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Networking
 {
@@ -408,7 +409,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 Foo = pred.Foo;
             }
 
-            public override ComponentState GetComponentState()
+            public override ComponentState GetComponentState(ICommonSession player)
             {
                 return new PredictionComponentState(Foo);
             }

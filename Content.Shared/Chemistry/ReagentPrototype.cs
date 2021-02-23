@@ -15,7 +15,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Chemistry
 {
     [Prototype("reagent")]
-    public class ReagentPrototype : IPrototype, IIndexedPrototype
+    public class ReagentPrototype : IPrototype
     {
         [Dependency] private readonly IModuleManager _moduleManager = default!;
 

@@ -173,7 +173,6 @@ namespace Content.Client
             "Matchstick",
             "Matchbox",
             "BlockGameArcade",
-            "KitchenSpike",
             "Butcherable",
             "Rehydratable",
             "Headset",
@@ -245,6 +244,7 @@ namespace Content.Client
             "SolutionTransfer",
             "Shovel",
             "ReagentTank",
+            "UtilityAI",
         };
     }
 }

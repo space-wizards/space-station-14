@@ -9,7 +9,6 @@ namespace Content.Client.Arcade
 {
     public class SpaceVillainArcadeMenu : SS14Window
     {
-        protected override Vector2? CustomSize => (400, 200);
         public SpaceVillainArcadeBoundUserInterface Owner { get; set; }
 
         private readonly Label _enemyNameLabel;
@@ -21,6 +20,7 @@ namespace Content.Client.Arcade
         private readonly Button[] _gameButtons = new Button[3]; //used to disable/enable all game buttons
         public SpaceVillainArcadeMenu(SpaceVillainArcadeBoundUserInterface owner)
         {
+            MinSize = SetSize = (400, 200);
             Title = Loc.GetString("Space Villain");
             Owner = owner;
 

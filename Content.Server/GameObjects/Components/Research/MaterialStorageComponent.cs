@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Research
         public int StorageLimit => _storageLimit;
         private int _storageLimit;
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new MaterialStorageState(Storage);
         }

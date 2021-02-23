@@ -57,14 +57,14 @@ namespace Content.Client.GameObjects.Components
                 var wrapper = new HBoxContainer
                 {
                     SeparationOverride = 4,
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                    HorizontalAlignment = HAlignment.Center
                 };
 
                 AddChild(wrapper);
 
                 for (var i = 0; i < _sections.Length; i++)
                 {
-                    var panel = new PanelContainer {CustomMinimumSize = (20, 20)};
+                    var panel = new PanelContainer {MinSize = (20, 20)};
                     wrapper.AddChild(panel);
                     _sections[i] = panel;
                 }

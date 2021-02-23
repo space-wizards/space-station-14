@@ -34,6 +34,7 @@
     state: full
   - type: Sprite
     netsync: false
+    noRot: true
     drawdepth: Mobs
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
@@ -326,5 +327,3 @@
     - type: Appearance
       visuals:
       - type: RotationVisualizer
-    - type: Grammar
-      proper: true
