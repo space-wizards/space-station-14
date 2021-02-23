@@ -24,9 +24,13 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.Components.ContainsKey("Sprite")) continue;
+                    if (proto.Abstract || !proto.Components.ContainsKey("Sprite")) continue;
 
-                    var _ = SpriteComponent.GetPrototypeTextures(proto, resourceCache).ToList();
+                    Assert.DoesNotThrow(() =>
+                    {
+                        var _ = SpriteComponent.GetPrototypeTextures(proto, resourceCache).ToList();
+                    }, "Prototype {0} threw an exception when getting its textures.",
+                        proto.ID);
                 }
             });
         }

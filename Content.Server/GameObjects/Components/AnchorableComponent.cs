@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -75,6 +76,14 @@ namespace Content.Server.GameObjects.Components
 
             var physics = Owner.GetComponent<IPhysicsComponent>();
             physics.Anchored = true;
+
+            if (Owner.TryGetComponent(out PullableComponent? pullableComponent))
+            {
+                if (pullableComponent.Puller != null)
+                {
+                    pullableComponent.TryStopPull();
+                }
+            }
 
             if (Snap)
                 Owner.SnapToGrid(SnapGridOffset.Center, Owner.EntityManager);

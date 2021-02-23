@@ -186,6 +186,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                     var (rsi, state) = data.Value;
                     _sprite.LayerSetVisible(slot, true);
                     _sprite.LayerSetState(slot, state, rsi);
+                    _sprite.LayerSetAutoAnimated(slot, true);
 
                     if (slot == Slots.INNERCLOTHING)
                     {

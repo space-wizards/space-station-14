@@ -19,7 +19,6 @@ namespace Content.Client
             "EmitSoundOnUse",
             "FootstepModifier",
             "HeatResistance",
-            "Teleportable",
             "ItemTeleporter",
             "EntityStorage",
             "Wirecutter",
@@ -60,7 +59,6 @@ namespace Content.Client
             "Rotatable",
             "MagicMirror",
             "FloorTile",
-            "FootstepSound",
             "ShuttleController",
             "HumanInventoryController",
             "UseDelay",
@@ -164,6 +162,7 @@ namespace Content.Client
             "Firelock",
             "AtmosPlaque",
             "Spillable",
+            "StorageCounter",
             "SpaceVillainArcade",
             "Flammable",
             "CreamPie",
@@ -172,7 +171,6 @@ namespace Content.Client
             "Matchstick",
             "Matchbox",
             "BlockGameArcade",
-            "KitchenSpike",
             "Butcherable",
             "Rehydratable",
             "Headset",
@@ -244,6 +242,7 @@ namespace Content.Client
             "SolutionTransfer",
             "Shovel",
             "ReagentTank",
+            "UtilityAI",
         };
     }
 }

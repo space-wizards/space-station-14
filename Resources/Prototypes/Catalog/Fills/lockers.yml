@@ -90,13 +90,15 @@
       - name: ClothingOuterSuitFire
         prob: 0.5
       - name: ClothingShoesColorBrown
-        prob: 0.7 
+        prob: 0.7
       - name: ClothingHeadHatCargosoft
         prob: 0.8
       - name: SupplyRequestComputerCircuitboard
         prob: 1
       - name: SupplyComputerCircuitboard
         prob: 1
+      - name: CigPackGreen
+        prob: 0.50
 
 - type: entity
   id: LockerCaptainFilled
@@ -120,7 +122,7 @@
       - name: TaserGun
         prob: 1
       - name: ClothingShoesColorBlack
-        prob: 0.7 
+        prob: 0.7
       - name: ClothingHeadHelmetHardsuitCap
         prob: 1
       - name: CommsComputerCircuitboard
@@ -129,7 +131,9 @@
         prob: 1
       - name: PlushieNuke
         prob: 0.1
-        
+      - name: CigarGoldCase
+        prob: 0.25
+
 - type: entity
   id: LockerHeadOfPersonnelFilled
   suffix: Filled
@@ -152,9 +156,12 @@
       - name: TaserGun
         prob: 1
       - name: ClothingShoesColorBlack
-        prob: 0.7 
+        prob: 0.7
       - name: PlushieLizard
         prob: 0.1
+      - name: CigarGoldCase
+        prob: 0.10
+        # Fuck the HoP they don't deserve fucking cigars.
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -171,6 +178,8 @@
       - name: ClothingEyesGlassesMeson
       - name: ClothingBeltChiefEngineerFilled
       - name: ClothingHeadHatBeretEngineering
+      - name: CigarCase
+        prob: 0.15
 
 - type: entity
   id: LockerElectricalSuppliesFilled
@@ -189,7 +198,7 @@
         prob: 0.2
       - name: ApcExtensionCableStack
         prob: 0.3
-        
+
 - type: entity
   id: LockerWeldingSuppliesFilled
   suffix: Filled
@@ -294,7 +303,7 @@
         orGroup: Surgshrubs
       - name: ClothingMaskSterile
         prob: 1
-        
+
 
 - type: entity
   id: LockerChemistryFilled
@@ -393,7 +402,8 @@
         prob: 1
       - name: ClothingShoesBootsJack
         prob: 1
-
+      - name: CigarGoldCase
+        prob: 0.50
 
 - type: entity
   id: LockerWardenFilled

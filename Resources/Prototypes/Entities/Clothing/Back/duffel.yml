@@ -2,7 +2,7 @@
   parent: Clothing
   id: ClothingBackpackDuffel
   name: duffel bag
-  description: "A large duffel bag for holding extra things."
+  description: A large duffel bag for holding extra things.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/duffel.rsi
@@ -21,7 +21,7 @@
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelEngineering
   name: engineering duffel bag
-  description:
+  description: A large duffel bag for holding extra tools and supplies.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/engineering.rsi
@@ -32,7 +32,7 @@
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelMedical
   name: medical duffel bag
-  description: "A large duffel bag for holding extra medical supplies."
+  description: A large duffel bag for holding extra medical supplies.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/medical.rsi
@@ -43,7 +43,7 @@
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelCaptain
   name: captain's duffel bag
-  description: "A large duffel bag for holding extra captainly goods."
+  description: A large duffel bag for holding extra captainly goods.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/captain.rsi
@@ -54,7 +54,7 @@
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelClown
   name: clown duffel bag
-  description: "A large duffel bag for holding extra honk goods."
+  description: A large duffel bag for holding extra honk goods.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/clown.rsi
@@ -65,7 +65,7 @@
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSecurity
   name: security duffel bag
-  description: "A large duffel bag for holding extra security related goods."
+  description: A large duffel bag for holding extra security related goods.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/security.rsi
@@ -76,7 +76,7 @@
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelChemistry
   name: chemistry duffel bag
-  description: "A large duffel bag for holding extra beakers and test tubes."
+  description: A large duffel bag for holding extra beakers and test tubes.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/chemistry.rsi
@@ -87,7 +87,7 @@
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelMime
   name: mime duffel bag
-  description: "A large duffel bag for holding... mime... stuff."
+  description: A large duffel bag for holding... mime... stuff.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/mime.rsi
@@ -98,7 +98,7 @@
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelScience
   name: science duffel bag
-  description: "A large duffel bag for holding extra science related goods."
+  description: A large duffel bag for holding extra science related goods.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/science.rsi
@@ -109,7 +109,7 @@
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicate
   name: syndicate duffel bag
-  description: "A large duffel bag for holding various traitor goods."
+  description: A large duffel bag for holding various traitor goods.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi

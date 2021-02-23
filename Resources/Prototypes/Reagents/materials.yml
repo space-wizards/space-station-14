@@ -1,4 +1,4 @@
-﻿- type: material
+- type: material
   id: steel
   name: steel
   color: gray
@@ -54,3 +54,21 @@
   electricResistivity: 6.9e-7
   thermalConductivity: 18
   specificHeat: 200
+
+- type: material
+  id: wood
+  name: wood
+  icon: Objects/Materials/wood_plank.png
+  density: 6000
+  electricResistivity: 1.0e+13
+  thermalConductivity: 1.5
+  specificHeat: 600
+
+- type: material
+  id: plastic
+  name: plastic
+  icon: Objects/Materials/sheets.rsi/plastic.png
+  density: 6500
+  electricResistivity: 1.0e+13
+  thermalConductivity: 1.5
+  specificHeat: 600

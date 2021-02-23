@@ -30,6 +30,20 @@ namespace Content.Client.UserInterface.Stylesheets
             var notoSans10 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 10);
             var notoSansBold16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 16);
 
+            var progressBarBackground = new StyleBoxFlat
+            {
+                BackgroundColor = new Color(0.25f, 0.25f, 0.25f)
+            };
+            progressBarBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
+
+            var progressBarForeground = new StyleBoxFlat
+            {
+                BackgroundColor = new Color(0.25f, 0.50f, 0.25f)
+            };
+            progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
+
+            var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
+
             Stylesheet = new Stylesheet(BaseRules.Concat(new StyleRule[]
             {
                 Element<Label>().Class(StyleClassLabelHeading)
@@ -45,6 +59,15 @@ namespace Content.Client.UserInterface.Stylesheets
                     {
                         BackgroundColor = SpaceRed, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
                     }),
+
+                Element<PanelContainer>().Class(ClassLowDivider)
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
+                    {
+                        BackgroundColor = Color.FromHex("#444"),
+                        ContentMarginLeftOverride = 2,
+                        ContentMarginBottomOverride = 2
+                    }),
+
                 // Shapes for the buttons.
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButton),
@@ -103,10 +126,41 @@ namespace Content.Client.UserInterface.Stylesheets
                 Element<Label>().Class(ContainerButton.StyleClassButton)
                     .Prop(Label.StylePropertyAlignMode, Label.AlignMode.Center),
 
+                Element<PanelContainer>().Class(ClassAngleRect)
+                    .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#202030")),
+
                 Child()
                     .Parent(Element<Button>().Class(ContainerButton.StylePseudoClassDisabled))
                     .Child(Element<Label>())
                     .Prop("font-color", Color.FromHex("#E5E5E581")),
+
+                Element<ProgressBar>()
+                    .Prop(ProgressBar.StylePropertyBackground, progressBarBackground)
+                    .Prop(ProgressBar.StylePropertyForeground, progressBarForeground),
+
+                // OptionButton
+                Element<OptionButton>()
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButton),
+
+                Element<OptionButton>().Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDefault),
+
+                Element<OptionButton>().Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorHovered),
+
+                Element<OptionButton>().Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorPressed),
+
+                Element<OptionButton>().Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
+
+                Element<TextureRect>().Class(OptionButton.StyleClassOptionTriangle)
+                    .Prop(TextureRect.StylePropertyTexture, textureInvertedTriangle),
+
+                Element<Label>().Class(OptionButton.StyleClassOptionButton)
+                    .Prop(Label.StylePropertyAlignMode, Label.AlignMode.Center),
+
 
             }).ToList());
         }

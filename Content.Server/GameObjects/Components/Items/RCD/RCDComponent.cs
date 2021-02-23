@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
@@ -80,12 +80,26 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             int mode = (int) _mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             _mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("The RCD is now set to {0} mode.", _mode)); //Prints an overhead message above the RCD
+            Owner.PopupMessage(eventArgs.User,
+                Loc.GetString(
+                    "rcd-component-change-mode",
+                    ("mode", _mode.ToString())
+                )
+            ); //Prints an overhead message above the RCD
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("It's currently on {0} mode, and holds {1} charges.",_mode.ToString(), _ammo));
+            if (inDetailsRange)
+            {
+                message.AddMarkup(
+                    Loc.GetString(
+                        "rcd-component-examine-detail-count",
+                        ("mode", _mode),
+                        ("ammoCount", _ammo)
+                    )
+                );
+            }
         }
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs   eventArgs)

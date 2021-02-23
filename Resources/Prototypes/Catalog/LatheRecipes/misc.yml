@@ -31,7 +31,7 @@
   result: GlowStickRed
   completetime: 500
   materials:
-    glass: 20
+    plastic: 20
 
 - type: latheRecipe
   id: FlareBase
@@ -39,7 +39,7 @@
   result: FlareBase
   completetime: 500
   materials:
-    glass: 40
+    plastic: 40
 
 - type: latheRecipe
   id: FlashLightLantern
@@ -48,7 +48,7 @@
   completetime: 500
   materials:
     steel: 50
-    glass: 60
+    glass: 40
 
 - type: latheRecipe
   id:  FireExtinguisher
@@ -57,7 +57,6 @@
   completetime: 500
   materials:
     steel: 80
-    glass: 30
 
 - type: latheRecipe
   id: Matchbox
@@ -65,4 +64,4 @@
   result: Matchbox
   completetime: 10
   materials:
-    glass: 10
+    wood: 10

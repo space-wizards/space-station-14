@@ -17,6 +17,8 @@ namespace Content.Shared.Alert
     [Prototype("alert")]
     public class AlertPrototype : IPrototype
     {
+        public string ID { get; private set; }
+
         /// <summary>
         /// Type of alert, no 2 alert prototypes should have the same one.
         /// </summary>
@@ -94,7 +96,11 @@ namespace Content.Shared.Alert
             serializer.DataField(ref _minSeverity, "minSeverity", (short) 1);
 
             serializer.DataReadFunction("name", string.Empty,
-                s => Name = FormattedMessage.FromMarkup(s));
+                s =>
+                {
+                    ID = s;
+                    Name = FormattedMessage.FromMarkup(s);
+                });
             serializer.DataReadFunction("description", string.Empty,
                 s => Description = FormattedMessage.FromMarkup(s));
 

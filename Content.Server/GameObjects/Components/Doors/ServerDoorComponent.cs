@@ -24,9 +24,10 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameObjects.Components.Doors
 {
@@ -66,13 +67,6 @@ namespace Content.Server.GameObjects.Components.Doors
                 Dirty();
             }
         }
-
-        /// <summary>
-        /// The amount of time the door has been open. Used to automatically close the door if it autocloses.
-        /// </summary>
-        [ViewVariables]
-        private float _openTimeCounter;
-        [ViewVariables(VVAccess.ReadWrite)]
 
         private static readonly TimeSpan AutoCloseDelay = TimeSpan.FromSeconds(5);
 
@@ -441,7 +435,6 @@ namespace Content.Server.GameObjects.Components.Doors
         public void Close()
         {
             State = DoorState.Closing;
-            _openTimeCounter = 0;
 
             // no more autoclose; we ARE closed
             _autoCloseCancelTokenSource?.Cancel();
@@ -573,7 +566,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             var realCloseTime = _doorCheck.GetCloseSpeed() ?? AutoCloseDelay;
 
-            Owner.SpawnTimer(realCloseTime, async () =>
+            Owner.SpawnRepeatingTimer(realCloseTime, async () =>
             {
                 if (CanCloseGeneric())
                 {
@@ -628,6 +621,12 @@ namespace Content.Server.GameObjects.Components.Doors
                     _beingWelded = true;
                     if(await welder.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Welding, 3f, () => CanWeldShut))
                     {
+                        // just in case
+                        if (!CanWeldShut)
+                        {
+                            return false;
+                        }
+
                         _beingWelded = false;
                         IsWeldedShut = !IsWeldedShut;
                         return true;
@@ -642,7 +641,7 @@ namespace Content.Server.GameObjects.Components.Doors
             return false;
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new DoorComponentState(State, StateChangeStartTime, CurrentlyCrushing, GameTiming.CurTime);
         }

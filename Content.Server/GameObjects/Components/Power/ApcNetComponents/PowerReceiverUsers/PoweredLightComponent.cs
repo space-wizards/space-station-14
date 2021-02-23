@@ -221,7 +221,23 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 case PowerChangedMessage:
                     UpdateLight();
                     break;
+                case DamageChangedMessage msg:
+                    TryDestroyBulb(msg);
+                    break;
             }
+        }
+
+        private void TryDestroyBulb(DamageChangedMessage msg)
+        {
+            if (!msg.TookDamage)
+                return;
+
+            if (LightBulb == null || LightBulb.State == LightBulbState.Broken)
+                return;
+
+            LightBulb.State = LightBulbState.Broken;
+            LightBulb.PlayBreakSound();
+            UpdateLight();
         }
 
         void IMapInit.MapInit()

@@ -4,8 +4,8 @@
   result: MopItem
   completetime: 500
   materials:
-    steel: 10
-    glass: 40
+    plastic: 10
+    wood: 40
 
 - type: latheRecipe
   id: MopBucket
@@ -14,7 +14,7 @@
   completetime: 500
   materials:
     steel: 20
-    glass: 60
+    plastic: 60
 
 - type: latheRecipe
   id: Bucket
@@ -30,7 +30,7 @@
   result: WetFloorSign
   completetime: 500
   materials:
-    glass: 60
+    plastic: 60
 
 - type: latheRecipe
   id: SprayBottle
@@ -38,7 +38,7 @@
   result: SprayBottle
   completetime: 500
   materials:
-    glass: 50
+    plastic: 50
 
 - type: latheRecipe
   id: TrashBag
@@ -46,4 +46,4 @@
   result: TrashBag
   completetime: 300
   materials:
-    glass: 15
+    plastic: 15

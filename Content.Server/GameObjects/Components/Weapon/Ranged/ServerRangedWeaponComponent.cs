@@ -18,7 +18,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -120,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             }
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new RangedWeaponComponentState(FireRateSelector);
         }

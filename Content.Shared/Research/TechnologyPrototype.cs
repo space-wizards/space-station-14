@@ -9,7 +9,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Research
 {
     [NetSerializable, Serializable, Prototype("technology")]
-    public class TechnologyPrototype : IPrototype, IIndexedPrototype
+    public class TechnologyPrototype : IPrototype
     {
         private string _name;
         private string _id;

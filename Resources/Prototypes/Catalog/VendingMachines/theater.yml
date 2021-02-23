@@ -3,3 +3,12 @@
   name: AutoDrobe
   description: A vending machine containing costumes.
   spriteName: theater
+  startingInventory:
+    ClothingOuterCardborg: 2
+    ClothingOuterPonchoClassic: 2
+    ClothingOuterRobesJudge: 2
+    ClothingOuterPoncho: 2
+    ClothingOuterSanta: 2
+    ClothingOuterXenos: 2
+    ClothingOuterSkub: 2
+    ClothingHeadHatXeno: 2

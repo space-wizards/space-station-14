@@ -61,5 +61,15 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Loadout7 = "Loadout7";
         public static readonly BoundKeyFunction Loadout8 = "Loadout8";
         public static readonly BoundKeyFunction Loadout9 = "Loadout9";
+        public static readonly BoundKeyFunction Vote0 = "Vote0";
+        public static readonly BoundKeyFunction Vote1 = "Vote1";
+        public static readonly BoundKeyFunction Vote2 = "Vote2";
+        public static readonly BoundKeyFunction Vote3 = "Vote3";
+        public static readonly BoundKeyFunction Vote4 = "Vote4";
+        public static readonly BoundKeyFunction Vote5 = "Vote5";
+        public static readonly BoundKeyFunction Vote6 = "Vote6";
+        public static readonly BoundKeyFunction Vote7 = "Vote7";
+        public static readonly BoundKeyFunction Vote8 = "Vote8";
+        public static readonly BoundKeyFunction Vote9 = "Vote9";
     }
 }
