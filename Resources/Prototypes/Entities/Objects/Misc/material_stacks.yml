@@ -162,6 +162,7 @@
       sprite: Objects/Materials/materials.rsi
       state: goldbar_10
     - type: Stack
+      stackType: GoldStack1
       count: 1
 
 - type: entity
@@ -199,6 +200,7 @@
   suffix: 1
   components:
   - type: Stack
+    stackType: PlasmaStack1
     count: 1
 
 - type: entity
@@ -227,6 +229,7 @@
   suffix: 1
   components:
   - type: Stack
+    stackType: WoodPlank1
     count: 1
 
 - type: entity
@@ -255,4 +258,5 @@
   suffix: 1
   components:
   - type: Stack
+    stackType: PlasticSheet1
     count: 1

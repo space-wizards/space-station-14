@@ -43,3 +43,19 @@
   name: metal rod
   icon: "/Textures/Objects/Materials/materials.rsi/rods.png"
   spawn: MetalRodStack1
+
+- type: stack
+  id: GoldStack1
+  name: gold
+
+- type: stack
+  id: PlasmaStack1
+  name: plasma
+
+- type: stack
+  id: WoodPlank1
+  name: wood
+
+- type: stack
+  id: PlasticSheet1
+  name: plastic

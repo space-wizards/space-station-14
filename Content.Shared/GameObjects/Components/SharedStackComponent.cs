@@ -52,7 +52,7 @@ namespace Content.Shared.GameObjects.Components
 
         [ViewVariables] public string StackTypeId { get; private set; }
 
-        public StackPrototype StackType => IoCManager.Resolve<IPrototypeManager>().Index<StackPrototype>(StackTypeId);
+        public StackPrototype StackType => _prototypeManager.Index<StackPrototype>(StackTypeId);
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -70,12 +70,13 @@ namespace Content.Shared.GameObjects.Components
                 return;
             }
 
-            stackType = serializer.TryReadDataFieldCached("stackType", out string raw)
-                ? raw
-                : Owner.Prototype.ID;
+            serializer.DataFieldCached(ref stackType, "stackType", null);
 
-            serializer.SetCacheData(SerializationCache, stackType);
-            StackTypeId = stackType;
+            if (stackType != null)
+            {
+                serializer.SetCacheData(SerializationCache, stackType);
+                StackTypeId = stackType;
+            }
         }
 
         protected override void Startup()
