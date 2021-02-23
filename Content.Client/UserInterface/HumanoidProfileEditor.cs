@@ -340,6 +340,29 @@ namespace Content.Client.UserInterface
 
             #endregion Backpack
 
+            #region Eyes
+
+            var eyesPanel = HighlightedContainer();
+            var eyesVBox = new VBoxContainer();
+
+            _eyesPicker = new EyeColorPicker();
+
+            _eyesPicker.OnEyeColorPicked += newColor =>
+            {
+                if (Profile is null)
+                    return;
+                Profile = Profile.WithCharacterAppearance(
+                    Profile.Appearance.WithEyeColor(newColor));
+                IsDirty = true;
+            };
+
+            eyesVBox.AddChild(_eyesPicker);
+
+            eyesPanel.AddChild(eyesVBox);
+            appearanceVBox.AddChild(eyesPanel);
+
+            #endregion Eyes
+
             #endregion Appearance
 
             #region Jobs
@@ -504,37 +527,6 @@ namespace Content.Client.UserInterface
             }
 
             #endregion Antags
-
-            #region Eyes
-
-            var eyesList = new VBoxContainer();
-
-            var eyesVBox = new VBoxContainer
-            {
-                Children =
-                {
-                    eyesList
-                }
-            };
-
-            tabContainer.AddChild(eyesVBox);
-
-            tabContainer.SetTabTitle(3, Loc.GetString("Eye Color"));
-
-            _eyesPicker = new EyeColorPicker();
-
-            _eyesPicker.OnEyeColorPicked += newColor =>
-            {
-                if (Profile is null)
-                    return;
-                Profile = Profile.WithCharacterAppearance(
-                    Profile.Appearance.WithEyeColor(newColor));
-                IsDirty = true;
-            };
-
-            eyesList.AddChild(_eyesPicker);
-
-            #endregion Eyes
 
             var rightColumn = new VBoxContainer();
             middleContainer.AddChild(rightColumn);
