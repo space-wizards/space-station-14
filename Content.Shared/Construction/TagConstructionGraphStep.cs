@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction
 {
@@ -14,7 +15,7 @@ namespace Content.Shared.Construction
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _tags, "list", new List<string>());
+            serializer.DataField(ref _tags, "tags", new List<string>());
         }
 
         public override bool EntityValid(IEntity entity)

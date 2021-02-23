@@ -89,7 +89,7 @@ namespace Content.Shared.Construction
                 return component;
             }
 
-            if (mapping.TryGetNode("tag", out _))
+            if (mapping.TryGetNode("tags", out _))
             {
                 var tags = new TagConstructionGraphStep();
                 tags.ExposeData(stepSerializer);

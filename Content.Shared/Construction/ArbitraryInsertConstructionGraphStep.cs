@@ -20,7 +20,7 @@ namespace Content.Shared.Construction
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {
             if (string.IsNullOrEmpty(Name)) return;
-            message.AddMarkup(Loc.GetString("Next, insert {0}", Name));
+            message.AddMarkup(Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name)));
         }
     }
 }
