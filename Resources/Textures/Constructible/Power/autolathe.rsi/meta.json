@@ -126,6 +126,22 @@
             ]
         },
         {
+            "name": "autolathe_inserting_plastic_sheet",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
             "name": "autolathe_inserting_unlit",
             "delays": [
                 [

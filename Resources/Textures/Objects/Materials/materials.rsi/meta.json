@@ -32,7 +32,7 @@
             "name": "uranium"
         },
         {
-            "name": "wood_plank"
+            "name": "wood"
         },
         {
             "name": "wool"
@@ -75,9 +75,6 @@
         },
         {
             "name": "rods"
-        },
-        {
-            "name": "plastic"
         }
     ]
 }
