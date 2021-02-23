@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.GameObjects.Components.Power;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
@@ -18,6 +18,7 @@ namespace Content.Client.GameObjects.Components.Power
         private Animation _insertingGlassAnimation;
         private Animation _insertingGoldAnimation;
         private Animation _insertingPlasmaAnimation;
+        private Animation _insertingPlasticAnimation;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -28,6 +29,7 @@ namespace Content.Client.GameObjects.Components.Power
             _insertingGlassAnimation = PopulateAnimation("autolathe_inserting_glass_plate", "autolathe_inserting_unlit", 0.9f);
             _insertingGoldAnimation = PopulateAnimation("autolathe_inserting_gold_plate", "autolathe_inserting_unlit", 0.9f);
             _insertingPlasmaAnimation = PopulateAnimation("autolathe_inserting_plasma_sheet", "autolathe_inserting_unlit", 0.9f);
+            _insertingPlasticAnimation = PopulateAnimation("autolathe_inserting_plastic_sheet", "autolathe_inserting_unlit", 0.9f);
         }
 
         private Animation PopulateAnimation(string sprite, string spriteUnlit, float length)
@@ -105,6 +107,12 @@ namespace Content.Client.GameObjects.Components.Power
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(_insertingPlasmaAnimation, AnimationKey);
+                    }
+                    break;
+                case LatheVisualState.InsertingPlastic:
+                    if (!animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Play(_insertingPlasticAnimation, AnimationKey);
                     }
                     break;
                 default:

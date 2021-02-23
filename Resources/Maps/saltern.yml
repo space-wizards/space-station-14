@@ -41510,7 +41510,7 @@ entities:
   - supplyRate: 6000
     type: PowerSupplier
 - uid: 4717
-  type: Spade
+  type: HydroponicsToolSpade
   components:
   - parent: 853
     pos: -20.5,-1.5

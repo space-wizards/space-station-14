@@ -52,7 +52,7 @@
 - type: entity
   name: spade
   parent: BaseItem
-  id: Spade
+  id: HydroponicsToolSpade
   description: A small tool for digging and moving dirt.
   components:
   - type: Tag

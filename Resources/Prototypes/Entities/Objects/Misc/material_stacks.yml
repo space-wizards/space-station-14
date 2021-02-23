@@ -207,18 +207,18 @@
   parent: MaterialStack
   suffix: Full
   components:
-    - type: Material
-      materials:
-      - key: enum.MaterialKeys.Stack
-        mat: wood
-    - type: Stack
-      stacktype: enum.StackType.Wood 
-    - type: Sprite
-      sprite: Objects/Materials/materials.rsi
-      state: wood
-    - type: Item
-      sprite: Objects/Materials/materials.rsi
-      HeldPrefix: wood
+  - type: Material
+    materials:
+    - key: enum.MaterialKeys.Stack
+      mat: wood
+  - type: Stack
+    stacktype: enum.StackType.Wood
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: wood
+  - type: Item
+    sprite: Objects/Materials/materials.rsi
+    HeldPrefix: wood
 
 - type: entity
   id: WoodPlank1
@@ -226,8 +226,8 @@
   parent: WoodPlank
   suffix: 1
   components:
-    - type: Stack
-      count: 1
+  - type: Stack
+    count: 1
 
 - type: entity
   name: plastic sheet
@@ -235,18 +235,18 @@
   parent: MaterialStack
   suffix: Full
   components:
-    - type: Material
-      materials:
-      - key: enum.MaterialKeys.Stack
-        mat: plastic
-    - type: Stack
-      stacktype: enum.StackType.Plastic 
-    - type: Sprite
-      sprite: Objects/Materials/sheets.rsi/plastic.png
-      state: plastic
-    - type: Item
-      sprite: Objects/Materials/sheets.rsi/plastic.png
-      HeldPrefix: plastic
+  - type: Material
+    materials:
+    - key: enum.MaterialKeys.Stack
+      mat: plastic
+  - type: Stack
+    stacktype: enum.StackType.Plastic
+  - type: Sprite
+    sprite: Objects/Materials/sheets.rsi
+    state: plastic
+  - type: Item
+    sprite: Objects/Materials/sheets.rsi
+    HeldPrefix: plastic
 
 - type: entity
   id: PlasticSheet1
@@ -254,5 +254,5 @@
   parent: PlasticSheet
   suffix: 1
   components:
-    - type: Stack
-      count: 1
+  - type: Stack
+    count: 1
