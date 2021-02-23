@@ -24,7 +24,7 @@
       ]
     },
     {
-      "name": "carp",
+      "name": "alive",
       "directions": 4,
       "delays": [
         [
@@ -50,7 +50,7 @@
       ]
     },
     {
-      "name": "carp_gib",
+      "name": "gib",
       "delays": [
         [
           0.1,

@@ -3,3 +3,9 @@
 
 - type: Tag
   id: Wall
+
+- type: Tag
+  id: Teleportable
+
+- type: Tag
+  id: FootstepSound
