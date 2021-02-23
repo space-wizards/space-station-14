@@ -1,0 +1,17 @@
+﻿- type: stack
+  id: PaperRolling
+
+- type: stack
+  id: CigaretteFilter
+
+- type: stack
+  id: GroundTobacco
+
+- type: stack
+  id: GroundCannabis
+
+- type: stack
+  id: LeavesTobaccoDried
+
+- type: stack
+  id: LeavesCannabisDried

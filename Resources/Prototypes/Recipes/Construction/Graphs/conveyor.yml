@@ -46,7 +46,7 @@
         completed:
           - !type:SnapToGrid {}
         steps:
-          - material: Metal
+          - material: Steel
             amount: 2
             doAfter: 1
   - node: lever

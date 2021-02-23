@@ -1,0 +1,14 @@
+﻿- type: stack
+  id: FloorTileSteel
+
+- type: stack
+  id: FloorTileCarpet
+
+- type: stack
+  id: FloorTileWhite
+
+- type: stack
+  id: FloorTileDark
+
+- type: stack
+  id: FloorTileWood

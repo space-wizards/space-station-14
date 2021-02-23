@@ -50,7 +50,7 @@
   - type: Stack
     max: 5
     count: 5
-    stacktype: enum.StackType.Ointment
+    stackType: Ointment
 
 - type: entity
   name: bruise pack
@@ -67,7 +67,7 @@
     - type: Stack
       max: 5
       count: 5
-      stacktype: enum.StackType.Brutepack
+      stackType: Brutepack
 
 - type: entity
   name: roll of gauze
@@ -84,4 +84,4 @@
   - type: Stack
     max: 5
     count: 5
-    stacktype: enum.StackType.Gauze
+    stackType: Gauze
