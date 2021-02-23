@@ -80,6 +80,7 @@ namespace Content.Client
             prototypes.RegisterIgnore("barSign");
             prototypes.RegisterIgnore("objective");
             prototypes.RegisterIgnore("holiday");
+            prototypes.RegisterIgnore("aiFaction");
 
             ClientContentIoC.Register();
 
