@@ -32,7 +32,7 @@ namespace Content.Server.Actions
 
             // find all IGhostBooAffected nearby and do boo on them
             var entityMan = args.Performer.EntityManager;
-            var ents = entityMan.GetEntitiesInRange(args.Performer, _radius, false).ToList();
+            var ents = entityMan.GetEntitiesInRange(args.Performer, _radius, false);
 
             var booCounter = 0;
             foreach (var ent in ents)
