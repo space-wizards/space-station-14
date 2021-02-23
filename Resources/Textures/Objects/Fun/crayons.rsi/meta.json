@@ -8,37 +8,37 @@
   },
   "states": [
     {
-        "name": "crayonblack"
+        "name": "black"
     },
     {
-        "name": "crayonblue"
+        "name": "blue"
     },
     {
-        "name": "crayonbox"
+        "name": "box"
     },
     {
-        "name": "crayongreen"
+        "name": "green"
     },
     {
-        "name": "crayonmime"
+        "name": "mime"
     },
     {
-        "name": "crayonorange"
+        "name": "orange"
     },
     {
-        "name": "crayonpurple"
+        "name": "purple"
     },
     {
-        "name": "crayonrainbow"
+        "name": "rainbow"
     },
     {
-        "name": "crayonred"
+        "name": "red"
     },
     {
-        "name": "crayonwhite"
+        "name": "white"
     },
     {
-        "name": "crayonyellow"
+        "name": "yellow"
     },
     {
         "name": "green_box"

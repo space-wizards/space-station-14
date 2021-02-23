@@ -1,3 +1,6 @@
+- type: Tag
+  id: Crayon
+
 - type: entity
   parent: BaseItem
   id: Crayon
@@ -5,6 +8,11 @@
   abstract: true
   description: "A colourful crayon. Looks tasty. Mmmm..."
   components:
+  - type: Tag
+    tags:
+      - Crayon
+  - type: Item
+    size: 1
   - type: UserInterface
     interfaces:
     - key: enum.CrayonUiKey.Key
@@ -24,6 +32,30 @@
 
 - type: entity
   parent: Crayon
+  id: CrayonMime
+  suffix: Mime
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: mime
+  - type: Crayon
+    color: white
+    capacity: 15
+
+- type: entity
+  parent: Crayon
+  id: CrayonBlack
+  suffix: Black
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: black
+  - type: Crayon
+    color: black
+    capacity: 15
+
+- type: entity
+  parent: Crayon
   id: CrayonRed
   suffix: Red
   components:
@@ -32,30 +64,6 @@
     state: red
   - type: Crayon
     color: red
-    capacity: 15
-
-- type: entity
-  parent: Crayon
-  id: CrayonGreen
-  suffix: Green
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
-    state: green
-  - type: Crayon
-    color: green
-    capacity: 15
-
-- type: entity
-  parent: Crayon
-  id: CrayonPurple
-  suffix: Purple
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
-    state: purple
-  - type: Crayon
-    color: purple
     capacity: 15
 
 - type: entity
@@ -83,6 +91,42 @@
     capacity: 15
 
 - type: entity
+  parent: Crayon
+  id: CrayonGreen
+  suffix: Green
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: green
+  - type: Crayon
+    color: green
+    capacity: 15
+
+- type: entity
+  parent: Crayon
+  id: CrayonBlue
+  suffix: Blue
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: blue
+  - type: Crayon
+    color: lightblue
+    capacity: 15
+
+- type: entity
+  parent: Crayon
+  id: CrayonPurple
+  suffix: Purple
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: purple
+  - type: Crayon
+    color: purple
+    capacity: 15
+
+- type: entity
   id: CrayonBox
   parent: BaseItem
   name: crayon box
@@ -92,21 +136,29 @@
     sprite: Objects/Fun/crayons.rsi
     state: box
   - type: Storage
-    capacity: 30
+    capacity: 7
   - type: Item
     size: 9999
-
-- type: entity
-  id: CrayonBoxFilled
-  name: crayon box
-  parent: CrayonBox
-  suffix: Filled
-  components:
+  - type: StorageCounter
+    countTag: Crayon
   - type: StorageFill
     contents:
-      - name: CrayonGreen
-      - name: CrayonOrange
-      - name: CrayonPurple
       - name: CrayonRed
-      - name: CrayonWhite
+      - name: CrayonOrange
       - name: CrayonYellow
+      - name: CrayonGreen
+      - name: CrayonBlue
+      - name: CrayonPurple
+      - name: CrayonBlack
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        composite: true
+        stackLayers:
+          - red_box
+          - orange_box
+          - yellow_box
+          - green_box
+          - blue_box
+          - purple_box
+          - black_box

@@ -37488,7 +37488,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
 - uid: 4169
-  type: CrayonBoxFilled
+  type: CrayonBox
   components:
   - parent: 853
     pos: -19.173923,-9.122305
