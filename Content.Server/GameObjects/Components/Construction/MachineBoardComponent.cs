@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using Content.Server.Construction;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Stacks;
+using Microsoft.Extensions.Logging;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -63,7 +65,10 @@ namespace Content.Server.GameObjects.Components.Construction
 
             foreach (var material in _materialIdRequirements.Keys)
             {
-                _prototypeManager.Index<StackPrototype>(material);
+                if (!_prototypeManager.HasIndex<StackPrototype>(material))
+                {
+                    Logger.Error($"No {nameof(StackPrototype)} found with id {material}");
+                }
             }
         }
 

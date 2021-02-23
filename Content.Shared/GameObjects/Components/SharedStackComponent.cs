@@ -2,6 +2,7 @@ using System;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -50,7 +51,7 @@ namespace Content.Shared.GameObjects.Components
 
         [ViewVariables] public int AvailableSpace => MaxCount - Count;
 
-        [ViewVariables] public string StackTypeId { get; private set; }
+        [ViewVariables] public string StackTypeId { get; private set; } = string.Empty;
 
         public StackPrototype StackType => _prototypeManager.Index<StackPrototype>(StackTypeId);
 
@@ -70,9 +71,9 @@ namespace Content.Shared.GameObjects.Components
                 return;
             }
 
-            serializer.DataFieldCached(ref stackType, "stackType", null);
+            serializer.DataFieldCached(ref stackType, "stackType", string.Empty);
 
-            if (stackType != null)
+            if (!string.IsNullOrEmpty(stackType))
             {
                 serializer.SetCacheData(SerializationCache, stackType);
                 StackTypeId = stackType;
@@ -83,7 +84,10 @@ namespace Content.Shared.GameObjects.Components
         {
             base.Startup();
 
-            _prototypeManager.Index<StackPrototype>(StackTypeId);
+            if (!_prototypeManager.HasIndex<StackPrototype>(StackTypeId))
+            {
+                Logger.Error($"No {nameof(StackPrototype)} found with id {StackTypeId}");
+            }
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
