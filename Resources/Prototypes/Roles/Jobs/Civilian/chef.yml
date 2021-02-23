@@ -8,7 +8,6 @@
   icon: "Chef"
   access:
   - Service
-  - Kitchen
   - Maintenance
 
 - type: startingGear

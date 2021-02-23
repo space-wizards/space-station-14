@@ -10,9 +10,7 @@
   icon: "HeadOfSecurity"
   access:
   - Command
-  - HeadOfSecurity
   - Brig
-  - Detective
   - Security
   - Maintenance
   - Service
