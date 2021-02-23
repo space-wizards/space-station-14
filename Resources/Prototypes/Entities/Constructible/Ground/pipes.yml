@@ -25,6 +25,7 @@
   - type: Appearance
     visuals:
     - type: PipeVisualizer
+    - type: PipeConnectorVisualizer
   - type: Icon
     sprite: Constructible/Atmos/pipe.rsi
 
@@ -55,7 +56,7 @@
       pipeDirection: Lateral
   - type: Icon
     state: pipeStraight
-
+    
 - type: entity
   parent: PipeBase
   id: PipeBend
@@ -68,7 +69,7 @@
       pipeDirection: SEBend
   - type: Icon
     state: pipeBend
-
+    
 - type: entity
   parent: PipeBase
   id: PipeTJunction
@@ -81,7 +82,7 @@
       pipeDirection: TEast
   - type: Icon
     state: pipeTJunction
-
+    
 - type: entity
   parent: PipeBase
   id: PipeFourway

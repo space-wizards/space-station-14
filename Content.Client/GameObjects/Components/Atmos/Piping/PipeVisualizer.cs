@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
@@ -12,43 +13,44 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Atmos.Piping
 {
+    /// <summary>
+    ///     Sets the state of the sprite based on what shape of pipe it is.
+    /// </summary>
     [UsedImplicitly]
     [DataDefinition]
     public class PipeVisualizer : AppearanceVisualizer, ISerializationHooks
     {
-        [DataField("rsiString")] private string _rsiString = "Constructible/Atmos/pipe.rsi";
-
-        private RSI _pipeRSI;
+        [DataField("rsi")] private string _rsiString = "Constructible/Atmos/pipe.rsi";
+        private RSI? _pipeRSI;
 
         public void AfterDeserialization()
         {
             var rsiPath = SharedSpriteComponent.TextureRoot / _rsiString;
-            try
+            var resourceCache = IoCManager.Resolve<IResourceCache>();
+
+            if (resourceCache.TryGetResource(rsiPath, out RSIResource? rsi))
             {
-                var resourceCache = IoCManager.Resolve<IResourceCache>();
-                var resource = resourceCache.GetResource<RSIResource>(rsiPath);
-                _pipeRSI = resource.RSI;
-            }
-            catch (Exception e)
-            {
-                Logger.ErrorS("go.ventvisualizer", "Unable to load RSI '{0}'. Trace:\n{1}", rsiPath, e);
+                _pipeRSI = rsi.RSI;
             }
         }
 
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
-            if (!entity.TryGetComponent(out ISpriteComponent sprite)) return;
+            if (!entity.TryGetComponent<ISpriteComponent>(out var sprite)) return;
             sprite.LayerMapReserveBlank(Layer.PipeBase);
             var pipeBaseLayer = sprite.LayerMapGet(Layer.PipeBase);
-            sprite.LayerSetRSI(pipeBaseLayer, _pipeRSI);
+
+            if (_pipeRSI != null)
+                sprite.LayerSetRSI(pipeBaseLayer, _pipeRSI);
+
             sprite.LayerSetVisible(pipeBaseLayer, true);
         }
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite)) return;
+            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite)) return;
             if (!component.TryGetData(PipeVisuals.VisualState, out PipeVisualState pipeVisualState)) return;
             var pipeBase = sprite.LayerMapGet(Layer.PipeBase);
             var pipeBaseStateId = GetPipeBaseStateId(pipeVisualState);
@@ -58,7 +60,7 @@ namespace Content.Client.GameObjects.Components.Atmos.Piping
         private string GetPipeBaseStateId(PipeVisualState pipeVisualState)
         {
             var stateId = "pipe";
-            stateId += pipeVisualState.PipeDirection.PipeDirectionToPipeShape().ToString();
+            stateId += pipeVisualState.PipeShape.ToString();
             return stateId;
         }
 

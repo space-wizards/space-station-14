@@ -4,9 +4,6 @@
   name: cigarette pack
   abstract: true
   components:
-    - type: Sprite
-      netsync: false
-      state: closed
     - type: Storage
       capacity: 6
     - type: Item
@@ -38,6 +35,7 @@
   description: "A label on the packaging reads, 'Wouldn't a slow death make a change?'"
   components:
     - type: Sprite
+      netsync: false
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
       layers:
         - state: closed
@@ -52,6 +50,7 @@
   description: "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
   components:
     - type: Sprite
+      netsync: false
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
       layers:
         - state: closed
@@ -66,6 +65,7 @@
   description: "For those who somehow want to obtain the record for the most amount of cancerous tumors."
   components:
     - type: Sprite
+      netsync: false
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
       layers:
         - state: closed
@@ -80,6 +80,7 @@
   description: "Nomads's extra strong, for when your life is more extra hard."
   components:
     - type: Sprite
+      netsync: false
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
       layers:
         - state: closed

@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// <summary>
         ///     If this node should be considered for connection by other nodes.
         /// </summary>
-        private bool Connectable => !_deleting && Anchored;
+        public bool Connectable => !_deleting && Anchored;
 
         private bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
 
@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             Owner = owner;
         }
 
-        public void OnContainerStartup()
+        public virtual void OnContainerStartup()
         {
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();
@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             }
         }
 
-        public void OnContainerRemove()
+        public virtual void OnContainerRemove()
         {
             _deleting = true;
             NodeGroup.RemoveNode(this);

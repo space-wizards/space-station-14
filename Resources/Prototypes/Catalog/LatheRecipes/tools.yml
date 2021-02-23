@@ -24,8 +24,7 @@
   result: Welder
   completetime: 500
   materials:
-    steel: 70
-    glass: 30
+    steel: 90
 
 - type: latheRecipe
   id: Wrench
@@ -34,7 +33,6 @@
   completetime: 500
   materials:
     steel: 70
-    glass: 30
 
 - type: latheRecipe
   id: CableStack
@@ -44,7 +42,7 @@
   completetime: 500
   materials:
     steel: 50
-    glass: 50
+    plastic: 50
 
 - type: latheRecipe
   id: Crowbar
@@ -63,6 +61,17 @@
     steel: 80
 
 - type: latheRecipe
+  id: Shovel
+  icon:
+    sprite: Objects/Tools/shovel.rsi
+    state: icon
+  result: Shovel
+  completetime: 500
+  materials:
+    steel: 50
+    wood: 30
+
+- type: latheRecipe
   id: Multitool
   icon:
     sprite: Objects/Tools/multitool.rsi
@@ -71,7 +80,7 @@
   completetime: 500
   materials:
     steel: 50
-    glass: 20
+    plastic: 20
 
 - type: latheRecipe
   id: PowerDrill
@@ -81,8 +90,7 @@
   result: PowerDrill
   completetime: 500
   materials:
-    steel: 80
-    glass: 20
+    steel: 90
 
 - type: latheRecipe
   id: RCD
@@ -93,7 +101,7 @@
   completetime: 1000
   materials:
     steel: 250
-    glass: 100
+    plastic: 100
 
 - type: latheRecipe
   id: RCDAmmo
@@ -104,15 +112,4 @@
   completetime: 600
   materials:
     steel: 90
-    glass: 80
-
-- type: latheRecipe
-  id: Shovel
-  icon:
-    sprite: Objects/Tools/Hydroponics/hatchet.rsi
-    state: icon
-  result: Shovel
-  completetime: 500
-  materials:
-    steel: 60
-    glass: 10
+    plastic: 80

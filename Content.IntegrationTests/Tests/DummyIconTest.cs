@@ -24,7 +24,7 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.Components.ContainsKey("Sprite")) continue;
+                    if (proto.Abstract || !proto.Components.ContainsKey("Sprite")) continue;
 
                     Assert.DoesNotThrow(() =>
                     {

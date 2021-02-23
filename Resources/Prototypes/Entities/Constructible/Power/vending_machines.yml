@@ -76,7 +76,7 @@
       broken: true
     - type: WiresVisualizer
   - type: AccessReader
-    access: [["Bar"]]
+    access: [["Service"]]
 
 - type: entity
   parent: VendingMachine
@@ -236,7 +236,7 @@
       broken: true
     - type: WiresVisualizer
   - type: AccessReader
-    access: [["Kitchen"]]
+    access: [["Service"]]
 
 - type: entity
   parent: VendingMachine
@@ -417,7 +417,7 @@
       broken: true
     - type: WiresVisualizer
   - type: AccessReader
-    access: [["Hydroponics"]]
+    access: [["Service"]]
 
 - type: entity
   parent: VendingMachine
@@ -525,7 +525,7 @@
       broken: true
     - type: WiresVisualizer
   - type: AccessReader
-    access: [["Hydroponics"]]
+    access: [["Service"]]
 
 - type: entity
   parent: VendingMachine

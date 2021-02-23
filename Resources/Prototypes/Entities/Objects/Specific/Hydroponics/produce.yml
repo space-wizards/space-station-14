@@ -8,7 +8,9 @@
     - type: Sprite
       state: produce
     - type: Produce
-    - type: Grindable
+    - type: Tag
+      tags:
+      - Grindable
 
 - type: entity
   name: wheat
