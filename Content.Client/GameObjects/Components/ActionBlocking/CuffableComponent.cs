@@ -13,7 +13,7 @@ namespace Content.Client.GameObjects.Components.ActionBlocking
     public class CuffableComponent : SharedCuffableComponent
     {
         [ViewVariables]
-        private string _currentRSI = default!;
+        private string? _currentRSI;
 
         [ViewVariables] [ComponentDependency] private readonly SpriteComponent? _spriteComponent = null;
 
@@ -36,7 +36,11 @@ namespace Content.Client.GameObjects.Components.ActionBlocking
                     if (_currentRSI != cuffState.RSI) // we don't want to keep loading the same RSI
                     {
                         _currentRSI = cuffState.RSI;
-                        _spriteComponent.LayerSetState(HumanoidVisualLayers.Handcuffs, new RSI.StateId(cuffState.IconState), new ResourcePath(cuffState.RSI));
+
+                        if (_currentRSI != null)
+                        {
+                            _spriteComponent.LayerSetState(HumanoidVisualLayers.Handcuffs, new RSI.StateId(cuffState.IconState), new ResourcePath(_currentRSI));
+                        }
                     }
                     else
                     {

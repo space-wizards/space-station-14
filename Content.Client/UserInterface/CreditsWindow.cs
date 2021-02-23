@@ -38,9 +38,18 @@ namespace Content.Client.UserInterface
 
             var rootContainer = new TabContainer();
 
-            var patronsList = new ScrollContainer();
-            var ss14ContributorsList = new ScrollContainer();
-            var licensesList = new ScrollContainer();
+            var patronsList = new ScrollContainer
+            {
+                HScrollEnabled = false
+            };
+            var ss14ContributorsList = new ScrollContainer
+            {
+                HScrollEnabled = false
+            };
+            var licensesList = new ScrollContainer
+            {
+                HScrollEnabled = false
+            };
 
             rootContainer.AddChild(ss14ContributorsList);
             rootContainer.AddChild(patronsList);
@@ -56,14 +65,15 @@ namespace Content.Client.UserInterface
 
             Contents.AddChild(rootContainer);
 
-            CustomMinimumSize = (650, 450);
+            SetSize = (650, 650);
         }
 
         private void PopulateLicenses(ScrollContainer licensesList)
         {
-            var margin = new MarginContainer {MarginLeftOverride = 2, MarginTopOverride = 2};
-            var vBox = new VBoxContainer();
-            margin.AddChild(vBox);
+            var vBox = new VBoxContainer
+            {
+                Margin = new Thickness(2, 2, 0, 0)
+            };
 
             foreach (var entry in CreditsManager.GetLicenses().OrderBy(p => p.Name))
             {
@@ -77,14 +87,15 @@ namespace Content.Client.UserInterface
                 }
             }
 
-            licensesList.AddChild(margin);
+            licensesList.AddChild(vBox);
         }
 
         private void PopulatePatronsList(Control patronsList)
         {
-            var margin = new MarginContainer {MarginLeftOverride = 2, MarginTopOverride = 2};
-            var vBox = new VBoxContainer();
-            margin.AddChild(vBox);
+            var vBox = new VBoxContainer
+            {
+                Margin = new Thickness(2, 2, 0, 0)
+            };
             var patrons = LoadPatrons();
 
             // Do not show "become a patron" button on Steam builds
@@ -95,7 +106,7 @@ namespace Content.Client.UserInterface
                 vBox.AddChild(patronButton = new Button
                 {
                     Text = "Become a Patron",
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                    HorizontalAlignment = HAlignment.Center
                 });
 
                 patronButton.OnPressed +=
@@ -107,7 +118,7 @@ namespace Content.Client.UserInterface
             {
                 if (!first)
                 {
-                    vBox.AddChild(new Control {CustomMinimumSize = (0, 10)});
+                    vBox.AddChild(new Control {MinSize = (0, 10)});
                 }
 
                 first = false;
@@ -123,7 +134,7 @@ namespace Content.Client.UserInterface
 
 
 
-            patronsList.AddChild(margin);
+            patronsList.AddChild(vBox);
         }
 
         private IEnumerable<PatronEntry> LoadPatrons()
@@ -140,17 +151,14 @@ namespace Content.Client.UserInterface
         {
             Button contributeButton;
 
-            var margin = new MarginContainer
+            var vBox = new VBoxContainer
             {
-                MarginLeftOverride = 2,
-                MarginTopOverride = 2
+                Margin = new Thickness(2, 2, 0, 0)
             };
-            var vBox = new VBoxContainer();
-            margin.AddChild(vBox);
 
             vBox.AddChild(new HBoxContainer
             {
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                HorizontalAlignment = HAlignment.Center,
                 SeparationOverride = 20,
                 Children =
                 {
@@ -165,7 +173,7 @@ namespace Content.Client.UserInterface
             {
                 if (!first)
                 {
-                    vBox.AddChild(new Control {CustomMinimumSize = (0, 10)});
+                    vBox.AddChild(new Control {MinSize = (0, 10)});
                 }
 
                 first = false;
@@ -190,7 +198,7 @@ namespace Content.Client.UserInterface
             AddSection("Original Space Station 13 Remake Team", "OriginalRemake.txt");
             AddSection("Special Thanks", "SpecialThanks.txt", true);
 
-            contributorsList.AddChild(margin);
+            contributorsList.AddChild(vBox);
 
             contributeButton.OnPressed += _ =>
                 IoCManager.Resolve<IUriOpener>().OpenUri(UILinks.GitHub);

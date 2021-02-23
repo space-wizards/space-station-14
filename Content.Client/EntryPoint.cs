@@ -14,6 +14,7 @@ using Content.Client.UserInterface;
 using Content.Client.UserInterface.AdminMenu;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Graphics.Overlays;
+using Content.Client.Voting;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Cargo;
@@ -60,17 +61,17 @@ namespace Content.Client
                 factory.RegisterIgnore(ignoreName);
             }
 
-            factory.Register<SharedResearchConsoleComponent>();
-            factory.Register<SharedLatheComponent>();
-            factory.Register<SharedSpawnPointComponent>();
-            factory.Register<SharedVendingMachineComponent>();
-            factory.Register<SharedWiresComponent>();
-            factory.Register<SharedCargoConsoleComponent>();
-            factory.Register<SharedReagentDispenserComponent>();
-            factory.Register<SharedChemMasterComponent>();
-            factory.Register<SharedMicrowaveComponent>();
-            factory.Register<SharedGravityGeneratorComponent>();
-            factory.Register<SharedAMEControllerComponent>();
+            factory.RegisterClass<SharedResearchConsoleComponent>();
+            factory.RegisterClass<SharedLatheComponent>();
+            factory.RegisterClass<SharedSpawnPointComponent>();
+            factory.RegisterClass<SharedVendingMachineComponent>();
+            factory.RegisterClass<SharedWiresComponent>();
+            factory.RegisterClass<SharedCargoConsoleComponent>();
+            factory.RegisterClass<SharedReagentDispenserComponent>();
+            factory.RegisterClass<SharedChemMasterComponent>();
+            factory.RegisterClass<SharedMicrowaveComponent>();
+            factory.RegisterClass<SharedGravityGeneratorComponent>();
+            factory.RegisterClass<SharedAMEControllerComponent>();
 
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
@@ -79,6 +80,7 @@ namespace Content.Client
             prototypes.RegisterIgnore("barSign");
             prototypes.RegisterIgnore("objective");
             prototypes.RegisterIgnore("holiday");
+            prototypes.RegisterIgnore("aiFaction");
 
             ClientContentIoC.Register();
 
@@ -161,6 +163,7 @@ namespace Content.Client
             IoCManager.Resolve<EuiManager>().Initialize();
             IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<ActionManager>().Initialize();
+            IoCManager.Resolve<IVoteManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {

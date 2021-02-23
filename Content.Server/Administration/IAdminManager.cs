@@ -26,11 +26,21 @@ namespace Content.Server.Administration
         IEnumerable<IPlayerSession> ActiveAdmins { get; }
 
         /// <summary>
+        ///     Checks if a player is an admin.
+        /// </summary>
+        /// <param name="session">The player to check.</param>
+        /// <param name="includeDeAdmin">
+        ///     Whether to return admin data for admins that are current de-adminned.
+        /// </param>
+        /// <returns>true if the player is an admin, false otherwise.</returns>
+        bool IsAdmin(IPlayerSession session, bool includeDeAdmin = false);
+
+        /// <summary>
         ///     Gets the admin data for a player, if they are an admin.
         /// </summary>
         /// <param name="session">The player to get admin data for.</param>
         /// <param name="includeDeAdmin">
-        /// Whether to return admin data for admins that are current de-adminned.
+        ///     Whether to return admin data for admins that are current de-adminned.
         /// </param>
         /// <returns><see langword="null" /> if the player is not an admin.</returns>
         AdminData? GetAdminData(IPlayerSession session, bool includeDeAdmin = false);

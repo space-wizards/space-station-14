@@ -29,7 +29,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {

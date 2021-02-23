@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Chat
 {
-    public class ChatBox : MarginContainer
+    public class ChatBox : Control
     {
         public delegate void TextSubmitHandler(ChatBox chatBox, string text);
 
@@ -23,7 +23,7 @@ namespace Content.Client.Chat
         public Button LocalButton { get; }
         public Button OOCButton { get; }
         public Button AdminButton { get; }
-        public Button DeadButton { get;  }
+        public Button DeadButton { get; }
 
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
@@ -36,13 +36,6 @@ namespace Content.Client.Chat
 
         public ChatBox()
         {
-            /*MarginLeft = -475.0f;
-            MarginTop = 10.0f;
-            MarginRight = -10.0f;
-            MarginBottom = 235.0f;
-
-            AnchorLeft = 1.0f;
-            AnchorRight = 1.0f;*/
             MouseFilter = MouseFilterMode.Stop;
 
             var outerVBox = new VBoxContainer();
@@ -50,7 +43,7 @@ namespace Content.Client.Chat
             var panelContainer = new PanelContainer
             {
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#25252aaa")},
-                SizeFlagsVertical = SizeFlags.FillExpand
+                VerticalExpand = true
             };
             var vBox = new VBoxContainer();
             panelContainer.AddChild(vBox);
@@ -59,15 +52,8 @@ namespace Content.Client.Chat
             outerVBox.AddChild(panelContainer);
             outerVBox.AddChild(hBox);
 
-
-            var contentMargin = new MarginContainer
-            {
-                MarginLeftOverride = 4, MarginRightOverride = 4,
-                SizeFlagsVertical = SizeFlags.FillExpand
-            };
-            Contents = new OutputPanel();
-            contentMargin.AddChild(Contents);
-            vBox.AddChild(contentMargin);
+            Contents = new OutputPanel {Margin = new Thickness(4, 0), VerticalExpand = true};
+            vBox.AddChild(Contents);
 
             Input = new HistoryLineEdit();
             Input.OnKeyBindDown += InputKeyBindDown;
@@ -78,7 +64,8 @@ namespace Content.Client.Chat
             {
                 Text = Loc.GetString("All"),
                 Name = "ALL",
-                SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand,
+                HorizontalExpand = true,
+                HorizontalAlignment = HAlignment.Right,
                 ToggleMode = true,
             };
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Client.Administration;
+using Content.Shared.Administration.AdminMenu;
 using Content.Shared.Input;
 using Robust.Client.Console;
 using Robust.Client.Input;
@@ -18,11 +19,14 @@ namespace Content.Client.UserInterface.AdminMenu
         [Dependency] private readonly IClientAdminManager _clientAdminManager = default!;
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
 
-        private SS14Window _window;
+        private AdminMenuWindow _window;
         private List<SS14Window> _commandWindows;
 
         public void Initialize()
         {
+            _netManager.RegisterNetMessage<AdminMenuPlayerListRequest>(AdminMenuPlayerListRequest.NAME);
+            _netManager.RegisterNetMessage<AdminMenuPlayerListMessage>(AdminMenuPlayerListMessage.NAME, HandlePlayerListMessage);
+
             _commandWindows = new List<SS14Window>();
             // Reset the AdminMenu Window on disconnect
             _netManager.Disconnect += (sender, channel) => ResetWindow();
@@ -55,6 +59,18 @@ namespace Content.Client.UserInterface.AdminMenu
             _gameHud.AdminButtonDown = false;
         }
 
+        private void RequestPlayerList()
+        {
+            var message = _netManager.CreateNetMessage<AdminMenuPlayerListRequest>();
+
+            _netManager.ClientSendMessage(message);
+        }
+
+        private void HandlePlayerListMessage(AdminMenuPlayerListMessage msg)
+        {
+            _window.RefreshPlayerList(msg.NamesToPlayers);
+        }
+
         public void ResetWindow()
         {
             _window?.Close();
@@ -73,8 +89,8 @@ namespace Content.Client.UserInterface.AdminMenu
 
         public void Open()
         {
-            if (_window == null)
-                _window = new AdminMenuWindow();
+            _window ??= new AdminMenuWindow();
+            _window.OnPlayerListRefresh += RequestPlayerList;
             _window.OpenCentered();
         }
 

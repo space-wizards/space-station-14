@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.BarSign
                 return;
             }
 
-            if (!_prototypeManager.TryIndex(_currentSign, out BarSignPrototype prototype))
+            if (!_prototypeManager.TryIndex(_currentSign, out BarSignPrototype? prototype))
             {
                 Logger.ErrorS("barSign", $"Invalid bar sign prototype: \"{_currentSign}\"");
                 return;

@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: WallLight
-  name: "unpowered light"
+  name: unpowered light
+  description: "An unpowered light."
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -19,15 +20,32 @@
   - type: PointLight
     radius: 8
     energy: 1.2
-    offset: "0.5, 0"
+    offset: "0, -0.5"
     color: "#DCDCC6"
   - type: SignalReceiver
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SteelSheet1:
+            min: 2
+            max: 2
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   placement:
     snap:
     - Wallmount
 
 - type: entity
   name: light
+  description: "A powered wall light emitting... light."
   id: Poweredlight
   parent: WallLight
   components:
@@ -39,19 +57,10 @@
   - type: PoweredLight
     bulb: Tube
   - type: PowerReceiver
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
 
 - type: entity
   id: PoweredlightEmpty
+  description: "A wall light. It's empty."
   suffix: Empty
   parent: Poweredlight
   components:
@@ -62,6 +71,7 @@
 
 - type: entity
   name: unpowered small light
+  description: "An unpowered light."
   id: SmallLight
   parent: WallLight
   components:
@@ -71,21 +81,29 @@
     - type: PointLight
       energy: 1.0
       enabled: true
-      offset: "0.5, 0"
+      offset: "0, -0.5"
+    - type: Damageable
     - type: Destructible
       thresholds:
       - trigger:
           !type:DamageTrigger
           damage: 25
         behaviors:
+        - !type:EmptyAllContainersBehaviour
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SteelSheet1:
+              min: 1
+              max: 1
         - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+          acts: ["Destruction"]
     - type: Construction
       graph: lightFixture
       node: bulbLight
 
 - type: entity
   name: small light
+  description: "A powered wall light emitting... light."
   id: PoweredSmallLight
   parent: SmallLight
   components:
@@ -95,7 +113,7 @@
   - type: PointLight
     energy: 1.0
     enabled: false
-    offset: "0.5, 0"
+    offset: "0, -0.5"
   - type: Physics
     shapes:
       - !type:PhysShapeAabb
@@ -104,16 +122,6 @@
   - type: PoweredLight
     bulb: Bulb
   - type: PowerReceiver
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 25
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
 
 - type: entity
   id: PoweredSmallLightEmpty

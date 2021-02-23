@@ -16,6 +16,9 @@
     - sprite: Constructible/Atmos/pipe.rsi
       state: pipeHalf
     - state: gasCanisterPort
+  - type: Appearance
+    visuals:
+    - type: PipeConnectorVisualizer
   - type: Damageable
   - type: Destructible
     thresholds:
@@ -31,6 +34,7 @@
   parent: GasCanisterPortBase
   id: GasCanisterPort
   name: Gas Canister Port
+  description: "Connect a gas canister here to release gasses into a system."
   components:
   - type: NodeContainer
     nodes:

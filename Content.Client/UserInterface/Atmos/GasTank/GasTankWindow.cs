@@ -72,7 +72,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
                 Children =
                 {
                     (_topContainer = new VBoxContainer()),
-                    new Control {CustomMinimumSize = (0, 110)}
+                    new Control {MinSize = (0, 110)}
                 }
             };
 
@@ -82,37 +82,26 @@ namespace Content.Client.UserInterface.Atmos.GasTank
 
             var font = _resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
 
-            var topRow = new MarginContainer
+            var topRow = new HBoxContainer
             {
-                MarginLeftOverride = 4,
-                MarginTopOverride = 2,
-                MarginRightOverride = 12,
-                MarginBottomOverride = 2,
+                Margin = new Thickness(4, 2, 12, 2),
                 Children =
                 {
-                    new HBoxContainer
+                    (_lblName = new Label
                     {
-                        Children =
-                        {
-                            (_lblName = new Label
-                            {
-                                Text = Loc.GetString("Gas Tank"),
-                                FontOverride = font,
-                                FontColorOverride = StyleNano.NanoGold,
-                                SizeFlagsVertical = SizeFlags.ShrinkCenter
-                            }),
-                            new Control
-                            {
-                                CustomMinimumSize = (20, 0),
-                                SizeFlagsHorizontal = SizeFlags.Expand
-                            },
-                            (btnClose = new TextureButton
-                            {
-                                StyleClasses = {SS14Window.StyleClassWindowCloseButton},
-                                SizeFlagsVertical = SizeFlags.ShrinkCenter
-                            })
-                        }
-                    }
+                        Text = Loc.GetString("Gas Tank"),
+                        FontOverride = font,
+                        FontColorOverride = StyleNano.NanoGold,
+                        VerticalAlignment = VAlignment.Center,
+                        HorizontalExpand = true,
+                        HorizontalAlignment = HAlignment.Left,
+                        Margin = new Thickness(0, 0, 20, 0),
+                    }),
+                    (btnClose = new TextureButton
+                    {
+                        StyleClasses = {SS14Window.StyleClassWindowCloseButton},
+                        VerticalAlignment = VAlignment.Center
+                    })
                 }
             };
 
@@ -121,30 +110,23 @@ namespace Content.Client.UserInterface.Atmos.GasTank
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#202025")},
                 Children =
                 {
-                    new MarginContainer
+                    (_contentContainer = new VBoxContainer
                     {
-                        MarginLeftOverride = 8,
-                        MarginRightOverride = 8,
-                        MarginTopOverride = 4,
-                        MarginBottomOverride = 4,
-                        Children =
-                        {
-                            (_contentContainer = new VBoxContainer())
-                        }
-                    }
+                        Margin = new Thickness(8, 4),
+                    })
                 }
             };
 
             _topContainer.AddChild(topRow);
             _topContainer.AddChild(new PanelContainer
             {
-                CustomMinimumSize = (0, 2),
+                MinSize = (0, 2),
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
             });
             _topContainer.AddChild(middle);
             _topContainer.AddChild(new PanelContainer
             {
-                CustomMinimumSize = (0, 2),
+                MinSize = (0, 2),
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
             });
 
@@ -154,26 +136,20 @@ namespace Content.Client.UserInterface.Atmos.GasTank
 
             //internals
             _lblInternals = new RichTextLabel
-                {CustomMinimumSize = (200, 0), SizeFlagsVertical = SizeFlags.ShrinkCenter};
+                {MinSize = (200, 0), VerticalAlignment = VAlignment.Center};
             _btnInternals = new Button {Text = Loc.GetString("Toggle")};
 
             _contentContainer.AddChild(
-                new MarginContainer
+                new HBoxContainer
                 {
-                    MarginTopOverride = 7,
-                    Children =
-                    {
-                        new HBoxContainer
-                        {
-                            Children = {_lblInternals, _btnInternals}
-                        }
-                    }
+                    Margin = new Thickness(0, 7, 0, 0),
+                    Children = {_lblInternals, _btnInternals}
                 });
 
             // Separator
             _contentContainer.AddChild(new Control
             {
-                CustomMinimumSize = new Vector2(0, 10)
+                MinSize = new Vector2(0, 10)
             });
 
             _contentContainer.AddChild(new Label
@@ -181,19 +157,12 @@ namespace Content.Client.UserInterface.Atmos.GasTank
                 Text = Loc.GetString("Output Pressure"),
                 Align = Label.AlignMode.Center
             });
-            _spbPressure = new FloatSpinBox {IsValid = f => f >= 0 || f <= 3000};
-            _contentContainer.AddChild(
-                new MarginContainer
-                {
-                    MarginRightOverride = 25,
-                    MarginLeftOverride = 25,
-                    MarginBottomOverride = 7,
-                    Children =
-                    {
-                        _spbPressure
-                    }
-                }
-            );
+            _spbPressure = new FloatSpinBox
+            {
+                IsValid = f => f >= 0 || f <= 3000,
+                Margin = new Thickness(25, 0, 25, 7)
+            };
+            _contentContainer.AddChild(_spbPressure);
 
             // Handlers
             _spbPressure.OnValueChanged += args =>

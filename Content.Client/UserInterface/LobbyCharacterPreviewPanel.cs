@@ -40,7 +40,7 @@ namespace Content.Client.UserInterface
             CharacterSetupButton = new Button
             {
                 Text = Loc.GetString("Customize"),
-                SizeFlagsHorizontal = SizeFlags.None
+                HorizontalAlignment = HAlignment.Left
             };
 
             _summaryLabel = new Label();

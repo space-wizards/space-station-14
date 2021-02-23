@@ -16,6 +16,12 @@ namespace Content.Client.Administration
         event Action AdminStatusUpdated;
 
         /// <summary>
+        ///     Checks whether the local player is an admin.
+        /// </summary>
+        /// <returns>true if the local player is an admin, false otherwise even if they are deadminned.</returns>
+        bool IsActive();
+
+        /// <summary>
         ///     Checks whether the local player has an admin flag.
         /// </summary>
         /// <param name="flag">The flags to check. Multiple flags can be specified, they must all be held.</param>

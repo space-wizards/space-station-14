@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Animations;
 using Content.Client.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Client.GameObjects;
@@ -29,8 +30,17 @@ namespace Content.Client.GameObjects.Components.Storage
         private int StorageSizeUsed;
         private int StorageCapacityMax;
         private StorageWindow Window;
+        private SharedBagState _bagState;
 
         public override IReadOnlyList<IEntity> StoredEntities => _storedEntities;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            // Hide stackVisualizer on start
+            _bagState = SharedBagState.Close;
+        }
 
         public override void OnAdd()
         {
@@ -69,12 +79,15 @@ namespace Content.Client.GameObjects.Components.Storage
                 //Updates what we are storing for the UI
                 case StorageHeldItemsMessage msg:
                     HandleStorageMessage(msg);
+                    ChangeStorageVisualization(_bagState);
                     break;
                 //Opens the UI
                 case OpenStorageUIMessage _:
+                    ChangeStorageVisualization(SharedBagState.Open);
                     ToggleUI();
                     break;
                 case CloseStorageUIMessage _:
+                    ChangeStorageVisualization(SharedBagState.Close);
                     CloseUI();
                     break;
                 case AnimateInsertingEntitiesMessage msg:
@@ -119,6 +132,7 @@ namespace Content.Client.GameObjects.Components.Storage
         private void ToggleUI()
         {
             if (Window.IsOpen)
+
                 Window.Close();
             else
                 Window.Open();
@@ -127,6 +141,16 @@ namespace Content.Client.GameObjects.Components.Storage
         private void CloseUI()
         {
             Window.Close();
+        }
+
+        private void ChangeStorageVisualization(SharedBagState state)
+        {
+            _bagState = state;
+            if (Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
+            {
+                appearanceComponent.SetData(SharedBagOpenVisuals.BagState, state);
+                appearanceComponent.SetData(StackVisuals.Hide, state == SharedBagState.Close);
+            }
         }
 
         /// <summary>
@@ -162,25 +186,20 @@ namespace Content.Client.GameObjects.Components.Storage
             private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
             private readonly StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
 
-            protected override Vector2? CustomSize => (180, 320);
-
             public StorageWindow()
             {
+                MinSize = SetSize = (180, 320);
                 Title = "Storage Item";
                 RectClipContent = true;
 
                 var containerButton = new ContainerButton
                 {
-                    SizeFlagsHorizontal = SizeFlags.Fill,
-                    SizeFlagsVertical = SizeFlags.Fill,
                     MouseFilter = MouseFilterMode.Pass,
                 };
 
                 var innerContainerButton = new PanelContainer
                 {
                     PanelOverride = _unHoveredBox,
-                    SizeFlagsHorizontal = SizeFlags.Fill,
-                    SizeFlagsVertical = SizeFlags.Fill,
                 };
 
 
@@ -203,20 +222,20 @@ namespace Content.Client.GameObjects.Components.Storage
                 _information = new Label
                 {
                     Text = "Items: 0 Volume: 0/0 Stuff",
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter
+                    VerticalAlignment = VAlignment.Center
                 };
                 VSplitContainer.AddChild(_information);
 
                 var listScrollContainer = new ScrollContainer
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    VerticalExpand = true,
+                    HorizontalExpand = true,
                     HScrollEnabled = true,
                     VScrollEnabled = true,
                 };
                 _entityList = new VBoxContainer
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
+                    HorizontalExpand = true
                 };
                 listScrollContainer.AddChild(_entityList);
                 VSplitContainer.AddChild(listScrollContainer);
@@ -318,8 +337,8 @@ namespace Content.Client.GameObjects.Components.Storage
             {
                 ActualButton = new Button
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    HorizontalExpand = true,
+                    VerticalExpand = true,
                     ToggleMode = true,
                     MouseFilter = MouseFilterMode.Stop
                 };
@@ -328,11 +347,12 @@ namespace Content.Client.GameObjects.Components.Storage
                 var hBoxContainer = new HBoxContainer();
                 EntitySpriteView = new SpriteView
                 {
-                    CustomMinimumSize = new Vector2(32.0f, 32.0f)
+                    MinSize = new Vector2(32.0f, 32.0f),
+                    OverrideDirection = Direction.South
                 };
                 EntityName = new Label
                 {
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                    VerticalAlignment = VAlignment.Center,
                     Text = "Backpack",
                 };
                 hBoxContainer.AddChild(EntitySpriteView);
@@ -340,11 +360,11 @@ namespace Content.Client.GameObjects.Components.Storage
 
                 EntityControl = new Control
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
+                    HorizontalExpand = true
                 };
                 EntitySize = new Label
                 {
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                    VerticalAlignment = VAlignment.Center,
                     Text = "Size 6",
                     Align = Label.AlignMode.Right,
                     /*AnchorLeft = 1.0f,
