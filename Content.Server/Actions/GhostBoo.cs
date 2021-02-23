@@ -17,11 +17,13 @@ namespace Content.Server.Actions
     {
         private float _radius;
         private float _cooldown;
+        private int _maxTargets;
 
         void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _radius, "radius", 3);
             serializer.DataField(ref _cooldown, "cooldown", 120);
+            serializer.DataField(ref _maxTargets, "maxTargets", 3);
         }
 
         public void DoInstantAction(InstantActionEventArgs args)
@@ -31,13 +33,25 @@ namespace Content.Server.Actions
             // find all IGhostBooAffected nearby and do boo on them
             var entityMan = args.Performer.EntityManager;
             var ents = entityMan.GetEntitiesInRange(args.Performer, _radius, false).ToList();
+
+            var booCounter = 0;
             foreach (var ent in ents)
             {
                 var boos = ent.GetAllComponents<IGhostBooAffected>().ToList();
                 foreach (var boo in boos)
+                {
                     boo.AffectedByGhostBoo(args);
+                    booCounter++;
+
+                    // yes, this is goto
+                    // the quickest escape from nested loops
+                    if (booCounter >= _maxTargets)
+                        goto EnoughBoo;
+                }
+
             }
 
+            EnoughBoo:
             actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(_cooldown));
         }
     }

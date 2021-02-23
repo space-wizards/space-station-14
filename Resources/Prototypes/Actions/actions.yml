@@ -44,6 +44,7 @@
   behavior: !type:GhostBoo
     radius: 3
     cooldown: 120
+    maxTargets: 3
 
 - type: action
   actionType: DebugInstant
