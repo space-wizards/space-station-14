@@ -353,13 +353,16 @@ namespace Content.Server.GameObjects.Components.Instruments
 
                 UserInterface?.CloseAll();
 
-                if(Handheld)
-                    EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
-
-                if (mob != null && mob.TryGetComponent(out StunnableComponent? stun))
+                if (mob != null)
                 {
-                    stun.Stun(1);
-                    Clean();
+                    if (Handheld)
+                        EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
+
+                    if (mob.TryGetComponent(out StunnableComponent? stun))
+                    {
+                        stun.Stun(1);
+                        Clean();
+                    }
                 }
 
                 InstrumentPlayer = null;

@@ -15,7 +15,7 @@ namespace Content.Shared.GameObjects.Components.Body.Template
     /// </summary>
     [Prototype("bodyTemplate")]
     [Serializable, NetSerializable]
-    public class BodyTemplatePrototype : IPrototype, IIndexedPrototype
+    public class BodyTemplatePrototype : IPrototype
     {
         private string _id = string.Empty;
         private string _name = string.Empty;

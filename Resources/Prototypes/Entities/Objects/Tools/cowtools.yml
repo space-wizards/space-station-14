@@ -4,6 +4,9 @@
   id: Haycutters
   description: This kills the wire. Moo!
   components:
+    - type: Tag
+      tags:
+      - PlantSampleTaker
     - type: Sprite
       sprite: Objects/Tools/Cowtools/haycutters.rsi
       state: haycutters
@@ -16,7 +19,6 @@
       speed: 0.05
     - type: Item
       sprite: Objects/Tools/Cowtools/haycutters.rsi
-    - type: PlantSampleTaker
 
 - type: entity
   name: moodriver
@@ -174,3 +176,5 @@
         - name: Mooltitool
         - name: Cowelder
         - name: Milkalyzer
+
+# I hate these fucking cowtools I hope the burn in hell -Swept

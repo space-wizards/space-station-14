@@ -189,7 +189,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             var diff = targetWorldPos - player.Transform.WorldPosition;
             if (diff.LengthSquared > 0.01f)
             {
-                player.Transform.LocalRotation = new Angle(diff);
+                player.Transform.LocalRotation = Angle.FromWorldVec(diff);
             }
 
             return true;

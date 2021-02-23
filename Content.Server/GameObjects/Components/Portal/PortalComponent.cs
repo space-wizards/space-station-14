@@ -1,7 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Portal;
+using Content.Shared.GameObjects.Components.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -110,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Portal
         {
             // TODO: Check if it's slotted etc. Otherwise the slot item itself gets ported.
             return !ImmuneEntities.Contains(entity) &&
-                   entity.HasComponent<TeleportableComponent>();
+                   entity.HasTag("Teleportable");
         }
 
         public void StartCooldown()

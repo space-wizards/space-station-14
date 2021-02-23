@@ -68,7 +68,7 @@ namespace Content.Client.UserInterface
             _gameHud = IoCManager.Resolve<IGameHud>();
 
             Title = Loc.GetString("Actions");
-            CustomMinimumSize = (300, 300);
+            MinSize = (300, 300);
 
             Contents.AddChild(new VBoxContainer
             {
@@ -81,7 +81,7 @@ namespace Content.Client.UserInterface
                             (_searchBar = new LineEdit
                             {
                                 StyleClasses = { StyleNano.StyleClassActionSearchBox },
-                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                HorizontalExpand = true,
                                 PlaceHolder = Loc.GetString("Search")
                             }),
                             (_filterButton = new MultiselectOptionButton<string>()
@@ -97,14 +97,14 @@ namespace Content.Client.UserInterface
                     (_filterLabel = new Label()),
                     new ScrollContainer
                     {
-                        //TODO: needed? CustomMinimumSize = new Vector2(200.0f, 0.0f),
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        //TODO: needed? MinSize = new Vector2(200.0f, 0.0f),
+                        VerticalExpand = true,
+                        HorizontalExpand = true,
                         Children =
                         {
                             (_resultsGrid = new GridContainer
                             {
-                                MaxWidth = 300
+                                MaxGridWidth = 300
                             })
                         }
                     }
@@ -136,12 +136,12 @@ namespace Content.Client.UserInterface
 
             _dragShadow = new TextureRect
             {
-                CustomMinimumSize = (64, 64),
+                MinSize = (64, 64),
                 Stretch = TextureRect.StretchMode.Scale,
-                Visible = false
+                Visible = false,
+                SetSize = (64, 64)
             };
             UserInterfaceManager.PopupRoot.AddChild(_dragShadow);
-            LayoutContainer.SetSize(_dragShadow, (64, 64));
 
             _dragDropHelper = new DragDropHelper<ActionMenuItem>(OnBeginActionDrag, OnContinueActionDrag, OnEndActionDrag);
         }
@@ -190,7 +190,7 @@ namespace Content.Client.UserInterface
             base.Resized();
             // TODO: Can rework this once https://github.com/space-wizards/RobustToolbox/issues/1392 is done,
             // currently no good way to let the grid know what size it has to "work with", so must manually resize
-            _resultsGrid.MaxWidth = Width;
+            _resultsGrid.MaxGridWidth = Width;
         }
 
         private bool OnBeginActionDrag()

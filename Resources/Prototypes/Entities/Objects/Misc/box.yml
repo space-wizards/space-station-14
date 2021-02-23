@@ -4,6 +4,7 @@
   abstract: true
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Storage/boxes.rsi
   - type: Item
     sprite: Objects/Storage/boxes.rsi

@@ -10,7 +10,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Prototypes.Cargo
 {
     [NetSerializable, Serializable, Prototype("cargoProduct")]
-    public class CargoProductPrototype : IPrototype, IIndexedPrototype
+    public class CargoProductPrototype : IPrototype
     {
         private string _id = string.Empty;
         private string _name = string.Empty;

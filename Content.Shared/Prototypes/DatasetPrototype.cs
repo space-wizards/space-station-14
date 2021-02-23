@@ -7,7 +7,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Prototypes
 {
     [Prototype("dataset")]
-    public class DatasetPrototype : IPrototype, IIndexedPrototype
+    public class DatasetPrototype : IPrototype
     {
         private string _id = string.Empty;
         public string ID => _id;

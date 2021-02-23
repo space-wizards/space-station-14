@@ -14,7 +14,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
     /// machines define their inventory.
     /// </summary>
     [Serializable, NetSerializable, Prototype("reagentDispenserInventory")]
-    public class ReagentDispenserInventoryPrototype : IPrototype, IIndexedPrototype
+    public class ReagentDispenserInventoryPrototype : IPrototype
     {
         private string _id = string.Empty;
         private List<string> _inventory = new();

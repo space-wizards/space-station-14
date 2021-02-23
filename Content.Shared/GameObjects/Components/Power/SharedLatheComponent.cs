@@ -12,6 +12,7 @@ namespace Content.Shared.GameObjects.Components.Power
         InsertingMetal,
         InsertingGlass,
         InsertingGold,
-        InsertingPlasma
+        InsertingPlasma,
+        InsertingPlastic
     }
 }

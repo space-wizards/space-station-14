@@ -1,0 +1,25 @@
+- type: Tag
+  id: Cigarette
+
+- type: entity
+  id: Cigarette
+  parent: BaseSmokeable
+  name: cigarette
+  description: "A roll of tobacco and nicotine."
+  components:
+    - type: Sprite
+      sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
+      netsync: false
+      state: unlit-icon
+    - type: Tag
+      tags:
+        - Cigarette
+    - type: Clothing
+      netsync: false
+      sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
+      Slots: [ mask ]
+      HeldPrefix: unlit
+      size: 1
+    - type: Construction
+      graph: smokeableCigarette
+      node: cigarette

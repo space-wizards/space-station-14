@@ -1,11 +1,11 @@
 ﻿<v:VoteCallMenu xmlns="https://spacestation14.io"
                 xmlns:cuic="clr-namespace:Content.Client.UserInterface.Controls"
                 xmlns:v="clr-namespace:Content.Client.Voting"
-                MouseFilter="Stop" CustomMinimumSize="350 150">
+                MouseFilter="Stop" MinSize="350 150">
     <PanelContainer StyleClasses="AngleRect" />
     <VBoxContainer>
         <HBoxContainer>
-            <MarginContainer MarginLeftOverride="8" SizeFlagsHorizontal="FillExpand">
+            <MarginContainer MarginLeftOverride="8" HorizontalExpand="True">
                 <Label Text="{Loc 'Call Vote'}" VAlign="Center" StyleClasses="LabelHeading" />
             </MarginContainer>
             <MarginContainer MarginRightOverride="8">
@@ -18,8 +18,8 @@
         <MarginContainer SizeFlagsHorizontal="Fill" SizeFlagsVertical="Expand"
                          MarginLeftOverride="8" MarginRightOverride="8" MarginTopOverride="2">
             <HBoxContainer>
-                <OptionButton Name="VoteTypeButton" SizeFlagsHorizontal="FillExpand" />
-                <Control SizeFlagsHorizontal="FillExpand">
+                <OptionButton Name="VoteTypeButton" HorizontalExpand="True" />
+                <Control HorizontalExpand="True">
                     <OptionButton Name="VoteSecondButton" Visible="False" />
                 </Control>
             </HBoxContainer>

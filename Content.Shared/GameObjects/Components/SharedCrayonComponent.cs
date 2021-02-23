@@ -74,6 +74,8 @@ namespace Content.Shared.GameObjects.Components
     [Serializable, NetSerializable, Prototype("crayonDecal")]
     public class CrayonDecalPrototype : IPrototype
     {
+        public string ID { get; private set; }
+
         private string _spritePath = string.Empty;
         public string SpritePath => _spritePath;
 
@@ -84,6 +86,7 @@ namespace Content.Shared.GameObjects.Components
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
+            serializer.DataField(this, x => x.ID, "id", string.Empty);
             serializer.DataField(ref _spritePath, "spritePath", string.Empty);
             serializer.DataField(ref _decals, "decals", new List<string>());
         }

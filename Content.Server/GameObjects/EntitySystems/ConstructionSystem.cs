@@ -23,8 +23,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timers;
-
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

@@ -6,9 +6,9 @@ using Content.Shared.GameTicking;
 using Content.Shared.Prototypes;
 using Content.Shared.Roles;
 using Content.Shared.Utility;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Localization.Macros;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -19,7 +19,7 @@ namespace Content.Shared.Preferences
     /// Character profile. Looks immutable, but uses non-immutable semantics internally for serialization/code sanity purposes.
     /// </summary>
     [Serializable, NetSerializable]
-    public class HumanoidCharacterProfile : ICharacterProfile, IGenderable
+    public class HumanoidCharacterProfile : ICharacterProfile
     {
         private readonly Dictionary<string, JobPriority> _jobPriorities;
         private readonly List<string> _antagPreferences;
@@ -286,7 +286,12 @@ namespace Content.Shared.Preferences
         }
 
         public string Summary =>
-             Loc.GetString(" This is {0}. {2:They} {2:are} {1} years old.", Name, Age, this);
+             Loc.GetString(
+                 "humanoid-character-profile-summary",
+                 ("name", Name),
+                 ("gender", Gender.ToString().ToLowerInvariant()),
+                 ("age", Age)
+            );
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {

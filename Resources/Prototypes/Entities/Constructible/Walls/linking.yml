@@ -1,6 +1,7 @@
 - type: entity
   id: SignalSwitch
   name: "signal switch"
+  description: "Its a switch for toggling power to things."
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -18,6 +19,7 @@
 - type: entity
   id: SignalButton
   name: "signal button"
+  description: "It's a button for activating something."
   components:
   - type: Clickable
   - type: InteractionOutline

@@ -10,12 +10,9 @@ namespace Content.Shared.Prototypes.Kitchen
     /// <summary>
     ///    A recipe for space microwaves.
     /// </summary>
-
     [Prototype("microwaveMealRecipe")]
-
-    public class FoodRecipePrototype : IPrototype, IIndexedPrototype
+    public class FoodRecipePrototype : IPrototype
     {
-
         private string _id = string.Empty;
         private string _name = string.Empty;
         private string _result = string.Empty;
@@ -31,7 +28,6 @@ namespace Content.Shared.Prototypes.Kitchen
         public IReadOnlyDictionary<string, int> IngredientsReagents => _ingsReagents;
         public IReadOnlyDictionary<string, int> IngredientsSolids => _ingsSolids;
 
-
         public void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
@@ -43,6 +39,5 @@ namespace Content.Shared.Prototypes.Kitchen
             serializer.DataField(ref _ingsSolids, "solids", new Dictionary<string, int>());
             serializer.DataField(ref _cookTime, "time", 5);
         }
-
     }
 }

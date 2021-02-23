@@ -9,7 +9,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.GameObjects.Components.Weapons.Melee
 {
     [Prototype("MeleeWeaponAnimation")]
-    public sealed class MeleeWeaponAnimationPrototype : IPrototype, IIndexedPrototype
+    public sealed class MeleeWeaponAnimationPrototype : IPrototype
     {
         private string _prototype = "WeaponArc";
         private string _state = string.Empty;

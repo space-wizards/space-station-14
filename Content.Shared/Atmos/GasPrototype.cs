@@ -7,7 +7,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Atmos
 {
     [Prototype("gas")]
-    public class GasPrototype : IPrototype, IIndexedPrototype
+    public class GasPrototype : IPrototype
     {
         public string Name { get; private set; } = string.Empty;
 
