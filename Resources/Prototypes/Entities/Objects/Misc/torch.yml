@@ -19,10 +19,12 @@
     - type: Sprite
       sprite: Objects/Misc/torch.rsi
       layers:
-        - state: torch_unlit
+        - state: torch_nocloth
         - state: lit_overlay
+          color: "#FFFFFF"
           visible: false
           shader: unshaded
+        - state: torch_unlit
     - type: Icon
       sprite: Objects/Misc/torch.rsi
       state: icon

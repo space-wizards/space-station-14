@@ -27,6 +27,9 @@
       "name": "torch_unlit"
     },
     {
+      "name": "torch_nocloth"
+    },
+    {
       "name": "torch_spent"
     },
     {
