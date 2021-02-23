@@ -16,11 +16,11 @@
   suffix: White
   components:
   - type: Sprite
-    sprite: Objects/Misc/crayons.rsi
-    state: crayonwhite
+    sprite: Objects/Fun/crayons.rsi
+    state: white
   - type: Crayon
     color: white
-    capacity: 30
+    capacity: 15
 
 - type: entity
   parent: Crayon
@@ -28,11 +28,11 @@
   suffix: Red
   components:
   - type: Sprite
-    sprite: Objects/Misc/crayons.rsi
-    state: crayonred
+    sprite: Objects/Fun/crayons.rsi
+    state: red
   - type: Crayon
     color: red
-    capacity: 30
+    capacity: 15
 
 - type: entity
   parent: Crayon
@@ -40,11 +40,11 @@
   suffix: Green
   components:
   - type: Sprite
-    sprite: Objects/Misc/crayons.rsi
-    state: crayongreen
+    sprite: Objects/Fun/crayons.rsi
+    state: green
   - type: Crayon
     color: green
-    capacity: 30
+    capacity: 15
 
 - type: entity
   parent: Crayon
@@ -52,11 +52,11 @@
   suffix: Purple
   components:
   - type: Sprite
-    sprite: Objects/Misc/crayons.rsi
-    state: crayonpurple
+    sprite: Objects/Fun/crayons.rsi
+    state: purple
   - type: Crayon
     color: purple
-    capacity: 30
+    capacity: 15
 
 - type: entity
   parent: Crayon
@@ -64,11 +64,11 @@
   suffix: Orange
   components:
   - type: Sprite
-    sprite: Objects/Misc/crayons.rsi
-    state: crayonorange
+    sprite: Objects/Fun/crayons.rsi
+    state: orange
   - type: Crayon
     color: orange
-    capacity: 30
+    capacity: 15
 
 - type: entity
   parent: Crayon
@@ -76,11 +76,11 @@
   suffix: Yellow
   components:
   - type: Sprite
-    sprite: Objects/Misc/crayons.rsi
-    state: crayonyellow
+    sprite: Objects/Fun/crayons.rsi
+    state: yellow
   - type: Crayon
     color: yellow
-    capacity: 30
+    capacity: 15
 
 - type: entity
   id: CrayonBox
@@ -89,8 +89,8 @@
   description: "It's a box of crayons."
   components:
   - type: Sprite
-    sprite: Objects/Misc/crayons.rsi
-    state: crayonbox
+    sprite: Objects/Fun/crayons.rsi
+    state: box
   - type: Storage
     capacity: 30
   - type: Item
