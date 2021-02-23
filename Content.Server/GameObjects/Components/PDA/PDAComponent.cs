@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +13,7 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Interfaces.PDA;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.PDA;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -262,7 +263,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 return TryInsertIdCard(eventArgs, idCardComponent);
             }
 
-            if (item.HasComponent<WriteComponent>())
+            if (item.HasTag("Write"))
             {
                 return TryInsertPen(eventArgs);
             }

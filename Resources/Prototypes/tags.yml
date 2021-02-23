@@ -1,11 +1,38 @@
 - type: Tag
+  id: BotanySharp
+
+- type: Tag
+  id: ConveyorAssembly
+
+- type: Tag
   id: ExplosivePassable
+
+- type: Tag
+  id: FirelockElectronics
+  
+- type: Tag
+  id: FootstepSound
+
+- type: Tag
+  id: GlassBeaker
+
+- type: Tag
+  id: Grindable
+
+- type: Tag
+  id: Hoe
+
+- type: Tag
+  id: PlantSampleTaker
+
+- type: Tag
+  id: Shovel
+  
+  - type: Tag
+  id: Teleportable
 
 - type: Tag
   id: Wall
 
 - type: Tag
-  id: Teleportable
-
-- type: Tag
-  id: FootstepSound
+  id: Write
