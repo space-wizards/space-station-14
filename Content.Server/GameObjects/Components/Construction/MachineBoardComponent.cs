@@ -75,9 +75,9 @@ namespace Content.Server.GameObjects.Components.Construction
                 message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", amount, Loc.GetString(part.ToString())));
             }
 
-            foreach (var (material, amount) in MaterialIdRequirements)
+            foreach (var (material, amount) in MaterialRequirements)
             {
-                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", amount, Loc.GetString(material)));
+                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", amount, Loc.GetString(material.Name)));
             }
 
             foreach (var (_, info) in ComponentRequirements)

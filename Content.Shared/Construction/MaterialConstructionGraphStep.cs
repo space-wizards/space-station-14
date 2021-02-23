@@ -34,7 +34,7 @@ namespace Content.Shared.Construction
 
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("Next, add [color=yellow]{0}x[/color] [color=cyan]{1}[/color].", Amount, MaterialPrototypeId));
+            message.AddMarkup(Loc.GetString("Next, add [color=yellow]{0}x[/color] [color=cyan]{1}[/color].", Amount, MaterialPrototype.Name));
         }
 
         public override bool EntityValid(IEntity entity)
