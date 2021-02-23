@@ -11,6 +11,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
+    noRot: false
     sprite: Effects/clicktest.rsi
 
 
