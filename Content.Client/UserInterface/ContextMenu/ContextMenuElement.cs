@@ -38,6 +38,7 @@ namespace Content.Client.UserInterface.ContextMenu
             }
         }
     }
+
     public sealed class SingleContextElement : ContextMenuElement
     {
         public event Action? OnMouseHovering;
@@ -63,7 +64,7 @@ namespace Content.Client.UserInterface.ContextMenu
             OutlineComponent = ContextEntity.GetComponentOrNull<InteractionOutlineComponent>();
 
             AddChild(
-                new HBoxContainer()
+                new HBoxContainer
                 {
                     Children =
                     {
@@ -71,15 +72,10 @@ namespace Content.Client.UserInterface.ContextMenu
                         {
                             Children = { new SpriteView { Sprite = SpriteComp } }
                         },
-                        new MarginContainer
+                        new Label
                         {
-                            MarginLeftOverride = 4, MarginRightOverride = 4,
-                            Children = {
-                                new Label
-                                {
-                                    Text = Loc.GetString(UserInterfaceManager.DebugMonitors.Visible ? $"{ContextEntity.Name} ({ContextEntity.Uid})" : ContextEntity.Name)
-                                }
-                            }
+                            Margin = new Thickness(4, 0, 4, 0),
+                            Text = Loc.GetString(UserInterfaceManager.DebugMonitors.Visible ? $"{ContextEntity.Name} ({ContextEntity.Uid})" : ContextEntity.Name)
                         }
                     }
                 }
@@ -101,6 +97,7 @@ namespace Content.Client.UserInterface.ContextMenu
             base.ExitedTree();
         }
     }
+
     public sealed class StackContextElement : ContextMenuElement
      {
          public event Action? OnExitedTree;
@@ -119,7 +116,7 @@ namespace Content.Client.UserInterface.ContextMenu
          {
              Pre = pre;
              ContextEntities = new(entities);
-             _spriteView = new SpriteView()
+             _spriteView = new SpriteView
              {
                  Sprite = ContextEntities.First().GetComponent<ISpriteComponent>()
              };
@@ -140,10 +137,10 @@ namespace Content.Client.UserInterface.ContextMenu
                      Children =
                      {
                          new LayoutContainer { Children = { _spriteView, _label } },
-                         new MarginContainer
+                         new Label
                          {
-                             MarginLeftOverride = 4, MarginRightOverride = 4,
-                             Children = { new Label { Text = Loc.GetString(ContextEntities.First().Name) } }
+                             Margin = new Thickness(4, 0, 4, 0),
+                             Text = Loc.GetString(ContextEntities.First().Name)
                          },
                          new TextureRect
                          {
@@ -173,9 +170,10 @@ namespace Content.Client.UserInterface.ContextMenu
     public sealed class ContextMenuPopup : Popup
     {
         private static readonly Color DefaultColor = Color.FromHex("#111E");
+        private static readonly Color MarginColor = Color.FromHex("#222E");
         private const int MaxItemsBeforeScroll = 10;
 
-        public  VBoxContainer List { get; }
+        public VBoxContainer List { get; }
         public int Depth { get; }
 
         public ContextMenuPopup(int depth = 0)
@@ -186,16 +184,43 @@ namespace Content.Client.UserInterface.ContextMenu
                 HScrollEnabled = false,
                 Children = { new PanelContainer
                 {
-                    Children = { (List = new VBoxContainer() { SeparationOverride = 5 }) },
-                    PanelOverride = new StyleBoxFlat { BackgroundColor = DefaultColor }
+                    Children = { (List = new VBoxContainer { SeparationOverride = 2 }) },
+                    PanelOverride = new StyleBoxFlat {  BackgroundColor = MarginColor }
                 }}
             });
         }
-        protected override Vector2 CalculateMinimumSize()
+
+        public void AddToMenu(ContextMenuElement element)
         {
-            var size = base.CalculateMinimumSize();
-            size.Y = List.ChildCount > MaxItemsBeforeScroll ? MaxItemsBeforeScroll * 32 + MaxItemsBeforeScroll * 2 : size.Y;
-            return Vector2.ComponentMin(size, List.CombinedMinimumSize);
+            List.AddChild(new PanelContainer
+            {
+                Children = {element},
+                PanelOverride = new StyleBoxFlat {BackgroundColor = DefaultColor}
+            });
+        }
+
+        public void RemoveFromMenu(ContextMenuElement element)
+        {
+            List.RemoveChild(element.Parent!);
+            InvalidateMeasure();
+        }
+
+        protected override Vector2 MeasureOverride(Vector2 availableSize)
+        {
+            if (List.ChildCount == 0)
+            {
+                return Vector2.Zero;
+            }
+
+            List.Measure(availableSize);
+            var listSize = List.DesiredSize;
+
+            if (List.ChildCount < MaxItemsBeforeScroll)
+            {
+                return listSize;
+            }
+            listSize.Y = MaxItemsBeforeScroll * 32 + MaxItemsBeforeScroll * 2;
+            return listSize;
         }
     }
 }

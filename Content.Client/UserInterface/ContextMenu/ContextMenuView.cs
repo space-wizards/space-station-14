@@ -134,7 +134,7 @@ namespace Content.Client.UserInterface.ContextMenu
                 single.OnExitedTree += () => OnExitedTree?.Invoke(this, single);
 
                 UpdateElements(entity, single);
-                menu.List.AddChild(single);
+                menu.AddToMenu(single);
             }
         }
         private void AddStackContextElement(IEnumerable<IEntity> entities, StackContextElement? pre)
@@ -151,7 +151,7 @@ namespace Content.Client.UserInterface.ContextMenu
                 {
                     UpdateElements(entity, stack);
                 }
-                menu.List.AddChild(stack);
+                menu.AddToMenu(stack);
             }
         }
         private void UpdateElements(IEntity entity, ContextMenuElement element)
@@ -171,7 +171,7 @@ namespace Content.Client.UserInterface.ContextMenu
             var menu = element.ParentMenu;
             if (menu != null)
             {
-                menu.List.RemoveChild(element);
+                menu.RemoveFromMenu(element);
                 if (menu.List.ChildCount == 0)
                 {
                     OnCloseChildMenu?.Invoke(this, menu.Depth - 1);

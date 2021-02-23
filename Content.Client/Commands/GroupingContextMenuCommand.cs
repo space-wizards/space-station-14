@@ -12,7 +12,7 @@ namespace Content.Client.Commands
     {
         public string Command => "contextmenug";
 
-        public string Description => "???.";
+        public string Description => "Sets the contextmenu-groupingtype.";
 
         public string Help => ($"Usage: contextmenug <0:{ContextMenuView.GroupingTypesCount}>");
         public void Execute(IConsoleShell shell, string argStr, string[] args)

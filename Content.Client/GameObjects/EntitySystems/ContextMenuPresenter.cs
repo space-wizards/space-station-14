@@ -22,7 +22,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
-using Timer = Robust.Shared.Timers.Timer;
+using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Client.GameObjects.EntitySystems
 {
     public class ContextMenuPresenter : IDisposable
@@ -47,6 +47,7 @@ namespace Content.Client.GameObjects.EntitySystems
         public ContextMenuPresenter(VerbSystem verbSystem)
         {
             IoCManager.InjectDependencies(this);
+
             _verbSystem = verbSystem;
             _verbSystem.ToggleContextMenu += SystemOnToggleContextMenu;
             _verbSystem.ToggleContainerVisibility += SystemOnToggleContainerVisibility;
@@ -72,14 +73,17 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             _contextMenuView.CloseContextPopups(depth);
         }
+
         private void OnCloseRootMenu(object? sender, EventArgs e)
         {
             _contextMenuView.CloseContextPopups();
         }
+
         private void OnExitedTree(object? sender, ContextMenuElement e)
         {
            _contextMenuView.UpdateParents(e);
         }
+
         private void OnMouseEnteredStack(object? sender, StackContextElement e)
         {
             var realGlobalPosition = e.GlobalPosition;
@@ -105,6 +109,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 }
             }, _cancellationTokenSource.Token);
         }
+
         private void OnKeyBindDownStack(object? sender, (GUIBoundKeyEventArgs, StackContextElement) e)
         {
             var (args, stack) = e;
@@ -136,6 +141,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 CloseAllMenus();
             }
         }
+
         private void OnMouseHoveringSingle(object? sender, SingleContextElement e)
         {
             if (!e.DrawOutline) return;
@@ -148,6 +154,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 e.OutlineComponent?.UpdateInRange(inRange);
             }
         }
+
         private void OnMouseEnteredSingle(object? sender, SingleContextElement e)
         {
             _cancellationTokenSource?.Cancel();
@@ -169,6 +176,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
             e.DrawOutline = true;
         }
+
         private void OnMouseExitedSingle(object? sender, SingleContextElement e)
         {
             if (!e.ContextEntity.Deleted)
@@ -181,6 +189,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
             e.DrawOutline = false;
         }
+
         private void OnKeyBindDownSingle(object? sender, (GUIBoundKeyEventArgs, SingleContextElement) valueTuple)
         {
             var (args, single) = valueTuple;
@@ -230,6 +239,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             _playerCanSeeThroughContainers = args;
         }
+
         private void SystemOnToggleContextMenu(object? sender, PointerInputCmdHandler.PointerInputCmdArgs args)
         {
             if (_stateManager.CurrentState is not GameScreenBase)
@@ -255,6 +265,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 _contextMenuView.AddRootMenu(entities);
             }
         }
+
         public void HandleMoveEvent(MoveEvent ev)
         {
             if (_contextMenuView.Elements.Count == 0) return;
@@ -267,6 +278,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 }
             }
         }
+
         public void Update()
         {
             if (_contextMenuView.Elements.Count == 0) return;
@@ -302,8 +314,23 @@ namespace Content.Client.GameObjects.EntitySystems
             _verbSystem.CloseGroupMenu();
             _verbSystem.CloseVerbMenu();
         }
+
         public void Dispose()
         {
+            _verbSystem.ToggleContextMenu -= SystemOnToggleContextMenu;
+            _verbSystem.ToggleContainerVisibility -= SystemOnToggleContainerVisibility;
+
+            _contextMenuView.OnKeyBindDownSingle -= OnKeyBindDownSingle;
+            _contextMenuView.OnMouseEnteredSingle -= OnMouseEnteredSingle;
+            _contextMenuView.OnMouseExitedSingle -= OnMouseExitedSingle;
+            _contextMenuView.OnMouseHoveringSingle -= OnMouseHoveringSingle;
+
+            _contextMenuView.OnKeyBindDownStack -= OnKeyBindDownStack;
+            _contextMenuView.OnMouseEnteredStack -= OnMouseEnteredStack;
+
+            _contextMenuView.OnExitedTree -= OnExitedTree;
+            _contextMenuView.OnCloseRootMenu -= OnCloseRootMenu;
+            _contextMenuView.OnCloseChildMenu -= OnCloseChildMenu;
         }
     }
 }

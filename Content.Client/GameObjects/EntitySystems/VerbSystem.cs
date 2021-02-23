@@ -1,28 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
-using Content.Client.State;
-using Content.Client.UserInterface;
 using Content.Client.Utility;
-using Content.Shared;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
-using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
-using Robust.Shared.Configuration;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -31,9 +22,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Timer = Robust.Shared.Timers.Timer;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -226,7 +216,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     {
                         vBox.AddChild(new PanelContainer
                         {
-                            CustomMinimumSize = (0, 2),
+                            MinSize = (0, 2),
                             PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
                         });
                     }
@@ -248,7 +238,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         {
                             vBox.AddChild(new PanelContainer
                             {
-                                CustomMinimumSize = (0, 2),
+                                MinSize = (0, 2),
                                 PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
                             });
                         }
@@ -373,12 +363,12 @@ namespace Content.Client.GameObjects.EntitySystems
                     {
                         (_icon = new TextureRect
                         {
-                            CustomMinimumSize = (32, 32),
+                            MinSize = (32, 32),
                             Stretch = TextureRect.StretchMode.KeepCentered
                         }),
                         (_label = new Label()),
                         // Padding
-                        new Control {CustomMinimumSize = (8, 0)}
+                        new Control {MinSize = (8, 0)}
                     }
                 });
             }
@@ -430,7 +420,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     {
                         (_icon = new TextureRect
                         {
-                            CustomMinimumSize = (32, 32),
+                            MinSize = (32, 32),
                             Stretch = TextureRect.StretchMode.KeepCentered
                         }),
 
@@ -440,7 +430,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         }),
 
                         // Padding
-                        new Control {CustomMinimumSize = (8, 0)},
+                        new Control {MinSize = (8, 0)},
 
                         new TextureRect
                         {
@@ -489,7 +479,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         {
                             popup.List.AddChild(new PanelContainer
                             {
-                                CustomMinimumSize = (0, 2),
+                                MinSize = (0, 2),
                                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
                             });
                         }
