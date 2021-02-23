@@ -20,8 +20,8 @@ namespace Content.Server.Actions
 
         void IExposeData.ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(ref _radius, "radius", 10);
-            serializer.DataField(ref _cooldown, "cooldown", 10);
+            serializer.DataField(ref _radius, "radius", 3);
+            serializer.DataField(ref _cooldown, "cooldown", 120);
         }
 
         public void DoInstantAction(InstantActionEventArgs args)
