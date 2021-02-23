@@ -1,10 +1,8 @@
 - type: entity
-  save: false
   name: space carp
   id: CarpMob_Content
+  parent: SimpleMobBase
   description: It's a space carp.
-  drawdepth: Mobs
-  suffix: AI
   components:
   - type: UtilityAI
     behaviorSets:
@@ -13,15 +11,12 @@
   - type: AiFactionTag
     factions:
     - SimpleHostile
-  - type: MovementSpeedModifier
-  - type: InteractionOutline
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: carp
-      sprite: Mobs/Aliens/Carps/carp_space.rsi
-  - type: Clickable
+      state: alive
+      sprite: Mobs/Aliens/Carps/space.rsi
   - type: Physics
     anchored: false
     mass: 50
@@ -36,70 +31,44 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: Damageable
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
       50: !type:CriticalMobState {}
       100: !type:DeadMobState {}
-  - type: HeatResistance
-  - type: CombatMode
-  - type: Teleportable
-  - type: Stunnable
-  - type: UnarmedCombat
-    range: 1.5
-    arcwidth: 0
-    arc: bite
-    damage: 50
   - type: MovementIgnoreGravity
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
-      normal: carp
+      normal: alive
       dead: dead
 
 - type: entity
-  save: false
   name: magicarp
   parent: CarpMob_Content
   id: MagicarpMob_Content
   description: Looks like some kind of fish. Might be magical.
-  drawdepth: Mobs
-  suffix: AI
   components:
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: magicarp
-      sprite: Mobs/Aliens/Carps/carp_magic.rsi
+      state: alive
+      sprite: Mobs/Aliens/Carps/magic.rsi
   - type: Physics
     mass: 60
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: magicarp
-      dead: dead
 
 - type: entity
-  save: false
   name: holocarp
   parent: CarpMob_Content
   id: HolocarpMob_Content
   description: Carp made out of holographic energies.
-  drawdepth: Mobs
-  suffix: AI
   components:
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: holocarp
-      sprite: Mobs/Aliens/Carps/carp_holo.rsi
+      state: alive
+      sprite: Mobs/Aliens/Carps/holo.rsi
   - type: Physics
     mass: 5
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: holocarp
-      dead: dead

@@ -9,6 +9,9 @@
 
 - type: Tag
   id: FirelockElectronics
+  
+- type: Tag
+  id: FootstepSound
 
 - type: Tag
   id: GlassBeaker
@@ -24,6 +27,9 @@
 
 - type: Tag
   id: Shovel
+  
+  - type: Tag
+  id: Teleportable
 
 - type: Tag
   id: Wall

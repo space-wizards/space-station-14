@@ -1,4 +1,3 @@
-# Both humans and NPCs inherit from this.
 # Anything human specific (e.g. UI, input) goes under HumanMob_Content
 - type: entity
   save: false
@@ -8,6 +7,10 @@
   drawdepth: Mobs
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - Teleportable
+    - FootstepSound
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
@@ -186,9 +189,7 @@
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
-  - type: Teleportable
   - type: CharacterInfo
-  - type: FootstepSound
   - type: AnimationPlayer
   - type: Buckle
   - type: UnarmedCombat
