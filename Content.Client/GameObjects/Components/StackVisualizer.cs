@@ -108,10 +108,7 @@ namespace Content.Client.GameObjects.Components
                 && _spriteLayers.Count > 0
                 && entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
             {
-                if (_spritePath == null)
-                {
-                    _spritePath = spriteComponent.BaseRSI!.Path!;
-                }
+                _spritePath ??= spriteComponent.BaseRSI!.Path!;
 
                 foreach (var sprite in _spriteLayers)
                 {
