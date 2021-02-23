@@ -21,6 +21,8 @@
   - type: SolutionTransfer
     transferAmount: 5.0
   - type: Spillable
+  - type: Drink
+    isOpen: true
 
 - type: entity
   name: large beaker
@@ -37,6 +39,10 @@
     maxVol: 100
     caps: OpenContainer, FitsInDispenser
   - type: SolutionTransfer
+    transferAmount: 5.0
+  - type: Spillable
+  - type: Drink
+    isOpen: true
 
 - type: entity
   name: dropper
