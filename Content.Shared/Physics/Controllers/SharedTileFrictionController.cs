@@ -3,6 +3,8 @@ using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using JetBrains.Annotations;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -16,6 +18,7 @@ namespace Content.Shared.Physics.Controllers
 {
     public sealed class SharedTileFrictionController : AetherController
     {
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
@@ -23,10 +26,14 @@ namespace Content.Shared.Physics.Controllers
 
         private const float StopSpeed = 0.01f;
 
+        private float _frictionModifier;
+
         public override void Initialize()
         {
             base.Initialize();
             _broadPhaseSystem = EntitySystem.Get<SharedBroadPhaseSystem>();
+            _frictionModifier = _configManager.GetCVar(CVars.TileFrictionModifier);
+            _configManager.OnValueChanged(CVars.TileFrictionModifier, value => _frictionModifier = value);
         }
 
         public override void UpdateBeforeSolve(bool prediction, PhysicsMap map, float frameTime)
@@ -47,9 +54,7 @@ namespace Content.Shared.Physics.Controllers
                 if (SharedMoverController.UseMobMovement(_broadPhaseSystem, body)) continue;
 
                 var surfaceFriction = GetTileFriction(body);
-                // TODO: Make cvar
-                var frictionModifier = 10.0f;
-                var friction = frictionModifier * surfaceFriction;
+                var friction = _frictionModifier * surfaceFriction;
 
                 if (friction > 0.0f)
                 {

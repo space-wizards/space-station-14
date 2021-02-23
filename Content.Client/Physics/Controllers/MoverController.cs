@@ -10,11 +10,13 @@ namespace Content.Client.Physics.Controllers
 {
     public sealed class MoverController : SharedMoverController
     {
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+
         public override void UpdateBeforeSolve(bool prediction, PhysicsMap map, float frameTime)
         {
             base.UpdateBeforeSolve(prediction, map, frameTime);
 
-            var player = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
             if (player == null ||
                 !player.TryGetComponent(out IMoverComponent? mover) ||
                 !player.TryGetComponent(out PhysicsComponent? body)) return;
