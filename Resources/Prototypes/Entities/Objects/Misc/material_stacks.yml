@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: material stack
   id: MaterialStack
   abstract: true
@@ -207,17 +207,51 @@
   parent: MaterialStack
   suffix: Full
   components:
-    # TODO: Specify a material.
+    - type: Material
+      materials:
+      - key: enum.MaterialKeys.Stack
+        mat: wood
+    - type: Stack
+      stacktype: enum.StackType.Wood 
     - type: Sprite
       sprite: Objects/Materials/materials.rsi
-      state: wood_plank
-    - type: Stack
-      stacktype: enum.StackType.Wood
+      state: wood
+    - type: Item
+      sprite: Objects/Materials/materials.rsi
+      HeldPrefix: wood
 
 - type: entity
   id: WoodPlank1
   name: wood plank
   parent: WoodPlank
+  suffix: 1
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: plastic sheet
+  id: PlasticSheet
+  parent: MaterialStack
+  suffix: Full
+  components:
+    - type: Material
+      materials:
+      - key: enum.MaterialKeys.Stack
+        mat: plastic
+    - type: Stack
+      stacktype: enum.StackType.Plastic 
+    - type: Sprite
+      sprite: Objects/Materials/sheets.rsi/plastic.png
+      state: plastic
+    - type: Item
+      sprite: Objects/Materials/sheets.rsi/plastic.png
+      HeldPrefix: plastic
+
+- type: entity
+  id: PlasticSheet1
+  name: plastic sheet
+  parent: PlasticSheet
   suffix: 1
   components:
     - type: Stack

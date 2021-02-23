@@ -22,7 +22,7 @@
   result: Gauze
   completetime: 500
   materials:
-    glass: 40
+    plastic: 40
 
 - type: latheRecipe
   id: Scalpel
@@ -47,7 +47,6 @@
   completetime: 500
   materials:
     steel: 80
-    glass: 20
 
 - type: latheRecipe
   id: Drill
@@ -55,8 +54,7 @@
   result: Drill
   completetime: 500
   materials:
-    steel: 70
-    glass: 30
+    steel: 90
 
 - type: latheRecipe
   id: BoneSaw
@@ -64,8 +62,7 @@
   result: BoneSaw
   completetime: 500
   materials:
-    steel: 80
-    glass: 20
+    steel: 90
 
 - type: latheRecipe
   id: Hemostat
@@ -81,4 +78,4 @@
   result: BodyBag_Item
   completetime: 300
   materials:
-    glass: 20
+    plastic: 20

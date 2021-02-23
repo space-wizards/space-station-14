@@ -7,7 +7,6 @@
   completetime: 500
   materials:
     steel: 30
-    glass: 10
 
 - type: latheRecipe
   id: Scythe
@@ -18,7 +17,7 @@
   completetime: 500
   materials:
     steel: 40
-    glass: 30
+    wood: 30
 
 - type: latheRecipe
   id: Hatchet
@@ -29,7 +28,6 @@
   completetime: 500
   materials:
     steel: 60
-    glass: 10
 
 - type: latheRecipe
   id: Spade
@@ -39,5 +37,4 @@
   result: Spade
   completetime: 500
   materials:
-    steel: 30
-    glass: 10
+    steel: 40
