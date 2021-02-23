@@ -1,32 +1,32 @@
 - type: Tag
+  id: BotanySharp
+
+- type: Tag
+  id: ConveyorAssembly
+
+- type: Tag
   id: ExplosivePassable
-
-- type: Tag
-  id: Wall
-
-- type: Tag
-  id: GlassBeaker
 
 - type: Tag
   id: FirelockElectronics
 
 - type: Tag
-  id: Hoe
-
-- type: Tag
-  id: BotanySharp
-
-- type: Tag
-  id: Shovel
-
-- type: Tag
-  id: PlantSampleTaker
-
-- type: Tag
-  id: Write
+  id: GlassBeaker
 
 - type: Tag
   id: Grindable
 
 - type: Tag
-  id: ConveyorAssembly
+  id: Hoe
+
+- type: Tag
+  id: PlantSampleTaker
+
+- type: Tag
+  id: Shovel
+
+- type: Tag
+  id: Wall
+
+- type: Tag
+  id: Write
