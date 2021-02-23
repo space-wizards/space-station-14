@@ -39,8 +39,10 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         // time to blink light when ghost made boo nearby
         private static readonly TimeSpan ghostBlinkingTime = TimeSpan.FromSeconds(10);
+        private static readonly TimeSpan ghostBlinkingCooldown = TimeSpan.FromSeconds(60);
 
         private TimeSpan _lastThunk;
+        private TimeSpan? _lastGhostBlink;
         private bool _hasLampOnSpawn;
 
         [ViewVariables] private bool _on;
@@ -287,13 +289,24 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             }
         }
 
-        public void AffectedByGhostBoo(InstantActionEventArgs args)
+        public bool AffectedByGhostBoo(InstantActionEventArgs args)
         {
+            // check cooldown first to prevent abuse
+            var time = _gameTiming.CurTime;
+            if (_lastGhostBlink != null)
+            {
+                if (time <= _lastGhostBlink + ghostBlinkingCooldown)
+                    return false;
+            }
+            _lastGhostBlink = time;
+
             ToggleBlinkingLight(true);
 
             Owner.SpawnTimer(ghostBlinkingTime, () => {
                 ToggleBlinkingLight(false);
-            });   
+            });
+
+            return true;
         }
     }
 }

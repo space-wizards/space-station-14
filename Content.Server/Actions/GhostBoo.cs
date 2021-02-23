@@ -40,18 +40,14 @@ namespace Content.Server.Actions
                 var boos = ent.GetAllComponents<IGhostBooAffected>().ToList();
                 foreach (var boo in boos)
                 {
-                    boo.AffectedByGhostBoo(args);
-                    booCounter++;
-
-                    // yes, this is goto
-                    // the quickest escape from nested loops
-                    if (booCounter >= _maxTargets)
-                        goto EnoughBoo;
+                    if (boo.AffectedByGhostBoo(args))
+                        booCounter++;
                 }
 
+                if (booCounter >= _maxTargets)
+                    break;
             }
 
-            EnoughBoo:
             actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(_cooldown));
         }
     }
