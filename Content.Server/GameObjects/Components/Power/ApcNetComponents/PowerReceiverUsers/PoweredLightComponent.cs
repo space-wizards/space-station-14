@@ -36,10 +36,12 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         public override string Name => "PoweredLight";
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
-
         // time to blink light when ghost made boo nearby
         private static readonly TimeSpan ghostBlinkingTime = TimeSpan.FromSeconds(10);
         private static readonly TimeSpan ghostBlinkingCooldown = TimeSpan.FromSeconds(60);
+
+        [ComponentDependency]
+        private readonly AppearanceComponent? _appearance;
 
         private TimeSpan _lastThunk;
         private TimeSpan? _lastGhostBlink;
@@ -174,13 +176,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         public void UpdateLight()
         {
             var powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
-            var appearance = Owner.GetComponentOrNull<AppearanceComponent>();
-
 
             if (LightBulb == null) // No light bulb.
             {
                 powerReceiver.Load = 0;
-                appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
+                _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
                 return;
             }
 
@@ -190,8 +190,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     if (powerReceiver.Powered && _on)
                     {
                         powerReceiver.Load = LightBulb.PowerUse;
-                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
-                        appearance?.SetData(PoweredLightVisuals.BulbColor, LightBulb.Color);
+                        _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
+                        _appearance?.SetData(PoweredLightVisuals.BulbColor, LightBulb.Color);
                         var time = _gameTiming.CurTime;
                         if (time > _lastThunk + _thunkDelay)
                         {
@@ -201,14 +201,14 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     }
                     else
                     {
-                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
+                        _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
                     }
                     break;
                 case LightBulbState.Broken:
-                    appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
+                    _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
                     break;
                 case LightBulbState.Burned:
-                    appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
+                    _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                     break;
             }
         }
@@ -282,11 +282,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 return;
 
             _isBlinking = isNowBlinking;
-
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-            {
-                appearance.SetData(PoweredLightVisuals.Blinking, _isBlinking);
-            }
+            _appearance?.SetData(PoweredLightVisuals.Blinking, _isBlinking);
         }
 
         public bool AffectedByGhostBoo(InstantActionEventArgs args)
@@ -301,7 +297,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             _lastGhostBlink = time;
 
             ToggleBlinkingLight(true);
-
             Owner.SpawnTimer(ghostBlinkingTime, () => {
                 ToggleBlinkingLight(false);
             });
