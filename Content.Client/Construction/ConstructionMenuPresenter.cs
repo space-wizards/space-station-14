@@ -71,7 +71,7 @@ namespace Content.Client.Construction
                     _constructionView.Close();
             }
         }
-        
+
         /// <summary>
         /// Constructs a new instance of <see cref="ConstructionMenuPresenter" />.
         /// </summary>
@@ -216,7 +216,7 @@ namespace Content.Client.Construction
 
         private void GenerateStepList(ConstructionPrototype prototype, ItemList stepList)
         {
-            if (!_prototypeManager.TryIndex(prototype.Graph, out ConstructionGraphPrototype graph))
+            if (!_prototypeManager.TryIndex(prototype.Graph, out ConstructionGraphPrototype? graph))
                 return;
 
             var startNode = graph.Nodes[prototype.StartNode];
@@ -430,7 +430,7 @@ namespace Content.Client.Construction
 
             _constructionView.BuildButtonPressed = true;
         }
-        
+
         private void OnSystemLoaded(object? sender, SystemChangedArgs args)
         {
             if (args.System is ConstructionSystem system) SystemBindingChanged(system);

@@ -18,7 +18,7 @@ namespace Content.Shared
 
             var culture = new CultureInfo(Culture);
 
-            loc.LoadCulture(res, culture);
+            loc.LoadCulture(culture);
             loc.AddFunction(culture, "PRESSURE", FormatPressure);
             loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
         }

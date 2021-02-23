@@ -304,13 +304,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private async void HandleStartItemConstruction(TryStartItemConstructionMessage ev, EntitySessionEventArgs args)
         {
-            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype constructionPrototype))
+            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
             {
                 Logger.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
                 return;
             }
 
-            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype constructionGraph))
+            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype? constructionGraph))
             {
                 Logger.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
                 return;
@@ -360,14 +360,14 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private async void HandleStartStructureConstruction(TryStartStructureConstructionMessage ev, EntitySessionEventArgs args)
         {
-            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype constructionPrototype))
+            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
             {
                 Logger.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
                 RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
                 return;
             }
 
-            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype constructionGraph))
+            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype? constructionGraph))
             {
                 Logger.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
                 RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));

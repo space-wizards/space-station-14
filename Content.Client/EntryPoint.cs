@@ -61,17 +61,17 @@ namespace Content.Client
                 factory.RegisterIgnore(ignoreName);
             }
 
-            factory.Register<SharedResearchConsoleComponent>();
-            factory.Register<SharedLatheComponent>();
-            factory.Register<SharedSpawnPointComponent>();
-            factory.Register<SharedVendingMachineComponent>();
-            factory.Register<SharedWiresComponent>();
-            factory.Register<SharedCargoConsoleComponent>();
-            factory.Register<SharedReagentDispenserComponent>();
-            factory.Register<SharedChemMasterComponent>();
-            factory.Register<SharedMicrowaveComponent>();
-            factory.Register<SharedGravityGeneratorComponent>();
-            factory.Register<SharedAMEControllerComponent>();
+            factory.RegisterClass<SharedResearchConsoleComponent>();
+            factory.RegisterClass<SharedLatheComponent>();
+            factory.RegisterClass<SharedSpawnPointComponent>();
+            factory.RegisterClass<SharedVendingMachineComponent>();
+            factory.RegisterClass<SharedWiresComponent>();
+            factory.RegisterClass<SharedCargoConsoleComponent>();
+            factory.RegisterClass<SharedReagentDispenserComponent>();
+            factory.RegisterClass<SharedChemMasterComponent>();
+            factory.RegisterClass<SharedMicrowaveComponent>();
+            factory.RegisterClass<SharedGravityGeneratorComponent>();
+            factory.RegisterClass<SharedAMEControllerComponent>();
 
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.

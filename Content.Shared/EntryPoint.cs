@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using Content.Shared.Chemistry;
 using Content.Shared.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -16,7 +14,6 @@ namespace Content.Shared
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly IResourceManager _resourceManager = default!;
 
         public override void PreInit()
         {
