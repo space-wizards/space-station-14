@@ -107,13 +107,13 @@ namespace Content.Client.UserInterface
             var namePanel = HighlightedContainer();
             var nameHBox = new HBoxContainer
             {
-                SizeFlagsVertical = SizeFlags.FillExpand
+                VerticalExpand = true
             };
             var nameLabel = new Label { Text = Loc.GetString("Name:") };
             _nameEdit = new LineEdit
             {
-                CustomMinimumSize = (270, 0),
-                SizeFlagsVertical = SizeFlags.ShrinkCenter
+                MinSize = (270, 0),
+                VerticalAlignment = VAlignment.Center
             };
             _nameEdit.OnTextChanged += args => { SetName(args.Text); };
             var nameRandomButton = new Button
@@ -210,7 +210,7 @@ namespace Content.Client.UserInterface
             var agePanel = HighlightedContainer();
             var ageHBox = new HBoxContainer();
             var ageLabel = new Label { Text = Loc.GetString("Age:") };
-            _ageEdit = new LineEdit { CustomMinimumSize = (40, 0) };
+            _ageEdit = new LineEdit { MinSize = (40, 0) };
             _ageEdit.OnTextChanged += args =>
             {
                 if (!int.TryParse(args.Text, out var newAge))
@@ -253,10 +253,12 @@ namespace Content.Client.UserInterface
             #region Hair
 
             var hairPanel = HighlightedContainer();
-            hairPanel.SizeFlagsHorizontal = SizeFlags.None;
             var hairHBox = new HBoxContainer();
 
-            _hairPicker = new HairStylePicker();
+            _hairPicker = new HairStylePicker
+            {
+                HorizontalAlignment = HAlignment.Center
+            };
             _hairPicker.Populate();
 
             _hairPicker.OnHairStylePicked += newStyle =>
