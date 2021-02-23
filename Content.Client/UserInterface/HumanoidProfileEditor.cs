@@ -133,7 +133,22 @@ namespace Content.Client.UserInterface
 
             #region Appearance
 
-            var appearanceVBox = new VBoxContainer();
+            var appearanceList = new VBoxContainer();
+
+            var appearanceVBox = new VBoxContainer
+            {
+                Children =
+                {
+                    new ScrollContainer
+                    {
+                        VerticalExpand = true,
+                        Children =
+                        {
+                            appearanceList
+                        }
+                    }
+                }
+            };
             tabContainer.AddChild(appearanceVBox);
             tabContainer.SetTabTitle(0, Loc.GetString("Appearance"));
 
@@ -142,7 +157,7 @@ namespace Content.Client.UserInterface
                 SeparationOverride = 10
             };
 
-            appearanceVBox.AddChild(sexAndAgeRow);
+            appearanceList.AddChild(sexAndAgeRow);
 
             #region Sex
 
@@ -287,7 +302,7 @@ namespace Content.Client.UserInterface
             hairHBox.AddChild(_facialHairPicker);
 
             hairPanel.AddChild(hairHBox);
-            appearanceVBox.AddChild(hairPanel);
+            appearanceList.AddChild(hairPanel);
 
             #endregion Hair
 
@@ -311,7 +326,7 @@ namespace Content.Client.UserInterface
             clothingHBox.AddChild(clothingLabel);
             clothingHBox.AddChild(_clothingButton);
             clothingPanel.AddChild(clothingHBox);
-            appearanceVBox.AddChild(clothingPanel);
+            appearanceList.AddChild(clothingPanel);
 
             #endregion Clothing
 
@@ -336,7 +351,7 @@ namespace Content.Client.UserInterface
             backpackHBox.AddChild(backpackLabel);
             backpackHBox.AddChild(_backpackButton);
             backpackPanel.AddChild(backpackHBox);
-            appearanceVBox.AddChild(backpackPanel);
+            appearanceList.AddChild(backpackPanel);
 
             #endregion Backpack
 
@@ -359,7 +374,7 @@ namespace Content.Client.UserInterface
             eyesVBox.AddChild(_eyesPicker);
 
             eyesPanel.AddChild(eyesVBox);
-            appearanceVBox.AddChild(eyesPanel);
+            appearanceList.AddChild(eyesPanel);
 
             #endregion Eyes
 
