@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -31,6 +32,8 @@ namespace Content.Server.Actions
         public Type RegisteredInduceType;
 
         public IComponent CheckedComponent;
+
+        private string castSound = "";
         public ProjectileSpell()
         {
             IoCManager.InjectDependencies(this);
@@ -45,6 +48,7 @@ namespace Content.Server.Actions
             serializer.DataField(this, x => x.IgnoreCaster, "ignorecaster", false); //ignore caster or not
             serializer.DataField(this, x => x.TargetType, "NeedComponent", "SharedActionsComponent"); //Needed component the target must posess
             serializer.DataField(this, x => x.InduceComponent, "AddedComponent", "SharedActionsComponent"); //The component the spell adds onto the target
+            serializer.DataFieldCached(ref castSound, "pickup_sound", "/Audio/Effects/Fluids/slosh.ogg");
         }
 
         public void DoTargetPointAction(TargetPointActionEventArgs args)
@@ -56,6 +60,8 @@ namespace Content.Server.Actions
             var coords = args.Performer.Transform.Coordinates.WithPosition(playerPosition + direction);
 
             args.Performer.PopupMessageEveryone(CastMessage); //Speak the cast message out loud
+
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(castSound, args.Performer); //play the sound
 
             var spawnedSpell = _entityManager.SpawnEntity(Projectile, coords);
 
