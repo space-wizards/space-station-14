@@ -8,7 +8,7 @@
     - type: StorageVisualizer
       state: rd
   - type: AccessReader
-    access: [ [ "ResearchDirector" ] ]
+    access: [ [ "Research", "Command" ] ]
 
 - type: entity
   id: LockerScientist

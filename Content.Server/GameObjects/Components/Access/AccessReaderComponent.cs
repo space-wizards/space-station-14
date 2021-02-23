@@ -6,9 +6,13 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.Access;
 using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -101,6 +105,20 @@ namespace Content.Server.GameObjects.Components.Access
             }
 
             return Array.Empty<string>();
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            var proto = IoCManager.Resolve<IPrototypeManager>();
+            foreach (var level in AccessLists.SelectMany(c => c).Union(DenyTags))
+            {
+                if (!proto.HasIndex<AccessLevelPrototype>(level))
+                {
+                    Logger.ErrorS("access", $"Invalid access level: {level}");
+                }
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)

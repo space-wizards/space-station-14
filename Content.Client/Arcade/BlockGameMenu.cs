@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Content.Client.GameObjects.Components.Arcade;
@@ -525,12 +525,12 @@ namespace Content.Client.Arcade
 
         public void UpdatePoints(int points)
         {
-            _pointsLabel.Text = Loc.GetString("Points: {0}", points);
+            _pointsLabel.Text = Loc.GetString("blockgame-points-label", ("points", points));
         }
 
         public void UpdateLevel(int level)
         {
-            _levelLabel.Text = Loc.GetString("Level {0}", level + 1);
+            _levelLabel.Text = Loc.GetString("blockgame-level-label", ("level", level + 1));
         }
 
         public void UpdateHighscores(List<BlockGameMessages.HighScoreEntry> localHighscores,

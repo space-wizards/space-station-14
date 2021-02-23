@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Botany;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
@@ -347,7 +348,7 @@ namespace Content.Server.Botany
 
         public bool CheckHarvest(IEntity user, IEntity held = null)
         {
-            return (!Ligneous || (Ligneous && held != null && held.HasComponent<BotanySharpComponent>()));
+            return (!Ligneous || (Ligneous && held != null && held.HasTag("BotanySharp")));
         }
     }
 }

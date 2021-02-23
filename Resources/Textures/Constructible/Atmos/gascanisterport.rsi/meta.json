@@ -9,7 +9,6 @@
    "states":[
       {
          "name":"gasCanisterPort",
-         "directions":1
       }
    ]
 }

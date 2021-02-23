@@ -9,6 +9,7 @@ using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Kitchen;
@@ -197,7 +198,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 foreach (var entity in _chamber.ContainedEntities)
                 {
                     if (!canJuice && entity.HasComponent<JuiceableComponent>()) canJuice = true;
-                    if (!canGrind && entity.HasComponent<GrindableComponent>()) canGrind = true;
+                    if (!canGrind && entity.HasTag("Grindable")) canGrind = true;
                     if (canJuice && canGrind) break;
                 }
             }
@@ -287,7 +288,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
 
             //Next, see if the user is trying to insert something they want to be ground/juiced.
-            if(!heldEnt.TryGetComponent(out GrindableComponent? grind) && !heldEnt.TryGetComponent(out JuiceableComponent? juice))
+            if(!heldEnt.HasTag("Grindable") && !heldEnt.TryGetComponent(out JuiceableComponent? juice))
             {
                 //Entity did NOT pass the whitelist for grind/juice.
                 //Wouldn't want the clown grinding up the Captain's ID card now would you?
@@ -333,7 +334,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     {
                         foreach (var item in _chamber.ContainedEntities.ToList())
                         {
-                            if (!item.HasComponent<GrindableComponent>()) continue;
+                            if (!item.HasTag("Grindable")) continue;
                             if (!item.TryGetComponent<SolutionContainerComponent>(out var solution)) continue;
                             if (_heldBeaker.CurrentVolume + solution.CurrentVolume > _heldBeaker.MaxVolume) continue;
                             _heldBeaker.TryAddSolution(solution.Solution);
