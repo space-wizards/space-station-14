@@ -5,7 +5,7 @@ using System;
 namespace Content.Shared.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
 {
     [Serializable, NetSerializable]
-    public enum PoweredLightVisuals
+    public enum PoweredLightVisuals : byte
     {
         BulbState,
         BulbColor,
@@ -13,7 +13,7 @@ namespace Content.Shared.GameObjects.Components.Power.ApcNetComponents.PowerRece
     }
 
     [Serializable, NetSerializable]
-    public enum PoweredLightState
+    public enum PoweredLightState : byte
     {
         Empty,
         On,
