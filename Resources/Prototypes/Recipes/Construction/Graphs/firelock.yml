@@ -51,7 +51,6 @@
               anchored: true
           steps:
             - prototype: FirelockElectronics
-              amount: 1
               name: Firelock Electronics
               icon:
                 sprite: "Constructible/Misc/module.rsi"

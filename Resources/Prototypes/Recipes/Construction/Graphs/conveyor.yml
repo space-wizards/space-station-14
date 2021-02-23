@@ -6,9 +6,8 @@
       edges:
         - to: entity
           steps:
-            # Pretty sure this doesn't work but i'm waiting for construction tags anyway *dab dab*
+            # Replace with tag ASAP
             - prototype: ConveyorAssembly
-              amount: 1
               icon:
                 sprite: Constructible/Power/conveyor.rsi
                 state: conveyor_loose
