@@ -113,9 +113,13 @@ namespace Content.Server.GameObjects.Components.Interactable
                             EntitySystem.Get<AudioSystem>().PlayFromEntity(LitSound, Owner);
                         }
 
+                        if (IconStateLit != null)
+                        {
+                            sprite.LayerSetState(2, IconStateLit);
+                            sprite.LayerSetShader(2, "shaded");
+                        }
+
                         sprite.LayerSetVisible(1, true);
-                        sprite.LayerSetState(2, IconStateLit);
-                        sprite.LayerSetShader(2, "unshaded");
                         break;
 
                     case ExpendableLightState.Fading:
@@ -134,9 +138,9 @@ namespace Content.Server.GameObjects.Components.Interactable
                             loopSound.StopAllSounds();
                         }
 
+                        sprite.LayerSetState(0, IconStateSpent);
+                        sprite.LayerSetShader(0, "shaded");
                         sprite.LayerSetVisible(1, false);
-                        sprite.LayerSetState(2, IconStateSpent);
-                        sprite.LayerSetShader(2, "shaded");
                         break;
                 }
             }

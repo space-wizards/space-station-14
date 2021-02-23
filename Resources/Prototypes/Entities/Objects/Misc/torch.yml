@@ -9,7 +9,6 @@
       spentDesc: It looks like this torch has burnt out. What a bummer.
       glowDuration: 200
       fadeOutDuration: 4
-      iconStateOn: torch_unlit
       iconStateSpent: torch_spent
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
@@ -19,12 +18,11 @@
     - type: Sprite
       sprite: Objects/Misc/torch.rsi
       layers:
-        - state: torch_nocloth
+        - state: torch_unlit
         - state: lit_overlay
           color: "#FFFFFF"
           visible: false
           shader: unshaded
-        - state: torch_unlit
     - type: Icon
       sprite: Objects/Misc/torch.rsi
       state: icon
