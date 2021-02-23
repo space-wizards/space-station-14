@@ -1,48 +1,32 @@
 - type: entity
   id: OxygenTankFilled
   parent: OxygenTank
-  name: oxygen tank
-  description: A tank of oxygen.
-  suffix: Filled
-  components:
-    - type: GasTank
-      outputPressure: 21.27825
-      air:
-        volume: 70
-        moles:
-          - 22.6293856 # oxygen
-        temperature: 293.15
+  suffix: ent-gas-tank-suffix-filled
+  components: &oxyTankFill
+  - type: GasTank
+    outputPressure: 21.27825
+    air:
+      volume: 70
+      moles:
+        - 22.6293856 # oxygen
+      temperature: 293.15
 
 - type: entity
   id: YellowOxygenTankFilled
-  parent: OxygenTankFilled
-  name: oxygen tank
-  description: A tank of oxygen. This one is yellow.
-  suffix: Filled
-  components:
-    - type: Sprite
-      sprite: Objects/Tanks/yellow.rsi
-    - type: Clothing
-      sprite: Objects/Tanks/yellow.rsi
+  parent: YellowOxygenTank
+  suffix: ent-gas-tank-suffix-filled
+  components: *oxyTankFill
 
 - type: entity
   id: RedOxygenTankFilled
-  parent: OxygenTankFilled
-  name: oxygen tank
-  description: A tank of oxygen. This one is red.
-  suffix: Filled
-  components:
-    - type: Sprite
-      sprite: Objects/Tanks/red.rsi
-    - type: Clothing
-      sprite: Objects/Tanks/red.rsi
+  parent: RedOxygenTank
+  suffix: ent-gas-tank-suffix-filled
+  components: *oxyTankFill
 
 - type: entity
   id: EmergencyOxygenTankFilled
   parent: EmergencyOxygenTank
-  name: emergency oxygen tank
-  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
-  suffix: Filled
+  suffix: ent-gas-tank-suffix-filled
   components:
     - type: GasTank
       outputPressure: 21.27825
@@ -55,9 +39,7 @@
 - type: entity
   id: ExtendedEmergencyOxygenTankFilled
   parent: ExtendedEmergencyOxygenTank
-  name: extended-capacity emergency oxygen tank
-  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
-  suffix: Filled
+  suffix: ent-gas-tank-suffix-filled
   components:
     - type: GasTank
       outputPressure: 21.27825
@@ -70,9 +52,7 @@
 - type: entity
   id: DoubleEmergencyOxygenTankFilled
   parent: DoubleEmergencyOxygenTank
-  name: double emergency oxygen tank
-  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
-  suffix: Filled
+  suffix: ent-gas-tank-suffix-filled
   components:
     - type: GasTank
       outputPressure: 21.27825
@@ -84,13 +64,9 @@
 
 - type: entity
   id: AirTankFilled
-  parent: GasTankBase
-  name: air tank
-  description: Mixed anyone?
-  suffix: Filled
+  parent: AirTank
+  suffix: ent-gas-tank-suffix-filled
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/generic.rsi
     - type: GasTank
       outputPressure: 101.325
       air:
@@ -99,14 +75,12 @@
           - 4.75217098 # oxygen
           - 17.8772147 # nitrogen
         temperature: 293.15
-    - type: Clothing
-      sprite: Objects/Tanks/generic.rsi
 
 - type: entity
   id: PlasmaTankFilled
   parent: PlasmaTank
   name: plasma tank
-  suffix: Filled
+  suffix: ent-gas-tank-suffix-filled
   description: "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
   components:
     - type: GasTank
