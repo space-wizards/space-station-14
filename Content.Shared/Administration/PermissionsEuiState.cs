@@ -44,7 +44,7 @@ namespace Content.Shared.Administration
         [Serializable, NetSerializable]
         public sealed class AddAdmin : EuiMessageBase
         {
-            public string UserNameOrId = default!;
+            public string UserNameOrId = string.Empty;
             public string? Title;
             public AdminFlags PosFlags;
             public AdminFlags NegFlags;
@@ -71,7 +71,7 @@ namespace Content.Shared.Administration
         [Serializable, NetSerializable]
         public sealed class AddAdminRank : EuiMessageBase
         {
-            public string Name = default!;
+            public string Name = string.Empty;
             public AdminFlags Flags;
         }
 
@@ -86,7 +86,7 @@ namespace Content.Shared.Administration
         {
             public int Id;
 
-            public string Name = default!;
+            public string Name = string.Empty;
             public AdminFlags Flags;
         }
     }

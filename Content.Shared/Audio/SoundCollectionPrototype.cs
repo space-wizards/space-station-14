@@ -10,7 +10,7 @@ namespace Content.Shared.Audio
     [Prototype("soundCollection")]
     public sealed class SoundCollectionPrototype : IPrototype
     {
-        public string ID { get; private set; } = "";
+        public string ID { get; private set; } = string.Empty;
         public List<string> PickFiles { get; private set; } = new();
 
         public void LoadFrom(YamlMappingNode mapping)

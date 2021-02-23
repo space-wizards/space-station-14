@@ -26,7 +26,7 @@ namespace Content.Shared.Administration
         {
             public bool CloseAfter;
             public ReagentUnit Amount;
-            public string ReagentId = "";
+            public string ReagentId = string.Empty;
         }
     }
 }

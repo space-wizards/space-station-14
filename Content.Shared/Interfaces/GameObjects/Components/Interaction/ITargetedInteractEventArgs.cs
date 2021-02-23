@@ -8,11 +8,11 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         /// Performer of the attack
         /// </summary>
-        IEntity? User { get; }
+        IEntity User { get; }
         /// <summary>
         /// Target of the attack
         /// </summary>
-        IEntity? Target { get; }
+        IEntity Target { get; }
 
     }
 }

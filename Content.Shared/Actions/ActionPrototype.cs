@@ -32,21 +32,21 @@ namespace Content.Shared.Actions
         /// action. Null if this is not a Toggle ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public IToggleAction? ToggleAction { get; private set; }
+        public IToggleAction ToggleAction { get; private set; } = default!;
 
         /// <summary>
         /// The ITargetEntityAction that should be invoked when performing this
         /// action. Null if this is not a TargetEntity ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public ITargetEntityAction? TargetEntityAction { get; private set; }
+        public ITargetEntityAction TargetEntityAction { get; private set; } = default!;
 
         /// <summary>
         /// The ITargetPointAction that should be invoked when performing this
         /// action. Null if this is not a TargetPoint ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public ITargetPointAction? TargetPointAction { get; private set; }
+        public ITargetPointAction TargetPointAction { get; private set; } = default!;
 
         public override void LoadFrom(YamlMappingNode mapping)
         {

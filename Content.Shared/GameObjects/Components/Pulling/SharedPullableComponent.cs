@@ -53,9 +53,9 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     Dirty();
                     _pullerPhysics = null;
 
-                    if (_physics != null)
+                    if (_physics != null && oldPullerPhysics != null)
                     {
-                        var message = new PullStoppedMessage(oldPullerPhysics!, _physics);
+                        var message = new PullStoppedMessage(oldPullerPhysics, _physics);
 
                         oldPuller.SendMessage(null, message);
                         Owner.SendMessage(null, message);
@@ -74,8 +74,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     return;
                 }
 
-                if (value != null)
-                {
+                if (value != null) {
                     // Pulling a new object : Perform sanity checks.
 
                     if (!_canStartPull(value))
