@@ -252,6 +252,11 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+  - type: Appearance
+    visuals:
+    - type: FireVisualizer
+      sprite: Effects/fire.rsi
+      normalState: fireobject
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -286,6 +291,11 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+  - type: Appearance
+    visuals:
+    - type: FireVisualizer
+      sprite: Effects/fire.rsi
+      normalState: fireobject
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

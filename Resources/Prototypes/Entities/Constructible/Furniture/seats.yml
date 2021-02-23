@@ -64,6 +64,11 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+  - type: Appearance
+    visuals:
+    - type: FireVisualizer
+      sprite: Effects/fire.rsi
+      normalState: fireobject
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
@@ -84,6 +89,11 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+  - type: Appearance
+    visuals:
+    - type: FireVisualizer
+      sprite: Effects/fire.rsi
+      normalState: fireobject
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
@@ -103,6 +113,11 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+  - type: Appearance
+    visuals:
+    - type: FireVisualizer
+      sprite: Effects/fire.rsi
+      normalState: fireobject
   - type: Sprite
     state: officechair_white
   - type: Physics
@@ -124,6 +139,11 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+  - type: Appearance
+    visuals:
+    - type: FireVisualizer
+      sprite: Effects/fire.rsi
+      normalState: fireobject
 
 - type: entity
   name: comfy chair
@@ -136,6 +156,11 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+  - type: Appearance
+    visuals:
+    - type: FireVisualizer
+      sprite: Effects/fire.rsi
+      normalState: fireobject
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
@@ -156,6 +181,11 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+  - type: Appearance
+    visuals:
+    - type: FireVisualizer
+      sprite: Effects/fire.rsi
+      normalState: fireobject
   - type: Physics
     shapes:
     - !type:PhysShapeAabb

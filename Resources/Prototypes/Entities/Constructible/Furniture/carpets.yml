@@ -18,6 +18,11 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+  - type: Appearance
+    visuals:
+    - type: FireVisualizer
+      sprite: Effects/fire.rsi
+      normalState: fireobject
   - type: Physics
     shapes:
       - !type:PhysShapeAabb
