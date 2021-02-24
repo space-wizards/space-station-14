@@ -39,11 +39,11 @@ namespace Content.Shared.GameObjects.Components.Body
         private readonly Dictionary<string, IBodyPart> _parts = new();
 
         [ViewVariables]
-        [DataField("templateName", required: true)]
+        [DataField("template", required: true)]
         public string TemplateName { get; private set; } = default!;
 
         [ViewVariables]
-        [DataField("presetName", required: true)]
+        [DataField("preset", required: true)]
         public string PresetName { get; private set; } = default!;
 
         [ViewVariables]
