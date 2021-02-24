@@ -1,0 +1,55 @@
+﻿Entries:
+- id: 1
+  author: "PJB"
+  time: "2021-02-16T16:18:11+0000"
+  changes:
+  - type: Add
+    message: Added changelog
+  - type: Remove
+    message: Removed fun
+  - type: Fix
+    message: Removed swept
+  - type: Tweak
+    message: I ran out of things to say I ran out of things to sayI ran out of things to sayI ran out of things to sayI ran out of things to sayI ran out of things to sayI ran out of things to sayI ran out of things to sayI ran out of things to sayI ran out of things to sayI ran out of things to sayI ran out of things to sayI ran out of things to say
+- id: 2
+  author: "PJB"
+  time: "2021-02-17T16:18:11+0000"
+  changes:
+    - type: Add
+      message: AAAAAAAAAAAAAAAAAAAAAAAAAAH
+- id: 3
+  author: "PJB"
+  time: "2021-02-17T16:18:11+0000"
+  changes:
+    - type: Add
+      message: aaaaaaaaaaaaa
+- id: 4
+  author: "evil PJB"
+  time: "2021-02-17T16:18:11+0000"
+  changes:
+    - type: Add
+      message: ilolol
+- id: 5
+  author: "Swept"
+  time: "2021-02-17T16:18:11+0000"
+  changes:
+    - type: Add
+      message: 3124234
+- id: 6
+  author: "PJB"
+  time: "2021-02-17T16:18:11+0000"
+  changes:
+    - type: Add
+      message: grgdrg
+- id: 7
+  author: "PJB"
+  time: "2021-02-17T16:18:11+0000"
+  changes:
+    - type: Add
+      message: wadawdwa
+- id: 8
+  author: "PJB"
+  time: "2021-02-24T09:46:17+0000"
+  changes:
+    - type: Add
+      message: Re-added Swept.
