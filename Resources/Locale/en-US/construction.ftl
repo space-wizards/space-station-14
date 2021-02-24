@@ -13,3 +13,5 @@ construction-insert-entity-with-component = Next, insert an entity with a {$comp
 # Shown when examining an in-construction object
 construction-insert-exact-entity = Next, insert {$entityName}.
 
+# Shown when examining an in-construction object
+construction-insert-arbitrary-entity = Next, insert {$stepName}.

@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         private void InitializeFromPrototype()
         {
             if (string.IsNullOrEmpty(_packPrototypeId)) { return; }
-            if (!_prototypeManager.TryIndex(_packPrototypeId, out VendingMachineInventoryPrototype packPrototype))
+            if (!_prototypeManager.TryIndex(_packPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
             {
                 return;
             }

@@ -130,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                             break;
                         }
 
-                        PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
+                        PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype? product);
                         if (product == null!)
                             break;
                         var capacity = _cargoConsoleSystem.GetCapacity(orders.Database.Id);
@@ -178,7 +178,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                                 orders.Database.ClearOrderCapacity();
                                 foreach (var order in approvedOrders)
                                 {
-                                    if (!PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product))
+                                    if (!PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype? product))
                                         continue;
                                     for (var i = 0; i < order.Amount; i++)
                                     {

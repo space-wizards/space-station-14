@@ -50,7 +50,7 @@
             - !type:EntityAnchored
               anchored: true
           steps:
-            - prototype: FirelockElectronics
+            - tag: FirelockElectronics
               name: Firelock Electronics
               icon:
                 sprite: "Constructible/Misc/module.rsi"

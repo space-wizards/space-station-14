@@ -2,8 +2,6 @@
   parent: BaseItem
   abstract: true
   id: GasTankBase
-  name: Gas Tank
-  description: It's a gas tank. It contains gas.
   components:
     - type: Sprite
       sprite: Objects/Tanks/generic.rsi
@@ -23,9 +21,7 @@
 - type: entity
   id: OxygenTank
   parent: GasTankBase
-  name: oxygen tank
-  description: A tank of oxygen.
-  suffix: Empty
+  suffix: ent-gas-tank-suffix-empty
   components:
     - type: Sprite
       sprite: Objects/Tanks/oxygen.rsi
@@ -42,9 +38,7 @@
 - type: entity
   id: YellowOxygenTank
   parent: OxygenTank
-  name: oxygen tank
-  description: A tank of oxygen. This one is in yellow.
-  suffix: Empty
+  suffix: ent-gas-tank-suffix-empty
   components:
     - type: Sprite
       sprite: Objects/Tanks/yellow.rsi
@@ -56,9 +50,7 @@
 - type: entity
   id: RedOxygenTank
   parent: OxygenTank
-  name: oxygen tank
-  description: A tank of oxygen. This one is in yellow.
-  suffix: Empty
+  suffix: ent-gas-tank-suffix-empty
   components:
     - type: Sprite
       sprite: Objects/Tanks/red.rsi
@@ -70,9 +62,7 @@
 - type: entity
   id: EmergencyOxygenTank
   parent: OxygenTank
-  name: emergency oxygen tank
-  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
-  suffix: Empty
+  suffix: ent-gas-tank-suffix-empty
   components:
     - type: Sprite
       sprite: Objects/Tanks/emergency.rsi
@@ -90,9 +80,7 @@
 - type: entity
   id: ExtendedEmergencyOxygenTank
   parent: EmergencyOxygenTank
-  name: extended-capacity emergency oxygen tank
-  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
-  suffix: Empty
+  suffix: ent-gas-tank-suffix-empty
   components:
     - type: Sprite
       sprite: Objects/Tanks/emergency_yellow.rsi
@@ -110,9 +98,7 @@
 - type: entity
   id: DoubleEmergencyOxygenTank
   parent: ExtendedEmergencyOxygenTank
-  name: double emergency oxygen tank
-  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
-  suffix: Empty
+  suffix: ent-gas-tank-suffix-empty
   components:
     - type: Sprite
       sprite: Objects/Tanks/emergency_double.rsi
@@ -130,9 +116,7 @@
 - type: entity
   id: AirTank
   parent: GasTankBase
-  name: air tank
-  description: Mixed anyone?
-  suffix: Empty
+  suffix: ent-gas-tank-suffix-empty
   components:
     - type: Sprite
       sprite: Objects/Tanks/generic.rsi
@@ -149,9 +133,7 @@
 - type: entity
   id: PlasmaTank
   parent: GasTankBase
-  name: plasma tank
-  suffix: Empty
-  description: "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
+  suffix: ent-gas-tank-suffix-empty
   components:
     - type: Sprite
       sprite: Objects/Tanks/plasma.rsi
