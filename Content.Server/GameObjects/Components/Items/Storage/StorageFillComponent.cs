@@ -17,7 +17,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override string Name => "StorageFill";
 
         [DataField("contents")]
-        private List<StorageFillEntry> _contents = new ();
+        private List<StorageFillEntry> _contents = new();
+
+        public IReadOnlyList<StorageFillEntry> Contents => _contents;
 
         void IMapInit.MapInit()
         {

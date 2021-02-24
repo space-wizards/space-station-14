@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.GameObjects.Components.Body.Template
 {
@@ -15,73 +13,78 @@ namespace Content.Shared.GameObjects.Components.Body.Template
     /// </summary>
     [Prototype("bodyTemplate")]
     [Serializable, NetSerializable]
-    public class BodyTemplatePrototype : IPrototype
+    public class BodyTemplatePrototype : IPrototype, ISerializationHooks
     {
-        [DataField("id")]
-        private string _id;
-        [DataField("name")]
-        private string _name;
-        [DataField("centerSlot")]
-        private string _centerSlot;
         [DataField("slots")]
         private Dictionary<string, BodyPartType> _slots;
-        private Dictionary<string, List<string>> _connections;
+
+        [DataField("connections")]
+        private Dictionary<string, List<string>> _rawConnections;
+
         [DataField("layers")]
         private Dictionary<string, string> _layers;
+
         [DataField("mechanismLayers")]
         private Dictionary<string, string> _mechanismLayers;
 
-        [ViewVariables] public string ID => _id;
-
-        [ViewVariables] public string Name => _name;
-
-        [ViewVariables] public string CenterSlot => _centerSlot;
-
-        [ViewVariables] public Dictionary<string, BodyPartType> Slots => new(_slots);
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; }
 
         [ViewVariables]
-        [DataField("connections", priority: 2)]
-        public Dictionary<string, List<string>> Connections
+        [field: DataField("name")]
+        public string Name { get; }
+
+        [ViewVariables]
+        [field: DataField("centerSlot")]
+        public string CenterSlot { get; }
+
+        [ViewVariables]
+        public Dictionary<string, BodyPartType> Slots => new(_slots);
+
+        [ViewVariables]
+        public Dictionary<string, List<string>> Connections { get; set; }
+
+        [ViewVariables]
+        public Dictionary<string, string> Layers => new(_layers);
+
+        [ViewVariables]
+        public Dictionary<string, string> MechanismLayers => new(_mechanismLayers);
+
+        public void AfterDeserialization()
         {
-            get => _connections.ToDictionary(x => x.Key, x => x.Value.ToList());
-            private set
+            //Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
+            //The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
+            var cleanedConnections = new Dictionary<string, List<string>>();
+
+            foreach (var targetSlotName in _slots.Keys)
             {
-                //Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
-                //The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
-                var cleanedConnections = new Dictionary<string, List<string>>();
-                foreach (var targetSlotName in _slots.Keys)
+                var tempConnections = new List<string>();
+                foreach (var (slotName, slotConnections) in _rawConnections)
                 {
-                    var tempConnections = new List<string>();
-                    foreach (var (slotName, slotConnections) in value)
+                    if (slotName == targetSlotName)
                     {
-                        if (slotName == targetSlotName)
+                        foreach (var connection in slotConnections)
                         {
-                            foreach (var connection in slotConnections)
+                            if (!tempConnections.Contains(connection))
                             {
-                                if (!tempConnections.Contains(connection))
-                                {
-                                    tempConnections.Add(connection);
-                                }
+                                tempConnections.Add(connection);
                             }
                         }
-                        else if (slotConnections.Contains(targetSlotName))
-                        {
-                            tempConnections.Add(slotName);
-                        }
                     }
-
-                    if (tempConnections.Count > 0)
+                    else if (slotConnections.Contains(targetSlotName))
                     {
-                        cleanedConnections.Add(targetSlotName, tempConnections);
+                        tempConnections.Add(slotName);
                     }
                 }
 
-                _connections = cleanedConnections;
+                if (tempConnections.Count > 0)
+                {
+                    cleanedConnections.Add(targetSlotName, tempConnections);
+                }
             }
+
+            Connections = cleanedConnections;
         }
-
-        [ViewVariables] public Dictionary<string, string> Layers => new(_layers);
-
-        [ViewVariables] public Dictionary<string, string> MechanismLayers => new(_mechanismLayers);
     }
 }

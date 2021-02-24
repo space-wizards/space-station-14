@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +13,7 @@ using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Botany;
 using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
@@ -677,7 +678,7 @@ namespace Content.Server.GameObjects.Components.Botany
                 return false;
             }
 
-            if (usingItem.HasComponent<HoeComponent>())
+            if (usingItem.HasTag("Hoe"))
             {
                 if (WeedLevel > 0)
                 {
@@ -694,7 +695,7 @@ namespace Content.Server.GameObjects.Components.Botany
                 return true;
             }
 
-            if (usingItem.HasComponent<ShovelComponent>())
+            if (usingItem.HasTag("Shovel"))
             {
                 if (Seed != null)
                 {
@@ -740,7 +741,7 @@ namespace Content.Server.GameObjects.Components.Botany
                 return true;
             }
 
-            if (usingItem.HasComponent<PlantSampleTakerComponent>())
+            if (usingItem.HasTag("PlantSampleTaker"))
             {
                 if (Seed == null)
                 {
@@ -775,7 +776,7 @@ namespace Content.Server.GameObjects.Components.Botany
                 return true;
             }
 
-            if (usingItem.HasComponent<BotanySharpComponent>())
+            if (usingItem.HasTag("BotanySharp"))
             {
                 return DoHarvest(user);
             }

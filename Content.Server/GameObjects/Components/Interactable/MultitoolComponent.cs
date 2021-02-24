@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             [field: DataField("texture")]
             public string Texture { get; } = string.Empty;
 
-            [field: DataField("state")]
+            [field: DataField("sprite")]
             public string Sprite { get; } = string.Empty;
 
             [field: DataField("useSound")]

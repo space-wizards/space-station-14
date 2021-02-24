@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -46,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
             }
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new ClothingComponentState(ClothingEquippedPrefix, EquippedPrefix);
         }

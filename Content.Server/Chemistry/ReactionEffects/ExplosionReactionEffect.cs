@@ -18,13 +18,13 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// <summary>
         /// If true, then scale ranges by intensity. If not, the ranges are the same regardless of reactant amount.
         /// </summary>
-        [DataField("flashRange")] private bool _scaled;
+        [DataField("scaled")] private bool _scaled;
 
         /// <summary>
         /// Maximum scaling on ranges. For example, if it equals 5, then it won't scaled anywhere past
         /// 5 times the minimum reactant amount.
         /// </summary>
-        [DataField("flashRange")] private float _maxScale = 1;
+        [DataField("maxScale")] private float _maxScale = 1;
 
         public void React(IEntity solutionEntity, double intensity)
         {

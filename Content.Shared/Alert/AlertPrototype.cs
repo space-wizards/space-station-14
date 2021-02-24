@@ -37,8 +37,7 @@ namespace Content.Shared.Alert
         /// <summary>
         /// Name to show in tooltip window. Accepts formatting.
         /// </summary>
-        [DataField("name")]
-        public FormattedMessage Name { get; private set; } = new();
+        public FormattedMessage Name { get; private set; } = default!;
 
         /// <summary>
         /// Description to show in tooltip window. Accepts formatting.
@@ -99,6 +98,8 @@ namespace Content.Shared.Alert
                 Logger.ErrorS("alert", "missing or invalid alertType for alert with name {0}", Name);
             }
 
+            Name = new FormattedMessage();
+            Name.AddText(ID);
             AlertKey = new AlertKey(AlertType, Category);
             // TODO PAUL SERV3
             // HasOnClick = serializer.TryReadDataField("onClick", out string _);

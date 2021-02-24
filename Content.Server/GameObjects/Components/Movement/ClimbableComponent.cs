@@ -4,7 +4,6 @@ using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -23,13 +22,6 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(IClimbable))]
     public class ClimbableComponent : SharedClimbableComponent
     {
-        /// <summary>
-        ///     The range from which this entity can be climbed.
-        /// </summary>
-        [ViewVariables]
-        [DataField("range")]
-        private float _range = SharedInteractionSystem.InteractionRange / 1.4f;
-
         /// <summary>
         ///     The time it takes to climb onto the entity.
         /// </summary>

@@ -19,32 +19,35 @@ namespace Content.Shared.Chemistry
     {
         [Dependency] private readonly IModuleManager _moduleManager = default!;
 
-        [DataField("id", required: true)]
-        private readonly string _id = default!;
-        [DataField("name")]
-        private readonly string _name = default!;
-        [DataField("desc")]
-        private readonly string _description = default!;
-        [DataField("physicalDesc")]
-        private readonly string _physicalDescription = default!;
-        [DataField("color")]
-        private readonly Color _substanceColor = default!;
         [DataField("spritePath")]
         private readonly string _spritePath = default!;
+
         [DataField("metabolism", serverOnly: true)]
         private readonly List<IMetabolizable> _metabolism = new() {new DefaultMetabolizable()};
+
         [DataField("tileReactions", serverOnly: true)]
         private readonly List<ITileReaction> _tileReactions = new(0);
+
         [DataField("plantMetabolism", serverOnly: true)]
         private readonly List<IPlantMetabolizable> _plantMetabolism = new(0);
+
         [DataField("customPlantMetabolism")]
         private readonly float _customPlantMetabolism = 1f;
 
-        public string ID => _id;
-        public string Name => _name;
-        public string Description => _description;
-        public string PhysicalDescription => _physicalDescription;
-        public Color SubstanceColor => _substanceColor;
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [field: DataField("name")]
+        public string Name { get; } = default!;
+
+        [field: DataField("desc")]
+        public string Description { get; } = default!;
+
+        [field: DataField("physicalDesc")]
+        public string PhysicalDescription { get; } = default!;
+
+        [field: DataField("color")]
+        public Color SubstanceColor { get; } = default!;
 
         //List of metabolism effects this reagent has, should really only be used server-side.
         public IReadOnlyList<IMetabolizable> Metabolism => _metabolism;

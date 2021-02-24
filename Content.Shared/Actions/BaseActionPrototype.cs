@@ -35,7 +35,6 @@ namespace Content.Shared.Actions
         /// <summary>
         /// Name to show in UI. Accepts formatting.
         /// </summary>
-        [DataField("name")]
         public FormattedMessage Name { get; private set; } = new();
 
         /// <summary>
@@ -98,6 +97,9 @@ namespace Content.Shared.Actions
 
         public void AfterDeserialization()
         {
+            Name = new FormattedMessage();
+            Name.AddText(ID);
+
             if (BehaviorType == BehaviorType.None)
             {
                 Logger.ErrorS("action", "Missing behaviorType for action with name {0}", Name);

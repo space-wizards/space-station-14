@@ -6,7 +6,8 @@
       edges:
         - to: entity
           steps:
-            - component: ConveyorAssembly
+            # Replace with tag ASAP
+            - prototype: ConveyorAssembly
               icon:
                 sprite: Constructible/Power/conveyor.rsi
                 state: conveyor_loose
