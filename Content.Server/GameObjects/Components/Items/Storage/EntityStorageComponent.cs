@@ -17,10 +17,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -42,21 +40,32 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         [ViewVariables]
         [DataField("Capacity")]
         private int _storageCapacityMax = 30;
+
         [ViewVariables]
         [DataField("IsCollidableWhenOpen")]
         private bool _isCollidableWhenOpen;
+
         [ViewVariables]
         protected IEntityQuery? EntityQuery;
+
         [DataField("showContents")]
         private bool _showContents;
+
         [DataField("occludesLight")]
         private bool _occludesLight = true;
+
         [DataField("open")]
         private bool _open;
+
+        [DataField("CanWeldShut")]
         private bool _canWeldShut = true;
+
+        [DataField("IsWeldedShut")]
         private bool _isWeldedShut;
+
         [DataField("closeSound")]
         private string _closeSound = "/Audio/Machines/closetclose.ogg";
+
         [DataField("openSound")]
         private string _openSound = "/Audio/Machines/closetopen.ogg";
 
@@ -96,7 +105,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("IsWeldedShut")]
         public bool IsWeldedShut
         {
             get => _isWeldedShut;
@@ -114,7 +122,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private bool _beingWelded;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("CanWeldShut")]
         public bool CanWeldShut {
             get => _canWeldShut;
             set
