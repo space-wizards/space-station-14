@@ -47,7 +47,7 @@ namespace Content.IntegrationTests.Tests.Networking
                     ContentBeforeIoC = () =>
                     {
                         IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
-                        IoCManager.Resolve<IComponentFactory>().Register<PredictionTestComponent>();
+                        IoCManager.Resolve<IComponentFactory>().RegisterClass<PredictionTestComponent>();
                     }
                 },
                 new ServerContentIntegrationOption
@@ -55,7 +55,7 @@ namespace Content.IntegrationTests.Tests.Networking
                     ContentBeforeIoC = () =>
                     {
                         IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
-                        IoCManager.Resolve<IComponentFactory>().Register<PredictionTestComponent>();
+                        IoCManager.Resolve<IComponentFactory>().RegisterClass<PredictionTestComponent>();
                     }
                 });
 

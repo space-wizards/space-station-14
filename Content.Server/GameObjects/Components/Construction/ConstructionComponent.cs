@@ -480,7 +480,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 return;
             }
 
-            if (_prototypeManager.TryIndex(_graphIdentifier, out ConstructionGraphPrototype graph))
+            if (_prototypeManager.TryIndex(_graphIdentifier, out ConstructionGraphPrototype? graph))
             {
                 GraphPrototype = graph;
 

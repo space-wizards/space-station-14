@@ -8,7 +8,7 @@
   - type: Clickable
   - type: Sprite
     netsync: false
-    directional: false
+    noRot: false
     sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
     state: bullet
   - type: Physics
@@ -90,7 +90,7 @@
     stunAmount: 5
     knockdownAmount: 5
   - type: Sprite
-    directional: false
+    noRot: false
     sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
     color: "#ffff33"
     layers:
