@@ -259,12 +259,8 @@ namespace Content.Client.Construction
                             stepList.AddItem(Loc.GetString("{0}. Use a {1}.", stepNumber++, toolStep.Tool.GetToolName()), icon);
                             break;
 
-                        case PrototypeConstructionGraphStep prototypeStep:
-                            stepList.AddItem(Loc.GetString("{0}. Add {1}.", stepNumber++, prototypeStep.Name), icon);
-                            break;
-
-                        case ComponentConstructionGraphStep componentStep:
-                            stepList.AddItem(Loc.GetString("{0}. Add {1}.", stepNumber++, componentStep.Name), icon);
+                        case ArbitraryInsertConstructionGraphStep arbitraryStep:
+                            stepList.AddItem(Loc.GetString("{0}. Add {1}.", stepNumber++, arbitraryStep.Name), icon);
                             break;
 
                         case NestedConstructionGraphStep nestedStep:
@@ -282,19 +278,16 @@ namespace Content.Client.Construction
                                     switch (subStep)
                                     {
                                         case MaterialConstructionGraphStep materialStep:
-                                            if (!(prototype.Type == ConstructionType.Item)) stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}x {4}.", stepNumber, parallelNumber, subStepNumber++, materialStep.Amount, materialStep.Material), icon);
+                                            if (prototype.Type != ConstructionType.Item)
+                                                stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}x {4}.", stepNumber, parallelNumber, subStepNumber++, materialStep.Amount, materialStep.Material), icon);
                                             break;
 
                                         case ToolConstructionGraphStep toolStep:
                                             stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Use a {3}.", stepNumber, parallelNumber, subStepNumber++, toolStep.Tool.GetToolName()), icon);
                                             break;
 
-                                        case PrototypeConstructionGraphStep prototypeStep:
-                                            stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}.", stepNumber, parallelNumber, subStepNumber++, prototypeStep.Name), icon);
-                                            break;
-
-                                        case ComponentConstructionGraphStep componentStep:
-                                            stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}.", stepNumber, parallelNumber, subStepNumber++, componentStep.Name), icon);
+                                        case ArbitraryInsertConstructionGraphStep arbitraryStep:
+                                            stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}.", stepNumber, parallelNumber, subStepNumber++, arbitraryStep.Name), icon);
                                             break;
                                     }
                                 }
@@ -357,11 +350,8 @@ namespace Content.Client.Construction
 
                     break;
 
-                case ComponentConstructionGraphStep componentStep:
-                    return componentStep.Icon?.Frame0();
-
-                case PrototypeConstructionGraphStep prototypeStep:
-                    return prototypeStep.Icon?.Frame0();
+                case ArbitraryInsertConstructionGraphStep arbitraryStep:
+                    return arbitraryStep.Icon?.Frame0();
 
                 case NestedConstructionGraphStep:
                     return null;
