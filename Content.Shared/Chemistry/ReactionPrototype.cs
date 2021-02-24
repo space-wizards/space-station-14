@@ -16,14 +16,16 @@ namespace Content.Shared.Chemistry
     {
         [Dependency] private readonly IModuleManager _moduleManager = default!;
 
-        [DataField("id")] private string _id = default!;
-        [DataField("name")] private string _name = default!;
-        [DataField("reactants")] private Dictionary<string, ReactantPrototype> _reactants = default!;
-        [DataField("products")] private Dictionary<string, ReagentUnit> _products = default!;
-        [DataField("effects")] private List<IReactionEffect> _effects = default!;
+        [DataField("reactants")] private Dictionary<string, ReactantPrototype> _reactants = new();
+        [DataField("products")] private Dictionary<string, ReagentUnit> _products = new();
+        [DataField("effects")] private List<IReactionEffect> _effects = new();
 
-        public string ID => _id;
-        public string Name => _name;
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [field: DataField("name")]
+        public string Name { get; } = string.Empty;
+
         /// <summary>
         /// Reactants required for the reaction to occur.
         /// </summary>
@@ -38,7 +40,7 @@ namespace Content.Shared.Chemistry
         public IReadOnlyList<IReactionEffect> Effects => _effects;
 
         // TODO SERV3: Empty on the client, (de)serialize on the server with module manager is server module
-        [DataField("sound")] public string? Sound { get; private set; } = "/Audio/Effects/Chemistry/bubbles.ogg";
+        [DataField("sound", serverOnly: true)] public string? Sound { get; private set; } = "/Audio/Effects/Chemistry/bubbles.ogg";
     }
 
     /// <summary>
