@@ -1,4 +1,5 @@
 #nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
@@ -35,6 +36,8 @@ namespace Content.Server.Physics.Controllers
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
 
+        private HashSet<EntityUid> _excludedMobs = new();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -44,18 +47,20 @@ namespace Content.Server.Physics.Controllers
         public override void UpdateBeforeSolve(bool prediction, PhysicsMap map, float frameTime)
         {
             base.UpdateBeforeSolve(prediction, map, frameTime);
+            _excludedMobs.Clear();
 
             foreach (var (mobMover, mover, physics) in ComponentManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
             {
                 // TODO: Shitcodey and should just be run before all maps
                 if (mover.Owner.Transform.MapID != map.MapId) continue;
 
+                _excludedMobs.Add(mover.Owner.Uid);
                 HandleMobMovement(mover, physics, mobMover);
             }
 
             foreach (var (mover, physics) in ComponentManager.EntityQuery<IMoverComponent, PhysicsComponent>())
             {
-                if (mover.Owner.HasComponent<IMobMoverComponent>()) continue;
+                if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
 
                 // TODO: Shitcodey and should just be run before all maps
                 if (mover.Owner.Transform.MapID != map.MapId) continue;

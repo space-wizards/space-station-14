@@ -15,6 +15,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -144,9 +145,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        public void CollideWith(IEntity collidedWith)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
         {
-            if (!collidedWith.TryGetComponent(out FlammableComponent otherFlammable))
+            if (!otherBody.Entity.TryGetComponent(out FlammableComponent otherFlammable))
                 return;
 
             if (!FireSpread || !otherFlammable.FireSpread)

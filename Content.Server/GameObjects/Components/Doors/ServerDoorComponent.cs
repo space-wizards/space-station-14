@@ -209,7 +209,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        void ICollideBehavior.CollideWith(IEntity entity)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
         {
             if (State != DoorState.Closed)
             {
@@ -223,9 +223,9 @@ namespace Content.Server.GameObjects.Components.Doors
 
             // Disabled because it makes it suck hard to walk through double doors.
 
-            if (entity.HasComponent<IBody>())
+            if (otherBody.Entity.HasComponent<IBody>())
             {
-                if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
+                if (!otherBody.Entity.TryGetComponent<IMoverComponent>(out var mover)) return;
 
                 /*
                 // TODO: temporary hack to fix the physics system raising collision events akwardly.
@@ -238,7 +238,7 @@ namespace Content.Server.GameObjects.Components.Doors
                     TryOpen(entity);
                 */
 
-                TryOpen(entity);
+                TryOpen(otherBody.Entity);
             }
         }
 

@@ -90,6 +90,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         /// <param name="toRepell">Entity to repell.</param>
         public void TryRepell(IEntity repellFrom, IEntity toRepell)
         {
+            // TODO: Fix this shitcode also it's fucking repel
             if (!_fields.Contains(repellFrom) || !toRepell.TryGetComponent<IPhysicsComponent>(out var collidableComponent)) return;
 
             var speed = 5;

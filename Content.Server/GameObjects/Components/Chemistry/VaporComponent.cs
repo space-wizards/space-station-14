@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -127,15 +128,15 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
-        void ICollideBehavior.CollideWith(IEntity collidedWith)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
         {
             if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
                 return;
 
-            contents.Solution.DoEntityReaction(collidedWith, ReactionMethod.Touch);
+            contents.Solution.DoEntityReaction(otherBody.Entity, ReactionMethod.Touch);
 
             // Check for collision with a impassable object (e.g. wall) and stop
-            if (collidedWith.TryGetComponent(out IPhysicsComponent physics))
+            if (otherBody.Entity.TryGetComponent(out IPhysicsComponent physics))
             {
                 if ((physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && physics.Hard)
                 {

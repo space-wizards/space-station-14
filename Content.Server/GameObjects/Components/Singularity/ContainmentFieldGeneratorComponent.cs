@@ -183,9 +183,9 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        public void CollideWith(IEntity collidedWith)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
         {
-            if(collidedWith.HasComponent<EmitterBoltComponent>())
+            if (otherBody.Entity.HasComponent<EmitterBoltComponent>())
             {
                 ReceivePower(4);
             }

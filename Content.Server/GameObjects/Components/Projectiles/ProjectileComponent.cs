@@ -5,13 +5,14 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Projectiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
     [RegisterComponent]
-    public class ProjectileComponent : SharedProjectileComponent, ICollideBehavior
+    public class ProjectileComponent : SharedProjectileComponent, ICollideBehavior, IPostCollide
     {
         protected override EntityUid Shooter => _shooter;
 
@@ -26,14 +27,13 @@ namespace Content.Server.GameObjects.Components.Projectiles
             set => _damages = value;
         }
 
-        public bool DeleteOnCollide => _deleteOnCollide;
+        private bool _damagedEntity = false;
+
         private bool _deleteOnCollide;
 
         // Get that juicy FPS hit sound
         private string _soundHit;
         private string _soundHitSpecies;
-
-        private bool _damagedEntity;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -57,41 +57,27 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Dirty();
         }
 
-        private bool _internalDeleteOnCollide;
-
         /// <summary>
-        /// Applies the damage when our projectile collides with its victim
+        ///     Applies the damage when our projectile collides with its victim
         /// </summary>
-        /// <param name="entity"></param>
-        void ICollideBehavior.CollideWith(IEntity entity)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
         {
-
-
-            if (_damagedEntity)
-            {
-                return;
-            }
-
             // This is so entities that shouldn't get a collision are ignored.
-            if (entity.TryGetComponent(out IPhysicsComponent otherPhysics) && otherPhysics.Hard == false)
+            if (!otherBody.Hard || _damagedEntity)
             {
-                _internalDeleteOnCollide = false;
                 return;
             }
-            else
+
+            if (_soundHitSpecies != null && otherBody.Entity.HasComponent<IDamageableComponent>())
             {
-                _internalDeleteOnCollide = true;
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, otherBody.Entity.Transform.Coordinates);
+            }
+            else if (_soundHit != null)
+            {
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, otherBody.Entity.Transform.Coordinates);
             }
 
-            if (_soundHitSpecies != null && entity.HasComponent<IDamageableComponent>())
-            {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, entity.Transform.Coordinates);
-            } else if (_soundHit != null)
-            {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, entity.Transform.Coordinates);
-            }
-
-            if (entity.TryGetComponent(out IDamageableComponent damage))
+            if (otherBody.Entity.TryGetComponent(out IDamageableComponent damage))
             {
                 Owner.EntityManager.TryGetEntity(_shooter, out var shooter);
 
@@ -103,17 +89,16 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 _damagedEntity = true;
             }
 
-            if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
-                                && Owner.TryGetComponent(out IPhysicsComponent ownPhysics))
+            if (otherBody.Entity.TryGetComponent(out CameraRecoilComponent recoilComponent))
             {
-                var direction = ownPhysics.LinearVelocity.Normalized;
+                var direction = ourBody.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);
             }
         }
 
-        void ICollideBehavior.PostCollide(int collideCount)
+        void IPostCollide.PostCollide(IPhysBody ourBody, IPhysBody otherBody)
         {
-            if (collideCount > 0 && DeleteOnCollide && _internalDeleteOnCollide) Owner.Delete();
+            if (_damagedEntity) Owner.Delete();
         }
 
         public override ComponentState GetComponentState()

@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
@@ -36,9 +37,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
             _solutionContainer = Owner.EnsureComponent<SolutionContainerComponent>();
         }
 
-        void ICollideBehavior.CollideWith(IEntity entity)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
         {
-            if (!entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))
+            if (!otherBody.Entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))
                 return;
 
             var solution = _solutionContainer.Solution;

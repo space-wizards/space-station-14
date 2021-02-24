@@ -7,6 +7,7 @@ using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Physics;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -53,14 +54,12 @@ namespace Content.Shared.GameObjects.Components.Movement
         [ViewVariables(VVAccess.ReadWrite)]
         public virtual bool Slippery { get; set; }
 
-        private bool TrySlip(IEntity entity)
+        private bool TrySlip(IPhysBody ourBody, IPhysBody otherBody)
         {
             if (!Slippery
                 || Owner.IsInContainer()
-                ||  _slipped.Contains(entity.Uid)
-                ||  !entity.TryGetComponent(out SharedStunnableComponent stun)
-                ||  !entity.TryGetComponent(out IPhysicsComponent otherBody)
-                ||  !Owner.TryGetComponent(out IPhysicsComponent body))
+                ||  _slipped.Contains(otherBody.Entity.Uid)
+                ||  !otherBody.Entity.TryGetComponent(out SharedStunnableComponent stun))
             {
                 return false;
             }
@@ -70,25 +69,22 @@ namespace Content.Shared.GameObjects.Components.Movement
                 return false;
             }
 
-            var percentage = otherBody.GetWorldAABB().IntersectPercentage(body.GetWorldAABB());
+            var percentage = otherBody.GetWorldAABB().IntersectPercentage(ourBody.GetWorldAABB());
 
             if (percentage < IntersectPercentage)
             {
                 return false;
             }
 
-            if (!EffectBlockerSystem.CanSlip(entity))
+            if (!EffectBlockerSystem.CanSlip(otherBody.Entity))
             {
                 return false;
             }
 
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
-            {
-                physics.LinearVelocity *= LaunchForwardsMultiplier;
-            }
+            otherBody.LinearVelocity *= LaunchForwardsMultiplier;
 
             stun.Paralyze(5);
-            _slipped.Add(entity.Uid);
+            _slipped.Add(otherBody.Entity.Uid);
 
             OnSlip();
 
@@ -97,9 +93,9 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         protected virtual void OnSlip() { }
 
-        public void CollideWith(IEntity collidedWith)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
         {
-            TrySlip(collidedWith);
+            TrySlip(ourBody, otherBody);
         }
 
         public void Update()

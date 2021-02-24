@@ -58,7 +58,7 @@ namespace Content.Shared.GameObjects
         public const uint FLASHABLE = 1051;
         public const uint BUCKLE = 1052;
         public const uint PROJECTILE = 1053;
-        public const uint THROWN_ITEM = 1054;
+        // 1054
         public const uint STRAP = 1055;
         public const uint DISPOSABLE = 1056;
         public const uint GAS_ANALYZER = 1057;

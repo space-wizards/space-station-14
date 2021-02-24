@@ -19,6 +19,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -176,9 +177,9 @@ namespace Content.Server.GameObjects.Components.Recycling
             serializer.DataField(ref _efficiency, "efficiency", 0.25f);
         }
 
-        void ICollideBehavior.CollideWith(IEntity collidedWith)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
         {
-            Recycle(collidedWith);
+            Recycle(otherBody.Entity);
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)

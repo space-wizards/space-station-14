@@ -72,7 +72,7 @@ namespace Content.Shared.Physics.Controllers
             var transform = mover.Owner.Transform;
             var (walkDir, sprintDir) = mover.VelocityDir;
 
-            var weightless = transform.Owner.IsWeightless();
+            var weightless = transform.Owner.IsWeightless(_physicsManager);
 
             // Handle wall-pushes.
             if (weightless)
@@ -93,6 +93,8 @@ namespace Content.Shared.Physics.Controllers
 
             if (total != Vector2.Zero)
             {
+                // This should have its event run during island solver soooo
+                transform.DeferUpdates = true;
                 transform.LocalRotation = total.GetDir().ToAngle();
                 HandleFootsteps(mover, mobMover);
             }

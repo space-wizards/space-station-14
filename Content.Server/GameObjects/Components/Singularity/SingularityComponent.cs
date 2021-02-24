@@ -188,11 +188,13 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        void ICollideBehavior.CollideWith(IEntity entity)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
         {
             if (_collidableComponent == null) return; //how did it even collide then? :D
 
-            if (entity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
+            var otherEntity = otherBody.Entity;
+
+            if (otherEntity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
             {
                 foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(((IPhysBody) _collidableComponent).GetWorldAABB()))
                 {
@@ -202,14 +204,14 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            if (entity.HasComponent<ContainmentFieldComponent>() || (entity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.CanRepell(Owner)))
+            if (otherEntity.HasComponent<ContainmentFieldComponent>() || (otherEntity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.CanRepell(Owner)))
             {
                 return;
             }
 
-            if (entity.IsInContainer()) return;
+            if (otherEntity.IsInContainer()) return;
 
-            entity.Delete();
+            otherEntity.Delete();
             Energy++;
         }
 
