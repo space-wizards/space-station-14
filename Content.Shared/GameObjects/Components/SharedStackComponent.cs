@@ -65,7 +65,8 @@ namespace Content.Shared.GameObjects.Components
         {
             var reflection = IoCManager.Resolve<IReflectionManager>();
 
-            if (reflection.TryParseEnumReference(StackTypeId, out var @enum))
+            if (StackTypeId != null &&
+                reflection.TryParseEnumReference(StackTypeId, out var @enum))
             {
                 StackType = @enum;
             }

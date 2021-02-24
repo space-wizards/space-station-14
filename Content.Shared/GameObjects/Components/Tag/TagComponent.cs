@@ -23,8 +23,10 @@ namespace Content.Shared.GameObjects.Components.Tag
 
         public IReadOnlySet<string> Tags => _tags;
 
-        public void AfterDeserialization()
+        public override void Initialize()
         {
+            base.Initialize();
+
             foreach (var tag in _tags)
             {
                 GetTagOrThrow(tag);

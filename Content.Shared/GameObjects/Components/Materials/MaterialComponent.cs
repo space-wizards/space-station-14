@@ -16,28 +16,28 @@ namespace Content.Shared.GameObjects.Components.Materials
     [RegisterComponent]
     public class MaterialComponent : Component, ISerializationHooks
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public const string SerializationCache = "mat";
 
         public override string Name => "Material";
 
         [DataField("materials")] private List<MaterialDataEntry> _materials = new();
 
-        public Dictionary<object, MaterialPrototype> MaterialTypes { get; }
-
-        void ISerializationHooks.AfterDeserialization()
+        public IEnumerable<KeyValuePair<object, MaterialPrototype>> MaterialTypes
         {
-            if (_materials != null)
+            get
             {
-                var protoMan = IoCManager.Resolve<IPrototypeManager>();
-
                 foreach (var entry in _materials)
                 {
-                    var proto = protoMan.Index<MaterialPrototype>(entry.Value);
-                    MaterialTypes[entry.Key] = proto;
+                    var prototype = _prototypeManager.Index<MaterialPrototype>(entry.Value);
+
+                    yield return new KeyValuePair<object, MaterialPrototype>(entry.Key, prototype);
                 }
             }
         }
 
+        [DataDefinition]
         public class MaterialDataEntry : ISerializationHooks
         {
             public object Key;

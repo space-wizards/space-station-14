@@ -73,24 +73,6 @@ namespace Content.Shared.GameObjects.Components.Damage
             }
         }
 
-        void ISerializationHooks.AfterDeserialization()
-        {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-            // TODO DAMAGE Serialize damage done and resistance changes
-            var damagePrototype = prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
-
-            _supportedClasses.Clear();
-            _supportedTypes.Clear();
-
-            DamageContainerId = damagePrototype.ID;
-            _supportedClasses.UnionWith(damagePrototype.SupportedClasses);
-            _supportedTypes.UnionWith(damagePrototype.SupportedTypes);
-
-            var resistancePrototype = prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
-            Resistances = new ResistanceSet(resistancePrototype);
-        }
-
         public void AddFlag(DamageFlag flag)
         {
             Flags |= flag;
@@ -114,6 +96,26 @@ namespace Content.Shared.GameObjects.Components.Damage
         public bool SupportsDamageType(DamageType type)
         {
             return _supportedTypes.Contains(type);
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            // TODO DAMAGE Serialize damage done and resistance changes
+            var damagePrototype = prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
+
+            _supportedClasses.Clear();
+            _supportedTypes.Clear();
+
+            DamageContainerId = damagePrototype.ID;
+            _supportedClasses.UnionWith(damagePrototype.SupportedClasses);
+            _supportedTypes.UnionWith(damagePrototype.SupportedTypes);
+
+            var resistancePrototype = prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
+            Resistances = new ResistanceSet(resistancePrototype);
         }
 
         protected override void Startup()
