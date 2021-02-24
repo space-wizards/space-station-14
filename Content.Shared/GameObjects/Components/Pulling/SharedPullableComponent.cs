@@ -144,8 +144,9 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                     _physics.WakeBody();
                     _pullJoint = pullerPhysics.CreateDistanceJoint(_physics);
-                    _physics.BodyType = BodyType.Kinematic; // TODO: Need to consider their original bodytype
+                    // _physics.BodyType = BodyType.Kinematic; // TODO: Need to consider their original bodytype
                     _pullJoint.CollideConnected = true;
+                    _pullJoint.WarmStarting = false;
                     _pullJoint.MaxLength = 2.0f; // TODO hacky, we should consider ours and their bb
                     _pullJoint.MinLength = 1.0f;
                     _pullJoint.Length = 1.0f;

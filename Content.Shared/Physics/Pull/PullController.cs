@@ -20,7 +20,6 @@ namespace Content.Shared.Physics.Pull
     public class PullController : VirtualController
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
 
         private const float DistBeforeStopPull = InteractionRange;
 

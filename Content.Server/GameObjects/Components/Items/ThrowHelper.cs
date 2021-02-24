@@ -1,4 +1,6 @@
 #nullable enable
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -14,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Items
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="direction">Will use the vector's magnitude as the strength of the impulse</param>
-        internal static void TryThrow(this IEntity entity, Vector2 direction)
+        internal static void TryThrow(this IEntity entity, Vector2 direction, IEntity? user = null)
         {
             if (direction == Vector2.Zero || !entity.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
@@ -31,6 +33,14 @@ namespace Content.Server.GameObjects.Components.Items
             {
                 Logger.Warning("Throwing not supported for mobs!");
                 return;
+            }
+
+            if (entity.HasComponent<ItemComponent>())
+            {
+                entity.EnsureComponent<ThrownItemComponent>().Thrower = user;
+
+                if (user != null)
+                    EntitySystem.Get<InteractionSystem>().ThrownInteraction(user, entity);
             }
 
             physicsComponent.ApplyLinearImpulse(direction);

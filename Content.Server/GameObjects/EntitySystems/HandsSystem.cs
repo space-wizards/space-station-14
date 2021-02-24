@@ -176,8 +176,11 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var direction = coords.ToMapPos(EntityManager) - playerEnt.Transform.WorldPosition;
+            if (direction == Vector2.Zero) return true;
 
-            throwEnt.TryThrow(direction * ThrowForce * 10);
+            direction = direction.Normalized * MathF.Min(direction.Length, 8.0f);
+
+            throwEnt.TryThrow(direction * ThrowForce * 15);
 
             return true;
         }

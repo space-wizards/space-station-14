@@ -56,7 +56,8 @@ namespace Content.Shared.Physics.Controllers
                 if (SharedMoverController.UseMobMovement(_broadPhaseSystem, body, _physicsManager)) continue;
 
                 var surfaceFriction = GetTileFriction(body);
-                var friction = _frictionModifier * surfaceFriction;
+                var bodyModifier = body.Owner.GetComponentOrNull<SharedTileFrictionModifier>()?.Modifier ?? 1.0f;
+                var friction = _frictionModifier * surfaceFriction * bodyModifier;
 
                 if (friction > 0.0f)
                 {

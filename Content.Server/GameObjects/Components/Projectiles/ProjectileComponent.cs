@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 return;
             }
 
-            if (_soundHitSpecies != null && otherBody.Entity.HasComponent<IDamageableComponent>())
+            if (otherBody.Entity.TryGetComponent(out IDamageableComponent damage) && _soundHitSpecies != null)
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, otherBody.Entity.Transform.Coordinates);
             }
@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, otherBody.Entity.Transform.Coordinates);
             }
 
-            if (otherBody.Entity.TryGetComponent(out IDamageableComponent damage))
+            if (damage != null)
             {
                 Owner.EntityManager.TryGetEntity(_shooter, out var shooter);
 
