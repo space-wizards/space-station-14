@@ -19,6 +19,7 @@ namespace Content.Server.GameObjects.Components.Items
             switch (message)
             {
                 case PhysicsSleepCompMessage:
+                    EntitySystem.Get<InteractionSystem>().LandInteraction(Thrower, Owner, Owner.Transform.Coordinates);
                     IoCManager.Resolve<IComponentManager>().RemoveComponent(Owner.Uid, this);
                     break;
             }
