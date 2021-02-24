@@ -274,6 +274,8 @@
      #   prob: 1
       - name: ClothingBeltMedical
         prob: 1
+      - name: MedkitFilled
+        prob: 1
       - name: ClothingHeadHatSurgcapBlue
         prob: 1
         orGroup: Surgcaps
