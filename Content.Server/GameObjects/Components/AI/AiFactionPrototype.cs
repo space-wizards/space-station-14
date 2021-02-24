@@ -14,6 +14,6 @@ namespace Content.Server.GameObjects.Components.AI
         public string ID { get; private set; } = default!;
 
         [DataField("hostile")]
-        public IReadOnlyList<string> Hostile { get; private set; } = default!;
+        public IReadOnlyList<string> Hostile { get; private set; } = new List<string>();
     }
 }
