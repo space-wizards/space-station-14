@@ -75,6 +75,9 @@ namespace Content.Client.Changelog
             {
                 var yamlData = _resource.ContentFileReadYaml(new ResourcePath("/Changelog/Changelog.yml"));
 
+                if (yamlData.Documents.Count == 0)
+                    return new List<ChangelogEntry>();
+
                 var serializer = YamlObjectSerializer.NewReader((YamlMappingNode) yamlData.Documents[0].RootNode);
 
                 return serializer.ReadDataField<List<ChangelogEntry>>("Entries");
