@@ -1,5 +1,6 @@
-#nullable enable
+﻿#nullable enable
 using System;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.Markdown;
@@ -12,30 +13,42 @@ namespace Content.Shared.Construction
         // TODO PAUL SERV3
         public ConstructionGraphStep Read(MappingDataNode node, ISerializationContext? context = null)
         {
-            // if (serializer.TryReadDataField("material", out MaterialConstructionGraphStep material))
-            // {
-            //     return material;
-            // }
-            //
-            // if (serializer.TryReadDataField("tool", out ToolConstructionGraphStep tool))
-            // {
-            //     return tool;
-            // }
-            //
-            // if (serializer.TryReadDataField("prototype", out PrototypeConstructionGraphStep prototype))
-            // {
-            //     return prototype;
-            // }
-            //
-            // if (serializer.TryReadDataField("component", out ComponentConstructionGraphStep component))
-            // {
-            //     return component;
-            // }
-            //
-            // if (serializer.TryReadDataField("steps", out NestedConstructionGraphStep nested))
-            // {
-            //     return nested;
-            // }
+            var serializationManager = IoCManager.Resolve<IServ3Manager>();
+
+            if (node.HasNode("material"))
+            {
+                return serializationManager.ReadValue<MaterialConstructionGraphStep>(node);
+            }
+
+            if (node.HasNode("tool"))
+            {
+                return serializationManager.ReadValue<ToolConstructionGraphStep>(node);
+            }
+
+            if (node.HasNode("prototype"))
+            {
+                return serializationManager.ReadValue<PrototypeConstructionGraphStep>(node);
+            }
+
+            if (node.HasNode("component"))
+            {
+                return serializationManager.ReadValue<ComponentConstructionGraphStep>(node);
+            }
+
+            if (node.HasNode("tag"))
+            {
+                return serializationManager.ReadValue<TagConstructionGraphStep>(node);
+            }
+
+            if (node.HasNode("allTags") || node.HasNode("anyTags"))
+            {
+                return serializationManager.ReadValue<MultipleTagsConstructionGraphStep>(node);
+            }
+
+            if (node.HasNode("steps"))
+            {
+                return serializationManager.ReadValue<NestedConstructionGraphStep>(node);
+            }
 
             throw new ArgumentException("Tried to convert invalid YAML node mapping to ConstructionGraphStep!");
         }
