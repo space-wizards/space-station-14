@@ -52,8 +52,10 @@ namespace Content.Shared.Actions
         /// </summary>
         public ITargetPointAction TargetPointAction { get; private set; }
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
+            base.AfterDeserialization();
+
             if (ActionType == ActionType.Error)
             {
                 Logger.ErrorS("action", "missing or invalid actionType for action with name {0}", Name);
