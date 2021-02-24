@@ -15,8 +15,8 @@ namespace Content.Shared.Damage.DamageContainer
     public class DamageContainerPrototype : IPrototype, ISerializationHooks
     {
         [DataField("supportAll")] private bool _supportAll;
-        [DataField("supportedClasses")] private HashSet<DamageClass> _supportedClasses;
-        [DataField("supportedTypes")] private HashSet<DamageType> _supportedTypes;
+        [DataField("supportedClasses")] private HashSet<DamageClass> _supportedClasses = new();
+        [DataField("supportedTypes")] private HashSet<DamageType> _supportedTypes = new();
         [DataField("id")] private string _id;
 
         // TODO NET 5 IReadOnlySet
