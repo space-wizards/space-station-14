@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Markdown;
 namespace Content.Shared.Construction
 {
     [TypeSerializer]
-    public class ConstructionGraphStepTypeSerializer : ITypeSerializer<ConstructionGraphStep, MappingDataNode>
+    public class ConstructionGraphStepTypeSerializer : ITypeReader<ConstructionGraphStep, MappingDataNode>
     {
         // TODO PAUL SERV3
         public ConstructionGraphStep Read(MappingDataNode node, ISerializationContext? context = null)
@@ -51,12 +51,6 @@ namespace Content.Shared.Construction
             }
 
             throw new ArgumentException("Tried to convert invalid YAML node mapping to ConstructionGraphStep!");
-        }
-
-        public DataNode Write(ConstructionGraphStep value, bool alwaysWrite = false,
-            ISerializationContext? context = null)
-        {
-            return new MappingDataNode();
         }
     }
 }
