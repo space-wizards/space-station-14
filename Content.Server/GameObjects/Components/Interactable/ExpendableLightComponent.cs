@@ -113,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                             EntitySystem.Get<AudioSystem>().PlayFromEntity(LitSound, Owner);
                         }
 
-                        if (IconStateLit == string.Empty)
+                        if (IconStateLit != string.Empty)
                         {
                             sprite.LayerSetState(2, IconStateLit);
                             sprite.LayerSetShader(2, "shaded");
