@@ -66,6 +66,7 @@ namespace Content.Client.UserInterface.ContextMenu
             AddChild(
                 new HBoxContainer
                 {
+                    SeparationOverride = 6,
                     Children =
                     {
                         new LayoutContainer
@@ -74,7 +75,6 @@ namespace Content.Client.UserInterface.ContextMenu
                         },
                         new Label
                         {
-                            Margin = new Thickness(4, 0, 4, 0),
                             Text = Loc.GetString(UserInterfaceManager.DebugMonitors.Visible ? $"{ContextEntity.Name} ({ContextEntity.Uid})" : ContextEntity.Name)
                         }
                     }
@@ -137,15 +137,21 @@ namespace Content.Client.UserInterface.ContextMenu
                      Children =
                      {
                          new LayoutContainer { Children = { _spriteView, _label } },
-                         new Label
+                         new HBoxContainer()
                          {
-                             Margin = new Thickness(4, 0, 4, 0),
-                             Text = Loc.GetString(ContextEntities.First().Name)
-                         },
-                         new TextureRect
-                         {
-                             Texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Interface/VerbIcons/group.svg.96dpi.png"),
-                             Stretch = TextureRect.StretchMode.KeepCentered,
+                             SeparationOverride = 6,
+                             Children =
+                             {
+                                 new Label
+                                 {
+                                     Text = Loc.GetString(ContextEntities.First().Name)
+                                 },
+                                 new TextureRect
+                                 {
+                                     Texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Interface/VerbIcons/group.svg.96dpi.png"),
+                                     Stretch = TextureRect.StretchMode.KeepCentered,
+                                 }
+                             },
                          }
                      },
                  }
@@ -169,7 +175,7 @@ namespace Content.Client.UserInterface.ContextMenu
 
     public sealed class ContextMenuPopup : Popup
     {
-        private static readonly Color DefaultColor = Color.FromHex("#111E");
+        private static readonly Color DefaultColor = Color.FromHex("#1116");
         private static readonly Color MarginColor = Color.FromHex("#222E");
         private const int MaxItemsBeforeScroll = 10;
 
@@ -184,7 +190,7 @@ namespace Content.Client.UserInterface.ContextMenu
                 HScrollEnabled = false,
                 Children = { new PanelContainer
                 {
-                    Children = { (List = new VBoxContainer { SeparationOverride = 2 }) },
+                    Children = { (List = new VBoxContainer()) },
                     PanelOverride = new StyleBoxFlat {  BackgroundColor = MarginColor }
                 }}
             });
@@ -194,7 +200,8 @@ namespace Content.Client.UserInterface.ContextMenu
         {
             List.AddChild(new PanelContainer
             {
-                Children = {element},
+                Children = { element },
+                Margin = new Thickness(0,0,0, 2),
                 PanelOverride = new StyleBoxFlat {BackgroundColor = DefaultColor}
             });
         }
