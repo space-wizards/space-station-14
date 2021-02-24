@@ -334,19 +334,28 @@
   solids:
     FoodMiloSoup: 1
 
+- type: microwaveMealRecipe
+  id: RecipeLoadedBakedPotato
+  name: loaded baked potato
+  result: FoodLoadedBakedPotato
+  time: 10
+  solids:
+    FoodPotato: 1
+    FoodCheeseWedge: 1
+  
 # NOT ACTUAL FOOD
 
 - type: microwaveMealRecipe
-  id: RecipeDriedCannabis
-  name: dried cannabis leaves recipe
+  id: RecipeDriedTobacco
+  name: dried tobacco leaves recipe
   result: LeavesTobaccoDried
   time: 10
   solids:
     LeavesTobacco: 1
 
 - type: microwaveMealRecipe
-  id: RecipeDriedTobacco
-  name: dried tobacco leaves recipe
+  id: RecipeDriedCannabis
+  name: dried cannabis leaves recipe
   result: LeavesCannabisDried
   time: 10
   solids:
