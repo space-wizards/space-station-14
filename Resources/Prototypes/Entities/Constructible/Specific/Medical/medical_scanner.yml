@@ -7,7 +7,6 @@
   components:
   - type: Sprite
     netsync: false
-    noRot: true
     sprite: Constructible/Specific/Medical/scanner.rsi
     layers:
     - state: open

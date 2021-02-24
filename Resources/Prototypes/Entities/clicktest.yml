@@ -31,7 +31,6 @@
   parent: ClickTestRotatingCornerVisible
   components:
   - type: Sprite
-    noRot: true
 
 - type: entity
   id: ClickTestRotatingCornerInvisible
@@ -55,8 +54,6 @@
   parent: ClickTestRotatingCornerInvisible
   components:
     - type: Sprite
-      noRot: true
-
 
 - type: entity
   id: ClickTestFixedCornerVisible
@@ -80,4 +77,3 @@
   - type: InteractionOutline
   - type: Sprite
     state: invis_base
-

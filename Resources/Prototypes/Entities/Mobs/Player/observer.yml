@@ -29,7 +29,6 @@
   - type: Ghost
   - type: Sprite
     netsync: false
-    noRot: true
     drawdepth: Ghosts
     sprite: Mobs/Ghosts/ghost_human.rsi
     state: animated
