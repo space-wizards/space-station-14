@@ -72,6 +72,8 @@
     capacity: 50
   - type: Item
     size: 5
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    HeldPrefix: firstaid
     
 
 - type: entity
@@ -82,11 +84,13 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: firstaid_fire
+    state: burnkit
   - type: Storage
     capacity: 50
   - type: Item
     size: 5
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    HeldPrefix: burnkit
 
 - type: entity
   name: toxin treatment kit
@@ -96,11 +100,13 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: firstaid_toxin
+    state: toxinkit
   - type: Storage
     capacity: 50
   - type: Item
     size: 5
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    HeldPrefix: toxinkit
 
 - type: entity
   name: oxygen deprivation treatment kit
@@ -110,11 +116,13 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: firstaid_o2
+    state: o2kit
   - type: Storage
     capacity: 50
   - type: Item
     size: 5
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    HeldPrefix: o2kit
     
 - type: entity
   name: brute trauma treatment kit
@@ -124,11 +132,13 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: firstaid_brute
+    state: brutekit
   - type: Storage
     capacity: 50
   - type: Item
     size: 5
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    HeldPrefix: brutekit
 
 - type: entity
   name: advanced first aid kit
@@ -138,11 +148,13 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: firstaid_adv
+    state: advkit
   - type: Storage
     capacity: 50
   - type: Item
     size: 5
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    HeldPrefix: advkit
 
 - type: entity
   name: radiation treatment kit
@@ -152,11 +164,13 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: firstaid_rad
+    state: radkit
   - type: Storage
     capacity: 50
   - type: Item
     size: 5
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    HeldPrefix: radkit
     
 - type: entity
   name: combat medical kit
@@ -166,8 +180,10 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: firstaid_black
+    state: blackkit
   - type: Storage
     capacity: 50
   - type: Item
     size: 5
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    HeldPrefix: blackkit
