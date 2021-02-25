@@ -1,0 +1,330 @@
+- type: entity
+  id: OreBase
+  abstract: true
+  parent: BaseItem
+  description: A piece of unrefined ore.
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Materials/ore.rsi
+    - type: Item
+      sprite: Objects/Materials/ore.rsi
+    - type: ItemStatus
+    - type: Tag
+      tags:
+        - Ore
+
+- type: entity
+  name:
+  id: Ore
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat:
+    - type: Stack
+      stacktype:
+    - type: Sprite
+      state:
+
+- type: entity
+  id: 1
+  parent: Ore
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: adamantine ore
+  id: AdamantineOre
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: adamantine
+    - type: Stack
+      stacktype: AdamantineOre
+    - type: Sprite
+      state: adamantine
+
+- type: entity
+  id: AdamantineOre1
+  parent: AdamantineOre
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: ammonia
+  id: Ammonia
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: ammonia
+    - type: Stack
+      stacktype: Ammonia
+    - type: Sprite
+      state: ammonia
+
+- type: entity
+  id: 1
+  parent: Ammonia1
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: banananium ore
+  id: BanananiumOre
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: banananium
+    - type: Stack
+      stacktype: BanananiumOre
+    - type: Sprite
+      state: banananium
+
+- type: entity
+  id: BanananiumOre1
+  parent: BanananiumOre
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: raw diamond
+  id: DiamondRaw
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: diamond
+    - type: Stack
+      stacktype: DiamondOre
+    - type: Sprite
+      state: diamond
+
+- type: entity
+  id: DiamondRaw1
+  parent: DiamondRaw
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: gold ore
+  id: GoldOre
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: gold
+    - type: Stack
+      stacktype: GoldOre
+    - type: Sprite
+      state: gold
+
+- type: entity
+  id: GoldOre1
+  parent: GoldOre
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: iron ore
+  id: IronOre
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: iron
+    - type: Stack
+      stacktype: IronOre
+    - type: Sprite
+      state: iron
+
+- type: entity
+  id: IronOre1
+  parent: IronOre
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: phoron ore
+  id: PhoronOre
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: phoron
+    - type: Stack
+      stacktype: PhoronOre
+    - type: Sprite
+      state: phoron
+
+- type: entity
+  id: PhoronOre1
+  parent: PhoronOre
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: plasma ore
+  id: PlasmaOre
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: plasma
+    - type: Stack
+      stacktype: PlasmaOre
+    - type: Sprite
+      state: plasma
+
+- type: entity
+  id: PlasmaOre1
+  parent: PlasmaOre
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: sand
+  id: Sand
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: sand
+    - type: Stack
+      stacktype: Sand
+    - type: Sprite
+      state: sand
+
+- type: entity
+  id: Sand1
+  parent: Sand
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: black sand
+  id: SandBLack
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: blacksand
+    - type: Stack
+      stacktype: BlackSand
+    - type: Sprite
+      state: sand_black
+
+- type: entity
+  id: SandBlack1
+  parent: SandBlack
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: silver ore
+  id: SilverOre
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: silver
+    - type: Stack
+      stacktype: SilverOre
+    - type: Sprite
+      state: silver
+
+- type: entity
+  id: SilverOre1
+  parent: SilverOre
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: slag
+  id: Slag
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: slag
+    - type: Stack
+      stacktype: Slag
+    - type: Sprite
+      state: slag
+
+- type: entity
+  id: Slag1
+  parent: Slag
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: titanium ore
+  id: TitaniumOre
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: titanium
+    - type: Stack
+      stacktype: TitaniumOre
+    - type: Sprite
+      state: titanium
+
+- type: entity
+  id: TitaniumOre1
+  parent: TitaniumOre
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: uranium ore
+  id: UraniumOre
+  parent: OreBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: uranium
+    - type: Stack
+      stacktype: UraniumOre
+    - type: Sprite
+      state: uranium
+
+- type: entity
+  id: UraniumOre1
+  parent: UraniumOre
+  components:
+    - type: Stack
+      count: 1

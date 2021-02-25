@@ -17,7 +17,25 @@
         "name": "cathide"
     },
     {
+        "name": "cloth"
+    },
+    {
+        "name": "cloth_2"
+    },
+    {
+        "name": "cloth_3"
+    },
+    {
         "name": "corgihide"
+    },
+    {
+        "name": "cotton"
+    },
+    {
+        "name": "cotton_2"
+    },
+    {
+        "name": "cotton_3"
     },
     {
         "name": "diamond"
@@ -29,6 +47,42 @@
     {
         "name": "diamond-inhand-right",
         "directions": 4
+    },
+    {
+        "name": "durathread"
+    },
+    {
+        "name": "durathread_2"
+    },
+    {
+        "name": "durathread_3"
+    },
+    {
+        "name": "durathreadraw"
+    },
+    {
+        "name": "durathreadraw_2"
+    },
+    {
+        "name": "durathreadraw_3"
+    },
+    {
+        "name": "hide"
+    },
+    {
+        "name": "hide_2"
+    },
+    {
+        "name": "hide_3"
+    },
+    {
+        "name": "leather"
+    },
+    {
+        "name": "leather_2"
+    },
+    {
+        "name": "leather_3"
     },
     {
         "name": "liggerhide"
@@ -52,9 +106,6 @@
     {
         "name": "wood-inhand-right",
         "directions": 4
-    },
-    {
-        "name": "wool"
     }
   ]
 }
