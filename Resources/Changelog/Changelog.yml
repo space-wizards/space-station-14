@@ -4,3 +4,8 @@ Entries:
   - {message: Added a changelog. You're reading it right now!, type: Add}
   id: 1
   time: '2021-02-25T08:50:45.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added new first aid kits with fancy new sprites., type: Add}
+  id: 2
+  time: '2021-02-25T10:46:21.0000000+00:00'
