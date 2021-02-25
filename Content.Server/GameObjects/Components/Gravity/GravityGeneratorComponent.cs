@@ -1,25 +1,19 @@
 ﻿#nullable enable
-using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Gravity;
-using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Gravity
 {
     [RegisterComponent]
-    public class GravityGeneratorComponent : SharedGravityGeneratorComponent, IInteractUsing, IBreakAct, IInteractHand
+    public class GravityGeneratorComponent : SharedGravityGeneratorComponent, IBreakAct, IInteractHand
     {
         [ComponentDependency] private readonly AppearanceComponent? _appearance = default!;
 
@@ -93,28 +87,6 @@ namespace Content.Server.GameObjects.Components.Gravity
                 return false;
             }
             OpenUserInterface(actor.playerSession);
-            return true;
-        }
-
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool))
-                return false;
-
-            if (!await tool.UseTool(eventArgs.User, Owner, 2f, ToolQuality.Welding, 5f))
-                return false;
-
-            // Repair generator
-            if (Owner.TryGetComponent(out IDamageableComponent? damageable))
-            {
-                damageable.Heal();
-            }
-
-            _intact = true;
-
-            Owner.PopupMessage(eventArgs.User,
-                Loc.GetString("You repair {0:theName} with {1:theName}", Owner, eventArgs.Using));
-
             return true;
         }
 
