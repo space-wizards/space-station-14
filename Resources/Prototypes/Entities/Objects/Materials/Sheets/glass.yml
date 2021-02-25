@@ -24,7 +24,7 @@
         - key: enum.MaterialKeys.Stack
           mat: glass
     - type: Stack
-      stacktype: enum.StackType.Glass
+      stacktype: Glass
     - type: Sprite
       state: glass_3
     - type: Item
@@ -57,7 +57,7 @@
         - key: enum.MaterialKeys.Stack
           mat: rglass
     - type: Stack
-      stacktype: enum.StackType.ReinforcedGlass
+      stacktype: ReinforcedGlass
     - type: Sprite
       state: rglass_3
     - type: Item
@@ -90,7 +90,7 @@
         - key: enum.MaterialKeys.Stack
           mat: pglass
     - type: Stack
-      stacktype: enum.StackType.PlasmaGlass
+      stacktype: PlasmaGlass
     - type: Sprite
       state: pglass_3
     - type: Item
@@ -123,7 +123,7 @@
         - key: enum.MaterialKeys.Stack
           mat: rpglass
     - type: Stack
-      stacktype: enum.StackType.ReinforcedPlasmaGlass
+      stacktype: ReinforcedPlasmaGlass
     - type: Sprite
       state: rpglass_3
     - type: Item
@@ -156,7 +156,7 @@
         - key: enum.MaterialKeys.Stack
           mat: titaniumglass
     - type: Stack
-      stacktype: enum.StackType.TitaniumGlass
+      stacktype: TitaniumGlass
     - type: Sprite
       state: titaniumglass_3
     - type: Item
@@ -189,7 +189,7 @@
         - key: enum.MaterialKeys.Stack
           mat: plastitaniumglass
     - type: Stack
-      stacktype: enum.StackType.PlastitaniumGlass
+      stacktype: PlastitaniumGlass
     - type: Sprite
       state: plastitaniumglass_3
     - type: Item

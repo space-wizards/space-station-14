@@ -17,7 +17,7 @@
   parent: PartBase
   components:
     - type: Stack
-      stacktype: enum.StackType.MetalRod
+      stacktype: MetalRod
     - type: Sprite
       state: rods_5
 #    - type: Item

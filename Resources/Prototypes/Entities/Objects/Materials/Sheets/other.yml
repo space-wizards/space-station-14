@@ -24,7 +24,7 @@
         - key: enum.MaterialKeys.Stack
           mat: paper
     - type: Stack
-      stacktype: enum.StackType.Paper
+      stacktype: Paper
     - type: Sprite
       state: paper_3
     - type: Item
@@ -57,7 +57,7 @@
         - key: enum.MaterialKeys.Stack
           mat: phoron
     - type: Stack
-      stacktype: enum.StackType.Phoron
+      stacktype: Phoron
     - type: Sprite
       state: phoron
     - type: Item
@@ -81,7 +81,7 @@
         - key: enum.MaterialKeys.Stack
           mat: plasma
     - type: Stack
-      stacktype: enum.StackType.Plasma
+      stacktype: Plasma
     - type: Sprite
       state: plasma_3
     - type: Item
@@ -114,7 +114,7 @@
         - key: enum.MaterialKeys.Stack
           mat: plastic
     - type: Stack
-      stacktype: enum.StackType.Plastic
+      stacktype: Plastic
     - type: Sprite
       state: plastic_3
     - type: Item
@@ -147,7 +147,7 @@
         - key: enum.MaterialKeys.Stack
           mat: uranium
     - type: Stack
-      stacktype: enum.StackType.Uranium
+      stacktype: Uranium
     - type: Sprite
       state: uranium
     - type: Item
