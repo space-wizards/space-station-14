@@ -4,8 +4,3 @@ Entries:
   - {message: Added a changelog. You're reading it right now!, type: Add}
   id: 1
   time: '2021-02-25T08:50:45.0000000+00:00'
-- author: PJB
-  changes:
-  - {message: Added a changelog. You're reading it right now!, type: Add}
-  id: 2
-  time: '2021-02-25T08:50:45.0000000+00:00'
