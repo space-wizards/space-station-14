@@ -41,7 +41,7 @@
   name: laser cannon
   parent: BaseItem
   id: LaserCannon
-  description: Pew pew.
+  description: The laser gun's bigger and meaner brother.
   components:
   - type: Sprite
     netsync: false
@@ -80,7 +80,7 @@
   name: x-ray cannon
   parent: BaseItem
   id: XrayCannon
-  description: Blah blah blah...
+  description: AKA the Cancer Cannon.
   components:
   - type: Sprite
     netsync: false
