@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
@@ -26,8 +27,13 @@ namespace Content.Server.Construction.Completions
             if (!entity.TryGetComponent(out ContainerManagerComponent? containerManager) ||
                 !containerManager.TryGetContainer(Container, out var container)) return;
 
-            container.EmptyContainer(true, entity.Transform.Coordinates);
-            entity.Transform.AttachToGridOrMap();
+            // TODO: Use container helpers.
+            foreach (var contained in container.ContainedEntities.ToArray())
+            {
+                container.ForceRemove(contained);
+                contained.Transform.Coordinates = entity.Transform.Coordinates;
+                contained.Transform.AttachToGridOrMap();
+            }
         }
     }
 }
