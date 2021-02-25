@@ -120,7 +120,6 @@ namespace Content.Shared.GameObjects.Components
     public enum StackType
     {
         Metal,
-        Steel,
         Glass,
         ReinforcedGlass,
         Plasteel,
@@ -145,20 +144,6 @@ namespace Content.Shared.GameObjects.Components
         GroundTobacco,
         GroundCannabis,
         LeavesTobaccoDried,
-        LeavesCannabisDried,
-        Titanium,
-        Plastitanium,
-        Brass,
-        PlasmaGlass,
-        ReinforcedPlasmaGlass,
-        TitaniumGlass,
-        PlastitaniumGlass,
-        Paper,
-        Uranium,
-        Adamantine,
-        Copper,
-        Iron,
-        Silver,
-        Hydrogen
+        LeavesCannabisDried
     }
 }
