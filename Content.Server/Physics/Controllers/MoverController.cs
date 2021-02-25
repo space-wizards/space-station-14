@@ -44,16 +44,13 @@ namespace Content.Server.Physics.Controllers
             _audioSystem = EntitySystem.Get<AudioSystem>();
         }
 
-        public override void UpdateBeforeSolve(bool prediction, PhysicsMap map, float frameTime)
+        public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {
-            base.UpdateBeforeSolve(prediction, map, frameTime);
+            base.UpdateBeforeSolve(prediction, frameTime);
             _excludedMobs.Clear();
 
             foreach (var (mobMover, mover, physics) in ComponentManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
             {
-                // TODO: Shitcodey and should just be run before all maps
-                if (mover.Owner.Transform.MapID != map.MapId) continue;
-
                 _excludedMobs.Add(mover.Owner.Uid);
                 HandleMobMovement(mover, physics, mobMover);
             }
@@ -61,9 +58,6 @@ namespace Content.Server.Physics.Controllers
             foreach (var (mover, physics) in ComponentManager.EntityQuery<IMoverComponent, PhysicsComponent>())
             {
                 if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
-
-                // TODO: Shitcodey and should just be run before all maps
-                if (mover.Owner.Transform.MapID != map.MapId) continue;
 
                 HandleKinematicMovement(mover, physics);
             }

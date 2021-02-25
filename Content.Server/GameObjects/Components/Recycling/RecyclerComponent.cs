@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Recycling
     {
         public override string Name => "Recycler";
 
-        private readonly List<IEntity> _intersecting = new();
+        public List<IEntity> Intersecting { get; set; } = new();
 
         /// <summary>
         ///     Whether or not sentient beings will be recycled
@@ -73,9 +73,9 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private void Recycle(IEntity entity)
         {
-            if (!_intersecting.Contains(entity))
+            if (!Intersecting.Contains(entity))
             {
-                _intersecting.Add(entity);
+                Intersecting.Add(entity);
             }
 
             // TODO: Prevent collision with recycled items
@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Recycling
             recyclable.Recycle(_efficiency);
         }
 
-        private bool CanRun()
+        public bool CanRun()
         {
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
                 !receiver.Powered)
@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Recycling
             return true;
         }
 
-        private bool CanMove(IEntity entity)
+        public bool CanMove(IEntity entity)
         {
             if (entity == Owner)
             {
@@ -139,34 +139,6 @@ namespace Content.Server.GameObjects.Components.Recycling
             }
 
             return true;
-        }
-
-        public void Update(float frameTime)
-        {
-            if (!CanRun())
-            {
-                _intersecting.Clear();
-                return;
-            }
-
-            var direction = Vector2.UnitX;
-
-            for (var i = _intersecting.Count - 1; i >= 0; i--)
-            {
-                var entity = _intersecting[i];
-
-                if (entity.Deleted || !CanMove(entity) || !Owner.EntityManager.IsIntersecting(Owner, entity))
-                {
-                    _intersecting.RemoveAt(i);
-                    continue;
-                }
-
-                if (entity.TryGetComponent(out IPhysicsComponent? physics))
-                {
-                    var controller = physics.EnsureController<ConveyedController>();
-                    controller.Move(direction, frameTime, entity.Transform.WorldPosition - Owner.Transform.WorldPosition);
-                }
-            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)

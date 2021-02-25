@@ -38,9 +38,9 @@ namespace Content.Shared.Physics.Controllers
             _configManager.OnValueChanged(CVars.TileFrictionModifier, value => _frictionModifier = value);
         }
 
-        public override void UpdateBeforeSolve(bool prediction, PhysicsMap map, float frameTime)
+        public override void UpdateBeforeMapSolve(bool prediction, PhysicsMap map, float frameTime)
         {
-            base.UpdateBeforeSolve(prediction, map, frameTime);
+            base.UpdateBeforeMapSolve(prediction, map, frameTime);
 
             foreach (var body in map.AwakeBodies)
             {

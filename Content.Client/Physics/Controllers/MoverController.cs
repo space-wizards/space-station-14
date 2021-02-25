@@ -12,9 +12,9 @@ namespace Content.Client.Physics.Controllers
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        public override void UpdateBeforeSolve(bool prediction, PhysicsMap map, float frameTime)
+        public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {
-            base.UpdateBeforeSolve(prediction, map, frameTime);
+            base.UpdateBeforeSolve(prediction, frameTime);
 
             var player = _playerManager.LocalPlayer?.ControlledEntity;
             if (player == null ||

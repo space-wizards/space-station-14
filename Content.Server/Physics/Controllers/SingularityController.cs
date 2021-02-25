@@ -7,9 +7,9 @@ namespace Content.Server.Physics.Controllers
 {
     internal sealed class SingularityController : AetherController
     {
-        public override void UpdateBeforeSolve(bool prediction, PhysicsMap map, float frameTime)
+        public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {
-            base.UpdateBeforeSolve(prediction, map, frameTime);
+            base.UpdateBeforeSolve(prediction, frameTime);
             foreach (var singularity in ComponentManager.EntityQuery<SingularityComponent>())
             {
                 if (singularity.Owner.HasComponent<BasicActorComponent>()) continue;
