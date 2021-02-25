@@ -9,4 +9,4 @@
     - type: StorageVisualizer
       state: cabinet
   - type: AccessReader
-    access: [["Bar"]]
+    access: [["Service"]]

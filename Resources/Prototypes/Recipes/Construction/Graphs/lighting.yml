@@ -6,12 +6,12 @@
       edges:
         - to: bulbLight
           steps:
-            - material: Metal
+            - material: Steel
               amount: 1
-              doAfter: 2.0      
+              doAfter: 2.0
         - to: tubeLight
           steps:
-            - material: Metal
+            - material: Steel
               amount: 2
               doAfter: 2.0
     - node: tubeLight
@@ -28,7 +28,7 @@
             - !type:SpawnPrototype
               prototype: SteelSheet1
               amount: 2
-            - !type:DeleteEntity {}         
+            - !type:DeleteEntity {}
     - node: bulbLight
       entity: PoweredSmallLightEmpty
       edges:

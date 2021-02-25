@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Serialization;
+﻿using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction
@@ -14,6 +15,12 @@ namespace Content.Shared.Construction
 
             serializer.DataField(this, x => x.Icon, "icon", SpriteSpecifier.Invalid);
             serializer.DataField(this, x => x.Name, "name", string.Empty);
+        }
+
+        public override void DoExamine(FormattedMessage message, bool inDetailsRange)
+        {
+            if (string.IsNullOrEmpty(Name)) return;
+            message.AddMarkup(Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name)));
         }
     }
 }

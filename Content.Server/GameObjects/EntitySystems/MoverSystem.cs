@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -96,7 +97,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 mover.StepSoundDistance = 0;
 
-                if (!mover.Owner.HasComponent<FootstepSoundComponent>())
+                if (!mover.Owner.HasTag("FootstepSound"))
                 {
                     return;
                 }

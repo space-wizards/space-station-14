@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components;
@@ -15,7 +15,7 @@ namespace Content.Client.GameObjects.Components
     /// Visualizer for items that come in stacks and have different appearance
     /// depending on the size of the stack. Visualizer can work by switching between different
     /// icons in <c>_spriteLayers</c> or if the sprite layers are supposed to be composed as transparent layers.
-    /// The former behavior is default and the latter behavior can be defined in prototypes. 
+    /// The former behavior is default and the latter behavior can be defined in prototypes.
     ///
     /// <example>
     /// <para>To define a Stack Visualizer prototype insert the following
@@ -72,9 +72,10 @@ namespace Content.Client.GameObjects.Components
         /// <description>true: they are transparent and thus layered one over another in ascending order first</description>
         /// </item>
         /// </list>
-        /// 
+        ///
         /// </summary>
         private bool _isComposite;
+        private ResourcePath? _spritePath;
 
         public override void LoadData(YamlMappingNode mapping)
         {
@@ -92,6 +93,11 @@ namespace Content.Client.GameObjects.Components
             {
                 _isComposite = transparent.AsBool();
             }
+
+            if (mapping.TryGetNode<YamlScalarNode>("sprite", out var spritePath))
+            {
+                _spritePath = spritePath.AsResourcePath();
+            }
         }
 
         public override void InitializeEntity(IEntity entity)
@@ -102,11 +108,12 @@ namespace Content.Client.GameObjects.Components
                 && _spriteLayers.Count > 0
                 && entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
             {
+                var spritePath = _spritePath ?? spriteComponent.BaseRSI!.Path!;
+
                 foreach (var sprite in _spriteLayers)
                 {
-                    var rsiPath = spriteComponent.BaseRSI!.Path!;
                     spriteComponent.LayerMapReserveBlank(sprite);
-                    spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(rsiPath, sprite));
+                    spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(spritePath, sprite));
                     spriteComponent.LayerSetVisible(sprite, false);
                 }
             }

@@ -28,6 +28,7 @@
     - state: scrubOff
   - type: Appearance
     visuals:
+    - type: PipeConnectorVisualizer
     - type: SiphonVisualizer
 
 - type: entity

@@ -8,7 +8,7 @@
   - type: Clickable
   - type: Sprite
     netsync: false
-    directional: false
+    noRot: false
     sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
     state: bullet
   - type: Physics
@@ -115,6 +115,7 @@
   abstract: true
   components:
   - type: Sprite
+    color: "#ffff33"
     sprite: Constructible/Power/emitter.rsi
     state: ''
     layers:

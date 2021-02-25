@@ -31,7 +31,6 @@
   parent: BaseItem
   abstract: true
   components:
-  - type: Stack
   - type: Item
   - type: Healing
 
@@ -48,9 +47,9 @@
     heal:
       Heat: 10
   - type: Stack
+    stackType: Ointment
     max: 5
     count: 5
-    stacktype: enum.StackType.Ointment
 
 - type: entity
   name: bruise pack
@@ -65,9 +64,9 @@
       heal:
         Blunt: 10
     - type: Stack
+      stackType: Brutepack
       max: 5
       count: 5
-      stacktype: enum.StackType.Brutepack
 
 - type: entity
   name: roll of gauze
@@ -82,6 +81,6 @@
 #    heal:
 #      Blunt: 10
   - type: Stack
+    stackType: Gauze
     max: 5
     count: 5
-    stacktype: enum.StackType.Gauze

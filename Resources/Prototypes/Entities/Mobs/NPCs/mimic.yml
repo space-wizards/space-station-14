@@ -1,12 +1,12 @@
-# Hacky for the stress test so don't even consider adding to this
 - type: entity
-  save: false
   name: Mimic
   id: MimicMob_Content
+  parent: SimpleMobBase
   description: Surprise. # When this gets a proper write this should use the object's actual description >:)
-  drawdepth: Mobs
-  suffix: AI
   components:
+  - type: Tag
+    tags:
+    - FootstepSound
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -14,17 +14,13 @@
     factions:
     - SimpleHostile
   - type: Hands
-  - type: MovementSpeedModifier
-  - type: InteractionOutline
   - type: Sprite
-    netsync: false
     drawdepth: Mobs
     sprite: Constructible/Power/VendingMachines/cola.rsi
     state: normal
   - type: Icon
     sprite: Constructible/Power/VendingMachines/cola.rsi
     state: normal
-  - type: Clickable
   - type: Physics
     anchored: false
     mass: 85
@@ -39,19 +35,8 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: Damageable
-  - type: MobState
-    thresholds:
-      0: !type:NormalMobState {}
-      100: !type:CriticalMobState {}
-      200: !type:DeadMobState {}
-  - type: HeatResistance
-  - type: CombatMode
-  - type: Teleportable
   - type: CharacterInfo
-  - type: FootstepSound
   - type: HumanoidAppearance
-  - type: Stunnable
   - type: AnimationPlayer
   - type: UnarmedCombat
     range: 1.5

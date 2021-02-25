@@ -9,7 +9,6 @@
   icon: "Botanist"
   access:
   - Service
-  - Hydroponics
   - Maintenance
 
 - type: startingGear

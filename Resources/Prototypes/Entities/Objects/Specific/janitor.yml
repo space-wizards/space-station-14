@@ -14,12 +14,12 @@
   - type: Mop
   - type: SolutionContainer
     maxVol: 10
-  - type: LoopingSound
 
 - type: entity
   name: mop bucket
   id: MopBucket
   description: Holds water and the tears of the janitor.
+  suffix: Full
   components:
   - type: Clickable
   - type: Sprite
@@ -33,6 +33,11 @@
   - type: LoopingSound
   - type: SolutionContainer
     maxVol: 500
+    contents:
+      reagents:
+        - ReagentId: chem.Water
+          Quantity: 500
+
   - type: Physics
     mass: 5
     anchored: false
@@ -44,7 +49,6 @@
       - Opaque
       layer:
       - Opaque
-  - type: Spillable
   - type: Pullable
 
 - type: entity
