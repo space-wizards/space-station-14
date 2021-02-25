@@ -8,18 +8,15 @@
   },
   "states": [
     {
-      "name": "icon"
-    },
-    {
-      "name": "equipped-HELMET",
+      "name": "bear-equipped-HELMET",
       "directions": 4
     },
     {
-      "name": "inhand-left",
+      "name": "bear-inhand-left",
       "directions": 4
     },
     {
-      "name": "inhand-right",
+      "name": "bear-inhand-right",
       "directions": 4
     }
   ]
