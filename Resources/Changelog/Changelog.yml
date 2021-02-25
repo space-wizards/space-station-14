@@ -14,3 +14,8 @@ Entries:
   - {message: Constructed walls don't have broken lighting anymore, type: Fix}
   id: 3
   time: '2021-02-25T10:52:26.0000000+00:00'
+- author: Abraham
+  changes:
+  - {message: Can now cook banana cream pies, type: Add}
+  id: 4
+  time: '2021-02-25T11:45:11.0000000+00:00'
