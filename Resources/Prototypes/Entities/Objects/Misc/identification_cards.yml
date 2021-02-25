@@ -103,17 +103,17 @@
   - type: PresetIdCard
     job: CargoTechnician
 
-- type: entity
-  parent: IDCardStandard
-  id: QuartermasterIDCard
-  name: quartermaster ID card
-  components:
-    - type: Sprite
-      layers:
-        - state: default
-        - state: idquartermaster
-    - type: PresetIdCard
-      job: Quartermaster
+#- type: entity
+#  parent: IDCardStandard
+#  id: QuartermasterIDCard
+#  name: quartermaster ID card
+#  components:
+#    - type: Sprite
+#      layers:
+#        - state: default
+#        - state: idquartermaster
+#    - type: PresetIdCard
+#      job: Quartermaster
 
 - type: entity
   parent: IDCardStandard

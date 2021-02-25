@@ -9,7 +9,7 @@
     - type: StorageVisualizer
       state: hos
   - type: AccessReader
-    access: [["HeadOfSecurity"]]
+    access: [["Security", "Command"]]
 
 # Warden
 - type: entity

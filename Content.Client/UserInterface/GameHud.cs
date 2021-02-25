@@ -132,7 +132,7 @@ namespace Content.Client.UserInterface
 
         public void Initialize()
         {
-            RootControl = new LC();
+            RootControl = new LC { Name = "AAAAAAAAAAAAAAAAAAAAAA"};
             LC.SetAnchorPreset(RootControl, LC.LayoutPreset.Wide);
 
             var escapeTexture = _resourceCache.GetTexture("/Textures/Interface/hamburger.svg.192dpi.png");
@@ -162,7 +162,7 @@ namespace Content.Client.UserInterface
             _buttonEscapeMenu = new TopButton(escapeTexture, EngineKeyFunctions.EscapeMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open escape menu."),
-                CustomMinimumSize = (70, 64),
+                MinSize = (70, 64),
                 StyleClasses = {StyleBase.ButtonOpenRight}
             };
 
@@ -174,7 +174,7 @@ namespace Content.Client.UserInterface
             _buttonCharacterMenu = new TopButton(characterTexture, ContentKeyFunctions.OpenCharacterMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open character menu."),
-                CustomMinimumSize = topMinSize,
+                MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -187,7 +187,7 @@ namespace Content.Client.UserInterface
             _buttonInventoryMenu = new TopButton(inventoryTexture, ContentKeyFunctions.OpenInventoryMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open inventory menu."),
-                CustomMinimumSize = topMinSize,
+                MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -200,7 +200,7 @@ namespace Content.Client.UserInterface
             _buttonCraftingMenu = new TopButton(craftingTexture, ContentKeyFunctions.OpenCraftingMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open crafting menu."),
-                CustomMinimumSize = topMinSize,
+                MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -213,7 +213,7 @@ namespace Content.Client.UserInterface
             _buttonActionsMenu = new TopButton(actionsTexture, ContentKeyFunctions.OpenActionsMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open actions menu."),
-                CustomMinimumSize = topMinSize,
+                MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -226,7 +226,7 @@ namespace Content.Client.UserInterface
             _buttonAdminMenu = new TopButton(adminTexture, ContentKeyFunctions.OpenAdminMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open admin menu."),
-                CustomMinimumSize = topMinSize,
+                MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -239,7 +239,7 @@ namespace Content.Client.UserInterface
             _buttonSandboxMenu = new TopButton(sandboxTexture, ContentKeyFunctions.OpenSandboxWindow, _inputManager)
             {
                 ToolTip = Loc.GetString("Open sandbox menu."),
-                CustomMinimumSize = topMinSize,
+                MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -252,7 +252,7 @@ namespace Content.Client.UserInterface
             _buttonTutorial = new TopButton(tutorialTexture, ContentKeyFunctions.OpenTutorial, _inputManager)
             {
                 ToolTip = Loc.GetString("Open tutorial."),
-                CustomMinimumSize = topMinSize,
+                MinSize = topMinSize,
                 StyleClasses = {StyleBase.ButtonOpenLeft, TopButton.StyleClassRedTopButton},
             };
 
@@ -300,25 +300,25 @@ namespace Content.Client.UserInterface
             LC.SetMarginBottom(centerBottomContainer, -10f);
             RootControl.AddChild(centerBottomContainer);
 
-            HandsContainer = new MarginContainer
+            HandsContainer = new Control
             {
-                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
+                VerticalAlignment = Control.VAlignment.Bottom,
             };
-            RightInventoryQuickButtonContainer = new MarginContainer
+            RightInventoryQuickButtonContainer = new Control
             {
-                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
+                VerticalAlignment = Control.VAlignment.Bottom,
             };
-            LeftInventoryQuickButtonContainer = new MarginContainer
+            LeftInventoryQuickButtonContainer = new Control
             {
-                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
+                VerticalAlignment = Control.VAlignment.Bottom,
             };
             centerBottomContainer.AddChild(LeftInventoryQuickButtonContainer);
             centerBottomContainer.AddChild(HandsContainer);
             centerBottomContainer.AddChild(RightInventoryQuickButtonContainer);
 
-            SuspicionContainer = new MarginContainer
+            SuspicionContainer = new Control
             {
-                SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter
+                HorizontalAlignment = Control.HAlignment.Center
             };
 
             RootControl.AddChild(SuspicionContainer);
@@ -330,7 +330,7 @@ namespace Content.Client.UserInterface
 
             _topNotificationContainer = new VBoxContainer
             {
-                CustomMinimumSize = (600, 0)
+                MinSize = (600, 0)
             };
             RootControl.AddChild(_topNotificationContainer);
             LC.SetAnchorPreset(_topNotificationContainer, LC.LayoutPreset.CenterTop);
@@ -498,21 +498,21 @@ namespace Content.Client.UserInterface
                     {
                         Children =
                         {
-                            new Control {CustomMinimumSize = (0, VertPad)},
                             (_textureRect = new TextureRect
                             {
                                 TextureScale = (0.5f, 0.5f),
                                 Texture = texture,
-                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                                SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
+                                HorizontalAlignment = HAlignment.Center,
+                                VerticalAlignment = VAlignment.Center,
+                                VerticalExpand = true,
+                                Margin = new Thickness(0, VertPad),
                                 ModulateSelfOverride = NormalColor,
                                 Stretch = TextureRect.StretchMode.KeepCentered
                             }),
-                            new Control {CustomMinimumSize = (0, VertPad)},
                             (_label = new Label
                             {
                                 Text = ShortKeyName(_function),
-                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                                HorizontalAlignment = HAlignment.Center,
                                 ModulateSelfOverride = NormalColor,
                                 StyleClasses = {StyleClassLabelTopButton}
                             })

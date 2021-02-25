@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             //Only reagents with spritePath property can change appearance of transformable containers!
             if (!string.IsNullOrWhiteSpace(reagentId) &&
-                _prototypeManager.TryIndex(reagentId, out ReagentPrototype proto) &&
+                _prototypeManager.TryIndex(reagentId, out ReagentPrototype? proto) &&
                 !string.IsNullOrWhiteSpace(proto.SpriteReplacementPath))
             {
                 var spriteSpec = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Consumable/Drinks/" + proto.SpriteReplacementPath),"icon");

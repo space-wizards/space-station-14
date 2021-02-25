@@ -1,11 +1,11 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.Maps;
-using Robust.Server.Timing;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests

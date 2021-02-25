@@ -80,3 +80,25 @@
       amount: 4
     - !type:AdjustWeeds
       amount: -6
+
+- type: reagent
+  id: chem.THC
+  name: THC
+  desc: The main psychoactive compound in cannabis.
+  color: "#808080"
+  physicalDesc: crystalline
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: -5
+    - !type:AdjustHealth
+      amount: -1
+
+- type: reagent
+  id: chem.Nicotine
+  name: Nicotine
+  desc: Dangerous and highly addictive.
+  color: "#C0C0C0"
+  physicalDesc: strong smelling
+  plantMetabolism:
+    - !type:AdjustHealth
+      amount: -5

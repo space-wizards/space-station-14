@@ -9,7 +9,7 @@
             - !type:SnapToGrid
               southRotation: true
           steps:
-            - material: Metal
+            - material: Steel
               amount: 2
               doAfter: 1
 
@@ -41,7 +41,7 @@
           conditions:
             - !type:EntityAnchored {}
           steps:
-            - material: Metal
+            - material: Steel
               amount: 2
 
         - to: reinforcedGirder

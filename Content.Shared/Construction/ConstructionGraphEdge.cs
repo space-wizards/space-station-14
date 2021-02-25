@@ -89,6 +89,20 @@ namespace Content.Shared.Construction
                 return component;
             }
 
+            if (mapping.TryGetNode("tag", out _))
+            {
+                var tags = new TagConstructionGraphStep();
+                tags.ExposeData(stepSerializer);
+                return tags;
+            }
+
+            if (mapping.TryGetNode("allTags", out _) || mapping.TryGetNode("anyTags", out _))
+            {
+                var tags = new MultipleTagsConstructionGraphStep();
+                tags.ExposeData(stepSerializer);
+                return tags;
+            }
+
             if(mapping.TryGetNode("steps", out _))
             {
                 var nested = new NestedConstructionGraphStep();

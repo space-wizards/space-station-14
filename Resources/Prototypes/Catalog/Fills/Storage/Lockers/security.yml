@@ -1,0 +1,61 @@
+- type: entity
+  id: LockerWardenFilled
+  suffix: Filled
+  parent: LockerWarden
+  components:
+  - type: StorageFill
+    contents:
+      - name: TaserGun
+        prob: 0.3
+      - name: ClothingHeadHatWarden
+        prob: 1
+      - name: ClothingHeadHatBeretWarden
+        prob: 1
+      - name: ClothingBeltSecurityFilled
+        prob: 1
+      - name: Flash
+        prob: 1
+      - name: ClothingEyesGlassesSecurity
+        prob: 1
+      - name: ClothingHeadsetAltSecurity
+        prob: 1
+      - name: ClothingHandsGlovesCombat
+        prob: 1
+      - name: ClothingShoesBootsJack
+        prob: 1
+
+- type: entity
+  id: LockerSecurityFilled
+  suffix: Filled
+  parent: LockerSecurity
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingUniformJumpsuitSecGrey
+        prob: 0.3
+      - name: ClothingHeadHelmetHelmet
+        prob: 1
+      - name: ClothingOuterArmorBulletproof
+        prob: 1
+      - name: ClothingBeltSecurityFilled
+        prob: 1
+      - name: Flash
+        prob: 0.5
+      - name: ClothingEyesGlassesSecurity
+        prob: 1
+      - name: ClothingHeadsetSecurity
+        prob: 1
+      - name: ClothingHandsGlovesColorBlack
+        prob: 1
+      - name: ClothingShoesBootsJack
+        prob: 1
+
+#- type: entity
+#  id: LockerDetectiveFilled
+#  suffix: Filled
+#  parent: LockerDetective
+
+- type: entity
+  id: LockerBombFilled
+  parent: LockerBomb
+  suffix: Filled

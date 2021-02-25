@@ -337,7 +337,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
             // Using ToList here lets us edit reagents while iterating
             foreach (var reagent in bloodstream.Solution.ReagentList.ToList())
             {
-                if (!_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype prototype))
+                if (!_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? prototype))
                 {
                     continue;
                 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -91,8 +91,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 if (--Uses == 0)
                 {
                     sprite.LayerSetState(0, "burnt");
-
-                    Owner.PopupMessage(user, Loc.GetString("The flash burns out!"));
+                    Owner.PopupMessage(user, Loc.GetString("flash-component-becomes-empty"));
                 }
                 else if (!_flashing)
                 {
@@ -136,7 +135,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (entity != user)
             {
-                user.PopupMessage(entity, Loc.GetString("{0:TheName} blinds you with {1:theName}", user, Owner));
+                user.PopupMessage(entity,
+                    Loc.GetString(
+                        "flash-component-user-blinds-you",
+                        ("user", user)
+                    )
+                );
             }
         }
 
@@ -144,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             if (!HasUses)
             {
-                message.AddText("It's burnt out.");
+                message.AddText(Loc.GetString("flash-component-examine-empty"));
                 return;
             }
 
@@ -152,9 +156,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 message.AddMarkup(
                     Loc.GetString(
-                        "The flash has [color=green]{0}[/color] {1} remaining.",
-                        Uses,
-                        Loc.GetPluralString("use", "uses", Uses)
+                        "flash-component-examine-detail-count",
+                        ("count", Uses),
+                        ("markupCountColor", "green")
                     )
                 );
             }

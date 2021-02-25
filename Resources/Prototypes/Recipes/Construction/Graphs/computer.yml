@@ -9,7 +9,7 @@
             - !type:SetAnchor
               value: false
           steps:
-            - material: Metal
+            - material: Steel
               amount: 5
 
     - node: frameUnsecured

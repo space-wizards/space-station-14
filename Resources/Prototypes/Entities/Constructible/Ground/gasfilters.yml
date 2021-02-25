@@ -28,6 +28,7 @@
     - state: gasFilter
   - type: Appearance
     visuals:
+    - type: PipeConnectorVisualizer
     - type: GasFilterVisualizer
 
 - type: entity
