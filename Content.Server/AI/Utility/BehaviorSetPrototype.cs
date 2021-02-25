@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -11,16 +12,17 @@ namespace Content.Server.AI.Utility
         /// <summary>
         ///     Name of the BehaviorSet.
         /// </summary>
-        public string ID { get; private set; }
+        public string ID { get; private set; } = default!;
 
         /// <summary>
         ///     Actions that this BehaviorSet grants to the entity.
         /// </summary>
-        public IReadOnlyList<string> Actions { get; private set; }
+        public IReadOnlyList<string> Actions { get; private set; } = default!;
 
         public void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
+
             serializer.DataField(this, x => x.ID, "id", string.Empty);
             serializer.DataField(this, x => x.Actions, "actions", new List<string>());
         }
