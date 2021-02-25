@@ -333,7 +333,6 @@
     FoodMiloSoup: 1
 
 - type: microwaveMealRecipe
-<<<<<<< HEAD
   id: RecipeLoadedBakedPotato
   name: loaded baked potato recipe
   result: FoodLoadedBakedPotato
@@ -369,7 +368,8 @@
   time: 5
   solids:
     FoodCorn: 1
-=======
+
+- type: microwaveMealRecipe
   id: RecipeBananaCreamPie
   name: banana cream pie
   result: FoodBananaCreamPie
@@ -378,7 +378,6 @@
     chem.Flour: 10
   solids:
     FoodBanana: 3
->>>>>>> upstream/master
 
 # NOT ACTUAL FOOD
 
