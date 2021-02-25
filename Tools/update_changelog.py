@@ -33,7 +33,7 @@ def main():
 
     for partname in os.listdir(args.parts_dir):
         if not partname.endswith(".yml"):
-            return
+            continue
 
         partpath = os.path.join(args.parts_dir, partname)
         print(partpath)
@@ -53,6 +53,8 @@ def main():
         )
 
         os.remove(partpath)
+
+    print(f"Have {len(entries_list)} changelog entries")
 
     entries_list.sort(key=lambda e: e["id"])
 
