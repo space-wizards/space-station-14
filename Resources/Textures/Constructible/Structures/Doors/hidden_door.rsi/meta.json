@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Custom based on solidwall from https://github.com/discordia-space/CEV-Eris/ with square doors from https://github.com/ParadiseSS13/Paradise/blob/master/icons/obj/doors/doorf.dmi",
+  "states": [
+    {
+      "name": "closed1",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "closing1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "open1",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "opening1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "closed2",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "closing2",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "open2",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "opening2",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "closed3",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "closing3",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "open3",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "opening3",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    }
+  ]
+}

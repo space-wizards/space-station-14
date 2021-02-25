@@ -1,0 +1,47 @@
+- type: entity
+  id: Barricade
+  name: barricade
+  description: The poor man's barrier, not nearly as strong or cool looking.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Construction
+    graph: barricade
+    node: barricadewooden
+  - type: Sprite
+    sprite: Constructible/Structures/barricades.rsi
+    state: barricadewooden
+  - type: Physics
+    mass: 25
+    anchored: true
+    shapes:
+    - !type:PhysShapeAabb
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Tag
+    tags:
+    - ExplosivePassable
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          WoodPlank:
+            min: 3
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: SnapGrid
+    offset: Edge
+  placement:
+    snap:
+    - Wall

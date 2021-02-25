@@ -1,0 +1,14 @@
+﻿- type: constructionGraph
+  id: barricade
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: barricadewooden
+          steps:
+            - material: Wood
+              amount: 5
+          doAfter: 1
+              
+    - node: barricadewooden
+      entity: Barricade

@@ -211,3 +211,20 @@
   objectType: Structure
   placementMode: AlignWallProper
   canBuildInImpassable: true
+
+- type: construction
+  name: Wooden Barricade
+  id: Barricade
+  graph: barricade
+  startNode: start
+  targetNode: barricadewooden
+  category: Structures
+  description: An improvised barricade made out of wooden planks.
+  icon:
+    sprite: Constructible/Structures/barricades.rsi
+    state: barricadewooden
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
