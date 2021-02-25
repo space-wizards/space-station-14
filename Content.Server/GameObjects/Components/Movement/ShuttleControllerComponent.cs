@@ -45,39 +45,13 @@ namespace Content.Server.GameObjects.Components.Movement
         public float CurrentWalkSpeed { get; } = 8;
         public float CurrentSprintSpeed => 0;
 
-        /// <inheritdoc />
-        [ViewVariables]
-        public float CurrentPushSpeed => 0.0f;
-
-        /// <inheritdoc />
-        [ViewVariables]
-        public float GrabRange => 0.0f;
-
         public bool Sprinting => false;
 
-        public (Vector2 walking, Vector2 sprinting) VelocityDir { get; } = (Vector2.Zero, Vector2.Zero);
-        public EntityCoordinates LastPosition { get; set; }
-        public float StepSoundDistance { get; set; }
+        public (Vector2 walking, Vector2 sprinting) VelocityDir { get; set; } = (Vector2.Zero, Vector2.Zero);
 
         public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled)
         {
-            var gridId = Owner.Transform.GridID;
-
-            if (_mapManager.TryGetGrid(gridId, out var grid) &&
-                Owner.EntityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
-            {
-                //TODO: Switch to shuttle component
-                if (!gridEntity.TryGetComponent(out PhysicsComponent? physics))
-                {
-                    physics = gridEntity.AddComponent<PhysicsComponent>();
-                    physics.Mass = 1;
-                    physics.CanCollide = true;
-                    physics.AddFixture(new Fixture(physics, new PhysShapeGrid(grid)));
-                }
-
-                var controller = physics.EnsureController<ShuttleController>();
-                controller.Push(CalcNewVelocity(direction, enabled), CurrentWalkSpeed);
-            }
+            VelocityDir = (CalcNewVelocity(direction, enabled), Vector2.Zero);
         }
 
         public void SetSprinting(ushort subTick, bool walking)

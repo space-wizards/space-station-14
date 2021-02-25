@@ -26,7 +26,7 @@ namespace Content.Shared.Physics.Controllers
 
         private SharedBroadPhaseSystem _broadPhaseSystem = default!;
 
-        private const float StopSpeed = 0.01f;
+        private float _stopSpeed;
 
         private float _frictionModifier;
 
@@ -34,8 +34,12 @@ namespace Content.Shared.Physics.Controllers
         {
             base.Initialize();
             _broadPhaseSystem = EntitySystem.Get<SharedBroadPhaseSystem>();
-            _frictionModifier = _configManager.GetCVar(CVars.TileFrictionModifier);
-            _configManager.OnValueChanged(CVars.TileFrictionModifier, value => _frictionModifier = value);
+
+            _frictionModifier = _configManager.GetCVar(CCVars.TileFrictionModifier);
+            _configManager.OnValueChanged(CCVars.TileFrictionModifier, value => _frictionModifier = value);
+
+            _stopSpeed = _configManager.GetCVar(CCVars.StopSpeed);
+            _configManager.OnValueChanged(CCVars.StopSpeed, value => _stopSpeed = value);
         }
 
         public override void UpdateBeforeMapSolve(bool prediction, PhysicsMap map, float frameTime)
@@ -64,7 +68,7 @@ namespace Content.Shared.Physics.Controllers
                     // TBH I can't really tell if this makes a difference, player movement is fucking hard.
                     if (!prediction)
                     {
-                        control = speed < StopSpeed ? StopSpeed : speed;
+                        control = speed < _stopSpeed ? _stopSpeed : speed;
                     }
                     else
                     {

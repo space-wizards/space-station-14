@@ -47,14 +47,6 @@ namespace Content.Shared.Physics.Controllers
             physicsComponent.LinearVelocity = total;
         }
 
-        // TODO: Shuttle mover here
-        /*
-         * Some thoughts:
-         * Unreal actually doesn't predict vehicle movement at all, it's purely server-side which I thought was interesting
-         * The reason for this is that vehicles change direction very slowly compared to players so you don't really have the requirement for quick movement anyway
-         * As such could probably just look at applying a force / impulse to the shuttle server-side only so it controls like the titanic.
-         */
-
         /// <summary>
         ///     Movement while considering actionblockers, weightlessness, etc.
         /// </summary>

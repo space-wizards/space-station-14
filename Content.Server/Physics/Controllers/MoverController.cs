@@ -18,6 +18,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -55,12 +56,45 @@ namespace Content.Server.Physics.Controllers
                 HandleMobMovement(mover, physics, mobMover);
             }
 
+            foreach (var mover in ComponentManager.EntityQuery<ShuttleControllerComponent>())
+            {
+                _excludedMobs.Add(mover.Owner.Uid);
+                HandleShuttleMovement(mover);
+            }
+
             foreach (var (mover, physics) in ComponentManager.EntityQuery<IMoverComponent, PhysicsComponent>())
             {
                 if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
 
                 HandleKinematicMovement(mover, physics);
             }
+        }
+
+        /*
+         * Some thoughts:
+         * Unreal actually doesn't predict vehicle movement at all, it's purely server-side which I thought was interesting
+         * The reason for this is that vehicles change direction very slowly compared to players so you don't really have the requirement for quick movement anyway
+         * As such could probably just look at applying a force / impulse to the shuttle server-side only so it controls like the titanic.
+         */
+        private void HandleShuttleMovement(ShuttleControllerComponent mover)
+        {
+            var gridId = mover.Owner.Transform.GridID;
+
+            if (!_mapManager.TryGetGrid(gridId, out var grid) || !EntityManager.TryGetEntity(grid.GridEntityId, out var gridEntity)) return;
+
+            //TODO: Switch to shuttle component
+            if (!gridEntity.TryGetComponent(out PhysicsComponent? physics))
+            {
+                physics = gridEntity.AddComponent<PhysicsComponent>();
+                physics.Status = BodyStatus.InAir;
+                physics.Mass = 1;
+                physics.CanCollide = true;
+                physics.AddFixture(new Fixture(physics, new PhysShapeGrid(grid)));
+            }
+
+            // TODO: Uhh this probably doesn't work but I still need to rip out the entity tree and make RenderingTreeSystem use grids so I'm not overly concerned about breaking shuttles.
+            physics.ApplyForce(mover.VelocityDir.walking + mover.VelocityDir.sprinting);
+            mover.VelocityDir = (Vector2.Zero, Vector2.Zero);
         }
 
         protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)

@@ -1,4 +1,6 @@
 #nullable enable
+using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Recycling;
 using Content.Shared.GameObjects.Components.Movement;
@@ -8,8 +10,10 @@ using Robust.Shared.Physics.Controllers;
 
 namespace Content.Server.Physics.Controllers
 {
-    public class ConveyorController : AetherController
+    internal sealed class ConveyorController : AetherController
     {
+        public override List<Type> UpdatesAfter => new() {typeof(MoverController)};
+
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {
             base.UpdateBeforeSolve(prediction, frameTime);
@@ -52,6 +56,7 @@ namespace Content.Server.Physics.Controllers
             }
         }
 
+        // TODO Uhhh I did a shit job plz fix smug
         private Vector2 Convey(Vector2 velocityDirection, float frameTime, Vector2 itemRelativeToConveyor)
         {
             //gravitating item towards center
@@ -79,7 +84,7 @@ namespace Content.Server.Physics.Controllers
             }
 
             var delta = centerPoint - itemRelativeToConveyor;
-            return delta * (4 * delta.Length) * frameTime;
+            return delta * (400 * delta.Length) * frameTime;
         }
 
         private void ConveyRecycler(RecyclerComponent comp, float frameTime)
