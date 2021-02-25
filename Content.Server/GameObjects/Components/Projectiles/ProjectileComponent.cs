@@ -89,7 +89,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 _damagedEntity = true;
             }
 
-            if (otherBody.Entity.TryGetComponent(out CameraRecoilComponent recoilComponent))
+            // Damaging it can delete it
+            if (!otherBody.Entity.Deleted && otherBody.Entity.TryGetComponent(out CameraRecoilComponent recoilComponent))
             {
                 var direction = ourBody.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);

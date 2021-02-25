@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -70,6 +71,12 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (physics.Owner.HasComponent<IMobStateComponent>())
                 {
                     physics.Status = BodyStatus.InAir;
+
+                    foreach (var fixture in physics.Fixtures)
+                    {
+                        fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
+                    }
+
                     Owner.SpawnTimer(2000, () =>
                     {
                         if (Deleted || !Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
@@ -78,6 +85,11 @@ namespace Content.Server.GameObjects.Components.Atmos
                         if (physicsComponent.Owner.HasComponent<IMobStateComponent>())
                         {
                             physicsComponent.Status = BodyStatus.OnGround;
+                        }
+
+                        foreach (var fixture in physics.Fixtures)
+                        {
+                            fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
                         }
                     });
                 }
