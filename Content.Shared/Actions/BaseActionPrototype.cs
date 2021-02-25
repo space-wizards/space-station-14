@@ -77,17 +77,19 @@ namespace Content.Shared.Actions
         [DataField("deselectWhenEntityNotClicked")]
         public bool DeselectWhenEntityNotClicked { get; private set; }
 
+        [DataField("filters")] private List<string> _filters = new();
+
         /// <summary>
         /// Filters that can be used to filter this item in action menu.
         /// </summary>
-        [DataField("filters")]
-        public IEnumerable<string> Filters { get; private set; }
+        public IEnumerable<string> Filters => _filters;
+
+        [DataField("keywords")] private List<string> _keywords = new();
 
         /// <summary>
         /// Keywords that can be used to search this item in action menu.
         /// </summary>
-        [DataField("keywords")]
-        public IEnumerable<string> Keywords { get; private set; }
+        public IEnumerable<string> Keywords => _keywords;
 
         /// <summary>
         /// True if this is an action that requires selecting a target

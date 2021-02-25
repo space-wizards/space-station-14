@@ -28,7 +28,7 @@ namespace Content.Server.Commands
             }
             else
             {
-                if (!prototypeManager.TryIndex(id, out EntityPrototype prototype))
+                if (!prototypeManager.TryIndex(id, out EntityPrototype? prototype))
                 {
                     shell.WriteLine($"No entity prototype found with id {id}.");
                     return;

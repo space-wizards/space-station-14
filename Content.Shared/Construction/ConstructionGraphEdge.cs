@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.Interfaces;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Construction
 {
@@ -17,8 +11,10 @@ namespace Content.Shared.Construction
     {
         [DataField("steps")]
         private List<ConstructionGraphStep> _steps = new();
+
         [DataField("conditions", serverOnly: true)]
         private List<IEdgeCondition> _conditions;
+
         [DataField("completed", serverOnly: true)]
         private List<IGraphAction> _completed;
 

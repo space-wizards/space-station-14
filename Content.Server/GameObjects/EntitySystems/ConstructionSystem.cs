@@ -185,41 +185,19 @@ namespace Content.Server.GameObjects.EntitySystems
 
                         break;
 
-                    case ComponentConstructionGraphStep componentStep:
+                    case ArbitraryInsertConstructionGraphStep arbitraryStep:
                         foreach (var entity in EnumerateNearby(user))
                         {
-                            if (!componentStep.EntityValid(entity))
+                            if (!arbitraryStep.EntityValid(entity))
                                 continue;
 
-                            if (string.IsNullOrEmpty(componentStep.Store))
+                            if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
                                 if (!container.Insert(entity))
                                     continue;
                             }
-                            else if (!GetContainer(componentStep.Store).Insert(entity))
+                            else if (!GetContainer(arbitraryStep.Store).Insert(entity))
                                 continue;
-
-                            handled = true;
-                            break;
-                        }
-
-                        break;
-
-                    case PrototypeConstructionGraphStep prototypeStep:
-                        foreach (var entity in EnumerateNearby(user))
-                        {
-                            if (!prototypeStep.EntityValid(entity))
-                                continue;
-
-                            if (string.IsNullOrEmpty(prototypeStep.Store))
-                            {
-                                if (!container.Insert(entity))
-                                    continue;
-                            }
-                            else if (!GetContainer(prototypeStep.Store).Insert(entity))
-                            {
-                                continue;
-                            }
 
                             handled = true;
                             break;
@@ -304,13 +282,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private async void HandleStartItemConstruction(TryStartItemConstructionMessage ev, EntitySessionEventArgs args)
         {
-            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype constructionPrototype))
+            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
             {
                 Logger.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
                 return;
             }
 
-            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype constructionGraph))
+            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype? constructionGraph))
             {
                 Logger.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
                 return;
@@ -360,14 +338,14 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private async void HandleStartStructureConstruction(TryStartStructureConstructionMessage ev, EntitySessionEventArgs args)
         {
-            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype constructionPrototype))
+            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
             {
                 Logger.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
                 RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
                 return;
             }
 
-            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype constructionGraph))
+            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype? constructionGraph))
             {
                 Logger.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
                 RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));

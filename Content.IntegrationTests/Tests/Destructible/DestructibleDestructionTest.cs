@@ -22,7 +22,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 ExtraPrototypes = Prototypes,
                 ContentBeforeIoC = () =>
                 {
-                    IoCManager.Resolve<IComponentFactory>().Register<TestThresholdListenerComponent>();
+                    IoCManager.Resolve<IComponentFactory>().RegisterClass<TestThresholdListenerComponent>();
                 }
             });
 
