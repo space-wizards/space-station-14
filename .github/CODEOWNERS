@@ -1,1 +1,7 @@
+# Last match in file takes precedence.
+
+# Be they Fluent translations or Freemarker templates, I know them both!
+*.ftl @RemieRichards
+
+# Ping for all PRs
 * @PJB3005 @Zumorica
