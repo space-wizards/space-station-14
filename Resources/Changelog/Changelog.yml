@@ -1,16 +1,1 @@
-Entries:
-- author: PJB
-  changes:
-  - {message: Added a changelog. You're reading it right now!, type: Add}
-  id: 1
-  time: 2021-02-25 08:50:45
-- author: PJB
-  changes:
-  - {message: Testing whether changelog works..., type: Fix}
-  id: 2
-  time: '2021-02-25T09:10:40.172922+00:00'
-- author: PJB
-  changes:
-  - {message: Added a changelog. You're reading it right now!, type: Add}
-  id: 3
-  time: 2021-02-25 08:50:45
+Entries: []

@@ -13,6 +13,22 @@ HEADER_RE = r"(?::cl:|🆑) *\r?\n(.+)$"
 ENTRY_RE = r"^ *[*-]? *(\S[^\n\r]+)\r?$"
 
 
+# From https://stackoverflow.com/a/37958106/4678631
+class NoDatesSafeLoader(yaml.SafeLoader):
+    @classmethod
+    def remove_implicit_resolver(cls, tag_to_remove):
+        if not 'yaml_implicit_resolvers' in cls.__dict__:
+            cls.yaml_implicit_resolvers = cls.yaml_implicit_resolvers.copy()
+
+        for first_letter, mappings in cls.yaml_implicit_resolvers.items():
+            cls.yaml_implicit_resolvers[first_letter] = [(tag, regexp)
+                                                         for tag, regexp in mappings
+                                                         if tag != tag_to_remove]
+
+# Hrm yes let's make the fucking default of our serialization library to PARSE ISO-8601
+# but then output garbage when re-serializing.
+NoDatesSafeLoader.remove_implicit_resolver('tag:yaml.org,2002:timestamp')
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("changelog_file")
@@ -21,7 +37,7 @@ def main():
     args = parser.parse_args()
 
     with open(args.changelog_file, "r", encoding="utf-8-sig") as f:
-        current_data = yaml.safe_load(f)
+        current_data = yaml.load(f, Loader=NoDatesSafeLoader)
 
     entries_list: List[Any]
     if current_data is None:
@@ -38,7 +54,7 @@ def main():
         partpath = os.path.join(args.parts_dir, partname)
         print(partpath)
 
-        partyaml = yaml.safe_load(open(partpath, "r", encoding="utf-8-sig"))
+        partyaml = yaml.load(open(partpath, "r", encoding="utf-8-sig"), Loader=NoDatesSafeLoader)
 
         author = partyaml["author"]
         time = partyaml.get(
