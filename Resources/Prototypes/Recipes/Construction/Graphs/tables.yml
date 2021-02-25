@@ -22,7 +22,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-                prototype: MetalRod
+                prototype: PartRodMetal
                 amount: 2
             - !type:DeleteEntity {}
           steps:

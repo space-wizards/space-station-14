@@ -8,19 +8,19 @@
   },
   "states": [
     {
-      "name": "rods-1"
+      "name": "rods"
     },
     {
-      "name": "rods-2"
+      "name": "rods_2"
     },
     {
-      "name": "rods-3"
+      "name": "rods_3"
     },
     {
-      "name": "rods-4"
+      "name": "rods_4"
     },
     {
-      "name": "rods-5"
+      "name": "rods_5"
     }
   ]
 }

@@ -150,7 +150,7 @@ namespace Content.Shared.GameObjects.Components
         Plastitanium,
         Brass,
         PlasmaGlass,
-        PlasmaReinforcedGlass,
+        ReinforcedPlasmaGlass,
         TitaniumGlass,
         PlastitaniumGlass,
         Paper

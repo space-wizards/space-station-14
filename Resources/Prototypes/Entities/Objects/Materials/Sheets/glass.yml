@@ -2,7 +2,7 @@
   id: SheetGlassBase
   abstract: true
   parent: BaseItem
-  suffix: Sheet
+  description: A sheet of glass, used often on the station in various applications.
   components:
     - type: Sprite
       netsync: false
@@ -26,7 +26,7 @@
     - type: Stack
       stacktype: enum.StackType.Glass
     - type: Sprite
-      state: glass
+      state: glass_3
     - type: Item
       HeldPrefix: glass
     - type: Appearance
@@ -42,6 +42,8 @@
   name: glass
   parent: SheetGlass
   components:
+    - type: Sprite
+      state: glass
     - type: Stack
       count: 1
 
@@ -57,7 +59,7 @@
     - type: Stack
       stacktype: enum.StackType.ReinforcedGlass
     - type: Sprite
-      state: rglass
+      state: rglass_3
     - type: Item
       HeldPrefix: rglass
     - type: Appearance
@@ -73,6 +75,8 @@
   name: reinforced glass
   parent: SheetRGlass
   components:
+    - type: Sprite
+      state: rglass
     - type: Stack
       count: 1
 
@@ -88,7 +92,7 @@
     - type: Stack
       stacktype: enum.StackType.PlasmaGlass
     - type: Sprite
-      state: pglass
+      state: pglass_3
     - type: Item
       HeldPrefix: pglass
     - type: Appearance
@@ -104,37 +108,41 @@
   name: plasma glass
   parent: SheetPGlass
   components:
+    - type: Sprite
+      state: pglass
     - type: Stack
       count: 1
 
 - type: entity
   name: reinforced plasma glass
-  id: SheetPGlass
+  id: SheetRPGlass
   parent: SheetGlassBase
   components:
     - type: Material
       materials:
         - key: enum.MaterialKeys.Stack
-          mat: pglass
+          mat: rpglass
     - type: Stack
-      stacktype: enum.StackType.PlasmaGlass
+      stacktype: enum.StackType.ReinforcedPlasmaGlass
     - type: Sprite
-      state: pglass
+      state: rpglass_3
     - type: Item
-      HeldPrefix: pglass
+      HeldPrefix: rpglass
     - type: Appearance
       visuals:
         - type: StackVisualizer
           stackLayers:
-            - prglass
-            - prglass_2
-            - prglass_3
+            - rpglass
+            - rpglass_2
+            - rpglass_3
 
 - type: entity
-  id: SheetPGlass1
+  id: SheetRPGlass1
   name: reinforced plasma glass
   parent: SheetPGlass
   components:
+    - type: Sprite
+      state: rpglass
     - type: Stack
       count: 1
 
@@ -150,7 +158,7 @@
     - type: Stack
       stacktype: enum.StackType.TitaniumGlass
     - type: Sprite
-      state: titaniumglass
+      state: titaniumglass_3
     - type: Item
       HeldPrefix: titaniumglass
     - type: Appearance
@@ -166,6 +174,8 @@
   name: titanium glass
   parent: SheetTitaniumGlass
   components:
+    - type: Sprite
+      state: titaniumglass
     - type: Stack
       count: 1
 
@@ -181,7 +191,7 @@
     - type: Stack
       stacktype: enum.StackType.PlastitaniumGlass
     - type: Sprite
-      state: plastitaniumglass
+      state: plastitaniumglass_3
     - type: Item
       HeldPrefix: plastitaniumglass
     - type: Appearance
@@ -197,5 +207,7 @@
   name: plastitanium glass
   parent: SheetPlastitaniumGlass
   components:
+    - type: Sprite
+      state: plastitaniumglass
     - type: Stack
       count: 1

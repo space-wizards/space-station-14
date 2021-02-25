@@ -43,6 +43,14 @@
         "name": "copper_3"
     },
     {
+        "name": "copper-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "copper-inhand-right",
+        "directions": 4
+    },
+    {
         "name": "gold"
     },
     {
@@ -69,6 +77,14 @@
         "name": "hydrogen_3"
     },
     {
+        "name": "hydrogen-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "hydrogen-inhand-right",
+        "directions": 4
+    },
+    {
         "name": "iron"
     },
     {
@@ -76,6 +92,14 @@
     },
     {
         "name": "iron_3"
+    },
+    {
+        "name": "iron-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "iron-inhand-right",
+        "directions": 4
     },
     {
         "name": "silver"

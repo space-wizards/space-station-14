@@ -55,20 +55,20 @@
         "directions": 4
     },
     {
-        "name": "prglass"
+        "name": "rpglass"
     },
     {
-        "name": "prglass_2"
+        "name": "rpglass_2"
     },
     {
-        "name": "prglass_3"
+        "name": "rpglass_3"
     },
     {
-        "name": "prglass-inhand-left",
+        "name": "rpglass-inhand-left",
         "directions": 4
     },
     {
-        "name": "prglass-inhand-right",
+        "name": "rpglass-inhand-right",
         "directions": 4
     },
     {

@@ -2,6 +2,7 @@
   id: SheetMetalBase
   abstract: true
   parent: BaseItem
+  description: A sheet of metal, used often on the station in various applications.
   components:
     - type: Sprite
       netsync: false
@@ -17,7 +18,6 @@
   name: steel
   id: SheetSteel
   parent: SheetMetalBase
-  suffix: Full
   components:
     - type: Material
       materials:
@@ -26,7 +26,7 @@
     - type: Stack
       stacktype: enum.StackType.Steel
     - type: Sprite
-      state: steel
+      state: steel_3
     - type: Item
       HeldPrefix: steel
     - type: Appearance
@@ -41,8 +41,9 @@
   id: SheetSteel1
   name: steel
   parent: SheetSteel
-  suffix: 1
   components:
+    - type: Sprite
+      state: steel
     - type: Stack
       count: 1
 
@@ -50,7 +51,6 @@
   name: plasteel
   id: SheetPlasteel
   parent: SheetMetalBase
-  suffix: Full
   components:
     - type: Material
       materials:
@@ -59,7 +59,7 @@
     - type: Stack
       stacktype: enum.StackType.Plasteel
     - type: Sprite
-      state: plasteel
+      state: plasteel_3
     - type: Item
       HeldPrefix: plasteel
     - type: Appearance
@@ -74,8 +74,9 @@
   id: SheetPlasteel1
   name: plasteel
   parent: SheetPlasteel
-  suffix: 1
   components:
+    - type: Sprite
+      state: plasteel
     - type: Stack
       count: 1
 
@@ -83,7 +84,6 @@
   name: titanium
   id: SheetTitanium
   parent: SheetMetalBase
-  suffix: Full
   components:
     - type: Material
       materials:
@@ -92,7 +92,7 @@
     - type: Stack
       stacktype: enum.StackType.Titanium
     - type: Sprite
-      state: titanium
+      state: titanium_3
     - type: Item
       HeldPrefix: titanium
     - type: Appearance
@@ -107,8 +107,9 @@
   id: SheetTitanium1
   name: titanium
   parent: SheetTitanium
-  suffix: 1
   components:
+    - type: Sprite
+      state: titanium
     - type: Stack
       count: 1
 
@@ -116,7 +117,6 @@
   name: plastitanium
   id: SheetPlastitanium
   parent: SheetMetalBase
-  suffix: Full
   components:
     - type: Material
       materials:
@@ -125,7 +125,7 @@
     - type: Stack
       stacktype: enum.StackType.Plastitanium
     - type: Sprite
-      state: plastitanium
+      state: plastitanium_3
     - type: Item
       HeldPrefix: plastitanium
     - type: Appearance
@@ -140,8 +140,9 @@
   id: SheetPlastitanium1
   name: plastitanium
   parent: SheetPlastitanium
-  suffix: 1
   components:
+    - type: Sprite
+      state: plastitanium
     - type: Stack
       count: 1
 
@@ -149,7 +150,6 @@
   name: brass
   id: SheetBrass
   parent: SheetMetalBase
-  suffix: Full
   components:
     - type: Material
       materials:
@@ -158,7 +158,7 @@
     - type: Stack
       stacktype: enum.StackType.Brass
     - type: Sprite
-      state: brass
+      state: brass_3
     - type: Item
       HeldPrefix: brass
     - type: Appearance
@@ -173,7 +173,8 @@
   id: SheetBrass1
   name: brass
   parent: SheetBrass
-  suffix: 1
   components:
+    - type: Sprite
+      state: brass
     - type: Stack
       count: 1

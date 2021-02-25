@@ -154,7 +154,7 @@
   requiredTechnologies:
     - IndustrialEngineering
   unlockedRecipes:
-    - MetalStack
+    - SheetSteel
     - GlassStack
 
 # Electromagnetic Theory Technology Tree

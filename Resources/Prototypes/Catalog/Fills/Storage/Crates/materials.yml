@@ -15,7 +15,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: MetalStack
+      - name: SheetSteel
         amount: 1
 
 - type: entity

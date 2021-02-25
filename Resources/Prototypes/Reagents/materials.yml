@@ -1,74 +1,170 @@
+# Since most of these material values are completely arbitrary, just parent them all lol.
+# This will be refactored by Smug soon anyway.
+
 - type: material
-  id: steel
-  name: steel
-  color: gray
-  icon: Objects/Materials/sheets.rsi/metal.png
+  id: MaterialBase
   density: 7700
   electricResistivity: 6.9e-7
   thermalConductivity: 18
   specificHeat: 500
 
 - type: material
-  id: glass
-  name: glass
-  color: '#e8f0ff33'
-  icon: Objects/Materials/sheets.rsi/glass.png
-  density: 2500
-  electricResistivity: 1.0e+13
-  thermalConductivity: 0.9
-  specificHeat: 840
-
-- type: material
-  id: rglass
-  name: Reinforced glass
-  color: '#49c9a7'
-  icon: Objects/Materials/sheets.rsi/rglass.png
-  density: 5000
-  electricResistivity: 1.0e+13
-  thermalConductivity: 0.9
-  specificHeat: 5000
-
-- type: material
-  id: gold
-  name: gold
-  icon: Objects/Materials/goldbar_single.png
-  density: 10000
-  electricResistivity: 8.0e-9
-  thermalConductivity: 30
-  specificHeat: 1000
-
-- type: material
-  id: plasma
-  name: plasma
-  icon: Objects/Materials/sheets.rsi/plasma.png
-  density: 200
-  electricResistivity: 2.1e-1
-  thermalConductivity: 80
-  specificHeat: 2000
+  id: steel
+  name: steel
+  color: gray
+  icon: Objects/Materials/Sheets/metal.rsi/steel.png
+  parent: MaterialBase
 
 - type: material
   id: plasteel
   name: plasteel
-  icon: Objects/Materials/sheet_plasteel.png
-  density: 15400 # literally arbitrary values...
-  electricResistivity: 6.9e-7
-  thermalConductivity: 18
-  specificHeat: 200
+  color: darkgrey
+  icon: Objects/Materials/Sheets/metal.rsi/plasteel.png
+  parent: MaterialBase
 
 - type: material
-  id: wood
-  name: wood
-  icon: Objects/Materials/wood_plank.png
-  density: 6000
-  electricResistivity: 1.0e+13
-  thermalConductivity: 1.5
-  specificHeat: 600
+  id: brass
+  name: brass
+  color: darkorange
+  icon: Objects/Materials/Sheets/metal.rsi/brass.png
+  parent: MaterialBase
+
+- type: material
+  id: titanium
+  name: titanium
+  color: darkgrey
+  icon: Objects/Materials/Sheets/metal.rsi/titanium.png
+  parent: MaterialBase
+
+- type: material
+  id: plastitanium
+  name: plastitanium
+  color: darkgrey
+  icon: Objects/Materials/Sheets/metal.rsi/plastitanium.png
+  parent: MaterialBase
+
+- type: material
+  id: glass
+  name: glass
+  color: lightblue
+  icon: Objects/Materials/Sheets/glass.rsi/glass.png
+  parent: MaterialBase
+
+- type: material
+  id: rglass
+  name: reinforced glass
+  color: blue
+  icon: Objects/Materials/Sheets/glass.rsi/rglass.png
+  parent: MaterialBase
+
+- type: material
+  id: pglass
+  name: plasma glass
+  color: pink
+  icon: Objects/Materials/Sheets/glass.rsi/pglass.png
+  parent: MaterialBase
+
+- type: material
+  id: rpglass
+  name: reinforced plasma glass
+  color: darkpink
+  icon: Objects/Materials/Sheets/glass.rsi/prglass.png
+  parent: MaterialBase
+
+- type: material
+  id: titaniumglass
+  name: titanium glass
+  color: grey
+  icon: Objects/Materials/Sheets/glass.rsi/titaniumglass.png
+  parent: MaterialBase
+
+- type: material
+  id: plastitaniumglass
+  name: plastitanium glass
+  color: grey
+  icon: Objects/Materials/Sheets/glass.rsi/plastitaniumglass.png
+  parent: MaterialBase
+
+- type: material
+  id: adamantine
+  name: adamantine
+  color: darkgrey
+  icon: Objects/Materials/Ingots/adamantine.png
+  parent: MaterialBase
+
+- type: material
+  id: copper
+  name: copper
+  color: orange
+  icon: Objects/Materials/Ingots/copper.png
+  parent: MaterialBase
+
+- type: material
+  id: gold
+  name: gold
+  color: yellow
+  icon: Objects/Materials/Ingots/gold.png
+  parent: MaterialBase
+
+- type: material
+  id: hydrogen
+  name: hydrogen
+  color: black
+  icon: Objects/Materials/Ingots/hydrogen.png
+  parent: MaterialBase
+
+- type: material
+  id: iron
+  name: iron
+  color: grey
+  icon: Objects/Materials/Ingots/iron.png
+  parent: MaterialBase
+
+- type: material
+  id: silver
+  name: silver
+  color: lightgrey
+  icon: Objects/Materials/Ingots/silver.png
+  parent: MaterialBase
+
+- type: material
+  id: plasma
+  name: plasma
+  color: pink
+  icon: Objects/Materials/Sheets/other.rsi/plasma.png
+  parent: MaterialBase
+
+- type: material
+  id: uranium
+  name: uranium
+  color: pink
+  icon: Objects/Materials/Sheets/other.rsi/uranium.png
+  parent: MaterialBase
+
+- type: material
+  id: paper
+  name: paper
+  color: white
+  icon: Objects/Materials/Sheets/other.rsi/paper.png
+  parent: MaterialBase
+
+- type: material
+  id: phoron
+  name: phoron
+  color: orange
+  icon: Objects/Materials/Sheets/other.rsi/phoron.png
+  parent: MaterialBase
 
 - type: material
   id: plastic
   name: plastic
-  icon: Objects/Materials/sheets.rsi/plastic.png
-  density: 6500
-  electricResistivity: 1.0e+13
-  thermalConductivity: 1.5
-  specificHeat: 600
+  color: white
+  icon: Objects/Materials/Sheets/other.rsi/plastic.png
+  parent: MaterialBase
+
+- type: material
+  id: wood
+  name: wood
+  color: lightbrown
+  icon: Objects/Materials/materials.rsi/wood_plank.png
+  parent: MaterialBase

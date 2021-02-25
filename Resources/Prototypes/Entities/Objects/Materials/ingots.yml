@@ -2,8 +2,10 @@
   id: IngotBase
   abstract: true
   parent: BaseItem
+  description: A heavy metal ingot stamped with the Nanotransen logo.
   components:
     - type: Sprite
+      netsync: false
       sprite: Objects/Materials/ingots.rsi
     - type: Item
       sprite: Objects/Materials/ingots.rsi
@@ -13,10 +15,75 @@
         - Ingot
 
 - type: entity
+  name: adamantine bar
+  id: IngotAdamantine
+  parent: IngotBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: adamantine
+    - type: Stack
+      stacktype: enum.StackType.Adamantine
+    - type: Sprite
+      state: adamantine_3
+    - type: Item
+      HeldPrefix: adamantine
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - adamantine
+            - adamantine_2
+            - adamantine_3
+
+- type: entity
+  id: IngotAdamantine1
+  name: adamantine bar
+  parent: IngotAdamantine
+  components:
+    - type: Sprite
+      state: adamantine
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: copper bar
+  id: IngotCopper
+  parent: IngotBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: copper
+    - type: Stack
+      stacktype: enum.StackType.Copper
+    - type: Sprite
+      state: copper_3
+    - type: Item
+      HeldPrefix: copper
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - copper
+            - copper_2
+            - copper_3
+
+- type: entity
+  id: IngotCopper1
+  name: copper bar
+  parent: IngotCopper
+  components:
+    - type: Sprite
+      state: copper
+    - type: Stack
+      count: 1
+
+- type: entity
   name: gold bar
   id: IngotGold
   parent: IngotBase
-  suffix: Full
   components:
     - type: Material
       materials:
@@ -25,23 +92,122 @@
     - type: Stack
       stacktype: enum.StackType.Gold
     - type: Sprite
-      state: goldbar_3
-      netsync: false
+      state: gold_3
+    - type: Item
+      HeldPrefix: gold
     - type: Appearance
       visuals:
         - type: StackVisualizer
           stackLayers:
-            - goldbar
-            - goldbar_2
-            - goldbar_3
+            - gold
+            - gold_2
+            - gold_3
 
 - type: entity
   id: IngotGold1
   name: gold bar
   parent: IngotGold
-  suffix: 1
   components:
     - type: Sprite
-      state: goldbar
+      state: gold
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: hydrogen bar
+  id: IngotHydrogen
+  parent: IngotBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: hydrogen
+    - type: Stack
+      stacktype: enum.StackType.Hydrogen
+    - type: Sprite
+      state: hydrogen_3
+    - type: Item
+      HeldPrefix: hydrogen
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - hydrogen
+            - hydrogen_2
+            - hydrogen_3
+
+- type: entity
+  id: IngotHydrogen1
+  name: hydrogen bar
+  parent: IngotHydrogen
+  components:
+    - type: Sprite
+      state: hydrogen
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: iron bar
+  id: IngotIron
+  parent: IngotBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: iron
+    - type: Stack
+      stacktype: enum.StackType.Iron
+    - type: Sprite
+      state: iron_3
+    - type: Item
+      HeldPrefix: iron
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - iron
+            - iron_2
+            - iron_3
+
+- type: entity
+  id: IngotIron1
+  name: iron bar
+  parent: IngotIron
+  components:
+    - type: Sprite
+      state: iron
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: silver bar
+  id: IngotSilver
+  parent: IngotBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: silver
+    - type: Stack
+      stacktype: enum.StackType.Silver
+    - type: Sprite
+      state: silver_3
+    - type: Item
+      HeldPrefix: silver
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - silver
+            - silver_2
+            - silver_3
+
+- type: entity
+  id: IngotSilver1
+  name: silver bar
+  parent: IngotSilver
+  components:
+    - type: Sprite
+      state: silver
     - type: Stack
       count: 1
