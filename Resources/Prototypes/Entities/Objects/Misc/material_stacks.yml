@@ -19,7 +19,7 @@
         - key: enum.MaterialKeys.Stack
           mat: steel
     - type: Stack
-      stacktype: enum.StackType.Metal
+      stackType: Steel
     - type: Sprite
       sprite: Objects/Materials/sheets.rsi
       state: metal
@@ -37,7 +37,7 @@
   suffix: 1
   components:
     - type: Stack
-      stacktype: enum.StackType.Metal
+      stackType: Steel
       count: 1
 
 - type: entity
@@ -51,7 +51,7 @@
         - key: enum.MaterialKeys.Stack
           mat: glass
     - type: Stack
-      stacktype: enum.StackType.Glass
+      stackType: Glass
     - type: Sprite
       sprite: Objects/Materials/sheets.rsi
       state: glass
@@ -66,7 +66,7 @@
   suffix: 1
   components:
     - type: Stack
-      stacktype: enum.StackType.Glass
+      stackType: Glass
       count: 1
 
 - type: entity
@@ -80,7 +80,7 @@
         - key: enum.MaterialKeys.Stack
           mat: rglass
     - type: Stack
-      stacktype: enum.StackType.ReinforcedGlass
+      stackType: ReinforcedGlass
     - type: Sprite
       sprite: Objects/Materials/sheets.rsi
       state: rglass
@@ -95,7 +95,7 @@
   suffix: 1
   components:
     - type: Stack
-      StackType: enum.StackType.ReinforcedGlass
+      stackType: ReinforcedGlass
       count: 1
 
 
@@ -110,7 +110,7 @@
         - key: enum.MaterialKeys.Stack
           mat: plasteel
     - type: Stack
-      stacktype: enum.StackType.Plasteel
+      stackType: Plasteel
     - type: Sprite
       sprite: Objects/Materials/sheets.rsi
       state: plasteel
@@ -125,7 +125,7 @@
   suffix: 1
   components:
     - type: Stack
-      stacktype: enum.StackType.Plasteel
+      stackType: Plasteel
       count: 1
 
 - type: entity
@@ -139,7 +139,7 @@
         - key: enum.MaterialKeys.Stack
           mat: gold
     - type: Stack
-      stacktype: enum.StackType.Gold
+      stackType: Gold
     - type: Sprite
       sprite: Objects/Materials/materials.rsi
       state: goldbar_30
@@ -162,6 +162,7 @@
       sprite: Objects/Materials/materials.rsi
       state: goldbar_10
     - type: Stack
+      stackType: GoldStack1
       count: 1
 
 - type: entity
@@ -184,7 +185,7 @@
     - key: enum.MaterialKeys.Stack
       mat: plasma
   - type: Stack
-    stacktype: enum.StackType.Plasma
+    stackType: Plasma
   - type: Sprite
     sprite: Objects/Materials/sheets.rsi
     state: plasma
@@ -199,6 +200,7 @@
   suffix: 1
   components:
   - type: Stack
+    stackType: PlasmaStack1
     count: 1
 
 - type: entity
@@ -212,7 +214,7 @@
     - key: enum.MaterialKeys.Stack
       mat: wood
   - type: Stack
-    stacktype: enum.StackType.Wood
+    stackType: Wood
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
     state: wood
@@ -227,6 +229,7 @@
   suffix: 1
   components:
   - type: Stack
+    stackType: WoodPlank1
     count: 1
 
 - type: entity
@@ -240,7 +243,7 @@
     - key: enum.MaterialKeys.Stack
       mat: plastic
   - type: Stack
-    stacktype: enum.StackType.Plastic
+    stackType: Plastic
   - type: Sprite
     sprite: Objects/Materials/sheets.rsi
     state: plastic
@@ -255,4 +258,5 @@
   suffix: 1
   components:
   - type: Stack
+    stackType: PlasticSheet1
     count: 1

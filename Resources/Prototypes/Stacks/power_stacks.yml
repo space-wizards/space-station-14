@@ -1,0 +1,25 @@
+﻿- type: stack
+  id: Cable
+  name: cable
+  icon: "/Textures/Objects/Tools/cables.rsi/coil-30.png"
+  spawn: ApcExtensionCableStack1
+
+- type: stack
+  id: MVCable
+  name: mv cable
+
+- type: stack
+  id: HVCable
+  name: hv cable
+
+- type: stack
+  id: HVWireStack1
+  name: hv wire
+
+- type: stack
+  id: MVWireStack1
+  name: mv wire
+
+- type: stack
+  id: ApcExtensionCableStack1
+  name: apc extension cable

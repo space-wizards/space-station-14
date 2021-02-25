@@ -186,8 +186,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 {
                     case MaterialConstructionGraphStep _:
                     case ToolConstructionGraphStep _:
-                    case PrototypeConstructionGraphStep _:
-                    case ComponentConstructionGraphStep _:
+                    case ArbitraryInsertConstructionGraphStep _:
                         if (await HandleStep(eventArgs, edge, firstStep))
                         {
                             if(edge.Steps.Count > 1)
@@ -258,17 +257,8 @@ namespace Content.Server.GameObjects.Components.Construction
 
                     switch (insertStep)
                     {
-                        case PrototypeConstructionGraphStep prototypeStep:
-                            if (prototypeStep.EntityValid(eventArgs.Using)
-                                && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
-                            {
-                                valid = true;
-                            }
-
-                            break;
-
-                        case ComponentConstructionGraphStep componentStep:
-                            if (componentStep.EntityValid(eventArgs.Using)
+                        case ArbitraryInsertConstructionGraphStep arbitraryStep:
+                            if (arbitraryStep.EntityValid(eventArgs.Using)
                                 && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
                             {
                                 valid = true;

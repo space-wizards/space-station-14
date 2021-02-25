@@ -3,7 +3,7 @@
   id: cargo.armorysmg
   description: "Contains three high-powered, semiautomatic rifles with six mags. Requires Armory access to open."
   icon:
-    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
     state: icon
   product: CrateArmorySMG
   cost: 8000
