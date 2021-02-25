@@ -27,6 +27,7 @@ namespace Content.Server.Construction.Completions
                 !containerManager.TryGetContainer(Container, out var container)) return;
 
             container.EmptyContainer(true, entity.Transform.Coordinates);
+            entity.Transform.AttachToGridOrMap();
         }
     }
 }
