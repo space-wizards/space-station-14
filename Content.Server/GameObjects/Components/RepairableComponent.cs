@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components
                     damageable.Heal();
 
                     Owner.PopupMessage(eventArgs.User,
-                        Loc.GetString("repairable-component-repair",
+                        Loc.GetString("comp-repairable-repair",
                             ("target", Owner),
                             ("welder", eventArgs.Using)));
                 }
