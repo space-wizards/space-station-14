@@ -62,9 +62,10 @@ namespace Content.Server.Physics.Controllers
                 HandleShuttleMovement(mover);
             }
 
-            foreach (var (mover, physics) in ComponentManager.EntityQuery<IMoverComponent, PhysicsComponent>())
+            foreach (var (mover, physics) in ComponentManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
             {
                 if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
+                if (mover.Owner.Paused && !mover.IgnorePaused) continue;
 
                 HandleKinematicMovement(mover, physics);
             }
@@ -128,7 +129,7 @@ namespace Content.Server.Physics.Controllers
             {
                 mobMover.StepSoundDistance = 0;
 
-                if (!mover.Owner.HasComponent<FootstepSoundComponent>())
+                if (!mover.Owner.HasComponent<FootstepSoundComponent>() || mover.Owner.Transform.GridID == GridId.Invalid)
                 {
                     return;
                 }

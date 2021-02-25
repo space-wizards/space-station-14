@@ -9,6 +9,12 @@ namespace Content.Shared.GameObjects.Components.Movement
     public interface IMoverComponent : IComponent
     {
         /// <summary>
+        ///     Whether this mover should ignore if the map is paused.
+        ///     Useful for mapping modes.
+        /// </summary>
+        bool IgnorePaused { get; }
+
+        /// <summary>
         ///     Movement speed (m/s) that the entity walks.
         /// </summary>
         float CurrentWalkSpeed { get; }

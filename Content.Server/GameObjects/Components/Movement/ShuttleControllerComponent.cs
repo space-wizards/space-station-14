@@ -21,8 +21,6 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(IMoverComponent))]
     internal class ShuttleControllerComponent : Component, IMoverComponent
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-
         private bool _movingUp;
         private bool _movingDown;
         private bool _movingLeft;
@@ -40,6 +38,8 @@ namespace Content.Server.GameObjects.Components.Movement
         private IEntity? _controller;
 
         public override string Name => "ShuttleController";
+
+        public bool IgnorePaused => false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentWalkSpeed { get; } = 8;

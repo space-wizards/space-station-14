@@ -96,9 +96,10 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 if (maxForce > ThrowForce)
                 {
+                    // Vera please fix ;-;
                     if (throwTarget != EntityCoordinates.Invalid)
                     {
-                        var moveForce = maxForce * MathHelper.Clamp(moveProb, 0, 100) / 30f;
+                        var moveForce = maxForce * MathHelper.Clamp(moveProb, 0, 100) / 15f;
                         var pos = ((throwTarget.Position - transform.Coordinates.Position).Normalized + direction.ToDirection().ToVec()).Normalized;
                         physics.ApplyLinearImpulse(pos * moveForce);
                     }

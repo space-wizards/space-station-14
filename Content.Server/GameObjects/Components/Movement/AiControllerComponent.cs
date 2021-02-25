@@ -92,6 +92,8 @@ namespace Content.Server.GameObjects.Components.Movement
             Processor?.Shutdown();
         }
 
+        public bool IgnorePaused => false;
+
         /// <summary>
         ///     Movement speed (m/s) that the entity walks, after modifiers
         /// </summary>
