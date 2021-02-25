@@ -81,6 +81,7 @@ namespace Content.Client
             prototypes.RegisterIgnore("objective");
             prototypes.RegisterIgnore("holiday");
             prototypes.RegisterIgnore("aiFaction");
+            prototypes.RegisterIgnore("behaviorSet");
 
             ClientContentIoC.Register();
 
