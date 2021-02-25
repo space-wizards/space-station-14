@@ -31,7 +31,7 @@
 
         - to: MetalTable
           steps:
-            - material: Metal
+            - material: Steel
               amount: 1
               doAfter: 1
 

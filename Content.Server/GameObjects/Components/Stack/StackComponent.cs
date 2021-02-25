@@ -14,7 +14,6 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Stack
 {
-
     // TODO: Naming and presentation and such could use some improvement.
     [RegisterComponent]
     [ComponentReference(typeof(SharedStackComponent))]
@@ -85,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Stack
             if (!eventArgs.Using.TryGetComponent<StackComponent>(out var stack))
                 return false;
 
-            if (!stack.StackType.Equals(StackType))
+            if (!stack.StackTypeId.Equals(StackTypeId))
             {
                 return false;
             }
