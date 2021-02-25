@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Explosion;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Maps;
@@ -224,7 +223,7 @@ namespace Content.Server.Explosions
             var players = playerManager.GetPlayersInRange(epicenter, (int) Math.Ceiling(maxRange));
             foreach (var player in players)
             {
-                if (player.AttachedEntity == null || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent? recoil))
+                if (player.AttachedEntity == null || !player.AttachedEntity.TryGetComponent(out EyeComponent? recoil))
                 {
                     continue;
                 }

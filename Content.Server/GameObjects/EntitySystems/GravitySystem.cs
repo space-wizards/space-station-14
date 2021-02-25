@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Gravity;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.EntitySystemMessages.Gravity;
 using JetBrains.Annotations;
@@ -129,7 +128,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (player.AttachedEntity == null
                     || player.AttachedEntity.Transform.GridID != gridId
-                    || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent recoil))
+                    || !player.AttachedEntity.TryGetComponent(out EyeComponent recoil))
                 {
                     continue;
                 }

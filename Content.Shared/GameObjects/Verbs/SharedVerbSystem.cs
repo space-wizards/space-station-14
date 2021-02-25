@@ -44,7 +44,7 @@ namespace Content.Shared.GameObjects.Verbs
                        !occluder.Enabled;
             }
 
-            var mask = player.TryGetComponent(out SharedEyeComponent? eye) && eye.DrawFov
+            var mask = player.TryGetComponent(out EyeComponent? eye) && eye.DrawFov
                 ? CollisionGroup.Opaque
                 : CollisionGroup.None;
 

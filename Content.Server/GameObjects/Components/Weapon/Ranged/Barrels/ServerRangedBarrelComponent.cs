@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Shared.Audio;
@@ -233,7 +232,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var direction = (targetPos - shooter.Transform.WorldPosition).ToAngle();
             var angle = GetRecoilAngle(direction);
             // This should really be client-side but for now we'll just leave it here
-            if (shooter.TryGetComponent(out CameraRecoilComponent recoilComponent))
+            if (shooter.TryGetComponent(out EyeComponent recoilComponent))
             {
                 recoilComponent.Kick(-angle.ToVec() * 0.15f);
             }

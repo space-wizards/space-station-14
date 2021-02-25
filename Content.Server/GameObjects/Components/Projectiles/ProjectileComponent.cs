@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Mobs;
+using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Projectiles;
@@ -102,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 _damagedEntity = true;
             }
 
-            if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
+            if (!entity.Deleted && entity.TryGetComponent(out EyeComponent recoilComponent)
                                 && Owner.TryGetComponent(out IPhysicsComponent ownPhysics))
             {
                 var direction = ownPhysics.LinearVelocity.Normalized;

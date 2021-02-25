@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         void ICollideBehavior.CollideWith(IEntity entity)
         {
-            if (entity.TryGetComponent(out StunnableComponent stunnableComponent))
+            if (entity.TryGetComponent(out SharedStunnableComponent stunnableComponent))
             {
                 stunnableComponent.Stun(_stunAmount);
                 stunnableComponent.Knockdown(_knockdownAmount);
