@@ -153,6 +153,12 @@ namespace Content.Shared.GameObjects.Components
         ReinforcedPlasmaGlass,
         TitaniumGlass,
         PlastitaniumGlass,
-        Paper
+        Paper,
+        Uranium,
+        Adamantine,
+        Copper,
+        Iron,
+        Silver,
+        Hydrogen
     }
 }
