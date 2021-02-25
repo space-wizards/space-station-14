@@ -25,23 +25,6 @@
         "directions": 4
     },
     {
-        "name": "metal"
-    },
-    {
-        "name": "metal_2"
-    },
-    {
-        "name": "metal_3"
-    },
-    {
-        "name": "metal-inhand-left",
-        "directions": 4
-    },
-    {
-        "name": "metal-inhand-right",
-        "directions": 4
-    },
-    {
         "name": "plasteel"
     },
     {
@@ -73,6 +56,23 @@
     },
     {
         "name": "plastitanium-inhand-right",
+        "directions": 4
+    },
+    {
+        "name": "steel"
+    },
+    {
+        "name": "steel_2"
+    },
+    {
+        "name": "steel_3"
+    },
+    {
+        "name": "steel-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "steel-inhand-right",
         "directions": 4
     },
     {

@@ -1,0 +1,47 @@
+- type: entity
+  id: IngotBase
+  abstract: true
+  parent: BaseItem
+  components:
+    - type: Sprite
+      sprite: Objects/Materials/ingots.rsi
+    - type: Item
+      sprite: Objects/Materials/ingots.rsi
+    - type: ItemStatus
+    - type: Tag
+      tags:
+        - Ingot
+
+- type: entity
+  name: gold bar
+  id: IngotGold
+  parent: IngotBase
+  suffix: Full
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: gold
+    - type: Stack
+      stacktype: enum.StackType.Gold
+    - type: Sprite
+      state: goldbar_3
+      netsync: false
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - goldbar
+            - goldbar_2
+            - goldbar_3
+
+- type: entity
+  id: IngotGold1
+  name: gold bar
+  parent: IngotGold
+  suffix: 1
+  components:
+    - type: Sprite
+      state: goldbar
+    - type: Stack
+      count: 1

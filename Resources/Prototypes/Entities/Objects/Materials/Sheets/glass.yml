@@ -1,0 +1,201 @@
+- type: entity
+  id: SheetGlassBase
+  abstract: true
+  parent: BaseItem
+  suffix: Sheet
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Materials/Sheets/glass.rsi
+    - type: Item
+      sprite: Objects/Materials/Sheets/glass.rsi
+    - type: ItemStatus
+    - type: Tag
+      tags:
+        - Sheet
+
+- type: entity
+  name: glass
+  id: SheetGlass
+  parent: SheetGlassBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: glass
+    - type: Stack
+      stacktype: enum.StackType.Glass
+    - type: Sprite
+      state: glass
+    - type: Item
+      HeldPrefix: glass
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - glass
+            - glass_2
+            - glass_3
+
+- type: entity
+  id: SheetGlass1
+  name: glass
+  parent: SheetGlass
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: reinforced glass
+  id: SheetRGlass
+  parent: SheetGlassBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: rglass
+    - type: Stack
+      stacktype: enum.StackType.ReinforcedGlass
+    - type: Sprite
+      state: rglass
+    - type: Item
+      HeldPrefix: rglass
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - rglass
+            - rglass_2
+            - rglass_3
+
+- type: entity
+  id: SheetRGlass1
+  name: reinforced glass
+  parent: SheetRGlass
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: plasma glass
+  id: SheetPGlass
+  parent: SheetGlassBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: pglass
+    - type: Stack
+      stacktype: enum.StackType.PlasmaGlass
+    - type: Sprite
+      state: pglass
+    - type: Item
+      HeldPrefix: pglass
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - pglass
+            - pglass_2
+            - pglass_3
+
+- type: entity
+  id: SheetPGlass1
+  name: plasma glass
+  parent: SheetPGlass
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: reinforced plasma glass
+  id: SheetPGlass
+  parent: SheetGlassBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: pglass
+    - type: Stack
+      stacktype: enum.StackType.PlasmaGlass
+    - type: Sprite
+      state: pglass
+    - type: Item
+      HeldPrefix: pglass
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - prglass
+            - prglass_2
+            - prglass_3
+
+- type: entity
+  id: SheetPGlass1
+  name: reinforced plasma glass
+  parent: SheetPGlass
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: titanium glass
+  id: SheetTitaniumGlass
+  parent: SheetGlassBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: titaniumglass
+    - type: Stack
+      stacktype: enum.StackType.TitaniumGlass
+    - type: Sprite
+      state: titaniumglass
+    - type: Item
+      HeldPrefix: titaniumglass
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - titaniumglass
+            - titaniumglass_2
+            - titaniumglass_3
+
+- type: entity
+  id: SheetTitaniumGlass1
+  name: titanium glass
+  parent: SheetTitaniumGlass
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: plastitanium glass
+  id: SheetPlastitaniumGlass
+  parent: SheetGlassBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: plastitaniumglass
+    - type: Stack
+      stacktype: enum.StackType.PlastitaniumGlass
+    - type: Sprite
+      state: plastitaniumglass
+    - type: Item
+      HeldPrefix: plastitaniumglass
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - plastitaniumglass
+            - plastitaniumglass_2
+            - plastitaniumglass_3
+
+- type: entity
+  id: SheetPlastitaniumGlass1
+  name: plastitanium glass
+  parent: SheetPlastitaniumGlass
+  components:
+    - type: Stack
+      count: 1

@@ -23,10 +23,19 @@
   id: Hoe
 
 - type: Tag
+  id: Ingot
+
+- type: Tag
+  id: Ore
+
+- type: Tag
   id: PlantSampleTaker
 
 - type: Tag
   id: Shovel
+
+- type: Tag
+  id: Sheet
 
 - type: Tag
   id: Teleportable

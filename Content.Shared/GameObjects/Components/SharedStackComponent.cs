@@ -119,7 +119,7 @@ namespace Content.Shared.GameObjects.Components
 
     public enum StackType
     {
-        Metal,
+        Steel,
         Glass,
         ReinforcedGlass,
         Plasteel,
