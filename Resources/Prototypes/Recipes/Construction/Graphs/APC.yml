@@ -6,8 +6,8 @@
       edges:
         - to: apc
           steps:
-            - material: Metal
+            - material: Steel
               amount: 3
 
     - node: apc
-      entity: BaseAPC
+      entity: BaseApc

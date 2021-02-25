@@ -1,4 +1,4 @@
-- type: material
+﻿- type: material
   id: steel
   name: steel
   color: gray
@@ -31,7 +31,7 @@
 - type: material
   id: gold
   name: gold
-  icon: Objects/Materials/goldbar_single.png
+  icon: Objects/Materials/materials.rsi/goldbar_10.png
   density: 10000
   electricResistivity: 8.0e-9
   thermalConductivity: 30
