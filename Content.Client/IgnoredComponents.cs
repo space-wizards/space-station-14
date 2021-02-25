@@ -238,6 +238,7 @@ namespace Content.Client
             "SecretStash",
             "Toilet",
             "ClusterFlash",
+            "Repairable",
             "GasGenerator",
             "SolutionTransfer",
             "Shovel",
