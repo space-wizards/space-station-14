@@ -29,7 +29,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
         private IPhysicsComponent? _pullerPhysics;
         public IPhysicsComponent? PullerPhysics => _pullerPhysics;
 
-        private DistanceJoint? _pullJoint = null;
+        private SlothJoint? _pullJoint = null;
 
         /// <summary>
         /// The current entity pulling this component.
@@ -143,14 +143,10 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
 
                     _physics.WakeBody();
-                    _pullJoint = pullerPhysics.CreateDistanceJoint(_physics);
+                    _pullJoint = pullerPhysics.CreateSlothJoint(_physics);
                     // _physics.BodyType = BodyType.Kinematic; // TODO: Need to consider their original bodytype
                     _pullJoint.CollideConnected = true;
-                    _pullJoint.WarmStarting = false;
                     _pullJoint.MaxLength = 2.0f; // TODO hacky, we should consider ours and their bb
-                    _pullJoint.MinLength = 1.0f;
-                    _pullJoint.Length = 1.0f;
-                    _pullJoint.LinearStiffness(0.5f, 0.7f);
                 }
                 // Code here will not run if pulling a new object was attempted and failed because of the returns from the refactor.
             }
@@ -259,12 +255,16 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return false;
             }
 
+            /*
             if (!_physics.TryGetController(out PullController controller))
             {
                 return false;
             }
+            */
 
-            return controller.TryMoveTo(Puller.Transform.Coordinates, to);
+            return true;
+
+            //return controller.TryMoveTo(Puller.Transform.Coordinates, to);
         }
 
         public override ComponentState GetComponentState()

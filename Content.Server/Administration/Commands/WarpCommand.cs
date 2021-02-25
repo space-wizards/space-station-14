@@ -8,6 +8,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Administration.Commands
 {
@@ -115,7 +116,7 @@ namespace Content.Server.Administration.Commands
                     player.AttachedEntity.Transform.Coordinates = found;
                     if (player.AttachedEntity.TryGetComponent(out IPhysicsComponent physics))
                     {
-                        physics.Stop();
+                        physics.LinearVelocity = Vector2.Zero;
                     }
                 }
                 else

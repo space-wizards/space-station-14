@@ -8,17 +8,19 @@
     anchored: false
     fixtures:
     - shape:
-        !type:PhysShapeCircle:
+        !type:PhysShapeCircle
           radius: 0.5
       hard: false
-      layer: [Impassable]
-      mask:
-      - AllMask
-    - shape:
-        !type:PhysShapeCircle:
-          radius: 10
-      hard: false
       layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      - Underplating
+      - MapGrid
+      mask:
+      - MapGrid
     mass: 5
   - type: Singularity
   - type: RadiationPulse

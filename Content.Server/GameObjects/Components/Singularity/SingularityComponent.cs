@@ -39,7 +39,6 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _energy = value;
                 if (_energy <= 0)
                 {
-                    if(_singularityController != null) _singularityController.LinearVelocity = Vector2.Zero;
                     _spriteComponent?.LayerSetVisible(0, false);
 
                     Owner.Delete();
@@ -96,7 +95,6 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _ => 0
             };
 
-        private SingularityController? _singularityController;
         private PhysicsComponent? _collidableComponent;
         private SpriteComponent? _spriteComponent;
         private RadiationPulseComponent? _radiationPulseComponent;
@@ -130,9 +128,6 @@ namespace Content.Server.GameObjects.Components.Singularity
                 Logger.Error("SingularityComponent was spawned without SpriteComponent");
             }
 
-            _singularityController = _collidableComponent?.EnsureController<SingularityController>();
-            if(_singularityController!=null)_singularityController.ControlledComponent = _collidableComponent;
-
             if (!Owner.TryGetComponent(out _radiationPulseComponent))
             {
                 Logger.Error("SingularityComponent was spawned without RadiationPulseComponent");
@@ -141,62 +136,18 @@ namespace Content.Server.GameObjects.Components.Singularity
             Level = 1;
         }
 
-        public void Update()
+        public void Update(int seconds)
         {
-            Energy -= EnergyDrain;
-
-            if(Level == 1) return;
-            //pushing
-            var pushVector = new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10));
-            while (pushVector.X == 0 && pushVector.Y == 0)
-            {
-                pushVector = new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10));
-            }
-            _singularityController?.Push(pushVector.Normalized, 2);
-        }
-
-        private readonly List<IEntity> _previousPulledEntities = new();
-        public void CleanupPulledEntities()
-        {
-            foreach (var previousPulledEntity in _previousPulledEntities)
-            {
-                if(previousPulledEntity.Deleted) continue;
-                if (!previousPulledEntity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
-                var controller = collidableComponent.EnsureController<SingularityPullController>();
-                controller.StopPull();
-            }
-            _previousPulledEntities.Clear();
-        }
-
-        public void PullUpdate()
-        {
-            CleanupPulledEntities();
-            var entitiesToPull = Owner.EntityManager.GetEntitiesInRange(Owner.Transform.Coordinates, Level * 10);
-            foreach (var entity in entitiesToPull)
-            {
-                if (!entity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
-                if (entity.HasComponent<GhostComponent>()) continue;
-                var controller = collidableComponent.EnsureController<SingularityPullController>();
-                if(Owner.Transform.Coordinates.EntityId != entity.Transform.Coordinates.EntityId) continue;
-                var vec = (Owner.Transform.Coordinates - entity.Transform.Coordinates).Position;
-                if (vec == Vector2.Zero) continue;
-
-                var speed = 10 / vec.Length * Level;
-
-                controller.Pull(vec.Normalized, speed);
-                _previousPulledEntities.Add(entity);
-            }
+            Energy -= EnergyDrain * seconds;
         }
 
         void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
         {
-            if (_collidableComponent == null) return; //how did it even collide then? :D
-
             var otherEntity = otherBody.Entity;
 
             if (otherEntity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
             {
-                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(((IPhysBody) _collidableComponent).GetWorldAABB()))
+                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(ourBody.GetWorldAABB()))
                 {
                     mapGridComponent.Grid.SetTile(tile.GridIndices, Tile.Empty);
                     Energy++;
@@ -219,7 +170,6 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             _playingSound?.Stop();
             _audioSystem.PlayAtCoords("/Audio/Effects/singularity_collapse.ogg", Owner.Transform.Coordinates);
-            CleanupPulledEntities();
             base.OnRemove();
         }
     }

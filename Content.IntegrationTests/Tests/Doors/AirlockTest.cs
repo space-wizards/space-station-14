@@ -113,7 +113,6 @@ namespace Content.IntegrationTests.Tests.Doors
 
             IEntity physicsDummy = null;
             IEntity airlock = null;
-            TestController controller = null;
             ServerDoorComponent doorComponent = null;
 
             var physicsDummyStartingX = -1;
@@ -130,8 +129,6 @@ namespace Content.IntegrationTests.Tests.Doors
 
                 Assert.True(physicsDummy.TryGetComponent(out IPhysicsComponent physics));
 
-                controller = physics.EnsureController<TestController>();
-
                 Assert.True(airlock.TryGetComponent(out doorComponent));
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
             });
@@ -139,7 +136,7 @@ namespace Content.IntegrationTests.Tests.Doors
             await server.WaitIdleAsync();
 
             // Push the human towards the airlock
-            controller.LinearVelocity = (0.5f, 0);
+            //controller.LinearVelocity = (0.5f, 0);
 
             for (var i = 0; i < 240; i += 10)
             {
@@ -159,7 +156,5 @@ namespace Content.IntegrationTests.Tests.Doors
             // Blocked by the airlock
             Assert.That(physicsDummy.Transform.MapPosition.X, Is.Negative.Or.Zero);
         }
-
-        private class TestController : VirtualController { }
     }
 }
