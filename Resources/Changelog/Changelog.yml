@@ -9,3 +9,8 @@ Entries:
   - {message: Added new first aid kits with fancy new sprites., type: Add}
   id: 2
   time: '2021-02-25T10:46:21.0000000+00:00'
+- author: tmtmtl30
+  changes:
+  - {message: Constructed walls don't have broken lighting anymore, type: Fix}
+  id: 3
+  time: '2021-02-25T10:52:26.0000000+00:00'
