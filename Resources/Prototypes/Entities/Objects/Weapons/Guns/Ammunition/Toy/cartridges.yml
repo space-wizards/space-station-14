@@ -8,7 +8,7 @@
     caliber: Cap
   - type: Sprite
     netsync: false
-    directional: true
+    noRot: true
     sprite: Objects/Consumable/Trash/ash.rsi
     layers:
     - state: base

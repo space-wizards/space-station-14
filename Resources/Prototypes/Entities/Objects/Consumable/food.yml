@@ -2464,7 +2464,7 @@
 
 - type: entity
   parent: FoodBase
-  id: FoodToastedsandwich
+  id: FoodToastedSandwich
   name: toasted sandwich
   description: Now if you only had a pepper bar.
   components:
