@@ -49,6 +49,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         [ViewVariables] private bool _on;
         [ViewVariables] private bool _isBlinking;
+        [ViewVariables] private bool _ignoreGhostsBoo;
 
         private LightBulbType BulbType = LightBulbType.Tube;
         [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
@@ -158,6 +159,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             serializer.DataField(ref BulbType, "bulb", LightBulbType.Tube);
             serializer.DataField(ref _on, "on", true);
             serializer.DataField(ref _hasLampOnSpawn, "hasLampOnSpawn", true);
+            serializer.DataField(ref _ignoreGhostsBoo, "ignoreGhostsBoo", false);
         }
 
         /// <summary>
@@ -287,6 +289,9 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         public bool AffectedByGhostBoo(InstantActionEventArgs args)
         {
+            if (_ignoreGhostsBoo)
+                return false;
+
             // check cooldown first to prevent abuse
             var time = _gameTiming.CurTime;
             if (_lastGhostBlink != null)
