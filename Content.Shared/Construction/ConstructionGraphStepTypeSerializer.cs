@@ -13,7 +13,7 @@ namespace Content.Shared.Construction
         // TODO PAUL SERV3
         public ConstructionGraphStep Read(MappingDataNode node, ISerializationContext? context = null)
         {
-            var serializationManager = IoCManager.Resolve<IServ3Manager>();
+            var serializationManager = IoCManager.Resolve<ISerializationManager>();
 
             if (node.HasNode("material"))
             {
