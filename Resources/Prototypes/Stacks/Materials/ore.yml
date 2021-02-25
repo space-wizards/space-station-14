@@ -11,10 +11,10 @@
   spawn: Ammonia1
 
 - type: stack
-  id: BanananiumOre
-  name: banananium ore
-  icon: /Textures/Objects/Materials/ore.rsi/banananium.png
-  spawn: BanananiumOre1
+  id: BananiumOre
+  name: bananium ore
+  icon: /Textures/Objects/Materials/ore.rsi/bananium.png
+  spawn: BananiumOre1
 
 - type: stack
   id: DiamondOre

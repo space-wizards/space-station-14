@@ -15,27 +15,6 @@
         - Ore
 
 - type: entity
-  name:
-  id: Ore
-  parent: OreBase
-  components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat:
-    - type: Stack
-      stacktype:
-    - type: Sprite
-      state:
-
-- type: entity
-  id: 1
-  parent: Ore
-  components:
-    - type: Stack
-      count: 1
-
-- type: entity
   name: adamantine ore
   id: AdamantineOre
   parent: OreBase
@@ -52,6 +31,7 @@
 - type: entity
   id: AdamantineOre1
   parent: AdamantineOre
+  suffix: 1
   components:
     - type: Stack
       count: 1
@@ -71,29 +51,31 @@
       state: ammonia
 
 - type: entity
-  id: 1
-  parent: Ammonia1
+  id: Ammonia1
+  parent: Ammonia
+  suffix: 1
   components:
     - type: Stack
       count: 1
 
 - type: entity
-  name: banananium ore
-  id: BanananiumOre
+  name: bananium ore
+  id: BananiumOre
   parent: OreBase
   components:
     - type: Material
       materials:
         - key: enum.MaterialKeys.Stack
-          mat: banananium
+          mat: bananium
     - type: Stack
-      stacktype: BanananiumOre
+      stacktype: BananiumOre
     - type: Sprite
-      state: banananium
+      state: bananium
 
 - type: entity
-  id: BanananiumOre1
-  parent: BanananiumOre
+  id: BananiumOre1
+  parent: BananiumOre
+  suffix: 1
   components:
     - type: Stack
       count: 1
@@ -115,6 +97,7 @@
 - type: entity
   id: DiamondRaw1
   parent: DiamondRaw
+  suffix: 1
   components:
     - type: Stack
       count: 1
@@ -136,6 +119,7 @@
 - type: entity
   id: GoldOre1
   parent: GoldOre
+  suffix: 1
   components:
     - type: Stack
       count: 1
@@ -157,6 +141,7 @@
 - type: entity
   id: IronOre1
   parent: IronOre
+  suffix: 1
   components:
     - type: Stack
       count: 1
@@ -178,6 +163,7 @@
 - type: entity
   id: PhoronOre1
   parent: PhoronOre
+  suffix: 1
   components:
     - type: Stack
       count: 1
@@ -199,6 +185,7 @@
 - type: entity
   id: PlasmaOre1
   parent: PlasmaOre
+  suffix: 1
   components:
     - type: Stack
       count: 1
@@ -220,13 +207,14 @@
 - type: entity
   id: Sand1
   parent: Sand
+  suffix: 1
   components:
     - type: Stack
       count: 1
 
 - type: entity
   name: black sand
-  id: SandBLack
+  id: SandBlack
   parent: OreBase
   components:
     - type: Material
@@ -241,6 +229,7 @@
 - type: entity
   id: SandBlack1
   parent: SandBlack
+  suffix: 1
   components:
     - type: Stack
       count: 1
@@ -262,6 +251,7 @@
 - type: entity
   id: SilverOre1
   parent: SilverOre
+  suffix: 1
   components:
     - type: Stack
       count: 1
@@ -283,6 +273,7 @@
 - type: entity
   id: Slag1
   parent: Slag
+  suffix: 1
   components:
     - type: Stack
       count: 1
@@ -304,6 +295,7 @@
 - type: entity
   id: TitaniumOre1
   parent: TitaniumOre
+  suffix: 1
   components:
     - type: Stack
       count: 1
@@ -325,6 +317,7 @@
 - type: entity
   id: UraniumOre1
   parent: UraniumOre
+  suffix: 1
   components:
     - type: Stack
       count: 1

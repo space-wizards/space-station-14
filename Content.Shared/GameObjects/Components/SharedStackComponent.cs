@@ -57,7 +57,7 @@ namespace Content.Shared.GameObjects.Components
 
         public override void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataFieldCached(ref _maxCount, "max", 50);
+            serializer.DataFieldCached(ref _maxCount, "max", 30);
             serializer.DataFieldCached(ref _count, "count", MaxCount);
 
             if (serializer.Writing)
