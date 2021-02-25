@@ -122,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Explosion
                     thrownCount++;
 
                     // TODO: Suss out throw strength
-                    grenade.TryThrow(angle.ToVec().Normalized * 10);
+                    grenade.TryThrow(angle.ToVec().Normalized * 50);
 
                     grenade.SpawnTimer(delay, () =>
                     {
@@ -148,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Explosion
             if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.MapPosition);
                 return true;
             }
 
