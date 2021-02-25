@@ -106,22 +106,22 @@ namespace Content.Server.GameObjects.Components
             switch (level)
             {
                 case 0:
-                    message.AddText(Loc.GetString("window-component-damaged-1"));
+                    message.AddText(Loc.GetString("comp-window-damaged-1"));
                     break;
                 case 1:
-                    message.AddText(Loc.GetString("window-component-damaged-2"));
+                    message.AddText(Loc.GetString("comp-window-damaged-2"));
                     break;
                 case 2:
-                    message.AddText(Loc.GetString("window-component-damaged-3"));
+                    message.AddText(Loc.GetString("comp-window-damaged-3"));
                     break;
                 case 3:
-                    message.AddText(Loc.GetString("window-component-damaged-4"));
+                    message.AddText(Loc.GetString("comp-window-damaged-4"));
                     break;
                 case 4:
-                    message.AddText(Loc.GetString("window-component-damaged-5"));
+                    message.AddText(Loc.GetString("comp-window-damaged-5"));
                     break;
                 case 5:
-                    message.AddText(Loc.GetString("window-component-damaged-6"));
+                    message.AddText(Loc.GetString("comp-window-damaged-6"));
                     break;
             }
         }
@@ -135,7 +135,7 @@ namespace Content.Server.GameObjects.Components
 
             EntitySystem.Get<AudioSystem>()
                 .PlayAtCoords("/Audio/Effects/glass_knock.ogg", eventArgs.Target.Transform.Coordinates, AudioHelpers.WithVariation(0.05f));
-            eventArgs.Target.PopupMessageEveryone(Loc.GetString("window-component-knock"));
+            eventArgs.Target.PopupMessageEveryone(Loc.GetString("comp-window-knock"));
 
             _lastKnockTime = _gameTiming.CurTime;
 
