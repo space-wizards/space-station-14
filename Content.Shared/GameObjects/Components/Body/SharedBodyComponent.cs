@@ -62,19 +62,17 @@ namespace Content.Shared.GameObjects.Components.Body
 
         [ViewVariables] public IReadOnlyDictionary<string, string> PartIDs => _partIds;
 
-        void ISerializationHooks.AfterDeserialization()
+        public override void Initialize()
         {
             // TODO BODY BeforeDeserialization
             // TODO BODY Move to template or somewhere else
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-            var template = prototypeManager.Index<BodyTemplatePrototype>(TemplateName);
+            var template = _prototypeManager.Index<BodyTemplatePrototype>(TemplateName);
 
             Connections = template.Connections;
             Slots = template.Slots;
             _centerSlot = template.CenterSlot;
 
-            var preset = prototypeManager.Index<BodyPresetPrototype>(PresetName);
+            var preset = _prototypeManager.Index<BodyPresetPrototype>(PresetName);
 
             _partIds = preset.PartIDs;
 
