@@ -1,9 +1,11 @@
 ﻿<SS14Window xmlns="https://spacestation14.io"
             xmlns:voting="clr-namespace:Content.Client.Voting"
+            xmlns:changelog="clr-namespace:Content.Client.Changelog"
             Title="{Loc 'ui-escape-title'}"
             Resizable="False">
 
-    <VBoxContainer SeparationOverride="4">
+    <VBoxContainer SeparationOverride="4" CustomMinimumSize="0 160">
+        <changelog:ChangelogButton />
         <voting:VoteCallMenuButton />
         <Button Name="OptionsButton" Text="{Loc 'ui-escape-options'}" />
         <Button Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}" />
