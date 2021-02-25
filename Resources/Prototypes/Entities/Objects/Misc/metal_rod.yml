@@ -16,7 +16,7 @@
       graph: metalRod
       node: MetalRod
     - type: Stack
-      stacktype: enum.StackType.MetalRod
+      stackType: MetalRod
       count: 50
       max: 50
     - type: FloorTile
@@ -30,6 +30,6 @@
   suffix: 1
   components:
     - type: Stack
-      stacktype: enum.StackType.MetalRod
+      stackType: MetalRod
       count: 1
       max: 50

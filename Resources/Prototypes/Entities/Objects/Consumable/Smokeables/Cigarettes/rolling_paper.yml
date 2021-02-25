@@ -22,7 +22,7 @@
   parent: BaseItem
   components:
     - type: Stack
-      stacktype: enum.StackType.PaperRolling
+      stackType: PaperRolling
       max: 5
       count: 1
     - type: Sprite
@@ -39,7 +39,7 @@
   parent: BaseItem
   components:
     - type: Stack
-      stacktype: enum.StackType.CigaretteFilter
+      stackType: CigaretteFilter
       max: 5
       count: 1
     - type: Sprite

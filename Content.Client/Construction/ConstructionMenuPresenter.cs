@@ -18,6 +18,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Construction
 {
@@ -250,8 +251,8 @@ namespace Content.Client.Construction
                             stepList.AddItem(
                                 !firstNode
                                     ? Loc.GetString(
-                                        "{0}. Add {1}x {2}.", stepNumber++, materialStep.Amount, materialStep.Material)
-                                    : Loc.GetString("      {0}x {1}", materialStep.Amount, materialStep.Material), icon);
+                                        "{0}. Add {1}x {2}.", stepNumber++, materialStep.Amount, materialStep.MaterialPrototype.Name)
+                                    : Loc.GetString("      {0}x {1}", materialStep.Amount, materialStep.MaterialPrototype.Name), icon);
 
                             break;
 
@@ -278,8 +279,7 @@ namespace Content.Client.Construction
                                     switch (subStep)
                                     {
                                         case MaterialConstructionGraphStep materialStep:
-                                            if (prototype.Type != ConstructionType.Item)
-                                                stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}x {4}.", stepNumber, parallelNumber, subStepNumber++, materialStep.Amount, materialStep.Material), icon);
+                                            if (prototype.Type != ConstructionType.Item) stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}x {4}.", stepNumber, parallelNumber, subStepNumber++, materialStep.Amount, materialStep.MaterialPrototype.Name), icon);
                                             break;
 
                                         case ToolConstructionGraphStep toolStep:
@@ -308,28 +308,7 @@ namespace Content.Client.Construction
             switch (step)
             {
                 case MaterialConstructionGraphStep materialStep:
-                    switch (materialStep.Material)
-                    {
-                        case StackType.Metal:
-                            return resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/metal.png");
-
-                        case StackType.Glass:
-                            return resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/glass.png");
-
-                        case StackType.Plasteel:
-                            return resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/plasteel.png");
-
-                        case StackType.Plasma:
-                            return resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/phoron.png");
-
-                        case StackType.Cable:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/cables.rsi/coil-30.png");
-
-                        case StackType.MetalRod:
-                            return resourceCache.GetTexture("/Textures/Objects/Materials/materials.rsi/rods.png");
-                    }
-
-                    break;
+                    return materialStep.MaterialPrototype.Icon?.Frame0();
 
                 case ToolConstructionGraphStep toolStep:
                     switch (toolStep.Tool)
