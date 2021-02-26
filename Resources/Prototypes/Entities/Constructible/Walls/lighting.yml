@@ -16,6 +16,9 @@
   - type: LoopingSound
   - type: Sprite
     sprite: Constructible/Lighting/light_tube.rsi
+    layers:
+    - state: on
+      map: ["enum.PoweredLightLayers.Base"]
     state: on
   - type: PointLight
     radius: 8
@@ -57,6 +60,10 @@
   - type: PoweredLight
     bulb: Tube
   - type: PowerReceiver
+  - type: Appearance
+    visuals:
+    - type: PoweredLightVisualizer
+      blinkingSound: "/Audio/Machines/light_tube_on.ogg"
 
 - type: entity
   id: PoweredlightEmpty
@@ -122,6 +129,9 @@
   - type: PoweredLight
     bulb: Bulb
   - type: PowerReceiver
+  - type: Appearance
+    visuals:
+    - type: PoweredLightVisualizer
 
 - type: entity
   id: PoweredSmallLightEmpty

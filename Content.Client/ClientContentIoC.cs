@@ -1,4 +1,5 @@
 ﻿using Content.Client.Administration;
+using Content.Client.Changelog;
 using Content.Client.Chat;
 using Content.Client.Eui;
 using Content.Client.GameTicking;
@@ -45,6 +46,7 @@ namespace Content.Client
             IoCManager.Register<IClientAdminManager, ClientAdminManager>();
             IoCManager.Register<EuiManager, EuiManager>();
             IoCManager.Register<IVoteManager, VoteManager>();
+            IoCManager.Register<ChangelogManager, ChangelogManager>();
         }
     }
 }

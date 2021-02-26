@@ -99,11 +99,8 @@ namespace Content.Server.GameObjects.Components.Research
         }
 
         internal bool Produce(LatheRecipePrototype recipe)
-        {   if(!Powered)
-            {
-                return false;
-            }
-            if (Producing || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent? storage)) return false;
+        {
+            if (Producing || !Powered || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent? storage)) return false;
 
             UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue()));
 
@@ -181,14 +178,20 @@ namespace Content.Server.GameObjects.Components.Research
             State = LatheState.Inserting;
             switch (material.MaterialTypes.Values.First().Name)
             {
-                case "Steel":
+                case "steel":
                     SetAppearance(LatheVisualState.InsertingMetal);
                     break;
-                case "Glass":
+                case "glass":
                     SetAppearance(LatheVisualState.InsertingGlass);
                     break;
-                case "Gold":
+                case "gold":
                     SetAppearance(LatheVisualState.InsertingGold);
+                    break;
+                case "plastic":
+                    SetAppearance(LatheVisualState.InsertingPlastic);
+                    break;
+                case "plasma":
+                    SetAppearance(LatheVisualState.InsertingPlasma);
                     break;
             }
 

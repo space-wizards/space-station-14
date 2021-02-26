@@ -44,26 +44,26 @@ namespace Content.Client.UserInterface
                     VerticalExpand = true,
                 };
 
-                VSyncCheckBox = new CheckBox {Text = Loc.GetString("VSync")};
+                VSyncCheckBox = new CheckBox {Text = Loc.GetString("ui-options-vsync")};
                 contents.AddChild(VSyncCheckBox);
                 VSyncCheckBox.OnToggled += OnCheckBoxToggled;
 
-                FullscreenCheckBox = new CheckBox {Text = Loc.GetString("Fullscreen")};
+                FullscreenCheckBox = new CheckBox {Text = Loc.GetString("ui-options-fullscreen")};
                 contents.AddChild(FullscreenCheckBox);
                 FullscreenCheckBox.OnToggled += OnCheckBoxToggled;
 
                 LightingPresetOption = new OptionButton {MinSize = (100, 0)};
-                LightingPresetOption.AddItem(Loc.GetString("Very Low"));
-                LightingPresetOption.AddItem(Loc.GetString("Low"));
-                LightingPresetOption.AddItem(Loc.GetString("Medium"));
-                LightingPresetOption.AddItem(Loc.GetString("High"));
+                LightingPresetOption.AddItem(Loc.GetString("ui-options-lighting-very-low"));
+                LightingPresetOption.AddItem(Loc.GetString("ui-options-lighting-low"));
+                LightingPresetOption.AddItem(Loc.GetString("ui-options-lighting-medium"));
+                LightingPresetOption.AddItem(Loc.GetString("ui-options-lighting-high"));
                 LightingPresetOption.OnItemSelected += OnLightingQualityChanged;
 
                 contents.AddChild(new HBoxContainer
                 {
                     Children =
                     {
-                        new Label {Text = Loc.GetString("Lighting Quality:")},
+                        new Label {Text = Loc.GetString("ui-options-lighting-label")},
                         new Control {MinSize = (4, 0)},
                         LightingPresetOption
                     }
@@ -71,27 +71,27 @@ namespace Content.Client.UserInterface
 
                 ApplyButton = new Button
                 {
-                    Text = Loc.GetString("Apply"), TextAlign = Label.AlignMode.Center,
+                    Text = Loc.GetString("ui-options-apply"), TextAlign = Label.AlignMode.Center,
                     HorizontalAlignment = HAlignment.Right
                 };
 
                 var resourceCache = IoCManager.Resolve<IResourceCache>();
 
                 _uiScaleOption = new OptionButton();
-                _uiScaleOption.AddItem(Loc.GetString("Automatic ({0}%)", UserInterfaceManager.DefaultUIScale * 100));
-                _uiScaleOption.AddItem(Loc.GetString("75%"));
-                _uiScaleOption.AddItem(Loc.GetString("100%"));
-                _uiScaleOption.AddItem(Loc.GetString("125%"));
-                _uiScaleOption.AddItem(Loc.GetString("150%"));
-                _uiScaleOption.AddItem(Loc.GetString("175%"));
-                _uiScaleOption.AddItem(Loc.GetString("200%"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-auto", ("scale", UserInterfaceManager.DefaultUIScale)));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-75"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-100"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-125"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-150"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-175"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-200"));
                 _uiScaleOption.OnItemSelected += OnUIScaleChanged;
 
                 contents.AddChild(new HBoxContainer
                 {
                     Children =
                     {
-                        new Label {Text = Loc.GetString("UI Scale:")},
+                        new Label {Text = Loc.GetString("ui-options-scale-label")},
                         new Control {MinSize = (4, 0)},
                         _uiScaleOption
                     }
@@ -100,7 +100,7 @@ namespace Content.Client.UserInterface
                 contents.AddChild(new Placeholder(resourceCache)
                 {
                     VerticalExpand = true,
-                    PlaceholderText = "Viewport settings"
+                    PlaceholderText = Loc.GetString("ui-options-placeholder-viewport")
                 });
 
                 vBox.AddChild(contents);

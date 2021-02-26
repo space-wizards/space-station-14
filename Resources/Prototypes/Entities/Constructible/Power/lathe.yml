@@ -44,13 +44,15 @@
   - type: Sprite
     sprite: Constructible/Power/autolathe.rsi
     layers:
-    - state: autolathe
+    - state: icon
       map: ["enum.AutolatheVisualLayers.Base"]
-    - state: autolathe_unlit
+    - state: unlit
       shader: unshaded
       map: ["enum.AutolatheVisualLayers.BaseUnlit"]
-    - state: autolathe_panel
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+    - state: icon
+      map: ["enum.AutolatheVisualLayers.AnimationLayer"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Construction
     graph: machine
     node: machine
@@ -106,15 +108,15 @@
   - type: Sprite
     sprite: Constructible/Power/protolathe.rsi
     layers:
-    - state: protolathe
+    - state: icon
       map: ["enum.ProtolatheVisualLayers.Base"]
-    - state: protolathe_unlit
+    - state: unlit
       shader: unshaded
       map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
-    - state: protolathe
+    - state: icon
       map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
-    - state: protolathe_panel
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ResearchClient
   - type: Construction
     graph: machine
