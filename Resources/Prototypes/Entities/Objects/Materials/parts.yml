@@ -6,7 +6,8 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Objects/Materials/parts.rsi/rods.png
+      sprite: Objects/Materials/parts.rsi
+      state: rods
     - type: Item
       sprite: Objects/Materials/parts.rsi
     - type: ItemStatus

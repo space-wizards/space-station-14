@@ -19,10 +19,6 @@
   id: SheetPaper
   parent: SheetOtherBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: paper
     - type: Stack
       stacktype: Paper
     - type: Sprite
@@ -142,10 +138,6 @@
   id: SheetUranium
   parent: SheetOtherBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: uranium
     - type: Stack
       stacktype: Uranium
     - type: Sprite

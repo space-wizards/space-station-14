@@ -19,10 +19,6 @@
   id: AdamantineOre
   parent: OreBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: adamantine
     - type: Stack
       stacktype: AdamantineOre
     - type: Sprite
@@ -41,10 +37,6 @@
   id: Ammonia
   parent: OreBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: ammonia
     - type: Stack
       stacktype: Ammonia
     - type: Sprite
@@ -63,10 +55,6 @@
   id: BananiumOre
   parent: OreBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: bananium
     - type: Stack
       stacktype: BananiumOre
     - type: Sprite
@@ -85,10 +73,6 @@
   id: DiamondRaw
   parent: OreBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: diamond
     - type: Stack
       stacktype: DiamondOre
     - type: Sprite
@@ -107,10 +91,6 @@
   id: GoldOre
   parent: OreBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: gold
     - type: Stack
       stacktype: GoldOre
     - type: Sprite
@@ -129,10 +109,6 @@
   id: IronOre
   parent: OreBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: iron
     - type: Stack
       stacktype: IronOre
     - type: Sprite
@@ -151,10 +127,6 @@
   id: PhoronOre
   parent: OreBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: phoron
     - type: Stack
       stacktype: PhoronOre
     - type: Sprite
@@ -173,10 +145,6 @@
   id: PlasmaOre
   parent: OreBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: plasma
     - type: Stack
       stacktype: PlasmaOre
     - type: Sprite
@@ -195,10 +163,6 @@
   id: Sand
   parent: OreBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: sand
     - type: Stack
       stacktype: Sand
     - type: Sprite
@@ -217,10 +181,6 @@
   id: SandBlack
   parent: OreBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: blacksand
     - type: Stack
       stacktype: BlackSand
     - type: Sprite
@@ -239,10 +199,6 @@
   id: SilverOre
   parent: OreBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: silver
     - type: Stack
       stacktype: SilverOre
     - type: Sprite
@@ -261,10 +217,6 @@
   id: Slag
   parent: OreBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: slag
     - type: Stack
       stacktype: Slag
     - type: Sprite
@@ -283,10 +235,6 @@
   id: TitaniumOre
   parent: OreBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: titanium
     - type: Stack
       stacktype: TitaniumOre
     - type: Sprite
@@ -305,10 +253,6 @@
   id: UraniumOre
   parent: OreBase
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: uranium
     - type: Stack
       stacktype: UraniumOre
     - type: Sprite

@@ -149,7 +149,7 @@
   parent: MaterialDurathreadRaw
   components:
     - type: Sprite
-      state: durathread
+      state: durathreadraw
     - type: Stack
       count: 1
 
@@ -210,6 +210,10 @@
   id: MaterialWood
   parent: MaterialBase
   components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: wood
     - type: Stack
       stacktype: Wood
     - type: Sprite
