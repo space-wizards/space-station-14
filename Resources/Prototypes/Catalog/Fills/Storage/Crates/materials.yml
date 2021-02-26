@@ -5,7 +5,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: GlassStack
+      - name: SheetGlass
         amount: 1
 
 - type: entity
@@ -15,7 +15,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: MetalStack
+      - name: SheetSteel
         amount: 1
 
 - type: entity
@@ -25,8 +25,8 @@
   components:
   - type: StorageFill
     contents:
-      - name: WoodPlank
-        amount: 15
+      - name: MaterialWoodPlank
+        amount: 1
 
 - type: entity
   id: CrateMaterialsFuelTank
@@ -68,24 +68,22 @@
 #      - name: WaterTankFull
 #        amount: 1
 
-# Unimplemented Materials
+- type: entity
+  id: CrateMaterialsPlastic
+  name:  plastics crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - name: SheetPlastic
+        amount: 1
 
-#- type: entity
-#  id: CrateMaterialsPlastic
-#  name:  plastics crate
-#  parent: CrateGenericonimo
-#  components:
-#  - type: StorageFill
-#    contents:
-#      - name: PlasticStack
-#        amount: 1
-
-#- type: entity
-#  id: CrateMaterialsPlasteel
-#  name: plasteel crate
-#  parent: CrateGenericonimo
-#  components:
-#  - type: StorageFill
-#    contents:
-#      - name: PlasteelStack
-#        amount: 1
+- type: entity
+  id: CrateMaterialsPlasteel
+  name: plasteel crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - name: SheetPlasteel
+        amount: 1
