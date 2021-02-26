@@ -66,7 +66,6 @@ namespace Content.Client.UserInterface.ContextMenu
             AddChild(
                 new HBoxContainer
                 {
-                    SeparationOverride = 6,
                     Children =
                     {
                         new LayoutContainer
@@ -77,7 +76,7 @@ namespace Content.Client.UserInterface.ContextMenu
                         {
                             Text = Loc.GetString(UserInterfaceManager.DebugMonitors.Visible ? $"{ContextEntity.Name} ({ContextEntity.Uid})" : ContextEntity.Name)
                         }
-                    }
+                    }, Margin = new Thickness(0,0,10,0)
                 }
             );
         }
@@ -151,9 +150,9 @@ namespace Content.Client.UserInterface.ContextMenu
                                      Texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Interface/VerbIcons/group.svg.96dpi.png"),
                                      Stretch = TextureRect.StretchMode.KeepCentered,
                                  }
-                             },
+                             }
                          }
-                     },
+                     }, Margin = new Thickness(0,0,10,0)
                  }
              );
          }
@@ -178,6 +177,7 @@ namespace Content.Client.UserInterface.ContextMenu
         private static readonly Color DefaultColor = Color.FromHex("#1116");
         private static readonly Color MarginColor = Color.FromHex("#222E");
         private const int MaxItemsBeforeScroll = 10;
+        private const int MarginSizeBetweenElements = 2;
 
         public VBoxContainer List { get; }
         public int Depth { get; }
@@ -201,15 +201,18 @@ namespace Content.Client.UserInterface.ContextMenu
             List.AddChild(new PanelContainer
             {
                 Children = { element },
-                Margin = new Thickness(0,0,0, 2),
+                Margin = new Thickness(0,0,0, MarginSizeBetweenElements),
                 PanelOverride = new StyleBoxFlat {BackgroundColor = DefaultColor}
             });
         }
 
         public void RemoveFromMenu(ContextMenuElement element)
         {
-            List.RemoveChild(element.Parent!);
-            InvalidateMeasure();
+            if (element.Parent != null)
+            {
+                List.RemoveChild(element.Parent);
+                InvalidateMeasure();
+            }
         }
 
         protected override Vector2 MeasureOverride(Vector2 availableSize)
@@ -226,7 +229,7 @@ namespace Content.Client.UserInterface.ContextMenu
             {
                 return listSize;
             }
-            listSize.Y = MaxItemsBeforeScroll * 32 + MaxItemsBeforeScroll * 2;
+            listSize.Y = MaxItemsBeforeScroll * 32 + MaxItemsBeforeScroll * MarginSizeBetweenElements;
             return listSize;
         }
     }
