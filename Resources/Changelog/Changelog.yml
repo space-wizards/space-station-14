@@ -29,3 +29,8 @@ Entries:
   - {message: Ghosts can flick lights and spook living, type: Add}
   id: 6
   time: '2021-02-26T01:31:06.0000000+00:00'
+- author: daniel-cr
+  changes:
+  - {message: Adjusted a margin in the new context menu., type: Tweak}
+  id: 7
+  time: '2021-02-26T04:59:10.0000000+00:00'
