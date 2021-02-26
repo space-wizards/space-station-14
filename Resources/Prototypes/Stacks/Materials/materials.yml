@@ -11,10 +11,10 @@
   spawn: MaterialDiamond1
 
 - type: stack
-  id: Wood
-  name: wood
+  id: WoodPlank
+  name: wood plank
   icon: /Textures/Objects/Materials/materials.rsi/wood.png
-  spawn: MaterialWood1
+  spawn: MaterialWoodPlank1
 
 - type: stack
   id: Cloth

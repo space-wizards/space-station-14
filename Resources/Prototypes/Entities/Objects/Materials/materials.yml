@@ -207,7 +207,7 @@
 
 - type: entity
   name: wood
-  id: MaterialWood
+  id: MaterialWoodPlank
   parent: MaterialBase
   components:
     - type: Material
@@ -215,15 +215,15 @@
         - key: enum.MaterialKeys.Stack
           mat: wood
     - type: Stack
-      stacktype: Wood
+      stacktype: WoodPlank
     - type: Sprite
       state: wood
     - type: Item
       HeldPrefix: wood
 
 - type: entity
-  id: MaterialWood1
-  parent: MaterialWood
+  id: MaterialWoodPlank1
+  parent: MaterialWoodPlank
   suffix: 1
   components:
     - type: Stack
