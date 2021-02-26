@@ -24,3 +24,8 @@ Entries:
   - {message: APC Construction fixed and will not align to walls correctly., type: Fix}
   id: 5
   time: '2021-02-25T15:10:54.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Ghosts can flick lights and spook living, type: Add}
+  id: 6
+  time: '2021-02-26T01:31:06.0000000+00:00'
