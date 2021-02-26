@@ -63,6 +63,7 @@
   id: SheetPhoron1
   name: phoron
   parent: SheetPhoron
+  suffix: 1
   components:
     - type: Stack
       count: 1
@@ -149,6 +150,7 @@
   id: SheetUranium1
   name: uranium
   parent: SheetUranium
+  suffix: 1
   components:
     - type: Stack
       count: 1
