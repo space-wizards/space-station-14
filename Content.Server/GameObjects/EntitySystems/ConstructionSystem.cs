@@ -185,41 +185,19 @@ namespace Content.Server.GameObjects.EntitySystems
 
                         break;
 
-                    case ComponentConstructionGraphStep componentStep:
+                    case ArbitraryInsertConstructionGraphStep arbitraryStep:
                         foreach (var entity in EnumerateNearby(user))
                         {
-                            if (!componentStep.EntityValid(entity))
+                            if (!arbitraryStep.EntityValid(entity))
                                 continue;
 
-                            if (string.IsNullOrEmpty(componentStep.Store))
+                            if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
                                 if (!container.Insert(entity))
                                     continue;
                             }
-                            else if (!GetContainer(componentStep.Store).Insert(entity))
+                            else if (!GetContainer(arbitraryStep.Store).Insert(entity))
                                 continue;
-
-                            handled = true;
-                            break;
-                        }
-
-                        break;
-
-                    case PrototypeConstructionGraphStep prototypeStep:
-                        foreach (var entity in EnumerateNearby(user))
-                        {
-                            if (!prototypeStep.EntityValid(entity))
-                                continue;
-
-                            if (string.IsNullOrEmpty(prototypeStep.Store))
-                            {
-                                if (!container.Insert(entity))
-                                    continue;
-                            }
-                            else if (!GetContainer(prototypeStep.Store).Insert(entity))
-                            {
-                                continue;
-                            }
 
                             handled = true;
                             break;

@@ -8,8 +8,8 @@
     caliber: Cap
   - type: Sprite
     netsync: false
-    noRot: true
-    sprite: Objects/Consumable/Trash/ash.rsi
+    directional: true
+    sprite: Objects\Weapons\Guns\Ammunition\Casings\ammo_casing.rsi
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
@@ -17,7 +17,7 @@
 
 - type: entity
   id: CartridgeCap
-  name: cartridge (cap)
+  name: cap gun cartridge
   parent: CartridgeCapBase
   components:
   - type: Ammo

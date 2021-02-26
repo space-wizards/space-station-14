@@ -1,4 +1,5 @@
-﻿using Robust.Client.UserInterface;
+﻿using Content.Client.Changelog;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -35,10 +36,17 @@ namespace Content.Client.UserInterface
             var creditsButton = new Button { Text = Loc.GetString("Credits") };
             creditsButton.OnPressed += args => new CreditsWindow().Open();
 
+            var changelogButton = new ChangelogButton
+            {
+                HorizontalExpand = true,
+                HorizontalAlignment = HAlignment.Right
+            };
+
             buttons.AddChild(discordButton);
             buttons.AddChild(websiteButton);
             buttons.AddChild(reportButton);
             buttons.AddChild(creditsButton);
+            buttons.AddChild(changelogButton);
         }
 
         public void SetInfoBlob(string markup)

@@ -1,219 +1,241 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/master/icons/obj/machines/excelsior/autolathe.dmi at 40b254106b46981b8ad95ccd5589deb8fa56e765",
-    "states": [
-        {
-            "name": "protolathe",
-
-        },
-        {
-            "name": "protolathe_unlit",
-
-        },
-        {
-            "name": "protolathe_adamantine",
-            "delays": [
-                [
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088
-                ]
-            ]
-        },
-        {
-            "name": "protolathe_bananium",
-            "delays": [
-                [
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088
-                ]
-            ]
-        },
-        {
-            "name": "protolathe_diamond",
-            "delays": [
-                [
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088
-                ]
-            ]
-        },
-        {
-            "name": "protolathe_glass",
-            "delays": [
-                [
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088
-                ]
-            ]
-        },
-        {
-            "name": "protolathe_gold",
-            "delays": [
-                [
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088
-                ]
-            ]
-        },
-        {
-            "name": "protolathe_metal",
-            "delays": [
-                [
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088
-                ]
-            ]
-        },
-        {
-            "name": "protolathe_phoron",
-            "delays": [
-                [
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088
-                ]
-            ]
-        },
-        {
-            "name": "protolathe_plastic",
-            "delays": [
-                [
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088
-                ]
-            ]
-        },
-        {
-            "name": "protolathe_building",
-            "delays": [
-                [
-                    0.05,
-                    0.05,
-                    0.05,
-                    0.05,
-                    0.05,
-                    0.05,
-                    0.05,
-                    0.05,
-                    0.05,
-                    0.05,
-                    0.05,
-                    0.05,
-                    0.05
-                ]
-            ]
-        },
-        {
-            "name": "protolathe_silver",
-            "delays": [
-                [
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088
-                ]
-            ]
-        },
-        {
-            "name": "protolathe_solid plasma",
-            "delays": [
-                [
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088
-                ]
-            ]
-        },
-        {
-            "name": "protolathe_panel",
-
-        },
-        {
-            "name": "protolathe_uranium",
-            "delays": [
-                [
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088,
-                    0.088
-                ]
-            ]
-        }
-    ]
+    {
+      "name": "panel"
+    },
+    {
+      "name": "unlit"
+    },
+    {
+      "name": "building",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "building_unlit",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "inserting_unlit",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "inserting_glass",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "inserting_adamantine",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "inserting_bananium",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "inserting_diamond",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "inserting_silver",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "inserting_uranium",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "inserting_gold",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "inserting_metal",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "inserting_phoron",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "inserting_plasma",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "inserting_plastic",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    }
+  ]
 }
