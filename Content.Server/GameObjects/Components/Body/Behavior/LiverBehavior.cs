@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Shared.Chemistry;
@@ -69,12 +69,12 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
             _accumulatedFrameTime -= 1;
 
-            if (!Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
+            if (!Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
                 return;
             }
 
-            if (bloodstream.Solution.CurrentVolume == 0)
+            if (bloodstream.Solution.CurrentVolume <= ReagentUnit.Zero)
             {
                 return;
             }
@@ -97,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
                 // Run metabolism code for each reagent
                 foreach (var metabolizable in prototype.Metabolism)
                 {
-                    var reagentDelta = metabolizable.Metabolize(Owner, reagent.ReagentId, frameTime);
+                    var reagentDelta = metabolizable.Metabolize(Body.Owner, reagent.ReagentId, frameTime);
                     bloodstream.Solution.TryRemoveReagent(reagent.ReagentId, reagentDelta);
                 }
             }
