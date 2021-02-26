@@ -32,10 +32,10 @@
   id: PlantSampleTaker
 
 - type: Tag
-  id: Shovel
+  id: Sheet
 
 - type: Tag
-  id: Sheet
+  id: Shovel
 
 - type: Tag
   id: Teleportable
