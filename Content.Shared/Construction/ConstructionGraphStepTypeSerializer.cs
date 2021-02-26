@@ -3,6 +3,7 @@ using System;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.Manager.Result;
 using Robust.Shared.Serialization.Markdown;
 
 namespace Content.Shared.Construction
@@ -11,46 +12,46 @@ namespace Content.Shared.Construction
     public class ConstructionGraphStepTypeSerializer : ITypeReader<ConstructionGraphStep, MappingDataNode>
     {
         // TODO PAUL SERV3
-        public ConstructionGraphStep Read(MappingDataNode node, ISerializationContext? context = null)
+        public DeserializationResult<ConstructionGraphStep> Read(MappingDataNode node,
+            ISerializationContext? context = null)
         {
             var serializationManager = IoCManager.Resolve<ISerializationManager>();
+            Type type;
 
             if (node.HasNode("material"))
             {
-                return serializationManager.ReadValue<MaterialConstructionGraphStep>(node);
+                type = typeof(MaterialConstructionGraphStep);
             }
-
-            if (node.HasNode("tool"))
+            else if (node.HasNode("tool"))
             {
-                return serializationManager.ReadValue<ToolConstructionGraphStep>(node);
+                type = typeof(ToolConstructionGraphStep);
             }
-
-            if (node.HasNode("prototype"))
+            else if (node.HasNode("prototype"))
             {
-                return serializationManager.ReadValue<PrototypeConstructionGraphStep>(node);
+                type = typeof(PrototypeConstructionGraphStep);
             }
-
-            if (node.HasNode("component"))
+            else if (node.HasNode("component"))
             {
-                return serializationManager.ReadValue<ComponentConstructionGraphStep>(node);
+                type = typeof(ComponentConstructionGraphStep);
             }
-
-            if (node.HasNode("tag"))
+            else if (node.HasNode("tag"))
             {
-                return serializationManager.ReadValue<TagConstructionGraphStep>(node);
+                type = typeof(TagConstructionGraphStep);
             }
-
-            if (node.HasNode("allTags") || node.HasNode("anyTags"))
+            else if (node.HasNode("allTags") || node.HasNode("anyTags"))
             {
-                return serializationManager.ReadValue<MultipleTagsConstructionGraphStep>(node);
+                type = typeof(MultipleTagsConstructionGraphStep);
             }
-
-            if (node.HasNode("steps"))
+            else if (node.HasNode("steps"))
             {
-                return serializationManager.ReadValue<NestedConstructionGraphStep>(node);
+                type = typeof(NestedConstructionGraphStep);
+            }
+            else
+            {
+                throw new ArgumentException("Tried to convert invalid YAML node mapping to ConstructionGraphStep!");
             }
 
-            throw new ArgumentException("Tried to convert invalid YAML node mapping to ConstructionGraphStep!");
+            return DeserializationResult.Value(serializationManager.ReadValueOrThrow<ConstructionGraphStep>(type, node));
         }
     }
 }
