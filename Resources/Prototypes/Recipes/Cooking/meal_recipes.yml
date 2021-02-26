@@ -333,6 +333,43 @@
     FoodMiloSoup: 1
 
 - type: microwaveMealRecipe
+  id: RecipeLoadedBakedPotato
+  name: loaded baked potato recipe
+  result: FoodLoadedBakedPotato
+  time: 10
+  solids:
+    FoodPotato: 1
+    FoodCheeseWedge: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCandyCorn
+  name: candy corn recipe
+  result: FoodCandyCorn
+  time: 5
+  solids:    
+      FoodCorn: 1
+      Sugarcane: 1
+
+#  Reagent version (Reagents are broken)
+#- type: microwaveMealRecipe
+#  id: RecipeCandyCorn
+#  name: candy corn recipe
+#  result: FoodCandyCorn
+#  time: 5
+#  reagents:
+#    chem.Glucose: 5
+#  solids:    
+#    FoodCorn: 1  
+
+- type: microwaveMealRecipe
+  id: RecipePopcorn
+  name: popcorn recipe
+  result: FoodPopcorn
+  time: 5
+  solids:
+    FoodCorn: 1
+
+- type: microwaveMealRecipe
   id: RecipeBananaCreamPie
   name: banana cream pie
   result: FoodBananaCreamPie
@@ -345,16 +382,16 @@
 # NOT ACTUAL FOOD
 
 - type: microwaveMealRecipe
-  id: RecipeDriedCannabis
-  name: dried cannabis leaves recipe
+  id: RecipeDriedTobacco
+  name: dried tobacco leaves recipe
   result: LeavesTobaccoDried
   time: 10
   solids:
     LeavesTobacco: 1
 
 - type: microwaveMealRecipe
-  id: RecipeDriedTobacco
-  name: dried tobacco leaves recipe
+  id: RecipeDriedCannabis
+  name: dried cannabis leaves recipe
   result: LeavesCannabisDried
   time: 10
   solids:
