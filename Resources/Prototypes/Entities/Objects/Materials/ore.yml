@@ -20,7 +20,7 @@
   parent: OreBase
   components:
     - type: Stack
-      stacktype: AdamantineOre
+      stackType: AdamantineOre
     - type: Sprite
       state: adamantine
 
@@ -38,7 +38,7 @@
   parent: OreBase
   components:
     - type: Stack
-      stacktype: Ammonia
+      stackType: Ammonia
     - type: Sprite
       state: ammonia
 
@@ -56,7 +56,7 @@
   parent: OreBase
   components:
     - type: Stack
-      stacktype: BananiumOre
+      stackType: BananiumOre
     - type: Sprite
       state: bananium
 
@@ -74,7 +74,7 @@
   parent: OreBase
   components:
     - type: Stack
-      stacktype: DiamondOre
+      stackType: DiamondOre
     - type: Sprite
       state: diamond
 
@@ -92,7 +92,7 @@
   parent: OreBase
   components:
     - type: Stack
-      stacktype: GoldOre
+      stackType: GoldOre
     - type: Sprite
       state: gold
 
@@ -110,7 +110,7 @@
   parent: OreBase
   components:
     - type: Stack
-      stacktype: IronOre
+      stackType: IronOre
     - type: Sprite
       state: iron
 
@@ -128,7 +128,7 @@
   parent: OreBase
   components:
     - type: Stack
-      stacktype: PhoronOre
+      stackType: PhoronOre
     - type: Sprite
       state: phoron
 
@@ -146,7 +146,7 @@
   parent: OreBase
   components:
     - type: Stack
-      stacktype: PlasmaOre
+      stackType: PlasmaOre
     - type: Sprite
       state: plasma
 
@@ -164,7 +164,7 @@
   parent: OreBase
   components:
     - type: Stack
-      stacktype: Sand
+      stackType: Sand
     - type: Sprite
       state: sand
 
@@ -182,7 +182,7 @@
   parent: OreBase
   components:
     - type: Stack
-      stacktype: BlackSand
+      stackType: BlackSand
     - type: Sprite
       state: sand_black
 
@@ -200,7 +200,7 @@
   parent: OreBase
   components:
     - type: Stack
-      stacktype: SilverOre
+      stackType: SilverOre
     - type: Sprite
       state: silver
 
@@ -218,7 +218,7 @@
   parent: OreBase
   components:
     - type: Stack
-      stacktype: Slag
+      stackType: Slag
     - type: Sprite
       state: slag
 
@@ -236,7 +236,7 @@
   parent: OreBase
   components:
     - type: Stack
-      stacktype: TitaniumOre
+      stackType: TitaniumOre
     - type: Sprite
       state: titanium
 
@@ -254,7 +254,7 @@
   parent: OreBase
   components:
     - type: Stack
-      stacktype: UraniumOre
+      stackType: UraniumOre
     - type: Sprite
       state: uranium
 

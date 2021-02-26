@@ -17,7 +17,7 @@
   parent: MaterialBase
   components:
     - type: Stack
-      stacktype: Bananium
+      stackType: Bananium
     - type: Sprite
       state: bananium
 
@@ -35,7 +35,7 @@
   parent: MaterialBase
   components:
     - type: Stack
-      stacktype: Cloth
+      stackType: Cloth
     - type: Sprite
       state: cloth_3
     - type: Appearance
@@ -61,7 +61,7 @@
   parent: MaterialBase
   components:
     - type: Stack
-      stacktype: Cotton
+      stackType: Cotton
     - type: Sprite
       state: cotton_3
     - type: Appearance
@@ -87,7 +87,7 @@
   parent: MaterialBase
   components:
     - type: Stack
-      stacktype: Diamond
+      stackType: Diamond
     - type: Sprite
       state: diamond
     - type: Item
@@ -107,7 +107,7 @@
   parent: MaterialBase
   components:
     - type: Stack
-      stacktype: Durathread
+      stackType: Durathread
     - type: Sprite
       state: durathread_3
     - type: Appearance
@@ -133,7 +133,7 @@
   parent: MaterialBase
   components:
     - type: Stack
-      stacktype: RawDurathread
+      stackType: RawDurathread
     - type: Sprite
       state: durathreadraw_3
     - type: Appearance
@@ -159,7 +159,7 @@
   parent: MaterialBase
   components:
     - type: Stack
-      stacktype: Hide
+      stackType: Hide
     - type: Sprite
       state: hide_3
     - type: Appearance
@@ -185,7 +185,7 @@
   parent: MaterialBase
   components:
     - type: Stack
-      stacktype: Leather
+      stackType: Leather
     - type: Sprite
       state: leather_3
     - type: Appearance
@@ -215,7 +215,7 @@
         - key: enum.MaterialKeys.Stack
           mat: wood
     - type: Stack
-      stacktype: WoodPlank
+      stackType: WoodPlank
     - type: Sprite
       state: wood
     - type: Item

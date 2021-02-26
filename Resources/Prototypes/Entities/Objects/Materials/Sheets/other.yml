@@ -20,7 +20,7 @@
   parent: SheetOtherBase
   components:
     - type: Stack
-      stacktype: Paper
+      stackType: Paper
     - type: Sprite
       state: paper_3
     - type: Item
@@ -53,7 +53,7 @@
         - key: enum.MaterialKeys.Stack
           mat: phoron
     - type: Stack
-      stacktype: Phoron
+      stackType: Phoron
     - type: Sprite
       state: phoron
     - type: Item
@@ -78,7 +78,7 @@
         - key: enum.MaterialKeys.Stack
           mat: plasma
     - type: Stack
-      stacktype: Plasma
+      stackType: Plasma
     - type: Sprite
       state: plasma_3
     - type: Item
@@ -111,7 +111,7 @@
         - key: enum.MaterialKeys.Stack
           mat: plastic
     - type: Stack
-      stacktype: Plastic
+      stackType: Plastic
     - type: Sprite
       state: plastic_3
     - type: Item
@@ -140,7 +140,7 @@
   parent: SheetOtherBase
   components:
     - type: Stack
-      stacktype: Uranium
+      stackType: Uranium
     - type: Sprite
       state: uranium
     - type: Item

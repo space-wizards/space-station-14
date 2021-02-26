@@ -24,7 +24,7 @@
         - key: enum.MaterialKeys.Stack
           mat: steel
     - type: Stack
-      stacktype: Steel
+      stackType: Steel
     - type: Sprite
       state: steel_3
     - type: Item
@@ -57,7 +57,7 @@
         - key: enum.MaterialKeys.Stack
           mat: plasteel
     - type: Stack
-      stacktype: Plasteel
+      stackType: Plasteel
     - type: Sprite
       state: plasteel_3
     - type: Item
@@ -90,7 +90,7 @@
         - key: enum.MaterialKeys.Stack
           mat: titanium
     - type: Stack
-      stacktype: Titanium
+      stackType: Titanium
     - type: Sprite
       state: titanium_3
     - type: Item
@@ -123,7 +123,7 @@
         - key: enum.MaterialKeys.Stack
           mat: plastitanium
     - type: Stack
-      stacktype: Plastitanium
+      stackType: Plastitanium
     - type: Sprite
       state: plastitanium_3
     - type: Item
@@ -156,7 +156,7 @@
         - key: enum.MaterialKeys.Stack
           mat: brass
     - type: Stack
-      stacktype: Brass
+      stackType: Brass
     - type: Sprite
       state: brass_3
     - type: Item

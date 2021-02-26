@@ -24,7 +24,7 @@
         - key: enum.MaterialKeys.Stack
           mat: adamantine
     - type: Stack
-      stacktype: Adamantine
+      stackType: Adamantine
     - type: Sprite
       state: adamantine_3
     - type: Item
@@ -57,7 +57,7 @@
         - key: enum.MaterialKeys.Stack
           mat: copper
     - type: Stack
-      stacktype: Copper
+      stackType: Copper
     - type: Sprite
       state: copper_3
     - type: Item
@@ -90,7 +90,7 @@
         - key: enum.MaterialKeys.Stack
           mat: gold
     - type: Stack
-      stacktype: Gold
+      stackType: Gold
     - type: Sprite
       state: gold_3
     - type: Item
@@ -123,7 +123,7 @@
         - key: enum.MaterialKeys.Stack
           mat: hydrogen
     - type: Stack
-      stacktype: Hydrogen
+      stackType: Hydrogen
     - type: Sprite
       state: hydrogen_3
     - type: Item
@@ -156,7 +156,7 @@
         - key: enum.MaterialKeys.Stack
           mat: iron
     - type: Stack
-      stacktype: Iron
+      stackType: Iron
     - type: Sprite
       state: iron_3
     - type: Item
@@ -189,7 +189,7 @@
         - key: enum.MaterialKeys.Stack
           mat: silver
     - type: Stack
-      stacktype: Silver
+      stackType: Silver
     - type: Sprite
       state: silver_3
     - type: Item

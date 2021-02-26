@@ -57,7 +57,6 @@
     stackType: Gauze
     max: 5
     count: 5
-    stacktype: enum.StackType.Gauze
 #first aid kit entities. See catalog/fills/firstaidkits for contents
 - type: entity
   name: first aid kit
