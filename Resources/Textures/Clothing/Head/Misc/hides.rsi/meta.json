@@ -18,6 +18,14 @@
     {
       "name": "bear-inhand-right",
       "directions": 4
+    },
+    {
+      "name": "corgi-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "corgi2-equipped-HELMET",
+      "directions": 4
     }
   ]
 }

@@ -233,36 +233,41 @@
   parent: MaterialBase
   components:
     - type: Sprite
+      sprite: Objects/Materials/materials.rsi
       state: bearpelt
-    - type: Item
+    - type: Clothing
       sprite: Clothing/Head/Misc/hides.rsi
       HeldPrefix: bear
-    - type: Clothing
+      ClothingPrefix: bear
       Slots:
       - Helmet
-      sprite: Clothing/Head/Misc/hides.rsi
-      ClothingPrefix: bear
 
 - type: entity
   name: cat hide
   id: MaterialHideCat
-  parent: MaterialHideBear
+  parent: MaterialBase
   components:
     - type: Sprite
+      sprite: Objects/Materials/materials.rsi
       state: cathide
-#    - type: Item
-#      HeldPrefix: cat
-#    - type: Clothing
-#      ClothingPrefix: cat
+    # - type: Clothing
+    #   sprite: Clothing/Head/Misc/hides.rsi
+    #   HeldPrefix: cat
+    #   ClothingPrefix: cat
+    #   Slots:
+    #   - Helmet
 
 - type: entity
   name: corgi hide
   id: MaterialHideCorgi
-  parent: MaterialHideBear
+  parent: MaterialBase
   components:
     - type: Sprite
+      sprite: Objects/Materials/materials.rsi
       state: corgihide
-#    - type: Item
-#      HeldPrefix: corgi
-#    - type: Clothing
-#      ClothingPrefix: corgi
+    - type: Clothing
+      sprite: Clothing/Head/Misc/hides.rsi
+    #   HeldPrefix: corgi
+      ClothingPrefix: corgi2
+      Slots:
+      - Helmet
