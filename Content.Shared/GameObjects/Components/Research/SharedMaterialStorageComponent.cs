@@ -1,7 +1,7 @@
+#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Content.Shared.Materials;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -11,7 +11,7 @@ namespace Content.Shared.GameObjects.Components.Research
     public class SharedMaterialStorageComponent : Component, IEnumerable<KeyValuePair<string, int>>
     {
         [ViewVariables]
-        protected virtual Dictionary<string, int> Storage { get; set; }
+        protected virtual Dictionary<string, int> Storage { get; set; } = new();
         public override string Name => "MaterialStorage";
         public sealed override uint? NetID => ContentNetIDs.MATERIAL_STORAGE;
 
@@ -19,17 +19,6 @@ namespace Content.Shared.GameObjects.Components.Research
         {
             get
             {
-                if (!Storage.ContainsKey(ID))
-                    return 0;
-                return Storage[ID];
-            }
-        }
-
-        public int this[Material material]
-        {
-            get
-            {
-                var ID = material.ID;
                 if (!Storage.ContainsKey(ID))
                     return 0;
                 return Storage[ID];

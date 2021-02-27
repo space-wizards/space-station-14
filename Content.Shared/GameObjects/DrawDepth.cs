@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared.Serialization;
 using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
 

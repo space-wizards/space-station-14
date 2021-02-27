@@ -1,4 +1,5 @@
-﻿using Lidgren.Network;
+﻿#nullable enable
+using Lidgren.Network;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Administration.AdminMenu

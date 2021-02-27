@@ -1,3 +1,4 @@
+﻿#nullable enable
 ﻿using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -6,8 +7,8 @@ namespace Content.Shared.Construction
 {
     public abstract class ArbitraryInsertConstructionGraphStep : EntityInsertConstructionGraphStep
     {
-        public string Name { get; private set; }
-        public SpriteSpecifier Icon { get; private set; }
+        public string Name { get; private set; } = string.Empty;
+        public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
 
         public override void ExposeData(ObjectSerializer serializer)
         {

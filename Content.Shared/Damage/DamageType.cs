@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.EntitySystems;
@@ -29,7 +30,7 @@ namespace Content.Shared.Damage
             return DamageSystem.TypeToClass[type];
         }
 
-        public static Dictionary<DamageType, T> ToNewDictionary<T>()
+        public static Dictionary<DamageType, T> ToNewDictionary<T>() where T : struct
         {
             return Enum.GetValues(typeof(DamageType))
                 .Cast<DamageType>()

@@ -1,4 +1,5 @@
-﻿using Content.Shared.Interfaces.Chemistry;
+﻿#nullable enable
+using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 

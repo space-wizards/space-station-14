@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Part;
@@ -16,13 +17,13 @@ namespace Content.Shared.GameObjects.Components.Body.Template
     [Serializable, NetSerializable]
     public class BodyTemplatePrototype : IPrototype
     {
-        private string _id;
-        private string _name;
-        private string _centerSlot;
-        private Dictionary<string, BodyPartType> _slots;
-        private Dictionary<string, List<string>> _connections;
-        private Dictionary<string, string> _layers;
-        private Dictionary<string, string> _mechanismLayers;
+        private string _id = string.Empty;
+        private string _name = string.Empty;
+        private string _centerSlot = string.Empty;
+        private Dictionary<string, BodyPartType> _slots = new();
+        private Dictionary<string, List<string>> _connections = new();
+        private Dictionary<string, string> _layers = new();
+        private Dictionary<string, string> _mechanismLayers = new();
 
         [ViewVariables] public string ID => _id;
 

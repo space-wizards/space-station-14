@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -15,9 +16,9 @@ namespace Content.Shared.Damage.DamageContainer
     public class DamageContainerPrototype : IPrototype
     {
         private bool _supportAll;
-        private HashSet<DamageClass> _supportedClasses;
-        private HashSet<DamageType> _supportedTypes;
-        private string _id;
+        private HashSet<DamageClass> _supportedClasses = new();
+        private HashSet<DamageType> _supportedTypes = new();
+        private string _id = string.Empty;
 
         // TODO NET 5 IReadOnlySet
         [ViewVariables] public IReadOnlyCollection<DamageClass> SupportedClasses => _supportedClasses;
