@@ -39,7 +39,7 @@ namespace Content.Shared.GameObjects.Components.Cargo
         public CargoProductPrototype? GetProduct(string productId)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            if (!prototypeManager.TryIndex(productId, out CargoProductPrototype product) || !_products.Contains(product))
+            if (!prototypeManager.TryIndex(productId, out CargoProductPrototype? product) || !_products.Contains(product))
             {
                 return null;
             }
@@ -76,7 +76,7 @@ namespace Content.Shared.GameObjects.Components.Cargo
                     _products.Clear();
                     foreach (var id in products)
                     {
-                        if (!prototypeManager.TryIndex(id, out CargoProductPrototype product))
+                        if (!prototypeManager.TryIndex(id, out CargoProductPrototype? product))
                         {
                             continue;
                         }

@@ -33,7 +33,7 @@ namespace Content.Shared.GameObjects.Components.Research
 
         public bool CanProduce(string ID, int quantity = 1)
         {
-            return PrototypeManager.TryIndex(ID, out LatheRecipePrototype recipe) && CanProduce(recipe, quantity);
+            return PrototypeManager.TryIndex(ID, out LatheRecipePrototype? recipe) && CanProduce(recipe, quantity);
         }
 
         /// <summary>

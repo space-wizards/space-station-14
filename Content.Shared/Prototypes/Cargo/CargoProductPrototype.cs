@@ -35,7 +35,7 @@ namespace Content.Shared.Prototypes.Cargo
                 if (_name.Trim().Length != 0)
                     return _name;
 
-                if (IoCManager.Resolve<IPrototypeManager>().TryIndex(_product, out EntityPrototype prototype))
+                if (IoCManager.Resolve<IPrototypeManager>().TryIndex(_product, out EntityPrototype? prototype))
                 {
                     _name = prototype.Name;
                 }
@@ -55,7 +55,7 @@ namespace Content.Shared.Prototypes.Cargo
                 if (_description.Trim().Length != 0)
                     return _description;
 
-                if (IoCManager.Resolve<IPrototypeManager>().TryIndex(_product, out EntityPrototype prototype))
+                if (IoCManager.Resolve<IPrototypeManager>().TryIndex(_product, out EntityPrototype? prototype))
                 {
                     _description = prototype.Description;
                 }

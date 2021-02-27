@@ -84,7 +84,7 @@ namespace Content.Shared.GameObjects.Components.Research
 
                     foreach (var id in recipes)
                     {
-                        if (prototypeManager.TryIndex(id, out LatheRecipePrototype recipe))
+                        if (prototypeManager.TryIndex(id, out LatheRecipePrototype? recipe))
                         {
                             _recipes.Add(recipe);
                         }
