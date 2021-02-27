@@ -1,46 +1,46 @@
-﻿- type: entity
-  name: emergency flare # todo: we need some sort of IgnitionSourceComponent we can add to this, so when it's lit it will cause fires when touching fuel
+- type: entity
+  name: torch # todo: we need some sort of IgnitionSourceComponent we can add to this, so when it's lit it will cause fires when touching fuel
   parent: BaseItem
-  id: FlareBase
-  description: A flare that produces a very bright light for a short while. Point the flame away from yourself.
+  id: Torch
+  description: A torch fashioned from some wood.
   components:
     - type: ExpendableLight
-      spentName: spent flare
-      spentDesc: It looks like this flare has burnt out. What a bummer.
-      glowDuration: 150
+      spentName: burnt torch
+      spentDesc: It looks like this torch has burnt out. What a bummer.
+      glowDuration: 100
       fadeOutDuration: 4
-      iconStateOn: flare_unlit
-      iconStateSpent: flare_spent
+      iconStateSpent: torch_spent
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
+      # Sounds legit nuff
       litSound: /Audio/Items/Flare/flare_on.ogg
       loopedSound: /Audio/Items/Flare/flare_burn.ogg
     - type: Sprite
-      sprite: Objects/Misc/flare.rsi
+      sprite: Objects/Misc/torch.rsi
       layers:
-        - state: flare_base
-        - state: flare_burn
+        - state: torch_unlit
+        - state: lit_overlay
           color: "#FFFFFF"
           visible: false
           shader: unshaded
-        - state: flare_unlit
-          color: "#FF0000"
     - type: Icon
-      sprite: Objects/Misc/flare.rsi
+      sprite: Objects/Misc/torch.rsi
       state: icon
     - type: Item
-      sprite: Objects/Misc/flare.rsi
-      color: "#FF0000"
+      sprite: Objects/Misc/torch.rsi
       HeldPrefix: unlit
     - type: LoopingSound
+    - type: Construction
+      graph: lightTorch
+      node: torch
     - type: Appearance
       visuals:
         - type: ExpendableLightVisualizer
     - type: PointLight
       enabled: false
-      color: "#FF8080"
+      color: "#E25822"
       radius: 1.0
-      energy: 9.0
+      energy: 5.0
     - type: LightBehaviour
       behaviours:
         - !type:RandomizeBehaviour # immediately make it bright and flickery

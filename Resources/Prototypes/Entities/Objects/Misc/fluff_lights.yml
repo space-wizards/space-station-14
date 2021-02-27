@@ -75,32 +75,6 @@
       - type: FlashLightVisualizer
 
 - type: entity
-  name: torch
-  id: Torch
-  parent: BaseLamp
-  description: A torch fashioned from some leaves and a log.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/torch.rsi
-    layers:
-      - state: torch
-      - state: torch_on
-        shader: unshaded
-        visible: false
-  - type: Item
-    sprite: Objects/Misc/torch.rsi
-    HeldPrefix: off
-  - type: PointLight
-    enabled: false
-    radius: 1
-    energy: 4
-    color: "#FFC458"
-  - type: LoopingSound
-  - type: Appearance
-    visuals:
-      - type: LanternVisualizer
-
-- type: entity
   name: floodlight
   id: Floodlight
   parent: BaseLamp
