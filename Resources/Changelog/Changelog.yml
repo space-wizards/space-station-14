@@ -40,3 +40,9 @@ Entries:
     type: Add}
   id: 8
   time: '2021-02-27T14:30:48.420921+00:00'
+- author: AJCM
+  changes:
+  - {message: Fixes the changelog escape menu button text going out of the limits
+      of the button when there is an update., type: Fix}
+  id: 9
+  time: '2021-02-27T17:33:32.0000000+00:00'
