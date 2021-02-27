@@ -1,10 +1,12 @@
 #nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Movement
@@ -78,6 +80,7 @@ namespace Content.Shared.GameObjects.Components.Movement
                 */
         }
 
+        [Serializable, NetSerializable]
         private sealed class PlayerMobMoverComponentState : ComponentState
         {
             public float StepSoundDistance;

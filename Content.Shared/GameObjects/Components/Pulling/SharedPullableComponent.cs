@@ -29,7 +29,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
         private IPhysicsComponent? _pullerPhysics;
         public IPhysicsComponent? PullerPhysics => _pullerPhysics;
 
-        private SlothJoint? _pullJoint = null;
+        private DistanceJoint? _pullJoint = null;
 
         /// <summary>
         /// The current entity pulling this component.
@@ -143,9 +143,10 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
 
                     _physics.WakeBody();
-                    _pullJoint = pullerPhysics.CreateSlothJoint(_physics);
+                    _pullJoint = pullerPhysics.CreateDistanceJoint(_physics);
                     // _physics.BodyType = BodyType.Kinematic; // TODO: Need to consider their original bodytype
                     _pullJoint.CollideConnected = true;
+                    _pullJoint.Length = 1.4f;
                     _pullJoint.MaxLength = 2.0f; // TODO hacky, we should consider ours and their bb
                 }
                 // Code here will not run if pulling a new object was attempted and failed because of the returns from the refactor.
