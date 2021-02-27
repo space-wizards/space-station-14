@@ -3,6 +3,7 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.ViewVariables;
 
@@ -18,14 +19,35 @@ namespace Content.Shared.GameObjects.Components.Movement
         public override string Name => "PlayerMobMover";
         public override uint? NetID => ContentNetIDs.PLAYER_MOB_MOVER;
 
-        // TODO: COMPSTATE
+        private float _stepSoundDistance;
+        private float _grabRange;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public EntityCoordinates LastPosition { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float StepSoundDistance { get; set; }
+        public float StepSoundDistance
+        {
+            get => _stepSoundDistance;
+            set
+            {
+                if (MathHelper.CloseTo(_stepSoundDistance, value)) return;
+                _stepSoundDistance = value;
+                Dirty();
+            }
+        }
+
         [ViewVariables(VVAccess.ReadWrite)]
-        public float GrabRange { get; set; }
+        public float GrabRange
+        {
+            get => _grabRange;
+            set
+            {
+                if (MathHelper.CloseTo(_grabRange, value)) return;
+                _grabRange = value;
+                Dirty();
+            }
+        }
 
         public override void Initialize()
         {
@@ -33,13 +55,39 @@ namespace Content.Shared.GameObjects.Components.Movement
             Owner.EnsureComponentWarn<SharedPlayerInputMoverComponent>();
         }
 
+        public override ComponentState GetComponentState()
+        {
+            return new PlayerMobMoverComponentState(StepSoundDistance, GrabRange);
+        }
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+            if (curState is not PlayerMobMoverComponentState playerMoverState) return;
+            StepSoundDistance = playerMoverState.StepSoundDistance;
+            GrabRange = playerMoverState.GrabRange;
+        }
+
         bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
         {
             // Don't collide with other mobs
-            // TODO: unless they have combat mode on
-            return collidedWith.Entity.HasComponent<IBody>() &&
-                   (!Owner.TryGetComponent(out SharedCombatModeComponent? ownerCombat) || !ownerCombat.IsInCombatMode) &&
-                    (!collidedWith.Entity.TryGetComponent(out SharedCombatModeComponent? otherCombat) || !otherCombat.IsInCombatMode);
+            // unless they have combat mode on
+            return collidedWith.Entity.HasComponent<IBody>();  /* &&
+                (!Owner.TryGetComponent(out SharedCombatModeComponent? ownerCombat) || !ownerCombat.IsInCombatMode) &&
+                (!collidedWith.Entity.TryGetComponent(out SharedCombatModeComponent? otherCombat) || !otherCombat.IsInCombatMode);
+                */
+        }
+
+        private sealed class PlayerMobMoverComponentState : ComponentState
+        {
+            public float StepSoundDistance;
+            public float GrabRange;
+
+            public PlayerMobMoverComponentState(float stepSoundDistance, float grabRange) : base(ContentNetIDs.PLAYER_MOB_MOVER)
+            {
+                StepSoundDistance = stepSoundDistance;
+                GrabRange = grabRange;
+            }
         }
     }
 }

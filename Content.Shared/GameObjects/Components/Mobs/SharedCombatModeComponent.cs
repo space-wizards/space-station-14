@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -19,8 +20,22 @@ namespace Content.Shared.GameObjects.Components.Mobs
             get => _isInCombatMode;
             set
             {
+                if (_isInCombatMode == value) return;
                 _isInCombatMode = value;
                 Dirty();
+
+                // Regenerate physics contacts -> Can probably just selectively check
+                /* Still a bit jank so left disabled for now.
+                if (Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
+                {
+                    if (value)
+                    {
+                        physicsComponent.WakeBody();
+                    }
+
+                    physicsComponent.RegenerateContacts();
+                }
+                */
             }
         }
 
@@ -30,12 +45,13 @@ namespace Content.Shared.GameObjects.Components.Mobs
             get => _activeZone;
             set
             {
+                if (_activeZone == value) return;
                 _activeZone = value;
                 Dirty();
             }
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
