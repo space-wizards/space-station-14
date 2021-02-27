@@ -123,6 +123,7 @@ namespace Content.Client.Construction
         {
             _constructionView.Dispose();
 
+            SystemBindingChanged(null);
             _systemManager.SystemLoaded -= OnSystemLoaded;
             _systemManager.SystemUnloaded -= OnSystemUnloaded;
 
