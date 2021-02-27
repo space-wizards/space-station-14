@@ -1,3 +1,3 @@
 ### UI
 
- chat-manager-max-message-lenght = Your message exceeds {$maxMessageLenght} character limit
+ chat-manager-max-message-length = Your message exceeds {$maxMessageLength} character limit
