@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -126,8 +127,8 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return false;
             }
 
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
-                physics.Anchored)
+            if (!entity.TryGetComponent(out IPhysBody? physics) ||
+                physics.BodyType == BodyType.Static)
             {
                 return false;
             }

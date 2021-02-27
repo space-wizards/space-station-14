@@ -26,8 +26,8 @@ namespace Content.Shared.GameObjects.Components.Pulling
         /// Only set in Puller->set! Only set in unison with _pullerPhysics!
         /// </summary>
         private IEntity? _puller;
-        private IPhysicsComponent? _pullerPhysics;
-        public IPhysicsComponent? PullerPhysics => _pullerPhysics;
+        private IPhysBody? _pullerPhysics;
+        public IPhysBody? PullerPhysics => _pullerPhysics;
 
         private DistanceJoint? _pullJoint = null;
 
@@ -70,7 +70,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 // Now that is settled, prepare to be pulled by a new object.
                 if (_physics == null)
                 {
-                    Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? SharedPullableComponent on {0} didn't have an IPhysicsComponent.", Owner);
+                    Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? SharedPullableComponent on {0} didn't have an IPhysBody.", Owner);
                     return;
                 }
 

@@ -117,8 +117,8 @@ namespace Content.Server.GameObjects.Components.Recycling
                 return false;
             }
 
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
-                physics.Anchored)
+            if (!entity.TryGetComponent(out IPhysBody? physics) ||
+                physics.BodyType == BodyType.Static)
             {
                 return false;
             }

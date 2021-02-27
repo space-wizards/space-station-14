@@ -112,7 +112,7 @@ namespace Content.Shared.Physics.Controllers
         /// <param name="mover"></param>
         /// <param name="collider"></param>
         /// <returns></returns>
-        public static bool IsAroundCollider(SharedBroadPhaseSystem broadPhaseSystem, ITransformComponent transform, IMobMoverComponent mover, IPhysicsComponent collider)
+        public static bool IsAroundCollider(SharedBroadPhaseSystem broadPhaseSystem, ITransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
         {
             var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
 

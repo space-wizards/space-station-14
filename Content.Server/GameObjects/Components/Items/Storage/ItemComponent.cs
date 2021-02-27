@@ -12,6 +12,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -85,8 +86,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return false;
             }
 
-            if (Owner.TryGetComponent(out IPhysicsComponent physics) &&
-                physics.Anchored)
+            if (Owner.TryGetComponent(out IPhysBody physics) &&
+                physics.BodyType == BodyType.Static)
             {
                 return false;
             }

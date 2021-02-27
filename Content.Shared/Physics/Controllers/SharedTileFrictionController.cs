@@ -86,9 +86,9 @@ namespace Content.Shared.Physics.Controllers
         }
 
         [Pure]
-        private float GetTileFriction(IPhysicsComponent body)
+        private float GetTileFriction(IPhysBody body)
         {
-            if (!body.OnGround)
+            if (body.Status == BodyStatus.OnGround)
                 return 0.0f;
 
             var transform = body.Owner.Transform;

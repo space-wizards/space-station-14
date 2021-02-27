@@ -1,10 +1,13 @@
+#nullable enable
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.Singularity;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Random;
 
@@ -12,6 +15,7 @@ namespace Content.Server.Physics.Controllers
 {
     internal sealed class SingularityController : AetherController
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         private float _pullAccumulator;
@@ -32,6 +36,8 @@ namespace Content.Server.Physics.Controllers
                 {
                     // TODO: Use colliders instead probably yada yada
                     PullEntities(singularity);
+                    // Yeah look the collision with station wasn't working and I'm 15k lines in and not debugging this shit
+                    DestroyTiles(singularity);
                 }
             }
 
@@ -80,6 +86,20 @@ namespace Content.Server.Physics.Controllers
                 var speed = 10 / vec.Length * component.Level;
 
                 collidableComponent.ApplyLinearImpulse(vec.Normalized * speed);
+            }
+        }
+
+        private void DestroyTiles(SingularityComponent component)
+        {
+            if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
+            var worldBox = physicsComponent.GetWorldAABB();
+
+            foreach (var grid in _mapManager.FindGridsIntersecting(component.Owner.Transform.MapID, worldBox))
+            {
+                foreach (var tile in grid.GetTilesIntersecting(worldBox))
+                {
+                    grid.SetTile(tile.GridIndices, Tile.Empty);
+                }
             }
         }
     }

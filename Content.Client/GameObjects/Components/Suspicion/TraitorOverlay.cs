@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 
 namespace Content.Client.GameObjects.Components.Suspicion
 {
@@ -62,7 +63,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     continue;
                 }
 
-                if (!ally.TryGetComponent(out IPhysicsComponent physics))
+                if (!ally.TryGetComponent(out IPhysBody physics))
                 {
                     continue;
                 }

@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.Recycling;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
 
 namespace Content.Server.Physics.Controllers
@@ -46,7 +47,7 @@ namespace Content.Server.Physics.Controllers
             {
                 if (!comp.CanMove(entity)) continue;
 
-                if (!entity.TryGetComponent(out IPhysicsComponent? physics) || physics.Status == BodyStatus.InAir ||
+                if (!entity.TryGetComponent(out IPhysBody? physics) || physics.Status == BodyStatus.InAir ||
                     entity.IsWeightless()) continue;
 
                 ownerPos ??= comp.Owner.Transform.WorldPosition;
@@ -108,7 +109,7 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out IPhysicsComponent? physics)) continue;
+                if (!entity.TryGetComponent(out IPhysBody? physics)) continue;
                 ownerPos ??= comp.Owner.Transform.WorldPosition;
                 physics.LinearVelocity += Convey(direction, frameTime, entity.Transform.WorldPosition - ownerPos.Value);
             }

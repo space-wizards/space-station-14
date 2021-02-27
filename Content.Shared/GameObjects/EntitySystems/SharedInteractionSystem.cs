@@ -132,7 +132,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             foreach (var result in rayResults)
             {
-                if (!result.HitEntity.TryGetComponent(out IPhysicsComponent p))
+                if (!result.HitEntity.TryGetComponent(out IPhysBody p))
                 {
                     continue;
                 }

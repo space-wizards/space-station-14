@@ -127,7 +127,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
                 airlock = entityManager.SpawnEntity("AirlockDummy", new MapCoordinates((0, 0), mapId));
 
-                Assert.True(physicsDummy.TryGetComponent(out IPhysicsComponent physics));
+                Assert.True(physicsDummy.TryGetComponent(out IPhysBody physics));
 
                 Assert.True(airlock.TryGetComponent(out doorComponent));
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
@@ -141,7 +141,7 @@ namespace Content.IntegrationTests.Tests.Doors
             for (var i = 0; i < 240; i += 10)
             {
                 // Keep the airlock awake so they collide
-                airlock.GetComponent<IPhysicsComponent>().WakeBody();
+                airlock.GetComponent<IPhysBody>().WakeBody();
 
                 // Ensure that it is still closed
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));

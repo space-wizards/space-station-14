@@ -109,8 +109,8 @@ namespace Content.Shared.GameObjects.Components.Movement
                 }
 
                 var entity = Owner.EntityManager.GetEntity(uid);
-                var physics = Owner.GetComponent<IPhysicsComponent>();
-                var otherPhysics = entity.GetComponent<IPhysicsComponent>();
+                var physics = Owner.GetComponent<IPhysBody>();
+                var otherPhysics = entity.GetComponent<IPhysBody>();
 
                 if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                 {

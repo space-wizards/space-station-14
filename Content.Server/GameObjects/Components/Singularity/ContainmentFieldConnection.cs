@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Singularity
@@ -91,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         public void TryRepell(IEntity repellFrom, IEntity toRepell)
         {
             // TODO: Fix this also it's fucking repel
-            if (!_fields.Contains(repellFrom) || !toRepell.TryGetComponent<IPhysicsComponent>(out var collidableComponent)) return;
+            if (!_fields.Contains(repellFrom) || !toRepell.TryGetComponent<IPhysBody>(out var collidableComponent)) return;
 
             return;
             var speed = 5;

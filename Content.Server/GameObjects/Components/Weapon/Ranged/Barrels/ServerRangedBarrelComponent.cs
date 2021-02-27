@@ -384,14 +384,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     projectileAngle = angle;
                 }
 
-                var physics = projectile.GetComponent<IPhysicsComponent>();
+                var physics = projectile.GetComponent<IPhysBody>();
                 physics.Status = BodyStatus.InAir;
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
 
                 projectile
-                    .GetComponent<IPhysicsComponent>()
+                    .GetComponent<IPhysBody>()
                     .LinearVelocity = projectileAngle.ToVec() * velocity;
 
                 projectile.Transform.LocalRotation = projectileAngle.Theta;

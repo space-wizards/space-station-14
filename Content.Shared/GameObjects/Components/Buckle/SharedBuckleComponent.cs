@@ -18,7 +18,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
 
         public sealed override uint? NetID => ContentNetIDs.BUCKLE;
 
-        [ComponentDependency] protected readonly IPhysicsComponent? Physics;
+        [ComponentDependency] protected readonly IPhysBody? Physics;
 
         /// <summary>
         ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.

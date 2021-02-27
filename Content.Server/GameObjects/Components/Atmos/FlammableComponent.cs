@@ -135,8 +135,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
 
                 var entity = Owner.EntityManager.GetEntity(uid);
-                var physics = Owner.GetComponent<IPhysicsComponent>();
-                var otherPhysics = entity.GetComponent<IPhysicsComponent>();
+                var physics = Owner.GetComponent<IPhysBody>();
+                var otherPhysics = entity.GetComponent<IPhysBody>();
 
                 if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                 {
