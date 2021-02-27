@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.EntitySystems

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -11,20 +12,9 @@ namespace Content.Shared.Prototypes.Cargo
     [NetSerializable, Serializable, Prototype("cargoProduct")]
     public class CargoProductPrototype : IPrototype
     {
-        [DataField("name")]
-        private string _name;
-        [DataField("description")]
-        private string _description;
-        [DataField("icon")]
-        private SpriteSpecifier _icon;
-        [DataField("product")]
-        private string _product;
-        [DataField("cost")]
-        private int _pointCost;
-        [DataField("category")]
-        private string _category;
-        [DataField("group")]
-        private string _group;
+        [DataField("name")] private string _name = string.Empty;
+
+        [DataField("description")] private string _description = string.Empty;
 
         [ViewVariables]
         [field: DataField("id", required: true)]
@@ -32,7 +22,7 @@ namespace Content.Shared.Prototypes.Cargo
 
         [ViewVariables]
         [field: DataField("parent")]
-        public string Parent { get; }
+        public string? Parent { get; }
 
         /// <summary>
         ///     Product name.
@@ -44,10 +34,12 @@ namespace Content.Shared.Prototypes.Cargo
             {
                 if (_name.Trim().Length != 0)
                     return _name;
-                EntityPrototype prototype = null;
-                IoCManager.Resolve<IPrototypeManager>()?.TryIndex(_product, out prototype);
-                if (prototype?.Name != null)
+
+                if (IoCManager.Resolve<IPrototypeManager>().TryIndex(Product, out EntityPrototype? prototype))
+                {
                     _name = prototype.Name;
+                }
+
                 return _name;
             }
         }
@@ -62,10 +54,12 @@ namespace Content.Shared.Prototypes.Cargo
             {
                 if (_description.Trim().Length != 0)
                     return _description;
-                EntityPrototype prototype = null;
-                IoCManager.Resolve<IPrototypeManager>()?.TryIndex(_product, out prototype);
-                if (prototype?.Description != null)
+
+                if (IoCManager.Resolve<IPrototypeManager>().TryIndex(Product, out EntityPrototype? prototype))
+                {
                     _description = prototype.Description;
+                }
+
                 return _description;
             }
         }
@@ -74,31 +68,36 @@ namespace Content.Shared.Prototypes.Cargo
         ///     Texture path used in the CargoConsole GUI.
         /// </summary>
         [ViewVariables]
-        public SpriteSpecifier Icon => _icon;
+        [field: DataField("icon")]
+        public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         ///     The prototype name of the product.
         /// </summary>
         [ViewVariables]
-        public string Product => _product;
+        [field: DataField("product")]
+        public string Product { get; } = string.Empty;
 
         /// <summary>
         ///     The point cost of the product.
         /// </summary>
         [ViewVariables]
-        public int PointCost => _pointCost;
+        [field: DataField("cost")]
+        public int PointCost { get; }
 
         /// <summary>
         ///     The prototype category of the product. (e.g. Engineering, Medical)
         /// </summary>
         [ViewVariables]
-        public string Category => _category;
+        [field: DataField("category")]
+        public string Category { get; } = string.Empty;
 
         /// <summary>
         ///     The prototype group of the product. (e.g. Contraband)
         /// </summary>
         [ViewVariables]
-        public string Group => _group;
+        [field: DataField("group")]
+        public string Group { get; } = string.Empty;
 
         public CargoProductPrototype()
         {

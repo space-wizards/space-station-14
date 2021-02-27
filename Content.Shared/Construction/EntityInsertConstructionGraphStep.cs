@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+#nullable enable
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction
@@ -6,7 +7,7 @@ namespace Content.Shared.Construction
     [DataDefinition]
     public abstract class EntityInsertConstructionGraphStep : ConstructionGraphStep
     {
-        [DataField("store")] public string Store { get; private set; } = string.Empty;
+        [DataField("store")] public string Store { get; } = string.Empty;
 
         public abstract bool EntityValid(IEntity entity);
     }

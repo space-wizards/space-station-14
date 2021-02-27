@@ -1,4 +1,5 @@
-﻿using Content.Shared.Interfaces;
+﻿#nullable enable
+using Content.Shared.Interfaces;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
@@ -21,36 +22,36 @@ namespace Content.Shared.Actions
         [DataField("actionType", required: true)]
         public ActionType ActionType { get; set; }
 
-        [DataField("behavior", serverOnly: true, required: true)]
-        private IActionBehavior Behavior { get; set; }
+        [DataField("behavior", serverOnly: true)]
+        private IActionBehavior? Behavior { get; set; }
 
         /// <summary>
         /// The IInstantAction that should be invoked when performing this
         /// action. Null if this is not an Instant ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public IInstantAction InstantAction { get; private set; }
+        public IInstantAction InstantAction { get; private set; } = default!;
 
         /// <summary>
         /// The IToggleAction that should be invoked when performing this
         /// action. Null if this is not a Toggle ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public IToggleAction ToggleAction { get; private set; }
+        public IToggleAction ToggleAction { get; private set; } = default!;
 
         /// <summary>
         /// The ITargetEntityAction that should be invoked when performing this
         /// action. Null if this is not a TargetEntity ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public ITargetEntityAction TargetEntityAction { get; private set; }
+        public ITargetEntityAction TargetEntityAction { get; private set; } = default!;
 
         /// <summary>
         /// The ITargetPointAction that should be invoked when performing this
         /// action. Null if this is not a TargetPoint ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public ITargetPointAction TargetPointAction { get; private set; }
+        public ITargetPointAction TargetPointAction { get; private set; } = default!;
 
         void ISerializationHooks.AfterDeserialization()
         {

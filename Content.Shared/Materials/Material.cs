@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -20,7 +21,7 @@ namespace Content.Shared.Materials
 
         [ViewVariables]
         [field: DataField("parent")]
-        public string Parent { get; }
+        public string? Parent { get; }
 
         [DataField("name")] public string Name { get; private set; } = "unobtanium";
 

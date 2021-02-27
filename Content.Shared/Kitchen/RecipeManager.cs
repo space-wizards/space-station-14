@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Content.Shared.Prototypes.Kitchen;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -9,7 +10,7 @@ namespace Content.Shared.Kitchen
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public List<FoodRecipePrototype> Recipes { get; private set; }
+        public List<FoodRecipePrototype> Recipes { get; private set; } = new();
 
         public void Initialize()
         {
@@ -41,7 +42,7 @@ namespace Content.Shared.Kitchen
 
         private class RecipeComparer : Comparer<FoodRecipePrototype>
         {
-            public override int Compare(FoodRecipePrototype x, FoodRecipePrototype y)
+            public override int Compare(FoodRecipePrototype? x, FoodRecipePrototype? y)
             {
                 if (x == null || y == null)
                 {

@@ -6,8 +6,11 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.MachineLinking;
 using Content.Server.GameObjects.Components.MachineLinking.Signals;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Observer;
+using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -15,10 +18,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
@@ -27,18 +28,28 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>, IGhostBooAffected
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "PoweredLight";
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
+        // time to blink light when ghost made boo nearby
+        private static readonly TimeSpan ghostBlinkingTime = TimeSpan.FromSeconds(10);
+        private static readonly TimeSpan ghostBlinkingCooldown = TimeSpan.FromSeconds(60);
+
+        [ComponentDependency]
+        private readonly AppearanceComponent? _appearance;
+
         private TimeSpan _lastThunk;
+        private TimeSpan? _lastGhostBlink;
         [DataField("hasLampOnSpawn")]
         private bool _hasLampOnSpawn = true;
 
         [ViewVariables] [DataField("on")] private bool _on = true;
+        [ViewVariables] private bool _isBlinking;
+        [ViewVariables] [DataField("ignoreGhostsBoo")] private bool _ignoreGhostsBoo;
 
         [DataField("bulb")]
         private LightBulbType BulbType = LightBulbType.Tube;
@@ -160,13 +171,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         public void UpdateLight()
         {
             var powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
-            var sprite = Owner.GetComponent<SpriteComponent>();
-            var light = Owner.GetComponent<PointLightComponent>();
+
             if (LightBulb == null) // No light bulb.
             {
                 powerReceiver.Load = 0;
-                sprite.LayerSetState(0, "empty");
-                light.Enabled = false;
+                _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
                 return;
             }
 
@@ -176,9 +185,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     if (powerReceiver.Powered && _on)
                     {
                         powerReceiver.Load = LightBulb.PowerUse;
-                        sprite.LayerSetState(0, "on");
-                        light.Enabled = true;
-                        light.Color = LightBulb.Color;
+                        _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
+                        _appearance?.SetData(PoweredLightVisuals.BulbColor, LightBulb.Color);
                         var time = _gameTiming.CurTime;
                         if (time > _lastThunk + _thunkDelay)
                         {
@@ -188,17 +196,14 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     }
                     else
                     {
-                        sprite.LayerSetState(0, "off");
-                        light.Enabled = false;
+                        _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
                     }
                     break;
                 case LightBulbState.Broken:
-                    sprite.LayerSetState(0, "broken");
-                    light.Enabled = false;
+                    _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
                     break;
                 case LightBulbState.Burned:
-                    sprite.LayerSetState(0, "burned");
-                    light.Enabled = false;
+                    _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                     break;
             }
         }
@@ -264,6 +269,37 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             _on = !_on;
             UpdateLight();
+        }
+
+        public void ToggleBlinkingLight(bool isNowBlinking)
+        {
+            if (_isBlinking == isNowBlinking)
+                return;
+
+            _isBlinking = isNowBlinking;
+            _appearance?.SetData(PoweredLightVisuals.Blinking, _isBlinking);
+        }
+
+        public bool AffectedByGhostBoo(InstantActionEventArgs args)
+        {
+            if (_ignoreGhostsBoo)
+                return false;
+
+            // check cooldown first to prevent abuse
+            var time = _gameTiming.CurTime;
+            if (_lastGhostBlink != null)
+            {
+                if (time <= _lastGhostBlink + ghostBlinkingCooldown)
+                    return false;
+            }
+            _lastGhostBlink = time;
+
+            ToggleBlinkingLight(true);
+            Owner.SpawnTimer(ghostBlinkingTime, () => {
+                ToggleBlinkingLight(false);
+            });
+
+            return true;
         }
     }
 }

@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -14,10 +15,10 @@ namespace Content.Shared.Prototypes.PDA
 
         [ViewVariables]
         [field: DataField("parent")]
-        public string Parent { get; }
+        public string? Parent { get; }
 
         [field: DataField("itemId")]
-        public string ItemId { get; }
+        public string ItemId { get; } = string.Empty;
 
         [field: DataField("price")]
         public int Price { get; } = 5;
@@ -26,9 +27,9 @@ namespace Content.Shared.Prototypes.PDA
         public UplinkCategory Category { get; } = UplinkCategory.Utility;
 
         [field: DataField("description")]
-        public string Description { get; }
+        public string Description { get; } = string.Empty;
 
         [field: DataField("listingName")]
-        public string ListingName { get; }
+        public string ListingName { get; } = string.Empty;
     }
 }

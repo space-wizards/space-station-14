@@ -42,7 +42,7 @@ namespace Content.Shared.Actions
         /// <summary>
         /// Name to show in UI. Accepts formatting.
         /// </summary>
-        public FormattedMessage Name { get; private set; } = new();
+        public FormattedMessage Name { get; private set; }
 
         /// <summary>
         /// Description to show in UI. Accepts formatting.

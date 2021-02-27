@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Localization;
+﻿#nullable enable
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 

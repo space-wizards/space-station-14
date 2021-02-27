@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -15,11 +16,11 @@ namespace Content.Shared.GameObjects.Components.Weapons.Melee
 
         [ViewVariables]
         [field: DataField("parent")]
-        public string Parent { get; }
+        public string? Parent { get; }
 
         [ViewVariables]
         [field: DataField("state")]
-        public string State { get; }
+        public string State { get; } = string.Empty;
 
         [ViewVariables]
         [field: DataField("prototype")]

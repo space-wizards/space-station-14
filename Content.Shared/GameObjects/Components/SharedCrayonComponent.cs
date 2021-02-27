@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
@@ -14,9 +15,10 @@ namespace Content.Shared.GameObjects.Components
         public override string Name => "Crayon";
         public override uint? NetID => ContentNetIDs.CRAYONS;
 
-        public string SelectedState { get; set; }
+        public string SelectedState { get; set; } = string.Empty;
+
         [DataField("color")]
-        protected Color _color = Color.White;
+        protected string _color = "white";
 
         [Serializable, NetSerializable]
         public enum CrayonUiKey
@@ -81,14 +83,10 @@ namespace Content.Shared.GameObjects.Components
 
         [ViewVariables]
         [field: DataField("parent")]
-        public string Parent { get; }
+        public string? Parent { get; }
 
-        [DataField("spritePath")]
-        private string _spritePath;
-        public string SpritePath => _spritePath;
+        [field: DataField("spritePath")] public string SpritePath { get; } = string.Empty;
 
-        [DataField("decals")]
-        private List<string> _decals;
-        public List<string> Decals => _decals;
+        [field: DataField("decals")] public List<string> Decals { get; } = new();
     }
 }

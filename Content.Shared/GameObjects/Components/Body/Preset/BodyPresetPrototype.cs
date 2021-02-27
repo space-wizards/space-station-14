@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Prototypes;
@@ -21,14 +22,14 @@ namespace Content.Shared.GameObjects.Components.Body.Preset
 
         [ViewVariables]
         [field: DataField("parent")]
-        public string Parent { get; }
+        public string? Parent { get; }
 
         [DataField("partIDs")]
         private Dictionary<string, string> _partIDs = new();
 
         [ViewVariables]
         [field: DataField("name")]
-        public string Name { get; }
+        public string Name { get; } = string.Empty;
 
         [ViewVariables] public Dictionary<string, string> PartIDs => new(_partIDs);
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -14,10 +15,8 @@ namespace Content.Shared.Prototypes
 
         [ViewVariables]
         [field: DataField("parent")]
-        public string Parent { get; }
+        public string? Parent { get; }
 
-        [DataField("values")] private List<string> _values = new();
-
-        public IReadOnlyList<string> Values => _values;
+        [DataField("values")] public IReadOnlyList<string> Values { get; } = new List<string>();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Content.Shared.Prototypes.Cargo;
@@ -66,10 +67,10 @@ namespace Content.Shared.GameObjects.Components.Cargo
         ///     Returns a product from the string id;
         /// </summary>
         /// <returns>Product</returns>
-        public CargoProductPrototype GetProduct(string productId)
+        public CargoProductPrototype? GetProduct(string productId)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            if (!prototypeManager.TryIndex(productId, out CargoProductPrototype product) || !_products.Contains(product))
+            if (!prototypeManager.TryIndex(productId, out CargoProductPrototype? product) || !_products.Contains(product))
             {
                 return null;
             }

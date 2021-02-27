@@ -15,7 +15,7 @@
       edges:
         - to: lowWall
           steps:
-            - material: Metal
+            - material: Steel
               amount: 3
               doAfter: 5
 

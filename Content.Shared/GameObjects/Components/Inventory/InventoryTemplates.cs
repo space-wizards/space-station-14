@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 

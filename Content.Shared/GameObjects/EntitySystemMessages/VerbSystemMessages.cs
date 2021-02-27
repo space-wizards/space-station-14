@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Shared.GameObjects;
@@ -37,8 +38,8 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
                 public readonly string Text;
                 public readonly string Key;
                 public readonly string Category;
-                public readonly SpriteSpecifier Icon;
-                public readonly SpriteSpecifier CategoryIcon;
+                public readonly SpriteSpecifier? Icon;
+                public readonly SpriteSpecifier? CategoryIcon;
                 public readonly bool Available;
 
                 public NetVerbData(VerbData data, string key)

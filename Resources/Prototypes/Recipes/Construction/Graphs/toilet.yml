@@ -8,7 +8,7 @@
           completed:
             - !type:SnapToGrid { }
           steps:
-            - material: Metal
+            - material: Steel
               amount: 5
               doAfter: 1
     - node: toilet
@@ -18,12 +18,12 @@
             - !type:SpawnPrototype
               prototype: SteelSheet1
               amount: 5
-            - !type:EmptyAllContainers {}              
+            - !type:EmptyAllContainers {}
             - !type:DeleteEntity {}
           conditions:
             - !type:EntityAnchored
               anchored: false
-            - !type:ToiletLidClosed {}  
+            - !type:ToiletLidClosed {}
           steps:
             - tool: Welding
               doAfter: 2

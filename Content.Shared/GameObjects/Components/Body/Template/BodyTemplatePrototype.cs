@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Prototypes;
@@ -16,16 +17,16 @@ namespace Content.Shared.GameObjects.Components.Body.Template
     public class BodyTemplatePrototype : IPrototype, ISerializationHooks
     {
         [DataField("slots")]
-        private Dictionary<string, BodyPartType> _slots;
+        private Dictionary<string, BodyPartType> _slots = new();
 
         [DataField("connections")]
-        private Dictionary<string, List<string>> _rawConnections;
+        private Dictionary<string, List<string>> _rawConnections = new();
 
         [DataField("layers")]
-        private Dictionary<string, string> _layers;
+        private Dictionary<string, string> _layers = new();
 
         [DataField("mechanismLayers")]
-        private Dictionary<string, string> _mechanismLayers;
+        private Dictionary<string, string> _mechanismLayers = new();
 
         [ViewVariables]
         [field: DataField("id", required: true)]
@@ -37,11 +38,11 @@ namespace Content.Shared.GameObjects.Components.Body.Template
 
         [ViewVariables]
         [field: DataField("name")]
-        public string Name { get; }
+        public string Name { get; } = string.Empty;
 
         [ViewVariables]
         [field: DataField("centerSlot")]
-        public string CenterSlot { get; }
+        public string CenterSlot { get; } = string.Empty;
 
         [ViewVariables]
         public Dictionary<string, BodyPartType> Slots => new(_slots);

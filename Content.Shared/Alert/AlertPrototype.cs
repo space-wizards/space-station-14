@@ -43,7 +43,7 @@ namespace Content.Shared.Alert
         /// <summary>
         /// Name to show in tooltip window. Accepts formatting.
         /// </summary>
-        public FormattedMessage Name { get; private set; } = default!;
+        public FormattedMessage Name { get; private set; } = new();
 
         /// <summary>
         /// Description to show in tooltip window. Accepts formatting.

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -97,7 +98,7 @@ namespace Content.Shared.GameObjects.Components.Research
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
             foreach (var technologyId in technology.RequiredTechnologies)
             {
-                protoMan.TryIndex(technologyId, out TechnologyPrototype requiredTechnology);
+                protoMan.TryIndex(technologyId, out TechnologyPrototype? requiredTechnology);
                 if (requiredTechnology == null)
                     return false;
 

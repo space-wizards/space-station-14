@@ -295,9 +295,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 recipeToCook = r;
             }
 
-            var goodMeal = (recipeToCook != null)
-                           &&
-                           (_currentCookTimerTime == (uint)recipeToCook.CookTime);
             SetAppearance(MicrowaveVisualState.Cooking);
             _audioSystem.PlayFromEntity(_startCookingSound, Owner, AudioParams.Default);
             Owner.SpawnTimer((int)(_currentCookTimerTime * _cookTimeMultiplier), (Action)(() =>
@@ -314,20 +311,16 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 }
                 else
                 {
-                    if (goodMeal)
+                    if (recipeToCook != null)
                     {
-                        SubtractContents(recipeToCook!);
+                        SubtractContents(recipeToCook);
+                        Owner.EntityManager.SpawnEntity(recipeToCook.Result, Owner.Transform.Coordinates);
                     }
                     else
                     {
                         VaporizeReagents();
                         VaporizeSolids();
-                    }
-
-                    if (recipeToCook != null)
-                    {
-                        var entityToSpawn = goodMeal ? recipeToCook.Result : _badRecipeName;
-                        Owner.EntityManager.SpawnEntity(entityToSpawn, Owner.Transform.Coordinates);
+                        Owner.EntityManager.SpawnEntity(_badRecipeName, Owner.Transform.Coordinates);
                     }
                 }
                 _audioSystem.PlayFromEntity(_cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
@@ -422,6 +415,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private MicrowaveSuccessState CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string,int> solids)
         {
+            if (_currentCookTimerTime != (uint) recipe.CookTime)
+            {
+                return MicrowaveSuccessState.RecipeFail;
+            }
+
             if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 return MicrowaveSuccessState.RecipeFail;
@@ -452,7 +450,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     return MicrowaveSuccessState.RecipeFail;
                 }
             }
-
 
             return MicrowaveSuccessState.RecipePass;
         }

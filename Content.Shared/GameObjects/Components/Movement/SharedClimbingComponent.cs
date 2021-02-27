@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
@@ -12,14 +13,14 @@ namespace Content.Shared.GameObjects.Components.Movement
         public sealed override string Name => "Climbing";
         public sealed override uint? NetID => ContentNetIDs.CLIMBING;
 
-        protected IPhysicsComponent Body;
-        protected bool IsOnClimbableThisFrame = false;
+        protected IPhysicsComponent? Body;
+        protected bool IsOnClimbableThisFrame;
 
         protected bool OwnerIsTransitioning
         {
             get
             {
-                if (Body.TryGetController<ClimbController>(out var controller))
+                if (Body != null && Body.TryGetController<ClimbController>(out var controller))
                 {
                     return controller.IsActive;
                 }

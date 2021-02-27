@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -16,19 +17,19 @@ namespace Content.Shared.VendingMachines
 
         [ViewVariables]
         [field: DataField("parent")]
-        public string Parent { get; }
+        public string? Parent { get; }
 
         [field: DataField("name")]
-        public string Name { get; }
+        public string Name { get; } = string.Empty;
 
         [field: DataField("description")]
-        public string Description { get; }
+        public string Description { get; } = string.Empty;
 
         [field: DataField("animationDuration")]
         public double AnimationDuration { get; }
 
         [field: DataField("spriteName")]
-        public string SpriteName { get; }
+        public string SpriteName { get; } = string.Empty;
 
         [field: DataField("startingInventory")]
         public Dictionary<string, uint> StartingInventory { get; } = new();

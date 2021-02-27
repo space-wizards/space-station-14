@@ -60,10 +60,10 @@
   components:
   - type: StorageFill
     contents:
-      - name: GoldStack
+      - name: IngotGold
         amount: 5
       - name: DrinkGoldenCup
         prob: 0.05
         orGroup: CupOrGold
-      - name: GoldStack
+      - name: IngotGold
         orGroup: CupOrGold

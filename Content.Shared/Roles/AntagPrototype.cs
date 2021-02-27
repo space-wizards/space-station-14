@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -11,8 +12,6 @@ namespace Content.Shared.Roles
     [Prototype("antag")]
     public class AntagPrototype : IPrototype
     {
-        private string _name;
-
         [ViewVariables]
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
@@ -24,18 +23,14 @@ namespace Content.Shared.Roles
         /// <summary>
         ///     The name of this antag as displayed to players.
         /// </summary>
-        [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
+        [field: DataField("name")]
+        public string Name { get; } = string.Empty;
 
         /// <summary>
         ///     The antag's objective, displayed at round-start to the player.
         /// </summary>
         [DataField("objective")]
-        public string Objective { get; private set; }
+        public string Objective { get; private set; } = string.Empty;
 
         /// <summary>
         ///     Whether or not the antag role is one of the bad guys.

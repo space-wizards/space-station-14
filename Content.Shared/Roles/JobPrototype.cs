@@ -28,12 +28,8 @@ namespace Content.Shared.Roles
         /// <summary>
         ///     The name of this job as displayed to players.
         /// </summary>
-        [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
+        [field: DataField("name")]
+        public string Name { get; } = string.Empty;
 
         /// <summary>
         ///     Whether this job is a head.
@@ -57,14 +53,15 @@ namespace Content.Shared.Roles
         [DataField("startingGear")]
         public string? StartingGear { get; private set; }
 
-        [DataField("icon")]
-        public string? Icon { get; private set; }
+        [field: DataField("icon")] public string Icon { get; } = string.Empty;
 
         [DataField("special")]
         public JobSpecial? Special { get; private set; }
 
-        [DataField("departments")] public IReadOnlyCollection<string> Departments { get; private set; } = Array.Empty<string>();
-        [DataField("access")]
-        public IReadOnlyCollection<string> Access { get; private set; } = ImmutableArray<string>.Empty;
+        [field: DataField("departments")]
+        public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();
+
+        [field: DataField("access")]
+        public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
     }
 }
