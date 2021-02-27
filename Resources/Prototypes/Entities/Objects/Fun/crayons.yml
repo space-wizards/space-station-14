@@ -29,7 +29,7 @@
     state: white
   - type: Crayon
     color: white
-    capacity: 15
+    capacity: 5
 
 - type: entity
   parent: Crayon
@@ -41,7 +41,7 @@
     state: mime
   - type: Crayon
     color: white
-    capacity: 15
+    capacity: 5
 
 - type: entity
   parent: Crayon
@@ -53,7 +53,7 @@
     state: black
   - type: Crayon
     color: black
-    capacity: 15
+    capacity: 5
 
 - type: entity
   parent: Crayon
@@ -65,7 +65,7 @@
     state: red
   - type: Crayon
     color: red
-    capacity: 15
+    capacity: 5
 
 - type: entity
   parent: Crayon
@@ -77,7 +77,7 @@
     state: orange
   - type: Crayon
     color: orange
-    capacity: 15
+    capacity: 5
 
 - type: entity
   parent: Crayon
@@ -89,7 +89,7 @@
     state: yellow
   - type: Crayon
     color: yellow
-    capacity: 15
+    capacity: 5
 
 - type: entity
   parent: Crayon
@@ -101,7 +101,7 @@
     state: green
   - type: Crayon
     color: green
-    capacity: 15
+    capacity: 5
 
 - type: entity
   parent: Crayon
@@ -113,7 +113,7 @@
     state: blue
   - type: Crayon
     color: lightblue
-    capacity: 15
+    capacity: 5
 
 - type: entity
   parent: Crayon
@@ -125,7 +125,7 @@
     state: purple
   - type: Crayon
     color: purple
-    capacity: 15
+    capacity: 5
 
 - type: entity
   id: CrayonBox
@@ -135,6 +135,7 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
+    netsync: false
     state: box
   - type: Storage
     capacity: 7
