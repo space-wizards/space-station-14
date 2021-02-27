@@ -199,7 +199,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             }
 
             var primaryReagent = Solution.GetPrimaryReagentId();
-            if (!prototypeManager.TryIndex(primaryReagent, out ReagentPrototype proto))
+            if (!prototypeManager.TryIndex(primaryReagent, out ReagentPrototype? proto))
             {
                 Logger.Error($"{nameof(SharedSolutionContainerComponent)} could not find the prototype associated with {primaryReagent}.");
                 return;

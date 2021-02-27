@@ -10,7 +10,7 @@
   suffix: Full
   components:
     - type: Stack
-      stacktype: enum.StackType.Cable
+      stackType: Cable
     - type: Sprite
       sprite: Objects/Tools/cables.rsi
       netsync: false
@@ -27,7 +27,7 @@
   suffix: Full
   components:
     - type: Stack
-      stacktype: enum.StackType.HVCable
+      stackType: HVCable
     - type: Sprite
       state: coilhv-30
     - type: Item
@@ -50,10 +50,11 @@
   suffix: 1
   components:
     - type: Sprite
-      state: coilhv-10      
+      state: coilhv-10
     - type: Item
       size: 3
     - type: Stack
+      stackType: HVWireStack1
       count: 1
 
 - type: entity
@@ -89,6 +90,7 @@
     - type: Item
       size: 3
     - type: Stack
+      stackType: ApcExtensionCableStack1
       count: 1
 
 - type: entity
@@ -98,7 +100,7 @@
   suffix: Full
   components:
     - type: Stack
-      stacktype: enum.StackType.MVCable
+      stackType: MVCable
     - type: Sprite
       state: coilmv-30
     - type: Item
@@ -125,4 +127,5 @@
     - type: Item
       size: 3
     - type: Stack
+      stackType: MVWireStack1
       count: 1

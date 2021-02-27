@@ -103,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (string.IsNullOrEmpty(_packPrototypeId)) return;
 
-            if (!_prototypeManager.TryIndex(_packPrototypeId, out ReagentDispenserInventoryPrototype packPrototype))
+            if (!_prototypeManager.TryIndex(_packPrototypeId, out ReagentDispenserInventoryPrototype? packPrototype))
             {
                 return;
             }

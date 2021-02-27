@@ -46,26 +46,28 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.Arcade1);
             human.AddFunction(ContentKeyFunctions.Arcade2);
             human.AddFunction(ContentKeyFunctions.Arcade3);
-            human.AddFunction(ContentKeyFunctions.OpenActionsMenu);
-            human.AddFunction(ContentKeyFunctions.Hotbar0);
-            human.AddFunction(ContentKeyFunctions.Hotbar1);
-            human.AddFunction(ContentKeyFunctions.Hotbar2);
-            human.AddFunction(ContentKeyFunctions.Hotbar3);
-            human.AddFunction(ContentKeyFunctions.Hotbar4);
-            human.AddFunction(ContentKeyFunctions.Hotbar5);
-            human.AddFunction(ContentKeyFunctions.Hotbar6);
-            human.AddFunction(ContentKeyFunctions.Hotbar7);
-            human.AddFunction(ContentKeyFunctions.Hotbar8);
-            human.AddFunction(ContentKeyFunctions.Hotbar9);
-            human.AddFunction(ContentKeyFunctions.Loadout1);
-            human.AddFunction(ContentKeyFunctions.Loadout2);
-            human.AddFunction(ContentKeyFunctions.Loadout3);
-            human.AddFunction(ContentKeyFunctions.Loadout4);
-            human.AddFunction(ContentKeyFunctions.Loadout5);
-            human.AddFunction(ContentKeyFunctions.Loadout6);
-            human.AddFunction(ContentKeyFunctions.Loadout7);
-            human.AddFunction(ContentKeyFunctions.Loadout8);
-            human.AddFunction(ContentKeyFunctions.Loadout9);
+
+            // actions should be common (for ghosts, mobs, etc)
+            common.AddFunction(ContentKeyFunctions.OpenActionsMenu);
+            common.AddFunction(ContentKeyFunctions.Hotbar0);
+            common.AddFunction(ContentKeyFunctions.Hotbar1);
+            common.AddFunction(ContentKeyFunctions.Hotbar2);
+            common.AddFunction(ContentKeyFunctions.Hotbar3);
+            common.AddFunction(ContentKeyFunctions.Hotbar4);
+            common.AddFunction(ContentKeyFunctions.Hotbar5);
+            common.AddFunction(ContentKeyFunctions.Hotbar6);
+            common.AddFunction(ContentKeyFunctions.Hotbar7);
+            common.AddFunction(ContentKeyFunctions.Hotbar8);
+            common.AddFunction(ContentKeyFunctions.Hotbar9);
+            common.AddFunction(ContentKeyFunctions.Loadout1);
+            common.AddFunction(ContentKeyFunctions.Loadout2);
+            common.AddFunction(ContentKeyFunctions.Loadout3);
+            common.AddFunction(ContentKeyFunctions.Loadout4);
+            common.AddFunction(ContentKeyFunctions.Loadout5);
+            common.AddFunction(ContentKeyFunctions.Loadout6);
+            common.AddFunction(ContentKeyFunctions.Loadout7);
+            common.AddFunction(ContentKeyFunctions.Loadout8);
+            common.AddFunction(ContentKeyFunctions.Loadout9);
 
             var ghost = contexts.New("ghost", "common");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);

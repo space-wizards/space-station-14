@@ -9,6 +9,7 @@ namespace Content.Shared.Actions
         Error,
         HumanScream,
         Disarm,
+        GhostBoo,
         DebugInstant,
         DebugToggle,
         DebugTargetPoint,

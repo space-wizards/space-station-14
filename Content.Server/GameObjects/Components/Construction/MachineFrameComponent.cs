@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Content.Server.Construction;
 using Content.Server.GameObjects.Components.Stack;
-using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Construction;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -16,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Construction
     [RegisterComponent]
     public class MachineFrameComponent : Component, IInteractUsing
     {
-        [Dependency] private IComponentFactory _componentFactory = default!;
+        [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
         public const string PartContainer = "machine_parts";
         public const string BoardContainer = "machine_board";
@@ -60,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Construction
         private Dictionary<MachinePart, int> _progress;
 
         [ViewVariables]
-        private Dictionary<StackType, int> _materialProgress;
+        private Dictionary<string, int> _materialProgress;
 
         [ViewVariables]
         private Dictionary<string, int> _componentProgress;
@@ -75,13 +74,13 @@ namespace Content.Server.GameObjects.Components.Construction
         public IReadOnlyDictionary<MachinePart, int> Requirements { get; private set; }
 
         [ViewVariables]
-        public IReadOnlyDictionary<StackType, int> MaterialRequirements { get; private set; }
+        public IReadOnlyDictionary<string, int> MaterialRequirements { get; private set; }
 
         [ViewVariables]
         public IReadOnlyDictionary<string, ComponentPartInfo> ComponentRequirements { get; private set; }
 
         public IReadOnlyDictionary<MachinePart, int> Progress => _progress;
-        public IReadOnlyDictionary<StackType, int> MaterialProgress => _materialProgress;
+        public IReadOnlyDictionary<string, int> MaterialProgress => _materialProgress;
         public IReadOnlyDictionary<string, int> ComponentProgress => _componentProgress;
 
         public override void Initialize()
@@ -108,10 +107,10 @@ namespace Content.Server.GameObjects.Components.Construction
         private void ResetProgressAndRequirements(MachineBoardComponent machineBoard)
         {
             Requirements = machineBoard.Requirements;
-            MaterialRequirements = machineBoard.MaterialRequirements;
+            MaterialRequirements = machineBoard.MaterialIdRequirements;
             ComponentRequirements = machineBoard.ComponentRequirements;
             _progress = new Dictionary<MachinePart, int>();
-            _materialProgress = new Dictionary<StackType, int>();
+            _materialProgress = new Dictionary<string, int>();
             _componentProgress = new Dictionary<string, int>();
 
             foreach (var (machinePart, _) in Requirements)
@@ -179,7 +178,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
                 if (part.TryGetComponent<StackComponent>(out var stack))
                 {
-                    var type = (StackType) stack.StackType;
+                    var type = stack.StackTypeId;
                     // Check this is part of the requirements...
                     if (!MaterialRequirements.ContainsKey(type))
                         continue;
@@ -249,7 +248,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
                 if (eventArgs.Using.TryGetComponent<StackComponent>(out var stack))
                 {
-                    var type = (StackType) stack.StackType;
+                    var type = stack.StackTypeId;
                     if (!MaterialRequirements.ContainsKey(type))
                         return false;
 

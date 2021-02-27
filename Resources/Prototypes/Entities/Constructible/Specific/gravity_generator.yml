@@ -13,7 +13,6 @@
         state: activated
         shader: unshaded
         map: ["enum.GravityGeneratorVisualLayers.Core"]
-
   - type: SnapGrid
     offset: Center
   - type: PowerReceiver
@@ -31,6 +30,9 @@
   - type: InteractionOutline
   - type: Damageable
     resistances: metallicResistances
+  - type: Repairable
+    fuelCost: 10
+    doAfterDelay: 5
   - type: Destructible
     thresholds:
     - trigger:

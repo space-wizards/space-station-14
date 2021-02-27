@@ -1,0 +1,53 @@
+- type: stack
+  id: Banananium
+  name: banananium
+  icon: /Textures/Objects/Materials/materials.rsi/banananium.png
+  spawn: MaterialBanananium1
+
+- type: stack
+  id: Diamond
+  name: diamond
+  icon: /Textures/Objects/Materials/materials.rsi/diamond.png
+  spawn: MaterialDiamond1
+
+- type: stack
+  id: WoodPlank
+  name: wood plank
+  icon: /Textures/Objects/Materials/materials.rsi/wood.png
+  spawn: MaterialWoodPlank1
+
+- type: stack
+  id: Cloth
+  name: cloth
+  icon: /Textures/Objects/Materials/materials.rsi/cloth.png
+  spawn: MaterialCloth1
+
+- type: stack
+  id: Cotton
+  name: cotton
+  icon: /Textures/Objects/Materials/materials.rsi/cotton.png
+  spawn: MaterialCotton1
+
+- type: stack
+  id: Durathread
+  name: durathread
+  icon: /Textures/Objects/Materials/materials.rsi/durathread.png
+  spawn: MaterialDurathread1
+
+- type: stack
+  id: RawDurathread
+  name: raw durathread
+  icon: /Textures/Objects/Materials/materials.rsi/durathreadraw.png
+  spawn: MaterialDurathreadRaw1
+
+- type: stack
+  id: Hide
+  name: hide
+  icon: /Textures/Objects/Materials/materials.rsi/hide.png
+  spawn: MaterialHide1
+
+- type: stack
+  id: Leather
+  name: leather
+  icon: /Textures/Objects/Materials/materials.rsi/leather.png
+  spawn: MaterialLeather1

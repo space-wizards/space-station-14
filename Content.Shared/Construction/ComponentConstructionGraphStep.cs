@@ -15,7 +15,6 @@ namespace Content.Shared.Construction
             base.ExposeData(serializer);
 
             serializer.DataField(this, x => x.Component, "component", string.Empty);
-
         }
 
         public override bool EntityValid(IEntity entity)
