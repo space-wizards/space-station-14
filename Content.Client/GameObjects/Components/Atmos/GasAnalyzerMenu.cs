@@ -149,7 +149,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             {
                 _statusContainer.AddChild(new Label
                 {
-                    Text = Loc.GetString("Error: {0}", state.Error),
+                    Text = Loc.GetString("gas-analyzer-error", ("error", state.Error)),
                     FontColorOverride = Color.Red
                 });
                 return;
@@ -157,12 +157,13 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             _statusContainer.AddChild(new Label
             {
-                Text = Loc.GetString("Pressure: {0:0.##} kPa", state.Pressure)
+                Text = Loc.GetString("gas-analyzer-pressure", ("pressure", state.Pressure))
             });
             _statusContainer.AddChild(new Label
             {
-                Text = Loc.GetString("Temperature: {0:0.#}K ({1:0.#}°C)", state.Temperature,
-                    TemperatureHelpers.KelvinToCelsius(state.Temperature))
+                Text = Loc.GetString("gas-analyzer-temperature",
+                            ("kelvin", state.Temperature),
+                            ("celsius", TemperatureHelpers.KelvinToCelsius(state.Temperature)))
             });
             // Return here cause all that stuff down there is gas stuff (so we don't get the seperators)
             if (state.Gases.Length == 0)
@@ -222,7 +223,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                 });
                 tableVal.AddChild(new Label
                 {
-                    Text = Loc.GetString("{0:0.##} mol", gas.Amount)
+                    Text = Loc.GetString("gas-analyzer-gas-amount", ("amount", gas.Amount))
                 });
 
                 // Add to the gas bar //TODO: highlight the currently hover one
@@ -230,8 +231,10 @@ namespace Content.Client.GameObjects.Components.Atmos
                 var right = (i == state.Gases.Length - 1) ? 0f : 2f;
                 gasBar.AddChild(new PanelContainer
                 {
-                    ToolTip = Loc.GetString("{0}: {1:0.##} mol ({2:0.#}%)", gas.Name, gas.Amount,
-                        (gas.Amount / totalGasAmount) * 100),
+                    ToolTip = Loc.GetString("gas-analyzer-gas-info", ("name", gas.Name),
+                                    ("amount", gas.Amount),
+                                    ("percentage", (gas.Amount / totalGasAmount) * 100)
+                        ),
                     HorizontalExpand = true,
                     SizeFlagsStretchRatio = gas.Amount,
                     MouseFilter = MouseFilterMode.Pass,

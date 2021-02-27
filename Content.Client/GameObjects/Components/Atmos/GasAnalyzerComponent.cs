@@ -61,9 +61,9 @@ namespace Content.Client.GameObjects.Components.Atmos
                     GasAnalyzerDanger.Hazard => "red",
                     _ => "green",
                 };
-                _label.SetMarkup(Loc.GetString("Pressure: [color={0}]{1}[/color]",
-                    color,
-                    Enum.GetName(typeof(GasAnalyzerDanger), _parent.Danger)));
+                _label.SetMarkup(Loc.GetString("comp-gas-analyzer-pressure-status",
+                                    ("color", color),
+                                    ("status", Enum.GetName(typeof(GasAnalyzerDanger), _parent.Danger))));
             }
         }
     }
