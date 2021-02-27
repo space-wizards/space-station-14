@@ -9,13 +9,18 @@
     tags:
     - GlassBeaker
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/beakers.rsi
-    state: beaker
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+    netsync: false
+    layers:
+      - state: beaker
+        map: ["enum.SolutionContainerLayers.Base"]
+      - state: beaker1  
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
   - type: Item
-    sprite: Objects/Specific/Chemistry/beakers.rsi
+    sprite: Objects/Specific/Chemistry/beaker.rsi
     HeldPrefix: beaker
   - type: SolutionContainer
-    fillingState: beaker
     maxVol: 50
     caps: OpenContainer, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
   - type: SolutionTransfer
@@ -31,6 +36,7 @@
   id: LargeBeaker
   components:
   - type: Sprite
+    sprite: Objects/Specific/Chemistry/beakers.rsi
     state: beakerlarge
   - type: Item
     HeldPrefix: beaker
