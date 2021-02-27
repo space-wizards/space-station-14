@@ -22,7 +22,7 @@
 - type: entity
   parent: Crayon
   id: CrayonWhite
-  suffix: White
+  name: white crayon
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
@@ -34,7 +34,7 @@
 - type: entity
   parent: Crayon
   id: CrayonMime
-  suffix: Mime
+  name: mime crayon
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
@@ -46,7 +46,7 @@
 - type: entity
   parent: Crayon
   id: CrayonBlack
-  suffix: Black
+  name: black crayon
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
@@ -58,7 +58,7 @@
 - type: entity
   parent: Crayon
   id: CrayonRed
-  suffix: Red
+  name: red crayon
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
@@ -70,7 +70,7 @@
 - type: entity
   parent: Crayon
   id: CrayonOrange
-  suffix: Orange
+  name: orange crayon
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
@@ -82,7 +82,7 @@
 - type: entity
   parent: Crayon
   id: CrayonYellow
-  suffix: Yellow
+  name: yellow crayon
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
@@ -94,7 +94,7 @@
 - type: entity
   parent: Crayon
   id: CrayonGreen
-  suffix: Green
+  name: green crayon
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
@@ -106,7 +106,7 @@
 - type: entity
   parent: Crayon
   id: CrayonBlue
-  suffix: Blue
+  name: blue crayon
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
@@ -118,7 +118,7 @@
 - type: entity
   parent: Crayon
   id: CrayonPurple
-  suffix: Purple
+  name: purple crayon
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
