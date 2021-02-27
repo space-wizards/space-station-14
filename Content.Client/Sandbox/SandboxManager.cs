@@ -287,7 +287,11 @@ namespace Content.Client.Sandbox
         private void ToggleEntitySpawnWindow()
         {
             if (_spawnWindow == null)
+            {
                 _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
+                _spawnWindow.OpenToLeft();
+                return;
+            }
 
             if (_spawnWindow.IsOpen)
             {
@@ -295,15 +299,18 @@ namespace Content.Client.Sandbox
             }
             else
             {
-                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
-                _spawnWindow.OpenToLeft();
+                _spawnWindow.Open();
             }
         }
 
         private void ToggleTilesWindow()
         {
             if (_tilesSpawnWindow == null)
+            {
                 _tilesSpawnWindow = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
+                _tilesSpawnWindow.OpenToLeft();
+                return;
+            }
 
             if (_tilesSpawnWindow.IsOpen)
             {
@@ -311,8 +318,7 @@ namespace Content.Client.Sandbox
             }
             else
             {
-                _tilesSpawnWindow = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
-                _tilesSpawnWindow.OpenToLeft();
+                _tilesSpawnWindow.Open();
             }
         }
 
