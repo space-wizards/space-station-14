@@ -2,8 +2,7 @@
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Access
 {
@@ -13,7 +12,13 @@ namespace Content.Shared.Access
     [Prototype("accessLevel")]
     public class AccessLevelPrototype : IPrototype
     {
-        [DataField("id")] public string ID { get; private set; } = "";
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         /// <summary>
         ///     The player-visible name of the access level, in the ID card console and such.

@@ -6,7 +6,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Research
 {
@@ -15,8 +14,6 @@ namespace Content.Shared.Research
     {
         [DataField("name")]
         private string _name;
-        [DataField("id")]
-        private string _id;
         [DataField("icon")]
         private SpriteSpecifier _icon = SpriteSpecifier.Invalid;
         [DataField("description")]
@@ -29,7 +26,12 @@ namespace Content.Shared.Research
         private Dictionary<string, int> _requiredMaterials = new();
 
         [ViewVariables]
-        public string ID => _id;
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string Parent { get; }
 
         /// <summary>
         ///     Name displayed in the lathe GUI.

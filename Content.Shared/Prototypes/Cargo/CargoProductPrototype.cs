@@ -11,8 +11,6 @@ namespace Content.Shared.Prototypes.Cargo
     [NetSerializable, Serializable, Prototype("cargoProduct")]
     public class CargoProductPrototype : IPrototype
     {
-        [DataField("id")]
-        private string _id;
         [DataField("name")]
         private string _name;
         [DataField("description")]
@@ -29,7 +27,12 @@ namespace Content.Shared.Prototypes.Cargo
         private string _group;
 
         [ViewVariables]
-        public string ID => _id;
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string Parent { get; }
 
         /// <summary>
         ///     Product name.

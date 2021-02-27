@@ -2,6 +2,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Materials
 {
@@ -13,8 +14,13 @@ namespace Content.Shared.Materials
     [DataDefinition]
     public class MaterialPrototype : IPrototype
     {
-        [DataField("id", required: true)]
-        public string ID { get; private set; }
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string Parent { get; }
 
         [DataField("name")] public string Name { get; private set; } = "unobtanium";
 

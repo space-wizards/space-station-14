@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.Botany
 {
@@ -72,8 +71,13 @@ namespace Content.Server.Botany
     {
         private const string SeedPrototype = "SeedBase";
 
-        [DataField("id")]
-        public string ID { get; private set; }
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; private init; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         /// <summary>
         ///     Unique identifier of this seed. Do NOT set this.
@@ -81,13 +85,14 @@ namespace Content.Server.Botany
         public int Uid { get; internal set; } = -1;
 
         #region Tracking
-        [ViewVariables] [DataField("name")] public string Name { get; set; }
-        [ViewVariables] [DataField("seedName")] public string SeedName { get; set; }
+
+        [ViewVariables] [DataField("name")] public string Name { get; set; } = string.Empty;
+        [ViewVariables] [DataField("seedName")] public string SeedName { get; set; } = string.Empty;
 
         [ViewVariables]
         [DataField("seedNoun")]
         public string SeedNoun { get; set; } = "seeds";
-        [ViewVariables] [DataField("displayName")] public string DisplayName { get; set; }
+        [ViewVariables] [DataField("displayName")] public string DisplayName { get; set; } = string.Empty;
 
         [ViewVariables]
         [DataField("roundStart")]
@@ -105,8 +110,14 @@ namespace Content.Server.Botany
         [ViewVariables]
         [DataField("chemicals")]
         public Dictionary<string, SeedChemQuantity> Chemicals { get; set; } = new();
-        [ViewVariables] [DataField("consumeGasses")] public Dictionary<Gas, float> ConsumeGasses { get; set; }
-        [ViewVariables] [DataField("exudeGasses")] public Dictionary<Gas, float> ExudeGasses { get; set; }
+
+        [ViewVariables]
+        [DataField("consumeGasses")]
+        public Dictionary<Gas, float> ConsumeGasses { get; set; } = new();
+
+        [ViewVariables]
+        [DataField("exudeGasses")]
+        public Dictionary<Gas, float> ExudeGasses { get; set; } = new();
         #endregion
 
         #region Tolerances
@@ -168,11 +179,27 @@ namespace Content.Server.Botany
         #endregion
 
         #region Cosmetics
-        [ViewVariables] [DataField("plantRsi")] public ResourcePath PlantRsi { get; set; }
-        [ViewVariables] [DataField("plantIconState")] public string PlantIconState { get; set; } = "produce";
-        [ViewVariables] [DataField("bioluminescent")] public bool Bioluminescent { get; set; }
-        [ViewVariables] [DataField("bioluminescentColor")] public Color BioluminescentColor { get; set; } = Color.White;
-        [ViewVariables] [DataField("splatPrototype")] public string SplatPrototype { get; set; }
+
+        [ViewVariables]
+        [DataField("plantRsi", required: true)]
+        public ResourcePath PlantRsi { get; set; } = default!;
+
+        [ViewVariables]
+        [DataField("plantIconState")]
+        public string PlantIconState { get; set; } = "produce";
+
+        [ViewVariables]
+        [DataField("bioluminescent")]
+        public bool Bioluminescent { get; set; }
+
+        [ViewVariables]
+        [DataField("bioluminescentColor")]
+        public Color BioluminescentColor { get; set; } = Color.White;
+
+        [ViewVariables]
+        [DataField("splatPrototype")]
+        public string? SplatPrototype { get; set; }
+
         #endregion
 
         public Seed Clone()
@@ -222,7 +249,7 @@ namespace Content.Server.Botany
             return newSeed;
         }
 
-        public IEntity SpawnSeedPacket(EntityCoordinates transformCoordinates, IEntityManager entityManager = null)
+        public IEntity SpawnSeedPacket(EntityCoordinates transformCoordinates, IEntityManager? entityManager = null)
         {
             entityManager ??= IoCManager.Resolve<IEntityManager>();
 
@@ -231,7 +258,7 @@ namespace Content.Server.Botany
             var seedComp = seed.EnsureComponent<SeedComponent>();
             seedComp.Seed = this;
 
-            if (seed.TryGetComponent(out SpriteComponent sprite))
+            if (seed.TryGetComponent(out SpriteComponent? sprite))
             {
                 // Seed state will always be seed. Blame the spriter if that's not the case!
                 sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(PlantRsi, "seed"));
@@ -328,7 +355,7 @@ namespace Content.Server.Botany
             return Clone();
         }
 
-        public bool CheckHarvest(IEntity user, IEntity held = null)
+        public bool CheckHarvest(IEntity user, IEntity? held = null)
         {
             return (!Ligneous || (Ligneous && held != null && held.HasTag("BotanySharp")));
         }

@@ -1,8 +1,7 @@
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Roles
 {
@@ -14,8 +13,13 @@ namespace Content.Shared.Roles
     {
         private string _name;
 
-        [DataField("id")]
-        public string ID { get; private set; }
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string Parent { get; }
 
         /// <summary>
         ///     The name of this antag as displayed to players.

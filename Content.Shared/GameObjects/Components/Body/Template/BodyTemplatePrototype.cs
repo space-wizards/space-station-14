@@ -29,7 +29,11 @@ namespace Content.Shared.GameObjects.Components.Body.Template
 
         [ViewVariables]
         [field: DataField("id", required: true)]
-        public string ID { get; }
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string Parent { get; }
 
         [ViewVariables]
         [field: DataField("name")]

@@ -1,31 +1,34 @@
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Prototypes.PDA
 {
     [Prototype("uplinkListing")]
     public class UplinkStoreListingPrototype : IPrototype
     {
-        [DataField("id")]
-        private string _id;
-        [DataField("itemId")]
-        private string _itemId;
-        [DataField("price")]
-        private int _price = 5;
-        [DataField("category")]
-        private UplinkCategory _category = UplinkCategory.Utility;
-        [DataField("description")]
-        private string _desc;
-        [DataField("listingName")]
-        private string _name;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        public string ID => _id;
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string Parent { get; }
 
-        public string ItemId => _itemId;
-        public int Price => _price;
-        public UplinkCategory Category => _category;
-        public string Description => _desc;
-        public string ListingName => _name;
+        [field: DataField("itemId")]
+        public string ItemId { get; }
+
+        [field: DataField("price")]
+        public int Price { get; } = 5;
+
+        [field: DataField("category")]
+        public UplinkCategory Category { get; } = UplinkCategory.Utility;
+
+        [field: DataField("description")]
+        public string Description { get; }
+
+        [field: DataField("listingName")]
+        public string ListingName { get; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Atmos
 {
@@ -14,8 +13,13 @@ namespace Content.Shared.Atmos
         // TODO: Control gas amount necessary for overlay to appear
         // TODO: Add interfaces for gas behaviours e.g. breathing, burning
 
-        [DataField("id")]
-        public string ID { get; private set; }
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         /// <summary>
         ///     Specific heat for gas.

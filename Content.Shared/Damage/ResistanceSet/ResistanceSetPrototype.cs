@@ -20,16 +20,19 @@ namespace Content.Shared.Damage.ResistanceSet
         [DataField("flatReductions")]
         private Dictionary<DamageType, int> _flatReductions;
 
-        [DataField("id", required: true)]
-        private string _id;
-
         [ViewVariables] public Dictionary<DamageType, float> Coefficients => _coefficients;
 
         [ViewVariables] public Dictionary<DamageType, int> FlatReductions => _flatReductions;
 
         [ViewVariables] public Dictionary<DamageType, ResistanceSetSettings> Resistances { get; private set; }
 
-        [ViewVariables] public string ID => _id;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string Parent { get; }
 
         public void AfterDeserialization()
         {

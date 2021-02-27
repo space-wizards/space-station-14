@@ -1,12 +1,12 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Reactions
 {
@@ -26,8 +26,13 @@ namespace Content.Server.Atmos.Reactions
     [Prototype("gasReaction")]
     public class GasReactionPrototype : IPrototype
     {
-        [DataField("id")]
-        public string ID { get; private set; }
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         /// <summary>
         ///     Minimum gas amount requirements.
@@ -57,8 +62,7 @@ namespace Content.Server.Atmos.Reactions
         /// <summary>
         ///     A list of effects this will produce.
         /// </summary>
-        [DataField("effects")]
-        private List<IGasReactionEffect> _effects;
+        [DataField("effects")] private List<IGasReactionEffect> _effects = new();
 
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder holder, GridTileLookupSystem gridLookup)
         {

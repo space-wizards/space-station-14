@@ -9,34 +9,45 @@ namespace Content.Shared.GameObjects.Components.Weapons.Melee
     [Prototype("MeleeWeaponAnimation")]
     public sealed class MeleeWeaponAnimationPrototype : IPrototype
     {
-        [DataField("prototype")]
-        private string _prototype = "WeaponArc";
-        [DataField("state")]
-        private string _state;
-        [DataField("id")]
-        private string _id;
-        [DataField("colorDelta")]
-        private Vector4 _colorDelta = Vector4.Zero;
-        [DataField("color")]
-        private Vector4 _color = new Vector4(1,1,1,1);
-        [DataField("length")]
-        private TimeSpan _length = TimeSpan.FromSeconds(0.5f);
-        [DataField("speed")]
-        private float _speed = 1;
-        [DataField("width")]
-        private float _width = 90;
-        [DataField("arcType")]
-        private WeaponArcType _arcType = WeaponArcType.Slash;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        [ViewVariables] public string ID => _id;
-        [ViewVariables] public string State => _state;
-        [ViewVariables] public string Prototype => _prototype;
-        [ViewVariables] public TimeSpan Length => _length;
-        [ViewVariables] public float Speed => _speed;
-        [ViewVariables] public Vector4 Color => _color;
-        [ViewVariables] public Vector4 ColorDelta => _colorDelta;
-        [ViewVariables] public WeaponArcType ArcType => _arcType;
-        [ViewVariables] public float Width => _width;
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string Parent { get; }
+
+        [ViewVariables]
+        [field: DataField("state")]
+        public string State { get; }
+
+        [ViewVariables]
+        [field: DataField("prototype")]
+        public string Prototype { get; } = "WeaponArc";
+
+        [ViewVariables]
+        [field: DataField("length")]
+        public TimeSpan Length { get; } = TimeSpan.FromSeconds(0.5f);
+
+        [ViewVariables]
+        [field: DataField("speed")]
+        public float Speed { get; } = 1;
+
+        [ViewVariables]
+        [field: DataField("color")]
+        public Vector4 Color { get; } = new(1,1,1,1);
+
+        [ViewVariables]
+        [field: DataField("colorDelta")]
+        public Vector4 ColorDelta { get; } = Vector4.Zero;
+
+        [ViewVariables]
+        [field: DataField("arcType")]
+        public WeaponArcType ArcType { get; } = WeaponArcType.Slash;
+
+        [ViewVariables]
+        [field: DataField("width")]
+        public float Width { get; } = 90;
     }
 
     public enum WeaponArcType

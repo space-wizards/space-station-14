@@ -1,23 +1,22 @@
+#nullable enable
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Audio
 {
     [Prototype("soundCollection")]
     public sealed class SoundCollectionPrototype : IPrototype
     {
-        [DataField("id")]
-        public string ID { get; private set; }
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        [DataField("files")] private List<string> _pickFiles;
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
-        public List<string> PickFiles
-        {
-            get => _pickFiles;
-            private set => _pickFiles = value;
-        }
+        [field: DataField("files")] public List<string> PickFiles { get; } = new();
     }
 }

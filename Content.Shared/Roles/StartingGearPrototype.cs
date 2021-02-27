@@ -1,13 +1,9 @@
 #nullable enable
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 using Content.Shared.Preferences;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.Roles
@@ -15,9 +11,6 @@ namespace Content.Shared.Roles
     [Prototype("startingGear")]
     public class StartingGearPrototype : IPrototype
     {
-        [DataField("id")]
-        private string _id = string.Empty;
-
         [DataField("equipment")] private Dictionary<Slots, string> _equipment = new();
 
         /// <summary>
@@ -25,8 +18,10 @@ namespace Content.Shared.Roles
         /// </summary>
         [DataField("innerclothingskirt")]
         private string _innerClothingSkirt = default!;
+
         [DataField("satchel")]
         private string _satchel = string.Empty;
+
         [DataField("duffelbag")]
         private string _duffelbag = string.Empty;
 
@@ -37,7 +32,13 @@ namespace Content.Shared.Roles
         [DataField("inhand")]
         private Dictionary<string, string> _inHand = new(0);
 
-        [ViewVariables] public string ID => _id;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         public string GetGear(Slots slot, HumanoidCharacterProfile? profile)
         {

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Shared.Log;
@@ -15,7 +16,13 @@ namespace Content.Shared.Actions
     [DataDefinition]
     public abstract class BaseActionPrototype : IPrototype, ISerializationHooks
     {
-        [DataField("name", required: true)] public string ID { get; private set; } = default!;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         /// <summary>
         /// Icon representing this action in the UI.
@@ -48,7 +55,7 @@ namespace Content.Shared.Actions
         /// so the requirements message isn't too prominent in the tooltip.
         /// </summary>
         [DataField("requires")]
-        public string Requires { get; private set; }
+        public string Requires { get; private set; } = string.Empty;
 
         /// <summary>
         /// The type of behavior this action has. This is valid clientside and serverside.

@@ -3,10 +3,8 @@ using System.Linq;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.Objectives
 {
@@ -14,8 +12,12 @@ namespace Content.Server.Objectives
     public class ObjectivePrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id")]
-        public string ID { get; private set; }
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         [ViewVariables] [DataField("issuer")] public string Issuer { get; private set; } = "Unknown";
 

@@ -5,6 +5,7 @@ using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry
 {
@@ -20,8 +21,13 @@ namespace Content.Shared.Chemistry
         [DataField("products")] private Dictionary<string, ReagentUnit> _products = new();
         [DataField("effects")] private List<IReactionEffect> _effects = new();
 
+        [ViewVariables]
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         [field: DataField("name")]
         public string Name { get; } = string.Empty;

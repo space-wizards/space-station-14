@@ -1,8 +1,10 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Alert
 {
@@ -13,7 +15,13 @@ namespace Content.Shared.Alert
     [DataDefinition]
     public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>, ISerializationHooks
     {
-        [DataField("id", required: true)] public string ID { get; private set; } = default!;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         [DataField("order")] private readonly Dictionary<string, string> _order = new();
 
@@ -68,7 +76,7 @@ namespace Content.Shared.Alert
             return -1;
         }
 
-        public int Compare(AlertPrototype x, AlertPrototype y)
+        public int Compare(AlertPrototype? x, AlertPrototype? y)
         {
             if ((x == null) && (y == null)) return 0;
             if (x == null) return 1;

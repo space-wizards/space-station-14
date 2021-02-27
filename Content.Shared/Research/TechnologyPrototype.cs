@@ -5,7 +5,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Research
 {
@@ -14,8 +13,7 @@ namespace Content.Shared.Research
     {
         [DataField("name")]
         private string _name;
-        [DataField("id")]
-        private string _id;
+
         [DataField("icon")]
         private SpriteSpecifier _icon;
         [DataField("description")]
@@ -31,7 +29,12 @@ namespace Content.Shared.Research
         ///     The ID of this technology prototype.
         /// </summary>
         [ViewVariables]
-        public string ID => _id;
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string Parent { get; }
 
         /// <summary>
         ///     The name this technology will have on user interfaces.

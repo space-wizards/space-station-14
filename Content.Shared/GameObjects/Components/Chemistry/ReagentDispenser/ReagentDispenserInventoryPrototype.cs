@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
 {
@@ -16,12 +16,17 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
     [Serializable, NetSerializable, Prototype("reagentDispenserInventory")]
     public class ReagentDispenserInventoryPrototype : IPrototype
     {
-        [DataField("id")]
-        private string _id;
         [DataField("inventory")]
         private List<string> _inventory = new();
 
-        public string ID => _id;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string Parent { get; }
+
         public List<string> Inventory => _inventory;
     }
 }

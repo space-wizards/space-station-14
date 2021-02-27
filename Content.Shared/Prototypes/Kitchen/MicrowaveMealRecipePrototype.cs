@@ -2,6 +2,7 @@
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Prototypes.Kitchen
 {
@@ -11,8 +12,13 @@ namespace Content.Shared.Prototypes.Kitchen
     [Prototype("microwaveMealRecipe")]
     public class FoodRecipePrototype : IPrototype
     {
+        [ViewVariables]
         [field: DataField("id", required: true)]
-        public string ID { get; }
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string Parent { get; }
 
         [DataField("name")]
         private string _name;

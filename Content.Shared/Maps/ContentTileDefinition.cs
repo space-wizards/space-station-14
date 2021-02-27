@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Maps
 {
@@ -13,7 +11,12 @@ namespace Content.Shared.Maps
     [Prototype("tile")]
     public sealed class ContentTileDefinition : IPrototype, ITileDefinition
     {
+        [ViewVariables]
         string IPrototype.ID => Name;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string Parent { get; }
 
         [DataField("name")] public string Name { get; private set; }
         public ushort TileId { get; private set; }

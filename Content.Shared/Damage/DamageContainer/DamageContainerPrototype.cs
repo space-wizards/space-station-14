@@ -24,7 +24,13 @@ namespace Content.Shared.Damage.DamageContainer
 
         [ViewVariables] public IReadOnlyCollection<DamageType> SupportedTypes => _supportedTypes;
 
-        [ViewVariables] public string ID => _id;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string Parent { get; }
 
         public void AfterDeserialization()
         {

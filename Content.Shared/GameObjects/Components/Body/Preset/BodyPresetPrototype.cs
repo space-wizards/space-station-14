@@ -5,7 +5,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.GameObjects.Components.Body.Preset
 {
@@ -16,16 +15,20 @@ namespace Content.Shared.GameObjects.Components.Body.Preset
     [Serializable, NetSerializable]
     public class BodyPresetPrototype : IPrototype
     {
-        [DataField("id")]
-        private string _id;
-        [DataField("name")]
-        private string _name;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string Parent { get; }
+
         [DataField("partIDs")]
         private Dictionary<string, string> _partIDs = new();
 
-        [ViewVariables] public string ID => _id;
-
-        [ViewVariables] public string Name => _name;
+        [ViewVariables]
+        [field: DataField("name")]
+        public string Name { get; }
 
         [ViewVariables] public Dictionary<string, string> PartIDs => new(_partIDs);
     }
