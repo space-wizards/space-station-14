@@ -12,10 +12,12 @@ namespace Content.Tests.Shared.Alert
     {
         const string PROTOTYPES = @"
 - type: alert
+  name: AlertLowPressure
   alertType: LowPressure
   icon: /Textures/Interface/Alerts/Pressure/lowpressure.png
 
 - type: alert
+  name: AlertHighPressure
   alertType: HighPressure
   icon: /Textures/Interface/Alerts/Pressure/highpressure.png
 ";

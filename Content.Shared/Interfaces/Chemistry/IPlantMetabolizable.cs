@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+﻿#nullable enable
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Interfaces.Chemistry

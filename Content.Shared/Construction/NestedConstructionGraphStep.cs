@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.IO;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
@@ -11,7 +12,7 @@ namespace Content.Shared.Construction
 
         public void LoadFrom(YamlMappingNode mapping)
         {
-            if (!mapping.TryGetNode("steps", out YamlSequenceNode steps)) return;
+            if (!mapping.TryGetNode("steps", out YamlSequenceNode? steps)) return;
 
             foreach (var node in steps)
             {

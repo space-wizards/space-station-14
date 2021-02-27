@@ -1,4 +1,5 @@
-﻿using Content.Shared.Interfaces;
+﻿#nullable enable
+using Content.Shared.Interfaces;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
@@ -26,28 +27,28 @@ namespace Content.Shared.Actions
         /// action. Null if this is not an Instant ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public IInstantItemAction InstantAction { get; private set; }
+        public IInstantItemAction InstantAction { get; private set; } = default!;
 
         /// <summary>
         /// The IToggleItemAction that should be invoked when performing this
         /// action. Null if this is not a Toggle ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public IToggleItemAction ToggleAction { get; private set; }
+        public IToggleItemAction ToggleAction { get; private set; } = default!;
 
         /// <summary>
         /// The ITargetEntityItemAction that should be invoked when performing this
         /// action. Null if this is not a TargetEntity ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public ITargetEntityItemAction TargetEntityAction { get; private set; }
+        public ITargetEntityItemAction TargetEntityAction { get; private set; } = default!;
 
         /// <summary>
         /// The ITargetPointItemAction that should be invoked when performing this
         /// action. Null if this is not a TargetPoint ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public ITargetPointItemAction TargetPointAction { get; private set; }
+        public ITargetPointItemAction TargetPointAction { get; private set; } = default!;
 
         public override void LoadFrom(YamlMappingNode mapping)
         {
@@ -65,7 +66,7 @@ namespace Content.Shared.Actions
             // TODO: Split this class into server/client after RobustToolbox#1405
             if (IoCManager.Resolve<IModuleManager>().IsClientModule) return;
 
-            IItemActionBehavior behavior = null;
+            IItemActionBehavior? behavior = null;
             serializer.DataField(ref behavior, "behavior", null);
             switch (behavior)
             {

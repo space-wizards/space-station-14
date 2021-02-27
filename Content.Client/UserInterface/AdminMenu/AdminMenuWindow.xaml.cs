@@ -21,10 +21,9 @@ namespace Content.Client.UserInterface.AdminMenu
             remove => PlayerTabControl.OnPlayerListRefresh -= value;
         }
 
-        protected override Vector2? CustomSize => (500, 250);
-
         public AdminMenuWindow()
         {
+            MinSize = SetSize = (500, 250);
             Title = Loc.GetString("Admin Menu");
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);

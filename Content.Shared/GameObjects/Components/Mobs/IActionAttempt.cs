@@ -1,5 +1,4 @@
 ﻿#nullable enable
-
 using Content.Shared.Actions;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;

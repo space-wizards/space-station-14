@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Shared.Prototypes.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -41,7 +42,7 @@ namespace Content.Shared.GameObjects.Components.Tag
                 () => _tags);
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             var tags = new string[_tags.Count];
             var i = 0;

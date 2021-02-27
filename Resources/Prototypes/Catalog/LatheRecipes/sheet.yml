@@ -1,5 +1,5 @@
 - type: latheRecipe
-  id: MetalStack
+  id: SheetSteel
   icon:
     sprite: Objects/Materials/sheets.rsi
     state: metal

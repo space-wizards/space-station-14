@@ -1,0 +1,196 @@
+- type: entity
+  id: LockerQuarterMasterFilled
+  suffix: Filled
+  parent: LockerQuarterMaster
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingNeckCloakQm
+        prob: 1
+      - name: ClothingHeadsetCargo
+        prob: 1
+      - name: PlushieLizard
+        prob: 0.1
+      - name: ClothingHandsGlovesColorBrown
+        prob: 1
+      - name: ClothingOuterSuitFire
+        prob: 0.5
+      - name: ClothingShoesColorBrown
+        prob: 0.7
+      - name: ClothingHeadHatCargosoft
+        prob: 0.8
+      - name: SupplyRequestComputerCircuitboard
+        prob: 1
+      - name: SupplyComputerCircuitboard
+        prob: 1
+      - name: CigPackGreen
+        prob: 0.50
+
+- type: entity
+  id: LockerCaptainFilled
+  suffix: Filled
+  parent: LockerCaptain
+  components:
+  - type: StorageFill
+    contents:
+      - name: NukeDisk
+        prob: 1
+      - name: CaptainIDCard
+        prob: 1
+      - name: ClothingHeadHatCaptain
+        prob: 1
+      - name: ClothingNeckCloakCap
+        prob: 1
+      - name: ClothingHandsGlovesCaptain
+        prob: 1
+      - name: ClothingOuterHardsuitCap
+        prob: 1
+      - name: TaserGun
+        prob: 1
+      - name: ClothingShoesColorBlack
+        prob: 0.7
+      - name: ClothingHeadHelmetHardsuitCap
+        prob: 1
+      - name: CommsComputerCircuitboard
+        prob: 1
+      - name: ClothingHeadsetAltCommand
+        prob: 1
+      - name: PlushieNuke
+        prob: 0.1
+      - name: CigarGoldCase
+        prob: 0.25
+
+- type: entity
+  id: LockerHeadOfPersonnelFilled
+  suffix: Filled
+  parent: LockerHeadOfPersonnel
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingNeckCloakHop
+        prob: 1
+      - name: ClothingHeadHatHopcap
+        prob: 1
+      - name: HoPIDCard
+        prob: 0.9
+      - name: ClothingHeadsetCommand
+        prob: 1
+      - name: BoxPDA
+        prob: 1
+      - name: IDComputerCircuitboard
+        prob: 1
+      - name: TaserGun
+        prob: 1
+      - name: ClothingShoesColorBlack
+        prob: 0.7
+      - name: PlushieLizard
+        prob: 0.1
+      - name: CigarGoldCase
+        prob: 0.10
+        # Fuck the HoP they don't deserve fucking cigars.
+
+- type: entity
+  id: LockerChiefEngineerFilled
+  suffix: Filled
+  parent: LockerChiefEngineer
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHeadHelmetHardsuitEngineeringWhite
+      - name: ClothingOuterHardsuitEngineeringWhite
+      - name: ClothingMaskBreath
+      - name: OxygenTankFilled
+      - name: ClothingNeckCloakCe
+      - name: ClothingEyesGlassesMeson
+      - name: ClothingBeltChiefEngineerFilled
+      - name: ClothingHeadHatBeretEngineering
+      - name: CigarCase
+        prob: 0.15
+
+- type: entity
+  id: LockerChiefMedicalOfficerFilled
+  suffix: Filled
+  parent: LockerChiefMedicalOfficer
+  components:
+  - type: StorageFill
+    contents:
+      - name: MedkitFilled
+        prob: 1
+      - name: ClothingHandsGlovesLatex
+        prob: 1
+      #- name: ClothingEyesHudMedical #Removed until working properly
+      #  prob: 1
+      - name: ClothingHeadsetAltMedical
+        prob: 1
+      - name: ClothingCloakCmo
+        prob: 1
+      - name: ClothingBackpackDuffelSurgeryFilled
+        prob: 1
+      - name: ClothingOuterCoatLabCmo
+        prob: 1
+      - name: ClothingMaskSterile
+        prob: 1
+
+- type: entity
+  id: LockerResearchDirectorFilled
+  suffix: Filled
+  parent: LockerResearchDirector
+  components:
+  - type: StorageFill
+    contents:
+      - name: ResearchComputerCircuitboard
+        prob: 1
+      - name: ProtolatheMachineCircuitboard
+        prob: 1
+      - name: ClothingNeckCloakRd
+        prob: 1
+      - name: ClothingHeadsetMedicalScience
+        prob: 1
+      - name: PlushieSlime
+        prob: 0.1
+
+- type: entity
+  id: LockerHeadOfSecurityFilled
+  suffix: Filled
+  parent: LockerHeadOfSecurity
+  components:
+  - type: StorageFill
+    contents:
+      - name: TaserGun
+        prob: 1
+      - name: ClothingHeadHatBeretHoS
+        prob: 1
+      - name: ClothingHeadHatHoshat
+        prob: 1
+      - name: ClothingNeckCloakHos
+        prob: 1
+      - name: ClothingOuterCoatHoSTrench
+        prob: 1
+      - name: ClothingUniformJumpskirtHoSAlt
+        prob: 1
+      - name: ClothingUniformJumpsuitHoSAlt
+        prob: 1
+      - name: ClothingUniformJumpsuitHoSBlue
+        prob: 0.5
+      - name: ClothingUniformJumpsuitHoSGrey
+        prob: 0.5
+      - name: ClothingUniformJumpsuitHoSParadeMale
+        prob: 0.1
+      - name: ClothingUniformJumpskirtHoSParadeMale
+        prob: 0.1
+      - name: ClothingHeadHelmetHardsuitSecurityRed
+        prob: 1
+      - name: ClothingOuterHardsuitSecurityRed
+        prob: 1
+      - name: DrinkVacuumFlask
+        prob: 0.8
+      - name: ClothingBeltSecurityFilled
+        prob: 1
+      - name: ClothingHeadsetAltSecurity
+        prob: 1
+      - name: ClothingEyesGlassesSecurity
+        prob: 1
+      - name: ClothingShoesBootsJack
+        prob: 1
+      - name: CigarGoldCase
+        prob: 0.50

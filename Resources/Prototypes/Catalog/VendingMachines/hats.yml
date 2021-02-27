@@ -1,7 +1,7 @@
 - type: vendingMachineInventory
   id: Hatlord 9000
   name: Hatlord 9000
-  description: A vending machine containing hats.
+  description: "Hats for the hatlord. Skulls for the hat-throne!"
   spriteName: hats
   startingInventory:
     HatBandBlack: 3
@@ -10,7 +10,6 @@
     HatBandGreen: 3
     HatBandRed: 3
     HatBandSkull: 3
-    ClothingHeadHatBearpelt: 3
     ClothingHeadHatBeret: 3
     ClothingHeadHatBluesoft: 3
     ClothingHeadHatBluesoftFlipped: 3

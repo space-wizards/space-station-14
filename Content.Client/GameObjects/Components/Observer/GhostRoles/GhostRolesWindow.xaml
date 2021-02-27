@@ -1,10 +1,10 @@
 <SS14Window Title="Ghost Roles"
-            xmlns="https://spacestation14.io">
-    <CenterContainer Name="NoRolesMessage" SizeFlagsVertical="FillExpand" SizeFlagsHorizontal="FillExpand">
+            xmlns="https://spacestation14.io" MinSize="350 275">
+    <CenterContainer Name="NoRolesMessage" VerticalExpand="True" HorizontalExpand="True">
         <Label Text="There are currently no available ghost roles." />
     </CenterContainer>
-    <ScrollContainer SizeFlagsHorizontal="FillExpand" SizeFlagsVertical="FillExpand">
-        <VBoxContainer Name="EntryContainer" SizeFlagsHorizontal="FillExpand" SizeFlagsVertical="FillExpand" />
+    <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+        <VBoxContainer Name="EntryContainer" HorizontalExpand="True" VerticalExpand="True" />
     </ScrollContainer>
 
 </SS14Window>

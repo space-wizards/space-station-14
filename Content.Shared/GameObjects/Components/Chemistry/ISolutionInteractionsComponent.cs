@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry;
+﻿#nullable enable
+using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Chemistry
@@ -63,6 +64,11 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         bool CanRefill => false;
         ReagentUnit RefillSpaceAvailable => ReagentUnit.Zero;
+
+        /// <summary>
+        ///     The amount that will transfer if something is spilled on the container.
+        /// </summary>
+        ReagentUnit MaxSpillRefill => ReagentUnit.Zero;
 
         void Refill(Solution solution)
         {

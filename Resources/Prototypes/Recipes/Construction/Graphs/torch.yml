@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: lightTorch
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: torch
+          steps:
+            - material: Wood
+              amount: 2
+              doAfter: 2
+    - node: torch
+      entity: Torch

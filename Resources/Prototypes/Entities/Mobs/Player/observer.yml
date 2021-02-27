@@ -29,6 +29,7 @@
   - type: Ghost
   - type: Sprite
     netsync: false
+    noRot: true
     drawdepth: Ghosts
     sprite: Mobs/Ghosts/ghost_human.rsi
     state: animated
@@ -40,5 +41,6 @@
     baseSprintSpeed: 14
     baseWalkSpeed: 7
   - type: MovementIgnoreGravity
-  - type: Grammar
-    proper: true
+  - type: Actions
+    innateActions:
+      - GhostBoo

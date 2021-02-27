@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.GameObjects.Verbs
+﻿#nullable enable
+
+namespace Content.Shared.GameObjects.Verbs
 {
     public abstract class VerbBase
     {

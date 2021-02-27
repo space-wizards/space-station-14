@@ -15,11 +15,13 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
     {
         const string PROTOTYPES = @"
 - type: alert
+  name: AlertLowPressure
   alertType: LowPressure
   category: Pressure
   icon: /Textures/Interface/Alerts/Pressure/lowpressure.png
 
 - type: alert
+  name: AlertHighPressure
   alertType: HighPressure
   category: Pressure
   icon: /Textures/Interface/Alerts/Pressure/highpressure.png
@@ -34,7 +36,7 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var factory = IoCManager.Resolve<IComponentFactory>();
-            factory.Register<ServerAlertsComponent>();
+            factory.RegisterClass<ServerAlertsComponent>();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
             prototypeManager.Resync();
             var alertManager = IoCManager.Resolve<AlertManager>();
@@ -48,18 +50,18 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
             Assert.That(alertManager.TryGet(AlertType.HighPressure, out var highpressure));
 
             alertsComponent.ShowAlert(AlertType.LowPressure);
-            var alertState = alertsComponent.GetComponentState() as AlertsComponentState;
+            var alertState = alertsComponent.GetComponentState(null) as AlertsComponentState;
             Assert.NotNull(alertState);
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(lowpressure.AlertKey));
 
             alertsComponent.ShowAlert(AlertType.HighPressure);
-            alertState = alertsComponent.GetComponentState() as AlertsComponentState;
+            alertState = alertsComponent.GetComponentState(null) as AlertsComponentState;
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(highpressure.AlertKey));
 
             alertsComponent.ClearAlertCategory(AlertCategory.Pressure);
-            alertState = alertsComponent.GetComponentState() as AlertsComponentState;
+            alertState = alertsComponent.GetComponentState(null) as AlertsComponentState;
             Assert.That(alertState.Alerts.Count, Is.EqualTo(0));
         }
     }

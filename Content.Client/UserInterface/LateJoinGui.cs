@@ -24,8 +24,6 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IClientGameTicker _gameTicker = default!;
 
-        protected override Vector2? CustomSize => (360, 560);
-
         public event Action<string> SelectedId;
 
         private readonly Dictionary<string, JobButton> _jobButtons = new();
@@ -33,6 +31,7 @@ namespace Content.Client.UserInterface
 
         public LateJoinGui()
         {
+            MinSize = SetSize = (360, 560);
             IoCManager.InjectDependencies(this);
 
             Title = Loc.GetString("Late Join");
@@ -44,7 +43,7 @@ namespace Content.Client.UserInterface
                 {
                     new ScrollContainer
                     {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
+                        VerticalExpand = true,
                         Children =
                         {
                             jobList
@@ -77,7 +76,7 @@ namespace Content.Client.UserInterface
                         {
                             category.AddChild(new Control
                             {
-                                CustomMinimumSize = new Vector2(0, 23),
+                                MinSize = new Vector2(0, 23),
                             });
                         }
 
@@ -104,7 +103,7 @@ namespace Content.Client.UserInterface
 
                     var jobSelector = new HBoxContainer
                     {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand
+                        HorizontalExpand = true
                     };
 
                     var icon = new TextureRect

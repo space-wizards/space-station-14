@@ -29,7 +29,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             var resourceCache = IoCManager.Resolve<IResourceCache>();
 
             Owner = owner;
-            var rootContainer = new LayoutContainer { Name = "WireRoot" };
+            var rootContainer = new LayoutContainer {Name = "WireRoot"};
             AddChild(rootContainer);
 
             MouseFilter = MouseFilterMode.Stop;
@@ -66,7 +66,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                 Children =
                 {
                     (_topContainer = new VBoxContainer()),
-                    new Control {CustomMinimumSize = (0, 110)}
+                    new Control {MinSize = (0, 110)}
                 }
             };
 
@@ -78,42 +78,33 @@ namespace Content.Client.GameObjects.Components.Atmos
             var fontSmall = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 10);
 
             Button refreshButton;
-            var topRow = new MarginContainer
+            var topRow = new HBoxContainer
             {
-                MarginLeftOverride = 4,
-                MarginTopOverride = 2,
-                MarginRightOverride = 12,
-                MarginBottomOverride = 2,
+                Margin = new Thickness(4, 4, 12, 2),
                 Children =
                 {
-                    new HBoxContainer
+                    (_nameLabel = new Label
                     {
-                        Children =
-                        {
-                            (_nameLabel = new Label
-                            {
-                                Text = Loc.GetString("Gas Analyzer"),
-                                FontOverride = font,
-                                FontColorOverride = StyleNano.NanoGold,
-                                SizeFlagsVertical = SizeFlags.ShrinkCenter
-                            }),
-                            new Control
-                            {
-                                CustomMinimumSize = (20, 0),
-                                SizeFlagsHorizontal = SizeFlags.Expand
-                            },
-                            (refreshButton = new Button {Text = "Refresh"}), //TODO: refresh icon?
-                            new Control
-                            {
-                                CustomMinimumSize = (2, 0),
-                            },
-                            (CloseButton = new TextureButton
-                            {
-                                StyleClasses = {SS14Window.StyleClassWindowCloseButton},
-                                SizeFlagsVertical = SizeFlags.ShrinkCenter
-                            })
-                        }
-                    }
+                        Text = Loc.GetString("Gas Analyzer"),
+                        FontOverride = font,
+                        FontColorOverride = StyleNano.NanoGold,
+                        VerticalAlignment = VAlignment.Center
+                    }),
+                    new Control
+                    {
+                        MinSize = (20, 0),
+                        HorizontalExpand = true,
+                    },
+                    (refreshButton = new Button {Text = "Refresh"}), //TODO: refresh icon?
+                    new Control
+                    {
+                        MinSize = (2, 0),
+                    },
+                    (CloseButton = new TextureButton
+                    {
+                        StyleClasses = {SS14Window.StyleClassWindowCloseButton},
+                        VerticalAlignment = VAlignment.Center
+                    })
                 }
             };
 
@@ -124,37 +115,30 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             var middle = new PanelContainer
             {
-                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#202025") },
+                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#202025")},
                 Children =
                 {
-                    new MarginContainer
+                    (_statusContainer = new VBoxContainer
                     {
-                        MarginLeftOverride = 8,
-                        MarginRightOverride = 8,
-                        MarginTopOverride = 4,
-                        MarginBottomOverride = 4,
-                        Children =
-                        {
-                            (_statusContainer = new VBoxContainer())
-                        }
-                    }
+                        Margin = new Thickness(8, 8, 4, 4)
+                    })
                 }
             };
 
             _topContainer.AddChild(topRow);
             _topContainer.AddChild(new PanelContainer
             {
-                CustomMinimumSize = (0, 2),
-                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#525252ff") }
+                MinSize = (0, 2),
+                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
             });
             _topContainer.AddChild(middle);
             _topContainer.AddChild(new PanelContainer
             {
-                CustomMinimumSize = (0, 2),
-                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#525252ff") }
+                MinSize = (0, 2),
+                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
             });
             CloseButton.OnPressed += _ => Close();
-            LayoutContainer.SetSize(this, (300, 200));
+            SetSize = (300, 200);
         }
 
 
@@ -177,17 +161,19 @@ namespace Content.Client.GameObjects.Components.Atmos
             });
             _statusContainer.AddChild(new Label
             {
-                Text = Loc.GetString("Temperature: {0:0.#}K ({1:0.#}°C)", state.Temperature, TemperatureHelpers.KelvinToCelsius(state.Temperature))
+                Text = Loc.GetString("Temperature: {0:0.#}K ({1:0.#}°C)", state.Temperature,
+                    TemperatureHelpers.KelvinToCelsius(state.Temperature))
             });
             // Return here cause all that stuff down there is gas stuff (so we don't get the seperators)
             if (state.Gases.Length == 0)
             {
                 return;
             }
+
             // Seperator
             _statusContainer.AddChild(new Control
             {
-                CustomMinimumSize = new Vector2(0, 10)
+                MinSize = new Vector2(0, 10)
             });
 
             // Add a table with all the gases
@@ -200,7 +186,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                     tableKey,
                     new Control
                     {
-                        CustomMinimumSize = new Vector2(20, 0)
+                        MinSize = new Vector2(20, 0)
                     },
                     tableVal
                 }
@@ -210,13 +196,13 @@ namespace Content.Client.GameObjects.Components.Atmos
             var minSize = 24; // This basically allows gases which are too small, to be shown properly
             var gasBar = new HBoxContainer
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                CustomMinimumSize = new Vector2(0, height)
+                HorizontalExpand = true,
+                MinSize = new Vector2(0, height)
             };
             // Seperator
             _statusContainer.AddChild(new Control
             {
-                CustomMinimumSize = new Vector2(0, 10)
+                MinSize = new Vector2(0, 10)
             });
 
             var totalGasAmount = 0f;
@@ -244,8 +230,9 @@ namespace Content.Client.GameObjects.Components.Atmos
                 var right = (i == state.Gases.Length - 1) ? 0f : 2f;
                 gasBar.AddChild(new PanelContainer
                 {
-                    ToolTip = Loc.GetString("{0}: {1:0.##} mol ({2:0.#}%)", gas.Name, gas.Amount, (gas.Amount / totalGasAmount) * 100),
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    ToolTip = Loc.GetString("{0}: {1:0.##} mol ({2:0.#}%)", gas.Name, gas.Amount,
+                        (gas.Amount / totalGasAmount) * 100),
+                    HorizontalExpand = true,
                     SizeFlagsStretchRatio = gas.Amount,
                     MouseFilter = MouseFilterMode.Pass,
                     PanelOverride = new StyleBoxFlat
@@ -254,9 +241,10 @@ namespace Content.Client.GameObjects.Components.Atmos
                         PaddingLeft = left,
                         PaddingRight = right
                     },
-                    CustomMinimumSize = new Vector2(minSize, 0)
+                    MinSize = new Vector2(minSize, 0)
                 });
             }
+
             _statusContainer.AddChild(gasBar);
         }
 

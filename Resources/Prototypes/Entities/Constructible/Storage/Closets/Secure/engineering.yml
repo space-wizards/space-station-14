@@ -9,7 +9,7 @@
     - type: StorageVisualizer
       state: ce
   - type: AccessReader
-    access: [ [ "ChiefEngineer" ] ]
+    access: [ [ "Engineering", "Command" ] ]
 
 # Electrical supplies
 - type: entity

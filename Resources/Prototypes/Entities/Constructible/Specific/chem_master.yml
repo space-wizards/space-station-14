@@ -55,7 +55,7 @@
 - type: entity
   id: chem_master_broken
   name: ChemMaster 4000 [Broken]
-  description: A broken industrial grade chemical manipulator.
+  description: "An industrial grade chemical manipulator with pill and bottle production included. It's broken."
   abstract: true
   components:
   - type: Sprite

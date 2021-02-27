@@ -50,4 +50,4 @@
     - type: StorageVisualizer
       state: cmo
   - type: AccessReader
-    access: [ [ "ChiefMedicalOfficer" ] ]
+    access: [ [ "Medical", "Command" ] ]

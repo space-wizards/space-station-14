@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+﻿#nullable enable
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -7,7 +8,7 @@ namespace Content.Shared.Construction
 {
     public class PrototypeConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
-        public string Prototype { get; private set; }
+        public string Prototype { get; private set; } = string.Empty;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -24,8 +25,14 @@ namespace Content.Shared.Construction
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {
             message.AddMarkup(string.IsNullOrEmpty(Name)
-                ? Loc.GetString("Next, insert {0}", Prototype) // Terrible.
-                : Loc.GetString("Next, insert {0}", Name));
+                ? Loc.GetString(
+                    "construction-insert-prototype-no-name",
+                    ("prototypeName", Prototype) // Terrible.
+                )
+                : Loc.GetString(
+                    "construction-insert-prototype",
+                    ("entityName", Name)
+                ));
         }
     }
 }
