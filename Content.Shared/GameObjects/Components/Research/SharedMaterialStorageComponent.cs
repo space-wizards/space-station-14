@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Content.Shared.Materials;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -10,10 +11,11 @@ namespace Content.Shared.GameObjects.Components.Research
 {
     public class SharedMaterialStorageComponent : Component, IEnumerable<KeyValuePair<string, int>>
     {
-        [ViewVariables]
-        protected virtual Dictionary<string, int> Storage { get; set; } = new();
         public override string Name => "MaterialStorage";
         public sealed override uint? NetID => ContentNetIDs.MATERIAL_STORAGE;
+
+        [ViewVariables]
+        protected virtual Dictionary<string, int> Storage { get; set; } = new();
 
         public int this[string ID]
         {
@@ -63,10 +65,6 @@ namespace Content.Shared.GameObjects.Components.Research
         {
             return GetEnumerator();
         }
-    }
-
-    public class MaterialPrototype
-    {
     }
 
     [NetSerializable, Serializable]

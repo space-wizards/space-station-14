@@ -18,7 +18,7 @@ namespace Content.Shared.Roles
 
         [ViewVariables]
         [field: DataField("parent")]
-        public string Parent { get; }
+        public string? Parent { get; }
 
         /// <summary>
         ///     The name of this antag as displayed to players.

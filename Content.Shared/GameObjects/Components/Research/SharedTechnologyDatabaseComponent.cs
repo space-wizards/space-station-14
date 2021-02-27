@@ -43,7 +43,7 @@ namespace Content.Shared.GameObjects.Components.Research
 
             foreach (var id in _technologyIds)
             {
-                if (prototypeManager.TryIndex(id, out TechnologyPrototype tech))
+                if (prototypeManager.TryIndex(id, out TechnologyPrototype? tech))
                 {
                     _technologies.Add(tech);
                 }

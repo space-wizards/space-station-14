@@ -34,7 +34,7 @@ namespace Content.Shared.GameObjects.Components.Cargo
 
             foreach (var id in _productIds)
             {
-                if (!prototypeManager.TryIndex(id, out CargoProductPrototype product))
+                if (!prototypeManager.TryIndex(id, out CargoProductPrototype? product))
                 {
                     continue;
                 }

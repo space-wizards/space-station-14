@@ -21,7 +21,7 @@ namespace Content.Shared.Construction
 
         [ViewVariables]
         [DataField("to")]
-        public string Target { get; private set; } = string.Empty;;
+        public string Target { get; private set; } = string.Empty;
 
         [ViewVariables]
         public IReadOnlyList<IEdgeCondition> Conditions => _conditions;

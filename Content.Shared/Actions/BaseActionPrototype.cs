@@ -28,34 +28,34 @@ namespace Content.Shared.Actions
         /// Icon representing this action in the UI.
         /// </summary>
         [ViewVariables]
-        [DataField("icon")]
-        public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
+        [field: DataField("icon")]
+        public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         /// For toggle actions only, icon to show when toggled on. If omitted,
         /// the action will simply be highlighted when turned on.
         /// </summary>
         [ViewVariables]
-        [DataField("iconOn")]
-        public SpriteSpecifier IconOn { get; private set; } = SpriteSpecifier.Invalid;
+        [field: DataField("iconOn")]
+        public SpriteSpecifier IconOn { get; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         /// Name to show in UI. Accepts formatting.
         /// </summary>
-        public FormattedMessage Name { get; private set; }
+        public FormattedMessage Name { get; private set; } = new();
 
         /// <summary>
         /// Description to show in UI. Accepts formatting.
         /// </summary>
-        [DataField("description")]
-        public FormattedMessage Description { get; private set; } = new();
+        [field: DataField("description")]
+        public FormattedMessage Description { get; } = new();
 
         /// <summary>
         /// Requirements message to show in UI. Accepts formatting, but generally should be avoided
         /// so the requirements message isn't too prominent in the tooltip.
         /// </summary>
-        [DataField("requires")]
-        public string Requires { get; private set; } = string.Empty;
+        [field: DataField("requires")]
+        public string Requires { get; } = string.Empty;
 
         /// <summary>
         /// The type of behavior this action has. This is valid clientside and serverside.

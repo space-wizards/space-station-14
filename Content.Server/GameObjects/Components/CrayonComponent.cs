@@ -11,28 +11,40 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class CrayonComponent : SharedCrayonComponent, IAfterInteract, IUse, IDropped
+    public class CrayonComponent : SharedCrayonComponent, IAfterInteract, IUse, IDropped, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         //TODO: useSound
         [DataField("useSound")]
-        private string? _useSound;
+        private string? _useSound = string.Empty;
+
+        [ViewVariables]
+        public Color Color { get; set; }
+
         [ViewVariables(VVAccess.ReadWrite)]
         public int Charges { get; set; }
-        [DataField("capacity")]
-        private int _capacity = 30;
+
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Capacity { get => _capacity; set => _capacity = value; }
+        [field: DataField("capacity")]
+        public int Capacity { get; set; } = 30;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            Color = Color.FromName(_color);
+        }
 
         public override void Initialize()
         {
@@ -88,7 +100,7 @@ namespace Content.Server.GameObjects.Components
                 {
                     // Tell the user interface the selected stuff
                     UserInterface.SetState(
-                        new CrayonBoundUserInterfaceState(SelectedState, _color));
+                        new CrayonBoundUserInterfaceState(SelectedState, Color));
                 }
                 return true;
             }

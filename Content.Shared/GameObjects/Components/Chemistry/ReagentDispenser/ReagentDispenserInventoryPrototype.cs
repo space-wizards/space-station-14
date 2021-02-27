@@ -26,7 +26,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
 
         [ViewVariables]
         [field: DataField("parent")]
-        public string Parent { get; }
+        public string? Parent { get; }
 
         public List<string> Inventory => _inventory;
     }

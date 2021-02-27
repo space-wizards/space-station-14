@@ -34,7 +34,7 @@ namespace Content.Shared.GameObjects.Components.Body.Template
 
         [ViewVariables]
         [field: DataField("parent")]
-        public string Parent { get; }
+        public string? Parent { get; }
 
         [ViewVariables]
         [field: DataField("name")]
@@ -48,7 +48,7 @@ namespace Content.Shared.GameObjects.Components.Body.Template
         public Dictionary<string, BodyPartType> Slots => new(_slots);
 
         [ViewVariables]
-        public Dictionary<string, List<string>> Connections { get; set; }
+        public Dictionary<string, List<string>> Connections { get; set; } = new();
 
         [ViewVariables]
         public Dictionary<string, string> Layers => new(_layers);
@@ -56,7 +56,7 @@ namespace Content.Shared.GameObjects.Components.Body.Template
         [ViewVariables]
         public Dictionary<string, string> MechanismLayers => new(_mechanismLayers);
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             //Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
             //The user only has to do one. We want it to be that way in the code, though, so this cleans that up.

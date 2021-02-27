@@ -48,12 +48,12 @@ namespace Content.Shared.GameObjects.Components
     [Serializable, NetSerializable]
     public class CrayonComponentState : ComponentState
     {
-        public readonly Color Color;
+        public readonly string Color;
         public readonly string State;
         public readonly int Charges;
         public readonly int Capacity;
 
-        public CrayonComponentState(Color color, string state, int charges, int capacity) : base(ContentNetIDs.CRAYONS)
+        public CrayonComponentState(string color, string state, int charges, int capacity) : base(ContentNetIDs.CRAYONS)
         {
             Color = color;
             State = state;

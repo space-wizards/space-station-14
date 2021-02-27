@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -20,6 +23,7 @@ namespace Content.Client.Changelog
         public const string ForkId = "Wizards";
 
         [Dependency] private readonly IResourceManager _resource = default!;
+        [Dependency] private readonly ISerializationManager _serialization = default!;
 
         public bool NewChangelogEntries { get; private set; }
         public int LastReadId { get; private set; }
@@ -78,39 +82,41 @@ namespace Content.Client.Changelog
                 if (yamlData.Documents.Count == 0)
                     return new List<ChangelogEntry>();
 
-                var serializer = YamlObjectSerializer.NewReader((YamlMappingNode) yamlData.Documents[0].RootNode);
-
-                return serializer.ReadDataField<List<ChangelogEntry>>("Entries");
+                // TODO Paul serv3 serializer
+                var node = yamlData.Documents[0].RootNode.ToDataNode();
+                return _serialization.ReadValueOrThrow<List<ChangelogEntry>>(node);
             });
         }
 
-
-        public sealed class ChangelogEntry : IExposeData
+        [DataDefinition]
+        public sealed class ChangelogEntry : ISerializationHooks
         {
+            [DataField("id")]
             public int Id { get; private set; }
-            public string Author { get; private set; } = "";
-            public DateTime Time { get; private set; }
-            public List<ChangelogChange> Changes { get; private set; } = default!;
 
-            void IExposeData.ExposeData(ObjectSerializer serializer)
+            [field: DataField("author")]
+            public string Author { get; } = "";
+
+            [DataField("time")] private string _time = default!;
+
+            public DateTime Time { get; private set; }
+
+            [field: DataField("changes")]
+            public List<ChangelogChange> Changes { get; } = default!;
+
+            public void AfterDeserialization()
             {
-                Id = serializer.ReadDataField<int>("id");
-                Author = serializer.ReadDataField<string>("author");
-                Time = DateTime.Parse(serializer.ReadDataField<string>("time"), null, DateTimeStyles.RoundtripKind);
-                Changes = serializer.ReadDataField<List<ChangelogChange>>("changes");
+                Time = DateTime.Parse(_time, null, DateTimeStyles.RoundtripKind);
             }
         }
 
-        public sealed class ChangelogChange : IExposeData
+        public sealed class ChangelogChange : ISerializationHooks
         {
+            [DataField("type")]
             public ChangelogLineType Type { get; private set; }
-            public string Message { get; private set; } = "";
 
-            void IExposeData.ExposeData(ObjectSerializer serializer)
-            {
-                Type = serializer.ReadDataField<ChangelogLineType>("type");
-                Message = serializer.ReadDataField<string>("message");
-            }
+            [DataField("message")]
+            public string Message { get; private set; } = "";
         }
 
         public enum ChangelogLineType

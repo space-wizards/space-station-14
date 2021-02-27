@@ -31,7 +31,7 @@ namespace Content.Shared.Prototypes.Kitchen
         private readonly Dictionary<string, int> _ingsSolids = new ();
 
         [field: DataField("result")]
-        public s0tring Result { get; } = string.Empty;
+        public string Result { get; } = string.Empty;
 
         [field: DataField("time")]
         public int CookTime { get; } = 5;
