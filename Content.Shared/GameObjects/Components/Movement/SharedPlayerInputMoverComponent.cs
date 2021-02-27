@@ -15,7 +15,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 {
     [RegisterComponent]
     [ComponentReference(typeof(IMoverComponent))]
-    public class SharedPlayerInputMoverComponent : Component, IMoverComponent, ICollideSpecial
+    public class SharedPlayerInputMoverComponent : Component, IMoverComponent
     {
         // This class has to be able to handle server TPS being lower than client FPS.
         // While still having perfectly responsive movement client side.
@@ -246,13 +246,6 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
 
             return vec;
-        }
-
-        bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
-        {
-            // Don't collide with other mobs
-            // TODO: unless they have combat mode on
-            return collidedWith.Entity.HasComponent<IBody>();
         }
 
         [Serializable, NetSerializable]
