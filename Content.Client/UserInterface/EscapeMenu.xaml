@@ -4,7 +4,7 @@
             Title="{Loc 'ui-escape-title'}"
             Resizable="False">
 
-    <VBoxContainer SeparationOverride="4" CustomMinimumSize="0 160">
+    <VBoxContainer SeparationOverride="4" CustomMinimumSize="150 160">
         <changelog:ChangelogButton />
         <voting:VoteCallMenuButton />
         <Button Name="OptionsButton" Text="{Loc 'ui-escape-options'}" />
