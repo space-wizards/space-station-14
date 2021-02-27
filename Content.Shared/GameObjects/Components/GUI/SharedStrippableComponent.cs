@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;

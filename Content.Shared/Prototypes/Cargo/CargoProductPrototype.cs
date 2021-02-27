@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -11,14 +12,14 @@ namespace Content.Shared.Prototypes.Cargo
     [NetSerializable, Serializable, Prototype("cargoProduct")]
     public class CargoProductPrototype : IPrototype
     {
-        private string _id;
-        private string _name;
-        private string _description;
-        private SpriteSpecifier _icon;
-        private string _product;
+        private string _id = string.Empty;
+        private string _name = string.Empty;
+        private string _description = string.Empty;
+        private SpriteSpecifier _icon = SpriteSpecifier.Invalid;
+        private string _product = string.Empty;
         private int _pointCost;
-        private string _category;
-        private string _group;
+        private string _category = string.Empty;
+        private string _group = string.Empty;
 
         [ViewVariables]
         public string ID => _id;
@@ -33,10 +34,12 @@ namespace Content.Shared.Prototypes.Cargo
             {
                 if (_name.Trim().Length != 0)
                     return _name;
-                EntityPrototype prototype = null;
-                IoCManager.Resolve<IPrototypeManager>()?.TryIndex(_product, out prototype);
-                if (prototype?.Name != null)
+
+                if (IoCManager.Resolve<IPrototypeManager>().TryIndex(_product, out EntityPrototype? prototype))
+                {
                     _name = prototype.Name;
+                }
+
                 return _name;
             }
         }
@@ -51,10 +54,12 @@ namespace Content.Shared.Prototypes.Cargo
             {
                 if (_description.Trim().Length != 0)
                     return _description;
-                EntityPrototype prototype = null;
-                IoCManager.Resolve<IPrototypeManager>()?.TryIndex(_product, out prototype);
-                if (prototype?.Description != null)
+
+                if (IoCManager.Resolve<IPrototypeManager>().TryIndex(_product, out EntityPrototype? prototype))
+                {
                     _description = prototype.Description;
+                }
+
                 return _description;
             }
         }
@@ -102,7 +107,7 @@ namespace Content.Shared.Prototypes.Cargo
             serializer.DataField(ref _id, "id", string.Empty);
             serializer.DataField(ref _description, "description", string.Empty);
             serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
-            serializer.DataField(ref _product, "product", null);
+            serializer.DataField(ref _product, "product", string.Empty);
             serializer.DataField(ref _pointCost, "cost", 0);
             serializer.DataField(ref _category, "category", string.Empty);
             serializer.DataField(ref _group, "group", string.Empty);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Shared.GameObjects;

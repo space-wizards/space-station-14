@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -9,50 +10,50 @@ namespace Content.Shared.Construction
     [Prototype("construction")]
     public class ConstructionPrototype : IPrototype
     {
-        private List<IConstructionCondition> _conditions;
+        private List<IConstructionCondition> _conditions = new();
 
         /// <summary>
         ///     Friendly name displayed in the construction GUI.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; private set; } = string.Empty;
 
         /// <summary>
         ///     "Useful" description displayed in the construction GUI.
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; private set; } = string.Empty;
 
         /// <summary>
         ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
         /// </summary>
-        public string Graph { get; private set; }
+        public string Graph { get; private set; } = string.Empty;
 
         /// <summary>
         ///     The target <see cref="ConstructionGraphNode"/> this construction will guide the user to.
         /// </summary>
-        public string TargetNode { get; private set; }
+        public string TargetNode { get; private set; } = string.Empty;
 
         /// <summary>
         ///     The starting <see cref="ConstructionGraphNode"/> this construction will start at.
         /// </summary>
-        public string StartNode { get; private set; }
+        public string StartNode { get; private set; } = string.Empty;
 
         /// <summary>
         ///     Texture path inside the construction GUI.
         /// </summary>
-        public SpriteSpecifier Icon { get; private set; }
+        public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         ///     If you can start building or complete steps on impassable terrain.
         /// </summary>
         public bool CanBuildInImpassable { get; private set; }
 
-        public string Category { get; private set; }
+        public string Category { get; private set; } = string.Empty;
 
-        public ConstructionType Type { get; private set; }
+        public ConstructionType Type { get; private set; } = ConstructionType.Structure;
 
-        public string ID { get; private set; }
+        public string ID { get; private set; } = string.Empty;
 
-        public string PlacementMode { get; private set; }
+        public string PlacementMode { get; private set; } = "PlaceFree";
 
         /// <summary>
         ///     Whether this construction can be constructed rotated or not.

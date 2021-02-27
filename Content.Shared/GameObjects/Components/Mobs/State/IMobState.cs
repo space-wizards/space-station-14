@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+﻿#nullable enable
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 

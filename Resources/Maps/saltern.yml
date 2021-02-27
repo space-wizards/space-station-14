@@ -12466,7 +12466,7 @@ entities:
   - parent: 1044
     type: Transform
 - uid: 876
-  type: GlassSheet1
+  type: SheetGlass1
   components:
   - parent: 1044
     type: Transform
@@ -13747,8 +13747,8 @@ entities:
     - Ointment
     - LightTube
     - LightBulb
-    - MetalStack
-    - GlassStack
+    - SheetSteel
+    - SheetGlass
     type: ProtolatheDatabase
   - containers:
       machine_board:
@@ -13777,8 +13777,8 @@ entities:
     - Ointment
     - LightTube
     - LightBulb
-    - MetalStack
-    - GlassStack
+    - SheetSteel
+    - SheetGlass
     type: LatheDatabase
   - containers:
       machine_board:
@@ -21277,7 +21277,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
 - uid: 1937
-  type: GoldStack
+  type: IngotGold
   components:
   - parent: 853
     pos: -2.615473,16.701466
@@ -35551,7 +35551,7 @@ entities:
         type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 3927
-  type: MetalStack
+  type: SheetSteel
   components:
   - parent: 853
     pos: 47.585052,4.443361
@@ -35614,21 +35614,21 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
 - uid: 3936
-  type: GlassStack
+  type: SheetGlass
   components:
   - parent: 853
     pos: 49.131927,4.677736
     rot: 4.371139006309477E-08 rad
     type: Transform
 - uid: 3937
-  type: GlassStack
+  type: SheetGlass
   components:
   - parent: 853
     pos: 48.788177,4.505861
     rot: 4.371139006309477E-08 rad
     type: Transform
 - uid: 3938
-  type: MetalStack
+  type: SheetSteel
   components:
   - parent: 853
     pos: 48.038177,4.677736

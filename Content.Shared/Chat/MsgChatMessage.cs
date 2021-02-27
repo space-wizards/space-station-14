@@ -1,3 +1,4 @@
+#nullable enable
 using JetBrains.Annotations;
 using Lidgren.Network;
 using Robust.Shared.GameObjects;
@@ -28,12 +29,12 @@ namespace Content.Shared.Chat
         /// <summary>
         ///     The actual message contents.
         /// </summary>
-        public string Message { get; set; }
+        public string Message { get; set; } = string.Empty;
 
         /// <summary>
         ///     What to "wrap" the message contents with. Example is stuff like 'Joe says: "{0}"'
         /// </summary>
-        public string MessageWrap { get; set; }
+        public string MessageWrap { get; set; } = string.Empty;
 
         /// <summary>
         ///     The sending entity.

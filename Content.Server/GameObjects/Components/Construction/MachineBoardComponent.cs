@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.Construction;
-using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Stacks;
+using Microsoft.Extensions.Logging;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -14,13 +18,15 @@ namespace Content.Server.GameObjects.Components.Construction
     [RegisterComponent]
     public class MachineBoardComponent : Component, IExamine
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override string Name => "MachineBoard";
 
         [ViewVariables]
         private Dictionary<MachinePart, int> _requirements;
 
         [ViewVariables]
-        private Dictionary<StackType, int> _materialRequirements;
+        private Dictionary<string, int> _materialIdRequirements;
 
         [ViewVariables]
         private Dictionary<string, ComponentPartInfo> _componentRequirements;
@@ -28,7 +34,20 @@ namespace Content.Server.GameObjects.Components.Construction
         [ViewVariables(VVAccess.ReadWrite)]
         public string Prototype { get; private set; }
         public IReadOnlyDictionary<MachinePart, int> Requirements => _requirements;
-        public IReadOnlyDictionary<StackType, int> MaterialRequirements => _materialRequirements;
+        public IReadOnlyDictionary<string, int> MaterialIdRequirements => _materialIdRequirements;
+
+        public IEnumerable<KeyValuePair<StackPrototype, int>> MaterialRequirements
+        {
+            get
+            {
+                foreach (var (materialId, amount) in MaterialIdRequirements)
+                {
+                    var material = _prototypeManager.Index<StackPrototype>(materialId);
+                    yield return new KeyValuePair<StackPrototype, int>(material, amount);
+                }
+            }
+        }
+
         public IReadOnlyDictionary<string, ComponentPartInfo> ComponentRequirements => _componentRequirements;
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -36,8 +55,21 @@ namespace Content.Server.GameObjects.Components.Construction
             base.ExposeData(serializer);
             serializer.DataField(this, x => x.Prototype, "prototype", null);
             serializer.DataField(ref _requirements, "requirements", new Dictionary<MachinePart, int>());
-            serializer.DataField(ref _materialRequirements, "materialRequirements", new Dictionary<StackType, int>());
+            serializer.DataField(ref _materialIdRequirements, "materialRequirements", new Dictionary<string, int>());
             serializer.DataField(ref _componentRequirements, "componentRequirements", new Dictionary<string, ComponentPartInfo>());
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            foreach (var material in _materialIdRequirements.Keys)
+            {
+                if (!_prototypeManager.HasIndex<StackPrototype>(material))
+                {
+                    Logger.Error($"No {nameof(StackPrototype)} found with id {material}");
+                }
+            }
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
@@ -50,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             foreach (var (material, amount) in MaterialRequirements)
             {
-                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", amount, Loc.GetString(material.ToString())));
+                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", amount, Loc.GetString(material.Name)));
             }
 
             foreach (var (_, info) in ComponentRequirements)

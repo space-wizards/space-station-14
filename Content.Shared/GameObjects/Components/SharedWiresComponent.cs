@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
@@ -115,12 +116,12 @@ namespace Content.Shared.GameObjects.Components
         public class WiresBoundUserInterfaceState : BoundUserInterfaceState
         {
             public string BoardName { get; }
-            public string SerialNumber { get; }
+            public string? SerialNumber { get; }
             public ClientWire[] WiresList { get; }
             public StatusEntry[] Statuses { get; }
             public int WireSeed { get; }
 
-            public WiresBoundUserInterfaceState(ClientWire[] wiresList, StatusEntry[] statuses, string boardName, string serialNumber, int wireSeed)
+            public WiresBoundUserInterfaceState(ClientWire[] wiresList, StatusEntry[] statuses, string boardName, string? serialNumber, int wireSeed)
             {
                 BoardName = boardName;
                 SerialNumber = serialNumber;

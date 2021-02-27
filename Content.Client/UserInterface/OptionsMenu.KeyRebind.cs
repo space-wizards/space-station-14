@@ -65,11 +65,11 @@ namespace Content.Client.UserInterface
                                         new Label
                                         {
                                             StyleClasses = {StyleBase.StyleClassLabelSubText},
-                                            Text = "Click to change binding, right-click to clear"
+                                            Text = Loc.GetString("ui-options-binds-explanation")
                                         },
                                         (resetAllButton = new Button
                                         {
-                                            Text = "Reset ALL keybinds",
+                                            Text = Loc.GetString("ui-options-binds-reset-all"),
                                             StyleClasses = {StyleBase.ButtonCaution},
                                             HorizontalAlignment = HAlignment.Right
                                         })
@@ -101,96 +101,96 @@ namespace Content.Client.UserInterface
                     first = false;
                     vBox.AddChild(new Label
                     {
-                        Text = headerContents,
+                        Text = Loc.GetString(headerContents),
                         FontColorOverride = StyleNano.NanoGold,
                         StyleClasses = {StyleNano.StyleClassLabelKeyText}
                     });
                 }
 
-                void AddButton(BoundKeyFunction function, string name)
+                void AddButton(BoundKeyFunction function)
                 {
-                    var control = new KeyControl(this, name, function);
+                    var control = new KeyControl(this, function);
                     vBox.AddChild(control);
                     _keyControls.Add(function, control);
                 }
 
-                AddHeader("Movement");
-                AddButton(EngineKeyFunctions.MoveUp, "Move up");
-                AddButton(EngineKeyFunctions.MoveLeft, "Move left");
-                AddButton(EngineKeyFunctions.MoveDown, "Move down");
-                AddButton(EngineKeyFunctions.MoveRight, "Move right");
-                AddButton(EngineKeyFunctions.Walk, "Walk");
+                AddHeader("ui-options-header-movement");
+                AddButton(EngineKeyFunctions.MoveUp);
+                AddButton(EngineKeyFunctions.MoveLeft);
+                AddButton(EngineKeyFunctions.MoveDown);
+                AddButton(EngineKeyFunctions.MoveRight);
+                AddButton(EngineKeyFunctions.Walk);
 
-                AddHeader("Basic Interaction");
-                AddButton(EngineKeyFunctions.Use, "Use");
-                AddButton(ContentKeyFunctions.WideAttack, "Wide attack");
-                AddButton(ContentKeyFunctions.ActivateItemInHand, "Activate item in hand");
-                AddButton(ContentKeyFunctions.ActivateItemInWorld, "Activate item in world");
-                AddButton(ContentKeyFunctions.Drop, "Drop item");
-                AddButton(ContentKeyFunctions.ExamineEntity, "Examine");
-                AddButton(ContentKeyFunctions.SwapHands, "Swap hands");
-                AddButton(ContentKeyFunctions.ToggleCombatMode, "Toggle combat mode");
+                AddHeader("ui-options-header-interaction-basic");
+                AddButton(EngineKeyFunctions.Use);
+                AddButton(ContentKeyFunctions.WideAttack);
+                AddButton(ContentKeyFunctions.ActivateItemInHand);
+                AddButton(ContentKeyFunctions.ActivateItemInWorld);
+                AddButton(ContentKeyFunctions.Drop);
+                AddButton(ContentKeyFunctions.ExamineEntity);
+                AddButton(ContentKeyFunctions.SwapHands);
+                AddButton(ContentKeyFunctions.ToggleCombatMode);
 
-                AddHeader("Advanced Interaction");
-                AddButton(ContentKeyFunctions.SmartEquipBackpack, "Smart-equip to backpack");
-                AddButton(ContentKeyFunctions.SmartEquipBelt, "Smart-equip to belt");
-                AddButton(ContentKeyFunctions.ThrowItemInHand, "Throw item");
-                AddButton(ContentKeyFunctions.TryPullObject, "Pull object");
-                AddButton(ContentKeyFunctions.MovePulledObject, "Move pulled object");
-                AddButton(ContentKeyFunctions.ReleasePulledObject, "Release pulled object");
-                AddButton(ContentKeyFunctions.Point, "Point at location");
+                AddHeader("ui-options-header-interaction-adv");
+                AddButton(ContentKeyFunctions.SmartEquipBackpack);
+                AddButton(ContentKeyFunctions.SmartEquipBelt);
+                AddButton(ContentKeyFunctions.ThrowItemInHand);
+                AddButton(ContentKeyFunctions.TryPullObject);
+                AddButton(ContentKeyFunctions.MovePulledObject);
+                AddButton(ContentKeyFunctions.ReleasePulledObject);
+                AddButton(ContentKeyFunctions.Point);
 
-                AddHeader("User Interface");
-                AddButton(ContentKeyFunctions.FocusChat, "Focus chat");
-                AddButton(ContentKeyFunctions.FocusOOC, "Focus chat (OOC)");
-                AddButton(ContentKeyFunctions.FocusAdminChat, "Focus chat (admin)");
-                AddButton(ContentKeyFunctions.OpenCharacterMenu, "Open character menu");
-                AddButton(ContentKeyFunctions.OpenContextMenu, "Open context menu");
-                AddButton(ContentKeyFunctions.OpenCraftingMenu, "Open crafting menu");
-                AddButton(ContentKeyFunctions.OpenInventoryMenu, "Open inventory");
-                AddButton(ContentKeyFunctions.OpenTutorial, "Open tutorial");
-                AddButton(ContentKeyFunctions.OpenActionsMenu, "Open action menu");
-                AddButton(ContentKeyFunctions.OpenEntitySpawnWindow, "Open entity spawn menu");
-                AddButton(ContentKeyFunctions.OpenSandboxWindow, "Open sandbox menu");
-                AddButton(ContentKeyFunctions.OpenTileSpawnWindow, "Open tile spawn menu");
-                AddButton(ContentKeyFunctions.OpenAdminMenu, "Open admin menu");
+                AddHeader("ui-options-header-ui");
+                AddButton(ContentKeyFunctions.FocusChat);
+                AddButton(ContentKeyFunctions.FocusOOC);
+                AddButton(ContentKeyFunctions.FocusAdminChat);
+                AddButton(ContentKeyFunctions.OpenCharacterMenu);
+                AddButton(ContentKeyFunctions.OpenContextMenu);
+                AddButton(ContentKeyFunctions.OpenCraftingMenu);
+                AddButton(ContentKeyFunctions.OpenInventoryMenu);
+                AddButton(ContentKeyFunctions.OpenTutorial);
+                AddButton(ContentKeyFunctions.OpenActionsMenu);
+                AddButton(ContentKeyFunctions.OpenEntitySpawnWindow);
+                AddButton(ContentKeyFunctions.OpenSandboxWindow);
+                AddButton(ContentKeyFunctions.OpenTileSpawnWindow);
+                AddButton(ContentKeyFunctions.OpenAdminMenu);
 
-                AddHeader("Miscellaneous");
-                AddButton(ContentKeyFunctions.TakeScreenshot, "Take screenshot");
-                AddButton(ContentKeyFunctions.TakeScreenshotNoUI, "Take screenshot (without UI)");
+                AddHeader("ui-options-header-misc");
+                AddButton(ContentKeyFunctions.TakeScreenshot);
+                AddButton(ContentKeyFunctions.TakeScreenshotNoUI);
 
-                AddHeader("Hotbar");
-                AddButton(ContentKeyFunctions.Hotbar1, "Hotbar slot 1");
-                AddButton(ContentKeyFunctions.Hotbar2, "Hotbar slot 2");
-                AddButton(ContentKeyFunctions.Hotbar3, "Hotbar slot 3");
-                AddButton(ContentKeyFunctions.Hotbar4, "Hotbar slot 4");
-                AddButton(ContentKeyFunctions.Hotbar5, "Hotbar slot 5");
-                AddButton(ContentKeyFunctions.Hotbar6, "Hotbar slot 6");
-                AddButton(ContentKeyFunctions.Hotbar7, "Hotbar slot 7");
-                AddButton(ContentKeyFunctions.Hotbar8, "Hotbar slot 8");
-                AddButton(ContentKeyFunctions.Hotbar9, "Hotbar slot 9");
-                AddButton(ContentKeyFunctions.Hotbar0, "Hotbar slot 0");
-                AddButton(ContentKeyFunctions.Loadout1, "Hotbar Loadout 1");
-                AddButton(ContentKeyFunctions.Loadout2, "Hotbar Loadout 2");
-                AddButton(ContentKeyFunctions.Loadout3, "Hotbar Loadout 3");
-                AddButton(ContentKeyFunctions.Loadout4, "Hotbar Loadout 4");
-                AddButton(ContentKeyFunctions.Loadout5, "Hotbar Loadout 5");
-                AddButton(ContentKeyFunctions.Loadout6, "Hotbar Loadout 6");
-                AddButton(ContentKeyFunctions.Loadout7, "Hotbar Loadout 7");
-                AddButton(ContentKeyFunctions.Loadout8, "Hotbar Loadout 8");
-                AddButton(ContentKeyFunctions.Loadout9, "Hotbar Loadout 9");
+                AddHeader("ui-options-header-hotbar");
+                AddButton(ContentKeyFunctions.Hotbar1);
+                AddButton(ContentKeyFunctions.Hotbar2);
+                AddButton(ContentKeyFunctions.Hotbar3);
+                AddButton(ContentKeyFunctions.Hotbar4);
+                AddButton(ContentKeyFunctions.Hotbar5);
+                AddButton(ContentKeyFunctions.Hotbar6);
+                AddButton(ContentKeyFunctions.Hotbar7);
+                AddButton(ContentKeyFunctions.Hotbar8);
+                AddButton(ContentKeyFunctions.Hotbar9);
+                AddButton(ContentKeyFunctions.Hotbar0);
+                AddButton(ContentKeyFunctions.Loadout1);
+                AddButton(ContentKeyFunctions.Loadout2);
+                AddButton(ContentKeyFunctions.Loadout3);
+                AddButton(ContentKeyFunctions.Loadout4);
+                AddButton(ContentKeyFunctions.Loadout5);
+                AddButton(ContentKeyFunctions.Loadout6);
+                AddButton(ContentKeyFunctions.Loadout7);
+                AddButton(ContentKeyFunctions.Loadout8);
+                AddButton(ContentKeyFunctions.Loadout9);
 
-                AddHeader("Map Editor");
-                AddButton(EngineKeyFunctions.EditorPlaceObject, "Place object");
-                AddButton(EngineKeyFunctions.EditorCancelPlace, "Cancel placement");
-                AddButton(EngineKeyFunctions.EditorGridPlace, "Place in grid");
-                AddButton(EngineKeyFunctions.EditorLinePlace, "Place line");
-                AddButton(EngineKeyFunctions.EditorRotateObject, "Rotate");
+                AddHeader("ui-options-header-map-editor");
+                AddButton(EngineKeyFunctions.EditorPlaceObject);
+                AddButton(EngineKeyFunctions.EditorCancelPlace);
+                AddButton(EngineKeyFunctions.EditorGridPlace);
+                AddButton(EngineKeyFunctions.EditorLinePlace);
+                AddButton(EngineKeyFunctions.EditorRotateObject);
 
-                AddHeader("Development");
-                AddButton(EngineKeyFunctions.ShowDebugConsole, "Open Console");
-                AddButton(EngineKeyFunctions.ShowDebugMonitors, "Show Debug Monitors");
-                AddButton(EngineKeyFunctions.HideUI, "Hide UI");
+                AddHeader("ui-options-header-dev");
+                AddButton(EngineKeyFunctions.ShowDebugConsole);
+                AddButton(EngineKeyFunctions.ShowDebugMonitors);
+                AddButton(EngineKeyFunctions.HideUI);
 
                 foreach (var control in _keyControls.Values)
                 {
@@ -357,7 +357,7 @@ namespace Content.Client.UserInterface
                 }
 
                 _currentlyRebinding = button;
-                _currentlyRebinding.Button.Text = Loc.GetString("Press a key...");
+                _currentlyRebinding.Button.Text = Loc.GetString("ui-options-key-prompt");
 
                 if (button.Binding != null)
                 {
@@ -394,19 +394,20 @@ namespace Content.Client.UserInterface
                 public readonly BindButton BindButton2;
                 public readonly Button ResetButton;
 
-                public KeyControl(KeyRebindControl parent, string niceName, BoundKeyFunction function)
+                public KeyControl(KeyRebindControl parent, BoundKeyFunction function)
                 {
                     Function = function;
                     var name = new Label
                     {
-                        Text = Loc.GetString(niceName),
+                        Text = Loc.GetString(
+                            $"ui-options-function-{CaseConversion.PascalToKebab(function.FunctionName)}"),
                         HorizontalExpand = true,
                         HorizontalAlignment = HAlignment.Left
                     };
 
                     BindButton1 = new BindButton(parent, this, StyleBase.ButtonOpenRight);
                     BindButton2 = new BindButton(parent, this, StyleBase.ButtonOpenLeft);
-                    ResetButton = new Button {Text = Loc.GetString("Reset"), StyleClasses = {StyleBase.ButtonCaution}};
+                    ResetButton = new Button {Text = Loc.GetString("ui-options-bind-reset"), StyleClasses = {StyleBase.ButtonCaution}};
 
                     var hBox = new HBoxContainer
                     {
@@ -478,7 +479,7 @@ namespace Content.Client.UserInterface
 
                 public void UpdateText()
                 {
-                    Button.Text = Binding?.GetKeyString() ?? "Unbound";
+                    Button.Text = Binding?.GetKeyString() ?? Loc.GetString("ui-options-unbound");
                 }
             }
         }

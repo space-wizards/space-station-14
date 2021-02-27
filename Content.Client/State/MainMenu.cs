@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Content.Client.Changelog;
 using Content.Client.UserInterface;
 using Robust.Client;
 using Robust.Client.ResourceManagement;
@@ -308,6 +309,8 @@ namespace Content.Client.State
                 };
 
                 vBox.AddChild(QuitButton);
+
+                vBox.AddChild(new ChangelogButton());
 
                 VersionLabel = new Label
                 {

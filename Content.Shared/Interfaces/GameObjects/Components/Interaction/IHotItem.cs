@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Analyzers;
+﻿#nullable enable
+using Robust.Shared.Analyzers;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
 {

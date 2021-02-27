@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
@@ -36,7 +37,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             }
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 

@@ -8,7 +8,7 @@
           completed:
             - !type:SnapToGrid { }
           steps:
-            - material: Metal
+            - material: Steel
               amount: 3
               doAfter: 1
 
@@ -50,7 +50,7 @@
             - !type:EntityAnchored
               anchored: true
           steps:
-            - prototype: FirelockElectronics
+            - tag: FirelockElectronics
               name: Firelock Electronics
               icon:
                 sprite: "Constructible/Misc/module.rsi"

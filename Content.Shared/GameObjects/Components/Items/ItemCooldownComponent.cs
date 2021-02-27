@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
@@ -61,7 +62,7 @@ namespace Content.Shared.GameObjects.Components.Items
             };
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 

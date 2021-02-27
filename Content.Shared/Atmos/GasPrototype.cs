@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Prototypes;
+﻿#nullable enable
+using System;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
 
@@ -7,12 +9,12 @@ namespace Content.Shared.Atmos
     [Prototype("gas")]
     public class GasPrototype : IPrototype
     {
-        public string Name { get; private set; }
+        public string Name { get; private set; } = string.Empty;
 
         // TODO: Control gas amount necessary for overlay to appear
         // TODO: Add interfaces for gas behaviours e.g. breathing, burning
 
-        public string ID { get; private set; }
+        public string ID { get; private set; } = string.Empty;
 
         /// <summary>
         ///     Specific heat for gas.
@@ -43,25 +45,25 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     If this reagent is in gas form, this is the path to the overlay that will be used to make the gas visible.
         /// </summary>
-        public string GasOverlayTexture { get; private set; }
+        public string GasOverlayTexture { get; private set; } = string.Empty;
 
         /// <summary>
         ///     If this reagent is in gas form, this will be the path to the RSI sprite that will be used to make the gas visible.
         /// </summary>
-        public string GasOverlayState { get; set; }
+        public string GasOverlayState { get; set; } = string.Empty;
 
         /// <summary>
         ///     State for the gas RSI overlay.
         /// </summary>
-        public string GasOverlaySprite { get; set; }
+        public string GasOverlaySprite { get; set; } = string.Empty;
 
         /// <summary>
         /// Path to the tile overlay used when this gas appears visible.
         /// </summary>
-        public string OverlayPath { get; private set; }
+        public string OverlayPath { get; private set; } = string.Empty;
 
 
-        public string Color { get; private set; }
+        public string Color { get; private set; } = string.Empty;
 
         public void LoadFrom(YamlMappingNode mapping)
         {

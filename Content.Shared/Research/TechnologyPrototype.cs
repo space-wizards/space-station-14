@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -11,13 +12,13 @@ namespace Content.Shared.Research
     [NetSerializable, Serializable, Prototype("technology")]
     public class TechnologyPrototype : IPrototype
     {
-        private string _name;
-        private string _id;
-        private SpriteSpecifier _icon;
-        private string _description;
+        private string _name = string.Empty;
+        private string _id = string.Empty;
+        private SpriteSpecifier _icon = SpriteSpecifier.Invalid;
+        private string _description = string.Empty;
         private int _requiredPoints;
-        private List<string> _requiredTechnologies;
-        private List<string> _unlockedRecipes;
+        private List<string> _requiredTechnologies = new();
+        private List<string> _unlockedRecipes = new();
 
         /// <summary>
         ///     The ID of this technology prototype.

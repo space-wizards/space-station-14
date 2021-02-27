@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
@@ -49,16 +50,16 @@ namespace Content.Shared.GameObjects.Components.Access
             public readonly bool IsPrivilegedIdAuthorized;
             public readonly bool IsTargetIdPresent;
             public readonly string TargetIdName;
-            public readonly string TargetIdFullName;
-            public readonly string TargetIdJobTitle;
-            public readonly string[] TargetIdAccessList;
+            public readonly string? TargetIdFullName;
+            public readonly string? TargetIdJobTitle;
+            public readonly string[]? TargetIdAccessList;
 
             public IdCardConsoleBoundUserInterfaceState(bool isPrivilegedIdPresent,
                 bool isPrivilegedIdAuthorized,
                 bool isTargetIdPresent,
-                string targetIdFullName,
-                string targetIdJobTitle,
-                string[] targetIdAccessList, string privilegedIdName, string targetIdName)
+                string? targetIdFullName,
+                string? targetIdJobTitle,
+                string[]? targetIdAccessList, string privilegedIdName, string targetIdName)
             {
                 IsPrivilegedIdPresent = isPrivilegedIdPresent;
                 IsPrivilegedIdAuthorized = isPrivilegedIdAuthorized;

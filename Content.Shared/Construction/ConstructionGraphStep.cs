@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.Interfaces;
 using Robust.Shared.IoC;
@@ -10,7 +11,7 @@ namespace Content.Shared.Construction
     [Serializable]
     public abstract class ConstructionGraphStep : IExposeData
     {
-        private List<IGraphAction> _completed;
+        private List<IGraphAction> _completed = new();
         public float DoAfter { get; private set; }
         public IReadOnlyList<IGraphAction> Completed => _completed;
 
