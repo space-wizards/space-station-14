@@ -1,4 +1,3 @@
-# TODO: Add description (1)
 - type: entity
   name: beaker
   parent: BaseItem
@@ -13,7 +12,6 @@
     netsync: false
     layers:
       - state: beaker
-        map: ["enum.SolutionContainerLayers.Base"]
       - state: beaker1  
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
@@ -28,6 +26,11 @@
   - type: Spillable
   - type: Drink
     isOpen: true
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 6
+      fillBaseName: beaker
 
 - type: entity
   name: large beaker
@@ -37,7 +40,8 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beakers.rsi
-    state: beakerlarge
+    layers:
+      - state: beaker
   - type: Item
     HeldPrefix: beaker
   - type: SolutionContainer

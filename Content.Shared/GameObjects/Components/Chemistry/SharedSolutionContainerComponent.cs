@@ -307,7 +307,6 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
     public enum SolutionContainerLayers : byte
     {
-        Base,
         Fill
     }
 
