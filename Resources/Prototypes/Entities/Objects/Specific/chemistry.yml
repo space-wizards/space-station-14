@@ -54,6 +54,19 @@
       fillBaseName: beakerlarge
 
 - type: entity
+  name: bluespace beaker
+  parent: Beaker
+  description: A bluespace beaker, powered by experimental bluespace technology.
+  id: BluespaceBeaker
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
+    layers:
+      - state: beakerbluespace
+  - type: SolutionContainer
+    maxVol: 300
+
+- type: entity
   name: dropper
   parent: BaseItem
   description: Used to transfer small amounts of chemical solution between containers.
