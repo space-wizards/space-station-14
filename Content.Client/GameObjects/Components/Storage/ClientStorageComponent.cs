@@ -39,7 +39,7 @@ namespace Content.Client.GameObjects.Components.Storage
             base.Initialize();
 
             // Hide stackVisualizer on start
-            _bagState = SharedBagState.Close;
+            ChangeStorageVisualization(SharedBagState.Close);
         }
 
         public override void OnAdd()
@@ -149,7 +149,6 @@ namespace Content.Client.GameObjects.Components.Storage
             if (Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
             {
                 appearanceComponent.SetData(SharedBagOpenVisuals.BagState, state);
-                appearanceComponent.SetData(StackVisuals.Hide, state == SharedBagState.Close);
             }
         }
 
