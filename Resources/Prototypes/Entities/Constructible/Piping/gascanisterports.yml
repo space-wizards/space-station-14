@@ -40,4 +40,4 @@
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: East
+      pipeDirection: South

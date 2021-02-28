@@ -52,3 +52,9 @@ Entries:
       now, but aren''t damaged by alcohol or toxins yet.', type: Add}
   id: 10
   time: '2021-02-28T01:58:09.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: Stack visualizer no longer affected by open/close state by default.,
+    type: Fix}
+  id: 11
+  time: '2021-02-28T11:02:08.0000000+00:00'
