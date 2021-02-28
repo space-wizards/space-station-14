@@ -12,15 +12,9 @@
           radius: 0.5
       hard: false
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      - Underplating
       - MapGrid
       mask:
-      - MapGrid
+      - AllMask
     mass: 5
   - type: Singularity
   - type: RadiationPulse
