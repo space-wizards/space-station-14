@@ -74,7 +74,7 @@ namespace Content.Tests.Shared.Alert
             var newReagent = new AlertPrototype();
             var serMan = IoCManager.Resolve<ISerializationManager>();
             serMan.Initialize();
-            serMan.Read<AlertPrototype>(new MappingDataNode(proto));
+            serMan.ReadValue<AlertPrototype>(new MappingDataNode(proto));
 
             return newReagent;
         }
