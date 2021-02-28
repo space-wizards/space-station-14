@@ -33,7 +33,7 @@ namespace Content.Shared.Utility
         {
             prototypeManager ??= IoCManager.Resolve<IPrototypeManager>();
 
-            return prototypeManager.TryIndex(prototype, out EntityPrototype proto) && proto.HasComponent(component, componentFactory);
+            return prototypeManager.TryIndex(prototype, out EntityPrototype? proto) && proto.HasComponent(component, componentFactory);
         }
     }
 }

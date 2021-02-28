@@ -1,0 +1,52 @@
+- type: entity
+  id: LockerMedicineFilled
+  suffix: Filled
+  parent: LockerMedicine
+
+- type: entity
+  id: LockerMedicalFilled
+  suffix: Filled
+  parent: LockerMedical
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHandsGlovesLatex
+        prob: 1
+      - name: ClothingHeadsetMedical
+        prob: 1
+     # - name: ClothingEyesHudMedical #Removed until working properly
+     #   prob: 1
+      - name: ClothingBeltMedical
+        prob: 1
+      - name: ClothingHeadHatSurgcapBlue
+        prob: 1
+        orGroup: Surgcaps
+      - name: ClothingHeadHatSurgcapGreen
+        prob: 0.1
+        orGroup: Surgcaps
+      - name: ClothingHeadHatSurgcapPurple
+        prob: 0.05
+        orGroup: Surgcaps
+      - name: UniformScrubsColorBlue
+        prob: 0.5
+        orGroup: Surgshrubs
+      - name: UniformScrubsColorGreen
+        prob: 0.1
+        orGroup: Surgshrubs
+      - name: UniformScrubsColorPurple
+        prob: 0.05
+        orGroup: Surgshrubs
+      - name: ClothingMaskSterile
+        prob: 1
+
+- type: entity
+  id: LockerChemistryFilled
+  suffix: Filled
+  parent: LockerChemistry
+  components:
+  - type: StorageFill
+    contents:
+      - name: BoxSyringe
+        prob: 1
+      - name: BoxBeaker
+        prob: 1

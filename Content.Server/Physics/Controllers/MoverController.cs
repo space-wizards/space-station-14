@@ -129,7 +129,7 @@ namespace Content.Server.Physics.Controllers
             {
                 mobMover.StepSoundDistance = 0;
 
-                if (!mover.Owner.HasComponent<FootstepSoundComponent>() || mover.Owner.Transform.GridID == GridId.Invalid)
+                if (!mover.Owner.HasTag("FootstepSound") || mover.Owner.Transform.GridID == GridId.Invalid)
                 {
                     return;
                 }

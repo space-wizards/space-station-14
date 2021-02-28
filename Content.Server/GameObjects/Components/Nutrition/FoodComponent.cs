@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             if (_utensilsNeeded != UtensilType.None)
             {
-                eventArgs.User.PopupMessage(Loc.GetString("You need to use a {0} to eat that!", _utensilsNeeded));
+                eventArgs.User.PopupMessage(Loc.GetString("food-you-need-utensil", ("utensil", _utensilsNeeded)));
                 return false;
             }
 
@@ -160,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 if (!types.HasFlag(_utensilsNeeded))
                 {
-                    trueTarget.PopupMessage(user, Loc.GetString("You need to be holding a {0} to eat that!", _utensilsNeeded));
+                    trueTarget.PopupMessage(user, Loc.GetString("food-you-need-to-hold-utensil", ("utensil", _utensilsNeeded)));
                     return false;
                 }
             }

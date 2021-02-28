@@ -5,6 +5,16 @@
   components:
     - type: Clickable
     - type: InteractionOutline
+    - type: Damageable
+      resistances: metallicResistances
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 500
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
     - type: Sprite
       netsync: false
       drawdepth: Mobs # They're on the same layer as mobs, perspective.

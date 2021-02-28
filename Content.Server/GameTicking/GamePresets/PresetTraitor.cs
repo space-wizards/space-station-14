@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
@@ -25,9 +25,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.GamePresets
 {
+    [GamePreset("traitor")]
     public class PresetTraitor : GamePreset
     {
-        [Dependency] private readonly IGameTicker _gameticker = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -154,7 +155,7 @@ namespace Content.Server.GameTicking.GamePresets
                 traitor.GreetTraitor(codewords);
             }
 
-            _gameticker.AddGameRule<RuleTraitor>();
+            _gameTicker.AddGameRule<RuleTraitor>();
             return true;
         }
 
@@ -177,12 +178,15 @@ namespace Content.Server.GameTicking.GamePresets
 
         public override string GetRoundEndDescription()
         {
-            var traitorCount = _traitors.Count;
-            var result = Loc.GetString("There {0} {1} {2}.", Loc.GetPluralString("was", "were", traitorCount),
-                traitorCount, Loc.GetPluralString("traitor", "traitors", traitorCount));
+            var result = Loc.GetString(
+                "traitor-round-end-result",
+                ("traitorCount", _traitors.Count)
+            );
+
             foreach (var traitor in _traitors)
             {
-                result += Loc.GetString("\n{0} was a traitor",traitor.Mind.Session.Name);
+                result += "\n"+Loc.GetString("traitor-user-was-a-traitor", ("user", traitor.Mind.Session.Name));
+
                 var objectives = traitor.Mind.AllObjectives.ToArray();
                 if (objectives.Length == 0)
                 {
@@ -190,17 +194,33 @@ namespace Content.Server.GameTicking.GamePresets
                     continue;
                 }
 
-                result += Loc.GetString(" and had the following objectives:");
+                result += Loc.GetString("traitor-objective-list-start");
                 foreach (var objectiveGroup in objectives.GroupBy(o => o.Prototype.Issuer))
                 {
-                    result += $"\n[color=#87cefa]{Loc.GetString(objectiveGroup.Key)}[/color]";
+                    result += $"\n[color=#87cefa]{objectiveGroup.Key}[/color]";
+
                     foreach (var objective in objectiveGroup)
                     {
                         foreach (var condition in objective.Conditions)
                         {
                             var progress = condition.Progress;
-                            result +=
-                                Loc.GetString("\n- {0} | {1}", condition.Title, (progress > 0.99f ? $"[color=green]{Loc.GetString("Success!")}[/color]" : $"[color=red]{Loc.GetString("Failed!")}[/color] ({(int) (progress * 100)}%)"));
+                            if (progress > 0.99f)
+                            {
+                                result += "\n- " + Loc.GetString(
+                                    "traitor-objective-condition-success",
+                                    ("condition", condition.Title),
+                                    ("markupColor", "green")
+                                );
+                            }
+                            else
+                            {
+                                result += "\n- " + Loc.GetString(
+                                    "traitor-objective-condition-fail",
+                                    ("condition", condition.Title),
+                                    ("progress", (int) (progress * 100)),
+                                    ("markupColor", "red")
+                                );
+                            }
                         }
                     }
                 }

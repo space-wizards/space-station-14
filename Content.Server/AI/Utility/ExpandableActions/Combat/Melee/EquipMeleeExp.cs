@@ -37,8 +37,8 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
                 {
                     continue;
                 }
-                
-                yield return new EquipMelee(owner, entity, Bonus);
+
+                yield return new EquipMelee() {Owner = owner, Target = entity, Bonus = Bonus};
             }
         }
     }

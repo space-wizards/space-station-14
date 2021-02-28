@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameTicking;
 using Content.Server.Mobs;
 using Content.Shared.Roles;
@@ -17,12 +18,12 @@ namespace Content.Server.Interfaces.GameTicking
     public interface IGameTicker
     {
         GameRunLevel RunLevel { get; }
-        
+
         /// <summary>
         ///     The map loaded by the GameTicker on round start.
         /// </summary>
         MapId DefaultMap { get; }
-        
+
         /// <summary>
         ///     The GridId loaded by the GameTicker on round start.
         /// </summary>
@@ -59,7 +60,7 @@ namespace Content.Server.Interfaces.GameTicking
         void RemoveGameRule(GameRule rule);
         IEnumerable<GameRule> ActiveGameRules { get; }
 
-        bool TryGetPreset(string name, out Type type);
+        bool TryGetPreset(string name, [NotNullWhen(true)] out Type type);
         void SetStartPreset(Type type, bool force = false);
         void SetStartPreset(string name, bool force = false);
 

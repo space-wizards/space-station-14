@@ -19,15 +19,15 @@
     state: Assistant
 
 # Quartermaster
-- type: entity
-  id: SpawnPointQuartermaster
-  parent: SpawnPointJobBase
-  name: spawn point (quartermaster)
-  components:
-    - type: SpawnPoint
-      job_id: Quartermaster
-    - type: Sprite
-      state: Quartermaster
+#- type: entity
+#  id: SpawnPointQuartermaster
+#  parent: SpawnPointJobBase
+#  name: spawn point (quartermaster)
+#  components:
+#    - type: SpawnPoint
+#      job_id: Quartermaster
+#    - type: Sprite
+#      state: Quartermaster
 
 # Cargo tech
 - type: entity

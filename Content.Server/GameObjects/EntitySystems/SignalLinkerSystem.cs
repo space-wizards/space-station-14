@@ -23,12 +23,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public bool SignalLinkerKeybind(NetUserId id, bool? enable)
         {
-            if (enable == null)
-            {
-                enable = !_transmitters.ContainsKey(id);
-            }
+            enable ??= !_transmitters.ContainsKey(id);
 
-            if (enable == true)
+            if (enable.Value)
             {
                 if (_transmitters.ContainsKey(id))
                 {
@@ -45,7 +42,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 _transmitters.Add(id, null);
 
             }
-            else if (enable == false)
+            else
             {
                 if (!_transmitters.ContainsKey(id))
                 {
@@ -58,7 +55,8 @@ namespace Content.Server.GameObjects.EntitySystems
                     CommandBinds.Unregister<SignalLinkerSystem>();
                 }
             }
-            return enable == true;
+
+            return enable.Value;
         }
 
         private bool HandleUse(ICommonSession session, EntityCoordinates coords, EntityUid uid)

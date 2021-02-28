@@ -73,7 +73,7 @@ namespace Content.Client.GameObjects.Components.Gravity
 
             var vBox = new VBoxContainer
             {
-                CustomMinimumSize = new Vector2(250, 100)
+                MinSize = new Vector2(250, 100)
             };
             Status = new Label
             {
@@ -84,7 +84,7 @@ namespace Content.Client.GameObjects.Components.Gravity
             {
                 Text = Loc.GetString(Owner.IsOn ? "Turn Off" : "Turn On"),
                 TextAlign = Label.AlignMode.Center,
-                CustomMinimumSize = new Vector2(150, 60)
+                MinSize = new Vector2(150, 60)
             };
 
             vBox.AddChild(Status);

@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -6,15 +7,14 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Prototypes.PDA
 {
     [Prototype("uplinkListing")]
-    public class UplinkStoreListingPrototype : IPrototype, IIndexedPrototype
+    public class UplinkStoreListingPrototype : IPrototype
     {
-
-        private string _id;
-        private string _itemId;
+        private string _id = string.Empty;
+        private string _itemId = string.Empty;
         private int _price;
         private UplinkCategory _category;
-        private string _desc;
-        private string _name;
+        private string _desc = string.Empty;
+        private string _name = string.Empty;
 
         public string ID => _id;
 
@@ -23,6 +23,7 @@ namespace Content.Shared.Prototypes.PDA
         public UplinkCategory Category => _category;
         public string Description => _desc;
         public string ListingName => _name;
+
         public void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
@@ -32,7 +33,6 @@ namespace Content.Shared.Prototypes.PDA
             serializer.DataField(ref _category, "category", UplinkCategory.Utility);
             serializer.DataField(ref _desc, "description", string.Empty);
             serializer.DataField(ref _name, "listingName", string.Empty);
-
         }
     }
 }

@@ -1,6 +1,6 @@
 - type: entity
   id: CapAmmoBase
-  name: "cap loader"
+  name: "cap gun loader"
   parent: BaseItem
   abstract: true
   components:
@@ -23,7 +23,7 @@
 
 - type: entity
   id: CapLoader
-  name: "capgun loader"
+  name: "cap gun loader"
   parent: CapAmmoBase
   components:
   - type: SpeedLoader

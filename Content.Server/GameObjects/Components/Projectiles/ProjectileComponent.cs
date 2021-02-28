@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             if (_damagedEntity) Owner.Delete();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new ProjectileComponentState(NetID!.Value, _shooter, IgnoreShooter);
         }

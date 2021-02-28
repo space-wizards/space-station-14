@@ -1,4 +1,5 @@
-﻿using Lidgren.Network;
+﻿#nullable enable
+using Lidgren.Network;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Network.NetMessages
@@ -18,7 +19,7 @@ namespace Content.Shared.Network.NetMessages
         #endregion
 
         public CtlType Type;
-        public string OpenType;
+        public string OpenType = string.Empty;
         public uint Id;
 
         public override void ReadFromBuffer(NetIncomingMessage buffer)

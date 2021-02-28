@@ -15,27 +15,21 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
     public sealed class EquipMelee : UtilityAction
     {
-        private readonly IEntity _entity;
-
-        public EquipMelee(IEntity owner, IEntity entity, float weight) : base(owner)
-        {
-            _entity = entity;
-            Bonus = weight;
-        }
+        public IEntity Target { get; set; }
 
         public override void SetupOperators(Blackboard context)
         {
             ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
-                new EquipEntityOperator(Owner, _entity)
+                new EquipEntityOperator(Owner, Target)
             });
         }
 
         protected override void UpdateBlackboard(Blackboard context)
         {
             base.UpdateBlackboard(context);
-            context.GetState<WeaponEntityState>().SetValue(_entity);
-            context.GetState<TargetEntityState>().SetValue(_entity);
+            context.GetState<WeaponEntityState>().SetValue(Target);
+            context.GetState<TargetEntityState>().SetValue(Target);
         }
 
         protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)

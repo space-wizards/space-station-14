@@ -21,12 +21,16 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Buckle
 {
+    /// <summary>
+    ///     Component that handles sitting entities into <see cref="StrapComponent"/>s.
+    /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedBuckleComponent))]
     public class BuckleComponent : SharedBuckleComponent, IInteractHand
@@ -234,7 +238,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             return true;
         }
 
-        public override bool TryBuckle(IEntity user, IEntity to)
+        public override bool TryBuckle(IEntity? user, IEntity to)
         {
             if (!CanBuckle(user, to, out var strap))
             {
@@ -263,11 +267,20 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             SendMessage(new BuckleMessage(Owner, to));
 
-            if (Owner.TryGetComponent(out PullableComponent? pullableComponent))
+            if (Owner.TryGetComponent(out PullableComponent? ownerPullable))
             {
-                if (pullableComponent.Puller != null)
+                if (ownerPullable.Puller != null)
                 {
-                    pullableComponent.TryStopPull();
+                    ownerPullable.TryStopPull();
+                }
+            }
+
+            if (to.TryGetComponent(out PullableComponent? toPullable))
+            {
+                if (toPullable.Puller == Owner)
+                {
+                    // can't pull it and buckle to it at the same time
+                    toPullable.TryStopPull();
                 }
             }
 
@@ -324,7 +337,8 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
 
-            if (_stunnable != null && _stunnable.KnockedDown)
+            if (_stunnable != null && _stunnable.KnockedDown
+                || (_mobState?.IsIncapacitated() ?? false))
             {
                 EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }
@@ -375,10 +389,11 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             serializer.DataField(ref _size, "size", 100);
 
-            var seconds = 0.25f;
-            serializer.DataField(ref seconds, "cooldown", 0.25f);
-
-            _unbuckleDelay = TimeSpan.FromSeconds(seconds);
+            serializer.DataReadWriteFunction(
+                "cooldown",
+                0.25f,
+                seconds => _unbuckleDelay = TimeSpan.FromSeconds(seconds),
+                () => (float) _unbuckleDelay.TotalSeconds);
         }
 
         protected override void Startup()
@@ -398,7 +413,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             UpdateBuckleStatus();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             int? drawDepth = null;
 

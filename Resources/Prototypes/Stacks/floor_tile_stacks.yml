@@ -1,0 +1,19 @@
+﻿- type: stack
+  id: FloorTileSteel
+  name: steel tile
+
+- type: stack
+  id: FloorTileCarpet
+  name: carpet tile
+
+- type: stack
+  id: FloorTileWhite
+  name: white tile
+
+- type: stack
+  id: FloorTileDark
+  name: dark tile
+
+- type: stack
+  id: FloorTileWood
+  name: wood tile

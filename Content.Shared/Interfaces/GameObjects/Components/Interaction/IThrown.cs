@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;

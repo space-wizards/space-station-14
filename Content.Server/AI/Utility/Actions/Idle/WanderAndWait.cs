@@ -23,8 +23,6 @@ namespace Content.Server.AI.Utility.Actions.Idle
         public override bool CanOverride => false;
         public override float Bonus => 1.0f;
 
-        public WanderAndWait(IEntity owner) : base(owner) {}
-
         public override void SetupOperators(Blackboard context)
         {
             var robustRandom = IoCManager.Resolve<IRobustRandom>();

@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared;
 using Robust.Shared.Configuration;
 
@@ -176,6 +177,14 @@ namespace Content.Shared
             CVarDef.Create("physics.stopspeed", 0.1f);
 
         /*
+         * Ambience
+         */
+
+        public static readonly CVarDef<bool> AmbienceBasicEnabled =
+            CVarDef.Create("ambience.basicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+
+        /*
          * AI
          */
 
@@ -261,5 +270,19 @@ namespace Content.Shared
          */
 
         public static readonly CVarDef<bool> BrandingSteam = CVarDef.Create("branding.steam", false, CVar.CLIENTONLY);
+
+        /*
+         * OOC
+         */
+
+        public static readonly CVarDef<bool> OocEnabled = CVarDef.Create("ooc.enabled", true, CVar.NOTIFY);
+
+        public static readonly CVarDef<bool> AdminOocEnabled =
+            CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
+
+        /*
+         * Context Menu Grouping Types
+         */
+        public static readonly CVarDef<int> ContextMenuGroupingType = CVarDef.Create("context_menu", 0, CVar.CLIENTONLY);
     }
 }

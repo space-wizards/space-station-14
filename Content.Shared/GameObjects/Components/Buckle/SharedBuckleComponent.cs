@@ -44,7 +44,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
 
         public bool DontCollide { get; set; }
 
-        public abstract bool TryBuckle(IEntity user, IEntity to);
+        public abstract bool TryBuckle(IEntity? user, IEntity to);
 
         bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
         {

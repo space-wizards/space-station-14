@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: UnfinishedMachineFrame
   name: machine frame
+  description: "A machine under construction. Needs more parts."
   suffix: Unfinished
   placement:
     mode: SnapgridCenter

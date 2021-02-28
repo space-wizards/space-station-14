@@ -1,12 +1,10 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using Content.Shared.Chemistry;
 using Content.Shared.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Localization.Macros;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -15,22 +13,14 @@ namespace Content.Shared
 {
     public class EntryPoint : GameShared
     {
-        // If you want to change your codebase's language, do it here.
-        private const string Culture = "en-US";
-
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly ITextMacroFactory _textMacroFactory = default!;
-        [Dependency] private readonly IResourceManager _resourceManager = default!;
 
         public override void PreInit()
         {
             IoCManager.InjectDependencies(this);
 
-            _textMacroFactory.DoAutoRegistrations();
-
-            // Default to en-US.
-            Loc.LoadCulture(_resourceManager, _textMacroFactory, new CultureInfo(Culture));
+            Localization.Init();
         }
 
         public override void Init()

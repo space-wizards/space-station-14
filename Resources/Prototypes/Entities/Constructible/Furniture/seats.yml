@@ -16,13 +16,6 @@
           bounds: "-0.5,-0.25,0.5,0.25"
       mask:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
       - VaultImpassable
       - SmallImpassable
   - type: Sprite
@@ -56,7 +49,10 @@
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.45, -0.45, 0.05, 0.45"
-        layer: [ Passable ]
+        mask:
+      	- Impassable
+      	- VaultImpassable
+      	- SmallImpassable
 
 - type: entity
   name: stool
@@ -72,7 +68,10 @@
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.5, -0.25, 0.05, 0.25"
-        layer: [ Passable ]
+        mask:
+      	- Impassable
+      	- VaultImpassable
+      	- SmallImpassable
 
 - type: entity
   name: bar stool
@@ -87,7 +86,10 @@
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.5, -0.2, 0.2, 0.25"
-        layer: [ Passable ]
+        mask:
+	    - Impassable
+	    - VaultImpassable
+	    - SmallImpassable
 
 - type: entity
   name: white office chair
@@ -103,7 +105,10 @@
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.49, -0.25, 0.37, 0.25"
-        layer: [ Passable ]
+        mask:
+      	- Impassable
+      	- VaultImpassable
+      	- SmallImpassable
 
 - type: entity
   name: dark office chair
@@ -126,7 +131,10 @@
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.45, -0.3, 0.35, 0.3"
-        layer: [ Passable ]
+        mask:
+      	- Impassable
+      	- VaultImpassable
+      	- SmallImpassable
 
 - type: entity
   name: wooden chair
@@ -141,4 +149,7 @@
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.37, -0.25, 0.49, 0.24"
-        layer: [ Passable ]
+        mask:
+      	- Impassable
+      	- VaultImpassable
+      	- SmallImpassable

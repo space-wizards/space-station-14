@@ -9,7 +9,7 @@ using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Timer = Robust.Shared.Timers.Timer;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Commands
 {
@@ -44,6 +44,11 @@ namespace Content.Server.Commands
                 return;
             }
 
+            MakeSentient(entity);
+        }
+
+        public static void MakeSentient(IEntity entity)
+        {
             if(entity.HasComponent<AiControllerComponent>())
                 entity.RemoveComponent<AiControllerComponent>();
 

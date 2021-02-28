@@ -8,8 +8,8 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite
-      sprite: Constructible/Hydroponics/hydro_tools.rsi
-      state: sextractor
+      sprite: Constructible/Hydroponics/machines.rsi
+      state: seedextractor
     - type: Physics
       mass: 25
       anchored: true

@@ -1,22 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Markers;
-using Content.Server.Players;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Mobs;
+using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Observer;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Players;
-using Robust.Shared.ViewVariables;
-using Content.Shared.GameObjects.EntitySystems;
-using Robust.Shared.Utility;
 using Robust.Shared.Localization;
-using System;
-using Robust.Server.Player;
+using Robust.Shared.Log;
 using Robust.Shared.Network;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 #nullable enable
 namespace Content.Server.GameObjects.Components.Observer
@@ -47,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Observer
             _timeOfDeath = _gameTimer.RealTime;
         }
 
-        public override ComponentState GetComponentState() => new GhostComponentState(CanReturnToBody);
+        public override ComponentState GetComponentState(ICommonSession player) => new GhostComponentState(CanReturnToBody);
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
@@ -71,7 +72,8 @@ namespace Content.Server.GameObjects.Components.Observer
 
             switch (message)
             {
-                case ReturnToBodyComponentMessage _:
+                case ReturnToBodyComponentMessage:
+                {
                     if (!Owner.TryGetComponent(out IActorComponent? actor) ||
                         !CanReturnToBody)
                     {
@@ -85,6 +87,7 @@ namespace Content.Server.GameObjects.Components.Observer
                         Owner.Delete();
                     }
                     break;
+                }
                 case ReturnToCloneComponentMessage _:
 
                     if (Owner.TryGetComponent(out VisitingMindComponent? mind))
@@ -92,29 +95,53 @@ namespace Content.Server.GameObjects.Components.Observer
                         Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
                     }
                     break;
-                case GhostWarpRequestMessage warp:
-                    if (warp.PlayerTarget != default)
+                case GhostWarpToLocationRequestMessage warp:
+                {
+                    if (session?.AttachedEntity != Owner)
                     {
-                        foreach (var player in _playerManager.GetAllPlayers())
+                        break;
+                    }
+
+                    foreach (var warpPoint in FindWaypoints())
+                    {
+                        if (warp.Name == warpPoint.Location)
                         {
-                            if (player.AttachedEntity != null && warp.PlayerTarget == player.AttachedEntity.Uid)
-                            {
-                                session!.AttachedEntity!.Transform.Coordinates =
-                                    player.AttachedEntity.Transform.Coordinates;
-                            }
+                            Owner.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates;
+                            break;
                         }
                     }
-                    else
-                    {
-                        foreach (var warpPoint in FindWaypoints())
-                        {
-                            if (warp.WarpName == warpPoint.Location)
-                            {
-                                session!.AttachedEntity!.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates ;
-                            }
-                        }
-                    }
+
+                    Logger.Warning($"User {session.Name} tried to warp to an invalid warp: {warp.Name}");
+
                     break;
+                }
+                case GhostWarpToTargetRequestMessage target:
+                {
+                    if (session?.AttachedEntity != Owner)
+                    {
+                        break;
+                    }
+
+                    if (!Owner.TryGetComponent(out IActorComponent? actor))
+                    {
+                        break;
+                    }
+
+                    if (!Owner.EntityManager.TryGetEntity(target.Target, out var entity))
+                    {
+                        Logger.Warning($"User {session.Name} tried to warp to an invalid entity id: {target.Target}");
+                        break;
+                    }
+
+                    if (!_playerManager.TryGetSessionByChannel(actor.playerSession.ConnectedClient, out var player) ||
+                        player.AttachedEntity != entity)
+                    {
+                        break;
+                    }
+
+                    Owner.Transform.Coordinates = entity.Transform.Coordinates;
+                    break;
+                }
                 case GhostRequestPlayerNameData _:
                     var playerNames = new Dictionary<EntityUid, string>();
                     foreach (var names in _playerManager.GetAllPlayers())

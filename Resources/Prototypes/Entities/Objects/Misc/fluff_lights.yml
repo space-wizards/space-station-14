@@ -2,7 +2,6 @@
   name: lantern
   parent: BaseItem
   id: BaseLamp
-  description:
   abstract: true
   components:
   - type: HandheldLight
@@ -76,36 +75,10 @@
       - type: FlashLightVisualizer
 
 - type: entity
-  name: torch
-  id: Torch
-  parent: BaseLamp
-  description:
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/torch.rsi
-    layers:
-      - state: torch
-      - state: torch_on
-        shader: unshaded
-        visible: false
-  - type: Item
-    sprite: Objects/Misc/torch.rsi
-    HeldPrefix: off
-  - type: PointLight
-    enabled: false
-    radius: 1
-    energy: 4
-    color: "#FFC458"
-  - type: LoopingSound
-  - type: Appearance
-    visuals:
-      - type: LanternVisualizer
-
-- type: entity
   name: floodlight
   id: Floodlight
   parent: BaseLamp
-  description:
+  description: A pole with powerful mounted lights on it.
   components:
   - type: Sprite
     layers:
@@ -153,7 +126,7 @@
   name: broken floodlight
   id: FloodlightBroken
   parent: BaseItem
-  description:
+  description: A pole with powerful mounted lights on it. It's broken.
   components:
   - type: Sprite
     sprite: Objects/Misc/lights.rsi

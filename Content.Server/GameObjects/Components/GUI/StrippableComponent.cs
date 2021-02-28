@@ -76,6 +76,11 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public override bool Drop(DragDropEventArgs args)
         {
+            if (args.User == null)
+            {
+                return false;
+            }
+
             if (!args.User.TryGetComponent(out IActorComponent? actor)) return false;
 
             OpenUserInterface(actor.playerSession);

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.WorldState;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Utility.ExpandableActions
 {
@@ -11,6 +12,8 @@ namespace Content.Server.AI.Utility.ExpandableActions
     /// </summary>
     public abstract class ExpandableUtilityAction : IAiUtility
     {
+        public IEntity Owner { get; set; }
+
         public abstract float Bonus { get; }
 
         /// <summary>

@@ -50,9 +50,9 @@ namespace Content.Client.GameObjects.Components.Atmos
                 return;
             }
 
-            if (component.TryGetData<double>(VaporVisuals.Rotation, out var radians))
+            if (component.TryGetData<Angle>(VaporVisuals.Rotation, out var radians))
             {
-                SetRotation(component, new Angle(radians));
+                SetRotation(component, radians);
             }
 
             if (component.TryGetData<Color>(VaporVisuals.Color, out var color))

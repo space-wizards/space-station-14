@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Movement
@@ -98,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 IsClimbing = false;
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new ClimbModeComponentState(_isClimbing, OwnerIsTransitioning);
         }

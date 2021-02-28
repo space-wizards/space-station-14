@@ -149,14 +149,12 @@
   name: material sheet printing
   id: Sheets
   description: Print those sheets!
-  icon:
-    sprite: Objects/Materials/sheets.rsi
-    state: researchicon
+  icon: Objects/Materials/Sheets/researchicon.png
   requiredPoints: 250
   requiredTechnologies:
     - IndustrialEngineering
   unlockedRecipes:
-    - MetalStack
+    - SheetSteel
     - GlassStack
 
 # Electromagnetic Theory Technology Tree

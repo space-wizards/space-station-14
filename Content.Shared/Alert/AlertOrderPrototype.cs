@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -12,23 +13,29 @@ namespace Content.Shared.Alert
     [Prototype("alertOrder")]
     public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>
     {
+        public string ID { get; private set; } = string.Empty;
+
         private readonly Dictionary<AlertType, int> _typeToIdx = new();
         private readonly Dictionary<AlertCategory, int> _categoryToIdx = new();
 
         public void LoadFrom(YamlMappingNode mapping)
         {
-            if (!mapping.TryGetNode("order", out YamlSequenceNode orderMapping)) return;
+            var serializer = YamlObjectSerializer.NewReader(mapping);
 
-            int i = 0;
+            serializer.DataField(this, x => x.ID, "id", string.Empty);
+
+            if (!mapping.TryGetNode("order", out YamlSequenceNode? orderMapping)) return;
+
+            var i = 0;
             foreach (var entryYaml in orderMapping)
             {
                 var orderEntry = (YamlMappingNode) entryYaml;
-                var serializer = YamlObjectSerializer.NewReader(orderEntry);
-                if (serializer.TryReadDataField("category", out AlertCategory alertCategory))
+                var orderSerializer = YamlObjectSerializer.NewReader(orderEntry);
+                if (orderSerializer.TryReadDataField("category", out AlertCategory alertCategory))
                 {
                     _categoryToIdx[alertCategory] = i++;
                 }
-                else if (serializer.TryReadDataField("alertType", out AlertType alertType))
+                else if (orderSerializer.TryReadDataField("alertType", out AlertType alertType))
                 {
                     _typeToIdx[alertType] = i++;
                 }
@@ -50,7 +57,7 @@ namespace Content.Shared.Alert
             return -1;
         }
 
-        public int Compare(AlertPrototype x, AlertPrototype y)
+        public int Compare(AlertPrototype? x, AlertPrototype? y)
         {
             if ((x == null) && (y == null)) return 0;
             if (x == null) return 1;

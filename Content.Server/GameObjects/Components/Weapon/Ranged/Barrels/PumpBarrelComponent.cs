@@ -11,6 +11,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -82,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             UpdateAppearance();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             (int, int)? count = (ShotsLeft, Capacity);
             var chamberedExists = _chamberContainer.ContainedEntity != null;

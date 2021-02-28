@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Players;
 using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Serialization;
 
@@ -52,9 +53,10 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     var oldPullerPhysics = _pullerPhysics;
 
                     _puller = null;
+                    Dirty();
                     _pullerPhysics = null;
 
-                    if (_physics != null)
+                    if (_physics != null && oldPullerPhysics != null)
                     {
                         var message = new PullStoppedMessage(oldPullerPhysics, _physics);
 
@@ -132,6 +134,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     // Pull start confirm
 
                     _puller = value;
+                    Dirty();
                     _pullerPhysics = pullerPhysics;
 
                     var message = new PullStartedMessage(_pullerPhysics, _physics);
@@ -268,7 +271,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
             //return controller.TryMoveTo(Puller.Transform.Coordinates, to);
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new PullableComponentState(Puller?.Uid);
         }

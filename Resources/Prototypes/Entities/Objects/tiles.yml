@@ -12,7 +12,7 @@
       - plating
       - floor_steel
   - type: Stack
-    stacktype: FloorTileSteel
+    stackType: FloorTileSteel
     count: 1
     max: 8
 
@@ -41,7 +41,7 @@
       - plating
       - floor_wood
   - type: Stack
-    stacktype: FloorTileWood
+    stackType: FloorTileWood
     count: 1
     max: 8
 
@@ -61,7 +61,7 @@
       - plating
       - floor_white
   - type: Stack
-    stacktype: FloorTileWhite
+    stackType: FloorTileWhite
     count: 1
     max: 8
 
@@ -81,7 +81,7 @@
       - plating
       - floor_dark
   - type: Stack
-    stacktype: FloorTileDark
+    stackType: FloorTileDark
     count: 1
     max: 8
 

@@ -87,7 +87,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return true;
 
             var location = eventArgs.User.Transform.Coordinates;
-            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager));
+            var diff = eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager);
+            var angle = Angle.FromWorldVec(diff);
 
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
             var entities = ArcRayCast(eventArgs.User.Transform.WorldPosition, angle, eventArgs.User);
@@ -144,7 +145,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             var target = eventArgs.TargetEntity;
 
             var location = eventArgs.User.Transform.Coordinates;
-            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager));
+            var diff = eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager);
+            var angle = Angle.FromWorldVec(diff);
 
             var audioSystem = EntitySystem.Get<AudioSystem>();
             if (target != null)

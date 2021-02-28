@@ -205,7 +205,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private bool HandleClientUseItemInHand(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        public bool HandleClientUseItemInHand(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!coords.IsValid(_entityManager))
@@ -399,7 +399,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 var diff = coordinates.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
                 if (diff.LengthSquared > 0.01f)
                 {
-                    player.Transform.LocalRotation = new Angle(diff);
+                    player.Transform.LocalRotation = Angle.FromWorldVec(diff);
                 }
             }
         }
@@ -735,11 +735,11 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// Activates the Dropped behavior of an object
         /// Verifies that the user is capable of doing the drop interaction first
         /// </summary>
-        public bool TryDroppedInteraction(IEntity user, IEntity item)
+        public bool TryDroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
             if (user == null || item == null || !ActionBlockerSystem.CanDrop(user)) return false;
 
-            DroppedInteraction(user, item);
+            DroppedInteraction(user, item, intentional);
             return true;
         }
 
@@ -747,9 +747,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         ///     Calls Dropped on all components that implement the IDropped interface
         ///     on an entity that has been dropped.
         /// </summary>
-        public void DroppedInteraction(IEntity user, IEntity item)
+        public void DroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
-            var dropMsg = new DroppedMessage(user, item);
+            var dropMsg = new DroppedMessage(user, item, intentional);
             RaiseLocalEvent(dropMsg);
             if (dropMsg.Handled)
             {
@@ -761,7 +761,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
             {
-                comp.Dropped(new DroppedEventArgs(user));
+                comp.Dropped(new DroppedEventArgs(user, intentional));
             }
         }
 

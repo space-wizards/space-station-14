@@ -30,7 +30,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -96,10 +96,10 @@ namespace Content.Server.GameObjects.Components.Disposal
         private readonly List<string> _targetList = new();
 
         [ViewVariables]
-        private string _target = "";
+        private string? _target;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private string _tag = "";
+        private string _tag = string.Empty;
 
         [ViewVariables]
         public bool Powered =>
@@ -289,6 +289,11 @@ namespace Content.Server.GameObjects.Components.Disposal
                 _container.Remove(entity);
             }
 
+            if (_target == null)
+            {
+                return false;
+            }
+
             var holder = CreateTaggedHolder(entities, _target);
 
             entryComponent.TryInsert(holder);
@@ -442,7 +447,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
             }
 
-            if (obj.Message is UiTargetUpdateMessage tagMessage && TagRegex.IsMatch(tagMessage.Target))
+            if (obj.Message is UiTargetUpdateMessage tagMessage && TagRegex.IsMatch(tagMessage.Target ?? string.Empty))
             {
                 _target = tagMessage.Target;
             }
@@ -715,6 +720,11 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
+            if (eventArgs.User == null)
+            {
+                return false;
+            }
+
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return false;
