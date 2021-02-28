@@ -58,3 +58,8 @@ Entries:
     type: Fix}
   id: 11
   time: '2021-02-28T11:02:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Small physics refactor, type: Add}
+  id: 12
+  time: '2021-02-28T16:11:29.0000000+00:00'
