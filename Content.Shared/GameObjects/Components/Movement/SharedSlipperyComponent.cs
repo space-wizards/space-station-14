@@ -60,7 +60,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             if (!Slippery
                 || Owner.IsInContainer()
                 ||  _slipped.Contains(otherBody.Entity.Uid)
-                ||  !otherBody.Entity.TryGetComponent(out SharedStunnableComponent stun))
+                ||  !otherBody.Entity.TryGetComponent(out SharedStunnableComponent? stun))
             {
                 return false;
             }

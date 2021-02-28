@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
 
 namespace Content.Shared.Physics.Pull
 {

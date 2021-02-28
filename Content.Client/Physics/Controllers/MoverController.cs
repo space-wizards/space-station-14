@@ -23,8 +23,6 @@ namespace Content.Client.Physics.Controllers
 
             body.Predict = true; // TODO: equal prediction instead of true?
 
-            if (body.Paused && !mover.IgnorePaused) return;
-
             // Server-side should just be handled on its own so we'll just do this shizznit
             if (player.TryGetComponent(out IMobMoverComponent? mobMover))
             {

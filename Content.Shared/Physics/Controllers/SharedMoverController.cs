@@ -16,7 +16,7 @@ namespace Content.Shared.Physics.Controllers
     ///     Handles player and NPC mob movement.
     ///     NPCs are handled server-side only.
     /// </summary>
-    public abstract class SharedMoverController : AetherController
+    public abstract class SharedMoverController : VirtualController
     {
         [Dependency] private readonly IPhysicsManager _physicsManager = default!;
 

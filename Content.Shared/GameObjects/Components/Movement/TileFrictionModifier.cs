@@ -2,6 +2,7 @@
 using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -35,7 +36,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             serializer.DataField(this, x => x.Modifier, "modifier", 1.0f);
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession session)
         {
             return new TileFrictionComponentState(_modifier);
         }

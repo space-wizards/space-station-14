@@ -13,7 +13,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Physics.Controllers
 {
-    internal sealed class SingularityController : AetherController
+    internal sealed class SingularityController : VirtualController
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;

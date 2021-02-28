@@ -17,7 +17,7 @@ using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Shared.Physics.Controllers
 {
-    public sealed class SharedTileFrictionController : AetherController
+    public sealed class SharedTileFrictionController : VirtualController
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;

@@ -25,7 +25,6 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Physics;
 using Robust.Server.Player;
-using Robust.Server.Timing;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -34,6 +33,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Dynamics.Shapes;
+using Robust.Shared.Timing;
 
 #nullable enable
 
@@ -102,8 +102,6 @@ namespace Content.Server.Commands.Physics
             shell.WriteLine($"Testbed on map {mapId}");
         }
 
-        // TODO: Try actually adding in SynchronizeFixtures and have it whenever the body is moved it's dirty???
-
         private void SetupPlayer(MapId mapId, IConsoleShell shell, IPlayerSession? player, IMapManager mapManager)
         {
             var pauseManager = IoCManager.Resolve<IPauseManager>();
@@ -117,7 +115,6 @@ namespace Content.Server.Commands.Physics
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            // TODO: Need a blank entity we can spawn for testbed.
             var ground = entityManager.SpawnEntity("BlankEntity", new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
 
             var horizontal = new EdgeShape(new Vector2(-20, 0), new Vector2(20, 0));

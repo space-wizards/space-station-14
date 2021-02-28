@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Controllers;
@@ -65,7 +66,6 @@ namespace Content.Server.Physics.Controllers
             foreach (var (mover, physics) in ComponentManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
             {
                 if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
-                if (mover.Owner.Paused && !mover.IgnorePaused) continue;
 
                 HandleKinematicMovement(mover, physics);
             }

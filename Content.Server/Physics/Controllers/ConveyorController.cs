@@ -11,7 +11,7 @@ using Robust.Shared.Physics.Controllers;
 
 namespace Content.Server.Physics.Controllers
 {
-    internal sealed class ConveyorController : AetherController
+    internal sealed class ConveyorController : VirtualController
     {
         public override List<Type> UpdatesAfter => new() {typeof(MoverController)};
 

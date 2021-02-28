@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -57,7 +58,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             Owner.EnsureComponentWarn<SharedPlayerInputMoverComponent>();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession session)
         {
             return new PlayerMobMoverComponentState(StepSoundDistance, GrabRange);
         }
