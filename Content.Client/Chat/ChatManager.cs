@@ -237,7 +237,8 @@ namespace Content.Client.Chat
             {
                 if (_currentChatBox != null)
                 {
-                    string locWarning = Loc.GetString("Your message exceeds {0} character limit", _maxMessageLength);
+                    string locWarning = Loc.GetString("chat-manager-max-message-length",
+                                            ("maxMessageLength", _maxMessageLength));
                     _currentChatBox.AddLine(locWarning, ChatChannel.Server, Color.Orange);
                     _currentChatBox.ClearOnEnter = false; // The text shouldn't be cleared if it hasn't been sent
                 }
