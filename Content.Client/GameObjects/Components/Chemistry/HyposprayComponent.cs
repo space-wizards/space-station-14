@@ -59,9 +59,9 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
                 _parent._uiUpdateNeeded = false;
 
-                _label.SetMarkup(Loc.GetString(
-                    "Volume: [color=white]{0}/{1}[/color]",
-                    _parent.CurrentVolume, _parent.TotalVolume));
+                _label.SetMarkup(Loc.GetString("comp-hypospray-status",
+                                    ("currentVolume", _parent.CurrentVolume.Double()),
+                                    ("totalVolume", _parent.TotalVolume.Double())));
             }
         }
     }
