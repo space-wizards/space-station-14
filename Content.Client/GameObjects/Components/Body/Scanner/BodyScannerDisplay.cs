@@ -146,7 +146,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
             // TODO BODY Part damage
             if (part.Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                BodyPartHealth.Text = Loc.GetString("{0} damage", damageable.TotalDamage);
+                BodyPartHealth.Text = Loc.GetString("body-scanner-bodypart-damage", ("damage", damageable.TotalDamage));
             }
 
             MechanismList.Clear();

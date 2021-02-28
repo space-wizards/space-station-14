@@ -1,0 +1,4 @@
+### UI
+
+# Body scanner display
+body-scanner-bodypart-damage = damage: {$damage}
