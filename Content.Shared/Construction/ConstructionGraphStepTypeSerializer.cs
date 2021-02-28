@@ -12,10 +12,10 @@ namespace Content.Shared.Construction
     public class ConstructionGraphStepTypeSerializer : ITypeReader<ConstructionGraphStep, MappingDataNode>
     {
         // TODO PAUL SERV3
-        public DeserializationResult<ConstructionGraphStep> Read(MappingDataNode node,
+        public DeserializationResult<ConstructionGraphStep> Read(ISerializationManager serializationManager,
+            MappingDataNode node,
             ISerializationContext? context = null)
         {
-            var serializationManager = IoCManager.Resolve<ISerializationManager>();
             Type type;
 
             if (node.HasNode("material"))
