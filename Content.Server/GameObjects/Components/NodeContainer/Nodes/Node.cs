@@ -59,26 +59,18 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
-            {
-                AnchorUpdate();
-            }
         }
 
         public void AnchorUpdate()
         {
             if (Anchored)
             {
-                if (_needsGroup)
-                {
-                    TryAssignGroupIfNeeded();
-                    CombineGroupWithReachable();
-                }
+                TryAssignGroupIfNeeded();
+                CombineGroupWithReachable();
             }
             else
             {
-                NodeGroup.RemoveNode(this);
-                ClearNodeGroup();
+                RemoveSelfFromGroup();
             }
         }
 
@@ -90,7 +82,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public bool TryAssignGroupIfNeeded()
         {
-            if (!_needsGroup)
+            if (!_needsGroup || !Connectable)
             {
                 return false;
             }
@@ -119,8 +111,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         protected void RefreshNodeGroup()
         {
-            NodeGroup.RemoveNode(this);
-            ClearNodeGroup();
+            RemoveSelfFromGroup();
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();
         }
@@ -159,7 +150,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private void CombineGroupWithReachable()
         {
-            Debug.Assert(!_needsGroup);
+            if (_needsGroup || !Connectable)
+                return;
+
             foreach (var group in GetReachableCompatibleGroups())
             {
                 NodeGroup.CombineGroup(group);
@@ -176,6 +169,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         private INodeGroup MakeNewGroup()
         {
             return IoCManager.Resolve<INodeGroupFactory>().MakeNodeGroup(this);
+        }
+
+        private void RemoveSelfFromGroup()
+        {
+            NodeGroup.RemoveNode(this);
+            ClearNodeGroup();
         }
     }
 }
