@@ -63,3 +63,11 @@ Entries:
   - {message: Small physics refactor, type: Add}
   id: 12
   time: '2021-02-28T16:11:29.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: Patrons can now flex on poor people to get a cool colored name in OOC.,
+    type: Add}
+  - {message: 'To link your account, go to central.spacestation14.io and find the
+      "Patreon" section in your account settings.', type: Add}
+  id: 13
+  time: '2021-02-28T18:00:33.108215+00:00'
