@@ -1,0 +1,29 @@
+- type: entity
+  name: gravitational singularity generator
+  description: An Odd Device which produces a Gravitational Singularity when set up.
+  id: SingularityGenerator
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/Singularity/generator.rsi
+    state: icon
+  - type: SingularityGenerator
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5, -0.5, 0.5, 0.5"
+      # layer:
+      # - Impassable
+      # - MobImpassable
+      # - VaultImpassable
+      # - Opaque
+      # mask:
+      # - Impassable
+      # - MobImpassable
+      # - VaultImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: Anchorable
+    snap: true
+  - type: Pullable
