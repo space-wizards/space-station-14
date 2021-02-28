@@ -71,13 +71,11 @@
   - type: ItemCooldown
   - type: MeleeWeapon
 
-
-# TODO: Fix description, it's the same as cautery tool (1)
 - type: entity
   name: bone saw
   parent: BaseSurgeryTool
   id: BoneSaw
-  description: A surgical tool used to cauterize open wounds.
+  description: A surgical tool used for amputations.
   components:
   - type: SurgeryTool
     surgeryType: Amputation
