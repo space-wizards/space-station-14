@@ -81,3 +81,11 @@
   components:
     - type: ComputerBoard
       prototype: BlockGameArcade
+
+- type: entity
+  id: ParticleAcceleratorComputerCircuitboard
+  parent: BaseComputerCircuitboard
+  name: particle accelerator control box circuit board
+  components:
+    - type: ComputerBoard
+      prototype: ParticleAcceleratorControlBoxUnfinished
