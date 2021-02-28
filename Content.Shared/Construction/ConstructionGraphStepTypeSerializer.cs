@@ -12,7 +12,7 @@ namespace Content.Shared.Construction
     public class ConstructionGraphStepTypeSerializer : ITypeReader<ConstructionGraphStep, MappingDataNode>
     {
         // TODO PAUL SERV3
-        public DeserializationResult<ConstructionGraphStep> Read(ISerializationManager serializationManager,
+        public DeserializationResult Read(ISerializationManager serializationManager,
             MappingDataNode node,
             ISerializationContext? context = null)
         {

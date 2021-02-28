@@ -16,6 +16,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Behavior
 {
+    [DataDefinition]
     public class LungBehavior : MechanismBehavior
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;

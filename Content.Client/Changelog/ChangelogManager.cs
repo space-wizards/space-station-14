@@ -83,8 +83,8 @@ namespace Content.Client.Changelog
                     return new List<ChangelogEntry>();
 
                 // TODO Paul serv3 serializer
-                var node = yamlData.Documents[0].RootNode.ToDataNode();
-                return _serialization.ReadValueOrThrow<List<ChangelogEntry>>(node);
+                var node = (MappingDataNode)yamlData.Documents[0].RootNode.ToDataNode();
+                return _serialization.ReadValueOrThrow<List<ChangelogEntry>>(node["Entries"]);
             });
         }
 
@@ -110,6 +110,7 @@ namespace Content.Client.Changelog
             }
         }
 
+        [DataDefinition]
         public sealed class ChangelogChange : ISerializationHooks
         {
             [DataField("type")]

@@ -18,8 +18,6 @@ namespace Content.Shared.Chemistry
     [DataDefinition]
     public class ReagentPrototype : IPrototype
     {
-        [Dependency] private readonly IModuleManager _moduleManager = default!;
-
         [DataField("spritePath")]
         private readonly string _spritePath = default!;
 
@@ -60,11 +58,6 @@ namespace Content.Shared.Chemistry
         public IReadOnlyList<ITileReaction> TileReactions => _tileReactions;
         public IReadOnlyList<IPlantMetabolizable> PlantMetabolism => _plantMetabolism;
         public string SpriteReplacementPath => _spritePath;
-
-        public ReagentPrototype()
-        {
-            IoCManager.InjectDependencies(this);
-        }
 
         /// <summary>
         /// If the substance color is too dark we user a lighter version to make the text color readable when the user examines a solution.
