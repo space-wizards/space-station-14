@@ -1,0 +1,131 @@
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterLeft
+  name: EM Containment Grid
+  suffix: Left
+  description: This launchs the Alpha particles, might not want to stand near this end.
+  components:
+    - type: Sprite
+      sprite: Constructible/Specific/Engines/PA/emitter_left.rsi
+      layers:
+        - state: emitter_leftc
+          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
+        - state: emitter_left_unlitp
+          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: emitter_left_unlit
+    - type: ParticleAcceleratorEmitter
+      emitterType: Left
+    - type: Construction
+      graph: particleAcceleratorEmitterLeft
+      node: completed
+
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterCenter
+  name: EM Containment Grid
+  suffix: Center
+  description: This launchs the Alpha particles, might not want to stand near this end.
+  components:
+    - type: Sprite
+      sprite: Constructible/Specific/Engines/PA/emitter_center.rsi
+      layers:
+        - state: emitter_centerc
+          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
+        - state: emitter_center_unlitp
+          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: emitter_center_unlit
+    - type: ParticleAcceleratorEmitter
+      emitterType: Center
+    - type: Construction
+      graph: particleAcceleratorEmitterCenter
+      node: completed
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterRight
+  name: EM Containment Grid
+  suffix: Right
+  description: This launchs the Alpha particles, might not want to stand near this end.
+  components:
+    - type: Sprite
+      sprite: Constructible/Specific/Engines/PA/emitter_right.rsi
+      layers:
+        - state: emitter_rightc
+          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
+        - state: emitter_right_unlitp
+          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: emitter_right_unlit
+    - type: ParticleAcceleratorEmitter
+      emitterType: Right
+    - type: Construction
+      graph: particleAcceleratorEmitterRight
+      node: completed
+
+# Unfinished
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterLeftUnfinished
+  name: EM Containment Grid
+  suffix: Unfinished, Left
+  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
+  components:
+    - type: Physics
+      anchored: false
+    - type: Sprite
+      sprite: Constructible/Specific/Engines/PA/emitter_left.rsi
+      state: emitter_left
+    - type: Construction
+      graph: particleAcceleratorEmitterLeft
+      node: start
+      defaultTarget: completed
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterCenterUnfinished
+  name: EM Containment Grid
+  suffix: Unfinished, Center
+  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
+  components:
+    - type: Physics
+      anchored: false
+    - type: Sprite
+      sprite: Constructible/Specific/Engines/PA/emitter_center.rsi
+      state: emitter_center
+    - type: Construction
+      graph: particleAcceleratorEmitterCenter
+      node: start
+      defaultTarget: completed
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterRightUnfinished
+  name: EM Containment Grid
+  suffix: Unfinished, Right
+  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
+  components:
+    - type: Physics
+      anchored: false
+    - type: Sprite
+      sprite: Constructible/Specific/Engines/PA/emitter_right.rsi
+      state: emitter_right
+    - type: Construction
+      graph: particleAcceleratorEmitterRight
+      node: start
+      defaultTarget: completed
