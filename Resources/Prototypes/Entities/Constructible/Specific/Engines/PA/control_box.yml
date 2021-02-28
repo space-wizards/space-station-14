@@ -7,16 +7,16 @@
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/control_box.rsi
       layers:
-        - state: control_boxc
+        - state: boxc
           map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
-        - state: control_box_unlitp
+        - state: unlitp
           map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
           shader: unshaded
           visible: false
     - type: Appearance
       visuals:
         - type: ParticleAcceleratorPartVisualizer
-          baseState: control_box_unlit
+          baseState: unlit
     - type: PowerReceiver
     - type: ParticleAcceleratorControlBox
     - type: Construction
@@ -45,7 +45,7 @@
       anchored: false
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/control_box.rsi
-      state: control_box
+      state: box
     - type: Construction
       graph: particleAcceleratorControlBox
       node: start

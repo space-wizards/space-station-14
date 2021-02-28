@@ -7,16 +7,16 @@
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/fuel_chamber.rsi
       layers:
-        - state: fuel_chamberc
+        - state: chamberc
           map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
-        - state: fuel_chamber_unlitp
+        - state: unlitp
           map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
           shader: unshaded
           visible: false
     - type: Appearance
       visuals:
         - type: ParticleAcceleratorPartVisualizer
-          baseState: fuel_chamber_unlit
+          baseState: unlit
     - type: ParticleAcceleratorFuelChamber
     - type: Construction
       graph: particleAcceleratorFuelChamber
@@ -35,7 +35,7 @@
       anchored: false
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/fuel_chamber.rsi
-      state: fuel_chamber
+      state: chamber
     - type: Construction
       graph: particleAcceleratorFuelChamber
       node: start

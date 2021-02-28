@@ -8,16 +8,16 @@
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/emitter_left.rsi
       layers:
-        - state: emitter_leftc
+        - state: leftc
           map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
-        - state: emitter_left_unlitp
+        - state: unlitp
           map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
           shader: unshaded
           visible: false
     - type: Appearance
       visuals:
         - type: ParticleAcceleratorPartVisualizer
-          baseState: emitter_left_unlit
+          baseState: unlit
     - type: ParticleAcceleratorEmitter
       emitterType: Left
     - type: Construction
@@ -35,16 +35,16 @@
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/emitter_center.rsi
       layers:
-        - state: emitter_centerc
+        - state: centerc
           map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
-        - state: emitter_center_unlitp
+        - state: unlitp
           map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
           shader: unshaded
           visible: false
     - type: Appearance
       visuals:
         - type: ParticleAcceleratorPartVisualizer
-          baseState: emitter_center_unlit
+          baseState: unlit
     - type: ParticleAcceleratorEmitter
       emitterType: Center
     - type: Construction
@@ -61,16 +61,16 @@
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/emitter_right.rsi
       layers:
-        - state: emitter_rightc
+        - state: rightc
           map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
-        - state: emitter_right_unlitp
+        - state: unlitp
           map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
           shader: unshaded
           visible: false
     - type: Appearance
       visuals:
         - type: ParticleAcceleratorPartVisualizer
-          baseState: emitter_right_unlit
+          baseState: unlit
     - type: ParticleAcceleratorEmitter
       emitterType: Right
     - type: Construction
@@ -90,7 +90,7 @@
       anchored: false
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/emitter_left.rsi
-      state: emitter_left
+      state: left
     - type: Construction
       graph: particleAcceleratorEmitterLeft
       node: start
@@ -107,7 +107,7 @@
       anchored: false
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/emitter_center.rsi
-      state: emitter_center
+      state: center
     - type: Construction
       graph: particleAcceleratorEmitterCenter
       node: start
@@ -124,7 +124,7 @@
       anchored: false
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/emitter_right.rsi
-      state: emitter_right
+      state: right
     - type: Construction
       graph: particleAcceleratorEmitterRight
       node: start

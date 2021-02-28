@@ -6,7 +6,7 @@
   components:
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/end_cap.rsi
-      state: end_capc
+      state: capc
     - type: ParticleAcceleratorEndCap
     - type: Construction
       graph: particleAcceleratorEndCap
@@ -25,7 +25,7 @@
       anchored: false
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/end_cap.rsi
-      state: end_cap
+      state: cap
     - type: Construction
       graph: particleAcceleratorEndCap
       node: start

@@ -7,16 +7,16 @@
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/power_box.rsi
       layers:
-        - state: power_boxc
+        - state: boxc
           map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
-        - state: power_box_unlitp
+        - state: unlitp
           map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
           shader: unshaded
           visible: false
     - type: Appearance
       visuals:
         - type: ParticleAcceleratorPartVisualizer
-          baseState: power_box_unlit
+          baseState: unlit
     - type: ParticleAcceleratorPowerBox
     - type: PowerConsumer
       voltage: High
@@ -40,7 +40,7 @@
       anchored: false
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/power_box.rsi
-      state: power_box
+      state: box
     - type: Construction
       graph: particleAcceleratorPowerBox
       node: start
