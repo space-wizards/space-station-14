@@ -96,19 +96,18 @@ namespace Content.Client.GameObjects.Components.PDA
                 case PDAUpdateState msg:
                 {
                     _menu.FlashLightToggleButton.Pressed = msg.FlashlightEnabled;
-                    _menu.PDAOwnerLabel.SetMarkup(Loc.GetString("Owner: [color=white]{0}[/color]",
-                        msg.PDAOwnerInfo.ActualOwnerName));
+                    _menu.PDAOwnerLabel.SetMarkup(Loc.GetString("pda-owner",
+                                                        ("owner", msg.PDAOwnerInfo.ActualOwnerName)));
 
                     if (msg.PDAOwnerInfo.JobTitle == null || msg.PDAOwnerInfo.IdOwner == null)
                     {
-                        _menu.IDInfoLabel.SetMarkup(Loc.GetString("ID:"));
+                        _menu.IDInfoLabel.SetMarkup(Loc.GetString("pda-id-empty"));
                     }
                     else
                     {
-                        _menu.IDInfoLabel.SetMarkup(Loc.GetString(
-                            "ID: [color=white]{0}[/color], [color=yellow]{1}[/color]",
-                            msg.PDAOwnerInfo.IdOwner,
-                            msg.PDAOwnerInfo.JobTitle));
+                        _menu.IDInfoLabel.SetMarkup(Loc.GetString("pda-id",
+                                                        ("idOwner",msg.PDAOwnerInfo.IdOwner),
+                                                        ("jobTitle", msg.PDAOwnerInfo.JobTitle)));
                     }
 
                     _menu.EjectIDButton.Visible = msg.PDAOwnerInfo.IdOwner != null;
@@ -118,8 +117,9 @@ namespace Content.Client.GameObjects.Components.PDA
                         _menu.CurrentLoggedInAccount = msg.Account;
                         var balance = msg.Account.DataBalance;
                         var weightedColor = GetWeightedColorString(balance);
-                        _menu.BalanceInfo.SetMarkup(Loc.GetString("TC Balance: [color={0}]{1}[/color]", weightedColor, balance));
-
+                        _menu.BalanceInfo.SetMarkup(Loc.GetString("pda-tc-balance",
+                                                        ("color", weightedColor),
+                                                        ("balance", balance)));
                     }
 
                     if (msg.Listings != null)
