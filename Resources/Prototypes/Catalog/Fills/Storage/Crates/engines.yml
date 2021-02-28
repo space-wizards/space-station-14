@@ -72,7 +72,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: SinguloGenerator
+      - name: SingularityGenerator
         amount: 1
 
 # Non-functional for some reason

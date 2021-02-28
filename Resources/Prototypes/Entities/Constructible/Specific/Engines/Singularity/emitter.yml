@@ -1,14 +1,13 @@
 ﻿- type: entity
-  name: Emitter
+  name: emitter
   description: "A machine that fires bolts of energy, used for powering containment fields at a safe distance."
   id: Emitter
   placement:
     mode: SnapgridCenter
   components:
-  - type: InteractionOutline
   - type: Clickable
+  - type: InteractionOutline
   - type: Physics
-    anchored: false
     mass: 25
     shapes:
     - !type:PhysShapeAabb
@@ -25,23 +24,23 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    sprite: Constructible/Power/emitter.rsi
+    sprite: Constructible/Power/Singularity/emitter.rsi
     layers:
     - state: emitter2
-    - state: emitter-beam
+    - state: beam
       shader: unshaded
       visible: false
-    - state: emitter-lock
+    - state: lock
       shader: unshaded
       visible: false
   - type: Emitter
   - type: PowerConsumer
     voltage: Medium
-  # - type: NodeContainer
-  #   examinable: true
-  #   nodes:
-  #   - !type:AdjacentNode
-  #     nodeGroupID: MVPower
+  - type: NodeContainer
+    examinable: true
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: MVPower
   - type: Anchorable
     snap: true
   - type: Pullable
@@ -52,7 +51,6 @@
   - type: AccessReader
     access: [[ "Engineering" ]]
 
-
 - type: entity
   name: Emitter Bolt
   description: "A bolt of energy."
@@ -60,14 +58,14 @@
   parent: BulletBase
   components:
   - type: Sprite
-    sprite: Constructible/Power/emitter.rsi
+    sprite: Constructible/Power/Singularity/emitter.rsi
     state: ''
     layers:
-    - state: emitter_projectile
+    - state: projectile
       shader: unshaded
   - type: Icon
-    sprite: Constructible/Power/emitter.rsi
-    state: emitter_projectile
+    sprite: Constructible/Power/Singularity/emitter.rsi
+    state: projectile
   - type: EmitterBoltComponent
   - type: Projectile
     soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
