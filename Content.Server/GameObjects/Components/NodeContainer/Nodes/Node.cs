@@ -59,26 +59,18 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
-            {
-                AnchorUpdate();
-            }
         }
 
         public void AnchorUpdate()
         {
             if (Anchored)
             {
-                if (_needsGroup)
-                {
-                    TryAssignGroupIfNeeded();
-                    CombineGroupWithReachable();
-                }
+                TryAssignGroupIfNeeded();
+                CombineGroupWithReachable();
             }
             else
             {
-                NodeGroup.RemoveNode(this);
-                ClearNodeGroup();
+                RemoveSelfFromGroup();
             }
         }
 
@@ -90,7 +82,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public bool TryAssignGroupIfNeeded()
         {
-            if (!_needsGroup)
+            if (!_needsGroup || !Connectable)
             {
                 return false;
             }
@@ -101,10 +93,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public void SpreadGroup()
         {
             Debug.Assert(!_needsGroup);
-            foreach (var node in GetReachableCompatibleNodes().Where(node => node._needsGroup))
+            foreach (var node in GetReachableCompatibleNodes())
             {
-                node.NodeGroup = NodeGroup;
-                node.SpreadGroup();
+                if (node._needsGroup)
+                {
+                    node.NodeGroup = NodeGroup;
+                    node.SpreadGroup();
+                }
             }
         }
 
@@ -116,8 +111,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         protected void RefreshNodeGroup()
         {
-            NodeGroup.RemoveNode(this);
-            ClearNodeGroup();
+            RemoveSelfFromGroup();
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();
         }
@@ -130,20 +124,35 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private IEnumerable<Node> GetReachableCompatibleNodes()
         {
-            return GetReachableNodes().Where(node => node.NodeGroupID == NodeGroupID)
-                .Where(node => node.Connectable);
+            foreach (var node in GetReachableNodes())
+            {
+                if (node.NodeGroupID == NodeGroupID && node.Connectable)
+                {
+                    yield return node;
+                }
+            }
         }
 
         private IEnumerable<INodeGroup> GetReachableCompatibleGroups()
         {
-            return GetReachableCompatibleNodes().Where(node => !node._needsGroup)
-                .Select(node => node.NodeGroup)
-                .Where(group => group != NodeGroup);
+            foreach (var node in GetReachableCompatibleNodes())
+            {
+                if (!node._needsGroup)
+                {
+                    var group = node.NodeGroup;
+                    if (group != NodeGroup)
+                    {
+                        yield return group;
+                    }
+                }
+            }
         }
 
         private void CombineGroupWithReachable()
         {
-            Debug.Assert(!_needsGroup);
+            if (_needsGroup || !Connectable)
+                return;
+
             foreach (var group in GetReachableCompatibleGroups())
             {
                 NodeGroup.CombineGroup(group);
@@ -160,6 +169,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         private INodeGroup MakeNewGroup()
         {
             return IoCManager.Resolve<INodeGroupFactory>().MakeNodeGroup(this);
+        }
+
+        private void RemoveSelfFromGroup()
+        {
+            NodeGroup.RemoveNode(this);
+            ClearNodeGroup();
         }
     }
 }
