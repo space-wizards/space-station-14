@@ -13,9 +13,10 @@
   - type: Physics
     mass: 25
     anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4, -0.45, 0.45, 0.45"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4, -0.45, 0.45, 0.45"
       mask:
       - Impassable
       - MobImpassable
@@ -55,8 +56,9 @@
   - type: Physics
     mass: 25
     anchored: true
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       mask:
       - Impassable
       - MobImpassable

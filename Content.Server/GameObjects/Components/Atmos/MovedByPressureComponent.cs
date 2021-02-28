@@ -1,6 +1,14 @@
 ﻿#nullable enable
+using System;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Atmos;
+using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -9,7 +17,15 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class MovedByPressureComponent : Component
     {
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+
         public override string Name => "MovedByPressure";
+
+        private const float MoveForcePushRatio = 1f;
+        private const float MoveForceForcePushRatio = 1f;
+        private const float ProbabilityOffset = 25f;
+        private const float ProbabilityBasePercent = 10f;
+        private const float ThrowForce = 100f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
@@ -26,6 +42,77 @@ namespace Content.Server.GameObjects.Components.Atmos
             serializer.DataField(this, x => x.Enabled, "enabled", true);
             serializer.DataField(this, x => PressureResistance, "pressureResistance", 1f);
             serializer.DataField(this, x => MoveResist, "moveResist", 100f);
+        }
+
+        public void ExperiencePressureDifference(int cycle, float pressureDifference, AtmosDirection direction,
+            float pressureResistanceProbDelta, EntityCoordinates throwTarget)
+        {
+            if (!Owner.TryGetComponent(out PhysicsComponent? physics))
+                return;
+
+            physics.WakeBody();
+            // TODO ATMOS stuns?
+
+            var transform = physics.Owner.Transform;
+            var maxForce = MathF.Sqrt(pressureDifference) * 2.25f;
+            var moveProb = 100f;
+
+            if (PressureResistance > 0)
+                moveProb = MathF.Abs((pressureDifference / PressureResistance * ProbabilityBasePercent) -
+                           ProbabilityOffset);
+
+            if (moveProb > ProbabilityOffset && _robustRandom.Prob(MathF.Min(moveProb / 100f, 1f))
+                                             && !float.IsPositiveInfinity(MoveResist)
+                                             && (!physics.Anchored
+                                                 && (maxForce >= (MoveResist * MoveForcePushRatio)))
+                || (physics.Anchored && (maxForce >= (MoveResist * MoveForceForcePushRatio))))
+            {
+
+                if (physics.Owner.HasComponent<IMobStateComponent>())
+                {
+                    physics.BodyStatus = BodyStatus.InAir;
+
+                    foreach (var fixture in physics.Fixtures)
+                    {
+                        fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
+                    }
+
+                    Owner.SpawnTimer(2000, () =>
+                    {
+                        if (Deleted || !Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
+
+                        // Uhh if you get race conditions good luck buddy.
+                        if (physicsComponent.Owner.HasComponent<IMobStateComponent>())
+                        {
+                            physicsComponent.BodyStatus = BodyStatus.OnGround;
+                        }
+
+                        foreach (var fixture in physics.Fixtures)
+                        {
+                            fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
+                        }
+                    });
+                }
+
+                if (maxForce > ThrowForce)
+                {
+                    // Vera please fix ;-;
+                    if (throwTarget != EntityCoordinates.Invalid)
+                    {
+                        var moveForce = maxForce * MathHelper.Clamp(moveProb, 0, 100) / 15f;
+                        var pos = ((throwTarget.Position - transform.Coordinates.Position).Normalized + direction.ToDirection().ToVec()).Normalized;
+                        physics.ApplyLinearImpulse(pos * moveForce);
+                    }
+
+                    else
+                    {
+                        var moveForce = MathF.Min(maxForce * MathHelper.Clamp(moveProb, 0, 100) / 2500f, 20f);
+                        physics.ApplyLinearImpulse(direction.ToDirection().ToVec() * moveForce);
+                    }
+
+                    LastHighPressureMovementAirCycle = cycle;
+                }
+            }
         }
     }
 

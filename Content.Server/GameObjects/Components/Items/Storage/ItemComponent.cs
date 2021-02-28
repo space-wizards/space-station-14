@@ -1,6 +1,5 @@
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Throw;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Storage;
@@ -14,6 +13,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Players;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -87,8 +87,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return false;
             }
 
-            if (Owner.TryGetComponent(out IPhysicsComponent physics) &&
-                physics.Anchored)
+            if (Owner.TryGetComponent(out IPhysBody physics) &&
+                physics.BodyType == BodyType.Static)
             {
                 return false;
             }
@@ -141,22 +141,22 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             var targetLocation = eventArgs.Target.Transform.Coordinates;
             var dirVec = (targetLocation.ToMapPos(Owner.EntityManager) - sourceLocation.ToMapPos(Owner.EntityManager)).Normalized;
 
-            var throwForce = 1.0f;
+            float throwForce;
 
             switch (eventArgs.Severity)
             {
                 case ExplosionSeverity.Destruction:
-                    throwForce = 3.0f;
+                    throwForce = 30.0f;
                     break;
                 case ExplosionSeverity.Heavy:
-                    throwForce = 2.0f;
+                    throwForce = 20.0f;
                     break;
-                case ExplosionSeverity.Light:
-                    throwForce = 1.0f;
+                default:
+                    throwForce = 10.0f;
                     break;
             }
 
-            Owner.Throw(throwForce, targetLocation, sourceLocation, true);
+            Owner.TryThrow(dirVec * throwForce);
         }
     }
 }

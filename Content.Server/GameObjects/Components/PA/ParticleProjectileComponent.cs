@@ -6,6 +6,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.PA
@@ -15,9 +16,9 @@ namespace Content.Server.GameObjects.Components.PA
     {
         public override string Name => "ParticleProjectile";
         private ParticleAcceleratorPowerState _state;
-        public void CollideWith(IEntity collidedWith)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
         {
-            if (collidedWith.TryGetComponent<SingularityComponent>(out var singularityComponent))
+            if (otherBody.Entity.TryGetComponent<SingularityComponent>(out var singularityComponent))
             {
                 var multiplier = _state switch
                 {
@@ -30,8 +31,8 @@ namespace Content.Server.GameObjects.Components.PA
                 };
                 singularityComponent.Energy += 10 * multiplier;
                 Owner.Delete();
-            }else if (collidedWith.TryGetComponent<SingularityGeneratorComponent>(out var singularityGeneratorComponent)
-            )
+            }
+            else if (otherBody.Entity.TryGetComponent<SingularityGeneratorComponent>(out var singularityGeneratorComponent))
             {
                 singularityGeneratorComponent.Power += _state switch
                 {
@@ -55,7 +56,7 @@ namespace Content.Server.GameObjects.Components.PA
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a CollidableComponent");
                 return;
             }
-            physicsComponent.Status = BodyStatus.InAir;
+            physicsComponent.BodyStatus = BodyStatus.InAir;
 
             if (!Owner.TryGetComponent<ProjectileComponent>(out var projectileComponent))
             {
@@ -81,7 +82,6 @@ namespace Content.Server.GameObjects.Components.PA
             spriteComponent.LayerSetState(0, $"particle{suffix}");
 
             physicsComponent
-                .EnsureController<BulletController>()
                 .LinearVelocity = angle.ToVec() * 20f;
 
             Owner.Transform.LocalRotation = new Angle(angle + Angle.FromDegrees(180));

@@ -1,11 +1,11 @@
 using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Throw;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
@@ -144,12 +144,12 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private bool HandleThrowItem(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
-            var plyEnt = ((IPlayerSession)session).AttachedEntity;
+            var playerEnt = ((IPlayerSession)session).AttachedEntity;
 
-            if (plyEnt == null || !plyEnt.IsValid())
+            if (playerEnt == null || !playerEnt.IsValid())
                 return false;
 
-            if (!plyEnt.TryGetComponent(out HandsComponent handsComp))
+            if (!playerEnt.TryGetComponent(out HandsComponent handsComp))
                 return false;
 
             if (!handsComp.CanDrop(handsComp.ActiveHand))
@@ -168,14 +168,19 @@ namespace Content.Server.GameObjects.EntitySystems
             else
             {
                 stackComp.Use(1);
-                throwEnt = throwEnt.EntityManager.SpawnEntity(throwEnt.Prototype.ID, plyEnt.Transform.Coordinates);
+                throwEnt = throwEnt.EntityManager.SpawnEntity(throwEnt.Prototype.ID, playerEnt.Transform.Coordinates);
 
                 // can only throw one item at a time, regardless of what the prototype stack size is.
                 if (throwEnt.TryGetComponent<StackComponent>(out var newStackComp))
                     newStackComp.Count = 1;
             }
 
-            throwEnt.ThrowTo(ThrowForce, coords, plyEnt.Transform.Coordinates, false, plyEnt);
+            var direction = coords.ToMapPos(EntityManager) - playerEnt.Transform.WorldPosition;
+            if (direction == Vector2.Zero) return true;
+
+            direction = direction.Normalized * MathF.Min(direction.Length, 8.0f);
+
+            throwEnt.TryThrow(direction * ThrowForce * 15);
 
             return true;
         }

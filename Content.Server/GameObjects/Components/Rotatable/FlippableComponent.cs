@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Rotatable
@@ -17,8 +18,8 @@ namespace Content.Server.GameObjects.Components.Rotatable
 
         private void TryFlip(IEntity user)
         {
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics) &&
-                physics.Anchored)
+            if (Owner.TryGetComponent(out IPhysBody? physics) &&
+                physics.BodyType == BodyType.Static)
             {
                 Owner.PopupMessage(user, Loc.GetString("It's stuck."));
                 return;

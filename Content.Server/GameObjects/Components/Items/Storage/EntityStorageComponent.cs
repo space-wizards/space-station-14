@@ -17,6 +17,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -226,7 +227,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private void ModifyComponents()
         {
-            if (!_isCollidableWhenOpen && Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+            if (!_isCollidableWhenOpen && Owner.TryGetComponent<IPhysBody>(out var physics))
             {
                 if (Open)
                 {
@@ -252,10 +253,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         protected virtual bool AddToContents(IEntity entity)
         {
             if (entity == Owner) return false;
-            if (entity.TryGetComponent(out IPhysicsComponent? entityPhysicsComponent))
+            if (entity.TryGetComponent(out IPhysBody? entityPhysicsComponent))
             {
-                if(MaxSize < entityPhysicsComponent.WorldAABB.Size.X
-                    || MaxSize < entityPhysicsComponent.WorldAABB.Size.Y)
+                if(MaxSize < entityPhysicsComponent.GetWorldAABB().Size.X
+                    || MaxSize < entityPhysicsComponent.GetWorldAABB().Size.Y)
                 {
                     return false;
                 }
@@ -285,7 +286,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 if(Contents.Remove(contained))
                 {
                     contained.Transform.WorldPosition = ContentsDumpPosition();
-                    if (contained.TryGetComponent<IPhysicsComponent>(out var physics))
+                    if (contained.TryGetComponent<IPhysBody>(out var physics))
                     {
                         physics.CanCollide = true;
                     }

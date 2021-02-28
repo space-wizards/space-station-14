@@ -1,15 +1,17 @@
 #nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Tag;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Physics.Controllers;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -17,13 +19,15 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Physics.Controllers
 {
-    [UsedImplicitly]
-    internal class MoverSystem : SharedMoverSystem
+    public class MoverController : SharedMoverController
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
@@ -35,54 +39,83 @@ namespace Content.Server.GameObjects.EntitySystems
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
 
-        /// <inheritdoc />
+        private HashSet<EntityUid> _excludedMobs = new();
+
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<PlayerDetachedSystemMessage>(PlayerDetached);
-
-            _audioSystem = EntitySystemManager.GetEntitySystem<AudioSystem>();
-
-            UpdatesBefore.Add(typeof(PhysicsSystem));
+            _audioSystem = EntitySystem.Get<AudioSystem>();
         }
 
-        public override void Update(float frameTime)
+        public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {
-            foreach (var (moverComponent, collidableComponent) in EntityManager.ComponentManager
-                .EntityQuery<IMoverComponent, IPhysicsComponent>(false))
+            base.UpdateBeforeSolve(prediction, frameTime);
+            _excludedMobs.Clear();
+
+            foreach (var (mobMover, mover, physics) in ComponentManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
             {
-                var entity = moverComponent.Owner;
-                UpdateKinematics(entity.Transform, moverComponent, collidableComponent);
+                _excludedMobs.Add(mover.Owner.Uid);
+                HandleMobMovement(mover, physics, mobMover);
+            }
+
+            foreach (var mover in ComponentManager.EntityQuery<ShuttleControllerComponent>())
+            {
+                _excludedMobs.Add(mover.Owner.Uid);
+                HandleShuttleMovement(mover);
+            }
+
+            foreach (var (mover, physics) in ComponentManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
+            {
+                if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
+
+                HandleKinematicMovement(mover, physics);
             }
         }
 
-        private void PlayerDetached(PlayerDetachedSystemMessage ev)
+        /*
+         * Some thoughts:
+         * Unreal actually doesn't predict vehicle movement at all, it's purely server-side which I thought was interesting
+         * The reason for this is that vehicles change direction very slowly compared to players so you don't really have the requirement for quick movement anyway
+         * As such could probably just look at applying a force / impulse to the shuttle server-side only so it controls like the titanic.
+         */
+        private void HandleShuttleMovement(ShuttleControllerComponent mover)
         {
-            if (ev.Entity.TryGetComponent(out IPhysicsComponent? physics) &&
-                physics.TryGetController(out MoverController controller) &&
-                !ev.Entity.IsWeightless())
+            var gridId = mover.Owner.Transform.GridID;
+
+            if (!_mapManager.TryGetGrid(gridId, out var grid) || !EntityManager.TryGetEntity(grid.GridEntityId, out var gridEntity)) return;
+
+            //TODO: Switch to shuttle component
+            if (!gridEntity.TryGetComponent(out PhysicsComponent? physics))
             {
-                controller.StopMoving();
+                physics = gridEntity.AddComponent<PhysicsComponent>();
+                physics.BodyStatus = BodyStatus.InAir;
+                physics.Mass = 1;
+                physics.CanCollide = true;
+                physics.AddFixture(new Fixture(physics, new PhysShapeGrid(grid)));
             }
+
+            // TODO: Uhh this probably doesn't work but I still need to rip out the entity tree and make RenderingTreeSystem use grids so I'm not overly concerned about breaking shuttles.
+            physics.ApplyForce(mover.VelocityDir.walking + mover.VelocityDir.sprinting);
+            mover.VelocityDir = (Vector2.Zero, Vector2.Zero);
         }
 
-        protected override void HandleFootsteps(IMoverComponent mover)
+        protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)
         {
             var transform = mover.Owner.Transform;
             // Handle footsteps.
-            if (_mapManager.GridExists(mover.LastPosition.GetGridId(EntityManager)))
+            if (_mapManager.GridExists(mobMover.LastPosition.GetGridId(EntityManager)))
             {
                 // Can happen when teleporting between grids.
-                if (!transform.Coordinates.TryDistance(EntityManager, mover.LastPosition, out var distance))
+                if (!transform.Coordinates.TryDistance(EntityManager, mobMover.LastPosition, out var distance))
                 {
-                    mover.LastPosition = transform.Coordinates;
+                    mobMover.LastPosition = transform.Coordinates;
                     return;
                 }
 
-                mover.StepSoundDistance += distance;
+                mobMover.StepSoundDistance += distance;
             }
 
-            mover.LastPosition = transform.Coordinates;
+            mobMover.LastPosition = transform.Coordinates;
             float distanceNeeded;
             if (mover.Sprinting)
             {
@@ -93,11 +126,11 @@ namespace Content.Server.GameObjects.EntitySystems
                 distanceNeeded = StepSoundMoveDistanceWalking;
             }
 
-            if (mover.StepSoundDistance > distanceNeeded)
+            if (mobMover.StepSoundDistance > distanceNeeded)
             {
-                mover.StepSoundDistance = 0;
+                mobMover.StepSoundDistance = 0;
 
-                if (!mover.Owner.HasTag("FootstepSound"))
+                if (!mover.Owner.HasTag("FootstepSound") || mover.Owner.Transform.GridID == GridId.Invalid)
                 {
                     return;
                 }
@@ -159,5 +192,6 @@ namespace Content.Server.GameObjects.EntitySystems
                 Logger.ErrorS("sound", $"Unable to find sound collection for {soundCollectionName}");
             }
         }
+
     }
 }

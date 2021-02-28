@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -80,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+            if (!entity.TryGetComponent(out IPhysBody? physics) ||
                 !physics.CanCollide)
             {
                 return false;
@@ -97,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (entity.TryGetComponent(out IPhysicsComponent? physics))
+            if (entity.TryGetComponent(out IPhysBody? physics))
             {
                 physics.CanCollide = false;
             }
@@ -129,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in _contents.ContainedEntities.ToArray())
             {
-                if (entity.TryGetComponent(out IPhysicsComponent? physics))
+                if (entity.TryGetComponent(out IPhysBody? physics))
                 {
                     physics.CanCollide = true;
                 }

@@ -4,11 +4,13 @@ using Content.Server.GameObjects.Components.MachineLinking;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.GameObjects.Components.Conveyor;
 using Content.Shared.GameObjects.Components.MachineLinking;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -26,6 +28,8 @@ namespace Content.Server.GameObjects.Components.Conveyor
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         private Angle _angle;
+
+        public float Speed => _speed;
 
         /// <summary>
         ///     The amount of units to move the entity by per second.
@@ -86,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
         /// <returns>
         ///     The angle when taking into account if the conveyor is reversed
         /// </returns>
-        private Angle GetAngle()
+        public Angle GetAngle()
         {
             var adjustment = _state == ConveyorState.Reversed ? MathHelper.Pi : 0;
             var radians = MathHelper.DegreesToRadians(_angle);
@@ -94,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
             return new Angle(Owner.Transform.LocalRotation.Theta + radians + adjustment);
         }
 
-        private bool CanRun()
+        public bool CanRun()
         {
             if (State == ConveyorState.Off)
             {
@@ -115,15 +119,16 @@ namespace Content.Server.GameObjects.Components.Conveyor
             return true;
         }
 
-        private bool CanMove(IEntity entity)
+        public bool CanMove(IEntity entity)
         {
+            // TODO We should only check status InAir or Static or MapGrid or /mayber/ container
             if (entity == Owner)
             {
                 return false;
             }
 
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
-                physics.Anchored)
+            if (!entity.TryGetComponent(out IPhysBody? physics) ||
+                physics.BodyType == BodyType.Static)
             {
                 return false;
             }
@@ -144,31 +149,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
 
             return true;
-        }
-
-        public void Update(float frameTime)
-        {
-            if (!CanRun())
-            {
-                return;
-            }
-
-            var intersecting = Owner.EntityManager.GetEntitiesIntersecting(Owner, true);
-            var direction = GetAngle().ToVec();
-
-            foreach (var entity in intersecting)
-            {
-                if (!CanMove(entity))
-                {
-                    continue;
-                }
-
-                if (entity.TryGetComponent(out IPhysicsComponent? physics))
-                {
-                    var controller = physics.EnsureController<ConveyedController>();
-                    controller.Move(direction, _speed, entity.Transform.WorldPosition - Owner.Transform.WorldPosition);
-                }
-            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)

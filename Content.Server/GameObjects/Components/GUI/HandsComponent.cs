@@ -27,6 +27,9 @@ using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Map;
+using Robust.Shared.Network;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.GUI
 {
@@ -717,13 +720,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 Dirty();
 
-                if (!message.Entity.TryGetComponent(out IPhysicsComponent? physics))
+                if (!message.Entity.TryGetComponent(out IPhysBody? physics))
                 {
                     return;
                 }
 
                 // set velocity to zero
-                physics.Stop();
+                physics.LinearVelocity = Vector2.Zero;
                 return;
             }
         }

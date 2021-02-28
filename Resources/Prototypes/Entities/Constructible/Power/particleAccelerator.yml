@@ -9,9 +9,10 @@
     - type: Physics
       mass: 25
       anchored: true
-      shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49"
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+              bounds: "-0.49,-0.49,0.49,0.49"
           layer:
             - Opaque
             - Impassable
@@ -39,10 +40,11 @@
       damages:
         Radiation: 10
     - type: Physics
-      hard: false
-      shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.48,-0.48,0.48,0.48"
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.48,-0.48,0.48,0.48"
+        hard: false
         layer: [None]
         mask:
         - MobMask

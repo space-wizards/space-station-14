@@ -3,64 +3,89 @@ using System;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
-    public abstract class SharedClimbingComponent : Component, IActionBlocker, ICollideSpecial
+    public abstract class SharedClimbingComponent : Component, IActionBlocker
     {
         public sealed override string Name => "Climbing";
         public sealed override uint? NetID => ContentNetIDs.CLIMBING;
 
-        protected IPhysicsComponent? Body;
-        protected bool IsOnClimbableThisFrame;
-
-        protected bool OwnerIsTransitioning
+        protected bool IsOnClimbableThisFrame
         {
             get
             {
-                if (Body != null && Body.TryGetController<ClimbController>(out var controller))
+                if (Body == null) return false;
+
+                foreach (var entity in Body.GetBodiesIntersecting())
                 {
-                    return controller.IsActive;
+                    if ((entity.CollisionLayer & (int) CollisionGroup.VaultImpassable) != 0) return true;
                 }
 
                 return false;
             }
         }
 
-        public abstract bool IsClimbing { get; set; }
-
         bool IActionBlocker.CanMove() => !OwnerIsTransitioning;
-        bool IActionBlocker.CanChangeDirection() => !OwnerIsTransitioning;
 
-        bool ICollideSpecial.PreventCollide(IPhysBody collided)
+        [ViewVariables]
+        protected virtual bool OwnerIsTransitioning { get; set; }
+
+        [ComponentDependency] protected PhysicsComponent? Body;
+
+        protected TimeSpan StartClimbTime = TimeSpan.Zero;
+
+        /// <summary>
+        ///     We'll launch the mob onto the table and give them at least this amount of time to be on it.
+        /// </summary>
+        protected const float BufferTime = 0.3f;
+
+        public virtual bool IsClimbing
         {
-            if (((CollisionGroup)collided.CollisionLayer).HasFlag(CollisionGroup.VaultImpassable) && collided.Entity.HasComponent<IClimbable>())
+            get => _isClimbing;
+            set
             {
-                IsOnClimbableThisFrame = true;
-                return IsClimbing;
-            }
+                if (_isClimbing == value) return;
+                _isClimbing = value;
 
-            return false;
+                ToggleVaultPassable(value);
+            }
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
+        protected bool _isClimbing;
 
-            Owner.TryGetComponent(out Body);
+        // TODO: Layers need a re-work
+        private void ToggleVaultPassable(bool value)
+        {
+            // Hope the mob has one fixture
+            if (Body == null || Body.Deleted) return;
+
+            foreach (var fixture in Body.Fixtures)
+            {
+                if (value)
+                {
+                    fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
+                }
+                else
+                {
+                    fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
+                }
+            }
         }
 
         [Serializable, NetSerializable]
         protected sealed class ClimbModeComponentState : ComponentState
         {
-            public ClimbModeComponentState(bool climbing) : base(ContentNetIDs.CLIMBING)
+            public ClimbModeComponentState(bool climbing, bool isTransitioning) : base(ContentNetIDs.CLIMBING)
             {
                 Climbing = climbing;
+                IsTransitioning = isTransitioning;
             }
 
             public bool Climbing { get; }
+            public bool IsTransitioning { get; }
         }
     }
 }

@@ -13,9 +13,10 @@
   - type: Physics
     mass: 25
     anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.4,0.4,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
       layer:
       - Opaque
       - Impassable
@@ -61,9 +62,10 @@
   - type: Physics
     mass: 25
     anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.4,0.4,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
       layer:
       - Opaque
       - Impassable

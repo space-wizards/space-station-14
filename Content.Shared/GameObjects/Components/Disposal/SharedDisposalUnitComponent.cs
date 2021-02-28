@@ -20,8 +20,8 @@ namespace Content.Shared.GameObjects.Components.Disposal
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out IPhysicsComponent? physics) ||
-            physics.Anchored;
+            !Owner.TryGetComponent(out IPhysBody? physics) ||
+            physics.BodyType == BodyType.Static;
 
         [Serializable, NetSerializable]
         public enum Visuals
@@ -166,7 +166,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
             if (!Anchored)
                 return false;
 
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+            if (!entity.TryGetComponent(out IPhysBody? physics) ||
                 !physics.CanCollide)
             {
                 if (!(entity.TryGetComponent(out IMobStateComponent? damageState) && damageState.IsDead())) {

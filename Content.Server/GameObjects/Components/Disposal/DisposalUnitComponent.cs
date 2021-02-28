@@ -28,6 +28,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -139,7 +140,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (!base.CanInsert(entity))
                 return false;
 
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+            if (!entity.TryGetComponent(out IPhysBody? physics) ||
                 !physics.CanCollide)
             {
                 if (entity.TryGetComponent(out IMobStateComponent? state) && state.IsDead())

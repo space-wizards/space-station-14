@@ -11,14 +11,13 @@ namespace Content.Client.GameObjects.Components.Movement
         {
             base.HandleComponentState(curState, nextState);
 
-            if (curState is not ClimbModeComponentState climbModeState || Body == null)
+            if (curState is not ClimbModeComponentState climbModeState)
             {
                 return;
             }
 
             IsClimbing = climbModeState.Climbing;
+            OwnerIsTransitioning = climbModeState.IsTransitioning;
         }
-
-        public override bool IsClimbing { get; set; }
     }
 }

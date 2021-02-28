@@ -13,6 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -164,9 +165,11 @@ namespace Content.Server.GameObjects.Components.Movement
 
             var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out PhysicsComponent body) && body.Fixtures.Count >= 1)
             {
-                var direction = (Owner.Transform.WorldPosition - entityToMove.Transform.WorldPosition).Normalized;
+                var entityPos = entityToMove.Transform.WorldPosition;
+
+                var direction = (Owner.Transform.WorldPosition - entityPos).Normalized;
                 var endPoint = Owner.Transform.WorldPosition;
 
                 var climbMode = entityToMove.GetComponent<ClimbingComponent>();
@@ -174,14 +177,14 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
                 {
-                    endPoint = new Vector2(entityToMove.Transform.WorldPosition.X, endPoint.Y);
+                    endPoint = new Vector2(entityPos.X, endPoint.Y);
                 }
                 else if (MathF.Abs(direction.Y) < 0.6f) // user climbed mostly horizontally so lets make it a clean straight line
                 {
-                    endPoint = new Vector2(endPoint.X, entityToMove.Transform.WorldPosition.Y);
+                    endPoint = new Vector2(endPoint.X, entityPos.Y);
                 }
 
-                climbMode.TryMoveTo(entityToMove.Transform.WorldPosition, endPoint);
+                climbMode.TryMoveTo(entityPos, endPoint);
                 // we may potentially need additional logic since we're forcing a player onto a climbable
                 // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
 
@@ -209,9 +212,12 @@ namespace Content.Server.GameObjects.Components.Movement
 
             var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out PhysicsComponent body) && body.Fixtures.Count >= 1)
             {
-                var direction = (Owner.Transform.WorldPosition - user.Transform.WorldPosition).Normalized;
+                // TODO: Remove the copy-paste code
+                var userPos = user.Transform.WorldPosition;
+
+                var direction = (Owner.Transform.WorldPosition - userPos).Normalized;
                 var endPoint = Owner.Transform.WorldPosition;
 
                 var climbMode = user.GetComponent<ClimbingComponent>();
@@ -226,7 +232,7 @@ namespace Content.Server.GameObjects.Components.Movement
                     endPoint = new Vector2(endPoint.X, user.Transform.WorldPosition.Y);
                 }
 
-                climbMode.TryMoveTo(user.Transform.WorldPosition, endPoint);
+                climbMode.TryMoveTo(userPos, endPoint);
 
                 var othersMessage = Loc.GetString("{0:theName} jumps onto {1:theName}!", user, Owner);
                 user.PopupMessageOtherClients(othersMessage);

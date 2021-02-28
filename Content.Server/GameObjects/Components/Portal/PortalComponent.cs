@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.Components.Portal;
 using Content.Shared.GameObjects.Components.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -168,11 +169,11 @@ namespace Content.Server.GameObjects.Components.Portal
             StartCooldown();
         }
 
-        public void CollideWith(IEntity collidedWith)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
         {
             if (_onCooldown == false)
             {
-                TryPortalEntity(collidedWith);
+                TryPortalEntity(otherBody.Entity);
             }
         }
     }
