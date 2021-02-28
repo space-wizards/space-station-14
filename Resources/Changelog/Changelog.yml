@@ -71,3 +71,9 @@ Entries:
       "Patreon" section in your account settings.', type: Add}
   id: 13
   time: '2021-02-28T18:00:33.108215+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: material crates for cargo, type: Add}
+  - {message: singularity crates for cargo, type: Add}
+  id: 14
+  time: '2021-02-28T19:57:44.0000000+00:00'
