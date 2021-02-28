@@ -28,21 +28,20 @@ namespace Content.Shared.Alert
         private readonly Dictionary<AlertType, int> _typeToIdx = new();
         private readonly Dictionary<AlertCategory, int> _categoryToIdx = new();
 
-        public void BeforeSerialization()
+        void ISerializationHooks.BeforeSerialization()
         {
-            /*todo paul serv3
             foreach (var type in _typeToIdx.Keys)
             {
-                _order["alertType"] = type.ToString();
+                _order.Add(("alertType", type.ToString()));
             }
 
             foreach (var type in _categoryToIdx.Keys)
             {
-                _order["category"] = type.ToString();
-            }*/
+                _order.Add(("order", type.ToString()));
+            }
         }
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             var i = 0;
 
