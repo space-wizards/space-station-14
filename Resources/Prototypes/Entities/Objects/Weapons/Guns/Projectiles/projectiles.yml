@@ -262,3 +262,5 @@
     state: capbullet
   - type: Projectile
     deleteOnCollide: true
+    damages:
+      Piercing: 0

@@ -9,14 +9,12 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Temperature;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
-using Content.Shared.Chemistry;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -317,43 +315,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
         }
 
         /// <summary>
-        ///     Loops through each reagent in _internalSolution,
-        ///     and calls <see cref="IMetabolizable.Metabolize"/> for each of them.
-        /// </summary>
-        /// <param name="frameTime">The time since the last metabolism tick in seconds.</param>
-        private void ProcessNutrients(float frameTime)
-        {
-            if (!Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
-            {
-                return;
-            }
-
-            if (bloodstream.Solution.CurrentVolume == 0)
-            {
-                return;
-            }
-
-            // Run metabolism for each reagent, remove metabolized reagents
-            // Using ToList here lets us edit reagents while iterating
-            foreach (var reagent in bloodstream.Solution.ReagentList.ToList())
-            {
-                if (!_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? prototype))
-                {
-                    continue;
-                }
-
-                // Run metabolism code for each reagent
-                foreach (var metabolizable in prototype.Metabolism)
-                {
-                    var reagentDelta = metabolizable.Metabolize(Owner, reagent.ReagentId, frameTime);
-                    bloodstream.Solution.TryRemoveReagent(reagent.ReagentId, reagentDelta);
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Processes gases in the bloodstream and triggers metabolism of the
-        ///     reagents inside of it.
+        ///     Processes gases in the bloodstream.
         /// </summary>
         /// <param name="frameTime">
         ///     The time since the last metabolism tick in seconds.
@@ -374,7 +336,6 @@ namespace Content.Server.GameObjects.Components.Metabolism
             }
 
             ProcessGases(_accumulatedFrameTime);
-            ProcessNutrients(_accumulatedFrameTime);
             ProcessThermalRegulation(_accumulatedFrameTime);
 
             _accumulatedFrameTime -= 1;

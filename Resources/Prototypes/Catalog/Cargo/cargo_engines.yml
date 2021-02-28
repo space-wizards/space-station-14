@@ -1,6 +1,6 @@
 - type: cargoProduct
   name: "packaged antimatter reactor crate"
-  id: cargo.enginesameshielding
+  id: cargo.engineameshielding
   description: "9 parts for the main body of an antimatter reactor, or for expanding an existing one."
   icon:
     sprite: Objects/Power/AME/ame_part.rsi
@@ -12,7 +12,7 @@
 
 - type: cargoProduct
   name: "antimatter containment jar crate"
-  id: cargo.enginesamejar
+  id: cargo.engineamejar
   description: "3 antimatter jars, for fuelling an antimatter reactor."
   icon:
     sprite: Objects/Power/AME/ame_jar.rsi
@@ -24,7 +24,7 @@
 
 - type: cargoProduct
   name: "antimatter control unit crate"
-  id: cargo.enginesamecontrol
+  id: cargo.engineamecontrol
   description: "The control unit of an antimatter reactor."
   icon:
     sprite: Constructible/Power/ame_controller.rsi
@@ -34,3 +34,50 @@
   category: Engineering
   group: market
 
+- type: cargoProduct
+  name: "singularity generator crate"
+  id: cargo.enginesingularitygenerator
+  description: "Contains one singularity generator. The mother of the beast."
+  icon:
+    sprite: Constructible/Power/Singularity/generator.rsi
+    state: icon
+  product: CrateEngineeringSingularityGenerator
+  cost: 4000
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  name: "singularity containment crate"
+  id: cargo.enginesingularitycontainment
+  description: "Contains 2 singularity containment field generators."
+  icon:
+    sprite: Constructible/Power/Singularity/containment.rsi
+    state: icon
+  product: CrateEngineeringSingularityContainment
+  cost: 1500
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  name: "emitter crate"
+  id: cargo.enginesingularityemitter
+  description: "Contains 2 emitters. Used only for dangerous applications."
+  icon:
+    sprite: Constructible/Power/Singularity/emitter.rsi
+    state: emitter2
+  product: CrateEngineeringSingularityEmitter
+  cost: 1500
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  name: "radiation collector crate"
+  id: cargo.enginesingularitycollector
+  description: "Contains 2 radiation collectors. Safety first!"
+  icon:
+    sprite: Constructible/Power/Singularity/collector.rsi
+    state: ca_on
+  product: CrateEngineeringSingularityCollector
+  cost: 1500
+  category: Engineering
+  group: market

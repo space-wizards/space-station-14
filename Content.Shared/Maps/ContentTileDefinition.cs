@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -14,17 +15,17 @@ namespace Content.Shared.Maps
     {
         string IPrototype.ID => Name;
 
-        public string Name { get; private set; }
+        public string Name { get; private set; } = string.Empty;
         public ushort TileId { get; private set; }
-        public string DisplayName { get; private set; }
-        public string SpriteName { get; private set; }
+        public string DisplayName { get; private set; } = string.Empty;
+        public string SpriteName { get; private set; } = string.Empty;
         public bool IsSubFloor { get; private set; }
-        public List<string> BaseTurfs { get; private set; }
+        public List<string> BaseTurfs { get; private set; } = new();
         public bool CanCrowbar { get; private set; }
-        public string FootstepSounds { get; private set; }
+        public string FootstepSounds { get; private set; } = string.Empty;
         public float Friction { get; set; }
         public float ThermalConductivity { get; set; }
-        public string ItemDropPrototypeName { get; private set; }
+        public string ItemDropPrototypeName { get; private set; } = string.Empty;
         public bool IsSpace { get; private set; }
 
         public void AssignTileId(ushort id)
@@ -43,7 +44,7 @@ namespace Content.Shared.Maps
                 IsSubFloor = node.AsBool();
             }
 
-            if (mapping.TryGetNode("base_turfs", out YamlSequenceNode baseTurfNode))
+            if (mapping.TryGetNode("base_turfs", out YamlSequenceNode? baseTurfNode))
                 BaseTurfs = baseTurfNode.Select(i => i.ToString()).ToList();
             else
                 BaseTurfs = new List<string>();

@@ -32,6 +32,63 @@
         amount: 1
 
 - type: entity
+  id: CrateEngineeringSingularityEmitter
+  name: emitter crate
+  description: "An emitter, best used for singularity engines."
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - name: Emitter
+        amount: 2
+
+- type: entity
+  id: CrateEngineeringSingularityCollector
+  name: radiation collector crate
+  description: "A radiation collector, best used for singularity engines."
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - name: RadiationCollector
+        amount: 2
+
+- type: entity
+  id: CrateEngineeringSingularityContainment
+  name: containment field generator crate
+  description: "A containment field generator, keeps the singulo in submission."
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - name: ContainmentFieldGenerator
+        amount: 2
+
+- type: entity
+  id: CrateEngineeringSingularityGenerator
+  name: singularity generator crate
+  description: "A singularity generator, the mother of the beast."
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - name: SingularityGenerator
+        amount: 1
+
+# Non-functional for some reason
+
+#- type: entity
+#  id: CrateEngineeringSingularity
+#  name: singularity crate
+#  description: "Prank the station!"
+#  parent: CrateEngineeringSecure
+#  components:
+#  - type: StorageFill
+#    contents:
+#      - name: Singularity
+#        amount: 1
+
+- type: entity
   id: CrateEngineeringGenerator
   name: generator crate
   parent: CrateEngineering

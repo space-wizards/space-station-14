@@ -1,0 +1,180 @@
+- type: entity
+  id: SheetMetalBase
+  abstract: true
+  parent: BaseItem
+  description: A sheet of metal, used often on the station in various applications.
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Materials/Sheets/metal.rsi
+    - type: Item
+      sprite: Objects/Materials/Sheets/metal.rsi
+    - type: ItemStatus
+    - type: Tag
+      tags:
+        - Sheet
+
+- type: entity
+  name: steel
+  id: SheetSteel
+  parent: SheetMetalBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: steel
+    - type: Stack
+      stackType: Steel
+    - type: Sprite
+      state: steel_3
+    - type: Item
+      HeldPrefix: steel
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - steel
+            - steel_2
+            - steel_3
+
+- type: entity
+  id: SheetSteel1
+  name: steel
+  parent: SheetSteel
+  components:
+    - type: Sprite
+      state: steel
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: plasteel
+  id: SheetPlasteel
+  parent: SheetMetalBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: plasteel
+    - type: Stack
+      stackType: Plasteel
+    - type: Sprite
+      state: plasteel_3
+    - type: Item
+      HeldPrefix: plasteel
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - plasteel
+            - plasteel_2
+            - plasteel_3
+
+- type: entity
+  id: SheetPlasteel1
+  name: plasteel
+  parent: SheetPlasteel
+  components:
+    - type: Sprite
+      state: plasteel
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: titanium
+  id: SheetTitanium
+  parent: SheetMetalBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: titanium
+    - type: Stack
+      stackType: Titanium
+    - type: Sprite
+      state: titanium_3
+    - type: Item
+      HeldPrefix: titanium
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - titanium
+            - titanium_2
+            - titanium_3
+
+- type: entity
+  id: SheetTitanium1
+  name: titanium
+  parent: SheetTitanium
+  components:
+    - type: Sprite
+      state: titanium
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: plastitanium
+  id: SheetPlastitanium
+  parent: SheetMetalBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: plastitanium
+    - type: Stack
+      stackType: Plastitanium
+    - type: Sprite
+      state: plastitanium_3
+    - type: Item
+      HeldPrefix: plastitanium
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - plastitanium
+            - plastitanium_2
+            - plastitanium_3
+
+- type: entity
+  id: SheetPlastitanium1
+  name: plastitanium
+  parent: SheetPlastitanium
+  components:
+    - type: Sprite
+      state: plastitanium
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: brass
+  id: SheetBrass
+  parent: SheetMetalBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: brass
+    - type: Stack
+      stackType: Brass
+    - type: Sprite
+      state: brass_3
+    - type: Item
+      HeldPrefix: brass
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - brass
+            - brass_2
+            - brass_3
+
+- type: entity
+  id: SheetBrass1
+  name: brass
+  parent: SheetBrass
+  components:
+    - type: Sprite
+      state: brass
+    - type: Stack
+      count: 1

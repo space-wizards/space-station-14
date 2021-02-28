@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Movement;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 

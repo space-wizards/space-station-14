@@ -1,0 +1,73 @@
+Entries:
+- author: PJB
+  changes:
+  - {message: Added a changelog. You're reading it right now!, type: Add}
+  id: 1
+  time: '2021-02-25T08:50:45.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added new first aid kits with fancy new sprites., type: Add}
+  id: 2
+  time: '2021-02-25T10:46:21.0000000+00:00'
+- author: tmtmtl30
+  changes:
+  - {message: Constructed walls don't have broken lighting anymore, type: Fix}
+  id: 3
+  time: '2021-02-25T10:52:26.0000000+00:00'
+- author: AJCM
+  changes:
+  - {message: Can now cook banana cream pies, type: Add}
+  id: 4
+  time: '2021-02-25T11:45:11.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: APC Construction fixed and will not align to walls correctly., type: Fix}
+  id: 5
+  time: '2021-02-25T15:10:54.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Ghosts can flick lights and spook living, type: Add}
+  id: 6
+  time: '2021-02-26T01:31:06.0000000+00:00'
+- author: daniel-cr
+  changes:
+  - {message: Adjusted a margin in the new context menu., type: Tweak}
+  id: 7
+  time: '2021-02-26T04:59:10.0000000+00:00'
+- author: AJCM
+  changes:
+  - {message: Makes gravity generator and windows repairable with a lit welding tool,
+    type: Add}
+  id: 8
+  time: '2021-02-27T14:30:48.420921+00:00'
+- author: AJCM
+  changes:
+  - {message: Fixes the changelog escape menu button text going out of the limits
+      of the button when there is an update., type: Fix}
+  id: 9
+  time: '2021-02-27T17:33:32.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: 'Added a basic implementation of livers. They handle reagent metabolization
+      now, but aren''t damaged by alcohol or toxins yet.', type: Add}
+  id: 10
+  time: '2021-02-28T01:58:09.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: Stack visualizer no longer affected by open/close state by default.,
+    type: Fix}
+  id: 11
+  time: '2021-02-28T11:02:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Small physics refactor, type: Add}
+  id: 12
+  time: '2021-02-28T16:11:29.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: Patrons can now flex on poor people to get a cool colored name in OOC.,
+    type: Add}
+  - {message: 'To link your account, go to central.spacestation14.io and find the
+      "Patreon" section in your account settings.', type: Add}
+  id: 13
+  time: '2021-02-28T18:00:33.108215+00:00'

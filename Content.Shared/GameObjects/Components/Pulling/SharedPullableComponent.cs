@@ -53,7 +53,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     Dirty();
                     _pullerPhysics = null;
 
-                    if (_physics != null)
+                    if (_physics != null && oldPullerPhysics != null)
                     {
                         var message = new PullStoppedMessage(oldPullerPhysics, _physics);
 

@@ -222,7 +222,7 @@ namespace Content.Client.Chat
                 };
             }
 
-            _currentChatBox?.AddLine(messageText, message.Channel, color);
+            _currentChatBox?.AddLine(FormattedMessage.FromMarkup(messageText), color);
         }
 
         private void OnChatBoxTextSubmitted(ChatBox chatBox, string text)
@@ -422,7 +422,7 @@ namespace Content.Client.Chat
                 return;
             }
 
-            var messages = SplitMessage(msg.Message);
+            var messages = SplitMessage(FormattedMessage.RemoveMarkup(msg.Message));
 
             foreach (var message in messages)
             {

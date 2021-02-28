@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Body.Circulatory;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref _transferEfficiency, "transferEfficiency", 1f);
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)
@@ -48,6 +49,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             var hitBloodstreams = new List<BloodstreamComponent>();
             foreach (var entity in hitEntities)
             {
+                if (entity.Deleted)
+                    continue;
+
                 if (entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))
                     hitBloodstreams.Add(bloodstream);
             }

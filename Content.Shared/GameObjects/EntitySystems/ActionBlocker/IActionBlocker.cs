@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
+﻿#nullable enable
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 
 namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
 {

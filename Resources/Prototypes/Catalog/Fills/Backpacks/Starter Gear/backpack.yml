@@ -34,6 +34,7 @@
   - type: StorageFill
     contents:
       - name: BoxSurvival
+      - name: Medkit
 
 - type: entity
   abstract: true

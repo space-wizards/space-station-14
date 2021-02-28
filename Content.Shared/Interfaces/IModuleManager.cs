@@ -1,4 +1,5 @@
-﻿namespace Content.Shared.Interfaces
+﻿#nullable enable
+namespace Content.Shared.Interfaces
 {
     /// <summary>
     /// Provides a simple way to check whether calling code is being run by

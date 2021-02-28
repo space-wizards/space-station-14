@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Physics;
+﻿#nullable enable
+using Robust.Shared.Physics;
 
 namespace Content.Shared.Physics
 {

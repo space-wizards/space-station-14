@@ -29,12 +29,17 @@ namespace Content.Shared.Chemistry
         private List<ITileReaction> _tileReactions = default!;
         private List<IPlantMetabolizable> _plantMetabolism = default!;
         private float _customPlantMetabolism;
+        private bool _toxin;
+        private int _boozePower;
 
         public string ID => _id;
         public string Name => _name;
         public string Description => _description;
         public string PhysicalDescription => _physicalDescription;
         public Color SubstanceColor => _substanceColor;
+
+        public bool Toxin => _toxin;
+        public int BoozePower => _boozePower;
 
         //List of metabolism effects this reagent has, should really only be used server-side.
         public IReadOnlyList<IMetabolizable> Metabolism => _metabolism;
@@ -58,6 +63,8 @@ namespace Content.Shared.Chemistry
             serializer.DataField(ref _substanceColor, "color", Color.White);
             serializer.DataField(ref _spritePath, "spritePath", string.Empty);
             serializer.DataField(ref _customPlantMetabolism, "customPlantMetabolism", 1f);
+            serializer.DataField(ref _toxin, "toxin", false);
+            serializer.DataField(ref _boozePower, "boozePower", 0);
 
             if (_moduleManager.IsServerModule)
             {

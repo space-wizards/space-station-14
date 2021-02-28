@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Client.Administration;
+using Content.Client.Changelog;
 using Content.Client.Eui;
 using Content.Client.GameObjects.Components.Actor;
 using Content.Client.Input;
@@ -98,6 +99,7 @@ namespace Content.Client
             IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
             IoCManager.Resolve<IStylesheetManager>().Initialize();
             IoCManager.Resolve<IScreenshotHook>().Initialize();
+            IoCManager.Resolve<ChangelogManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
 

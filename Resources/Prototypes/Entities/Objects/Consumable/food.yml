@@ -2123,7 +2123,7 @@
   parent: FoodBase
   id: FoodSausage
   name: sausage  # sanga
-  description: A piece of mixed, long meat.
+  description: It's best not to see how this was made.
   components:
   - type: SolutionContainer
     contents:
@@ -2217,7 +2217,7 @@
 - type: entity
   parent: FoodBase
   id: FoodSoylentYellow
-  name: soylen viridians
+  name: soylent viridians
   description: Not made of people. Honest.
   components:
   - type: Food
