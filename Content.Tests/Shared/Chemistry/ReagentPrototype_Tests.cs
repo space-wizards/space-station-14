@@ -25,8 +25,10 @@ namespace Content.Tests.Shared.Chemistry
                 var proto = (YamlMappingNode)rootNode[0];
 
                 var defType = proto.GetNode("type").AsString();
-                var newReagent = IoCManager.Resolve<ISerializationManager>()
-                    .ReadValue<ReagentPrototype>(new MappingDataNode(proto));
+                var serializationManager = IoCManager.Resolve<ISerializationManager>();
+                serializationManager.Initialize();
+
+                var newReagent = serializationManager.ReadValue<ReagentPrototype>(new MappingDataNode(proto));
 
                 Assert.That(defType, Is.EqualTo("reagent"));
                 Assert.That(newReagent.ID, Is.EqualTo("chem.H2"));
