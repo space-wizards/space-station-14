@@ -54,9 +54,23 @@
       fillBaseName: beakerlarge
 
 - type: entity
+  name: cryostasis beaker
+  parent: Beaker
+  description: Used to contain chemicals or solutions without reactions.
+  id: CryostasisBeaker
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
+    layers:
+      - state: beakernoreact
+  - type: SolutionContainer
+    maxVol: 60
+    canReact: false
+
+- type: entity
   name: bluespace beaker
   parent: Beaker
-  description: A bluespace beaker, powered by experimental bluespace technology.
+  description: Powered by experimental bluespace technology.
   id: BluespaceBeaker
   components:
   - type: Sprite
