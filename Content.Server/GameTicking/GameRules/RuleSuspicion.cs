@@ -9,13 +9,13 @@ using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -48,9 +48,9 @@ namespace Content.Server.GameTicking.GameRules
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("There are traitors on the station! Find them, and kill them!"));
 
-            bool Predicate(IPlayerSession session) => session.ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false;
-
-            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Misc/tatoralert.ogg", AudioParams.Default, Predicate);
+            var filter = Filter.Empty()
+                .AddWhere(session => ((IPlayerSession)session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
+            SoundSystem.Play(filter, "/Audio/Misc/tatoralert.ogg", AudioParams.Default);
             EntitySystem.Get<SuspicionEndTimerSystem>().EndTime = _endTime;
 
             EntitySystem.Get<ServerDoorSystem>().AccessType = ServerDoorSystem.AccessTypes.AllowAllNoExternal;
