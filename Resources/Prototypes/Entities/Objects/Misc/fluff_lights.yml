@@ -144,7 +144,7 @@
         sound: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
-          SteelSheet1:
+          SheetSteel1:
             min: 1
             max: 1
       - !type:DoActsBehavior

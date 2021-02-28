@@ -3,7 +3,7 @@
   icon:
     sprite: Objects/Materials/sheets.rsi
     state: metal
-  result: SteelSheet1
+  result: SheetSteel1
   completetime: 500
   materials:
     steel: 100
@@ -13,7 +13,7 @@
   icon:
     sprite: Objects/Materials/sheets.rsi
     state: glass
-  result: GlassSheet1
+  result: SheetGlass1
   completetime: 500
   materials:
     glass: 100
