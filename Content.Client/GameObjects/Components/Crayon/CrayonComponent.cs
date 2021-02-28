@@ -60,11 +60,11 @@ namespace Content.Client.GameObjects.Components.Crayon
                 }
 
                 _parent._uiUpdateNeeded = false;
-                _label.SetMarkup(Loc.GetString("Drawing: [color={0}]{1}[/color] ({2}/{3})",
-                    _parent.Color,
-                    _parent.SelectedState,
-                    _parent.Charges,
-                    _parent.Capacity));
+                _label.SetMarkup(Loc.GetString("comp-crayon-status",
+                                    ("color", _parent.Color),
+                                    ("selectedState", _parent.SelectedState),
+                                    ("charges", _parent.Charges),
+                                    ("capacity", _parent.Capacity)));
             }
         }
     }
