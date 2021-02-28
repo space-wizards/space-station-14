@@ -1,0 +1,78 @@
+- type: entity
+  parent: BaseItem
+  id: FoodBreadBase
+  abstract: true
+  components:
+  - type: Food
+    trash: Plate
+  - type: LoopingSound
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bread.rsi
+    netsync: false
+
+# Plate
+
+- type: entity
+  name: plate
+  parent: BaseItem
+  id: Plate
+  description: A large plate, excellent for bread.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bread.rsi
+    state: plate
+    netsync: false
+  - type: DamageOnLand
+    amount: 5
+  - type: DamageOtherOnHit
+    amount: 5
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PlateTrash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  name: broken plate
+  parent: BaseItem
+  id: PlateTrash
+  description: A large plate, broken and useless.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bread.rsi
+    state: plate-trash
+    netsync: false
+
+# Custom Bread Example
+
+- type: entity
+  name: volcanic loaf
+  parent: FoodBreadBase
+  id: FoodBreadVolcanic
+  description: A dark loaf. Resembles pumice.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bread.rsi
+    layers:
+    - state: plate
+    - state: alpha
+      color: "#a9a9a9"
+    - state: alpha-filling
+      color: orange

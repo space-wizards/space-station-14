@@ -32,25 +32,28 @@
       "name": "bowl2"
     },
     {
-      "name": "bungocurry"
+      "name": "bowl-trash"
+    },
+    {
+      "name": "bungo"
+    },
+    {
+      "name": "chili-clown"
+    },
+    {
+      "name": "chili-cold"
+    },
+    {
+      "name": "chili-hot"
     },
     {
       "name": "citrusdelight"
     },
     {
-      "name": "clownchili"
-    },
-    {
-      "name": "clownstears"
-    },
-    {
-      "name": "coldchili"
+      "name": "clowntears"
     },
     {
       "name": "eden"
-    },
-    {
-      "name": "egg"
     },
     {
       "name": "electron",
@@ -77,16 +80,13 @@
       "name": "herb"
     },
     {
-      "name": "hotchili"
-    },
-    {
       "name": "jungle"
     },
     {
       "name": "meatball"
     },
     {
-      "name": "miso"
+      "name": "milo"
     },
     {
       "name": "monkeydelight"
@@ -113,10 +113,13 @@
       "name": "rice"
     },
     {
-      "name": "ricepork"
+      "name": "rice-egg"
     },
     {
-      "name": "ricepudding"
+      "name": "rice-pork"
+    },
+    {
+      "name": "rice-pudding"
     },
     {
       "name": "slime"

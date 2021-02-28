@@ -1,5 +1,5 @@
 - type: entity
-  parent: FoodBase
+  parent: BaseItem
   id: MonkeyCube
   name: monkey cube
   description: Just add water!
