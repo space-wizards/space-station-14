@@ -48,15 +48,14 @@
         - state: extinguish
           map: [ "enum.VaporVisualLayers.Base" ]
     - type: Physics
-      fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.25,0.25"
-        hard: false
-        mask:
-          - Impassable
-          - MobImpassable
-          - SmallImpassable
+      hard: false
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+          mask:
+            - Impassable
+            - MobImpassable
+            - SmallImpassable
     - type: Appearance
       visuals:
         - type: VaporVisualizer

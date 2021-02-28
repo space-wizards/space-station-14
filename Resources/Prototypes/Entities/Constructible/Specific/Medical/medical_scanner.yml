@@ -20,12 +20,12 @@
   - type: Physics
     mass: 25
     anchored: true
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      layer:
-      - Impassable
-      - VaultImpassable
+    shapes:
+    - !type:PhysShapeAabb
+      mask:
+        - Impassable
+        - VaultImpassable
+        - SmallImpassable
   - type: SnapGrid
     offset: Center
   - type: Anchorable

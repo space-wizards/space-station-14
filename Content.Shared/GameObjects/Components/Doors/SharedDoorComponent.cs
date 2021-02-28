@@ -19,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Doors
         protected readonly SharedAppearanceComponent? AppearanceComponent = null;
 
         [ComponentDependency]
-        protected readonly IPhysBody? PhysicsComponent = null;
+        protected readonly IPhysicsComponent? PhysicsComponent = null;
 
         [ViewVariables]
         private DoorState _state = DoorState.Closed;

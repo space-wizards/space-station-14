@@ -1,21 +1,22 @@
 #nullable enable
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.GameObjects.Components.Explosion;
+using Robust.Shared.GameObjects;
+using System.Threading.Tasks;
+using Robust.Shared.Serialization;
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.Trigger.TimerTrigger;
-using Content.Shared.GameObjects.Components.Explosion;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Throw;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Explosion;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Explosion
+namespace Content.Server.GameObjects.Components.Explosives
 {
     [RegisterComponent]
     public sealed class ClusterFlashComponent : Component, IInteractUsing, IUse
@@ -116,13 +117,10 @@ namespace Content.Server.GameObjects.Components.Explosion
                     var angleMin = segmentAngle * thrownCount;
                     var angleMax = segmentAngle * (thrownCount + 1);
                     var angle = Angle.FromDegrees(random.Next(angleMin, angleMax));
-                    // var distance = random.NextFloat() * _throwDistance;
+                    var distance = (float)random.NextFloat() * _throwDistance;
+                    var target = new EntityCoordinates(Owner.Uid, angle.ToVec().Normalized * distance);
 
-                    delay += random.Next(550, 900);
-                    thrownCount++;
-
-                    // TODO: Suss out throw strength
-                    grenade.TryThrow(angle.ToVec().Normalized * 50);
+                    grenade.Throw(0.5f, target, grenade.Transform.Coordinates);
 
                     grenade.SpawnTimer(delay, () =>
                     {
@@ -134,6 +132,9 @@ namespace Content.Server.GameObjects.Components.Explosion
                             useTimer.Trigger(eventArgs.User);
                         }
                     });
+
+                    delay += random.Next(550, 900);
+                    thrownCount++;
                 }
 
                 Owner.Delete();
@@ -148,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Explosion
             if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.MapPosition);
+                grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
                 return true;
             }
 

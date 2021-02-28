@@ -4,7 +4,6 @@ using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -29,9 +28,9 @@ namespace Content.Server.GameObjects.Components.Rotatable
 
         private void TryRotate(IEntity user, Angle angle)
         {
-            if (!RotateWhileAnchored && Owner.TryGetComponent(out IPhysBody physics))
+            if (!RotateWhileAnchored && Owner.TryGetComponent(out IPhysicsComponent physics))
             {
-                if (physics.BodyType == BodyType.Static)
+                if (physics.Anchored)
                 {
                     Owner.PopupMessage(user, Loc.GetString("It's stuck."));
                     return;
@@ -46,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
         {
             protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody physics) && physics.BodyType == BodyType.Static))
+                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysicsComponent physics) && physics.Anchored))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -68,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
         {
             protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody physics) && physics.BodyType == BodyType.Static))
+                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysicsComponent physics) && physics.Anchored))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

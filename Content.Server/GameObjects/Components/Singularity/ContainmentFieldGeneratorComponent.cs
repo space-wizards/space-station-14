@@ -10,7 +10,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.ViewVariables;
 using Robust.Server.GameObjects;
 
@@ -118,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 var dirVec = direction.ToVec();
                 var ray = new CollisionRay(Owner.Transform.WorldPosition, dirVec, (int) CollisionGroup.MobMask);
-                var rawRayCastResults = EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRay(Owner.Transform.MapID, ray, 4.5f, Owner, false);
+                var rawRayCastResults = _physicsManager.IntersectRay(Owner.Transform.MapID, ray, 4.5f, Owner, false);
 
                 var rayCastResults = rawRayCastResults as RayCastResults[] ?? rawRayCastResults.ToArray();
                 if(!rayCastResults.Any()) continue;
@@ -183,9 +182,9 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        public void CollideWith(IEntity collidedWith)
         {
-            if (otherBody.Entity.HasComponent<EmitterBoltComponent>())
+            if(collidedWith.HasComponent<EmitterBoltComponent>())
             {
                 ReceivePower(4);
             }

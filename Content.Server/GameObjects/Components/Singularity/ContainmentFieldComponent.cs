@@ -1,6 +1,5 @@
 #nullable enable
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -10,7 +9,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         public override string Name => "ContainmentField";
         public ContainmentFieldConnection? Parent;
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        public void CollideWith(IEntity collidedWith)
         {
             if (Parent == null)
             {
@@ -18,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            Parent.TryRepell(Owner, otherBody.Entity);
+            Parent.TryRepell(Owner, collidedWith);
         }
     }
 }

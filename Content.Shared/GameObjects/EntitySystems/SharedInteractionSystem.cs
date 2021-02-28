@@ -9,7 +9,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -19,6 +18,8 @@ namespace Content.Shared.GameObjects.EntitySystems
     [UsedImplicitly]
     public class SharedInteractionSystem : EntitySystem
     {
+        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
+
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
@@ -48,7 +49,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             predicate ??= _ => false;
             var ray = new CollisionRay(origin.Position, dir.Normalized, collisionMask);
-            var rayResults = Get<SharedBroadPhaseSystem>().IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var rayResults = _physicsManager.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0) return dir.Length;
             return (rayResults[0].HitPos - origin.Position).Length;
@@ -124,7 +125,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             predicate ??= _ => false;
 
             var ray = new CollisionRay(origin.Position, dir.Normalized, (int) collisionMask);
-            var rayResults = Get<SharedBroadPhaseSystem>().IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var rayResults = _physicsManager.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0) return true;
 
@@ -132,12 +133,12 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             foreach (var result in rayResults)
             {
-                if (!result.HitEntity.TryGetComponent(out IPhysBody p))
+                if (!result.HitEntity.TryGetComponent(out IPhysicsComponent p))
                 {
                     continue;
                 }
 
-                var bBox = p.GetWorldAABB();
+                var bBox = p.WorldAABB;
 
                 if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
                 {

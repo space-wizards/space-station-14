@@ -166,15 +166,6 @@ namespace Content.Shared
         public static readonly CVarDef<bool> ParallaxDebug =
             CVarDef.Create("parallax.debug", false, CVar.CLIENTONLY);
 
-        /*
-         * Physics
-         */
-
-        public static readonly CVarDef<float> TileFrictionModifier =
-            CVarDef.Create("physics.tilefriction", 15.0f);
-
-        public static readonly CVarDef<float> StopSpeed =
-            CVarDef.Create("physics.stopspeed", 0.1f);
 
         /*
          * Ambience

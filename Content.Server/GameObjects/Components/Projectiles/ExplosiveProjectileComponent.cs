@@ -1,6 +1,5 @@
 using Content.Server.GameObjects.Components.Explosion;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
@@ -16,12 +15,18 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Owner.EnsureComponent<ExplosiveComponent>();
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        void ICollideBehavior.CollideWith(IEntity entity)
         {
             if (Owner.TryGetComponent(out ExplosiveComponent explosive))
             {
                 explosive.Explosion();
             }
+        }
+
+        // Projectile should handle the deleting
+        void ICollideBehavior.PostCollide(int collisionCount)
+        {
+            return;
         }
     }
 }

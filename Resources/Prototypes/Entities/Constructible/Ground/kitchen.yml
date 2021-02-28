@@ -8,9 +8,8 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
+    shapes:
+    - !type:PhysShapeAabb
       mask:
       - Impassable
       layer:

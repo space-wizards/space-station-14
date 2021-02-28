@@ -7,7 +7,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -30,6 +29,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private float _timer;
         private EntityCoordinates _target;
         private bool _running;
+        private Vector2 _direction;
+        private float _velocity;
         private float _aliveTime;
 
         public override void Initialize()
@@ -39,16 +40,18 @@ namespace Content.Server.GameObjects.Components.Chemistry
             Owner.EnsureComponentWarn(out SolutionContainerComponent _);
         }
 
-        public void Start(Vector2 dir, float speed, EntityCoordinates target, float aliveTime)
+        public void Start(Vector2 dir, float velocity, EntityCoordinates target, float aliveTime)
         {
             _running = true;
             _target = target;
+            _direction = dir;
+            _velocity = velocity;
             _aliveTime = aliveTime;
             // Set Move
-            if (Owner.TryGetComponent(out PhysicsComponent physics))
+            if (Owner.TryGetComponent(out IPhysicsComponent physics))
             {
-                physics.BodyStatus = BodyStatus.InAir;
-                physics.ApplyLinearImpulse(dir * speed);
+                var controller = physics.EnsureController<VaporController>();
+                controller.Move(_direction, _velocity);
             }
         }
 
@@ -69,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _timer += frameTime;
             _reactTimer += frameTime;
 
-            if (_reactTimer >= ReactTime)
+            if (_reactTimer >= ReactTime && Owner.TryGetComponent(out IPhysicsComponent physics))
             {
                 _reactTimer = 0;
                 var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
@@ -87,6 +90,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if(!_reached && _target.TryDistance(Owner.EntityManager, Owner.Transform.Coordinates, out var distance) && distance <= 0.5f)
             {
                 _reached = true;
+
+                if (Owner.TryGetComponent(out IPhysicsComponent coll))
+                {
+                    var controller = coll.EnsureController<VaporController>();
+                    controller.Stop();
+                }
             }
 
             if (contents.CurrentVolume == 0 || _timer > _aliveTime)
@@ -118,17 +127,26 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        void ICollideBehavior.CollideWith(IEntity collidedWith)
         {
             if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
                 return;
 
-            contents.Solution.DoEntityReaction(otherBody.Entity, ReactionMethod.Touch);
+            contents.Solution.DoEntityReaction(collidedWith, ReactionMethod.Touch);
 
             // Check for collision with a impassable object (e.g. wall) and stop
-            if ((otherBody.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && otherBody.Hard)
+            if (collidedWith.TryGetComponent(out IPhysicsComponent physics))
             {
-                Owner.Delete();
+                if ((physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && physics.Hard)
+                {
+                    if (Owner.TryGetComponent(out IPhysicsComponent coll))
+                    {
+                        var controller = coll.EnsureController<VaporController>();
+                        controller.Stop();
+                    }
+
+                    Owner.Delete();
+                }
             }
         }
     }

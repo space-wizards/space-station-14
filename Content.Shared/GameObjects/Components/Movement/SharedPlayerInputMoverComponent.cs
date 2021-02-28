@@ -5,6 +5,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
@@ -14,9 +15,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(IMoverComponent))]
-    public class SharedPlayerInputMoverComponent : Component, IMoverComponent
+    public abstract class SharedPlayerInputMoverComponent : Component, IMoverComponent, ICollideSpecial
     {
         // This class has to be able to handle server TPS being lower than client FPS.
         // While still having perfectly responsive movement client side.
@@ -40,10 +39,8 @@ namespace Content.Shared.GameObjects.Components.Movement
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        [ComponentDependency] private readonly MovementSpeedModifierComponent? _movementSpeed = default!;
-
-        public override string Name => "PlayerInputMover";
-        public override uint? NetID => ContentNetIDs.PLAYER_INPUT_MOVER;
+        public sealed override string Name => "PlayerInputMover";
+        public sealed override uint? NetID => ContentNetIDs.PLAYER_INPUT_MOVER;
 
         private GameTick _lastInputTick;
         private ushort _lastInputSubTick;
@@ -52,19 +49,36 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         private MoveButtons _heldMoveButtons = MoveButtons.None;
 
-        // Don't serialize because it probably shouldn't change and it's a waste.
-        public bool IgnorePaused
+        public float CurrentWalkSpeed
         {
-            get => _ignorePaused;
-            set => _ignorePaused = value;
+            get
+            {
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
+                {
+                    return component.CurrentWalkSpeed;
+                }
+
+                return MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+            }
         }
 
-        private bool _ignorePaused;
+        public float CurrentSprintSpeed
+        {
+            get
+            {
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
+                {
+                    return component.CurrentSprintSpeed;
+                }
 
-        public float CurrentWalkSpeed => _movementSpeed?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+                return MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+            }
+        }
 
-        public float CurrentSprintSpeed => _movementSpeed?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
-
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float CurrentPushSpeed => 5;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float GrabRange => 0.2f;
         public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
 
         /// <summary>
@@ -117,24 +131,27 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
+        public abstract EntityCoordinates LastPosition { get; set; }
+        public abstract float StepSoundDistance { get; set; }
+
         /// <summary>
         ///     Whether or not the player can move diagonally.
         /// </summary>
         [ViewVariables]
         public bool DiagonalMovementEnabled => _configurationManager.GetCVar<bool>(CCVars.GameDiagonalMovement);
 
-        public override void ExposeData(ObjectSerializer serializer)
+        /// <inheritdoc />
+        public override void OnAdd()
         {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _ignorePaused, "ignorePaused", false);
+            // This component requires that the entity has a IPhysicsComponent.
+            if (!Owner.HasComponent<IPhysicsComponent>())
+                Logger.Error(
+                    $"[ECS] {Owner.Prototype?.Name} - {nameof(SharedPlayerInputMoverComponent)} requires" +
+                    $" {nameof(IPhysicsComponent)}. ");
+
+            base.OnAdd();
         }
 
-        /// <inheritdoc />
-        public override void Initialize()
-        {
-            base.Initialize();
-            Owner.EnsureComponentWarn<PhysicsComponent>();
-        }
 
         /// <summary>
         ///     Toggles one of the four cardinal directions. Each of the four directions are
@@ -247,6 +264,12 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
 
             return vec;
+        }
+
+        bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
+        {
+            // Don't collide with other mobs
+            return collidedWith.Entity.HasComponent<IBody>();
         }
 
         [Serializable, NetSerializable]

@@ -11,9 +11,8 @@
   - type: Sprite
     sprite: Constructible/Misc/bookshelf.rsi
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
+    shapes:
+    - !type:PhysShapeAabb
       layer:
       - Opaque
       - Impassable

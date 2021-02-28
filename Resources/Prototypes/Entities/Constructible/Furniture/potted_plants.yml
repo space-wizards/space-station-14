@@ -7,10 +7,9 @@
   - type: Physics
     mass: 25
     anchored: true
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5, -0.2, 0.5, 0.2"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.2, 0.5, 0.2"
       mask:
       - Impassable
       - MobImpassable
@@ -59,10 +58,9 @@
   - type: Sprite
     state: plant-25
   - type: Physics
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.47,-0.25,0.05,0.25"
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.47,-0.25,0.05,0.25"
         layer: [ Passable ]
 
 - type: entity

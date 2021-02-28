@@ -11,7 +11,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
-using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Pulling
@@ -21,16 +20,14 @@ namespace Content.Shared.GameObjects.Components.Pulling
         public override string Name => "Pullable";
         public override uint? NetID => ContentNetIDs.PULLABLE;
 
-        [ComponentDependency] private readonly PhysicsComponent? _physics = default!;
+        [ComponentDependency] private readonly IPhysicsComponent? _physics = default!;
 
         /// <summary>
         /// Only set in Puller->set! Only set in unison with _pullerPhysics!
         /// </summary>
         private IEntity? _puller;
-        private IPhysBody? _pullerPhysics;
-        public IPhysBody? PullerPhysics => _pullerPhysics;
-
-        private DistanceJoint? _pullJoint = null;
+        private IPhysicsComponent? _pullerPhysics;
+        public IPhysicsComponent? PullerPhysics => _pullerPhysics;
 
         /// <summary>
         /// The current entity pulling this component.
@@ -65,6 +62,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                         oldPuller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
                         _physics.WakeBody();
+                        _physics.TryRemoveController<PullController>();
                     }
                     // else-branch warning is handled below
                 }
@@ -72,7 +70,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 // Now that is settled, prepare to be pulled by a new object.
                 if (_physics == null)
                 {
-                    Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? SharedPullableComponent on {0} didn't have an IPhysBody.", Owner);
+                    Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? SharedPullableComponent on {0} didn't have an IPhysicsComponent.", Owner);
                     return;
                 }
 
@@ -85,7 +83,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                         return;
                     }
 
-                    if (!value.TryGetComponent<PhysicsComponent>(out var pullerPhysics))
+                    if (!value.TryGetComponent<IPhysicsComponent>(out var valuePhysics))
                     {
                         return;
                     }
@@ -115,7 +113,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                     // Continue with pulling process.
 
-                    var pullAttempt = new PullAttemptMessage(pullerPhysics, _physics);
+                    var pullAttempt = new PullAttemptMessage(valuePhysics, _physics);
 
                     value.SendMessage(null, pullAttempt);
 
@@ -135,8 +133,9 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                     _puller = value;
                     Dirty();
-                    _pullerPhysics = pullerPhysics;
+                    _pullerPhysics = valuePhysics;
 
+                    _physics.EnsureController<PullController>().Manager = this;
                     var message = new PullStartedMessage(_pullerPhysics, _physics);
 
                     _puller.SendMessage(null, message);
@@ -144,13 +143,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                     _puller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
-
                     _physics.WakeBody();
-                    _pullJoint = pullerPhysics.CreateDistanceJoint(_physics);
-                    // _physics.BodyType = BodyType.Kinematic; // TODO: Need to consider their original bodytype
-                    _pullJoint.CollideConnected = true;
-                    _pullJoint.Length = 1.4f;
-                    _pullJoint.MaxLength = 2.0f; // TODO hacky, we should consider ours and their bb
                 }
                 // Code here will not run if pulling a new object was attempted and failed because of the returns from the refactor.
             }
@@ -219,12 +212,6 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return false;
             }
 
-            if (_physics != null && _pullJoint != null)
-            {
-                _physics.RemoveJoint(_pullJoint);
-            }
-
-            _pullJoint = null;
             Puller = null;
             return true;
         }
@@ -259,16 +246,12 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return false;
             }
 
-            /*
             if (!_physics.TryGetController(out PullController controller))
             {
                 return false;
             }
-            */
 
-            return true;
-
-            //return controller.TryMoveTo(Puller.Transform.Coordinates, to);
+            return controller.TryMoveTo(Puller.Transform.Coordinates, to);
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

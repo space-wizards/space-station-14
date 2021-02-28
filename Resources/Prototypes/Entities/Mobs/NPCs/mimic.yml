@@ -24,10 +24,9 @@
   - type: Physics
     anchored: false
     mass: 85
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.35,-0.35,0.35,0.35"
       mask:
       - Impassable
       - MobImpassable

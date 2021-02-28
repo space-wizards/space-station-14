@@ -21,10 +21,9 @@
   - type: Physics
     mass: 5
     anchored: false
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.45,-0.5,0.1,0.5"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.45,-0.5,0.1,0.5"
       layer:
       - Clickable
   - type: BodyBagEntityStorage
@@ -39,7 +38,7 @@
       state_closed: bag
     - type: BodyBagVisualizer
   - type: Pullable
-
+  
 - type: entity
   id: BodyBag_Item
   name: body bag
@@ -54,8 +53,8 @@
 # - type: Placeable
 #   prototype: someId
 #   snap: Center
-
-
+  
+  
 - type: entity
   id: Morgue
   name: morgue
@@ -76,10 +75,9 @@
   - type: Physics
     mass: 25
     anchored: true
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
       mask:
        - Impassable
        - MobImpassable
@@ -107,7 +105,7 @@
       light_soul: morgue_soul_light
   - type: SnapGrid
     offset: Center
-
+    
 - type: entity
   id: MorgueTray
   name: morgue tray
@@ -122,10 +120,9 @@
   - type: Physics
     mass: 15
     anchored: true
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
       layer:
        - Clickable
   - type: MorgueTray
@@ -151,10 +148,9 @@
   - type: Physics
     mass: 25
     anchored: true
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
       mask:
        - Impassable
        - MobImpassable
@@ -183,7 +179,7 @@
       light_burning: crema_active_light
   - type: SnapGrid
     offset: Center
-
+      
 - type: entity
   id: CrematoriumTray
   name: crematorium tray

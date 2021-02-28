@@ -51,10 +51,9 @@
       state_anchored: pipe-s
       state_broken: pipe-b
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.25,0.5,0.25"
       layer: [ Underplating ]
 
 - type: entity
@@ -79,10 +78,9 @@
     - key: enum.DisposalTaggerUiKey.Key
       type: DisposalTaggerBoundUserInterface
   - type: Physics
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.25,0.5,0.25"
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.25,0.5,0.25"
         layer: [ Underplating ]
 
 - type: entity
@@ -103,10 +101,9 @@
       state_anchored: pipe-t
       state_broken: pipe-b
   - type: Physics
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.25,0.4,0.25"
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.25,0.4,0.25"
         layer: [ Underplating ]
 
 - type: entity
@@ -135,10 +132,9 @@
   - type: InteractionOutline
   - type: Physics
     anchored: true
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.35,0.3,0.35"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.3,-0.35,0.3,0.35"
       mask:
       - Impassable
       - MobImpassable
@@ -210,10 +206,9 @@
     - key: enum.DisposalRouterUiKey.Key
       type: DisposalRouterBoundUserInterface
   - type: Physics
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.25"
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.25"
         layer: [ Underplating ]
 
 - type: entity
@@ -239,11 +234,10 @@
   - type: Flippable
     entity: DisposalRouter
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.5"
-      layer: [ Underplating ]
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.25,0.5,0.5"
+        layer: [ Underplating ]
 
 - type: entity
   id: DisposalJunction
@@ -269,11 +263,10 @@
   - type: Flippable
     entity: DisposalJunctionFlipped
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.25"
-      layer: [ Underplating ]
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.25"
+        layer: [ Underplating ]
 
 - type: entity
   id: DisposalJunctionFlipped
@@ -298,11 +291,10 @@
   - type: Flippable
     entity: DisposalJunction
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.5"
-      layer: [ Underplating ]
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.25,0.5,0.5"
+        layer: [ Underplating ]
 
 - type: entity
   id: DisposalYJunction
@@ -326,11 +318,10 @@
       state_anchored: pipe-y
       state_broken: pipe-b
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.25,0.5"
-      layer: [ Underplating ]
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.25,0.5"
+        layer: [ Underplating ]
 
 - type: entity
   id: DisposalBend
@@ -350,11 +341,10 @@
       state_anchored: pipe-c
       state_broken: pipe-b
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.25,0.25"
-      layer: [ Underplating ]
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.25,0.25"
+        layer: [ Underplating ]
 
 - type: entity
   id: DisposalMailingUnit
@@ -385,10 +375,9 @@
   - type: InteractionOutline
   - type: Physics
     anchored: true
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.35,-0.3,0.35,0.3"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.35,-0.3,0.35,0.3"
       mask:
       - Impassable
       - MobImpassable

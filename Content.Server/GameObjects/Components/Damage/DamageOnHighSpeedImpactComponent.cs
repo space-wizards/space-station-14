@@ -6,7 +6,6 @@ using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -47,16 +46,16 @@ namespace Content.Server.GameObjects.Components.Damage
             serializer.DataField(this, x => x.StunMinimumDamage, "stunMinimumDamage", 10);
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        public void CollideWith(IEntity collidedWith)
         {
-            if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
+            if (!Owner.TryGetComponent(out IPhysicsComponent physics) || !Owner.TryGetComponent(out IDamageableComponent damageable)) return;
 
-            var speed = ourBody.LinearVelocity.Length;
+            var speed = physics.LinearVelocity.Length;
 
             if (speed < MinimumSpeed) return;
 
             if(!string.IsNullOrEmpty(SoundHit))
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(SoundHit, otherBody.Entity, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(SoundHit, collidedWith, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
 
             if ((_gameTiming.CurTime - _lastHit).TotalSeconds < DamageCooldown)
                 return;
@@ -68,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Damage
             if (Owner.TryGetComponent(out StunnableComponent stun) && _robustRandom.Prob(StunChance))
                 stun.Stun(StunSeconds);
 
-            damageable.ChangeDamage(Damage, damage, false, otherBody.Entity);
+            damageable.ChangeDamage(Damage, damage, false, collidedWith);
         }
     }
 }

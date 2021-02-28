@@ -19,7 +19,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -31,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Recycling
     {
         public override string Name => "Recycler";
 
-        public List<IEntity> Intersecting { get; set; } = new();
+        private readonly List<IEntity> _intersecting = new();
 
         /// <summary>
         ///     Whether or not sentient beings will be recycled
@@ -73,9 +72,9 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private void Recycle(IEntity entity)
         {
-            if (!Intersecting.Contains(entity))
+            if (!_intersecting.Contains(entity))
             {
-                Intersecting.Add(entity);
+                _intersecting.Add(entity);
             }
 
             // TODO: Prevent collision with recycled items
@@ -94,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Recycling
             recyclable.Recycle(_efficiency);
         }
 
-        public bool CanRun()
+        private bool CanRun()
         {
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
                 !receiver.Powered)
@@ -110,15 +109,15 @@ namespace Content.Server.GameObjects.Components.Recycling
             return true;
         }
 
-        public bool CanMove(IEntity entity)
+        private bool CanMove(IEntity entity)
         {
             if (entity == Owner)
             {
                 return false;
             }
 
-            if (!entity.TryGetComponent(out IPhysBody? physics) ||
-                physics.BodyType == BodyType.Static)
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+                physics.Anchored)
             {
                 return false;
             }
@@ -141,6 +140,34 @@ namespace Content.Server.GameObjects.Components.Recycling
             return true;
         }
 
+        public void Update(float frameTime)
+        {
+            if (!CanRun())
+            {
+                _intersecting.Clear();
+                return;
+            }
+
+            var direction = Vector2.UnitX;
+
+            for (var i = _intersecting.Count - 1; i >= 0; i--)
+            {
+                var entity = _intersecting[i];
+
+                if (entity.Deleted || !CanMove(entity) || !Owner.EntityManager.IsIntersecting(Owner, entity))
+                {
+                    _intersecting.RemoveAt(i);
+                    continue;
+                }
+
+                if (entity.TryGetComponent(out IPhysicsComponent? physics))
+                {
+                    var controller = physics.EnsureController<ConveyedController>();
+                    controller.Move(direction, frameTime, entity.Transform.WorldPosition - Owner.Transform.WorldPosition);
+                }
+            }
+        }
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -149,9 +176,9 @@ namespace Content.Server.GameObjects.Components.Recycling
             serializer.DataField(ref _efficiency, "efficiency", 0.25f);
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        void ICollideBehavior.CollideWith(IEntity collidedWith)
         {
-            Recycle(otherBody.Entity);
+            Recycle(collidedWith);
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)

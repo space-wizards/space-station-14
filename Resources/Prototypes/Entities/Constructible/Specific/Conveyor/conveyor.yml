@@ -8,11 +8,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49"
-      hard: false
+    hard: false
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.49,-0.49,0.49,0.49"
       layer: [Passable]
       mask:
       - Impassable

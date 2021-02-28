@@ -19,8 +19,6 @@ namespace Content.Shared.GameObjects.Components.Projectiles
             get => _ignoreShooter;
             set
             {
-                if (_ignoreShooter == value) return;
-
                 _ignoreShooter = value;
                 Dirty();
             }

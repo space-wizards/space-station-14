@@ -7,7 +7,6 @@ using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -43,7 +42,7 @@ namespace Content.Server.GameObjects.Components
         /// <returns>true if it is valid, false otherwise</returns>
         private async Task<bool> Valid(IEntity user, IEntity? utilizing, [NotNullWhen(true)] bool force = false)
         {
-            if (!Owner.HasComponent<IPhysBody>())
+            if (!Owner.HasComponent<IPhysicsComponent>())
             {
                 return false;
             }
@@ -75,8 +74,8 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            var physics = Owner.GetComponent<IPhysBody>();
-            physics.BodyType = BodyType.Static;
+            var physics = Owner.GetComponent<IPhysicsComponent>();
+            physics.Anchored = true;
 
             if (Owner.TryGetComponent(out PullableComponent? pullableComponent))
             {
@@ -106,8 +105,8 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            var physics = Owner.GetComponent<IPhysBody>();
-            physics.BodyType = BodyType.Dynamic;
+            var physics = Owner.GetComponent<IPhysicsComponent>();
+            physics.Anchored = false;
 
             return true;
         }
@@ -121,12 +120,12 @@ namespace Content.Server.GameObjects.Components
         /// <returns>true if toggled, false otherwise</returns>
         private async Task<bool> TryToggleAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
         {
-            if (!Owner.TryGetComponent(out IPhysBody? physics))
+            if (!Owner.TryGetComponent(out IPhysicsComponent? physics))
             {
                 return false;
             }
 
-            return physics.BodyType == BodyType.Static ?
+            return physics.Anchored ?
                 await TryUnAnchor(user, utilizing, force) :
                 await TryAnchor(user, utilizing, force);
         }

@@ -10,7 +10,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Shared.Maps
 {
@@ -182,7 +181,7 @@ namespace Content.Shared.Maps
         /// </summary>
         public static bool IsBlockedTurf(this TileRef turf, bool filterMobs)
         {
-            var physics = EntitySystem.Get<SharedBroadPhaseSystem>();
+            var physics = IoCManager.Resolve<IPhysicsManager>();
 
             var worldBox = GetWorldTileBox(turf);
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -26,7 +25,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems.Click
@@ -38,8 +36,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
     public sealed class InteractionSystem : SharedInteractionSystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-
-        private List<IThrowCollide> _throwCollide = new();
 
         public override void Initialize()
         {
@@ -606,43 +602,28 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         ///     Calls ThrowCollide on all components that implement the IThrowCollide interface
         ///     on a thrown entity and the target entity it hit.
         /// </summary>
-        public void ThrowCollideInteraction(IEntity user, IPhysBody thrown, IPhysBody target)
+        public void ThrowCollideInteraction(IEntity user, IEntity thrown, IEntity target, EntityCoordinates location)
         {
-            // TODO: Just pass in the bodies directly
-            var collideMsg = new ThrowCollideMessage(user, thrown.Entity, target.Entity);
+            var collideMsg = new ThrowCollideMessage(user, thrown, target, location);
             RaiseLocalEvent(collideMsg);
             if (collideMsg.Handled)
             {
                 return;
             }
 
-            var eventArgs = new ThrowCollideEventArgs(user, thrown.Entity, target.Entity);
+            var eventArgs = new ThrowCollideEventArgs(user, thrown, target, location);
 
-            foreach (var comp in thrown.Entity.GetAllComponents<IThrowCollide>())
+            foreach (var comp in thrown.GetAllComponents<IThrowCollide>().ToArray())
             {
-                _throwCollide.Add(comp);
+                if (thrown.Deleted) break;
+                comp.DoHit(eventArgs);
             }
 
-            foreach (var collide in _throwCollide)
+            foreach (var comp in target.GetAllComponents<IThrowCollide>().ToArray())
             {
-                if (thrown.Entity.Deleted) break;
-                collide.DoHit(eventArgs);
+                if (target.Deleted) break;
+                comp.HitBy(eventArgs);
             }
-
-            _throwCollide.Clear();
-
-            foreach (var comp in target.Entity.GetAllComponents<IThrowCollide>())
-            {
-                _throwCollide.Add(comp);
-            }
-
-            foreach (var collide in _throwCollide)
-            {
-                if (target.Entity.Deleted) break;
-                collide.HitBy(eventArgs);
-            }
-
-            _throwCollide.Clear();
         }
 
         /// <summary>

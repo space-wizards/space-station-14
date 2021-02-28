@@ -20,7 +20,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -384,14 +383,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     projectileAngle = angle;
                 }
 
-                var physics = projectile.GetComponent<IPhysBody>();
-                physics.BodyStatus = BodyStatus.InAir;
+                var physics = projectile.GetComponent<IPhysicsComponent>();
+                physics.Status = BodyStatus.InAir;
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
 
                 projectile
-                    .GetComponent<IPhysBody>()
+                    .GetComponent<IPhysicsComponent>()
+                    .EnsureController<BulletController>()
                     .LinearVelocity = projectileAngle.ToVec() * velocity;
 
                 projectile.Transform.LocalRotation = projectileAngle + MathHelper.PiOver2;
@@ -421,7 +421,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private void FireHitscan(IEntity shooter, HitscanComponent hitscan, Angle angle)
         {
             var ray = new CollisionRay(Owner.Transform.Coordinates.ToMapPos(Owner.EntityManager), angle.ToVec(), (int) hitscan.CollisionMask);
-            var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
+            var physicsManager = IoCManager.Resolve<IPhysicsManager>();
             var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter, false).ToList();
 
             if (rayCastResults.Count >= 1)

@@ -6,13 +6,10 @@
   - type: Clickable
   - type: Physics
     anchored: false
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-          radius: 0.5
-      hard: false
-      layer:
-      - MapGrid
+    shapes:
+    - !type:PhysShapeCircle
+      radius: 0.5
+      layer: [Impassable]
       mask:
       - AllMask
     mass: 5
@@ -39,10 +36,9 @@
   - type: InteractionOutline
   - type: Physics
     anchored: true
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
@@ -74,10 +70,9 @@
   - type: Clickable
   - type: Physics
     anchored: true
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
@@ -108,10 +103,9 @@
   - type: Clickable
   - type: Physics
     anchored: true
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
@@ -136,10 +130,9 @@
     - type: Clickable
     - type: Physics
       anchored: true
-      fixtures:
-        - shape:
-            !type:PhysShapeAabb
-              bounds: "-0.5, -0.5, 0.5, 0.5"
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
           layer: [ MobMask ]
     - type: SnapGrid
       offset: Center

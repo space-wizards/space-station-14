@@ -22,10 +22,9 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
     - type: Physics
-      fixtures:
-        - shape:
-            !type:PhysShapeAabb
-              bounds: "-0.49,-0.49,0.49,0.49"
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
           mask:
             - Impassable
           layer:

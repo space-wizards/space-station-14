@@ -13,7 +13,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Server.GameObjects;
-using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -41,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public GasMixture Air { get; set; } = default!;
 
         [ViewVariables]
-        public bool Anchored => !Owner.TryGetComponent<IPhysBody>(out var physics) || physics.BodyType == BodyType.Static;
+        public bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
 
         /// <summary>
         /// The floor connector port that the canister is attached to.
@@ -78,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void Initialize()
         {
             base.Initialize();
-            if (Owner.TryGetComponent<IPhysBody>(out var physics))
+            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
             {
                 AnchorUpdate();
             }

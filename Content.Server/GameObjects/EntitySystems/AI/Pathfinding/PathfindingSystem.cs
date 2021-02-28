@@ -11,7 +11,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
@@ -30,7 +29,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-
+        
         public IReadOnlyDictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> Graph => _graph;
         private readonly Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> _graph = new();
 
@@ -82,8 +81,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             foreach (var update in _collidableUpdateQueue)
             {
-                if (!EntityManager.TryGetEntity(update.Owner, out var entity)) continue;
-
+                var entity = EntityManager.GetEntity(update.Owner);
                 if (update.CanCollide)
                 {
                     HandleEntityAdd(entity);
@@ -264,7 +262,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             if (entity.Deleted ||
                 _lastKnownPositions.ContainsKey(entity) ||
-                !entity.TryGetComponent(out IPhysBody physics) ||
+                !entity.TryGetComponent(out IPhysicsComponent physics) ||
                 !PathfindingNode.IsRelevant(entity, physics))
             {
                 return;
@@ -303,7 +301,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             // If we've moved to space or the likes then remove us.
             if (moveEvent.Sender.Deleted ||
-                !moveEvent.Sender.TryGetComponent(out IPhysBody physics) ||
+                !moveEvent.Sender.TryGetComponent(out IPhysicsComponent physics) ||
                 !PathfindingNode.IsRelevant(moveEvent.Sender, physics) ||
                 moveEvent.NewPosition.GetGridId(EntityManager) == GridId.Invalid)
             {
@@ -368,7 +366,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
         public bool CanTraverse(IEntity entity, PathfindingNode node)
         {
-            if (entity.TryGetComponent(out IPhysBody physics) &&
+            if (entity.TryGetComponent(out IPhysicsComponent physics) &&
                 (physics.CollisionMask & node.BlockedCollisionMask) != 0)
             {
                 return false;

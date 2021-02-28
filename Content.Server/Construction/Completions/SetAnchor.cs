@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
@@ -20,9 +19,9 @@ namespace Content.Server.Construction.Completions
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
-            if (!entity.TryGetComponent(out IPhysBody? physics)) return;
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics)) return;
 
-            physics.BodyType = Value ? BodyType.Static : BodyType.Dynamic;
+            physics.Anchored = Value;
         }
     }
 }

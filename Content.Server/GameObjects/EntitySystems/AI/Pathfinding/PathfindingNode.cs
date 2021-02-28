@@ -6,7 +6,6 @@ using Content.Server.GameObjects.Components.Doors;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
@@ -41,7 +40,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             GenerateMask();
         }
 
-        public static bool IsRelevant(IEntity entity, IPhysBody physicsComponent)
+        public static bool IsRelevant(IEntity entity, IPhysicsComponent physicsComponent)
         {
             if (entity.Transform.GridID == GridId.Invalid ||
                 (PathfindingSystem.TrackedCollisionLayers & physicsComponent.CollisionLayer) == 0)
@@ -257,7 +256,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         /// <param name="entity"></param>
         /// TODO: These 2 methods currently don't account for a bunch of changes (e.g. airlock unpowered, wrenching, etc.)
         /// TODO: Could probably optimise this slightly more.
-        public void AddEntity(IEntity entity, IPhysBody physicsComponent)
+        public void AddEntity(IEntity entity, IPhysicsComponent physicsComponent)
         {
             // If we're a door
             if (entity.HasComponent<AirlockComponent>() || entity.HasComponent<ServerDoorComponent>())
@@ -276,7 +275,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             DebugTools.Assert((PathfindingSystem.TrackedCollisionLayers & physicsComponent.CollisionLayer) != 0);
 
-            if (physicsComponent.BodyType == BodyType.Static)
+            if (!physicsComponent.Anchored)
             {
                 _physicsLayers.Add(entity, physicsComponent.CollisionLayer);
             }

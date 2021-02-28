@@ -21,12 +21,11 @@
     soundHit: /Audio/Effects/bang.ogg
   - type: InteractionOutline
   - type: Physics
-    mass: 50
+    mass: 25
     anchored: false
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.25,0.5,0.25"
       mask:
       - Impassable
       - MobImpassable

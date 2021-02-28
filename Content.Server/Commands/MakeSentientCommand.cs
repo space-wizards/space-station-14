@@ -5,7 +5,6 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Mobs.Speech;
-using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -56,8 +55,7 @@ namespace Content.Server.Commands
             Timer.Spawn(100, () =>
             {
                 entity.EnsureComponent<MindComponent>();
-                entity.EnsureComponent<SharedPlayerInputMoverComponent>();
-                entity.EnsureComponent<SharedPlayerMobMoverComponent>();
+                entity.EnsureComponent<PlayerInputMoverComponent>();
                 entity.EnsureComponent<SharedSpeechComponent>();
                 entity.EnsureComponent<SharedEmotingComponent>();
             });

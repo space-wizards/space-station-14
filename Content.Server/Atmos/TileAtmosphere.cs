@@ -17,7 +17,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
 
@@ -194,12 +193,14 @@ namespace Content.Server.Atmos
 
             foreach (var entity in _gridTileLookupSystem.GetEntitiesIntersecting(GridIndex, GridIndices))
             {
-                if (!entity.TryGetComponent(out IPhysBody physics)
+                if (!entity.TryGetComponent(out IPhysicsComponent physics)
                     || !entity.IsMovedByPressure(out var pressure)
                     || entity.IsInContainer())
                     continue;
 
-                var pressureMovements = physics.Entity.EnsureComponent<MovedByPressureComponent>();
+                physics.WakeBody();
+
+                var pressureMovements = physics.EnsureController<HighPressureMovementController>();
                 if (pressure.LastHighPressureMovementAirCycle < _gridAtmosphereComponent.UpdateCounter)
                 {
                     pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToEntityCoordinates(GridIndex, _mapManager) ?? EntityCoordinates.Invalid);

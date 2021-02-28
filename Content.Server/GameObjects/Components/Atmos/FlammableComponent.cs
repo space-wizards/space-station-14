@@ -15,7 +15,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -135,19 +134,19 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
 
                 var entity = Owner.EntityManager.GetEntity(uid);
-                var physics = Owner.GetComponent<IPhysBody>();
-                var otherPhysics = entity.GetComponent<IPhysBody>();
+                var physics = Owner.GetComponent<IPhysicsComponent>();
+                var otherPhysics = entity.GetComponent<IPhysicsComponent>();
 
-                if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
+                if (!physics.WorldAABB.Intersects(otherPhysics.WorldAABB))
                 {
                     _collided.Remove(uid);
                 }
             }
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        public void CollideWith(IEntity collidedWith)
         {
-            if (!otherBody.Entity.TryGetComponent(out FlammableComponent otherFlammable))
+            if (!collidedWith.TryGetComponent(out FlammableComponent otherFlammable))
                 return;
 
             if (!FireSpread || !otherFlammable.FireSpread)

@@ -1,39 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameTicking;
+﻿using Content.Server.GameObjects.Components.Movement;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class ClimbSystem : EntitySystem, IResettingEntitySystem
+    internal sealed class ClimbSystem : EntitySystem
     {
-        private readonly HashSet<ClimbingComponent> _activeClimbers = new();
-
-        public void AddActiveClimber(ClimbingComponent climbingComponent)
-        {
-            _activeClimbers.Add(climbingComponent);
-        }
-
-        public void RemoveActiveClimber(ClimbingComponent climbingComponent)
-        {
-            _activeClimbers.Remove(climbingComponent);
-        }
-
         public override void Update(float frameTime)
         {
-            foreach (var climber in _activeClimbers.ToArray())
+            foreach (var comp in ComponentManager.EntityQuery<ClimbingComponent>(true))
             {
-                climber.Update();
+                comp.Update();
             }
-        }
-
-        public void Reset()
-        {
-            _activeClimbers.Clear();
         }
     }
 }

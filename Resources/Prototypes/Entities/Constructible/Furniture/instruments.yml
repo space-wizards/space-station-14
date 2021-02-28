@@ -11,9 +11,8 @@
   - type: InteractionOutline
   - type: Anchorable
   - type: Physics
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb {}
+    shapes:
+      - !type:PhysShapeAabb
         layer: [MobMask]
         mask:
           - Impassable

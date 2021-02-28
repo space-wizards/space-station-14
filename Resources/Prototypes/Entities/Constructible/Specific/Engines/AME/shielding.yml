@@ -12,9 +12,8 @@
     sprite: Constructible/Power/ame_shielding.rsi
     state: shield_0
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
+    shapes:
+    - !type:PhysShapeAabb
       layer:
       - Opaque
       - Impassable

@@ -1,6 +1,5 @@
 using System;
 using Content.Shared.GameObjects.Components.Weapons;
-using Content.Shared.Physics;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -32,17 +31,18 @@ namespace Content.Server.GameObjects.Components.Weapon
 
         public static void FlashAreaHelper(IEntity source, float range, float duration, string sound = null)
         {
-            foreach (var entity in source.EntityManager.GetEntitiesInRange(source.Transform.Coordinates, range))
+            foreach (var entity in IoCManager.Resolve<IEntityManager>().GetEntitiesInRange(source.Transform.Coordinates, range))
             {
-                if (!entity.TryGetComponent(out FlashableComponent flashable) ||
-                    !source.InRangeUnobstructed(entity, range, CollisionGroup.Opaque)) continue;
+                if (!source.InRangeUnobstructed(entity, range, popup: true))
+                    continue;
 
-                flashable.Flash(duration);
+                if(entity.TryGetComponent(out FlashableComponent flashable))
+                    flashable.Flash(duration);
             }
 
             if (!string.IsNullOrEmpty(sound))
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(sound, source.Transform.Coordinates);
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>().PlayAtCoords(sound, source.Transform.Coordinates);
             }
         }
     }

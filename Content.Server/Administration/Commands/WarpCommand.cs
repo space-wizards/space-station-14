@@ -8,8 +8,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 
 namespace Content.Server.Administration.Commands
 {
@@ -115,9 +113,9 @@ namespace Content.Server.Administration.Commands
                 if (found.GetGridId(entityManager) != GridId.Invalid)
                 {
                     player.AttachedEntity.Transform.Coordinates = found;
-                    if (player.AttachedEntity.TryGetComponent(out IPhysBody physics))
+                    if (player.AttachedEntity.TryGetComponent(out IPhysicsComponent physics))
                     {
-                        physics.LinearVelocity = Vector2.Zero;
+                        physics.Stop();
                     }
                 }
                 else

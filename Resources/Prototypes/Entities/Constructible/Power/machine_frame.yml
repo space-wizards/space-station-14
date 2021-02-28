@@ -9,10 +9,9 @@
     - type: Physics
       mass: 25
       anchored: true
-      fixtures:
-        - shape:
-            !type:PhysShapeAabb
-              bounds: "-0.5,-0.25,0.5,0.25"
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
           layer:
             - Impassable
             - MobImpassable
@@ -56,10 +55,9 @@
     - type: Physics
       mass: 25
       anchored: true
-      fixtures:
-        - shape:
-            !type:PhysShapeAabb
-              bounds: "-0.5,-0.25,0.5,0.25"
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
           layer:
             - Impassable
             - MobImpassable

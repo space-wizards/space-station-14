@@ -11,9 +11,8 @@
     state: 0
 
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
+    shapes:
+    - !type:PhysShapeAabb
       layer: [MobMask]
   - type: Damageable
     resistances: metallicResistances

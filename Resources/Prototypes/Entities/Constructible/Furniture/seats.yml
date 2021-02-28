@@ -10,10 +10,9 @@
   - type: InteractionOutline
   - type: Physics
     anchored: true
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.25,0.5,0.25"
       mask:
       - Impassable
       - VaultImpassable
@@ -45,10 +44,9 @@
     state: chair
     color: "#8e9799"
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.45, -0.45, 0.05, 0.45"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.45, -0.45, 0.05, 0.45"
       mask:
       - Impassable
       - VaultImpassable
@@ -64,10 +62,9 @@
     state: stool_base
     color: "#8e9799"
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5, -0.25, 0.05, 0.25"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.25, 0.05, 0.25"
       mask:
       - Impassable
       - VaultImpassable
@@ -82,10 +79,9 @@
     state: bar_stool
     color: "white"
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5, -0.2, 0.2, 0.25"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.2, 0.2, 0.25"
       mask:
       - Impassable
       - VaultImpassable
@@ -101,10 +97,9 @@
   - type: Sprite
     state: officechair_white
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.49, -0.25, 0.37, 0.25"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.49, -0.25, 0.37, 0.25"
       mask:
       - Impassable
       - VaultImpassable
@@ -127,10 +122,9 @@
   - type: Sprite
     state: comfychair_preview
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.45, -0.3, 0.35, 0.3"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.45, -0.3, 0.35, 0.3"
       mask:
       - Impassable
       - VaultImpassable
@@ -145,10 +139,9 @@
     state: wooden_chair
     color: "white"
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.37, -0.25, 0.49, 0.24"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.37, -0.25, 0.49, 0.24"
       mask:
       - Impassable
       - VaultImpassable

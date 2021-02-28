@@ -85,22 +85,13 @@ namespace Content.Client.GameObjects.EntitySystems
             foreach (var snapGridComponent in grid.GetSnapGridCell(position, SnapGridOffset.Center))
             {
                 var entity = snapGridComponent.Owner;
-                if (!entity.TryGetComponent(out SubFloorHideComponent subFloorComponent))
+                if (!entity.TryGetComponent(out SubFloorHideComponent subFloorComponent) ||
+                    !entity.TryGetComponent(out ISpriteComponent spriteComponent))
                 {
                     continue;
                 }
 
-                var enabled = EnableAll || !subFloorComponent.Running || tileDef.IsSubFloor;
-
-                if (entity.TryGetComponent(out ISpriteComponent spriteComponent))
-                {
-                    spriteComponent.Visible = enabled;
-                }
-
-                if (entity.TryGetComponent(out PhysicsComponent physicsComponent))
-                {
-                    physicsComponent.CanCollide = enabled;
-                }
+                spriteComponent.Visible = EnableAll || !subFloorComponent.Running || tileDef.IsSubFloor;
             }
         }
     }

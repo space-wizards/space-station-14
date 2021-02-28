@@ -13,9 +13,8 @@
   - type: Physics
     # Mass of 1? Unmovable. Mass of 25? Fine. What on earth is going on?
     mass: 25
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
+    shapes:
+    - !type:PhysShapeAabb
       layer:
       - Opaque
       - Impassable

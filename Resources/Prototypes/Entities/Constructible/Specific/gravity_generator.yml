@@ -18,15 +18,14 @@
   - type: PowerReceiver
     powerLoad: 500
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-1.5,-1.5,1.5,1.5"
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-1.5,-1.5,1.5,1.5"
+        layer:
+        - Opaque
+        - Impassable
+        - MobImpassable
+        - VaultImpassable
   - type: Clickable
   - type: InteractionOutline
   - type: Damageable

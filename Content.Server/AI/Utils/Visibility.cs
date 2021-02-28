@@ -8,7 +8,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Server.AI.Utils
 {
@@ -41,7 +40,7 @@ namespace Content.Server.AI.Utils
                 angle.ToVec(),
                 (int)(CollisionGroup.Opaque | CollisionGroup.Impassable | CollisionGroup.MobImpassable));
 
-            var rayCastResults = EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRay(owner.Transform.MapID, ray, range, owner).ToList();
+            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(owner.Transform.MapID, ray, range, owner).ToList();
 
             return rayCastResults.Count > 0 && rayCastResults[0].HitEntity == target;
         }

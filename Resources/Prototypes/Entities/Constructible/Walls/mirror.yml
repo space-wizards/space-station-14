@@ -9,9 +9,8 @@
   - type: Physics
     mass: 25
     anchored: true
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
+    shapes:
+    - !type:PhysShapeAabb
       layer: [Clickable]
   - type: Clickable
   - type: InteractionOutline

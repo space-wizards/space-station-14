@@ -2,7 +2,6 @@
 using System;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Serialization;
 using RobustPhysics = Robust.Shared.Physics;
 
@@ -12,7 +11,7 @@ namespace Content.Shared.Physics
     ///     Defined collision groups for the physics system.
     /// </summary>
     [Flags, PublicAPI]
-    [FlagsFor(typeof(CollisionLayer)), FlagsFor(typeof(CollisionMask))]
+    [FlagsFor(typeof(RobustPhysics.CollisionLayer)), FlagsFor(typeof(RobustPhysics.CollisionMask))]
     public enum CollisionGroup
     {
 		None            = 0,

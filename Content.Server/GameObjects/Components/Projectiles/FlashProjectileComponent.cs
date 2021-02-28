@@ -1,6 +1,5 @@
 using Content.Server.GameObjects.Components.Weapon;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Projectiles
@@ -32,15 +31,20 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Owner.EnsureComponent<ProjectileComponent>();
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        void ICollideBehavior.CollideWith(IEntity entity)
         {
             if (_flashed)
             {
                 return;
             }
-
             FlashableComponent.FlashAreaHelper(Owner, _range, _duration);
             _flashed = true;
+        }
+
+        // Projectile should handle the deleting
+        void ICollideBehavior.PostCollide(int collisionCount)
+        {
+            return;
         }
     }
 }

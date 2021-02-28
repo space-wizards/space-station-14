@@ -77,7 +77,6 @@ namespace Content.Server.Explosions
 
             var impassableEntities = new List<Tuple<IEntity, float>>();
             var nonImpassableEntities = new List<Tuple<IEntity, float>>();
-            // TODO: Given this seems to rely on physics it should just query directly like everything else.
 
             // The entities are paired with their distance to the epicenter
             // and splitted into two lists based on if they are Impassable or not
@@ -93,7 +92,7 @@ namespace Content.Server.Explosions
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out PhysicsComponent? body) || body.Fixtures.Count < 1)
+                if (!entity.TryGetComponent(out IPhysicsComponent? body) || body.PhysicsShapes.Count < 1)
                 {
                     continue;
                 }

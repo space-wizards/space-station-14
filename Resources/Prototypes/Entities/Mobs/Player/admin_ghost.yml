@@ -4,6 +4,3 @@
   id: AdminObserver
   name: admin observer
   abstract: true
-  components:
-  - type: PlayerInputMover
-    ignorePaused: true

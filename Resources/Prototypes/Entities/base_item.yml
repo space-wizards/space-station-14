@@ -9,23 +9,14 @@
   - type: InteractionOutline
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
-  - type: CollisionWake
-  - type: TileFrictionModifier
-    modifier: 0.5
   - type: Physics
     anchored: false
     mass: 5
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25,-0.25,0.25,0.25"
       layer:
       - Clickable
-      mask:
-      - Impassable
-      - SmallImpassable
-      restitution: 0.8  # We want them items B O U N C Y
-      friction: 0.2
   - type: Sprite
     drawdepth: Items
   - type: Pullable

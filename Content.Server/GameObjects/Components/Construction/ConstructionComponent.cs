@@ -16,7 +16,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
-using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -437,10 +436,10 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
             }
 
-            if (Owner.TryGetComponent(out IPhysBody? physics) &&
-                entity.TryGetComponent(out IPhysBody? otherPhysics))
+            if (Owner.TryGetComponent(out IPhysicsComponent? physics) &&
+                entity.TryGetComponent(out IPhysicsComponent? otherPhysics))
             {
-                otherPhysics.BodyType = physics.BodyType;
+                otherPhysics.Anchored = physics.Anchored;
             }
 
             Owner.Delete();

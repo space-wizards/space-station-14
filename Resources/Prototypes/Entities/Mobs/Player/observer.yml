@@ -11,10 +11,9 @@
   - type: Physics
     anchored: false
     mass: 5
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.35,-0.35,0.35,0.35"
       mask:
       - GhostImpassable
     status: InAir

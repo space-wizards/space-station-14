@@ -20,11 +20,8 @@
   - type: Icon
     state: full
   - type: Physics
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+    shapes:
+    - !type:PhysShapeAabb
       layer:
       - Opaque
       - Impassable

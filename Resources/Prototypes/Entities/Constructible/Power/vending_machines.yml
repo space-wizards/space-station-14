@@ -13,10 +13,9 @@
     netsync: false
   - type: Physics
     anchored: true
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.25,0.5,0.25"
       mask:
       - Impassable
       - MobImpassable

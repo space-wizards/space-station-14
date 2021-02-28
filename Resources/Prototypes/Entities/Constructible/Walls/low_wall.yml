@@ -20,9 +20,8 @@
     sprite: Constructible/Structures/Walls/low_wall.rsi
     state: metal
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
+    shapes:
+    - !type:PhysShapeAabb
       layer:
       - VaultImpassable
       - SmallImpassable

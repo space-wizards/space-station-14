@@ -5,7 +5,6 @@ using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Broadphase;
 
 namespace Content.IntegrationTests.Tests.Utility
 {
@@ -21,10 +20,9 @@ namespace Content.IntegrationTests.Tests.Utility
   name: {BlockerDummyId}
   components:
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: ""-0.49,-0.49,0.49,0.49""
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: ""-0.49,-0.49,0.49,0.49""
       mask:
       - Impassable
 ";
@@ -39,7 +37,6 @@ namespace Content.IntegrationTests.Tests.Utility
 
             var sMapManager = server.ResolveDependency<IMapManager>();
             var sEntityManager = server.ResolveDependency<IEntityManager>();
-            var broady = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SharedBroadPhaseSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -61,7 +58,6 @@ namespace Content.IntegrationTests.Tests.Utility
 
                 // Spawn a blocker with an Impassable mask
                 sEntityManager.SpawnEntity(BlockerDummyId, entityCoordinates);
-                broady.Update(0.016f);
 
                 // Cannot spawn something with an Impassable layer
                 Assert.Null(sEntityManager.SpawnIfUnobstructed(null, entityCoordinates, CollisionGroup.Impassable));

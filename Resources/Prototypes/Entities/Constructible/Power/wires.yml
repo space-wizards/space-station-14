@@ -6,12 +6,10 @@
   components:
   - type: Clickable
   - type: Physics
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5, -0.5, 0.5, 0.5"
-        layer:
-        - Underplating
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5, -0.5, 0.5, 0.5"
+        layer: [ Underplating ]
   - type: InteractionOutline
   - type: SnapGrid
     offset: Center

@@ -183,9 +183,8 @@
   - type: Slippery
     intersectPercentage: 0.2
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.2,-0.2,0.2,0.2"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.2,0.2,0.2"
       layer:
       - MobImpassable

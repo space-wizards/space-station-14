@@ -14,9 +14,8 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(IMobMoverComponent))]
-    public class AiControllerComponent : Component, IMobMoverComponent, IMoverComponent
+    [RegisterComponent, ComponentReference(typeof(IMoverComponent))]
+    public class AiControllerComponent : Component, IMoverComponent
     {
         private float _visionRadius;
 
@@ -108,7 +107,8 @@ namespace Content.Server.GameObjects.Components.Movement
 
         /// <inheritdoc />
         [ViewVariables]
-        public float GrabRange { get; set; } = 0.2f;
+        public float GrabRange => 0.2f;
+
 
         /// <summary>
         ///     Is the entity Sprinting (running)?

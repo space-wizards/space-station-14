@@ -8,10 +8,9 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.5"
         layer: [ Passable ]
   - type: Sprite
     netsync: false

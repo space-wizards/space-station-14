@@ -4,10 +4,9 @@
   name: Atmos Plaque
   components:
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.3,-0.3,0.3,0.3"
       layer:
       - Opaque
       - Impassable

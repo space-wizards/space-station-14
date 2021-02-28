@@ -14,11 +14,10 @@
   - type: Physics
     anchored: false
     edgeslide: false
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.1,-0.1,0.1,0.1"
-      hard: false
+    hard: false
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.1,0.1,0.1"
       layer: [Clickable]
       mask:
       - Impassable
@@ -100,11 +99,10 @@
   - type: Physics
     anchored: false
     edgeslide: false
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.2,-0.2,0.2,0.2"
-      hard: false
+    hard: false
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.2,0.2,0.2"
       layer: 32
       mask: 30
 

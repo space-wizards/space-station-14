@@ -17,9 +17,8 @@
     key: state
     base: state_
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
+    shapes:
+    - !type:PhysShapeAabb
       layer:
       - VaultImpassable
   - type: SnapGrid

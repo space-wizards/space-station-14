@@ -5,7 +5,6 @@ using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -39,7 +38,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         public bool Connectable => !_deleting && Anchored;
 
-        private bool Anchored => !Owner.TryGetComponent<IPhysBody>(out var physics) || physics.BodyType == BodyType.Static;
+        private bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
 
         /// <summary>
         ///    Prevents a node from being used by other nodes while midway through removal.
