@@ -55,7 +55,10 @@ namespace Content.Shared.GameObjects.Components.Movement
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponentWarn<SharedPlayerInputMoverComponent>();
+            if (!Owner.HasComponent<IMoverComponent>())
+            {
+                Owner.EnsureComponentWarn<SharedPlayerInputMoverComponent>();
+            }
         }
 
         public override ComponentState GetComponentState(ICommonSession session)

@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 if (physics.Owner.HasComponent<IMobStateComponent>())
                 {
-                    physics.Status = BodyStatus.InAir;
+                    physics.BodyStatus = BodyStatus.InAir;
 
                     foreach (var fixture in physics.Fixtures)
                     {
@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                         // Uhh if you get race conditions good luck buddy.
                         if (physicsComponent.Owner.HasComponent<IMobStateComponent>())
                         {
-                            physicsComponent.Status = BodyStatus.OnGround;
+                            physicsComponent.BodyStatus = BodyStatus.OnGround;
                         }
 
                         foreach (var fixture in physics.Fixtures)

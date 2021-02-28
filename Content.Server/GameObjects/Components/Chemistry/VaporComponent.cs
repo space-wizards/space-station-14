@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             // Set Move
             if (Owner.TryGetComponent(out PhysicsComponent physics))
             {
-                physics.Status = BodyStatus.InAir;
+                physics.BodyStatus = BodyStatus.InAir;
                 physics.ApplyLinearImpulse(dir * speed);
             }
         }

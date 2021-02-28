@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.PA
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a CollidableComponent");
                 return;
             }
-            physicsComponent.Status = BodyStatus.InAir;
+            physicsComponent.BodyStatus = BodyStatus.InAir;
 
             if (!Owner.TryGetComponent<ProjectileComponent>(out var projectileComponent))
             {

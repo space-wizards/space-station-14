@@ -20,6 +20,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -87,7 +88,7 @@ namespace Content.Server.Physics.Controllers
             if (!gridEntity.TryGetComponent(out PhysicsComponent? physics))
             {
                 physics = gridEntity.AddComponent<PhysicsComponent>();
-                physics.Status = BodyStatus.InAir;
+                physics.BodyStatus = BodyStatus.InAir;
                 physics.Mass = 1;
                 physics.CanCollide = true;
                 physics.AddFixture(new Fixture(physics, new PhysShapeGrid(grid)));

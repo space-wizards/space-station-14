@@ -254,7 +254,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            physicsComponent.Status = BodyStatus.InAir;
+            physicsComponent.BodyStatus = BodyStatus.InAir;
 
             if (!projectile.TryGetComponent<ProjectileComponent>(out var projectileComponent))
             {

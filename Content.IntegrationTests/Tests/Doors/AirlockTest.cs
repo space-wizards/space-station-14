@@ -20,9 +20,10 @@ namespace Content.IntegrationTests.Tests.Doors
   components:
   - type: Physics
     anchored: false
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: ""-0.49,-0.49,0.49,0.49""
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: ""-0.49,-0.49,0.49,0.49""
       layer:
       - Impassable
 
@@ -33,9 +34,10 @@ namespace Content.IntegrationTests.Tests.Doors
   - type: Door
   - type: Airlock
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: ""-0.49,-0.49,0.49,0.49""
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: ""-0.49,-0.49,0.49,0.49""
       mask:
       - Impassable
 ";
@@ -111,6 +113,7 @@ namespace Content.IntegrationTests.Tests.Doors
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
+            IPhysBody physBody = null;
             IEntity physicsDummy = null;
             IEntity airlock = null;
             ServerDoorComponent doorComponent = null;
@@ -127,7 +130,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
                 airlock = entityManager.SpawnEntity("AirlockDummy", new MapCoordinates((0, 0), mapId));
 
-                Assert.True(physicsDummy.TryGetComponent(out IPhysBody physics));
+                Assert.True(physicsDummy.TryGetComponent(out physBody));
 
                 Assert.True(airlock.TryGetComponent(out doorComponent));
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
@@ -136,7 +139,8 @@ namespace Content.IntegrationTests.Tests.Doors
             await server.WaitIdleAsync();
 
             // Push the human towards the airlock
-            //controller.LinearVelocity = (0.5f, 0);
+            Assert.That(physBody != null);
+            physBody.LinearVelocity = (0.5f, 0);
 
             for (var i = 0; i < 240; i += 10)
             {

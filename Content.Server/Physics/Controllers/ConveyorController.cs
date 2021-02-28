@@ -47,7 +47,7 @@ namespace Content.Server.Physics.Controllers
             {
                 if (!comp.CanMove(entity)) continue;
 
-                if (!entity.TryGetComponent(out IPhysBody? physics) || physics.Status == BodyStatus.InAir ||
+                if (!entity.TryGetComponent(out IPhysBody? physics) || physics.BodyStatus == BodyStatus.InAir ||
                     entity.IsWeightless()) continue;
 
                 ownerPos ??= comp.Owner.Transform.WorldPosition;

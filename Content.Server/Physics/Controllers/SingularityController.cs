@@ -51,7 +51,7 @@ namespace Content.Server.Physics.Controllers
 
                     // TODO: Need to essentially use a push vector in a random direction for us PLUS
                     // Any entity colliding with our larger circlebox needs to have an impulse applied to itself.
-                    physics.Status = BodyStatus.InAir;
+                    physics.BodyStatus = BodyStatus.InAir;
                     MoveSingulo(singularity, physics);
                 }
             }

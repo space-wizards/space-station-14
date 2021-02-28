@@ -50,7 +50,7 @@ namespace Content.Shared.Physics.Controllers
             {
                 var speed = body.LinearVelocity.Length;
 
-                if (speed <= 0.0f || body.Status == BodyStatus.InAir) continue;
+                if (speed <= 0.0f || body.BodyStatus == BodyStatus.InAir) continue;
 
                 // This is the *actual* amount that speed will drop by, we just do some multiplication around it to be easier.
                 var drop = 0.0f;
@@ -88,7 +88,7 @@ namespace Content.Shared.Physics.Controllers
         [Pure]
         private float GetTileFriction(IPhysBody body)
         {
-            if (body.Status == BodyStatus.OnGround)
+            if (body.BodyStatus == BodyStatus.InAir)
                 return 0.0f;
 
             var transform = body.Owner.Transform;

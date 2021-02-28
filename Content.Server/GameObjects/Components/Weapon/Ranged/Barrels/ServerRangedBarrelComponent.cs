@@ -385,7 +385,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
 
                 var physics = projectile.GetComponent<IPhysBody>();
-                physics.Status = BodyStatus.InAir;
+                physics.BodyStatus = BodyStatus.InAir;
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);

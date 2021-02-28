@@ -96,7 +96,7 @@ namespace Content.Shared.Physics.Controllers
 
         public static bool UseMobMovement(SharedBroadPhaseSystem broadPhaseSystem, PhysicsComponent body, IPhysicsManager? physicsManager = null)
         {
-            return (body.Status == BodyStatus.OnGround) &
+            return (body.BodyStatus == BodyStatus.OnGround) &
                    body.Owner.HasComponent<IMobStateComponent>() &&
                    ActionBlockerSystem.CanMove(body.Owner) &&
                    (!body.Owner.IsWeightless(physicsManager) ||
