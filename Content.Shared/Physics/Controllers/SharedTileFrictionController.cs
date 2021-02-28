@@ -88,7 +88,7 @@ namespace Content.Shared.Physics.Controllers
         [Pure]
         private float GetTileFriction(IPhysBody body)
         {
-            if (body.BodyStatus == BodyStatus.InAir)
+            if (body.BodyStatus == BodyStatus.InAir || body.Entity.Transform.GridID == GridId.Invalid)
                 return 0.0f;
 
             var transform = body.Owner.Transform;
