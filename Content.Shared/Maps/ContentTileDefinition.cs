@@ -23,23 +23,23 @@ namespace Content.Shared.Maps
 
         public ushort TileId { get; private set; }
 
-        [DataField("display_name")] public string DisplayName { get; } = string.Empty;
+        [field: DataField("display_name")] public string DisplayName { get; } = string.Empty;
 
-        [DataField("texture")] public string SpriteName { get; } = string.Empty;
+        [field: DataField("texture")] public string SpriteName { get; } = string.Empty;
 
         [DataField("is_subfloor")] public bool IsSubFloor { get; private set; }
 
-        [DataField("base_turfs")] public List<string> BaseTurfs { get; } = new();
+        [field: DataField("base_turfs")] public List<string> BaseTurfs { get; } = new();
 
         [DataField("can_crowbar")] public bool CanCrowbar { get; private set; }
 
-        [DataField("footstep_sounds")] public string FootstepSounds { get; } = string.Empty;
+        [field: DataField("footstep_sounds")] public string FootstepSounds { get; } = string.Empty;
 
         [DataField("friction")] public float Friction { get; set; }
 
         [DataField("thermalConductivity")] public float ThermalConductivity { get; set; } = 0.05f;
 
-        [DataField("item_drop")] public string ItemDropPrototypeName { get; } = "FloorTileItemSteel";
+        [field: DataField("item_drop")] public string ItemDropPrototypeName { get; } = "FloorTileItemSteel";
 
         [DataField("is_space")] public bool IsSpace { get; private set; }
 

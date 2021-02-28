@@ -17,6 +17,6 @@ namespace Content.Shared.Prototypes
         [field: DataField("parent")]
         public string? Parent { get; }
 
-        [DataField("values")] public IReadOnlyList<string> Values { get; } = new List<string>();
+        [field: DataField("values")] public IReadOnlyList<string> Values { get; } = new List<string>();
     }
 }

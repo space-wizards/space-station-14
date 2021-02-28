@@ -35,7 +35,7 @@ namespace Content.Server.AI.Utility.AiLogic
         /// <summary>
         ///     The sum of all BehaviorSets gives us what actions the AI can take
         /// </summary>
-        [DataField("behaviorSets")]
+        [field: DataField("behaviorSets")]
         public HashSet<string> BehaviorSets { get; } = new();
 
         public List<IAiUtility> AvailableActions { get; set; } = new();
@@ -64,7 +64,7 @@ namespace Content.Server.AI.Utility.AiLogic
         /// </summary>
         private bool _isDead;
 
-        public void AfterDeserialization()
+        /*public void AfterDeserialization()
         {
             if (BehaviorSets.Count > 0)
             {
@@ -77,10 +77,22 @@ namespace Content.Server.AI.Utility.AiLogic
 
                 behaviorManager.RebuildActions(this);
             }
-        }
+        }*/
 
         public override void Initialize()
         {
+            if (BehaviorSets.Count > 0)
+            {
+                var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
+
+                foreach (var bSet in BehaviorSets)
+                {
+                    behaviorManager.AddBehaviorSet(this, bSet, false);
+                }
+
+                behaviorManager.RebuildActions(this);
+            }
+
             base.Initialize();
             _planCooldownRemaining = PlanCooldown;
             _blackboard = new Blackboard(Owner);

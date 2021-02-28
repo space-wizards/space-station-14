@@ -19,7 +19,7 @@ namespace Content.Shared.Construction
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [DataField("parent")] public string Parent { get; }
+        [field: DataField("parent")] public string Parent { get; }
 
         [ViewVariables]
         [field: DataField("start")]

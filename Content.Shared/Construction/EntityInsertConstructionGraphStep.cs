@@ -7,7 +7,7 @@ namespace Content.Shared.Construction
     [DataDefinition]
     public abstract class EntityInsertConstructionGraphStep : ConstructionGraphStep
     {
-        [DataField("store")] public string Store { get; } = string.Empty;
+        [field: DataField("store")] public string Store { get; } = string.Empty;
 
         public abstract bool EntityValid(IEntity entity);
     }
