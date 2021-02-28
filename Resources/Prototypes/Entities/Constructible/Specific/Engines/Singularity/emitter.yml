@@ -8,8 +8,8 @@
   - type: InteractionOutline
   - type: Clickable
   - type: Physics
+    anchored: false
     mass: 25
-    anchored: true
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
