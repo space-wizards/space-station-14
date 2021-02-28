@@ -77,10 +77,10 @@ namespace Content.Shared.GameObjects.Components.Atmos
         {
             return shape switch
             {
-                PipeShape.Half => PipeDirection.East,
-                PipeShape.Straight => PipeDirection.Lateral,
-                PipeShape.Bend => PipeDirection.SEBend,
-                PipeShape.TJunction => PipeDirection.TEast,
+                PipeShape.Half => PipeDirection.South,
+                PipeShape.Straight => PipeDirection.Longitudinal,
+                PipeShape.Bend => PipeDirection.SWBend,
+                PipeShape.TJunction => PipeDirection.TSouth,
                 PipeShape.Fourway => PipeDirection.Fourway,
                 _ => throw new ArgumentOutOfRangeException(nameof(shape), $"{shape} does not have an associated {nameof(PipeDirection)}."),
             };
@@ -98,14 +98,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
 
         public static Angle ToAngle(this PipeDirection pipeDirection)
         {
-            return pipeDirection switch
-            {
-                PipeDirection.East  => Angle.FromDegrees(0),
-                PipeDirection.North => Angle.FromDegrees(90),
-                PipeDirection.West  => Angle.FromDegrees(180),
-                PipeDirection.South => Angle.FromDegrees(270),
-                _ => throw new ArgumentOutOfRangeException(nameof(pipeDirection), $"{pipeDirection} does not have an associated angle."),
-            };
+            return pipeDirection.ToDirection().ToAngle();
         }
 
         public static PipeDirection ToPipeDirection(this Direction direction)
