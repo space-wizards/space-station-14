@@ -13,7 +13,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Botany
 {
     [RegisterComponent]
-    public class SeedComponent : Component, IExamine, ISerializationHooks
+    public class SeedComponent : Component, IExamine
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -23,14 +23,10 @@ namespace Content.Server.GameObjects.Components.Botany
         private string? _seedName;
 
         [ViewVariables]
-        public Seed? Seed { get; set; }
-
-        void ISerializationHooks.AfterDeserialization()
+        public Seed? Seed
         {
-            if (_seedName != null)
-            {
-                Seed = IoCManager.Resolve<IPrototypeManager>().Index<Seed>(_seedName);
-            }
+            get => _seedName != null ? IoCManager.Resolve<IPrototypeManager>().Index<Seed>(_seedName) : null;
+            set => _seedName = value?.ID;
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
