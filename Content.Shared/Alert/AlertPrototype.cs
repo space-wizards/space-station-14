@@ -80,7 +80,7 @@ namespace Content.Shared.Alert
         /// no severity levels are supported by the state.
         /// </summary>
         [DataField("maxSeverity")]
-        public short MaxSeverity { get; private set; } = -1;
+        public short MaxSeverity = -1;
 
         /// <summary>
         /// Indicates whether this state support severity levels

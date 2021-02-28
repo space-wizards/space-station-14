@@ -53,7 +53,7 @@ namespace Content.Shared.Actions
         /// </summary>
         public ITargetPointItemAction TargetPointAction { get; private set; } = default!;
 
-        [DataField("behavior", readOnly: true)]
+        [DataField("behavior", readOnly: true, serverOnly: true)]
         public IItemActionBehavior? ItemActionBehavior { get; private set; }
 
         public override string ID => ActionType.ToString();

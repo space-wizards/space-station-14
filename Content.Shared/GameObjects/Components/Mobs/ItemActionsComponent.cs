@@ -238,7 +238,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <summary>
         /// Whether action is initially enabled on this item. Defaults to true.
         /// </summary>
-        public bool Enabled { get; private set; }
+        public bool Enabled { get; private set; } = true;
 
         public void AfterDeserialization()
         {

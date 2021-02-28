@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         public override string Name => "SignalTransmitter";
 
         private List<SignalReceiverComponent> _unresolvedReceivers;
-        private List<SignalReceiverComponent> _receivers;
+        private List<SignalReceiverComponent> _receivers = new();
 
         /// <summary>
         /// 0 is unlimited range

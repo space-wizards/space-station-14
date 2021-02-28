@@ -36,13 +36,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
 
+        private const int DefaultCapacity = 6;
         [field: DataField("capacity")]
-        public override int Capacity { get; } = 6;
+        public override int Capacity { get; } = DefaultCapacity;
 
         // Even a point having a chamber? I guess it makes some of the below code cleaner
         private ContainerSlot _chamberContainer;
-        //todo paul wat [DataClassTarget("spawnedAmmo")]
-        private Stack<IEntity> _spawnedAmmo;
+        private Stack<IEntity> _spawnedAmmo = new (DefaultCapacity-1);
         private Container _ammoContainer;
 
         [ViewVariables]

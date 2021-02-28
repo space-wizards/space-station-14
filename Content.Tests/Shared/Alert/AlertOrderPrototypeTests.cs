@@ -14,6 +14,7 @@ namespace Content.Tests.Shared.Alert
     {
         const string PROTOTYPES = @"
 - type: alertOrder
+  id: testAlertOrder
   order:
     - alertType: Handcuffed
     - category: Pressure

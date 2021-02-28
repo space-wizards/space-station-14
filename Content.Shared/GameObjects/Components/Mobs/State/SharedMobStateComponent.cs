@@ -34,7 +34,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         ///     Ordered from lowest to highest.
         /// </summary>
         [ViewVariables]
-        [DataField("states")]
+        [DataField("thresholds")]
         private readonly SortedDictionary<int, IMobState> _lowestToHighestStates = default!;
 
         // TODO Remove Nullability?

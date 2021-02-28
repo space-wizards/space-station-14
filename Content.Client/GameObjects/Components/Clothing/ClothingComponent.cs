@@ -36,6 +36,8 @@ namespace Content.Client.GameObjects.Components.Clothing
 
                 _clothingEquippedPrefix = value;
 
+                if(!Initialized) return;
+
                 if (!Owner.TryGetContainer(out IContainer? container))
                     return;
                 if (!container.Owner.TryGetComponent(out ClientInventoryComponent? inventory))
@@ -45,6 +47,12 @@ namespace Content.Client.GameObjects.Components.Clothing
 
                 inventory.SetSlotVisuals(slots.Value, Owner);
             }
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            ClothingEquippedPrefix = ClothingEquippedPrefix;
         }
 
         [ViewVariables(VVAccess.ReadWrite)]

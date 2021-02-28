@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components
     /// This AnimationTrack derivative does not rely on keyframes since it often needs to have a randomized duration.
     /// </summary>
     [Serializable]
-    [DataDefinition]
+    [ImplicitDataDefinitionForInheritors]
     public abstract class LightBehaviourAnimationTrack : AnimationTrackProperty
     {
         [DataField("id")] [ViewVariables] public string ID { get; set; } = string.Empty;

@@ -15,11 +15,9 @@ namespace Content.Shared.Chemistry
     [Prototype("reaction")]
     public class ReactionPrototype : IPrototype
     {
-        [Dependency] private readonly IModuleManager _moduleManager = default!;
-
         [DataField("reactants")] private Dictionary<string, ReactantPrototype> _reactants = new();
         [DataField("products")] private Dictionary<string, ReagentUnit> _products = new();
-        [DataField("effects")] private List<IReactionEffect> _effects = new();
+        [DataField("effects", serverOnly: true)] private List<IReactionEffect> _effects = new();
 
         [ViewVariables]
         [field: DataField("id", required: true)]
