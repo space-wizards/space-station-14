@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿#nullable enable
+using System;
+using System.IO;
 using Lidgren.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -16,7 +18,7 @@ namespace Content.Shared.Network.NetMessages
 
             #endregion
 
-            public string[] Events;
+            public string[] Events = Array.Empty<string>();
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {

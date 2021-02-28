@@ -14,7 +14,7 @@ namespace Content.Client.GameObjects.Components.Buckle
 
         public override bool Buckled => _buckled;
 
-        public override bool TryBuckle(IEntity user, IEntity to)
+        public override bool TryBuckle(IEntity? user, IEntity to)
         {
             // TODO: Prediction
             return false;

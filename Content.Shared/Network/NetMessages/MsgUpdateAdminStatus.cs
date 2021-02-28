@@ -1,4 +1,6 @@
-﻿using Content.Shared.Administration;
+﻿#nullable enable
+using System;
+using Content.Shared.Administration;
 using Lidgren.Network;
 using Robust.Shared.Network;
 
@@ -15,8 +17,8 @@ namespace Content.Shared.Network.NetMessages
 
         #endregion
 
-        public AdminData Admin;
-        public string[] AvailableCommands;
+        public AdminData? Admin;
+        public string[] AvailableCommands = Array.Empty<string>();
 
         public override void ReadFromBuffer(NetIncomingMessage buffer)
         {
@@ -55,16 +57,14 @@ namespace Content.Shared.Network.NetMessages
                 buffer.Write(cmd);
             }
 
-            var isAdmin = Admin != null;
-            buffer.Write(isAdmin);
+            buffer.Write(Admin != null);
 
-            if (isAdmin)
-            {
-                buffer.Write(Admin.Active);
-                buffer.WritePadBits();
-                buffer.Write((uint) Admin.Flags);
-                buffer.Write(Admin.Title);
-            }
+            if (Admin == null) return;
+
+            buffer.Write(Admin.Active);
+            buffer.WritePadBits();
+            buffer.Write((uint) Admin.Flags);
+            buffer.Write(Admin.Title);
         }
 
         public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;

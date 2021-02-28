@@ -1,20 +1,22 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Prototypes
 {
     [Prototype("dataset")]
     public class DatasetPrototype : IPrototype
     {
-        [DataField("id")]
-        private string _id;
-        public string ID => _id;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        [DataField("values")]
-        private List<string> _values;
-        public IReadOnlyList<string> Values => _values;
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
+
+        [DataField("values")] public IReadOnlyList<string> Values { get; } = new List<string>();
     }
 }

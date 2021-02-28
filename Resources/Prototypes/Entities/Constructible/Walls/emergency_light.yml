@@ -18,7 +18,8 @@
   - type: EmergencyLight
   - type: Sprite
     sprite: Constructible/Lighting/emergency_light.rsi
-    state: emergency_light_off
+    layers:
+    - state: emergency_light_off
   placement:
     snap:
     - Wallmount

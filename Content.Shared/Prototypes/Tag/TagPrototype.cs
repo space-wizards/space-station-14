@@ -1,7 +1,7 @@
 ﻿#nullable enable
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Prototypes.Tag
 {
@@ -13,7 +13,12 @@ namespace Content.Shared.Prototypes.Tag
     [Prototype("Tag")]
     public class TagPrototype : IPrototype
     {
-        [DataField("id", required: true)]
-        public string ID { get; [UsedImplicitly] private set; } = string.Empty;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
     }
 }

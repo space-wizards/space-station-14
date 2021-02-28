@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Shared.IoC;
@@ -6,30 +7,37 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Research
 {
     [NetSerializable, Serializable, Prototype("latheRecipe")]
     public class LatheRecipePrototype : IPrototype
     {
-        [DataField("name")]
-        private string _name;
-        [DataField("id")]
-        private string _id;
-        [DataField("icon")]
-        private SpriteSpecifier _icon = SpriteSpecifier.Invalid;
-        [DataField("description")]
-        private string _description;
-        [DataField("result")]
-        private string _result;
-        [DataField("completetime")]
-        private int _completeTime = 2500;
-        [DataField("materials")]
-        private Dictionary<string, int> _requiredMaterials = new();
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
         [ViewVariables]
-        public string ID => _id;
+        [field: DataField("parent")]
+        public string? Parent { get; }
+
+        [DataField("name")]
+        private string _name = string.Empty;
+
+        [DataField("icon")]
+        private SpriteSpecifier _icon = SpriteSpecifier.Invalid;
+
+        [DataField("description")]
+        private string _description = string.Empty;
+
+        [DataField("result")]
+        private string _result = string.Empty;
+
+        [DataField("completetime")]
+        private int _completeTime = 2500;
+
+        [DataField("materials")]
+        private Dictionary<string, int> _requiredMaterials = new();
 
         /// <summary>
         ///     Name displayed in the lathe GUI.
@@ -42,7 +50,7 @@ namespace Content.Shared.Research
                 if (_name.Trim().Length != 0) return _name;
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
                 if (protoMan == null) return _description;
-                protoMan.TryIndex(_result, out EntityPrototype prototype);
+                protoMan.TryIndex(_result, out EntityPrototype? prototype);
                 if (prototype?.Name != null)
                     _name = prototype.Name;
                 return _name;
@@ -60,7 +68,7 @@ namespace Content.Shared.Research
                 if (_description.Trim().Length != 0) return _description;
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
                 if (protoMan == null) return _description;
-                protoMan.TryIndex(_result, out EntityPrototype prototype);
+                protoMan.TryIndex(_result, out EntityPrototype? prototype);
                 if (prototype?.Description != null)
                     _description = prototype.Description;
                 return _description;

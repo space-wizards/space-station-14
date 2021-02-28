@@ -64,6 +64,8 @@ namespace Content.Shared.GameObjects.Components.Body
 
         public override void Initialize()
         {
+            base.Initialize();
+
             // TODO BODY BeforeDeserialization
             // TODO BODY Move to template or somewhere else
             var template = _prototypeManager.Index<BodyTemplatePrototype>(TemplateName);

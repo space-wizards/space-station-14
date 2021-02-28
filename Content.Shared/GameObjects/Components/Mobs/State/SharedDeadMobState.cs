@@ -1,4 +1,5 @@
-﻿namespace Content.Shared.GameObjects.Components.Mobs.State
+﻿#nullable enable
+namespace Content.Shared.GameObjects.Components.Mobs.State
 {
     public abstract class SharedDeadMobState : BaseMobState
     {

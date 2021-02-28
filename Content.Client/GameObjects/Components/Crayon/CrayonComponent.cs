@@ -15,7 +15,7 @@ namespace Content.Client.GameObjects.Components.Crayon
     public class CrayonComponent : SharedCrayonComponent, IItemStatus
     {
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
-        [ViewVariables(VVAccess.ReadWrite)] private Color Color => _color;
+        [ViewVariables(VVAccess.ReadWrite)] private string Color => _color;
         [ViewVariables] private int Charges { get; set; }
         [ViewVariables] private int Capacity { get; set; }
 

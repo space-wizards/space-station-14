@@ -1,8 +1,10 @@
 using System;
+using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Players;
-using Robust.Shared.Reflection;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -11,15 +13,18 @@ namespace Content.Shared.GameObjects.Components
 {
     public abstract class SharedStackComponent : Component, ISerializationHooks
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         private const string SerializationCache = "stack";
 
         public sealed override string Name => "Stack";
         public sealed override uint? NetID => ContentNetIDs.STACK;
 
         [DataField("count")]
-        private int _count = 50;
+        private int _count = 30;
+
         [DataField("max")]
-        private int _maxCount = 50;
+        private int _maxCount = 30;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public virtual int Count
@@ -50,29 +55,19 @@ namespace Content.Shared.GameObjects.Components
 
         [ViewVariables] public int AvailableSpace => MaxCount - Count;
 
-        [DataField("stacktype")] public string StackTypeId;
-
         [ViewVariables]
-        public object StackType
+        [field: DataField("stacktype")]
+        public string StackTypeId { get; } = string.Empty;
+
+        public StackPrototype StackType => _prototypeManager.Index<StackPrototype>(StackTypeId);
+
+        protected override void Startup()
         {
-            get => _stackType ?? Owner.Prototype?.ID;
-            private set => _stackType = value;
-        }
+            base.Startup();
 
-        private object _stackType;
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            var reflection = IoCManager.Resolve<IReflectionManager>();
-
-            if (StackTypeId != null &&
-                reflection.TryParseEnumReference(StackTypeId, out var @enum))
+            if (!_prototypeManager.HasIndex<StackPrototype>(StackTypeId))
             {
-                StackType = @enum;
-            }
-            else
-            {
-                StackType = StackTypeId;
+                Logger.Error($"No {nameof(StackPrototype)} found with id {StackTypeId} for {Owner.Prototype?.ID ?? Owner.Name}");
             }
         }
 
@@ -105,35 +100,5 @@ namespace Content.Shared.GameObjects.Components
                 MaxCount = maxCount;
             }
         }
-    }
-
-    public enum StackType
-    {
-        Metal,
-        Glass,
-        ReinforcedGlass,
-        Plasteel,
-        Cable,
-        Wood,
-        Plastic,
-        MVCable,
-        HVCable,
-        Gold,
-        Plasma,
-        Ointment,
-        Gauze,
-        Brutepack,
-        FloorTileSteel,
-        FloorTileCarpet,
-        FloorTileWhite,
-        FloorTileDark,
-        FloorTileWood,
-        MetalRod,
-        PaperRolling,
-        CigaretteFilter,
-        GroundTobacco,
-        GroundCannabis,
-        LeavesTobaccoDried,
-        LeavesCannabisDried
     }
 }

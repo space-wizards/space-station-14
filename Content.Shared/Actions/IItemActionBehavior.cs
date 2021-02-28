@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 
@@ -33,7 +34,7 @@ namespace Content.Shared.Actions
         /// <summary>
         /// Item actions component of the item.
         /// </summary>
-        public readonly ItemActionsComponent ItemActions;
+        public readonly ItemActionsComponent? ItemActions;
 
         public ItemActionEventArgs(IEntity performer, IEntity item, ItemActionType actionType)
         {

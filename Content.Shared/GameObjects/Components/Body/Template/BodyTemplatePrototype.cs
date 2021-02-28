@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Prototypes;
@@ -16,34 +17,38 @@ namespace Content.Shared.GameObjects.Components.Body.Template
     public class BodyTemplatePrototype : IPrototype, ISerializationHooks
     {
         [DataField("slots")]
-        private Dictionary<string, BodyPartType> _slots;
+        private Dictionary<string, BodyPartType> _slots = new();
 
         [DataField("connections")]
-        private Dictionary<string, List<string>> _rawConnections;
+        private Dictionary<string, List<string>> _rawConnections = new();
 
         [DataField("layers")]
-        private Dictionary<string, string> _layers;
+        private Dictionary<string, string> _layers = new();
 
         [DataField("mechanismLayers")]
-        private Dictionary<string, string> _mechanismLayers;
+        private Dictionary<string, string> _mechanismLayers = new();
 
         [ViewVariables]
         [field: DataField("id", required: true)]
-        public string ID { get; }
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         [ViewVariables]
         [field: DataField("name")]
-        public string Name { get; }
+        public string Name { get; } = string.Empty;
 
         [ViewVariables]
         [field: DataField("centerSlot")]
-        public string CenterSlot { get; }
+        public string CenterSlot { get; } = string.Empty;
 
         [ViewVariables]
         public Dictionary<string, BodyPartType> Slots => new(_slots);
 
         [ViewVariables]
-        public Dictionary<string, List<string>> Connections { get; set; }
+        public Dictionary<string, List<string>> Connections { get; set; } = new();
 
         [ViewVariables]
         public Dictionary<string, string> Layers => new(_layers);
@@ -51,7 +56,7 @@ namespace Content.Shared.GameObjects.Components.Body.Template
         [ViewVariables]
         public Dictionary<string, string> MechanismLayers => new(_mechanismLayers);
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             //Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
             //The user only has to do one. We want it to be that way in the code, though, so this cleans that up.

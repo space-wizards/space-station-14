@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Threading;
 using Content.Shared.Alert;
@@ -32,13 +33,18 @@ namespace Content.Shared.GameObjects.Components.Mobs
               (TimeSpan.FromSeconds(Math.Max(StunnedTimer, Math.Max(KnockdownTimer, SlowdownTimer))));
 
         private bool _canHelp = true;
+
         [DataField("stunCap")]
         protected float _stunCap = 20f;
+
         [DataField("knockdownCap")]
         protected float _knockdownCap = 20f;
+
         [DataField("slowdownCap")]
         protected float _slowdownCap = 20f;
+
         private float _helpKnockdownRemove = 1f;
+
         [DataField("helpInterval")]
         private float _helpInterval = 1f;
 
@@ -46,8 +52,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         protected float KnockdownTimer;
         protected float SlowdownTimer;
 
-        [DataField("stunAlertId")]
-        private string _stunAlertId = "stun";
+        [DataField("stunAlertId")] private string _stunAlertId = "stun";
 
         protected CancellationTokenSource StatusRemoveCancellation = new();
 
@@ -189,7 +194,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             SlowdownTimer = seconds;
             LastStun = _gameTiming.CurTime;
 
-            if (Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
+            if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movement))
                 movement.RefreshMovementSpeedModifiers();
 
             SetAlert();
@@ -198,7 +203,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         private void SetAlert()
         {
-            if (!Owner.TryGetComponent(out SharedAlertsComponent status))
+            if (!Owner.TryGetComponent(out SharedAlertsComponent? status))
             {
                 return;
             }

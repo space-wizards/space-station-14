@@ -15,7 +15,13 @@ namespace Content.Server.Holiday
     {
         [ViewVariables] [DataField("name")] public string Name { get; private set; } = string.Empty;
 
-        [ViewVariables] [DataField("id")] public string ID { get; private set; } = string.Empty;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         [ViewVariables]
         [DataField("beginDay")]

@@ -13,7 +13,7 @@ namespace Content.Shared.Construction.ConstructionConditions
     [DataDefinition]
     public class TileType : IConstructionCondition
     {
-        [DataField("targets")] public List<string>? TargetTiles { get; private set; }
+        [DataField("targets")] public List<string> TargetTiles { get; private set; } = new();
 
         public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
         {

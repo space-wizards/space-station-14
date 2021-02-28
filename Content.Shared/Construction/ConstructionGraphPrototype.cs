@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Construction
 {
@@ -17,15 +14,16 @@ namespace Content.Shared.Construction
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
         private readonly Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]> _paths = new();
         private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode>> _pathfinding = new();
-        [DataField("start")]
-        private readonly string _start;
 
         [ViewVariables]
-        [DataField("id")]
-        public string ID { get; private set; }
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [DataField("parent")] public string Parent { get; }
 
         [ViewVariables]
-        public string Start => _start;
+        [field: DataField("start")]
+        public string Start { get; }
 
         [DataField("graph", priority: 2)]
         private List<ConstructionGraphNode> _nodeYamlInterface

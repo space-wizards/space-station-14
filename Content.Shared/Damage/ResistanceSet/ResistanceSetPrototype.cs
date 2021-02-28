@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -14,22 +15,24 @@ namespace Content.Shared.Damage.ResistanceSet
     [Serializable, NetSerializable]
     public class ResistanceSetPrototype : IPrototype, ISerializationHooks
     {
-        [DataField("coefficients")]
-        private Dictionary<DamageType, float> _coefficients;
+        [ViewVariables]
+        [field: DataField("coefficients")]
+        public Dictionary<DamageType, float> Coefficients { get; } = new();
 
-        [DataField("flatReductions")]
-        private Dictionary<DamageType, int> _flatReductions;
+        [ViewVariables]
+        [field: DataField("flatReductions")]
+        public Dictionary<DamageType, int> FlatReductions { get; } = new();
 
-        [DataField("id", required: true)]
-        private string _id;
+        [ViewVariables]
+        public Dictionary<DamageType, ResistanceSetSettings> Resistances { get; private set; } = new();
 
-        [ViewVariables] public Dictionary<DamageType, float> Coefficients => _coefficients;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        [ViewVariables] public Dictionary<DamageType, int> FlatReductions => _flatReductions;
-
-        [ViewVariables] public Dictionary<DamageType, ResistanceSetSettings> Resistances { get; private set; }
-
-        [ViewVariables] public string ID => _id;
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         public void AfterDeserialization()
         {
@@ -37,7 +40,7 @@ namespace Content.Shared.Damage.ResistanceSet
             foreach (var damageType in (DamageType[]) Enum.GetValues(typeof(DamageType)))
             {
                 Resistances.Add(damageType,
-                    new ResistanceSetSettings(_coefficients[damageType], _flatReductions[damageType]));
+                    new ResistanceSetSettings(Coefficients[damageType], FlatReductions[damageType]));
             }
         }
     }

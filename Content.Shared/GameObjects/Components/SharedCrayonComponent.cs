@@ -1,11 +1,12 @@
-﻿using Robust.Shared.GameObjects;
+#nullable enable
+using System;
+using System.Collections.Generic;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using System;
-using System.Collections.Generic;
 using Robust.Shared.Serialization.Manager.Attributes;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components
 {
@@ -14,9 +15,10 @@ namespace Content.Shared.GameObjects.Components
         public override string Name => "Crayon";
         public override uint? NetID => ContentNetIDs.CRAYONS;
 
-        public string SelectedState { get; set; }
+        public string SelectedState { get; set; } = string.Empty;
+
         [DataField("color")]
-        protected Color _color = Color.White;
+        protected string _color = "white";
 
         [Serializable, NetSerializable]
         public enum CrayonUiKey
@@ -46,12 +48,12 @@ namespace Content.Shared.GameObjects.Components
     [Serializable, NetSerializable]
     public class CrayonComponentState : ComponentState
     {
-        public readonly Color Color;
+        public readonly string Color;
         public readonly string State;
         public readonly int Charges;
         public readonly int Capacity;
 
-        public CrayonComponentState(Color color, string state, int charges, int capacity) : base(ContentNetIDs.CRAYONS)
+        public CrayonComponentState(string color, string state, int charges, int capacity) : base(ContentNetIDs.CRAYONS)
         {
             Color = color;
             State = state;
@@ -75,15 +77,16 @@ namespace Content.Shared.GameObjects.Components
     [Serializable, NetSerializable, Prototype("crayonDecal")]
     public class CrayonDecalPrototype : IPrototype
     {
-        [DataField("id", required: true)]
-        public string ID { get; private set; }
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        [DataField("spritePath")]
-        private string _spritePath;
-        public string SpritePath => _spritePath;
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
-        [DataField("decals")]
-        private List<string> _decals;
-        public List<string> Decals => _decals;
+        [field: DataField("spritePath")] public string SpritePath { get; } = string.Empty;
+
+        [field: DataField("decals")] public List<string> Decals { get; } = new();
     }
 }

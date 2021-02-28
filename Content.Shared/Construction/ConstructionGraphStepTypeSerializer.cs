@@ -51,7 +51,7 @@ namespace Content.Shared.Construction
                 throw new ArgumentException("Tried to convert invalid YAML node mapping to ConstructionGraphStep!");
             }
 
-            return DeserializationResult.Value(serializationManager.ReadValueOrThrow<ConstructionGraphStep>(type, node));
+            return new DeserializedValue<ConstructionGraphStep>(serializationManager.ReadValueOrThrow<ConstructionGraphStep>(type, node));
         }
     }
 }

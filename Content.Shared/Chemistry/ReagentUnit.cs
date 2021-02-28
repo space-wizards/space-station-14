@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Globalization;
 using System.Linq;
@@ -204,7 +205,7 @@ namespace Content.Shared.Chemistry
             return reagent < min ? min : reagent > max ? max : reagent;
         }
 
-        public override readonly bool Equals(object obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is ReagentUnit unit &&
                    _value == unit._value;

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.Research;
@@ -12,6 +13,8 @@ namespace Content.Shared.GameObjects.Components.Research
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
     public class SharedProtolatheDatabaseComponent : SharedLatheDatabaseComponent, ISerializationHooks
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override string Name => "ProtolatheDatabase";
 
         public sealed override uint? NetID => ContentNetIDs.PROTOLATHE_DATABASE;
@@ -21,29 +24,13 @@ namespace Content.Shared.GameObjects.Components.Research
         /// <summary>
         ///    A full list of recipes this protolathe can print.
         /// </summary>
-        public List<LatheRecipePrototype> ProtolatheRecipes { get; } = new();
-
-        void ISerializationHooks.BeforeSerialization()
+        public IEnumerable<LatheRecipePrototype> ProtolatheRecipes
         {
-            var list = new List<string>();
-
-            foreach (var recipe in ProtolatheRecipes)
+            get
             {
-                list.Add(recipe.ID);
-            }
-
-            _recipeIds = list;
-        }
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-            foreach (var id in _recipeIds)
-            {
-                if (prototypeManager.TryIndex(id, out LatheRecipePrototype recipe))
+                foreach (var id in _recipeIds)
                 {
-                    ProtolatheRecipes.Add(recipe);
+                    yield return _prototypeManager.Index<LatheRecipePrototype>(id);
                 }
             }
         }

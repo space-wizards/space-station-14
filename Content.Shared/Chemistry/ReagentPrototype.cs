@@ -10,6 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry
 {
@@ -34,8 +35,13 @@ namespace Content.Shared.Chemistry
         [DataField("customPlantMetabolism")]
         private readonly float _customPlantMetabolism = 1f;
 
+        [ViewVariables]
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         [field: DataField("name")]
         public string Name { get; } = default!;

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.Research;
@@ -17,8 +18,8 @@ namespace Content.Shared.GameObjects.Components.Research
 
         public bool CanProduce(LatheRecipePrototype recipe, int quantity = 1)
         {
-            if (!Owner.TryGetComponent(out SharedMaterialStorageComponent storage)
-            ||  !Owner.TryGetComponent(out SharedLatheDatabaseComponent database)) return false;
+            if (!Owner.TryGetComponent(out SharedMaterialStorageComponent? storage)
+            ||  !Owner.TryGetComponent(out SharedLatheDatabaseComponent? database)) return false;
 
             if (!database.Contains(recipe)) return false;
 
@@ -32,7 +33,7 @@ namespace Content.Shared.GameObjects.Components.Research
 
         public bool CanProduce(string ID, int quantity = 1)
         {
-            return PrototypeManager.TryIndex(ID, out LatheRecipePrototype recipe) && CanProduce(recipe, quantity);
+            return PrototypeManager.TryIndex(ID, out LatheRecipePrototype? recipe) && CanProduce(recipe, quantity);
         }
 
         /// <summary>

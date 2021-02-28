@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Roles
 {
@@ -18,18 +17,19 @@ namespace Content.Shared.Roles
     {
         private string _name = string.Empty;
 
-        [DataField("id")]
-        public string ID { get; private set; } = string.Empty;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         /// <summary>
         ///     The name of this job as displayed to players.
         /// </summary>
-        [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
+        [field: DataField("name")]
+        public string Name { get; } = string.Empty;
 
         /// <summary>
         ///     Whether this job is a head.
@@ -53,14 +53,15 @@ namespace Content.Shared.Roles
         [DataField("startingGear")]
         public string? StartingGear { get; private set; }
 
-        [DataField("icon")]
-        public string? Icon { get; private set; }
+        [field: DataField("icon")] public string Icon { get; } = string.Empty;
 
         [DataField("special")]
         public JobSpecial? Special { get; private set; }
 
-        [DataField("departments")] public IReadOnlyCollection<string> Departments { get; private set; } = Array.Empty<string>();
-        [DataField("access")]
-        public IReadOnlyCollection<string> Access { get; private set; } = ImmutableArray<string>.Empty;
+        [field: DataField("departments")]
+        public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();
+
+        [field: DataField("access")]
+        public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
     }
 }

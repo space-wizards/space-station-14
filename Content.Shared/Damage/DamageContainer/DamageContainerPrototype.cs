@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -17,14 +18,19 @@ namespace Content.Shared.Damage.DamageContainer
         [DataField("supportAll")] private bool _supportAll;
         [DataField("supportedClasses")] private HashSet<DamageClass> _supportedClasses = new();
         [DataField("supportedTypes")] private HashSet<DamageType> _supportedTypes = new();
-        [DataField("id")] private string _id;
 
         // TODO NET 5 IReadOnlySet
         [ViewVariables] public IReadOnlyCollection<DamageClass> SupportedClasses => _supportedClasses;
 
         [ViewVariables] public IReadOnlyCollection<DamageType> SupportedTypes => _supportedTypes;
 
-        [ViewVariables] public string ID => _id;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         public void AfterDeserialization()
         {

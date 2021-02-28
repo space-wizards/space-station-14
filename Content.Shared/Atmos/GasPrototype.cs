@@ -1,21 +1,25 @@
-﻿using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+#nullable enable
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Atmos
 {
     [Prototype("gas")]
     public class GasPrototype : IPrototype
     {
-        [DataField("name")]
-        public string Name { get; private set; }
+        [DataField("name")] public string Name { get; } = string.Empty;
 
         // TODO: Control gas amount necessary for overlay to appear
         // TODO: Add interfaces for gas behaviours e.g. breathing, burning
 
-        [DataField("id")]
-        public string ID { get; private set; }
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         /// <summary>
         ///     Specific heat for gas.
@@ -40,7 +44,7 @@ namespace Content.Shared.Atmos
         ///     Minimum amount of moles for this gas to be visible.
         /// </summary>
         [DataField("gasMolesVisible")]
-        public float GasMolesVisible { get; private set; } = 0.25f;
+        public float GasMolesVisible { get; } = 0.25f;
 
         /// <summary>
         ///     Visibility for this gas will be max after this value.
@@ -51,27 +55,26 @@ namespace Content.Shared.Atmos
         ///     If this reagent is in gas form, this is the path to the overlay that will be used to make the gas visible.
         /// </summary>
         [DataField("gasOverlayTexture")]
-        public string GasOverlayTexture { get; private set; }
+        public string GasOverlayTexture { get; } = string.Empty;
 
         /// <summary>
         ///     If this reagent is in gas form, this will be the path to the RSI sprite that will be used to make the gas visible.
         /// </summary>
         [DataField("gasOverlayState")]
-        public string GasOverlayState { get; set; }
+        public string GasOverlayState { get; set; } = string.Empty;
 
         /// <summary>
         ///     State for the gas RSI overlay.
         /// </summary>
         [DataField("gasOverlaySprite")]
-        public string GasOverlaySprite { get; set; }
+        public string GasOverlaySprite { get; set; } = string.Empty;
 
         /// <summary>
         /// Path to the tile overlay used when this gas appears visible.
         /// </summary>
         [DataField("overlayPath")]
-        public string OverlayPath { get; private set; }
+        public string OverlayPath { get; } = string.Empty;
 
-        [DataField("color")]
-        public string Color { get; private set; }
+        [DataField("color")] public string Color { get; } = string.Empty;
     }
 }
