@@ -41,8 +41,10 @@ namespace Content.Shared.Roles
         /// <summary>
         ///     The total amount of people that can start with this job round-start.
         /// </summary>
+        public int SpawnPositions => _spawnPositions ?? TotalPositions;
+
         [DataField("spawnPositions")]
-        public int SpawnPositions { get; private set; }
+        private int? _spawnPositions;
 
         /// <summary>
         ///     The total amount of positions available.
