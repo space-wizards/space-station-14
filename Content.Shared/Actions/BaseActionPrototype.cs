@@ -16,9 +16,7 @@ namespace Content.Shared.Actions
     [DataDefinition]
     public abstract class BaseActionPrototype : IPrototype, ISerializationHooks
     {
-        [ViewVariables]
-        [field: DataField("id", required: true)]
-        public string ID { get; } = default!;
+        public abstract string ID { get; }
 
         [ViewVariables]
         [field: DataField("parent")]
@@ -42,6 +40,7 @@ namespace Content.Shared.Actions
         /// <summary>
         /// Name to show in UI. Accepts formatting.
         /// </summary>
+        [DataField("name")]
         public FormattedMessage Name { get; private set; } = new();
 
         /// <summary>

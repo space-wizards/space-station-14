@@ -75,10 +75,14 @@ namespace Content.Server.GameObjects.Components.Construction
     }
 
     [Serializable]
+    [DataDefinition]
     public struct ComponentPartInfo
     {
+        [DataField("Amount")]
         public int Amount;
+        [DataField("ExamineName")]
         public string ExamineName;
+        [DataField("DefaultPrototype")]
         public string DefaultPrototype;
     }
 }

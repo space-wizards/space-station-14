@@ -56,6 +56,8 @@ namespace Content.Shared.Actions
         [DataField("behavior", readOnly: true)]
         public IItemActionBehavior? ItemActionBehavior { get; private set; }
 
+        public override string ID => ActionType.ToString();
+
         public void AfterDeserialization()
         {
             if (ActionType == ItemActionType.Error)

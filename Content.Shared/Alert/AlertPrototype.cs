@@ -18,8 +18,7 @@ namespace Content.Shared.Alert
     public class AlertPrototype : IPrototype, ISerializationHooks
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
-        public string ID { get; } = default!;
+        string IPrototype.ID => AlertType.ToString();
 
         [ViewVariables]
         [field: DataField("parent")]
@@ -28,6 +27,7 @@ namespace Content.Shared.Alert
         /// <summary>
         /// Type of alert, no 2 alert prototypes should have the same one.
         /// </summary>
+        [DataField("alertType")]
         public AlertType AlertType { get; private set; }
 
         /// <summary>
@@ -43,6 +43,7 @@ namespace Content.Shared.Alert
         /// <summary>
         /// Name to show in tooltip window. Accepts formatting.
         /// </summary>
+        [DataField("name")]
         public FormattedMessage Name { get; private set; } = new();
 
         /// <summary>
@@ -58,6 +59,7 @@ namespace Content.Shared.Alert
         /// replace each other and are mutually exclusive, for example lowpressure / highpressure,
         /// hot / cold. If left unspecified, the alert will not replace or be replaced by any other alerts.
         /// </summary>
+        [DataField("category")]
         public AlertCategory? Category { get; private set; }
 
         /// <summary>
@@ -104,11 +106,7 @@ namespace Content.Shared.Alert
                 Logger.ErrorS("alert", "missing or invalid alertType for alert with name {0}", Name);
             }
 
-            Name = new FormattedMessage();
-            Name.AddText(ID);
             AlertKey = new AlertKey(AlertType, Category);
-            // TODO PAUL SERV3
-            // HasOnClick = serializer.TryReadDataField("onClick", out string _);
         }
 
         /// <param name="severity">severity level, if supported by this alert</param>
@@ -163,8 +161,8 @@ namespace Content.Shared.Alert
     [Serializable, NetSerializable]
     public struct AlertKey : ISerializationHooks, IPopulateDefaultValues
     {
-        [DataField("alertType")] public AlertType? AlertType { get; private set; }
-        [DataField("category")] public readonly AlertCategory? AlertCategory;
+        public AlertType? AlertType { get; private set; }
+        public readonly AlertCategory? AlertCategory;
 
         /// NOTE: if the alert has a category you must pass the category for this to work
         /// properly as a key. I.e. if the alert has a category and you pass only the alert type, and you

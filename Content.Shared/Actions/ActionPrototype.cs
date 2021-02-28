@@ -53,6 +53,8 @@ namespace Content.Shared.Actions
         /// </summary>
         public ITargetPointAction TargetPointAction { get; private set; } = default!;
 
+        public override string ID => ActionType.ToString();
+
         void ISerializationHooks.AfterDeserialization()
         {
             base.AfterDeserialization();

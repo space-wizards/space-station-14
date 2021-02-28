@@ -14,6 +14,7 @@ namespace Content.Server.Actions
     ///     Blink lights and scare livings
     /// </summary>
     [UsedImplicitly]
+    [DataDefinition]
     public class GhostBoo : IInstantAction
     {
         [DataField("radius")] private float _radius = 3;
