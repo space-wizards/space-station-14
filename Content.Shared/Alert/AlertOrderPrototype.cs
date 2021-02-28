@@ -23,13 +23,14 @@ namespace Content.Shared.Alert
         [field: DataField("parent")]
         public string? Parent { get; }
 
-        [DataField("order")] private readonly Dictionary<string, string> _order = new();
+        [DataField("order")] private readonly List<(string, string)> _order = new();
 
         private readonly Dictionary<AlertType, int> _typeToIdx = new();
         private readonly Dictionary<AlertCategory, int> _categoryToIdx = new();
 
         public void BeforeSerialization()
         {
+            /*todo paul serv3
             foreach (var type in _typeToIdx.Keys)
             {
                 _order["alertType"] = type.ToString();
@@ -38,7 +39,7 @@ namespace Content.Shared.Alert
             foreach (var type in _categoryToIdx.Keys)
             {
                 _order["category"] = type.ToString();
-            }
+            }*/
         }
 
         public void AfterDeserialization()
