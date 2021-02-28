@@ -74,8 +74,10 @@ namespace Content.Client.GameObjects.Components.Interactable
                 var fuelCap = _parent.FuelCapacity;
                 var fuel = _parent.Fuel;
 
-                _label.SetMarkup(Loc.GetString("Fuel: [color={0}]{1}/{2}[/color]",
-                    fuel < fuelCap / 4f ? "darkorange" : "orange", Math.Round(fuel), fuelCap));
+                _label.SetMarkup(Loc.GetString("comp-welder-status",
+                                    ("color", fuel < fuelCap / 4f ? "darkorange" : "orange"),
+                                    ("remaining", Math.Round(fuel)),
+                                    ("total", fuelCap)));
             }
         }
     }
