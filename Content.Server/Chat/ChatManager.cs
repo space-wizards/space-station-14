@@ -32,6 +32,14 @@ namespace Content.Server.Chat
     /// </summary>
     internal sealed class ChatManager : IChatManager
     {
+        private static readonly Dictionary<string, string> PatronOocColors = new()
+        {
+            // I had plans for multiple colors and those went nowhere so...
+            { "nuclear_operative", "#aa00ff" },
+            { "syndicate_agent", "#aa00ff" },
+            { "revolutionary", "#aa00ff" }
+        };
+
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMoMMILink _mommiLink = default!;
@@ -246,6 +254,12 @@ namespace Content.Server.Chat
                 var prefs = _preferencesManager.GetPreferences(player.UserId);
                 msg.MessageColorOverride = prefs.AdminOOCColor;
             }
+            if (player.ConnectedClient.UserData.PatronTier is { } patron &&
+                     PatronOocColors.TryGetValue(patron, out var patronColor))
+            {
+                msg.MessageWrap = $"OOC: [color={patronColor}]{player.Name}[/color]: {{0}}";
+            }
+
             //TODO: player.Name color, this will need to change the structure of the MsgChatMessage
             _netManager.ServerSendToAll(msg);
 
