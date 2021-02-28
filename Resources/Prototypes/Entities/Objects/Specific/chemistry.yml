@@ -39,20 +39,19 @@
   id: LargeBeaker
   components:
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/beakers.rsi
+    sprite: Objects/Specific/Chemistry/beaker_large.rsi
     layers:
-      - state: beaker
-  - type: Item
-    HeldPrefix: beaker
+      - state: beakerlarge
+      - state: beakerlarge1  
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
   - type: SolutionContainer
-    fillingState: beakerlarge
     maxVol: 100
-    caps: OpenContainer, FitsInDispenser
-  - type: SolutionTransfer
-    transferAmount: 5.0
-  - type: Spillable
-  - type: Drink
-    isOpen: true
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 6
+      fillBaseName: beakerlarge
 
 - type: entity
   name: dropper

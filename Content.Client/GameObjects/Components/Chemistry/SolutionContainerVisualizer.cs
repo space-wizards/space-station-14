@@ -8,7 +8,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Chemistry
 {
-    //[UsedImplicitly]
+    [UsedImplicitly]
     public class SolutionContainerVisualizer : AppearanceVisualizer
     {
         private int _maxFillLevels;
