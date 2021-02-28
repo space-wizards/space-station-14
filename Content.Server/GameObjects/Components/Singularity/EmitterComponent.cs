@@ -98,8 +98,6 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-
-
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (_isLocked)
