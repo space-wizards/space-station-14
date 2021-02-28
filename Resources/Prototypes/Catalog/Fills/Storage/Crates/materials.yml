@@ -1,6 +1,6 @@
 - type: entity
   id: CrateMaterialGlass
-  name:  glass crate
+  name:  glass sheet crate
   parent: CrateGenericonimo
   components:
   - type: StorageFill
@@ -9,8 +9,8 @@
         amount: 3
 
 - type: entity
-  id: CrateMaterialMetal
-  name:  metals crate
+  id: CrateMaterialSteel
+  name:  steel sheet crate
   parent: CrateGenericonimo
   components:
   - type: StorageFill
@@ -20,7 +20,7 @@
 
 - type: entity
   id: CrateMaterialPlastic
-  name:  plastics crate
+  name:  plastic sheet crate
   parent: CrateGenericonimo
   components:
   - type: StorageFill

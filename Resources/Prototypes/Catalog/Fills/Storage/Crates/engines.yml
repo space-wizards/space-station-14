@@ -40,7 +40,7 @@
   - type: StorageFill
     contents:
       - name: Emitter
-        amount: 2
+        amount: 1
 
 - type: entity
   id: CrateEngineeringSingularityCollector
@@ -51,7 +51,7 @@
   - type: StorageFill
     contents:
       - name: RadiationCollector
-        amount: 2
+        amount: 1
 
 - type: entity
   id: CrateEngineeringSingularityContainment
@@ -62,7 +62,7 @@
   - type: StorageFill
     contents:
       - name: ContainmentFieldGenerator
-        amount: 2
+        amount: 1
 
 - type: entity
   id: CrateEngineeringSingularityGenerator
