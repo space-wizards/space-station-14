@@ -171,7 +171,6 @@ namespace Content.Client
             "Matchstick",
             "Matchbox",
             "BlockGameArcade",
-            "Butcherable",
             "Rehydratable",
             "Headset",
             "ComputerBoard",
