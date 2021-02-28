@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.PlantMetabolism
 {
-    [DataDefinition]
+    [ImplicitDataDefinitionForInheritors]
     public abstract class AdjustAttribute : IPlantMetabolizable
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;

@@ -59,10 +59,14 @@ namespace Content.Server.Botany
     }
 */
 
+    [DataDefinition]
     public struct SeedChemQuantity
     {
+        [DataField("Min")]
         public int Min;
+        [DataField("Max")]
         public int Max;
+        [DataField("PotencyDivisor")]
         public int PotencyDivisor;
     }
 

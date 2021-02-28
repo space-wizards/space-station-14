@@ -7,6 +7,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
     [Serializable]
+    [DataDefinition]
     public class PlaySoundBehavior : IThresholdBehavior
     {
         /// <summary>

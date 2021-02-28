@@ -5,6 +5,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction
 {
+    [DataDefinition]
     public class TagConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
         [DataField("tag")]

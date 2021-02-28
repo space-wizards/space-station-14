@@ -327,9 +327,12 @@ namespace Content.Shared.Chemistry
         }
 
         [Serializable, NetSerializable]
+        [DataDefinition]
         public readonly struct ReagentQuantity: IComparable<ReagentQuantity>
         {
+            [DataField("ReagentId")]
             public readonly string ReagentId;
+            [DataField("Quantity")]
             public readonly ReagentUnit Quantity;
 
             public ReagentQuantity(string reagentId, ReagentUnit quantity)

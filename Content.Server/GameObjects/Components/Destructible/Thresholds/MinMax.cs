@@ -5,6 +5,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds
 {
     [Serializable]
+    [DataDefinition]
     public struct MinMax
     {
         [ViewVariables]

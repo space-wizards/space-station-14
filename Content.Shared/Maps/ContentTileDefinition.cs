@@ -19,7 +19,7 @@ namespace Content.Shared.Maps
         [field: DataField("parent")]
         public string? Parent { get; }
 
-        [DataField("name")] public string Name { get; } = string.Empty;
+        [field: DataField("name", required: true)] public string Name { get; } = string.Empty;
 
         public ushort TileId { get; private set; }
 

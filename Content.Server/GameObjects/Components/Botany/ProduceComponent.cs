@@ -24,17 +24,13 @@ namespace Content.Server.GameObjects.Components.Botany
         private string? _seedName;
 
         [ViewVariables]
-        public Seed? Seed { get; set; }
+        public Seed? Seed
+        {
+            get => _seedName != null ? IoCManager.Resolve<IPrototypeManager>().Index<Seed>(_seedName) : null;
+            set => _seedName = value?.ID;
+        }
 
         public float Potency => Seed?.Potency ?? 0;
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            if (_seedName != null)
-            {
-                Seed = IoCManager.Resolve<IPrototypeManager>().Index<Seed>(_seedName);
-            }
-        }
 
         public void Grown()
         {
