@@ -77,3 +77,9 @@ Entries:
   - {message: singularity crates for cargo, type: Add}
   id: 14
   time: '2021-02-28T19:57:44.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: 'Restart votes now need an 80% majority to succeed, and have a longer
+      cooldown for the caller.', type: Tweak}
+  id: 15
+  time: '2021-02-28T21:13:03.652572+00:00'

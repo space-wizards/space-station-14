@@ -1,4 +1,0 @@
-﻿author: PJB
-changes:
-  - message: Restart votes now need an 80% majority to succeed, and have a longer cooldown for the caller.
-    type: Tweak
