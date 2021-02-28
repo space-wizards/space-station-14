@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -8,8 +9,8 @@ namespace Content.Server.GameObjects.Components.BarSign
     [Prototype("barSign")]
     public class BarSignPrototype : IPrototype
     {
-        private string _description;
-        private string _name;
+        private string _description = "";
+        private string _name = "";
 
         [ViewVariables]
         [field: DataField("id", required: true)]
@@ -19,8 +20,7 @@ namespace Content.Server.GameObjects.Components.BarSign
         [field: DataField("parent")]
         public string? Parent { get; }
 
-        [DataField("icon")]
-        public string Icon { get; private set; }
+        [DataField("icon")] public string Icon { get; private set; } = "";
 
         [DataField("name")]
         public string Name
