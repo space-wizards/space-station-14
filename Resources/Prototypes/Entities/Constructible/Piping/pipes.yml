@@ -40,7 +40,7 @@
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: East
+      pipeDirection: South
   - type: Icon
     state: pipeHalf
 
@@ -53,7 +53,7 @@
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: Lateral
+      pipeDirection: Longitudinal
   - type: Icon
     state: pipeStraight
     
@@ -66,7 +66,7 @@
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: SEBend
+      pipeDirection: SWBend
   - type: Icon
     state: pipeBend
     
@@ -79,7 +79,7 @@
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: TEast
+      pipeDirection: TSouth
   - type: Icon
     state: pipeTJunction
     

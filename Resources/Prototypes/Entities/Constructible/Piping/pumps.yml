@@ -40,10 +40,10 @@
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: West
+      pipeDirection: North
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: East
+      pipeDirection: South
   - type: PressurePump
-    inletDirection: West
-    outletDirection: East
+    inletDirection: North
+    outletDirection: South

@@ -41,14 +41,14 @@
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
+      pipeDirection: West
+    - !type:PipeNode
+      nodeGroupID: Pipe
       pipeDirection: South
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: East
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: North
   - type: GasFilter
-    inletDirection: South
-    filterOutletDirection: East
-    outletDirection: North
+    inletDirection: West
+    filterOutletDirection: South
+    outletDirection: East
