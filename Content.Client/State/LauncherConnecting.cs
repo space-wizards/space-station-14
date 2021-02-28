@@ -219,7 +219,7 @@ namespace Content.Client.State
 
             _clientNetManager.ConnectFailed += (sender, args) =>
             {
-                _connectFailReason.Text = Loc.GetString("Failed to connect to server:\n{0}", args.Reason);
+                _connectFailReason.Text = Loc.GetString("launcher-connecting", ("reason", args.Reason));
                 SetActivePage(Page.ConnectFailed);
             };
 
