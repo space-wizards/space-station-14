@@ -94,3 +94,27 @@ Entries:
   - {message: Cargo crates stop spawning underneath the teleporter., type: Fix}
   id: 17
   time: '2021-03-01T20:54:06.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Material crates ordered from cargo are now fixed., type: Fix}
+  - {message: Singularity parts have their physics again., type: Fix}
+  - {message: 'Singularity crates contain one part, but cost less.', type: Tweak}
+  id: 18
+  time: '2021-03-01T20:55:34.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Added cable crates to cargo console, type: Add}
+  id: 19
+  time: '2021-03-01T20:56:14.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Starting cargo balance is now 1000 instead of 100000, type: Tweak}
+  - {message: Cargo passive point income doubled, type: Tweak}
+  id: 20
+  time: '2021-03-01T20:56:39.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Can place lattice and underplating again, type: Add}
+  - {message: Glass floors, type: Add}
+  id: 21
+  time: '2021-03-01T20:57:04.0000000+00:00'
