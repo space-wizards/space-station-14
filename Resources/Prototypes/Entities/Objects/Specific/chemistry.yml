@@ -88,14 +88,22 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/dropper.rsi
-    state: dropper
+    layers:
+      - state: dropper
+      - state: dropper1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
   - type: SolutionContainer
-    fillingState: dropper
-    fillingSteps: 2
+    caps: OpenContainer
     maxVol: 5
   - type: SolutionTransfer
     transferAmount: 5.0
   - type: Spillable
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 1
+      fillBaseName: dropper
 
 - type: entity
   name: syringe
