@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Initialize()
         {
-            CreateBankAccount("Orbital Monitor IV Station", 100000);
+            CreateBankAccount("Space Station 14", 1000);
             CreateOrderDatabase(0);
         }
 
