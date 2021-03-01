@@ -13,8 +13,12 @@ namespace Content.IntegrationTests.Tests.Serialization
             var server = StartServer();
             await server.WaitIdleAsync();
             var sprotoManager = server.ResolveDependency<IPrototypeManager>();
-            var res = sprotoManager.ValidateDirectory(new ResourcePath("/Prototypes"));
-            Assert.That(res.Count, Is.Zero);
+            await server.WaitAssertion(() =>
+                {
+                    var res = sprotoManager.ValidateDirectory(new ResourcePath("/Prototypes"));
+                    Assert.That(res.Count, Is.Zero);
+                }
+            );
         }
     }
 }

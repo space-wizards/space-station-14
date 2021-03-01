@@ -4,6 +4,7 @@ using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.Manager.Result;
 using Robust.Shared.Serialization.Markdown;
+using Robust.Shared.Serialization.Markdown.Validation;
 
 namespace Content.Shared.Construction
 {
@@ -57,10 +58,12 @@ namespace Content.Shared.Construction
             return new DeserializedValue<ConstructionGraphStep>(serializationManager.ReadValueOrThrow<ConstructionGraphStep>(type, node, context));
         }
 
-        public bool Validate(ISerializationManager serializationManager, MappingDataNode node, ISerializationContext? context = null)
+        public ValidatedNode Validate(ISerializationManager serializationManager, MappingDataNode node,
+            ISerializationContext? context = null)
         {
             var type = GetType(node);
-            return type != null && serializationManager.ValidateNode(type, node, context);
+            if (type == null) return new ErrorNode(node);
+            return serializationManager.ValidateNode(type, node, context);
         }
     }
 }
