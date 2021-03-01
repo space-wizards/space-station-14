@@ -29,7 +29,10 @@ namespace Content.Server.GameObjects.Components.Construction
         private Dictionary<string, int> _materialIdRequirements;
 
         [ViewVariables]
-        private Dictionary<string, ComponentPartInfo> _componentRequirements;
+        private Dictionary<string, GenericPartInfo> _componentRequirements;
+
+        [ViewVariables]
+        private Dictionary<string, GenericPartInfo> _tagRequirements;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string Prototype { get; private set; }
@@ -48,7 +51,8 @@ namespace Content.Server.GameObjects.Components.Construction
             }
         }
 
-        public IReadOnlyDictionary<string, ComponentPartInfo> ComponentRequirements => _componentRequirements;
+        public IReadOnlyDictionary<string, GenericPartInfo> ComponentRequirements => _componentRequirements;
+        public IReadOnlyDictionary<string, GenericPartInfo> TagRequirements => _tagRequirements;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -56,7 +60,8 @@ namespace Content.Server.GameObjects.Components.Construction
             serializer.DataField(this, x => x.Prototype, "prototype", null);
             serializer.DataField(ref _requirements, "requirements", new Dictionary<MachinePart, int>());
             serializer.DataField(ref _materialIdRequirements, "materialRequirements", new Dictionary<string, int>());
-            serializer.DataField(ref _componentRequirements, "componentRequirements", new Dictionary<string, ComponentPartInfo>());
+            serializer.DataField(ref _componentRequirements, "componentRequirements", new Dictionary<string, GenericPartInfo>());
+            serializer.DataField(ref _tagRequirements, "tagRequirements", new Dictionary<string, GenericPartInfo>());
         }
 
         protected override void Startup()
@@ -89,11 +94,16 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
             }
+
+            foreach (var (_, info) in TagRequirements)
+            {
+                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
+            }
         }
     }
 
     [Serializable]
-    public struct ComponentPartInfo
+    public struct GenericPartInfo
     {
         public int Amount;
         public string ExamineName;
