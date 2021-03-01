@@ -25,7 +25,7 @@ namespace Content.Shared.Construction
         [field: DataField("start")]
         public string Start { get; }
 
-        [DataField("graph", priority: 2)]
+        [DataField("graph", priority: 0)]
         private List<ConstructionGraphNode> _nodeYamlInterface
         {
             get => _nodes.Values.ToList();
