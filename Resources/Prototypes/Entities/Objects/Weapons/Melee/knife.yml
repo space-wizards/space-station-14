@@ -59,7 +59,6 @@
     sprite: Objects/Weapons/Melee/combat_knife.rsi
     size: 2
     state: icon
-
   - type: MeleeWeapon
     damage: 25
   - type: Item
