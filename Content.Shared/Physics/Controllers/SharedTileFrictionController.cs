@@ -48,6 +48,8 @@ namespace Content.Shared.Physics.Controllers
 
             foreach (var body in map.AwakeBodies)
             {
+                if (prediction && !body.Predict) continue;
+
                 var speed = body.LinearVelocity.Length;
 
                 if (speed <= 0.0f || body.BodyStatus == BodyStatus.InAir) continue;
@@ -65,7 +67,7 @@ namespace Content.Shared.Physics.Controllers
 
                 if (friction > 0.0f)
                 {
-                    // TBH I can't really tell if this makes a difference, player movement is fucking hard.
+                    // TBH I can't really tell if this makes a difference.
                     if (!prediction)
                     {
                         control = speed < _stopSpeed ? _stopSpeed : speed;
