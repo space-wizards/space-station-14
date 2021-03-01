@@ -40,11 +40,11 @@ namespace Content.Shared.GameObjects.Components.Body
 
         [ViewVariables]
         [DataField("template", required: true)]
-        public string TemplateName { get; private set; } = default!;
+        public string? TemplateName { get; private set; }
 
         [ViewVariables]
         [DataField("preset", required: true)]
-        public string PresetName { get; private set; } = default!;
+        public string? PresetName { get; private set; }
 
         [ViewVariables]
         public Dictionary<string, BodyPartType> Slots { get; private set; } = new();
@@ -68,15 +68,21 @@ namespace Content.Shared.GameObjects.Components.Body
 
             // TODO BODY BeforeDeserialization
             // TODO BODY Move to template or somewhere else
-            var template = _prototypeManager.Index<BodyTemplatePrototype>(TemplateName);
+            if (TemplateName != null)
+            {
+                var template = _prototypeManager.Index<BodyTemplatePrototype>(TemplateName);
 
-            Connections = template.Connections;
-            Slots = template.Slots;
-            _centerSlot = template.CenterSlot;
+                Connections = template.Connections;
+                Slots = template.Slots;
+                _centerSlot = template.CenterSlot;
+            }
 
-            var preset = _prototypeManager.Index<BodyPresetPrototype>(PresetName);
+            if (PresetName != null)
+            {
+                var preset = _prototypeManager.Index<BodyPresetPrototype>(PresetName);
 
-            _partIds = preset.PartIDs;
+                _partIds = preset.PartIDs;
+            }
 
             // Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
             // The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
