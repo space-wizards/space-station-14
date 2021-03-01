@@ -37,7 +37,7 @@
 - type: cargoProduct
   name: "singularity generator crate"
   id: cargo.enginesingularitygenerator
-  description: "Contains one singularity generator. The mother of the beast."
+  description: "Contains a singularity generator. The mother of the beast."
   icon:
     sprite: Constructible/Power/Singularity/generator.rsi
     state: icon
@@ -49,36 +49,36 @@
 - type: cargoProduct
   name: "singularity containment crate"
   id: cargo.enginesingularitycontainment
-  description: "Contains 2 singularity containment field generators."
+  description: "Contains a singularity containment field generator."
   icon:
     sprite: Constructible/Power/Singularity/containment.rsi
     state: icon
   product: CrateEngineeringSingularityContainment
-  cost: 1500
+  cost: 1000
   category: Engineering
   group: market
 
 - type: cargoProduct
   name: "emitter crate"
   id: cargo.enginesingularityemitter
-  description: "Contains 2 emitters. Used only for dangerous applications."
+  description: "Contains an emitter. Used only for dangerous applications."
   icon:
     sprite: Constructible/Power/Singularity/emitter.rsi
     state: emitter2
   product: CrateEngineeringSingularityEmitter
-  cost: 1500
+  cost: 1000
   category: Engineering
   group: market
 
 - type: cargoProduct
   name: "radiation collector crate"
   id: cargo.enginesingularitycollector
-  description: "Contains 2 radiation collectors. Safety first!"
+  description: "Contains a radiation collector. Safety first!"
   icon:
     sprite: Constructible/Power/Singularity/collector.rsi
     state: ca_on
   product: CrateEngineeringSingularityCollector
-  cost: 1500
+  cost: 1000
   category: Engineering
   group: market
 

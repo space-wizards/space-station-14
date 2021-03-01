@@ -41473,7 +41473,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
 - uid: 4714
-  type: CrateMaterialMetal
+  type: CrateMaterialSteel
   components:
   - parent: 853
     pos: 21.5,13.5
