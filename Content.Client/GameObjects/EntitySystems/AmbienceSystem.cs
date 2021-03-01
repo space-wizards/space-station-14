@@ -76,6 +76,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void StartAmbience()
         {
+            EndAmbience();
             var file = _robustRandom.Pick(_ambientCollection.PickFiles);
             _ambientStream = _audioSystem.Play(file, _ambientParams);
         }
