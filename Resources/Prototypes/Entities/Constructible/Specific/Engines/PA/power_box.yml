@@ -1,8 +1,8 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorPowerBox
-  name: Particle Focusing EM Lens
-  description: This uses electromagnetic waves to focus the Alpha-Particles.
+  name: PA power box
+  description: Formally known as the Particle Focusing EM Lens. This uses electromagnetic waves to focus the Alpha-Particles.
   components:
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/power_box.rsi
@@ -32,9 +32,9 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorPowerBoxUnfinished
-  name: Particle Focusing EM Lens
+  name: PA power box
   suffix: Unfinished
-  description: This uses electromagnetic waves to focus the Alpha-Particles. It looks unfinished.
+  description: Formally known as the Particle Focusing EM Lens. This uses electromagnetic waves to focus the Alpha-Particles. It looks unfinished.
   components:
     - type: Physics
       anchored: false

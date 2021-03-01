@@ -1,7 +1,7 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorControlBox
-  name: Particle Accelerator Control Computer
+  name: PA control computer
   description: This controls the density of the particles.
   components:
     - type: Sprite
@@ -37,7 +37,7 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorControlBoxUnfinished
-  name: Particle Accelerator Control Computer
+  name: PA control computer
   suffix: Unfinished
   description: This controls the density of the particles. It looks unfinished.
   components:

@@ -1,7 +1,7 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterLeft
-  name: em containment grid L
+  name: PA containment emitter L
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
     - type: Sprite
@@ -26,7 +26,7 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterCenter
-  name: em containment grid C
+  name: PA containment emitter C
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
     - type: Sprite
@@ -51,7 +51,7 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterRight
-  name: em containment grid R
+  name: PA containment emitter R
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
     - type: Sprite
@@ -78,7 +78,7 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterLeftUnfinished
-  name: em containment grid L
+  name: PA containment emitter L
   suffix: Unfinished, Left
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
@@ -95,7 +95,7 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterCenterUnfinished
-  name: em containment grid C
+  name: PA containment emitter C
   suffix: Unfinished
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
@@ -112,7 +112,7 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterRightUnfinished
-  name: em containment grid R
+  name: PA containment emitter R
   suffix: Unfinished
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:

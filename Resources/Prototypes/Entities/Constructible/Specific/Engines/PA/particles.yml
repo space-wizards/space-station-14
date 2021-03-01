@@ -1,6 +1,6 @@
 - type: entity
-  name: Particles
-  description: "Accelerated particles."
+  name: particles
+  description: Accelerated particles.
   id: ParticlesProjectile
   parent: BulletBase
   components:

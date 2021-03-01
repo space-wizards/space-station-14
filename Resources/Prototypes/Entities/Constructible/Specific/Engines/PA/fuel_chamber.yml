@@ -1,8 +1,8 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorFuelChamber
-  name: EM Acceleration Chamber
-  description: This is where the Alpha particles are accelerated to radical speeds.
+  name: PA fuel chamber
+  description: Formally known as the EM Acceleration Chamber. This is where the Alpha particles are accelerated to radical speeds.
   components:
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/fuel_chamber.rsi
@@ -27,9 +27,9 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorFuelChamberUnfinished
-  name: EM Acceleration Chamber
+  name: PA fuel chamber
   suffix: Unfinished
-  description: This is where the Alpha particles are accelerated to radical speeds. It looks unfinished.
+  description: Formally known as the EM Acceleration Chamber. This is where the Alpha particles are accelerated to radical speeds. It looks unfinished.
   components:
     - type: Physics
       anchored: false
