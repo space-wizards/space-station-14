@@ -85,7 +85,8 @@
 - type: entity
   id: ParticleAcceleratorComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: particle accelerator control box circuit board
+  name: PA control box
+  suffix: Circuit Board
   components:
     - type: ComputerBoard
       prototype: ParticleAcceleratorControlBoxUnfinished
