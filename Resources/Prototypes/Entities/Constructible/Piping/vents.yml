@@ -1,6 +1,6 @@
 ﻿- type: entity
   abstract: true
-  id: ScrubberBase
+  id: VentBase
   placement:
     mode: SnapgridCenter
   components:
@@ -21,26 +21,26 @@
         acts: ["Destruction"]
   - type: Sprite
     netsync: false
-    sprite: Constructible/Atmos/scrubber.rsi
+    sprite: Constructible/Atmos/vent.rsi
     layers:
     - sprite: Constructible/Atmos/pipe.rsi
       state: pipeHalf
-    - state: scrubOff
+    - state: ventOff
   - type: Appearance
     visuals:
     - type: PipeConnectorVisualizer
-    - type: SiphonVisualizer
+    - type: VentVisualizer
 
 - type: entity
-  parent: ScrubberBase
-  id: Scrubber
-  name: Scrubber
-  description: "Scrubs unwanted gasses out of the air."
+  parent: VentBase
+  id: Vent
+  name: Vent
+  description: "A vent that releases gas."
   components:
   - type: NodeContainer
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: East
-  - type: PressureSiphon
-    scrubberOutletDirection: East
+      pipeDirection: South
+  - type: PressureVent
+    ventInletDirection: South

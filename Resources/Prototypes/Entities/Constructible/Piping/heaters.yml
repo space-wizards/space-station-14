@@ -1,6 +1,7 @@
-﻿- type: entity
-  abstract: true
-  id: VentBase
+- type: entity
+  id: Heater
+  name: Heater
+  description: Heats gas.
   placement:
     mode: SnapgridCenter
   components:
@@ -10,7 +11,6 @@
   - type: SnapGrid
     offset: Center
   - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -21,26 +21,13 @@
         acts: ["Destruction"]
   - type: Sprite
     netsync: false
-    sprite: Constructible/Atmos/vent.rsi
+    sprite: Constructible/Atmos/heater.rsi
     layers:
-    - sprite: Constructible/Atmos/pipe.rsi
-      state: pipeHalf
-    - state: ventOff
-  - type: Appearance
-    visuals:
-    - type: PipeConnectorVisualizer
-    - type: VentVisualizer
-
-- type: entity
-  parent: VentBase
-  id: Vent
-  name: Vent
-  description: "A vent that releases gas."
-  components:
+    - state: heater
+    - state: heaterPipe
   - type: NodeContainer
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: East
-  - type: PressureVent
-    ventInletDirection: East
+  - type: PipeHeater

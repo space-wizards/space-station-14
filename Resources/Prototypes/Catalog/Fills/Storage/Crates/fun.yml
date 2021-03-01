@@ -62,7 +62,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: CrayonBoxFilled
+      - name: CrayonBox
         amount: 1
       - name: CrayonWhite
         amount: 1

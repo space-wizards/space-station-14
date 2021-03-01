@@ -1,6 +1,6 @@
-﻿- type: entity
+- type: entity
   abstract: true
-  id: PumpBase
+  id: GasFilterBase
   placement:
     mode: SnapgridCenter
   components:
@@ -21,20 +21,21 @@
         acts: ["Destruction"]
   - type: Sprite
     netsync: false
-    sprite: Constructible/Atmos/pump.rsi
+    sprite: Constructible/Atmos/gasfilter.rsi
     layers:
     - sprite: Constructible/Atmos/pipe.rsi
-      state: pipeStraight
-    - state: pumpPressure
+      state: pipeTJunction
+    - state: gasFilter
   - type: Appearance
     visuals:
     - type: PipeConnectorVisualizer
-    - type: PumpVisualizer
+    - type: GasFilterVisualizer
 
 - type: entity
-  parent: PumpBase
-  id: DebugPressurePump
-  name: Debug Pressure Pump
+  parent: GasFilterBase
+  id: GasFilter
+  name: Gas Filter
+  description: It filters gases.
   components:
   - type: NodeContainer
     nodes:
@@ -43,7 +44,11 @@
       pipeDirection: West
     - !type:PipeNode
       nodeGroupID: Pipe
+      pipeDirection: South
+    - !type:PipeNode
+      nodeGroupID: Pipe
       pipeDirection: East
-  - type: PressurePump
+  - type: GasFilter
     inletDirection: West
+    filterOutletDirection: South
     outletDirection: East

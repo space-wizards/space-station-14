@@ -108,7 +108,7 @@
   id: LiverHuman
   parent: BaseHumanOrgan
   name: "human liver"
-  description: "Filters impurities out of a bloodstream and provides other important functionality to a human."
+  description: "Filters impurities out of a bloodstream and provides other important functionality to a human, such as reagent metabolization."
   components:
   - type: Sprite
     netsync: false
@@ -118,6 +118,12 @@
     durability: 15
     size: 1
     compatibility: Biological
+    behaviors:
+    - !type:LiverBehavior
+      alcoholLethality: 0.005
+      alcoholExponent: 1.6
+      toxinTolerance: 3
+      toxinLethality: 0.01
 
 - type: entity
   id: KidneysHuman

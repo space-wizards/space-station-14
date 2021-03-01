@@ -19,7 +19,7 @@ namespace Content.Shared.Chemistry
     public class ReagentPrototype : IPrototype
     {
         [DataField("spritePath")]
-        private readonly string _spritePath = default!;
+        private readonly string _spritePath = string.Empty;
 
         [DataField("metabolism", serverOnly: true)]
         private readonly List<IMetabolizable> _metabolism = new() {new DefaultMetabolizable()};
@@ -42,16 +42,22 @@ namespace Content.Shared.Chemistry
         public string? Parent { get; }
 
         [field: DataField("name")]
-        public string Name { get; } = default!;
+        public string Name { get; } = string.Empty;
 
         [field: DataField("desc")]
-        public string Description { get; } = default!;
+        public string Description { get; } = string.Empty;
 
         [field: DataField("physicalDesc")]
-        public string PhysicalDescription { get; } = default!;
+        public string PhysicalDescription { get; } = string.Empty;
 
         [field: DataField("color")]
-        public Color SubstanceColor { get; } = default!;
+        public Color SubstanceColor { get; } = Color.White;
+
+        [field: DataField("toxin")]
+        public bool Toxin { get; }
+
+        [field: DataField("boozePower")]
+        public int BoozePower { get; }
 
         //List of metabolism effects this reagent has, should really only be used server-side.
         public IReadOnlyList<IMetabolizable> Metabolism => _metabolism;

@@ -5,7 +5,7 @@
     - node: start
       actions:
         - !type:SpawnPrototype
-          prototype: SteelSheet1
+          prototype: SheetSteel1
         - !type:DeleteEntity {}
       edges:
         - to: missingWires
@@ -35,7 +35,7 @@
               anchored: false
           completed:
             - !type:SpawnPrototype
-              prototype: SteelSheet1
+              prototype: SheetSteel1
               amount: 5
             - !type:DeleteEntity {}
           steps:

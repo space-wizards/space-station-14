@@ -46,3 +46,40 @@ Entries:
       of the button when there is an update., type: Fix}
   id: 9
   time: '2021-02-27T17:33:32.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: 'Added a basic implementation of livers. They handle reagent metabolization
+      now, but aren''t damaged by alcohol or toxins yet.', type: Add}
+  id: 10
+  time: '2021-02-28T01:58:09.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: Stack visualizer no longer affected by open/close state by default.,
+    type: Fix}
+  id: 11
+  time: '2021-02-28T11:02:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Small physics refactor, type: Add}
+  id: 12
+  time: '2021-02-28T16:11:29.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: Patrons can now flex on poor people to get a cool colored name in OOC.,
+    type: Add}
+  - {message: 'To link your account, go to central.spacestation14.io and find the
+      "Patreon" section in your account settings.', type: Add}
+  id: 13
+  time: '2021-02-28T18:00:33.108215+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: material crates for cargo, type: Add}
+  - {message: singularity crates for cargo, type: Add}
+  id: 14
+  time: '2021-02-28T19:57:44.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: 'Restart votes now need an 80% majority to succeed, and have a longer
+      cooldown for the caller.', type: Tweak}
+  id: 15
+  time: '2021-02-28T21:13:03.652572+00:00'
