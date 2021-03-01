@@ -1,0 +1,21 @@
+﻿- type: entity
+  id: SolarAssemblyPart
+  name: Solar Assembly Part
+  parent: BaseItem
+  description: Used in the construction of solar assemblies for solar panels and trackers.
+  components:
+  - type: Item
+    size: 10
+  - type: Sprite
+    sprite: Objects/Power/solar_parts.rsi
+    state: solar_assembly_parts
+    
+- type: entity
+  id: SolarTrackerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Solar Tracker (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: Autolathe
+      materialRequirements:
+        Glass: 1

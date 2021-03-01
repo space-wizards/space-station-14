@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: BaseGenerator
-  description: A high efficiency thermoelectric generator.
+  description: "A high efficiency thermoelectric generator."
   name: Base Generator
   abstract: true
   placement:
@@ -44,7 +44,7 @@
 
 - type: entity
   id: BaseSmes
-  description: A high-capacity superconducting magnetic energy storage (SMES) unit.
+  description: "A high-capacity superconducting magnetic energy storage (SMES) unit."
   name: Base Smes
   abstract: true
   placement:
@@ -102,7 +102,7 @@
 
 - type: entity
   id: BaseSubstation
-  description: Reduces the voltage of electricity put into it.
+  description: "Reduces the voltage of electricity put into it."
   name: Base Substation
   abstract: true
   placement:
@@ -161,7 +161,7 @@
 
 - type: entity
   id: BaseApc
-  description: A control terminal for the area's electrical systems.
+  description: "A control terminal for the area's electrical systems."
   name: Base Apc
   abstract: true
   placement:
@@ -219,14 +219,14 @@
 - type: entity
   id: SolarPanel
   name: solar panel
-  description: Generates power from sunlight. Usually used to power replacements for sunlight. Fragile.
+  description: "Generates power from sunlight. Usually used to power replacements for sunlight. Fragile."
   placement:
     mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 25
+    mass: 100
     anchored: false
     shapes:
     - !type:PhysShapeAabb
@@ -268,3 +268,83 @@
   - type: ClientEntitySpawner
     prototypes:
     - HVDummyWire
+
+- type: entity
+  id: SolarAssembly
+  name: solar assembly
+  description: "A solar assembly. Anchor to a wire to start building a solar panel."
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    mass: 50
+    anchored: false
+    shapes:
+    - !type:PhysShapeAabb
+      mask:
+      - VaultImpassable
+      layer:
+      - Opaque
+      - VaultImpassable
+  - type: Sprite
+    sprite: Constructible/Power/solar_panel.rsi
+    state: solar_assembly
+  - type: SnapGrid
+    offset: Center
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Anchorable
+  - type: Pullable
+  - type: Construction
+    graph: solarpanel
+    node: solarassembly
+    
+- type: entity
+  id: SolarTracker
+  name: solar tracker
+  description: "A solar tracker. Can be wired to a solar array and computer to track solar positions."
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    mass: 50
+    anchored: false
+    shapes:
+    - !type:PhysShapeAabb
+      mask:
+      - VaultImpassable
+      layer:
+      - Opaque
+      - VaultImpassable
+  - type: Sprite
+    sprite: Constructible/Power/solar_panel.rsi
+    state: solar_tracker
+  - type: SnapGrid
+    offset: Center
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Anchorable
+  - type: Pullable
+  - type: Construction
+    graph: solarpanel
+    node: solartracker
