@@ -23,6 +23,12 @@ namespace Content.Tests.Shared.Alert
   minSeverity: 0
   maxSeverity: 6";
 
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            IoCManager.Resolve<ISerializationManager>().Initialize();
+        }
+
         [Test]
         public void TestAlertKey()
         {
@@ -70,9 +76,7 @@ namespace Content.Tests.Shared.Alert
             var document = yamlStream.Documents[0];
             var rootNode = (YamlSequenceNode) document.RootNode;
             var proto = (YamlMappingNode) rootNode[0];
-
             var serMan = IoCManager.Resolve<ISerializationManager>();
-            serMan.Initialize();
 
             return serMan.ReadValue<AlertPrototype>(new MappingDataNode(proto));
         }
