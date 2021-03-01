@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Construction
 {
     [Prototype("constructionGraph")]
-    public class ConstructionGraphPrototype : IPrototype
+    public class ConstructionGraphPrototype : IPrototype, ISerializationHooks
     {
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
         private readonly Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]> _paths = new();
@@ -26,24 +26,23 @@ namespace Content.Shared.Construction
         public string Start { get; }
 
         [DataField("graph", priority: 0)]
-        private List<ConstructionGraphNode> _nodeYamlInterface
-        {
-            get => _nodes.Values.ToList();
-            set
-            {
-                _nodes.Clear();
-                foreach (var graphNode in value)
-                {
-                    _nodes[graphNode.Name] = graphNode;
-                }
-
-                if(string.IsNullOrEmpty(Start) || !_nodes.ContainsKey(Start))
-                    throw new InvalidDataException($"Starting node for construction graph {ID} is null, empty or invalid!");
-            }
-        }
+        private List<ConstructionGraphNode> _graph = new();
 
         [ViewVariables]
         public IReadOnlyDictionary<string, ConstructionGraphNode> Nodes => _nodes;
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            _nodes.Clear();
+
+            foreach (var graphNode in _graph)
+            {
+                _nodes[graphNode.Name] = graphNode;
+            }
+
+            if(string.IsNullOrEmpty(Start) || !_nodes.ContainsKey(Start))
+                throw new InvalidDataException($"Starting node for construction graph {ID} is null, empty or invalid!");
+        }
 
         public ConstructionGraphEdge Edge(string startNode, string nextNode)
         {
