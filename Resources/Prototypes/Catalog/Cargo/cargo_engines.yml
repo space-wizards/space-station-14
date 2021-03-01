@@ -81,3 +81,15 @@
   cost: 1500
   category: Engineering
   group: market
+
+- type: cargoProduct
+  name: "particle accelerator crate"
+  id: cargo.engineparticleaccelerator
+  description: "Contains all the boards needed to construct a Particle Accelerator."
+  icon:
+    sprite: Constructible/Specific/Engines/PA/control_box.rsi
+    state: boxc
+  product: CrateEngineeringParticleAccelerator
+  cost: 10000
+  category: Engineering
+  group: market
