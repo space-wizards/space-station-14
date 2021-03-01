@@ -88,14 +88,10 @@ namespace Content.Shared.Physics.Controllers
         [Pure]
         private float GetTileFriction(IPhysBody body)
         {
-            if (body.BodyStatus == BodyStatus.InAir || body.Entity.Transform.GridID == GridId.Invalid)
+            if (body.BodyStatus == BodyStatus.InAir || !_mapManager.TryGetGrid(body.Owner.Transform.GridID, out var grid))
                 return 0.0f;
 
-            var transform = body.Owner.Transform;
-            var coords = transform.Coordinates;
-
-            var grid = _mapManager.GetGrid(coords.GetGridId(body.Owner.EntityManager));
-            var tile = grid.GetTileRef(coords);
+            var tile = grid.GetTileRef(body.Owner.Transform.Coordinates);
             var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
             return tileDef.Friction;
         }
