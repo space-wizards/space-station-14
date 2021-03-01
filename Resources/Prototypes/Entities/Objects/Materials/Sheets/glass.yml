@@ -36,6 +36,9 @@
             - glass
             - glass_2
             - glass_3
+    - type: FloorTile
+      outputs:
+        - floor_glass
 
 - type: entity
   id: SheetGlass1
@@ -69,6 +72,9 @@
             - rglass
             - rglass_2
             - rglass_3
+    - type: FloorTile
+      outputs:
+        - floor_rglass
 
 - type: entity
   id: SheetRGlass1
