@@ -69,6 +69,8 @@
     - type: FireVisualizer
       sprite: Effects/fire.rsi
       normalState: fireobject
+      Sprite:
+        drawdepth: Overlays
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
@@ -94,6 +96,8 @@
     - type: FireVisualizer
       sprite: Effects/fire.rsi
       normalState: fireobject
+      Sprite:
+        drawdepth: Overlays
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
@@ -118,6 +122,8 @@
     - type: FireVisualizer
       sprite: Effects/fire.rsi
       normalState: fireobject
+      Sprite:
+        drawdepth: Overlays
   - type: Sprite
     state: officechair_white
   - type: Physics
@@ -144,6 +150,8 @@
     - type: FireVisualizer
       sprite: Effects/fire.rsi
       normalState: fireobject
+      Sprite:
+        drawdepth: Overlays
 
 - type: entity
   name: comfy chair
@@ -161,6 +169,8 @@
     - type: FireVisualizer
       sprite: Effects/fire.rsi
       normalState: fireobject
+      Sprite:
+        drawdepth: Overlays
   - type: Physics
     shapes:
     - !type:PhysShapeAabb
@@ -186,6 +196,8 @@
     - type: FireVisualizer
       sprite: Effects/fire.rsi
       normalState: fireobject
+      Sprite:
+        drawdepth: Overlays
   - type: Physics
     shapes:
     - !type:PhysShapeAabb

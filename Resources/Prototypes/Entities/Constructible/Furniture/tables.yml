@@ -262,6 +262,8 @@
     - type: FireVisualizer
       sprite: Effects/fire.rsi
       normalState: fireobject
+      Sprite:
+        drawdepth: Overlays
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -301,6 +303,8 @@
     - type: FireVisualizer
       sprite: Effects/fire.rsi
       normalState: fireobject
+      Sprite:
+        drawdepth: Overlays
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

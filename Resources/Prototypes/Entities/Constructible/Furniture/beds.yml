@@ -13,6 +13,8 @@
     - type: FireVisualizer
       sprite: Effects/fire.rsi
       normalState: fireobject
+      Sprite:
+        drawdepth: Overlays
   - type: Physics
     mass: 25
     anchored: true

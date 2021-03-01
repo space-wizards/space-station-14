@@ -23,6 +23,8 @@
     - type: FireVisualizer
       sprite: Effects/fire.rsi
       normalState: fireobject
+      Sprite:
+        drawdepth: Overlays
   - type: Physics
     shapes:
       - !type:PhysShapeAabb
