@@ -30,7 +30,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
         private IPhysBody? _pullerPhysics;
         public IPhysBody? PullerPhysics => _pullerPhysics;
 
-        private DistanceJoint? _pullJoint = null;
+        private DistanceJoint? _pullJoint;
 
         /// <summary>
         /// The current entity pulling this component.
@@ -104,7 +104,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     {
                         if (oldPulling.TryGetComponent(out SharedPullableComponent? pullable))
                         {
-                            pullable.Puller = null;
+                            pullable.TryStopPull();
                         }
                         else
                         {
