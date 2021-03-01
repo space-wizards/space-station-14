@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Strap
     {
         [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;
 
-        private HashSet<IEntity> _buckledEntities = null!;
+        private readonly HashSet<IEntity> _buckledEntities = new();
 
         /// <summary>
         /// The angle in degrees to rotate the player by when they get strapped
@@ -128,11 +128,6 @@ namespace Content.Server.GameObjects.Components.Strap
                 _occupiedSize -= buckle.Size;
                 SendMessage(new UnStrapMessage(buckle.Owner, Owner));
             }
-        }
-
-        public void AfterDeserialization()
-        {
-            _buckledEntities = new HashSet<IEntity>(_size / 100);
         }
 
         public override void OnRemove()
