@@ -7,7 +7,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
-  - type: MeleeWeapon
+  - type: Fireaxe
   - type: ItemCooldown
   - type: MeleeWeapon
     damage: 30
