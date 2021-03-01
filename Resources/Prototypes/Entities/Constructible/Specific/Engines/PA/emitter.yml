@@ -24,7 +24,6 @@
       graph: particleAcceleratorEmitterLeft
       node: completed
 
-
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterCenter
@@ -82,7 +81,7 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterLeftUnfinished
-  name: EM Containment Grid
+  name: EM Containment Grid 
   suffix: Unfinished, Left
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
