@@ -10,10 +10,10 @@ namespace Content.IntegrationTests.Tests.Serialization
         [Test]
         public async Task Test()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
             await server.WaitIdleAsync();
             var sprotoManager = server.ResolveDependency<IPrototypeManager>();
-            var res = sprotoManager.ValidateDirectory(new ResourcePath("/Resources/Prototypes"));
+            var res = sprotoManager.ValidateDirectory(new ResourcePath("/Prototypes"));
             Assert.That(res.Count, Is.Zero);
         }
     }

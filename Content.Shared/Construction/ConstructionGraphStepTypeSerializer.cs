@@ -57,10 +57,10 @@ namespace Content.Shared.Construction
             return new DeserializedValue<ConstructionGraphStep>(serializationManager.ReadValueOrThrow<ConstructionGraphStep>(type, node, context));
         }
 
-        public bool Validate(ISerializationManager serializationManager, MappingDataNode node)
+        public bool Validate(ISerializationManager serializationManager, MappingDataNode node, ISerializationContext? context = null)
         {
             var type = GetType(node);
-            return type != null && serializationManager.ValidateNode(type, node);
+            return type != null && serializationManager.ValidateNode(type, node, context);
         }
     }
 }
