@@ -81,8 +81,6 @@ namespace Content.Shared.GameObjects.Components.Body
             // Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
             // The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
             var cleanedConnections = new Dictionary<string, List<string>>();
-            Slots ??= new Dictionary<string, BodyPartType>();
-            Connections ??= new Dictionary<string, List<string>>();
 
             foreach (var targetSlotName in Slots.Keys)
             {

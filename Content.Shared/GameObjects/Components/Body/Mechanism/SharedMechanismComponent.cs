@@ -23,7 +23,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         protected IEntity? PerformerCache;
         private IBodyPart? _part;
 
-        [DataField("behaviours", serverOnly: true)] private HashSet<IMechanismBehavior> _behaviorTypes = new();
+        [DataField("behaviors", serverOnly: true)] private HashSet<IMechanismBehavior> _behaviorTypes = new();
 
         private readonly Dictionary<Type, IMechanismBehavior> _behaviors = new();
 
