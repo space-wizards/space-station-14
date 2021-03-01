@@ -15,6 +15,7 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -219,7 +220,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             base.Initialize();
 
-            _lightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner);
+            _lightBulbContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "light_bulb");
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)

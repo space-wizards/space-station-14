@@ -11,7 +11,7 @@ using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -286,7 +286,7 @@ namespace Content.Server.GameObjects.Components.Construction
                     else
                     {
                         _containers.Add(insertStep.Store);
-                        var container = ContainerManagerComponent.Ensure<Container>(insertStep.Store, Owner);
+                        var container = ContainerHelpers.EnsureContainer<Container>(Owner, insertStep.Store);
                         container.Insert(entityUsing);
                     }
 
@@ -425,7 +425,7 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 foreach (var container in _containers)
                 {
-                    var otherContainer = ContainerManagerComponent.Ensure<Container>(container, entity);
+                    var otherContainer = ContainerHelpers.EnsureContainer<Container>(entity, container);
                     var ourContainer = containerComp.GetContainer(container);
 
                     foreach (var ent in ourContainer.ContainedEntities.ToArray())

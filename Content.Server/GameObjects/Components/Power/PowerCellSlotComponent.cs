@@ -7,6 +7,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -104,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Power
         public override void Initialize()
         {
             base.Initialize();
-            _cellContainer = ContainerManagerComponent.Ensure<ContainerSlot>("cellslot_cell_container", Owner, out _);
+            _cellContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "cellslot_cell_container", out _);
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)

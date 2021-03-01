@@ -462,8 +462,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 50
   type: Table
@@ -607,8 +606,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 69
   type: PowerCellRecharger
@@ -620,8 +618,7 @@ entities:
   - anchored: False
     type: Physics
   - containers:
-      PowerCellCharger-powerCellContainer:
-        type: Content.Server.GameObjects.ContainerSlot
+      PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 70
   type: FirelockGlass
@@ -647,8 +644,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Container
+      storagebase: !type:Container {}
     type: ContainerContainer
 - uid: 73
   type: DrinkGoldenCup
@@ -942,8 +938,7 @@ entities:
     pos: 33.57156,-2.0622954
     type: Transform
   - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Container
+      storagebase: !type:Container {}
     type: ContainerContainer
 - uid: 115
   type: FlashlightLantern
@@ -952,10 +947,8 @@ entities:
     pos: 30.248352,-4.36431
     type: Transform
   - containers:
-      flashlight_cell_container:
-        type: Content.Server.GameObjects.ContainerSlot
-      cellslot_cell_container:
-        type: Content.Server.GameObjects.ContainerSlot
+      flashlight_cell_container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 116
   type: FlashlightLantern
@@ -964,10 +957,8 @@ entities:
     pos: 30.545227,-4.17681
     type: Transform
   - containers:
-      flashlight_cell_container:
-        type: Content.Server.GameObjects.ContainerSlot
-      cellslot_cell_container:
-        type: Content.Server.GameObjects.ContainerSlot
+      flashlight_cell_container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 117
   type: ClothingHeadHatHardhatYellow
@@ -976,8 +967,7 @@ entities:
     pos: 31.357727,-4.36431
     type: Transform
   - containers:
-      cellslot_cell_container:
-        type: Content.Server.GameObjects.ContainerSlot
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 118
   type: ClothingHeadHatHardhatWhite
@@ -986,8 +976,7 @@ entities:
     pos: 31.623352,-4.14556
     type: Transform
   - containers:
-      cellslot_cell_container:
-        type: Content.Server.GameObjects.ContainerSlot
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 119
   type: ClothingHeadHatHardhatRed
@@ -996,8 +985,7 @@ entities:
     pos: 31.201477,-4.05181
     type: Transform
   - containers:
-      cellslot_cell_container:
-        type: Content.Server.GameObjects.ContainerSlot
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 120
   type: VendingMachineDinnerware
@@ -1035,10 +1023,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      stunbaton_cell_container:
-        type: Content.Server.GameObjects.ContainerSlot
-      cellslot_cell_container:
-        type: Content.Server.GameObjects.ContainerSlot
+      stunbaton_cell_container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 125
   type: Stunbaton
@@ -1048,10 +1034,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      stunbaton_cell_container:
-        type: Content.Server.GameObjects.ContainerSlot
-      cellslot_cell_container:
-        type: Content.Server.GameObjects.ContainerSlot
+      stunbaton_cell_container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 126
   type: PowerCellSmallStandard
@@ -1066,12 +1050,9 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      BatteryBarrel-powercell-container:
-        entities:
-        - 126
-        type: Content.Server.GameObjects.ContainerSlot
-      BatteryBarrel-ammo-container:
-        type: Content.Server.GameObjects.ContainerSlot
+      BatteryBarrel-powercell-container: !type:ContainerSlot
+        ents: 126
+      BatteryBarrel-ammo-container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 128
   type: PowerCellSmallStandard
@@ -1086,12 +1067,9 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      BatteryBarrel-powercell-container:
-        entities:
-        - 128
-        type: Content.Server.GameObjects.ContainerSlot
-      BatteryBarrel-ammo-container:
-        type: Content.Server.GameObjects.ContainerSlot
+      BatteryBarrel-powercell-container: !type:ContainerSlot
+        ents: 128
+      BatteryBarrel-ammo-container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 130
   type: Table
@@ -1131,8 +1109,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 135
   type: Poweredlight
@@ -1144,8 +1121,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 136
   type: Poweredlight
@@ -1157,8 +1133,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 137
   type: PlaqueAtmos
@@ -1194,8 +1169,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 141
   type: Poweredlight
@@ -1207,8 +1181,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 142
   type: SignRND
@@ -1248,8 +1221,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 147
   type: SignEVA
@@ -1341,8 +1313,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalBend:
-        type: Robust.Server.GameObjects.Container
+      DisposalBend: !type:Container {}
     type: ContainerContainer
 - uid: 160
   type: DisposalBend
@@ -1352,8 +1323,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalBend:
-        type: Robust.Server.GameObjects.Container
+      DisposalBend: !type:Container {}
     type: ContainerContainer
 - uid: 161
   type: DisposalPipe
@@ -1363,8 +1333,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 162
   type: TwoWayLever
@@ -1382,8 +1351,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 164
   type: DisposalJunction
@@ -1393,8 +1361,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 165
   type: DisposalJunction
@@ -1404,8 +1371,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 166
   type: DisposalJunctionFlipped
@@ -1415,8 +1381,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 167
   type: DisposalJunction
@@ -1426,8 +1391,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 168
   type: DisposalJunctionFlipped
@@ -1437,8 +1401,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 169
   type: DisposalJunctionFlipped
@@ -1448,8 +1411,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 170
   type: DisposalJunction
@@ -1459,8 +1421,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 171
   type: DisposalYJunction
@@ -1470,8 +1431,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 172
   type: DisposalJunctionFlipped
@@ -1481,8 +1441,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 173
   type: DisposalJunction
@@ -1492,8 +1451,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 174
   type: DisposalJunction
@@ -1503,8 +1461,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 175
   type: DisposalJunctionFlipped
@@ -1514,8 +1471,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 176
   type: DisposalJunctionFlipped
@@ -1525,8 +1481,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 177
   type: DisposalJunction
@@ -1536,8 +1491,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 178
   type: DisposalJunctionFlipped
@@ -1547,8 +1501,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalJunction:
-        type: Robust.Server.GameObjects.Container
+      DisposalJunction: !type:Container {}
     type: ContainerContainer
 - uid: 179
   type: DisposalPipe
@@ -1558,8 +1511,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 180
   type: DisposalPipe
@@ -1569,8 +1521,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 181
   type: DisposalPipe
@@ -1580,8 +1531,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 182
   type: DisposalPipe
@@ -1591,8 +1541,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 183
   type: DisposalTrunk
@@ -1602,8 +1551,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 184
   type: DisposalUnit
@@ -1613,8 +1561,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 185
   type: DisposalPipe
@@ -1624,8 +1571,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 186
   type: DisposalPipe
@@ -1635,8 +1581,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 187
   type: DisposalPipe
@@ -1646,8 +1591,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 188
   type: DisposalPipe
@@ -1657,8 +1601,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 189
   type: DisposalPipe
@@ -1668,8 +1611,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 190
   type: DisposalPipe
@@ -1679,8 +1621,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 191
   type: VendingMachineYouTool
@@ -1697,8 +1638,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 193
   type: DisposalBend
@@ -1708,8 +1648,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalBend:
-        type: Robust.Server.GameObjects.Container
+      DisposalBend: !type:Container {}
     type: ContainerContainer
 - uid: 194
   type: DisposalPipe
@@ -1719,8 +1658,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 195
   type: DisposalPipe
@@ -1730,8 +1668,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 196
   type: DisposalPipe
@@ -1741,8 +1678,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 197
   type: DisposalPipe
@@ -1752,8 +1688,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 198
   type: DisposalPipe
@@ -1763,8 +1698,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 199
   type: DisposalPipe
@@ -1774,8 +1708,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 200
   type: DisposalPipe
@@ -1785,8 +1718,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 201
   type: DisposalTrunk
@@ -1796,8 +1728,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 202
   type: DisposalUnit
@@ -1807,8 +1738,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 203
   type: DisposalPipe
@@ -1818,8 +1748,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 204
   type: DisposalPipe
@@ -1829,8 +1758,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 205
   type: DisposalPipe
@@ -1840,8 +1768,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 206
   type: DisposalTrunk
@@ -1851,8 +1778,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 207
   type: DisposalUnit
@@ -1861,8 +1787,7 @@ entities:
     pos: 6.5,11.5
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 208
   type: DisposalPipe
@@ -1872,8 +1797,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 209
   type: DisposalPipe
@@ -1883,8 +1807,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 210
   type: DisposalPipe
@@ -1894,8 +1817,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 211
   type: DisposalPipe
@@ -1905,8 +1827,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 212
   type: DisposalTrunk
@@ -1916,8 +1837,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 213
   type: DisposalUnit
@@ -1927,8 +1847,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 214
   type: DisposalPipe
@@ -1938,8 +1857,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 215
   type: DisposalPipe
@@ -1949,8 +1867,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 216
   type: DisposalPipe
@@ -1960,8 +1877,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 217
   type: DisposalPipe
@@ -1971,8 +1887,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 218
   type: Recycler
@@ -1988,8 +1903,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 220
   type: DisposalPipe
@@ -1999,8 +1913,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 221
   type: DisposalPipe
@@ -2010,8 +1923,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 222
   type: DisposalPipe
@@ -2021,8 +1933,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 223
   type: DisposalPipe
@@ -2032,8 +1943,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 224
   type: DisposalPipe
@@ -2043,8 +1953,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 225
   type: DisposalPipe
@@ -2054,8 +1963,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 226
   type: DisposalTrunk
@@ -2065,8 +1973,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 227
   type: DisposalUnit
@@ -2075,8 +1982,7 @@ entities:
     pos: 34.5,-4.5
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 228
   type: DisposalPipe
@@ -2086,8 +1992,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 229
   type: DisposalPipe
@@ -2097,8 +2002,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 230
   type: DisposalPipe
@@ -2108,8 +2012,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 231
   type: DisposalPipe
@@ -2119,8 +2022,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 232
   type: DisposalPipe
@@ -2130,8 +2032,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 233
   type: DisposalPipe
@@ -2141,8 +2042,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 234
   type: DisposalPipe
@@ -2152,8 +2052,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 235
   type: DisposalBend
@@ -2163,8 +2062,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalBend:
-        type: Robust.Server.GameObjects.Container
+      DisposalBend: !type:Container {}
     type: ContainerContainer
 - uid: 236
   type: DisposalPipe
@@ -2174,8 +2072,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 237
   type: DisposalPipe
@@ -2185,8 +2082,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 238
   type: DisposalTrunk
@@ -2196,8 +2092,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 239
   type: DisposalUnit
@@ -2207,8 +2102,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 240
   type: DisposalBend
@@ -2218,8 +2112,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalBend:
-        type: Robust.Server.GameObjects.Container
+      DisposalBend: !type:Container {}
     type: ContainerContainer
 - uid: 241
   type: DisposalPipe
@@ -2229,8 +2122,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 242
   type: DisposalPipe
@@ -2240,8 +2132,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 243
   type: DisposalPipe
@@ -2251,8 +2142,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 244
   type: DisposalPipe
@@ -2262,8 +2152,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 245
   type: DisposalPipe
@@ -2273,8 +2162,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 246
   type: DisposalPipe
@@ -2284,8 +2172,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 247
   type: DisposalPipe
@@ -2295,8 +2182,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 248
   type: DisposalPipe
@@ -2306,8 +2192,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 249
   type: DisposalPipe
@@ -2317,8 +2202,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 250
   type: DisposalPipe
@@ -2328,8 +2212,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 251
   type: DisposalPipe
@@ -2339,8 +2222,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 252
   type: DisposalPipe
@@ -2350,8 +2232,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 253
   type: DisposalPipe
@@ -2361,8 +2242,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 254
   type: DisposalPipe
@@ -2372,8 +2252,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 255
   type: DisposalPipe
@@ -2383,8 +2262,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 256
   type: DisposalPipe
@@ -2394,8 +2272,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 257
   type: DisposalPipe
@@ -2405,8 +2282,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 258
   type: DisposalPipe
@@ -2416,8 +2292,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 259
   type: DisposalPipe
@@ -2427,8 +2302,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 260
   type: DisposalPipe
@@ -2438,8 +2312,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 261
   type: DisposalPipe
@@ -2449,8 +2322,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 262
   type: DisposalPipe
@@ -2460,8 +2332,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 263
   type: DisposalPipe
@@ -2471,8 +2342,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 264
   type: Window
@@ -2489,8 +2359,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 266
   type: DisposalPipe
@@ -2500,8 +2369,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 267
   type: DisposalPipe
@@ -2511,8 +2379,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 268
   type: DisposalPipe
@@ -2522,8 +2389,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 269
   type: DisposalPipe
@@ -2533,8 +2399,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 270
   type: DisposalPipe
@@ -2544,8 +2409,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 271
   type: DisposalTrunk
@@ -2555,8 +2419,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 272
   type: DisposalUnit
@@ -2565,8 +2428,7 @@ entities:
     pos: -2.5,29.5
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 273
   type: DisposalPipe
@@ -2576,8 +2438,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 274
   type: DisposalPipe
@@ -2587,8 +2448,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 275
   type: DisposalPipe
@@ -2598,8 +2458,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 276
   type: DisposalPipe
@@ -2609,8 +2468,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 277
   type: DisposalPipe
@@ -2620,8 +2478,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 278
   type: DisposalPipe
@@ -2631,8 +2488,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 279
   type: DisposalPipe
@@ -2642,8 +2498,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 280
   type: DisposalPipe
@@ -2653,8 +2508,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 281
   type: DisposalPipe
@@ -2664,8 +2518,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 282
   type: DisposalPipe
@@ -2675,8 +2528,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 283
   type: DisposalPipe
@@ -2686,8 +2538,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 284
   type: DisposalPipe
@@ -2697,8 +2548,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 285
   type: DisposalPipe
@@ -2708,8 +2558,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 286
   type: DisposalPipe
@@ -2719,8 +2568,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 287
   type: DisposalBend
@@ -2730,8 +2578,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalBend:
-        type: Robust.Server.GameObjects.Container
+      DisposalBend: !type:Container {}
     type: ContainerContainer
 - uid: 288
   type: DisposalPipe
@@ -2741,8 +2588,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 289
   type: DisposalPipe
@@ -2752,8 +2598,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 290
   type: DisposalPipe
@@ -2763,8 +2608,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 291
   type: DisposalPipe
@@ -2774,8 +2618,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 292
   type: DisposalPipe
@@ -2785,8 +2628,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 293
   type: DisposalPipe
@@ -2796,8 +2638,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 294
   type: DisposalPipe
@@ -2807,8 +2648,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 295
   type: DisposalTrunk
@@ -2818,8 +2658,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 296
   type: DisposalUnit
@@ -2828,8 +2667,7 @@ entities:
     pos: 11.5,-11.5
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 297
   type: DisposalPipe
@@ -2839,8 +2677,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 298
   type: DisposalPipe
@@ -2850,8 +2687,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 299
   type: DisposalPipe
@@ -2861,8 +2697,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 300
   type: DisposalPipe
@@ -2872,8 +2707,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 301
   type: DisposalTrunk
@@ -2883,8 +2717,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 302
   type: DisposalUnit
@@ -2893,8 +2726,7 @@ entities:
     pos: 12.5,-2.5
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 303
   type: Window
@@ -2918,8 +2750,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 306
   type: DisposalPipe
@@ -2929,8 +2760,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 307
   type: DisposalPipe
@@ -2940,8 +2770,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 308
   type: DisposalPipe
@@ -2951,8 +2780,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 309
   type: DisposalPipe
@@ -2962,8 +2790,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 310
   type: DisposalPipe
@@ -2973,8 +2800,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 311
   type: DisposalPipe
@@ -2984,8 +2810,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 312
   type: DisposalPipe
@@ -2995,8 +2820,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 313
   type: DisposalPipe
@@ -3006,8 +2830,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 314
   type: DisposalPipe
@@ -3017,8 +2840,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 315
   type: DisposalPipe
@@ -3028,8 +2850,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 316
   type: DisposalPipe
@@ -3039,8 +2860,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 317
   type: DisposalPipe
@@ -3050,8 +2870,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 318
   type: DisposalPipe
@@ -3061,8 +2880,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 319
   type: DisposalPipe
@@ -3072,8 +2890,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 320
   type: DisposalPipe
@@ -3083,8 +2900,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 321
   type: DisposalPipe
@@ -3094,8 +2910,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 322
   type: DisposalPipe
@@ -3105,8 +2920,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 323
   type: DisposalPipe
@@ -3116,8 +2930,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 324
   type: DisposalPipe
@@ -3127,8 +2940,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 325
   type: Firelock
@@ -3146,8 +2958,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 327
   type: DisposalPipe
@@ -3157,8 +2968,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 328
   type: DisposalPipe
@@ -3168,8 +2978,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 329
   type: DisposalPipe
@@ -3179,8 +2988,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 330
   type: DisposalPipe
@@ -3190,8 +2998,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 331
   type: DisposalPipe
@@ -3201,8 +3008,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 332
   type: DisposalPipe
@@ -3212,8 +3018,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 333
   type: DisposalPipe
@@ -3223,8 +3028,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 334
   type: DisposalTrunk
@@ -3234,8 +3038,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 335
   type: DisposalUnit
@@ -3245,8 +3048,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 336
   type: DisposalPipe
@@ -3256,8 +3058,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 337
   type: DisposalTrunk
@@ -3267,8 +3068,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 338
   type: DisposalPipe
@@ -3278,8 +3078,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 339
   type: DisposalPipe
@@ -3289,8 +3088,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 340
   type: DisposalTrunk
@@ -3300,8 +3098,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 341
   type: DisposalPipe
@@ -3311,8 +3108,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 342
   type: DisposalPipe
@@ -3322,8 +3118,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 343
   type: DisposalPipe
@@ -3333,8 +3128,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 344
   type: DisposalBend
@@ -3344,8 +3138,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalBend:
-        type: Robust.Server.GameObjects.Container
+      DisposalBend: !type:Container {}
     type: ContainerContainer
 - uid: 345
   type: DisposalPipe
@@ -3355,8 +3148,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 346
   type: DisposalPipe
@@ -3366,8 +3158,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 347
   type: DisposalTrunk
@@ -3377,8 +3168,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 348
   type: DisposalBend
@@ -3388,8 +3178,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalBend:
-        type: Robust.Server.GameObjects.Container
+      DisposalBend: !type:Container {}
     type: ContainerContainer
 - uid: 349
   type: DisposalPipe
@@ -3399,8 +3188,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 350
   type: DisposalPipe
@@ -3410,8 +3198,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 351
   type: DisposalPipe
@@ -3421,8 +3208,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 352
   type: DisposalPipe
@@ -3432,8 +3218,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 353
   type: DisposalPipe
@@ -3443,8 +3228,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 354
   type: DisposalPipe
@@ -3454,8 +3238,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 355
   type: DisposalPipe
@@ -3465,8 +3248,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 356
   type: DisposalPipe
@@ -3476,8 +3258,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 357
   type: DisposalPipe
@@ -3487,8 +3268,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 358
   type: DisposalPipe
@@ -3498,8 +3278,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 359
   type: DisposalPipe
@@ -3509,8 +3288,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 360
   type: DisposalPipe
@@ -3520,8 +3298,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 361
   type: DisposalPipe
@@ -3531,8 +3308,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 362
   type: DisposalPipe
@@ -3542,8 +3318,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 363
   type: DisposalUnit
@@ -3553,8 +3328,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 364
   type: DisposalPipe
@@ -3564,8 +3338,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 365
   type: DisposalPipe
@@ -3575,8 +3348,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 366
   type: DisposalPipe
@@ -3586,8 +3358,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 367
   type: DisposalPipe
@@ -3597,8 +3368,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 368
   type: DisposalPipe
@@ -3608,8 +3378,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 369
   type: DisposalPipe
@@ -3619,8 +3388,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 370
   type: DisposalPipe
@@ -3630,8 +3398,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 371
   type: DisposalPipe
@@ -3641,8 +3408,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 372
   type: DisposalPipe
@@ -3652,8 +3418,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 373
   type: DisposalUnit
@@ -3662,8 +3427,7 @@ entities:
     pos: -22.5,6.5
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 374
   type: DisposalPipe
@@ -3673,8 +3437,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 375
   type: DisposalPipe
@@ -3684,8 +3447,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 376
   type: DisposalPipe
@@ -3695,8 +3457,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 377
   type: DisposalPipe
@@ -3706,8 +3467,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 378
   type: DisposalPipe
@@ -3717,8 +3477,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 379
   type: DisposalPipe
@@ -3728,8 +3487,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 380
   type: DisposalPipe
@@ -3739,8 +3497,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 381
   type: DisposalPipe
@@ -3750,8 +3507,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 382
   type: DisposalPipe
@@ -3761,8 +3517,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 383
   type: DisposalPipe
@@ -3772,8 +3527,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 384
   type: DisposalPipe
@@ -3783,8 +3537,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 385
   type: DisposalPipe
@@ -3794,8 +3547,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 386
   type: DisposalPipe
@@ -3805,8 +3557,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 387
   type: DisposalPipe
@@ -3816,8 +3567,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 388
   type: DisposalPipe
@@ -3827,8 +3577,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 389
   type: DisposalPipe
@@ -3838,8 +3587,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 390
   type: DisposalPipe
@@ -3849,8 +3597,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 391
   type: DisposalPipe
@@ -3860,8 +3607,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 392
   type: DisposalPipe
@@ -3871,8 +3617,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 393
   type: DisposalPipe
@@ -3882,8 +3627,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 394
   type: DisposalPipe
@@ -3893,8 +3637,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 395
   type: DisposalPipe
@@ -3904,8 +3647,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 396
   type: DisposalBend
@@ -3915,8 +3657,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalBend:
-        type: Robust.Server.GameObjects.Container
+      DisposalBend: !type:Container {}
     type: ContainerContainer
 - uid: 397
   type: DisposalPipe
@@ -3926,8 +3667,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 398
   type: DisposalPipe
@@ -3937,8 +3677,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 399
   type: DisposalPipe
@@ -3948,8 +3687,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 400
   type: DisposalPipe
@@ -3959,8 +3697,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 401
   type: DisposalUnit
@@ -3969,8 +3706,7 @@ entities:
     pos: -27.5,-8.5
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 402
   type: DisposalPipe
@@ -3980,8 +3716,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 403
   type: DisposalPipe
@@ -3991,8 +3726,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 404
   type: DisposalPipe
@@ -4002,8 +3736,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 405
   type: DisposalUnit
@@ -4013,8 +3746,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 406
   type: Firelock
@@ -4700,8 +4432,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 503
   type: TrashSpawner
@@ -4790,8 +4521,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 515
   type: Poweredlight
@@ -4803,8 +4533,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 516
   type: Poweredlight
@@ -4816,8 +4545,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 517
   type: Catwalk
@@ -5149,8 +4877,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 559
   type: Poweredlight
@@ -5164,8 +4891,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 560
   type: Poweredlight
@@ -5179,8 +4905,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 561
   type: AirlockCommandGlassLocked
@@ -5225,10 +4950,9 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      board:
-        entities:
+      board: !type:Container
+        ents:
         - 563
-        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 565
   type: cargoTelepad
@@ -6491,8 +6215,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 663
   type: Table
@@ -6518,8 +6241,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 666
   type: LowWall
@@ -7061,10 +6783,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      potted_plant_hide:
-        type: Content.Server.GameObjects.ContainerSlot
-      stash:
-        type: Content.Server.GameObjects.ContainerSlot
+      potted_plant_hide: !type:ContainerSlot {}
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 743
   type: ReinforcedWindow
@@ -7081,10 +6801,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      potted_plant_hide:
-        type: Content.Server.GameObjects.ContainerSlot
-      stash:
-        type: Content.Server.GameObjects.ContainerSlot
+      potted_plant_hide: !type:ContainerSlot {}
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 745
   type: PottedPlantRandomPlastic
@@ -7094,10 +6812,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      potted_plant_hide:
-        type: Content.Server.GameObjects.ContainerSlot
-      stash:
-        type: Content.Server.GameObjects.ContainerSlot
+      potted_plant_hide: !type:ContainerSlot {}
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 746
   type: PottedPlantRandom
@@ -7107,10 +6823,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      potted_plant_hide:
-        type: Content.Server.GameObjects.ContainerSlot
-      stash:
-        type: Content.Server.GameObjects.ContainerSlot
+      potted_plant_hide: !type:ContainerSlot {}
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 747
   type: LowWall
@@ -7169,10 +6883,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      potted_plant_hide:
-        type: Content.Server.GameObjects.ContainerSlot
-      stash:
-        type: Content.Server.GameObjects.ContainerSlot
+      potted_plant_hide: !type:ContainerSlot {}
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 755
   type: LowWall
@@ -7210,10 +6922,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      potted_plant_hide:
-        type: Content.Server.GameObjects.ContainerSlot
-      stash:
-        type: Content.Server.GameObjects.ContainerSlot
+      potted_plant_hide: !type:ContainerSlot {}
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 760
   type: LockerEmergencyFilledRandom
@@ -7225,8 +6935,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 761
   type: PottedPlantRandom
@@ -7236,10 +6945,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      potted_plant_hide:
-        type: Content.Server.GameObjects.ContainerSlot
-      stash:
-        type: Content.Server.GameObjects.ContainerSlot
+      potted_plant_hide: !type:ContainerSlot {}
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 762
   type: LockerEmergencyFilledRandom
@@ -7251,8 +6958,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 763
   type: LockerEmergencyFilledRandom
@@ -7264,8 +6970,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 764
   type: PottedPlantRandom
@@ -7275,10 +6980,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      potted_plant_hide:
-        type: Content.Server.GameObjects.ContainerSlot
-      stash:
-        type: Content.Server.GameObjects.ContainerSlot
+      potted_plant_hide: !type:ContainerSlot {}
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 765
   type: PottedPlantRandom
@@ -7288,10 +6991,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      potted_plant_hide:
-        type: Content.Server.GameObjects.ContainerSlot
-      stash:
-        type: Content.Server.GameObjects.ContainerSlot
+      potted_plant_hide: !type:ContainerSlot {}
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 766
   type: LockerEmergencyFilledRandom
@@ -7303,8 +7004,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 767
   type: LockerEmergencyFilledRandom
@@ -7316,8 +7016,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 768
   type: LockerEmergencyFilledRandom
@@ -7329,8 +7028,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 769
   type: PottedPlantRD
@@ -7340,10 +7038,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      potted_plant_hide:
-        type: Content.Server.GameObjects.ContainerSlot
-      stash:
-        type: Content.Server.GameObjects.ContainerSlot
+      potted_plant_hide: !type:ContainerSlot {}
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 770
   type: LockerEmergencyFilledRandom
@@ -7355,8 +7051,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 771
   type: PottedPlantRandom
@@ -7366,10 +7061,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      potted_plant_hide:
-        type: Content.Server.GameObjects.ContainerSlot
-      stash:
-        type: Content.Server.GameObjects.ContainerSlot
+      potted_plant_hide: !type:ContainerSlot {}
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 772
   type: PottedPlantRandom
@@ -7379,10 +7072,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      potted_plant_hide:
-        type: Content.Server.GameObjects.ContainerSlot
-      stash:
-        type: Content.Server.GameObjects.ContainerSlot
+      potted_plant_hide: !type:ContainerSlot {}
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 773
   type: LockerFireFilled
@@ -7394,8 +7085,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 774
   type: LockerFireFilled
@@ -7407,8 +7097,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 775
   type: LockerBombFilled
@@ -7420,8 +7109,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 776
   type: LockerBombFilled
@@ -7433,8 +7121,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 777
   type: LockerFireFilled
@@ -7446,8 +7133,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 778
   type: LockerEmergencyFilledRandom
@@ -7459,8 +7145,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 779
   type: LockerFireFilled
@@ -7472,8 +7157,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 780
   type: LockerEmergencyFilledRandom
@@ -7485,8 +7169,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 781
   type: LockerFireFilled
@@ -7498,8 +7181,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 782
   type: LockerFireFilled
@@ -7511,8 +7193,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 783
   type: LockerEmergencyFilledRandom
@@ -7524,8 +7205,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 784
   type: LockerFireFilled
@@ -7537,8 +7217,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 785
   type: LockerEmergencyFilledRandom
@@ -7550,8 +7229,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 786
   type: LockerEmergencyFilledRandom
@@ -7563,8 +7241,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 787
   type: LockerEmergencyFilledRandom
@@ -7576,8 +7253,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 788
   type: LockerEmergencyFilledRandom
@@ -7589,8 +7265,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 789
   type: LockerFireFilled
@@ -7602,8 +7277,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 790
   type: LockerEmergencyFilledRandom
@@ -7615,8 +7289,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 791
   type: LockerEmergencyFilledRandom
@@ -7628,8 +7301,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 792
   type: LockerEmergencyFilledRandom
@@ -7641,8 +7313,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 793
   type: LockerEmergencyFilledRandom
@@ -7654,8 +7325,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 794
   type: LockerCaptainFilled
@@ -7667,8 +7337,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 795
   type: WardrobeCargoFilled
@@ -7680,8 +7349,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 796
   type: PottedPlantRandom
@@ -7691,10 +7359,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      potted_plant_hide:
-        type: Content.Server.GameObjects.ContainerSlot
-      stash:
-        type: Content.Server.GameObjects.ContainerSlot
+      potted_plant_hide: !type:ContainerSlot {}
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 797
   type: WardrobePrisonFilled
@@ -7706,8 +7372,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 798
   type: LockerL3JanitorFilled
@@ -7719,8 +7384,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 799
   type: LockerJanitorFilled
@@ -7732,8 +7396,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 800
   type: LockerChefFilled
@@ -7745,8 +7408,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 801
   type: WardrobeWhiteFilled
@@ -7758,8 +7420,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 802
   type: LockerMedicineFilled
@@ -7771,8 +7432,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 803
   type: LockerL3VirologyFilled
@@ -7784,8 +7444,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 804
   type: LockerSecurityFilled
@@ -7797,8 +7456,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 805
   type: LockerSecurityFilled
@@ -7810,8 +7468,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 806
   type: LockerSecurityFilled
@@ -7823,8 +7480,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 807
   type: WardrobeMedicalDoctorFilled
@@ -7836,8 +7492,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 808
   type: LockerL3SecurityFilled
@@ -7849,8 +7504,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 809
   type: LockerChiefMedicalOfficerFilled
@@ -7862,8 +7516,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 810
   type: TableGlass
@@ -7882,8 +7535,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 812
   type: LowWall
@@ -7902,8 +7554,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 814
   type: WardrobeAtmosphericsFilled
@@ -7915,8 +7566,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 815
   type: LockerAtmosphericsFilled
@@ -7928,8 +7578,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 816
   type: LockerAtmosphericsFilled
@@ -7941,8 +7590,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 817
   type: LockerChiefEngineerFilled
@@ -7954,8 +7602,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 818
   type: LockerEngineerFilled
@@ -7967,8 +7614,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 819
   type: LockerEngineerFilled
@@ -7980,8 +7626,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 820
   type: LockerResearchDirectorFilled
@@ -7993,8 +7638,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 821
   type: WardrobeScienceFilled
@@ -8006,8 +7650,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 822
   type: LockerL3JanitorFilled
@@ -8019,8 +7662,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 823
   type: LockerGeneric
@@ -8032,8 +7674,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 824
   type: TableGlass
@@ -8050,8 +7691,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      ReagentDispenser-reagentContainerContainer:
-        type: Content.Server.GameObjects.ContainerSlot
+      ReagentDispenser-reagentContainerContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 826
   type: Catwalk
@@ -8145,8 +7785,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 839
   type: DisposalBend
@@ -8156,8 +7795,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalBend:
-        type: Robust.Server.GameObjects.Container
+      DisposalBend: !type:Container {}
     type: ContainerContainer
 - uid: 840
   type: DisposalBend
@@ -8167,8 +7805,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalBend:
-        type: Robust.Server.GameObjects.Container
+      DisposalBend: !type:Container {}
     type: ContainerContainer
 - uid: 841
   type: DisposalBend
@@ -8178,8 +7815,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalBend:
-        type: Robust.Server.GameObjects.Container
+      DisposalBend: !type:Container {}
     type: ContainerContainer
 - uid: 842
   type: DisposalPipe
@@ -8189,8 +7825,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 843
   type: DisposalPipe
@@ -8200,8 +7835,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 844
   type: DisposalTrunk
@@ -8211,8 +7845,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 845
   type: DisposalUnit
@@ -8222,8 +7855,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 846
   type: DisposalPipe
@@ -8233,8 +7865,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 847
   type: DisposalPipe
@@ -8244,8 +7875,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 848
   type: DisposalPipe
@@ -8255,8 +7885,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 849
   type: DisposalPipe
@@ -8266,8 +7895,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 850
   type: DisposalPipe
@@ -8277,8 +7905,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 851
   type: DisposalPipe
@@ -8288,8 +7915,7 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 852
   type: DisposalPipe
@@ -8299,8 +7925,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 853
   components:
@@ -12340,8 +11965,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 858
   type: Poweredlight
@@ -12355,8 +11979,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 859
   type: LowWall
@@ -12582,8 +12205,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 892
   type: Poweredlight
@@ -12597,8 +12219,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 893
   type: Poweredlight
@@ -12612,8 +12233,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 894
   type: KitchenMicrowave
@@ -12623,8 +12243,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      microwave_entity_container:
-        type: Robust.Server.GameObjects.Container
+      microwave_entity_container: !type:Container {}
     type: ContainerContainer
 - uid: 895
   type: Table
@@ -13084,10 +12703,9 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      board:
-        entities:
+      board: !type:Container
+        ents:
         - 4024
-        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 960
   type: ChairOfficeDark
@@ -13198,14 +12816,11 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      IdCardConsole-privilegedId:
-        type: Content.Server.GameObjects.ContainerSlot
-      IdCardConsole-targetId:
-        type: Content.Server.GameObjects.ContainerSlot
-      board:
-        entities:
+      IdCardConsole-privilegedId: !type:ContainerSlot {}
+      IdCardConsole-targetId: !type:ContainerSlot {}
+      board: !type:Container
+        ents:
         - 3945
-        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 974
   type: ComputerId
@@ -13215,14 +12830,11 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      IdCardConsole-privilegedId:
-        type: Content.Server.GameObjects.ContainerSlot
-      IdCardConsole-targetId:
-        type: Content.Server.GameObjects.ContainerSlot
-      board:
-        entities:
+      IdCardConsole-privilegedId: !type:ContainerSlot {}
+      IdCardConsole-targetId: !type:ContainerSlot {}
+      board: !type:Container
+        ents:
         - 3946
-        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 975
   type: Table
@@ -13275,10 +12887,9 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      board:
-        entities:
+      board: !type:Container
+        ents:
         - 3992
-        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 981
   type: ChairOfficeDark
@@ -13377,10 +12988,9 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      board:
-        entities:
+      board: !type:Container
+        ents:
         - 4032
-        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 993
   type: Table
@@ -13685,8 +13295,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1036
   type: SpawnPointSecurityOfficer
@@ -13750,22 +13359,19 @@ entities:
     - LightTube
     - LightBulb
     - SheetSteel
-    - SheetGlass
     type: ProtolatheDatabase
   - containers:
-      machine_board:
-        entities:
+      machine_board: !type:Container
+        ents:
         - 4272
-        type: Robust.Server.GameObjects.Container
-      machine_parts:
-        entities:
+      machine_parts: !type:Container
+        ents:
         - 4273
         - 4274
         - 4275
         - 4276
         - 4277
         - 4278
-        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1044
   type: Autolathe
@@ -13780,21 +13386,18 @@ entities:
     - LightTube
     - LightBulb
     - SheetSteel
-    - SheetGlass
     type: LatheDatabase
   - containers:
-      machine_board:
-        entities:
+      machine_board: !type:Container
+        ents:
         - 871
-        type: Robust.Server.GameObjects.Container
-      machine_parts:
-        entities:
+      machine_parts: !type:Container
+        ents:
         - 872
         - 873
         - 874
         - 875
         - 876
-        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1045
   type: ChairOfficeLight
@@ -13900,8 +13503,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1058
   type: ComputerResearchAndDevelopment
@@ -13911,10 +13513,9 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      board:
-        entities:
+      board: !type:Container
+        ents:
         - 4009
-        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 1059
   type: LowWall
@@ -13942,8 +13543,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1062
   type: Poweredlight
@@ -13957,8 +13557,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1063
   type: Poweredlight
@@ -13972,8 +13571,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1064
   type: Poweredlight
@@ -13987,8 +13585,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1065
   type: ResearchAndDevelopmentServer
@@ -14011,8 +13608,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1067
   type: Poweredlight
@@ -14026,8 +13622,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1068
   type: Poweredlight
@@ -14041,8 +13636,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1069
   type: Poweredlight
@@ -14056,8 +13650,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1070
   type: Poweredlight
@@ -14071,8 +13664,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1071
   type: Poweredlight
@@ -14086,8 +13678,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1072
   type: Poweredlight
@@ -14101,8 +13692,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1073
   type: Poweredlight
@@ -14116,8 +13706,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1074
   type: ReinforcedWindow
@@ -14289,8 +13878,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1097
   type: ChairOfficeLight
@@ -14349,8 +13937,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 1105
   type: DisposalUnit
@@ -14360,8 +13947,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      DisposalUnit:
-        type: Robust.Server.GameObjects.Container
+      DisposalUnit: !type:Container {}
     type: ContainerContainer
 - uid: 1106
   type: SpawnPointBotanist
@@ -14492,8 +14078,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1124
   type: Poweredlight
@@ -14507,8 +14092,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1125
   type: Poweredlight
@@ -14522,8 +14106,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1126
   type: Poweredlight
@@ -14537,8 +14120,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1127
   type: Window
@@ -14592,8 +14174,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 1134
   type: LowWall
@@ -14610,8 +14191,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      CloningPod-bodyContainer:
-        type: Content.Server.GameObjects.ContainerSlot
+      CloningPod-bodyContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1136
   type: VendingMachineSeeds
@@ -14657,8 +14237,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 1142
   type: Table
@@ -14698,8 +14277,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 1147
   type: Table
@@ -14746,8 +14324,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 1153
   type: Catwalk
@@ -14766,8 +14343,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 1155
   type: WarpPoint
@@ -14831,8 +14407,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 1162
   type: LockerElectricalSupplies
@@ -14844,8 +14419,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 1163
   type: Catwalk
@@ -14889,8 +14463,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 1168
   type: Table
@@ -14921,8 +14494,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      ChemMaster-reagentContainerContainer:
-        type: Content.Server.GameObjects.ContainerSlot
+      ChemMaster-reagentContainerContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1172
   type: TableGlassR
@@ -14953,8 +14525,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      ReagentDispenser-reagentContainerContainer:
-        type: Content.Server.GameObjects.ContainerSlot
+      ReagentDispenser-reagentContainerContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1176
   type: ComputerMedicalRecords
@@ -15061,8 +14632,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1190
   type: EmergencyLight
@@ -15087,8 +14657,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1192
   type: SignShipDock
@@ -15137,8 +14706,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1198
   type: PoweredSmallLight
@@ -15152,8 +14720,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1199
   type: TableCarpet
@@ -15181,8 +14748,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1202
   type: PoweredSmallLight
@@ -15196,8 +14762,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1203
   type: Pen
@@ -15224,8 +14789,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1206
   type: Table
@@ -15276,8 +14840,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1212
   type: TableR
@@ -15298,8 +14861,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1214
   type: CrowbarRed
@@ -15326,8 +14888,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1217
   type: Poweredlight
@@ -15341,8 +14902,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1218
   type: Poweredlight
@@ -15356,8 +14916,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1219
   type: Poweredlight
@@ -15371,8 +14930,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1220
   type: LockerWeldingSupplies
@@ -15384,8 +14942,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 1221
   type: Welder
@@ -15411,8 +14968,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 1224
   type: Multitool
@@ -15431,8 +14987,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 1226
   type: Poweredlight
@@ -15446,8 +15001,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1227
   type: PoweredSmallLight
@@ -15461,8 +15015,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1228
   type: Table
@@ -15490,8 +15043,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1231
   type: PoweredSmallLight
@@ -15505,8 +15057,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1232
   type: PoweredSmallLight
@@ -15520,8 +15071,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1233
   type: LockerToolFilled
@@ -15533,8 +15083,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 1234
   type: Poweredlight
@@ -15548,8 +15097,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1235
   type: VendingMachineCola
@@ -15594,8 +15142,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1241
   type: Table
@@ -15683,8 +15230,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1253
   type: PoweredSmallLight
@@ -15698,8 +15244,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1254
   type: PoweredSmallLight
@@ -15713,8 +15258,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1255
   type: PoweredSmallLight
@@ -15728,8 +15272,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1256
   type: PoweredSmallLight
@@ -15743,8 +15286,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1257
   type: Paper
@@ -15764,8 +15306,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1259
   type: Poweredlight
@@ -15779,8 +15320,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1260
   type: Poweredlight
@@ -15794,8 +15334,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1261
   type: Poweredlight
@@ -15809,8 +15348,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1262
   type: solid_wall
@@ -15850,8 +15388,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1267
   type: Poweredlight
@@ -15865,8 +15402,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1268
   type: Poweredlight
@@ -15880,8 +15416,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1269
   type: Poweredlight
@@ -15895,8 +15430,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1270
   type: SignDirectionalSci
@@ -15917,8 +15451,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1272
   type: Poweredlight
@@ -15932,8 +15465,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1273
   type: Poweredlight
@@ -15947,8 +15479,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1274
   type: PoweredSmallLight
@@ -15962,8 +15493,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1275
   type: PoweredSmallLight
@@ -15977,8 +15507,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1276
   type: Poweredlight
@@ -15992,8 +15521,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1277
   type: Poweredlight
@@ -16007,8 +15535,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1278
   type: Poweredlight
@@ -16020,8 +15547,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1279
   type: Poweredlight
@@ -16035,8 +15561,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1280
   type: Poweredlight
@@ -16048,8 +15573,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1281
   type: Poweredlight
@@ -16063,8 +15587,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1282
   type: Carpet
@@ -16106,8 +15629,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1287
   type: AirlockMaintCommonLocked
@@ -16133,8 +15655,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1289
   type: Poweredlight
@@ -16148,8 +15669,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1290
   type: Poweredlight
@@ -16163,8 +15683,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1291
   type: Poweredlight
@@ -16178,8 +15697,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1292
   type: Poweredlight
@@ -16193,8 +15711,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1293
   type: Poweredlight
@@ -16208,8 +15725,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1294
   type: Poweredlight
@@ -16223,8 +15739,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1295
   type: Poweredlight
@@ -16238,8 +15753,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1296
   type: Poweredlight
@@ -16253,8 +15767,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1297
   type: Poweredlight
@@ -16268,8 +15781,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1298
   type: Poweredlight
@@ -16283,8 +15795,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1299
   type: Poweredlight
@@ -16298,8 +15809,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1300
   type: solid_wall
@@ -16327,8 +15837,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1303
   type: solid_wall
@@ -16370,8 +15879,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1308
   type: PoweredSmallLight
@@ -16385,8 +15893,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1309
   type: PoweredSmallLight
@@ -16400,8 +15907,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1310
   type: Poweredlight
@@ -16415,8 +15921,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1311
   type: Poweredlight
@@ -16430,8 +15935,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1312
   type: Poweredlight
@@ -16445,8 +15949,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1313
   type: Poweredlight
@@ -16460,8 +15963,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1314
   type: Poweredlight
@@ -16475,8 +15977,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1315
   type: Poweredlight
@@ -16490,8 +15991,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1316
   type: Poweredlight
@@ -16505,8 +16005,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1317
   type: Poweredlight
@@ -16520,8 +16019,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1318
   type: Poweredlight
@@ -16535,8 +16033,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1319
   type: Poweredlight
@@ -16550,8 +16047,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1320
   type: solid_wall
@@ -16579,8 +16075,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1323
   type: Poweredlight
@@ -16594,8 +16089,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1324
   type: Poweredlight
@@ -16609,8 +16103,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1325
   type: Poweredlight
@@ -16624,8 +16117,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1326
   type: SignCargo
@@ -16646,8 +16138,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1328
   type: solid_wall
@@ -16668,8 +16159,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1330
   type: SignDirectionalMed
@@ -16697,8 +16187,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1333
   type: Poweredlight
@@ -16712,8 +16201,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1334
   type: Poweredlight
@@ -16727,8 +16215,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1335
   type: Poweredlight
@@ -16742,8 +16229,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1336
   type: solid_wall
@@ -16789,8 +16275,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1341
   type: Poweredlight
@@ -16804,8 +16289,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1342
   type: Poweredlight
@@ -16819,8 +16303,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1343
   type: Poweredlight
@@ -16832,8 +16315,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1344
   type: Poweredlight
@@ -16847,8 +16329,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1345
   type: solid_wall
@@ -16869,8 +16350,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1347
   type: PoweredSmallLight
@@ -16884,8 +16364,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1348
   type: PoweredSmallLight
@@ -16899,8 +16378,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1349
   type: solid_wall
@@ -16942,8 +16420,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1354
   type: solid_wall
@@ -16964,8 +16441,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1356
   type: PoweredSmallLight
@@ -16979,8 +16455,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1357
   type: Catwalk
@@ -17029,8 +16504,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1363
   type: Window
@@ -17051,8 +16525,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1365
   type: PoweredSmallLight
@@ -17066,8 +16539,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1366
   type: PoweredSmallLight
@@ -17081,8 +16553,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1367
   type: PoweredSmallLight
@@ -17096,8 +16567,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1368
   type: PoweredSmallLight
@@ -17111,8 +16581,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1369
   type: Poweredlight
@@ -17126,8 +16595,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1370
   type: Poweredlight
@@ -17141,8 +16609,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1371
   type: Poweredlight
@@ -17156,8 +16623,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1372
   type: SignEngineering
@@ -17178,8 +16644,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1374
   type: Poweredlight
@@ -17193,8 +16658,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1375
   type: Poweredlight
@@ -17208,8 +16672,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1376
   type: Poweredlight
@@ -17223,8 +16686,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1377
   type: Poweredlight
@@ -17238,8 +16700,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1378
   type: solid_wall
@@ -17267,8 +16728,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1381
   type: Poweredlight
@@ -17282,8 +16742,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1382
   type: Poweredlight
@@ -17297,8 +16756,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1383
   type: PoweredSmallLight
@@ -17312,8 +16770,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1384
   type: ApcExtensionCable
@@ -17340,8 +16797,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1387
   type: Poweredlight
@@ -17355,8 +16811,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1388
   type: Poweredlight
@@ -17370,8 +16825,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1389
   type: SignDirectionalEng
@@ -18472,8 +17926,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      MedicalScanner-bodyContainer:
-        type: Content.Server.GameObjects.ContainerSlot
+      MedicalScanner-bodyContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1545
   type: ComputerAlert
@@ -18630,10 +18083,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      BoltActionBarrel-ammo-container:
-        type: Robust.Server.GameObjects.Container
-      BoltActionBarrel-chamber-container:
-        type: Content.Server.GameObjects.ContainerSlot
+      BoltActionBarrel-ammo-container: !type:Container {}
+      BoltActionBarrel-chamber-container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1567
   type: Catwalk
@@ -18689,8 +18140,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 1574
   type: CrateGeneric
@@ -18702,8 +18152,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 1575
   type: Table
@@ -19044,8 +18493,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1622
   type: PoweredSmallLight
@@ -19059,8 +18507,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1623
   type: solid_wall
@@ -20586,8 +20033,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1840
   type: solid_wall
@@ -24425,8 +23871,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Container
+      storagebase: !type:Container {}
     type: ContainerContainer
 - uid: 2385
   type: solid_wall
@@ -24624,10 +24069,9 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      board:
-        entities:
+      board: !type:Container
+        ents:
         - 2414
-        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 2413
   type: solid_wall
@@ -24716,8 +24160,7 @@ entities:
     rot: 3.141592697301183 rad
     type: Transform
   - containers:
-      DisposalEntry:
-        type: Robust.Server.GameObjects.Container
+      DisposalEntry: !type:Container {}
     type: ContainerContainer
 - uid: 2426
   type: VendingMachineSovietSoda
@@ -24785,8 +24228,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Container
+      storagebase: !type:Container {}
     type: ContainerContainer
 - uid: 2435
   type: VendingMachineCola
@@ -25063,8 +24505,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      ReagentDispenser-reagentContainerContainer:
-        type: Content.Server.GameObjects.ContainerSlot
+      ReagentDispenser-reagentContainerContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2474
   type: StoolBar
@@ -25152,8 +24593,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 2486
   type: CrateRadiation
@@ -25165,8 +24605,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 2487
   type: solid_wall
@@ -25429,8 +24868,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 2517
   type: SalternApc
@@ -35053,8 +34491,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 3879
   type: ApcExtensionCable
@@ -35444,8 +34881,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 3917
   type: PoweredSmallLight
@@ -35457,8 +34893,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 3918
   type: BedsheetSpawner
@@ -35484,8 +34919,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 3921
   type: SalternApc
@@ -35549,8 +34983,7 @@ entities:
     pos: 23.283348,-4.2176166
     type: Transform
   - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Container
+      storagebase: !type:Container {}
     type: ContainerContainer
 - uid: 3927
   type: SheetSteel
@@ -35645,8 +35078,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 3940
   type: Crowbar
@@ -35676,8 +35108,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 3944
   type: ApcExtensionCable
@@ -35905,8 +35336,7 @@ entities:
     rot: 4.71238902409608 rad
     type: Transform
   - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Container
+      DisposalTransit: !type:Container {}
     type: ContainerContainer
 - uid: 3973
   type: FirelockGlass
@@ -37017,8 +36447,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4116
   type: AirlockMaintIntLocked
@@ -37079,8 +36508,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4123
   type: Poweredlight
@@ -37092,8 +36520,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4124
   type: Poweredlight
@@ -37105,8 +36532,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4125
   type: CarpetGreen
@@ -37199,8 +36625,7 @@ entities:
     pos: -7.5,-29.5
     type: Transform
   - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Container
+      storagebase: !type:Container {}
     type: ContainerContainer
 - uid: 4138
   type: TableR
@@ -37247,8 +36672,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 4144
   type: LockerGeneric
@@ -37260,8 +36684,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 4145
   type: Poweredlight
@@ -37273,8 +36696,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4146
   type: Poweredlight
@@ -37286,8 +36708,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4147
   type: Poweredlight
@@ -37299,8 +36720,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4148
   type: Poweredlight
@@ -37310,8 +36730,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4149
   type: Rack
@@ -37330,8 +36749,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4151
   type: hydroponicsTray
@@ -37411,10 +36829,8 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
-      morgue_tray:
-        type: Content.Server.GameObjects.ContainerSlot
+      EntityStorageComponent: !type:Container {}
+      morgue_tray: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4162
   type: Morgue
@@ -37424,10 +36840,8 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
-      morgue_tray:
-        type: Content.Server.GameObjects.ContainerSlot
+      EntityStorageComponent: !type:Container {}
+      morgue_tray: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4163
   type: Morgue
@@ -37437,10 +36851,8 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
-      morgue_tray:
-        type: Content.Server.GameObjects.ContainerSlot
+      EntityStorageComponent: !type:Container {}
+      morgue_tray: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4164
   type: Morgue
@@ -37450,10 +36862,8 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
-      morgue_tray:
-        type: Content.Server.GameObjects.ContainerSlot
+      EntityStorageComponent: !type:Container {}
+      morgue_tray: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4165
   type: Morgue
@@ -37463,10 +36873,8 @@ entities:
     rot: 1.5707963705062866 rad
     type: Transform
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
-      morgue_tray:
-        type: Content.Server.GameObjects.ContainerSlot
+      EntityStorageComponent: !type:Container {}
+      morgue_tray: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4166
   type: SignMorgue
@@ -37496,8 +36904,7 @@ entities:
     pos: -19.173923,-9.122305
     type: Transform
   - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Container
+      storagebase: !type:Container {}
     type: ContainerContainer
 - uid: 4170
   type: MagazinePistolSmgTopMounted
@@ -37506,8 +36913,7 @@ entities:
     pos: -8.129097,21.659065
     type: Transform
   - containers:
-      RangedMagazine-magazine:
-        type: Robust.Server.GameObjects.Container
+      RangedMagazine-magazine: !type:Container {}
     type: ContainerContainer
 - uid: 4171
   type: MagazinePistolSmgTopMounted
@@ -37516,8 +36922,7 @@ entities:
     pos: -8.347847,21.83094
     type: Transform
   - containers:
-      RangedMagazine-magazine:
-        type: Robust.Server.GameObjects.Container
+      RangedMagazine-magazine: !type:Container {}
     type: ContainerContainer
 - uid: 4172
   type: AirlockMedicalLocked
@@ -37541,10 +36946,9 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      board:
-        entities:
+      board: !type:Container
+        ents:
         - 4174
-        type: Robust.Server.GameObjects.Container
     type: ContainerContainer
 - uid: 4174
   type: BodyScannerComputerCircuitboard
@@ -37582,8 +36986,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4179
   type: Poweredlight
@@ -37595,8 +36998,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4180
   type: MopBucket
@@ -37620,10 +37022,8 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      ReagentGrinder-reagentContainerContainer:
-        type: Content.Server.GameObjects.ContainerSlot
-      ReagentGrinder-entityContainerContainer:
-        type: Robust.Server.GameObjects.Container
+      ReagentGrinder-reagentContainerContainer: !type:ContainerSlot {}
+      ReagentGrinder-entityContainerContainer: !type:Container {}
     type: ContainerContainer
 - uid: 4183
   type: ApcExtensionCable
@@ -37761,8 +37161,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 4202
   type: LockerFreezer
@@ -37774,8 +37173,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 4203
   type: Poweredlight
@@ -37787,8 +37185,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4204
   type: Carpet
@@ -37930,8 +37327,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      WeaponCapacitorCharger-powerCellContainer:
-        type: Content.Server.GameObjects.ContainerSlot
+      WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4224
   type: Table
@@ -38038,8 +37434,7 @@ entities:
     pos: -4.5,14.5
     type: Transform
   - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Container
+      storagebase: !type:Container {}
     type: ContainerContainer
 - uid: 4239
   type: WeaponCapacitorRecharger
@@ -38050,8 +37445,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      WeaponCapacitorCharger-powerCellContainer:
-        type: Content.Server.GameObjects.ContainerSlot
+      WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4240
   type: BoxDonkpocket
@@ -38060,8 +37454,7 @@ entities:
     pos: -5.5,13.5
     type: Transform
   - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Container
+      storagebase: !type:Container {}
     type: ContainerContainer
 - uid: 4241
   type: RadioHandheld
@@ -38108,8 +37501,7 @@ entities:
     pos: -7.5,-28.5
     type: Transform
   - containers:
-      microwave_entity_container:
-        type: Robust.Server.GameObjects.Container
+      microwave_entity_container: !type:Container {}
     type: ContainerContainer
 - uid: 4248
   type: ClothingHeadHelmetScaf
@@ -38124,8 +37516,7 @@ entities:
     pos: -6.5,13.5
     type: Transform
   - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Container
+      storagebase: !type:Container {}
     type: ContainerContainer
 - uid: 4250
   type: Shelf
@@ -38161,12 +37552,9 @@ entities:
   - maxAngle: 59.99999999999999
     type: MagazineBarrel
   - containers:
-      MagazineBarrel-chamber:
-        type: Content.Server.GameObjects.ContainerSlot
-      MagazineBarrel-magazine:
-        entities:
-        - 4255
-        type: Content.Server.GameObjects.ContainerSlot
+      MagazineBarrel-chamber: !type:ContainerSlot {}
+      MagazineBarrel-magazine: !type:ContainerSlot
+        ents: 4255
     type: ContainerContainer
 - uid: 4255
   type: MagazinePistolSmgTopMounted
@@ -38174,8 +37562,7 @@ entities:
   - parent: 4254
     type: Transform
   - containers:
-      RangedMagazine-magazine:
-        type: Robust.Server.GameObjects.Container
+      RangedMagazine-magazine: !type:Container {}
     type: ContainerContainer
 - uid: 4256
   type: BodyBag_Container
@@ -38184,10 +37571,8 @@ entities:
     pos: 14.594889,-13.278449
     type: Transform
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
-      body_bag_label:
-        type: Content.Server.GameObjects.ContainerSlot
+      EntityStorageComponent: !type:Container {}
+      body_bag_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4257
   type: BodyBag_Container
@@ -38196,10 +37581,8 @@ entities:
     pos: 15.594889,-13.262824
     type: Transform
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
-      body_bag_label:
-        type: Content.Server.GameObjects.ContainerSlot
+      EntityStorageComponent: !type:Container {}
+      body_bag_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4258
   type: Poweredlight
@@ -38211,8 +37594,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4259
   type: TableMetal
@@ -38235,8 +37617,7 @@ entities:
     pos: -14.43611,19.60069
     type: Transform
   - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Container
+      storagebase: !type:Container {}
     type: ContainerContainer
 - uid: 4262
   type: CarpetBlue
@@ -38302,8 +37683,7 @@ entities:
     rot: 4.371139006309477E-08 rad
     type: Transform
   - containers:
-      cellslot_cell_container:
-        type: Content.Server.GameObjects.ContainerSlot
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4271
   type: Table
@@ -38665,8 +38045,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4322
   type: ApcExtensionCable
@@ -38790,8 +38169,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4339
   type: HVWire
@@ -39841,8 +39219,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4484
   type: Poweredlight
@@ -39854,8 +39231,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4485
   type: Poweredlight
@@ -39867,8 +39243,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4486
   type: Poweredlight
@@ -39880,8 +39255,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4487
   type: MVWire
@@ -41482,8 +40856,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 4715
   type: CrateServiceReplacementLights
@@ -41495,8 +40868,7 @@ entities:
   - IsPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent:
-        type: Robust.Server.GameObjects.Container
+      EntityStorageComponent: !type:Container {}
     type: ContainerContainer
 - uid: 4716
   type: SalternSubstation

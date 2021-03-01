@@ -13,6 +13,7 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -123,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override void Initialize()
         {
             base.Initialize();
-            Contents = ContainerManagerComponent.Ensure<Container>(nameof(EntityStorageComponent), Owner);
+            Contents = ContainerHelpers.EnsureContainer<Container>(Owner, nameof(EntityStorageComponent));
             EntityQuery = new IntersectingEntityQuery(Owner);
 
             Contents.ShowContents = _showContents;

@@ -14,7 +14,7 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private async Task<IEntity?> Construct(IEntity user, string materialContainer, ConstructionGraphPrototype graph, ConstructionGraphEdge edge, ConstructionGraphNode targetNode)
         {
             // We need a place to hold our construction items!
-            var container = ContainerManagerComponent.Ensure<Container>(materialContainer, user, out var existed);
+            var container = ContainerHelpers.EnsureContainer<Container>(user, materialContainer, out var existed);
 
             if (existed)
             {
@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 while (true)
                 {
                     var random = _robustRandom.Next();
-                    var c = ContainerManagerComponent.Ensure<Container>(random.ToString(), user!, out var existed);
+                    var c = ContainerHelpers.EnsureContainer<Container>(user!, random.ToString(), out var existed);
 
                     if (existed) continue;
 
@@ -250,7 +250,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // We preserve the containers...
             foreach (var (name, cont) in containers)
             {
-                var newCont = ContainerManagerComponent.Ensure<Container>(name, newEntity);
+                var newCont = ContainerHelpers.EnsureContainer<Container>(newEntity, name);
 
                 foreach (var entity in cont.ContainedEntities.ToArray())
                 {
