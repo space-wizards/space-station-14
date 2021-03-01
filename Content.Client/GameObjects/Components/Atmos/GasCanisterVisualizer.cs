@@ -1,6 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -8,17 +9,10 @@ namespace Content.Client.GameObjects.Components.Atmos
 {
     public class GasCanisterVisualizer : AppearanceVisualizer
     {
+        [DataField("stateConnected")]
         private string _stateConnected;
+        [DataField("pressureStates")]
         private string[] _statePressure = new string[] {"", "", "", ""};
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            _stateConnected = node.GetNode("stateConnected").AsString();
-            for (int i = 0; i < _statePressure.Length; i++)
-                _statePressure[i] = node.GetNode("stateO" + i).AsString();
-        }
 
         public override void InitializeEntity(IEntity entity)
         {

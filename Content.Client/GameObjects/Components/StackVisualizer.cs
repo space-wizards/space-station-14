@@ -6,6 +6,7 @@ using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -59,6 +60,7 @@ namespace Content.Client.GameObjects.Components
         /// Sprite layers used in stack visualizer. Sprites first in layer correspond to lower stack states
         /// e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
         /// </summary>
+        [DataField("stackLayers")]
         private readonly List<string> _spriteLayers = new();
 
         /// <summary>
@@ -74,31 +76,10 @@ namespace Content.Client.GameObjects.Components
         /// </list>
         ///
         /// </summary>
+        [DataField("composite")]
         private bool _isComposite;
+        [DataField("sprite")]
         private ResourcePath? _spritePath;
-
-        public override void LoadData(YamlMappingNode mapping)
-        {
-            base.LoadData(mapping);
-
-            if (mapping.TryGetNode<YamlSequenceNode>("stackLayers", out var spriteSequenceNode))
-            {
-                foreach (var yamlNode in spriteSequenceNode)
-                {
-                    _spriteLayers.Add(((YamlScalarNode) yamlNode).Value!);
-                }
-            }
-
-            if (mapping.TryGetNode<YamlScalarNode>("composite", out var transparent))
-            {
-                _isComposite = transparent.AsBool();
-            }
-
-            if (mapping.TryGetNode<YamlScalarNode>("sprite", out var spritePath))
-            {
-                _spritePath = spritePath.AsResourcePath();
-            }
-        }
 
         public override void InitializeEntity(IEntity entity)
         {
