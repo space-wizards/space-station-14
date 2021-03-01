@@ -31,6 +31,10 @@
       - cargo.hydroponicsseedsexotic
       - cargo.servicejanitorial
       - cargo.servicelightsreplacement
+      - cargo.engineeringcablelv
+      - cargo.engineeringcablemv
+      - cargo.engineeringcablehv
+      - cargo.engineeringcablebulk
       - cargo.engineameshielding
       - cargo.engineamejar
       - cargo.engineamecontrol
