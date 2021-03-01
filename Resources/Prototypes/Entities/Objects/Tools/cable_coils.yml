@@ -1,6 +1,6 @@
 # If you're looking at the rsi for this file, you'll probably be confused why
 # I didn't just use an alpha for most of this stuff. Well icons don't have the
-# ability to have applied colors yet in GUIs. -Swept
+# ability to have applied colors yet in GUIs. And also inhands... -Swept
 
 - type: entity
   id: CableStack
@@ -12,10 +12,10 @@
     - type: Stack
       stackType: Cable
     - type: Sprite
-      sprite: Objects/Tools/cables.rsi
+      sprite: Objects/Tools/cable-coils.rsi
       netsync: false
     - type: Item
-      sprite: Objects/Tools/cables.rsi
+      sprite: Objects/Tools/cable-coils.rsi
     - type: WirePlacer
     - type: Clickable
 
