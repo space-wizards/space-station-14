@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// How many points to give to every bank account every <see cref="Delay"/> seconds.
         /// </summary>
-        private const int PointIncrease = 10;
+        private const int PointIncrease = 20;
 
         /// <summary>
         /// Keeps track of how much time has elapsed since last balance increase.
@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Initialize()
         {
-            CreateBankAccount("Orbital Monitor IV Station", 100000);
+            CreateBankAccount("Space Station 14", 1000);
             CreateOrderDatabase(0);
         }
 
