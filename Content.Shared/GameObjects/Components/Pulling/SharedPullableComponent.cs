@@ -144,13 +144,15 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                     _puller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
+                    var union = _pullerPhysics.GetWorldAABB().Union(_physics.GetWorldAABB());
+                    var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
                     _physics.WakeBody();
                     _pullJoint = pullerPhysics.CreateDistanceJoint(_physics);
                     // _physics.BodyType = BodyType.Kinematic; // TODO: Need to consider their original bodytype
                     _pullJoint.CollideConnected = true;
-                    _pullJoint.Length = 1.4f;
-                    _pullJoint.MaxLength = 2.0f; // TODO hacky, we should consider ours and their bb
+                    _pullJoint.Length = length * 0.75f;
+                    _pullJoint.MaxLength = length;
                 }
                 // Code here will not run if pulling a new object was attempted and failed because of the returns from the refactor.
             }
