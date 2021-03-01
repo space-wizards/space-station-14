@@ -71,12 +71,10 @@ namespace Content.Tests.Shared.Alert
             var rootNode = (YamlSequenceNode) document.RootNode;
             var proto = (YamlMappingNode) rootNode[0];
 
-            var newReagent = new AlertPrototype();
             var serMan = IoCManager.Resolve<ISerializationManager>();
             serMan.Initialize();
-            serMan.ReadValue<AlertPrototype>(new MappingDataNode(proto));
 
-            return newReagent;
+            return serMan.ReadValue<AlertPrototype>(new MappingDataNode(proto));
         }
     }
 }
