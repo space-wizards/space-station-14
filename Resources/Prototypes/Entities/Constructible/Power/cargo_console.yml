@@ -44,6 +44,7 @@
       - cargo.enginesingularitycollector
       - cargo.enginesingularitygenerator
       - cargo.enginesingularitycontainment
+      - cargo.engineparticleaccelerator
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Key
