@@ -1,7 +1,7 @@
 - type: entity
   name: fireaxe
   parent: BaseItem
-  id: Firexe
+  id: Fireaxe
   description: A large, robust axe. Can pry open doors and skulls alike.
   components:
   - type: Sprite
