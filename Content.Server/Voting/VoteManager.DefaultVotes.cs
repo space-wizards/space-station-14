@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Shared;
 using Robust.Server.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -15,15 +16,16 @@ namespace Content.Server.Voting
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
             {
-                Title = Loc.GetString("Restart round"),
+                Title = Loc.GetString("ui-vote-restart-title"),
                 Options =
                 {
-                    (Loc.GetString("Yes"), true),
-                    (Loc.GetString("No"), false)
+                    (Loc.GetString("ui-vote-restart-yes"), true),
+                    (Loc.GetString("ui-vote-restart-no"), false)
                 },
                 Duration = alone
                     ? TimeSpan.FromSeconds(10)
-                    : TimeSpan.FromSeconds(30)
+                    : TimeSpan.FromSeconds(30),
+                InitiatorTimeout = TimeSpan.FromMinutes(3)
             };
 
             if (alone)
@@ -33,23 +35,22 @@ namespace Content.Server.Voting
 
             var vote = CreateVote(options);
 
-            vote.OnFinished += (_, args) =>
+            vote.OnFinished += (_, _) =>
             {
-                if (args.Winner == null)
-                {
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("Restart vote failed due to tie."));
-                    return;
-                }
+                var votesYes = vote.VotesPerOption[true];
+                var votesNo = vote.VotesPerOption[false];
+                var total = votesYes + votesNo;
 
-                var win = (bool) args.Winner;
-                if (win)
+                var ratioRequired = _cfg.GetCVar(CCVars.VoteRestartRequiredRatio);
+                if (votesYes / (float) total >= ratioRequired)
                 {
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("Restart vote succeeded."));
+                    _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
                     _ticker.RestartRound();
                 }
                 else
                 {
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("Restart vote failed."));
+                    _chatManager.DispatchServerAnnouncement(
+                        Loc.GetString("ui-vote-restart-failed", ("ratio", ratioRequired)));
                 }
             };
 
@@ -64,16 +65,16 @@ namespace Content.Server.Voting
         {
             var presets = new Dictionary<string, string>
             {
-                ["traitor"] = "Traitor",
-                ["extended"] = "Extended",
-                ["sandbox"] = "Sandbox",
-                ["suspicion"] = "Suspicion"
+                ["traitor"] = "mode-traitor",
+                ["extended"] = "mode-extended",
+                ["sandbox"] = "mode-sandbox",
+                ["suspicion"] = "mode-suspicion",
             };
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
             {
-                Title = Loc.GetString("Next gamemode"),
+                Title = Loc.GetString("ui-vote-gamemode-title"),
                 Duration = alone
                     ? TimeSpan.FromSeconds(10)
                     : TimeSpan.FromSeconds(30)
@@ -98,13 +99,13 @@ namespace Content.Server.Voting
                 {
                     picked = (string) IoCManager.Resolve<IRobustRandom>().Pick(args.Winners);
                     _chatManager.DispatchServerAnnouncement(
-                        Loc.GetString("Tie for gamemode vote! Picking... {0}", Loc.GetString(presets[picked])));
+                        Loc.GetString("ui-vote-gamemode-tie", ("picked", Loc.GetString(presets[picked]))));
                 }
                 else
                 {
                     picked = (string) args.Winner;
                     _chatManager.DispatchServerAnnouncement(
-                        Loc.GetString("{0} won the gamemode vote!", Loc.GetString(presets[picked])));
+                        Loc.GetString("ui-vote-gamemode-win", ("winner", Loc.GetString(presets[picked]))));
                 }
 
                 _ticker.SetStartPreset(picked);

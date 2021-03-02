@@ -9,13 +9,13 @@
           component: Window
       actions:
         - !type:SpawnPrototype
-          prototype: SteelSheet1
+          prototype: SheetSteel1
           amount: 3
         - !type:DeleteEntity { }
       edges:
         - to: lowWall
           steps:
-            - material: Metal
+            - material: Steel
               amount: 3
               doAfter: 5
 

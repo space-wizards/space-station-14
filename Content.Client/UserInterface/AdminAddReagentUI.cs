@@ -82,11 +82,11 @@ namespace Content.Client.UserInterface
                                 (_amountEdit = new LineEdit
                                 {
                                     PlaceHolder = Loc.GetString("A number..."),
-                                    SizeFlagsHorizontal = SizeFlags.FillExpand
+                                    HorizontalExpand = true
                                 }),
                             },
-                            SizeFlagsHorizontal = SizeFlags.FillExpand,
-                            SizeFlagsVertical = SizeFlags.FillExpand
+                            HorizontalExpand = true,
+                            VerticalExpand = true
                         },
                         new HBoxContainer
                         {
@@ -94,7 +94,7 @@ namespace Content.Client.UserInterface
                             {
                                 (_errorLabel = new Label
                                 {
-                                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                    HorizontalExpand = true,
                                     ClipText = true
                                 }),
 

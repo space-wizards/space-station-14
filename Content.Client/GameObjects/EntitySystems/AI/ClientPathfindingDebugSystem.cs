@@ -11,7 +11,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timers;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.EntitySystems.AI
 {

@@ -28,6 +28,9 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Buckle
 {
+    /// <summary>
+    ///     Component that handles sitting entities into <see cref="StrapComponent"/>s.
+    /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedBuckleComponent))]
     public class BuckleComponent : SharedBuckleComponent, IInteractHand
@@ -235,7 +238,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             return true;
         }
 
-        public override bool TryBuckle(IEntity user, IEntity to)
+        public override bool TryBuckle(IEntity? user, IEntity to)
         {
             if (!CanBuckle(user, to, out var strap))
             {
@@ -334,7 +337,8 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
 
-            if (_stunnable != null && _stunnable.KnockedDown)
+            if (_stunnable != null && _stunnable.KnockedDown
+                || (_mobState?.IsIncapacitated() ?? false))
             {
                 EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }

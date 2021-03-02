@@ -19,7 +19,6 @@ namespace Content.Client
             "EmitSoundOnUse",
             "FootstepModifier",
             "HeatResistance",
-            "Teleportable",
             "ItemTeleporter",
             "EntityStorage",
             "Wirecutter",
@@ -60,7 +59,6 @@ namespace Content.Client
             "Rotatable",
             "MagicMirror",
             "FloorTile",
-            "FootstepSound",
             "ShuttleController",
             "HumanInventoryController",
             "UseDelay",
@@ -153,6 +151,7 @@ namespace Content.Client
             "PressureVent",
             "VolumePump",
             "PressureSiphon",
+            "PipeHeater",
             "SignalReceiver",
             "SignalSwitch",
             "SignalTransmitter",
@@ -239,10 +238,12 @@ namespace Content.Client
             "SecretStash",
             "Toilet",
             "ClusterFlash",
+            "Repairable",
             "GasGenerator",
             "SolutionTransfer",
             "Shovel",
             "ReagentTank",
+            "UtilityAI",
         };
     }
 }

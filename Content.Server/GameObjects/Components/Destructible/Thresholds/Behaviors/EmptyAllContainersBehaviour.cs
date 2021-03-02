@@ -1,6 +1,5 @@
 #nullable enable
 using Content.Server.GameObjects.EntitySystems;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;

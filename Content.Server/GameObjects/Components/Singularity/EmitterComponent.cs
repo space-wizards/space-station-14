@@ -19,7 +19,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
+using Timer = Robust.Shared.Timing.Timer;
 
 #nullable enable
 
@@ -96,23 +96,6 @@ namespace Content.Server.GameObjects.Components.Singularity
             {
                 PowerOn();
             }
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case AnchoredChangedMessage anchoredChanged:
-                    OnAnchoredChanged(anchoredChanged);
-                    break;
-            }
-        }
-
-        private void OnAnchoredChanged(AnchoredChangedMessage anchoredChanged)
-        {
-            if (anchoredChanged.Anchored)
-                Owner.SnapToGrid();
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)

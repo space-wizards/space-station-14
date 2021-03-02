@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Maths;
+﻿#nullable enable
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
 namespace Content.Shared.Physics

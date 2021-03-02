@@ -253,3 +253,27 @@
   footstep_sounds: footstep_floor
   friction: 0.35
   item_drop: FloorTileItemGold
+
+- type: tile
+  name: floor_glass
+  display_name: glass floor
+  texture: glass
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  item_drop: SheetGlass1
+
+- type: tile
+  name: floor_rglass
+  display_name: reinforced glass floor
+  texture: rglass
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  item_drop: SheetRGlass1

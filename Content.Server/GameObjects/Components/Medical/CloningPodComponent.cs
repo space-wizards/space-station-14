@@ -14,6 +14,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -59,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
-            _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
+            _bodyContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-bodyContainer");
 
             //TODO: write this so that it checks for a change in power events for GORE POD cases
             var newState = GetUserInterfaceState();

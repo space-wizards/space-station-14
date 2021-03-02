@@ -9,12 +9,14 @@ using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Kitchen;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -77,11 +79,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
             base.Initialize();
             //A slot for the beaker where the grounds/juices will go.
             _beakerContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
+                ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
 
             //A container for the things that WILL be ground/juiced. Useful for ejecting them instead of deleting them from the hands of the user.
             _chamber =
-                ContainerManagerComponent.Ensure<Container>($"{Name}-entityContainerContainer", Owner);
+                ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-entityContainerContainer");
 
             if (UserInterface != null)
             {
@@ -197,7 +199,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 foreach (var entity in _chamber.ContainedEntities)
                 {
                     if (!canJuice && entity.HasComponent<JuiceableComponent>()) canJuice = true;
-                    if (!canGrind && entity.HasComponent<GrindableComponent>()) canGrind = true;
+                    if (!canGrind && entity.HasTag("Grindable")) canGrind = true;
                     if (canJuice && canGrind) break;
                 }
             }
@@ -241,7 +243,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
             if (!HasBeaker || _heldBeaker == null || _busy)
                 return;
 
-            _beakerContainer.Remove(_beakerContainer.ContainedEntity);
+            var beaker = _beakerContainer.ContainedEntity;
+            if(beaker is null)
+                return;
+
+            _beakerContainer.Remove(beaker);
 
             if (user == null || !user.TryGetComponent<HandsComponent>(out var hands) || !_heldBeaker.Owner.TryGetComponent<ItemComponent>(out var item))
                 return;
@@ -287,7 +293,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
 
             //Next, see if the user is trying to insert something they want to be ground/juiced.
-            if(!heldEnt.TryGetComponent(out GrindableComponent? grind) && !heldEnt.TryGetComponent(out JuiceableComponent? juice))
+            if(!heldEnt.HasTag("Grindable") && !heldEnt.TryGetComponent(out JuiceableComponent? juice))
             {
                 //Entity did NOT pass the whitelist for grind/juice.
                 //Wouldn't want the clown grinding up the Captain's ID card now would you?
@@ -333,7 +339,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     {
                         foreach (var item in _chamber.ContainedEntities.ToList())
                         {
-                            if (!item.HasComponent<GrindableComponent>()) continue;
+                            if (!item.HasTag("Grindable")) continue;
                             if (!item.TryGetComponent<SolutionContainerComponent>(out var solution)) continue;
                             if (_heldBeaker.CurrentVolume + solution.CurrentVolume > _heldBeaker.MaxVolume) continue;
                             _heldBeaker.TryAddSolution(solution.Solution);

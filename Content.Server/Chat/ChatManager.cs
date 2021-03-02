@@ -22,6 +22,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 using static Content.Server.Interfaces.Chat.IChatManager;
 
 namespace Content.Server.Chat
@@ -31,6 +32,14 @@ namespace Content.Server.Chat
     /// </summary>
     internal sealed class ChatManager : IChatManager
     {
+        private static readonly Dictionary<string, string> PatronOocColors = new()
+        {
+            // I had plans for multiple colors and those went nowhere so...
+            { "nuclear_operative", "#aa00ff" },
+            { "syndicate_agent", "#aa00ff" },
+            { "revolutionary", "#aa00ff" }
+        };
+
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMoMMILink _mommiLink = default!;
@@ -170,6 +179,8 @@ namespace Content.Server.Chat
             var listeners = EntitySystem.Get<ListeningSystem>();
             listeners.PingListeners(source, message);
 
+            message = FormattedMessage.EscapeText(message);
+
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Local;
             msg.Message = message;
@@ -197,6 +208,8 @@ namespace Content.Server.Chat
                 DispatchServerMessage(actor.playerSession, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
                 return;
             }
+
+            action = FormattedMessage.EscapeText(action);
 
             var pos = source.Transform.Coordinates;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
@@ -230,6 +243,8 @@ namespace Content.Server.Chat
                 return;
             }
 
+            message = FormattedMessage.EscapeText(message);
+
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.OOC;
             msg.Message = message;
@@ -239,6 +254,12 @@ namespace Content.Server.Chat
                 var prefs = _preferencesManager.GetPreferences(player.UserId);
                 msg.MessageColorOverride = prefs.AdminOOCColor;
             }
+            if (player.ConnectedClient.UserData.PatronTier is { } patron &&
+                     PatronOocColors.TryGetValue(patron, out var patronColor))
+            {
+                msg.MessageWrap = $"OOC: [color={patronColor}]{player.Name}[/color]: {{0}}";
+            }
+
             //TODO: player.Name color, this will need to change the structure of the MsgChatMessage
             _netManager.ServerSendToAll(msg);
 
@@ -253,6 +274,8 @@ namespace Content.Server.Chat
                 DispatchServerMessage(player, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
                 return;
             }
+
+            message = FormattedMessage.EscapeText(message);
 
             var clients = GetDeadChatClients();
 
@@ -272,6 +295,8 @@ namespace Content.Server.Chat
                 DispatchServerMessage(player, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
                 return;
             }
+
+            message = FormattedMessage.EscapeText(message);
 
             var clients = GetDeadChatClients();
 
@@ -299,6 +324,8 @@ namespace Content.Server.Chat
                 return;
             }
 
+            message = FormattedMessage.EscapeText(message);
+
             var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
@@ -313,6 +340,8 @@ namespace Content.Server.Chat
         {
             var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
 
+            message = FormattedMessage.EscapeText(message);
+
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
 
             msg.Channel = ChatChannel.AdminChat;
@@ -324,6 +353,8 @@ namespace Content.Server.Chat
 
         public void SendHookOOC(string sender, string message)
         {
+            message = FormattedMessage.EscapeText(message);
+
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.OOC;
             msg.Message = message;

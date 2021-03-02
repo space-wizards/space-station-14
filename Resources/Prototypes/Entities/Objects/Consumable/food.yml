@@ -1,8 +1,12 @@
+# TODO: Add description (many)
 - type: entity
   parent: BaseItem
   id: FoodBase
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - Grindable
   - type: Food
   - type: LoopingSound
   - type: SolutionContainer
@@ -10,7 +14,6 @@
   - type: Sprite
     state: icon
     netsync: false
-  - type: Grindable
 
   # Only use visualizer if there's multiple steps available
 # - type: Appearance
@@ -2120,7 +2123,7 @@
   parent: FoodBase
   id: FoodSausage
   name: sausage  # sanga
-  description: A piece of mixed, long meat.
+  description: It's best not to see how this was made.
   components:
   - type: SolutionContainer
     contents:
@@ -2214,7 +2217,7 @@
 - type: entity
   parent: FoodBase
   id: FoodSoylentYellow
-  name: soylen viridians
+  name: soylent viridians
   description: Not made of people. Honest.
   components:
   - type: Food
@@ -2461,7 +2464,7 @@
 
 - type: entity
   parent: FoodBase
-  id: FoodToastedsandwich
+  id: FoodToastedSandwich
   name: toasted sandwich
   description: Now if you only had a pepper bar.
   components:

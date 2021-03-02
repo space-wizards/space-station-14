@@ -13,10 +13,11 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
-using Robust.Shared.Timers;
 using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Singularity;
 using Robust.Shared.Players;
+using Robust.Shared.Timing;
+
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -68,7 +69,6 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _level = value;
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
-
 
                 if (_collidableComponent != null && _collidableComponent.PhysicsShapes.Any() && _collidableComponent.PhysicsShapes[0] is PhysShapeCircle circle)
                 {

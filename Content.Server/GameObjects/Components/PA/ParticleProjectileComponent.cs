@@ -6,7 +6,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Timers;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.PA
 {

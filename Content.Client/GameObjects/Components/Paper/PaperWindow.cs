@@ -10,10 +10,10 @@ namespace Content.Client.GameObjects.Components.Paper
     {
         private readonly RichTextLabel _label;
         public readonly LineEdit Input;
-        protected override Vector2? CustomSize => (300, 300);
 
         public PaperWindow()
         {
+            MinSize = SetSize = (300, 300);
             var container = new VBoxContainer();
             _label = new RichTextLabel();
             Input = new LineEdit {Visible = false};

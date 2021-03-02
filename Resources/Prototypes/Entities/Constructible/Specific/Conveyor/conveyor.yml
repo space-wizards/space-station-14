@@ -46,11 +46,13 @@
   suffix: assembly
   description: A conveyor belt assembly. Used to construct a conveyor belt.
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Constructible/Power/conveyor.rsi
-      state: conveyor_loose
-    - type: ConveyorAssembly
-    - type: Construction
-      graph: ConveyorGraph
-      node: item
+  - type: Tag
+    tags:
+    - ConveyorAssembly
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Power/conveyor.rsi
+    state: conveyor_loose
+  - type: Construction
+    graph: ConveyorGraph
+    node: item

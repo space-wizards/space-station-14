@@ -36,10 +36,9 @@ namespace Content.Client.UserInterface
 [color=#a4885c]AlignWall[/color] snaps to vertical halftiles.
 [color=#a4885c]AlignWallProper[/color] snaps the entity to the middle of the tile edges";
 
-        protected override Vector2? CustomSize => (520, 580);
-
         public TutorialWindow()
         {
+            MinSize = SetSize = (520, 580);
             Title = "The Tutorial!";
 
             //Get section header font

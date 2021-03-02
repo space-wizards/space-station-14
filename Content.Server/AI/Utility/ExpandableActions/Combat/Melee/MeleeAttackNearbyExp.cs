@@ -39,7 +39,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
             foreach (var target in EntitySystem.Get<AiFactionTagSystem>()
                 .GetNearbyHostiles(owner, controller.VisionRadius))
             {
-                yield return new MeleeWeaponAttackEntity(owner, target, Bonus);
+                yield return new MeleeWeaponAttackEntity() {Owner = owner, Target = target, Bonus = Bonus};
             }
         }
     }

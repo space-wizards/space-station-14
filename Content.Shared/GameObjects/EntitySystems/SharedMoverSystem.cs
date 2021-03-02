@@ -152,7 +152,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             var owner = session?.AttachedEntity;
 
-            if (owner != null)
+            if (owner != null && session != null)
             {
                 foreach (var comp in owner.GetAllComponents<IRelayMoveInput>())
                 {

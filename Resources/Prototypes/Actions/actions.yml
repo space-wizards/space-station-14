@@ -34,6 +34,19 @@
   behavior: !type:DisarmAction { }
 
 - type: action
+  actionType: GhostBoo
+  icon: Interface/Actions/scream.png
+  name: "Boo"
+  description: "Scare your crew members because of boredom!"
+  filters:
+    - ghost
+  behaviorType: Instant
+  behavior: !type:GhostBoo
+    radius: 3
+    cooldown: 120
+    maxTargets: 3
+
+- type: action
   actionType: DebugInstant
   icon: Interface/Alerts/Human/human1.png
   name: "[color=red]Debug Instant[/color]"

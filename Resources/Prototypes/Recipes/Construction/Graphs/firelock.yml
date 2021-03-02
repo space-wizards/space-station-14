@@ -8,7 +8,7 @@
           completed:
             - !type:SnapToGrid { }
           steps:
-            - material: Metal
+            - material: Steel
               amount: 3
               doAfter: 1
 
@@ -30,7 +30,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: SteelSheet1
+              prototype: SheetSteel1
               amount: 3
             - !type:DeleteEntity {}
           conditions:
@@ -50,9 +50,8 @@
             - !type:EntityAnchored
               anchored: true
           steps:
-            - component: FirelockElectronics
-              store: Firelock Electornics
-              name: Firelock Electornics
+            - tag: FirelockElectronics
+              name: Firelock Electronics
               icon:
                 sprite: "Constructible/Misc/module.rsi"
                 state: "mainboard"
@@ -147,12 +146,12 @@
         - to: frame4
           completed:
             - !type:SpawnPrototype
-              prototype: GlassSheet1
+              prototype: SheetGlass1
               amount: 2
           steps:
             - tool: Screwing
               doAfter: 1
-      
+
 
     - node: FirelockGlass
       entity: FirelockGlass

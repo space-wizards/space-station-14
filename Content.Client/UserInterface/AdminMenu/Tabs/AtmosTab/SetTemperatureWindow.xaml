@@ -2,24 +2,24 @@
     xmlns="https://spacestation14.io" Title="{Loc Set Temperature}">
     <VBoxContainer>
         <HBoxContainer>
-            <Label Text="{Loc Grid}" CustomMinimumSize="100 0" />
-            <Control CustomMinimumSize="50 0" />
-            <OptionButton Name="GridOptions" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+            <Label Text="{Loc Grid}" MinSize="100 0" />
+            <Control MinSize="50 0" />
+            <OptionButton Name="GridOptions" MinSize="100 0" HorizontalExpand="True" />
         </HBoxContainer>
         <HBoxContainer>
-            <Label Text="{Loc TileX}" CustomMinimumSize="100 0" />
-            <Control CustomMinimumSize="50 0" />
-            <SpinBox Name="TileXSpin" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+            <Label Text="{Loc TileX}" MinSize="100 0" />
+            <Control MinSize="50 0" />
+            <SpinBox Name="TileXSpin" MinSize="100 0" HorizontalExpand="True" />
         </HBoxContainer>
         <HBoxContainer>
-            <Label Text="{Loc TileY}" CustomMinimumSize="100 0" />
-            <Control CustomMinimumSize="50 0" />
-            <SpinBox Name="TileYSpin" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+            <Label Text="{Loc TileY}" MinSize="100 0" />
+            <Control MinSize="50 0" />
+            <SpinBox Name="TileYSpin" MinSize="100 0" HorizontalExpand="True" />
         </HBoxContainer>
         <HBoxContainer>
-            <Label Text="{Loc Temperature}" CustomMinimumSize="100 0" />
-            <Control CustomMinimumSize="50 0" />
-            <SpinBox Name="TemperatureSpin" CustomMinimumSize="100 0" SizeFlagsHorizontal="FillExpand" />
+            <Label Text="{Loc Temperature}" MinSize="100 0" />
+            <Control MinSize="50 0" />
+            <SpinBox Name="TemperatureSpin" MinSize="100 0" HorizontalExpand="True" />
         </HBoxContainer>
         <Button Name="SubmitButton" Text="{Loc Set Temperature}" />
     </VBoxContainer>

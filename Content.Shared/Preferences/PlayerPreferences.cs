@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Shared.Maths;
@@ -44,12 +45,6 @@ namespace Content.Shared.Preferences
         public ICharacterProfile SelectedCharacter => Characters[SelectedCharacterIndex];
 
         public Color AdminOOCColor { get; set; }
-
-        public int FirstEmptySlot()
-        {
-            var firstEmpty = IndexOfCharacter(null);
-            return firstEmpty == -1 ? _characters.Count : firstEmpty;
-        }
 
         public int IndexOfCharacter(ICharacterProfile profile)
         {

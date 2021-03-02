@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
