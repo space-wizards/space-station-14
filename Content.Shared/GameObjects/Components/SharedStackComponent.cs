@@ -57,7 +57,7 @@ namespace Content.Shared.GameObjects.Components
 
         public override void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataFieldCached(ref _maxCount, "max", 50);
+            serializer.DataFieldCached(ref _maxCount, "max", 30);
             serializer.DataFieldCached(ref _count, "count", MaxCount);
 
             if (serializer.Writing)
@@ -86,7 +86,7 @@ namespace Content.Shared.GameObjects.Components
 
             if (!_prototypeManager.HasIndex<StackPrototype>(StackTypeId))
             {
-                Logger.Error($"No {nameof(StackPrototype)} found with id {StackTypeId}");
+                Logger.Error($"No {nameof(StackPrototype)} found with id {StackTypeId} for {Owner.Prototype?.ID ?? Owner.Name}");
             }
         }
 

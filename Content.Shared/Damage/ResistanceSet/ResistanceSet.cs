@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -32,7 +33,7 @@ namespace Content.Shared.Damage.ResistanceSet
             _resistances = data.Resistances;
         }
 
-        public string ID { get; }
+        public string ID { get; } = string.Empty;
 
         /// <summary>
         ///     Adjusts input damage with the resistance set values.

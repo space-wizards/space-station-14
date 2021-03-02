@@ -16,7 +16,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: SteelSheet1
+              prototype: SheetSteel1
               amount: 5
             - !type:EmptyAllContainers {}
             - !type:DeleteEntity {}

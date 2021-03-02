@@ -1,0 +1,78 @@
+- type: material
+  id: MetalMaterialBase
+  density: 7700
+  electricResistivity: 6.9e-7
+  thermalConductivity: 18
+  specificHeat: 500
+
+- type: material
+  id: steel
+  name: steel
+  icon: Objects/Materials/Sheets/metal.rsi/steel.png
+  parent: MetalMaterialBase
+
+- type: material
+  id: adamantine
+  name: adamantine
+  icon: Objects/Materials/Ingots/adamantine.png
+  parent: MetalMaterialBase
+
+- type: material
+  id: copper
+  name: copper
+  icon: Objects/Materials/Ingots/copper.png
+  parent: MetalMaterialBase
+
+- type: material
+  id: gold
+  name: gold
+  icon: Objects/Materials/Ingots/gold.png
+  density: 10000
+  electricResistivity: 8.0e-9
+  thermalConductivity: 30
+  specificHeat: 1000
+
+- type: material
+  id: hydrogen
+  name: hydrogen
+  icon: Objects/Materials/Ingots/hydrogen.png
+  parent: MetalMaterialBase
+
+- type: material
+  id: iron
+  name: iron
+  icon: Objects/Materials/Ingots/iron.png
+  parent: MetalMaterialBase
+
+- type: material
+  id: silver
+  name: silver
+  icon: Objects/Materials/Ingots/silver.png
+  parent: MetalMaterialBase
+
+- type: material
+  id: plasteel
+  name: plasteel
+  icon: Objects/Materials/Sheets/metal.rsi/plasteel.png
+  density: 15400 # literally arbitrary values...
+  electricResistivity: 6.9e-7
+  thermalConductivity: 18
+  specificHeat: 200
+
+- type: material
+  id: brass
+  name: brass
+  icon: Objects/Materials/Sheets/metal.rsi/brass.png
+  parent: MetalMaterialBase
+
+- type: material
+  id: titanium
+  name: titanium
+  icon: Objects/Materials/Sheets/metal.rsi/titanium.png
+  parent: MetalMaterialBase
+
+- type: material
+  id: plastitanium
+  name: plastitanium
+  icon: Objects/Materials/Sheets/metal.rsi/plastitanium.png
+  parent: MetalMaterialBase

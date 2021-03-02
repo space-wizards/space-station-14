@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -27,7 +28,7 @@ namespace Content.Shared.Actions
         /// <summary>
         /// Actions component of the performer.
         /// </summary>
-        public readonly SharedActionsComponent PerformerActions;
+        public readonly SharedActionsComponent? PerformerActions;
 
         public ActionEventArgs(IEntity performer, ActionType actionType)
         {

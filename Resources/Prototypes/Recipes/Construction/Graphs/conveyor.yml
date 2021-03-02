@@ -37,7 +37,7 @@
   - node: start
     actions:
       - !type:SpawnPrototype
-        prototype: SteelSheet1
+        prototype: SheetSteel1
         amount: 2
       - !type:DeleteEntity {}
     edges:

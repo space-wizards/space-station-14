@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -9,12 +10,12 @@ namespace Content.Shared.VendingMachines
     [Serializable, NetSerializable, Prototype("vendingMachineInventory")]
     public class VendingMachineInventoryPrototype : IPrototype
     {
-        private string _id;
-        private string _name;
-        private string _description;
+        private string _id = string.Empty;
+        private string _name = string.Empty;
+        private string _description = string.Empty;
         private double _animationDuration;
-        private string _spriteName;
-        private Dictionary<string, uint> _startingInventory;
+        private string _spriteName = string.Empty;
+        private Dictionary<string, uint> _startingInventory = new();
 
         public string ID => _id;
         public string Name => _name;

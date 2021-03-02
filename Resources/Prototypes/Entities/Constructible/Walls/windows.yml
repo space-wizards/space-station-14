@@ -28,6 +28,7 @@
       - SmallImpassable
   - type: Damageable
     resistances: metallicResistances
+  - type: Repairable
   - type: Destructible
     thresholds:
     - trigger:
@@ -65,8 +66,9 @@
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
   - type: Icon
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
-  - type: Damageable
-    resistances: metallicResistances
+  - type: Repairable
+    fuelCost: 10
+    doAfterDelay: 2
   - type: Destructible
     thresholds:
     - trigger:

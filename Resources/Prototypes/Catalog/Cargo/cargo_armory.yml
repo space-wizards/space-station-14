@@ -1,7 +1,7 @@
 - type: cargoProduct
   name: "smg crate"
   id: cargo.armorysmg
-  description: "Contains three high-powered, semiautomatic rifles with six mags. Requires Armory access to open."
+  description: "Contains three WT-550 SMGs with six mags. Requires Armory access to open."
   icon:
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
     state: icon

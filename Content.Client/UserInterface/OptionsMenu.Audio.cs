@@ -56,39 +56,40 @@ namespace Content.Client.UserInterface
                     Children =
                     {
                         new Control {MinSize = (4, 0)},
-                        new Label {Text = Loc.GetString("Master Volume:")},
+                        new Label {Text = Loc.GetString("ui-options-master-volume")},
                         new Control {MinSize = (8, 0)},
                         MasterVolumeSlider,
                         new Control {MinSize = (8, 0)},
                         MasterVolumeLabel,
-                        new Control { MinSize = (4, 0) },
+                        new Control {MinSize = (4, 0)},
                     }
                 });
 
                 // sets up ambience checkbox. i am sorry for not fixing the rest of this code.
-                AmbienceCheckBox = new CheckBox { Text = Loc.GetString("Ambient Hum") };
+                AmbienceCheckBox = new CheckBox {Text = Loc.GetString("ui-options-ambient-hum")};
                 contents.AddChild(AmbienceCheckBox);
                 AmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.AmbienceBasicEnabled);
 
                 ApplyButton = new Button
                 {
-                    Text = Loc.GetString("Apply"), TextAlign = Label.AlignMode.Center,
+                    Text = Loc.GetString("ui-options-apply"), TextAlign = Label.AlignMode.Center,
                     HorizontalAlignment = HAlignment.Right
                 };
 
                 vBox.AddChild(new Label
                 {
-                    Text = Loc.GetString("Volume Sliders"),
+                    Text = Loc.GetString("ui-options-volume-sliders"),
                     FontColorOverride = StyleNano.NanoGold,
-                    StyleClasses = { StyleNano.StyleClassLabelKeyText }
+                    StyleClasses = {StyleNano.StyleClassLabelKeyText}
                 });
 
                 vBox.AddChild(contents);
 
                 ResetButton = new Button
                 {
-                    Text = Loc.GetString("Reset all"),
-                    StyleClasses = { StyleBase.ButtonCaution },
+                    Text = Loc.GetString("ui-options-reset-all"),
+                    StyleClasses = {StyleBase.ButtonCaution},
+                    HorizontalExpand = true,
                     HorizontalAlignment = HAlignment.Right
                 };
 
@@ -106,15 +107,12 @@ namespace Content.Client.UserInterface
                             Children =
                             {
                                 ResetButton,
-                                new Control { MinSize = (2, 0) },
+                                new Control {MinSize = (2, 0)},
                                 ApplyButton
                             }
                         }
                     }
                 });
-
-                MasterVolumeSlider.Value = _cfg.GetCVar(CVars.AudioMasterVolume) * 100.0f;
-                MasterVolumeLabel.Text = string.Format(Loc.GetString("{0:0}%"), MasterVolumeSlider.Value);
 
                 ApplyButton.OnPressed += OnApplyButtonPressed;
                 ResetButton.OnPressed += OnResetButtonPressed;
@@ -122,7 +120,8 @@ namespace Content.Client.UserInterface
                 AmbienceCheckBox.OnToggled += OnAmbienceCheckToggled;
 
                 AddChild(vBox);
-                UpdateChanges();
+
+                Reset();
             }
 
             protected override void Dispose(bool disposing)
@@ -136,8 +135,9 @@ namespace Content.Client.UserInterface
 
             private void OnMasterVolumeSliderChanged(Range range)
             {
-                MasterVolumeLabel.Text = string.Format(Loc.GetString("{0:0}%"), MasterVolumeSlider.Value);
-                _clydeAudio.SetMasterVolume(MasterVolumeSlider.Value / 100.0f);
+                MasterVolumeLabel.Text =
+                    Loc.GetString("ui-options-volume-percent", ("volume", MasterVolumeSlider.Value / 100));
+                _clydeAudio.SetMasterVolume(MasterVolumeSlider.Value / 100);
                 UpdateChanges();
             }
 
@@ -148,7 +148,7 @@ namespace Content.Client.UserInterface
 
             private void OnApplyButtonPressed(BaseButton.ButtonEventArgs args)
             {
-                _cfg.SetCVar(CVars.AudioMasterVolume, MasterVolumeSlider.Value / 100.0f);
+                _cfg.SetCVar(CVars.AudioMasterVolume, MasterVolumeSlider.Value / 100);
                 _cfg.SetCVar(CCVars.AmbienceBasicEnabled, AmbienceCheckBox.Pressed);
                 _cfg.SaveToFile();
                 UpdateChanges();
@@ -156,15 +156,22 @@ namespace Content.Client.UserInterface
 
             private void OnResetButtonPressed(BaseButton.ButtonEventArgs args)
             {
-                MasterVolumeSlider.Value = _cfg.GetCVar(CVars.AudioMasterVolume) * 100.0f;
-                MasterVolumeLabel.Text = string.Format(Loc.GetString("{0:0}%"), MasterVolumeSlider.Value);
+                Reset();
+            }
+
+            private void Reset()
+            {
+                MasterVolumeSlider.Value = _cfg.GetCVar(CVars.AudioMasterVolume) * 100;
+                MasterVolumeLabel.Text =
+                    Loc.GetString("ui-options-volume-percent", ("volume", MasterVolumeSlider.Value / 100));
                 AmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.AmbienceBasicEnabled);
                 UpdateChanges();
             }
 
             private void UpdateChanges()
             {
-                var isMasterVolumeSame = System.Math.Abs(MasterVolumeSlider.Value - _cfg.GetCVar(CVars.AudioMasterVolume) * 100.0f) < 0.01f;
+                var isMasterVolumeSame =
+                    System.Math.Abs(MasterVolumeSlider.Value - _cfg.GetCVar(CVars.AudioMasterVolume) * 100) < 0.01f;
                 var isAmbienceSame = AmbienceCheckBox.Pressed == _cfg.GetCVar(CCVars.AmbienceBasicEnabled);
                 var isEverythingSame = isMasterVolumeSame && isAmbienceSame;
                 ApplyButton.Disabled = isEverythingSame;

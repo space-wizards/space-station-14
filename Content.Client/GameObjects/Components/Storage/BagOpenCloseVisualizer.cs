@@ -63,6 +63,7 @@ namespace Content.Client.GameObjects.Components.Storage
                             spriteComponent.LayerSetVisible(OpenIcon, false);
                             break;
                     }
+                    component.SetData(StackVisuals.Hide, bagState == SharedBagState.Close);
                 }
             }
         }

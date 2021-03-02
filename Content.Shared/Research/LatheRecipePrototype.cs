@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Shared.IoC;
@@ -12,13 +13,13 @@ namespace Content.Shared.Research
     [NetSerializable, Serializable, Prototype("latheRecipe")]
     public class LatheRecipePrototype : IPrototype
     {
-        private string _name;
-        private string _id;
-        private SpriteSpecifier _icon;
-        private string _description;
-        private string _result;
+        private string _name = string.Empty;
+        private string _id = string.Empty;
+        private SpriteSpecifier _icon = SpriteSpecifier.Invalid;
+        private string _description = string.Empty;
+        private string _result = string.Empty;
         private int _completeTime;
-        private Dictionary<string, int> _requiredMaterials;
+        private Dictionary<string, int> _requiredMaterials = new();
 
         [ViewVariables]
         public string ID => _id;
@@ -34,7 +35,7 @@ namespace Content.Shared.Research
                 if (_name.Trim().Length != 0) return _name;
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
                 if (protoMan == null) return _description;
-                protoMan.TryIndex(_result, out EntityPrototype prototype);
+                protoMan.TryIndex(_result, out EntityPrototype? prototype);
                 if (prototype?.Name != null)
                     _name = prototype.Name;
                 return _name;
@@ -52,7 +53,7 @@ namespace Content.Shared.Research
                 if (_description.Trim().Length != 0) return _description;
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
                 if (protoMan == null) return _description;
-                protoMan.TryIndex(_result, out EntityPrototype prototype);
+                protoMan.TryIndex(_result, out EntityPrototype? prototype);
                 if (prototype?.Description != null)
                     _description = prototype.Description;
                 return _description;
@@ -98,7 +99,7 @@ namespace Content.Shared.Research
             serializer.DataField(ref _id, "id", string.Empty);
             serializer.DataField(ref _description, "description", string.Empty);
             serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
-            serializer.DataField(ref _result, "result", null);
+            serializer.DataField(ref _result, "result", string.Empty);
             serializer.DataField(ref _completeTime, "completetime", 2500);
             serializer.DataField(ref _requiredMaterials, "materials", new Dictionary<string, int>());
         }

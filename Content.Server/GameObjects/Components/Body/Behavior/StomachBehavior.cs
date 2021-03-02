@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body.Networks;
@@ -44,8 +45,8 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
             _accumulatedFrameTime -= 1;
 
-            if (!Owner.TryGetComponent(out SharedSolutionContainerComponent? solution) ||
-                !Body.Owner.TryGetComponent(out SharedBloodstreamComponent? bloodstream))
+            if (!Body.Owner.TryGetComponent(out SolutionContainerComponent? solution) ||
+                !Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
                 return;
             }
@@ -138,10 +139,10 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public bool TryTransferSolution(Solution solution)
         {
-            if (!CanTransferSolution(solution))
+            if (Body == null || !CanTransferSolution(solution))
                 return false;
 
-            if (!Owner.TryGetComponent(out SharedSolutionContainerComponent? solutionComponent))
+            if (!Body.Owner.TryGetComponent(out SolutionContainerComponent? solutionComponent))
             {
                 return false;
             }

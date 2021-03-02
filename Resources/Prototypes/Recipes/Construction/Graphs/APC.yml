@@ -10,4 +10,4 @@
               amount: 3
 
     - node: apc
-      entity: BaseAPC
+      entity: BaseApc

@@ -6,7 +6,6 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
@@ -64,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Initialize();
 
-            _contents = ContainerManagerComponent.Ensure<Container>(nameof(DisposalHolderComponent), Owner);
+            _contents = ContainerHelpers.EnsureContainer<Container>(Owner, nameof(DisposalHolderComponent));
         }
 
         public override void OnRemove()

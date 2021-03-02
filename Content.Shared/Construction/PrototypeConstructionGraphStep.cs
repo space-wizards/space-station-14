@@ -1,3 +1,4 @@
+﻿#nullable enable
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -7,7 +8,7 @@ namespace Content.Shared.Construction
 {
     public class PrototypeConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
-        public string Prototype { get; private set; }
+        public string Prototype { get; private set; } = string.Empty;
 
         public override void ExposeData(ObjectSerializer serializer)
         {

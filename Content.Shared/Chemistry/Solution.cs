@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -278,12 +279,13 @@ namespace Content.Shared.Chemistry
 
             Color mixColor = default;
             var runningTotalQuantity = ReagentUnit.New(0);
+            var protoManager = IoCManager.Resolve<IPrototypeManager>();
 
             foreach (var reagent in Contents)
             {
                 runningTotalQuantity += reagent.Quantity;
 
-                if (!IoCManager.Resolve<IPrototypeManager>().TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                if (!protoManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
                     continue;
                 }
@@ -322,7 +324,7 @@ namespace Content.Shared.Chemistry
 
             foreach (var (reagentId, quantity) in _contents.ToArray())
             {
-                if (!proto.TryIndex(reagentId, out ReagentPrototype reagent))
+                if (!proto.TryIndex(reagentId, out ReagentPrototype? reagent))
                     continue;
 
                 var removedAmount = reagent.ReactionEntity(entity, method, quantity);
