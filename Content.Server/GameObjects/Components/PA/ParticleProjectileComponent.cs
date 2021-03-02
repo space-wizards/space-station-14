@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.PA
         private ParticleAcceleratorPowerState _state;
         public void CollideWith(IEntity collidedWith)
         {
-            if (collidedWith.TryGetComponent<SingularityComponent>(out var singularityComponent))
+            if (collidedWith.TryGetComponent<ServerSingularityComponent>(out var singularityComponent))
             {
                 var multiplier = _state switch
                 {

@@ -3,7 +3,6 @@ using Content.Server.GameObjects.Components.Observer;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.StationEvents;
-using Content.Shared.GameObjects;
 using Content.Shared.Physics;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -16,17 +15,16 @@ using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Timers;
 using Robust.Server.GameObjects;
+using Content.Shared.GameObjects.Components.Singularity;
+using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
-    public class SingularityComponent : Component, ICollideBehavior
+    public class ServerSingularityComponent : SharedSingularityComponent, ICollideBehavior
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        public override uint? NetID => ContentNetIDs.SINGULARITY;
-
-        public override string Name => "Singularity";
 
         public int Energy
         {
@@ -71,41 +69,13 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
 
-                /* //TODO: FIX THIS
-                if (_shaderComponent != null)
-                {
-                    _shaderComponent.SetSingularityTexture("Effects/Singularity/singularity_" + _level + ".rsi", "singularity_" + _level);
-                    switch (value)
-                    {
-                        case 0:
-                            _shaderComponent.SetEffectIntensity(0.0f, 100.0f);
-                            break;
-                        case 1:
-                            _shaderComponent.SetEffectIntensity(2.7f, 6.4f);
-                            break;
-                        case 2:
-                            _shaderComponent.SetEffectIntensity(14.4f, 7.0f);
-                            break;
-                        case 3:
-                            _shaderComponent.SetEffectIntensity(47.2f, 8.0f);
-                            break;
-                        case 4:
-                            _shaderComponent.SetEffectIntensity(180f, 10.0f);
-                            break;
-                        case 5:
-                            _shaderComponent.SetEffectIntensity(600f, 12.0f);
-                            break;
-                        case 6:
-                            _shaderComponent.SetEffectIntensity(800f, 12.0f);
-                            break;
-                    }
-                }
-                */
 
                 if (_collidableComponent != null && _collidableComponent.PhysicsShapes.Any() && _collidableComponent.PhysicsShapes[0] is PhysShapeCircle circle)
                 {
                     circle.Radius = _level - 0.5f;
                 }
+
+                Dirty();
             }
         }
         private int _level;
@@ -128,6 +98,11 @@ namespace Content.Server.GameObjects.Components.Singularity
         private AudioSystem _audioSystem = null!;
         private AudioSystem.AudioSourceServer? _playingSound;
 
+        public override ComponentState GetComponentState(ICommonSession player)
+        {
+            return new SingularityComponentState(Level);
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -140,33 +115,18 @@ namespace Content.Server.GameObjects.Components.Singularity
             _audioSystem.PlayFromEntity("/Audio/Effects/singularity_form.ogg", Owner);
             Timer.Spawn(5200,() => _playingSound = _audioSystem.PlayFromEntity("/Audio/Effects/singularity.ogg", Owner, audioParams));
 
-
+            if (!Owner.TryGetComponent(out _radiationPulseComponent))
+                Logger.Error("SingularityComponent was spawned without RadiationPulseComponent");
             if (!Owner.TryGetComponent(out _collidableComponent))
-            {
-                Logger.Error("SingularityComponent was spawned without CollidableComponent");
-            }
+                Logger.Error("SingularityComponent was spawned without CollidableComponent!");
             else
-            {
                 _collidableComponent.Hard = false;
-            }
 
             _singularityController = _collidableComponent?.EnsureController<SingularityController>();
-            if(_singularityController!=null)_singularityController.ControlledComponent = _collidableComponent;
-
-            if (!Owner.TryGetComponent(out _radiationPulseComponent))
-            {
-                Logger.Error("SingularityComponent was spawned without RadiationPulseComponent");
-            }
+            if(_singularityController != null)
+                _singularityController.ControlledComponent = _collidableComponent;
 
             Level = 1;
-        }
-
-        public void FrameUpdate(float frameTime)
-        {
-            foreach (var key in _delayTiming.Keys.ToList())
-            {
-                _delayTiming[key] += frameTime;
-            }
         }
 
         public void Update()
@@ -181,6 +141,15 @@ namespace Content.Server.GameObjects.Components.Singularity
                 pushVector = new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10));
             }
             _singularityController?.Push(pushVector.Normalized, 2);
+        }
+
+
+        public void FrameUpdate(float frameTime)
+        {
+            foreach (var key in _delayTiming.Keys.ToList())
+            {
+                _delayTiming[key] += frameTime;
+            }
         }
 
         private readonly List<IEntity> _previousPulledEntities = new();
@@ -204,7 +173,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             {
                 if (entity.Deleted) continue;
                 if (entity.HasComponent<GhostComponent>()) continue; //Temporary fix for ghosts
-                if (entity.HasComponent<SingularityComponent>()) continue;
+                if (entity.HasComponent<ServerSingularityComponent>()) continue;
                 if (!entity.Transform.ParentUid.IsValid()) continue; //Don't move root node of grid (root node has no parent)
                 if (!entity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
                 if (entity.HasComponent<GhostComponent>()) continue;
@@ -240,7 +209,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 }
                 return;
             }
-            if (entity.TryGetComponent<SingularityComponent>(out var otherSingularity))
+            if (entity.TryGetComponent<ServerSingularityComponent>(out var otherSingularity))
             {
                 if (otherSingularity.Energy > Energy)
                 {

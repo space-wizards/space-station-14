@@ -151,7 +151,8 @@ namespace Content.Client
 
             var overlayMgr = IoCManager.Resolve<IOverlayManager>();
             overlayMgr.AddOverlay(new ParallaxOverlay());
-            overlayMgr.AddOverlay(new GradientCircleMaskOverlay()); //Why do we need to init these here... (other than Parallax)?
+            overlayMgr.AddOverlay(new SingularityOverlay());
+            overlayMgr.AddOverlay(new GradientCircleMaskOverlay()); //Hopefully we can cut down on this list... don't see why a death overlay needs to be instantiated here.
             overlayMgr.AddOverlay(new CircleMaskOverlay());
             overlayMgr.AddOverlay(new FlashOverlay());
             overlayMgr.AddOverlay(new RadiationPulseOverlay());

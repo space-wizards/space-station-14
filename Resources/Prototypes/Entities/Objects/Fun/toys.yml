@@ -618,8 +618,8 @@
   - type: Icon
     sprite: Objects/Fun/toys.rsi
     state: singularitytoy
-  - type: SingularityShaderAura
-
+  - type: ToySingularity
+  
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi

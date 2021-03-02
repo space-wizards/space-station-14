@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         public bool CanRepell(IEntity toRepell)
         {
             var powerNeeded = 1;
-            if (toRepell.TryGetComponent<SingularityComponent>(out var singularityComponent))
+            if (toRepell.TryGetComponent<ServerSingularityComponent>(out var singularityComponent))
             {
                 powerNeeded += 2*singularityComponent.Level;
             }

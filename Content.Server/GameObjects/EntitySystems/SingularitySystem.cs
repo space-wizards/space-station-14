@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var shouldUpdate = curTimeSingulo >= 1f;
             var shouldPull = curTimePull >= 0.2f;
             if (!shouldUpdate && !shouldPull) return;
-            var singulos = ComponentManager.EntityQuery<SingularityComponent>(true);
+            var singulos = ComponentManager.EntityQuery<ServerSingularityComponent>(true);
 
             if (curTimeSingulo >= 1f)
             {

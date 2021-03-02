@@ -14,7 +14,6 @@
       - AllMask
     mass: 5
   - type: Singularity
-  - type: SingularityShaderAura
   - type: RadiationPulse
     range: 15
     decay: false
@@ -22,6 +21,10 @@
     sprite: Effects/Singularity/singularity_1.rsi
     state: singularity_1
     drawdepth: Items
+  - type: Sprite
+    sprite: Constructible/Power/field_generator.rsi
+    state: Field_Gen
+
 
 - type: entity
   id: RadiationCollector

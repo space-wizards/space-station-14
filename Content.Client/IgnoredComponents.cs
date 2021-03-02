@@ -196,7 +196,6 @@ namespace Content.Client
             "ContainmentFieldGenerator",
             "ContainmentField",
             "Emitter",
-            "Singularity",
             "SingularityGenerator",
             "EmitterBoltComponent",
             "ParticleProjectile",
