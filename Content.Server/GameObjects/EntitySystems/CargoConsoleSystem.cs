@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// How many points to give to every bank account every <see cref="Delay"/> seconds.
         /// </summary>
-        private const int PointIncrease = 20;
+        private const int PointIncrease = 150;
 
         /// <summary>
         /// Keeps track of how much time has elapsed since last balance increase.
