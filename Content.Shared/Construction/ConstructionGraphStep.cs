@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Construction
 {
     [Serializable]
-    [DataDefinition]
+    [ImplicitDataDefinitionForInheritors]
     public abstract class ConstructionGraphStep
     {
         [DataField("completed", serverOnly: true)] private List<IGraphAction> _completed = new();

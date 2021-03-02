@@ -22,10 +22,8 @@ namespace Content.Client.GameObjects.Components.Sound
         [DataField("schedules", true)]
         private List<ScheduledSound> _scheduledSounds
         {
-            set
-            {
-                value.ForEach(AddScheduledSound);
-            }
+            set => value.ForEach(AddScheduledSound);
+            get => new();
         }
 
         public override void StopAllSounds()

@@ -13,7 +13,7 @@ namespace Content.Shared.Actions
     /// <summary>
     /// Base class for action prototypes.
     /// </summary>
-    [DataDefinition]
+    [ImplicitDataDefinitionForInheritors]
     public abstract class BaseActionPrototype : IPrototype, ISerializationHooks
     {
         public abstract string ID { get; }

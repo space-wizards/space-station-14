@@ -1,10 +1,10 @@
-#nullable enable
+﻿#nullable enable
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction
 {
-    [DataDefinition]
+    [ImplicitDataDefinitionForInheritors]
     public abstract class EntityInsertConstructionGraphStep : ConstructionGraphStep
     {
         [field: DataField("store")] public string Store { get; } = string.Empty;

@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     ///     Organizes themselves into distinct <see cref="INodeGroup"/>s with other <see cref="Node"/>s
     ///     that they can "reach" and have the same <see cref="Node.NodeGroupID"/>.
     /// </summary>
-    [DataDefinition]
+    [ImplicitDataDefinitionForInheritors]
     public abstract class Node
     {
         /// <summary>
