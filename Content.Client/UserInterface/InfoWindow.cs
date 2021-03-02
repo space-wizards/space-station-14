@@ -61,6 +61,41 @@ namespace Content.Client.UserInterface
 
         private void PopulateRules(Control rulesList)
         {
+            var vBox = new VBoxContainer
+            {
+                Margin = new Thickness(2, 2, 0, 0)
+            };
+
+            var first = true;
+
+            void AddSection(string title, string path, bool markup = false)
+            {
+                if (!first)
+                {
+                    vBox.AddChild(new Control { MinSize = (0, 10) });
+                }
+
+                first = false;
+                vBox.AddChild(new Label { StyleClasses = { StyleBase.StyleClassLabelHeading }, Text = title });
+
+                var label = new RichTextLabel();
+                var text = _resourceManager.ContentFileReadAllText($"/Server Info/{path}");
+                if (markup)
+                {
+                    label.SetMessage(FormattedMessage.FromMarkup(text.Trim()));
+                }
+                else
+                {
+                    label.SetMessage(text);
+                }
+
+                vBox.AddChild(label);
+            }
+
+            AddSection(Loc.GetString("ui-info-header-rules"), "Rules.txt", true);
+
+            rulesList.AddChild(vBox);
+
         }
 
         private void PopulateTutorial(Control tutorialList)
