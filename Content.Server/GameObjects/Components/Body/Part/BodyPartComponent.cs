@@ -14,6 +14,7 @@ using Content.Shared.Utility;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -60,7 +61,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
         {
             base.Initialize();
 
-            _mechanismContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-{nameof(BodyPartComponent)}", Owner);
+            _mechanismContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-{nameof(BodyPartComponent)}");
 
             // This is ran in Startup as entities spawned in Initialize
             // are not synced to the client since they are assumed to be

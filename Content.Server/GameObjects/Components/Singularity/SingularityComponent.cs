@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         private SpriteComponent? _spriteComponent;
         private RadiationPulseComponent? _radiationPulseComponent;
         private AudioSystem _audioSystem = null!;
-        private AudioSystem.AudioSourceServer? _playingSound;
+        private IPlayingAudioStream? _playingSound;
 
         public override void Initialize()
         {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Trigger.TimerTrigger;
 using Content.Server.Throw;
 using Content.Shared.GameObjects.Components.Explosion;
+using Robust.Shared.Containers;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -73,7 +74,8 @@ namespace Content.Server.GameObjects.Components.Explosion
         {
             base.Initialize();
 
-            _grenadesContainer = ContainerManagerComponent.Ensure<Container>("cluster-flash", Owner);
+            _grenadesContainer = ContainerHelpers.EnsureContainer<Container>(Owner, "cluster-flash");
+
         }
 
         protected override void Startup()

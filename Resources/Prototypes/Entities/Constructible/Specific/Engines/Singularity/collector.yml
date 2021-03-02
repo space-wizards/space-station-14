@@ -8,18 +8,20 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    anchored: false
+    mass: 25
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
-      # layer:
-      # - Impassable
-      # - MobImpassable
-      # - VaultImpassable
-      # - Opaque
-      # mask:
-      # - Impassable
-      # - MobImpassable
-      # - VaultImpassable
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - Opaque
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
   - type: SnapGrid
     offset: Center
   - type: Sprite

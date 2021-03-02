@@ -1,3 +1,5 @@
+# AME
+
 - type: entity
   id: CrateEngineeringAMEShielding
   name: packaged antimatter reactor crate
@@ -31,6 +33,8 @@
       - name: AMEControllerUnanchored
         amount: 1
 
+# Singularity
+
 - type: entity
   id: CrateEngineeringSingularityEmitter
   name: emitter crate
@@ -40,7 +44,7 @@
   - type: StorageFill
     contents:
       - name: Emitter
-        amount: 2
+        amount: 1
 
 - type: entity
   id: CrateEngineeringSingularityCollector
@@ -51,7 +55,7 @@
   - type: StorageFill
     contents:
       - name: RadiationCollector
-        amount: 2
+        amount: 1
 
 - type: entity
   id: CrateEngineeringSingularityContainment
@@ -62,7 +66,7 @@
   - type: StorageFill
     contents:
       - name: ContainmentFieldGenerator
-        amount: 2
+        amount: 1
 
 - type: entity
   id: CrateEngineeringSingularityGenerator
@@ -73,6 +77,31 @@
   - type: StorageFill
     contents:
       - name: SingularityGenerator
+        amount: 1
+
+# Particle Accelerator
+
+- type: entity
+  id: CrateEngineeringParticleAccelerator
+  name: PA crate
+  description: "Complex to setup, but rewarding as fuck."
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - name: MachineParticleAcceleratorEndCapCircuitboard
+        amount: 1
+      - name: MachineParticleAcceleratorEmitterLeftCircuitboard
+        amount: 1
+      - name: MachineParticleAcceleratorEmitterCenterCircuitboard
+        amount: 1
+      - name: MachineParticleAcceleratorEmitterRightCircuitboard
+        amount: 1
+      - name: MachineParticleAcceleratorFuelChamberCircuitboard
+        amount: 1
+      - name: MachineParticleAcceleratorPowerBoxCircuitboard
+        amount: 1
+      - name: ParticleAcceleratorComputerCircuitboard
         amount: 1
 
 # Non-functional for some reason
