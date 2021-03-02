@@ -94,7 +94,7 @@
   category: Engineering
   group: market
   
-  - type: cargoProduct
+- type: cargoProduct
   name: "solar assembly parts"
   id: cargo.enginessolar
   description: "Parts for constructing solar panels and trackers."
