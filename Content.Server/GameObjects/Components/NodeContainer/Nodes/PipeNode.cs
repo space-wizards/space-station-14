@@ -109,9 +109,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             UpdateAppearance();
         }
 
-        public override void OnContainerRemove()
+        public override void OnContainerShutdown()
         {
-            base.OnContainerRemove();
+            base.OnContainerShutdown();
             UpdateAdjacentConnectedDirections();
         }
 
