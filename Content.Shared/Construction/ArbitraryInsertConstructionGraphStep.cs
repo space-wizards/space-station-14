@@ -5,7 +5,6 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction
 {
-    [DataDefinition]
     public abstract class ArbitraryInsertConstructionGraphStep : EntityInsertConstructionGraphStep
     {
         [DataField("name")] public string Name { get; private set; } = string.Empty;

@@ -18,7 +18,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// Basically smoke and foam reactions.
     /// </summary>
     [UsedImplicitly]
-    [DataDefinition]
+    [ImplicitDataDefinitionForInheritors]
     public abstract class AreaReactionEffect : IReactionEffect
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
