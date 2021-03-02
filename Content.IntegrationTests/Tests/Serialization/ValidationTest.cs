@@ -40,7 +40,14 @@ namespace Content.IntegrationTests.Tests.Serialization
             );
 
             var actualErrors = clientErrors.Intersect(serverErrors).ToHashSet();
-            Assert.That(actualErrors.Count, Is.Zero);
+            Assert.Multiple(() =>
+            {
+                if(actualErrors.Count > 0) Assert.Fail($"Total Errors: {actualErrors.Count}");
+                foreach (var actualError in actualErrors)
+                {
+                    Assert.Fail(actualError);
+                }
+            });
         }
     }
 }
