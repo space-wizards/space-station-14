@@ -460,14 +460,18 @@ namespace Content.Client.ParticleAccelerator
             private readonly TextureRect _base;
             private readonly TextureRect _unlit;
             private readonly RSI _rsi;
+            private readonly int _pos;
+            private readonly string _afterUnderscore;
 
             public PASegmentControl(ParticleAcceleratorControlMenu menu, IResourceCache cache, string name)
             {
                 _menu = menu;
                 _baseState = name;
-                _rsi = cache.GetResource<RSIResource>($"/Textures/Constructible/Power/PA/{name}.rsi").RSI;
+                _rsi = cache.GetResource<RSIResource>($"/Textures/Constructible/Specific/Engines/PA/{name}.rsi").RSI;
+                _pos = name.IndexOf("_") + 1;
+                _afterUnderscore = name.Substring(_pos, name.Length - _pos);
 
-                AddChild(_base = new TextureRect {Texture = _rsi[$"{name}c"].Frame0});
+                AddChild(_base = new TextureRect {Texture = _rsi[$"{_afterUnderscore}c"].Frame0});
                 AddChild(_unlit = new TextureRect());
                 MinSize = _rsi.Size;
             }
