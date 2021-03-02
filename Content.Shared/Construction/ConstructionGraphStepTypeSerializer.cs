@@ -49,20 +49,23 @@ namespace Content.Shared.Construction
 
         public DeserializationResult Read(ISerializationManager serializationManager,
             MappingDataNode node,
+            bool skipHook,
             ISerializationContext? context = null)
         {
             var type = GetType(node) ??
                        throw new ArgumentException(
                            "Tried to convert invalid YAML node mapping to ConstructionGraphStep!");
 
-            return new DeserializedValue<ConstructionGraphStep>(serializationManager.ReadValueOrThrow<ConstructionGraphStep>(type, node, context));
+            return serializationManager.Read(type, node, context, skipHook);
         }
 
         public ValidatedNode Validate(ISerializationManager serializationManager, MappingDataNode node,
             ISerializationContext? context = null)
         {
             var type = GetType(node);
+
             if (type == null) return new ErrorNode(node);
+
             return serializationManager.ValidateNode(type, node, context);
         }
     }
