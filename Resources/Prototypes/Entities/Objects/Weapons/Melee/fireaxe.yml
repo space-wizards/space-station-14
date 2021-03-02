@@ -10,6 +10,6 @@
   - type: MeleeWeapon
     damage: 30
   - type: Item
-    size: 10
+    size: 24
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     prefix: inhand
