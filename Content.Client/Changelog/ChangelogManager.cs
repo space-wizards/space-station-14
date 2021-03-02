@@ -11,7 +11,6 @@ using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 #nullable enable
 
@@ -82,7 +81,6 @@ namespace Content.Client.Changelog
                 if (yamlData.Documents.Count == 0)
                     return new List<ChangelogEntry>();
 
-                // TODO Paul serv3 serializer
                 var node = (MappingDataNode)yamlData.Documents[0].RootNode.ToDataNode();
                 return _serialization.ReadValueOrThrow<List<ChangelogEntry>>(node["Entries"]);
             });
