@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -90,7 +90,7 @@ namespace Content.Client.UserInterface
         private TopButton _buttonActionsMenu;
         private TopButton _buttonAdminMenu;
         private TopButton _buttonSandboxMenu;
-        private TutorialWindow _tutorialWindow;
+        private InfoWindow _tutorialWindow;
         private TargetingDoll _targetingDoll;
         private Button _combatModeButton;
         private VBoxContainer _combatPanelContainer;
@@ -260,7 +260,7 @@ namespace Content.Client.UserInterface
 
             _buttonTutorial.OnToggled += a => ButtonTutorialOnOnToggled();
 
-            _tutorialWindow = new TutorialWindow();
+            _tutorialWindow = new InfoWindow();
 
             _tutorialWindow.OnClose += () => _buttonTutorial.Pressed = false;
 

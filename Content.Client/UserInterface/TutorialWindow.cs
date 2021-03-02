@@ -1,4 +1,6 @@
-﻿using Robust.Client.Graphics;
+#nullable enable
+
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
@@ -191,3 +193,4 @@ Hotbar Loadout 9: [color=#a4885c]{52}[/color]
         }
     }
 }
+
