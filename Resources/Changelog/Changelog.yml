@@ -118,3 +118,8 @@ Entries:
   - {message: Glass floors, type: Add}
   id: 21
   time: '2021-03-01T20:57:04.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Cargo passive point gen tweaked from 20 -> 150  every 10 seconds., type: Tweak}
+  id: 22
+  time: '2021-03-02T02:31:38.0000000+00:00'
