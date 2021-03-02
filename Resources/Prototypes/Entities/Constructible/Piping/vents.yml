@@ -30,7 +30,7 @@
     visuals:
     - type: PipeConnectorVisualizer
     - type: VentVisualizer
-    - type: PipeNetDevice
+  - type: PipeNetDevice
 
 - type: entity
   parent: VentBase
