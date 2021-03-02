@@ -11,8 +11,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     {
         protected override IEnumerable<Node> GetReachableNodes()
         {
-            var cells = Owner.GetComponent<SnapGridComponent>()
-                .GetCardinalNeighborCells();
+            if (!Owner.TryGetComponent(out SnapGridComponent? grid))
+                yield break;
+
+            var cells = grid.GetCardinalNeighborCells();
 
             foreach (var cell in cells)
             {
