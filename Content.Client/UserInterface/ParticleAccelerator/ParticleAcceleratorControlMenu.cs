@@ -468,7 +468,7 @@ namespace Content.Client.ParticleAccelerator
                 _menu = menu;
                 _baseState = name;
                 _rsi = cache.GetResource<RSIResource>($"/Textures/Constructible/Specific/Engines/PA/{name}.rsi").RSI;
-                _pos = name.IndexOf("_") + 1;
+                _pos = name.LastIndexOf("_") + 1;
                 _afterUnderscore = name.Substring(_pos, name.Length - _pos);
 
                 AddChild(_base = new TextureRect {Texture = _rsi[$"{_afterUnderscore}c"].Frame0});
