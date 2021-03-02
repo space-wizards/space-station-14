@@ -218,8 +218,6 @@
 
 - type: entity
   id: SolarPanel
-  name: solar panel
-  description: "Generates power from sunlight. Usually used to power replacements for sunlight. Fragile."
   placement:
     mode: SnapgridCenter
   components:
@@ -311,8 +309,6 @@
     
 - type: entity
   id: SolarTracker
-  name: solar tracker
-  description: "A solar tracker. Can be wired to a solar array and computer to track solar positions."
   placement:
     mode: SnapgridCenter
   components:
