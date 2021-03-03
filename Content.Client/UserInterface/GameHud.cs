@@ -251,7 +251,7 @@ namespace Content.Client.UserInterface
             // Info Window
             _buttonInfo = new TopButton(infoTexture, ContentKeyFunctions.OpenInfo, _inputManager)
             {
-                ToolTip = Loc.GetString("Open server info."),
+                ToolTip = Loc.GetString("ui-options-function-open-info"),
                 MinSize = topMinSize,
                 StyleClasses = {StyleBase.ButtonOpenLeft, TopButton.StyleClassRedTopButton},
             };
