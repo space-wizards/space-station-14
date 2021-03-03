@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
