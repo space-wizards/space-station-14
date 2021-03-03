@@ -1,0 +1,34 @@
+- type: constructionGraph
+  id: tileSteel
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: steeltile
+          steps:
+            - material: Steel
+              icon:
+                sprite: Objects/Materials/Sheets/metal.rsi
+                state: steel
+              name: steel sheet
+              amount: 1
+    - node: steeltile
+      entity: FloorTileItemSteel
+
+- type: constructionGraph
+  id: tileWood
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: woodtile
+          steps:
+            # FUCK IT 
+            - material: Steel
+              icon:
+                sprite: Objects/Materials/materials.rsi
+                state: wood
+              name: wood
+              amount: 1
+    - node: woodtile
+      entity: FloorTileItemWood

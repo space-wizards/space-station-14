@@ -28,6 +28,9 @@
       - floor_steel
   - type: Stack
     stackType: FloorTileSteel
+  - type: Construction
+    graph: tileSteel
+    node: steeltile
 
 - type: entity
   name: wood floor
@@ -44,6 +47,9 @@
       - floor_wood
   - type: Stack
     stackType: FloorTileWood
+  - type: Construction
+    graph: tileWood
+    node: woodtile
 
 - type: entity
   name: white tile

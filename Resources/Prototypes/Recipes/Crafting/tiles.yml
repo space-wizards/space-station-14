@@ -1,0 +1,155 @@
+# These should be lathe recipes but lathe code sucks so hard rn so they'll be crafted by hand.
+
+- type: construction
+  name: steel tile
+  id: tileSteel
+  graph: tileSteel
+  startNode: start
+  targetNode: steeltile
+  category: Tiles
+  description: "A steel station tile."
+  icon: Objects/Tiles/tile.rsi/steel.png
+  objectType: Item
+
+- type: construction
+  name: wood floor
+  id: tileWood
+  graph: tileWood
+  startNode: start
+  targetNode: woodtile
+  category: Tiles
+  description: "A piece of wooden station flooring."
+  icon: Objects/Tiles/tile.rsi/wood.png
+  objectType: Item
+
+# - type: construction
+#   name: white tile
+#   id: tileWhite
+#   graph: tileWhite
+#   startNode: start
+#   targetNode: whitetile
+#   category: Tiles
+#   description: "A white station tile."
+#   icon: Objects/Tiles/tile.rsi/white.png
+#   objectType: Item
+#
+# - type: construction
+#   name: dark tile
+#   id: tileDark
+#   graph: tile
+#   startNode: start
+#   targetNode: darktile
+#   category: Tiles
+#   description: "A dark station tile."
+#   icon: Objects/Tiles/tile.rsi/dark.png
+#   objectType: Item
+#
+# - type: construction
+#   name: techmaint floor
+#   id: tileTechmaint
+#   graph: tileTechmaint
+#   startNode: start
+#   targetNode: techmainttile
+#   category: Tiles
+#   description: "A piece of techmaint flooring."
+#   icon: Objects/Tiles/tile.rsi/steel_techfloor_grid.png
+#   objectType: Item
+#
+# - type: construction
+#   name: freezer tile
+#   id: tileFreezer
+#   graph: tileFreezer
+#   startNode: start
+#   targetNode: freezertile
+#   category: Tiles
+#   description: "A freezer station tile."
+#   icon: Objects/Tiles/tile.rsi/showroom.png
+#   objectType: Item
+#
+# - type: construction
+#   name: showroom tile
+#   id: tileShowroom
+#   graph: tileShowroom
+#   startNode: start
+#   targetNode: showroomtile
+#   category: Tiles
+#   description: "A showroom station tile."
+#   icon: Objects/Tiles/tile.rsi/showroom.png
+#   objectType: Item
+#
+# - type: construction
+#   name: green-circuit floor
+#   id: tileGCircuit
+#   graph: tileGCircuit
+#   startNode: start
+#   targetNode: gcircuittile
+#   category: Tiles
+#   description: "A piece of green-circuit flooring."
+#   icon: Objects/Tiles/tile.rsi/gcircuit.png
+#   objectType: Item
+#
+# - type: construction
+#   name: gold floor
+#   id: tileGold
+#   graph: tileGold
+#   startNode: start
+#   targetNode: goldtile
+#   category: Tiles
+#   description: "A piece of gold flooring."
+#   icon: Objects/Tiles/tile.rsi/gold.png
+#   objectType: Item
+#
+# - type: construction
+#   name: reinforced tile
+#   id: tileReinforced
+#   graph: tileReinforced
+#   startNode: start
+#   targetNode: reinforcedtile
+#   category: Tiles
+#   description: "A reinforced station tile."
+#   icon: Objects/Tiles/tile.rsi/reinforced.png
+#   objectType: Item
+#
+# - type: construction
+#   name: mono tile
+#   id: tileMono
+#   graph: tileMono
+#   startNode: start
+#   targetNode: monotile
+#   category: Tiles
+#   description: "A mono station tile."
+#   icon: Objects/Tiles/tile.rsi/white_monofloor.png
+#   objectType: Item
+#
+# - type: construction
+#   name: linoleum floor
+#   id: tileLino
+#   graph: tileLino
+#   startNode: start
+#   targetNode: linotile
+#   category: Tiles
+#   description: "A piece of linoleum flooring."
+#   icon: Objects/Tiles/tile.rsi/white_monofloor.png
+#   objectType: Item
+#
+# - type: construction
+#   name: hydro tile
+#   id: tileHydro
+#   graph: tileHydro
+#   startNode: start
+#   targetNode: hydrotile
+#   category: Tiles
+#   description: "A hydro station tile."
+#   icon: Objects/Tiles/tile.rsi/hydro.png
+#   objectType: Item
+#
+# - type: construction
+#   name: dirty tile
+#   id: tileDirty
+#   graph: tileDirty
+#   startNode: start
+#   targetNode: dirtytile
+#   category: Tiles
+#   description: "A dirty station tile."
+#   icon: Objects/Tiles/tile.rsi/dirty.png
+#   objectType: Item
