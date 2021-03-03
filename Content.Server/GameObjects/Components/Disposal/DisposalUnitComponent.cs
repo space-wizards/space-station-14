@@ -547,7 +547,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Initialize();
 
-            _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
+            _container = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
 
             if (UserInterface != null)
             {

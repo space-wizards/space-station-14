@@ -31,12 +31,24 @@
       - cargo.hydroponicsseedsexotic
       - cargo.servicejanitorial
       - cargo.servicelightsreplacement
-      - cargo.enginesameshielding
-      - cargo.enginesamejar
-      - cargo.enginesamecontrol
+      - cargo.engineeringcablelv
+      - cargo.engineeringcablemv
+      - cargo.engineeringcablehv
+      - cargo.engineeringcablebulk
+      - cargo.engineameshielding
+      - cargo.engineamejar
+      - cargo.engineamecontrol
       - cargo.funplushies
       - cargo.funartsupplies
       - cargo.funinstruments
+      - cargo.materialsteel
+      - cargo.materialglass
+      - cargo.materialplastic
+      - cargo.enginesingularityemitter
+      - cargo.enginesingularitycollector
+      - cargo.enginesingularitygenerator
+      - cargo.enginesingularitycontainment
+      - cargo.engineparticleaccelerator
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Key

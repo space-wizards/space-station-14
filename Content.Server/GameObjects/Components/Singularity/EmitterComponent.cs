@@ -98,23 +98,6 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case AnchoredChangedMessage anchoredChanged:
-                    OnAnchoredChanged(anchoredChanged);
-                    break;
-            }
-        }
-
-        private void OnAnchoredChanged(AnchoredChangedMessage anchoredChanged)
-        {
-            if (anchoredChanged.Anchored)
-                Owner.SnapToGrid();
-        }
-
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (_isLocked)

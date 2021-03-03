@@ -9,7 +9,7 @@
           component: Window
       actions:
         - !type:SpawnPrototype
-          prototype: SteelSheet1
+          prototype: SheetSteel1
           amount: 3
         - !type:DeleteEntity { }
       edges:

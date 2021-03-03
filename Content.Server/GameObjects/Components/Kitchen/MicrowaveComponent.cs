@@ -22,6 +22,7 @@ using Content.Shared.Kitchen;
 using Content.Shared.Prototypes.Kitchen;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -83,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             Owner.EnsureComponent<SolutionContainerComponent>();
 
-            _storage = ContainerManagerComponent.Ensure<Container>("microwave_entity_container", Owner, out var existed);
+            _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "microwave_entity_container", out var existed);
             _audioSystem = EntitySystem.Get<AudioSystem>();
 
             if (UserInterface != null)

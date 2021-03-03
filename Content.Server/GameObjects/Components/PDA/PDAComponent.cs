@@ -19,6 +19,7 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -72,8 +73,8 @@ namespace Content.Server.GameObjects.Components.PDA
         public override void Initialize()
         {
             base.Initialize();
-            _idSlot = ContainerManagerComponent.Ensure<ContainerSlot>("pda_entity_container", Owner);
-            _penSlot = ContainerManagerComponent.Ensure<ContainerSlot>("pda_pen_slot", Owner);
+            _idSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "pda_entity_container");
+            _penSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "pda_pen_slot");
 
             if (UserInterface != null)
             {

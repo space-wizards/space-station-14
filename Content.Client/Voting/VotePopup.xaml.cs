@@ -50,12 +50,12 @@ namespace Content.Client.Voting
         public void UpdateData()
         {
             VoteTitle.Text = _vote.Title;
-            VoteCaller.Text = Loc.GetString("{0} called a vote:", _vote.Initiator);
+            VoteCaller.Text = Loc.GetString("ui-vote-created", ("initiator", _vote.Initiator));
 
             for (var i = 0; i < _voteButtons.Length; i++)
             {
                 var entry = _vote.Entries[i];
-                _voteButtons[i].Text = Loc.GetString("{0} ({1})", entry.Text, entry.Votes);
+                _voteButtons[i].Text = Loc.GetString("ui-vote-button", ("text", entry.Text), ("votes", entry.Votes));
 
                 if (_vote.OurVote == i)
                     _voteButtons[i].Pressed = true;

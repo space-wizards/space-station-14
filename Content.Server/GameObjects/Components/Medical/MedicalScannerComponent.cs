@@ -14,6 +14,7 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -52,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
-            _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
+            _bodyContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-bodyContainer");
 
             // TODO: write this so that it checks for a change in power events and acts accordingly.
             var newState = GetUserInterfaceState();

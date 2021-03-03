@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
 
-                _spriteComponent?.LayerSetRSI(0, "Effects/Singularity/singularity_" + _level + ".rsi");
+                _spriteComponent?.LayerSetRSI(0, "Constructible/Power/Singularity/singularity_" + _level + ".rsi");
                 _spriteComponent?.LayerSetState(0, "singularity_" + _level);
 
                 if(_collidableComponent != null && _collidableComponent.Fixtures.Any() && _collidableComponent.Fixtures[0].Shape is PhysShapeCircle circle)
@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         private SpriteComponent? _spriteComponent;
         private RadiationPulseComponent? _radiationPulseComponent;
         private AudioSystem _audioSystem = null!;
-        private AudioSystem.AudioSourceServer? _playingSound;
+        private IPlayingAudioStream? _playingSound;
 
         public override void Initialize()
         {

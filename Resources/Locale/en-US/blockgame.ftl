@@ -8,4 +8,6 @@ blockgame-points-label = Points: {$points}
 blockgame-level-label = Level: {$level}
 
 # Game over information of your round
-blockgame-gameover-info = Global: {$global}\nLocal: {$local}\nPoints: {$points}
+blockgame-gameover-info = Global: {$global}
+    Local: {$local}
+    Points: {$points}

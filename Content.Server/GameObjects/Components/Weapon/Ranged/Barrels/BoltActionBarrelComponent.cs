@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             // TODO: Add existing ammo support on revolvers
             base.Initialize();
             _spawnedAmmo = new Stack<IEntity>(_capacity - 1);
-            _ammoContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-ammo-container", Owner, out var existing);
+            _ammoContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-ammo-container", out var existing);
 
             if (existing)
             {
@@ -163,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
             }
 
-            _chamberContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-chamber-container", Owner);
+            _chamberContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-chamber-container");
 
             if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
             {

@@ -13,6 +13,7 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -40,8 +41,8 @@ namespace Content.Server.GameObjects.Components.Access
         {
             base.Initialize();
 
-            _privilegedIdContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-privilegedId", Owner);
-            _targetIdContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-targetId", Owner);
+            _privilegedIdContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-privilegedId");
+            _targetIdContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-targetId");
 
             Owner.EnsureComponentWarn<AccessReader>();
             Owner.EnsureComponentWarn<ServerUserInterfaceComponent>();
