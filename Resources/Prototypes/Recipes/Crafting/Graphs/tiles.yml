@@ -23,12 +23,11 @@
       edges:
         - to: woodtile
           steps:
-            # FUCK IT 
-            - material: Steel
+            # Needs StackType ID
+            - material: WoodPlank
               icon:
                 sprite: Objects/Materials/materials.rsi
                 state: wood
               name: wood
-              amount: 1
     - node: woodtile
       entity: FloorTileItemWood
