@@ -411,3 +411,25 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.35
+
+- type: tile
+  name: floor_decorated_steel
+  display_name: Decorated Steel Tile
+  texture: decorated_steel
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_old_steel
+  display_name: Old Steel Tile
+  texture: old_steel
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
