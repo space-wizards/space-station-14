@@ -1,4 +1,4 @@
-﻿using Content.Shared.Input;
+using Content.Shared.Input;
 using Robust.Shared.Input;
 
 namespace Content.Client.Input
@@ -16,7 +16,7 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.FocusOOC);
             common.AddFunction(ContentKeyFunctions.FocusAdminChat);
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
-            common.AddFunction(ContentKeyFunctions.OpenTutorial);
+            common.AddFunction(ContentKeyFunctions.OpenInfo);
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);
             common.AddFunction(ContentKeyFunctions.TakeScreenshotNoUI);
             common.AddFunction(ContentKeyFunctions.Point);
