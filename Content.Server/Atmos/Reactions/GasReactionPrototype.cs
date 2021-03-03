@@ -38,6 +38,11 @@ namespace Content.Server.Atmos.Reactions
         public float MinimumTemperatureRequirement { get; private set; }
 
         /// <summary>
+        ///     Maximum temperature requirement.
+        /// </summary>
+        public float MaximumTemperatureRequirement { get; private set; }
+
+        /// <summary>
         ///     Minimum energy requirement.
         /// </summary>
         public float MinimumEnergyRequirement { get; private set; }
@@ -60,6 +65,7 @@ namespace Content.Server.Atmos.Reactions
             serializer.DataField(this, x => x.ID, "id", string.Empty);
             serializer.DataField(this, x => x.Priority, "priority", 100);
             serializer.DataField(this, x => x.MinimumRequirements, "minimumRequirements", new float[Atmospherics.TotalNumberOfGases]);
+            serializer.DataField(this, x => x.MaximumTemperatureRequirement, "maximumTemperature", float.MaxValue);
             serializer.DataField(this, x => x.MinimumTemperatureRequirement, "minimumTemperature", Atmospherics.TCMB);
             serializer.DataField(this, x => x.MinimumEnergyRequirement, "minimumEnergy", 0f);
             serializer.DataField(ref _effects, "effects", new List<IGasReactionEffect>());
