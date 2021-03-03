@@ -268,7 +268,7 @@
     - HVDummyWire
   - type: Construction
     graph: solarpanel
-    node: solarassembly
+    node: solarpanel
 
 - type: entity
   id: SolarAssembly

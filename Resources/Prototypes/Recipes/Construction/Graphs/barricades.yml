@@ -6,9 +6,22 @@
       edges:
         - to: barricadewooden
           steps:
-            - material: Wood
+            - material: MaterialWoodPlank1
               amount: 5
-          doAfter: 1
+          doAfter: 3
               
     - node: barricadewooden
       entity: Barricade
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 5
+            - !type:DeleteEntity {}
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Prying
+              doAfter: 5
