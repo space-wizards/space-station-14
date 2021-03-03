@@ -57,7 +57,9 @@ namespace Content.YAMLLinter
                 }
             ).Wait();
 
-            return clientErrors.Intersect(serverErrors).ToHashSet();
+            var res = clientErrors.Intersect(serverErrors).ToHashSet();
+            client.Stop();
+            return res;
         }
     }
 }
