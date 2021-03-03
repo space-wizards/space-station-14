@@ -1,6 +1,7 @@
 #nullable enable
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
