@@ -266,6 +266,9 @@
   - type: ClientEntitySpawner
     prototypes:
     - HVDummyWire
+  - type: Construction
+    graph: solarpanel
+    node: solarassembly
 
 - type: entity
   id: SolarAssembly
