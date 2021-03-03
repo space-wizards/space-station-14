@@ -136,7 +136,7 @@ namespace Content.Server.GameObjects.Components.Movement
         public void SetSprinting(ushort subTick, bool walking) { }
 
         public virtual void Update(float frameTime) {}
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
         {
             if (otherBody.BodyType == BodyType.Dynamic && manifold.LocalNormal != Vector2.Zero)
             {

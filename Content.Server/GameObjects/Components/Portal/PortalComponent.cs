@@ -170,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Portal
             StartCooldown();
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
         {
             if (_onCooldown == false)
             {

@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.PA
     {
         public override string Name => "ParticleProjectile";
         private ParticleAcceleratorPowerState _state;
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
         {
             if (otherBody.Entity.TryGetComponent<SingularityComponent>(out var singularityComponent))
             {

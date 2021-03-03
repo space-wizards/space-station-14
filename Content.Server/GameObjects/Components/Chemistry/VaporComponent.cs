@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
         {
             if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
                 return;

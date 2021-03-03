@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         public override string Name => "ContainmentField";
         public ContainmentFieldConnection? Parent;
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
         {
             if (Parent == null)
             {

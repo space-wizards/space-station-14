@@ -142,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             Energy -= EnergyDrain * seconds;
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
         {
             var otherEntity = otherBody.Entity;
 

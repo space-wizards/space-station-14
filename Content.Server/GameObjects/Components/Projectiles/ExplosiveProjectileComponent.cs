@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Owner.EnsureComponent<ExplosiveComponent>();
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
         {
             if (Owner.TryGetComponent(out ExplosiveComponent explosive))
             {

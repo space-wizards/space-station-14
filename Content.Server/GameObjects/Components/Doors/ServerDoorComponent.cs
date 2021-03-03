@@ -204,7 +204,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
         {
             if (State != DoorState.Closed)
             {

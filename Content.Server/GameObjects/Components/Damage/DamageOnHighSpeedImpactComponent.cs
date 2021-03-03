@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Damage
             serializer.DataField(this, x => x.StunMinimumDamage, "stunMinimumDamage", 10);
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
         {
             if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
 

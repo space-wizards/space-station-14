@@ -86,7 +86,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _grabRange, "grabRange", 0.2f);
-            serializer.DataField(ref _pushStrength, "pushStrength", 10.0f);
+            serializer.DataField(ref _pushStrength, "pushStrength", 600.0f);
         }
 
         public override ComponentState GetComponentState(ICommonSession session)
@@ -112,11 +112,11 @@ namespace Content.Shared.GameObjects.Components.Movement
                 */
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
         {
             if (otherBody.BodyType == BodyType.Dynamic && manifold.LocalNormal != Vector2.Zero)
             {
-                otherBody.ApplyLinearImpulse(-manifold.LocalNormal * _pushStrength);
+                otherBody.ApplyLinearImpulse(-manifold.LocalNormal * _pushStrength * frameTime);
             }
         }
 

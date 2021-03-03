@@ -184,7 +184,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
         {
             if (otherBody.Entity.HasComponent<EmitterBoltComponent>())
             {

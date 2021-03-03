@@ -95,7 +95,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         protected virtual void OnSlip() { }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
         {
             TrySlip(ourBody, otherBody);
         }

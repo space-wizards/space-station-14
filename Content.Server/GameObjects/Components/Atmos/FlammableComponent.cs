@@ -146,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
         {
             if (!otherBody.Entity.TryGetComponent(out FlammableComponent otherFlammable))
                 return;

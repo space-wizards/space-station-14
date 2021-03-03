@@ -150,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Recycling
             serializer.DataField(ref _efficiency, "efficiency", 0.25f);
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
         {
             Recycle(otherBody.Entity);
         }

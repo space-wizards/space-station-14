@@ -85,7 +85,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             _pathfindingSystem = Get<PathfindingSystem>();
             SubscribeLocalEvent<PathfindingChunkUpdateMessage>(RecalculateNodeRegions);
 #if DEBUG
-            SubscribeLocalEvent<PlayerAttachSystemMessage>(SendDebugMessage);
             SubscribeNetworkEvent<SharedAiDebug.SubscribeReachableMessage>(HandleSubscription);
             SubscribeNetworkEvent<SharedAiDebug.UnsubscribeReachableMessage>(HandleUnsubscription);
 #endif
@@ -706,15 +705,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         }
 
 #if DEBUG
-        private void SendDebugMessage(PlayerAttachSystemMessage message)
-        {
-            var playerGrid = message.Entity.Transform.GridID;
-            if(playerGrid.IsValid())
-                SendRegionsDebugMessage(playerGrid);
-        }
-
         private void SendRegionsDebugMessage(GridId gridId)
         {
+            if (_subscribedSessions.Count == 0) return;
             var grid = _mapManager.GetGrid(gridId);
             // Chunk / Regions / Nodes
             var debugResult = new Dictionary<int, Dictionary<int, List<Vector2>>>();
