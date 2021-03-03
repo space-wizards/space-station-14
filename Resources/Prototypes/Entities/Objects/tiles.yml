@@ -8,6 +8,8 @@
     sprite: Objects/Tiles/tile.rsi
   - type: Item
     sprite: Objects/Tiles/tile.rsi
+  - type: Stack
+    count: 1
 
 - type: entity
   name: steel floor tile
@@ -24,8 +26,6 @@
       - floor_steel
   - type: Stack
     stackType: FloorTileSteel
-    count: 1
-    max: 8
 
 - type: entity
   name: wood floor tile
@@ -42,8 +42,6 @@
       - floor_wood
   - type: Stack
     stackType: FloorTileWood
-    count: 1
-    max: 8
 
 - type: entity
   name: white floor tile
@@ -60,8 +58,6 @@
       - floor_white
   - type: Stack
     stackType: FloorTileWhite
-    count: 1
-    max: 8
 
 - type: entity
   name: dark floor tile
@@ -78,8 +74,6 @@
       - floor_dark
   - type: Stack
     stackType: FloorTileDark
-    count: 1
-    max: 8
 
 - type: entity
   name: floor tile techmaint
