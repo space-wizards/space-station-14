@@ -59,3 +59,10 @@
   id: LockerBombFilled
   parent: LockerBomb
   suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHeadHelmetBombSuit
+        prob: 1
+      - name: ClothingOuterSuitBomb
+        prob: 1
