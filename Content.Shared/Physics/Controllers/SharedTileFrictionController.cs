@@ -90,7 +90,8 @@ namespace Content.Shared.Physics.Controllers
         [Pure]
         private float GetTileFriction(IPhysBody body)
         {
-            if (body.BodyStatus == BodyStatus.InAir || !_mapManager.TryGetGrid(body.Owner.Transform.GridID, out var grid))
+            // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
+            if (body.BodyStatus == BodyStatus.InAir || body.Owner.IsWeightless(_physicsManager) || !_mapManager.TryGetGrid(body.Owner.Transform.GridID, out var grid))
                 return 0.0f;
 
             var tile = grid.GetTileRef(body.Owner.Transform.Coordinates);
