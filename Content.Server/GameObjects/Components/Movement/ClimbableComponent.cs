@@ -185,11 +185,11 @@ namespace Content.Server.GameObjects.Components.Movement
                 // we may potentially need additional logic since we're forcing a player onto a climbable
                 // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
 
-                var othersMessage = Loc.GetString("{0:theName} forces {1:theName} onto {2:theName}!", user,
-                    entityToMove, Owner);
+                var othersMessage = Loc.GetString("{0:theName} forces {1:theName} onto the {2:theName}!", user,
+                    entityToMove, Owner.Name);
                 user.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("You force {0:theName} onto {1:theName}!", entityToMove, Owner);
+                var selfMessage = Loc.GetString("You force {0:theName} onto the {1:theName}!", entityToMove, Owner.Name);
                 user.PopupMessage(selfMessage);
             }
         }
@@ -228,10 +228,10 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 climbMode.TryMoveTo(user.Transform.WorldPosition, endPoint);
 
-                var othersMessage = Loc.GetString("{0:theName} jumps onto {1:theName}!", user, Owner);
+                var othersMessage = Loc.GetString("{0:theName} jumps onto the {1:theName}!", user, Owner.Name);
                 user.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("You jump onto {0:theName}!", Owner);
+                var selfMessage = Loc.GetString("You jump onto the {0:theName}!", Owner.Name);
                 user.PopupMessage(selfMessage);
             }
         }
