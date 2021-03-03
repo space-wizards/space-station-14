@@ -25,6 +25,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         private float _stepSoundDistance;
         private float _grabRange;
+        private float _pushStrength;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public EntityCoordinates LastPosition { get; set; }
@@ -66,8 +67,6 @@ namespace Content.Shared.GameObjects.Components.Movement
                 Dirty();
             }
         }
-
-        private float _pushStrength;
 
         public override void Initialize()
         {

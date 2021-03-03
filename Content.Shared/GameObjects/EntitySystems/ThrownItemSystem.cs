@@ -53,7 +53,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 comp.Land(new LandEventArgs(user, coordinates));
             }
 
-            ComponentManager.RemoveComponent(landing.Uid, message.Body);
+            ComponentManager.RemoveComponent(landing.Uid, thrownItem);
         }
 
         /// <summary>

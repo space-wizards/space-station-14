@@ -143,13 +143,14 @@ namespace Content.Server.Physics.Controllers
                 }
                 else
                 {
-                    PlayFootstepSound(transform.Coordinates, mover.Sprinting);
+                    PlayFootstepSound(mover.Owner, mover.Sprinting);
                 }
             }
         }
 
-        private void PlayFootstepSound(EntityCoordinates coordinates, bool sprinting)
+        private void PlayFootstepSound(IEntity mover, bool sprinting)
         {
+            var coordinates = mover.Transform.Coordinates;
             // Step one: figure out sound collection prototype.
             var grid = _mapManager.GetGrid(coordinates.GetGridId(EntityManager));
             var tile = grid.GetTileRef(coordinates);
