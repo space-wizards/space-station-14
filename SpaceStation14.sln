@@ -96,6 +96,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Analyzers", "RobustT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Generators", "RobustToolbox\Robust.Generators\Robust.Generators.csproj", "{F22AE243-45F8-4B39-8EDE-A44C65EB4637}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.YAMLLinter", "Content.YAMLLinter\Content.YAMLLinter.csproj", "{A59E2FCC-93CF-4886-8EA7-94F021A7475D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -212,6 +214,10 @@ Global
 		{F22AE243-45F8-4B39-8EDE-A44C65EB4637}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F22AE243-45F8-4B39-8EDE-A44C65EB4637}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F22AE243-45F8-4B39-8EDE-A44C65EB4637}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A59E2FCC-93CF-4886-8EA7-94F021A7475D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A59E2FCC-93CF-4886-8EA7-94F021A7475D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A59E2FCC-93CF-4886-8EA7-94F021A7475D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A59E2FCC-93CF-4886-8EA7-94F021A7475D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

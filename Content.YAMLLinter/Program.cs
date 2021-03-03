@@ -1,53 +1,63 @@
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NUnit.Framework;
+using Content.IntegrationTests;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.IntegrationTests.Tests.Serialization
+namespace Content.YAMLLinter
 {
-    public class ValidationTest : ContentIntegrationTest
+    class Program : ContentIntegrationTest
     {
-        /*[Test]
-        public async Task Test()
+        static int Main(string[] args)
+        {
+            var errors = new Program().RunValidation();
+            if (errors.Count != 0)
+            {
+                Console.WriteLine($"Found {errors.Count} Error(s)!");
+                Console.WriteLine();
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error);
+                }
+
+                return -1;
+            }
+
+            return 0;
+        }
+
+        public HashSet<string> RunValidation()
         {
             var server = StartServer();
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync().Wait();
             var sprotoManager = server.ResolveDependency<IPrototypeManager>();
             var serverErrors = new HashSet<string>();
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
                 {
                     var res = sprotoManager.ValidateDirectory(new ResourcePath("/Prototypes"));
                     serverErrors = res.SelectMany(p =>
                         p.Value.Where(n => !n.node.Valid)
                             .SelectMany(n => n.node.Invalids().Select(i => $"{{{n.file}}} => {p.Key} <> {i}").ToList())).ToHashSet();
                 }
-            );
+            ).Wait();
             server.Stop();
 
             var client = StartClient();
-            await client.WaitIdleAsync();
+            client.WaitIdleAsync().Wait();
             var cprotoManager = client.ResolveDependency<IPrototypeManager>();
             var clientErrors = new HashSet<string>();
-            await client.WaitAssertion(() =>
+            client.WaitAssertion(() =>
                 {
                     var res = cprotoManager.ValidateDirectory(new ResourcePath("/Prototypes"));
                     clientErrors = res.SelectMany(p =>
                         p.Value.Where(n => !n.node.Valid)
                             .SelectMany(n => n.node.Invalids().Select(i => $"{{{n.file}}} => {p.Key} <> {i}").ToList())).ToHashSet();
                 }
-            );
+            ).Wait();
 
-            var actualErrors = clientErrors.Intersect(serverErrors).ToHashSet();
-            Assert.Multiple(() =>
-            {
-                if(actualErrors.Count > 0) Assert.Fail($"Total Errors: {actualErrors.Count}");
-                foreach (var actualError in actualErrors)
-                {
-                    Assert.Fail(actualError);
-                }
-            });
-        }*/
+            return clientErrors.Intersect(serverErrors).ToHashSet();
+        }
     }
 }
