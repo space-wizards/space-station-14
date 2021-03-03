@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private ContainerSlot _magazineContainer;
 
         [ViewVariables] public MagazineType MagazineTypes => _magazineTypes;
-        [DataField("types")]
+        [DataField("magazineTypes")]
         private MagazineType _magazineTypes = default;
         [ViewVariables] public BallisticCaliber Caliber => _caliber;
         [DataField("caliber")]

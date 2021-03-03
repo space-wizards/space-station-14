@@ -35,6 +35,7 @@ namespace Content.IntegrationTests.Tests
 
                         Assert.That(protoManager.HasIndex<EntityPrototype>(name), $"Unable to find StorageFill prototype of {name} in prototype {proto.ID}");
                         Assert.That(entry.Amount > 0, $"Specified invalid amount of {entry.Amount} for prototype {proto.ID}");
+                        Assert.That(entry.SpawnProbability > 0, $"Specified invalid probability of {entry.SpawnProbability} for prototype {proto.ID}");
                     }
                 }
             });

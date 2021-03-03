@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         public override FireRateSelector AllRateSelectors => _fireRateSelector;
 
-        [DataField("allRateSelectors")]
+        [DataField("allSelectors")]
         private FireRateSelector _allRateSelectors;
 
         [field: DataField("fireRate")]
