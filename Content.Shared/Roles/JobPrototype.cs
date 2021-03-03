@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Shared.Localization;
@@ -13,12 +14,12 @@ namespace Content.Shared.Roles
     [Prototype("job")]
     public class JobPrototype : IPrototype
     {
-        public string ID { get; private set; }
+        public string ID { get; private set; } = string.Empty;
 
         /// <summary>
         ///     The name of this job as displayed to players.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; private set; } = string.Empty;
 
         /// <summary>
         ///     Whether this job is a head.
@@ -36,14 +37,14 @@ namespace Content.Shared.Roles
         /// </summary>
         public int TotalPositions { get; private set; }
 
-        public string StartingGear { get; private set; }
+        public string StartingGear { get; private set; } = string.Empty;
 
-        public string Icon { get; private set; }
+        public string Icon { get; private set; } = string.Empty;
 
-        public JobSpecial Special { get; private set; }
+        public JobSpecial? Special { get; private set; } = null;
 
-        public IReadOnlyCollection<string> Departments { get; private set; }
-        public IReadOnlyCollection<string> Access { get; private set; }
+        public IReadOnlyCollection<string> Departments { get; private set; } = Array.Empty<string>();
+        public IReadOnlyCollection<string> Access { get; private set; } = Array.Empty<string>();
 
         public void LoadFrom(YamlMappingNode mapping)
         {
@@ -57,7 +58,7 @@ namespace Content.Shared.Roles
             srz.DataField(this, p => p.SpawnPositions, "spawnPositions", TotalPositions);
             srz.DataField(this, p => p.IsHead, "head", false);
             srz.DataField(this, p => p.Access, "access", Array.Empty<string>());
-            srz.DataField(this, p => p.Icon, "icon", null);
+            srz.DataField(this, p => p.Icon, "icon", string.Empty);
             srz.DataField(this, p => p.Special, "special", null);
         }
     }

@@ -1,10 +1,10 @@
 ﻿#nullable enable
 using System;
-using Content.Server.GameObjects.Components.ContainerExt;
+using Content.Server.GameObjects;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;

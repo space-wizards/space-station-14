@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Robust.Shared.GameObjects;
 

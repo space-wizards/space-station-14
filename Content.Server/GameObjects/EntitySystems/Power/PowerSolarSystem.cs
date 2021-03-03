@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// The current sun angle.
         /// </summary>
-        public Angle TowardsSun = Angle.South;
+        public Angle TowardsSun = Angle.Zero;
 
         /// <summary>
         /// The current sun angular velocity. (This is changed in Initialize)

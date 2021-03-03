@@ -7,6 +7,7 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -222,7 +223,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Initialize();
 
-            Contents = ContainerManagerComponent.Ensure<Container>(Name, Owner);
+            Contents = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
             Owner.EnsureComponent<AnchorableComponent>();
         }
 

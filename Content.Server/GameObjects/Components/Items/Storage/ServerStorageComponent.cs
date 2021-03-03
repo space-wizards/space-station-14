@@ -16,6 +16,7 @@ using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -350,7 +351,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             base.Initialize();
 
             // ReSharper disable once StringLiteralTypo
-            _storage = ContainerManagerComponent.Ensure<Container>("storagebase", Owner);
+            _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "storagebase");
             _storage.OccludesLight = _occludesLight;
         }
 

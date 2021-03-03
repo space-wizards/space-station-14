@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.Research;
@@ -35,7 +36,7 @@ namespace Content.Shared.GameObjects.Components.Research
 
                     foreach (var id in recipes)
                     {
-                        if (prototypeManager.TryIndex(id, out LatheRecipePrototype recipe))
+                        if (prototypeManager.TryIndex(id, out LatheRecipePrototype? recipe))
                         {
                             _protolatheRecipes.Add(recipe);
                         }

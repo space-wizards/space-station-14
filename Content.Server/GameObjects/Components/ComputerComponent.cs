@@ -2,6 +2,7 @@ using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
@@ -71,7 +72,7 @@ namespace Content.Server.GameObjects.Components
             if (string.IsNullOrEmpty(_boardPrototype))
                 return;
 
-            var container = ContainerManagerComponent.Ensure<Container>("board", Owner, out var existed);
+            var container = ContainerHelpers.EnsureContainer<Container>(Owner, "board", out var existed);
 
             if (existed)
             {

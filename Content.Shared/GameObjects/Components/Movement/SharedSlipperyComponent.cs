@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -57,9 +58,9 @@ namespace Content.Shared.GameObjects.Components.Movement
             if (!Slippery
                 || Owner.IsInContainer()
                 ||  _slipped.Contains(entity.Uid)
-                ||  !entity.TryGetComponent(out SharedStunnableComponent stun)
-                ||  !entity.TryGetComponent(out IPhysicsComponent otherBody)
-                ||  !Owner.TryGetComponent(out IPhysicsComponent body))
+                ||  !entity.TryGetComponent(out SharedStunnableComponent? stun)
+                ||  !entity.TryGetComponent(out IPhysicsComponent? otherBody)
+                ||  !Owner.TryGetComponent(out IPhysicsComponent? body))
             {
                 return false;
             }
@@ -81,7 +82,7 @@ namespace Content.Shared.GameObjects.Components.Movement
                 return false;
             }
 
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
+            if (entity.TryGetComponent(out IPhysicsComponent? physics))
             {
                 var controller = physics.EnsureController<SlipController>();
                 controller.LinearVelocity = physics.LinearVelocity * LaunchForwardsMultiplier;

@@ -278,7 +278,6 @@
   footstep_sounds: footstep_floor
   friction: 0.35
   item_drop: SheetRGlass1
-
   
 - type: tile
   name: floor_warning1

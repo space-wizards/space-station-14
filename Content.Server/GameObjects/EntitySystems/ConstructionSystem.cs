@@ -14,7 +14,7 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private async Task<IEntity?> Construct(IEntity user, string materialContainer, ConstructionGraphPrototype graph, ConstructionGraphEdge edge, ConstructionGraphNode targetNode)
         {
             // We need a place to hold our construction items!
-            var container = ContainerManagerComponent.Ensure<Container>(materialContainer, user, out var existed);
+            var container = ContainerHelpers.EnsureContainer<Container>(user, materialContainer, out var existed);
 
             if (existed)
             {
@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 while (true)
                 {
                     var random = _robustRandom.Next();
-                    var c = ContainerManagerComponent.Ensure<Container>(random.ToString(), user!, out var existed);
+                    var c = ContainerHelpers.EnsureContainer<Container>(user!, random.ToString(), out var existed);
 
                     if (existed) continue;
 
@@ -185,41 +185,19 @@ namespace Content.Server.GameObjects.EntitySystems
 
                         break;
 
-                    case ComponentConstructionGraphStep componentStep:
+                    case ArbitraryInsertConstructionGraphStep arbitraryStep:
                         foreach (var entity in EnumerateNearby(user))
                         {
-                            if (!componentStep.EntityValid(entity))
+                            if (!arbitraryStep.EntityValid(entity))
                                 continue;
 
-                            if (string.IsNullOrEmpty(componentStep.Store))
+                            if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
                                 if (!container.Insert(entity))
                                     continue;
                             }
-                            else if (!GetContainer(componentStep.Store).Insert(entity))
+                            else if (!GetContainer(arbitraryStep.Store).Insert(entity))
                                 continue;
-
-                            handled = true;
-                            break;
-                        }
-
-                        break;
-
-                    case PrototypeConstructionGraphStep prototypeStep:
-                        foreach (var entity in EnumerateNearby(user))
-                        {
-                            if (!prototypeStep.EntityValid(entity))
-                                continue;
-
-                            if (string.IsNullOrEmpty(prototypeStep.Store))
-                            {
-                                if (!container.Insert(entity))
-                                    continue;
-                            }
-                            else if (!GetContainer(prototypeStep.Store).Insert(entity))
-                            {
-                                continue;
-                            }
 
                             handled = true;
                             break;
@@ -272,7 +250,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // We preserve the containers...
             foreach (var (name, cont) in containers)
             {
-                var newCont = ContainerManagerComponent.Ensure<Container>(name, newEntity);
+                var newCont = ContainerHelpers.EnsureContainer<Container>(newEntity, name);
 
                 foreach (var entity in cont.ContainedEntities.ToArray())
                 {
@@ -304,13 +282,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private async void HandleStartItemConstruction(TryStartItemConstructionMessage ev, EntitySessionEventArgs args)
         {
-            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype constructionPrototype))
+            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
             {
                 Logger.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
                 return;
             }
 
-            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype constructionGraph))
+            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype? constructionGraph))
             {
                 Logger.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
                 return;
@@ -360,14 +338,14 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private async void HandleStartStructureConstruction(TryStartStructureConstructionMessage ev, EntitySessionEventArgs args)
         {
-            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype constructionPrototype))
+            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
             {
                 Logger.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
                 RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
                 return;
             }
 
-            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype constructionGraph))
+            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype? constructionGraph))
             {
                 Logger.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
                 RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
@@ -468,7 +446,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             structure.Transform.Coordinates = ev.Location;
-            structure.Transform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.South;
+            structure.Transform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 

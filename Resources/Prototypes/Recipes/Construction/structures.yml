@@ -209,5 +209,5 @@
     sprite: Constructible/Power/apc.rsi
     state: apc0
   objectType: Structure
-  placementMode: AlignWallProper
+  placementMode: SnapgridCenter
   canBuildInImpassable: true

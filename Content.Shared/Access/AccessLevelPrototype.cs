@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -26,11 +27,11 @@ namespace Content.Shared.Access
             Name = Loc.GetString(Name);
         }
 
-        public string ID { get; private set; }
+        public string ID { get; private set; } = string.Empty;
 
         /// <summary>
         ///     The player-visible name of the access level, in the ID card console and such.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; private set; } = string.Empty;
     }
 }

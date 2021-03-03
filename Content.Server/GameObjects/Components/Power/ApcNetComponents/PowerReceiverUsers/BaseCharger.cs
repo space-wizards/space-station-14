@@ -10,6 +10,7 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -48,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             base.Initialize();
 
             Owner.EnsureComponent<PowerReceiverComponent>();
-            _container = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-powerCellContainer", Owner);
+            _container = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-powerCellContainer");
             // Default state in the visualizer is OFF, so when this gets powered on during initialization it will generally show empty
         }
 

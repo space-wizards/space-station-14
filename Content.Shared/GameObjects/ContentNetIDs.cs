@@ -1,3 +1,5 @@
+#nullable enable
+
 namespace Content.Shared.GameObjects
 {
     // Starting from 1000 to avoid crossover with engine.

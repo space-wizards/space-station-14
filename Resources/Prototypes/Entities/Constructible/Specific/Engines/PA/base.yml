@@ -1,0 +1,25 @@
+- type: entity
+  id: ParticleAcceleratorBase
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: InteractionOutline
+    - type: Anchorable
+      snap: true
+    - type: Physics
+      mass: 25
+      anchored: true
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+          layer:
+            - Opaque
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+      IsScrapingFloor: true
+    - type: SnapGrid
+      offset: Center
+    - type: Pullable
+    - type: Clickable

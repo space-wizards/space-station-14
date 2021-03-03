@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Threading.Tasks;
 using Content.Server.Utility;
 using Content.Shared.Construction;
@@ -28,7 +28,7 @@ namespace Content.Server.Construction.Completions
             entity.SnapToGrid(Offset);
             if (SouthRotation)
             {
-                entity.Transform.LocalRotation = Angle.South;
+                entity.Transform.LocalRotation = Angle.Zero;
             }
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Network.NetMessages;
+using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
@@ -27,6 +28,7 @@ namespace Content.Client.Voting
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IClientConsoleHost _console = default!;
+        [Dependency] private readonly IBaseClient _client = default!;
 
         private readonly Dictionary<int, ActiveVote> _votes = new();
         private readonly Dictionary<int, VotePopup> _votePopups = new();
@@ -39,6 +41,18 @@ namespace Content.Client.Voting
         {
             _netManager.RegisterNetMessage<MsgVoteData>(MsgVoteData.NAME, ReceiveVoteData);
             _netManager.RegisterNetMessage<MsgVoteCanCall>(MsgVoteCanCall.NAME, ReceiveVoteCanCall);
+
+            _client.RunLevelChanged += ClientOnRunLevelChanged;
+        }
+
+        private void ClientOnRunLevelChanged(object? sender, RunLevelChangedEventArgs e)
+        {
+            // Clear votes on disconnect.
+            if (e.NewLevel == ClientRunLevel.Initialize)
+            {
+                ClearPopupContainer();
+                _votes.Clear();
+            }
         }
 
         public void ClearPopupContainer()

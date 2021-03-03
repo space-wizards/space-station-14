@@ -41,7 +41,7 @@
   name: laser cannon
   parent: BaseItem
   id: LaserCannon
-  description: Pew pew.
+  description: A heavy duty, high powered laser weapon.
   components:
   - type: Sprite
     netsync: false
@@ -80,7 +80,7 @@
   name: x-ray cannon
   parent: BaseItem
   id: XrayCannon
-  description: Blah blah blah...
+  description: An experimental weapon that uses concentrated x-ray energy against its target.
   components:
   - type: Sprite
     netsync: false

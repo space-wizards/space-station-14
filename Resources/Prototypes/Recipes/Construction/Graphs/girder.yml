@@ -9,7 +9,7 @@
             - !type:SnapToGrid
               southRotation: true
           steps:
-            - material: Metal
+            - material: Steel
               amount: 2
               doAfter: 1
 
@@ -24,7 +24,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: SteelSheet1
+              prototype: SheetSteel1
               amount: 2
             - !type:DeleteEntity {}
           conditions:
@@ -41,7 +41,7 @@
           conditions:
             - !type:EntityAnchored {}
           steps:
-            - material: Metal
+            - material: Steel
               amount: 2
 
         - to: reinforcedGirder
@@ -60,7 +60,7 @@
         - to: girder
           completed:
             - !type:SpawnPrototype
-              prototype: SteelSheet1
+              prototype: SheetSteel1
               amount: 2
           steps:
             - tool: Welding

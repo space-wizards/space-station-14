@@ -135,13 +135,5 @@ namespace Content.Client.Construction
             TargetTexture.Texture = null;
             StepList.Clear();
         }
-
-        /// <inheritdoc />
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (disposing) { }
-        }
     }
 }

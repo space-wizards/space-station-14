@@ -1,11 +1,12 @@
-﻿using Robust.Shared.GameObjects;
+﻿#nullable enable
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Construction
 {
     public abstract class EntityInsertConstructionGraphStep : ConstructionGraphStep
     {
-        public string Store { get; private set; }
+        public string Store { get; private set; } = string.Empty;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
