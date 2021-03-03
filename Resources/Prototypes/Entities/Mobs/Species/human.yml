@@ -117,7 +117,7 @@
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
   - type: Physics
-    bodyType: Kinematic
+    bodyType: KinematicController
     anchored: false
     mass: 70
     fixtures:

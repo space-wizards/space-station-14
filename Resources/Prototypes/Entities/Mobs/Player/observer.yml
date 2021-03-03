@@ -9,6 +9,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    bodyType: KinematicController
     anchored: false
     mass: 5
     fixtures:
