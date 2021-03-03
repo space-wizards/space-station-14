@@ -131,6 +131,7 @@ Entries:
   id: 23
   time: '2021-03-03T06:56:52.0000000+00:00'
 - author: PJB
-  changes: {message: You can burn yourself on wall lights again., type: Fix}
+  changes:
+  - {message: You can burn yourself on wall lights again., type: Fix}
   id: 24
   time: '2021-03-03T15:30:18.279719+00:00'
