@@ -31,3 +31,4 @@
       nodeGroupID: Pipe
       pipeDirection: East
   - type: PipeHeater
+  - type: PipeNetDevice

@@ -45,12 +45,21 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private TimeSpan _lastThunk;
         private TimeSpan? _lastGhostBlink;
+
         [DataField("hasLampOnSpawn")]
         private bool _hasLampOnSpawn = true;
 
-        [ViewVariables] [DataField("on")] private bool _on = true;
-        [ViewVariables] private bool _isBlinking;
-        [ViewVariables] [DataField("ignoreGhostsBoo")] private bool _ignoreGhostsBoo;
+        [ViewVariables] [DataField("on")]
+        private bool _on = true;
+
+        [ViewVariables]
+        private bool _currentLit;
+
+        [ViewVariables]
+        private bool _isBlinking;
+
+        [ViewVariables] [DataField("ignoreGhostsBoo")]
+        private bool _ignoreGhostsBoo;
 
         [DataField("bulb")]
         private LightBulbType BulbType = LightBulbType.Tube;
@@ -99,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 if (LightBulb == null)
                     return false;
 
-                return _lightState && heatResistance < LightBulb.BurningTemperature;
+                return _currentLit && heatResistance < LightBulb.BurningTemperature;
             }
 
             void Burn()
@@ -164,8 +173,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             UpdateLight();
         }
 
-        private bool _lightState => Owner.GetComponent<PointLightComponent>().Enabled;
-
         /// <summary>
         ///     Updates the light's power drain, sprite and actual light state.
         /// </summary>
@@ -175,6 +182,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             if (LightBulb == null) // No light bulb.
             {
+                _currentLit = false;
                 powerReceiver.Load = 0;
                 _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
                 return;
@@ -185,6 +193,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 case LightBulbState.Normal:
                     if (powerReceiver.Powered && _on)
                     {
+                        _currentLit = true;
                         powerReceiver.Load = LightBulb.PowerUse;
                         _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
                         _appearance?.SetData(PoweredLightVisuals.BulbColor, LightBulb.Color);
@@ -197,13 +206,16 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     }
                     else
                     {
+                        _currentLit = false;
                         _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
                     }
                     break;
                 case LightBulbState.Broken:
+                    _currentLit = false;
                     _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
                     break;
                 case LightBulbState.Burned:
+                    _currentLit = false;
                     _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                     break;
             }
