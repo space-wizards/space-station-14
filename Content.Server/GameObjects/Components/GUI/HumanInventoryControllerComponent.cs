@@ -1,4 +1,5 @@
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Shared.GameObjects.Components.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
