@@ -14,8 +14,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
@@ -28,6 +26,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         [DataField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
+
+        [DataField("capacity")]
         public int Capacity
         {
             get => _capacity;
@@ -38,7 +38,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
         }
 
-        [DataField("capacity")]
         private int _capacity = 30;
 
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
