@@ -333,3 +333,81 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.35
+
+- type: tile
+  name: floor_green
+  display_name: Green Tile
+  texture: green
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_purple
+  display_name: Purple Tile
+  texture: purple
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+
+- type: tile
+  name: floor_red
+  display_name: Red Tile
+  texture: red
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_yellow
+  display_name: Yellow Tile
+  texture: yellow
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_warning
+  display_name: Warning Tile
+  texture: warning
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_kitchen
+  display_name: Kitchen Tile
+  texture: kitchen
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_bolted_wood
+  display_name: Bolted Wood Tile
+  texture: bolted_wood
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
