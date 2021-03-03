@@ -60,13 +60,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer
             }
         }
 
-        public override void OnRemove()
+        protected override void Shutdown()
         {
+            base.Shutdown();
+
             foreach (var node in _nodes)
             {
-                node.OnContainerRemove();
+                node.OnContainerShutdown();
             }
-            base.OnRemove();
         }
 
         private void AnchorUpdate()

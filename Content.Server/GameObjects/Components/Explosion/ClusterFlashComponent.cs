@@ -10,6 +10,7 @@ using Content.Server.GameObjects.Components.Trigger.TimerTrigger;
 using Content.Server.Throw;
 using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Explosion;
+using Robust.Shared.Containers;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -83,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Explosives
         {
             base.Initialize();
 
-            _grenadesContainer = ContainerManagerComponent.Ensure<Container>("cluster-flash", Owner);
+            _grenadesContainer = ContainerHelpers.EnsureContainer<Container>(Owner, "cluster-flash");
 
         }
 

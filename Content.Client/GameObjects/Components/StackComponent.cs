@@ -29,11 +29,11 @@ namespace Content.Client.GameObjects.Components
             {
                 var valueChanged = value != Count;
                 base.Count = value;
-                
+
                 if (valueChanged)
                 {
                     _appearanceComponent?.SetData(StackVisuals.Actual, Count);
-                 
+
                 }
 
                 _uiUpdateNeeded = true;
@@ -76,7 +76,7 @@ namespace Content.Client.GameObjects.Components
 
                 _parent._uiUpdateNeeded = false;
 
-                _label.SetMarkup(Loc.GetString("Count: [color=white]{0}[/color]", _parent.Count));
+                _label.SetMarkup(Loc.GetString("comp-stack-status", ("count", _parent.Count)));
             }
         }
     }

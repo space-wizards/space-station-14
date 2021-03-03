@@ -79,7 +79,7 @@
   name: C-20r sub machine gun
   parent: SmgBase
   id: SmgC20r
-  description: A rooty tooty point and shooty.
+  description: A firearm that is often used by the infamous nuclear operatives.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
@@ -164,7 +164,7 @@
   name: WT550
   parent: SmgBase
   id: SmgWt550
-  description: A rooty tooty point and shooty.
+  description: An excellent SMG, produced by NanoTrasen's Small Arms Division.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
@@ -205,7 +205,7 @@
   name: Zoric
   parent: SmgBase
   id: SmgZoric
-  description: A rooty tooty point and shooty.
+  description: A compact, robust SMG that uses high caliber rounds.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/zoric.rsi

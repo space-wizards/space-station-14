@@ -20,8 +20,8 @@ namespace Content.Client.Voting
 
         public static readonly (string name, string id, (string name, string id)[]? secondaries)[] AvailableVoteTypes =
         {
-            ("Restart round", "restart", null),
-            ("Next gamemode", "preset", null)
+            ("ui-vote-type-restart", "restart", null),
+            ("ui-vote-type-gamemode", "preset", null)
         };
 
         public VoteCallMenu()

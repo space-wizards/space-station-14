@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,7 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -49,7 +50,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         {
             base.Initialize();
 
-            Container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
+            Container = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
             Owner.EnsureComponentWarn<HandsComponent>();
         }
 

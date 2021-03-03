@@ -275,5 +275,13 @@ namespace Content.Shared
          * Context Menu Grouping Types
          */
         public static readonly CVarDef<int> ContextMenuGroupingType = CVarDef.Create("context_menu", 0, CVar.CLIENTONLY);
+
+        /*
+         * VOTE
+         */
+
+        public static readonly CVarDef<float> VoteRestartRequiredRatio =
+            CVarDef.Create("vote.restart_required_ratio", 0.8f, CVar.SERVERONLY);
+
     }
 }

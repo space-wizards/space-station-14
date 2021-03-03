@@ -152,8 +152,8 @@ namespace Content.Client.GameObjects.Components
         private void ProcessCompositeSprites(AppearanceComponent component, ISpriteComponent spriteComponent)
         {
             // If hidden, don't render any sprites
-            if (!component.TryGetData<bool>(StackVisuals.Hide, out var hide)
-                || hide)
+            if (component.TryGetData<bool>(StackVisuals.Hide, out var hide)
+                && hide)
             {
                 foreach (var transparentSprite in _spriteLayers)
                 {

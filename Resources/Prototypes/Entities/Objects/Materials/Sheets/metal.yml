@@ -36,7 +36,10 @@
             - steel
             - steel_2
             - steel_3
-
+    - type: FloorTile
+      outputs:
+        - underplating
+        
 - type: entity
   id: SheetSteel1
   name: steel
