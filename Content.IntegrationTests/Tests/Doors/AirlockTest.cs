@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Doors;
 using NUnit.Framework;
@@ -158,7 +159,7 @@ namespace Content.IntegrationTests.Tests.Doors
             Assert.That(physicsDummy.Transform.MapPosition.X, Is.GreaterThan(physicsDummyStartingX));
 
             // Blocked by the airlock
-            Assert.That(physicsDummy.Transform.MapPosition.X, Is.Negative.Or.Zero);
+            Assert.That(Math.Abs(physicsDummy.Transform.MapPosition.X - 1) > 0.01f);
         }
     }
 }
