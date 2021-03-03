@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         private int _capacity = 30;
 
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
-        private Stack<IEntity> _spawnedAmmo;
+        private Stack<IEntity> _spawnedAmmo = new();
         private Container _ammoContainer;
         private int _unspawnedCount;
 

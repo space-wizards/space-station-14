@@ -169,8 +169,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         private IEnumerable<PipeNode> PipesInDirection(PipeDirection pipeDir)
         {
-            var entities = Owner.GetComponent<SnapGridComponent>()
-                .GetInDir(pipeDir.ToDirection());
+            if(!Owner.TryGetComponent<SnapGridComponent>(out var snapGridComponent)) yield break;
+            var entities = snapGridComponent.GetInDir(pipeDir.ToDirection());
 
             foreach (var entity in entities)
             {
