@@ -13,6 +13,7 @@ using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -22,7 +23,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.GameObjects.Components.Body
 {
     // TODO BODY Damage methods for collections of IDamageableComponents
-    public abstract class SharedBodyComponent : Component, IBody
+    public abstract class SharedBodyComponent : Component, IBody, ICollideBehavior
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -705,6 +706,15 @@ namespace Content.Shared.GameObjects.Components.Body
 
                 if (gibParts)
                     part.Gib();
+            }
+        }
+
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        {
+            // TODO: Make this hack use manifold instead.
+            if (otherBody.BodyType == BodyType.Dynamic)
+            {
+                otherBody.ApplyLinearImpulse((otherBody.WorldPosition - ourBody.WorldPosition).Normalized * 10);
             }
         }
     }
