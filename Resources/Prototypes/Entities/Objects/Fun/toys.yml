@@ -124,6 +124,21 @@
     sound: /Audio/Items/Toys/mousesqueek.ogg
   - type: UseDelay
     delay: 1.0
+    
+- type: entity
+  name: crewmate plushie
+  parent: BaseItem
+  id: PlushieSus
+  description: A stuffed toy that resembles a strangely shaped crewman in a spacesuit. The tag claims malicous shapeshifters purely fictitious.
+  components:
+  - type: Toys
+  - type: LoopingSound
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_sus
+  - type: ItemCooldown
+  - type: UseDelay
+    delay: 1.0
 
 - type: entity
   name: help me carving
