@@ -64,7 +64,7 @@ namespace Content.Shared.Construction
         {
             var type = GetType(node);
 
-            if (type == null) return new ErrorNode(node);
+            if (type == null) return new ErrorNode(node, "Could not resolve steptype");
 
             return serializationManager.ValidateNode(type, node, context);
         }
