@@ -370,7 +370,6 @@ namespace Content.Client.GameObjects.Components
         public readonly List<LightBehaviourAnimationTrack> Behaviours = new();
 
         [ViewVariables(VVAccess.ReadOnly)]
-        [DataField("animations")]
         private readonly List<AnimationContainer> _animations = new();
 
         private float _originalRadius;
