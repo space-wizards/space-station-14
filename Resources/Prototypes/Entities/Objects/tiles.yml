@@ -14,7 +14,7 @@
     count: 1
 
 - type: entity
-  name: steel floor tile
+  name: steel tile
   parent: FloorTileItemBase
   id: FloorTileItemSteel
   components:
@@ -30,7 +30,7 @@
     stackType: FloorTileSteel
 
 - type: entity
-  name: wood floor tile
+  name: wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWood
   components:
@@ -46,7 +46,7 @@
     stackType: FloorTileWood
 
 - type: entity
-  name: white floor tile
+  name: white tile
   parent: FloorTileItemBase
   id: FloorTileItemWhite
   components:
@@ -62,7 +62,7 @@
     stackType: FloorTileWhite
 
 - type: entity
-  name: dark floor tile
+  name: dark tile
   parent: FloorTileItemBase
   id: FloorTileItemDark
   components:
@@ -78,7 +78,7 @@
     stackType: FloorTileDark
 
 - type: entity
-  name: floor tile techmaint
+  name: techmaint floor
   parent: FloorTileItemBase
   id: FloorTileItemTechmaint
   components:
@@ -90,9 +90,11 @@
     outputs:
       - plating
       - floor_techmaint
+  - type: Stack
+    stackType: FloorTileTechmaint
 
 - type: entity
-  name: floor tile freezer
+  name: freezer tile
   parent: FloorTileItemBase
   id: FloorTileItemFreezer
   components:
@@ -104,9 +106,11 @@
     outputs:
       - plating
       - floor_freezer
+  - type: Stack
+    stackType: FloorTileFreezer
 
 - type: entity
-  name: floor tile showroom
+  name: showroom tile
   parent: FloorTileItemBase
   id: FloorTileItemShowroom
   components:
@@ -118,23 +122,11 @@
     outputs:
       - plating
       - floor_showroom
+  - type: Stack
+    stackType: FloorTileShowroom
 
 - type: entity
-  name: floor tile snow
-  parent: FloorTileItemBase
-  id: FloorTileItemSnow
-  components:
-  - type: Sprite
-    state: snow
-  - type: Item
-    HeldPrefix: silver
-  - type: FloorTile
-    outputs:
-      - plating
-      - floor_snow
-
-- type: entity
-  name: floor tile green circuit
+  name: green-circuit floor
   parent: FloorTileItemBase
   id: FloorTileItemGCircuit
   components:
@@ -146,9 +138,11 @@
     outputs:
       - plating
       - floor_green_circuit
+  - type: Stack
+    stackType: FloorTileGCircuit
 
 - type: entity
-  name: floor tile gold
+  name: gold floor
   parent: FloorTileItemBase
   id: FloorTileItemGold
   components:
@@ -160,9 +154,11 @@
     outputs:
       - plating
       - floor_gold
+  - type: Stack
+    stackType: FloorTileGold
 
 - type: entity
-  name: floor tile reinforced
+  name: reinforced tile
   parent: FloorTileItemBase
   id: FloorTileItemReinforced
   components:
@@ -174,23 +170,11 @@
     outputs:
       - plating
       - floor_reinforced
+  - type: Stack
+    stackType: FloorTileReinforced
 
 - type: entity
-  name: floor tile rock
-  parent: FloorTileItemBase
-  id: FloorTileItemRock
-  components:
-  - type: Sprite
-    state: rockvault
-  - type: Item
-    HeldPrefix: steel
-  - type: FloorTile
-    outputs:
-      - plating
-      - floor_rockvault
-
-- type: entity
-  name: floor tile mono
+  name: mono tile
   parent: FloorTileItemBase
   id: FloorTileItemMono
   components:
@@ -202,9 +186,11 @@
     outputs:
       - plating
       - floor_mono
+  - type: Stack
+    stackType: FloorTileMono
 
 - type: entity
-  name: floor tile linoleum
+  name: linoleum floor
   parent: FloorTileItemBase
   id: FloorTileItemLino
   components:
@@ -216,23 +202,11 @@
     outputs:
       - plating
       - floor_lino
+  - type: Stack
+    stackType: FloorTileLino
 
 - type: entity
-  name: floor tile asteroid
-  parent: FloorTileItemBase
-  id: FloorTileItemAsteroid
-  components:
-  - type: Sprite
-    state: white
-  - type: Item
-    HeldPrefix: brown
-  - type: FloorTile
-    outputs:
-      - plating
-      - floor_asteroid_tile
-
-- type: entity
-  name: floor tile hydro
+  name: hydro tile
   parent: FloorTileItemBase
   id: FloorTileItemHydro
   components:
@@ -244,9 +218,11 @@
     outputs:
       - plating
       - floor_hydro
+  - type: Stack
+    stackType: FloorTileHydro
 
 - type: entity
-  name: floor tile dirty
+  name: dirty tile
   parent: FloorTileItemBase
   id: FloorTileItemDirty
   components:
@@ -258,3 +234,5 @@
     outputs:
       - plating
       - floor_steel_dirty
+  - type: Stack
+    stackType: FloorTileDirty
