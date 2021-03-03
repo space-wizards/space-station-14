@@ -6,7 +6,18 @@
   components:
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
-    state: tile_steel
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+
+- type: entity
+  name: steel floor tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSteel
+  components:
+  - type: Sprite
+    state: steel
+  - type: Item
+    HeldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
@@ -17,25 +28,14 @@
     max: 8
 
 - type: entity
-  name: steel floor tile
-  parent: FloorTileItemBase
-  id: FloorTileItemSteel
-  components:
-  - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_steel
-
-- type: entity
   name: wood floor tile
   parent: FloorTileItemBase
   id: FloorTileItemWood
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_wood
+    state: wood
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_wood
+    HeldPrefix: wood
   - type: FloorTile
     outputs:
       - plating
@@ -51,11 +51,9 @@
   id: FloorTileItemWhite
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_white
+    state: white
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_white
+    HeldPrefix: white
   - type: FloorTile
     outputs:
       - plating
@@ -71,11 +69,9 @@
   id: FloorTileItemDark
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_dark
+    state: dark
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_dark
+    HeldPrefix: dark
   - type: FloorTile
     outputs:
       - plating
@@ -91,11 +87,9 @@
   id: FloorTileItemTechmaint
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_dark_techfloor_grid
+    state: dark_techfloor_grid
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_dark
+    HeldPrefix: dark
   - type: FloorTile
     outputs:
       - plating
@@ -107,11 +101,9 @@
   id: FloorTileItemFreezer
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_showroom
+    state: showroom
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_showroom
+    HeldPrefix: showroom
   - type: FloorTile
     outputs:
       - plating
@@ -123,11 +115,9 @@
   id: FloorTileItemShowroom
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_showroom
+    state: showroom
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_showroom
+    HeldPrefix: showroom
   - type: FloorTile
     outputs:
       - plating
@@ -139,11 +129,9 @@
   id: FloorTileItemSnow
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_snow
+    state: snow
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_silver
+    HeldPrefix: silver
   - type: FloorTile
     outputs:
       - plating
@@ -155,11 +143,9 @@
   id: FloorTileItemGCircuit
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_gcircuit
+    state: gcircuit
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_silver
+    HeldPrefix: silver
   - type: FloorTile
     outputs:
       - plating
@@ -171,11 +157,9 @@
   id: FloorTileItemGold
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_gold
+    state: gold
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_gold
+    HeldPrefix: gold
   - type: FloorTile
     outputs:
       - plating
@@ -187,11 +171,9 @@
   id: FloorTileItemReinforced
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_reinforced
+    state: reinforced
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_reinforced
+    HeldPrefix: reinforced
   - type: FloorTile
     outputs:
       - plating
@@ -203,11 +185,9 @@
   id: FloorTileItemRock
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_rockvault
+    state: rockvault
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_steel
+    HeldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
@@ -219,11 +199,9 @@
   id: FloorTileItemMono
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_white_monofloor
+    state: white_monofloor
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_steel
+    HeldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
@@ -235,11 +213,9 @@
   id: FloorTileItemLino
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_white_monofloor
+    state: white_monofloor
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_steel
+    HeldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
@@ -251,11 +227,9 @@
   id: FloorTileItemAsteroid
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_white
+    state: white
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_brown
+    HeldPrefix: brown
   - type: FloorTile
     outputs:
       - plating
@@ -267,11 +241,9 @@
   id: FloorTileItemHydro
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_hydro
+    state: hydro
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_hydro
+    HeldPrefix: hydro
   - type: FloorTile
     outputs:
       - plating
@@ -283,11 +255,9 @@
   id: FloorTileItemDirty
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_dirty
+    state: dirty
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_brown
+    HeldPrefix: brown
   - type: FloorTile
     outputs:
       - plating
