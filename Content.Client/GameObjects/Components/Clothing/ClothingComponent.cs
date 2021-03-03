@@ -1,20 +1,23 @@
-﻿#nullable enable
+#nullable enable
 using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.GameObjects.Components.Items;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Storage;
 using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Clothing
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedItemComponent))]
     [ComponentReference(typeof(ItemComponent))]
-    [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent
     {
         private FemaleClothingMask _femaleMask;
@@ -63,11 +66,9 @@ namespace Content.Client.GameObjects.Components.Clothing
         public (RSI rsi, RSI.StateId stateId)? GetEquippedStateInfo(EquipmentSlotDefines.SlotFlags slot)
         {
             if (RsiPath == null)
-            {
                 return null;
-            }
 
-            var rsi = GetRSI();
+            var rsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / RsiPath).RSI;
             var prefix = ClothingEquippedPrefix ?? EquippedPrefix;
             var stateId = prefix != null ? $"{prefix}-equipped-{slot}" : $"equipped-{slot}";
             if (rsi.TryGetState(stateId, out _))

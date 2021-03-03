@@ -175,7 +175,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
                 }
             }
 
-            if (!entity.HasComponent<SharedStorableComponent>() &&
+            if (!entity.HasComponent<SharedItemComponent>() &&
                 !entity.HasComponent<IBody>())
             {
                 return false;

@@ -1,7 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
@@ -133,7 +134,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 // TODO: Item check.
                 var touching = ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
                                 || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
-                               && !entity.HasComponent<IItemComponent>(); // This can't be an item
+                               && !entity.HasComponent<SharedItemComponent>(); // This can't be an item
 
                 if (touching)
                 {
