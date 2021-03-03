@@ -8,6 +8,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -103,11 +105,11 @@ namespace Content.Server.GameObjects.Components.Movement
         }
 
         /// <inheritdoc />
-        [ViewVariables]
-        public float CurrentPushSpeed => 5.0f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float CurrentPushSpeed { get; set; }
 
         /// <inheritdoc />
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float GrabRange { get; set; } = 0.2f;
 
         /// <summary>
@@ -127,11 +129,19 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public EntityCoordinates LastPosition { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public float StepSoundDistance { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float StepSoundDistance { get; set; }
 
         public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled) { }
         public void SetSprinting(ushort subTick, bool walking) { }
 
         public virtual void Update(float frameTime) {}
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        {
+            if (otherBody.BodyType == BodyType.Dynamic && manifold.LocalNormal != Vector2.Zero)
+            {
+                otherBody.ApplyLinearImpulse(-manifold.LocalNormal * CurrentPushSpeed);
+            }
+        }
     }
 }

@@ -1,11 +1,12 @@
 #nullable enable
 using System;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -28,6 +29,9 @@ namespace Content.Shared.GameObjects.Components.Movement
         [ViewVariables(VVAccess.ReadWrite)]
         public EntityCoordinates LastPosition { get; set; }
 
+        /// <summary>
+        ///     Used to keep track of how far we have moved before playing a step sound
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float StepSoundDistance
         {
@@ -36,7 +40,6 @@ namespace Content.Shared.GameObjects.Components.Movement
             {
                 if (MathHelper.CloseTo(_stepSoundDistance, value)) return;
                 _stepSoundDistance = value;
-                Dirty();
             }
         }
 
@@ -52,6 +55,20 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float PushStrength
+        {
+            get => _pushStrength;
+            set
+            {
+                if (MathHelper.CloseTo(_pushStrength, value)) return;
+                _pushStrength = value;
+                Dirty();
+            }
+        }
+
+        private float _pushStrength;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -59,19 +76,31 @@ namespace Content.Shared.GameObjects.Components.Movement
             {
                 Owner.EnsureComponentWarn<SharedPlayerInputMoverComponent>();
             }
+
+            if (Owner.TryGetComponent(out IPhysBody? body) && body.BodyType != BodyType.KinematicController)
+            {
+                Logger.WarningS("mover", $"Attached {nameof(SharedPlayerMobMoverComponent)} to a mob that's BodyType is not KinematicController!'");
+            }
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _grabRange, "grabRange", 0.2f);
+            serializer.DataField(ref _pushStrength, "pushStrength", 10.0f);
         }
 
         public override ComponentState GetComponentState(ICommonSession session)
         {
-            return new PlayerMobMoverComponentState(StepSoundDistance, GrabRange);
+            return new PlayerMobMoverComponentState(_grabRange, _pushStrength);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
             if (curState is not PlayerMobMoverComponentState playerMoverState) return;
-            StepSoundDistance = playerMoverState.StepSoundDistance;
             GrabRange = playerMoverState.GrabRange;
+            PushStrength = playerMoverState.PushStrength;
         }
 
         bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
@@ -84,16 +113,24 @@ namespace Content.Shared.GameObjects.Components.Movement
                 */
         }
 
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        {
+            if (otherBody.BodyType == BodyType.Dynamic && manifold.LocalNormal != Vector2.Zero)
+            {
+                otherBody.ApplyLinearImpulse(-manifold.LocalNormal * _pushStrength);
+            }
+        }
+
         [Serializable, NetSerializable]
         private sealed class PlayerMobMoverComponentState : ComponentState
         {
-            public float StepSoundDistance;
             public float GrabRange;
+            public float PushStrength;
 
-            public PlayerMobMoverComponentState(float stepSoundDistance, float grabRange) : base(ContentNetIDs.PLAYER_MOB_MOVER)
+            public PlayerMobMoverComponentState(float grabRange, float pushStrength) : base(ContentNetIDs.PLAYER_MOB_MOVER)
             {
-                StepSoundDistance = stepSoundDistance;
                 GrabRange = grabRange;
+                PushStrength = pushStrength;
             }
         }
     }

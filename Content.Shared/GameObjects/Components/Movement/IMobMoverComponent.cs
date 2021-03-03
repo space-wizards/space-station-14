@@ -4,7 +4,7 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
-    public interface IMobMoverComponent : IComponent
+    public interface IMobMoverComponent : IComponent, ICollideBehavior
     {
         EntityCoordinates LastPosition { get; set; }
 

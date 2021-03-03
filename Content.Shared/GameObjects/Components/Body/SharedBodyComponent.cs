@@ -25,7 +25,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.GameObjects.Components.Body
 {
     // TODO BODY Damage methods for collections of IDamageableComponents
-    public abstract class SharedBodyComponent : Component, IBody, ICollideBehavior
+    public abstract class SharedBodyComponent : Component, IBody
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -708,14 +708,6 @@ namespace Content.Shared.GameObjects.Components.Body
 
                 if (gibParts)
                     part.Gib();
-            }
-        }
-
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
-        {
-            if (otherBody.BodyType == BodyType.Dynamic && manifold.LocalNormal != Vector2.Zero)
-            {
-                otherBody.ApplyLinearImpulse(-manifold.LocalNormal * 10);
             }
         }
     }
