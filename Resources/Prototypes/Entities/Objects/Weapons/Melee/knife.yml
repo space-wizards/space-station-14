@@ -53,7 +53,7 @@
   name: combat knife
   parent: BaseKnife
   id: CombatKnife
-  description: A deadly blade intended for melee confrontations.
+  description: A deadly knife intended for melee confrontations.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/combat_knife.rsi
