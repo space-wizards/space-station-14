@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -169,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Portal
             StartCooldown();
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (_onCooldown == false)
             {

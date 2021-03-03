@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.PA
@@ -16,7 +17,7 @@ namespace Content.Server.GameObjects.Components.PA
     {
         public override string Name => "ParticleProjectile";
         private ParticleAcceleratorPowerState _state;
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (otherBody.Entity.TryGetComponent<SingularityComponent>(out var singularityComponent))
             {

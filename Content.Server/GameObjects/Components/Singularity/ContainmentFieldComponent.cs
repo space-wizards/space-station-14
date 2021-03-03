@@ -1,6 +1,7 @@
 #nullable enable
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -10,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         public override string Name => "ContainmentField";
         public ContainmentFieldConnection? Parent;
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (Parent == null)
             {

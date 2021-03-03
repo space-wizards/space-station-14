@@ -14,6 +14,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics.Shapes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -141,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             Energy -= EnergyDrain * seconds;
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             var otherEntity = otherBody.Entity;
 

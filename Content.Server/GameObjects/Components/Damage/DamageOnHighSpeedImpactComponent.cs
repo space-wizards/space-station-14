@@ -7,6 +7,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -47,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Damage
             serializer.DataField(this, x => x.StunMinimumDamage, "stunMinimumDamage", 10);
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
 

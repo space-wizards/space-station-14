@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components.Projectiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -61,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <summary>
         ///     Applies the damage when our projectile collides with its victim
         /// </summary>
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             // This is so entities that shouldn't get a collision are ignored.
             if (!otherBody.Hard || _damagedEntity)

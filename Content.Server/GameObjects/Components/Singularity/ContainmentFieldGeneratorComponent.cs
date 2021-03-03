@@ -13,6 +13,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.ViewVariables;
 using Robust.Server.GameObjects;
+using Robust.Shared.Physics.Collision;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -183,7 +184,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (otherBody.Entity.HasComponent<EmitterBoltComponent>())
             {

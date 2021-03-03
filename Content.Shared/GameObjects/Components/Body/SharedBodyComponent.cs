@@ -13,7 +13,9 @@ using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -709,12 +711,11 @@ namespace Content.Shared.GameObjects.Components.Body
             }
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            // TODO: Make this hack use manifold instead.
-            if (otherBody.BodyType == BodyType.Dynamic)
+            if (otherBody.BodyType == BodyType.Dynamic && manifold.LocalNormal != Vector2.Zero)
             {
-                otherBody.ApplyLinearImpulse((otherBody.WorldPosition - ourBody.WorldPosition).Normalized * 10);
+                otherBody.ApplyLinearImpulse(-manifold.LocalNormal * 10);
             }
         }
     }

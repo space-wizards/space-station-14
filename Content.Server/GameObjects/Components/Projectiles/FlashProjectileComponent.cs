@@ -1,6 +1,7 @@
 using Content.Server.GameObjects.Components.Weapon;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Projectiles
@@ -32,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Owner.EnsureComponent<ProjectileComponent>();
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (_flashed)
             {

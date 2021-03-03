@@ -3,6 +3,7 @@ using Content.Server.GameObjects.EntitySystems.Click;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 
 namespace Content.Server.GameObjects.Components.Items
 {
@@ -25,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Items
             }
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             EntitySystem.Get<InteractionSystem>().ThrowCollideInteraction(Thrower, ourBody, otherBody);
         }

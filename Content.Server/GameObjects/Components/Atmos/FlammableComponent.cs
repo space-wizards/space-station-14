@@ -16,6 +16,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -145,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (!otherBody.Entity.TryGetComponent(out FlammableComponent otherFlammable))
                 return;

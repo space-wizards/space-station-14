@@ -1,6 +1,7 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Projectiles
@@ -33,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Owner.EnsureComponentWarn(out ProjectileComponent _);
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (otherBody.Entity.TryGetComponent(out StunnableComponent stunnableComponent))
             {

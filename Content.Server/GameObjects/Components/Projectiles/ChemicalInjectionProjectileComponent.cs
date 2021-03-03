@@ -6,6 +6,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
@@ -37,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             _solutionContainer = Owner.EnsureComponent<SolutionContainerComponent>();
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (!otherBody.Entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))
                 return;

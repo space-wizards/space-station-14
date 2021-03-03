@@ -9,6 +9,7 @@ using Content.Shared.Physics;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -94,7 +95,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         protected virtual void OnSlip() { }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody)
+        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             TrySlip(ourBody, otherBody);
         }
