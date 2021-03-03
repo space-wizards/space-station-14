@@ -24,7 +24,7 @@
     anchored: true
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.25,0.4,0.25"
       layer:
       - Opaque
@@ -76,7 +76,7 @@
     anchored: true
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.25,0.4,0.25"
       layer:
       - Opaque

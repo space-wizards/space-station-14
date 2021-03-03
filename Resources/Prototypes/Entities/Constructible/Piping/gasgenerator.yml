@@ -9,7 +9,7 @@
   - type: Physics
     anchored: true
     shapes:
-    - !type:PhysShapeAabb
+    - !type:PolygonShape  # PhysShapeAabb
       bounds: "-0.5,-0.5,0.5,0.5"
       layer:
       - Impassable
@@ -23,7 +23,7 @@
   - type: SnapGrid
     offset: Center
   - type: GasGenerator
-    
+
 - type: entity
   parent: GasGeneratorBase
   id: GasGenerator
@@ -42,4 +42,4 @@
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: Fourway
-    
+

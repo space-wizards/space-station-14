@@ -152,7 +152,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/tastybread.rsi
-    
+
 
 - type: entity
   name: tray (trash)
@@ -185,7 +185,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
       layer:
       - MobImpassable

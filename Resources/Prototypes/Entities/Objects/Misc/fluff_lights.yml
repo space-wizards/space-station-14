@@ -89,7 +89,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
       layer:
       - Opaque
       - Impassable
@@ -152,7 +152,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
       layer:
       - Opaque
       - Impassable

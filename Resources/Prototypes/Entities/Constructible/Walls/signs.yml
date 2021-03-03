@@ -8,7 +8,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -37,7 +37,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
@@ -61,7 +61,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
@@ -83,7 +83,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
@@ -106,7 +106,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
@@ -129,7 +129,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
@@ -152,7 +152,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
@@ -174,7 +174,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
@@ -196,7 +196,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
@@ -219,7 +219,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -240,7 +240,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -261,7 +261,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -282,7 +282,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -303,7 +303,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -324,7 +324,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -345,7 +345,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -366,7 +366,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -387,7 +387,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -408,7 +408,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -429,7 +429,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -450,7 +450,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -471,7 +471,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -492,7 +492,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -513,7 +513,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -534,7 +534,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -555,7 +555,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -576,7 +576,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -597,7 +597,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -618,7 +618,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -639,7 +639,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -660,7 +660,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -681,7 +681,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -702,7 +702,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -723,7 +723,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -744,7 +744,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -765,7 +765,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -786,7 +786,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -807,7 +807,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -831,7 +831,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.3"
       layer:
       - Opaque
@@ -853,7 +853,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.3"
       layer:
       - Opaque
@@ -875,7 +875,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.3"
       layer:
       - Opaque
@@ -897,7 +897,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.3"
       layer:
       - Opaque
@@ -919,7 +919,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.3"
       layer:
       - Opaque
@@ -941,7 +941,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.3"
       layer:
       - Opaque
@@ -963,7 +963,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.3"
       layer:
       - Opaque
@@ -985,7 +985,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -1007,7 +1007,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
@@ -1029,7 +1029,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque

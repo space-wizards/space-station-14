@@ -19,7 +19,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
       layer:
       - VaultImpassable
   - type: SnapGrid

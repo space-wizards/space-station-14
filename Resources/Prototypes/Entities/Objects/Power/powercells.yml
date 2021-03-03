@@ -10,7 +10,7 @@
     anchored: false
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.15,-0.3,0.2,0.3" # TODO: these are placeholder values
       layer:
       - Clickable
@@ -325,7 +325,7 @@
     mass: 5
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]
@@ -354,7 +354,7 @@
     mass: 5
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]
@@ -382,7 +382,7 @@
     mass: 5
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]

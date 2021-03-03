@@ -23,7 +23,7 @@
     anchored: false
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.45,-0.5,0.1,0.5"
       layer:
       - Clickable
@@ -78,7 +78,7 @@
     anchored: true
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.5, -0.5, 0.5, 0.5"
       mask:
        - Impassable
@@ -124,7 +124,7 @@
     anchored: true
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.5, -0.5, 0.5, 0.5"
       layer:
        - Clickable
@@ -153,7 +153,7 @@
     anchored: true
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.5, -0.5, 0.5, 0.5"
       mask:
        - Impassable

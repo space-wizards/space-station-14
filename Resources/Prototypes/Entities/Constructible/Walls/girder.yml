@@ -18,7 +18,7 @@
     anchored: true
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
       layer:
       - Opaque
       - Impassable

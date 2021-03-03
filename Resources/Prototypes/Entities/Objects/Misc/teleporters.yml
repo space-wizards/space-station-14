@@ -51,7 +51,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
       mask: [Impassable, MobImpassable]
   - type: Portal
   - type: Sprite

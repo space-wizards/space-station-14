@@ -16,7 +16,7 @@
     edgeslide: false
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.1"
       hard: false
       layer: [Clickable]
@@ -102,7 +102,7 @@
     edgeslide: false
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
       layer: 32

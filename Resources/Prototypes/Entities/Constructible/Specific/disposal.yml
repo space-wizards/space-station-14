@@ -53,7 +53,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.5,-0.25,0.5,0.25"
       layer: [ Underplating ]
 
@@ -81,7 +81,7 @@
   - type: Physics
     fixtures:
       - shape:
-          !type:PhysShapeAabb
+          !type:PolygonShape  # PhysShapeAabb
             bounds: "-0.5,-0.25,0.5,0.25"
         layer: [ Underplating ]
 
@@ -105,7 +105,7 @@
   - type: Physics
     fixtures:
       - shape:
-          !type:PhysShapeAabb
+          !type:PolygonShape  # PhysShapeAabb
             bounds: "-0.5,-0.25,0.4,0.25"
         layer: [ Underplating ]
 
@@ -137,7 +137,7 @@
     anchored: true
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.3,-0.35,0.3,0.35"
       mask:
       - Impassable
@@ -212,7 +212,7 @@
   - type: Physics
     fixtures:
       - shape:
-          !type:PhysShapeAabb
+          !type:PolygonShape  # PhysShapeAabb
             bounds: "-0.5,-0.5,0.5,0.25"
         layer: [ Underplating ]
 
@@ -241,7 +241,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.5,-0.25,0.5,0.5"
       layer: [ Underplating ]
 
@@ -271,7 +271,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.25"
       layer: [ Underplating ]
 
@@ -300,7 +300,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.5,-0.25,0.5,0.5"
       layer: [ Underplating ]
 
@@ -328,7 +328,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.5,-0.5,0.25,0.5"
       layer: [ Underplating ]
 
@@ -352,7 +352,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.5,-0.5,0.25,0.25"
       layer: [ Underplating ]
 
@@ -387,7 +387,7 @@
     anchored: true
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.35,-0.3,0.35,0.3"
       mask:
       - Impassable

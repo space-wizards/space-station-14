@@ -7,7 +7,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.45, -0.95, 0.45, 1"
       layer: [ Passable ]
   - type: Sprite

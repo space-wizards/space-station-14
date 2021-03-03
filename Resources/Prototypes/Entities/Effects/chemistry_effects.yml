@@ -43,7 +43,7 @@
       offset: Center
     - type: Physics
       shapes:
-      - !type:PhysShapeAabb
+      - !type:PolygonShape  # PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
         layer:
         - MobImpassable
@@ -107,7 +107,7 @@
       drawdepth: Walls
     - type: Physics
       shapes:
-        - !type:PhysShapeAabb
+        - !type:PolygonShape  # PhysShapeAabb
           layer:
             - Opaque
             - Impassable

@@ -24,7 +24,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.16,-0.3,0.16,0.3"
       layer:
       - Opaque

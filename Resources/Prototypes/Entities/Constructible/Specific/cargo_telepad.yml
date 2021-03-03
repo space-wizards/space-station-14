@@ -12,7 +12,7 @@
     anchored: true
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.45, -0.45, 0.00, 0.45"
       layer: [ Passable ]
   - type: Sprite

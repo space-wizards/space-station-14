@@ -43,7 +43,7 @@
     anchored: false
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.40,-0.25,0.25,0.25"
       mask:
       - Impassable
@@ -74,7 +74,7 @@
     anchored: false
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
       mask:
       - Impassable
@@ -108,7 +108,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - MobImpassable
@@ -184,7 +184,7 @@
       anchored: false
       fixtures:
       - shape:
-          !type:PhysShapeAabb
+          !type:PolygonShape  # PhysShapeAabb
             bounds: "-0.25,-0.25,0.25,0.25"
         hard: false
         mask:

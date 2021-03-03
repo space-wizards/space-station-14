@@ -41,7 +41,7 @@
     anchored: true
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
@@ -76,7 +76,7 @@
     anchored: true
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
@@ -110,7 +110,7 @@
     anchored: true
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
@@ -138,7 +138,7 @@
       anchored: true
       fixtures:
         - shape:
-            !type:PhysShapeAabb
+            !type:PolygonShape  # PhysShapeAabb
               bounds: "-0.5, -0.5, 0.5, 0.5"
           layer: [ MobMask ]
     - type: SnapGrid

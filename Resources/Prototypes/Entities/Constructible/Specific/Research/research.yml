@@ -15,7 +15,7 @@
     anchored: true
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.4, -0.45, 0.45, 0.45"
       mask:
       - Impassable
@@ -58,7 +58,7 @@
     anchored: true
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
       mask:
       - Impassable
       - MobImpassable

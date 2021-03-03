@@ -305,7 +305,7 @@
       mass: 85
       fixtures:
       - shape:
-          !type:PhysShapeAabb
+          !type:PolygonShape  # PhysShapeAabb
             bounds: "-0.35,-0.35,0.35,0.35"
         mask:
         - Impassable

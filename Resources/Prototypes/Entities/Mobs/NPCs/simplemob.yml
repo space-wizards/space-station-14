@@ -34,7 +34,7 @@
     mass: 50
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
       mask:
       - Impassable
 #      - MobImpassable Turns these off for now since humans don't have collisions either.

@@ -23,7 +23,7 @@
     bodyType: Static
     fixtures:
     - shape:
-        !type:PhysShapeAabb
+        !type:PolygonShape  # PhysShapeAabb
           bounds: "-0.5, -0.5, 0.5, 0.5"
       layer:
       - Opaque
