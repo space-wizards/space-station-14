@@ -88,6 +88,7 @@ namespace Content.Shared.Physics.Controllers
                 // This should have its event run during island solver soooo
                 transform.DeferUpdates = true;
                 transform.LocalRotation = total.GetDir().ToAngle();
+                transform.DeferUpdates = false;
                 HandleFootsteps(mover, mobMover);
             }
 
