@@ -258,13 +258,16 @@ namespace Content.Server.GameObjects.Components.Construction
                     var needed = MaterialRequirements[type] - _materialProgress[type];
                     var count = stack.Count;
 
-                    if (count < needed && stack.Split(count, Owner.Transform.Coordinates, out var newStack))
+                    if (count < needed)
                     {
+                        if(!_partContainer.Insert(stack.Owner))
+                            return false;
+
                         _materialProgress[type] += count;
                         return true;
                     }
 
-                    if (!stack.Split(needed, Owner.Transform.Coordinates, out newStack))
+                    if (!stack.Split(needed, Owner.Transform.Coordinates, out var newStack))
                         return false;
 
                     if(!_partContainer.Insert(newStack))
