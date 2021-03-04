@@ -100,6 +100,8 @@
   - type: SolutionTransfer
     transferAmount: 5.0
   - type: Spillable
+  - type: Item
+    sprite: Objects/Specific/Chemistry/dropper.rsi
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -128,9 +130,11 @@
   - type: Spillable
   - type: Appearance
     visuals:
-    - type: SolutionContainerVisualizer
+      # this visualizer used for reagent inside
+    - type: SolutionContainerVisualizer 
       maxFillLevels: 4
       fillBaseName: syringe
+      # this one for syrigine itself (plunger)
     - type: SolutionContainerVisualizer
       maxFillLevels: 4
       fillBaseName: syringe_base
