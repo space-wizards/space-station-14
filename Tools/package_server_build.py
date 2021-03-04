@@ -23,19 +23,23 @@ except ImportError:
     Fore = ColorDummy()
     Style = ColorDummy()
 
+class PlatformReg:
+    def __init__(self, rid: str, target_os: str):
+        self.rid = rid
+        self.target_os = target_os
 
 p = os.path.join
 
-PLATFORM_WINDOWS = "windows"
-PLATFORM_LINUX = "linux"
-PLATFORM_LINUX_ARM64 = "linux-arm64"
-PLATFORM_MACOS = "mac"
+PLATFORMS = [
+    PlatformReg("win-x64", "Windows"),
+    PlatformReg("linux-x64", "Linux"),
+    PlatformReg("linux-arm64", "Linux"),
+    PlatformReg("osx-x64", "MacOS"),
+]
+
+PLATFORM_RIDS = {x.rid for x in PLATFORMS}
 
 SHARED_IGNORED_RESOURCES = {
-    "ss13model.7z",
-    "ResourcePack.zip",
-    "buildResourcePack.py",
-    "CONTENT_GOES_HERE",
     ".gitignore",
     ".directory",
     ".DS_Store"
@@ -45,8 +49,6 @@ SERVER_IGNORED_RESOURCES = {
     "Textures",
     "Fonts",
     "Audio",
-    "Scenes",
-    "Nano",
     "Shaders",
 }
 
@@ -70,7 +72,7 @@ def main() -> None:
     parser.add_argument("--platform",
                         "-p",
                         action="store",
-                        choices=[PLATFORM_WINDOWS, PLATFORM_MACOS, PLATFORM_LINUX, PLATFORM_LINUX_ARM64],
+                        choices=PLATFORM_RIDS,
                         nargs="*",
                         help="Which platform to build for. If not provided, all platforms will be built")
 
@@ -83,7 +85,7 @@ def main() -> None:
     skip_build = args.skip_build
 
     if not platforms:
-        platforms = [PLATFORM_WINDOWS, PLATFORM_MACOS, PLATFORM_LINUX, PLATFORM_LINUX_ARM64]
+        platforms = PLATFORM_RIDS
 
     if os.path.exists("release"):
         print(Fore.BLUE + Style.DIM +
@@ -92,25 +94,12 @@ def main() -> None:
 
     os.mkdir("release")
 
-    if PLATFORM_WINDOWS in platforms:
-        if not skip_build:
-            wipe_bin()
-        build_windows(skip_build)
+    # Good variable naming right here.
+    for platform in PLATFORMS:
+        if platform.rid not in platforms:
+            continue
 
-    if PLATFORM_LINUX in platforms:
-        if not skip_build:
-            wipe_bin()
-        build_linux(skip_build)
-
-    if PLATFORM_LINUX_ARM64 in platforms:
-        if not skip_build:
-            wipe_bin()
-        build_linux_arm64(skip_build)
-
-    if PLATFORM_MACOS in platforms:
-        if not skip_build:
-            wipe_bin()
-        build_macos(skip_build)
+        build_platform(platform, skip_build)
 
 
 def wipe_bin():
@@ -123,9 +112,8 @@ def wipe_bin():
         shutil.rmtree("bin")
 
 
-def build_windows(skip_build: bool) -> None:
-    # Run a full build.
-    print(Fore.GREEN + "Building project for Windows x64..." + Style.RESET_ALL)
+def build_platform(platform: PlatformReg, skip_build: bool) -> None:
+    print(Fore.GREEN + f"Building project for {platform.rid}..." + Style.RESET_ALL)
 
     if not skip_build:
         subprocess.run([
@@ -135,99 +123,17 @@ def build_windows(skip_build: bool) -> None:
             "-c", "Release",
             "--nologo",
             "/v:m",
-            "/p:TargetOS=Windows",
+            f"/p:TargetOS={platform.target_os}",
             "/t:Rebuild",
             "/p:FullRelease=True"
         ], check=True)
 
-        publish_client_server("win-x64", "Windows")
+        publish_client_server(platform.rid, platform.target_os)
 
-    print(Fore.GREEN + "Packaging Windows x64 server..." + Style.RESET_ALL)
-    server_zip = zipfile.ZipFile(p("release", "SS14.Server_Windows_x64.zip"), "w",
+    print(Fore.GREEN + "Packaging {platform.rid} server..." + Style.RESET_ALL)
+    server_zip = zipfile.ZipFile(p("release", f"SS14.Server_{platform.rid}.zip"), "w",
                                  compression=zipfile.ZIP_DEFLATED)
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Server", "win-x64", "publish"), "", server_zip)
-    copy_resources(p("Resources"), server_zip)
-    copy_content_assemblies(p("Resources", "Assemblies"), server_zip)
-    server_zip.close()
-
-def build_macos(skip_build: bool) -> None:
-    print(Fore.GREEN + "Building project for macOS x64..." + Style.RESET_ALL)
-
-    if not skip_build:
-        subprocess.run([
-            "dotnet",
-            "build",
-            p("Content.Server", "Content.Server.csproj"),
-            "-c", "Release",
-            "--nologo",
-            "/v:m",
-            "/p:TargetOS=MacOS",
-            "/t:Rebuild",
-            "/p:FullRelease=True"
-        ], check=True)
-
-        publish_client_server("osx-x64", "MacOS")
-
-    print(Fore.GREEN + "Packaging macOS x64 server..." + Style.RESET_ALL)
-    server_zip = zipfile.ZipFile(p("release", "SS14.Server_macOS_x64.zip"), "w",
-                                 compression=zipfile.ZIP_DEFLATED)
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Server", "osx-x64", "publish"), "", server_zip)
-    copy_resources(p("Resources"), server_zip)
-    copy_content_assemblies(p("Resources", "Assemblies"), server_zip)
-    server_zip.close()
-
-
-def build_linux(skip_build: bool) -> None:
-    # Run a full build.
-    print(Fore.GREEN + "Building project for Linux x64..." + Style.RESET_ALL)
-
-    if not skip_build:
-        subprocess.run([
-            "dotnet",
-            "build",
-            p("Content.Server", "Content.Server.csproj"),
-            "-c", "Release",
-            "--nologo",
-            "/v:m",
-            "/p:TargetOS=Linux",
-            "/t:Rebuild",
-            "/p:FullRelease=True"
-        ], check=True)
-
-        publish_client_server("linux-x64", "Linux")
-
-    print(Fore.GREEN + "Packaging Linux x64 server..." + Style.RESET_ALL)
-    server_zip = zipfile.ZipFile(p("release", "SS14.Server_Linux_x64.zip"), "w",
-                                 compression=zipfile.ZIP_DEFLATED)
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Server", "linux-x64", "publish"), "", server_zip)
-    copy_resources(p("Resources"), server_zip)
-    copy_content_assemblies(p("Resources", "Assemblies"), server_zip)
-    server_zip.close()
-
-
-def build_linux_arm64(skip_build: bool) -> None:
-    # Run a full build.
-    print(Fore.GREEN + "Building project for Linux ARM64 (SERVER ONLY)..." + Style.RESET_ALL)
-
-    if not skip_build:
-        subprocess.run([
-            "dotnet",
-            "build",
-            p("Content.Server", "Content.Server.csproj"),
-            "-c", "Release",
-            "--nologo",
-            "/v:m",
-            "/p:TargetOS=Linux",
-            "/t:Rebuild",
-            "/p:FullRelease=True"
-        ], check=True)
-
-        publish_client_server("linux-arm64", "Linux")
-
-    print(Fore.GREEN + "Packaging Linux ARM64 server..." + Style.RESET_ALL)
-    server_zip = zipfile.ZipFile(p("release", "SS14.Server_Linux_ARM64.zip"), "w",
-                                 compression=zipfile.ZIP_DEFLATED)
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Server", "linux-arm64", "publish"), "", server_zip)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Server", platform.rid, "publish"), "", server_zip)
     copy_resources(p("Resources"), server_zip)
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip)
     server_zip.close()
@@ -253,13 +159,6 @@ def copy_resources(target, zipf):
 
     do_resource_copy(target, "Resources", zipf, ignore_set)
     do_resource_copy(target, p("RobustToolbox", "Resources"), zipf, ignore_set)
-
-
-def copy_launcher_resources(target, zipf):
-    # Copy all engine resources, since those are stripped down enough now.
-    do_resource_copy(target, p("RobustToolbox", "Resources"), zipf, SHARED_IGNORED_RESOURCES)
-    for folder in LAUNCHER_RESOURCES:
-        copy_dir_into_zip(p("Resources", folder), p(target, folder), zipf)
 
 
 def do_resource_copy(target, source, zipf, ignore_set):
@@ -336,21 +235,6 @@ def copy_content_assemblies(target, zipf):
 
     for x in files:
         zipf.write(p(source_dir, x), p(target, x))
-
-
-def copy_dir_or_file(src: str, dst: str):
-    """
-    Just something from src to dst. If src is a dir it gets copied recursively.
-    """
-
-    if os.path.isfile(src):
-        shutil.copy2(src, dst)
-
-    elif os.path.isdir(src):
-        shutil.copytree(src, dst)
-
-    else:
-        raise IOError("{} is neither file nor directory. Can't copy.".format(src))
 
 
 if __name__ == '__main__':

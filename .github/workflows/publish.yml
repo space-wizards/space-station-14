@@ -1,0 +1,49 @@
+name: Publish
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.200
+
+    - name: Package client
+      run: |
+        Tools/package_server_build.py -p win-x64 -p linux-x64 -p osx-x64 -p linux-arm64
+        Tools/package_client_build.py
+
+    - name: Shuffle files around
+      run: |
+        mkdir "release/${{ github.sha }}"
+        mv release/*.zip "release/${{ github.sha }}"
+
+    - name: Upload files to centcomm
+      uses: appleboy/scp-action@master
+      with:
+        host: centcomm.spacestation14.io
+        username: wizards-build-push
+        key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
+        source: "release/${{ github.sha }}"
+        target: "/mnt/ext/wizards-builds/builds/"
+        strip_components: 1
+
+    - name: Update manifest JSON
+      uses: appleboy/ssh-action@master
+      with:
+        host: centcomm.spacestation14.io
+        username: wizards-build-push
+        key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
+        script: /home/wizards-build-push/push.ps1 ${{ github.sha }}
+
