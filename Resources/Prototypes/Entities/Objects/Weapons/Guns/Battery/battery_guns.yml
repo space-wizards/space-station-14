@@ -107,7 +107,7 @@
     angleDecay: 45
     powerCellPrototype: PowerCellSmallSuper
     powerCellRemovable: true
-    base_fire_cost: 600
+    fireCost: 600
     ammoPrototype: XrayLaser
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: Appearance

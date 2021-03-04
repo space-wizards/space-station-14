@@ -13,7 +13,6 @@
     state: cigpapers
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-    state: cigpapers
 
 - type: entity
   id: PaperRolling
@@ -30,7 +29,6 @@
       state: cigpaper
     - type: Item
       sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-      state: cigpaper
 
 - type: entity
   id: CigaretteFilter
@@ -47,4 +45,3 @@
       state: cigfilter
     - type: Item
       sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-      state: cigfilter
