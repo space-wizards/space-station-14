@@ -11,16 +11,25 @@
       "name": "alpha"
     },
     {
+      "name": "alpha2"
+    },
+    {
       "name": "alpha-filling"
+    },
+    {
+      "name": "alpha-filling2"
     },
     {
       "name": "alpha-slice"
     },
     {
+      "name": "alpha-slice2"
+    },
+    {
       "name": "alpha-slice-filling"
     },
     {
-      "name": "alpha-toast"
+      "name": "alpha-slice2-filling"
     },
     {
       "name": "baguette"
@@ -72,6 +81,9 @@
     },
     {
       "name": "plate-trash"
+    },
+    {
+      "name": "plate-trash2"
     },
     {
       "name": "spidermeat"
