@@ -162,3 +162,8 @@ Entries:
   - {message: Added a basic slime person mob., type: Add}
   id: 29
   time: '2021-03-04T12:58:43.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed machine frames not correctly taking material sheets., type: Fix}
+  id: 30
+  time: '2021-03-04T15:16:49.762593+00:00'
