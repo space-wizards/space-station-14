@@ -1,4 +1,4 @@
-name: YAML-Linter
+name: YAML Linter
 
 on: [push, pull_request]
 jobs:
@@ -23,4 +23,4 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
       - name: Run Linter
-        run: dotnet run --project Content.YAMLLinter/Content.YAMLLinter.csproj -nowarn
+        run: dotnet run --project Content.YAMLLinter/Content.YAMLLinter.csproj
