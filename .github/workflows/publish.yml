@@ -19,6 +19,11 @@ jobs:
       with:
         dotnet-version: 5.0.200
 
+    - name: Get Engine Tag
+      run: |
+        cd RobustToolbox
+        git fetch --depth=1
+
     - name: Package client
       run: |
         Tools/package_server_build.py -p win-x64 linux-x64 osx-x64 linux-arm64
