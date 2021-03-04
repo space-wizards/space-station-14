@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.Manager.Result;
@@ -49,6 +50,7 @@ namespace Content.Shared.Construction
 
         public DeserializationResult Read(ISerializationManager serializationManager,
             MappingDataNode node,
+            IDependencyCollection dependencies,
             bool skipHook,
             ISerializationContext? context = null)
         {
@@ -60,6 +62,7 @@ namespace Content.Shared.Construction
         }
 
         public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
+            IDependencyCollection dependencies,
             ISerializationContext? context = null)
         {
             var type = GetType(node);
