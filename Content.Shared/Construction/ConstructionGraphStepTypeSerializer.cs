@@ -59,7 +59,7 @@ namespace Content.Shared.Construction
             return serializationManager.Read(type, node, context, skipHook);
         }
 
-        public ValidatedNode Validate(ISerializationManager serializationManager, MappingDataNode node,
+        public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
             ISerializationContext? context = null)
         {
             var type = GetType(node);
