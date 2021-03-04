@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.Chat;
@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Headset
 
                 msg.Channel = ChatChannel.Radio;
                 msg.Message = message;
-                msg.MessageWrap = Loc.GetString("[{0}] {1} says, \"{{0}}\"", channel, source.Name);
+                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", channel), ("name", source.Name));
                 _netManager.ServerSendMessage(msg, playerChannel);
             }
         }
@@ -92,11 +92,11 @@ namespace Content.Server.GameObjects.Components.Headset
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddText(Loc.GetString("It is set to broadcast over the {0} frequency.", BroadcastFrequency));
-
-            message.AddText(Loc.GetString("A small screen on the headset displays the following available frequencies:"));
+            message.AddText(Loc.GetString("examine-radio-frequency", ("frequency", BroadcastFrequency)));
             message.AddText("\n");
-            message.AddText(Loc.GetString("Use {0} for the currently tuned frequency.", ";"));
+            message.AddText(Loc.GetString("examine-headset"));
+            message.AddText("\n");
+            message.AddText(Loc.GetString("examine-headset-chat-prefix", ("prefix", ";")));
         }
     }
 }

@@ -9,6 +9,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Client;
+using Robust.Client.State;
+using Content.Client.State;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -18,6 +21,7 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IStateManager _stateManager = default!;
 
         private AudioSystem _audioSystem = default!;
 
@@ -33,21 +37,58 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _audioSystem = EntitySystemManager.GetEntitySystem<AudioSystem>();
             _ambientCollection = _prototypeManager.Index<SoundCollectionPrototype>("AmbienceBase");
-            _configManager.OnValueChanged(CCVars.AmbienceBasicEnabled, HandleAmbience, true);
+
+            _configManager.OnValueChanged(CCVars.AmbienceBasicEnabled, AmbienceCVarChanged);
+
+            _stateManager.OnStateChanged += StateManagerOnStateChanged;
         }
 
-        private void HandleAmbience(bool ambienceEnabled)
+        public override void Shutdown()
         {
-            if (ambienceEnabled)
+            base.Shutdown();
+
+            _stateManager.OnStateChanged -= StateManagerOnStateChanged;
+        }
+
+        private void StateManagerOnStateChanged(StateChangedEventArgs args)
+        {
+            if (args.NewState is not GameScreen)
             {
-                var file = _robustRandom.Pick(_ambientCollection.PickFiles);
-                _ambientStream = _audioSystem.Play(file, _ambientParams);
+                EndAmbience();
             }
-            else if (_ambientStream != null)
+            else if (_configManager.GetCVar(CCVars.AmbienceBasicEnabled))
             {
-                _ambientStream.Stop();
-                _ambientStream = null;
+                StartAmbience();
             }
+        }
+
+        private void AmbienceCVarChanged(bool ambienceEnabled)
+        {
+            if (!ambienceEnabled)
+            {
+                EndAmbience();
+            }
+            else if (_stateManager.CurrentState is GameScreen)
+            {
+                StartAmbience();
+            }
+        }
+
+        private void StartAmbience()
+        {
+            EndAmbience();
+            var file = _robustRandom.Pick(_ambientCollection.PickFiles);
+            _ambientStream = _audioSystem.Play(file, _ambientParams);
+        }
+
+        private void EndAmbience()
+        {
+            if (_ambientStream == null)
+            {
+                return;
+            }
+            _ambientStream.Stop();
+            _ambientStream = null;
         }
     }
 }
