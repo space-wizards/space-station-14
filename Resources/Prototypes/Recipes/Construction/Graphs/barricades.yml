@@ -6,9 +6,9 @@
       edges:
         - to: barricadewooden
           steps:
-            - material: MaterialWoodPlank1
+            - material: WoodPlank
               amount: 5
-          doAfter: 3
+              doAfter: 3
               
     - node: barricadewooden
       entity: Barricade
