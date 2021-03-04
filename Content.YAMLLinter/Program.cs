@@ -5,31 +5,41 @@ using System.Threading.Tasks;
 using Content.IntegrationTests;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Markdown.Validation;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.YAMLLinter
 {
-    class Program : ContentIntegrationTest
+    internal class Program : ContentIntegrationTest
     {
-        static int Main(string[] args)
+        private static int Main(string[] args)
         {
-            var errors = new Program().RunValidation().Result;
-            if (errors.Count != 0)
-            {
-                foreach (var (file, errorHashset) in errors)
-                {
-                    foreach (var errorNode in errorHashset)
-                    {
-                        Console.WriteLine($"({file} | (L:{errorNode.Node.Start.Line}-{errorNode.Node.End.Line} | C:{errorNode.Node.Start.Column}-{errorNode.Node.End.Column}): {errorNode.ErrorReason}");
-                    }
-                }
+            return new Program().Run();
+        }
 
-                return -1;
+        private int Run()
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            var errors = RunValidation().Result;
+
+            if (errors.Count == 0)
+            {
+                Console.WriteLine($"No errors found in {(int) stopwatch.Elapsed.TotalMilliseconds} ms.");
+                return 0;
             }
 
-            Console.WriteLine("No errors found!");
+            foreach (var (file, errorHashset) in errors)
+            {
+                foreach (var errorNode in errorHashset)
+                {
+                    Console.WriteLine($"({file} | (L:{errorNode.Node.Start.Line}-{errorNode.Node.End.Line} | C:{errorNode.Node.Start.Column}-{errorNode.Node.End.Column}): {errorNode.ErrorReason}");
+                }
+            }
 
-            return 0;
+            Console.WriteLine($"{errors.Count} errors found in {(int) stopwatch.Elapsed.TotalMilliseconds} ms.");
+            return -1;
         }
 
         private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
