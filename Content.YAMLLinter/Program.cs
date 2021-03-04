@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Markdown.Validation;
-using Robust.Shared.Utility;
 
 namespace Content.YAMLLinter
 {
-    class Program : ContentIntegrationTest
+    internal class Program : ContentIntegrationTest
     {
-        static int Main(string[] args)
+        private static int Main(string[] args)
         {
             var errors = new Program().RunValidation().Result;
             if (errors.Count != 0)
@@ -32,53 +30,13 @@ namespace Content.YAMLLinter
             return 0;
         }
 
-        private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
-        {
-            var client = StartClient();
-
-            await client.WaitIdleAsync();
-
-            var cPrototypeManager = client.ResolveDependency<IPrototypeManager>();
-            var clientErrors = new Dictionary<string, HashSet<ErrorNode>>();
-
-            await client.WaitAssertion(() =>
-            {
-                clientErrors = cPrototypeManager.ValidateDirectory(new ResourcePath("/Prototypes"));
-            });
-
-            client.Stop();
-
-            return clientErrors;
-        }
-
-        private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateServer()
-        {
-            var server = StartServer();
-
-            await server.WaitIdleAsync();
-
-            var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
-            var serverErrors = new Dictionary<string, HashSet<ErrorNode>>();
-
-            await server.WaitAssertion(() =>
-            {
-                serverErrors = sPrototypeManager.ValidateDirectory(new ResourcePath("/Prototypes"));
-            });
-
-            server.Stop();
-
-            return serverErrors;
-        }
-
-        public async Task<Dictionary<string, HashSet<ErrorNode>>> RunValidation()
+        private async Task<Dictionary<string, HashSet<ErrorNode>>> RunValidation()
         {
             var allErrors = new Dictionary<string, HashSet<ErrorNode>>();
 
-            var tasks = await Task.WhenAll(ValidateClient(), ValidateServer());
-            var clientErrors = tasks[0];
-            var serverErrors = tasks[1];
+            var clientErrors = await Task.Run(() => new ClientLinter().ValidateClient());
 
-            foreach (var (key, val) in serverErrors)
+            foreach (var (key, val) in new ServerLinter().ValidateServer())
             {
                 if (clientErrors.TryGetValue(key, out var clientVal))
                 {
