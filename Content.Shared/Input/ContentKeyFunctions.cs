@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Robust.Shared.Input;
 
 namespace Content.Shared.Input
@@ -20,7 +20,7 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction OpenInventoryMenu = "OpenInventoryMenu";
         public static readonly BoundKeyFunction SmartEquipBackpack = "SmartEquipBackpack";
         public static readonly BoundKeyFunction SmartEquipBelt = "SmartEquipBelt";
-        public static readonly BoundKeyFunction OpenTutorial = "OpenTutorial";
+        public static readonly BoundKeyFunction OpenInfo = "OpenInfo";
         public static readonly BoundKeyFunction SwapHands = "SwapHands";
         public static readonly BoundKeyFunction ThrowItemInHand = "ThrowItemInHand";
         public static readonly BoundKeyFunction TryPullObject = "TryPullObject";

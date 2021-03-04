@@ -1,4 +1,5 @@
-﻿- type: tile
+﻿  
+- type: tile
   name: floor_dark
   display_name: Dark floor
   texture: "dark"
@@ -277,3 +278,58 @@
   footstep_sounds: footstep_floor
   friction: 0.35
   item_drop: SheetRGlass1
+  
+- type: tile
+  name: floor_warning1
+  display_name: Warning Tile
+  texture: steel_warning1
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_warning2
+  display_name: Beware Tile
+  texture: steel_warning2
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_white_warning1
+  display_name: White Warning Tile
+  texture: white_warning1
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_white_warning2
+  display_name: White Beware Tile
+  texture: white_warning2
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_blue
+  display_name: Blue Tile
+  texture: blue
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
