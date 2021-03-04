@@ -11,14 +11,15 @@ from zipfile import ZipFile, ZIP_DEFLATED
 FILE = "SS14.Client.zip"
 
 SERVER_FILES = [
-    "SS14.Server_Linux_x64.zip",
-    "SS14.Server_Linux_ARM64.zip",
-    "SS14.Server_Windows_x64.zip",
-    "SS14.Server_macOS_x64.zip"
+    "SS14.Server_linux-x64.zip",
+    "SS14.Server_linux-arm64.zip",
+    "SS14.Server_win-x64.zip",
+    "SS14.Server_osx-x64.zip"
 ]
 
+VERSION = os.environ['GITHUB_SHA']
 FORK_ID = "wizards"
-
+BUILD_URL = f"https://central.spacestation14.io/builds/wizards/builds/{VERSION}/{FILE}"
 
 def main() -> None:
     manifest = generate_manifest("release")
@@ -35,15 +36,13 @@ def inject_manifest(zip_path: str, manifest: str) -> None:
 def generate_manifest(dir: str) -> str:
     # Env variables set by Jenkins.
 
-    version = os.environ["BUILD_NUMBER"]
-    download = f"{os.environ['BUILD_URL']}artifact/release/{FILE}"
     hash = sha256_file(os.path.join(dir, FILE))
     engine_version = get_engine_version()
 
     return json.dumps({
-        "download": download,
+        "download": BUILD_URL,
         "hash": hash,
-        "version": version,
+        "version": VERSION,
         "fork_id": FORK_ID,
         "engine_version": engine_version
     })
