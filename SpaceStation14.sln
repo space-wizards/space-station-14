@@ -58,7 +58,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{806ED41A
 		.appveyor.yml = .appveyor.yml
 		Tools\gen_build_info.py = Tools\gen_build_info.py
 		Tools\generate_hashes.ps1 = Tools\generate_hashes.ps1
-		Jenkinsfile = Jenkinsfile
 		Tools\package_client_build.py = Tools\package_client_build.py
 		Tools\package_server_build.py = Tools\package_server_build.py
 	EndProjectSection

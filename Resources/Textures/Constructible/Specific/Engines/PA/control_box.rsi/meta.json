@@ -32,7 +32,13 @@
     },
     {
       "name": "unlitp3",
-      "directions": 4
+      "directions": 4,
+      "delays": [
+        [0.5, 0.5],
+        [0.5, 0.5],
+        [0.5, 0.5],
+        [0.5, 0.5]
+      ]
     },
     {
       "name": "boxw",

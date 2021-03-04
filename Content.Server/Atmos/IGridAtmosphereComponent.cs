@@ -155,6 +155,8 @@ namespace Content.Server.Atmos
         /// <returns></returns>
         float GetVolumeForCells(int cellCount);
 
+        void RepopulateTiles();
+
         /// <summary>
         ///     Returns a dictionary of adjacent TileAtmospheres.
         /// </summary>
