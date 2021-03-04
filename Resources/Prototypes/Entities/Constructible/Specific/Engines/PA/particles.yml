@@ -6,7 +6,10 @@
   components:
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/particle.rsi
-      state: particle0
+      state: ''
+      layers:
+      - state: particle0
+        shader: unshaded
       shader: unshaded
     - type: Projectile
       delete_on_collide: false
@@ -14,12 +17,15 @@
       damages:
         Radiation: 10
     - type: Physics
+      anchored: false
+      edgeslide: false
       hard: false
       shapes:
       - !type:PhysShapeAabb
         bounds: "-0.48,-0.48,0.48,0.48"
-        layer: [None]
+        layer:
+        - Impassable
+        - MobImpassable
         mask:
-        - MobMask
-        - Clickable
+        - Opaque
     - type: ParticleProjectile
