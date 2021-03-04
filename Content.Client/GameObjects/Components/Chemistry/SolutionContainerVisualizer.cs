@@ -13,6 +13,9 @@ namespace Content.Client.GameObjects.Components.Chemistry
     {
         private int _maxFillLevels;
         private string? _fillBaseName;
+        private string? _emptySpriteName;
+        private SolutionContainerLayers _layer;
+        private bool _changeColor;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -21,6 +24,10 @@ namespace Content.Client.GameObjects.Components.Chemistry
             var serializer = YamlObjectSerializer.NewReader(node);
             serializer.DataField(ref _maxFillLevels, "maxFillLevels", 0);
             serializer.DataField(ref _fillBaseName, "fillBaseName", null);
+
+            serializer.DataField(ref _emptySpriteName, "emptySpriteName", null);
+            serializer.DataField(ref _layer, "layer", SolutionContainerLayers.Fill);
+            serializer.DataField(ref _changeColor, "changeColor", true);
         }
 
         public override void OnChangeData(AppearanceComponent component)
@@ -33,7 +40,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                 out SolutionContainerVisualState state)) return;
 
             if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
-            if (!sprite.LayerMapTryGet(SolutionContainerLayers.Fill, out var fillLayer)) return;
+            if (!sprite.LayerMapTryGet(_layer, out var fillLayer)) return;
 
             var fillPercent = state.FilledVolumePercent;
             var closestFillSprite = (int) Math.Round(fillPercent * _maxFillLevels);
@@ -44,11 +51,16 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
                 var stateName = _fillBaseName + closestFillSprite;
                 sprite.LayerSetState(fillLayer, stateName);
-                sprite.LayerSetColor(fillLayer, state.Color);
+
+                if (_changeColor)
+                    sprite.LayerSetColor(fillLayer, state.Color);
             }
             else
             {
-                sprite.LayerSetVisible(fillLayer, false);
+                if (_emptySpriteName == null)
+                    sprite.LayerSetVisible(fillLayer, false);
+                else
+                    sprite.LayerSetState(fillLayer, _emptySpriteName);
             }
         }
     }

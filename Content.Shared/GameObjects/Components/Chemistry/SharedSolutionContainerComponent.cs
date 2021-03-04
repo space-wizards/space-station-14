@@ -307,7 +307,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
     public enum SolutionContainerLayers : byte
     {
-        Fill
+        Fill,
+        Base
     }
 
     [Serializable, NetSerializable]

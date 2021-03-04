@@ -8,19 +8,19 @@
     "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/syringe.dmi",	
 	"states": [
 		{
-			"name": "0"
+			"name": "syringe_base0"
 		},
 		{
-			"name": "1"
+			"name": "syringe_base1"
 		},
 		{
-			"name": "10"
+			"name": "syringe_base2"
 		},
 		{
-			"name": "15"
+			"name": "syringe_base3"
 		},
 		{
-			"name": "5"
+			"name": "syringe_base4"
 		},
 		{
 			"name": "broken"
