@@ -8,6 +8,10 @@
   drawdepth: Mobs
   abstract: true
   components:
+    - type: Tag
+      tags:
+        - Teleportable
+        - FootstepSound
     - type: Flashable
     - type: Hands
     - type: MovementSpeedModifier
@@ -183,9 +187,7 @@
     - type: CombatMode
     - type: Climbing
     - type: Cuffable
-    - type: Teleportable
     - type: CharacterInfo
-    - type: FootstepSound
     - type: AnimationPlayer
     - type: Buckle
     - type: UnarmedCombat
