@@ -13,7 +13,7 @@ namespace Content.YAMLLinter
     {
         static int Main(string[] args)
         {
-            var errors = new Program().RunValidation();
+            var errors = new Program().RunValidation().Result;
             if (errors.Count != 0)
             {
                 foreach (var (file, errorHashset) in errors)
@@ -32,31 +32,52 @@ namespace Content.YAMLLinter
             return 0;
         }
 
-        public Dictionary<string, HashSet<ErrorNode>> RunValidation()
+        private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
         {
-            var server = StartServer();
-            server.WaitIdleAsync().Wait();
-            var sprotoManager = server.ResolveDependency<IPrototypeManager>();
-            var serverErrors = new Dictionary<string, HashSet<ErrorNode>>();
-            server.WaitAssertion(() =>
-                {
-                    serverErrors = sprotoManager.ValidateDirectory(new ResourcePath("/Prototypes"));
-                }
-            ).Wait();
-            server.Stop();
-
             var client = StartClient();
-            client.WaitIdleAsync().Wait();
-            var cprotoManager = client.ResolveDependency<IPrototypeManager>();
+
+            await client.WaitIdleAsync();
+
+            var cPrototypeManager = client.ResolveDependency<IPrototypeManager>();
             var clientErrors = new Dictionary<string, HashSet<ErrorNode>>();
-            client.WaitAssertion(() =>
-                {
-                    clientErrors = cprotoManager.ValidateDirectory(new ResourcePath("/Prototypes"));
-                }
-            ).Wait();
+
+            await client.WaitAssertion(() =>
+            {
+                clientErrors = cPrototypeManager.ValidateDirectory(new ResourcePath("/Prototypes"));
+            });
+
             client.Stop();
 
+            return clientErrors;
+        }
+
+        private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateServer()
+        {
+            var server = StartServer();
+
+            await server.WaitIdleAsync();
+
+            var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
+            var serverErrors = new Dictionary<string, HashSet<ErrorNode>>();
+
+            await server.WaitAssertion(() =>
+            {
+                serverErrors = sPrototypeManager.ValidateDirectory(new ResourcePath("/Prototypes"));
+            });
+
+            server.Stop();
+
+            return serverErrors;
+        }
+
+        public async Task<Dictionary<string, HashSet<ErrorNode>>> RunValidation()
+        {
             var allErrors = new Dictionary<string, HashSet<ErrorNode>>();
+
+            var tasks = await Task.WhenAll(ValidateClient(), ValidateServer());
+            var clientErrors = tasks[0];
+            var serverErrors = tasks[1];
+
             foreach (var (key, val) in serverErrors)
             {
                 if (clientErrors.TryGetValue(key, out var clientVal))
@@ -69,6 +90,7 @@ namespace Content.YAMLLinter
                     allErrors[key] = newErrors;
                 }
             }
+
             return allErrors;
         }
     }
