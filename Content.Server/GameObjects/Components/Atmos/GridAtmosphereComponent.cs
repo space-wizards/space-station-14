@@ -181,7 +181,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             foreach (var (indices, tile) in Tiles)
             {
-                if (tile.Air == null) continue;
+                if (tile.Air == null || IsSpace(indices)) continue;
 
                 if (uniqueMixHash.TryGetValue(tile.Air, out var index))
                 {
