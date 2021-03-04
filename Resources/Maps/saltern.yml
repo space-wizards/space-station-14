@@ -38619,18 +38619,24 @@ entities:
   - parent: 853
     pos: 45.5,-17.5
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4402
   type: Emitter
   components:
   - parent: 853
     pos: 49.5,-17.5
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4403
   type: Emitter
   components:
   - parent: 853
     pos: 53.5,-17.5
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4404
   type: Emitter
   components:
@@ -38638,6 +38644,8 @@ entities:
     pos: 56.5,-20.5
     rot: 4.71238902409608 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4405
   type: Emitter
   components:
@@ -38645,6 +38653,8 @@ entities:
     pos: 56.5,-24.5
     rot: 4.71238902409608 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4406
   type: Emitter
   components:
@@ -38652,6 +38662,8 @@ entities:
     pos: 56.5,-28.5
     rot: 4.71238902409608 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4407
   type: Emitter
   components:
@@ -38659,6 +38671,8 @@ entities:
     pos: 53.5,-31.5
     rot: 3.141592697301183 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4408
   type: Emitter
   components:
@@ -38666,6 +38680,8 @@ entities:
     pos: 49.5,-31.5
     rot: 3.141592697301183 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4409
   type: Emitter
   components:
@@ -38673,6 +38689,8 @@ entities:
     pos: 45.5,-31.5
     rot: 3.141592697301183 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4410
   type: Emitter
   components:
@@ -38680,6 +38698,8 @@ entities:
     pos: 42.5,-28.5
     rot: 1.5707963705062866 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4411
   type: Emitter
   components:
@@ -38687,6 +38707,8 @@ entities:
     pos: 42.5,-24.5
     rot: 1.5707963705062866 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4412
   type: Emitter
   components:
@@ -38694,6 +38716,8 @@ entities:
     pos: 42.5,-20.5
     rot: 1.5707963705062866 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4413
   type: ApcExtensionCable
   components:
@@ -39786,6 +39810,8 @@ entities:
     pos: 45.5,-20.5
     rot: 4.371139006309477E-08 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4562
   type: ContainmentFieldGenerator
   components:
@@ -39793,6 +39819,8 @@ entities:
     pos: 49.5,-20.5
     rot: 4.371139006309477E-08 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4563
   type: ContainmentFieldGenerator
   components:
@@ -39800,6 +39828,8 @@ entities:
     pos: 53.5,-20.5
     rot: 4.371139006309477E-08 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4564
   type: ContainmentFieldGenerator
   components:
@@ -39807,6 +39837,8 @@ entities:
     pos: 53.5,-24.5
     rot: 4.371139006309477E-08 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4565
   type: ContainmentFieldGenerator
   components:
@@ -39814,6 +39846,8 @@ entities:
     pos: 53.5,-28.5
     rot: 4.371139006309477E-08 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4566
   type: ContainmentFieldGenerator
   components:
@@ -39821,6 +39855,8 @@ entities:
     pos: 49.5,-28.5
     rot: 4.371139006309477E-08 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4567
   type: ContainmentFieldGenerator
   components:
@@ -39828,6 +39864,8 @@ entities:
     pos: 45.5,-28.5
     rot: 4.371139006309477E-08 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4568
   type: ContainmentFieldGenerator
   components:
@@ -39835,6 +39873,8 @@ entities:
     pos: 45.5,-24.5
     rot: 4.371139006309477E-08 rad
     type: Transform
+  - anchored: True
+    type: Physics
 - uid: 4569
   type: Catwalk
   components:
