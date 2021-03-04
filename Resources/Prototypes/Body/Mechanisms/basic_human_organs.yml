@@ -27,7 +27,6 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: brain
   - type: Mechanism
-    durability: 10
     size: 1
     compatibility: Biological
     behaviors:
@@ -45,7 +44,6 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: eyeballs
   - type: Mechanism
-    durability: 10
     size: 1
     compatibility: Biological
 
@@ -60,7 +58,6 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: heart-on
   - type: Mechanism
-    durability: 10
     size: 1
     compatibility: Biological
     behaviors:
@@ -77,7 +74,6 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: lungs
   - type: Mechanism
-    durability: 13
     size: 1
     compatibility: Biological
     behaviors:
@@ -94,7 +90,6 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: stomach
   - type: Mechanism
-    durability: 13
     size: 1
     compatibility: Biological
     behaviors:
@@ -115,7 +110,6 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: liver
   - type: Mechanism
-    durability: 15
     size: 1
     compatibility: Biological
     behaviors:
@@ -136,6 +130,5 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: kidneys
   - type: Mechanism
-    durability: 20
     size: 1
     compatibility: Biological

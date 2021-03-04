@@ -92,7 +92,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
-    state: icon
   - type: RangedWeapon
   - type: BoltActionBarrel
     caliber: Shotgun
@@ -110,8 +109,8 @@
     soundGunshot: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
     soundInsert: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
-    sound_bolt_open: /Audio/Weapons/Guns/Cock/shotgun_open.ogg
-    sound_bolt_closed: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
+    soundBoltOpen: /Audio/Weapons/Guns/Cock/shotgun_open.ogg
+    soundBoltClosed: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -216,7 +215,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
-    state: icon
   - type: RangedWeapon
   - type: BoltActionBarrel
     caliber: Shotgun

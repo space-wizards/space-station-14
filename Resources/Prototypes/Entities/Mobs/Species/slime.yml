@@ -5,7 +5,6 @@
   name: Slime Person
   id: BaseSlimeMob_Content
   description: A miserable pile of slime.
-  drawdepth: Mobs
   abstract: true
   components:
     - type: Tag

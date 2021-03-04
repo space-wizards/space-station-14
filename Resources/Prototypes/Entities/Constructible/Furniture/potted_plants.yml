@@ -74,4 +74,3 @@
   - type: PointLight
     radius: 2
     color: "#2cb2e8"
-    power: 0.25

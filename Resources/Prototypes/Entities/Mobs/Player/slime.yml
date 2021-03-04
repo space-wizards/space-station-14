@@ -4,7 +4,6 @@
   parent: BaseSlimeMob_Content
   id: SlimeMob_Content
   description: A miserable pile of slime
-  drawdepth: Mobs
   components:
     - type: Mind
       showExamineInfo: true
