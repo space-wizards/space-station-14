@@ -58,7 +58,7 @@
       ]
     },
     {
-      "name": "custburg"
+      "name": "custburg-bottom"
     },
     {
       "name": "custburg-filling"
@@ -85,32 +85,29 @@
       "name": "ghost",
       "delays": [
         [
-          0.1,
+          0.01,
           0.08,
           0.06,
           0.05,
           0.04,
           0.04,
           0.06,
-          0.1,
-          0.13,
-          0.11,
+          0.01,
+          0.01,
+          0.01,
           0.09,
           0.06,
           0.05,
           0.06,
-          0.06
+          0.06,
           0.08,
-          0.1,
-          0.12
+          0.01,
+          0.02
         ]
       ]
     },
     {
       "name": "plain"
-    },
-    {
-      "name": "jelly"
     },
     {
       "name": "mcguffin"
@@ -156,7 +153,16 @@
       "name": "superbite"
     },
     {
+      "name": "plate"
+    },
+    {
+      "name": "plate-trash"
+    },
+    {
       "name": "tofu"
+    },
+    {
+      "name": "soylent"
     },
     {
       "name": "x"
