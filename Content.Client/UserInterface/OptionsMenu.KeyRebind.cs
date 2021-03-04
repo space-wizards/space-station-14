@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Client.UserInterface.Stylesheets;
@@ -71,6 +71,7 @@ namespace Content.Client.UserInterface
                                         {
                                             Text = Loc.GetString("ui-options-binds-reset-all"),
                                             StyleClasses = {StyleBase.ButtonCaution},
+                                            HorizontalExpand = true,
                                             HorizontalAlignment = HAlignment.Right
                                         })
                                     }
