@@ -125,7 +125,8 @@ def build_platform(platform: PlatformReg, skip_build: bool) -> None:
             "/v:m",
             f"/p:TargetOS={platform.target_os}",
             "/t:Rebuild",
-            "/p:FullRelease=True"
+            "/p:FullRelease=True",
+            "/m"
         ], check=True)
 
         publish_client_server(platform.rid, platform.target_os)
@@ -147,7 +148,8 @@ def publish_client_server(runtime: str, target_os: str) -> None:
         "--no-self-contained",
         "-c", "Release",
         f"/p:TargetOS={target_os}",
-        "/p:FullRelease=True"
+        "/p:FullRelease=True",
+        "/m"
     ]
 
     subprocess.run(base + ["RobustToolbox/Robust.Server/Robust.Server.csproj"], check=True)
