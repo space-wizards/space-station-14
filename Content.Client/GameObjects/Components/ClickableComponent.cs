@@ -5,7 +5,6 @@ using Robust.Client.Graphics;
 using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -126,19 +125,10 @@ namespace Content.Client.GameObjects.Components
                         }
 
                         var (mX, mY) = localOffset + rsi.Size / 2;
-
-                        switch (layer.DirOffset)
-                        {
-                            case SpriteComponent.DirectionOffset.None:
-                            case SpriteComponent.DirectionOffset.Flip:
-                                break;
-                            case SpriteComponent.DirectionOffset.Clockwise:
-                            case SpriteComponent.DirectionOffset.CounterClockwise:
-                                (mX, mY) = (mY, mX);
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
+                        (mX, mY) = layer.DirOffset == SpriteComponent.DirectionOffset.Clockwise ||
+                                   layer.DirOffset == SpriteComponent.DirectionOffset.CounterClockwise
+                            ? (mY, mX)
+                            : (mX, mY);
 
                         if (_clickMapManager.IsOccluding(rsi, layer.RsiState, dir,
                             layer.AnimationFrame, ((int) mX, (int) mY)))
