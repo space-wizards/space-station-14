@@ -135,3 +135,9 @@ Entries:
   - {message: You can burn yourself on wall lights again., type: Fix}
   id: 24
   time: '2021-03-03T15:30:18.279719+00:00'
+- author: PJB
+  changes:
+  - {message: Moved content builds over to a better server and threw it behind Cloudflare
+      caching. Should download MUCH faster now!, type: Tweak}
+  id: 25
+  time: '2021-03-04T01:20:22.853950+00:00'
