@@ -454,7 +454,7 @@ namespace Content.Server.GameObjects.Components.PA
 
             Vector2i RotateOffset(in Vector2i vec)
             {
-                var rot = new Angle(Owner.Transform.LocalRotation + Math.PI / 2);
+                var rot = new Angle(Owner.Transform.LocalRotation);
                 return (Vector2i) rot.RotateVec(vec);
             }
         }
