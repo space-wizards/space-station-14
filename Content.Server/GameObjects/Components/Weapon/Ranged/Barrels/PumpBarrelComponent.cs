@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 SoundGunshot);
         }
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             _spawnedAmmo = new Stack<IEntity>(Capacity - 1);
         }

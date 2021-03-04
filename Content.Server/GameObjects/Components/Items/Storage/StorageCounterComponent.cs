@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         public override string Name => "StorageCounter";
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             if (_countTag == null)
             {

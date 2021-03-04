@@ -13,7 +13,7 @@ namespace Content.Shared.Construction
     {
         [DataField("steps")] public List<List<ConstructionGraphStep>> Steps { get; private set; } = new();
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             if (Steps.Any(inner => inner.Any(step => step is NestedConstructionGraphStep)))
             {

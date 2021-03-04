@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
         [DataField("signalReceivers")] private List<EntityUid> _receiverIds = new();
 
-        public void BeforeSerialization()
+        void ISerializationHooks.BeforeSerialization()
         {
             var entityList = new List<EntityUid>();
 
@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             _receiverIds = entityList;
         }
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             _unresolvedReceivers = new List<SignalReceiverComponent>();
 

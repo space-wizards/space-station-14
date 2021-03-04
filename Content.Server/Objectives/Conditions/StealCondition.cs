@@ -33,7 +33,7 @@ namespace Content.Server.Objectives.Conditions
             };
         }
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             if (_amount < 1)
             {

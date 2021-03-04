@@ -536,7 +536,7 @@ namespace Content.Server.Atmos
             NumericsHelpers.Multiply(_moles, multiplier);
         }
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             // The arrays MUST have a specific length.
             Array.Resize(ref _moles, Atmospherics.AdjustedNumberOfGases);

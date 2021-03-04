@@ -19,7 +19,7 @@ namespace Content.Client.GameObjects.Components.Gravity
         private Dictionary<string, string> _rawSpriteMap = new();
         private Dictionary<GravityGeneratorStatus, string> _spriteMap = new();
 
-        public void BeforeSerialization()
+        void ISerializationHooks.BeforeSerialization()
         {
             _rawSpriteMap = new Dictionary<string, string>();
             foreach (var (status, sprite) in _spriteMap)

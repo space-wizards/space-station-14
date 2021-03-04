@@ -34,7 +34,7 @@ namespace Content.Shared.Damage.ResistanceSet
         [field: DataField("parent")]
         public string? Parent { get; }
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             Resistances = new Dictionary<DamageType, ResistanceSetSettings>();
             foreach (var damageType in (DamageType[]) Enum.GetValues(typeof(DamageType)))

@@ -240,7 +240,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// </summary>
         public bool Enabled { get; private set; } = true;
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             if (ActionType == ItemActionType.Error)
             {

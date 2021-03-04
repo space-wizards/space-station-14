@@ -58,8 +58,9 @@ namespace Content.Shared.Actions
 
         public override string ID => ActionType.ToString();
 
-        public void AfterDeserialization()
+        public override void AfterDeserialization()
         {
+            base.AfterDeserialization();
             if (ActionType == ItemActionType.Error)
             {
                 Logger.ErrorS("action", "missing or invalid actionType for action with name {0}", Name);

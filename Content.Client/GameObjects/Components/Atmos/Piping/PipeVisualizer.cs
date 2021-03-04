@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Atmos.Piping
         [DataField("rsi")] private string _rsiString = "Constructible/Atmos/pipe.rsi";
         private RSI? _pipeRSI;
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             var rsiPath = SharedSpriteComponent.TextureRoot / _rsiString;
             var resourceCache = IoCManager.Resolve<IResourceCache>();

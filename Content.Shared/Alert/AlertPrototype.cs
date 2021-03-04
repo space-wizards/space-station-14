@@ -99,7 +99,7 @@ namespace Content.Shared.Alert
         [DataField("onClick", serverOnly: true)]
         public IAlertClick? OnClick { get; private set; }
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             if (AlertType == AlertType.Error)
             {

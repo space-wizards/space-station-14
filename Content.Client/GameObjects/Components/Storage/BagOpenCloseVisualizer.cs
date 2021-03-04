@@ -20,7 +20,7 @@ namespace Content.Client.GameObjects.Components.Storage
         [DataField(OpenIcon)]
         private string? _openIcon;
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             if(_openIcon == null){
                 Logger.Warning("BagOpenCloseVisualizer is useless with no `openIcon`");

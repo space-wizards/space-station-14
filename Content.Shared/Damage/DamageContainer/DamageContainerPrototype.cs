@@ -32,7 +32,7 @@ namespace Content.Shared.Damage.DamageContainer
         [field: DataField("parent")]
         public string? Parent { get; }
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             if (_supportAll)
             {

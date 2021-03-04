@@ -53,7 +53,7 @@ namespace Content.Shared.Chemistry
             AddReagent(reagentId, quantity);
         }
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             TotalVolume = ReagentUnit.Zero;
             _contents.ForEach(reagent => TotalVolume += reagent.Quantity);

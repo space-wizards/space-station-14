@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Atmos.Piping
 
         private RSI? _connectorRsi;
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             var rsiString = SharedSpriteComponent.TextureRoot / _rsi;
             var resourceCache = IoCManager.Resolve<IResourceCache>();

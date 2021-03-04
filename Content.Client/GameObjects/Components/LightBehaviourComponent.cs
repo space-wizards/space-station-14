@@ -332,7 +332,7 @@ namespace Content.Client.GameObjects.Components
             return (-1, playingTime);
         }
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             if (ColorsToCycle.Count < 2)
             {
@@ -380,7 +380,7 @@ namespace Content.Client.GameObjects.Components
         private PointLightComponent _lightComponent;
         private AnimationPlayerComponent _animationPlayer;
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             var key = 0;
 

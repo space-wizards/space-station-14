@@ -103,7 +103,7 @@ namespace Content.Shared.Actions
         public bool IsTargetAction =>
             BehaviorType == BehaviorType.TargetEntity || BehaviorType == BehaviorType.TargetPoint;
 
-        public void AfterDeserialization()
+        public virtual void AfterDeserialization()
         {
             Name = new FormattedMessage();
             Name.AddText(ID);

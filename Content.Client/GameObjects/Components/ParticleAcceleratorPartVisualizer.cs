@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components
         private string _baseState;
         private Dictionary<ParticleAcceleratorVisualState, string> _states = new();
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             _states.Add(ParticleAcceleratorVisualState.Powered, _baseState+"p");
             _states.Add(ParticleAcceleratorVisualState.Level0, _baseState+"p0");

@@ -102,7 +102,7 @@ namespace Content.Client.Changelog
             [field: DataField("changes")]
             public List<ChangelogChange> Changes { get; } = default!;
 
-            public void AfterDeserialization()
+            void ISerializationHooks.AfterDeserialization()
             {
                 Time = DateTime.Parse(_time, null, DateTimeStyles.RoundtripKind);
             }
