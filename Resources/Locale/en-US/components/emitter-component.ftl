@@ -15,3 +15,6 @@ comp-emitter-unlock = You unlock the {$target}.
 comp-emitter-turned-on = The {$target} turns on.
 
 comp-emitter-turned-off = The {$target} turns off.
+
+# Shows if the user attempts to activate the emitter while it's un-anchored.
+comp-emitter-not-anchored = The {$target} isn't anchored to the ground!

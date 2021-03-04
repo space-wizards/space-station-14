@@ -6,7 +6,6 @@ using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.Interfaces;
-using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Singularity;
 using Content.Shared.Interfaces;
@@ -85,6 +84,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 Logger.Error($"EmitterComponent {Owner} created with no PowerConsumerComponent");
                 return;
             }
+
             _powerConsumer.OnReceivedPowerChanged += OnReceivedPowerChanged;
         }
 
@@ -113,15 +113,22 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            if (!_isOn)
+            if (Owner.TryGetComponent(out PhysicsComponent? phys) && phys.Anchored)
             {
-                SwitchOn();
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-turned-on", ("target", Owner)));
+                if (!_isOn)
+                {
+                    SwitchOn();
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-turned-on", ("target", Owner)));
+                }
+                else
+                {
+                    SwitchOff();
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-turned-off", ("target", Owner)));
+                }
             }
             else
             {
-                SwitchOff();
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-turned-off", ("target", Owner)));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-not-anchored", ("target", Owner)));
             }
         }
 

@@ -94,8 +94,9 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.2,0.2,0.2"
-      layer: 32
-      mask: 30
+      mask:
+        - Impassable
+        - MobImpassable
   - type: Ammo
     isProjectile: true
     ammoVelocity: 20

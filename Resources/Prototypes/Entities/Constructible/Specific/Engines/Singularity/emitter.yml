@@ -6,7 +6,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    anchored: false
+    anchored: true
     mass: 25
     shapes:
     - !type:PhysShapeAabb
