@@ -8,6 +8,7 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -33,7 +34,7 @@ namespace Content.Server.GameObjects.Components
             base.Initialize();
 
             ItemContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>("extinguisher_cabinet", Owner, out _);
+                ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "extinguisher_cabinet", out _);
         }
 
         public override void ExposeData(ObjectSerializer serializer)

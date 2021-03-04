@@ -23,6 +23,7 @@
   - type: SnapGrid
     offset: Center
   - type: GasGenerator
+  - type: PipeNetDevice
     
 - type: entity
   parent: GasGeneratorBase

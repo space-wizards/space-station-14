@@ -17,7 +17,7 @@
   icon:
     sprite: Objects/Materials/Sheets/metal.rsi
     state: steel_3
-  product: CrateMaterialGlass
+  product: CrateMaterialSteel
   cost: 1500
   category: Materials
   group: market

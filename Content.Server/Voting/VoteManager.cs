@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -10,11 +11,13 @@ using Content.Shared.Administration;
 using Content.Shared.Network.NetMessages;
 using Content.Shared.Utility;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 #nullable enable
 
@@ -23,6 +26,7 @@ namespace Content.Server.Voting
     public sealed partial class VoteManager : IVoteManager
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
@@ -320,7 +324,7 @@ namespace Content.Server.Voting
             }
             else
             {
-                options.InitiatorText = Loc.GetString("The server");
+                options.InitiatorText = Loc.GetString("ui-vote-initiator-server");
             }
         }
 
@@ -389,6 +393,8 @@ namespace Content.Server.Voting
             public bool Finished => _reg.Finished;
             public bool Cancelled => _reg.Cancelled;
 
+            public IReadOnlyDictionary<object, int> VotesPerOption { get; }
+
             public event VoteFinishedEventHandler? OnFinished
             {
                 add => _reg.OnFinished += value;
@@ -405,6 +411,8 @@ namespace Content.Server.Voting
             {
                 _mgr = mgr;
                 _reg = reg;
+
+                VotesPerOption = new VoteDict(reg);
             }
 
             public bool IsValidOption(int optionId)
@@ -420,6 +428,62 @@ namespace Content.Server.Voting
             public void Cancel()
             {
                 _mgr.CancelVote(_reg);
+            }
+
+            private sealed class VoteDict : IReadOnlyDictionary<object, int>
+            {
+                private readonly VoteReg _reg;
+
+                public VoteDict(VoteReg reg)
+                {
+                    _reg = reg;
+                }
+
+                public IEnumerator<KeyValuePair<object, int>> GetEnumerator()
+                {
+                    return _reg.Entries.Select(e => KeyValuePair.Create(e.Data, e.Votes)).GetEnumerator();
+                }
+
+                IEnumerator IEnumerable.GetEnumerator()
+                {
+                    return GetEnumerator();
+                }
+
+                public int Count => _reg.Entries.Length;
+
+                public bool ContainsKey(object key)
+                {
+                    return TryGetValue(key, out _);
+                }
+
+                public bool TryGetValue(object key, out int value)
+                {
+                    var entry = _reg.Entries.FirstOrNull(a => a.Data.Equals(key));
+                    if (entry != null)
+                    {
+                        value = entry.Value.Votes;
+                        return true;
+                    }
+
+                    value = default;
+                    return false;
+                }
+
+                public int this[object key]
+                {
+                    get
+                    {
+                        if (!TryGetValue(key, out var votes))
+                        {
+                            throw new KeyNotFoundException();
+                        }
+
+                        return votes;
+                    }
+                }
+
+                public IEnumerable<object> Keys => _reg.Entries.Select(c => c.Data);
+                public IEnumerable<int> Values  => _reg.Entries.Select(c => c.Votes);
             }
         }
 

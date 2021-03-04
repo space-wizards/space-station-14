@@ -31,6 +31,10 @@
       - cargo.hydroponicsseedsexotic
       - cargo.servicejanitorial
       - cargo.servicelightsreplacement
+      - cargo.engineeringcablelv
+      - cargo.engineeringcablemv
+      - cargo.engineeringcablehv
+      - cargo.engineeringcablebulk
       - cargo.engineameshielding
       - cargo.engineamejar
       - cargo.engineamecontrol
@@ -44,6 +48,7 @@
       - cargo.enginesingularitycollector
       - cargo.enginesingularitygenerator
       - cargo.enginesingularitycontainment
+      - cargo.engineparticleaccelerator
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Key

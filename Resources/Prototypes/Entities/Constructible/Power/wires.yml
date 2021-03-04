@@ -36,10 +36,10 @@
   decription: "An orange high voltage power cable."
   components:
   - type: Sprite
-    sprite: Constructible/Power/hv_cable.rsi
+    sprite: Constructible/Power/Wires/hv_cable.rsi
     state: hvcable_0
   - type: Icon
-    sprite: Constructible/Power/hv_cable.rsi
+    sprite: Constructible/Power/Wires/hv_cable.rsi
     state: hvcable_4
   - type: IconSmooth
     base: hvcable_
@@ -75,11 +75,11 @@
   components:
   - type: Sprite
     color: Yellow
-    sprite: Constructible/Power/mv_cable.rsi
+    sprite: Constructible/Power/Wires/mv_cable.rsi
     state: mvcable_0
   - type: Icon
     color: Yellow
-    sprite: Constructible/Power/mv_cable.rsi
+    sprite: Constructible/Power/Wires/mv_cable.rsi
     state: mvcable_4
   - type: IconSmooth
     base: mvcable_
@@ -115,11 +115,11 @@
   components:
   - type: Sprite
     color: Green
-    sprite: Constructible/Power/lv_cable.rsi
+    sprite: Constructible/Power/Wires/lv_cable.rsi
     state: lvcable_0
   - type: Icon
     color: Green
-    sprite: Constructible/Power/lv_cable.rsi
+    sprite: Constructible/Power/Wires/lv_cable.rsi
     state: lvcable_4
   - type: IconSmooth
     base: lvcable_
@@ -172,7 +172,7 @@
   name: HV Connector Wire
   components:
   - type: Sprite
-    sprite: Constructible/Power/hv_cable.rsi
+    sprite: Constructible/Power/Wires/hv_cable.rsi
     state: hvcable_0
   - type: IconSmooth
     base: hvcable_
@@ -185,7 +185,7 @@
   name: MV Connector Wire
   components:
   - type: Sprite
-    sprite: Constructible/Power/mv_cable.rsi
+    sprite: Constructible/Power/Wires/mv_cable.rsi
     state: mvcable_0
     color: Yellow
   - type: IconSmooth
@@ -199,7 +199,7 @@
   name: LV Connector Wire
   components:
   - type: Sprite
-    sprite: Constructible/Power/lv_cable.rsi
+    sprite: Constructible/Power/Wires/lv_cable.rsi
     state: lvcable_0
     color: Green
   - type: IconSmooth

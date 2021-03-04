@@ -6,7 +6,7 @@
     <VBoxContainer>
         <HBoxContainer>
             <MarginContainer MarginLeftOverride="8" HorizontalExpand="True">
-                <Label Text="{Loc 'Call Vote'}" VAlign="Center" StyleClasses="LabelHeading" />
+                <Label Text="{Loc 'ui-vote-create-title'}" VAlign="Center" StyleClasses="LabelHeading" />
             </MarginContainer>
             <MarginContainer MarginRightOverride="8">
                 <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"
@@ -27,12 +27,12 @@
 
         <MarginContainer SizeFlagsHorizontal="Fill"
                          MarginLeftOverride="8" MarginRightOverride="8" MarginBottomOverride="2">
-            <Button Name="CreateButton" Text="{Loc 'Call Vote'}" />
+            <Button Name="CreateButton" Text="{Loc 'ui-vote-create-button'}" />
         </MarginContainer>
 
         <PanelContainer StyleClasses="LowDivider" />
         <MarginContainer MarginLeftOverride="12">
-            <Label StyleClasses="LabelSubText" Text="{Loc 'Powered by Robust™ Anti-Tamper Technology'}" />
+            <Label StyleClasses="LabelSubText" Text="{Loc 'ui-vote-fluff'}" />
         </MarginContainer>
 
     </VBoxContainer>

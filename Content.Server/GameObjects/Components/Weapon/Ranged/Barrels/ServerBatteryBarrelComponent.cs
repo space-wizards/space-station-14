@@ -13,6 +13,7 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
@@ -102,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void Initialize()
         {
             base.Initialize();
-            _powerCellContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-powercell-container", Owner, out var existing);
+            _powerCellContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-powercell-container", out var existing);
             if (!existing && _powerCellPrototype != null)
             {
                 var powerCellEntity = Owner.EntityManager.SpawnEntity(_powerCellPrototype, Owner.Transform.Coordinates);
@@ -111,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             if (_ammoPrototype != null)
             {
-                _ammoContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-ammo-container", Owner);
+                _ammoContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-ammo-container");
             }
 
             if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -83,14 +83,14 @@ namespace Content.Client.UserInterface
     {
         private HBoxContainer _topButtonsContainer;
         private TopButton _buttonEscapeMenu;
-        private TopButton _buttonTutorial;
+        private TopButton _buttonInfo;
         private TopButton _buttonCharacterMenu;
         private TopButton _buttonInventoryMenu;
         private TopButton _buttonCraftingMenu;
         private TopButton _buttonActionsMenu;
         private TopButton _buttonAdminMenu;
         private TopButton _buttonSandboxMenu;
-        private TutorialWindow _tutorialWindow;
+        private InfoWindow _infoWindow;
         private TargetingDoll _targetingDoll;
         private Button _combatModeButton;
         private VBoxContainer _combatPanelContainer;
@@ -141,7 +141,7 @@ namespace Content.Client.UserInterface
             var craftingTexture = _resourceCache.GetTexture("/Textures/Interface/hammer.svg.192dpi.png");
             var actionsTexture = _resourceCache.GetTexture("/Textures/Interface/fist.svg.192dpi.png");
             var adminTexture = _resourceCache.GetTexture("/Textures/Interface/gavel.svg.192dpi.png");
-            var tutorialTexture = _resourceCache.GetTexture("/Textures/Interface/tutorial.svg.192dpi.png");
+            var infoTexture = _resourceCache.GetTexture("/Textures/Interface/info.svg.192dpi.png");
             var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.192dpi.png");
 
             _topButtonsContainer = new HBoxContainer
@@ -248,24 +248,24 @@ namespace Content.Client.UserInterface
 
             _buttonSandboxMenu.OnToggled += args => SandboxButtonToggled?.Invoke(args.Pressed);
 
-            // Tutorial
-            _buttonTutorial = new TopButton(tutorialTexture, ContentKeyFunctions.OpenTutorial, _inputManager)
+            // Info Window
+            _buttonInfo = new TopButton(infoTexture, ContentKeyFunctions.OpenInfo, _inputManager)
             {
-                ToolTip = Loc.GetString("Open tutorial."),
+                ToolTip = Loc.GetString("ui-options-function-open-info"),
                 MinSize = topMinSize,
                 StyleClasses = {StyleBase.ButtonOpenLeft, TopButton.StyleClassRedTopButton},
             };
 
-            _topButtonsContainer.AddChild(_buttonTutorial);
+            _topButtonsContainer.AddChild(_buttonInfo);
 
-            _buttonTutorial.OnToggled += a => ButtonTutorialOnOnToggled();
+            _buttonInfo.OnToggled += a => ButtonInfoOnOnToggled();
 
-            _tutorialWindow = new TutorialWindow();
+            _infoWindow = new InfoWindow();
 
-            _tutorialWindow.OnClose += () => _buttonTutorial.Pressed = false;
+            _infoWindow.OnClose += () => _buttonInfo.Pressed = false;
 
-            _inputManager.SetInputCommand(ContentKeyFunctions.OpenTutorial,
-                InputCmdHandler.FromDelegate(s => ButtonTutorialOnOnToggled()));
+            _inputManager.SetInputCommand(ContentKeyFunctions.OpenInfo,
+                InputCmdHandler.FromDelegate(s => ButtonInfoOnOnToggled()));
 
 
             _combatPanelContainer = new VBoxContainer
@@ -346,26 +346,26 @@ namespace Content.Client.UserInterface
             LC.SetGrowVertical(VoteContainer, LC.GrowDirection.End);
         }
 
-        private void ButtonTutorialOnOnToggled()
+        private void ButtonInfoOnOnToggled()
         {
-            _buttonTutorial.StyleClasses.Remove(TopButton.StyleClassRedTopButton);
-            if (_tutorialWindow.IsOpen)
+            _buttonInfo.StyleClasses.Remove(TopButton.StyleClassRedTopButton);
+            if (_infoWindow.IsOpen)
             {
-                if (!_tutorialWindow.IsAtFront())
+                if (!_infoWindow.IsAtFront())
                 {
-                    _tutorialWindow.MoveToFront();
-                    _buttonTutorial.Pressed = true;
+                    _infoWindow.MoveToFront();
+                    _buttonInfo.Pressed = true;
                 }
                 else
                 {
-                    _tutorialWindow.Close();
-                    _buttonTutorial.Pressed = false;
+                    _infoWindow.Close();
+                    _buttonInfo.Pressed = false;
                 }
             }
             else
             {
-                _tutorialWindow.OpenCentered();
-                _buttonTutorial.Pressed = true;
+                _infoWindow.OpenCentered();
+                _buttonInfo.Pressed = true;
             }
         }
 

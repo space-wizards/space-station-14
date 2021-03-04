@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,6 +20,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -211,12 +212,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// <param name="targetPos">Target position on the map to shoot at.</param>
         private void Fire(IEntity shooter, Vector2 targetPos)
         {
-            var soundSystem = EntitySystem.Get<AudioSystem>();
             if (ShotsLeft == 0)
             {
                 if (_soundEmpty != null)
                 {
-                    soundSystem.PlayAtCoords(_soundEmpty, Owner.Transform.Coordinates);
+                    SoundSystem.Play(Filter.Broadcast(), _soundEmpty, Owner.Transform.Coordinates);
                 }
                 return;
             }
@@ -225,7 +225,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var projectile = TakeProjectile(shooter.Transform.Coordinates);
             if (projectile == null)
             {
-                soundSystem.PlayAtCoords(_soundEmpty, Owner.Transform.Coordinates);
+                SoundSystem.Play(Filter.Broadcast(), _soundEmpty, Owner.Transform.Coordinates);
                 return;
             }
 
@@ -266,7 +266,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 throw new InvalidOperationException();
             }
 
-            soundSystem.PlayAtCoords(_soundGunshot, Owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Broadcast(), _soundGunshot, Owner.Transform.Coordinates);
             _lastFire = _gameTiming.CurTime;
 
             return;
@@ -316,7 +316,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             var soundCollection = prototypeManager.Index<SoundCollectionPrototype>(ammo.SoundCollectionEject);
             var randomFile = robustRandom.Pick(soundCollection.PickFiles);
-            EntitySystem.Get<AudioSystem>().PlayAtCoords(randomFile, entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
+            SoundSystem.Play(Filter.Broadcast(), randomFile, entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
         }
 
         /// <summary>
