@@ -14,11 +14,11 @@
             "name": "lid_beaker"
         },
         {
-            "name": "beaker-inhand-left",
+            "name": "inhand-left",
             "directions": 4
         },
         {
-            "name": "beaker-inhand-right",
+            "name": "inhand-right",
             "directions": 4
         },
         {

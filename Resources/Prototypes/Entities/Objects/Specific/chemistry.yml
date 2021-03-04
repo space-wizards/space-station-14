@@ -17,7 +17,6 @@
         visible: false
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker.rsi
-    HeldPrefix: beaker
   - type: SolutionContainer
     maxVol: 50
     caps: OpenContainer, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
@@ -163,6 +162,8 @@
     maxVol: 30
   - type: SolutionTransfer
     transferAmount: 5
+  - type: Item
+    sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: Spillable
   - type: Appearance
     visuals:
