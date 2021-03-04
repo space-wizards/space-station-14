@@ -25,7 +25,6 @@
           bounds: "-0.4, -0.4, 0.29, 0.4"
       mask:
       - Impassable
-      - MobImpassable
       - VaultImpassable
       - SmallImpassable
       layer:

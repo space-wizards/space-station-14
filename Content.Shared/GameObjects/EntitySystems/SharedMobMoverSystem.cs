@@ -3,6 +3,7 @@ using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -11,40 +12,27 @@ namespace Content.Shared.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<CollisionMessage>(HandleCollisionMessage);
+            Get<SharedPhysicsSystem>().KinematicControllerCollision += HandleCollisionMessage;
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            Get<SharedPhysicsSystem>().KinematicControllerCollision -= HandleCollisionMessage;
         }
 
         /// <summary>
         ///     Fake pushing for player collisions.
         /// </summary>
-        /// <param name="message"></param>
-        private void HandleCollisionMessage(CollisionMessage message)
+        private void HandleCollisionMessage(IPhysBody ourBody, IPhysBody otherBody, float frameTime, Manifold manifold)
         {
-            IPhysBody ourBody;
-            IPhysBody otherBody;
-
-            if (message.BodyA.BodyType == BodyType.KinematicController)
-            {
-                ourBody = message.BodyA;
-                otherBody = message.BodyB;
-            }
-            else if (message.BodyB.BodyType == BodyType.KinematicController)
-            {
-                ourBody = message.BodyB;
-                otherBody = message.BodyA;
-            }
-            else
-            {
-                return;
-            }
-
             if (otherBody.BodyType != BodyType.Dynamic) return;
 
-            var normal = message.Manifold.LocalNormal;
+            var normal = manifold.LocalNormal;
 
             if (!ourBody.Entity.TryGetComponent(out IMobMoverComponent? mobMover) || normal == Vector2.Zero) return;
 
-            otherBody.ApplyLinearImpulse(-normal * mobMover.PushStrength * message.FrameTime);
+            otherBody.ApplyLinearImpulse(-normal * mobMover.PushStrength * frameTime);
         }
     }
 }

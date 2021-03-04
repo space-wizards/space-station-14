@@ -34,6 +34,7 @@
       layer:
       - Opaque
       - MobImpassable
+      - SmallImpassable
   - type: EntityStorage
   - type: PlaceableSurface
     placeCentered: true
