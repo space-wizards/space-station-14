@@ -14,14 +14,37 @@ namespace Content.Shared.GameObjects.EntitySystems
             SubscribeLocalEvent<CollisionMessage>(HandleCollisionMessage);
         }
 
+        /// <summary>
+        ///     Fake pushing for player collisions.
+        /// </summary>
+        /// <param name="message"></param>
         private void HandleCollisionMessage(CollisionMessage message)
         {
-            if (message.OurBody.BodyType != BodyType.KinematicController ||
-                message.OtherBody.BodyType != BodyType.Dynamic ||
-                !message.OurBody.Entity.TryGetComponent(out IMobMoverComponent? mobMover) ||
-                message.Manifold.LocalNormal == Vector2.Zero) return;
+            IPhysBody ourBody;
+            IPhysBody otherBody;
 
-            message.OtherBody.ApplyLinearImpulse(-message.Manifold.LocalNormal * mobMover.PushStrength * message.FrameTime);
+            if (message.BodyA.BodyType == BodyType.KinematicController)
+            {
+                ourBody = message.BodyA;
+                otherBody = message.BodyB;
+            }
+            else if (message.BodyB.BodyType == BodyType.KinematicController)
+            {
+                ourBody = message.BodyB;
+                otherBody = message.BodyA;
+            }
+            else
+            {
+                return;
+            }
+
+            if (otherBody.BodyType != BodyType.Dynamic) return;
+
+            var normal = message.Manifold.LocalNormal;
+
+            if (!ourBody.Entity.TryGetComponent(out IMobMoverComponent? mobMover) || normal == Vector2.Zero) return;
+
+            otherBody.ApplyLinearImpulse(-normal * mobMover.PushStrength * message.FrameTime);
         }
     }
 }

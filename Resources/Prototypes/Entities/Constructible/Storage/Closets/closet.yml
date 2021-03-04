@@ -29,14 +29,11 @@
           bounds: "-0.48,-0.25,0.48,0.25"
       mask:
       - Impassable
-      - MobImpassable
       - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
       - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
   - type: EntityStorage
   - type: PlaceableSurface
     placeCentered: true
