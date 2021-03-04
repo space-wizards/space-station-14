@@ -256,7 +256,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             physicsComponent
                 .EnsureController<BulletController>()
-                .LinearVelocity = Owner.Transform.WorldRotation.ToVec() * 20f;
+                .LinearVelocity = Owner.Transform.WorldRotation.ToWorldVec() * 20f;
 
             projectile.Transform.LocalRotation = Owner.Transform.WorldRotation;
 

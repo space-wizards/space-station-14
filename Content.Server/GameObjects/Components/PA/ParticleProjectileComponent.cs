@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.PA
 
             physicsComponent
                 .EnsureController<BulletController>()
-                .LinearVelocity = angle.ToVec() * 20f;
+                .LinearVelocity = angle.ToWorldVec() * 20f;
 
             Owner.Transform.LocalRotation = new Angle(angle + Angle.FromDegrees(180));
             Timer.Spawn(3000, () => Owner.Delete());

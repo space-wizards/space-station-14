@@ -30107,14 +30107,12 @@ entities:
   components:
   - parent: 853
     pos: 38.25703,11.473667
-    rot: 4.371139006309477E-08 rad
     type: Transform
 - uid: 3180
   type: ApcExtensionCable
   components:
   - parent: 853
     pos: 21.5,13.5
-    rot: 4.371139006309477E-08 rad
     type: Transform
 - uid: 3181
   type: ApcExtensionCable
@@ -39240,75 +39238,81 @@ entities:
   components:
   - parent: 853
     pos: 45.5,-17.5
-    rot: 4.371139006309477E-08 rad
     type: Transform
 - uid: 4402
   type: Emitter
   components:
   - parent: 853
     pos: 49.5,-17.5
-    rot: 4.371139006309477E-08 rad
     type: Transform
 - uid: 4403
   type: Emitter
   components:
   - parent: 853
     pos: 53.5,-17.5
-    rot: 4.371139006309477E-08 rad
     type: Transform
 - uid: 4404
   type: Emitter
   components:
   - parent: 853
     pos: 56.5,-20.5
+    rot: 4.71238902409608 rad
     type: Transform
 - uid: 4405
   type: Emitter
   components:
   - parent: 853
     pos: 56.5,-24.5
+    rot: 4.71238902409608 rad
     type: Transform
 - uid: 4406
   type: Emitter
   components:
   - parent: 853
     pos: 56.5,-28.5
+    rot: 4.71238902409608 rad
     type: Transform
 - uid: 4407
   type: Emitter
   components:
   - parent: 853
     pos: 53.5,-31.5
+    rot: 3.141592697301183 rad
     type: Transform
 - uid: 4408
   type: Emitter
   components:
   - parent: 853
     pos: 49.5,-31.5
+    rot: 3.141592697301183 rad
     type: Transform
 - uid: 4409
   type: Emitter
   components:
   - parent: 853
     pos: 45.5,-31.5
+    rot: 3.141592697301183 rad
     type: Transform
 - uid: 4410
   type: Emitter
   components:
   - parent: 853
     pos: 42.5,-28.5
+    rot: 1.5707963705062866 rad
     type: Transform
 - uid: 4411
   type: Emitter
   components:
   - parent: 853
     pos: 42.5,-24.5
+    rot: 1.5707963705062866 rad
     type: Transform
 - uid: 4412
   type: Emitter
   components:
   - parent: 853
     pos: 42.5,-20.5
+    rot: 1.5707963705062866 rad
     type: Transform
 - uid: 4413
   type: ApcExtensionCable

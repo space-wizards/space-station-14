@@ -116,28 +116,37 @@
   components:
   - type: Sprite
     color: "#ffff33"
-    sprite: Constructible/Power/emitter.rsi
+    sprite: Constructible/Power/Singularity/emitter.rsi
     state: ''
     layers:
-      - state: emitter_projectile
+      - state: projectile
         shader: unshaded
   - type: Physics
     anchored: false
     edgeslide: false
     hard: false
     shapes:
+      # - !type:PhysShapePoly # uncomment in event of physics
+      #   bounds: "-0.5,-0.15,0.5,0.2"
+      #   layer:
+      #     - Impassable
+      #     - MobImpassable
+      #   mask:
+      #     - Opaque
       - !type:PhysShapeAabb
-        bounds: "-0.5,-0.15,0.5,0.2"
+        bounds: "-0.2,-0.2,0.2,0.2"
         layer:
           - Impassable
           - MobImpassable
         mask:
           - Opaque
-  - type: EmitterBoltComponent
   - type: Projectile
     soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
       Heat: 20
+  - type: Tag
+    tags:
+    - EmitterBolt
 
 # Launcher projectiles (grenade / rocket)
 - type: entity

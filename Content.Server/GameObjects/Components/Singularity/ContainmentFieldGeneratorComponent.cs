@@ -2,8 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.GameObjects.Components.Projectiles;
-using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -83,11 +82,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         private void OnAnchoredChanged()
         {
-            if(_collidableComponent?.Anchored == true)
-            {
-                Owner.SnapToGrid();
-            }
-            else
+            if(_collidableComponent?.Anchored != true)
             {
                 _connection1?.Item2.Dispose();
                 _connection2?.Item2.Dispose();
@@ -184,7 +179,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         public void CollideWith(IEntity collidedWith)
         {
-            if(collidedWith.HasComponent<EmitterBoltComponent>())
+            if(collidedWith.HasTag("EmitterBolt"))
             {
                 ReceivePower(4);
             }
