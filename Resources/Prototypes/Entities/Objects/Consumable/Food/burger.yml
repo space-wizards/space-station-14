@@ -380,3 +380,13 @@
   #     - cheese
   #     - cheesealt
 # Tastes like bun, beef patty, cheese.
+
+- type: entity
+  name: crazy hamburger # Burger for you euro-cucks
+  parent: FoodBurgerBase
+  id: FoodBurgerCrazy
+  description: This looks like the sort of food that a demented clown in a trenchcoat would make.
+  components:
+  - type: Sprite
+    state: crazy
+# Tastes like bun, a smoking flare, chili.
