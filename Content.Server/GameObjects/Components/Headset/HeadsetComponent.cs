@@ -92,11 +92,11 @@ namespace Content.Server.GameObjects.Components.Headset
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddText(Loc.GetString("It is set to broadcast over the {0} frequency.", BroadcastFrequency));
-
-            message.AddText(Loc.GetString("A small screen on the headset displays the following available frequencies:"));
+            message.AddText(Loc.GetString("examine-radio-frequency", ("frequency", BroadcastFrequency)));
             message.AddText("\n");
-            message.AddText(Loc.GetString("Use {0} for the currently tuned frequency.", ";"));
+            message.AddText(Loc.GetString("examine-headset"));
+            message.AddText("\n");
+            message.AddText(Loc.GetString("examine-headset-chat-prefix", ("prefix", ";")));
         }
     }
 }
