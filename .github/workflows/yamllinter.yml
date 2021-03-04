@@ -23,4 +23,4 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
       - name: Run Linter
-        run: dotnet run --project Content.YAMLLinter/Content.YAMLLinter.csproj
+        run: dotnet run --project Content.YAMLLinter/Content.YAMLLinter.csproj -nowarn
