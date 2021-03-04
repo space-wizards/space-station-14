@@ -128,6 +128,8 @@
   - type: Injector
     injectOnly: false
   - type: Spillable
+  - type: Item
+    sprite: Objects/Specific/Chemistry/syringe.rsi
   - type: Appearance
     visuals:
       # this visualizer used for reagent inside
