@@ -147,17 +147,28 @@
 - type: entity
   name: bottle
   parent: BaseItem
-  id: bottle
+  id: BaseEmptyBottle
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
-    state: bottle
+    netsync: false
+    layers:
+      - state: bottle-1
+      - state: bottle-1-1  
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
   - type: Drink
+    openSounds: bottleOpenSounds
   - type: SolutionContainer
     maxVol: 30
   - type: SolutionTransfer
     transferAmount: 5
   - type: Spillable
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 6
+      fillBaseName: bottle-1-
 
 - type: entity
   name: pill
