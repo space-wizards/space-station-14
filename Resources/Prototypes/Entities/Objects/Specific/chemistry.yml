@@ -114,14 +114,22 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/syringe.rsi
-    state: 0
+    netsync: false
+    layers:
+      - state: 0
+      - state: syringe1  
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
   - type: SolutionContainer
-    fillingState: syringe
-    fillingSteps: 5
     maxVol: 15
   - type: Injector
     injectOnly: false
   - type: Spillable
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 4
+      fillBaseName: syringe
 
 - type: entity
   name: bottle
