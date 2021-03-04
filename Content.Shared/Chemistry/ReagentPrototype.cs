@@ -1,11 +1,9 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -18,9 +16,6 @@ namespace Content.Shared.Chemistry
     [DataDefinition]
     public class ReagentPrototype : IPrototype
     {
-        [DataField("spritePath")]
-        private readonly string _spritePath = string.Empty;
-
         [DataField("metabolism", serverOnly: true)]
         private readonly List<IMetabolizable> _metabolism = new() {new DefaultMetabolizable()};
 
@@ -59,11 +54,19 @@ namespace Content.Shared.Chemistry
         [field: DataField("boozePower")]
         public int BoozePower { get; }
 
+        [field: DataField("boilingPoint")]
+        public float? BoilingPoint { get; }
+
+        [field: DataField("meltingPoint")]
+        public float? MeltingPoint { get; }
+
+        [field: DataField("spritePath")]
+        public string SpriteReplacementPath { get; } = string.Empty;
+
         //List of metabolism effects this reagent has, should really only be used server-side.
         public IReadOnlyList<IMetabolizable> Metabolism => _metabolism;
         public IReadOnlyList<ITileReaction> TileReactions => _tileReactions;
         public IReadOnlyList<IPlantMetabolizable> PlantMetabolism => _plantMetabolism;
-        public string SpriteReplacementPath => _spritePath;
 
         /// <summary>
         /// If the substance color is too dark we user a lighter version to make the text color readable when the user examines a solution.
@@ -83,7 +86,7 @@ namespace Content.Shared.Chemistry
             return SubstanceColor;
         }
 
-        public ReagentUnit ReactionEntity(IEntity entity, ReactionMethod method, ReagentUnit reactVolume)
+        public ReagentUnit ReactionEntity(IEntity? entity, ReactionMethod method, ReagentUnit reactVolume)
         {
             var removed = ReagentUnit.Zero;
 
@@ -136,7 +139,7 @@ namespace Content.Shared.Chemistry
             return removed;
         }
 
-        public void ReactionPlant(IEntity plantHolder)
+        public void ReactionPlant(IEntity? plantHolder)
         {
             if (plantHolder == null || plantHolder.Deleted)
                 return;

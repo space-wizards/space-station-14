@@ -67,21 +67,22 @@ namespace Content.Shared.Actions
         /// selected after it is used, so it can be continuously re-used. If this is false,
         /// the action will be deselected after one use.
         /// </summary>
-        public bool Repeat { get; private set; }
+        [field: DataField("repeat")]
+        public bool Repeat { get; }
 
         /// <summary>
         /// For TargetEntity/TargetPoint actions, should the action be de-selected if currently selected (choosing a target)
         /// when it goes on cooldown. Defaults to false.
         /// </summary>
-        [DataField("deselectOnCooldown")]
-        public bool DeselectOnCooldown { get; private set; }
+        [field: DataField("deselectOnCooldown")]
+        public bool DeselectOnCooldown { get; }
 
         /// <summary>
         /// For TargetEntity actions, should the action be de-selected if the user doesn't click an entity when
         /// selecting a target. Defaults to false.
         /// </summary>
-        [DataField("deselectWhenEntityNotClicked")]
-        public bool DeselectWhenEntityNotClicked { get; private set; }
+        [field: DataField("deselectWhenEntityNotClicked")]
+        public bool DeselectWhenEntityNotClicked { get; }
 
         [DataField("filters")] private List<string> _filters = new();
 

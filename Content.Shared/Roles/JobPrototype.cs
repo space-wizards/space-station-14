@@ -1,8 +1,6 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -35,7 +33,7 @@ namespace Content.Shared.Roles
         ///     Whether this job is a head.
         ///     The job system will try to pick heads before other jobs on the same priority level.
         /// </summary>
-        [DataField("IsHead")]
+        [DataField("head")]
         public bool IsHead { get; private set; }
 
         /// <summary>
