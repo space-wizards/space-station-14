@@ -1,0 +1,30 @@
+# Base
+
+- type: entity
+  parent: BaseItem
+  id: FoodCakeBase
+  abstract: true
+  components:
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/cake.rsi
+    netsync: false
+  - type: LoopingSound
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 20
+
+- type: entity
+  parent: FoodCakeBase
+  id: FoodCakeSliceBase
+  abstract: true
+  components:
+  - type: SolutionContainer
+    maxVol: 7
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 7

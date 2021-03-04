@@ -11,6 +11,12 @@
       "name": "alpha"
     },
     {
+      "name": "alpha-filling"
+    },
+    {
+      "name": "alpha-slice"
+    },
+    {
       "name": "alpha-slice-filling"
     },
     {
@@ -27,6 +33,9 @@
     },
     {
       "name": "brain"
+    },
+    {
+      "name": "brain-large"
     },
     {
       "name": "brain-slice"
@@ -78,6 +87,21 @@
     },
     {
       "name": "clown-slice"
+    },
+    {
+      "name": "plate"
+    },
+    {
+      "name": "plate-small"
+    },
+    {
+      "name": "plate-plastic"
+    },
+    {
+      "name": "plate-small-plastic"
+    },
+    {
+      "name": "plate-slice-shading"
     },
     {
       "name": "pumpkinspice"
