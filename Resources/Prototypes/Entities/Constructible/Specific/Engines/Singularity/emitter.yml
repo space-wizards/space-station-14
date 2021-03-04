@@ -1,6 +1,4 @@
 ﻿- type: entity
-  name: emitter
-  description: "A machine that fires bolts of energy, used for powering containment fields at a safe distance."
   id: Emitter
   placement:
     mode: SnapgridCenter

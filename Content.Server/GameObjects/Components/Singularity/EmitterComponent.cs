@@ -109,19 +109,19 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             if (_isLocked)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("{0:TheName} is access locked!", Owner));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-access-locked", ("target", Owner)));
                 return;
             }
 
             if (!_isOn)
             {
                 SwitchOn();
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("{0:TheName} turns on.", Owner));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-turned-on", ("target", Owner)));
             }
             else
             {
                 SwitchOff();
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("{0:TheName} turns off.", Owner));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-turned-off", ("target", Owner)));
             }
         }
 
@@ -138,18 +138,18 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 if (_isLocked)
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("You lock {0:TheName}.", Owner));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-lock", ("target", Owner)));
                 }
                 else
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("You unlock {0:TheName}.", Owner));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-unlock", ("target", Owner)));
                 }
 
                 UpdateAppearance();
             }
             else
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Access denied."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-access-denied"));
             }
 
             return Task.FromResult(true);
