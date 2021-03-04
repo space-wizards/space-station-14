@@ -13,11 +13,11 @@ using Robust.Shared.Timing;
 namespace Content.Server.GameObjects.Components.PA
 {
     [RegisterComponent]
-    public class ParticleProjectileComponent : Component, ICollideBehavior
+    public class ParticleProjectileComponent : Component, IStartCollide
     {
         public override string Name => "ParticleProjectile";
         private ParticleAcceleratorPowerState _state;
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (otherBody.Entity.TryGetComponent<SingularityComponent>(out var singularityComponent))
             {

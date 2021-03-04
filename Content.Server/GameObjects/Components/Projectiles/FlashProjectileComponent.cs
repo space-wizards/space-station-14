@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
     /// Upon colliding with an object this will flash in an area around it
     /// </summary>
     [RegisterComponent]
-    public class FlashProjectileComponent : Component, ICollideBehavior
+    public class FlashProjectileComponent : Component, IStartCollide
     {
         public override string Name => "FlashProjectile";
 
@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Owner.EnsureComponent<ProjectileComponent>();
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (_flashed)
             {

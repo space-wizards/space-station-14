@@ -6,7 +6,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Collision;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -110,14 +109,6 @@ namespace Content.Shared.GameObjects.Components.Movement
                 (!Owner.TryGetComponent(out SharedCombatModeComponent? ownerCombat) || !ownerCombat.IsInCombatMode) &&
                 (!collidedWith.Entity.TryGetComponent(out SharedCombatModeComponent? otherCombat) || !otherCombat.IsInCombatMode);
                 */
-        }
-
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
-        {
-            if (otherBody.BodyType == BodyType.Dynamic && manifold.LocalNormal != Vector2.Zero)
-            {
-                otherBody.ApplyLinearImpulse(-manifold.LocalNormal * _pushStrength * frameTime);
-            }
         }
 
         [Serializable, NetSerializable]

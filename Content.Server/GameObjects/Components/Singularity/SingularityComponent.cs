@@ -22,7 +22,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
-    public class SingularityComponent : Component, ICollideBehavior
+    public class SingularityComponent : Component, IStartCollide
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -142,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             Energy -= EnergyDrain * seconds;
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             var otherEntity = otherBody.Entity;
 

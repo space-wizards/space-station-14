@@ -12,6 +12,7 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -232,11 +233,17 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             {
                 if (Open)
                 {
-                    physics.Hard = false;
+                    foreach (var fixture in physics.Fixtures)
+                    {
+                        fixture.CollisionLayer &= ~(int) CollisionGroup.MobImpassable;
+                    }
                 }
                 else
                 {
-                    physics.Hard = true;
+                    foreach (var fixture in physics.Fixtures)
+                    {
+                        fixture.CollisionLayer |= (int) CollisionGroup.MobImpassable;
+                    }
                 }
             }
 
@@ -284,7 +291,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             foreach (var contained in Contents.ContainedEntities.ToArray())
             {
-                if(Contents.Remove(contained))
+                if (Contents.Remove(contained))
                 {
                     contained.Transform.WorldPosition = ContentsDumpPosition();
                     if (contained.TryGetComponent<IPhysBody>(out var physics))

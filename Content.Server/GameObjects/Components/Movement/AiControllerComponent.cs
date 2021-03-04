@@ -1,6 +1,4 @@
 ﻿#nullable enable
-using Content.Server.AI.Utility.AiLogic;
-using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Roles;
@@ -8,8 +6,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Collision;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -106,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         /// <inheritdoc />
         [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentPushSpeed { get; set; }
+        public float PushStrength { get; set; }
 
         /// <inheritdoc />
         [ViewVariables(VVAccess.ReadWrite)]
@@ -136,12 +132,5 @@ namespace Content.Server.GameObjects.Components.Movement
         public void SetSprinting(ushort subTick, bool walking) { }
 
         public virtual void Update(float frameTime) {}
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
-        {
-            if (otherBody.BodyType == BodyType.Dynamic && manifold.LocalNormal != Vector2.Zero)
-            {
-                otherBody.ApplyLinearImpulse(-manifold.LocalNormal * CurrentPushSpeed);
-            }
-        }
     }
 }

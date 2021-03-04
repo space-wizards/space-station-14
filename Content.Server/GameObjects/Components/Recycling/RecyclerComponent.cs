@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 {
     // TODO: Add sound and safe beep
     [RegisterComponent]
-    public class RecyclerComponent : Component, ICollideBehavior, ISuicideAct
+    public class RecyclerComponent : Component, IStartCollide, ISuicideAct
     {
         public override string Name => "Recycler";
 
@@ -150,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Recycling
             serializer.DataField(ref _efficiency, "efficiency", 0.25f);
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             Recycle(otherBody.Entity);
         }

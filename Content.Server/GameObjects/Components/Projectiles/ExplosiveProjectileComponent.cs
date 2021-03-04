@@ -6,7 +6,7 @@ using Robust.Shared.Physics.Collision;
 namespace Content.Server.GameObjects.Components.Projectiles
 {
     [RegisterComponent]
-    public class ExplosiveProjectileComponent : Component, ICollideBehavior
+    public class ExplosiveProjectileComponent : Component, IStartCollide
     {
         public override string Name => "ExplosiveProjectile";
 
@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Owner.EnsureComponent<ExplosiveComponent>();
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (Owner.TryGetComponent(out ExplosiveComponent explosive))
             {

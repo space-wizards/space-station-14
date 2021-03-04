@@ -14,7 +14,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Projectiles
 {
     [RegisterComponent]
-    public class ProjectileComponent : SharedProjectileComponent, ICollideBehavior, IPostCollide
+    public class ProjectileComponent : SharedProjectileComponent, IStartCollide
     {
         protected override EntityUid Shooter => _shooter;
 
@@ -62,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <summary>
         ///     Applies the damage when our projectile collides with its victim
         /// </summary>
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             // This is so entities that shouldn't get a collision are ignored.
             if (!otherBody.Hard || _damagedEntity)
@@ -97,11 +97,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 var direction = ourBody.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);
             }
-        }
 
-        void IPostCollide.PostCollide(IPhysBody ourBody, IPhysBody otherBody)
-        {
-            if (_damagedEntity) Owner.Delete();
+            Owner.Delete();
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

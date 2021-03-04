@@ -6,12 +6,12 @@ using Robust.Shared.Physics.Collision;
 namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
-    public class ContainmentFieldComponent : Component, ICollideBehavior
+    public class ContainmentFieldComponent : Component, IStartCollide
     {
         public override string Name => "ContainmentField";
         public ContainmentFieldConnection? Parent;
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (Parent == null)
             {

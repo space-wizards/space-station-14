@@ -18,7 +18,7 @@ using Robust.Shared.Physics.Collision;
 namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
-    public class ContainmentFieldGeneratorComponent : Component, ICollideBehavior
+    public class ContainmentFieldGeneratorComponent : Component, IStartCollide
     {
         [Dependency] private readonly IPhysicsManager _physicsManager = null!;
 
@@ -184,7 +184,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (otherBody.Entity.HasComponent<EmitterBoltComponent>())
             {

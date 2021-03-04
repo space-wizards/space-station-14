@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Doors
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedDoorComponent))]
-    public class ServerDoorComponent : SharedDoorComponent, IActivate, ICollideBehavior, IInteractUsing, IMapInit
+    public class ServerDoorComponent : SharedDoorComponent, IActivate, IStartCollide, IInteractUsing, IMapInit
     {
         [ComponentDependency]
         private readonly IDoorCheck? _doorCheck = null;
@@ -204,7 +204,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (State != DoorState.Closed)
             {

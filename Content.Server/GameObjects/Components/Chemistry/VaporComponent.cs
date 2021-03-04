@@ -16,7 +16,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Chemistry
 {
     [RegisterComponent]
-    class VaporComponent : SharedVaporComponent, ICollideBehavior
+    class VaporComponent : SharedVaporComponent, IStartCollide
     {
         public const float ReactTime = 0.125f;
 
@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
                 return;

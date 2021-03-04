@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Physics;
 using Robust.Shared.Containers;
@@ -15,7 +14,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
-    public abstract class SharedSlipperyComponent : Component, ICollideBehavior
+    public abstract class SharedSlipperyComponent : Component, IStartCollide
     {
 
         public sealed override string Name => "Slippery";
@@ -95,7 +94,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         protected virtual void OnSlip() { }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             TrySlip(ourBody, otherBody);
         }

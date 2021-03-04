@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
     /// Adds stun when it collides with an entity
     /// </summary>
     [RegisterComponent]
-    public sealed class StunnableProjectileComponent : Component, ICollideBehavior
+    public sealed class StunnableProjectileComponent : Component, IStartCollide
     {
         public override string Name => "StunnableProjectile";
 
@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Owner.EnsureComponentWarn(out ProjectileComponent _);
         }
 
-        void ICollideBehavior.CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (otherBody.Entity.TryGetComponent(out StunnableComponent stunnableComponent))
             {

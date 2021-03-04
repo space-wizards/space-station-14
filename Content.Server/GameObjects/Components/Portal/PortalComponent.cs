@@ -13,7 +13,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Portal
 {
     [RegisterComponent]
-    public class PortalComponent : SharedPortalComponent, ICollideBehavior
+    public class PortalComponent : SharedPortalComponent, IStartCollide
     {
         // Potential improvements: Different sounds,
         // Add Gateways
@@ -170,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Portal
             StartCooldown();
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (_onCooldown == false)
             {

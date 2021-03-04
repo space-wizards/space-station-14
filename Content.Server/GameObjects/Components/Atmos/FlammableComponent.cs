@@ -23,7 +23,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class FlammableComponent : SharedFlammableComponent, ICollideBehavior, IFireAct, IReagentReaction
+    public class FlammableComponent : SharedFlammableComponent, IStartCollide, IFireAct, IReagentReaction
     {
         private bool _resisting = false;
         private readonly List<EntityUid> _collided = new();
@@ -146,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        public void CollideWith(IPhysBody ourBody, IPhysBody otherBody, float frameTime, in Manifold manifold)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (!otherBody.Entity.TryGetComponent(out FlammableComponent otherFlammable))
                 return;
