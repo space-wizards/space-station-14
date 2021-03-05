@@ -5,9 +5,10 @@
   parent: BulletBase
   components:
     - type: Sprite
-      sprite: Constructible/Specific/Engines/PA/particle.rsi
-      state: particle0
-      shader: unshaded
+      layers:
+      - sprite: Constructible/Specific/Engines/PA/particle.rsi
+        state: particle0
+        shader: unshaded
     - type: Projectile
       delete_on_collide: false
       soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg

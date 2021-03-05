@@ -1,23 +1,22 @@
 #nullable enable
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Server.GameObjects.Components.Explosion;
-using Robust.Shared.GameObjects;
-using System.Threading.Tasks;
-using Robust.Shared.Serialization;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Trigger.TimerTrigger;
 using Content.Server.Throw;
-using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Explosion;
 using Robust.Shared.Containers;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Explosives
+namespace Content.Server.GameObjects.Components.Explosion
 {
     [RegisterComponent]
     public sealed class ClusterFlashComponent : Component, IInteractUsing, IUse
@@ -29,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Explosives
         /// <summary>
         ///     What we fill our prototype with if we want to pre-spawn with grenades.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables] [DataField("fillPrototype")]
         private string? _fillPrototype;
 
         /// <summary>
@@ -40,20 +39,20 @@ namespace Content.Server.GameObjects.Components.Explosives
         /// <summary>
         ///     Maximum grenades in the container.
         /// </summary>
-        [ViewVariables]
-        private int _maxGrenades;
+        [ViewVariables] [DataField("maxGrenadesCount")]
+        private int _maxGrenades = 3;
 
         /// <summary>
         ///     How long until our grenades are shot out and armed.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        private float _delay;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("delay")]
+        private float _delay = 1;
 
         /// <summary>
         ///     Max distance grenades can be thrown.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        private float _throwDistance;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("distance")]
+        private float _throwDistance = 3;
 
         /// <summary>
         ///     This is the end.
@@ -70,15 +69,6 @@ namespace Content.Server.GameObjects.Components.Explosives
             return true;
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _fillPrototype, "fillPrototype", null);
-            serializer.DataField(ref _maxGrenades, "maxGrenadesCount", 3);
-            serializer.DataField(ref _delay, "delay", 1.0f);
-            serializer.DataField(ref _throwDistance, "distance", 3.0f);
-        }
 
         public override void Initialize()
         {

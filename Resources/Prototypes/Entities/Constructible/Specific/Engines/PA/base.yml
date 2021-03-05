@@ -18,7 +18,6 @@
             - Impassable
             - MobImpassable
             - VaultImpassable
-      IsScrapingFloor: true
     - type: SnapGrid
       offset: Center
     - type: Pullable

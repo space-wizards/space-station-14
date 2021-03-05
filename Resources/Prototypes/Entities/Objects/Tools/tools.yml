@@ -207,9 +207,9 @@
       tags:
       - Shovel
     - type: Sprite
-      sprite: Objects/Tools/Hydroponics/shovel.rsi
+      sprite: Objects/Tools/shovel.rsi
       state: icon
     - type: ItemCooldown
     - type: MeleeWeapon
     - type: Item
-      sprite: Objects/Tools/Hydroponics/shovel.rsi
+      sprite: Objects/Tools/shovel.rsi

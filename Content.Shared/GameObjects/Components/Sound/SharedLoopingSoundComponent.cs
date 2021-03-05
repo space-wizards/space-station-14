@@ -3,6 +3,7 @@ using System;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Sound
 {
@@ -73,49 +74,43 @@ namespace Content.Shared.GameObjects.Components.Sound
     }
 
     [Serializable, NetSerializable]
-    public class ScheduledSound : IExposeData
+    [DataDefinition]
+    public class ScheduledSound
     {
-        public string Filename = "";
+        [DataField("fileName")]
+        public string Filename = string.Empty;
 
         /// <summary>
         /// The parameters to play the sound with.
         /// </summary>
+        [DataField("audioparams")]
         public AudioParams? AudioParams;
 
         /// <summary>
         /// Delay in milliseconds before playing the sound,
         /// and delay between repetitions if Times is not 0.
         /// </summary>
-        public uint Delay = 0;
+        [DataField("delay")]
+        public uint Delay;
 
         /// <summary>
         /// Maximum number of milliseconds to add to the delay randomly.
         /// Useful for random ambience noises. Generated value differs from client to client.
         /// </summary>
-        public uint RandomDelay = 0;
+        [DataField("randomdelay")]
+        public uint RandomDelay;
 
         /// <summary>
         /// How many times to repeat the sound. If it's 0, it will play the sound once.
         /// If it's less than 0, it will repeat the sound indefinitely.
         /// If it's greater than 0, it will play the sound n+1 times.
         /// </summary>
-        public int Times = 0;
+        [DataField("times")]
+        public int Times;
 
         /// <summary>
         /// Whether the sound will play or not.
         /// </summary>
         public bool Play = true;
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            if (serializer.Writing)
-                return;
-
-            Filename = serializer.ReadDataField("filename", "");
-            Delay = serializer.ReadDataField("delay", 0u);
-            RandomDelay = serializer.ReadDataField("randomdelay", 0u);
-            Times = serializer.ReadDataField("times", 0);
-            AudioParams = serializer.ReadDataField("audioparams", Robust.Shared.Audio.AudioParams.Default);
-        }
     }
 }

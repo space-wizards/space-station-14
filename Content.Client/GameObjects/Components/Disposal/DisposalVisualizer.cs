@@ -3,6 +3,7 @@ using Content.Shared.GameObjects.Components.Disposal;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -11,8 +12,11 @@ namespace Content.Client.GameObjects.Components.Disposal
     [UsedImplicitly]
     public class DisposalVisualizer : AppearanceVisualizer
     {
+        [DataField("state_free")]
         private string _stateFree;
+        [DataField("state_anchored")]
         private string _stateAnchored;
+        [DataField("state_broken")]
         private string _stateBroken;
 
         private void ChangeState(AppearanceComponent appearance)
@@ -45,15 +49,6 @@ namespace Content.Client.GameObjects.Components.Disposal
             {
                 appearance.Owner.RemoveComponent<SubFloorHideComponent>();
             }
-        }
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            _stateFree = node.GetNode("state_free").AsString();
-            _stateAnchored = node.GetNode("state_anchored").AsString();
-            _stateBroken = node.GetNode("state_broken").AsString();
         }
 
         public override void InitializeEntity(IEntity entity)

@@ -1,21 +1,16 @@
 ﻿using Content.Server.Utility;
 using Content.Shared.Actions;
 using JetBrains.Annotations;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Actions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class DebugToggle : IToggleAction, IToggleItemAction
     {
-        public string MessageOn { get; private set; }
-        public string MessageOff { get; private set; }
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.MessageOn, "messageOn", "on!");
-            serializer.DataField(this, x => x.MessageOff, "messageOff", "off!");
-        }
+        [DataField("messageOn")] public string MessageOn { get; private set; } = "on!";
+        [DataField("messageOff")] public string MessageOff { get; private set; } = "off!";
 
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {

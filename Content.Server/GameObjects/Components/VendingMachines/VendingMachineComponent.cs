@@ -17,6 +17,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
@@ -32,15 +33,20 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
         private bool _ejecting;
         private TimeSpan _animationDuration = TimeSpan.Zero;
-        private string _packPrototypeId = "";
+        [DataField("pack")]
+        private string _packPrototypeId = string.Empty;
         private string? _description;
         private string _spriteName = "";
 
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
         private bool _broken;
 
-        private string _soundVend = "";
-        private string _soundDeny = "";
+        [DataField("soundVend")]
+        // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
+        private string _soundVend = "/Audio/Machines/machine_vend.ogg";
+        [DataField("soundDeny")]
+        // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
+        private string _soundDeny = "/Audio/Machines/custom_deny.ogg";
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
 
@@ -61,17 +67,6 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             {
                 UserInterface?.Toggle(actor.playerSession);
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _packPrototypeId, "pack", string.Empty);
-            // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
-            serializer.DataField(ref _soundVend, "soundVend", "/Audio/Machines/machine_vend.ogg");
-            // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
-            serializer.DataField(ref _soundDeny, "soundDeny", "/Audio/Machines/custom_deny.ogg");
         }
 
         private void InitializeFromPrototype()

@@ -7,11 +7,12 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class BuildMachine : IGraphAction
     {
         public async Task PerformAction(IEntity entity, IEntity? user)
@@ -103,10 +104,6 @@ namespace Content.Server.Construction.Completions
             }
 
             entity.Delete();
-        }
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
         }
     }
 }

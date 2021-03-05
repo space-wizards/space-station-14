@@ -6,11 +6,12 @@ using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components
 {
-    public abstract class SharedStackComponent : Component
+    public abstract class SharedStackComponent : Component, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -19,8 +20,11 @@ namespace Content.Shared.GameObjects.Components
         public sealed override string Name => "Stack";
         public sealed override uint? NetID => ContentNetIDs.STACK;
 
-        private int _count;
-        private int _maxCount;
+        [DataField("count")]
+        private int _count = 30;
+
+        [DataField("max")]
+        private int _maxCount = 30;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public virtual int Count
@@ -51,34 +55,11 @@ namespace Content.Shared.GameObjects.Components
 
         [ViewVariables] public int AvailableSpace => MaxCount - Count;
 
-        [ViewVariables] public string StackTypeId { get; private set; } = string.Empty;
+        [ViewVariables]
+        [field: DataField("stackType")]
+        public string StackTypeId { get; } = string.Empty;
 
         public StackPrototype StackType => _prototypeManager.Index<StackPrototype>(StackTypeId);
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataFieldCached(ref _maxCount, "max", 30);
-            serializer.DataFieldCached(ref _count, "count", MaxCount);
-
-            if (serializer.Writing)
-            {
-                return;
-            }
-
-            if (serializer.TryGetCacheData(SerializationCache, out string stackType))
-            {
-                StackTypeId = stackType;
-                return;
-            }
-
-            serializer.DataFieldCached(ref stackType, "stackType", string.Empty);
-
-            if (!string.IsNullOrEmpty(stackType))
-            {
-                serializer.SetCacheData(SerializationCache, stackType);
-                StackTypeId = stackType;
-            }
-        }
 
         protected override void Startup()
         {

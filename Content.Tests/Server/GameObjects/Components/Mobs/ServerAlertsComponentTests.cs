@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Tests.Server.GameObjects.Components.Mobs
 {
@@ -34,6 +35,7 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
             // but wanted to keep it anyway to see what's possible w.r.t. testing components
             // in a unit test
 
+            IoCManager.Resolve<ISerializationManager>().Initialize();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var factory = IoCManager.Resolve<IComponentFactory>();
             factory.RegisterClass<ServerAlertsComponent>();

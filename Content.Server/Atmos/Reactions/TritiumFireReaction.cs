@@ -4,17 +4,14 @@ using Content.Server.Utility;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Atmos.Reactions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class TritiumFireReaction : IGasReactionEffect
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-        }
-
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, GridTileLookupSystem gridTileLookup)
         {
             var energyReleased = 0f;

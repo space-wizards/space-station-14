@@ -4,40 +4,32 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
     [UsedImplicitly]
-    public class VaporVisualizer : AppearanceVisualizer
+    public class VaporVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "flick_animation";
+
+        [DataField("animation_time")]
+        private float _delay = 0.25f;
+
+        [DataField("animation_state")]
+        private string _state = "chempuff";
+
         private Animation VaporFlick;
 
-        public override void LoadData(YamlMappingNode node)
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.LoadData(node);
-
-            var delay = 0.25f;
-            var state = "chempuff";
-
-            if (node.TryGetNode("animation_time", out var delayNode))
-            {
-                delay = delayNode.AsFloat();
-            }
-
-            if (node.TryGetNode("animation_state", out var stateNode))
-            {
-                state = stateNode.AsString();
-            }
-
-            VaporFlick = new Animation {Length = TimeSpan.FromSeconds(delay)};
+            VaporFlick = new Animation {Length = TimeSpan.FromSeconds(_delay)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 VaporFlick.AnimationTracks.Add(flick);
                 flick.LayerKey = VaporVisualLayers.Base;
-                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(state, 0f));
+                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(_state, 0f));
             }
         }
 
