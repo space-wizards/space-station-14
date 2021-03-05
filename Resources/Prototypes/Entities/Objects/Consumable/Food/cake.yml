@@ -59,6 +59,7 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
       color: blue
@@ -86,6 +87,7 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: plain-slice
 # Tastes like sweetness, cake.
 
@@ -111,6 +113,7 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: carrot-slice
 # Tastes like sweetness, cake, carrot.
 
@@ -136,6 +139,7 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: brain-slice
 # Tastes like sweetness, cake, brains.
 
@@ -161,6 +165,7 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: cheese-slice
 # Tastes like sweetness, cream cheese.
 
@@ -185,6 +190,7 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: orange-slice
 # Tastes like sweetness, cake, oranges.
 
@@ -209,6 +215,7 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: lime-slice
 # Tastes like sweetness, cake, limes.
 
@@ -233,6 +240,7 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: lemon-slice
 # Tastes like sweetness, cake, lemons.
 
@@ -286,6 +294,7 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: apple-slice
 # Tastes like sweetness, cake, slime.
 
@@ -315,6 +324,7 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: slime-slice
 # Tastes like sweetness, cake, slime.
 
@@ -344,6 +354,7 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: pumpkinspice-slice
 # Tastes like sweetness, cake, pumpkin.
 
@@ -372,6 +383,7 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: christmas-slice
 # Tastes like sweetness, cake, christmas.
 
@@ -430,6 +442,7 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: vanilla-slice
 # Tastes like sweetness, cake, vanilla.
 
@@ -459,6 +472,7 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: clown-slice
 # Tastes like sweetness, cake, clown.
 
@@ -488,5 +502,6 @@
   - type: Sprite
     layers:
     - state: plate-small
+    - state: plate-slice-shading
     - state: trumpet-slice
 # Tastes like sweetness, cake, jam.
