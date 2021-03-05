@@ -4,6 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Movement
@@ -28,13 +29,8 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
-        private float _modifier;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.Modifier, "modifier", 1.0f);
-        }
+        [DataField("modifier")]
+        private float _modifier = 1.0f;
 
         public override ComponentState GetComponentState(ICommonSession session)
         {

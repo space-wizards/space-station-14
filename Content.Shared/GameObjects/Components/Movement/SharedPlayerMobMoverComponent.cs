@@ -8,6 +8,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Movement
@@ -23,8 +24,10 @@ namespace Content.Shared.GameObjects.Components.Movement
         public override uint? NetID => ContentNetIDs.PLAYER_MOB_MOVER;
 
         private float _stepSoundDistance;
-        private float _grabRange;
-        private float _pushStrength;
+        [DataField("grabRange")]
+        private float _grabRange = 0.2f;
+        [DataField("pushStrength")]
+        private float _pushStrength = 600.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public EntityCoordinates LastPosition { get; set; }
@@ -79,13 +82,6 @@ namespace Content.Shared.GameObjects.Components.Movement
             {
                 Logger.WarningS("mover", $"Attached {nameof(SharedPlayerMobMoverComponent)} to a mob that's BodyType is not KinematicController!'");
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _grabRange, "grabRange", 0.2f);
-            serializer.DataField(ref _pushStrength, "pushStrength", 600.0f);
         }
 
         public override ComponentState GetComponentState(ICommonSession session)

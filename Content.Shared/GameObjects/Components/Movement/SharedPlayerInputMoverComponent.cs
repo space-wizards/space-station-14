@@ -52,15 +52,6 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         private MoveButtons _heldMoveButtons = MoveButtons.None;
 
-        // Don't serialize because it probably shouldn't change and it's a waste.
-        public bool IgnorePaused
-        {
-            get => _ignorePaused;
-            set => _ignorePaused = value;
-        }
-
-        private bool _ignorePaused;
-
         public float CurrentWalkSpeed => _movementSpeed?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
 
         public float CurrentSprintSpeed => _movementSpeed?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
@@ -122,12 +113,6 @@ namespace Content.Shared.GameObjects.Components.Movement
         /// </summary>
         [ViewVariables]
         public bool DiagonalMovementEnabled => _configurationManager.GetCVar<bool>(CCVars.GameDiagonalMovement);
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _ignorePaused, "ignorePaused", false);
-        }
 
         /// <inheritdoc />
         public override void Initialize()
