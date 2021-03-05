@@ -16,10 +16,6 @@ namespace Content.Shared.Access
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         /// <summary>
         ///     The player-visible name of the access level, in the ID card console and such.
         /// </summary>

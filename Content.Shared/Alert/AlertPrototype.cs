@@ -20,10 +20,6 @@ namespace Content.Shared.Alert
         [ViewVariables]
         string IPrototype.ID => AlertType.ToString();
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         /// <summary>
         /// Type of alert, no 2 alert prototypes should have the same one.
         /// </summary>

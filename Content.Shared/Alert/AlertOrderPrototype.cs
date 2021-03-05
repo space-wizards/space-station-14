@@ -19,10 +19,6 @@ namespace Content.Shared.Alert
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         [DataField("order")] private readonly List<(string type, string alert)> _order = new();
 
         private readonly Dictionary<AlertType, int> _typeToIdx = new();

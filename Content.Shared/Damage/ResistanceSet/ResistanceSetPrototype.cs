@@ -30,10 +30,6 @@ namespace Content.Shared.Damage.ResistanceSet
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         void ISerializationHooks.AfterDeserialization()
         {
             Resistances = new Dictionary<DamageType, ResistanceSetSettings>();

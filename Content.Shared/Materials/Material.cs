@@ -19,10 +19,6 @@ namespace Content.Shared.Materials
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         [DataField("name")] public string Name { get; private set; } = "unobtanium";
 
         [DataField("color")] public Color Color { get; private set; } = Color.Gray;

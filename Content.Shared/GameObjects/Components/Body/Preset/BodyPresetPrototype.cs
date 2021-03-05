@@ -20,10 +20,6 @@ namespace Content.Shared.GameObjects.Components.Body.Preset
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         [DataField("partIDs")]
         private Dictionary<string, string> _partIDs = new();
 

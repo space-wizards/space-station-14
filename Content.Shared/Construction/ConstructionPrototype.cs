@@ -62,10 +62,6 @@ namespace Content.Shared.Construction
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         [field: DataField("placementMode")]
         public string PlacementMode { get; } = "PlaceFree";
 

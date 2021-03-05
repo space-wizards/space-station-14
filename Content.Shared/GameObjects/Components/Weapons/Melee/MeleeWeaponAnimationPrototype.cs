@@ -15,10 +15,6 @@ namespace Content.Shared.GameObjects.Components.Weapons.Melee
         public string ID { get; } = default!;
 
         [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
-        [ViewVariables]
         [field: DataField("state")]
         public string State { get; } = string.Empty;
 

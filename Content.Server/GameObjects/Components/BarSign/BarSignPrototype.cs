@@ -16,9 +16,6 @@ namespace Content.Server.GameObjects.Components.BarSign
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
 
         [DataField("icon")] public string Icon { get; private set; } = "";
 
