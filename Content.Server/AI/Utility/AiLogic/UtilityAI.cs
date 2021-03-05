@@ -84,13 +84,8 @@ namespace Content.Server.AI.Utility.AiLogic
             if (BehaviorSets.Count > 0)
             {
                 var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
-
-                foreach (var bSet in BehaviorSets)
-                {
-                    behaviorManager.AddBehaviorSet(this, bSet, false);
-                }
-
                 behaviorManager.RebuildActions(this);
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(this, false));
             }
 
             base.Initialize();
