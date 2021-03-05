@@ -3,6 +3,9 @@
   start: a0
   graph:
     - node: a0
+      actions:
+        - !type:PopupEveryone
+          text: "Input bit A0..."
       edges:
         # Input 1
         - to: a1
@@ -17,6 +20,9 @@
               amount: 1
 
     - node: a1
+      actions:
+        - !type:PopupEveryone
+          text: "Input bit A1..."
       edges:
         # Input 1
         - to: b0
@@ -31,6 +37,9 @@
               amount: 1
 
     - node: b0
+      actions:
+        - !type:PopupEveryone
+          text: "Input bit B0..."
       edges:
         # Input 1
         - to: b1
@@ -45,6 +54,9 @@
               amount: 1
 
     - node: b1
+      actions:
+        - !type:PopupEveryone
+          text: "Input bit B1..."
       edges:
         # Input 1
         - to: result
@@ -201,11 +213,11 @@
                 container: c2
               # If c2 == 0...
               action:
-                !type:PopupUser
+                !type:PopupEveryone
                 text: "Result: 0"
               # If c2 == 1...
               else:
-                !type:PopupUser
+                !type:PopupEveryone
                 text: "Result: 4"
             # If c1 == 1...
             else:
@@ -215,11 +227,11 @@
                 container: c2
               # If c2 == 0...
               action:
-                !type:PopupUser
+                !type:PopupEveryone
                 text: "Result: 2"
               # If c2 == 1...
               else:
-                !type:PopupUser
+                !type:PopupEveryone
                 text: "Result: 6"
           # If c0 == 1...
           else:
@@ -235,11 +247,11 @@
                 container: c2
               # If c2 == 0...
               action:
-                !type:PopupUser
+                !type:PopupEveryone
                 text: "Result: 1"
               # If c2 == 1...
               else:
-                !type:PopupUser
+                !type:PopupEveryone
                 text: "Result: 5"
             # If c1 == 1...
             else:
@@ -249,9 +261,36 @@
                 container: c2
               # If c2 == 0...
               action:
-                !type:PopupUser
+                !type:PopupEveryone
                 text: "Result: 3"
               # If c2 == 1...
               else:
-                !type:PopupUser
+                !type:PopupEveryone
                 text: "Result: 7"
+      edges:
+        - to: a0
+          completed:
+            - !type:DeleteEntitiesInContainer
+              container: a0
+            - !type:DeleteEntitiesInContainer
+              container: a1
+            - !type:DeleteEntitiesInContainer
+              container: b0
+            - !type:DeleteEntitiesInContainer
+              container: b1
+            - !type:DeleteEntitiesInContainer
+              container: c0
+            - !type:DeleteEntitiesInContainer
+              container: c1
+            - !type:DeleteEntitiesInContainer
+              container: c2
+            - !type:DeleteEntitiesInContainer
+              container: t0
+            - !type:DeleteEntitiesInContainer
+              container: t1
+            - !type:DeleteEntitiesInContainer
+              container: t2
+            - !type:DeleteEntitiesInContainer
+              container: ca0
+          steps:
+            - tool: Prying
