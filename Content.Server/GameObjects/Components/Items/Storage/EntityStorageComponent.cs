@@ -18,7 +18,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -39,17 +39,35 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private TimeSpan _lastInternalOpenAttempt;
 
         [ViewVariables]
-        private int _storageCapacityMax;
+        [DataField("Capacity")]
+        private int _storageCapacityMax = 30;
+
         [ViewVariables]
+        [DataField("IsCollidableWhenOpen")]
         private bool _isCollidableWhenOpen;
+
         [ViewVariables]
         protected IEntityQuery? EntityQuery;
+
+        [DataField("showContents")]
         private bool _showContents;
-        private bool _occludesLight;
+
+        [DataField("occludesLight")]
+        private bool _occludesLight = true;
+
+        [DataField("open")]
         private bool _open;
-        private bool _canWeldShut;
+
+        [DataField("CanWeldShut")]
+        private bool _canWeldShut = true;
+
+        [DataField("IsWeldedShut")]
         private bool _isWeldedShut;
+
+        [DataField("closeSound")]
         private string _closeSound = "/Audio/Machines/closetclose.ogg";
+
+        [DataField("openSound")]
         private string _openSound = "/Audio/Machines/closetopen.ogg";
 
         [ViewVariables]
@@ -134,22 +152,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             {
                 placeableSurfaceComponent.IsPlaceable = Open;
             }
-        }
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _storageCapacityMax, "Capacity", 30);
-            serializer.DataField(ref _isCollidableWhenOpen, "IsCollidableWhenOpen", false);
-            serializer.DataField(ref _showContents, "showContents", false);
-            serializer.DataField(ref _occludesLight, "occludesLight", true);
-            serializer.DataField(ref _open, "open", false);
-            serializer.DataField(this, a => a.IsWeldedShut, "IsWeldedShut", false);
-            serializer.DataField(this, a => a.CanWeldShut, "CanWeldShut", true);
-            serializer.DataField(this, x => x._closeSound, "closeSound", "/Audio/Machines/closetclose.ogg");
-            serializer.DataField(this, x => x._openSound, "openSound", "/Audio/Machines/closetopen.ogg");
         }
 
         public virtual void Activate(ActivateEventArgs eventArgs)

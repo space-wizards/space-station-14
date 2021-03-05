@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,6 +24,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -33,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     /// All of the ranged weapon components inherit from this to share mechanics like shooting etc.
     /// Only difference between them is how they retrieve a projectile to shoot (battery, magazine, etc.)
     /// </summary>
-    public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IUse, IInteractUsing, IExamine
+    public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IUse, IInteractUsing, IExamine, ISerializationHooks
     {
         // There's still some of py01 and PJB's work left over, especially in underlying shooting logic,
         // it's just when I re-organised it changed me as the contributor
@@ -41,11 +42,17 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override FireRateSelector FireRateSelector => _fireRateSelector;
-        private FireRateSelector _fireRateSelector;
+
+        [DataField("currentSelector")]
+        private FireRateSelector _fireRateSelector = FireRateSelector.Safety;
+
         public override FireRateSelector AllRateSelectors => _fireRateSelector;
+
+        [DataField("allSelectors")]
         private FireRateSelector _allRateSelectors;
-        public override float FireRate => _fireRate;
-        private float _fireRate;
+
+        [field: DataField("fireRate")]
+        public override float FireRate { get; } = 2f;
 
         // _lastFire is when we actually fired (so if we hold the button then recoil doesn't build up if we're not firing)
         private TimeSpan _lastFire;
@@ -54,100 +61,76 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public abstract IEntity TakeProjectile(EntityCoordinates spawnAt);
 
         // Recoil / spray control
-        private Angle _minAngle;
-        private Angle _maxAngle;
+        [DataField("minAngle")]
+        private float _minAngleDegrees;
+
+        public Angle MinAngle { get; private set; }
+
+        [DataField("maxAngle")]
+        private float _maxAngleDegrees = 45;
+
+        public Angle MaxAngle { get; private set; }
+
         private Angle _currentAngle = Angle.Zero;
+
+        [DataField("angleDecay")]
+        private float _angleDecayDegrees = 20;
+
         /// <summary>
         /// How slowly the angle's theta decays per second in radians
         /// </summary>
-        private float _angleDecay;
+        public float AngleDecay { get; private set; }
+
+        [DataField("angleIncrease")]
+        private float? _angleIncreaseDegrees;
+
         /// <summary>
         /// How quickly the angle's theta builds for every shot fired in radians
         /// </summary>
-        private float _angleIncrease;
-        // Multiplies the ammo spread to get the final spread of each pellet
-        private float _spreadRatio;
+        public float AngleIncrease { get; private set; }
 
-        public bool CanMuzzleFlash => _canMuzzleFlash;
-        private bool _canMuzzleFlash = true;
+        // Multiplies the ammo spread to get the final spread of each pellet
+        [DataField("ammoSpreadRatio")]
+        public float SpreadRatio { get; private set; }
+
+        [field: DataField("canMuzzleFlash")]
+        public bool CanMuzzleFlash { get; } = true;
 
         // Sounds
-        public string SoundGunshot
+        [field: DataField("soundGunshot")]
+        public string SoundGunshot { get; set; }
+
+        [field: DataField("soundEmpty")]
+        public string SoundEmpty { get; } = "/Audio/Weapons/Guns/Empty/empty.ogg";
+
+        void ISerializationHooks.BeforeSerialization()
         {
-            get => _soundGunshot;
-            set => _soundGunshot = value;
+            _minAngleDegrees = (float) (MinAngle.Degrees * 2);
+            _maxAngleDegrees = (float) (MaxAngle.Degrees * 2);
+            _angleIncreaseDegrees = MathF.Round(AngleIncrease / ((float) Math.PI / 180f), 2);
+            AngleDecay = MathF.Round(AngleDecay / ((float) Math.PI / 180f), 2);
         }
-        private string _soundGunshot;
-        public string SoundEmpty => _soundEmpty;
-        private string _soundEmpty;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _fireRateSelector, "currentSelector", FireRateSelector.Safety);
-            serializer.DataField(ref _fireRate, "fireRate", 2.0f);
-
             // This hard-to-read area's dealing with recoil
             // Use degrees in yaml as it's easier to read compared to "0.0125f"
-            serializer.DataReadWriteFunction(
-                "minAngle",
-                0,
-                angle => _minAngle = Angle.FromDegrees(angle / 2f),
-                () => _minAngle.Degrees * 2);
+            MinAngle = Angle.FromDegrees(_minAngleDegrees / 2f);
 
             // Random doubles it as it's +/- so uhh we'll just half it here for readability
-            serializer.DataReadWriteFunction(
-                "maxAngle",
-                45,
-                angle => _maxAngle = Angle.FromDegrees(angle / 2f),
-                () => _maxAngle.Degrees * 2);
+            MaxAngle = Angle.FromDegrees(_maxAngleDegrees / 2f);
 
-            serializer.DataReadWriteFunction(
-                "angleIncrease",
-                40 / _fireRate,
-                angle => _angleIncrease = angle * (float) Math.PI / 180f,
-                () => MathF.Round(_angleIncrease / ((float) Math.PI / 180f), 2));
+            _angleIncreaseDegrees ??= 40 / FireRate;
+            AngleIncrease = _angleIncreaseDegrees.Value * (float) Math.PI / 180f;
 
-            serializer.DataReadWriteFunction(
-                "angleDecay",
-                20f,
-                angle => _angleDecay = angle * (float) Math.PI / 180f,
-                () => MathF.Round(_angleDecay / ((float) Math.PI / 180f), 2));
-
-            serializer.DataField(ref _spreadRatio, "ammoSpreadRatio", 1.0f);
-
-            serializer.DataReadWriteFunction(
-                "allSelectors",
-                new List<FireRateSelector>(),
-                selectors => selectors.ForEach(selector => _allRateSelectors |= selector),
-                () =>
-                {
-                    var types = new List<FireRateSelector>();
-
-                    foreach (FireRateSelector selector in Enum.GetValues(typeof(FireRateSelector)))
-                    {
-                        if ((_allRateSelectors & selector) != 0)
-                        {
-                            types.Add(selector);
-                        }
-                    }
-
-                    return types;
-                });
+            AngleDecay = _angleDecayDegrees * (float) Math.PI / 180f;
 
             // For simplicity we'll enforce it this way; ammo determines max spread
-            if (_spreadRatio > 1.0f)
+            if (SpreadRatio > 1.0f)
             {
                 Logger.Error("SpreadRatio must be <= 1.0f for guns");
                 throw new InvalidOperationException();
             }
-
-            serializer.DataField(ref _canMuzzleFlash, "canMuzzleFlash", true);
-
-            // Sounds
-            serializer.DataField(ref _soundGunshot, "soundGunshot", null);
-            serializer.DataField(ref _soundEmpty, "soundEmpty", "/Audio/Weapons/Guns/Empty/empty.ogg");
         }
 
         public override void OnAdd()
@@ -176,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             var currentTime = _gameTiming.CurTime;
             var timeSinceLastFire = (currentTime - _lastFire).TotalSeconds;
-            var newTheta = MathHelper.Clamp(_currentAngle.Theta + _angleIncrease - _angleDecay * timeSinceLastFire, _minAngle.Theta, _maxAngle.Theta);
+            var newTheta = MathHelper.Clamp(_currentAngle.Theta + AngleIncrease - AngleDecay * timeSinceLastFire, MinAngle.Theta, MaxAngle.Theta);
             _currentAngle = new Angle(newTheta);
 
             var random = (_robustRandom.NextDouble() - 0.5) * 2;
@@ -214,9 +197,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             if (ShotsLeft == 0)
             {
-                if (_soundEmpty != null)
+                if (SoundEmpty != null)
                 {
-                    SoundSystem.Play(Filter.Broadcast(), _soundEmpty, Owner.Transform.Coordinates);
+                    SoundSystem.Play(Filter.Broadcast(), SoundEmpty, Owner.Transform.Coordinates);
                 }
                 return;
             }
@@ -225,7 +208,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var projectile = TakeProjectile(shooter.Transform.Coordinates);
             if (projectile == null)
             {
-                SoundSystem.Play(Filter.Broadcast(), _soundEmpty, Owner.Transform.Coordinates);
+                SoundSystem.Play(Filter.Broadcast(), SoundEmpty, Owner.Transform.Coordinates);
                 return;
             }
 
@@ -266,7 +249,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 throw new InvalidOperationException();
             }
 
-            SoundSystem.Play(Filter.Broadcast(), _soundGunshot, Owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Broadcast(), SoundGunshot, Owner.Transform.Coordinates);
             _lastFire = _gameTiming.CurTime;
 
             return;
@@ -352,7 +335,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             List<Angle> sprayAngleChange = null;
             if (count > 1)
             {
-                evenSpreadAngle *= _spreadRatio;
+                evenSpreadAngle *= SpreadRatio;
                 sprayAngleChange = Linspace(-evenSpreadAngle / 2, evenSpreadAngle / 2, count);
             }
 

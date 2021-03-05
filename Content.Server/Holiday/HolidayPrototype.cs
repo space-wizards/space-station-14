@@ -5,57 +5,54 @@ using Content.Server.Holiday.Greet;
 using Content.Server.Holiday.Interfaces;
 using Content.Server.Holiday.ShouldCelebrate;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.Holiday
 {
     [Prototype("holiday")]
     public class HolidayPrototype : IPrototype
     {
-        [ViewVariables] public string Name { get; private set; } = string.Empty;
-        [ViewVariables] public string ID { get; private set; } = string.Empty;
-        [ViewVariables] public byte BeginDay { get; set; } = 1;
-        [ViewVariables] public Month BeginMonth { get; set; } = Month.Invalid;
+        [ViewVariables] [DataField("name")] public string Name { get; private set; } = string.Empty;
+
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
+
+        [ViewVariables]
+        [DataField("beginDay")]
+        public byte BeginDay { get; set; } = 1;
+
+        [ViewVariables]
+        [DataField("beginMonth")]
+        public Month BeginMonth { get; set; } = Month.Invalid;
 
         /// <summary>
         ///     Day this holiday will end. Zero means it lasts a single day.
         /// </summary>
-        [ViewVariables] public byte EndDay { get; set; } = 0;
+        [ViewVariables]
+        [DataField("endDay")]
+        public byte EndDay { get; set; }
 
         /// <summary>
         ///     Month this holiday will end in. Invalid means it lasts a single month.
         /// </summary>
-        [ViewVariables] public Month EndMonth { get; set; } = Month.Invalid;
-
         [ViewVariables]
-        private IHolidayShouldCelebrate _shouldCelebrate = new DefaultHolidayShouldCelebrate();
+        [DataField("endMonth")]
+        public Month EndMonth { get; set; } = Month.Invalid;
 
-        [ViewVariables]
-        private IHolidayGreet _greet = new DefaultHolidayGreet();
+        [ViewVariables] [DataField("shouldCelebrate")]
+        private readonly IHolidayShouldCelebrate _shouldCelebrate = new DefaultHolidayShouldCelebrate();
 
-        [ViewVariables]
-        private IHolidayCelebrate _celebrate = new DefaultHolidayCelebrate();
+        [ViewVariables] [DataField("greet")]
+        private readonly IHolidayGreet _greet = new DefaultHolidayGreet();
 
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-            ExposeData(serializer);
-        }
-
-        public void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.ID, "id", string.Empty);
-            serializer.DataField(this, x => x.Name, "name", string.Empty);
-            serializer.DataField(this, x => x.BeginDay, "beginDay", (byte)1);
-            serializer.DataField(this, x => x.BeginMonth, "beginMonth", Month.Invalid);
-            serializer.DataField(this, x => x.EndDay, "endDay", (byte)0);
-            serializer.DataField(this, x => x.EndMonth, "endMonth", Month.Invalid);
-            serializer.DataField(ref _shouldCelebrate, "shouldCelebrate", new DefaultHolidayShouldCelebrate());
-            serializer.DataField(ref _greet, "greet", new DefaultHolidayGreet());
-            serializer.DataField(ref _celebrate, "celebrate", new DefaultHolidayCelebrate());
-        }
+        [ViewVariables] [DataField("celebrate")]
+        private readonly IHolidayCelebrate _celebrate = new DefaultHolidayCelebrate();
 
         public bool ShouldCelebrate(DateTime date)
         {

@@ -7,35 +7,35 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Doors
 {
     [UsedImplicitly]
-    public class AirlockVisualizer : AppearanceVisualizer
+    public class AirlockVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "airlock_animation";
+
+        [DataField("open_sound", required: true)]
+        private string _openSound = default!;
+
+        [DataField("close_sound", required: true)]
+        private string _closeSound = default!;
+
+        [DataField("deny_sound", required: true)]
+        private string _denySound = default!;
+
+        [DataField("animation_time")]
+        private float _delay = 0.8f;
 
         private Animation CloseAnimation = default!;
         private Animation OpenAnimation = default!;
         private Animation DenyAnimation = default!;
 
-        public override void LoadData(YamlMappingNode node)
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.LoadData(node);
-
-            var delay = 0.8f;
-
-            var openSound = node.GetNode("open_sound").AsString();
-            var closeSound = node.GetNode("close_sound").AsString();
-            var denySound = node.GetNode("deny_sound").AsString();
-            if (node.TryGetNode("animation_time", out var yamlNode))
-            {
-                delay = yamlNode.AsFloat();
-            }
-
-            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(delay)};
+            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(_delay)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 CloseAnimation.AnimationTracks.Add(flick);
@@ -54,10 +54,10 @@ namespace Content.Client.GameObjects.Components.Doors
 
                 var sound = new AnimationTrackPlaySound();
                 CloseAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(closeSound, 0));
+                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_closeSound, 0));
             }
 
-            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(delay)};
+            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(_delay)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 OpenAnimation.AnimationTracks.Add(flick);
@@ -76,7 +76,7 @@ namespace Content.Client.GameObjects.Components.Doors
 
                 var sound = new AnimationTrackPlaySound();
                 OpenAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(openSound, 0));
+                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_openSound, 0));
             }
 
             DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(0.3f)};
@@ -88,7 +88,7 @@ namespace Content.Client.GameObjects.Components.Doors
 
                 var sound = new AnimationTrackPlaySound();
                 DenyAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
+                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
             }
         }
 

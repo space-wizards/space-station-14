@@ -25,7 +25,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Doors
     {
         [ComponentDependency]
         private readonly IDoorCheck? _doorCheck = null;
-        
+
         public override DoorState State
         {
             get => base.State;
@@ -79,31 +79,36 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         /// Whether the door will ever crush.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("inhibitCrush")]
         private bool _inhibitCrush;
 
         /// <summary>
         /// Whether the door blocks light.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] private bool _occludes;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("occludes")]
+        private bool _occludes = true;
         public bool Occludes => _occludes;
 
         /// <summary>
         /// Whether the door will open when it is bumped into.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] private bool _bumpOpen;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("bumpOpen")]
+        private bool _bumpOpen = true;
 
         /// <summary>
         /// Whether the door starts open when it's first loaded from prototype. A door won't start open if its prototype is also welded shut.
         /// Handled in Startup().
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("startOpen")]
         private bool _startOpen;
 
         /// <summary>
         /// Whether the airlock is welded shut. Can be set by the prototype, although this will fail if the door isn't weldable.
         /// When set by prototype, handled in Startup().
         /// </summary>
+        [DataField("welded")]
         private bool _isWeldedShut;
+
         /// <summary>
         /// Whether the airlock is welded shut.
         /// </summary>
@@ -127,6 +132,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// Whether the door can ever be welded shut.
         /// </summary>
         private bool _weldable;
+
         /// <summary>
         /// Whether the door can currently be welded.
         /// </summary>
@@ -135,19 +141,11 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
         /// </summary>
-        private bool _beingWelded = false;
+        private bool _beingWelded;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _isWeldedShut, "welded", false);
-            serializer.DataField(ref _startOpen, "startOpen", false);
-            serializer.DataField(ref _weldable, "weldable", true);
-            serializer.DataField(ref _bumpOpen, "bumpOpen", true);
-            serializer.DataField(ref _occludes, "occludes", true);
-            serializer.DataField(ref _inhibitCrush, "inhibitCrush", false);
-        }
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("canCrush")]
+        private bool _canCrush = true;
 
         protected override void Startup()
         {
@@ -308,7 +306,7 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 return _doorCheck.OpenCheck();
             }
-            
+
             return true;
         }
 
@@ -452,7 +450,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 OnPartialClose();
                 await Timer.Delay(CloseTimeTwo, _stateChangeCancelTokenSource.Token);
-                
+
                 if (Occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
                 {
                     occluder.Enabled = true;

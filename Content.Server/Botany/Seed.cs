@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.Botany
 {
@@ -59,19 +59,29 @@ namespace Content.Server.Botany
     }
 */
 
+    [DataDefinition]
     public struct SeedChemQuantity
     {
+        [DataField("Min")]
         public int Min;
+        [DataField("Max")]
         public int Max;
+        [DataField("PotencyDivisor")]
         public int PotencyDivisor;
     }
 
     [Prototype("seed")]
-    public class Seed : IPrototype, IExposeData
+    public class Seed : IPrototype
     {
         private const string SeedPrototype = "SeedBase";
 
-        public string ID { get; private set; }
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; private init; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         /// <summary>
         ///     Unique identifier of this seed. Do NOT set this.
@@ -79,45 +89,84 @@ namespace Content.Server.Botany
         public int Uid { get; internal set; } = -1;
 
         #region Tracking
-        [ViewVariables] public string Name { get; set; }
-        [ViewVariables] public string SeedName { get; set; }
-        [ViewVariables] public string SeedNoun { get; set; }
-        [ViewVariables] public string DisplayName { get; set; }
-        [ViewVariables] public bool RoundStart { get; private set; }
-        [ViewVariables] public bool Mysterious { get; set; }
-        [ViewVariables] public bool Immutable { get; set; }
+
+        [ViewVariables] [DataField("name")] public string Name { get; set; } = string.Empty;
+        [ViewVariables] [DataField("seedName")] public string SeedName { get; set; } = string.Empty;
+
+        [ViewVariables]
+        [DataField("seedNoun")]
+        public string SeedNoun { get; set; } = "seeds";
+        [ViewVariables] [DataField("displayName")] public string DisplayName { get; set; } = string.Empty;
+
+        [ViewVariables]
+        [DataField("roundStart")]
+        public bool RoundStart { get; private set; } = true;
+        [ViewVariables] [DataField("mysterious")] public bool Mysterious { get; set; }
+        [ViewVariables] [DataField("immutable")] public bool Immutable { get; set; }
         #endregion
 
         #region Output
-        [ViewVariables] public List<string> ProductPrototypes { get; set; }
-        [ViewVariables] public Dictionary<string, SeedChemQuantity> Chemicals { get; set; }
-        [ViewVariables] public Dictionary<Gas, float> ConsumeGasses { get; set; }
-        [ViewVariables]public Dictionary<Gas, float> ExudeGasses { get; set; }
+
+        [ViewVariables]
+        [DataField("productPrototypes")]
+        public List<string> ProductPrototypes { get; set; } = new();
+
+        [ViewVariables]
+        [DataField("chemicals")]
+        public Dictionary<string, SeedChemQuantity> Chemicals { get; set; } = new();
+
+        [ViewVariables]
+        [DataField("consumeGasses")]
+        public Dictionary<Gas, float> ConsumeGasses { get; set; } = new();
+
+        [ViewVariables]
+        [DataField("exudeGasses")]
+        public Dictionary<Gas, float> ExudeGasses { get; set; } = new();
         #endregion
 
         #region Tolerances
-        [ViewVariables] public float NutrientConsumption { get; set; }
-        [ViewVariables] public float WaterConsumption { get; set; }
-        [ViewVariables] public float IdealHeat { get; set; }
-        [ViewVariables] public float HeatTolerance { get; set; }
-        [ViewVariables] public float IdealLight { get; set; }
-        [ViewVariables] public float LightTolerance { get; set; }
-        [ViewVariables] public float ToxinsTolerance { get; set; }
-        [ViewVariables] public float LowPressureTolerance { get; set; }
-        [ViewVariables] public float HighPressureTolerance { get; set; }
-        [ViewVariables] public float PestTolerance { get; set; }
-        [ViewVariables] public float WeedTolerance { get; set; }
+
+        [ViewVariables]
+        [DataField("nutrientConsumption")]
+        public float NutrientConsumption { get; set; } = 0.25f;
+
+        [ViewVariables] [DataField("waterConsumption")] public float WaterConsumption { get; set; } = 3f;
+        [ViewVariables] [DataField("idealHeat")] public float IdealHeat { get; set; } = 293f;
+        [ViewVariables] [DataField("heatTolerance")] public float HeatTolerance { get; set; } = 20f;
+        [ViewVariables] [DataField("idealLight")] public float IdealLight { get; set; } = 7f;
+        [ViewVariables] [DataField("lightTolerance")] public float LightTolerance { get; set; } = 5f;
+        [ViewVariables] [DataField("toxinsTolerance")] public float ToxinsTolerance { get; set; } = 4f;
+
+        [ViewVariables]
+        [DataField("lowPressureTolerance")]
+        public float LowPressureTolerance { get; set; } = 25f;
+
+        [ViewVariables]
+        [DataField("highPressureTolerance")]
+        public float HighPressureTolerance { get; set; } = 200f;
+
+        [ViewVariables]
+        [DataField("pestTolerance")]
+        public float PestTolerance { get; set; } = 5f;
+
+        [ViewVariables]
+        [DataField("weedTolerance")]
+        public float WeedTolerance { get; set; } = 5f;
         #endregion
 
         #region General traits
-        [ViewVariables] public float Endurance { get; set; }
-        [ViewVariables] public int Yield { get; set; }
-        [ViewVariables] public float Lifespan { get; set; }
-        [ViewVariables] public float Maturation { get; set; }
-        [ViewVariables] public float Production { get; set; }
-        [ViewVariables] public int GrowthStages { get; set; }
-        [ViewVariables] public HarvestType HarvestRepeat { get; set; }
-        [ViewVariables] public float Potency { get; set; }
+
+        [ViewVariables]
+        [DataField("endurance")]
+        public float Endurance { get; set; } = 100f;
+        [ViewVariables] [DataField("yield")] public int Yield { get; set; }
+        [ViewVariables] [DataField("lifespan")] public float Lifespan { get; set; }
+        [ViewVariables] [DataField("maturation")] public float Maturation { get; set; }
+        [ViewVariables] [DataField("production")] public float Production { get; set; }
+        [ViewVariables] [DataField("growthStages")] public int GrowthStages { get; set; } = 6;
+        [ViewVariables] [DataField("harvestRepeat")] public HarvestType HarvestRepeat { get; set; } = HarvestType.NoRepeat;
+
+        [ViewVariables] [DataField("potency")] public float Potency { get; set; } = 1f;
         // No, I'm not removing these.
         //public PlantSpread Spread { get; set; }
         //public PlantMutation Mutation { get; set; }
@@ -127,71 +176,35 @@ namespace Content.Server.Botany
         //public bool Hematophage { get; set; }
         //public bool Thorny { get; set; }
         //public bool Stinging { get; set; }
+        [DataField("ligneous")]
         public bool Ligneous { get; set; }
         // public bool Teleporting { get; set; }
         // public PlantJuicy Juicy { get; set; }
         #endregion
 
         #region Cosmetics
-        [ViewVariables]public ResourcePath PlantRsi { get; set; }
-        [ViewVariables] public string PlantIconState { get; set; }
-        [ViewVariables] public bool Bioluminescent { get; set; }
-        [ViewVariables] public Color BioluminescentColor { get; set; }
-        [ViewVariables] public string SplatPrototype { get; set; }
+
+        [ViewVariables]
+        [DataField("plantRsi", required: true)]
+        public ResourcePath PlantRsi { get; set; } = default!;
+
+        [ViewVariables]
+        [DataField("plantIconState")]
+        public string PlantIconState { get; set; } = "produce";
+
+        [ViewVariables]
+        [DataField("bioluminescent")]
+        public bool Bioluminescent { get; set; }
+
+        [ViewVariables]
+        [DataField("bioluminescentColor")]
+        public Color BioluminescentColor { get; set; } = Color.White;
+
+        [ViewVariables]
+        [DataField("splatPrototype")]
+        public string? SplatPrototype { get; set; }
+
         #endregion
-
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            InternalExposeData(serializer);
-        }
-
-        public void InternalExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.ID, "id", string.Empty);
-            serializer.DataField(this, x => x.Name, "name", string.Empty);
-            serializer.DataField(this, x => x.SeedName, "seedName", string.Empty);
-            serializer.DataField(this, x => x.SeedNoun, "seedNoun", "seeds");
-            serializer.DataField(this, x => x.DisplayName, "displayName", string.Empty);
-            serializer.DataField(this, x => x.RoundStart, "roundStart", true);
-            serializer.DataField(this, x => x.Mysterious, "mysterious", false);
-            serializer.DataField(this, x => x.Immutable, "immutable", false);
-            serializer.DataField(this, x => x.ProductPrototypes, "productPrototypes", new List<string>());
-            serializer.DataField(this, x => x.Chemicals, "chemicals", new Dictionary<string, SeedChemQuantity>());
-            serializer.DataField(this, x => x.ConsumeGasses, "consumeGasses", new Dictionary<Gas, float>());
-            serializer.DataField(this, x => x.ExudeGasses, "exudeGasses", new Dictionary<Gas, float>());
-            serializer.DataField(this, x => x.NutrientConsumption, "nutrientConsumption", 0.25f);
-            serializer.DataField(this, x => x.WaterConsumption, "waterConsumption", 3f);
-            serializer.DataField(this, x => x.IdealHeat, "idealHeat", 293f);
-            serializer.DataField(this, x => x.HeatTolerance, "heatTolerance", 20f);
-            serializer.DataField(this, x => x.IdealLight, "idealLight", 7f);
-            serializer.DataField(this, x => x.LightTolerance, "lightTolerance", 5f);
-            serializer.DataField(this, x => x.ToxinsTolerance, "toxinsTolerance", 4f);
-            serializer.DataField(this, x => x.LowPressureTolerance, "lowPressureTolerance", 25f);
-            serializer.DataField(this, x => x.HighPressureTolerance, "highPressureTolerance", 200f);
-            serializer.DataField(this, x => x.PestTolerance, "pestTolerance", 5f);
-            serializer.DataField(this, x => x.WeedTolerance, "weedTolerance", 5f);
-            serializer.DataField(this, x => x.Endurance, "endurance", 100f);
-            serializer.DataField(this, x => x.Yield, "yield", 0);
-            serializer.DataField(this, x => x.Lifespan, "lifespan", 0f);
-            serializer.DataField(this, x => x.Maturation, "maturation", 0f);
-            serializer.DataField(this, x => x.Production, "production", 0f);
-            serializer.DataField(this, x => x.GrowthStages, "growthStages", 6);
-            serializer.DataField(this, x => x.HarvestRepeat, "harvestRepeat", HarvestType.NoRepeat);
-            serializer.DataField(this, x => x.Potency, "potency", 1f);
-            serializer.DataField(this, x => x.Ligneous, "ligneous", false);
-            serializer.DataField(this, x => x.PlantRsi, "plantRsi", null);
-            serializer.DataField(this, x => x.PlantIconState, "plantIconState", "produce");
-            serializer.DataField(this, x => x.Bioluminescent, "bioluminescent", false);
-            serializer.DataField(this, x => x.BioluminescentColor, "bioluminescentColor", Color.White);
-            serializer.DataField(this, x => x.SplatPrototype, "splatPrototype", string.Empty);
-        }
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-            InternalExposeData(serializer);
-        }
 
         public Seed Clone()
         {
@@ -240,7 +253,7 @@ namespace Content.Server.Botany
             return newSeed;
         }
 
-        public IEntity SpawnSeedPacket(EntityCoordinates transformCoordinates, IEntityManager entityManager = null)
+        public IEntity SpawnSeedPacket(EntityCoordinates transformCoordinates, IEntityManager? entityManager = null)
         {
             entityManager ??= IoCManager.Resolve<IEntityManager>();
 
@@ -249,7 +262,7 @@ namespace Content.Server.Botany
             var seedComp = seed.EnsureComponent<SeedComponent>();
             seedComp.Seed = this;
 
-            if (seed.TryGetComponent(out SpriteComponent sprite))
+            if (seed.TryGetComponent(out SpriteComponent? sprite))
             {
                 // Seed state will always be seed. Blame the spriter if that's not the case!
                 sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(PlantRsi, "seed"));
@@ -346,7 +359,7 @@ namespace Content.Server.Botany
             return Clone();
         }
 
-        public bool CheckHarvest(IEntity user, IEntity held = null)
+        public bool CheckHarvest(IEntity user, IEntity? held = null)
         {
             return (!Ligneous || (Ligneous && held != null && held.HasTag("BotanySharp")));
         }

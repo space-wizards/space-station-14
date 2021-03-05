@@ -1,55 +1,65 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Actions
 {
     /// <summary>
     /// Base class for action prototypes.
     /// </summary>
-    public abstract class BaseActionPrototype : IPrototype
+    [ImplicitDataDefinitionForInheritors]
+    public abstract class BaseActionPrototype : IPrototype, ISerializationHooks
     {
-        public string ID { get; private set; } = string.Empty;
+        public abstract string ID { get; }
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         /// <summary>
         /// Icon representing this action in the UI.
         /// </summary>
         [ViewVariables]
-        public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
+        [field: DataField("icon")]
+        public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         /// For toggle actions only, icon to show when toggled on. If omitted,
         /// the action will simply be highlighted when turned on.
         /// </summary>
         [ViewVariables]
-        public SpriteSpecifier IconOn { get; private set; } = SpriteSpecifier.Invalid;
+        [field: DataField("iconOn")]
+        public SpriteSpecifier IconOn { get; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         /// Name to show in UI. Accepts formatting.
         /// </summary>
+        [DataField("name")]
         public FormattedMessage Name { get; private set; } = new();
 
         /// <summary>
         /// Description to show in UI. Accepts formatting.
         /// </summary>
-        public FormattedMessage Description { get; private set; } = new();
+        [field: DataField("description")]
+        public FormattedMessage Description { get; } = new();
 
         /// <summary>
         /// Requirements message to show in UI. Accepts formatting, but generally should be avoided
         /// so the requirements message isn't too prominent in the tooltip.
         /// </summary>
-        public string Requires { get; private set; } = string.Empty;
+        [field: DataField("requires")]
+        public string Requires { get; } = string.Empty;
 
         /// <summary>
         /// The type of behavior this action has. This is valid clientside and serverside.
         /// </summary>
+        [DataField("behaviorType")]
         public BehaviorType BehaviorType { get; protected set; } = BehaviorType.None;
 
         /// <summary>
@@ -57,29 +67,36 @@ namespace Content.Shared.Actions
         /// selected after it is used, so it can be continuously re-used. If this is false,
         /// the action will be deselected after one use.
         /// </summary>
-        public bool Repeat { get; private set; }
+        [field: DataField("repeat")]
+        public bool Repeat { get; }
 
         /// <summary>
         /// For TargetEntity/TargetPoint actions, should the action be de-selected if currently selected (choosing a target)
         /// when it goes on cooldown. Defaults to false.
         /// </summary>
-        public bool DeselectOnCooldown { get; private set; }
+        [field: DataField("deselectOnCooldown")]
+        public bool DeselectOnCooldown { get; }
 
         /// <summary>
         /// For TargetEntity actions, should the action be de-selected if the user doesn't click an entity when
         /// selecting a target. Defaults to false.
         /// </summary>
-        public bool DeselectWhenEntityNotClicked { get; private set; }
+        [field: DataField("deselectWhenEntityNotClicked")]
+        public bool DeselectWhenEntityNotClicked { get; }
+
+        [DataField("filters")] private List<string> _filters = new();
 
         /// <summary>
         /// Filters that can be used to filter this item in action menu.
         /// </summary>
-        public IEnumerable<string> Filters { get; private set; } = new List<string>();
+        public IEnumerable<string> Filters => _filters;
+
+        [DataField("keywords")] private List<string> _keywords = new();
 
         /// <summary>
         /// Keywords that can be used to search this item in action menu.
         /// </summary>
-        public IEnumerable<string> Keywords { get; private set; } = new List<string>();
+        public IEnumerable<string> Keywords => _keywords;
 
         /// <summary>
         /// True if this is an action that requires selecting a target
@@ -87,27 +104,11 @@ namespace Content.Shared.Actions
         public bool IsTargetAction =>
             BehaviorType == BehaviorType.TargetEntity || BehaviorType == BehaviorType.TargetPoint;
 
-        public virtual void LoadFrom(YamlMappingNode mapping)
+        public virtual void AfterDeserialization()
         {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
+            Name = new FormattedMessage();
+            Name.AddText(ID);
 
-            serializer.DataReadFunction("name", string.Empty,
-                s =>
-                {
-                    ID = s;
-                    Name = FormattedMessage.FromMarkup(s);
-                });
-            serializer.DataReadFunction("description", string.Empty,
-                s => Description = FormattedMessage.FromMarkup(s));
-
-            serializer.DataField(this, x => x.Requires,"requires", string.Empty);
-            serializer.DataField(this, x => x.Icon,"icon", SpriteSpecifier.Invalid);
-            serializer.DataField(this, x => x.IconOn,"iconOn", SpriteSpecifier.Invalid);
-
-            // client needs to know what type of behavior it is even if the actual implementation is only
-            // on server side. If we wanted to avoid this we'd need to always add a shared or clientside interface
-            // for each action even if there was only server-side logic, which would be cumbersome
-            serializer.DataField(this, x => x.BehaviorType, "behaviorType", BehaviorType.None);
             if (BehaviorType == BehaviorType.None)
             {
                 Logger.ErrorS("action", "Missing behaviorType for action with name {0}", Name);
@@ -119,28 +120,12 @@ namespace Content.Shared.Actions
                                         " type was {1}. iconOn is only supported for Toggle behavior type.", Name);
             }
 
-            serializer.DataField(this, x => x.Repeat, "repeat", false);
             if (Repeat && BehaviorType != BehaviorType.TargetEntity && BehaviorType != BehaviorType.TargetPoint)
             {
                 Logger.ErrorS("action", " action named {0} used repeat: true, but this is only supported for" +
                                         " TargetEntity and TargetPoint behaviorType and its behaviorType is {1}",
                     Name, BehaviorType);
             }
-
-            serializer.DataField(this, x => x.DeselectOnCooldown, "deselectOnCooldown", false);
-            serializer.DataField(this, x => x.DeselectWhenEntityNotClicked, "deselectWhenEntityNotClicked", false);
-
-            serializer.DataReadFunction("filters", new List<string>(),
-                rawTags =>
-                {
-                    Filters = rawTags.Select(rawTag => rawTag.Trim()).ToList();
-                });
-
-            serializer.DataReadFunction("keywords", new List<string>(),
-                rawTags =>
-                {
-                    Keywords = rawTags.Select(rawTag => rawTag.Trim()).ToList();
-                });
         }
 
         protected void ValidateBehaviorType(BehaviorType expected, Type actualInterface)

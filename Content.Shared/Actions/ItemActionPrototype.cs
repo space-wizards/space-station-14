@@ -4,7 +4,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Actions
 {
@@ -12,15 +12,18 @@ namespace Content.Shared.Actions
     /// An action which is granted to an entity via an item (such as toggling a flashlight).
     /// </summary>
     [Prototype("itemAction")]
-    public class ItemActionPrototype : BaseActionPrototype
+    [DataDefinition]
+    public class ItemActionPrototype : BaseActionPrototype, ISerializationHooks
     {
         /// <summary>
         /// Type of item action, no 2 itemAction prototypes should have the same one.
         /// </summary>
-        public ItemActionType ActionType { get; private set; }
+        [DataField("actionType")]
+        public ItemActionType ActionType { get; private set; } = ItemActionType.Error;
 
         /// <see cref="ItemActionIconStyle"/>
-        public ItemActionIconStyle IconStyle { get; private set; }
+        [DataField("iconStyle")]
+        public ItemActionIconStyle IconStyle { get; private set; } = ItemActionIconStyle.BigItem;
 
         /// <summary>
         /// The IInstantItemAction that should be invoked when performing this
@@ -50,25 +53,23 @@ namespace Content.Shared.Actions
         /// </summary>
         public ITargetPointItemAction TargetPointAction { get; private set; } = default!;
 
-        public override void LoadFrom(YamlMappingNode mapping)
-        {
-            base.LoadFrom(mapping);
-            var serializer = YamlObjectSerializer.NewReader(mapping);
+        [DataField("behavior", readOnly: true, serverOnly: true)]
+        public IItemActionBehavior? ItemActionBehavior { get; private set; }
 
-            serializer.DataField(this, x => x.ActionType, "actionType", ItemActionType.Error);
+        public override string ID => ActionType.ToString();
+
+        public override void AfterDeserialization()
+        {
+            base.AfterDeserialization();
             if (ActionType == ItemActionType.Error)
             {
                 Logger.ErrorS("action", "missing or invalid actionType for action with name {0}", Name);
             }
 
-            serializer.DataField(this, x => x.IconStyle, "iconStyle", ItemActionIconStyle.BigItem);
-
             // TODO: Split this class into server/client after RobustToolbox#1405
             if (IoCManager.Resolve<IModuleManager>().IsClientModule) return;
 
-            IItemActionBehavior? behavior = null;
-            serializer.DataField(ref behavior, "behavior", null);
-            switch (behavior)
+            switch (ItemActionBehavior)
             {
                 case null:
                     BehaviorType = BehaviorType.None;

@@ -1,7 +1,9 @@
+using System.Diagnostics;
 using Content.Shared.GameObjects.Components.Power;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -10,14 +12,8 @@ namespace Content.Client.GameObjects.Components.Power
     [UsedImplicitly]
     public class PowerCellVisualizer : AppearanceVisualizer
     {
+        [DataField("prefix")]
         private string _prefix;
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            _prefix = node.GetNode("prefix").AsString();
-        }
 
         public override void InitializeEntity(IEntity entity)
         {

@@ -1,11 +1,12 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Reactions
 {
@@ -25,45 +26,43 @@ namespace Content.Server.Atmos.Reactions
     [Prototype("gasReaction")]
     public class GasReactionPrototype : IPrototype
     {
-        public string ID { get; private set; }
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         /// <summary>
         ///     Minimum gas amount requirements.
         /// </summary>
-        public float[] MinimumRequirements { get; private set; }
+        [DataField("minimumRequirements")]
+        public float[] MinimumRequirements { get; private set; } = new float[Atmospherics.TotalNumberOfGases];
 
         /// <summary>
         ///     Minimum temperature requirement.
         /// </summary>
-        public float MinimumTemperatureRequirement { get; private set; }
+        [DataField("minimumTemperature")]
+        public float MinimumTemperatureRequirement { get; private set; } = Atmospherics.TCMB;
 
         /// <summary>
         ///     Minimum energy requirement.
         /// </summary>
+        [DataField("minimumEnergy")]
         public float MinimumEnergyRequirement { get; private set; }
 
         /// <summary>
         ///     Lower numbers are checked/react later than higher numbers.
         ///     If two reactions have the same priority, they may happen in either order.
         /// </summary>
+        [DataField("priority")]
         public int Priority { get; private set; }
 
         /// <summary>
         ///     A list of effects this will produce.
         /// </summary>
-        private List<IGasReactionEffect> _effects;
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(this, x => x.ID, "id", string.Empty);
-            serializer.DataField(this, x => x.Priority, "priority", 100);
-            serializer.DataField(this, x => x.MinimumRequirements, "minimumRequirements", new float[Atmospherics.TotalNumberOfGases]);
-            serializer.DataField(this, x => x.MinimumTemperatureRequirement, "minimumTemperature", Atmospherics.TCMB);
-            serializer.DataField(this, x => x.MinimumEnergyRequirement, "minimumEnergy", 0f);
-            serializer.DataField(ref _effects, "effects", new List<IGasReactionEffect>());
-        }
+        [DataField("effects")] private List<IGasReactionEffect> _effects = new();
 
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder holder, GridTileLookupSystem gridLookup)
         {

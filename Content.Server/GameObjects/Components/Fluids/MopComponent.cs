@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Robust.Server.GameObjects;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -22,12 +24,10 @@ namespace Content.Server.GameObjects.Components.Fluids
     {
         public override string Name => "Mop";
 
-        public bool Mopping => _mopping;
-
         /// <summary>
         ///     Used to prevent do_after spam if we're currently mopping.
         /// </summary>
-        private bool _mopping;
+        public bool Mopping { get; private set; }
 
         public SolutionContainerComponent? Contents => Owner.GetComponentOrNull<SolutionContainerComponent>();
 
@@ -50,25 +50,18 @@ namespace Content.Server.GameObjects.Components.Fluids
         // Picking up a puddle requires multiple clicks
         // Dumping in a bucket requires 1 click
         // Long-term you'd probably use a cooldown and start the pickup once we have some form of global cooldown
-        public ReagentUnit PickupAmount => _pickupAmount;
-        private ReagentUnit _pickupAmount;
+        [field: DataField("pickup_amount")]
+        public ReagentUnit PickupAmount { get; } = ReagentUnit.New(5);
 
-        private string? _pickupSound;
+        [DataField("pickup_sound")]
+        private string? _pickupSound = "/Audio/Effects/Fluids/slosh.ogg";
 
         /// <summary>
         ///     Multiplier for the do_after delay for how fast the mop works.
         /// </summary>
         [ViewVariables]
-        private float _mopSpeed;
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataFieldCached(ref _pickupSound, "pickup_sound", "/Audio/Effects/Fluids/slosh.ogg");
-            // The turbo mop will pickup more
-            serializer.DataFieldCached(ref _pickupAmount, "pickup_amount", ReagentUnit.New(5));
-            serializer.DataField(ref _mopSpeed, "speed", 1.0f);
-        }
+        [DataField("speed")]
+        private float _mopSpeed = 1;
 
         public override void Initialize()
         {
@@ -88,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Fluids
              */
 
             if (!Owner.TryGetComponent(out SolutionContainerComponent? contents) ||
-                _mopping ||
+                Mopping ||
                 !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
                 return false;
@@ -121,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return false;
             }
 
-            _mopping = true;
+            Mopping = true;
 
             // So if the puddle has 20 units we mop in 2 seconds. Don't just store CurrentVolume given it can change so need to re-calc it anyway.
             var doAfterArgs = new DoAfterEventArgs(eventArgs.User, _mopSpeed * puddleVolume.Float() / 10.0f, target: eventArgs.Target)
@@ -132,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             };
             var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterArgs);
 
-            _mopping = false;
+            Mopping = false;
 
             if (result == DoAfterStatus.Cancelled ||
                 Owner.Deleted ||

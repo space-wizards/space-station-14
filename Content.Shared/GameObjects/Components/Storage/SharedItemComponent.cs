@@ -8,6 +8,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using System;
 
@@ -35,6 +36,7 @@ namespace Content.Shared.GameObjects.Components.Storage
                 Dirty();
             }
         }
+        [DataField("size")]
         private int _size;
 
         /// <summary>
@@ -51,6 +53,7 @@ namespace Content.Shared.GameObjects.Components.Storage
                 Dirty();
             }
         }
+        [DataField("HeldPrefix")]
         private string? _equippedPrefix;
 
         /// <summary>
@@ -66,7 +69,8 @@ namespace Content.Shared.GameObjects.Components.Storage
                 Dirty();
             }
         }
-        private Color _color;
+        [DataField("color")]
+        private Color _color = Color.White;
 
         /// <summary>
         ///     Rsi of the sprite shown on the player when this item is in their hands.
@@ -81,17 +85,8 @@ namespace Content.Shared.GameObjects.Components.Storage
                 Dirty();
             }
         }
+        [DataField("sprite")]
         private string? _rsiPath;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.Size, "size", 1);
-            serializer.DataField(this, x => x.EquippedPrefix, "HeldPrefix", null);
-            serializer.DataField(this, x => x.Color, "color", Color.White);
-            serializer.DataField(this, x => x.RsiPath, "sprite", RsiPath);
-        }
 
         public override ComponentState GetComponentState(ICommonSession player)
         {

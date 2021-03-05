@@ -1,8 +1,8 @@
 #nullable enable
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.AI.Utility
 {
@@ -12,19 +12,18 @@ namespace Content.Server.AI.Utility
         /// <summary>
         ///     Name of the BehaviorSet.
         /// </summary>
-        public string ID { get; private set; } = default!;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         /// <summary>
         ///     Actions that this BehaviorSet grants to the entity.
         /// </summary>
-        public IReadOnlyList<string> Actions { get; private set; } = default!;
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(this, x => x.ID, "id", string.Empty);
-            serializer.DataField(this, x => x.Actions, "actions", new List<string>());
-        }
+        [DataField("actions")]
+        public IReadOnlyList<string> Actions { get; private set; } = new List<string>();
     }
 }

@@ -160,7 +160,7 @@ namespace Content.Client.Research
             foreach (var (id, amount) in Owner.Storage)
             {
                 if (!_prototypeManager.TryIndex(id, out MaterialPrototype materialPrototype)) continue;
-                var material = materialPrototype.Material;
+                var material = materialPrototype;
                 _materials.AddItem($"{material.Name} {amount} cm³", material.Icon.Frame0(), false);
             }
         }

@@ -14,6 +14,5 @@
   - type: Item
     color: "#951710"
     sprite: Objects/Storage/donkpocket.rsi
-    state: icon
   - type: Storage
     capacity: 30

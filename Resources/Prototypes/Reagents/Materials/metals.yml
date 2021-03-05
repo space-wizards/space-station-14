@@ -14,19 +14,19 @@
 - type: material
   id: adamantine
   name: adamantine
-  icon: Objects/Materials/Ingots/adamantine.png
+  icon: Objects/Materials/ingots.rsi/adamantine.png
   parent: MetalMaterialBase
 
 - type: material
   id: copper
   name: copper
-  icon: Objects/Materials/Ingots/copper.png
+  icon: Objects/Materials/ingots.rsi/copper.png
   parent: MetalMaterialBase
 
 - type: material
   id: gold
   name: gold
-  icon: Objects/Materials/Ingots/gold.png
+  icon: Objects/Materials/ingots.rsi/gold.png
   density: 10000
   electricResistivity: 8.0e-9
   thermalConductivity: 30
@@ -35,19 +35,19 @@
 - type: material
   id: hydrogen
   name: hydrogen
-  icon: Objects/Materials/Ingots/hydrogen.png
+  icon: Objects/Materials/ingots.rsi/hydrogen.png
   parent: MetalMaterialBase
 
 - type: material
   id: iron
   name: iron
-  icon: Objects/Materials/Ingots/iron.png
+  icon: Objects/Materials/ingots.rsi/iron.png
   parent: MetalMaterialBase
 
 - type: material
   id: silver
   name: silver
-  icon: Objects/Materials/Ingots/silver.png
+  icon: Objects/Materials/ingots.rsi/silver.png
   parent: MetalMaterialBase
 
 - type: material

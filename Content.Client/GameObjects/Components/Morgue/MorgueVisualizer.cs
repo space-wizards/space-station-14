@@ -1,6 +1,8 @@
 ﻿#nullable enable
+using System.Runtime.CompilerServices;
 using Content.Shared.GameObjects.Components.Morgue;
 using Robust.Client.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -8,39 +10,17 @@ namespace Content.Client.GameObjects.Components.Storage
 {
     public sealed class MorgueVisualizer : AppearanceVisualizer
     {
+        [DataField("state_open")]
         private string _stateOpen = "";
+        [DataField("state_closed")]
         private string _stateClosed = "";
 
+        [DataField("light_contents")]
         private string _lightContents = "";
+        [DataField("light_mob")]
         private string _lightMob = "";
+        [DataField("light_soul")]
         private string _lightSoul = "";
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            if (node.TryGetNode("state_open", out var child))
-            {
-                _stateOpen = child.AsString();
-            }
-            if (node.TryGetNode("state_closed", out child))
-            {
-                _stateClosed = child.AsString();
-            }
-
-            if (node.TryGetNode("light_contents", out child))
-            {
-                _lightContents = child.AsString();
-            }
-            if (node.TryGetNode("light_mob", out child))
-            {
-                _lightMob = child.AsString();
-            }
-            if (node.TryGetNode("light_soul", out child))
-            {
-                _lightSoul = child.AsString();
-            }
-        }
 
         public override void OnChangeData(AppearanceComponent component)
         {

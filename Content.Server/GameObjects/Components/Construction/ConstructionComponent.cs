@@ -18,6 +18,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -33,8 +34,11 @@ namespace Content.Server.GameObjects.Components.Construction
         private bool _handling = false;
 
         private TaskCompletionSource<object>? _handlingTask = null;
+        [DataField("graph")]
         private string _graphIdentifier = string.Empty;
+        [DataField("node")]
         private string _startingNodeIdentifier = string.Empty;
+        [DataField("defaultTarget")]
         private string _startingTargetNodeIdentifier = string.Empty;
 
         [ViewVariables]
@@ -77,18 +81,8 @@ namespace Content.Server.GameObjects.Components.Construction
         public int EdgeStep { get; private set; } = 0;
 
         [ViewVariables]
+        [DataField("deconstructionTarget")]
         public string DeconstructionNodeIdentifier { get; private set; } = "start";
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _graphIdentifier, "graph", string.Empty);
-            serializer.DataField(ref _startingNodeIdentifier, "node", string.Empty);
-            serializer.DataField(ref _startingTargetNodeIdentifier, "defaultTarget", string.Empty);
-            serializer.DataField(this, x => x.DeconstructionNodeIdentifier, "deconstructionTarget", "start");
-        }
 
         /// <summary>
         ///     Attempts to set a new pathfinding target.

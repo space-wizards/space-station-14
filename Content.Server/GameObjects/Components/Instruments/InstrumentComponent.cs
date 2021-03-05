@@ -15,7 +15,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Instruments
@@ -40,6 +42,7 @@ namespace Content.Server.GameObjects.Components.Instruments
         [ViewVariables]
         private IPlayerSession? _instrumentPlayer;
 
+        [DataField("handheld")]
         private bool _handheld;
 
         [ViewVariables]
@@ -60,11 +63,16 @@ namespace Content.Server.GameObjects.Components.Instruments
         [ViewVariables]
         private int _midiEventCount = 0;
 
-        private byte _instrumentProgram;
+        [DataField("program")]
+        private byte _instrumentProgram = 1;
+        [DataField("bank")]
         private byte _instrumentBank;
+        [DataField("allowPercussion")]
         private bool _allowPercussion;
+        [DataField("allowProgramChange")]
         private bool _allowProgramChange;
-        private bool _respectMidiLimits;
+        [DataField("respectMidiLimits")]
+        private bool _respectMidiLimits = true;
 
         public override byte InstrumentProgram { get => _instrumentProgram;
             set
@@ -162,17 +170,6 @@ namespace Content.Server.GameObjects.Components.Instruments
             }
 
             _instrumentSystem = EntitySystem.Get<InstrumentSystem>();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _handheld, "handheld", false);
-            serializer.DataField(ref _instrumentProgram, "program", (byte) 1);
-            serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
-            serializer.DataField(ref _allowPercussion, "allowPercussion", false);
-            serializer.DataField(ref _allowProgramChange, "allowProgramChange", false);
-            serializer.DataField(ref _respectMidiLimits, "respectMidiLimits", true);
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

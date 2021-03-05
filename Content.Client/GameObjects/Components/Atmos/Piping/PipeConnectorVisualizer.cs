@@ -9,26 +9,27 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Atmos
+namespace Content.Client.GameObjects.Components.Atmos.Piping
 {
     [UsedImplicitly]
-    public class PipeConnectorVisualizer : AppearanceVisualizer
+    public class PipeConnectorVisualizer : AppearanceVisualizer, ISerializationHooks
     {
-        private string _baseState = string.Empty;
+        [DataField("rsi")]
+        private string _rsi = "Constructible/Atmos/pipe.rsi";
+
+        [DataField("baseState")]
+        private string _baseState = "pipeConnector";
 
         private RSI? _connectorRsi;
 
-        public override void LoadData(YamlMappingNode node)
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.LoadData(node);
-            var serializer = YamlObjectSerializer.NewReader(node);
-
-            serializer.DataField(ref _baseState, "baseState", "pipeConnector");
-
-            var rsiString = SharedSpriteComponent.TextureRoot / serializer.ReadDataField("rsi", "Constructible/Atmos/pipe.rsi");
+            var rsiString = SharedSpriteComponent.TextureRoot / _rsi;
             var resourceCache = IoCManager.Resolve<IResourceCache>();
+
             if (resourceCache.TryGetResource(rsiString, out RSIResource? rsi))
                 _connectorRsi = rsi.RSI;
             else

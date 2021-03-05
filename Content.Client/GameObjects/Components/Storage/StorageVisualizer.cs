@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -10,29 +11,12 @@ namespace Content.Client.GameObjects.Components.Storage
     [UsedImplicitly]
     public sealed class StorageVisualizer : AppearanceVisualizer
     {
+        [DataField("state")]
         private string _stateBase;
+        [DataField("state_open")]
         private string _stateOpen;
+        [DataField("state_closed")]
         private string _stateClosed;
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            if (node.TryGetNode("state", out var child))
-            {
-                _stateBase = child.AsString();
-            }
-
-            if (node.TryGetNode("state_open", out child))
-            {
-                _stateOpen = child.AsString();
-            }
-
-            if (node.TryGetNode("state_closed", out child))
-            {
-                _stateClosed = child.AsString();
-            }
-        }
 
         public override void InitializeEntity(IEntity entity)
         {

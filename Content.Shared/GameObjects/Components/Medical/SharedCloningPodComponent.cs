@@ -6,7 +6,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Medical
 {
-
     public class SharedCloningPodComponent : Component
     {
         public override string Name => "CloningPod";

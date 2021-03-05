@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
 {
@@ -11,14 +11,11 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
     ///     A trigger that will activate when any of its triggers have activated.
     /// </summary>
     [Serializable]
+    [DataDefinition]
     public class OrTrigger : IThresholdTrigger
     {
+        [field: DataField("triggers")]
         public List<IThresholdTrigger> Triggers { get; } = new();
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.Triggers, "triggers", new List<IThresholdTrigger>());
-        }
 
         public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
         {
