@@ -172,3 +172,8 @@ Entries:
   - {message: Cargo teleporter works again, type: Fix}
   id: 31
   time: '2021-03-05T01:38:41.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Ejected casings now have much more variation and look cooler, type: Tweak}
+  id: 32
+  time: '2021-03-05T07:23:09.0000000+00:00'
