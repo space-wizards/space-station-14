@@ -10,7 +10,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
     public static class MeleeWeaponSystemMessages
     {
         [Serializable, NetSerializable]
-        public sealed class PlayMeleeWeaponAnimationMessage : EntitySystemMessage
+        public sealed class PlayMeleeWeaponAnimationMessage : EntityEventArgs
         {
             public PlayMeleeWeaponAnimationMessage(string arcPrototype, Angle angle, EntityUid attacker, EntityUid source, List<EntityUid> hits, bool textureEffect = false, bool arcFollowAttacker = true)
             {
@@ -33,7 +33,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
         }
 
         [Serializable, NetSerializable]
-        public sealed class PlayLungeAnimationMessage : EntitySystemMessage
+        public sealed class PlayLungeAnimationMessage : EntityEventArgs
         {
             public Angle Angle { get; }
             public EntityUid Source { get; }
