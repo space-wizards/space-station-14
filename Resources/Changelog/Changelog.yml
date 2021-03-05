@@ -177,3 +177,7 @@ Entries:
   - {message: Ejected casings now have much more variation and look cooler, type: Tweak}
   id: 32
   time: '2021-03-05T07:23:09.0000000+00:00'
+- author: daniel-cr
+  changes: []
+  id: 33
+  time: '2021-03-05T08:33:01.0000000+00:00'
