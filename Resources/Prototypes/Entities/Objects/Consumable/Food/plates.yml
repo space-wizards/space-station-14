@@ -91,20 +91,22 @@
 
 - type: entity
   name: plastic plate
-  parent: PlatePlastic
+  parent: BaseItem
   id: PlatePlastic
   description: A large blue plastic plate, excellent for a birthday cake.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/cake.rsi
     state: plate-plastic
-
+    netsync: false
+    
 - type: entity
   name: plastic plate
-  parent: Plate
+  parent: BaseItem
   id: PlateSmallPlastic
   description: A blue plastic plate, excellent for slices of birthday cake.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/cake.rsi
     state: plate-small-plastic
+    netsync: false
