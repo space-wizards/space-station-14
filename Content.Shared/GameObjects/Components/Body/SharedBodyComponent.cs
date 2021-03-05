@@ -58,9 +58,8 @@ namespace Content.Shared.GameObjects.Components.Body
         [ViewVariables]
         public IReadOnlyDictionary<string, IBodyPart> Parts => _parts;
 
+        [ViewVariables]
         public IReadOnlyDictionary<string, string> PartIds => _partIds;
-
-        [ViewVariables] public IReadOnlyDictionary<string, string> PartIDs => _partIds;
 
         public override void Initialize()
         {
@@ -116,6 +115,7 @@ namespace Content.Shared.GameObjects.Components.Body
             }
 
             Connections = cleanedConnections;
+            CalculateSpeed();
         }
 
         protected virtual bool CanAddPart(string slot, IBodyPart part)
@@ -473,7 +473,7 @@ namespace Content.Shared.GameObjects.Components.Body
             var legs = GetPartsWithProperty<LegComponent>();
             float speedSum = 0;
 
-            foreach (var leg in GetPartsWithProperty<LegComponent>())
+            foreach (var leg in legs)
             {
                 var footDistance = DistanceToNearestFoot(leg.part);
 
