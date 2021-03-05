@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.Reactions
         /// <summary>
         ///     Maximum temperature requirement.
         /// </summary>
-		[DataField("maximumTemperature")]
+		  [DataField("maximumTemperature")]
         public float MaximumTemperatureRequirement { get; private set; }
         
         /// <summary>
