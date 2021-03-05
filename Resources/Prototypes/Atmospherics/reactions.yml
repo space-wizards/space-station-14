@@ -22,3 +22,19 @@
     - 0.01  # tritium
   effects:
     - !type:TritiumFireReaction {}
+
+- type: gasReaction
+  id: WaterVaporPuddle
+  priority: 1
+  maximumTemperature: 373.13 # Boiling point of water.
+  minimumRequirements: # In this case, same as minimum mole count.
+    - 0  # oxygen
+    - 0  # nitrogen
+    - 0  # carbon dioxide
+    - 0  # plasma
+    - 0  # tritium
+    - 1  # water vapor
+  effects:
+    - !type:WaterVaporReaction
+      gasId: 5
+      reagent: chem.Water
