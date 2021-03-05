@@ -181,3 +181,8 @@ Entries:
   changes: []
   id: 33
   time: '2021-03-05T08:33:01.0000000+00:00'
+- author: PaulRitter
+  changes:
+  - {message: Fixes all alertonclicks, type: Fix}
+  id: 34
+  time: '2021-03-05T11:46:04.0000000+00:00'
