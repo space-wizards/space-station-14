@@ -11,6 +11,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Atmos.Reactions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class WaterVaporReaction : IGasReactionEffect
     {
         [field: DataField("reagent")] public string? Reagent { get; } = null;
