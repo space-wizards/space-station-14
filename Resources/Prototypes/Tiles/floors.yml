@@ -391,9 +391,9 @@
   friction: 0.35
 
 - type: tile
-  name: floor_kitchen
-  display_name: Kitchen Tile
-  texture: kitchen
+  name: floor_checkered_black
+  display_name: Checkered Black Tile
+  texture: checkered_black
   base_turfs:
   - plating
   is_subfloor: false
@@ -489,4 +489,37 @@
   is_subfloor: false
   can_crowbar: false
   footstep_sounds: footstep_snow
+  friction: 0.35
+
+- type: tile
+  name: floor_checkered_brown
+  display_name: Checkered Brown Floor
+  texture: checkered_brown
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_checkered_grey
+  display_name: Checkered Grey Floor
+  texture: checkered_grey
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_checkered_blue
+  display_name: Checkered Blue Floor
+  texture: checkered_blue
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
   friction: 0.35
