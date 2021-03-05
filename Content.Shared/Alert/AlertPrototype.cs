@@ -84,11 +84,6 @@ namespace Content.Shared.Alert
         public bool SupportsSeverity => MaxSeverity != -1;
 
         /// <summary>
-        /// Whether this alert is clickable. This is valid clientside.
-        /// </summary>
-        public bool HasOnClick => OnClick != null;
-
-        /// <summary>
         /// Defines what to do when the alert is clicked.
         /// This will always be null on clientside.
         /// </summary>

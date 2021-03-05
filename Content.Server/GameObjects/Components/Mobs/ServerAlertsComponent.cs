@@ -70,15 +70,13 @@ namespace Content.Server.GameObjects.Components.Mobs
                         break;
                     }
 
-                    if (AlertManager.TryGet(msg.AlertType, out var alert) && alert.OnClick != null)
-                    {
-                        alert.OnClick.AlertClicked(new ClickAlertEventArgs(player, alert));
-                    }
-                    else
+                    if (!AlertManager.TryGet(msg.AlertType, out var alert))
                     {
                         Logger.WarningS("alert", "unrecognized encoded alert {0}", msg.AlertType);
+                        break;
                     }
 
+                    alert.OnClick?.AlertClicked(new ClickAlertEventArgs(player, alert));
                     break;
                 }
             }
