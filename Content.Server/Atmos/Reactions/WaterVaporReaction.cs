@@ -6,41 +6,37 @@ using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Atmos.Reactions
 {
     [UsedImplicitly]
     public class WaterVaporReaction : IGasReactionEffect
     {
-        private string? _reagent = null;
-        private int _gasId = 0;
-        private float _molesPerUnit = 1;
-        private string? _puddlePrototype;
+        [field: DataField("reagent")] public string? Reagent { get; } = null;
 
-        public void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _gasId, "gas", 0);
-            serializer.DataField(ref _molesPerUnit, "molesPerUnit", 1f);
-            serializer.DataField(ref _reagent, "reagent", null);
-            serializer.DataField(ref _puddlePrototype, "puddlePrototype", "PuddleSmear");
-        }
+        [field: DataField("gas")] public int GasId { get; } = 0;
+
+        [field: DataField("molesPerUnit")] public float MolesPerUnit { get; } = 1;
+
+        [field: DataField("puddlePrototype")] public string? PuddlePrototype { get; } = "PuddleSmear";
 
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, GridTileLookupSystem gridTileLookup)
         {
             // If any of the prototypes is invalid, we do nothing.
-            if (string.IsNullOrEmpty(_reagent) || string.IsNullOrEmpty(_puddlePrototype)) return ReactionResult.NoReaction;
+            if (string.IsNullOrEmpty(Reagent) || string.IsNullOrEmpty(PuddlePrototype)) return ReactionResult.NoReaction;
 
             // If we're not reacting on a tile, do nothing.
             if (holder is not TileAtmosphere tile) return ReactionResult.NoReaction;
 
             // If we don't have enough moles of the specified gas, do nothing.
-            if (mixture.GetMoles(_gasId) < _molesPerUnit) return ReactionResult.NoReaction;
+            if (mixture.GetMoles(GasId) < MolesPerUnit) return ReactionResult.NoReaction;
 
             // Remove the moles from the mixture...
-            mixture.AdjustMoles(_gasId, -_molesPerUnit);
+            mixture.AdjustMoles(GasId, -MolesPerUnit);
 
             var tileRef = tile.GridIndices.GetTileRef(tile.GridIndex);
-            tileRef.SpillAt(new Solution(_reagent, ReagentUnit.New(_molesPerUnit)), _puddlePrototype, sound: false);
+            tileRef.SpillAt(new Solution(Reagent, ReagentUnit.New(MolesPerUnit)), PuddlePrototype, sound: false);
 
             return ReactionResult.Reacting;
         }
