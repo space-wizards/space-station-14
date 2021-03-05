@@ -186,3 +186,8 @@ Entries:
   - {message: Fixes all alertonclicks, type: Fix}
   id: 34
   time: '2021-03-05T11:46:04.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: "Water vapor now makes puddles if under 100\xBAC.", type: Add}
+  id: 35
+  time: '2021-03-05T21:15:37.0000000+00:00'
