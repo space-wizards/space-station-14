@@ -17,10 +17,6 @@ namespace Content.Shared.Research
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         [DataField("name")]
         private string _name = string.Empty;
 

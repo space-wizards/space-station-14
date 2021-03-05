@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Shared.Log;
@@ -17,10 +17,6 @@ namespace Content.Shared.Actions
     public abstract class BaseActionPrototype : IPrototype, ISerializationHooks
     {
         public abstract string ID { get; }
-
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
 
         /// <summary>
         /// Icon representing this action in the UI.

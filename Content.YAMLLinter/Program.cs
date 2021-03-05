@@ -34,7 +34,7 @@ namespace Content.YAMLLinter
             {
                 foreach (var errorNode in errorHashset)
                 {
-                    Console.WriteLine($"({file} | (L:{errorNode.Node.Start.Line}-{errorNode.Node.End.Line} | C:{errorNode.Node.Start.Column}-{errorNode.Node.End.Column}): {errorNode.ErrorReason}");
+                    Console.WriteLine($"Error: {file}({errorNode.Node.Start.Line},{errorNode.Node.Start.Column}): {errorNode.ErrorReason}");
                 }
             }
 

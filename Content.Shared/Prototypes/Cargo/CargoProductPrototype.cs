@@ -20,10 +20,6 @@ namespace Content.Shared.Prototypes.Cargo
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         /// <summary>
         ///     Product name.
         /// </summary>
@@ -98,10 +94,5 @@ namespace Content.Shared.Prototypes.Cargo
         [ViewVariables]
         [field: DataField("group")]
         public string Group { get; } = string.Empty;
-
-        public CargoProductPrototype()
-        {
-            IoCManager.InjectDependencies(this);
-        }
     }
 }

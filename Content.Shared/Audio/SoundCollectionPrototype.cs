@@ -13,10 +13,6 @@ namespace Content.Shared.Audio
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         [field: DataField("files")] public List<string> PickFiles { get; } = new();
     }
 }

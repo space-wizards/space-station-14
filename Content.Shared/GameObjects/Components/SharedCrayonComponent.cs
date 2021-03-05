@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
@@ -80,10 +80,6 @@ namespace Content.Shared.GameObjects.Components
         [ViewVariables]
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
-
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
 
         [field: DataField("spritePath")] public string SpritePath { get; } = string.Empty;
 

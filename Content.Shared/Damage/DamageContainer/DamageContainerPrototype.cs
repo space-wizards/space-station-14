@@ -28,10 +28,6 @@ namespace Content.Shared.Damage.DamageContainer
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         void ISerializationHooks.AfterDeserialization()
         {
             if (_supportAll)

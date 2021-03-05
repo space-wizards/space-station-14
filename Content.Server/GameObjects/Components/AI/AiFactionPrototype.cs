@@ -15,10 +15,6 @@ namespace Content.Server.GameObjects.Components.AI
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         [DataField("hostile")]
         public IReadOnlyList<string> Hostile { get; private set; } = new List<string>();
     }

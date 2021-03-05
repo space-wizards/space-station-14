@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.Interfaces;
@@ -29,10 +29,6 @@ namespace Content.Server.Atmos.Reactions
         [ViewVariables]
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
-
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
 
         /// <summary>
         ///     Minimum gas amount requirements.

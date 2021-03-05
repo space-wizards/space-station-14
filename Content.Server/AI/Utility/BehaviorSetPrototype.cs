@@ -16,10 +16,6 @@ namespace Content.Server.AI.Utility
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         /// <summary>
         ///     Actions that this BehaviorSet grants to the entity.
         /// </summary>
