@@ -280,9 +280,9 @@
   item_drop: SheetRGlass1
   
 - type: tile
-  name: floor_warning1
-  display_name: Warning Tile
-  texture: steel_warning1
+  name: floor_steel_warning_full
+  display_name: Steel Warning Tile
+  texture: steel_warning_full
   base_turfs:
   - plating
   is_subfloor: false
@@ -291,9 +291,9 @@
   friction: 0.35
 
 - type: tile
-  name: floor_warning2
-  display_name: Beware Tile
-  texture: steel_warning2
+  name: floor_steel_warning_border
+  display_name: Steel Beware Tile
+  texture: steel_warning_border
   base_turfs:
   - plating
   is_subfloor: false
@@ -302,9 +302,9 @@
   friction: 0.35
 
 - type: tile
-  name: floor_white_warning1
+  name: floor_white_warning_full
   display_name: White Warning Tile
-  texture: white_warning1
+  texture: white_warning_full
   base_turfs:
   - plating
   is_subfloor: false
@@ -313,9 +313,9 @@
   friction: 0.35
 
 - type: tile
-  name: floor_white_warning2
+  name: floor_white_warning_border
   display_name: White Beware Tile
-  texture: white_warning2
+  texture: white_warning_border
   base_turfs:
   - plating
   is_subfloor: false
