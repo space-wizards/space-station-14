@@ -455,3 +455,38 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.35
+
+- type: tile
+  name: floor_red_circuit
+  display_name: Red circuit floor
+  texture: red_circuit
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  item_drop: FloorTileItemGCircuit #replace with RCircuit once done
+
+- type: tile
+  name: floor_blue_circuit
+  display_name: Blue circuit floor
+  texture: blue_circuit
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  item_drop: FloorTileItemGCircuit #replace with BCircuit once done
+
+- type: tile
+  name: floor_grass
+  display_name: Grass
+  texture: grass
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds: footstep_snow
+  friction: 0.35
