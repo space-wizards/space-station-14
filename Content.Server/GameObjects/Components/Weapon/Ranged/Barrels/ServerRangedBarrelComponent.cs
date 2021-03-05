@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +11,7 @@ using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -278,12 +279,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             if (ejectDirections == null)
             {
-                ejectDirections = new[] {Direction.East, Direction.North, Direction.South, Direction.West};
+                ejectDirections = new[] {Direction.East, Direction.North, Direction.NorthWest, Direction.South, Direction.SouthEast, Direction.West};
             }
 
-            const float ejectOffset = 0.2f;
+            const float ejectOffset = 1.8f;
             var ammo = entity.GetComponent<AmmoComponent>();
-            var offsetPos = (robustRandom.NextFloat() * ejectOffset, robustRandom.NextFloat() * ejectOffset);
+            var offsetPos = ((robustRandom.NextFloat() - 0.5f) * ejectOffset, (robustRandom.NextFloat() - 0.5f) * ejectOffset);
             entity.Transform.Coordinates = entity.Transform.Coordinates.Offset(offsetPos);
             entity.Transform.LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
 
@@ -311,7 +312,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var ejectDirections = new[] {Direction.East, Direction.North, Direction.South, Direction.West};
+            var ejectDirections = new[] {Direction.East, Direction.North, Direction.NorthWest, Direction.South, Direction.SouthEast, Direction.West};
             var soundPlayCount = 0;
             var playSound = true;
 
