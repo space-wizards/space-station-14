@@ -7,3 +7,13 @@
   metabolism:
     - !type:DefaultFood
       rate: 1
+
+- type: reagent
+  id: chem.Egg
+  name: egg
+  desc: Used for baking.
+  physicalDesc: mucus-like
+  color: "#FFFFFF"
+  metabolism:
+    - !type:DefaultFood
+      rate: 1

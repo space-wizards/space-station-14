@@ -69,6 +69,9 @@
       "directions": 4
     },
     {
+      "name": "eggshells"
+    },
+    {
       "name": "green"
     },
     {
@@ -83,22 +86,14 @@
       "name": "icon"
     },
     {
+      "name": "white"
+    },
+    {
       "name": "inhand-right",
       "directions": 4
     },
     {
       "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "mime"
-    },
-    {
-      "name": "mime-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "mime-inhand-left",
       "directions": 4
     },
     {
@@ -144,6 +139,18 @@
     {
       "name": "red-inhand-left",
       "directions": 4
+    },
+    {
+      "name": "egg-0"
+    },
+    {
+      "name": "egg-1"
+    },
+    {
+      "name": "egg-2"
+    },
+    {
+      "name": "egg-3"
     },
     {
       "name": "yellow"
