@@ -7,7 +7,7 @@ using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Inventory;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -17,13 +17,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     {
         public override string Name => "FoamSolutionAreaEffect";
 
-        private string? _foamedMetalPrototype;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _foamedMetalPrototype, "foamedMetalPrototype", null);
-        }
+        [DataField("foamedMetalPrototype")] private string? _foamedMetalPrototype;
 
         protected override void UpdateVisuals()
         {

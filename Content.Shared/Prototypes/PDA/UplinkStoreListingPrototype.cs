@@ -1,38 +1,35 @@
 #nullable enable
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Prototypes.PDA
 {
     [Prototype("uplinkListing")]
     public class UplinkStoreListingPrototype : IPrototype
     {
-        private string _id = string.Empty;
-        private string _itemId = string.Empty;
-        private int _price;
-        private UplinkCategory _category;
-        private string _desc = string.Empty;
-        private string _name = string.Empty;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        public string ID => _id;
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
-        public string ItemId => _itemId;
-        public int Price => _price;
-        public UplinkCategory Category => _category;
-        public string Description => _desc;
-        public string ListingName => _name;
+        [field: DataField("itemId")]
+        public string ItemId { get; } = string.Empty;
 
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _itemId, "itemId", string.Empty);
-            serializer.DataField(ref _price, "price", 5);
-            serializer.DataField(ref _category, "category", UplinkCategory.Utility);
-            serializer.DataField(ref _desc, "description", string.Empty);
-            serializer.DataField(ref _name, "listingName", string.Empty);
-        }
+        [field: DataField("price")]
+        public int Price { get; } = 5;
+
+        [field: DataField("category")]
+        public UplinkCategory Category { get; } = UplinkCategory.Utility;
+
+        [field: DataField("description")]
+        public string Description { get; } = string.Empty;
+
+        [field: DataField("listingName")]
+        public string ListingName { get; } = string.Empty;
     }
 }

@@ -4,32 +4,26 @@ using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components
 {
     [UsedImplicitly]
-    public class ParticleAcceleratorPartVisualizer : AppearanceVisualizer
+    [DataDefinition]
+    public class ParticleAcceleratorPartVisualizer : AppearanceVisualizer, ISerializationHooks
     {
-        private readonly Dictionary<ParticleAcceleratorVisualState, string> _states = new();
+        [DataField("baseState", required: true)]
+        private string _baseState;
+        private Dictionary<ParticleAcceleratorVisualState, string> _states = new();
 
-        public override void LoadData(YamlMappingNode node)
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.LoadData(node);
-
-            var serializer = YamlObjectSerializer.NewReader(node);
-            if (!serializer.TryReadDataField<string>("baseState", out var baseState))
-            {
-                throw new PrototypeLoadException("No baseState property specified for ParticleAcceleratorPartVisualizer");
-            }
-
-            _states.Add(ParticleAcceleratorVisualState.Powered, baseState+"p");
-            _states.Add(ParticleAcceleratorVisualState.Level0, baseState+"p0");
-            _states.Add(ParticleAcceleratorVisualState.Level1, baseState+"p1");
-            _states.Add(ParticleAcceleratorVisualState.Level2, baseState+"p2");
-            _states.Add(ParticleAcceleratorVisualState.Level3, baseState+"p3");
+            _states.Add(ParticleAcceleratorVisualState.Powered, _baseState+"p");
+            _states.Add(ParticleAcceleratorVisualState.Level0, _baseState+"p0");
+            _states.Add(ParticleAcceleratorVisualState.Level1, _baseState+"p1");
+            _states.Add(ParticleAcceleratorVisualState.Level2, _baseState+"p2");
+            _states.Add(ParticleAcceleratorVisualState.Level3, _baseState+"p3");
         }
 
         public override void InitializeEntity(IEntity entity)

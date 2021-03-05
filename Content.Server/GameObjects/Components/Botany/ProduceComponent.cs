@@ -1,4 +1,5 @@
-﻿using Content.Server.Botany;
+﻿#nullable enable
+using Content.Server.Botany;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Robust.Server.GameObjects;
@@ -7,39 +8,36 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Botany
 {
     [RegisterComponent]
-    public class ProduceComponent : Component
+    public class ProduceComponent : Component, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override string Name => "Produce";
 
+        [DataField("seed")]
+        private string? _seedName;
+
         [ViewVariables]
-        public Seed Seed { get; set; } = null;
-
-        public float Potency => Seed.Potency;
-
-        public override void ExposeData(ObjectSerializer serializer)
+        public Seed? Seed
         {
-            base.ExposeData(serializer);
-
-            serializer.DataReadFunction<string>("seed", null,
-                (s) =>
-                {
-                    if(!string.IsNullOrEmpty(s))
-                        Seed = _prototypeManager.Index<Seed>(s);
-                });
+            get => _seedName != null ? IoCManager.Resolve<IPrototypeManager>().Index<Seed>(_seedName) : null;
+            set => _seedName = value?.ID;
         }
+
+        public float Potency => Seed?.Potency ?? 0;
 
         public void Grown()
         {
             if (Seed == null)
                 return;
 
-            if (Owner.TryGetComponent(out SpriteComponent sprite))
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 sprite.LayerSetRSI(0, Seed.PlantRsi);
                 sprite.LayerSetState(0, Seed.PlantIconState);

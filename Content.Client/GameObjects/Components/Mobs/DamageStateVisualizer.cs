@@ -1,36 +1,52 @@
+#nullable enable
 using System.Collections.Generic;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
     [UsedImplicitly]
-    public sealed class DamageStateVisualizer : AppearanceVisualizer
+    public sealed class DamageStateVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private DamageState _data = DamageState.Alive;
-        private readonly Dictionary<DamageState, string> _stateMap = new();
+        private Dictionary<DamageState, string> _stateMap = new();
         private int? _originalDrawDepth;
 
-        public override void LoadData(YamlMappingNode node)
+        [DataField("normal")]
+        private string? normal;
+        [DataField("crit")]
+        private string? crit;
+        [DataField("dead")]
+        private string? dead;
+
+        void ISerializationHooks.BeforeSerialization()
         {
-            base.LoadData(node);
-            if (node.TryGetNode("normal", out var normal))
+            _stateMap.TryGetValue(DamageState.Alive, out normal);
+            _stateMap.TryGetValue(DamageState.Critical, out crit);
+            _stateMap.TryGetValue(DamageState.Dead, out dead);
+        }
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            if (normal != null)
             {
-                _stateMap.Add(DamageState.Alive, normal.AsString());
+                _stateMap.Add(DamageState.Alive, normal);
             }
 
-            if (node.TryGetNode("crit", out var crit))
+            if (crit != null)
             {
-                _stateMap.Add(DamageState.Critical, crit.AsString());
+                _stateMap.Add(DamageState.Critical, crit);
             }
 
-            if (node.TryGetNode("dead", out var dead))
+            if (dead != null)
             {
-                _stateMap.Add(DamageState.Dead, dead.AsString());
+                _stateMap.Add(DamageState.Dead, dead);
             }
         }
 

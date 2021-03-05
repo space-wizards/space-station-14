@@ -7,39 +7,30 @@ using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Tag
 {
     [RegisterComponent]
-    public class TagComponent : Component
+    public class TagComponent : Component, ISerializationHooks
     {
         public override string Name => "Tag";
 
         [ViewVariables]
+        [DataField("tags")]
         private readonly HashSet<string> _tags = new();
 
         public IReadOnlySet<string> Tags => _tags;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public override void Initialize()
         {
-            base.ExposeData(serializer);
+            base.Initialize();
 
-            serializer.DataReadWriteFunction(
-                "tags",
-                null!,
-                (ids) =>
-                {
-                    _tags.Clear();
-
-                    if (ids == null)
-                    {
-                        return;
-                    }
-
-                    AddTags(ids);
-                },
-                () => _tags);
+            foreach (var tag in _tags)
+            {
+                GetTagOrThrow(tag);
+            }
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

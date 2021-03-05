@@ -1,8 +1,7 @@
 ﻿#nullable enable
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Prototypes.Tag
 {
@@ -14,17 +13,12 @@ namespace Content.Shared.Prototypes.Tag
     [Prototype("Tag")]
     public class TagPrototype : IPrototype
     {
-        public string ID { get; [UsedImplicitly] private set; } = default!;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        private void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.ID, "id", "");
-        }
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-            ExposeData(serializer);
-        }
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
     }
 }

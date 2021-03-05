@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -12,25 +13,12 @@ namespace Content.Client.GameObjects.Components.Nutrition
     [UsedImplicitly]
     public sealed class FoodContainerVisualizer : AppearanceVisualizer
     {
+        [DataField("base_state", required: true)]
         private string _baseState;
+        [DataField("steps", required: true)]
         private int _steps;
-        private FoodContainerVisualMode _mode;
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            _baseState = node.GetNode("base_state").AsString();
-            _steps = node.GetNode("steps").AsInt();
-            try
-            {
-                _mode = node.GetNode("mode").AsEnum<FoodContainerVisualMode>();
-            }
-            catch (KeyNotFoundException)
-            {
-                _mode = FoodContainerVisualMode.Rounded;
-            }
-        }
+        [DataField("mode")]
+        private FoodContainerVisualMode _mode = FoodContainerVisualMode.Rounded;
 
         public override void OnChangeData(AppearanceComponent component)
         {

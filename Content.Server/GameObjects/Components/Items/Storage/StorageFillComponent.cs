@@ -1,27 +1,24 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
-using Logger = Robust.Shared.Log.Logger;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
     [RegisterComponent]
-    internal sealed class StorageFillComponent : Component, IMapInit
+    public sealed class StorageFillComponent : Component, IMapInit
     {
         public override string Name => "StorageFill";
 
-        private List<PrototypeItemData> _contents;
+        [DataField("contents")]
+        private List<StorageFillEntry> _contents = new();
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _contents, "contents", new List<PrototypeItemData>());
-        }
+        public IReadOnlyList<StorageFillEntry> Contents => _contents;
 
         void IMapInit.MapInit()
         {
@@ -30,11 +27,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            if (!Owner.TryGetComponent(out IStorageComponent storage))
+            if (!Owner.TryGetComponent(out IStorageComponent? storage))
             {
                 Logger.Error($"StorageFillComponent couldn't find any StorageComponent ({Owner})");
                 return;
             }
+
             var random = IoCManager.Resolve<IRobustRandom>();
 
             var alreadySpawnedGroups = new List<string>();
@@ -58,19 +56,25 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         [Serializable]
-        private struct PrototypeItemData : IExposeData
+        [DataDefinition]
+        public struct StorageFillEntry : IPopulateDefaultValues
         {
-            public string PrototypeName;
+            [DataField("name")]
+            public string? PrototypeName;
+
+            [DataField("prob")]
             public float SpawnProbability;
+
+            [DataField("orGroup")]
             public string GroupId;
+
+            [DataField("amount")]
             public int Amount;
 
-            void IExposeData.ExposeData(ObjectSerializer serializer)
+            public void PopulateDefaultValues()
             {
-                serializer.DataField(ref PrototypeName, "name", null);
-                serializer.DataField(ref Amount, "amount", 1);
-                serializer.DataField(ref SpawnProbability, "prob", 1f);
-                serializer.DataField(ref GroupId, "orGroup", null);
+                Amount = 1;
+                SpawnProbability = 1;
             }
         }
     }

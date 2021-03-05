@@ -1,10 +1,9 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Roles
 {
@@ -14,52 +13,55 @@ namespace Content.Shared.Roles
     [Prototype("job")]
     public class JobPrototype : IPrototype
     {
-        public string ID { get; private set; } = string.Empty;
+        private string _name = string.Empty;
+
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         /// <summary>
         ///     The name of this job as displayed to players.
         /// </summary>
-        public string Name { get; private set; } = string.Empty;
+        [field: DataField("name")]
+        public string Name { get; } = string.Empty;
 
         /// <summary>
         ///     Whether this job is a head.
         ///     The job system will try to pick heads before other jobs on the same priority level.
         /// </summary>
+        [DataField("head")]
         public bool IsHead { get; private set; }
 
         /// <summary>
         ///     The total amount of people that can start with this job round-start.
         /// </summary>
-        public int SpawnPositions { get; private set; }
+        public int SpawnPositions => _spawnPositions ?? TotalPositions;
+
+        [DataField("spawnPositions")]
+        private int? _spawnPositions;
 
         /// <summary>
         ///     The total amount of positions available.
         /// </summary>
+        [DataField("positions")]
         public int TotalPositions { get; private set; }
 
-        public string StartingGear { get; private set; } = string.Empty;
+        [DataField("startingGear")]
+        public string? StartingGear { get; private set; }
 
-        public string Icon { get; private set; } = string.Empty;
+        [field: DataField("icon")] public string Icon { get; } = string.Empty;
 
-        public JobSpecial? Special { get; private set; } = null;
+        [DataField("special")]
+        public JobSpecial? Special { get; private set; }
 
-        public IReadOnlyCollection<string> Departments { get; private set; } = Array.Empty<string>();
-        public IReadOnlyCollection<string> Access { get; private set; } = Array.Empty<string>();
+        [field: DataField("departments")]
+        public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();
 
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var srz = YamlObjectSerializer.NewReader(mapping);
-            ID = srz.ReadDataField<string>("id");
-            Name = Loc.GetString(srz.ReadDataField<string>("name"));
-            StartingGear = srz.ReadDataField<string>("startingGear");
-            Departments = srz.ReadDataField<List<string>>("departments");
-            TotalPositions = srz.ReadDataField<int>("positions");
-
-            srz.DataField(this, p => p.SpawnPositions, "spawnPositions", TotalPositions);
-            srz.DataField(this, p => p.IsHead, "head", false);
-            srz.DataField(this, p => p.Access, "access", Array.Empty<string>());
-            srz.DataField(this, p => p.Icon, "icon", string.Empty);
-            srz.DataField(this, p => p.Special, "special", null);
-        }
+        [field: DataField("access")]
+        public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
     }
 }

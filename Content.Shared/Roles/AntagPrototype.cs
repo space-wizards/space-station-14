@@ -1,8 +1,8 @@
 #nullable enable
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Roles
 {
@@ -12,35 +12,36 @@ namespace Content.Shared.Roles
     [Prototype("antag")]
     public class AntagPrototype : IPrototype
     {
-        public string ID { get; private set; } = string.Empty;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         /// <summary>
         ///     The name of this antag as displayed to players.
         /// </summary>
-        public string Name { get; private set; } = string.Empty;
+        [field: DataField("name")]
+        public string Name { get; } = string.Empty;
 
         /// <summary>
         ///     The antag's objective, displayed at round-start to the player.
         /// </summary>
+        [DataField("objective")]
         public string Objective { get; private set; } = string.Empty;
 
         /// <summary>
         ///     Whether or not the antag role is one of the bad guys.
         /// </summary>
+        [DataField("antagonist")]
         public bool Antagonist { get; private set; }
 
         /// <summary>
         ///     Whether or not the player can set the antag role in antag preferences.
         /// </summary>
+        [DataField("setPreference")]
         public bool SetPreference { get; private set; }
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            ID = mapping.GetNode("id").AsString();
-            Name = Loc.GetString(mapping.GetNode("name").ToString());
-            Objective = mapping.GetNode("objective").ToString();
-            Antagonist = mapping.GetNode("antagonist").AsBool();
-            SetPreference = mapping.GetNode("setPreference").AsBool();
-        }
     }
 }

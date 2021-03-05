@@ -3,7 +3,7 @@ using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research
@@ -17,11 +17,12 @@ namespace Content.Server.GameObjects.Components.Research
 
         [ViewVariables(VVAccess.ReadWrite)] public string ServerName => _serverName;
 
+        [DataField("servername")]
         private string _serverName = "RDSERVER";
         private float _timer = 0f;
         public TechnologyDatabaseComponent Database { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] private int _points = 0;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("points")] private int _points = 0;
 
         [ViewVariables(VVAccess.ReadOnly)] public int Id { get; private set; }
 
@@ -81,13 +82,6 @@ namespace Content.Server.GameObjects.Components.Research
         {
             base.Shutdown();
             EntitySystem.Get<ResearchSystem>()?.UnregisterServer(this);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _serverName, "servername", "RDSERVER");
-            serializer.DataField(ref _points, "points", 0);
         }
 
         public bool CanUnlockTechnology(TechnologyPrototype technology)

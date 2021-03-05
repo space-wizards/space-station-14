@@ -9,7 +9,6 @@
   - type: InteractionOutline
   - type: Physics
     mass: 25
-    anchored: false
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.45, -0.45, 0.00, 0.45"

@@ -1,12 +1,11 @@
 #nullable enable
-using System;
 using System.Collections.Generic;
-using Content.Server.Interfaces.Chemistry;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry
 {
@@ -16,14 +15,21 @@ namespace Content.Shared.Chemistry
     [Prototype("reaction")]
     public class ReactionPrototype : IPrototype
     {
-        private string _id = default!;
-        private string _name = default!;
-        private Dictionary<string, ReactantPrototype> _reactants = default!;
-        private Dictionary<string, ReagentUnit> _products = default!;
-        private IReactionEffect[] _effects = default!;
+        [DataField("reactants")] private Dictionary<string, ReactantPrototype> _reactants = new();
+        [DataField("products")] private Dictionary<string, ReagentUnit> _products = new();
+        [DataField("effects", serverOnly: true)] private List<IReactionEffect> _effects = new();
 
-        public string ID => _id;
-        public string Name => _name;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
+
+        [field: DataField("name")]
+        public string Name { get; } = string.Empty;
+
         /// <summary>
         /// Reactants required for the reaction to occur.
         /// </summary>
@@ -37,39 +43,19 @@ namespace Content.Shared.Chemistry
         /// </summary>
         public IReadOnlyList<IReactionEffect> Effects => _effects;
 
-        public string? Sound { get; private set; }
-
-        [Dependency] private readonly IModuleManager _moduleManager = default!;
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _name, "name", string.Empty);
-            serializer.DataField(ref _reactants, "reactants", new Dictionary<string, ReactantPrototype>());
-            serializer.DataField(ref _products, "products", new Dictionary<string, ReagentUnit>());
-            serializer.DataField(this, x => x.Sound, "sound", "/Audio/Effects/Chemistry/bubbles.ogg");
-
-            if (_moduleManager.IsServerModule)
-            {
-                //TODO: Don't have a check for if this is the server
-                //Some implementations of IReactionEffect can't currently be moved to shared, so this is here to prevent the client from breaking when reading server-only IReactionEffects.
-                serializer.DataField(ref _effects, "effects", Array.Empty<IReactionEffect>());
-            }
-            else
-            {
-                _effects = Array.Empty<IReactionEffect>(); //To ensure _effects isn't null since it is only serializable on the server right snow
-            }
-        }
+        // TODO SERV3: Empty on the client, (de)serialize on the server with module manager is server module
+        [DataField("sound", serverOnly: true)] public string? Sound { get; private set; } = "/Audio/Effects/Chemistry/bubbles.ogg";
     }
 
     /// <summary>
     /// Prototype for chemical reaction reactants.
     /// </summary>
-    public class ReactantPrototype : IExposeData
+    [DataDefinition]
+    public class ReactantPrototype
     {
-        private ReagentUnit _amount;
+        [DataField("amount")]
+        private ReagentUnit _amount = ReagentUnit.New(1);
+        [DataField("catalyst")]
         private bool _catalyst;
 
         /// <summary>
@@ -80,11 +66,5 @@ namespace Content.Shared.Chemistry
         /// Whether or not the reactant is a catalyst. Catalysts aren't removed when a reaction occurs.
         /// </summary>
         public bool Catalyst => _catalyst;
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _amount, "amount", ReagentUnit.New(1));
-            serializer.DataField(ref _catalyst, "catalyst", false);
-        }
     }
 }

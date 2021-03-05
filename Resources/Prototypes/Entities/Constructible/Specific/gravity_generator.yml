@@ -49,10 +49,11 @@
   - type: Appearance
     visuals:
     - type: GravityGeneratorVisualizer
-      broken: "broken"
-      unpowered: "off"
-      off: "off"
-      on: "on"
+      spritemap:
+        broken: "broken"
+        unpowered: "off"
+        off: "off"
+        on: "on"
 
   placement:
     mode: AlignTileAny

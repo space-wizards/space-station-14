@@ -6,59 +6,33 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
-
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
-    public class SharedProtolatheDatabaseComponent : SharedLatheDatabaseComponent
+    public class SharedProtolatheDatabaseComponent : SharedLatheDatabaseComponent, ISerializationHooks
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override string Name => "ProtolatheDatabase";
+
         public sealed override uint? NetID => ContentNetIDs.PROTOLATHE_DATABASE;
 
-        private readonly List<LatheRecipePrototype> _protolatheRecipes = new();
+        [DataField("protolatherecipes")] private List<string> _recipeIds = new();
 
         /// <summary>
         ///    A full list of recipes this protolathe can print.
         /// </summary>
-        public List<LatheRecipePrototype> ProtolatheRecipes => _protolatheRecipes;
-
-        public override void ExposeData(ObjectSerializer serializer)
+        public IEnumerable<LatheRecipePrototype> ProtolatheRecipes
         {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "protolatherecipes",
-                new List<string>(),
-                recipes =>
-                {
-                    var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-                    foreach (var id in recipes)
-                    {
-                        if (prototypeManager.TryIndex(id, out LatheRecipePrototype? recipe))
-                        {
-                            _protolatheRecipes.Add(recipe);
-                        }
-                    }
-                },
-                GetProtolatheRecipeIdList);
-        }
-
-        /// <summary>
-        ///     Returns a list of the allowed protolathe recipe IDs.
-        /// </summary>
-        /// <returns>A list of recipe IDs allowed</returns>
-        public List<string> GetProtolatheRecipeIdList()
-        {
-            var list = new List<string>();
-
-            foreach (var recipe in ProtolatheRecipes)
+            get
             {
-                list.Add(recipe.ID);
+                foreach (var id in _recipeIds)
+                {
+                    yield return _prototypeManager.Index<LatheRecipePrototype>(id);
+                }
             }
-
-            return list;
         }
     }
 

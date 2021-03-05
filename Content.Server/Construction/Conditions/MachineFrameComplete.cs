@@ -4,7 +4,7 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
@@ -13,10 +13,9 @@ namespace Content.Server.Construction.Conditions
     ///     Checks that the entity has all parts needed in the machine frame component.
     /// </summary>
     [UsedImplicitly]
+    [DataDefinition]
     public class MachineFrameComplete : IEdgeCondition
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer) { }
-
         public async Task<bool> Condition(IEntity entity)
         {
             if (entity.Deleted || !entity.TryGetComponent<MachineFrameComponent>(out var machineFrame))

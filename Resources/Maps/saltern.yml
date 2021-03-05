@@ -4961,8 +4961,6 @@ entities:
     pos: 21.5,11.5
     rot: 4.371139006309477E-08 rad
     type: Transform
-  - anchored: True
-    type: Physics
 - uid: 566
   type: AirlockCargoGlassLocked
   components:

@@ -9,7 +9,6 @@
     netsync: false
   - type: Item
     size: 24
-    state: icon
 
 - type: entity
   name: china lake

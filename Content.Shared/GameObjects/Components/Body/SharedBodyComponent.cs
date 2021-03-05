@@ -16,13 +16,14 @@ using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
     // TODO BODY Damage methods for collections of IDamageableComponents
-    public abstract class SharedBodyComponent : Component, IBody
+    public abstract class SharedBodyComponent : Component, IBody, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -30,15 +31,20 @@ namespace Content.Shared.GameObjects.Components.Body
 
         public override uint? NetID => ContentNetIDs.BODY;
 
+        [DataField("centerSlot", required: true)]
         private string? _centerSlot;
 
         private Dictionary<string, string> _partIds = new();
 
         private readonly Dictionary<string, IBodyPart> _parts = new();
 
-        [ViewVariables] public string? TemplateName { get; private set; }
+        [ViewVariables]
+        [DataField("template", required: true)]
+        public string? TemplateName { get; private set; }
 
-        [ViewVariables] public string? PresetName { get; private set; }
+        [ViewVariables]
+        [DataField("preset", required: true)]
+        public string? PresetName { get; private set; }
 
         [ViewVariables]
         public Dictionary<string, BodyPartType> Slots { get; private set; } = new();
@@ -55,6 +61,62 @@ namespace Content.Shared.GameObjects.Components.Body
         public IReadOnlyDictionary<string, string> PartIds => _partIds;
 
         [ViewVariables] public IReadOnlyDictionary<string, string> PartIDs => _partIds;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            // TODO BODY BeforeDeserialization
+            // TODO BODY Move to template or somewhere else
+            if (TemplateName != null)
+            {
+                var template = _prototypeManager.Index<BodyTemplatePrototype>(TemplateName);
+
+                Connections = template.Connections;
+                Slots = template.Slots;
+                _centerSlot = template.CenterSlot;
+            }
+
+            if (PresetName != null)
+            {
+                var preset = _prototypeManager.Index<BodyPresetPrototype>(PresetName);
+
+                _partIds = preset.PartIDs;
+            }
+
+            // Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
+            // The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
+            var cleanedConnections = new Dictionary<string, List<string>>();
+
+            foreach (var targetSlotName in Slots.Keys)
+            {
+                var tempConnections = new List<string>();
+                foreach (var (slotName, slotConnections) in Connections)
+                {
+                    if (slotName == targetSlotName)
+                    {
+                        foreach (var connection in slotConnections)
+                        {
+                            if (!tempConnections.Contains(connection))
+                            {
+                                tempConnections.Add(connection);
+                            }
+                        }
+                    }
+                    else if (slotConnections.Contains(targetSlotName))
+                    {
+                        tempConnections.Add(slotName);
+                    }
+                }
+
+                if (tempConnections.Count > 0)
+                {
+                    cleanedConnections.Add(targetSlotName, tempConnections);
+                }
+            }
+
+            Connections = cleanedConnections;
+        }
 
         protected virtual bool CanAddPart(string slot, IBodyPart part)
         {
@@ -535,122 +597,6 @@ namespace Content.Shared.GameObjects.Components.Body
         public KeyValuePair<string, IBodyPart> PartAt(int index)
         {
             return Parts.ElementAt(index);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "template",
-                null,
-                name =>
-                {
-                    if (string.IsNullOrEmpty(name))
-                    {
-                        return;
-                    }
-
-                    var template = _prototypeManager.Index<BodyTemplatePrototype>(name);
-
-                    Connections = template.Connections;
-                    Slots = template.Slots;
-                    _centerSlot = template.CenterSlot;
-
-                    TemplateName = name;
-                },
-                () => TemplateName);
-
-            serializer.DataReadWriteFunction(
-                "preset",
-                null,
-                name =>
-                {
-                    if (string.IsNullOrEmpty(name))
-                    {
-                        return;
-                    }
-
-                    var preset = _prototypeManager.Index<BodyPresetPrototype>(name);
-
-                    _partIds = preset.PartIDs;
-                },
-                () => PresetName);
-
-            serializer.DataReadWriteFunction(
-                "connections",
-                new Dictionary<string, List<string>>(),
-                connections =>
-                {
-                    foreach (var (from, to) in connections)
-                    {
-                        Connections.GetOrNew(from).AddRange(to);
-                    }
-                },
-                () => Connections);
-
-            serializer.DataReadWriteFunction(
-                "slots",
-                new Dictionary<string, BodyPartType>(),
-                slots =>
-                {
-                    foreach (var (part, type) in slots)
-                    {
-                        Slots[part] = type;
-                    }
-                },
-                () => Slots);
-
-            // TODO BODY Move to template or somewhere else
-            serializer.DataReadWriteFunction(
-                "centerSlot",
-                null,
-                slot => _centerSlot = slot,
-                () => _centerSlot);
-
-            serializer.DataReadWriteFunction(
-                "partIds",
-                new Dictionary<string, string>(),
-                partIds =>
-                {
-                    foreach (var (slot, part) in partIds)
-                    {
-                        _partIds[slot] = part;
-                    }
-                },
-                () => _partIds);
-
-            // Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
-            // The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
-            var cleanedConnections = new Dictionary<string, List<string>>();
-            foreach (var targetSlotName in Slots.Keys)
-            {
-                var tempConnections = new List<string>();
-                foreach (var (slotName, slotConnections) in Connections)
-                {
-                    if (slotName == targetSlotName)
-                    {
-                        foreach (var connection in slotConnections)
-                        {
-                            if (!tempConnections.Contains(connection))
-                            {
-                                tempConnections.Add(connection);
-                            }
-                        }
-                    }
-                    else if (slotConnections.Contains(targetSlotName))
-                    {
-                        tempConnections.Add(slotName);
-                    }
-                }
-
-                if (tempConnections.Count > 0)
-                {
-                    cleanedConnections.Add(targetSlotName, tempConnections);
-                }
-            }
-
-            Connections = cleanedConnections;
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

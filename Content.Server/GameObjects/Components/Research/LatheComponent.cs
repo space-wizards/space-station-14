@@ -160,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Research
             var totalAmount = 0;
 
             // Check if it can insert all materials.
-            foreach (var mat in material.MaterialTypes.Values)
+            foreach (var (_, mat) in material.MaterialTypes)
             {
                 // TODO: Change how MaterialComponent works so this is not hard-coded.
                 if (!storage.CanInsertMaterial(mat.ID, VolumePerSheet * multiplier)) return false;
@@ -170,13 +170,13 @@ namespace Content.Server.GameObjects.Components.Research
             // Check if it can take ALL of the material's volume.
             if (storage.CanTakeAmount(totalAmount)) return false;
 
-            foreach (var mat in material.MaterialTypes.Values)
+            foreach (var (_, mat) in material.MaterialTypes)
             {
                 storage.InsertMaterial(mat.ID, VolumePerSheet * multiplier);
             }
 
             State = LatheState.Inserting;
-            switch (material.MaterialTypes.Values.First().Name)
+            switch (material.MaterialTypes.First().Value.Name)
             {
                 case "steel":
                     SetAppearance(LatheVisualState.InsertingMetal);

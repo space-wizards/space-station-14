@@ -1,7 +1,9 @@
 ﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research
@@ -12,7 +14,9 @@ namespace Content.Server.GameObjects.Components.Research
     {
         public override string Name => "ResearchPointSource";
 
+        [DataField("pointspersecond")]
         private int _pointsPerSecond;
+        [DataField("active")]
         private bool _active;
         private PowerReceiverComponent _powerReceiver;
 
@@ -41,14 +45,6 @@ namespace Content.Server.GameObjects.Components.Research
         {
             base.Initialize();
             Owner.TryGetComponent(out _powerReceiver);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _pointsPerSecond, "pointspersecond", 0);
-            serializer.DataField(ref _active, "active", false);
         }
     }
 }

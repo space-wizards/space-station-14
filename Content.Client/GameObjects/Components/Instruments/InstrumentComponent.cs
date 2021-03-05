@@ -11,8 +11,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Instruments
@@ -35,19 +35,24 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         private InstrumentSystem _instrumentSystem = default!;
 
+        [DataField("program")]
         private byte _instrumentProgram = 1;
 
+        [DataField("bank")]
         private byte _instrumentBank;
 
         private uint _sequenceDelay;
 
         private uint _sequenceStartTick;
 
+        [DataField("allowPercussion")]
         private bool _allowPercussion;
 
+        [DataField("allowProgramChange")]
         private bool _allowProgramChange;
 
-        private bool _respectMidiLimits;
+        [DataField("respectMidiLimits")]
+        private bool _respectMidiLimits = true;
 
         /// <summary>
         ///     A queue of MidiEvents to be sent to the server.
@@ -137,6 +142,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         ///     Whether this instrument is handheld or not.
         /// </summary>
         [ViewVariables]
+        [DataField("handheld")]
         public bool Handheld { get; set; } // TODO: Replace this by simply checking if the entity has an ItemComponent.
 
         /// <summary>
@@ -261,17 +267,6 @@ namespace Content.Client.GameObjects.Components.Instruments
         {
             base.Shutdown();
             EndRenderer();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.Handheld, "handheld", false);
-            serializer.DataField(ref _instrumentProgram, "program", (byte) 1);
-            serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
-            serializer.DataField(ref _allowPercussion, "allowPercussion", false);
-            serializer.DataField(ref _allowProgramChange, "allowProgramChange", false);
-            serializer.DataField(ref _respectMidiLimits, "respectMidiLimits", true);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)

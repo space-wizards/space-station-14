@@ -33,7 +33,7 @@
   parent: WireBase
   id: HVWire
   name: HV Wire
-  decription: "An orange high voltage power cable."
+  description: "An orange high voltage power cable."
   components:
   - type: Sprite
     sprite: Constructible/Power/Wires/hv_cable.rsi

@@ -5,7 +5,9 @@ using Content.Server.Interfaces.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Construction
 {
@@ -14,16 +16,11 @@ namespace Content.Server.GameObjects.Components.Construction
     {
         public override string Name => "Machine";
 
+        [DataField("board")]
         public string BoardPrototype { get; private set; }
 
         private Container _boardContainer;
         private Container _partContainer;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.BoardPrototype, "board", null);
-        }
 
         public override void Initialize()
         {
