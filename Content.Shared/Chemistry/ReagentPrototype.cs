@@ -1,86 +1,72 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry
 {
     [Prototype("reagent")]
+    [DataDefinition]
     public class ReagentPrototype : IPrototype
     {
-        [Dependency] private readonly IModuleManager _moduleManager = default!;
+        [DataField("metabolism", serverOnly: true)]
+        private readonly List<IMetabolizable> _metabolism = new() {new DefaultMetabolizable()};
 
-        private string _id = default!;
-        private string _name = default!;
-        private string _description = default!;
-        private string _physicalDescription = default!;
-        private Color _substanceColor;
-        private string _spritePath = default!;
-        private List<IMetabolizable> _metabolism = default!;
-        private List<ITileReaction> _tileReactions = default!;
-        private List<IPlantMetabolizable> _plantMetabolism = default!;
-        private float _customPlantMetabolism;
-        private bool _toxin;
-        private int _boozePower;
+        [DataField("tileReactions", serverOnly: true)]
+        private readonly List<ITileReaction> _tileReactions = new(0);
 
-        public string ID => _id;
-        public string Name => _name;
-        public string Description => _description;
-        public string PhysicalDescription => _physicalDescription;
-        public Color SubstanceColor => _substanceColor;
+        [DataField("plantMetabolism", serverOnly: true)]
+        private readonly List<IPlantMetabolizable> _plantMetabolism = new(0);
 
-        public bool Toxin => _toxin;
-        public int BoozePower => _boozePower;
+        [DataField("customPlantMetabolism")]
+        private readonly float _customPlantMetabolism = 1f;
+
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
+
+        [field: DataField("name")]
+        public string Name { get; } = string.Empty;
+
+        [field: DataField("desc")]
+        public string Description { get; } = string.Empty;
+
+        [field: DataField("physicalDesc")]
+        public string PhysicalDescription { get; } = string.Empty;
+
+        [field: DataField("color")]
+        public Color SubstanceColor { get; } = Color.White;
+
+        [field: DataField("toxin")]
+        public bool Toxin { get; }
+
+        [field: DataField("boozePower")]
+        public int BoozePower { get; }
+
+        [field: DataField("boilingPoint")]
+        public float? BoilingPoint { get; }
+
+        [field: DataField("meltingPoint")]
+        public float? MeltingPoint { get; }
+
+        [field: DataField("spritePath")]
+        public string SpriteReplacementPath { get; } = string.Empty;
 
         //List of metabolism effects this reagent has, should really only be used server-side.
         public IReadOnlyList<IMetabolizable> Metabolism => _metabolism;
         public IReadOnlyList<ITileReaction> TileReactions => _tileReactions;
         public IReadOnlyList<IPlantMetabolizable> PlantMetabolism => _plantMetabolism;
-        public string SpriteReplacementPath => _spritePath;
-
-        public ReagentPrototype()
-        {
-            IoCManager.InjectDependencies(this);
-        }
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _name, "name", string.Empty);
-            serializer.DataField(ref _description, "desc", string.Empty);
-            serializer.DataField(ref _physicalDescription, "physicalDesc", string.Empty);
-            serializer.DataField(ref _substanceColor, "color", Color.White);
-            serializer.DataField(ref _spritePath, "spritePath", string.Empty);
-            serializer.DataField(ref _customPlantMetabolism, "customPlantMetabolism", 1f);
-            serializer.DataField(ref _toxin, "toxin", false);
-            serializer.DataField(ref _boozePower, "boozePower", 0);
-
-            if (_moduleManager.IsServerModule)
-            {
-                //Implementations of the needed interfaces are currently server-only, so they cannot be read on client
-                serializer.DataField(ref _metabolism, "metabolism", new List<IMetabolizable> { new DefaultMetabolizable() });
-                serializer.DataField(ref _tileReactions, "tileReactions", new List<ITileReaction> { });
-                serializer.DataField(ref _plantMetabolism, "plantMetabolism", new List<IPlantMetabolizable> { });
-            }
-            else
-            {
-                //ensure the following fields cannot null since they can only be serialized on server right now
-                _metabolism = new List<IMetabolizable> { new DefaultMetabolizable() };
-                _tileReactions = new();
-                _plantMetabolism = new();
-            }
-        }
 
         /// <summary>
         /// If the substance color is too dark we user a lighter version to make the text color readable when the user examines a solution.
@@ -100,7 +86,7 @@ namespace Content.Shared.Chemistry
             return SubstanceColor;
         }
 
-        public ReagentUnit ReactionEntity(IEntity entity, ReactionMethod method, ReagentUnit reactVolume)
+        public ReagentUnit ReactionEntity(IEntity? entity, ReactionMethod method, ReagentUnit reactVolume)
         {
             var removed = ReagentUnit.Zero;
 
@@ -153,7 +139,7 @@ namespace Content.Shared.Chemistry
             return removed;
         }
 
-        public void ReactionPlant(IEntity plantHolder)
+        public void ReactionPlant(IEntity? plantHolder)
         {
             if (plantHolder == null || plantHolder.Deleted)
                 return;

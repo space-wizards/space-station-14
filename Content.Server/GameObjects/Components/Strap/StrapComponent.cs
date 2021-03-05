@@ -13,33 +13,29 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Strap
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrapComponent))]
-    public class StrapComponent : SharedStrapComponent, IInteractHand
+    public class StrapComponent : SharedStrapComponent, IInteractHand, ISerializationHooks
     {
         [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;
 
-        private HashSet<IEntity> _buckledEntities = null!;
-        private StrapPosition _position;
-        private string _buckleSound = null!;
-        private string _unbuckleSound = null!;
-        private AlertType _buckledAlertType;
+        private readonly HashSet<IEntity> _buckledEntities = new();
 
         /// <summary>
         /// The angle in degrees to rotate the player by when they get strapped
         /// </summary>
-        [ViewVariables]
+        [ViewVariables] [DataField("rotation")]
         private int _rotation;
 
         /// <summary>
         /// The size of the strap which is compared against when buckling entities
         /// </summary>
-        [ViewVariables]
-        private int _size;
+        [ViewVariables] [DataField("size")] private int _size = 100;
         private int _occupiedSize;
 
         /// <summary>
@@ -50,25 +46,29 @@ namespace Content.Server.GameObjects.Components.Strap
         /// <summary>
         /// The change in position to the strapped mob
         /// </summary>
-        public StrapPosition Position => _position;
+        [field: DataField("position")]
+        public StrapPosition Position { get; } = StrapPosition.None;
 
         /// <summary>
         /// The sound to be played when a mob is buckled
         /// </summary>
         [ViewVariables]
-        public string BuckleSound => _buckleSound;
+        [field: DataField("buckleSound")]
+        public string BuckleSound { get; } = "/Audio/Effects/buckle.ogg";
 
         /// <summary>
         /// The sound to be played when a mob is unbuckled
         /// </summary>
         [ViewVariables]
-        public string UnbuckleSound => _unbuckleSound;
+        [field: DataField("unbuckleSound")]
+        public string UnbuckleSound { get; } = "/Audio/Effects/unbuckle.ogg";
 
         /// <summary>
         /// ID of the alert to show when buckled
         /// </summary>
         [ViewVariables]
-        public AlertType BuckledAlertType => _buckledAlertType;
+        [field: DataField("buckledAlertType")]
+        public AlertType BuckledAlertType { get; } = AlertType.Buckled;
 
         /// <summary>
         /// The sum of the sizes of all the buckled entities in this strap
@@ -128,24 +128,6 @@ namespace Content.Server.GameObjects.Components.Strap
                 _occupiedSize -= buckle.Size;
                 SendMessage(new UnStrapMessage(buckle.Owner, Owner));
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _position, "position", StrapPosition.None);
-            serializer.DataField(ref _buckleSound, "buckleSound", "/Audio/Effects/buckle.ogg");
-            serializer.DataField(ref _unbuckleSound, "unbuckleSound", "/Audio/Effects/unbuckle.ogg");
-            serializer.DataField(ref _buckledAlertType, "buckledAlertType", AlertType.Buckled);
-            serializer.DataField(ref _rotation, "rotation", 0);
-
-            var defaultSize = 100;
-
-            serializer.DataField(ref _size, "size", defaultSize);
-            _buckledEntities = new HashSet<IEntity>(_size / defaultSize);
-
-            _occupiedSize = 0;
         }
 
         public override void OnRemove()

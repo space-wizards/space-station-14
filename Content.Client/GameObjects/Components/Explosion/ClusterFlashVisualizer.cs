@@ -1,6 +1,7 @@
 using Content.Shared.GameObjects.Components.Explosion;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -10,16 +11,8 @@ namespace Content.Client.GameObjects.Components.Explosion
     // ReSharper disable once InconsistentNaming
     public class ClusterFlashVisualizer : AppearanceVisualizer
     {
+        [DataField("state")]
         private string _state;
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-            if (node.TryGetNode("state", out var state))
-            {
-                _state = state.AsString();
-            }
-        }
 
         public override void OnChangeData(AppearanceComponent component)
         {

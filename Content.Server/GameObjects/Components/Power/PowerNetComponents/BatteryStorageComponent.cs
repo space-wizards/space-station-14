@@ -1,6 +1,8 @@
 #nullable enable
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
@@ -15,7 +17,8 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int ActiveDrawRate { get => _activeDrawRate; set => SetActiveDrawRate(value); }
-        private int _activeDrawRate;
+        [DataField("activeDrawRate")]
+        private int _activeDrawRate = 100;
 
         [ViewVariables]
         [ComponentDependency] private BatteryComponent? _battery = default!;
@@ -24,12 +27,6 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public PowerConsumerComponent? Consumer => _consumer;
 
         [ComponentDependency] private PowerConsumerComponent? _consumer = default!;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _activeDrawRate, "activeDrawRate", 100);
-        }
 
         public override void Initialize()
         {

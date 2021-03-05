@@ -9,6 +9,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Projectiles
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         private EntityUid _shooter = EntityUid.Invalid;
 
-        private Dictionary<DamageType, int> _damages;
+        [DataField("damages")] private Dictionary<DamageType, int> _damages = new();
 
         [ViewVariables]
         public Dictionary<DamageType, int> Damages
@@ -29,23 +30,17 @@ namespace Content.Server.GameObjects.Components.Projectiles
             set => _damages = value;
         }
 
-        private bool _damagedEntity = false;
-
-        private bool _deleteOnCollide;
+        public bool DeleteOnCollide => _deleteOnCollide;
+        [DataField("delete_on_collide")]
+        private bool _deleteOnCollide = true;
 
         // Get that juicy FPS hit sound
-        private string _soundHit;
-        private string _soundHitSpecies;
+        [DataField("soundHit")]
+        private string _soundHit = default;
+        [DataField("soundHitSpecies")]
+        private string _soundHitSpecies = default;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _deleteOnCollide, "delete_on_collide", true);
-            // If not specified 0 damage
-            serializer.DataField(ref _damages, "damages", new Dictionary<DamageType, int>());
-            serializer.DataField(ref _soundHit, "soundHit", null);
-            serializer.DataField(ref _soundHitSpecies, "soundHitSpecies", null);
-        }
+        private bool _damagedEntity;
 
         public float TimeLeft { get; set; } = 10;
 

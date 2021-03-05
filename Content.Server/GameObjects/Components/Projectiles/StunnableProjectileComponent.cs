@@ -1,5 +1,6 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Serialization;
@@ -15,17 +16,12 @@ namespace Content.Server.GameObjects.Components.Projectiles
         public override string Name => "StunnableProjectile";
 
         // See stunnable for what these do
-        private int _stunAmount;
-        private int _knockdownAmount;
-        private int _slowdownAmount;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _stunAmount, "stunAmount", 0);
-            serializer.DataField(ref _knockdownAmount, "knockdownAmount", 0);
-            serializer.DataField(ref _slowdownAmount, "slowdownAmount", 0);
-        }
+        [DataField("stunAmount")]
+        private int _stunAmount = default;
+        [DataField("knockdownAmount")]
+        private int _knockdownAmount = default;
+        [DataField("slowdownAmount")]
+        private int _slowdownAmount = default;
 
         public override void Initialize()
         {

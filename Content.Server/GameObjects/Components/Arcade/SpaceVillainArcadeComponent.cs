@@ -13,8 +13,10 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Arcade
@@ -36,33 +38,23 @@ namespace Content.Server.GameObjects.Components.Arcade
         [ViewVariables] private bool _enemyInvincibilityFlag;
         [ViewVariables] private SpaceVillainGame _game = null!;
 
-        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleFightVerbs = null!;
-        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleFirstEnemyNames = null!;
-        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleLastEnemyNames = null!;
-        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleRewards = null!;
-
-        public override void ExposeData(ObjectSerializer serializer)
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleFightVerbs")] private List<string> _possibleFightVerbs = new List<string>()
+            {"Defeat", "Annihilate", "Save", "Strike", "Stop", "Destroy", "Robust", "Romance", "Pwn", "Own"};
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleFirstEnemyNames")] private List<string> _possibleFirstEnemyNames = new List<string>(){
+            "the Automatic", "Farmer", "Lord", "Professor", "the Cuban", "the Evil", "the Dread King",
+            "the Space", "Lord", "the Great", "Duke", "General"
+        };
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleLastEnemyNames")] private List<string> _possibleLastEnemyNames = new List<string>()
         {
-            serializer.DataField(ref _possibleFightVerbs, "possibleFightVerbs", new List<string>()
-                {"Defeat", "Annihilate", "Save", "Strike", "Stop", "Destroy", "Robust", "Romance", "Pwn", "Own"});
-            serializer.DataField(ref _possibleFirstEnemyNames, "possibleFirstEnemyNames", new List<string>(){
-                "the Automatic", "Farmer", "Lord", "Professor", "the Cuban", "the Evil", "the Dread King",
-                "the Space", "Lord", "the Great", "Duke", "General"
-            });
-            serializer.DataField(ref _possibleLastEnemyNames, "possibleLastEnemyNames", new List<string>()
-            {
-                "Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid",
-                "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn"
-            });
-            serializer.DataField(ref _possibleRewards, "possibleRewards", new List<string>()
-            {
-                "ToyMouse", "ToyAi", "ToyNuke", "ToyAssistant", "ToyGriffin", "ToyHonk", "ToyIan",
-                "ToyMarauder", "ToyMauler", "ToyGygax", "ToyOdysseus", "ToyOwlman", "ToyDeathRipley",
-                "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton"
-            });
-
-            _game = new SpaceVillainGame(this);
-        }
+            "Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid",
+            "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn"
+        };
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleRewards")] private List<string> _possibleRewards = new List<string>()
+        {
+            "ToyMouse", "ToyAi", "ToyNuke", "ToyAssistant", "ToyGriffin", "ToyHonk", "ToyIan",
+            "ToyMarauder", "ToyMauler", "ToyGygax", "ToyOdysseus", "ToyOwlman", "ToyDeathRipley",
+            "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton"
+        };
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
@@ -75,6 +67,8 @@ namespace Content.Server.GameObjects.Components.Arcade
                 return;
             }
             if(!ActionBlockerSystem.CanInteract(actor.playerSession.AttachedEntity)) return;
+
+            _game ??= new SpaceVillainGame(this);
 
             if (_wiresComponent?.IsPanelOpen == true)
             {

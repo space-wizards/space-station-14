@@ -10,6 +10,7 @@ using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos
@@ -18,28 +19,28 @@ namespace Content.Server.Atmos
     ///     A general-purpose, variable volume gas mixture.
     /// </summary>
     [Serializable]
-    public class GasMixture : IExposeData, IEquatable<GasMixture>, ICloneable
+    [DataDefinition]
+    public class GasMixture : IEquatable<GasMixture>, ICloneable, ISerializationHooks
     {
-        private readonly AtmosphereSystem _atmosphereSystem;
+        private AtmosphereSystem? _atmosphereSystem;
 
         public static GasMixture SpaceGas => new() {Volume = 2500f, Immutable = true, Temperature = Atmospherics.TCMB};
 
         // This must always have a length that is a multiple of 4 for SIMD acceleration.
-        [ViewVariables]
-        private float[] _moles;
+        [DataField("moles")] [ViewVariables] private float[] _moles = new float[Atmospherics.AdjustedNumberOfGases];
 
-        [ViewVariables]
-        private float[] _molesArchived;
+        [DataField("molesArchived")] [ViewVariables]
+        private float[] _molesArchived = new float[Atmospherics.AdjustedNumberOfGases];
 
-        [ViewVariables]
+        [DataField("temperature")] [ViewVariables]
         private float _temperature = Atmospherics.TCMB;
 
         public IReadOnlyList<float> Gases => _moles;
 
-        [ViewVariables]
+        [DataField("immutable")] [ViewVariables]
         public bool Immutable { get; private set; }
 
-        [ViewVariables]
+        [DataField("lastShare")] [ViewVariables]
         public float LastShare { get; private set; }
 
         [ViewVariables]
@@ -55,6 +56,7 @@ namespace Content.Server.Atmos
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
+                _atmosphereSystem ??= EntitySystem.Get<AtmosphereSystem>();
                 Span<float> tmp = stackalloc float[_moles.Length];
                 NumericsHelpers.Multiply(_moles, _atmosphereSystem.GasSpecificHeats, tmp);
 
@@ -68,6 +70,7 @@ namespace Content.Server.Atmos
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
+                _atmosphereSystem ??= EntitySystem.Get<AtmosphereSystem>();
                 Span<float> tmp = stackalloc float[_moles.Length];
                 NumericsHelpers.Multiply(_molesArchived, _atmosphereSystem.GasSpecificHeats, tmp);
 
@@ -106,10 +109,10 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public float ThermalEnergy => Temperature * HeatCapacity;
 
-        [ViewVariables]
+        [DataField("temperatureArchived")] [ViewVariables]
         public float TemperatureArchived { get; private set; }
 
-        [ViewVariables]
+        [DataField("volume")] [ViewVariables]
         public float Volume { get; set; }
 
         public GasMixture() : this(null)
@@ -118,9 +121,7 @@ namespace Content.Server.Atmos
 
         public GasMixture(AtmosphereSystem? atmosphereSystem)
         {
-            _atmosphereSystem = atmosphereSystem ?? EntitySystem.Get<AtmosphereSystem>();
-            _moles = new float[Atmospherics.AdjustedNumberOfGases];
-            _molesArchived = new float[Atmospherics.AdjustedNumberOfGases];
+            _atmosphereSystem = atmosphereSystem;
         }
 
         public GasMixture(float volume, AtmosphereSystem? atmosphereSystem = null): this(atmosphereSystem)
@@ -262,6 +263,7 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Share(GasMixture sharer, int atmosAdjacentTurfs)
         {
+            _atmosphereSystem ??= EntitySystem.Get<AtmosphereSystem>();
             var temperatureDelta = TemperatureArchived - sharer.TemperatureArchived;
             var absTemperatureDelta = Math.Abs(temperatureDelta);
             var oldHeatCapacity = 0f;
@@ -485,6 +487,7 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ReactionResult React(IGasMixtureHolder holder)
         {
+            _atmosphereSystem ??= EntitySystem.Get<AtmosphereSystem>();
             var reaction = ReactionResult.NoReaction;
             var temperature = Temperature;
             var energy = ThermalEnergy;
@@ -533,16 +536,8 @@ namespace Content.Server.Atmos
             NumericsHelpers.Multiply(_moles, multiplier);
         }
 
-        void IExposeData.ExposeData(ObjectSerializer serializer)
+        void ISerializationHooks.AfterDeserialization()
         {
-            serializer.DataField(this, x => x.Immutable, "immutable", false);
-            serializer.DataField(this, x => x.Volume, "volume", 0f);
-            serializer.DataField(this, x => x.LastShare, "lastShare", 0f);
-            serializer.DataField(this, x => x.TemperatureArchived, "temperatureArchived", 0f);
-            serializer.DataField(ref _moles, "moles", new float[Atmospherics.AdjustedNumberOfGases]);
-            serializer.DataField(ref _molesArchived, "molesArchived", new float[Atmospherics.AdjustedNumberOfGases]);
-            serializer.DataField(ref _temperature, "temperature", Atmospherics.TCMB);
-
             // The arrays MUST have a specific length.
             Array.Resize(ref _moles, Atmospherics.AdjustedNumberOfGases);
             Array.Resize(ref _molesArchived, Atmospherics.AdjustedNumberOfGases);

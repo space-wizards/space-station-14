@@ -3,22 +3,15 @@ using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Atmos
+namespace Content.Client.GameObjects.Components.Atmos.Piping
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class GasFilterVisualizer : AppearanceVisualizer
     {
-        private string _filterEnabledState = default!;
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-            var serializer = YamlObjectSerializer.NewReader(node);
-            serializer.DataField(ref _filterEnabledState, "filterEnabledState", "gasFilterOn");
-        }
+        [DataField("filterEnabledState")] private string _filterEnabledState = "gasFilterOn";
 
         public override void InitializeEntity(IEntity entity)
         {

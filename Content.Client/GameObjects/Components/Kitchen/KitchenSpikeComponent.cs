@@ -1,6 +1,6 @@
 #nullable enable
-using Content.Shared.GameObjects.Components.Kitchen;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Kitchen;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Kitchen

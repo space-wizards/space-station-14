@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Conditions
 {
@@ -13,6 +13,7 @@ namespace Content.Server.Construction.Conditions
     ///     Makes the condition fail if any entities on a tile have (or not) a component.
     /// </summary>
     [UsedImplicitly]
+    [DataDefinition]
     public class ComponentInTile : IEdgeCondition
     {
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
@@ -23,22 +24,18 @@ namespace Content.Server.Construction.Conditions
             IoCManager.InjectDependencies(this);
         }
 
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.Component, "component", string.Empty);
-            serializer.DataField(this, x => x.HasEntity, "hasEntity", true);
-        }
-
         /// <summary>
         ///     If true, any entity on the tile must have the component.
         ///     If false, no entity on the tile must have the component.
         /// </summary>
+        [DataField("hasEntity")]
         public bool HasEntity { get; private set; }
 
         /// <summary>
         ///     The component name in question.
         /// </summary>
-        public string Component { get; private set; }
+        [DataField("component")]
+        public string Component { get; private set; } = string.Empty;
 
         public async Task<bool> Condition(IEntity entity)
         {

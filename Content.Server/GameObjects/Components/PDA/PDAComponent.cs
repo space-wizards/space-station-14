@@ -23,7 +23,9 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.PDA
@@ -41,8 +43,8 @@ namespace Content.Server.GameObjects.Components.PDA
 
         [ViewVariables] private bool _lightOn;
 
-        [ViewVariables] private string? _startingIdCard = default!;
-        [ViewVariables] private string? _startingPen = default!;
+        [ViewVariables] [DataField("idCard")] private string? _startingIdCard = "AssistantIDCard";
+        [ViewVariables] [DataField("pen")] private string? _startingPen = "Pen";
 
         [ViewVariables] public string? OwnerName { get; private set; }
 
@@ -61,13 +63,6 @@ namespace Content.Server.GameObjects.Components.PDA
         public PDAComponent()
         {
             _accessSet = new PdaAccessSet(this);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _startingIdCard, "idCard", "AssistantIDCard");
-            serializer.DataField(ref _startingPen, "pen", "Pen");
         }
 
         public override void Initialize()

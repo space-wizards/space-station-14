@@ -12,7 +12,6 @@
   - type: CargoConsole
   - type: CargoOrderDatabase
   - type: GalacticMarket
-    static: true
     products:
       - cargo.emergencyexplosive
       - cargo.emergencyfire

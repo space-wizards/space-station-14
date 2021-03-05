@@ -4,7 +4,6 @@
   name: Urist McHands
   id: BaseHumanMob_Content
   description: A miserable pile of secrets.
-  drawdepth: Mobs
   abstract: true
   components:
   - type: Tag

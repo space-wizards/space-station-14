@@ -11,6 +11,8 @@ using Robust.Shared.Serialization;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Items
 {
@@ -20,14 +22,8 @@ namespace Content.Server.GameObjects.Components.Items
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
         public override string Name => "FloorTile";
+        [DataField("outputs")]
         private List<string> _outputTiles;
-
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _outputTiles, "outputs", null);
-        }
 
         public override void Initialize()
         {

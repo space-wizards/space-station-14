@@ -19,9 +19,11 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Recycling
@@ -37,14 +39,14 @@ namespace Content.Server.GameObjects.Components.Recycling
         /// <summary>
         ///     Whether or not sentient beings will be recycled
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        private bool _safe;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("safe")]
+        private bool _safe = true;
 
         /// <summary>
         ///     The percentage of material that will be recovered
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        private float _efficiency;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("efficiency")]
+        private float _efficiency = 0.25f;
 
         private bool Powered =>
             !Owner.TryGetComponent(out PowerReceiverComponent? receiver) ||
@@ -140,14 +142,6 @@ namespace Content.Server.GameObjects.Components.Recycling
             }
 
             return true;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _safe, "safe", true);
-            serializer.DataField(ref _efficiency, "efficiency", 0.25f);
         }
 
         void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)

@@ -5,6 +5,7 @@ using Content.Shared.Alert;
 using NUnit.Framework;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Tests.Shared.Alert
 {
@@ -13,6 +14,7 @@ namespace Content.Tests.Shared.Alert
     {
         const string PROTOTYPES = @"
 - type: alertOrder
+  id: testAlertOrder
   order:
     - alertType: Handcuffed
     - category: Pressure
@@ -72,8 +74,10 @@ namespace Content.Tests.Shared.Alert
         [Test]
         public void TestAlertOrderPrototype()
         {
+            IoCManager.Resolve<ISerializationManager>().Initialize();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
+            prototypeManager.Resync();
 
             var alertOrder = prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
 

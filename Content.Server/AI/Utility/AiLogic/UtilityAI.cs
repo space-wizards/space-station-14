@@ -15,13 +15,14 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.AI.Utility.AiLogic
 {
     // TODO: Need to split out the IMover stuff for NPC to a generic one that can be used for hoomans as well.
     [RegisterComponent]
     [ComponentReference(typeof(AiControllerComponent)), ComponentReference(typeof(IMoverComponent))]
-    internal sealed class UtilityAi : AiControllerComponent
+    public sealed class UtilityAi : AiControllerComponent, ISerializationHooks
     {
         public override string Name => "UtilityAI";
 
@@ -34,6 +35,7 @@ namespace Content.Server.AI.Utility.AiLogic
         /// <summary>
         ///     The sum of all BehaviorSets gives us what actions the AI can take
         /// </summary>
+        [field: DataField("behaviorSets")]
         public HashSet<string> BehaviorSets { get; } = new();
 
         public List<IAiUtility> AvailableActions { get; set; } = new();
@@ -62,26 +64,35 @@ namespace Content.Server.AI.Utility.AiLogic
         /// </summary>
         private bool _isDead;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        /*public void AfterDeserialization()
         {
-            base.ExposeData(serializer);
-            var bSets = serializer.ReadDataField("behaviorSets", new List<string>());
-
-            if (bSets.Count > 0)
+            if (BehaviorSets.Count > 0)
             {
                 var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
 
-                foreach (var bSet in bSets)
+                foreach (var bSet in BehaviorSets)
                 {
                     behaviorManager.AddBehaviorSet(this, bSet, false);
                 }
 
                 behaviorManager.RebuildActions(this);
             }
-        }
+        }*/
 
         public override void Initialize()
         {
+            if (BehaviorSets.Count > 0)
+            {
+                var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
+
+                foreach (var bSet in BehaviorSets)
+                {
+                    behaviorManager.AddBehaviorSet(this, bSet, false);
+                }
+
+                behaviorManager.RebuildActions(this);
+            }
+
             base.Initialize();
             _planCooldownRemaining = PlanCooldown;
             _blackboard = new Blackboard(Owner);

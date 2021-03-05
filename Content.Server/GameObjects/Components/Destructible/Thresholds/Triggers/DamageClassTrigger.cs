@@ -3,7 +3,7 @@ using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
 {
@@ -12,23 +12,20 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
     ///     of the specified class is above the specified threshold.
     /// </summary>
     [Serializable]
+    [DataDefinition]
     public class DamageClassTrigger : IThresholdTrigger
     {
         /// <summary>
         ///     The class to check the damage of.
         /// </summary>
+        [DataField("class")]
         public DamageClass? Class { get; set; }
 
         /// <summary>
         ///     The amount of damage at which this threshold will trigger.
         /// </summary>
+        [DataField("damage")]
         public int Damage { get; set; }
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.Class, "class", null);
-            serializer.DataField(this, x => x.Damage, "damage", 0);
-        }
 
         public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
         {

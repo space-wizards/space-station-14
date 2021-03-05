@@ -1,12 +1,13 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 using Robust.Shared.Physics;
-using System.Collections.Generic;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Doors
 {
@@ -52,19 +53,27 @@ namespace Content.Shared.GameObjects.Components.Doors
         /// <summary>
         /// Closing time until impassable.
         /// </summary>
-        protected TimeSpan CloseTimeOne;
+        [DataField("closeTimeOne")]
+        protected TimeSpan CloseTimeOne = TimeSpan.FromSeconds(0.4f);
+
         /// <summary>
         /// Closing time until fully closed.
         /// </summary>
-        protected TimeSpan CloseTimeTwo;
+        [DataField("closeTimeTwo")]
+        protected TimeSpan CloseTimeTwo = TimeSpan.FromSeconds(0.2f);
+
         /// <summary>
         /// Opening time until passable.
         /// </summary>
-        protected TimeSpan OpenTimeOne;
+        [DataField("openTimeOne")]
+        protected TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.4f);
+
         /// <summary>
         /// Opening time until fully open.
         /// </summary>
-        protected TimeSpan OpenTimeTwo;
+        [DataField("openTimeTwo")]
+        protected TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.2f);
+
         /// <summary>
         /// Time to finish denying.
         /// </summary>
@@ -85,42 +94,9 @@ namespace Content.Shared.GameObjects.Components.Doors
         /// </summary>
         protected List<EntityUid> CurrentlyCrushing = new();
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-
-            serializer.DataReadWriteFunction(
-                "closeTimeOne",
-                0.4f,
-                seconds => CloseTimeOne = TimeSpan.FromSeconds(seconds),
-                () => CloseTimeOne.TotalSeconds);
-
-            serializer.DataReadWriteFunction(
-                "closeTimeTwo",
-                0.2f,
-                seconds => CloseTimeTwo = TimeSpan.FromSeconds(seconds),
-                () => CloseTimeTwo.TotalSeconds);
-
-            serializer.DataReadWriteFunction(
-                "openTimeOne",
-                0.4f,
-                seconds => OpenTimeOne = TimeSpan.FromSeconds(seconds),
-                () => OpenTimeOne.TotalSeconds);
-
-            serializer.DataReadWriteFunction(
-                "openTimeTwo",
-                0.2f,
-                seconds => OpenTimeTwo = TimeSpan.FromSeconds(seconds),
-                () => OpenTimeTwo.TotalSeconds);
-        }
-
         protected void SetAppearance(DoorVisualState state)
         {
-            if (AppearanceComponent != null)
-            {
-                AppearanceComponent.SetData(DoorVisuals.VisualState, state);
-            }
+            AppearanceComponent?.SetData(DoorVisuals.VisualState, state);
         }
 
         // stops us colliding with people we're crushing, to prevent hitbox clipping and jank

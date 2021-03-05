@@ -11,6 +11,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Chemistry
@@ -24,7 +25,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables]
-        private ReagentUnit _transferAmount;
+        [DataField("transferAmount")]
+        private ReagentUnit _transferAmount = ReagentUnit.New(0.5);
 
         private bool _reached;
         private float _reactTimer;
@@ -51,12 +53,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 physics.BodyStatus = BodyStatus.InAir;
                 physics.ApplyLinearImpulse(dir * speed);
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(0.5));
         }
 
         public void Update(float frameTime)

@@ -6,6 +6,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Nutrition
@@ -37,7 +38,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
         /// Generally it ticks down whether it's time-based
         /// or consumption-based.
         /// </summary>
-        [ViewVariables] private int _duration;
+        [ViewVariables] [DataField("duration")]
+        private int _duration = 30;
 
         /// <summary>
         /// What is the temperature of the cigar?
@@ -45,7 +47,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
         /// For a regular cigar, the temp approaches around 400°C or 580°C
         /// dependant on where you measure.
         /// </summary>
-        [ViewVariables] private float _temperature;
+        [ViewVariables] [DataField("temperature")]
+        private float _temperature = 673.15f;
 
         [ViewVariables]
         private SharedBurningStates CurrentState
@@ -72,13 +75,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 _appearanceComponent?.SetData(SmokingVisuals.Smoking, _currentState);
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _duration, "duration", 30);
-            serializer.DataField(ref _temperature, "temperature", 673.15f);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

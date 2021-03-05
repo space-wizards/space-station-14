@@ -1,8 +1,8 @@
 #nullable enable
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Access
 {
@@ -12,26 +12,24 @@ namespace Content.Shared.Access
     [Prototype("accessLevel")]
     public class AccessLevelPrototype : IPrototype
     {
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            ID = mapping.GetNode("id").AsString();
-            if (mapping.TryGetNode("name", out var nameNode))
-            {
-                Name = nameNode.AsString();
-            }
-            else
-            {
-                Name = ID;
-            }
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-            Name = Loc.GetString(Name);
-        }
-
-        public string ID { get; private set; } = string.Empty;
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
         /// <summary>
         ///     The player-visible name of the access level, in the ID card console and such.
         /// </summary>
-        public string Name { get; private set; } = string.Empty;
+        [DataField("name")]
+        public string Name
+        {
+            get => _name ?? ID;
+            private set => _name = Loc.GetString(value);
+        }
+
+        private string? _name;
     }
 }

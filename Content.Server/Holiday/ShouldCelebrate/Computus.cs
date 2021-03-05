@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using JetBrains.Annotations;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Holiday.ShouldCelebrate
 {
@@ -9,16 +9,14 @@ namespace Content.Server.Holiday.ShouldCelebrate
     ///     Computus for easter calculation.
     /// </summary>
     [UsedImplicitly]
-    public class Computus : DefaultHolidayShouldCelebrate, IExposeData
+    [DataDefinition]
+    public class Computus : DefaultHolidayShouldCelebrate
     {
+        [DataField("daysEarly")]
         private byte _daysEarly = 1;
-        private byte _daysExtra = 1;
 
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _daysEarly, "daysEarly", (byte) 1);
-            serializer.DataField(ref _daysExtra, "daysExtra", (byte) 1);
-        }
+        [DataField("daysExtra")]
+        private byte _daysExtra = 1;
 
         public (int day, int month) DoComputus(DateTime date)
         {

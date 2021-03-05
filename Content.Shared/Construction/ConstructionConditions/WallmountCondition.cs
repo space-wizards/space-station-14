@@ -1,23 +1,22 @@
 #nullable enable
+using System.Linq;
 using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
-using System.Linq;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Shared.Construction.ConstructionConditions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class WallmountCondition : IConstructionCondition
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer) { }
-
         public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();

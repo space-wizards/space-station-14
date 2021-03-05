@@ -1,11 +1,12 @@
-﻿#nullable enable
+#nullable enable
+using System;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using System;
-using System.Collections.Generic;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components
 {
@@ -15,6 +16,8 @@ namespace Content.Shared.GameObjects.Components
         public override uint? NetID => ContentNetIDs.CRAYONS;
 
         public string SelectedState { get; set; } = string.Empty;
+
+        [DataField("color")]
         protected string _color = "white";
 
         [Serializable, NetSerializable]
@@ -74,21 +77,16 @@ namespace Content.Shared.GameObjects.Components
     [Serializable, NetSerializable, Prototype("crayonDecal")]
     public class CrayonDecalPrototype : IPrototype
     {
-        public string ID { get; private set; } = string.Empty;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        private string _spritePath = string.Empty;
-        public string SpritePath => _spritePath;
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
-        private List<string> _decals = new();
-        public List<string> Decals => _decals;
+        [field: DataField("spritePath")] public string SpritePath { get; } = string.Empty;
 
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(this, x => x.ID, "id", string.Empty);
-            serializer.DataField(ref _spritePath, "spritePath", string.Empty);
-            serializer.DataField(ref _decals, "decals", new List<string>());
-        }
+        [field: DataField("decals")] public List<string> Decals { get; } = new();
     }
 }

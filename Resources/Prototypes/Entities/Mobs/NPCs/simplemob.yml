@@ -2,7 +2,6 @@
   save: false
   abstract: true
   id: SimpleMobBase
-  drawdepth: Mobs
   suffix: AI
   components:
   - type: Tag

@@ -19,8 +19,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -46,13 +45,23 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private TimeSpan _lastThunk;
         private TimeSpan? _lastGhostBlink;
-        private bool _hasLampOnSpawn;
 
-        [ViewVariables] private bool _on;
-        [ViewVariables] private bool _currentLit;
-        [ViewVariables] private bool _isBlinking;
-        [ViewVariables] private bool _ignoreGhostsBoo;
+        [DataField("hasLampOnSpawn")]
+        private bool _hasLampOnSpawn = true;
 
+        [ViewVariables] [DataField("on")]
+        private bool _on = true;
+
+        [ViewVariables]
+        private bool _currentLit;
+
+        [ViewVariables]
+        private bool _isBlinking;
+
+        [ViewVariables] [DataField("ignoreGhostsBoo")]
+        private bool _ignoreGhostsBoo;
+
+        [DataField("bulb")]
         private LightBulbType BulbType = LightBulbType.Tube;
         [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
 
@@ -154,14 +163,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             if (!user.TryGetComponent(out HandsComponent? hands)
                 || !hands.PutInHand(bulb.Owner.GetComponent<ItemComponent>()))
                 bulb.Owner.Transform.Coordinates = user.Transform.Coordinates;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref BulbType, "bulb", LightBulbType.Tube);
-            serializer.DataField(ref _on, "on", true);
-            serializer.DataField(ref _hasLampOnSpawn, "hasLampOnSpawn", true);
-            serializer.DataField(ref _ignoreGhostsBoo, "ignoreGhostsBoo", false);
         }
 
         /// <summary>

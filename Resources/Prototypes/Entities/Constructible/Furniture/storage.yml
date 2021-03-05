@@ -1,7 +1,7 @@
 - type: entity
   id: Rack
   name: rack
-  desription: "A rack for storing things on."
+  description: "A rack for storing things on."
   placement:
     mode: SnapgridCenter
   components:

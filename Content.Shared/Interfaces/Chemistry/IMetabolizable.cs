@@ -1,14 +1,13 @@
 ﻿#nullable enable
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Interfaces.Chemistry
 {
     /// <summary>
     /// Metabolism behavior for a reagent.
     /// </summary>
-    public interface IMetabolizable : IExposeData
+    public interface IMetabolizable
     {
         /// <summary>
         /// Metabolize the attached reagent. Return the amount of reagent to be removed from the solution.

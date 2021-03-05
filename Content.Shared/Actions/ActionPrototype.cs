@@ -1,10 +1,10 @@
 ﻿#nullable enable
 using Content.Shared.Interfaces;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
-using Robust.Shared.Log;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Actions
 {
@@ -13,12 +13,17 @@ namespace Content.Shared.Actions
     /// or skill).
     /// </summary>
     [Prototype("action")]
-    public class ActionPrototype : BaseActionPrototype
+    [DataDefinition]
+    public class ActionPrototype : BaseActionPrototype, ISerializationHooks
     {
         /// <summary>
         /// Type of action, no 2 action prototypes should have the same one.
         /// </summary>
-        public ActionType ActionType { get; private set; }
+        [DataField("actionType", required: true)]
+        public ActionType ActionType { get; set; }
+
+        [DataField("behavior", serverOnly: true)]
+        private IActionBehavior? Behavior { get; set; }
 
         /// <summary>
         /// The IInstantAction that should be invoked when performing this
@@ -48,23 +53,20 @@ namespace Content.Shared.Actions
         /// </summary>
         public ITargetPointAction TargetPointAction { get; private set; } = default!;
 
-        public override void LoadFrom(YamlMappingNode mapping)
-        {
-            base.LoadFrom(mapping);
-            var serializer = YamlObjectSerializer.NewReader(mapping);
+        public override string ID => ActionType.ToString();
 
-            serializer.DataField(this, x => x.ActionType, "actionType", ActionType.Error);
+        void ISerializationHooks.AfterDeserialization()
+        {
+            base.AfterDeserialization();
+
             if (ActionType == ActionType.Error)
             {
                 Logger.ErrorS("action", "missing or invalid actionType for action with name {0}", Name);
             }
 
-            // TODO: Split this class into server/client after RobustToolbox#1405
             if (IoCManager.Resolve<IModuleManager>().IsClientModule) return;
 
-            IActionBehavior? behavior = null;
-            serializer.DataField(ref behavior, "behavior", null);
-            switch (behavior)
+            switch (Behavior)
             {
                 case null:
                     BehaviorType = BehaviorType.None;
@@ -95,7 +97,6 @@ namespace Content.Shared.Actions
                     Logger.ErrorS("action", "unrecognized behavior type for action with name {0}", Name);
                     break;
             }
-
         }
     }
 }

@@ -7,20 +7,51 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Cargo
 {
-    public class SharedGalacticMarketComponent : Component, IEnumerable<CargoProductPrototype>
+    public class SharedGalacticMarketComponent : Component, IEnumerable<CargoProductPrototype>, ISerializationHooks
     {
         public sealed override string Name => "GalacticMarket";
         public sealed override uint? NetID => ContentNetIDs.GALACTIC_MARKET;
 
-        protected List<CargoProductPrototype> _products = new();
+        [DataField("products")]
+        protected List<string> _productIds = new();
+
+        protected readonly List<CargoProductPrototype> _products = new();
 
         /// <summary>
         ///     A read-only list of products.
         /// </summary>
         public IReadOnlyList<CargoProductPrototype> Products => _products;
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            _productIds.Clear();
+
+            foreach (var id in _productIds)
+            {
+                if (!prototypeManager.TryIndex(id, out CargoProductPrototype? product))
+                {
+                    continue;
+                }
+
+                _products.Add(product);
+            }
+        }
+
+        void ISerializationHooks.BeforeSerialization()
+        {
+            _productIds = new List<string>();
+
+            foreach (var product in _products)
+            {
+                _productIds.Add(product.ID);
+            }
+        }
 
         public IEnumerator<CargoProductPrototype> GetEnumerator()
         {
@@ -52,7 +83,7 @@ namespace Content.Shared.GameObjects.Components.Cargo
         /// <returns>A list of product IDs</returns>
         public List<string> GetProductIdList()
         {
-            List<string> productIds = new List<string>();
+            var productIds = new List<string>();
 
             foreach (var product in _products)
             {
@@ -60,31 +91,6 @@ namespace Content.Shared.GameObjects.Components.Cargo
             }
 
             return productIds;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "products",
-                new List<string>(),
-                products =>
-                {
-                    var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-                    _products.Clear();
-                    foreach (var id in products)
-                    {
-                        if (!prototypeManager.TryIndex(id, out CargoProductPrototype? product))
-                        {
-                            continue;
-                        }
-
-                        _products.Add(product);
-                    }
-                },
-                GetProductIdList);
         }
     }
 

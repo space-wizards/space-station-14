@@ -4,22 +4,17 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class SpriteChange : IGraphAction
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.SpriteSpecifier, "specifier", SpriteSpecifier.Invalid);
-            serializer.DataField(this, x => x.Layer, "layer", 0);
-        }
-
-        public int Layer { get; private set; } = 0;
-        public SpriteSpecifier? SpriteSpecifier { get; private set; } = SpriteSpecifier.Invalid;
+        [DataField("layer")] public int Layer { get; private set; } = 0;
+        [DataField("specifier")]  public SpriteSpecifier? SpriteSpecifier { get; private set; } = SpriteSpecifier.Invalid;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
