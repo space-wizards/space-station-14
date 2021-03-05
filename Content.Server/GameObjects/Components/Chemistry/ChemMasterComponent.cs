@@ -17,6 +17,7 @@ using Content.Shared.Utility;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
@@ -58,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             _beakerContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
+                ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
 
             //BufferSolution = Owner.BufferSolution
             BufferSolution.RemoveAllSolution();
@@ -185,7 +186,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
 
             var beaker = _beakerContainer.ContainedEntity;
-            _beakerContainer.Remove(_beakerContainer.ContainedEntity);
+
+            if(beaker is null)
+                return;
+
+            _beakerContainer.Remove(beaker);
             UpdateUserInterface();
 
             if(!user.TryGetComponent<HandsComponent>(out var hands) || !beaker.TryGetComponent<ItemComponent>(out var item))
@@ -198,6 +203,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (!HasBeaker && _bufferModeTransfer) return;
             var beaker = _beakerContainer.ContainedEntity;
+
+            if(beaker is null)
+                return;
+
             var beakerSolution = beaker.GetComponent<SolutionContainerComponent>();
             if (isBuffer)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -12,9 +13,9 @@ namespace Content.Shared.GameObjects.Components.ActionBlocking
         [Serializable, NetSerializable]
         protected sealed class HandcuffedComponentState : ComponentState
         {
-            public string IconState { get; }
+            public string? IconState { get; }
 
-            public HandcuffedComponentState(string iconState) : base(ContentNetIDs.HANDCUFFS)
+            public HandcuffedComponentState(string? iconState) : base(ContentNetIDs.HANDCUFFS)
             {
                 IconState = iconState;
             }

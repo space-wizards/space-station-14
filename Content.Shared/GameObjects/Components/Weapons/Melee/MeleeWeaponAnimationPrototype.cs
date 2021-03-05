@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -10,9 +11,9 @@ namespace Content.Shared.GameObjects.Components.Weapons.Melee
     [Prototype("MeleeWeaponAnimation")]
     public sealed class MeleeWeaponAnimationPrototype : IPrototype
     {
-        private string _prototype;
-        private string _state;
-        private string _id;
+        private string _prototype = "WeaponArc";
+        private string _state = string.Empty;
+        private string _id = string.Empty;
         private Vector4 _colorDelta;
         private Vector4 _color;
         private TimeSpan _length;
@@ -35,8 +36,8 @@ namespace Content.Shared.GameObjects.Components.Weapons.Melee
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
             serializer.DataField(ref _prototype, "prototype", "WeaponArc");
-            serializer.DataField(ref _state, "state", null);
-            serializer.DataField(ref _id, "id", null);
+            serializer.DataField(ref _state, "state", string.Empty);
+            serializer.DataField(ref _id, "id", string.Empty);
             serializer.DataField(ref _colorDelta, "colorDelta", Vector4.Zero);
             serializer.DataField(ref _color, "color", new Vector4(1, 1, 1, 1));
             if (serializer.TryReadDataField("length", out float length))

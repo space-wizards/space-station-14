@@ -1,0 +1,35 @@
+- type: stack
+  id: Glass
+  name: glass
+  icon: /Textures/Objects/Materials/Sheets/glass.rsi/glass.png
+  spawn: SheetGlass1
+
+- type: stack
+  id: ReinforcedGlass
+  name: reinforced glass
+  icon: /Textures/Objects/Materials/Sheets/glass.rsi/rglass.png
+  spawn: SheetRGlass1
+
+- type: stack
+  id: PlasmaGlass
+  name: plasma glass
+  icon: /Textures/Objects/Materials/Sheets/glass.rsi/pglass.png
+  spawn: SheetPGlass1
+
+- type: stack
+  id: ReinforcedPlasmaGlass
+  name: reinforced plasma glass
+  icon: /Textures/Objects/Materials/Sheets/glass.rsi/rpglass.png
+  spawn: SheetRPGlass1
+
+- type: stack
+  id: TitaniumGlass
+  name: titanium glass
+  icon: /Textures/Objects/Materials/Sheets/glass.rsi/titaniumglass.png
+  spawn: SheetTitaniumGlass1
+
+- type: stack
+  id: PlastitaniumGlass
+  name: plastitanium glass
+  icon: /Textures/Objects/Materials/Sheets/glass.rsi/plastitaniumglass.png
+  spawn: SheetPlastitaniumGlass1

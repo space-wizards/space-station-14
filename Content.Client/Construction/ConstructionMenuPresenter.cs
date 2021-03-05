@@ -18,6 +18,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Construction
 {
@@ -71,7 +72,7 @@ namespace Content.Client.Construction
                     _constructionView.Close();
             }
         }
-        
+
         /// <summary>
         /// Constructs a new instance of <see cref="ConstructionMenuPresenter" />.
         /// </summary>
@@ -122,6 +123,7 @@ namespace Content.Client.Construction
         {
             _constructionView.Dispose();
 
+            SystemBindingChanged(null);
             _systemManager.SystemLoaded -= OnSystemLoaded;
             _systemManager.SystemUnloaded -= OnSystemUnloaded;
 
@@ -216,7 +218,7 @@ namespace Content.Client.Construction
 
         private void GenerateStepList(ConstructionPrototype prototype, ItemList stepList)
         {
-            if (!_prototypeManager.TryIndex(prototype.Graph, out ConstructionGraphPrototype graph))
+            if (!_prototypeManager.TryIndex(prototype.Graph, out ConstructionGraphPrototype? graph))
                 return;
 
             var startNode = graph.Nodes[prototype.StartNode];
@@ -250,8 +252,8 @@ namespace Content.Client.Construction
                             stepList.AddItem(
                                 !firstNode
                                     ? Loc.GetString(
-                                        "{0}. Add {1}x {2}.", stepNumber++, materialStep.Amount, materialStep.Material)
-                                    : Loc.GetString("      {0}x {1}", materialStep.Amount, materialStep.Material), icon);
+                                        "{0}. Add {1}x {2}.", stepNumber++, materialStep.Amount, materialStep.MaterialPrototype.Name)
+                                    : Loc.GetString("      {0}x {1}", materialStep.Amount, materialStep.MaterialPrototype.Name), icon);
 
                             break;
 
@@ -259,12 +261,8 @@ namespace Content.Client.Construction
                             stepList.AddItem(Loc.GetString("{0}. Use a {1}.", stepNumber++, toolStep.Tool.GetToolName()), icon);
                             break;
 
-                        case PrototypeConstructionGraphStep prototypeStep:
-                            stepList.AddItem(Loc.GetString("{0}. Add {1}.", stepNumber++, prototypeStep.Name), icon);
-                            break;
-
-                        case ComponentConstructionGraphStep componentStep:
-                            stepList.AddItem(Loc.GetString("{0}. Add {1}.", stepNumber++, componentStep.Name), icon);
+                        case ArbitraryInsertConstructionGraphStep arbitraryStep:
+                            stepList.AddItem(Loc.GetString("{0}. Add {1}.", stepNumber++, arbitraryStep.Name), icon);
                             break;
 
                         case NestedConstructionGraphStep nestedStep:
@@ -282,19 +280,15 @@ namespace Content.Client.Construction
                                     switch (subStep)
                                     {
                                         case MaterialConstructionGraphStep materialStep:
-                                            if (!(prototype.Type == ConstructionType.Item)) stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}x {4}.", stepNumber, parallelNumber, subStepNumber++, materialStep.Amount, materialStep.Material), icon);
+                                            if (prototype.Type != ConstructionType.Item) stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}x {4}.", stepNumber, parallelNumber, subStepNumber++, materialStep.Amount, materialStep.MaterialPrototype.Name), icon);
                                             break;
 
                                         case ToolConstructionGraphStep toolStep:
                                             stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Use a {3}.", stepNumber, parallelNumber, subStepNumber++, toolStep.Tool.GetToolName()), icon);
                                             break;
 
-                                        case PrototypeConstructionGraphStep prototypeStep:
-                                            stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}.", stepNumber, parallelNumber, subStepNumber++, prototypeStep.Name), icon);
-                                            break;
-
-                                        case ComponentConstructionGraphStep componentStep:
-                                            stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}.", stepNumber, parallelNumber, subStepNumber++, componentStep.Name), icon);
+                                        case ArbitraryInsertConstructionGraphStep arbitraryStep:
+                                            stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}.", stepNumber, parallelNumber, subStepNumber++, arbitraryStep.Name), icon);
                                             break;
                                     }
                                 }
@@ -315,28 +309,7 @@ namespace Content.Client.Construction
             switch (step)
             {
                 case MaterialConstructionGraphStep materialStep:
-                    switch (materialStep.Material)
-                    {
-                        case StackType.Metal:
-                            return resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/metal.png");
-
-                        case StackType.Glass:
-                            return resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/glass.png");
-
-                        case StackType.Plasteel:
-                            return resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/plasteel.png");
-
-                        case StackType.Plasma:
-                            return resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/phoron.png");
-
-                        case StackType.Cable:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/cables.rsi/coil-30.png");
-
-                        case StackType.MetalRod:
-                            return resourceCache.GetTexture("/Textures/Objects/Materials/materials.rsi/rods.png");
-                    }
-
-                    break;
+                    return materialStep.MaterialPrototype.Icon?.Frame0();
 
                 case ToolConstructionGraphStep toolStep:
                     switch (toolStep.Tool)
@@ -357,11 +330,8 @@ namespace Content.Client.Construction
 
                     break;
 
-                case ComponentConstructionGraphStep componentStep:
-                    return componentStep.Icon?.Frame0();
-
-                case PrototypeConstructionGraphStep prototypeStep:
-                    return prototypeStep.Icon?.Frame0();
+                case ArbitraryInsertConstructionGraphStep arbitraryStep:
+                    return arbitraryStep.Icon?.Frame0();
 
                 case NestedConstructionGraphStep:
                     return null;
@@ -430,7 +400,7 @@ namespace Content.Client.Construction
 
             _constructionView.BuildButtonPressed = true;
         }
-        
+
         private void OnSystemLoaded(object? sender, SystemChangedArgs args)
         {
             if (args.System is ConstructionSystem system) SystemBindingChanged(system);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -12,13 +13,13 @@ namespace Content.Shared.Prototypes.Kitchen
     [Prototype("microwaveMealRecipe")]
     public class FoodRecipePrototype : IPrototype
     {
-        private string _id;
-        private string _name;
-        private string _result;
+        private string _id = string.Empty;
+        private string _name = string.Empty;
+        private string _result = string.Empty;
         private int _cookTime;
 
-        private Dictionary<string, int> _ingsReagents;
-        private Dictionary<string, int> _ingsSolids;
+        private Dictionary<string, int> _ingsReagents = new();
+        private Dictionary<string, int> _ingsSolids = new();
 
         public string Name => Loc.GetString(_name);
         public string ID => _id;

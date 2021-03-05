@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -11,17 +12,17 @@ namespace Content.Shared.Roles
     [Prototype("antag")]
     public class AntagPrototype : IPrototype
     {
-        public string ID { get; private set; }
+        public string ID { get; private set; } = string.Empty;
 
         /// <summary>
         ///     The name of this antag as displayed to players.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; private set; } = string.Empty;
 
         /// <summary>
         ///     The antag's objective, displayed at round-start to the player.
         /// </summary>
-        public string Objective { get; private set; }
+        public string Objective { get; private set; } = string.Empty;
 
         /// <summary>
         ///     Whether or not the antag role is one of the bad guys.

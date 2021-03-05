@@ -1,4 +1,5 @@
-﻿- type: tile
+﻿  
+- type: tile
   name: floor_dark
   display_name: Dark floor
   texture: "dark"
@@ -253,3 +254,272 @@
   footstep_sounds: footstep_floor
   friction: 0.35
   item_drop: FloorTileItemGold
+
+- type: tile
+  name: floor_glass
+  display_name: glass floor
+  texture: glass
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  item_drop: SheetGlass1
+
+- type: tile
+  name: floor_rglass
+  display_name: reinforced glass floor
+  texture: rglass
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  item_drop: SheetRGlass1
+  
+- type: tile
+  name: floor_steel_warning_full
+  display_name: Steel Warning Tile
+  texture: steel_warning_full
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_steel_warning_border
+  display_name: Steel Beware Tile
+  texture: steel_warning_border
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_white_warning_full
+  display_name: White Warning Tile
+  texture: white_warning_full
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_white_warning_border
+  display_name: White Beware Tile
+  texture: white_warning_border
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_blue
+  display_name: Blue Tile
+  texture: blue
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_green
+  display_name: Green Tile
+  texture: green
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_purple
+  display_name: Purple Tile
+  texture: purple
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+
+- type: tile
+  name: floor_red
+  display_name: Red Tile
+  texture: red
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_yellow
+  display_name: Yellow Tile
+  texture: yellow
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_warning
+  display_name: Warning Tile
+  texture: warning
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_checkered_black
+  display_name: Checkered Black Tile
+  texture: checkered_black
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_bolted_wood
+  display_name: Bolted Wood Tile
+  texture: bolted_wood
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_decorated_steel
+  display_name: Decorated Steel Tile
+  texture: decorated_steel
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_old_steel
+  display_name: Old Steel Tile
+  texture: old_steel
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_gridded_steel
+  display_name: Gridded Steel Tile
+  texture: gridded_steel
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: tile_glass_with_lattice
+  display_name: Glass With Lattice Tile
+  texture: glass_with_lattice
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_red_circuit
+  display_name: Red circuit floor
+  texture: red_circuit
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  item_drop: FloorTileItemGCircuit #replace with RCircuit once done
+
+- type: tile
+  name: floor_blue_circuit
+  display_name: Blue circuit floor
+  texture: blue_circuit
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  item_drop: FloorTileItemGCircuit #replace with BCircuit once done
+
+- type: tile
+  name: floor_grass
+  display_name: Grass
+  texture: grass
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds: footstep_snow
+  friction: 0.35
+
+- type: tile
+  name: floor_checkered_brown
+  display_name: Checkered Brown Floor
+  texture: checkered_brown
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_checkered_grey
+  display_name: Checkered Grey Floor
+  texture: checkered_grey
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_checkered_blue
+  display_name: Checkered Blue Floor
+  texture: checkered_blue
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35

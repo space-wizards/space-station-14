@@ -6,5 +6,5 @@
   targetNode: MetalRod
   category: Materials
   description: A sturdy metal rod that can be used for various purposes.
-  icon: Objects/Materials/materials.rsi/rods.png
+  icon: Objects/Materials/parts.rsi/rods.png
   objectType: Item

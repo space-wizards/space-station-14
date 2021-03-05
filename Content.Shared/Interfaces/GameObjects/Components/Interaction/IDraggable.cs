@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;

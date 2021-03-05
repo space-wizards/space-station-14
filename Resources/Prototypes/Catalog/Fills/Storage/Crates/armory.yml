@@ -6,7 +6,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: SmgC20r
+      - name: SmgWt550
         amount: 3
       - name: MagazinePistolSmg
         amount: 6

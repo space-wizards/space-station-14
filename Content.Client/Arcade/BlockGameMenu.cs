@@ -520,7 +520,10 @@ namespace Content.Client.Arcade
             var globalPlacementText = globalPlacement == null ? "-" : $"#{globalPlacement}";
             var localPlacementText = localPlacement == null ? "-" : $"#{localPlacement}";
             _finalScoreLabel.Text =
-                Loc.GetString("Global: {0}\nLocal: {1}\nPoints: {2}", globalPlacementText, localPlacementText, amount);
+                Loc.GetString("blockgame-gameover-info",
+                    ("global", globalPlacementText),
+                    ("local", localPlacementText),
+                    ("points", amount));
         }
 
         public void UpdatePoints(int points)

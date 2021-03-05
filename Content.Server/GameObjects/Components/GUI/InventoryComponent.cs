@@ -426,7 +426,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             Dirty();
 
-            _slotContainers[slot] = ContainerManagerComponent.Create<ContainerSlot>(GetSlotString(slot), Owner);
+            _slotContainers[slot] = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, GetSlotString(slot));
 
             OnItemChanged?.Invoke();
 

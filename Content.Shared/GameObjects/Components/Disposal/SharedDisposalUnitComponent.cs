@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;

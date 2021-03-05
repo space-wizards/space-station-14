@@ -238,7 +238,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             return true;
         }
 
-        public override bool TryBuckle(IEntity user, IEntity to)
+        public override bool TryBuckle(IEntity? user, IEntity to)
         {
             if (!CanBuckle(user, to, out var strap))
             {

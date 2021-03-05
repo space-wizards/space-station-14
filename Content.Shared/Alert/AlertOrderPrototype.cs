@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -12,7 +13,7 @@ namespace Content.Shared.Alert
     [Prototype("alertOrder")]
     public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>
     {
-        public string ID { get; private set; }
+        public string ID { get; private set; } = string.Empty;
 
         private readonly Dictionary<AlertType, int> _typeToIdx = new();
         private readonly Dictionary<AlertCategory, int> _categoryToIdx = new();
@@ -23,7 +24,7 @@ namespace Content.Shared.Alert
 
             serializer.DataField(this, x => x.ID, "id", string.Empty);
 
-            if (!mapping.TryGetNode("order", out YamlSequenceNode orderMapping)) return;
+            if (!mapping.TryGetNode("order", out YamlSequenceNode? orderMapping)) return;
 
             var i = 0;
             foreach (var entryYaml in orderMapping)
@@ -56,7 +57,7 @@ namespace Content.Shared.Alert
             return -1;
         }
 
-        public int Compare(AlertPrototype x, AlertPrototype y)
+        public int Compare(AlertPrototype? x, AlertPrototype? y)
         {
             if ((x == null) && (y == null)) return 0;
             if (x == null) return 1;

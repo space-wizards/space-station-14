@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared;
 using Robust.Shared.Configuration;
 
@@ -269,5 +270,18 @@ namespace Content.Shared
 
         public static readonly CVarDef<bool> AdminOocEnabled =
             CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
+
+        /*
+         * Context Menu Grouping Types
+         */
+        public static readonly CVarDef<int> ContextMenuGroupingType = CVarDef.Create("context_menu", 0, CVar.CLIENTONLY);
+
+        /*
+         * VOTE
+         */
+
+        public static readonly CVarDef<float> VoteRestartRequiredRatio =
+            CVarDef.Create("vote.restart_required_ratio", 0.8f, CVar.SERVERONLY);
+
     }
 }

@@ -1,5 +1,6 @@
 using Content.Server.GameObjects.Components.Items.Storage;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
@@ -13,12 +15,10 @@ namespace Content.Shared.Alert
         [Dependency]
         private readonly IPrototypeManager _prototypeManager = default!;
 
-        private Dictionary<AlertType, AlertPrototype> _typeToAlert;
+        private readonly Dictionary<AlertType, AlertPrototype> _typeToAlert = new();
 
         public void Initialize()
         {
-            _typeToAlert = new Dictionary<AlertType, AlertPrototype>();
-
             foreach (var alert in _prototypeManager.EnumeratePrototypes<AlertPrototype>())
             {
                 if (!_typeToAlert.TryAdd(alert.AlertType, alert))
@@ -34,7 +34,7 @@ namespace Content.Shared.Alert
         /// Tries to get the alert of the indicated type
         /// </summary>
         /// <returns>true if found</returns>
-        public bool TryGet(AlertType alertType, out AlertPrototype alert)
+        public bool TryGet(AlertType alertType, [NotNullWhen(true)] out AlertPrototype? alert)
         {
             return _typeToAlert.TryGetValue(alertType, out alert);
         }
