@@ -433,3 +433,25 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.35
+
+- type: tile
+  name: floor_gridded_steel
+  display_name: Gridded Steel Tile
+  texture: gridded_steel
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: tile_glass_with_lattice
+  display_name: Glass With Lattice Tile
+  texture: glass_with_lattice
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
