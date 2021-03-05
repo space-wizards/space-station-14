@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -408,7 +408,10 @@ namespace Content.Server.GameTicking
 
         public void Respawn(IPlayerSession targetPlayer)
         {
+            targetPlayer.AttachedEntity.TryGetComponent<GhostComponent>(out var ghost);
             targetPlayer.ContentData()?.WipeMind();
+            if (ghost != null && ghost.Deleted == false)
+                ghost.Owner.Delete();
 
             if (LobbyEnabled)
                 _playerJoinLobby(targetPlayer);
