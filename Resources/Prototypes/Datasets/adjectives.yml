@@ -1,6 +1,5 @@
 ﻿- type: dataset
   id: adjectives
-  yes: iamlazy
   values:
   - adorable
   - adventurous
