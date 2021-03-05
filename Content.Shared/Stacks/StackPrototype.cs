@@ -1,33 +1,32 @@
 ﻿#nullable enable
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Stacks
 {
     [Prototype("stack")]
     public class StackPrototype : IPrototype
     {
-        public string ID { get; private set; } = string.Empty;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        public string Name { get; private set; } = string.Empty;
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
-        public SpriteSpecifier? Icon { get; private set; }
+        [field: DataField("name")]
+        public string Name { get; } = string.Empty;
+
+        [field: DataField("icon")]
+        public SpriteSpecifier? Icon { get; }
 
         /// <summary>
         ///     The entity id that will be spawned by default from this stack.
         /// </summary>
-        public string? Spawn { get; private set; }
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var reader = YamlObjectSerializer.NewReader(mapping);
-
-            reader.DataField(this, x => x.ID, "id", string.Empty);
-            reader.DataField(this, x => x.Name, "name", string.Empty);
-            reader.DataField(this, x => x.Icon, "icon", null);
-            reader.DataField(this, x => x.Spawn, "spawn", null);
-        }
+        [field: DataField("spawn")]
+        public string? Spawn { get; }
     }
 }

@@ -8,6 +8,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Mobs
 {
@@ -50,22 +51,24 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public IEntity? Holder { get; private set; }
         // cached actions component of the holder, since we'll need to access it frequently
         private SharedActionsComponent? _holderActionsComponent;
-        private List<ItemActionConfig> _actionConfigs = new();
-        // State of all actions provided by this item.
-        private readonly Dictionary<ItemActionType, ActionState> _actions = new();
 
-
-        public override void ExposeData(ObjectSerializer serializer)
+        [DataField("actions")]
+        private List<ItemActionConfig> _actionConfigs
         {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _actionConfigs,"actions", new List<ItemActionConfig>());
-
-            foreach (var actionConfig in _actionConfigs)
+            get => internalActionConfigs;
+            set
             {
-                GrantOrUpdate(actionConfig.ActionType, actionConfig.Enabled, false, null);
+                internalActionConfigs = value;
+                foreach (var actionConfig in value)
+                {
+                    GrantOrUpdate(actionConfig.ActionType, actionConfig.Enabled, false, null);
+                }
             }
         }
+
+        // State of all actions provided by this item.
+        private readonly Dictionary<ItemActionType, ActionState> _actions = new();
+        private List<ItemActionConfig> internalActionConfigs = new ();
 
         protected override void Startup()
         {
@@ -226,22 +229,23 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// <summary>
     /// Configuration for an item action provided by an item.
     /// </summary>
-    public class ItemActionConfig : IExposeData
+    [DataDefinition]
+    public class ItemActionConfig : ISerializationHooks
     {
-        public ItemActionType ActionType { get; private set; }
+        [DataField("actionType", required: true)]
+        public ItemActionType ActionType { get; private set; } = ItemActionType.Error;
+
         /// <summary>
         /// Whether action is initially enabled on this item. Defaults to true.
         /// </summary>
-        public bool Enabled { get; private set; }
+        public bool Enabled { get; private set; } = true;
 
-        void IExposeData.ExposeData(ObjectSerializer serializer)
+        void ISerializationHooks.AfterDeserialization()
         {
-            serializer.DataField(this, x => x.ActionType, "actionType", ItemActionType.Error);
             if (ActionType == ItemActionType.Error)
             {
                 Logger.ErrorS("action", "invalid or missing actionType");
             }
-            serializer.DataField(this, x => x.Enabled, "enabled", true);
         }
     }
 }

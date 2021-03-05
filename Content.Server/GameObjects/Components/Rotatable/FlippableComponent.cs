@@ -4,7 +4,9 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Rotatable
 {
@@ -13,7 +15,11 @@ namespace Content.Server.GameObjects.Components.Rotatable
     {
         public override string Name => "Flippable";
 
-        private string? _entity;
+
+        private string? _entity => _internalEntity ?? Owner.Prototype?.ID;
+
+        [DataField("entity")]
+        private string? _internalEntity;
 
         private void TryFlip(IEntity user)
         {
@@ -31,13 +37,6 @@ namespace Content.Server.GameObjects.Components.Rotatable
 
             Owner.EntityManager.SpawnEntity(_entity, Owner.Transform.Coordinates);
             Owner.Delete();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _entity, "entity", Owner.Prototype?.ID);
         }
 
         [Verb]

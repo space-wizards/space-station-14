@@ -3,43 +3,41 @@ using System.Collections.Generic;
 using System.IO;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Construction
 {
     [Prototype("constructionGraph")]
-    public class ConstructionGraphPrototype : IPrototype
+    public class ConstructionGraphPrototype : IPrototype, ISerializationHooks
     {
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
         private readonly Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]> _paths = new();
         private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode>> _pathfinding = new();
 
         [ViewVariables]
-        public string ID { get; private set; }
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [field: DataField("parent")] public string Parent { get; }
 
         [ViewVariables]
-        public string Start { get; private set; }
+        [field: DataField("start")]
+        public string Start { get; }
+
+        [DataField("graph", priority: 0)]
+        private List<ConstructionGraphNode> _graph = new();
 
         [ViewVariables]
         public IReadOnlyDictionary<string, ConstructionGraphNode> Nodes => _nodes;
 
-        public void LoadFrom(YamlMappingNode mapping)
+        void ISerializationHooks.AfterDeserialization()
         {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
+            _nodes.Clear();
 
-            serializer.DataField(this, x => x.ID, "id", string.Empty);
-            serializer.DataField(this, x => x.Start, "start", string.Empty);
-
-            if (!mapping.TryGetNode("graph", out YamlSequenceNode graphMapping)) return;
-
-            foreach (var yamlNode in graphMapping)
+            foreach (var graphNode in _graph)
             {
-                var childMapping = (YamlMappingNode) yamlNode;
-                var node = new ConstructionGraphNode();
-                node.LoadFrom(childMapping);
-                _nodes[node.Name] = node;
+                _nodes[graphNode.Name] = graphNode;
             }
 
             if(string.IsNullOrEmpty(Start) || !_nodes.ContainsKey(Start))

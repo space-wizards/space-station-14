@@ -35,7 +35,7 @@
 - type: material
   id: wood
   name: wood
-  icon: Objects/Materials/materials.rsi/wood_plank.png
+  icon: Objects/Materials/materials.rsi/wood.png
   density: 6000
   electricResistivity: 1.0e+13
   thermalConductivity: 1.5

@@ -2,6 +2,9 @@
 using System.IO;
 using Content.Shared.Alert;
 using NUnit.Framework;
+using Robust.Shared.IoC;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -19,6 +22,12 @@ namespace Content.Tests.Shared.Alert
   description: ""[color=green]Green[/color] good. [color=red]Red[/color] bad.""
   minSeverity: 0
   maxSeverity: 6";
+
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            IoCManager.Resolve<ISerializationManager>().Initialize();
+        }
 
         [Test]
         public void TestAlertKey()
@@ -67,11 +76,9 @@ namespace Content.Tests.Shared.Alert
             var document = yamlStream.Documents[0];
             var rootNode = (YamlSequenceNode) document.RootNode;
             var proto = (YamlMappingNode) rootNode[0];
+            var serMan = IoCManager.Resolve<ISerializationManager>();
 
-            var newReagent = new AlertPrototype();
-            newReagent.LoadFrom(proto);
-
-            return newReagent;
+            return serMan.ReadValue<AlertPrototype>(new MappingDataNode(proto));
         }
     }
 }

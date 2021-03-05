@@ -1,9 +1,10 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Alert
 {
@@ -11,33 +12,60 @@ namespace Content.Shared.Alert
     /// Defines the order of alerts so they show up in a consistent order.
     /// </summary>
     [Prototype("alertOrder")]
-    public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>
+    [DataDefinition]
+    public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>, ISerializationHooks
     {
-        public string ID { get; private set; } = string.Empty;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
+
+        [DataField("order")] private readonly List<(string type, string alert)> _order = new();
 
         private readonly Dictionary<AlertType, int> _typeToIdx = new();
         private readonly Dictionary<AlertCategory, int> _categoryToIdx = new();
 
-        public void LoadFrom(YamlMappingNode mapping)
+        void ISerializationHooks.BeforeSerialization()
         {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
+            _order.Clear();
 
-            serializer.DataField(this, x => x.ID, "id", string.Empty);
+            var orderArray = new KeyValuePair<string, string>[_typeToIdx.Count + _categoryToIdx.Count];
 
-            if (!mapping.TryGetNode("order", out YamlSequenceNode? orderMapping)) return;
-
-            var i = 0;
-            foreach (var entryYaml in orderMapping)
+            foreach (var (type, id) in _typeToIdx)
             {
-                var orderEntry = (YamlMappingNode) entryYaml;
-                var orderSerializer = YamlObjectSerializer.NewReader(orderEntry);
-                if (orderSerializer.TryReadDataField("category", out AlertCategory alertCategory))
+                orderArray[id] = new KeyValuePair<string, string>("alertType", type.ToString());
+            }
+
+            foreach (var (category, id) in _categoryToIdx)
+            {
+                orderArray[id] = new KeyValuePair<string, string>("category", category.ToString());
+            }
+
+            foreach (var (type, alert) in orderArray)
+            {
+                _order.Add((type, alert));
+            }
+        }
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            var i = 0;
+
+            foreach (var (type, alert) in _order)
+            {
+                switch (type)
                 {
-                    _categoryToIdx[alertCategory] = i++;
-                }
-                else if (orderSerializer.TryReadDataField("alertType", out AlertType alertType))
-                {
-                    _typeToIdx[alertType] = i++;
+                    case "alertType":
+                        _typeToIdx[Enum.Parse<AlertType>(alert)] = i++;
+                        break;
+                    case "category":
+                        _categoryToIdx[Enum.Parse<AlertCategory>(alert)] = i++;
+                        break;
+                    default:
+                        throw new ArgumentException();
                 }
             }
         }

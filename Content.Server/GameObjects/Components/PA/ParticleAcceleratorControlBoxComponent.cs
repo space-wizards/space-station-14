@@ -16,7 +16,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
@@ -68,10 +70,20 @@ namespace Content.Server.GameObjects.Components.PA
         /// <summary>
         ///     Delay between consecutive PA shots.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _firingDelay;
+        // Fun fact:
+        // On /vg/station (can't check TG because lol they removed singulo),
+        // the PA emitter parts have var/fire_delay = 50.
+        // For anybody from the future not BYOND-initiated, that's 5 seconds.
+        // However, /obj/machinery/particle_accelerator/control_box/process(),
+        // which calls emit_particle() on the emitters,
+        // only gets called every *2* seconds, because of CarnMC timing.
+        // So the *actual* effective firing delay of the PA is 6 seconds, not 5 as listed in the code.
+        // So...
+        // I have reflected that here to be authentic.
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireDelay")] private TimeSpan _firingDelay = TimeSpan.FromSeconds(6);
 
-        [ViewVariables(VVAccess.ReadWrite)] private int _powerDrawBase;
-        [ViewVariables(VVAccess.ReadWrite)] private int _powerDrawMult;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("powerDrawBase")] private int _powerDrawBase = 500;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("powerDrawMult")] private int _powerDrawMult = 1500;
 
         [ViewVariables] private bool ConsolePowered => _powerReceiverComponent?.Powered ?? true;
 
@@ -83,25 +95,6 @@ namespace Content.Server.GameObjects.Components.PA
         private ParticleAcceleratorPowerState MaxPower => _wireLimiterCut
             ? ParticleAcceleratorPowerState.Level3
             : ParticleAcceleratorPowerState.Level2;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            // Fun fact:
-            // On /vg/station (can't check TG because lol they removed singulo),
-            // the PA emitter parts have var/fire_delay = 50.
-            // For anybody from the future not BYOND-initiated, that's 5 seconds.
-            // However, /obj/machinery/particle_accelerator/control_box/process(),
-            // which calls emit_particle() on the emitters,
-            // only gets called every *2* seconds, because of CarnMC timing.
-            // So the *actual* effective firing delay of the PA is 6 seconds, not 5 as listed in the code.
-            // So...
-            // I have reflected that here to be authentic.
-            serializer.DataField(ref _firingDelay, "fireDelay", TimeSpan.FromSeconds(6));
-            serializer.DataField(ref _powerDrawBase, "powerDrawBase", 500);
-            serializer.DataField(ref _powerDrawMult, "powerDrawMult", 1500);
-        }
 
         public override void Initialize()
         {

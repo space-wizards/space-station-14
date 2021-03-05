@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Portal
@@ -26,32 +26,23 @@ namespace Content.Server.GameObjects.Components.Portal
 
         public override string Name => "ItemTeleporter";
 
-        [ViewVariables] private float _chargeTime;
-        [ViewVariables] private float _cooldown;
-        [ViewVariables] private int _range;
+        [DataField("charge_time")]
+        [ViewVariables] private float _chargeTime = 0.2f;
+        [DataField("cooldown")]
+        [ViewVariables] private float _cooldown = 2f;
+        [DataField("range")]
+        [ViewVariables] private int _range = 15;
         [ViewVariables] private ItemTeleporterState _state;
-        [ViewVariables] private TeleporterType _teleporterType;
-        [ViewVariables] private string _departureSound = "";
-        [ViewVariables] private string _arrivalSound = "";
-        [ViewVariables] private string? _cooldownSound;
+        [DataField("teleporter_type")]
+        [ViewVariables] private TeleporterType _teleporterType = TeleporterType.Random;
+        [ViewVariables] [DataField("departure_sound")] private string _departureSound = "/Audio/Effects/teleport_departure.ogg";
+        [ViewVariables] [DataField("arrival_sound")] private string _arrivalSound = "/Audio/Effects/teleport_arrival.ogg";
+        [ViewVariables] [DataField("cooldown_sound")] private string? _cooldownSound = default;
         // If the direct OR random teleport will try to avoid hitting collidables
-        [ViewVariables] private bool _avoidCollidable;
-        [ViewVariables] private float _portalAliveTime;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _teleporterType, "teleporter_type", TeleporterType.Random);
-            serializer.DataField(ref _range, "range", 15);
-            serializer.DataField(ref _chargeTime, "charge_time", 0.2f);
-            serializer.DataField(ref _cooldown, "cooldown", 2.0f);
-            serializer.DataField(ref _avoidCollidable, "avoid_walls", true);
-            serializer.DataField(ref _departureSound, "departure_sound", "/Audio/Effects/teleport_departure.ogg");
-            serializer.DataField(ref _arrivalSound, "arrival_sound", "/Audio/Effects/teleport_arrival.ogg");
-            serializer.DataField(ref _cooldownSound, "cooldown_sound", null);
-            serializer.DataField(ref _portalAliveTime, "portal_alive_time", 5.0f);  // TODO: Change this to 0 before PR?
-        }
+        [DataField("avoid_walls")] [ViewVariables]
+        private bool _avoidCollidable = true;
+        [DataField("portal_alive_time")]
+        [ViewVariables] private float _portalAliveTime = 5f;
 
         private void SetState(ItemTeleporterState newState)
         {

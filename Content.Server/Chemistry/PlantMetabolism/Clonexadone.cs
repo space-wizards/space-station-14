@@ -6,17 +6,14 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.PlantMetabolism
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class Clonexadone : IPlantMetabolizable
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-        }
-
         public void Metabolize(IEntity plantHolder, float customPlantMetabolism = 1)
         {
             if (plantHolder.Deleted || !plantHolder.TryGetComponent(out PlantHolderComponent? plantHolderComp)

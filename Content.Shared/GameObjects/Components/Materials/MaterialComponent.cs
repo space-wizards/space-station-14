@@ -5,7 +5,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Materials
 {
@@ -14,66 +14,51 @@ namespace Content.Shared.GameObjects.Components.Materials
     ///     This is not a storage system for say smelteries.
     /// </summary>
     [RegisterComponent]
-    public class MaterialComponent : Component
+    public class MaterialComponent : Component, ISerializationHooks
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public const string SerializationCache = "mat";
+
         public override string Name => "Material";
 
-        public Dictionary<object, Material> MaterialTypes => _materialTypes;
-        private Dictionary<object, Material> _materialTypes;
+        [DataField("materials")] private List<MaterialDataEntry> _materials = new();
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public IEnumerable<KeyValuePair<object, MaterialPrototype>> MaterialTypes
         {
-            base.ExposeData(serializer);
-
-            // TODO: Writing.
-            if (serializer.Writing)
+            get
             {
-                return;
-            }
-
-            if (serializer.TryGetCacheData(SerializationCache, out Dictionary<object, Material> cached))
-            {
-                _materialTypes = cached.ShallowClone();
-                return;
-            }
-
-            _materialTypes = new Dictionary<object, Material>();
-
-            if (serializer.TryReadDataField("materials", out List<MaterialDataEntry> list))
-            {
-                var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                foreach (var entry in list)
+                foreach (var entry in _materials)
                 {
-                    var proto = protoMan.Index<MaterialPrototype>(entry.Value);
-                    _materialTypes[entry.Key] = proto.Material;
+                    var prototype = _prototypeManager.Index<MaterialPrototype>(entry.Value);
+
+                    yield return new KeyValuePair<object, MaterialPrototype>(entry.Key, prototype);
                 }
             }
-
-            serializer.SetCacheData(SerializationCache, _materialTypes.ShallowClone());
         }
 
-        class MaterialDataEntry : IExposeData
+        [DataDefinition]
+        public class MaterialDataEntry : ISerializationHooks
         {
             public object Key;
+
+            [DataField("key")]
+            public string StringKey;
+
+            [DataField("mat")]
             public string Value;
 
-            void IExposeData.ExposeData(ObjectSerializer serializer)
+            void ISerializationHooks.AfterDeserialization()
             {
-                if (serializer.Writing)
-                {
-                    return;
-                }
-
                 var refl = IoCManager.Resolve<IReflectionManager>();
-                Value = serializer.ReadDataField<string>("mat");
-                var key = serializer.ReadDataField<string>("key");
-                if (refl.TryParseEnumReference(key, out var @enum))
+
+                if (refl.TryParseEnumReference(StringKey, out var @enum))
                 {
                     Key = @enum;
                     return;
                 }
-                Key = key;
+
+                Key = StringKey;
             }
         }
     }

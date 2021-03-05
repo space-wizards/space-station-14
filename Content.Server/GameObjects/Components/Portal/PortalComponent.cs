@@ -5,7 +5,7 @@ using Content.Shared.GameObjects.Components.Portal;
 using Content.Shared.GameObjects.Components.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Portal
@@ -21,29 +21,13 @@ namespace Content.Server.GameObjects.Components.Portal
 
         private IEntity? _connectingTeleporter;
         private PortalState _state = PortalState.Pending;
-        [ViewVariables(VVAccess.ReadWrite)] private float _individualPortalCooldown;
-        [ViewVariables] private float _overallPortalCooldown;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("individual_cooldown")] private float _individualPortalCooldown = 2.1f;
+        [ViewVariables] [DataField("overall_cooldown")] private float _overallPortalCooldown = 2.0f;
         [ViewVariables] private bool _onCooldown;
-        [ViewVariables] private string _departureSound = "";
-        [ViewVariables] private string _arrivalSound = "";
+        [ViewVariables] [DataField("departure_sound")] private string _departureSound = "/Audio/Effects/teleport_departure.ogg";
+        [ViewVariables] [DataField("arrival_sound")] private string _arrivalSound = "/Audio/Effects/teleport_arrival.ogg";
         public readonly List<IEntity> ImmuneEntities = new(); // K
-        [ViewVariables(VVAccess.ReadWrite)] private float _aliveTime;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            // How long will the portal stay up: 0 is infinite
-            serializer.DataField(ref _aliveTime, "alive_time", 10.0f);
-
-            // How long before a specific person can go back into it
-            serializer.DataField(ref _individualPortalCooldown, "individual_cooldown", 2.1f);
-
-            // How long before anyone can go in it
-            serializer.DataField(ref _overallPortalCooldown, "overall_cooldown", 2.0f);
-
-            serializer.DataField(ref _departureSound, "departure_sound", "/Audio/Effects/teleport_departure.ogg");
-            serializer.DataField(ref _arrivalSound, "arrival_sound", "/Audio/Effects/teleport_arrival.ogg");
-        }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("alive_time")] private float _aliveTime = 10f;
 
         public override void OnAdd()
         {

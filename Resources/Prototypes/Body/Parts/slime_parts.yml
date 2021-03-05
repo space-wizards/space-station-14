@@ -51,7 +51,7 @@
       partType: Head
       size: 7
       compatibility: Biological
-      isVital: true
+      vital: true
       mechanisms:
         - BrainHuman
         - EyesHuman

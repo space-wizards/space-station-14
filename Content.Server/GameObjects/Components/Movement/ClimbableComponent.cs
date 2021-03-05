@@ -13,7 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Movement
@@ -26,7 +26,8 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     The time it takes to climb onto the entity.
         /// </summary>
         [ViewVariables]
-        private float _climbDelay;
+        [DataField("delay")]
+        private float _climbDelay = 0.8f;
 
         public override void Initialize()
         {
@@ -36,13 +37,6 @@ namespace Content.Server.GameObjects.Components.Movement
             {
                 Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PhysicsComponent)}");
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _climbDelay, "delay", 0.8f);
         }
 
         public override bool CanDragDropOn(DragDropEventArgs eventArgs)

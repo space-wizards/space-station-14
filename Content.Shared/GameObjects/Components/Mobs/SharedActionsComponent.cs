@@ -10,6 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Mobs
@@ -46,7 +47,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// of the status of the entity.
         /// </summary>
         public IEnumerable<ActionType> InnateActions => _innateActions ?? Enumerable.Empty<ActionType>();
-        private List<ActionType>? _innateActions;
+        [DataField("innateActions")]
+        private List<ActionType>? _innateActions = null;
 
 
         // entries are removed from this if they are at the initial state (not enabled, no cooldown, toggled off).
@@ -63,11 +65,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         private Dictionary<EntityUid, Dictionary<ItemActionType, ActionState>> _itemActions =
             new();
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _innateActions,"innateActions", null);
-        }
         protected override void Startup()
         {
             foreach (var actionType in InnateActions)

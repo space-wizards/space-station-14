@@ -3,37 +3,35 @@ using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.VendingMachines
 {
     [Serializable, NetSerializable, Prototype("vendingMachineInventory")]
     public class VendingMachineInventoryPrototype : IPrototype
     {
-        private string _id = string.Empty;
-        private string _name = string.Empty;
-        private string _description = string.Empty;
-        private double _animationDuration;
-        private string _spriteName = string.Empty;
-        private Dictionary<string, uint> _startingInventory = new();
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        public string ID => _id;
-        public string Name => _name;
-        public string Description => _description;
-        public double AnimationDuration => _animationDuration;
-        public string SpriteName => _spriteName;
-        public Dictionary<string, uint> StartingInventory => _startingInventory;
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
 
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
+        [field: DataField("name")]
+        public string Name { get; } = string.Empty;
 
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _name, "name", string.Empty);
-            serializer.DataField(ref _description, "description", string.Empty);
-            serializer.DataField<double>(ref _animationDuration, "animationDuration", 0);
-            serializer.DataField(ref _spriteName, "spriteName", string.Empty);
-            serializer.DataField(ref _startingInventory, "startingInventory", new Dictionary<string, uint>());
-        }
+        [field: DataField("description")]
+        public string Description { get; } = string.Empty;
+
+        [field: DataField("animationDuration")]
+        public double AnimationDuration { get; }
+
+        [field: DataField("spriteName")]
+        public string SpriteName { get; } = string.Empty;
+
+        [field: DataField("startingInventory")]
+        public Dictionary<string, uint> StartingInventory { get; } = new();
     }
 }

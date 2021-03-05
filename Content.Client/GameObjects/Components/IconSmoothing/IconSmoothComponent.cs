@@ -6,7 +6,9 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using static Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.Client.GameObjects.Components.IconSmoothing
@@ -25,9 +27,12 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
     [RegisterComponent]
     public class IconSmoothComponent : Component
     {
-        private string _smoothKey;
-        private string _stateBase;
-        private IconSmoothingMode _mode;
+        [DataField("key")]
+        private string _smoothKey = default;
+        [DataField("base")]
+        private string _stateBase = "";
+        [DataField("mode")]
+        private IconSmoothingMode _mode = IconSmoothingMode.Corners;
 
         public override string Name => "IconSmooth";
 
@@ -61,15 +66,6 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
             SnapGrid = Owner.GetComponent<SnapGridComponent>();
             Sprite = Owner.GetComponent<ISpriteComponent>();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataFieldCached(ref _stateBase, "base", "");
-            serializer.DataFieldCached(ref _smoothKey, "key", null);
-            serializer.DataFieldCached(ref _mode, "mode", IconSmoothingMode.Corners);
         }
 
         /// <inheritdoc />

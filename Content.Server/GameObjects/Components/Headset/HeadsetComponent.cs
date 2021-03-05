@@ -9,7 +9,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -26,28 +28,20 @@ namespace Content.Server.GameObjects.Components.Headset
 
         private RadioSystem _radioSystem = default!;
 
-        private List<int> _channels = new();
+        [DataField("channels")]
+        private List<int> _channels = new(){1459};
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private int BroadcastFrequency { get; set; }
+        [DataField("broadcastChannel")]
+        private int BroadcastFrequency { get; set; } = 1459;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("listenRange")]
         public int ListenRange { get; private set; }
 
         public IReadOnlyList<int> Channels => _channels;
 
         public bool RadioRequested { get; set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            // Only listens to speech in exact same position
-            serializer.DataField(this, h => h.ListenRange, "listenRange", 0);
-
-            serializer.DataField(ref _channels, "channels", new List<int> {1459});
-            serializer.DataField(this, h => h.BroadcastFrequency, "broadcastChannel", 1459);
-        }
 
         public override void Initialize()
         {

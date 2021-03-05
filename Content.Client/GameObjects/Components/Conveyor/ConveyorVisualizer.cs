@@ -3,6 +3,7 @@ using Content.Shared.GameObjects.Components.Conveyor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -11,8 +12,11 @@ namespace Content.Client.GameObjects.Components.Conveyor
     [UsedImplicitly]
     public class ConveyorVisualizer : AppearanceVisualizer
     {
+        [DataField("state_running")]
         private string _stateRunning;
+        [DataField("state_stopped")]
         private string _stateStopped;
+        [DataField("state_reversed")]
         private string _stateReversed;
 
         private void ChangeState(AppearanceComponent appearance)
@@ -33,15 +37,6 @@ namespace Content.Client.GameObjects.Components.Conveyor
             };
 
             sprite.LayerSetState(0, texture);
-        }
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            _stateRunning = node.GetNode("state_running").AsString();
-            _stateStopped = node.GetNode("state_stopped").AsString();
-            _stateReversed = node.GetNode("state_reversed").AsString();
         }
 
         public override void InitializeEntity(IEntity entity)

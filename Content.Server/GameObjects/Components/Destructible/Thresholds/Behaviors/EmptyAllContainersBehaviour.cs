@@ -2,18 +2,16 @@
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
-
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
     /// <summary>
     ///     Drop all items from all containers
     /// </summary>
+    [DataDefinition]
     public class EmptyAllContainersBehaviour : IThresholdBehavior
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer) { }
-
         public void Execute(IEntity owner, DestructibleSystem system)
         {
             if (owner.Deleted || !owner.TryGetComponent<ContainerManagerComponent>(out var containerManager))
@@ -24,6 +22,5 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
                 container.EmptyContainer(true, owner.Transform.Coordinates);
             }
         }
-
     }
 }

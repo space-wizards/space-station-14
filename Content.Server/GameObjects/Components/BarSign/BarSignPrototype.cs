@@ -1,40 +1,44 @@
+#nullable enable
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.BarSign
 {
     [Prototype("barSign")]
     public class BarSignPrototype : IPrototype
     {
-        public string ID { get; private set; }
-        public string Icon { get; private set; }
-        public string Name { get; private set; }
-        public string Description { get; private set; }
-        public bool RenameArea { get; private set; } = true;
-        public bool Hidden { get; private set; }
+        private string _description = "";
+        private string _name = "";
 
-        public void LoadFrom(YamlMappingNode mapping)
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [ViewVariables]
+        [field: DataField("parent")]
+        public string? Parent { get; }
+
+        [DataField("icon")] public string Icon { get; private set; } = "";
+
+        [DataField("name")]
+        public string Name
         {
-            ID = mapping.GetNode("id").AsString();
-            Name = Loc.GetString(mapping.GetNode("name").AsString());
-            Icon = mapping.GetNode("icon").AsString();
-
-            if (mapping.TryGetNode("hidden", out var node))
-            {
-                Hidden = node.AsBool();
-            }
-
-            if (mapping.TryGetNode("renameArea", out node))
-            {
-                RenameArea = node.AsBool();
-            }
-
-            if (mapping.TryGetNode("description", out node))
-            {
-                Description = Loc.GetString(node.AsString());
-            }
+            get => _name;
+            private set => _name = Loc.GetString(value);
         }
+
+        [DataField("description")]
+        public string Description
+        {
+            get => _description;
+            private set => _description = Loc.GetString(value);
+        }
+
+        [DataField("renameArea")]
+        public bool RenameArea { get; private set; } = true;
+        [DataField("hidden")]
+        public bool Hidden { get; private set; }
     }
 }

@@ -7,8 +7,6 @@
   components:
   - type: Sprite
     netsync: false
-  - type: Icon
-    state: icon
   - type: Item
     size: 24
     state: icon

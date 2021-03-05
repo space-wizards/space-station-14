@@ -22,6 +22,7 @@
     sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
+  - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 100
 
