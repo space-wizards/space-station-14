@@ -39,10 +39,11 @@
     visuals:
     - type: GasCanisterVisualizer
       stateConnected: can-connector
-      stateO0: can-o0
-      stateO1: can-o1
-      stateO2: can-o2
-      stateO3: can-o3
+      pressureStates:
+        - can-o0
+        - can-o1
+        - can-o2
+        - can-o3
   - type: UserInterface
     interfaces:
       - key: enum.GasCanisterUiKey.Key

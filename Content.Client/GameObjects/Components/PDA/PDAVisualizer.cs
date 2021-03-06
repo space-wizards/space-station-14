@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -14,6 +15,7 @@ namespace Content.Client.GameObjects.Components.PDA
         /// <summary>
         /// The base PDA sprite state, eg. "pda", "pda-clown"
         /// </summary>
+        [DataField("state")]
         private string _state;
 
         private enum PDAVisualLayers : byte
@@ -21,15 +23,6 @@ namespace Content.Client.GameObjects.Components.PDA
             Base,
             Flashlight,
             IDLight
-        }
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-            if (node.TryGetNode("state", out var child))
-            {
-                _state = child.AsString();
-            }
         }
 
         public override void InitializeEntity(IEntity entity)
@@ -62,7 +55,5 @@ namespace Content.Client.GameObjects.Components.PDA
             }
 
         }
-
-
     }
 }

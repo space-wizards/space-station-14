@@ -64,6 +64,7 @@ namespace Content.IntegrationTests
                 typeof(Server.EntryPoint).Assembly,
                 typeof(ContentIntegrationTest).Assembly
             };
+
             options.BeforeStart += () =>
             {
                 IoCManager.Resolve<IModLoader>().SetModuleBaseCallbacks(new ServerModuleTestingCallbacks

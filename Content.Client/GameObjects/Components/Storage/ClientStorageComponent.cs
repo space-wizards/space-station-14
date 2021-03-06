@@ -229,7 +229,7 @@ namespace Content.Client.GameObjects.Components.Storage
                 {
                     VerticalExpand = true,
                     HorizontalExpand = true,
-                    HScrollEnabled = true,
+                    HScrollEnabled = false,
                     VScrollEnabled = true,
                 };
                 _entityList = new VBoxContainer
@@ -328,7 +328,7 @@ namespace Content.Client.GameObjects.Components.Storage
             public EntityUid EntityUid { get; set; }
             public Button ActualButton { get; }
             public SpriteView EntitySpriteView { get; }
-            public Control EntityControl { get; }
+            public Control SizeControl { get; }
             public Label EntityName { get; }
             public Label EntitySize { get; }
 
@@ -352,32 +352,23 @@ namespace Content.Client.GameObjects.Components.Storage
                 EntityName = new Label
                 {
                     VerticalAlignment = VAlignment.Center,
+                    HorizontalExpand = true,
+                    Margin = new Thickness(0, 0, 6, 0),
                     Text = "Backpack",
+                    ClipText = true
                 };
+
                 hBoxContainer.AddChild(EntitySpriteView);
                 hBoxContainer.AddChild(EntityName);
 
-                EntityControl = new Control
-                {
-                    HorizontalExpand = true
-                };
                 EntitySize = new Label
                 {
-                    VerticalAlignment = VAlignment.Center,
+                    VerticalAlignment = VAlignment.Bottom,
                     Text = "Size 6",
                     Align = Label.AlignMode.Right,
-                    /*AnchorLeft = 1.0f,
-                    AnchorRight = 1.0f,
-                    AnchorBottom = 0.5f,
-                    AnchorTop = 0.5f,
-                    MarginLeft = -38.0f,
-                    MarginTop = -7.0f,
-                    MarginRight = -5.0f,
-                    MarginBottom = 7.0f*/
                 };
 
-                EntityControl.AddChild(EntitySize);
-                hBoxContainer.AddChild(EntityControl);
+                hBoxContainer.AddChild(EntitySize);
                 AddChild(hBoxContainer);
             }
         }

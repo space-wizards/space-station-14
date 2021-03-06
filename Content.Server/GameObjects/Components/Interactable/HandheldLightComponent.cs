@@ -19,6 +19,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -30,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing
     {
-        [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("wattage")] public float Wattage { get; set; } = 3f;
         [ViewVariables] private PowerCellSlotComponent _cellSlot = default!;
         private PowerCellComponent? Cell => _cellSlot.Cell;
 
@@ -42,9 +43,9 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         [ViewVariables] protected override bool HasCell => _cellSlot.HasCell;
 
-        [ViewVariables(VVAccess.ReadWrite)] public string? TurnOnSound;
-        [ViewVariables(VVAccess.ReadWrite)] public string? TurnOnFailSound;
-        [ViewVariables(VVAccess.ReadWrite)] public string? TurnOffSound;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnSound")] public string? TurnOnSound = "/Audio/Items/flashlight_toggle.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnFailSound")] public string? TurnOnFailSound = "/Audio/Machines/button.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOffSound")] public string? TurnOffSound = "/Audio/Items/flashlight_toggle.ogg";
 
         [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
 
@@ -52,15 +53,6 @@ namespace Content.Server.GameObjects.Components.Interactable
         ///     Client-side ItemStatus level
         /// </summary>
         private byte? _lastLevel;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.Wattage, "wattage", 3f);
-            serializer.DataField(ref TurnOnSound, "turnOnSound", "/Audio/Items/flashlight_toggle.ogg");
-            serializer.DataField(ref TurnOnFailSound, "turnOnFailSound", "/Audio/Machines/button.ogg");
-            serializer.DataField(ref TurnOffSound, "turnOffSound", "/Audio/Items/flashlight_toggle.ogg");
-        }
 
         public override void Initialize()
         {
@@ -272,10 +264,9 @@ namespace Content.Server.GameObjects.Components.Interactable
     }
 
     [UsedImplicitly]
+    [DataDefinition]
     public class ToggleLightAction : IToggleItemAction
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer) {}
-
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
             if (!args.Item.TryGetComponent<HandheldLightComponent>(out var lightComponent)) return false;

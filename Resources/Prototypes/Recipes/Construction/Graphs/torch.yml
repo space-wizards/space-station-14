@@ -6,7 +6,7 @@
       edges:
         - to: torch
           steps:
-            - material: Wood
+            - material: WoodPlank
               amount: 2
               doAfter: 2
     - node: torch

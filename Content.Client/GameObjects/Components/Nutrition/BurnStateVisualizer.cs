@@ -1,6 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -9,29 +10,12 @@ namespace Content.Client.GameObjects.Components.Nutrition
     [UsedImplicitly]
     public class BurnStateVisualizer : AppearanceVisualizer
     {
+        [DataField("burntIcon")]
         private string _burntIcon = "burnt-icon";
+        [DataField("litIcon")]
         private string _litIcon = "lit-icon";
+        [DataField("unlitIcon")]
         private string _unlitIcon = "icon";
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            if (node.TryGetNode("unlitIcon", out var unlitIcon))
-            {
-                _unlitIcon = unlitIcon.AsString();
-            }
-
-            if (node.TryGetNode("litIcon", out var litIcon))
-            {
-                _litIcon = litIcon.AsString();
-            }
-
-            if (node.TryGetNode("burntIcon", out var burntIcon))
-            {
-                _burntIcon = burntIcon.AsString();
-            }
-        }
 
         public override void OnChangeData(AppearanceComponent component)
         {

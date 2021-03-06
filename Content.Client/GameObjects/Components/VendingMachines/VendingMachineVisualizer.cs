@@ -4,14 +4,14 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Shared.GameObjects.Components.VendingMachines.SharedVendingMachineComponent;
 
 namespace Content.Client.GameObjects.Components.VendingMachines
 {
     [UsedImplicitly]
-    public sealed class VendingMachineVisualizer : AppearanceVisualizer
+    public sealed class VendingMachineVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         // TODO: Should default to off or broken if damaged
         //
@@ -37,41 +37,53 @@ namespace Content.Client.GameObjects.Components.VendingMachines
                 {"broken", VendingMachineVisualLayers.Unlit},
             };
 
+        [DataField("screen")]
+        private bool _screen;
+
+        [DataField("normal")]
+        private bool _normal;
+
+        [DataField("normalUnshaded")]
+        private bool _normalUnshaded;
+
+        [DataField("eject")]
+        private bool _eject;
+
+        [DataField("ejectUnshaded")]
+        private bool _ejectUnshaded;
+
+        [DataField("deny")]
+        private bool _deny;
+
+        [DataField("denyUnshaded")]
+        private bool _denyUnshaded;
+
+        [DataField("broken")]
+        private bool _broken;
+
+        [DataField("brokenUnshaded")]
+        private bool _brokenUnshaded;
+
         private readonly Dictionary<string, Animation> _animations = new();
 
-        public override void LoadData(YamlMappingNode node)
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.LoadData(node);
-
-            _baseStates = new Dictionary<string, bool>
+            // Used a dictionary so the yaml can adhere to the style-guide and the texture states can be clear
+            var states = new Dictionary<string, bool>
             {
                 {"off", true},
+                {"screen", _screen},
+                {"normal", _normal},
+                {"normal-unshaded", _normalUnshaded},
+                {"eject", _eject},
+                {"eject-unshaded", _ejectUnshaded},
+                {"deny", _deny},
+                {"deny-unshaded", _denyUnshaded},
+                {"broken", _broken},
+                {"broken-unshaded", _brokenUnshaded},
             };
 
-            // Used a dictionary so the yaml can adhere to the style-guide and the texture states can be clear
-            var states = new Dictionary<string, string>
-            {
-                {"screen", "screen"},
-                {"normal", "normal"},
-                {"normalUnshaded", "normal-unshaded"},
-                {"eject", "eject"},
-                {"ejectUnshaded", "eject-unshaded"},
-                {"deny", "deny"},
-                {"denyUnshaded", "deny-unshaded"},
-                {"broken", "broken"},
-                {"brokenUnshaded", "broken-unshaded"},
-            };
-
-            foreach (var (state, textureState) in states)
-            {
-                if (!node.TryGetNode(state, out var yamlNode))
-                {
-                    _baseStates[textureState] = false;
-                    continue;
-                }
-
-                _baseStates.Add(textureState, yamlNode.AsBool());
-            }
+            _baseStates = states;
 
             if (_baseStates["deny"])
             {

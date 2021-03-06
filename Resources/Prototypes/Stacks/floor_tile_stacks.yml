@@ -3,8 +3,8 @@
   name: steel tile
 
 - type: stack
-  id: FloorTileCarpet
-  name: carpet tile
+  id: FloorTileWood
+  name: wood floor
 
 - type: stack
   id: FloorTileWhite
@@ -15,5 +15,41 @@
   name: dark tile
 
 - type: stack
-  id: FloorTileWood
-  name: wood tile
+  id: FloorTileTechmaint
+  name: techmaint floor
+
+- type: stack
+  id: FloorTileFreezer
+  name: freezer tile
+
+- type: stack
+  id: FloorTileShowroom
+  name: showroom tile
+
+- type: stack
+  id: FloorTileGCircuit
+  name: green-circuit floor
+
+- type: stack
+  id: FloorTileGold
+  name: gold floor
+
+- type: stack
+  id: FloorTileReinforced
+  name: reinforced tile
+
+- type: stack
+  id: FloorTileMono
+  name: mono tile
+
+- type: stack
+  id: FloorTileLino
+  name: linoleum floor
+
+- type: stack
+  id: FloorTileHydro
+  name: hydro tile
+
+- type: stack
+  id: FloorTileDirty
+  name: dirty tile

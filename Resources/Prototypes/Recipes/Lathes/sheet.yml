@@ -1,0 +1,19 @@
+- type: latheRecipe
+  id: SheetSteel
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: steel
+  result: SheetSteel1
+  completetime: 500
+  materials:
+    steel: 100
+
+- type: latheRecipe
+  id: GlassStack
+  icon:
+    sprite: Objects/Materials/Sheets/glass.rsi
+    state: glass
+  result: SheetGlass1
+  completetime: 500
+  materials:
+    glass: 100

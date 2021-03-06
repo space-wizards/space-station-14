@@ -15,7 +15,6 @@
     sprite: Objects/Specific/Chemistry/beakers.rsi
     HeldPrefix: beaker
   - type: SolutionContainer
-    fillingState: beaker
     maxVol: 50
     caps: OpenContainer, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
   - type: SolutionTransfer
@@ -35,7 +34,6 @@
   - type: Item
     HeldPrefix: beaker
   - type: SolutionContainer
-    fillingState: beakerlarge
     maxVol: 100
     caps: OpenContainer, FitsInDispenser
   - type: SolutionTransfer
@@ -54,8 +52,6 @@
     sprite: Objects/Specific/Chemistry/dropper.rsi
     state: dropper
   - type: SolutionContainer
-    fillingState: dropper
-    fillingSteps: 2
     maxVol: 5
   - type: SolutionTransfer
     transferAmount: 5.0
@@ -71,8 +67,6 @@
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: 0
   - type: SolutionContainer
-    fillingState: syringe
-    fillingSteps: 5
     maxVol: 15
   - type: Injector
     injectOnly: false

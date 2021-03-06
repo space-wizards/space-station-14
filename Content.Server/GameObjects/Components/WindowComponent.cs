@@ -13,8 +13,10 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -28,17 +30,11 @@ namespace Content.Server.GameObjects.Components
 
         [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _lastKnockTime;
 
-        [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _knockDelay;
+        [DataField("knockDelay")] [ViewVariables(VVAccess.ReadWrite)]
+        private TimeSpan _knockDelay = TimeSpan.FromSeconds(0.5);
 
-        [ViewVariables(VVAccess.ReadWrite)] private bool _rateLimitedKnocking;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _knockDelay, "knockDelay", TimeSpan.FromSeconds(0.5));
-            serializer.DataField(ref _rateLimitedKnocking, "rateLimitedKnocking", true);
-        }
+        [DataField("rateLimitedKnocking")]
+        [ViewVariables(VVAccess.ReadWrite)] private bool _rateLimitedKnocking = true;
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {

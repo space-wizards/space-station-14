@@ -5,38 +5,31 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Chemistry
 {
     [UsedImplicitly]
-    public class FoamVisualizer : AppearanceVisualizer
+    public class FoamVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "foamdissolve_animation";
+
+        [DataField("animationTime")]
+        private float _delay = 0.6f;
+
+        [DataField("animationState")]
+        private string _state = "foam-dissolve";
+
         private Animation _foamDissolve = new();
-        public override void LoadData(YamlMappingNode node)
+
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.LoadData(node);
-
-            var delay = 0.6f;
-            var state = "foam-dissolve";
-
-            if (node.TryGetNode("animationTime", out var delayNode))
-            {
-                delay = delayNode.AsFloat();
-            }
-
-            if (node.TryGetNode("animationState", out var stateNode))
-            {
-                state = stateNode.AsString();
-            }
-
-            _foamDissolve = new Animation {Length = TimeSpan.FromSeconds(delay)};
+            _foamDissolve = new Animation {Length = TimeSpan.FromSeconds(_delay)};
             var flick = new AnimationTrackSpriteFlick();
             _foamDissolve.AnimationTracks.Add(flick);
             flick.LayerKey = FoamVisualLayers.Base;
-            flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(state, 0f));
+            flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(_state, 0f));
         }
 
         public override void OnChangeData(AppearanceComponent component)

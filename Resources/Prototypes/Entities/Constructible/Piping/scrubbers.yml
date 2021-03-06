@@ -30,6 +30,7 @@
     visuals:
     - type: PipeConnectorVisualizer
     - type: SiphonVisualizer
+  - type: PipeNetDevice
 
 - type: entity
   parent: ScrubberBase
