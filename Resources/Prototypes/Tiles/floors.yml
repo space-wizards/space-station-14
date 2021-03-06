@@ -492,6 +492,17 @@
   friction: 0.35
 
 - type: tile
+  name: floor_grass2
+  display_name: Grass2
+  texture: grass2
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds: footstep_snow
+  friction: 0.35
+
+- type: tile
   name: floor_checkered_brown
   display_name: Checkered Brown Floor
   texture: checkered_brown
