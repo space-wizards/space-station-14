@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Fix # One of the following: Add, Remove, Tweak, Fix
+    message: Fixes bug where deconstructing computers wouldn't return the circuit board.
