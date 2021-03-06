@@ -3,32 +3,18 @@ using System;
 using Content.Shared.GameObjects.Components.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Chemistry
 {
     [UsedImplicitly]
     public class SolutionContainerVisualizer : AppearanceVisualizer
     {
-        private int _maxFillLevels;
-        private string? _fillBaseName;
-        private string? _emptySpriteName;
-        private SolutionContainerLayers _layer;
-        private bool _changeColor;
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            var serializer = YamlObjectSerializer.NewReader(node);
-            serializer.DataField(ref _maxFillLevels, "maxFillLevels", 0);
-            serializer.DataField(ref _fillBaseName, "fillBaseName", null);
-
-            serializer.DataField(ref _emptySpriteName, "emptySpriteName", null);
-            serializer.DataField(ref _layer, "layer", SolutionContainerLayers.Fill);
-            serializer.DataField(ref _changeColor, "changeColor", true);
-        }
+        [DataField("maxFillLevels")] private int _maxFillLevels = 0;
+        [DataField("fillBaseName")] private string? _fillBaseName = null;
+        [DataField("emptySpriteName")] private string? _emptySpriteName = null;
+        [DataField("layer")] private SolutionContainerLayers _layer = SolutionContainerLayers.Fill;
+        [DataField("changeColor")] private bool _changeColor = true;
 
         public override void OnChangeData(AppearanceComponent component)
         {
