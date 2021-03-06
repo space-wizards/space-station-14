@@ -419,7 +419,7 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 foreach (var container in _containers)
                 {
-                    var otherContainer = ContainerHelpers.EnsureContainer<Container>(entity, container);
+                    var otherContainer = entity.EnsureContainer<Container>(container);
                     var ourContainer = containerComp.GetContainer(container);
 
                     foreach (var ent in ourContainer.ContainedEntities.ToArray())

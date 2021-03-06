@@ -221,3 +221,9 @@ Entries:
   - {message: Fixes torch crafting recipe having incorrect materials., type: Fix}
   id: 40
   time: '2021-03-06T12:28:13.760916+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes bug where deconstructing computers wouldn't return the circuit
+      board., type: Fix}
+  id: 41
+  time: '2021-03-06T13:48:07.041235+00:00'
