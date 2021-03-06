@@ -1,18 +1,15 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Objectives.Requirements
 {
+    [DataDefinition]
     public class IncompatibleObjectivesRequirement : IObjectiveRequirement
     {
-        private List<string> _incompatibleObjectives = new();
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x=>x._incompatibleObjectives, "objectives", new List<string>());
-        }
+        [DataField("objectives")]
+        private readonly List<string> _incompatibleObjectives = new();
 
         public bool CanBeAssigned(Mind mind)
         {

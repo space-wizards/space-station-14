@@ -13,8 +13,10 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -33,15 +35,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private PowerCellComponent? Cell => _cellSlot.Cell;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("paralyzeChanceNoSlowdown")]
         private float _paralyzeChanceNoSlowdown = 0.35f;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("paralyzeChanceWithSlowdown")]
         private float _paralyzeChanceWithSlowdown = 0.85f;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("paralyzeTime")]
         private float _paralyzeTime = 10f;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("slowdownTime")]
         private float _slowdownTime = 5f;
 
         [ViewVariables(VVAccess.ReadWrite)] public float EnergyPerUse { get; set; } = 50;
@@ -53,16 +59,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             base.Initialize();
             _cellSlot = Owner.EnsureComponent<PowerCellSlotComponent>();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _paralyzeChanceNoSlowdown, "paralyzeChanceNoSlowdown", 0.35f);
-            serializer.DataField(ref _paralyzeChanceWithSlowdown, "paralyzeChanceWithSlowdown", 0.85f);
-            serializer.DataField(ref _paralyzeTime, "paralyzeTime", 10f);
-            serializer.DataField(ref _slowdownTime, "slowdownTime", 5f);
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)

@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -8,29 +9,29 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Atmos
+namespace Content.Client.GameObjects.Components.Atmos.Piping
 {
     /// <summary>
     ///     Sets the state of the sprite based on what shape of pipe it is.
     /// </summary>
     [UsedImplicitly]
-    public class PipeVisualizer : AppearanceVisualizer
+    [DataDefinition]
+    public class PipeVisualizer : AppearanceVisualizer, ISerializationHooks
     {
+        [DataField("rsi")] private string _rsiString = "Constructible/Atmos/pipe.rsi";
         private RSI? _pipeRSI;
 
-        public override void LoadData(YamlMappingNode node)
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.LoadData(node);
-            var serializer = YamlObjectSerializer.NewReader(node);
-    
-            var rsiString = SharedSpriteComponent.TextureRoot / serializer.ReadDataField("rsi", "Constructible/Atmos/pipe.rsi");
+            var rsiPath = SharedSpriteComponent.TextureRoot / _rsiString;
             var resourceCache = IoCManager.Resolve<IResourceCache>();
-            if (resourceCache.TryGetResource(rsiString, out RSIResource? rsi))
+
+            if (resourceCache.TryGetResource(rsiPath, out RSIResource? rsi))
+            {
                 _pipeRSI = rsi.RSI;
-            else
-                Logger.Error($"{nameof(PipeVisualizer)} could not load to load RSI {rsiString}.");
+            }
         }
 
         public override void InitializeEntity(IEntity entity)

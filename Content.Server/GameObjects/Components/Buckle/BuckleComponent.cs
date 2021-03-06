@@ -22,7 +22,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -42,14 +42,16 @@ namespace Content.Server.GameObjects.Components.Buckle
         [ComponentDependency] private readonly StunnableComponent? _stunnable = null;
         [ComponentDependency] private readonly MobStateComponent? _mobState = null;
 
-        private int _size;
+        [DataField("size")]
+        private int _size = 100;
 
         /// <summary>
         ///     The amount of time that must pass for this entity to
         ///     be able to unbuckle after recently buckling.
         /// </summary>
+        [DataField("delay")]
         [ViewVariables]
-        private TimeSpan _unbuckleDelay;
+        private TimeSpan _unbuckleDelay  = TimeSpan.FromSeconds(0.25f);
 
         /// <summary>
         ///     The time that this entity buckled at.
@@ -381,19 +383,6 @@ namespace Content.Server.GameObjects.Components.Buckle
             }
 
             return TryBuckle(user, to);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _size, "size", 100);
-
-            serializer.DataReadWriteFunction(
-                "cooldown",
-                0.25f,
-                seconds => _unbuckleDelay = TimeSpan.FromSeconds(seconds),
-                () => (float) _unbuckleDelay.TotalSeconds);
         }
 
         protected override void Startup()

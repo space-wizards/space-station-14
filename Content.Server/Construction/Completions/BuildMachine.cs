@@ -4,15 +4,15 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Construction;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class BuildMachine : IGraphAction
     {
         public async Task PerformAction(IEntity entity, IEntity? user)
@@ -66,7 +66,7 @@ namespace Content.Server.Construction.Completions
             var machine = entityManager.SpawnEntity(boardComponent.Prototype, entity.Transform.Coordinates);
             machine.Transform.LocalRotation = entity.Transform.LocalRotation;
 
-            var boardContainer = ContainerManagerComponent.Ensure<Container>(MachineFrameComponent.BoardContainer, machine, out var existed);
+            var boardContainer = ContainerHelpers.EnsureContainer<Container>(machine, MachineFrameComponent.BoardContainer, out var existed);
 
             if (existed)
             {
@@ -74,7 +74,7 @@ namespace Content.Server.Construction.Completions
                 boardContainer.CleanContainer();
             }
 
-            var partContainer = ContainerManagerComponent.Ensure<Container>(MachineFrameComponent.PartContainer, machine, out existed);
+            var partContainer = ContainerHelpers.EnsureContainer<Container>(machine, MachineFrameComponent.PartContainer, out existed);
 
             if (existed)
             {
@@ -104,10 +104,6 @@ namespace Content.Server.Construction.Completions
             }
 
             entity.Delete();
-        }
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
         }
     }
 }

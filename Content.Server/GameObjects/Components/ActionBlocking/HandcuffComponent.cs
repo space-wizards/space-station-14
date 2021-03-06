@@ -14,7 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.ActionBlocking
@@ -27,60 +27,70 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         ///     The time it takes to apply a <see cref="CuffedComponent"/> to an entity.
         /// </summary>
         [ViewVariables]
-        public float CuffTime { get; set; }
+        [DataField("cuffTime")]
+        public float CuffTime { get; set; } = 5f;
 
         /// <summary>
         ///     The time it takes to remove a <see cref="CuffedComponent"/> from an entity.
         /// </summary>
         [ViewVariables]
-        public float UncuffTime { get; set; }
+        [DataField("uncuffTime")]
+        public float UncuffTime { get; set; } = 5f;
 
         /// <summary>
         ///     The time it takes for a cuffed entity to remove <see cref="CuffedComponent"/> from itself.
         /// </summary>
         [ViewVariables]
-        public float BreakoutTime { get; set; }
+        [DataField("breakoutTime")]
+        public float BreakoutTime { get; set; } = 30f;
 
         /// <summary>
         ///     If an entity being cuffed is stunned, this amount of time is subtracted from the time it takes to add/remove their cuffs.
         /// </summary>
         [ViewVariables]
-        public float StunBonus { get; set; }
+        [DataField("stunBonus")]
+        public float StunBonus { get; set; } = 2f;
 
         /// <summary>
         ///     Will the cuffs break when removed?
         /// </summary>
         [ViewVariables]
+        [DataField("breakOnRemove")]
         public bool BreakOnRemove { get; set; }
 
         /// <summary>
         ///     The path of the RSI file used for the player cuffed overlay.
         /// </summary>
         [ViewVariables]
-        public string? CuffedRSI { get; set; }
+        [DataField("cuffedRSI")]
+        public string? CuffedRSI { get; set; } = "Objects/Misc/handcuffs.rsi";
 
         /// <summary>
         ///     The iconstate used with the RSI file for the player cuffed overlay.
         /// </summary>
         [ViewVariables]
-        public string? OverlayIconState { get; set; }
+        [DataField("bodyIconState")]
+        public string? OverlayIconState { get; set; } = "body-overlay";
 
         /// <summary>
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
+        [DataField("brokenIconState")]
         public string? BrokenState { get; set; }
 
         /// <summary>
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
+        [DataField("brokenName")]
         public string BrokenName { get; set; } = default!;
 
         /// <summary>
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
+        [DataField("brokenDesc")]
         public string BrokenDesc { get; set; } = default!;
 
         [ViewVariables]
@@ -101,12 +111,21 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             }
         }
 
-        public string? StartCuffSound { get; set; }
-        public string? EndCuffSound { get; set; }
-        public string? StartBreakoutSound { get; set; }
-        public string? StartUncuffSound { get; set; }
-        public string? EndUncuffSound { get; set; }
-        public Color Color { get; set; }
+        [DataField("startCuffSound")]
+        public string StartCuffSound { get; set; } = "/Audio/Items/Handcuffs/cuff_start.ogg";
+
+        [DataField("endCuffSound")] public string EndCuffSound { get; set; } = "/Audio/Items/Handcuffs/cuff_end.ogg";
+
+        [DataField("startBreakoutSound")]
+        public string StartBreakoutSound { get; set; } = "/Audio/Items/Handcuffs/cuff_breakout_start.ogg";
+
+        [DataField("startUncuffSound")]
+        public string StartUncuffSound { get; set; } = "/Audio/Items/Handcuffs/cuff_takeoff_start.ogg";
+
+        [DataField("endUncuffSound")]
+        public string EndUncuffSound { get; set; } = "/Audio/Items/Handcuffs/cuff_takeoff_end.ogg";
+        [DataField("color")]
+        public Color Color { get; set; } = Color.White;
 
         // Non-exposed data fields
         private bool _isBroken = false;
@@ -115,27 +134,6 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         ///     Used to prevent DoAfter getting spammed.
         /// </summary>
         private bool _cuffing;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.CuffTime, "cuffTime", 5.0f);
-            serializer.DataField(this, x => x.BreakoutTime, "breakoutTime", 30.0f);
-            serializer.DataField(this, x => x.UncuffTime, "uncuffTime", 5.0f);
-            serializer.DataField(this, x => x.StunBonus, "stunBonus", 2.0f);
-            serializer.DataField(this, x => x.StartCuffSound, "startCuffSound", "/Audio/Items/Handcuffs/cuff_start.ogg");
-            serializer.DataField(this, x => x.EndCuffSound, "endCuffSound", "/Audio/Items/Handcuffs/cuff_end.ogg");
-            serializer.DataField(this, x => x.StartUncuffSound, "startUncuffSound", "/Audio/Items/Handcuffs/cuff_takeoff_start.ogg");
-            serializer.DataField(this, x => x.EndUncuffSound, "endUncuffSound", "/Audio/Items/Handcuffs/cuff_takeoff_end.ogg");
-            serializer.DataField(this, x => x.StartBreakoutSound, "startBreakoutSound", "/Audio/Items/Handcuffs/cuff_breakout_start.ogg");
-            serializer.DataField(this, x => x.CuffedRSI, "cuffedRSI", "Objects/Misc/handcuffs.rsi");
-            serializer.DataField(this, x => x.OverlayIconState, "bodyIconState", "body-overlay");
-            serializer.DataField(this, x => x.Color, "color", Color.White);
-            serializer.DataField(this, x => x.BreakOnRemove, "breakOnRemove", false);
-            serializer.DataField(this, x => x.BrokenState, "brokenIconState", string.Empty);
-            serializer.DataField(this, x => x.BrokenName, "brokenName", string.Empty);
-            serializer.DataField(this, x => x.BrokenDesc, "brokenDesc", string.Empty);
-        }
 
         public override ComponentState GetComponentState(ICommonSession player)
         {

@@ -6,7 +6,7 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Chemistry
@@ -24,47 +24,26 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public override string Name => "SolutionTransfer";
 
-        private ReagentUnit _transferAmount;
-        private bool _canReceive;
-        private bool _canSend;
-
         /// <summary>
         ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.
         /// </summary>
+        [DataField("transferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit TransferAmount
-        {
-            get => _transferAmount;
-            set => _transferAmount = value;
-        }
+        public ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
 
         /// <summary>
         ///     Can this entity take reagent from reagent tanks?
         /// </summary>
+        [DataField("canReceive")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanReceive
-        {
-            get => _canReceive;
-            set => _canReceive = value;
-        }
+        public bool CanReceive { get; set; } = true;
 
         /// <summary>
         ///     Can this entity give reagent to other reagent containers?
         /// </summary>
+        [DataField("canSend")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanSend
-        {
-            get => _canSend;
-            set => _canSend = value;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5));
-            serializer.DataField(ref _canReceive, "canReceive", true);
-            serializer.DataField(ref _canSend, "canSend", true);
-        }
+        public bool CanSend { get; set; } = true;
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {

@@ -259,17 +259,17 @@ namespace Content.Client.ParticleAccelerator
                                                 Children =
                                                 {
                                                     new Control {MinSize = imgSize},
-                                                    (_endCapTexture = Segment("end_cap")),
+                                                    (_endCapTexture = Segment("end_cap", "capc")),
                                                     new Control {MinSize = imgSize},
-                                                    (_controlBoxTexture = Segment("control_box")),
-                                                    (_fuelChamberTexture = Segment("fuel_chamber")),
+                                                    (_controlBoxTexture = Segment("control_box", "boxc")),
+                                                    (_fuelChamberTexture = Segment("fuel_chamber", "chamberc")),
                                                     new Control {MinSize = imgSize},
                                                     new Control {MinSize = imgSize},
-                                                    (_powerBoxTexture = Segment("power_box")),
+                                                    (_powerBoxTexture = Segment("power_box", "boxc")),
                                                     new Control {MinSize = imgSize},
-                                                    (_emitterLeftTexture = Segment("emitter_left")),
-                                                    (_emitterCenterTexture = Segment("emitter_center")),
-                                                    (_emitterRightTexture = Segment("emitter_right")),
+                                                    (_emitterLeftTexture = Segment("emitter_left", "leftc")),
+                                                    (_emitterCenterTexture = Segment("emitter_center", "centerc")),
+                                                    (_emitterRightTexture = Segment("emitter_right", "rightc")),
                                                 }
                                             }
                                         }
@@ -325,9 +325,9 @@ namespace Content.Client.ParticleAccelerator
                 }
             };
 
-            PASegmentControl Segment(string name)
+            PASegmentControl Segment(string name, string state)
             {
-                return new(this, resourceCache, name);
+                return new(this, resourceCache, name, state);
             }
         }
 
@@ -461,13 +461,13 @@ namespace Content.Client.ParticleAccelerator
             private readonly TextureRect _unlit;
             private readonly RSI _rsi;
 
-            public PASegmentControl(ParticleAcceleratorControlMenu menu, IResourceCache cache, string name)
+            public PASegmentControl(ParticleAcceleratorControlMenu menu, IResourceCache cache, string name, string state)
             {
                 _menu = menu;
                 _baseState = name;
-                _rsi = cache.GetResource<RSIResource>($"/Textures/Constructible/Power/PA/{name}.rsi").RSI;
+                _rsi = cache.GetResource<RSIResource>($"/Textures/Constructible/Specific/Engines/PA/{name}.rsi").RSI;
 
-                AddChild(_base = new TextureRect {Texture = _rsi[$"{name}c"].Frame0});
+                AddChild(_base = new TextureRect {Texture = _rsi[$"{state}"].Frame0});
                 AddChild(_unlit = new TextureRect());
                 MinSize = _rsi.Size;
             }

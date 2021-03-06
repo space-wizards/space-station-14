@@ -11,6 +11,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -27,12 +28,14 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public sealed override uint? NetID => ContentNetIDs.SOLUTION;
 
         [ViewVariables]
+        [DataField("contents")]
         public Solution Solution { get; private set; } = new();
 
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit MaxVolume { get; set; }
+        [DataField("maxVol")]
+        public ReagentUnit MaxVolume { get; set; } = ReagentUnit.Zero;
 
         [ViewVariables]
         public ReagentUnit CurrentVolume => Solution.TotalVolume;
@@ -50,9 +53,11 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ///     If reactions will be checked for when adding reagents to the container.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanReact { get; set; }
+        [DataField("canReact")]
+        public bool CanReact { get; set; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("caps")]
         public SolutionContainerCaps Capabilities { get; set; }
 
         public bool CanExamineContents => Capabilities.HasCap(SolutionContainerCaps.CanExamine);
@@ -64,17 +69,6 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         public bool CanRefill => Capabilities.HasCap(SolutionContainerCaps.Refillable);
         public bool CanDrain => Capabilities.HasCap(SolutionContainerCaps.Drainable);
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.CanReact, "canReact", true);
-            serializer.DataField(this, x => x.MaxVolume, "maxVol", ReagentUnit.New(0));
-            serializer.DataField(this, x => x.Solution, "contents", new Solution());
-            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.None);
-            serializer.DataField(this, x => x.MaxSpillRefill, "maxSpillRefill", MaxVolume / ReagentUnit.New(4));
-        }
 
         public void RemoveAllSolution()
         {
@@ -215,6 +209,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ReagentUnit ISolutionInteractionsComponent.InjectSpaceAvailable => EmptyVolume;
         ReagentUnit ISolutionInteractionsComponent.DrawAvailable => CurrentVolume;
         ReagentUnit ISolutionInteractionsComponent.DrainAvailable => CurrentVolume;
+
+        [DataField("maxSpillRefill")]
         public ReagentUnit MaxSpillRefill { get; set; }
 
         void ISolutionInteractionsComponent.Refill(Solution solution)

@@ -46,3 +46,156 @@ Entries:
       of the button when there is an update., type: Fix}
   id: 9
   time: '2021-02-27T17:33:32.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: 'Added a basic implementation of livers. They handle reagent metabolization
+      now, but aren''t damaged by alcohol or toxins yet.', type: Add}
+  id: 10
+  time: '2021-02-28T01:58:09.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: Stack visualizer no longer affected by open/close state by default.,
+    type: Fix}
+  id: 11
+  time: '2021-02-28T11:02:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Small physics refactor, type: Add}
+  id: 12
+  time: '2021-02-28T16:11:29.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: Patrons can now flex on poor people to get a cool colored name in OOC.,
+    type: Add}
+  - {message: 'To link your account, go to central.spacestation14.io and find the
+      "Patreon" section in your account settings.', type: Add}
+  id: 13
+  time: '2021-02-28T18:00:33.108215+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: material crates for cargo, type: Add}
+  - {message: singularity crates for cargo, type: Add}
+  id: 14
+  time: '2021-02-28T19:57:44.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: 'Restart votes now need an 80% majority to succeed, and have a longer
+      cooldown for the caller.', type: Tweak}
+  id: 15
+  time: '2021-02-28T21:13:03.652572+00:00'
+- author: Swept
+  changes:
+  - {message: Added Particle Accelerator crate to cargo, type: Add}
+  - {message: Added circuit-boards for the Particle Accelerator parts, type: Add}
+  id: 16
+  time: '2021-03-01T20:53:17.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Cargo crates stop spawning underneath the teleporter., type: Fix}
+  id: 17
+  time: '2021-03-01T20:54:06.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Material crates ordered from cargo are now fixed., type: Fix}
+  - {message: Singularity parts have their physics again., type: Fix}
+  - {message: 'Singularity crates contain one part, but cost less.', type: Tweak}
+  id: 18
+  time: '2021-03-01T20:55:34.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Added cable crates to cargo console, type: Add}
+  id: 19
+  time: '2021-03-01T20:56:14.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Starting cargo balance is now 1000 instead of 100000, type: Tweak}
+  - {message: Cargo passive point income doubled, type: Tweak}
+  id: 20
+  time: '2021-03-01T20:56:39.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Can place lattice and underplating again, type: Add}
+  - {message: Glass floors, type: Add}
+  id: 21
+  time: '2021-03-01T20:57:04.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Cargo passive point gen tweaked from 20 -> 150  every 10 seconds., type: Tweak}
+  id: 22
+  time: '2021-03-02T02:31:38.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Added rules, type: Add}
+  - {message: Added admeen aboose, type: Add}
+  - {message: Removed fun, type: Remove}
+  id: 23
+  time: '2021-03-03T06:56:52.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: You can burn yourself on wall lights again., type: Fix}
+  id: 24
+  time: '2021-03-03T15:30:18.279719+00:00'
+- author: PJB
+  changes:
+  - {message: Moved content builds over to a better server and threw it behind Cloudflare
+      caching. Should download MUCH faster now!, type: Tweak}
+  id: 25
+  time: '2021-03-04T01:20:22.853950+00:00'
+- author: walrusfromspace
+  changes:
+  - {message: Fixed a fatal error which crashed the client when opening the particle
+      accelerator control computer., type: Fix}
+  id: 26
+  time: '2021-03-04T08:38:43.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Radio messages not showing up, type: Fix}
+  id: 27
+  time: '2021-03-04T10:31:22.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: Fixed the Particle Accelerator, type: Fix}
+  id: 28
+  time: '2021-03-04T11:18:51.765790+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added a basic slime person mob., type: Add}
+  id: 29
+  time: '2021-03-04T12:58:43.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed machine frames not correctly taking material sheets., type: Fix}
+  id: 30
+  time: '2021-03-04T15:16:49.762593+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Cargo teleporter works again, type: Fix}
+  id: 31
+  time: '2021-03-05T01:38:41.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Ejected casings now have much more variation and look cooler, type: Tweak}
+  id: 32
+  time: '2021-03-05T07:23:09.0000000+00:00'
+- author: daniel-cr
+  changes: []
+  id: 33
+  time: '2021-03-05T08:33:01.0000000+00:00'
+- author: PaulRitter
+  changes:
+  - {message: Fixes all alertonclicks, type: Fix}
+  id: 34
+  time: '2021-03-05T11:46:04.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: "Water vapor now makes puddles if under 100\xBAC.", type: Add}
+  id: 35
+  time: '2021-03-05T21:15:37.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Tiles do damage when thrown at someone else, type: Add}
+  - {message: You can craft tiles, type: Add}
+  - {message: Tile max stack size changed from 8 to 30, type: Tweak}
+  - {message: 'Removed unobtainable, player placeable tiles like snow/rock', type: Remove}
+  id: 36
+  time: '2021-03-06T05:41:53.0000000+00:00'

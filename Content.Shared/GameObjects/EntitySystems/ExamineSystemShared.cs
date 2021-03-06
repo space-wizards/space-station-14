@@ -8,6 +8,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 

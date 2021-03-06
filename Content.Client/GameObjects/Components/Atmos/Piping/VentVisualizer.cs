@@ -1,24 +1,16 @@
+using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Shared.GameObjects;
-using YamlDotNet.RepresentationModel;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Atmos
+namespace Content.Client.GameObjects.Components.Atmos.Piping
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class VentVisualizer : AppearanceVisualizer
     {
-        private string _ventOnstate;
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            var serializer = YamlObjectSerializer.NewReader(node);
-            serializer.DataField(ref _ventOnstate, "ventOnState", "ventOn");
-        }
+        [DataField("ventOnState")] private string _ventOnState = "ventOn";
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -28,7 +20,7 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             sprite.LayerMapReserveBlank(Layer.VentEnabled);
             var layer = sprite.LayerMapGet(Layer.VentEnabled);
-            sprite.LayerSetState(layer, _ventOnstate);
+            sprite.LayerSetState(layer, _ventOnState);
         }
 
         public override void OnChangeData(AppearanceComponent component)

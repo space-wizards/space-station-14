@@ -36,10 +36,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: ["Destruction"]
-
   - type: Occluder
-    sizeX: 32
-    sizeY: 32
 
 - type: entity
   id: Bookshelf0

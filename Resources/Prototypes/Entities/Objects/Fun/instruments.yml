@@ -12,7 +12,7 @@
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
   - type: Item
-    Size: 24
+    size: 24
 
 - type: entity
   name: synthesizer

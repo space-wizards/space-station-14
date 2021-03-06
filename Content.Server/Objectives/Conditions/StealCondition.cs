@@ -1,25 +1,27 @@
 ﻿#nullable enable
 using System;
-using Content.Server.GameObjects.Components.ContainerExt;
+using Content.Server.GameObjects;
 using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
 {
     [UsedImplicitly]
-    public class StealCondition : IObjectiveCondition
+    [DataDefinition]
+    public class StealCondition : IObjectiveCondition, ISerializationHooks
     {
         private Mind? _mind;
-        private string _prototypeId = default!;
-        private int _amount;
+        [DataField("prototype")] private string _prototypeId = string.Empty;
+        [DataField("amount")] private int _amount = 1;
 
         public IObjectiveCondition GetAssigned(Mind mind)
         {
@@ -31,11 +33,8 @@ namespace Content.Server.Objectives.Conditions
             };
         }
 
-        void IExposeData.ExposeData(ObjectSerializer serializer)
+        void ISerializationHooks.AfterDeserialization()
         {
-            serializer.DataField(ref _prototypeId, "prototype", "");
-            serializer.DataField(ref _amount, "amount", 1);
-
             if (_amount < 1)
             {
                 Logger.Error("StealCondition has an amount less than 1 ({0})", _amount);
@@ -64,8 +63,6 @@ namespace Content.Server.Objectives.Conditions
                 return count/_amount;
             }
         }
-
-
 
         public float Difficulty => 1f;
 

@@ -18,7 +18,6 @@
     state: icon
   - type: Item
     size: 12
-    state: icon
   - type: MagazineBarrel
     caliber: Pistol
     magazineTypes:
@@ -155,7 +154,6 @@
     - Single
     magazineTypes:
     - Pistol
-    capacity: 1
     fireRate: 8
     minAngle: 10
     maxAngle: 60

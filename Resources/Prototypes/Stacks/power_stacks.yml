@@ -1,7 +1,7 @@
 ﻿- type: stack
   id: Cable
   name: cable
-  icon: "/Textures/Objects/Tools/cables.rsi/coil-30.png"
+  icon: "/Textures/Objects/Tools/cable-coils.rsi/coil-30.png"
   spawn: ApcExtensionCableStack1
 
 - type: stack

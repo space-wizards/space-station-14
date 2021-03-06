@@ -4,25 +4,23 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Trigger
 {
     [UsedImplicitly]
-    public class TimerTriggerVisualizer : AppearanceVisualizer
+    public class TimerTriggerVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "priming_animation";
 
+        [DataField("countdown_sound", required: true)]
+        private string _countdownSound;
+
         private Animation PrimingAnimation;
 
-        public override void LoadData(YamlMappingNode node)
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.LoadData(node);
-
-            var countdownSound = node.GetNode("countdown_sound").AsString();
-
-
             PrimingAnimation = new Animation { Length = TimeSpan.MaxValue };
             {
                 var flick = new AnimationTrackSpriteFlick();
@@ -32,7 +30,7 @@ namespace Content.Client.GameObjects.Components.Trigger
 
                 var sound = new AnimationTrackPlaySound();
                 PrimingAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(countdownSound, 0));
+                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_countdownSound, 0));
             }
         }
 

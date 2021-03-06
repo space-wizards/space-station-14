@@ -30,7 +30,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: SteelSheet1
+              prototype: SheetSteel1
               amount: 3
             - !type:DeleteEntity {}
           conditions:
@@ -146,7 +146,7 @@
         - to: frame4
           completed:
             - !type:SpawnPrototype
-              prototype: GlassSheet1
+              prototype: SheetGlass1
               amount: 2
           steps:
             - tool: Screwing

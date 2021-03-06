@@ -1,7 +1,9 @@
 ﻿#nullable enable
 using System;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Storage
 {
@@ -10,14 +12,7 @@ namespace Content.Shared.GameObjects.Components.Storage
         public override string Name => "Storable";
         public override uint? NetID => ContentNetIDs.STORABLE;
 
-        public virtual int Size { get; set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, s => s.Size, "size", 1);
-        }
+        [DataField("size")] public virtual int Size { get; set; } = 1;
     }
 
     [Serializable, NetSerializable]
