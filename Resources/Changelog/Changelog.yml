@@ -199,3 +199,9 @@ Entries:
   - {message: 'Removed unobtainable, player placeable tiles like snow/rock', type: Remove}
   id: 36
   time: '2021-03-06T05:41:53.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Hands and inventory (pockets) no longer block the light from flashlights,
+    type: Fix}
+  id: 37
+  time: '2021-03-06T10:32:24.0000000+00:00'
