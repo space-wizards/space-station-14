@@ -9,7 +9,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    anchored: true
+    bodyType: Static
     fixtures:
     - shape:
         !type:PolygonShape  # PhysShapeAabb

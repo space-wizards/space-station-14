@@ -20,7 +20,7 @@
   - type: MovedByPressure
   - type: Physics
     mass: 5
-    anchored: false
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PolygonShape  # PhysShapeAabb
@@ -75,7 +75,7 @@
   - type: InteractionOutline
   - type: Physics
     mass: 25
-    anchored: true
+    bodyType: Static
     fixtures:
     - shape:
         !type:PolygonShape  # PhysShapeAabb
@@ -121,7 +121,7 @@
   - type: InteractionOutline
   - type: Physics
     mass: 15
-    anchored: true
+    bodyType: Static
     fixtures:
     - shape:
         !type:PolygonShape  # PhysShapeAabb
@@ -150,7 +150,7 @@
   - type: InteractionOutline
   - type: Physics
     mass: 25
-    anchored: true
+    bodyType: Static
     fixtures:
     - shape:
         !type:PolygonShape  # PhysShapeAabb

@@ -3,23 +3,16 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Trigger.TimerTrigger;
-using Content.Server.Throw;
 using Content.Server.GameObjects.Components.Items;
-using Content.Server.GameObjects.Components.Trigger.TimerTrigger;
 using Content.Shared.GameObjects.Components.Explosion;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Containers;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Explosion

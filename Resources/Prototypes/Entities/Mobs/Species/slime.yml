@@ -114,7 +114,7 @@
         - map: [ "enum.Slots.MASK" ]
         - map: [ "enum.Slots.HEAD" ]
     - type: Physics
-      anchored: false
+      bodyType: Dynamic
       mass: 85
       shapes:
         - !type:PhysShapeAabb

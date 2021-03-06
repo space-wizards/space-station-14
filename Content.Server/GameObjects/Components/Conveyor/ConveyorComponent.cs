@@ -155,8 +155,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
             return true;
         }
 
-        }
-
         public void TriggerSignal(TwoWayLeverSignal signal)
         {
             State = signal switch

@@ -10,7 +10,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: KinematicController
-    anchored: false
+    bodyType: Dynamic
     mass: 5
     fixtures:
     - shape:

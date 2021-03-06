@@ -12,7 +12,7 @@
     sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
     state: bullet
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PolygonShape  # PhysShapeAabb
@@ -97,7 +97,7 @@
     - state: spark
       shader: unshaded
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PolygonShape  # PhysShapeAabb

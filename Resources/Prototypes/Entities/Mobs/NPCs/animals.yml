@@ -14,7 +14,7 @@
       state: monkey
       sprite: Mobs/Animals/monkey.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 50
     fixtures:
     - shape:
@@ -48,7 +48,7 @@
       state: crawling
       sprite: Mobs/Animals/gorilla.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 90
     fixtures:
     - shape:
@@ -79,7 +79,7 @@
       state: chicken-0
       sprite: Mobs/Animals/chicken.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 20
     fixtures:
     - shape:
@@ -113,7 +113,7 @@
       state: butterfly
       sprite: Mobs/Animals/butterfly.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 5
     fixtures:
     - shape:
@@ -157,7 +157,7 @@
       state: bat
       sprite: Mobs/Animals/bat.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 5
     fixtures:
     - shape:
@@ -192,7 +192,7 @@
       state: 0
       sprite: Mobs/Animals/bee.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 5
     fixtures:
     - shape:
@@ -223,7 +223,7 @@
       state: goat
       sprite: Mobs/Animals/goat.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 20
     fixtures:
     - shape:
@@ -255,7 +255,7 @@
       state: goose
       sprite: Mobs/Animals/goose.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 20
     fixtures:
     - shape:
@@ -290,7 +290,7 @@
       state: parrot
       sprite: Mobs/Animals/parrot.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 20
     fixtures:
     - shape:
@@ -321,7 +321,7 @@
       state: snake
       sprite: Mobs/Animals/snake.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 10
     fixtures:
     - shape:
@@ -355,7 +355,7 @@
       state: tarantula
       sprite: Mobs/Animals/spider.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 10
     fixtures:
     - shape:
@@ -386,7 +386,7 @@
       state: crab
       sprite: Mobs/Animals/crab.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 10
     fixtures:
     - shape:
@@ -417,7 +417,7 @@
       state: penguin
       sprite: Mobs/Animals/penguin.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 10
     fixtures:
     - shape:

@@ -18,7 +18,7 @@
       state: alive
       sprite: Mobs/Aliens/Carps/space.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 50
     fixtures:
     - shape:

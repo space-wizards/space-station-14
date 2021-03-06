@@ -29,7 +29,7 @@
     drawdepth: Mobs
   - type: Clickable
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 50
     fixtures:
     - shape:

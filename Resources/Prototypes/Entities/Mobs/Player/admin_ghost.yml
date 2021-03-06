@@ -9,7 +9,7 @@
     ignorePaused: true
   - type: Physics
     bodyType: Kinematic
-    anchored: false
+    bodyType: Dynamic
     mass: 5
     # TODO: Even need these? Don't think so but CBF checking right now.
     fixtures:

@@ -40,7 +40,7 @@
 
   - type: Physics
     mass: 5
-    anchored: false
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PolygonShape  # PhysShapeAabb
@@ -71,7 +71,7 @@
     maxVol: 500
   - type: Physics
     mass: 5
-    anchored: false
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PolygonShape  # PhysShapeAabb
@@ -181,7 +181,7 @@
         - state: chempuff
           map: [ "enum.VaporVisualLayers.Base" ]
     - type: Physics
-      anchored: false
+      bodyType: Dynamic
       fixtures:
       - shape:
           !type:PolygonShape  # PhysShapeAabb

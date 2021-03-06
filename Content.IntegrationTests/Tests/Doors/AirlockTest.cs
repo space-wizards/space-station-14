@@ -20,7 +20,7 @@ namespace Content.IntegrationTests.Tests.Doors
   id: PhysicsDummy
   components:
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb

@@ -12,7 +12,7 @@
     sprite: Constructible/Power/VendingMachines/empty.rsi
     netsync: false
   - type: Physics
-    anchored: true
+    bodyType: Static
     fixtures:
     - shape:
         !type:PolygonShape  # PhysShapeAabb

@@ -20,7 +20,7 @@
       state: running
       sprite: Mobs/Aliens/Xenos/xeno.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 85
     fixtures:
     - shape:

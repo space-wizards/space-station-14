@@ -117,7 +117,7 @@
     - map: [ "enum.Slots.HEAD" ]
   - type: Physics
     bodyType: KinematicController
-    anchored: false
+    bodyType: Dynamic
     mass: 70
     fixtures:
     - shape:
@@ -300,7 +300,7 @@
       - map: ["hand-left"]
       - map: ["hand-right"]
     - type: Physics
-      anchored: false
+      bodyType: Dynamic
       mass: 85
       fixtures:
       - shape:

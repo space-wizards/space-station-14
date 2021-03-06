@@ -13,7 +13,7 @@
   - type: TileFrictionModifier
     modifier: 0.5
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 5
     fixtures:
     - shape:

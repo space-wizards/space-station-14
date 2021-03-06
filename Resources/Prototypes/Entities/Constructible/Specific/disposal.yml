@@ -9,7 +9,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    anchored: true
+    bodyType: Static
   - type: SnapGrid
     offset: Center
   - type: Anchorable
@@ -134,7 +134,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    anchored: true
+    bodyType: Static
     fixtures:
     - shape:
         !type:PolygonShape  # PhysShapeAabb
@@ -384,7 +384,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    anchored: true
+    bodyType: Static
     fixtures:
     - shape:
         !type:PolygonShape  # PhysShapeAabb

@@ -7,7 +7,7 @@
   parent: BaseItem
   components:
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PolygonShape  # PhysShapeAabb

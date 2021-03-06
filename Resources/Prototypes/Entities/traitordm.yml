@@ -13,7 +13,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    anchored: true
+    bodyType: Static
     mass: 1
     fixtures:
     - shape:

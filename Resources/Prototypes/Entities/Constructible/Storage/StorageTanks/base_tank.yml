@@ -8,7 +8,7 @@
   - type: InteractionOutline
   - type: Physics
     mass: 100
-    anchored: false
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PolygonShape  # PhysShapeAabb
