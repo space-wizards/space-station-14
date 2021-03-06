@@ -106,31 +106,6 @@
 
 - type: entity
   parent: VendingMachine
-  id: VendingMachineChapel
-  name: PietyVend
-  components:
-  - type: VendingMachine
-    pack: PietyVend
-  - type: Sprite
-    sprite: Constructible/Power/VendingMachines/chapel.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
-
-- type: entity
-  parent: VendingMachine
   id: VendingMachineCigs
   name: cigarette machine
   components:
@@ -292,54 +267,6 @@
 
 - type: entity
   parent: VendingMachine
-  id: VendingMachineHats
-  name: Hatlord 9000
-  components:
-  - type: VendingMachine
-    pack: Hatlord 9000
-  - type: Sprite
-    sprite: Constructible/Power/VendingMachines/hats.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
-
-- type: entity
-  parent: VendingMachine
-  id: VendingMachineMagivend
-  name: MagiVend
-  components:
-  - type: VendingMachine
-    pack: MagiVend
-  - type: Sprite
-    sprite: Constructible/Power/VendingMachines/magivend.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
-
-- type: entity
-  parent: VendingMachine
   id: VendingMachineMedical
   name: NanoMed Plus
   components:
@@ -368,31 +295,6 @@
 
 - type: entity
   parent: VendingMachine
-  id: VendingMachineMining
-  name: Dwarven Mining Equipment
-  components:
-  - type: VendingMachine
-    pack: Dwarven Mining Equipment
-  - type: Sprite
-    sprite: Constructible/Power/VendingMachines/mining.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
-
-- type: entity
-  parent: VendingMachine
   id: VendingMachineNutri
   name: NutriMax
   components:
@@ -418,33 +320,6 @@
     - type: WiresVisualizer
   - type: AccessReader
     access: [["Service"]]
-
-- type: entity
-  parent: VendingMachine
-  id: VendingMachineRobotics
-  name: Robotech Deluxe
-  components:
-  - type: VendingMachine
-    pack: Robotech Deluxe
-  - type: Sprite
-    sprite: Constructible/Power/VendingMachines/robotics.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
-  - type: AccessReader
-    access: [["Research"]]
 
 - type: entity
   parent: VendingMachine
@@ -506,7 +381,6 @@
   components:
   - type: VendingMachine
     pack: MegaSeed Servitor
-
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/seeds.rsi
     layers:
@@ -529,37 +403,11 @@
 
 - type: entity
   parent: VendingMachine
-  id: VendingMachineShoes
-  name: Shoelord 9000
-  components:
-  - type: VendingMachine
-    pack: Shoelord 9000
-
-  - type: Sprite
-    sprite: Constructible/Power/VendingMachines/shoes.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
-
-- type: entity
-  parent: VendingMachine
   id: VendingMachineSmartFridge
   name: SmartFridge
   components:
   - type: VendingMachine
     pack: SmartFridge
-
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/smartfridge.rsi
     layers:
@@ -584,7 +432,6 @@
   components:
   - type: VendingMachine
     pack: Getmore Chocolate Corp
-
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/snack.rsi
     layers:
@@ -611,7 +458,6 @@
   components:
   - type: VendingMachine
     pack: BODA
-
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/sovietsoda.rsi
     layers:
@@ -633,37 +479,11 @@
 
 - type: entity
   parent: VendingMachine
-  id: VendingMachineSuits
-  name: Suitlord 9000
-  components:
-  - type: VendingMachine
-    pack: Suitlord 9000
-
-  - type: Sprite
-    sprite: Constructible/Power/VendingMachines/suits.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
-
-- type: entity
-  parent: VendingMachine
   id: VendingMachineTheater
   name: AutoDrobe
   components:
   - type: VendingMachine
     pack: AutoDrobe
-
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/theater.rsi
     layers:
@@ -694,7 +514,6 @@
   components:
   - type: VendingMachine
     pack: Vendomat
-
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/vendomat.rsi
     layers:
@@ -717,37 +536,11 @@
 
 - type: entity
   parent: VendingMachine
-  id: VendingMachineVox
-  name: Trader Supply
-  components:
-  - type: VendingMachine
-    pack: Trader Supply
-
-  - type: Sprite
-    sprite: Constructible/Power/VendingMachines/vox.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
-
-- type: entity
-  parent: VendingMachine
   id: VendingMachineWallMedical
   name: NanoMed
   components:
   - type: VendingMachine
     pack: NanoMed
-
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/wallmed.rsi
     layers:
@@ -775,7 +568,6 @@
   components:
   - type: VendingMachine
     pack: YouTool
-
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/youtool.rsi
     layers:
