@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Fix
+    message: Fixes torch crafting recipe having incorrect materials.
