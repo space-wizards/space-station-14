@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,13 +7,16 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
-    public class SharedTechnologyDatabaseComponent : Component, IEnumerable<TechnologyPrototype>
+    public class SharedTechnologyDatabaseComponent : Component, IEnumerable<TechnologyPrototype>, ISerializationHooks
     {
         public override string Name => "TechnologyDatabase";
         public override uint? NetID => ContentNetIDs.TECHNOLOGY_DATABASE;
+
+        [DataField("technologies")] private List<string> _technologyIds = new();
 
         protected List<TechnologyPrototype> _technologies = new();
 
@@ -20,6 +24,31 @@ namespace Content.Shared.GameObjects.Components.Research
         ///     A read-only list of unlocked technologies.
         /// </summary>
         public IReadOnlyList<TechnologyPrototype> Technologies => _technologies;
+
+        void ISerializationHooks.BeforeSerialization()
+        {
+            var techIds = new List<string>();
+
+            foreach (var tech in _technologies)
+            {
+                techIds.Add(tech.ID);
+            }
+
+            _technologyIds = techIds;
+        }
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            foreach (var id in _technologyIds)
+            {
+                if (prototypeManager.TryIndex(id, out TechnologyPrototype? tech))
+                {
+                    _technologies.Add(tech);
+                }
+            }
+        }
 
         public IEnumerator<TechnologyPrototype> GetEnumerator()
         {
@@ -69,7 +98,7 @@ namespace Content.Shared.GameObjects.Components.Research
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
             foreach (var technologyId in technology.RequiredTechnologies)
             {
-                protoMan.TryIndex(technologyId, out TechnologyPrototype requiredTechnology);
+                protoMan.TryIndex(technologyId, out TechnologyPrototype? requiredTechnology);
                 if (requiredTechnology == null)
                     return false;
 
@@ -77,27 +106,6 @@ namespace Content.Shared.GameObjects.Components.Research
                     return false;
             }
             return true;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "technologies",
-                new List<string>(),
-                techs =>
-                {
-                    var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-                    foreach (var id in techs)
-                    {
-                        if (prototypeManager.TryIndex(id, out TechnologyPrototype tech))
-                        {
-                            _technologies.Add(tech);
-                        }
-                    }
-                }, GetTechnologyIdList);
         }
     }
 

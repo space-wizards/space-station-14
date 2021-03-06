@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Shared.Interfaces;
 using Lidgren.Network;
 using Robust.Shared.GameObjects;
@@ -24,7 +25,7 @@ namespace Content.Shared
 
             #endregion
 
-            public string Message { get; set; }
+            public string Message { get; set; } = string.Empty;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
@@ -47,7 +48,7 @@ namespace Content.Shared
 
             #endregion
 
-            public string Message { get; set; }
+            public string Message { get; set; } = string.Empty;
             public EntityCoordinates Coordinates;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
@@ -73,7 +74,7 @@ namespace Content.Shared
 
             #endregion
 
-            public string Message { get; set; }
+            public string Message { get; set; } = string.Empty;
             public EntityUid Entity;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)

@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Stack
                         300,
                         () => popupPos.PopupMessage(
                             eventArgs.User,
-                            Loc.GetString("stack-component-becomes-full")
+                            Loc.GetString("comp-stack-becomes-full")
                         )
                     );
                 }
@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Stack
             {
                 popupPos.PopupMessage(
                     eventArgs.User,
-                    Loc.GetString("stack-component-already-full")
+                    Loc.GetString("comp-stack-already-full")
                 );
             }
 
@@ -132,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Stack
             {
                 message.AddMarkup(
                     Loc.GetString(
-                        "stack-component-examine-detail-count",
+                        "comp-stack-examine-detail-count",
                         ("count", Count),
                         ("markupCountColor", "lightgray")
                     )

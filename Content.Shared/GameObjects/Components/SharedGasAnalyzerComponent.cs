@@ -23,7 +23,7 @@ namespace Content.Shared.GameObjects.Components
             public float Pressure;
             public float Temperature;
             public GasEntry[] Gases;
-            public string Error;
+            public string Error = string.Empty;
 
             public GasAnalyzerBoundUserInterfaceState(float pressure, float temperature, GasEntry[] gases, string error = null)
             {

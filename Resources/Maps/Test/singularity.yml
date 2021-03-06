@@ -1993,8 +1993,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 238
   type: Poweredlight
@@ -2006,8 +2005,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 239
   type: ApcExtensionCable

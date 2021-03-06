@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Behavior;
-using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.Components.Culinary;
+using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.Interfaces;
@@ -13,8 +13,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Chemistry
@@ -27,22 +26,19 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override string Name => "Pill";
 
         [ViewVariables]
-        private string _useSound;
+        [DataField("useSound")]
+        protected override string UseSound { get; set; } = default;
+
         [ViewVariables]
-        private string _trashPrototype;
+        [DataField("trash")]
+        protected override string TrashPrototype { get; set; } = default;
+
+        [ViewVariables]
+        [DataField("transferAmount")]
+        protected override ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(1000);
+
         [ViewVariables]
         private SolutionContainerComponent _contents;
-        [ViewVariables]
-        private ReagentUnit _transferAmount;
-
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _useSound, "useSound", null);
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(1000));
-            serializer.DataField(ref _trashPrototype, "trash", null);
-        }
 
         public override void Initialize()
         {
@@ -88,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return false;
             }
 
-            var transferAmount = ReagentUnit.Min(_transferAmount, _contents.CurrentVolume);
+            var transferAmount = ReagentUnit.Min(TransferAmount, _contents.CurrentVolume);
             var split = _contents.SplitSolution(transferAmount);
 
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
@@ -106,10 +102,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             firstStomach.TryTransferSolution(split);
 
-            if (_useSound != null)
+            if (UseSound != null)
             {
                 _entitySystem.GetEntitySystem<AudioSystem>()
-                    .PlayFromEntity(_useSound, trueTarget, AudioParams.Default.WithVolume(-1f));
+                    .PlayFromEntity(UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
             }
 
             trueTarget.PopupMessage(user, Loc.GetString("You swallow the pill."));

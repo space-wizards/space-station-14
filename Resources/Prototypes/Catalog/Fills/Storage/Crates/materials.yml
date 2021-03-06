@@ -1,35 +1,45 @@
 - type: entity
-  id: CrateMaterialsGlass
-  name:  glass crate
+  id: CrateMaterialGlass
+  name:  glass sheet crate
   parent: CrateGenericonimo
   components:
   - type: StorageFill
     contents:
-      - name: GlassStack
-        amount: 1
+      - name: SheetGlass
+        amount: 3
 
 - type: entity
-  id: CrateMaterialsMetal
-  name:  metals crate
+  id: CrateMaterialSteel
+  name:  steel sheet crate
   parent: CrateGenericonimo
   components:
   - type: StorageFill
     contents:
-      - name: MetalStack
-        amount: 1
+      - name: SheetSteel
+        amount: 3
 
 - type: entity
-  id: CrateMaterialsWood
+  id: CrateMaterialPlastic
+  name:  plastic sheet crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - name: SheetPlastic
+        amount: 3
+
+- type: entity
+  id: CrateMaterialWood
   name:  wood crate
   parent: CrateGenericonimo
   components:
   - type: StorageFill
     contents:
-      - name: WoodPlank
-        amount: 15
+      - name: MaterialWoodPlank
+        amount: 1
 
 - type: entity
-  id: CrateMaterialsFuelTank
+  id: CrateMaterialFuelTank
   name:  fueltank crate
   parent: CrateGenericonimo
   components:
@@ -39,7 +49,7 @@
         amount: 1
 
 #- type: entity
-#  id: CrateMaterialsHFuelTank
+#  id: CrateMaterialHFuelTank
 #  name:  fueltank crate
 #  parent: CrateGenericonimo
 #  components:
@@ -49,7 +59,7 @@
 #        amount: 1
 
 - type: entity
-  id: CrateMaterialsWaterTank
+  id: CrateMaterialWaterTank
   name:  watertank crate
   parent: CrateGenericonimo
   components:
@@ -59,7 +69,7 @@
         amount: 1
 
 #- type: entity
-#  id: CrateMaterialsHWaterTank
+#  id: CrateMaterialHWaterTank
 #  name:  watertank crate
 #  parent: CrateGenericonimo
 #  components:
@@ -68,24 +78,12 @@
 #      - name: WaterTankFull
 #        amount: 1
 
-# Unimplemented Materials
-
-#- type: entity
-#  id: CrateMaterialsPlastic
-#  name:  plastics crate
-#  parent: CrateGenericonimo
-#  components:
-#  - type: StorageFill
-#    contents:
-#      - name: PlasticStack
-#        amount: 1
-
-#- type: entity
-#  id: CrateMaterialsPlasteel
-#  name: plasteel crate
-#  parent: CrateGenericonimo
-#  components:
-#  - type: StorageFill
-#    contents:
-#      - name: PlasteelStack
-#        amount: 1
+- type: entity
+  id: CrateMaterialPlasteel
+  name: plasteel crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - name: SheetPlasteel
+        amount: 1

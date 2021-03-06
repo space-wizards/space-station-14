@@ -2,33 +2,24 @@
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
     [Serializable]
+    [DataDefinition]
     public class DoActsBehavior : IThresholdBehavior
     {
-        private int _acts;
-
         /// <summary>
         ///     What acts should be triggered upon activation.
         ///     See <see cref="ActSystem"/>.
         /// </summary>
-        public ThresholdActs Acts
-        {
-            get => (ThresholdActs) _acts;
-            set => _acts = (int) value;
-        }
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _acts, "acts", 0, WithFormat.Flags<ActsFlags>());
-        }
+        [DataField("acts")]
+        public ThresholdActs Acts { get; set; }
 
         public bool HasAct(ThresholdActs act)
         {
-            return (_acts & (int) act) != 0;
+            return (Acts & act) != 0;
         }
 
         public void Execute(IEntity owner, DestructibleSystem system)

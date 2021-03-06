@@ -33,7 +33,7 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors=nullable
+      run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors=nullable /m
     - name: Content.Tests
       run: dotnet test --no-build Content.Tests/Content.Tests.csproj -v n
     - name: Content.IntegrationTests

@@ -5,21 +5,16 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class PlaySound : IGraphAction
     {
-        public string SoundCollection { get; private set; } = string.Empty;
-        public string Sound { get; private set; } = string.Empty;
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.Sound, "sound", string.Empty);
-            serializer.DataField(this, x => x.SoundCollection, "soundCollection", string.Empty);
-        }
+        [DataField("soundCollection")] public string SoundCollection { get; private set; } = string.Empty;
+        [DataField("sound")] public string Sound { get; private set; } = string.Empty;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {

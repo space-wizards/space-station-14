@@ -13,4 +13,4 @@
               amount: 1
 
     - node: MetalRod
-      entity: MetalRod
+      entity: PartRodMetal

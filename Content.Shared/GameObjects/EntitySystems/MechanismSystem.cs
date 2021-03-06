@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Body.Mechanism;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Body.Mechanism;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 

@@ -6,289 +6,239 @@
   components:
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
-    state: tile_steel
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+  - type: DamageOtherOnHit
+    amount: 10
+  - type: Stack
+    count: 1
+
+- type: entity
+  name: steel tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSteel
+  components:
+  - type: Sprite
+    state: steel
+  - type: Item
+    HeldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
       - floor_steel
   - type: Stack
     stackType: FloorTileSteel
-    count: 1
-    max: 8
+  - type: Construction
+    graph: tileSteel
+    node: steeltile
 
 - type: entity
-  name: steel floor tile
-  parent: FloorTileItemBase
-  id: FloorTileItemSteel
-  components:
-  - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_steel
-
-- type: entity
-  name: wood floor tile
+  name: wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWood
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_wood
+    state: wood
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_wood
+    HeldPrefix: wood
   - type: FloorTile
     outputs:
       - plating
       - floor_wood
   - type: Stack
     stackType: FloorTileWood
-    count: 1
-    max: 8
+  - type: Construction
+    graph: tileWood
+    node: woodtile
 
 - type: entity
-  name: white floor tile
+  name: white tile
   parent: FloorTileItemBase
   id: FloorTileItemWhite
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_white
+    state: white
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_white
+    HeldPrefix: white
   - type: FloorTile
     outputs:
       - plating
       - floor_white
   - type: Stack
     stackType: FloorTileWhite
-    count: 1
-    max: 8
 
 - type: entity
-  name: dark floor tile
+  name: dark tile
   parent: FloorTileItemBase
   id: FloorTileItemDark
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_dark
+    state: dark
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_dark
+    HeldPrefix: dark
   - type: FloorTile
     outputs:
       - plating
       - floor_dark
   - type: Stack
     stackType: FloorTileDark
-    count: 1
-    max: 8
 
 - type: entity
-  name: floor tile techmaint
+  name: techmaint floor
   parent: FloorTileItemBase
   id: FloorTileItemTechmaint
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_dark_techfloor_grid
+    state: dark_techfloor_grid
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_dark
+    HeldPrefix: dark
   - type: FloorTile
     outputs:
       - plating
       - floor_techmaint
+  - type: Stack
+    stackType: FloorTileTechmaint
 
 - type: entity
-  name: floor tile freezer
+  name: freezer tile
   parent: FloorTileItemBase
   id: FloorTileItemFreezer
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_showroom
+    state: showroom
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_showroom
+    HeldPrefix: showroom
   - type: FloorTile
     outputs:
       - plating
       - floor_freezer
+  - type: Stack
+    stackType: FloorTileFreezer
 
 - type: entity
-  name: floor tile showroom
+  name: showroom tile
   parent: FloorTileItemBase
   id: FloorTileItemShowroom
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_showroom
+    state: showroom
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_showroom
+    HeldPrefix: showroom
   - type: FloorTile
     outputs:
       - plating
       - floor_showroom
+  - type: Stack
+    stackType: FloorTileShowroom
 
 - type: entity
-  name: floor tile snow
-  parent: FloorTileItemBase
-  id: FloorTileItemSnow
-  components:
-  - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_snow
-  - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_silver
-  - type: FloorTile
-    outputs:
-      - plating
-      - floor_snow
-
-- type: entity
-  name: floor tile green circuit
+  name: green-circuit floor
   parent: FloorTileItemBase
   id: FloorTileItemGCircuit
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_gcircuit
+    state: gcircuit
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_silver
+    HeldPrefix: silver
   - type: FloorTile
     outputs:
       - plating
       - floor_green_circuit
+  - type: Stack
+    stackType: FloorTileGCircuit
 
 - type: entity
-  name: floor tile gold
+  name: gold floor
   parent: FloorTileItemBase
   id: FloorTileItemGold
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_gold
+    state: gold
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_gold
+    HeldPrefix: gold
   - type: FloorTile
     outputs:
       - plating
       - floor_gold
+  - type: Stack
+    stackType: FloorTileGold
 
 - type: entity
-  name: floor tile reinforced
+  name: reinforced tile
   parent: FloorTileItemBase
   id: FloorTileItemReinforced
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_reinforced
+    state: reinforced
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_reinforced
+    HeldPrefix: reinforced
   - type: FloorTile
     outputs:
       - plating
       - floor_reinforced
+  - type: Stack
+    stackType: FloorTileReinforced
 
 - type: entity
-  name: floor tile rock
-  parent: FloorTileItemBase
-  id: FloorTileItemRock
-  components:
-  - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_rockvault
-  - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_steel
-  - type: FloorTile
-    outputs:
-      - plating
-      - floor_rockvault
-
-- type: entity
-  name: floor tile mono
+  name: mono tile
   parent: FloorTileItemBase
   id: FloorTileItemMono
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_white_monofloor
+    state: white_monofloor
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_steel
+    HeldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
       - floor_mono
+  - type: Stack
+    stackType: FloorTileMono
 
 - type: entity
-  name: floor tile linoleum
+  name: linoleum floor
   parent: FloorTileItemBase
   id: FloorTileItemLino
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_white_monofloor
+    state: white_monofloor
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_steel
+    HeldPrefix: steel
   - type: FloorTile
     outputs:
       - plating
       - floor_lino
+  - type: Stack
+    stackType: FloorTileLino
 
 - type: entity
-  name: floor tile asteroid
-  parent: FloorTileItemBase
-  id: FloorTileItemAsteroid
-  components:
-  - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_white
-  - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_brown
-  - type: FloorTile
-    outputs:
-      - plating
-      - floor_asteroid_tile
-
-- type: entity
-  name: floor tile hydro
+  name: hydro tile
   parent: FloorTileItemBase
   id: FloorTileItemHydro
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_hydro
+    state: hydro
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_hydro
+    HeldPrefix: hydro
   - type: FloorTile
     outputs:
       - plating
       - floor_hydro
+  - type: Stack
+    stackType: FloorTileHydro
 
 - type: entity
-  name: floor tile dirty
+  name: dirty tile
   parent: FloorTileItemBase
   id: FloorTileItemDirty
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_dirty
+    state: dirty
   - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_brown
+    HeldPrefix: brown
   - type: FloorTile
     outputs:
       - plating
       - floor_steel_dirty
+  - type: Stack
+    stackType: FloorTileDirty

@@ -3,7 +3,7 @@ using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Movement
@@ -22,6 +22,7 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     Path to the sound to be played when a mob slips.
         /// </summary>
         [ViewVariables]
+        [DataField("slipSound")]
         private string SlipSound { get; set; } = "/Audio/Effects/slip.ogg";
 
         /// <summary>
@@ -85,13 +86,6 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             get => _launchForwardsMultiplier;
             set => _launchForwardsMultiplier = value;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.SlipSound, "slipSound", "/Audio/Effects/slip.ogg");
         }
 
         protected override void OnSlip()

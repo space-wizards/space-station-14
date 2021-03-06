@@ -1,7 +1,9 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.Interfaces;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
@@ -11,15 +13,6 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         public override string Name => "GasMixtureHolder";
 
-        [ViewVariables] public GasMixture Air { get; set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            Air = new GasMixture();
-
-            serializer.DataField(this, x => x.Air, "air", new GasMixture());
-        }
+        [ViewVariables] [DataField("air")] public GasMixture Air { get; set; } = new GasMixture();
     }
 }

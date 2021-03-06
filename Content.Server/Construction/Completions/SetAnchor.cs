@@ -3,19 +3,15 @@ using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class SetAnchor : IGraphAction
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.Value, "value", true);
-        }
-
-        public bool Value { get; private set; } = true;
+        [DataField("value")] public bool Value { get; private set; } = true;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {

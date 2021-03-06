@@ -1,18 +1,18 @@
 #nullable enable
 using System;
+using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.Interfaces;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using System.Linq;
 using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Atmos;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Atmos;
+using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -37,7 +37,8 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// What <see cref="GasMixture"/> the canister contains.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public GasMixture Air { get; set; } = default!;
+        [DataField("gasMixture")]
+        public GasMixture Air { get; set; } = new (DefaultVolume);
 
         [ViewVariables]
         public bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
@@ -51,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables]
         public bool ConnectedToPort => ConnectedPort != null;
 
-        private const float DefaultVolume = 10;
+        public const float DefaultVolume = 10;
 
         [ViewVariables(VVAccess.ReadWrite)] public float ReleasePressure { get; set; }
 
@@ -66,13 +67,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         private GasCanisterBoundUserInterfaceState? _lastUiState;
 
         private AppearanceComponent? _appearance;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => Air, "gasMixture", new GasMixture(DefaultVolume));
-        }
-
 
         public override void Initialize()
         {

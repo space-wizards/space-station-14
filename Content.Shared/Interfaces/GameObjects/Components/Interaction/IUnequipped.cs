@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Inventory;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;

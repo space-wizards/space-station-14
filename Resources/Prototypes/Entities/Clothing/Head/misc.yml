@@ -1,16 +1,5 @@
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatBearpelt
-  name: bear pelt
-  description: It's a cute bear pelt.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Misc/bearpelt.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Misc/bearpelt.rsi
-
-- type: entity
-  parent: ClothingHeadBase
   id: ClothingHeadHatBunny
   name: bunny
   description: Cute bunny ears.

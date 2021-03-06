@@ -1,6 +1,4 @@
 ﻿#nullable enable
-using Content.Server.AI.Utility.AiLogic;
-using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Roles;
@@ -9,7 +7,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Movement
@@ -17,11 +15,12 @@ namespace Content.Server.GameObjects.Components.Movement
     [RegisterComponent, ComponentReference(typeof(IMoverComponent))]
     public class AiControllerComponent : Component, IMoverComponent
     {
-        private float _visionRadius;
+        [DataField("logic")] private float _visionRadius = 8.0f;
 
         public override string Name => "AiController";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("startingGear")]
         public string? StartingGearPrototype { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -52,19 +51,6 @@ namespace Content.Server.GameObjects.Components.Movement
                 var startingGear = protoManager.Index<StartingGearPrototype>(StartingGearPrototype);
                 gameTicker.EquipStartingGear(Owner, startingGear, null);
             }
-        }
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "startingGear",
-                null,
-                startingGear => StartingGearPrototype = startingGear,
-                () => StartingGearPrototype);
-            serializer.DataField(ref _visionRadius, "vision", 8.0f);
         }
 
         /// <summary>

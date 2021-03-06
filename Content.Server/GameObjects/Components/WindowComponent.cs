@@ -13,8 +13,10 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -28,17 +30,11 @@ namespace Content.Server.GameObjects.Components
 
         [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _lastKnockTime;
 
-        [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _knockDelay;
+        [DataField("knockDelay")] [ViewVariables(VVAccess.ReadWrite)]
+        private TimeSpan _knockDelay = TimeSpan.FromSeconds(0.5);
 
-        [ViewVariables(VVAccess.ReadWrite)] private bool _rateLimitedKnocking;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _knockDelay, "knockDelay", TimeSpan.FromSeconds(0.5));
-            serializer.DataField(ref _rateLimitedKnocking, "rateLimitedKnocking", true);
-        }
+        [DataField("rateLimitedKnocking")]
+        [ViewVariables(VVAccess.ReadWrite)] private bool _rateLimitedKnocking = true;
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
@@ -106,22 +102,22 @@ namespace Content.Server.GameObjects.Components
             switch (level)
             {
                 case 0:
-                    message.AddText(Loc.GetString("It looks fully intact."));
+                    message.AddText(Loc.GetString("comp-window-damaged-1"));
                     break;
                 case 1:
-                    message.AddText(Loc.GetString("It has a few scratches."));
+                    message.AddText(Loc.GetString("comp-window-damaged-2"));
                     break;
                 case 2:
-                    message.AddText(Loc.GetString("It has a few small cracks."));
+                    message.AddText(Loc.GetString("comp-window-damaged-3"));
                     break;
                 case 3:
-                    message.AddText(Loc.GetString("It has several big cracks running along its surface."));
+                    message.AddText(Loc.GetString("comp-window-damaged-4"));
                     break;
                 case 4:
-                    message.AddText(Loc.GetString("It has deep cracks across multiple layers."));
+                    message.AddText(Loc.GetString("comp-window-damaged-5"));
                     break;
                 case 5:
-                    message.AddText(Loc.GetString("It is extremely badly cracked and on the verge of shattering."));
+                    message.AddText(Loc.GetString("comp-window-damaged-6"));
                     break;
             }
         }
@@ -135,7 +131,7 @@ namespace Content.Server.GameObjects.Components
 
             EntitySystem.Get<AudioSystem>()
                 .PlayAtCoords("/Audio/Effects/glass_knock.ogg", eventArgs.Target.Transform.Coordinates, AudioHelpers.WithVariation(0.05f));
-            eventArgs.Target.PopupMessageEveryone(Loc.GetString("*knock knock*"));
+            eventArgs.Target.PopupMessageEveryone(Loc.GetString("comp-window-knock"));
 
             _lastKnockTime = _gameTiming.CurTime;
 

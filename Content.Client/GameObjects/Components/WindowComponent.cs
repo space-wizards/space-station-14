@@ -3,7 +3,7 @@ using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Client.GameObjects.Components.IconSmoothing.IconSmoothComponent;
 
 namespace Content.Client.GameObjects.Components
@@ -12,7 +12,8 @@ namespace Content.Client.GameObjects.Components
     [ComponentReference(typeof(SharedWindowComponent))]
     public sealed class WindowComponent : SharedWindowComponent
     {
-        private string _stateBase;
+        [DataField("base")]
+        private string _stateBase = default;
         private ISpriteComponent _sprite;
         private SnapGridComponent _snapGrid;
 
@@ -100,13 +101,6 @@ namespace Content.Client.GameObjects.Components
             }
 
             return null;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _stateBase, "base", null);
         }
     }
 
