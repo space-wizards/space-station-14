@@ -16,7 +16,7 @@
     maxVol: 250
   - type: Physics
     shapes:
-    - !type:PolygonShape  # PhysShapeAabb
+    - !type:PhysShapeAabb
       layer: [ Passable ]
   - type: Construction
     graph: toilet

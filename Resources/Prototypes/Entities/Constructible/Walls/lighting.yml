@@ -11,7 +11,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.45, -0.15, 0.45, 0.35"
       layer: [ Passable ]
   - type: LoopingSound
@@ -125,7 +125,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "0, 0, 0.25, 0.1"
       layer: [ Passable ]
   - type: PoweredLight

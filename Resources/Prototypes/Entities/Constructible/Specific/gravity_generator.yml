@@ -20,7 +20,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-1.5,-1.5,1.5,1.5"
       layer:
       - Opaque

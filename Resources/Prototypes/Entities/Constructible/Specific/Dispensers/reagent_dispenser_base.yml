@@ -11,7 +11,7 @@
     bodyType: Static
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.3,-0.4,0.3,0.4"
       mask:
       - Impassable

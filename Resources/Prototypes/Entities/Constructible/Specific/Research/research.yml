@@ -15,7 +15,7 @@
     bodyType: Static
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.4, -0.45, 0.45, 0.45"
       mask:
       - Impassable
@@ -58,7 +58,7 @@
     bodyType: Static
     fixtures:
     - shape:
-        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb {}
       mask:
       - Impassable
       - MobImpassable

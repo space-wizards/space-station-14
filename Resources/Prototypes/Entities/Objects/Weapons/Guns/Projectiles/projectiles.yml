@@ -15,7 +15,7 @@
     bodyType: Dynamic
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.1"
       hard: false
       layer: [Clickable]
@@ -100,7 +100,7 @@
     bodyType: Dynamic
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
       layer: 32

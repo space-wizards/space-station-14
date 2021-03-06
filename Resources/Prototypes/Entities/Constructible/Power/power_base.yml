@@ -13,7 +13,7 @@
     bodyType: Static
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.5, -0.4, 0.3, 0.4"
       mask:
       - Impassable
@@ -58,7 +58,7 @@
     bodyType: Static
     fixtures:
     - shape:
-        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb {}
       mask:
       - Impassable
       - MobImpassable
@@ -117,7 +117,7 @@
     bodyType: Static
     fixtures:
     - shape:
-        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb {}
       mask:
       - Impassable
       - MobImpassable
@@ -177,7 +177,7 @@
   - type: Physics
     fixtures:
       - shape:
-          !type:PolygonShape  # PhysShapeAabb
+          !type:PhysShapeAabb
             bounds: "-0.25, -0.25, 0.25, 0.3"
         layer: [ Passable ]
   - type: SnapGrid
@@ -234,7 +234,7 @@
     bodyType: Dynamic
     fixtures:
     - shape:
-        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb {}
       mask:
       - Impassable
       - MobImpassable

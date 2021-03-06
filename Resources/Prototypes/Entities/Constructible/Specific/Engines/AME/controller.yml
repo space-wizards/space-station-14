@@ -15,7 +15,7 @@
     mass: 25
     fixtures:
     - shape:
-        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb {}
       layer:
       - Opaque
       - Impassable

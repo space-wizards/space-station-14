@@ -53,7 +53,7 @@
     bodyType: Dynamic
     fixtures:
       - shape:
-          !type:PolygonShape  # PhysShapeAabb
+          !type:PhysShapeAabb
             bounds: "-0.5,-0.25,0.5,0.25"
         mask:
           - Impassable

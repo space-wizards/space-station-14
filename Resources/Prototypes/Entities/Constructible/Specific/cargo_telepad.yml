@@ -12,7 +12,7 @@
     bodyType: Dynamic
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.45, -0.45, 0.00, 0.45"
       layer: [ Passable ]
   - type: Sprite

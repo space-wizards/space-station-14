@@ -12,7 +12,7 @@
     bodyType: Static
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.5,-0.25,0.5,0.25"
       mask:
       - Impassable
@@ -47,7 +47,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.45, -0.45, 0.05, 0.45"
       mask:
       - Impassable
@@ -66,7 +66,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.5, -0.25, 0.05, 0.25"
       mask:
       - Impassable
@@ -84,7 +84,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.5, -0.2, 0.2, 0.25"
       mask:
       - Impassable
@@ -103,7 +103,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.49, -0.25, 0.37, 0.25"
       mask:
       - Impassable
@@ -129,7 +129,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.45, -0.3, 0.35, 0.3"
       mask:
       - Impassable
@@ -147,7 +147,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.37, -0.25, 0.49, 0.24"
       mask:
       - Impassable

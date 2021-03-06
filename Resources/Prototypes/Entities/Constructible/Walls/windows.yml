@@ -22,7 +22,7 @@
     bodyType: Static
     fixtures:
     - shape:
-        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb {}
       layer:
       - Impassable
       - MobImpassable

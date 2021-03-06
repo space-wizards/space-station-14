@@ -117,7 +117,6 @@
     - map: [ "enum.Slots.HEAD" ]
   - type: Physics
     bodyType: KinematicController
-    bodyType: Dynamic
     mass: 70
     fixtures:
     - shape:
@@ -304,7 +303,7 @@
       mass: 85
       fixtures:
       - shape:
-          !type:PolygonShape  # PhysShapeAabb
+          !type:PhysShapeAabb
             bounds: "-0.35,-0.35,0.35,0.35"
         mask:
         - Impassable

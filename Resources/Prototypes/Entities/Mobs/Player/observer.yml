@@ -10,11 +10,10 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: KinematicController
-    bodyType: Dynamic
     mass: 5
     fixtures:
     - shape:
-        !type:PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
       mask:
       - GhostImpassable

@@ -13,7 +13,7 @@
   - type: Physics
     fixtures:
     - shape:
-        !type:PolygonShape {}  # PolygonShape  # PhysShapeAabb
+        !type:PhysShapeAabb {}
       layer: [MobMask]
   - type: Damageable
     resistances: metallicResistances
