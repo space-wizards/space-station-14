@@ -191,3 +191,11 @@ Entries:
   - {message: "Water vapor now makes puddles if under 100\xBAC.", type: Add}
   id: 35
   time: '2021-03-05T21:15:37.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Tiles do damage when thrown at someone else, type: Add}
+  - {message: You can craft tiles, type: Add}
+  - {message: Tile max stack size changed from 8 to 30, type: Tweak}
+  - {message: 'Removed unobtainable, player placeable tiles like snow/rock', type: Remove}
+  id: 36
+  time: '2021-03-06T05:41:53.0000000+00:00'
