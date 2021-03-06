@@ -323,9 +323,9 @@ namespace Content.Client.Construction
                         case ToolQuality.Cutting:
                             return resourceCache.GetTexture("/Textures/Objects/Tools/wirecutters.rsi/cutters-map.png");
                         case ToolQuality.Welding:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/welder.rsi/welder.png");
+                            return resourceCache.GetTexture("/Textures/Objects/Tools/welder.rsi/icon.png");
                         case ToolQuality.Multitool:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/multitool.rsi/multitool.png");
+                            return resourceCache.GetTexture("/Textures/Objects/Tools/multitool.rsi/icon.png");
                     }
 
                     break;
