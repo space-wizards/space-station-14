@@ -1,4 +1,0 @@
-author: Zumorica
-changes:
-  - type: Fix
-    message: Fixes wood table and poker table constructions having the wrong material.

@@ -205,3 +205,19 @@ Entries:
     type: Fix}
   id: 37
   time: '2021-03-06T10:32:24.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes emitters shooting sideway bolts and in the wrong direction., type: Fix}
+  id: 38
+  time: '2021-03-06T12:28:13.757819+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes wood table and poker table constructions having the wrong material.,
+    type: Fix}
+  id: 39
+  time: '2021-03-06T12:28:13.759792+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes torch crafting recipe having incorrect materials., type: Fix}
+  id: 40
+  time: '2021-03-06T12:28:13.760916+00:00'
