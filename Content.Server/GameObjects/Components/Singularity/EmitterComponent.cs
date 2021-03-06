@@ -237,9 +237,9 @@ namespace Content.Server.GameObjects.Components.Singularity
             projectileComponent.IgnoreEntity(Owner);
 
             physicsComponent
-                .LinearVelocity = Owner.Transform.WorldRotation.ToVec() * 20f;
+                .LinearVelocity = Owner.Transform.WorldRotation.ToWorldVec() * 20f;
 
-            projectile.Transform.LocalRotation = Owner.Transform.WorldRotation;
+            projectile.Transform.WorldRotation = Owner.Transform.WorldRotation;
 
             // TODO: Move to projectile's code.
             Timer.Spawn(3000, () => projectile.Delete());
