@@ -503,6 +503,17 @@
   friction: 0.35
 
 - type: tile
+  name: floor_sand
+  display_name: Sand
+  texture: sand
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds: footstep_snow
+  friction: 0.35
+
+- type: tile
   name: floor_checkered_brown
   display_name: Checkered Brown Floor
   texture: checkered_brown
@@ -528,6 +539,17 @@
   name: floor_checkered_blue
   display_name: Checkered Blue Floor
   texture: checkered_blue
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+
+- type: tile
+  name: floor_stand_clear
+  display_name: Stand Clear Floor
+  texture: stand_clear
   base_turfs:
   - plating
   is_subfloor: false
