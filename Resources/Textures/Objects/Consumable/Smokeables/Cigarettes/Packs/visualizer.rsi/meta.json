@@ -8,21 +8,22 @@
   },
   "states": [
     {
-      "name": "closed"
+      "name": "cig1"
     },
     {
-      "name": "open"
+      "name": "cig2"
     },
     {
-      "name": "trash"
+      "name": "cig3"
     },
     {
-      "name": "inhand-left",
-      "directions": 4
+      "name": "cig4"
     },
     {
-      "name": "inhand-right",
-      "directions": 4
+      "name": "cig5"
+    },
+    {
+      "name": "cig6"
     }
   ]
 }
