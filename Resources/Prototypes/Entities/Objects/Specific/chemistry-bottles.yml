@@ -1,7 +1,7 @@
 - type: entity
   name: bottle
   parent: BaseItem
-  id: BaseChemestryEmptyBottle
+  id: BaseChemistryEmptyBottle
   abstract: true
   description: A small bottle.
   components:
@@ -22,8 +22,8 @@
 
 - type: entity
   name: bottle
-  parent: BaseChemestryEmptyBottle
-  id: ChemestryEmptyBottle01
+  parent: BaseChemistryEmptyBottle
+  id: ChemistryEmptyBottle01
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
@@ -40,8 +40,8 @@
 
 - type: entity
   name: bottle
-  parent: BaseChemestryEmptyBottle
-  id: ChemestryEmptyBottle02
+  parent: BaseChemistryEmptyBottle
+  id: ChemistryEmptyBottle02
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
@@ -58,8 +58,8 @@
 
 - type: entity
   name: bottle
-  parent: BaseChemestryEmptyBottle
-  id: ChemestryEmptyBottle03
+  parent: BaseChemistryEmptyBottle
+  id: ChemistryEmptyBottle03
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
@@ -76,8 +76,8 @@
 
 - type: entity
   name: bottle
-  parent: BaseChemestryEmptyBottle
-  id: ChemestryEmptyBottle04
+  parent: BaseChemistryEmptyBottle
+  id: ChemistryEmptyBottle04
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
