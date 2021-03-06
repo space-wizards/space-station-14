@@ -13,7 +13,6 @@
     state: cigpapers
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-    state: cigpapers
 
 - type: entity
   id: PaperRolling
@@ -22,7 +21,7 @@
   parent: BaseItem
   components:
     - type: Stack
-      stacktype: enum.StackType.PaperRolling
+      stackType: PaperRolling
       max: 5
       count: 1
     - type: Sprite
@@ -30,7 +29,6 @@
       state: cigpaper
     - type: Item
       sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-      state: cigpaper
 
 - type: entity
   id: CigaretteFilter
@@ -39,7 +37,7 @@
   parent: BaseItem
   components:
     - type: Stack
-      stacktype: enum.StackType.CigaretteFilter
+      stackType: CigaretteFilter
       max: 5
       count: 1
     - type: Sprite
@@ -47,4 +45,3 @@
       state: cigfilter
     - type: Item
       sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-      state: cigfilter

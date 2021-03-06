@@ -12,8 +12,10 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
@@ -28,48 +30,41 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private TimeSpan _lastAttackTime;
         private TimeSpan _cooldownEnd;
 
-        private readonly string _hitSound = default!;
-        private readonly string _missSound = default!;
+        [DataField("hitSound")]
+        private string _hitSound = "/Audio/Weapons/genhit1.ogg";
+
+        [DataField("missSound")]
+        private string _missSound = "/Audio/Weapons/punchmiss.ogg";
+
+        [DataField("arcCooldownTime")]
         public float ArcCooldownTime { get; private set; } = 1f;
-        public float CooldownTime { get; private set; } = 0.5f;
+
+        [DataField("cooldownTime")]
+        public float CooldownTime { get; private set; } = 1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string ClickArc { get; set; }
+        [DataField("clickArc")]
+        public string ClickArc { get; set; } = "punch";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string Arc { get; set; }
+        [DataField("arc")]
+        public string Arc { get; set; } = "default";
+
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("arcwidth")] public float ArcWidth { get; set; } = 90;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ArcWidth { get; set; }
+        [DataField("range")]
+        public float Range { get; set; } = 1;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float Range { get; set; }
+        [DataField("damage")]
+        public int Damage { get; set; } = 5;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Damage { get; set; }
+        [DataField("damageType")]
+        public DamageType DamageType { get; set; } = DamageType.Blunt;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageType DamageType { get; set; }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool ClickAttackEffect { get; set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.Damage, "damage", 5);
-            serializer.DataField(this, x => x.Range, "range", 1);
-            serializer.DataField(this, x => x.ArcWidth, "arcwidth", 90);
-            serializer.DataField(this, x => x.Arc, "arc", "default");
-            serializer.DataField(this, x => x.ClickArc, "clickArc", "punch");
-            serializer.DataField(this, x => x._hitSound, "hitSound", "/Audio/Weapons/genhit1.ogg");
-            serializer.DataField(this, x => x._missSound, "missSound", "/Audio/Weapons/punchmiss.ogg");
-            serializer.DataField(this, x => x.ArcCooldownTime, "arcCooldownTime", 1f);
-            serializer.DataField(this, x => x.CooldownTime, "cooldownTime", 1f);
-            serializer.DataField(this, x => x.DamageType, "damageType", DamageType.Blunt);
-            serializer.DataField(this, x => x.ClickAttackEffect, "clickAttackEffect", true);
-        }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("clickAttackEffect")] public bool ClickAttackEffect { get; set; } = true;
 
         protected virtual bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
         {

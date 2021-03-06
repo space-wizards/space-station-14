@@ -6,7 +6,7 @@
       edges:
         - to: entity
           steps:
-            - component: ConveyorAssembly
+            - tag: ConveyorAssembly
               icon:
                 sprite: Constructible/Power/conveyor.rsi
                 state: conveyor_loose
@@ -37,7 +37,7 @@
   - node: start
     actions:
       - !type:SpawnPrototype
-        prototype: SteelSheet1
+        prototype: SheetSteel1
         amount: 2
       - !type:DeleteEntity {}
     edges:
@@ -45,7 +45,7 @@
         completed:
           - !type:SnapToGrid {}
         steps:
-          - material: Metal
+          - material: Steel
             amount: 2
             doAfter: 1
   - node: lever

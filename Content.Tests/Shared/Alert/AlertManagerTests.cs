@@ -3,6 +3,7 @@ using Content.Shared.Alert;
 using NUnit.Framework;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Tests.Shared.Alert
@@ -25,6 +26,7 @@ namespace Content.Tests.Shared.Alert
         [Test]
         public void TestAlertManager()
         {
+            IoCManager.Resolve<ISerializationManager>().Initialize();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
             var alertManager = IoCManager.Resolve<AlertManager>();

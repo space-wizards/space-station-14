@@ -18,11 +18,13 @@ using Content.Shared.GameObjects.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Chemistry
@@ -43,26 +45,15 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
-        [ViewVariables] private string _packPrototypeId = "";
+        [ViewVariables] [DataField("pack")] private string _packPrototypeId = "";
 
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
         [ViewVariables] private ReagentUnit _dispenseAmount = ReagentUnit.New(10);
-        [UsedImplicitly] [ViewVariables] private SolutionContainerComponent? Solution => _beakerContainer.ContainedEntity.GetComponent<SolutionContainerComponent>();
+        [UsedImplicitly] [ViewVariables] private SolutionContainerComponent? Solution => _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
 
         [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ReagentDispenserUiKey.Key);
-
-        /// <summary>
-        /// Shows the serializer how to save/load this components yaml prototype.
-        /// </summary>
-        /// <param name="serializer">Yaml serializer</param>
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _packPrototypeId, "pack", string.Empty);
-        }
 
         /// <summary>
         /// Called once per instance of this component. Gets references to any other components needed
@@ -78,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             _beakerContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
+                ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
 
             InitializeFromPrototype();
             UpdateUserInterface();
@@ -103,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (string.IsNullOrEmpty(_packPrototypeId)) return;
 
-            if (!_prototypeManager.TryIndex(_packPrototypeId, out ReagentDispenserInventoryPrototype packPrototype))
+            if (!_prototypeManager.TryIndex(_packPrototypeId, out ReagentDispenserInventoryPrototype? packPrototype))
             {
                 return;
             }
@@ -222,7 +213,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (beaker == null)
             {
                 return new ReagentDispenserBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
-                    "", Inventory, Owner.Name, null, _dispenseAmount);
+                    string.Empty, Inventory, Owner.Name, null, _dispenseAmount);
             }
 
             var solution = beaker.GetComponent<SolutionContainerComponent>();
@@ -246,7 +237,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
 
             var beaker = _beakerContainer.ContainedEntity;
-            _beakerContainer.Remove(_beakerContainer.ContainedEntity);
+            if(beaker is null)
+                return;
+
+            _beakerContainer.Remove(beaker);
             UpdateUserInterface();
 
             if(!user.TryGetComponent<HandsComponent>(out var hands) || !beaker.TryGetComponent<ItemComponent>(out var item))
@@ -261,7 +255,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private void TryClear()
         {
             if (!HasBeaker) return;
-            var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionContainerComponent>();
+            var solution = _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
+            if(solution is null)
+                return;
+
             solution.RemoveAllSolution();
 
             UpdateUserInterface();
@@ -275,7 +272,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (!HasBeaker) return;
 
-            var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionContainerComponent>();
+            var solution = _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
+            if (solution is null)
+                return;
+
             solution.TryAddReagent(Inventory[dispenseIndex].ID, _dispenseAmount, out _);
 
             UpdateUserInterface();

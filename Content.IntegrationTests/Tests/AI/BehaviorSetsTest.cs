@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.Actions;
+using Content.Server.AI.Utility.AiLogic;
 using NUnit.Framework;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
@@ -49,12 +50,11 @@ namespace Content.IntegrationTests.Tests.AI
             {
                 foreach (var entity in protoManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!entity.Components.TryGetValue("UtilityAI", out var npcNode)) continue;
-                    var sets = npcNode["behaviorSets"];
+                    if (!entity.TryGetComponent<UtilityAi>("UtilityAI", out var npcNode)) continue;
 
-                    foreach (var entry in (YamlSequenceNode) sets)
+                    foreach (var entry in npcNode.BehaviorSets)
                     {
-                        Assert.That(behaviorSets.ContainsKey(entry.ToString()), $"BehaviorSet {entry} in entity {entity.ID} not found");
+                        Assert.That(behaviorSets.ContainsKey(entry), $"BehaviorSet {entry} in entity {entity.ID} not found");
                     }
                 }
             });

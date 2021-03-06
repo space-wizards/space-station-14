@@ -1,12 +1,13 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -68,7 +69,7 @@ namespace Content.Server.StationEvents
             _announceCancelToken = new CancellationTokenSource();
             Timer.Spawn(3000, () =>
             {
-                EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Announcements/power_on.ogg");
+                SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/power_on.ogg");
             }, _announceCancelToken.Token);
             _powered.Clear();
 

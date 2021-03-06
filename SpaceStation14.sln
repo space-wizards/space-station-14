@@ -58,7 +58,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{806ED41A
 		.appveyor.yml = .appveyor.yml
 		Tools\gen_build_info.py = Tools\gen_build_info.py
 		Tools\generate_hashes.ps1 = Tools\generate_hashes.ps1
-		Jenkinsfile = Jenkinsfile
 		Tools\package_client_build.py = Tools\package_client_build.py
 		Tools\package_server_build.py = Tools\package_server_build.py
 	EndProjectSection
@@ -93,6 +92,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Tools", "Content.Tools\Content.Tools.csproj", "{75AB8F8D-9E56-4B12-85E3-E03A852B31CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Analyzers", "RobustToolbox\Robust.Analyzers\Robust.Analyzers.csproj", "{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.YAMLLinter", "Content.YAMLLinter\Content.YAMLLinter.csproj", "{A59E2FCC-93CF-4886-8EA7-94F021A7475D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -206,6 +207,10 @@ Global
 		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A59E2FCC-93CF-4886-8EA7-94F021A7475D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A59E2FCC-93CF-4886-8EA7-94F021A7475D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A59E2FCC-93CF-4886-8EA7-94F021A7475D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A59E2FCC-93CF-4886-8EA7-94F021A7475D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

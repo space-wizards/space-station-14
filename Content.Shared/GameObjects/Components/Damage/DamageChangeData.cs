@@ -1,4 +1,5 @@
-﻿using Content.Shared.Damage;
+﻿#nullable enable
+using Content.Shared.Damage;
 
 namespace Content.Shared.GameObjects.Components.Damage
 {

@@ -10,7 +10,6 @@
   icon: "ResearchDirector"
   access:
   - Research
-  - ResearchDirector
   - Command
   - Maintenance
 

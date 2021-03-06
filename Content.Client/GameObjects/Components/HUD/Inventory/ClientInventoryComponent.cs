@@ -28,6 +28,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
 
+        [ComponentDependency]
         private ISpriteComponent? _sprite;
 
         private bool _playerAttached = false;
@@ -52,7 +53,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             InterfaceController = DynamicTypeFactory.CreateInstance<InventoryInterfaceController>(controllerType, args);
             InterfaceController.Initialize();
 
-            if (Owner.TryGetComponent(out _sprite))
+            if (_sprite != null)
             {
                 foreach (var mask in InventoryInstance.SlotMasks.OrderBy(s => InventoryInstance.SlotDrawingOrder(s)))
                 {
@@ -186,6 +187,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                     var (rsi, state) = data.Value;
                     _sprite.LayerSetVisible(slot, true);
                     _sprite.LayerSetState(slot, state, rsi);
+                    _sprite.LayerSetAutoAnimated(slot, true);
 
                     if (slot == Slots.INNERCLOTHING)
                     {

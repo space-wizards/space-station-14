@@ -16,7 +16,9 @@ using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Surgery
@@ -33,13 +35,15 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
 
         private readonly Dictionary<int, object> _optionsCache = new();
 
-        private float _baseOperateTime;
+        [DataField("baseOperateTime")]
+        private float _baseOperateTime = 5;
 
         private ISurgeon.MechanismRequestCallback? _callbackCache;
 
         private int _idHash;
 
-        private SurgeryType _surgeryType;
+        [DataField("surgeryType")]
+        private SurgeryType _surgeryType = SurgeryType.Incision;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
 
@@ -139,14 +143,6 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 Logger.Debug("Error on callback from mechanisms: there were no viable options to choose from!");
                 throw new InvalidOperationException();
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _surgeryType, "surgeryType", SurgeryType.Incision);
-            serializer.DataField(ref _baseOperateTime, "baseOperateTime", 5);
         }
 
         public override void Initialize()

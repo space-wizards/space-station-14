@@ -5,22 +5,19 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
     [Serializable]
+    [DataDefinition]
     public class SpawnEntitiesBehavior : IThresholdBehavior
     {
         /// <summary>
         ///     Entities spawned on reaching this threshold, from a min to a max.
         /// </summary>
+        [DataField("spawn")]
         public Dictionary<string, MinMax> Spawn { get; set; } = new();
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.Spawn, "spawn", new Dictionary<string, MinMax>());
-        }
 
         public void Execute(IEntity owner, DestructibleSystem system)
         {

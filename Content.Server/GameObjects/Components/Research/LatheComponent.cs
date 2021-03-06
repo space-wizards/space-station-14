@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Research
             switch (message.Message)
             {
                 case LatheQueueRecipeMessage msg:
-                    PrototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
+                    PrototypeManager.TryIndex(msg.ID, out LatheRecipePrototype? recipe);
                     if (recipe != null!)
                         for (var i = 0; i < msg.Quantity; i++)
                         {
@@ -99,11 +99,8 @@ namespace Content.Server.GameObjects.Components.Research
         }
 
         internal bool Produce(LatheRecipePrototype recipe)
-        {   if(!Powered)
-            {
-                return false;
-            }
-            if (Producing || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent? storage)) return false;
+        {
+            if (Producing || !Powered || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent? storage)) return false;
 
             UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue()));
 
@@ -163,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Research
             var totalAmount = 0;
 
             // Check if it can insert all materials.
-            foreach (var mat in material.MaterialTypes.Values)
+            foreach (var (_, mat) in material.MaterialTypes)
             {
                 // TODO: Change how MaterialComponent works so this is not hard-coded.
                 if (!storage.CanInsertMaterial(mat.ID, VolumePerSheet * multiplier)) return false;
@@ -173,22 +170,28 @@ namespace Content.Server.GameObjects.Components.Research
             // Check if it can take ALL of the material's volume.
             if (storage.CanTakeAmount(totalAmount)) return false;
 
-            foreach (var mat in material.MaterialTypes.Values)
+            foreach (var (_, mat) in material.MaterialTypes)
             {
                 storage.InsertMaterial(mat.ID, VolumePerSheet * multiplier);
             }
 
             State = LatheState.Inserting;
-            switch (material.MaterialTypes.Values.First().Name)
+            switch (material.MaterialTypes.First().Value.Name)
             {
-                case "Steel":
+                case "steel":
                     SetAppearance(LatheVisualState.InsertingMetal);
                     break;
-                case "Glass":
+                case "glass":
                     SetAppearance(LatheVisualState.InsertingGlass);
                     break;
-                case "Gold":
+                case "gold":
                     SetAppearance(LatheVisualState.InsertingGold);
+                    break;
+                case "plastic":
+                    SetAppearance(LatheVisualState.InsertingPlastic);
+                    break;
+                case "plasma":
+                    SetAppearance(LatheVisualState.InsertingPlasma);
                     break;
             }
 

@@ -1,3 +1,4 @@
+#nullable enable
 namespace Content.Shared.Actions
 {
     /// <summary>
@@ -8,6 +9,7 @@ namespace Content.Shared.Actions
         Error,
         HumanScream,
         Disarm,
+        GhostBoo,
         DebugInstant,
         DebugToggle,
         DebugTargetPoint,

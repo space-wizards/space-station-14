@@ -197,36 +197,36 @@
 
 - type: alert
   alertType: Debug1
-  icon: /Textures/Interface/Alerts/Human/human1.png
+  icon: /Textures/Interface/Alerts/human_health.rsi/health1.png
   name: Debug1
   description: Debug
 
 - type: alert
   alertType: Debug2
-  icon: /Textures/Interface/Alerts/Human/human2.png
+  icon: /Textures/Interface/Alerts/human_health.rsi/health2.png
   name: Debug2
   description: Debug
 
 - type: alert
   alertType: Debug3
-  icon: /Textures/Interface/Alerts/Human/human3.png
+  icon: /Textures/Interface/Alerts/human_health.rsi/health3.png
   name: Debug3
   description: Debug
 
 - type: alert
   alertType: Debug4
-  icon: /Textures/Interface/Alerts/Human/human4.png
+  icon: /Textures/Interface/Alerts/human_health.rsi/health4.png
   name: Debug4
   description: Debug
 
 - type: alert
   alertType: Debug5
-  icon: /Textures/Interface/Alerts/Human/human5.png
+  icon: /Textures/Interface/Alerts/human_health.rsi/health5.png
   name: Debug5
   description: Debug
 
 - type: alert
   alertType: Debug6
-  icon: /Textures/Interface/Alerts/Human/human6.png
+  icon: /Textures/Interface/Alerts/human_health.rsi/health6.png
   name: Debug6
   description: Debug

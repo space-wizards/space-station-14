@@ -136,7 +136,7 @@ binds:
 - function: OpenCraftingMenu
   type: State
   key: G
-- function: OpenTutorial
+- function: OpenInfo
   type: State
   key: F1
 - function: OpenInventoryMenu

@@ -2,9 +2,11 @@
   save: false
   abstract: true
   id: SimpleMobBase
-  drawdepth: Mobs
   suffix: AI
   components:
+  - type: Tag
+    tags:
+    - Teleportable
   - type: UtilityAI
     behaviorSets:
     - Clothing
@@ -23,6 +25,7 @@
     soundHit: /Audio/Effects/hit_kick.ogg
   - type: InteractionOutline
   - type: Sprite
+    noRot: true
     drawdepth: Mobs
   - type: Clickable
   - type: Physics
@@ -72,7 +75,6 @@
       100: !type:DeadMobState {}
   - type: HeatResistance
   - type: CombatMode
-  - type: Teleportable
   - type: Internals
   - type: Stunnable
   - type: UnarmedCombat
