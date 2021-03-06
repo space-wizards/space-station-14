@@ -458,6 +458,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, $"hand {_nextHand++}");
+            container.OccludesLight = false;
             var hand = new Hand(this, name, container);
 
             _hands.Add(hand);
