@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.Interfaces.Chemistry;
@@ -31,10 +31,6 @@ namespace Content.Shared.Chemistry
         [ViewVariables]
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
-
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
 
         [field: DataField("name")]
         public string Name { get; } = string.Empty;

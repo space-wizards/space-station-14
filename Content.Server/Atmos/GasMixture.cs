@@ -495,7 +495,8 @@ namespace Content.Server.Atmos
             foreach (var prototype in _atmosphereSystem.GasReactions)
             {
                 if (energy < prototype.MinimumEnergyRequirement ||
-                    temperature < prototype.MinimumTemperatureRequirement)
+                    temperature < prototype.MinimumTemperatureRequirement ||
+                    temperature > prototype.MaximumTemperatureRequirement)
                     continue;
 
                 var doReaction = true;

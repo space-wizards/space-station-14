@@ -19,10 +19,6 @@ namespace Content.Shared.Research
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         /// <summary>
         ///     The name this technology will have on user interfaces.
         /// </summary>

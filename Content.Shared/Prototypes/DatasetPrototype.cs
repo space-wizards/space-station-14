@@ -13,10 +13,6 @@ namespace Content.Shared.Prototypes
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         [field: DataField("values")] public IReadOnlyList<string> Values { get; } = new List<string>();
     }
 }

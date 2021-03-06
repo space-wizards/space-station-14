@@ -23,10 +23,6 @@ namespace Content.Shared.Chemistry
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         [field: DataField("name")]
         public string Name { get; } = string.Empty;
 

@@ -42,7 +42,7 @@ namespace Content.Server.Atmos.Reactions
             if (burnedFuel > 0)
             {
                 energyReleased += (Atmospherics.FireHydrogenEnergyReleased * burnedFuel);
-
+                
                 // TODO ATMOS Radiation pulse here!
 
                 // Conservation of mass is important.

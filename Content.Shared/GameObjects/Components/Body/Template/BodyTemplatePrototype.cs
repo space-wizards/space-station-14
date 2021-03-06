@@ -33,10 +33,6 @@ namespace Content.Shared.GameObjects.Components.Body.Template
         public string ID { get; } = default!;
 
         [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
-        [ViewVariables]
         [field: DataField("name")]
         public string Name { get; } = string.Empty;
 

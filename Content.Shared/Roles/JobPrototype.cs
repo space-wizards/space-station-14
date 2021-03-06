@@ -19,10 +19,6 @@ namespace Content.Shared.Roles
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         /// <summary>
         ///     The name of this job as displayed to players.
         /// </summary>

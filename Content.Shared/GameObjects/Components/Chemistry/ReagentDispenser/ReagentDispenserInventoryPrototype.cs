@@ -24,10 +24,6 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         public List<string> Inventory => _inventory;
     }
 }

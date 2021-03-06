@@ -13,10 +13,6 @@ namespace Content.Shared.Prototypes.PDA
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         [field: DataField("itemId")]
         public string ItemId { get; } = string.Empty;
 

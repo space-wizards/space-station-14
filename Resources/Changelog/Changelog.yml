@@ -167,3 +167,27 @@ Entries:
   - {message: Fixed machine frames not correctly taking material sheets., type: Fix}
   id: 30
   time: '2021-03-04T15:16:49.762593+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Cargo teleporter works again, type: Fix}
+  id: 31
+  time: '2021-03-05T01:38:41.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Ejected casings now have much more variation and look cooler, type: Tweak}
+  id: 32
+  time: '2021-03-05T07:23:09.0000000+00:00'
+- author: daniel-cr
+  changes: []
+  id: 33
+  time: '2021-03-05T08:33:01.0000000+00:00'
+- author: PaulRitter
+  changes:
+  - {message: Fixes all alertonclicks, type: Fix}
+  id: 34
+  time: '2021-03-05T11:46:04.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: "Water vapor now makes puddles if under 100\xBAC.", type: Add}
+  id: 35
+  time: '2021-03-05T21:15:37.0000000+00:00'
