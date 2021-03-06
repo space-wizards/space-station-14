@@ -23,7 +23,7 @@
       requirements:
         MatterBin: 2
         Manipulator: 2
-      componentRequirements:
+      tagRequirements:
         GlassBeaker:
           Amount: 2
           DefaultPrototype: Beaker
