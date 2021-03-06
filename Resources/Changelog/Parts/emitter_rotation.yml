@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Fix
+    message: Fixes emitters shooting sideway bolts and in the wrong direction.
