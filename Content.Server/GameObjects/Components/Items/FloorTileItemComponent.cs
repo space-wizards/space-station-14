@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
@@ -62,6 +62,8 @@ namespace Content.Server.GameObjects.Components.Items
 
             var location = eventArgs.ClickLocation.AlignWithClosestGridTile();
             var locationMap = location.ToMap(Owner.EntityManager);
+            if (locationMap.MapId == MapId.Nullspace)
+                return true;
             mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid);
             foreach (var currentTile in _outputTiles)
             {
