@@ -41,6 +41,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
         private TimeSpan _lastInternalOpenAttempt;
 
+        private const int OpenMask = (int) (
+            CollisionGroup.MobImpassable |
+            CollisionGroup.VaultImpassable |
+            CollisionGroup.SmallImpassable);
+
         [ViewVariables]
         [DataField("Capacity")]
         private int _storageCapacityMax = 30;
@@ -238,14 +243,14 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 {
                     foreach (var fixture in physics.Fixtures)
                     {
-                        fixture.CollisionLayer &= ~(int) CollisionGroup.MobImpassable;
+                        fixture.CollisionLayer &= ~OpenMask;
                     }
                 }
                 else
                 {
                     foreach (var fixture in physics.Fixtures)
                     {
-                        fixture.CollisionLayer |= (int) CollisionGroup.MobImpassable;
+                        fixture.CollisionLayer |= OpenMask;
                     }
                 }
             }

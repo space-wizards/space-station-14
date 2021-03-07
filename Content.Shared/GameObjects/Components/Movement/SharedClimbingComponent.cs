@@ -3,6 +3,7 @@ using System;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -31,7 +32,26 @@ namespace Content.Shared.GameObjects.Components.Movement
         bool IActionBlocker.CanMove() => !OwnerIsTransitioning;
 
         [ViewVariables]
-        protected virtual bool OwnerIsTransitioning { get; set; }
+        protected virtual bool OwnerIsTransitioning
+        {
+            get => _ownerIsTransitioning;
+            set
+            {
+                if (_ownerIsTransitioning == value) return;
+                _ownerIsTransitioning = value;
+                if (Body == null) return;
+                if (value)
+                {
+                    Body.BodyType = BodyType.Dynamic;
+                }
+                else
+                {
+                    Body.BodyType = BodyType.KinematicController;
+                }
+            }
+        }
+
+        private bool _ownerIsTransitioning = false;
 
         [ComponentDependency] protected PhysicsComponent? Body;
 
