@@ -7,6 +7,9 @@ using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Physics;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -160,6 +163,14 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         public void Update()
         {
+            if (!Slippery)
+                return;
+
+            if (Owner.TryGetComponent(out PhysicsComponent? phys))
+            {
+                phys.WakeBody();
+            }
+
             foreach (var uid in _slipped.ToArray())
             {
                 if (!uid.IsValid() || !Owner.EntityManager.EntityExists(uid))
@@ -176,23 +187,6 @@ namespace Content.Shared.GameObjects.Components.Movement
                 {
                     _slipped.Remove(uid);
                 }
-            }
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            var physics = Owner.EnsureComponent<PhysicsComponent>();
-
-            physics.Hard = false;
-
-            var fixtures = physics.Fixtures.FirstOrDefault();
-
-            if (fixtures != null)
-            {
-                fixtures.CollisionLayer |= (int) CollisionGroup.SmallImpassable;
-                fixtures.CollisionMask = (int) CollisionGroup.None;
             }
         }
     }
