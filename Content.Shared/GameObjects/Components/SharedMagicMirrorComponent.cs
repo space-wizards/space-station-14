@@ -43,19 +43,32 @@ namespace Content.Shared.GameObjects.Components
         }
 
         [Serializable, NetSerializable]
+        public class EyeColorSelectedMessage : BoundUserInterfaceMessage
+        {
+            public (byte r, byte g, byte b) EyeColor;
+
+            public EyeColorSelectedMessage((byte r, byte g, byte b) color)
+            {
+                EyeColor = color;
+            }
+        }
+
+        [Serializable, NetSerializable]
         public class MagicMirrorInitialDataMessage : BoundUserInterfaceMessage
         {
             public readonly Color HairColor;
             public readonly Color FacialHairColor;
             public readonly string HairName;
             public readonly string FacialHairName;
+            public readonly Color EyeColor;
 
-            public MagicMirrorInitialDataMessage(Color hairColor, Color facialHairColor, string hairName, string facialHairName)
+            public MagicMirrorInitialDataMessage(Color hairColor, Color facialHairColor, string hairName, string facialHairName, Color eyeColor)
             {
                 HairColor = hairColor;
                 FacialHairColor = facialHairColor;
                 HairName = hairName;
                 FacialHairName = facialHairName;
+                EyeColor = eyeColor;
             }
         }
     }

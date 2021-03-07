@@ -47,6 +47,7 @@ namespace Content.Client.UserInterface
         private readonly OptionButton _backpackButton;
         private readonly HairStylePicker _hairPicker;
         private readonly FacialHairStylePicker _facialHairPicker;
+        private readonly EyeColorPicker _eyesPicker;
 
         private readonly List<JobPrioritySelector> _jobPriorities;
         private readonly OptionButton _preferenceUnavailableButton;
@@ -90,45 +91,40 @@ namespace Content.Client.UserInterface
 
             #region Randomize
 
+            var randomizePanel = HighlightedContainer();
+            var randomizeEverythingButton = new Button
             {
-                var panel = HighlightedContainer();
-                var randomizeEverythingButton = new Button
-                {
-                    Text = Loc.GetString("Randomize everything")
-                };
-                randomizeEverythingButton.OnPressed += args => { RandomizeEverything(); };
-                panel.AddChild(randomizeEverythingButton);
-                leftColumn.AddChild(panel);
-            }
+                Text = Loc.GetString("Randomize everything")
+            };
+            randomizeEverythingButton.OnPressed += args => { RandomizeEverything(); };
+            randomizePanel.AddChild(randomizeEverythingButton);
+            leftColumn.AddChild(randomizePanel);
 
             #endregion Randomize
 
             #region Name
 
+            var namePanel = HighlightedContainer();
+            var nameHBox = new HBoxContainer
             {
-                var panel = HighlightedContainer();
-                var hBox = new HBoxContainer
-                {
-                    VerticalExpand = true
-                };
-                var nameLabel = new Label {Text = Loc.GetString("Name:")};
-                _nameEdit = new LineEdit
-                {
-                    MinSize = (270, 0),
-                    VerticalAlignment = VAlignment.Center
-                };
-                _nameEdit.OnTextChanged += args => { SetName(args.Text); };
-                var nameRandomButton = new Button
-                {
-                    Text = Loc.GetString("Randomize"),
-                };
-                nameRandomButton.OnPressed += _ => RandomizeName();
-                hBox.AddChild(nameLabel);
-                hBox.AddChild(_nameEdit);
-                hBox.AddChild(nameRandomButton);
-                panel.AddChild(hBox);
-                leftColumn.AddChild(panel);
-            }
+                VerticalExpand = true
+            };
+            var nameLabel = new Label { Text = Loc.GetString("Name:") };
+            _nameEdit = new LineEdit
+            {
+                MinSize = (270, 0),
+                VerticalAlignment = VAlignment.Center
+            };
+            _nameEdit.OnTextChanged += args => { SetName(args.Text); };
+            var nameRandomButton = new Button
+            {
+                Text = Loc.GetString("Randomize"),
+            };
+            nameRandomButton.OnPressed += args => RandomizeName();
+            nameHBox.AddChild(nameLabel);
+            nameHBox.AddChild(_nameEdit);
+            nameHBox.AddChild(nameRandomButton);
+            randomizePanel.AddChild(nameHBox);
 
             #endregion Name
 
@@ -137,233 +133,259 @@ namespace Content.Client.UserInterface
 
             #region Appearance
 
+            var appearanceList = new VBoxContainer();
+
+            var appearanceVBox = new VBoxContainer
             {
-                var appearanceVBox = new VBoxContainer();
-                tabContainer.AddChild(appearanceVBox);
-                tabContainer.SetTabTitle(0, Loc.GetString("Appearance"));
-
-                var sexAndAgeRow = new HBoxContainer
+                Children =
                 {
-                    SeparationOverride = 10
-                };
-
-                appearanceVBox.AddChild(sexAndAgeRow);
-
-                #region Sex
-
-                {
-                    var panel = HighlightedContainer();
-                    var hBox = new HBoxContainer();
-                    var sexLabel = new Label {Text = Loc.GetString("Sex:")};
-
-                    var sexButtonGroup = new ButtonGroup();
-
-                    _sexMaleButton = new Button
+                    new ScrollContainer
                     {
-                        Text = Loc.GetString("Male"),
-                        Group = sexButtonGroup
-                    };
-                    _sexMaleButton.OnPressed += args =>
-                    {
-                        SetSex(Sex.Male);
-                        if (Profile.Gender == Gender.Female)
+                        VerticalExpand = true,
+                        Children =
                         {
-                            SetGender(Gender.Male);
-                            UpdateGenderControls();
+                            appearanceList
                         }
-                    };
-
-                    _sexFemaleButton = new Button
-                    {
-                        Text = Loc.GetString("Female"),
-                        Group = sexButtonGroup
-                    };
-                    _sexFemaleButton.OnPressed += args =>
-                    {
-                        SetSex(Sex.Female);
-                        if (Profile.Gender == Gender.Male)
-                        {
-                            SetGender(Gender.Female);
-                            UpdateGenderControls();
-                        }
-                    };
-
-                    hBox.AddChild(sexLabel);
-                    hBox.AddChild(_sexMaleButton);
-                    hBox.AddChild(_sexFemaleButton);
-                    panel.AddChild(hBox);
-                    sexAndAgeRow.AddChild(panel);
+                    }
                 }
+            };
+            tabContainer.AddChild(appearanceVBox);
+            tabContainer.SetTabTitle(0, Loc.GetString("Appearance"));
 
-                #endregion Sex
+            var sexAndAgeRow = new HBoxContainer
+            {
+                SeparationOverride = 10
+            };
 
-                #region Age
+            appearanceList.AddChild(sexAndAgeRow);
 
+            #region Sex
+
+            var sexPanel = HighlightedContainer();
+            var sexHBox = new HBoxContainer();
+            var sexLabel = new Label { Text = Loc.GetString("Sex:") };
+
+            var sexButtonGroup = new ButtonGroup();
+
+            _sexMaleButton = new Button
+            {
+                Text = Loc.GetString("Male"),
+                Group = sexButtonGroup
+            };
+            _sexMaleButton.OnPressed += args =>
+            {
+                SetSex(Sex.Male);
+                if (Profile.Gender == Gender.Female)
                 {
-                    var panel = HighlightedContainer();
-                    var hBox = new HBoxContainer();
-                    var ageLabel = new Label {Text = Loc.GetString("Age:")};
-                    _ageEdit = new LineEdit {MinSize = (40, 0)};
-                    _ageEdit.OnTextChanged += args =>
-                    {
-                        if (!int.TryParse(args.Text, out var newAge))
-                            return;
-                        SetAge(newAge);
-                    };
-                    hBox.AddChild(ageLabel);
-                    hBox.AddChild(_ageEdit);
-                    panel.AddChild(hBox);
-                    sexAndAgeRow.AddChild(panel);
+                    SetGender(Gender.Male);
+                    UpdateGenderControls();
                 }
+            };
 
-                #endregion Age
-
-                #region Gender
-
+            _sexFemaleButton = new Button
+            {
+                Text = Loc.GetString("Female"),
+                Group = sexButtonGroup
+            };
+            _sexFemaleButton.OnPressed += args =>
+            {
+                SetSex(Sex.Female);
+                if (Profile.Gender == Gender.Male)
                 {
-                    var panel = HighlightedContainer();
-                    var hBox = new HBoxContainer();
-                    var genderLabel = new Label {Text = Loc.GetString("Pronouns:")};
-
-                    _genderButton = new OptionButton();
-
-                    _genderButton.AddItem(Loc.GetString("He / Him"), (int) Gender.Male);
-                    _genderButton.AddItem(Loc.GetString("She / Her"), (int) Gender.Female);
-                    _genderButton.AddItem(Loc.GetString("They / Them"), (int) Gender.Epicene);
-                    _genderButton.AddItem(Loc.GetString("It / It"), (int) Gender.Neuter);
-
-                    _genderButton.OnItemSelected += args =>
-                    {
-                        _genderButton.SelectId(args.Id);
-                        SetGender((Gender) args.Id);
-                    };
-
-                    hBox.AddChild(genderLabel);
-                    hBox.AddChild(_genderButton);
-                    panel.AddChild(hBox);
-                    sexAndAgeRow.AddChild(panel);
+                    SetGender(Gender.Female);
+                    UpdateGenderControls();
                 }
+            };
 
-                #endregion Gender
+            sexHBox.AddChild(sexLabel);
+            sexHBox.AddChild(_sexMaleButton);
+            sexHBox.AddChild(_sexFemaleButton);
+            sexPanel.AddChild(sexHBox);
+            sexAndAgeRow.AddChild(sexPanel);
 
-                #region Hair
+            #endregion Sex
 
-                {
-                    var panel = HighlightedContainer();
-                    panel.HorizontalAlignment = HAlignment.Left;
-                    var hairHBox = new HBoxContainer();
+            #region Age
 
-                    _hairPicker = new HairStylePicker();
-                    _hairPicker.Populate();
+            var agePanel = HighlightedContainer();
+            var ageHBox = new HBoxContainer();
+            var ageLabel = new Label { Text = Loc.GetString("Age:") };
+            _ageEdit = new LineEdit { MinSize = (40, 0) };
+            _ageEdit.OnTextChanged += args =>
+            {
+                if (!int.TryParse(args.Text, out var newAge))
+                    return;
+                SetAge(newAge);
+            };
+            ageHBox.AddChild(ageLabel);
+            ageHBox.AddChild(_ageEdit);
+            agePanel.AddChild(ageHBox);
+            sexAndAgeRow.AddChild(agePanel);
 
-                    _hairPicker.OnHairStylePicked += newStyle =>
-                    {
-                        if (Profile is null)
-                            return;
-                        Profile = Profile.WithCharacterAppearance(
-                            Profile.Appearance.WithHairStyleName(newStyle));
-                        IsDirty = true;
-                    };
+            #endregion Age
 
-                    _hairPicker.OnHairColorPicked += newColor =>
-                    {
-                        if (Profile is null)
-                            return;
-                        Profile = Profile.WithCharacterAppearance(
-                            Profile.Appearance.WithHairColor(newColor));
-                        IsDirty = true;
-                    };
+            #region Gender
 
-                    _facialHairPicker = new FacialHairStylePicker();
-                    _facialHairPicker.Populate();
+            var genderPanel = HighlightedContainer();
+            var genderHBox = new HBoxContainer();
+            var genderLabel = new Label { Text = Loc.GetString("Pronouns:") };
 
-                    _facialHairPicker.OnHairStylePicked += newStyle =>
-                    {
-                        if (Profile is null)
-                            return;
-                        Profile = Profile.WithCharacterAppearance(
-                            Profile.Appearance.WithFacialHairStyleName(newStyle));
-                        IsDirty = true;
-                    };
+            _genderButton = new OptionButton();
 
-                    _facialHairPicker.OnHairColorPicked += newColor =>
-                    {
-                        if (Profile is null)
-                            return;
-                        Profile = Profile.WithCharacterAppearance(
-                            Profile.Appearance.WithFacialHairColor(newColor));
-                        IsDirty = true;
-                    };
+            _genderButton.AddItem(Loc.GetString("He / Him"), (int) Gender.Male);
+            _genderButton.AddItem(Loc.GetString("She / Her"), (int) Gender.Female);
+            _genderButton.AddItem(Loc.GetString("They / Them"), (int) Gender.Epicene);
+            _genderButton.AddItem(Loc.GetString("It / It"), (int) Gender.Neuter);
 
-                    hairHBox.AddChild(_hairPicker);
-                    hairHBox.AddChild(_facialHairPicker);
+            _genderButton.OnItemSelected += args =>
+            {
+                _genderButton.SelectId(args.Id);
+                SetGender((Gender) args.Id);
+            };
 
-                    panel.AddChild(hairHBox);
-                    appearanceVBox.AddChild(panel);
-                }
+            genderHBox.AddChild(genderLabel);
+            genderHBox.AddChild(_genderButton);
+            genderPanel.AddChild(genderHBox);
+            sexAndAgeRow.AddChild(genderPanel);
 
-                #endregion Hair
+            #endregion Gender
 
-                #region Clothing
+            #region Hair
 
-                {
-                    var panel = HighlightedContainer();
-                    var hBox = new HBoxContainer();
-                    var clothingLabel = new Label {Text = Loc.GetString("Clothing:")};
+            var hairPanel = HighlightedContainer();
+            var hairHBox = new HBoxContainer();
 
-                    _clothingButton = new OptionButton();
+            _hairPicker = new HairStylePicker
+            {
+                HorizontalAlignment = HAlignment.Center
+            };
+            _hairPicker.Populate();
 
-                    _clothingButton.AddItem(Loc.GetString("Jumpsuit"), (int) ClothingPreference.Jumpsuit);
-                    _clothingButton.AddItem(Loc.GetString("Jumpskirt"), (int) ClothingPreference.Jumpskirt);
+            _hairPicker.OnHairStylePicked += newStyle =>
+            {
+                if (Profile is null)
+                    return;
+                Profile = Profile.WithCharacterAppearance(
+                    Profile.Appearance.WithHairStyleName(newStyle));
+                IsDirty = true;
+            };
 
-                    _clothingButton.OnItemSelected += args =>
-                    {
-                        _clothingButton.SelectId(args.Id);
-                        SetClothing((ClothingPreference) args.Id);
-                    };
+            _hairPicker.OnHairColorPicked += newColor =>
+            {
+                if (Profile is null)
+                    return;
+                Profile = Profile.WithCharacterAppearance(
+                    Profile.Appearance.WithHairColor(newColor));
+                IsDirty = true;
+            };
 
-                    hBox.AddChild(clothingLabel);
-                    hBox.AddChild(_clothingButton);
-                    panel.AddChild(hBox);
-                    appearanceVBox.AddChild(panel);
-                }
+            _facialHairPicker = new FacialHairStylePicker();
+            _facialHairPicker.Populate();
 
-                #endregion Clothing
+            _facialHairPicker.OnHairStylePicked += newStyle =>
+            {
+                if (Profile is null)
+                    return;
+                Profile = Profile.WithCharacterAppearance(
+                    Profile.Appearance.WithFacialHairStyleName(newStyle));
+                IsDirty = true;
+            };
 
-                #region Backpack
+            _facialHairPicker.OnHairColorPicked += newColor =>
+            {
+                if (Profile is null)
+                    return;
+                Profile = Profile.WithCharacterAppearance(
+                    Profile.Appearance.WithFacialHairColor(newColor));
+                IsDirty = true;
+            };
 
-                {
-                    var panel = HighlightedContainer();
-                    var hBox = new HBoxContainer();
-                    var backpackLabel = new Label {Text = Loc.GetString("Backpack:")};
+            hairHBox.AddChild(_hairPicker);
+            hairHBox.AddChild(_facialHairPicker);
 
-                    _backpackButton = new OptionButton();
+            hairPanel.AddChild(hairHBox);
+            appearanceList.AddChild(hairPanel);
 
-                    _backpackButton.AddItem(Loc.GetString("Backpack"), (int) BackpackPreference.Backpack);
-                    _backpackButton.AddItem(Loc.GetString("Satchel"), (int) BackpackPreference.Satchel);
-                    _backpackButton.AddItem(Loc.GetString("Duffelbag"), (int) BackpackPreference.Duffelbag);
+            #endregion Hair
 
-                    _backpackButton.OnItemSelected += args =>
-                    {
-                        _backpackButton.SelectId(args.Id);
-                        SetBackpack((BackpackPreference) args.Id);
-                    };
+            #region Clothing
 
-                    hBox.AddChild(backpackLabel);
-                    hBox.AddChild(_backpackButton);
-                    panel.AddChild(hBox);
-                    appearanceVBox.AddChild(panel);
-                }
+            var clothingPanel = HighlightedContainer();
+            var clothingHBox = new HBoxContainer();
+            var clothingLabel = new Label { Text = Loc.GetString("Clothing:") };
 
-                #endregion Clothing
-            }
+            _clothingButton = new OptionButton();
 
-            #endregion
+            _clothingButton.AddItem(Loc.GetString("Jumpsuit"), (int) ClothingPreference.Jumpsuit);
+            _clothingButton.AddItem(Loc.GetString("Jumpskirt"), (int) ClothingPreference.Jumpskirt);
+
+            _clothingButton.OnItemSelected += args =>
+            {
+                _clothingButton.SelectId(args.Id);
+                SetClothing((ClothingPreference) args.Id);
+            };
+
+            clothingHBox.AddChild(clothingLabel);
+            clothingHBox.AddChild(_clothingButton);
+            clothingPanel.AddChild(clothingHBox);
+            appearanceList.AddChild(clothingPanel);
+
+            #endregion Clothing
+
+            #region Backpack
+
+            var backpackPanel = HighlightedContainer();
+            var backpackHBox = new HBoxContainer();
+            var backpackLabel = new Label { Text = Loc.GetString("Backpack:") };
+
+            _backpackButton = new OptionButton();
+
+            _backpackButton.AddItem(Loc.GetString("Backpack"), (int) BackpackPreference.Backpack);
+            _backpackButton.AddItem(Loc.GetString("Satchel"), (int) BackpackPreference.Satchel);
+            _backpackButton.AddItem(Loc.GetString("Duffelbag"), (int) BackpackPreference.Duffelbag);
+
+            _backpackButton.OnItemSelected += args =>
+            {
+                _backpackButton.SelectId(args.Id);
+                SetBackpack((BackpackPreference) args.Id);
+            };
+
+            backpackHBox.AddChild(backpackLabel);
+            backpackHBox.AddChild(_backpackButton);
+            backpackPanel.AddChild(backpackHBox);
+            appearanceList.AddChild(backpackPanel);
+
+            #endregion Backpack
+
+            #region Eyes
+
+            var eyesPanel = HighlightedContainer();
+            var eyesVBox = new VBoxContainer();
+            var eyesLabel = new Label { Text = Loc.GetString("Eye color:") };
+
+            _eyesPicker = new EyeColorPicker();
+
+            _eyesPicker.OnEyeColorPicked += newColor =>
+            {
+                if (Profile is null)
+                    return;
+                Profile = Profile.WithCharacterAppearance(
+                    Profile.Appearance.WithEyeColor(newColor));
+                IsDirty = true;
+            };
+
+            eyesVBox.AddChild(eyesLabel);
+            eyesVBox.AddChild(_eyesPicker);
+            eyesPanel.AddChild(eyesVBox);
+            appearanceList.AddChild(eyesPanel);
+
+            #endregion Eyes
+
+            #endregion Appearance
 
             #region Jobs
 
-            {
-                var jobList = new VBoxContainer();
+            var jobList = new VBoxContainer();
 
                 var jobVBox = new VBoxContainer
                 {
@@ -381,42 +403,42 @@ namespace Content.Client.UserInterface
                     }
                 };
 
-                tabContainer.AddChild(jobVBox);
+            tabContainer.AddChild(jobVBox);
 
-                tabContainer.SetTabTitle(1, Loc.GetString("Jobs"));
+            tabContainer.SetTabTitle(1, Loc.GetString("Jobs"));
 
-                _preferenceUnavailableButton.AddItem(
-                    Loc.GetString("Stay in lobby if preference unavailable."),
-                    (int) PreferenceUnavailableMode.StayInLobby);
-                _preferenceUnavailableButton.AddItem(
-                    Loc.GetString("Be an {0} if preference unavailable.",
-                        Loc.GetString(SharedGameTicker.OverflowJobName)),
-                    (int) PreferenceUnavailableMode.SpawnAsOverflow);
+            _preferenceUnavailableButton.AddItem(
+                Loc.GetString("Stay in lobby if preference unavailable."),
+                (int) PreferenceUnavailableMode.StayInLobby);
+            _preferenceUnavailableButton.AddItem(
+                Loc.GetString("Be an {0} if preference unavailable.",
+                    Loc.GetString(SharedGameTicker.OverflowJobName)),
+                (int) PreferenceUnavailableMode.SpawnAsOverflow);
 
-                _preferenceUnavailableButton.OnItemSelected += args =>
+            _preferenceUnavailableButton.OnItemSelected += args =>
+            {
+                _preferenceUnavailableButton.SelectId(args.Id);
+
+                Profile = Profile.WithPreferenceUnavailable((PreferenceUnavailableMode) args.Id);
+                IsDirty = true;
+            };
+
+            _jobPriorities = new List<JobPrioritySelector>();
+            _jobCategories = new Dictionary<string, VBoxContainer>();
+
+            var firstCategory = true;
+
+            foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.Name))
+            {
+                foreach (var department in job.Departments)
                 {
-                    _preferenceUnavailableButton.SelectId(args.Id);
-
-                    Profile = Profile.WithPreferenceUnavailable((PreferenceUnavailableMode) args.Id);
-                    IsDirty = true;
-                };
-
-                _jobPriorities = new List<JobPrioritySelector>();
-                _jobCategories = new Dictionary<string, VBoxContainer>();
-
-                var firstCategory = true;
-
-                foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.Name))
-                {
-                    foreach (var department in job.Departments)
+                    if (!_jobCategories.TryGetValue(department, out var category))
                     {
-                        if (!_jobCategories.TryGetValue(department, out var category))
+                        category = new VBoxContainer
                         {
-                            category = new VBoxContainer
-                            {
-                                Name = department,
-                                ToolTip = Loc.GetString("Jobs in the {0} department", department)
-                            };
+                            Name = department,
+                            ToolTip = Loc.GetString("Jobs in the {0} department", department)
+                        };
 
                             if (firstCategory)
                             {
@@ -430,60 +452,58 @@ namespace Content.Client.UserInterface
                                 });
                             }
 
-                            category.AddChild(new PanelContainer
-                            {
-                                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#464966")},
-                                Children =
-                                {
-                                    new Label
-                                    {
-                                        Text = Loc.GetString("{0} jobs", department)
-                                    }
-                                }
-                            });
-
-                            _jobCategories[department] = category;
-                            jobList.AddChild(category);
-                        }
-
-                        var selector = new JobPrioritySelector(job);
-                        category.AddChild(selector);
-                        _jobPriorities.Add(selector);
-
-                        selector.PriorityChanged += priority =>
+                        category.AddChild(new PanelContainer
                         {
-                            Profile = Profile.WithJobPriority(job.ID, priority);
-                            IsDirty = true;
-
-                            foreach (var jobSelector in _jobPriorities)
+                            PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#464966")},
+                            Children =
                             {
-                                // Sync other selectors with the same job in case of multiple department jobs
-                                if (jobSelector.Job == selector.Job)
+                                new Label
                                 {
-                                    jobSelector.Priority = priority;
-                                }
-
-                                // Lower any other high priorities to medium.
-                                if (priority == JobPriority.High)
-                                {
-                                    if (jobSelector.Job != selector.Job && jobSelector.Priority == JobPriority.High)
-                                    {
-                                        jobSelector.Priority = JobPriority.Medium;
-                                        Profile = Profile.WithJobPriority(jobSelector.Job.ID, JobPriority.Medium);
-                                    }
+                                    Text = Loc.GetString("{0} jobs", department)
                                 }
                             }
-                        };
+                        });
+
+                        _jobCategories[department] = category;
+                        jobList.AddChild(category);
                     }
+
+                    var selector = new JobPrioritySelector(job);
+                    category.AddChild(selector);
+                    _jobPriorities.Add(selector);
+
+                    selector.PriorityChanged += priority =>
+                    {
+                        Profile = Profile.WithJobPriority(job.ID, priority);
+                        IsDirty = true;
+
+                        foreach (var jobSelector in _jobPriorities)
+                        {
+                            // Sync other selectors with the same job in case of multiple department jobs
+                            if (jobSelector.Job == selector.Job)
+                            {
+                                jobSelector.Priority = priority;
+                            }
+
+                            // Lower any other high priorities to medium.
+                            if (priority == JobPriority.High)
+                            {
+                                if (jobSelector.Job != selector.Job && jobSelector.Priority == JobPriority.High)
+                                {
+                                    jobSelector.Priority = JobPriority.Medium;
+                                    Profile = Profile.WithJobPriority(jobSelector.Job.ID, JobPriority.Medium);
+                                }
+                            }
+                        }
+                    };
                 }
             }
 
-            #endregion
+            #endregion Jobs
 
             #region Antags
 
-            {
-                var antagList = new VBoxContainer();
+            var antagList = new VBoxContainer();
 
                 var antagVBox = new VBoxContainer
                 {
@@ -500,11 +520,11 @@ namespace Content.Client.UserInterface
                     }
                 };
 
-                tabContainer.AddChild(antagVBox);
+            tabContainer.AddChild(antagVBox);
 
-                tabContainer.SetTabTitle(2, Loc.GetString("Antags"));
+            tabContainer.SetTabTitle(2, Loc.GetString("Antags"));
 
-                _antagPreferences = new List<AntagPreferenceSelector>();
+            _antagPreferences = new List<AntagPreferenceSelector>();
 
                 foreach (var antag in prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => a.Name))
                 {
@@ -517,41 +537,38 @@ namespace Content.Client.UserInterface
                     antagList.AddChild(selector);
                     _antagPreferences.Add(selector);
 
-                    selector.PreferenceChanged += preference =>
-                    {
-                        Profile = Profile.WithAntagPreference(antag.ID, preference);
-                        IsDirty = true;
-                    };
-                }
+                selector.PreferenceChanged += preference =>
+                {
+                    Profile = Profile.WithAntagPreference(antag.ID, preference);
+                    IsDirty = true;
+                };
             }
 
-            #endregion
+            #endregion Antags
 
             var rightColumn = new VBoxContainer();
             middleContainer.AddChild(rightColumn);
 
             #region Import/Export
 
+            var importExportPanelContainer = HighlightedContainer();
+            var importExportHBox = new HBoxContainer();
+            var importButton = new Button
             {
-                var panelContainer = HighlightedContainer();
-                var hBox = new HBoxContainer();
-                var importButton = new Button
-                {
-                    Text = Loc.GetString("Import"),
-                    Disabled = true,
-                    ToolTip = "Not yet implemented!"
-                };
-                var exportButton = new Button
-                {
-                    Text = Loc.GetString("Export"),
-                    Disabled = true,
-                    ToolTip = "Not yet implemented!"
-                };
-                hBox.AddChild(importButton);
-                hBox.AddChild(exportButton);
-                panelContainer.AddChild(hBox);
-                rightColumn.AddChild(panelContainer);
-            }
+                Text = Loc.GetString("Import"),
+                Disabled = true,
+                ToolTip = "Not yet implemented!"
+            };
+            var exportButton = new Button
+            {
+                Text = Loc.GetString("Export"),
+                Disabled = true,
+                ToolTip = "Not yet implemented!"
+            };
+            importExportHBox.AddChild(importButton);
+            importExportHBox.AddChild(exportButton);
+            importExportPanelContainer.AddChild(importExportHBox);
+            rightColumn.AddChild(importExportPanelContainer);
 
             #endregion Import/Export
 
@@ -571,7 +588,7 @@ namespace Content.Client.UserInterface
 
             #endregion Save
 
-            #endregion
+            #endregion Left
 
             #region Right
 
@@ -621,7 +638,7 @@ namespace Content.Client.UserInterface
             };
             box.AddChild(_previewSpriteSide);
 
-            #endregion
+            #endregion Right
 
             #endregion
 
@@ -757,6 +774,11 @@ namespace Content.Client.UserInterface
                 Profile.Appearance.FacialHairStyleName);
         }
 
+        private void UpdateEyePickers()
+        {
+            _eyesPicker.SetData(Profile.Appearance.EyeColor);
+        }
+
         private void UpdateSaveButton()
         {
             _saveButton.Disabled = Profile is null || !IsDirty;
@@ -781,6 +803,7 @@ namespace Content.Client.UserInterface
             UpdateBackpackControls();
             UpdateAgeEdit();
             UpdateHairPickers();
+            UpdateEyePickers();
             UpdateSaveButton();
             UpdateJobPriorities();
             UpdateAntagPreferences();
