@@ -141,6 +141,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             UnsubscribeNetworkEvent<SharedAiDebug.UnsubscribeReachableMessage>();
         }
 
+#if DEBUG
         private void HandleSubscription(SharedAiDebug.SubscribeReachableMessage message, EntitySessionEventArgs eventArgs)
         {
             _subscribedSessions.Add((IPlayerSession) eventArgs.SenderSession);
@@ -154,6 +155,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         {
             _subscribedSessions.Remove((IPlayerSession) eventArgs.SenderSession);
         }
+#endif
 
         private void RecalculateNodeRegions(PathfindingChunkUpdateMessage message)
         {
