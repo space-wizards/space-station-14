@@ -253,3 +253,8 @@ Entries:
   - {message: Character eye customization, type: Add}
   id: 46
   time: '2021-03-07T19:48:24.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Reworked the construction UI so that the recipe is easier to see, type: Tweak}
+  id: 47
+  time: '2021-03-07T22:09:41.0000000+00:00'
