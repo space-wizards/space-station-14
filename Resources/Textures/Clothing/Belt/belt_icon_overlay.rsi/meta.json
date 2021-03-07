@@ -8,204 +8,79 @@
   },
   "states": [
     {
-      "name": "crowbar",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "crowbar"
     },
     {
-      "name": "crowbar_brass",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "crowbar_brass"
     },
     {
-      "name": "crowbar_large",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "crowbar_large"
     },
     {
-      "name": "crowbar_red",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "crowbar_red"
     },
     {
-      "name": "cutters_brass",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "cutters_brass"
     },
     {
-      "name": "cutters_red",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "cutters_red"
     },
     {
-      "name": "cutters_yellow",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "cutters_yellow"
     },
     {
-      "name": "drill_bolt",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "drill_bolt"
     },
     {
-      "name": "drill_screw",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "drill_screw"
     },
     {
-      "name": "flashbang",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "flashbang"
     },
     {
-      "name": "jaws_cutter",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "jaws_cutter"
     },
     {
-      "name": "jaws_pry",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "jaws_pry"
     },
     {
-      "name": "multitool",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "multitool"
     },
     {
-      "name": "multitool_red",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "multitool_red"
     },
     {
-      "name": "multitool_yellow",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "multitool_yellow"
     },
     {
-      "name": "screwdriver",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "screwdriver"
     },
     {
-      "name": "screwdriver_brass",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "screwdriver_brass"
     },
     {
-      "name": "screwdriver_head",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "screwdriver_head"
     },
     {
-      "name": "screwdriver_nuke",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "screwdriver_nuke"
     },
     {
-      "name": "stunbaton",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "stunbaton"
     },
     {
-      "name": "stunbaton_active",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "stunbaton_active"
     },
     {
-      "name": "stunbaton_nocell",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "stunbaton_nocell"
     },
     {
-      "name": "wrench",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "wrench"
     },
     {
-      "name": "wrench_brass",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "wrench_brass"
     },
     {
-      "name": "wrench_medical",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "wrench_medical"
     }
   ]
 }

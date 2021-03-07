@@ -8,36 +8,16 @@
   },
   "states": [
     {
-      "name": "jaws_cutter",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "jaws_cutter"
     },
     {
-      "name": "jaws_pry",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "jaws_pry"
     },
     {
-      "name": "syn_jaws_cutter",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "syn_jaws_cutter"
     },
     {
-      "name": "syn_jaws_pry",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "syn_jaws_pry"
     },
     {
       "name": "inhand-left",

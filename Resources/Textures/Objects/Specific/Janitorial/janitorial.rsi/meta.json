@@ -6,44 +6,19 @@
   },
   "states": [
     {
-      "name": "bucket",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "bucket"
     },
     {
-      "name": "bucket_water",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "bucket_water"
     },
     {
-      "name": "cleaner",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "cleaner"
     },
     {
-      "name": "mopbucket",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "mopbucket"
     },
     {
-      "name": "mopbucket_water",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "mopbucket_water"
     }
   ]
 }
