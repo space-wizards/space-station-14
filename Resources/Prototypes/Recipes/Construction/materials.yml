@@ -13,7 +13,7 @@
   name: Reinforced Glass
   id: sheetRGlass
   graph: glass
-  startNode: SheetGlass
+  startNode: start
   targetNode: SheetRGlass
   category: Materials
   icon: Objects/Materials/Sheets/glass.rsi/rglass.png
@@ -23,7 +23,7 @@
   name: Plasma Glass
   id: sheetPGlass
   graph: glass
-  startNode: SheetGlass
+  startNode: start
   targetNode: SheetPGlass
   category: Materials
   icon: Objects/Materials/Sheets/glass.rsi/pglass.png
@@ -33,7 +33,7 @@
   name: Reinforced Plasma Glass
   id: sheetRPGlass
   graph: glass
-  startNode: SheetGlass
+  startNode: start
   targetNode: SheetRPGlass
   category: Materials
   icon: Objects/Materials/Sheets/glass.rsi/rpglass.png
