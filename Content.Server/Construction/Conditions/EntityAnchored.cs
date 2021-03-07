@@ -28,7 +28,7 @@ namespace Content.Server.Construction.Conditions
 
             switch (Anchored)
             {
-                case true when physics.BodyType == BodyType.Static:
+                case true when physics.BodyType != BodyType.Static:
                     message.AddMarkup("First, anchor it.\n");
                     return true;
                 case false when physics.BodyType == BodyType.Static:
