@@ -766,7 +766,7 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.Connected:
                 {
-                    _chatManager.DispatchServerAnnouncement($"Player {args.Session.Name} joined server!");
+                    _chatManager.SendAdminAnnouncement(Loc.GetString("player-join-message", ("name", args.Session.Name)));
 
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                     {
@@ -813,7 +813,8 @@ namespace Content.Server.GameTicking
                 {
                     if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
 
-                    _chatManager.DispatchServerAnnouncement($"Player {args.Session} left server!");
+                    _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
+
                     ServerEmptyUpdateRestartCheck();
                     _prefsManager.OnClientDisconnected(session);
                     break;
