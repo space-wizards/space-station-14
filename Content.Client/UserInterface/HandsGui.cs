@@ -46,6 +46,9 @@ namespace Content.Client.UserInterface
         [ViewVariables]
         private HandsGuiState State { get; set; } = new();
 
+        [ViewVariables]
+        private Dictionary<GuiHand, HandButton> Hands { get; set; } = new();
+
         /// <summary>
         ///     The hands component that created this. Should only be used for sending network messages.
         /// </summary>
@@ -54,6 +57,12 @@ namespace Content.Client.UserInterface
         public void SetState(HandsGuiState state)
         {
             State = state;
+
+            Hands.Clear();
+            foreach (var hand in state.GuiHands)
+            {
+                Hands.Add(hand, MakeHandbutton(hand.HandLocation));
+            }
             //TODO: Update UI with new state
         }
 
@@ -85,9 +94,9 @@ namespace Content.Client.UserInterface
             _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
         }
 
-        private ItemStatusPanel GetItemPanel(ClientHand hand)
+        private ItemStatusPanel GetItemPanel(HandLocation handLocation)
         {
-            return hand.Location switch
+            return handLocation switch
             {
                 HandLocation.Left => _rightPanel,
                 HandLocation.Middle => _topPanel,
@@ -117,10 +126,7 @@ namespace Content.Client.UserInterface
         /// </param>
         private void AddHand(ClientHand hand, HandLocation buttonLocation)
         {
-            var buttonTexture = HandTexture(buttonLocation);
-            var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
-            var blockedTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
-            var button = new HandButton(buttonTexture, storageTexture, blockedTexture, buttonLocation);
+            var button = MakeHandbutton(buttonLocation);
             var slot = hand.Name;
 
             button.OnPressed += args => HandKeyBindDown(args, slot);
@@ -128,6 +134,14 @@ namespace Content.Client.UserInterface
 
             _handsContainer.AddChild(button);
             hand.Button = button;
+        }
+
+        private HandButton MakeHandbutton(HandLocation buttonLocation)
+        {
+            var buttonTexture = HandTexture(buttonLocation);
+            var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
+            var blockedTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
+            return new HandButton(buttonTexture, storageTexture, blockedTexture, buttonLocation);
         }
 
         public void RemoveHand(ClientHand hand)
@@ -142,7 +156,7 @@ namespace Content.Client.UserInterface
 
         public void UpdateHandIcons()
         {
-            if (base.Parent == null)
+            if (Parent == null)
             {
                 return;
             }
@@ -286,10 +300,10 @@ namespace Content.Client.UserInterface
                     _rightPanel.Update(hands[1].HeldItem);
 
                     // Order is left, right
-                    foreach (var hand in Creator.Hands)
+                    foreach (var hand in State.GuiHands)
                     {
-                        var tooltip = GetItemPanel(hand);
-                        tooltip.Update(hand.Entity);
+                        var tooltip = GetItemPanel(hand.HandLocation);
+                        tooltip.Update(hand.HeldItem);
                     }
 
                     break;
