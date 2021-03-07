@@ -1,4 +1,7 @@
-﻿using System;
+#nullable enable
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.GameObjects.Components.Items;
 using Content.Client.Utility;
@@ -9,6 +12,7 @@ using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
@@ -125,7 +129,7 @@ namespace Content.Client.UserInterface
         /// </summary>
         /// <param name="hands"></param>
         /// <returns>true if successful and false if failure</returns>
-        private bool TryGetHands(out HandsComponent hands)
+        private bool TryGetHands([NotNullWhen(true)] out HandsComponent? hands)
         {
             hands = default;
 
@@ -329,6 +333,50 @@ namespace Content.Client.UserInterface
         {
             base.FrameUpdate(args);
             UpdatePanels();
+        }
+    }
+
+    /// <summary>
+    ///     Info on a set of hands to be displayed.
+    /// </summary>
+    public class HandsGuiState
+    {
+        /// <summary>
+        ///     The set of hands to be displayed.
+        /// </summary>
+        public List<GuiHand> GuiHands { get; } = new();
+
+        public HandsGuiState(List<GuiHand> guiHands)
+        {
+            GuiHands = guiHands;
+        }
+    }
+
+    /// <summary>
+    ///     Info on an individual hand to be displayed.
+    /// </summary>
+    public class GuiHand
+    {
+        /// <summary>
+        ///     The name of this hand.
+        /// </summary>
+        public string Name { get; }
+
+        /// <summary>
+        ///     Where this hand is located.
+        /// </summary>
+        public HandLocation HandLocation { get; }
+
+        /// <summary>
+        ///     The item being held in this hand.
+        /// </summary>
+        public IEntity? HeldItem { get; }
+
+        public GuiHand(string name, HandLocation handLocation, IEntity? heldItem = null)
+        {
+            Name = name;
+            HandLocation = handLocation;
+            HeldItem = heldItem;
         }
     }
 }
