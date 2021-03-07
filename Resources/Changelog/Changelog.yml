@@ -258,3 +258,9 @@ Entries:
   - {message: Reworked the construction UI so that the recipe is easier to see, type: Tweak}
   id: 47
   time: '2021-03-07T22:09:41.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: 'Reinforced glass, plasma glass, and reinforced plasma glass can now
+      be constructed.', type: Add}
+  id: 48
+  time: '2021-03-07T23:22:25.0000000+00:00'
