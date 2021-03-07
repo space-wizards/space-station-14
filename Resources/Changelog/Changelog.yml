@@ -238,3 +238,8 @@ Entries:
       in the theater vendor!, type: Add}
   id: 43
   time: '2021-03-07T12:41:42.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Added ammovend, type: Add}
+  id: 44
+  time: '2021-03-07T19:17:58.0000000+00:00'
