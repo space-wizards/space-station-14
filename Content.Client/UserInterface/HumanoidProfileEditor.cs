@@ -62,7 +62,7 @@ namespace Content.Client.UserInterface
         private bool _isDirty;
         public int CharacterSlot;
         public HumanoidCharacterProfile Profile;
-        public event Action<HumanoidCharacterProfile> OnProfileChanged;
+        public event Action<HumanoidCharacterProfile, int> OnProfileChanged;
 
         public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager,
             IEntityManager entityManager)
@@ -709,7 +709,7 @@ namespace Content.Client.UserInterface
         {
             IsDirty = false;
             _preferencesManager.UpdateCharacter(Profile, CharacterSlot);
-            OnProfileChanged?.Invoke(Profile);
+            OnProfileChanged?.Invoke(Profile, CharacterSlot);
         }
 
         private bool IsDirty
