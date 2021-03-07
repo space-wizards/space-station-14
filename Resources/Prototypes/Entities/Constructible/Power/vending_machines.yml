@@ -55,6 +55,32 @@
 
 - type: entity
   parent: VendingMachine
+  id: VendingMachineAmmo
+  name: Liberation Station
+  description: An overwhelming amount of ancient patriotism washes over you just by looking at the machine.
+# Ads cause I remember somebody was working on these
+# product_slogans = "Liberation Station: Your one-stop shop for all things second amendment!;Be a patriot today, pick up a gun!;Quality weapons for cheap prices!;Better dead than red!"
+# product_ads = "Float like an astronaut, sting like a bullet!;Express your second amendment today!;Guns don't kill people, but you can!;Who needs responsibilities when you have guns?"
+  components:
+  - type: VendingMachine
+    pack: AmmoVend
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/ammo.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+
+- type: entity
+  parent: VendingMachine
   id: VendingMachineBooze
   name: Booze-O-Mat
   components:
@@ -68,7 +94,7 @@
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
+    - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
     visuals:
