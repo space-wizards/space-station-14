@@ -6,7 +6,6 @@
   abstract: true
   components:
   - type: PlayerInputMover
-    ignorePaused: true
   - type: Physics
     bodyType: Kinematic
     mass: 5
