@@ -248,3 +248,8 @@ Entries:
   - {message: 'Mags/Batteries stop spawning at 0, 0.', type: Fix}
   id: 45
   time: '2021-03-07T19:43:07.0000000+00:00'
+- author: Rember
+  changes:
+  - {message: Character eye customization, type: Add}
+  id: 46
+  time: '2021-03-07T19:48:24.0000000+00:00'
