@@ -166,11 +166,6 @@ namespace Content.Shared.GameObjects.Components.Movement
             if (!Slippery)
                 return;
 
-            if (Owner.TryGetComponent(out PhysicsComponent? phys))
-            {
-                phys.WakeBody();
-            }
-
             foreach (var uid in _slipped.ToArray())
             {
                 if (!uid.IsValid() || !Owner.EntityManager.EntityExists(uid))
