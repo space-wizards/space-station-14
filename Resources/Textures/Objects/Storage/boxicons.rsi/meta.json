@@ -4,192 +4,77 @@
     "x": 32,
     "y": 32
   },
-  "license": "CC-BY-NA 3",
+  "license": "CC-BY-NA 3.0",
   "copyright": "https://github.com/Baystation12/Baystation12/commit/bc9fbb1722530596e3aa7522ee407280b323ad43",
   "states": [
     {
-      "name": "beaker",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "beaker"
     },
     {
-      "name": "bodybags",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "bodybags"
     },
     {
-      "name": "meson",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "meson"
     },
     {
-      "name": "sechud",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "sechud"
     },
     {
-      "name": "box",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "box"
     },
     {
-      "name": "box_of_doom",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "box_of_doom"
     },
     {
-      "name": "circuit",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "circuit"
     },
     {
-      "name": "disk_kit",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "disk_kit"
     },
     {
-      "name": "donk_kit",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "donk_kit"
     },
     {
-      "name": "flashbang",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "flashbang"
     },
     {
-      "name": "glasses",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "glasses"
     },
     {
-      "name": "handcuff",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "handcuff"
     },
     {
-      "name": "implant",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "implant"
     },
     {
-      "name": "latex",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "latex"
     },
     {
-      "name": "light",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "light"
     },
     {
-      "name": "lightmixed",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "lightmixed"
     },
     {
-      "name": "lighttube",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "lighttube"
     },
     {
-      "name": "mousetraps",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "mousetraps"
     },
     {
-      "name": "pda",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda"
     },
     {
-      "name": "pillbox",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pillbox"
     },
     {
-      "name": "solution_trays",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "solution_trays"
     },
     {
-      "name": "sterile",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "sterile"
     },
     {
-      "name": "syringe",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "syringe"
     }
   ]
 }
