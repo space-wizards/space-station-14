@@ -34,7 +34,7 @@
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
 
     - type: Physics
-      on: false
+      canCollide: false
       fixtures:
         - shape:
             !type:PhysShapeAabb
