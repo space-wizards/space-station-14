@@ -227,3 +227,8 @@ Entries:
       board., type: Fix}
   id: 41
   time: '2021-03-06T13:48:07.041235+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Glass shards can be turned into glass sheets with a welder again, type: Fix}
+  id: 42
+  time: '2021-03-07T09:05:57.0000000+00:00'
