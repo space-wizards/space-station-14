@@ -232,3 +232,9 @@ Entries:
   - {message: Glass shards can be turned into glass sheets with a welder again, type: Fix}
   id: 42
   time: '2021-03-07T09:05:57.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The Red-and-White Shrine Maiden outfit complete with gohei is now available
+      in the theater vendor!, type: Add}
+  id: 43
+  time: '2021-03-07T12:41:42.0000000+00:00'
