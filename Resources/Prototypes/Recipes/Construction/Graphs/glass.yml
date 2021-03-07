@@ -4,10 +4,6 @@
   graph:
     - node: start
       edges:
-        - to: SheetGlass
-          completed:
-            - !type:SetStackCount
-              amount: 1
         - to: SheetRGlass
           completed:
             - !type:SetStackCount
