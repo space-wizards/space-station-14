@@ -172,3 +172,84 @@ Entries:
   - {message: Cargo teleporter works again, type: Fix}
   id: 31
   time: '2021-03-05T01:38:41.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Ejected casings now have much more variation and look cooler, type: Tweak}
+  id: 32
+  time: '2021-03-05T07:23:09.0000000+00:00'
+- author: daniel-cr
+  changes: []
+  id: 33
+  time: '2021-03-05T08:33:01.0000000+00:00'
+- author: PaulRitter
+  changes:
+  - {message: Fixes all alertonclicks, type: Fix}
+  id: 34
+  time: '2021-03-05T11:46:04.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: "Water vapor now makes puddles if under 100\xBAC.", type: Add}
+  id: 35
+  time: '2021-03-05T21:15:37.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Tiles do damage when thrown at someone else, type: Add}
+  - {message: You can craft tiles, type: Add}
+  - {message: Tile max stack size changed from 8 to 30, type: Tweak}
+  - {message: 'Removed unobtainable, player placeable tiles like snow/rock', type: Remove}
+  id: 36
+  time: '2021-03-06T05:41:53.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Hands and inventory (pockets) no longer block the light from flashlights,
+    type: Fix}
+  id: 37
+  time: '2021-03-06T10:32:24.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes emitters shooting sideway bolts and in the wrong direction., type: Fix}
+  id: 38
+  time: '2021-03-06T12:28:13.757819+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes wood table and poker table constructions having the wrong material.,
+    type: Fix}
+  id: 39
+  time: '2021-03-06T12:28:13.759792+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes torch crafting recipe having incorrect materials., type: Fix}
+  id: 40
+  time: '2021-03-06T12:28:13.760916+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes bug where deconstructing computers wouldn't return the circuit
+      board., type: Fix}
+  id: 41
+  time: '2021-03-06T13:48:07.041235+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Glass shards can be turned into glass sheets with a welder again, type: Fix}
+  id: 42
+  time: '2021-03-07T09:05:57.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The Red-and-White Shrine Maiden outfit complete with gohei is now available
+      in the theater vendor!, type: Add}
+  id: 43
+  time: '2021-03-07T12:41:42.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Added ammovend, type: Add}
+  id: 44
+  time: '2021-03-07T19:17:58.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: 'Mags/Batteries stop spawning at 0, 0.', type: Fix}
+  id: 45
+  time: '2021-03-07T19:43:07.0000000+00:00'
+- author: Rember
+  changes:
+  - {message: Character eye customization, type: Add}
+  id: 46
+  time: '2021-03-07T19:48:24.0000000+00:00'

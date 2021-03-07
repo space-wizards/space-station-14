@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -137,7 +138,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 // Determine if the solar panel is occluded, and zero out coverage if so.
                 // FIXME: The "Opaque" collision group doesn't seem to work right now.
                 var ray = new CollisionRay(entity.Transform.WorldPosition, TowardsSun.ToVec(), (int) CollisionGroup.Opaque);
-                var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(entity.Transform.MapID, ray, SunOcclusionCheckDistance, entity);
+                var rayCastResults = EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRay(entity.Transform.MapID, ray, SunOcclusionCheckDistance, entity);
                 if (rayCastResults.Any())
                     coverage = 0;
             }

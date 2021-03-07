@@ -16,10 +16,6 @@ namespace Content.Server.Objectives
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         [ViewVariables] [DataField("issuer")] public string Issuer { get; private set; } = "Unknown";
 
         [ViewVariables] [DataField("prob")] public float Probability { get; private set; } = 0.3f;

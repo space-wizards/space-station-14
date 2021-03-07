@@ -29,10 +29,11 @@
     drawdepth: Mobs
   - type: Clickable
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 50
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       mask:
       - Impassable
 #      - MobImpassable Turns these off for now since humans don't have collisions either.

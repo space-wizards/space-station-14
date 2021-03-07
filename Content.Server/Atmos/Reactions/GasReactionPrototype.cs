@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.Interfaces;
@@ -30,16 +30,18 @@ namespace Content.Server.Atmos.Reactions
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         /// <summary>
         ///     Minimum gas amount requirements.
         /// </summary>
         [DataField("minimumRequirements")]
         public float[] MinimumRequirements { get; private set; } = new float[Atmospherics.TotalNumberOfGases];
 
+        /// <summary>
+        ///     Maximum temperature requirement.
+        /// </summary>
+		  [DataField("maximumTemperature")]
+        public float MaximumTemperatureRequirement { get; private set; }
+        
         /// <summary>
         ///     Minimum temperature requirement.
         /// </summary>

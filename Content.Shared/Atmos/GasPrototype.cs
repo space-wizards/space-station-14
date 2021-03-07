@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -16,10 +16,6 @@ namespace Content.Shared.Atmos
         [ViewVariables]
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
-
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
 
         /// <summary>
         ///     Specific heat for gas.

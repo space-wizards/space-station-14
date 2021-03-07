@@ -32,7 +32,7 @@
   description: Formally known as the EM Acceleration Chamber. This is where the Alpha particles are accelerated to radical speeds. It looks unfinished.
   components:
     - type: Physics
-      anchored: false
+      bodyType: Dynamic
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/fuel_chamber.rsi
       state: chamber

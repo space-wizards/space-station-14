@@ -16,12 +16,13 @@
   - type: Clickable
   - type: Slippery
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.4,0.4,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+      hard: false
       layer:
       - MobImpassable
-    hard: false
 
 - type: entity
   name: puddle

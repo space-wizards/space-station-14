@@ -2,10 +2,12 @@
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Physics;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -17,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Storage
     /// <summary>
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.
     /// </summary>
-    public abstract class SharedItemComponent : Component, IEquipped, IUnequipped, IExAct, IInteractHand
+    public abstract class SharedItemComponent : Component, IEquipped, IUnequipped, IExAct, IInteractHand, IThrown, ILand
     {
         public override string Name => "Item";
 
@@ -120,7 +122,7 @@ namespace Content.Shared.GameObjects.Components.Storage
             if (user.Transform.MapID != Owner.Transform.MapID)
                 return false;
 
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics) && physics.Anchored)
+            if (!Owner.TryGetComponent(out IPhysBody? physics) || physics.BodyType == BodyType.Static)
                 return false;
 
             return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: true);
@@ -140,6 +142,7 @@ namespace Content.Shared.GameObjects.Components.Storage
         {
             var source = eventArgs.Source;
             var target = eventArgs.Target.Transform.Coordinates;
+            var dirVec = (target.ToMapPos(Owner.EntityManager) - source.ToMapPos(Owner.EntityManager)).Normalized;
 
             var throwForce = eventArgs.Severity switch
             {
@@ -147,12 +150,32 @@ namespace Content.Shared.GameObjects.Components.Storage
                 ExplosionSeverity.Heavy => 2.0f,
                 _ => 1.0f,
             };
-            ThrowItem(source, target, throwForce);
+            ThrowItem(dirVec * throwForce);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             return TryPutInHand(eventArgs.User);
+        }
+
+        void IThrown.Thrown(ThrownEventArgs eventArgs)
+        {
+            if (!Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
+
+            foreach (var fixture in physicsComponent.Fixtures)
+            {
+                fixture.CollisionLayer |= (int) CollisionGroup.MobImpassable;
+            }
+        }
+
+        void ILand.Land(LandEventArgs eventArgs)
+        {
+            if (!Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
+
+            foreach (var fixture in physicsComponent.Fixtures)
+            {
+                fixture.CollisionLayer &= ~(int) CollisionGroup.MobImpassable;
+            }
         }
 
         /// <summary>
@@ -168,7 +191,7 @@ namespace Content.Shared.GameObjects.Components.Storage
         public virtual void EquippedToSlot() { }
 
         //TODO: Move server implementation here once throwing is in shared
-        protected virtual void ThrowItem(EntityCoordinates sourceLocation, EntityCoordinates targetLocation, float throwForce) { }
+        protected virtual void ThrowItem(Vector2 direction) { }
     }
 
     [Serializable, NetSerializable]

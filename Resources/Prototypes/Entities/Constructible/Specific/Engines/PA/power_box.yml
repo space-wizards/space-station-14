@@ -37,7 +37,7 @@
   description: Formally known as the Particle Focusing EM Lens. This uses electromagnetic waves to focus the Alpha-Particles. It looks unfinished.
   components:
     - type: Physics
-      anchored: false
+      bodyType: Dynamic
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/power_box.rsi
       state: box

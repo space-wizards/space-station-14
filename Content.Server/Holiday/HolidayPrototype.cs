@@ -20,10 +20,6 @@ namespace Content.Server.Holiday
         public string ID { get; } = default!;
 
         [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
-        [ViewVariables]
         [DataField("beginDay")]
         public byte BeginDay { get; set; } = 1;
 

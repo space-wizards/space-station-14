@@ -13,15 +13,11 @@ namespace Content.Shared.Materials
     /// </summary>
     [Prototype("material")]
     [DataDefinition]
-    public class MaterialPrototype : IPrototype
+    public class MaterialPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
-
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
 
         [DataField("name")] public string Name { get; private set; } = "unobtanium";
 
@@ -85,5 +81,11 @@ namespace Content.Shared.Materials
         /// </summary>
         [DataField("icon")]
         public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
+
+        [field: DataField("parent")]
+        public string? Parent { get; }
+
+        [field: DataField("abstract")]
+        public bool Abstract { get; }
     }
 }

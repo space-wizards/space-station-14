@@ -36,10 +36,6 @@ namespace Content.Shared.Roles
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
-
         public string GetGear(Slots slot, HumanoidCharacterProfile? profile)
         {
             if (profile != null)

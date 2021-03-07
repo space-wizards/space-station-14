@@ -40,10 +40,11 @@
 
   - type: Physics
     mass: 5
-    anchored: false
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.40,-0.25,0.25,0.25"
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.40,-0.25,0.25,0.25"
       mask:
       - Impassable
       - Opaque
@@ -70,10 +71,11 @@
     maxVol: 500
   - type: Physics
     mass: 5
-    anchored: false
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
       mask:
       - Impassable
   - type: Spillable
@@ -104,9 +106,10 @@
   - type: Slippery
     paralyzeTime: 2.5
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.3,-0.4,0.3,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - MobImpassable
 
@@ -178,15 +181,16 @@
         - state: chempuff
           map: [ "enum.VaporVisualLayers.Base" ]
     - type: Physics
-      anchored: false
-      hard: false
-      shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-          mask:
-            - Impassable
-            - MobImpassable
-            - SmallImpassable
+      bodyType: Dynamic
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+        hard: false
+        mask:
+          - Impassable
+          - MobImpassable
+          - SmallImpassable
     - type: Appearance
       visuals:
         - type: VaporVisualizer

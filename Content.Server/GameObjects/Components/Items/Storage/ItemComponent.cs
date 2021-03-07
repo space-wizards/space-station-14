@@ -1,7 +1,6 @@
 #nullable enable
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Throw;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
@@ -10,7 +9,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
@@ -51,9 +50,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             return true;
         }
 
-        protected override void ThrowItem(EntityCoordinates sourceLocation, EntityCoordinates targetLocation, float throwForce)
+        protected override void ThrowItem(Vector2 direction)
         {
-            Owner.Throw(throwForce, targetLocation, sourceLocation, true);
+            Owner.TryThrow(direction);
         }
 
         [Verb]

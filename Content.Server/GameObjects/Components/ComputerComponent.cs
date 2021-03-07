@@ -65,6 +65,10 @@ namespace Content.Server.GameObjects.Components
         /// </summary>
         private void CreateComputerBoard()
         {
+            // Ensure that the construction component is aware of the board container.
+            if (Owner.TryGetComponent(out ConstructionComponent construction))
+                construction.AddContainer("board");
+
             // We don't do anything if this is null or empty.
             if (string.IsNullOrEmpty(_boardPrototype))
                 return;
@@ -82,9 +86,6 @@ namespace Content.Server.GameObjects.Components
 
             if(!container.Insert(board))
                 Logger.Warning($"Couldn't insert board {board} to computer {Owner}!");
-
-            if (Owner.TryGetComponent(out ConstructionComponent construction))
-                construction.AddContainer("board");
         }
 
         public void MapInit()

@@ -16,9 +16,5 @@ namespace Content.Shared.Prototypes.Tag
         [ViewVariables]
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
-
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
     }
 }

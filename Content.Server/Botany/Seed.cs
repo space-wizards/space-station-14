@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,10 +78,6 @@ namespace Content.Server.Botany
         [ViewVariables]
         [field: DataField("id", required: true)]
         public string ID { get; private init; } = default!;
-
-        [ViewVariables]
-        [field: DataField("parent")]
-        public string? Parent { get; }
 
         /// <summary>
         ///     Unique identifier of this seed. Do NOT set this.

@@ -49,7 +49,7 @@
 
         - to: WoodTable
           steps:
-            - material: Wood
+            - material: WoodPlank
               amount: 1
               doAfter: 1
 
@@ -75,7 +75,7 @@
       edges:
         - to: PokerTable
           steps:
-            - material: Wood
+            - material: WoodPlank
               amount: 1
               doAfter: 1
 

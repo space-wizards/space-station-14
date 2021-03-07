@@ -30,7 +30,7 @@ namespace Content.Shared.GameObjects.Components.Cargo
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
-            _productIds.Clear();
+            _products.Clear();
 
             foreach (var id in _productIds)
             {
@@ -45,7 +45,7 @@ namespace Content.Shared.GameObjects.Components.Cargo
 
         void ISerializationHooks.BeforeSerialization()
         {
-            _productIds = new List<string>();
+            _productIds.Clear();
 
             foreach (var product in _products)
             {
