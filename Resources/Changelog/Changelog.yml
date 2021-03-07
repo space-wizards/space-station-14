@@ -243,3 +243,8 @@ Entries:
   - {message: Added ammovend, type: Add}
   id: 44
   time: '2021-03-07T19:17:58.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: 'Mags/Batteries stop spawning at 0, 0.', type: Fix}
+  id: 45
+  time: '2021-03-07T19:43:07.0000000+00:00'
