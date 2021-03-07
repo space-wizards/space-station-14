@@ -570,11 +570,12 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             var comps = thrown.GetAllComponents<IThrown>().ToList();
+            var args = new ThrownEventArgs(user);
 
             // Call Thrown on all components that implement the interface
             foreach (var comp in comps)
             {
-                comp.Thrown(new ThrownEventArgs(user));
+                comp.Thrown(args);
             }
         }
 

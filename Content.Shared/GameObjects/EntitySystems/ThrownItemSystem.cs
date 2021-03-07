@@ -46,11 +46,13 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
 
             var comps = landing.GetAllComponents<ILand>().ToArray();
+            var landArgs = new LandEventArgs(user, coordinates);
 
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
             {
-                comp.Land(new LandEventArgs(user, coordinates));
+                if (landing.Deleted) break;
+                comp.Land(landArgs);
             }
 
             ComponentManager.RemoveComponent(landing.Uid, thrownItem);

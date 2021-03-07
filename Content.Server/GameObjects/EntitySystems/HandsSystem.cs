@@ -181,7 +181,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             direction = direction.Normalized * MathF.Min(direction.Length, 8.0f);
 
-            throwEnt.TryThrow(direction * ThrowForce * 15);
+            throwEnt.TryThrow(direction * ThrowForce * 15, playerEnt);
 
             return true;
         }
