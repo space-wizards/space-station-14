@@ -25,9 +25,9 @@ namespace Content.Client.GameObjects.Components.Items
         private HandsGui? _gui;
 
         [ViewVariables]
-        private readonly List<Hand> _hands = new();
+        private readonly List<ClientHand> _hands = new();
 
-        [ViewVariables] public IReadOnlyList<Hand> Hands => _hands;
+        [ViewVariables] public IReadOnlyList<ClientHand> Hands => _hands;
 
         [ViewVariables] public string? ActiveIndex { get; private set; }
 
@@ -47,18 +47,18 @@ namespace Content.Client.GameObjects.Components.Items
             return false;
         }
 
-        private void AddHand(Hand hand)
+        private void AddHand(ClientHand hand)
         {
             _sprite?.LayerMapReserveBlank($"hand-{hand.Name}");
             _hands.Insert(hand.Index, hand);
         }
 
-        public Hand? GetHand(string? name)
+        public ClientHand? GetHand(string? name)
         {
             return Hands.FirstOrDefault(hand => hand.Name == name);
         }
 
-        private bool TryHand(string name, [NotNullWhen(true)] out Hand? hand)
+        private bool TryHand(string name, [NotNullWhen(true)] out ClientHand? hand)
         {
             return (hand = GetHand(name)) != null;
         }
@@ -104,7 +104,7 @@ namespace Content.Client.GameObjects.Components.Items
             {
                 if (!TryHand(sharedHand.Name, out var hand))
                 {
-                    hand = new Hand(this, sharedHand, Owner.EntityManager);
+                    hand = new ClientHand(this, sharedHand, Owner.EntityManager);
                     AddHand(hand);
                 }
                 else
@@ -140,12 +140,12 @@ namespace Content.Client.GameObjects.Components.Items
             OnHandsModified(); //placeholder for auto-updating gui state
         }
 
-        private void HideHand(Hand hand)
+        private void HideHand(ClientHand hand)
         {
             _sprite?.LayerSetVisible($"hand-{hand.Name}", false);
         }
 
-        private void UpdateHandSprites(Hand hand)
+        private void UpdateHandSprites(ClientHand hand)
         {
             if (_sprite == null)
             {
@@ -326,11 +326,11 @@ namespace Content.Client.GameObjects.Components.Items
         }
     }
 
-    public class Hand
+    public class ClientHand
     {
         private bool _enabled = true;
 
-        public Hand(HandsComponent parent, SharedHand hand, IEntityManager manager, HandButton? button = null)
+        public ClientHand(HandsComponent parent, SharedHand hand, IEntityManager manager, HandButton? button = null)
         {
             Parent = parent;
             Index = hand.Index;

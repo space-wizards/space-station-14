@@ -22,7 +22,6 @@ namespace Content.Client.UserInterface
 {
     public class HandsGui : Control
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
@@ -86,7 +85,7 @@ namespace Content.Client.UserInterface
             _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
         }
 
-        private ItemStatusPanel GetItemPanel(Hand hand)
+        private ItemStatusPanel GetItemPanel(ClientHand hand)
         {
             return hand.Location switch
             {
@@ -116,7 +115,7 @@ namespace Content.Client.UserInterface
         ///     The actual location of the button. The right hand is drawn
         ///     on the LEFT of the screen.
         /// </param>
-        private void AddHand(Hand hand, HandLocation buttonLocation)
+        private void AddHand(ClientHand hand, HandLocation buttonLocation)
         {
             var buttonTexture = HandTexture(buttonLocation);
             var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
@@ -131,7 +130,7 @@ namespace Content.Client.UserInterface
             hand.Button = button;
         }
 
-        public void RemoveHand(Hand hand)
+        public void RemoveHand(ClientHand hand)
         {
             var button = hand.Button;
 
@@ -382,7 +381,7 @@ namespace Content.Client.UserInterface
 
     public static class RefactorHelperExtensions //TODO: Remove
     {
-        public static GuiHand FromClientHand(this Hand hand)
+        public static GuiHand FromClientHand(this ClientHand hand)
         {
             return new GuiHand(hand.Name, hand.Location, hand.Entity);
         }
