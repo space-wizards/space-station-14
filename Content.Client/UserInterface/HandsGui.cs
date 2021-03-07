@@ -39,6 +39,18 @@ namespace Content.Client.UserInterface
 
         private int _lastHands;
 
+        /// <summary>
+        ///     Last state sent by the client hands.
+        ///     State has no hands if no state has been set yet.
+        /// </summary>
+        private HandsGuiState State { get; set; } = new();
+
+        public void SetState(HandsGuiState state)
+        {
+            State = state;
+            //TODO: Update UI with new state
+        }
+
         public HandsGui()
         {
             IoCManager.InjectDependencies(this);
@@ -345,6 +357,11 @@ namespace Content.Client.UserInterface
         ///     The set of hands to be displayed.
         /// </summary>
         public List<GuiHand> GuiHands { get; } = new();
+
+        public HandsGuiState()
+        {
+
+        }
 
         public HandsGuiState(List<GuiHand> guiHands)
         {

@@ -289,6 +289,23 @@ namespace Content.Client.GameObjects.Components.Items
 
             SendNetworkMessage(new ActivateInHandMsg(handIndex));
         }
+
+        private void SetGuiState()
+        {
+            _gui?.SetState(GetHandsGuiState());
+        }
+
+        private HandsGuiState GetHandsGuiState()
+        {
+            var handStates = new List<GuiHand>();
+
+            foreach (var hand in _hands)
+            {
+                var handState = new GuiHand(hand.Name, hand.Location, hand.Entity);
+                handStates.Add(handState);
+            }
+            return new HandsGuiState(handStates);
+        }
     }
 
     public class Hand
