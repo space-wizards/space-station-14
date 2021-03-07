@@ -7,11 +7,13 @@ using Robust.Shared.ViewVariables;
 using System;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
     [RegisterComponent]
-    public class ChemicalInjectionProjectileComponent : Component, ICollideBehavior
+    public class ChemicalInjectionProjectileComponent : Component, IStartCollide
     {
         public override string Name => "ChemicalInjectionProjectile";
 
@@ -33,9 +35,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
             _solutionContainer = Owner.EnsureComponent<SolutionContainerComponent>();
         }
 
-        void ICollideBehavior.CollideWith(IEntity entity)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            if (!entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))
+            if (!otherBody.Entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))
                 return;
 
             var solution = _solutionContainer.Solution;

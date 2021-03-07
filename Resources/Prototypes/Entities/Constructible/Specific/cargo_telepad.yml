@@ -9,9 +9,11 @@
   - type: InteractionOutline
   - type: Physics
     mass: 25
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.45, -0.45, 0.00, 0.45"
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.45, 0.00, 0.45"
       layer: [ Passable ]
   - type: Sprite
     sprite: Constructible/Specific/Cargo/teleporter.rsi

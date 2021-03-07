@@ -13,6 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -191,10 +192,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = _physicsManager.IntersectRay(mapId, new CollisionRay(position, castAngle.ToWorldVec(), (int) (CollisionGroup.Impassable|CollisionGroup.MobImpassable)), Range, ignore).FirstOrDefault();
-                if (res.HitEntity != null)
+                var res = EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRay(mapId,
+                    new CollisionRay(position, castAngle.ToVec(),
+                        (int) (CollisionGroup.Impassable | CollisionGroup.MobImpassable)), Range, ignore).ToList();
+
+                if (res.Count != 0)
                 {
-                    resSet.Add(res.HitEntity);
+                    resSet.Add(res[0].HitEntity);
                 }
             }
 

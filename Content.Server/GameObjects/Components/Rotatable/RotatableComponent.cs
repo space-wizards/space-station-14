@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -25,9 +26,9 @@ namespace Content.Server.GameObjects.Components.Rotatable
 
         private void TryRotate(IEntity user, Angle angle)
         {
-            if (!RotateWhileAnchored && Owner.TryGetComponent(out IPhysicsComponent physics))
+            if (!RotateWhileAnchored && Owner.TryGetComponent(out IPhysBody physics))
             {
-                if (physics.Anchored)
+                if (physics.BodyType == BodyType.Static)
                 {
                     Owner.PopupMessage(user, Loc.GetString("It's stuck."));
                     return;
@@ -42,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
         {
             protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysicsComponent physics) && physics.Anchored))
+                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody physics) && physics.BodyType == BodyType.Static))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -64,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
         {
             protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysicsComponent physics) && physics.Anchored))
+                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody physics) && physics.BodyType == BodyType.Static))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

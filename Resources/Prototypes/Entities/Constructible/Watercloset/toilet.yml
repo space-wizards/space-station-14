@@ -15,8 +15,9 @@
   - type: SolutionContainer
     maxVol: 250
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       layer: [ Passable ]
   - type: Construction
     graph: toilet

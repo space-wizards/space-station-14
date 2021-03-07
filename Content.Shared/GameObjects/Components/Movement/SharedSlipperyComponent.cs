@@ -7,14 +7,13 @@ using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Physics;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
-    public abstract class SharedSlipperyComponent : Component, ICollideBehavior
+    public abstract class SharedSlipperyComponent : Component, IStartCollide
     {
         public sealed override string Name => "Slippery";
 
@@ -115,14 +114,12 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
-        private bool TrySlip(IEntity entity)
+        private bool TrySlip(IPhysBody ourBody, IPhysBody otherBody)
         {
             if (!Slippery
                 || Owner.IsInContainer()
-                ||  _slipped.Contains(entity.Uid)
-                ||  !entity.TryGetComponent(out SharedStunnableComponent? stun)
-                ||  !entity.TryGetComponent(out IPhysicsComponent? otherBody)
-                ||  !Owner.TryGetComponent(out IPhysicsComponent? body))
+                ||  _slipped.Contains(otherBody.Entity.Uid)
+                ||  !otherBody.Entity.TryGetComponent(out SharedStunnableComponent? stun))
             {
                 return false;
             }
@@ -132,26 +129,22 @@ namespace Content.Shared.GameObjects.Components.Movement
                 return false;
             }
 
-            var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
+            var percentage = otherBody.GetWorldAABB().IntersectPercentage(ourBody.GetWorldAABB());
 
             if (percentage < IntersectPercentage)
             {
                 return false;
             }
 
-            if (!EffectBlockerSystem.CanSlip(entity))
+            if (!EffectBlockerSystem.CanSlip(otherBody.Entity))
             {
                 return false;
             }
 
-            if (entity.TryGetComponent(out IPhysicsComponent? physics))
-            {
-                var controller = physics.EnsureController<SlipController>();
-                controller.LinearVelocity = physics.LinearVelocity * LaunchForwardsMultiplier;
-            }
+            otherBody.LinearVelocity *= LaunchForwardsMultiplier;
 
             stun.Paralyze(5);
-            _slipped.Add(entity.Uid);
+            _slipped.Add(otherBody.Entity.Uid);
 
             OnSlip();
 
@@ -160,9 +153,9 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         protected virtual void OnSlip() { }
 
-        public void CollideWith(IEntity collidedWith)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            TrySlip(collidedWith);
+            TrySlip(ourBody, otherBody);
         }
 
         public void Update()
@@ -176,10 +169,10 @@ namespace Content.Shared.GameObjects.Components.Movement
                 }
 
                 var entity = Owner.EntityManager.GetEntity(uid);
-                var physics = Owner.GetComponent<IPhysicsComponent>();
-                var otherPhysics = entity.GetComponent<IPhysicsComponent>();
+                var physics = Owner.GetComponent<IPhysBody>();
+                var otherPhysics = entity.GetComponent<IPhysBody>();
 
-                if (!physics.WorldAABB.Intersects(otherPhysics.WorldAABB))
+                if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                 {
                     _slipped.Remove(uid);
                 }
@@ -194,12 +187,12 @@ namespace Content.Shared.GameObjects.Components.Movement
 
             physics.Hard = false;
 
-            var shape = physics.PhysicsShapes.FirstOrDefault();
+            var fixtures = physics.Fixtures.FirstOrDefault();
 
-            if (shape != null)
+            if (fixtures != null)
             {
-                shape.CollisionLayer |= (int) CollisionGroup.SmallImpassable;
-                shape.CollisionMask = (int) CollisionGroup.None;
+                fixtures.CollisionLayer |= (int) CollisionGroup.SmallImpassable;
+                fixtures.CollisionMask = (int) CollisionGroup.None;
             }
         }
     }

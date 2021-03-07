@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -25,6 +26,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems.Click
@@ -568,61 +570,12 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             var comps = thrown.GetAllComponents<IThrown>().ToList();
+            var args = new ThrownEventArgs(user);
 
             // Call Thrown on all components that implement the interface
             foreach (var comp in comps)
             {
-                comp.Thrown(new ThrownEventArgs(user));
-            }
-        }
-
-        /// <summary>
-        ///     Calls Land on all components that implement the ILand interface
-        ///     on an entity that has landed after being thrown.
-        /// </summary>
-        public void LandInteraction(IEntity user, IEntity landing, EntityCoordinates landLocation)
-        {
-            var landMsg = new LandMessage(user, landing, landLocation);
-            RaiseLocalEvent(landMsg);
-            if (landMsg.Handled)
-            {
-                return;
-            }
-
-            var comps = landing.GetAllComponents<ILand>().ToList();
-
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.Land(new LandEventArgs(user, landLocation));
-            }
-        }
-
-        /// <summary>
-        ///     Calls ThrowCollide on all components that implement the IThrowCollide interface
-        ///     on a thrown entity and the target entity it hit.
-        /// </summary>
-        public void ThrowCollideInteraction(IEntity user, IEntity thrown, IEntity target, EntityCoordinates location)
-        {
-            var collideMsg = new ThrowCollideMessage(user, thrown, target, location);
-            RaiseLocalEvent(collideMsg);
-            if (collideMsg.Handled)
-            {
-                return;
-            }
-
-            var eventArgs = new ThrowCollideEventArgs(user, thrown, target, location);
-
-            foreach (var comp in thrown.GetAllComponents<IThrowCollide>().ToArray())
-            {
-                if (thrown.Deleted) break;
-                comp.DoHit(eventArgs);
-            }
-
-            foreach (var comp in target.GetAllComponents<IThrowCollide>().ToArray())
-            {
-                if (target.Deleted) break;
-                comp.HitBy(eventArgs);
+                comp.Thrown(args);
             }
         }
 

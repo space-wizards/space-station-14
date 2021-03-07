@@ -19,8 +19,10 @@
     sprite: Constructible/Structures/Windows/window.rsi
     state: full
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       layer:
       - Impassable
       - MobImpassable

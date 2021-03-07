@@ -169,6 +169,18 @@ namespace Content.Shared.AI
                 Cached = cached;
             }
         }
+
+        /// <summary>
+        ///     Send if someone is subscribing to reachable regions for NPCs.
+        /// </summary>
+        [Serializable, NetSerializable]
+        public sealed class SubscribeReachableMessage : EntitySystemMessage {}
+
+        /// <summary>
+        ///     Send if someone is unsubscribing to reachable regions for NPCs.
+        /// </summary>
+        [Serializable, NetSerializable]
+        public sealed class UnsubscribeReachableMessage : EntitySystemMessage {}
         #endregion
     }
 }

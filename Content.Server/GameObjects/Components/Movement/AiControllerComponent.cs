@@ -12,8 +12,9 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
-    [RegisterComponent, ComponentReference(typeof(IMoverComponent))]
-    public class AiControllerComponent : Component, IMoverComponent
+    [RegisterComponent]
+    [ComponentReference(typeof(IMobMoverComponent))]
+    public class AiControllerComponent : Component, IMobMoverComponent, IMoverComponent
     {
         [DataField("logic")] private float _visionRadius = 8.0f;
 
@@ -88,13 +89,12 @@ namespace Content.Server.GameObjects.Components.Movement
         }
 
         /// <inheritdoc />
-        [ViewVariables]
-        public float CurrentPushSpeed => 5.0f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float PushStrength { get; set; }
 
         /// <inheritdoc />
-        [ViewVariables]
-        public float GrabRange => 0.2f;
-
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float GrabRange { get; set; } = 0.2f;
 
         /// <summary>
         ///     Is the entity Sprinting (running)?
@@ -113,7 +113,8 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public EntityCoordinates LastPosition { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public float StepSoundDistance { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float StepSoundDistance { get; set; }
 
         public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled) { }
         public void SetSprinting(ushort subTick, bool walking) { }
