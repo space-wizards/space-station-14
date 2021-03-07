@@ -14,11 +14,11 @@
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.49,-0.49,0.49,0.49"
-          layer:
-            - Opaque
-            - Impassable
-            - MobImpassable
-            - VaultImpassable
+        mask:
+        - Opaque
+        - Impassable
+        - MobImpassable
+        - VaultImpassable
     - type: SnapGrid
       offset: Center
     - type: Pullable

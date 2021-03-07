@@ -16,8 +16,8 @@
     maxVol: 250
   - type: Physics
     fixtures:
-      - shape:
-          !type:PhysShapeAabb {}
+    - shape:
+        !type:PhysShapeAabb {}
       layer: [ Passable ]
   - type: Construction
     graph: toilet
