@@ -76,6 +76,7 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             base.Startup();
             ActiveHand = _hands.LastOrDefault()?.Name;
+            Dirty();
         }
 
         public IEnumerable<ItemComponent> GetAllHeldItems()

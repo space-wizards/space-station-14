@@ -1,14 +1,12 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.GameObjects.Components.Items;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -54,18 +52,6 @@ namespace Content.Client.UserInterface
         /// </summary>
         private HandsComponent Creator { get; set; }
 
-        public void SetState(HandsGuiState state)
-        {
-            State = state;
-
-            Hands.Clear();
-            foreach (var hand in state.GuiHands)
-            {
-                Hands.Add(hand, MakeHandbutton(hand.HandLocation));
-            }
-            //TODO: Update UI with new state
-        }
-
         public HandsGui(HandsComponent creator)
         {
             Creator = creator;
@@ -94,15 +80,16 @@ namespace Content.Client.UserInterface
             _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
         }
 
-        private ItemStatusPanel GetItemPanel(HandLocation handLocation)
+        public void SetState(HandsGuiState state)
         {
-            return handLocation switch
+            State = state;
+            Hands.Clear();
+            foreach (var hand in state.GuiHands)
             {
-                HandLocation.Left => _rightPanel,
-                HandLocation.Middle => _topPanel,
-                HandLocation.Right => _leftPanel,
-                _ => throw new IndexOutOfRangeException()
-            };
+                Hands.Add(hand, MakeHandbutton(hand.HandLocation));
+            }
+
+            //TODO: Update UI with new state
         }
 
         private Texture HandTexture(HandLocation location)
@@ -116,26 +103,6 @@ namespace Content.Client.UserInterface
             };
         }
 
-        /// <summary>
-        ///     Adds a new hand to this control
-        /// </summary>
-        /// <param name="hand">The hand to add to this control</param>
-        /// <param name="buttonLocation">
-        ///     The actual location of the button. The right hand is drawn
-        ///     on the LEFT of the screen.
-        /// </param>
-        private void AddHand(ClientHand hand, HandLocation buttonLocation)
-        {
-            var button = MakeHandbutton(buttonLocation);
-            var slot = hand.Name;
-
-            button.OnPressed += args => HandKeyBindDown(args, slot);
-            button.OnStoragePressed += args => _OnStoragePressed(args, slot);
-
-            _handsContainer.AddChild(button);
-            hand.Button = button;
-        }
-
         private HandButton MakeHandbutton(HandLocation buttonLocation)
         {
             var buttonTexture = HandTexture(buttonLocation);
@@ -144,7 +111,7 @@ namespace Content.Client.UserInterface
             return new HandButton(buttonTexture, storageTexture, blockedTexture, buttonLocation);
         }
 
-        public void RemoveHand(ClientHand hand)
+        private void RemoveHand(ClientHand hand)
         {
             var button = hand.Button;
 
@@ -154,7 +121,7 @@ namespace Content.Client.UserInterface
             }
         }
 
-        public void UpdateHandIcons()
+        private void UpdateHandIcons()
         {
             if (Parent == null)
             {
@@ -179,11 +146,23 @@ namespace Content.Client.UserInterface
                 hand.Button!.SetPositionInParent(i);
                 _itemSlotManager.SetItemSlot(hand.Button, hand.Entity);
 
-                hand.Button!.SetActiveHand(Creator.ActiveIndex == hand.Name);
+                hand.Button!.SetActiveHand(State.ActiveHand == hand.Name);
             }
 
             _leftPanel.SetPositionFirst();
             _rightPanel.SetPositionLast();
+
+            void AddHand(ClientHand hand, HandLocation buttonLocation)
+            {
+                var button = MakeHandbutton(buttonLocation);
+                var slot = hand.Name;
+
+                button.OnPressed += args => HandKeyBindDown(args, slot);
+                button.OnStoragePressed += args => OnStoragePressed(args, slot);
+
+                _handsContainer.AddChild(button);
+                hand.Button = button;
+            }
         }
 
         private void HandKeyBindDown(GUIBoundKeyEventArgs args, string slotName)
@@ -194,16 +173,14 @@ namespace Content.Client.UserInterface
                 args.Handle();
                 return;
             }
-
-            var entity = Creator.GetEntity(slotName);
+            IEntity? entity = null; // Creator.GetEntity(slotName);
             if (entity == null)
             {
-                if (args.Function == EngineKeyFunctions.UIClick && Creator.ActiveIndex != slotName)
+                if (args.Function == EngineKeyFunctions.UIClick && State.ActiveHand != slotName)
                 {
                     Creator.SendChangeHand(slotName);
                     args.Handle();
                 }
-
                 return;
             }
 
@@ -215,34 +192,28 @@ namespace Content.Client.UserInterface
 
             if (args.Function == EngineKeyFunctions.UIClick)
             {
-                if (Creator.ActiveIndex == slotName)
-                {
+                if (State.ActiveHand == slotName)
                     Creator.UseActiveHand();
-                }
                 else
-                {
                     Creator.AttackByInHand(slotName);
-                }
-
                 args.Handle();
             }
         }
 
-        private void _OnStoragePressed(GUIBoundKeyEventArgs args, string handIndex)
+        private void OnStoragePressed(GUIBoundKeyEventArgs args, string handIndex)
         {
             if (args.Function != EngineKeyFunctions.UIClick)
-            {
                 return;
-            }
 
             Creator.ActivateItemInHand(handIndex);
         }
 
+        //per-frame update of hands
         private void UpdatePanels()
         {
             foreach (var hand in Creator.Hands)
             {
-                _itemSlotManager.UpdateCooldown(hand.Button, hand.Entity);
+                //_itemSlotManager.UpdateCooldown(hand.Button, hand.Entity);
             }
 
             var hands = State.GuiHands;
@@ -323,7 +294,7 @@ namespace Content.Client.UserInterface
                         }
                     }
 
-                    _topPanel.Update(Creator.ActiveHand);
+                    //_topPanel.Update(Creator.ActiveHand);
                     _leftPanel.Update(null);
                     _rightPanel.Update(null);
 
@@ -331,12 +302,22 @@ namespace Content.Client.UserInterface
             }
 
             _lastHands = hands.Count;
+
+            ItemStatusPanel GetItemPanel(HandLocation handLocation)
+            {
+                return handLocation switch
+                {
+                    HandLocation.Left => _rightPanel,
+                    HandLocation.Middle => _topPanel,
+                    HandLocation.Right => _leftPanel,
+                    _ => throw new IndexOutOfRangeException()
+                };
+            }
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
-            UpdatePanels();
         }
     }
 
@@ -351,14 +332,18 @@ namespace Content.Client.UserInterface
         [ViewVariables]
         public List<GuiHand> GuiHands { get; } = new();
 
-        public HandsGuiState()
-        {
+        /// <summary>
+        ///     The name of the hand that is currently selected by this player.
+        /// </summary>
+        [ViewVariables]
+        public string? ActiveHand { get; }
 
-        }
+        public HandsGuiState() { }
 
-        public HandsGuiState(List<GuiHand> guiHands)
+        public HandsGuiState(List<GuiHand> guiHands, string? activeHand)
         {
             GuiHands = guiHands;
+            ActiveHand = activeHand;
         }
     }
 
@@ -390,14 +375,6 @@ namespace Content.Client.UserInterface
             Name = name;
             HandLocation = handLocation;
             HeldItem = heldItem;
-        }
-    }
-
-    public static class RefactorHelperExtensions //TODO: Remove
-    {
-        public static GuiHand FromClientHand(this ClientHand hand)
-        {
-            return new GuiHand(hand.Name, hand.Location, hand.Entity);
         }
     }
 }
