@@ -47,6 +47,9 @@ namespace Content.Client.UserInterface
         [ViewVariables]
         private HandsGuiState State { get; set; } = new();
 
+        /// <summary>
+        ///     The hands component that created this. Should only be used for sending network messages.
+        /// </summary>
         private HandsComponent Creator { get; set; }
 
         public void SetState(HandsGuiState state)
@@ -147,14 +150,9 @@ namespace Content.Client.UserInterface
 
             UpdateDraw();
 
-            if (!TryGetHands(out var component))
-            {
-                return;
-            }
-
             // TODO: Remove button on remove hand
 
-            var hands = component.Hands.OrderByDescending(x => x.Location).ToArray();
+            var hands = Creator.Hands.OrderByDescending(x => x.Location).ToArray();
             for (var i = 0; i < hands.Length; i++)
             {
                 var hand = hands[i];
@@ -168,7 +166,7 @@ namespace Content.Client.UserInterface
                 hand.Button!.SetPositionInParent(i);
                 _itemSlotManager.SetItemSlot(hand.Button, hand.Entity);
 
-                hand.Button!.SetActiveHand(component.ActiveIndex == hand.Name);
+                hand.Button!.SetActiveHand(Creator.ActiveIndex == hand.Name);
             }
 
             _leftPanel.SetPositionFirst();
@@ -177,24 +175,19 @@ namespace Content.Client.UserInterface
 
         private void HandKeyBindDown(GUIBoundKeyEventArgs args, string slotName)
         {
-            if (!TryGetHands(out var hands))
-            {
-                return;
-            }
-
             if (args.Function == ContentKeyFunctions.MouseMiddle)
             {
-                hands.SendChangeHand(slotName);
+                Creator.SendChangeHand(slotName);
                 args.Handle();
                 return;
             }
 
-            var entity = hands.GetEntity(slotName);
+            var entity = Creator.GetEntity(slotName);
             if (entity == null)
             {
-                if (args.Function == EngineKeyFunctions.UIClick && hands.ActiveIndex != slotName)
+                if (args.Function == EngineKeyFunctions.UIClick && Creator.ActiveIndex != slotName)
                 {
-                    hands.SendChangeHand(slotName);
+                    Creator.SendChangeHand(slotName);
                     args.Handle();
                 }
 
@@ -209,13 +202,13 @@ namespace Content.Client.UserInterface
 
             if (args.Function == EngineKeyFunctions.UIClick)
             {
-                if (hands.ActiveIndex == slotName)
+                if (Creator.ActiveIndex == slotName)
                 {
-                    hands.UseActiveHand();
+                    Creator.UseActiveHand();
                 }
                 else
                 {
-                    hands.AttackByInHand(slotName);
+                    Creator.AttackByInHand(slotName);
                 }
 
                 args.Handle();
@@ -224,22 +217,17 @@ namespace Content.Client.UserInterface
 
         private void _OnStoragePressed(GUIBoundKeyEventArgs args, string handIndex)
         {
-            if (args.Function != EngineKeyFunctions.UIClick || !TryGetHands(out var hands))
+            if (args.Function != EngineKeyFunctions.UIClick)
             {
                 return;
             }
 
-            hands.ActivateItemInHand(handIndex);
+            Creator.ActivateItemInHand(handIndex);
         }
 
         private void UpdatePanels()
         {
-            if (!TryGetHands(out var component))
-            {
-                return;
-            }
-
-            foreach (var hand in component.Hands)
+            foreach (var hand in Creator.Hands)
             {
                 _itemSlotManager.UpdateCooldown(hand.Button, hand.Entity);
             }
@@ -299,7 +287,7 @@ namespace Content.Client.UserInterface
                     _rightPanel.Update(hands[1].HeldItem);
 
                     // Order is left, right
-                    foreach (var hand in component.Hands)
+                    foreach (var hand in Creator.Hands)
                     {
                         var tooltip = GetItemPanel(hand);
                         tooltip.Update(hand.Entity);
@@ -322,7 +310,7 @@ namespace Content.Client.UserInterface
                         }
                     }
 
-                    _topPanel.Update(component.ActiveHand);
+                    _topPanel.Update(Creator.ActiveHand);
                     _leftPanel.Update(null);
                     _rightPanel.Update(null);
 
@@ -336,15 +324,6 @@ namespace Content.Client.UserInterface
         {
             base.FrameUpdate(args);
             UpdatePanels();
-        }
-
-        //TODO: Purge this
-        private bool TryGetHands([NotNullWhen(true)] out HandsComponent? hands)
-        {
-            hands = default;
-
-            var entity = _playerManager?.LocalPlayer?.ControlledEntity;
-            return entity != null && entity.TryGetComponent(out hands);
         }
     }
 
