@@ -21,8 +21,10 @@ namespace Content.Client.GameObjects.Components.Items
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
 
+        [ViewVariables]
         private HandsGui? _gui;
 
+        [ViewVariables]
         private readonly List<Hand> _hands = new();
 
         [ViewVariables] public IReadOnlyList<Hand> Hands => _hands;
@@ -95,9 +97,7 @@ namespace Content.Client.GameObjects.Components.Items
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState == null)
-            {
                 return;
-            }
 
             var cast = (HandsComponentState) curState;
             foreach (var sharedHand in cast.Hands)
@@ -121,7 +121,7 @@ namespace Content.Client.GameObjects.Components.Items
                 UpdateHandSprites(hand);
             }
 
-            foreach (var currentHand in _hands.ToList())
+            foreach (var currentHand in _hands)
             {
                 if (cast.Hands.All(newHand => newHand.Name != currentHand.Name))
                 {
@@ -135,6 +135,9 @@ namespace Content.Client.GameObjects.Components.Items
 
             _gui?.UpdateHandIcons();
             RefreshInHands();
+
+
+            OnHandsModified(); //placeholder for auto-updating gui state
         }
 
         private void HideHand(Hand hand)
@@ -201,47 +204,17 @@ namespace Content.Client.GameObjects.Components.Items
             switch (message)
             {
                 case PlayerAttachedMsg _:
-                    if (_gui == null)
-                    {
-                        _gui = new HandsGui();
-                    }
-                    else
-                    {
-                        _gui.Parent?.RemoveChild(_gui);
-                    }
-
-                    _gameHud.HandsContainer.AddChild(_gui);
-                    _gui.UpdateHandIcons();
+                    HandlePlayerAttachedMsg();
                     break;
                 case PlayerDetachedMsg _:
-                    _gui?.Parent?.RemoveChild(_gui);
+                    HandlePlayerDetachedMsg();
                     break;
                 case HandEnabledMsg msg:
-                {
-                    var hand = GetHand(msg.Name);
-
-                    if (hand?.Button == null)
-                    {
-                        break;
-                    }
-
-                    hand.Button.Blocked.Visible = false;
-
+                    HandleHandEnabledMsg(msg);
                     break;
-                }
                 case HandDisabledMsg msg:
-                {
-                    var hand = GetHand(msg.Name);
-
-                    if (hand?.Button == null)
-                    {
-                        break;
-                    }
-
-                    hand.Button.Blocked.Visible = true;
-
+                    HandleHandDisabledMsg(msg);
                     break;
-                }
             }
         }
 
@@ -252,14 +225,56 @@ namespace Content.Client.GameObjects.Components.Items
             switch (message)
             {
                 case AnimatePickupEntityMessage msg:
-                {
-                    if (Owner.EntityManager.TryGetEntity(msg.EntityId, out var entity))
-                    {
-                        ReusableAnimations.AnimateEntityPickup(entity, msg.EntityPosition, Owner.Transform.WorldPosition);
-                    }
+                    HandleAnimatePickupEntityMessage(msg);
                     break;
-                }
             }
+        }
+
+        private void HandleAnimatePickupEntityMessage(AnimatePickupEntityMessage msg)
+        {
+            if (Owner.EntityManager.TryGetEntity(msg.EntityId, out var entity))
+            {
+                ReusableAnimations.AnimateEntityPickup(entity, msg.EntityPosition, Owner.Transform.WorldPosition);
+            }
+        }
+
+        private void HandlePlayerAttachedMsg()
+        {
+            if (_gui == null)
+            {
+                _gui = new HandsGui(this);
+            }
+            else
+            {
+                _gui.Parent?.RemoveChild(_gui);
+            }
+            _gameHud.HandsContainer.AddChild(_gui);
+            _gui.UpdateHandIcons();
+        }
+
+        private void HandlePlayerDetachedMsg()
+        {
+            _gui?.Parent?.RemoveChild(_gui);
+        }
+
+        private void HandleHandEnabledMsg(HandEnabledMsg msg)
+        {
+            var hand = GetHand(msg.Name);
+
+            if (hand?.Button == null)
+                return;
+
+            hand.Button.Blocked.Visible = false;
+        }
+
+        private void HandleHandDisabledMsg(HandDisabledMsg msg)
+        {
+            var hand = GetHand(msg.Name);
+
+            if (hand?.Button == null)
+                return;
+
+            hand.Button.Blocked.Visible = true;
         }
 
         public void SendChangeHand(string index)
@@ -283,11 +298,14 @@ namespace Content.Client.GameObjects.Components.Items
         public void ActivateItemInHand(string handIndex)
         {
             if (GetEntity(handIndex) == null)
-            {
                 return;
-            }
 
             SendNetworkMessage(new ActivateInHandMsg(handIndex));
+        }
+
+        private void OnHandsModified() //TODO: Have methods call this when appropriate
+        {
+            SetGuiState();
         }
 
         private void SetGuiState()

@@ -16,6 +16,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.UserInterface
 {
@@ -43,7 +44,10 @@ namespace Content.Client.UserInterface
         ///     Last state sent by the client hands.
         ///     State has no hands if no state has been set yet.
         /// </summary>
+        [ViewVariables]
         private HandsGuiState State { get; set; } = new();
+
+        private HandsComponent Creator { get; set; }
 
         public void SetState(HandsGuiState state)
         {
@@ -51,8 +55,10 @@ namespace Content.Client.UserInterface
             //TODO: Update UI with new state
         }
 
-        public HandsGui()
+        public HandsGui(HandsComponent creator)
         {
+            Creator = creator;
+
             IoCManager.InjectDependencies(this);
 
             AddChild(_guiContainer = new HBoxContainer
@@ -90,17 +96,13 @@ namespace Content.Client.UserInterface
 
         private Texture HandTexture(HandLocation location)
         {
-            switch (location)
+            return location switch
             {
-                case HandLocation.Left:
-                    return _leftHandTexture;
-                case HandLocation.Middle:
-                    return _middleHandTexture;
-                case HandLocation.Right:
-                    return _rightHandTexture;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(location), location, null);
-            }
+                HandLocation.Left => _leftHandTexture,
+                HandLocation.Middle => _middleHandTexture,
+                HandLocation.Right => _rightHandTexture,
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
 
         /// <summary>
@@ -136,22 +138,9 @@ namespace Content.Client.UserInterface
             }
         }
 
-        /// <summary>
-        ///     Gets the hands component controlling this gui
-        /// </summary>
-        /// <param name="hands"></param>
-        /// <returns>true if successful and false if failure</returns>
-        private bool TryGetHands([NotNullWhen(true)] out HandsComponent? hands)
-        {
-            hands = default;
-
-            var entity = _playerManager?.LocalPlayer?.ControlledEntity;
-            return entity != null && entity.TryGetComponent(out hands);
-        }
-
         public void UpdateHandIcons()
         {
-            if (Parent == null)
+            if (base.Parent == null)
             {
                 return;
             }
@@ -255,7 +244,9 @@ namespace Content.Client.UserInterface
                 _itemSlotManager.UpdateCooldown(hand.Button, hand.Entity);
             }
 
-            switch (component.Hands.Count)
+            var hands = State.GuiHands;
+
+            switch (hands.Count)
             {
                 case var n when n == 0 && _lastHands != 0:
                     _guiContainer.Visible = false;
@@ -285,7 +276,7 @@ namespace Content.Client.UserInterface
                         }
                     }
 
-                    _rightPanel.Update(component.Hands[0].Entity);
+                    _rightPanel.Update(hands[0].HeldItem);
 
                     break;
                 case 2:
@@ -304,8 +295,8 @@ namespace Content.Client.UserInterface
                         }
                     }
 
-                    _leftPanel.Update(component.Hands[0].Entity);
-                    _rightPanel.Update(component.Hands[1].Entity);
+                    _leftPanel.Update(hands[0].HeldItem);
+                    _rightPanel.Update(hands[1].HeldItem);
 
                     // Order is left, right
                     foreach (var hand in component.Hands)
@@ -338,13 +329,22 @@ namespace Content.Client.UserInterface
                     break;
             }
 
-            _lastHands = component.Hands.Count;
+            _lastHands = hands.Count;
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
             UpdatePanels();
+        }
+
+        //TODO: Purge this
+        private bool TryGetHands([NotNullWhen(true)] out HandsComponent? hands)
+        {
+            hands = default;
+
+            var entity = _playerManager?.LocalPlayer?.ControlledEntity;
+            return entity != null && entity.TryGetComponent(out hands);
         }
     }
 
@@ -356,6 +356,7 @@ namespace Content.Client.UserInterface
         /// <summary>
         ///     The set of hands to be displayed.
         /// </summary>
+        [ViewVariables]
         public List<GuiHand> GuiHands { get; } = new();
 
         public HandsGuiState()
@@ -377,23 +378,34 @@ namespace Content.Client.UserInterface
         /// <summary>
         ///     The name of this hand.
         /// </summary>
+        [ViewVariables]
         public string Name { get; }
 
         /// <summary>
         ///     Where this hand is located.
         /// </summary>
+        [ViewVariables]
         public HandLocation HandLocation { get; }
 
         /// <summary>
         ///     The item being held in this hand.
         /// </summary>
+        [ViewVariables]
         public IEntity? HeldItem { get; }
 
-        public GuiHand(string name, HandLocation handLocation, IEntity? heldItem = null)
+        public GuiHand(string name, HandLocation handLocation, IEntity? heldItem)
         {
             Name = name;
             HandLocation = handLocation;
             HeldItem = heldItem;
+        }
+    }
+
+    public static class RefactorHelperExtensions //TODO: Remove
+    {
+        public static GuiHand FromClientHand(this Hand hand)
+        {
+            return new GuiHand(hand.Name, hand.Location, hand.Entity);
         }
     }
 }
