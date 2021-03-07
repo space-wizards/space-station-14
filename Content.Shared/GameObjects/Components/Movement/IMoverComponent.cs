@@ -19,17 +19,6 @@ namespace Content.Shared.GameObjects.Components.Movement
         /// </summary>
         float CurrentSprintSpeed { get; }
 
-
-        /// <summary>
-        ///     The movement speed (m/s) of the entity when it pushes off of a solid object in zero gravity.
-        /// </summary>
-        float CurrentPushSpeed { get; }
-
-        /// <summary>
-        ///     How far an entity can reach (in meters) to grab hold of a solid object in zero gravity.
-        /// </summary>
-        float GrabRange { get; }
-
         /// <summary>
         ///     Is the entity Sprinting (running)?
         /// </summary>
@@ -39,10 +28,6 @@ namespace Content.Shared.GameObjects.Components.Movement
         ///     Calculated linear velocity direction of the entity.
         /// </summary>
         (Vector2 walking, Vector2 sprinting) VelocityDir { get; }
-
-        EntityCoordinates LastPosition { get; set; }
-
-        float StepSoundDistance { get; set; }
 
         /// <summary>
         ///     Toggles one of the four cardinal directions. Each of the four directions are
@@ -55,6 +40,5 @@ namespace Content.Shared.GameObjects.Components.Movement
         void SetVelocityDirection(Direction direction, ushort subTick, bool enabled);
 
         void SetSprinting(ushort subTick, bool walking);
-
     }
 }

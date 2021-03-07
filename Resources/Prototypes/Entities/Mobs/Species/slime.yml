@@ -114,11 +114,12 @@
         - map: [ "enum.Slots.MASK" ]
         - map: [ "enum.Slots.HEAD" ]
     - type: Physics
-      anchored: false
+      bodyType: Dynamic
       mass: 85
-      shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+              bounds: "-0.35,-0.35,0.35,0.35"
           mask:
             - Impassable
             - MobImpassable

@@ -1,6 +1,9 @@
 using Content.Server.GameObjects.Components.Weapon;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
@@ -8,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
     /// Upon colliding with an object this will flash in an area around it
     /// </summary>
     [RegisterComponent]
-    public class FlashProjectileComponent : Component, ICollideBehavior
+    public class FlashProjectileComponent : Component, IStartCollide
     {
         public override string Name => "FlashProjectile";
 
@@ -26,20 +29,15 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Owner.EnsureComponent<ProjectileComponent>();
         }
 
-        void ICollideBehavior.CollideWith(IEntity entity)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (_flashed)
             {
                 return;
             }
+
             FlashableComponent.FlashAreaHelper(Owner, _range, _duration);
             _flashed = true;
-        }
-
-        // Projectile should handle the deleting
-        void ICollideBehavior.PostCollide(int collisionCount)
-        {
-            return;
         }
     }
 }

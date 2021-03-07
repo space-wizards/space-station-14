@@ -12,10 +12,11 @@
     sprite: Constructible/Power/VendingMachines/empty.rsi
     netsync: false
   - type: Physics
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5,-0.25,0.5,0.25"
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
       mask:
       - Impassable
       - MobImpassable

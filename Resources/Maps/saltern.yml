@@ -615,7 +615,7 @@ entities:
     pos: 39.5,-1.5
     rot: 4.371139006309477E-08 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
@@ -5115,7 +5115,7 @@ entities:
     pos: -8.5,8.5
     rot: 1.5707963705062866 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 577
   type: ChairOfficeDark
@@ -5124,7 +5124,7 @@ entities:
     pos: -9.5,7.5
     rot: 4.371139006309477E-08 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 578
   type: TableR
@@ -7933,9 +7933,10 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
-  - shapes:
-    - !type:PhysShapeGrid
-      grid: 0
+  - fixtures:
+    - shape:
+        !type:PhysShapeGrid
+          grid: 0
     type: Physics
   - uniqueMixes:
     - volume: 2500
@@ -12661,7 +12662,7 @@ entities:
     pos: 10.5,17.5
     rot: 4.71238902409608 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 955
   type: Chair
@@ -12670,7 +12671,7 @@ entities:
     pos: 8.5,17.5
     rot: 1.5707963705062866 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 956
   type: Table
@@ -12712,7 +12713,7 @@ entities:
     pos: 0.5,31.5
     rot: 3.141592697301183 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 961
   type: ComputerMedicalRecords
@@ -12728,7 +12729,7 @@ entities:
     pos: 7.5,31.5
     rot: 3.141592697301183 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 963
   type: ChairOfficeDark
@@ -12737,7 +12738,7 @@ entities:
     pos: -2.5,25.5
     rot: 1.5707963705062866 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 964
   type: ChairOfficeDark
@@ -12746,7 +12747,7 @@ entities:
     pos: -2.5,24.5
     rot: 1.5707963705062866 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 965
   type: ChairOfficeDark
@@ -12755,7 +12756,7 @@ entities:
     pos: -0.5,25.5
     rot: 4.71238902409608 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 966
   type: ChairOfficeDark
@@ -12764,7 +12765,7 @@ entities:
     pos: -0.5,24.5
     rot: 4.71238902409608 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 967
   type: TableWood
@@ -12866,7 +12867,7 @@ entities:
     pos: 7.5,25.5
     rot: 1.5707963705062866 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 979
   type: ChairOfficeDark
@@ -12875,7 +12876,7 @@ entities:
     pos: 9.5,25.5
     rot: 4.71238902409608 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 980
   type: ComputerComms
@@ -12896,7 +12897,7 @@ entities:
     pos: 3.5,31.5
     rot: 3.141592697301183 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 982
   type: TableWood
@@ -13017,7 +13018,7 @@ entities:
     pos: 22.5,-14.5
     rot: 1.5707963705062866 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 997
   type: ApcExtensionCable
@@ -13404,7 +13405,7 @@ entities:
     pos: -8.5,-18.5
     rot: 3.141592697301183 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1046
   type: ChairOfficeLight
@@ -13413,7 +13414,7 @@ entities:
     pos: -9.5,-17.5
     rot: 1.5707963705062866 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1047
   type: Table
@@ -13436,7 +13437,7 @@ entities:
     pos: -5.5,-23.5
     rot: 1.5707963705062866 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1050
   type: ChairOfficeLight
@@ -13445,7 +13446,7 @@ entities:
     pos: -0.5,-14.5
     rot: 1.5707963705062866 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1051
   type: BaseResearchAndDevelopmentPointSource
@@ -13885,7 +13886,7 @@ entities:
     pos: 24.5,-14.5
     rot: 4.71238902409608 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1098
   type: Table
@@ -14440,7 +14441,7 @@ entities:
     pos: 28.5,1.5
     rot: 4.371139006309477E-08 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1166
   type: Chair
@@ -14449,7 +14450,7 @@ entities:
     pos: 26.5,1.5
     rot: 4.371139006309477E-08 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1167
   type: LockerHeadOfSecurityFilled
@@ -14539,7 +14540,7 @@ entities:
     pos: 6.5,-4.5
     rot: 3.141592697301183 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1178
   type: Table
@@ -14809,7 +14810,7 @@ entities:
     pos: -11.5,8.5
     rot: 4.71238902409608 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1209
   type: Chair
@@ -14818,7 +14819,7 @@ entities:
     pos: -13.5,8.5
     rot: 1.5707963705062866 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1210
   type: Food4NoRaisins
@@ -16250,7 +16251,7 @@ entities:
     pos: 10.5,-16.5
     rot: 4.71238902409608 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1339
   type: ChairOfficeLight
@@ -16259,7 +16260,7 @@ entities:
     pos: 14.5,0.5
     rot: 4.71238902409608 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1340
   type: Poweredlight
@@ -17857,7 +17858,7 @@ entities:
     pos: -3.5,-23.5
     rot: 4.71238902409608 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1536
   type: Chair
@@ -17866,7 +17867,7 @@ entities:
     pos: 38.5,-0.5
     rot: 1.5707963705062866 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1537
   type: Table
@@ -18119,7 +18120,7 @@ entities:
     pos: 30.5,-2.5
     rot: 4.71238902409608 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 1572
   type: Catwalk
@@ -24174,7 +24175,7 @@ entities:
     pos: 40.5,-0.5
     rot: 4.71238902409608 rad
     type: Transform
-  - anchored: False
+  - bodyType: Dynamic
     type: Physics
 - uid: 2428
   type: solid_wall

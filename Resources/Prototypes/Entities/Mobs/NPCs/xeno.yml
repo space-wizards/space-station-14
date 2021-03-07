@@ -20,11 +20,12 @@
       state: running
       sprite: Mobs/Aliens/Xenos/xeno.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 85
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-1,-0.4,-0.2,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-1,-0.4,-0.2,0.4"
       mask:
       - Impassable
       - MobImpassable

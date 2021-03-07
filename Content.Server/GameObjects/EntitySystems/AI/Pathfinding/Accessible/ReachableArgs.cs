@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 {
@@ -27,7 +28,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         public static ReachableArgs GetArgs(IEntity entity)
         {
             var collisionMask = 0;
-            if (entity.TryGetComponent(out IPhysicsComponent? physics))
+            if (entity.TryGetComponent(out IPhysBody? physics))
             {
                 collisionMask = physics.CollisionMask;
             }
