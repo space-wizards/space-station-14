@@ -6,9 +6,10 @@
   - type: Clickable
   - type: Physics
     bodyType: Dynamic
-    shapes:
-    - !type:PhysShapeCircle
-      radius: 0.5
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+          radius: 0.5
       layer: [Impassable]
       mask:
       - AllMask

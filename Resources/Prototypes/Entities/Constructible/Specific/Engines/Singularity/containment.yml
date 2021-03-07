@@ -10,9 +10,10 @@
   - type: Physics
     bodyType: Dynamic
     mass: 25
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
       layer:
       - Impassable
       - MobImpassable
@@ -52,9 +53,10 @@
   - type: Clickable
   - type: Physics
     bodyType: Static
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
       layer:
       - Impassable
       - MobImpassable

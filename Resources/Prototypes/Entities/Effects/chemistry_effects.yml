@@ -40,9 +40,10 @@
     - type: SnapGrid
       offset: Center
     - type: Physics
-      shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
         layer:
         - MobImpassable
     - type: FoamSolutionAreaEffect

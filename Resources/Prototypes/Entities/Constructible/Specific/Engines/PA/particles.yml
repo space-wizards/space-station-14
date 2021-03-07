@@ -16,9 +16,10 @@
         Radiation: 10
     - type: Physics
       hard: false
-      shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.48,-0.48,0.48,0.48"
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.48,-0.48,0.48,0.48"
         layer: [None]
         mask:
         - MobMask
