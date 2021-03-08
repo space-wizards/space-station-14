@@ -281,3 +281,8 @@ Entries:
   - {message: Throwing pushback implemented again, type: Fix}
   id: 51
   time: '2021-03-08T01:10:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pushing strength, type: Fix}
+  id: 52
+  time: '2021-03-08T01:48:15.0000000+00:00'
