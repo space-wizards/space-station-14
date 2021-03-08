@@ -182,12 +182,6 @@ namespace Content.Shared.GameObjects.Components.Disposal
                     return false;
                 }
             }
-
-            if (!entity.HasComponent<SharedItemComponent>() &&
-                !entity.HasComponent<IBody>())
-            {
-                return false;
-            }
             return true;
         }
 
