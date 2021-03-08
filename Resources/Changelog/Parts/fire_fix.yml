@@ -1,4 +1,0 @@
-author: Zumorica
-changes:
-  - type: Fix
-    message: Fixes bug where plasma and tritium fires would never occur no matter what.

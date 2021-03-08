@@ -325,3 +325,9 @@ Entries:
       within it., type: Fix}
   id: 59
   time: '2021-03-08T13:58:21.036238+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes bug where plasma and tritium fires would never occur no matter
+      what., type: Fix}
+  id: 60
+  time: '2021-03-08T14:23:04.819646+00:00'
