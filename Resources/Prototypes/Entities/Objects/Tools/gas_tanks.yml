@@ -20,6 +20,7 @@
 
 - type: entity
   id: OxygenTank
+  name: oxygen tank
   parent: GasTankBase
   suffix: ent-gas-tank-suffix-empty
   components:
@@ -61,6 +62,7 @@
 
 - type: entity
   id: EmergencyOxygenTank
+  name: emergency oxygen tank
   parent: OxygenTank
   suffix: ent-gas-tank-suffix-empty
   components:
@@ -79,6 +81,7 @@
 
 - type: entity
   id: ExtendedEmergencyOxygenTank
+  name: high-capacity emergency oxygen tank
   parent: EmergencyOxygenTank
   suffix: ent-gas-tank-suffix-empty
   components:
@@ -97,6 +100,7 @@
 
 - type: entity
   id: DoubleEmergencyOxygenTank
+  name: double emergency oxygen tank 
   parent: ExtendedEmergencyOxygenTank
   suffix: ent-gas-tank-suffix-empty
   components:
