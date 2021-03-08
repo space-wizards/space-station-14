@@ -446,17 +446,6 @@
   friction: 0.35
 
 - type: tile
-  name: tile_glass_with_lattice
-  display_name: Glass With Lattice Tile
-  texture: glass_with_lattice
-  base_turfs:
-  - plating
-  is_subfloor: false
-  can_crowbar: true
-  footstep_sounds: footstep_floor
-  friction: 0.35
-
-- type: tile
   name: floor_red_circuit
   display_name: Red circuit floor
   texture: red_circuit
