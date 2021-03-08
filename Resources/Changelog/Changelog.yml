@@ -299,3 +299,8 @@ Entries:
       forever client-side., type: Fix}
   id: 54
   time: '2021-03-08T04:00:51.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Protolathes can now be built again., type: Fix}
+  id: 55
+  time: '2021-03-08T04:09:30.0000000+00:00'
