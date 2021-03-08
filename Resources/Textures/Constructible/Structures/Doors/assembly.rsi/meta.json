@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/59fe5dd2841f47a8abce60eecb9fafad34282bd0",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "assembly_0"
+    },
+    {
+      "name": "assembly_1"
+    },
+    {
+      "name": "assembly_2"
+    },
+    {
+      "name": "fire_0"
+    },
+    {
+      "name": "fire_1"
+    },
+    {
+      "name": "fire_2"
+    },
+    {
+      "name": "fire_3"
+    }
+  ]
+}

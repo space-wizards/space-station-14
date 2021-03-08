@@ -9,7 +9,7 @@
   - type: InteractionOutline
   - type: Physics
     mass: 25
-    bodyType: Dynamic
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb

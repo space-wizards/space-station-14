@@ -20,9 +20,12 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
-      hard: false
       layer:
-      - MobImpassable
+        - SmallImpassable
+      mask:
+        - SmallImpassable
+        - MobImpassable
+      hard: false
 
 - type: entity
   name: puddle

@@ -2,7 +2,9 @@
 using System;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
@@ -16,7 +18,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Pulling
 {
-    public abstract class SharedPullableComponent : Component, ICollideSpecial
+    public abstract class SharedPullableComponent : Component, ICollideSpecial, IRelayMoveInput
     {
         public override string Name => "Pullable";
         public override uint? NetID => ContentNetIDs.PULLABLE;
@@ -331,15 +333,6 @@ namespace Content.Shared.GameObjects.Components.Pulling
             }
         }
 
-        private void OnClickAlert(ClickAlertEventArgs args)
-        {
-            EntitySystem
-                .Get<SharedPullingSystem>()
-                .GetPulled(args.Player)?
-                .GetComponentOrNull<SharedPullableComponent>()?
-                .TryStopPull();
-        }
-
         public override void OnRemove()
         {
             TryStopPull();
@@ -355,6 +348,14 @@ namespace Content.Shared.GameObjects.Components.Pulling
             }
 
             return (_physics.CollisionLayer & collidedWith.CollisionMask) == (int) CollisionGroup.MobImpassable;
+        }
+
+        // TODO: Need a component bus relay so all entities can use this and not just players
+        void IRelayMoveInput.MoveInputPressed(ICommonSession session)
+        {
+            var entity = session.AttachedEntity;
+            if (entity == null || !ActionBlockerSystem.CanMove(entity)) return;
+            TryStopPull();
         }
     }
 

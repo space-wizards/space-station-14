@@ -281,7 +281,7 @@ namespace Content.Server.GameObjects.Components.Construction
                     else
                     {
                         _containers.Add(insertStep.Store);
-                        var container = ContainerHelpers.EnsureContainer<Container>(Owner, insertStep.Store);
+                        var container = Owner.EnsureContainer<Container>(insertStep.Store);
                         container.Insert(entityUsing);
                     }
 

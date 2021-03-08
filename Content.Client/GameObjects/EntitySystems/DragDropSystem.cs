@@ -1,5 +1,6 @@
 #nullable enable
 using System.Collections.Generic;
+using System.Linq;
 using Content.Client.State;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.EntitySystemMessages;
@@ -313,22 +314,10 @@ namespace Content.Client.GameObjects.EntitySystems
 
                 // check if it's able to be dropped on by current dragged entity
                 var dropArgs = new DragDropEventArgs(_dragger, args.Coordinates, _dragDropHelper.Dragged, entity);
-                var valid = true;
-                var anyDragDrop = false;
-                var dragDropOn = new List<IDragDropOn>();
 
-                foreach (var comp in entity.GetAllComponents<IDragDropOn>())
-                {
-                    anyDragDrop = true;
+                // TODO: Cache valid CanDragDrops
+                if (ValidDragDrop(dropArgs) != true) continue;
 
-                    if (!comp.CanDragDropOn(dropArgs))
-                    {
-                        valid = false;
-                        dragDropOn.Add(comp);
-                    }
-                }
-
-                if (!valid || !anyDragDrop) continue;
                 if (!dropArgs.InRangeUnobstructed(ignoreInsideBlocker: true))
                 {
                     outOfRange = true;
@@ -344,12 +333,6 @@ namespace Content.Client.GameObjects.EntitySystems
                         entity.Uid));
 
                     draggable.Drop(dropArgs);
-
-                    // Don't fail if it isn't handled as server may do something with it
-                    foreach (var comp in dragDropOn)
-                    {
-                        if (!comp.DragDropOn(dropArgs)) continue;
-                    }
 
                     _dragDropHelper.EndDrag();
                     return true;
@@ -394,21 +377,11 @@ namespace Content.Client.GameObjects.EntitySystems
                     !inRangeSprite.Visible ||
                     pvsEntity == _dragDropHelper.Dragged) continue;
 
-                var valid = (bool?) null;
                 // check if it's able to be dropped on by current dragged entity
                 var dropArgs = new DragDropEventArgs(_dragger!, pvsEntity.Transform.Coordinates, _dragDropHelper.Dragged, pvsEntity);
 
-                foreach (var comp in pvsEntity.GetAllComponents<IDragDropOn>())
-                {
-                    valid = comp.CanDragDropOn(dropArgs);
-
-                    if (valid.Value)
-                        break;
-                }
-
-                // Can't do anything so no highlight
-                if (!valid.HasValue)
-                    continue;
+                var valid = ValidDragDrop(dropArgs);
+                if (valid == null) continue;
 
                 // We'll do a final check given server-side does this before any dragdrop can take place.
                 if (valid.Value)
@@ -432,6 +405,43 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             _highlightedSprites.Clear();
+        }
+
+        /// <summary>
+        ///     Are these args valid for drag-drop?
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        /// <returns>null if the target doesn't support IDragDropOn</returns>
+        private bool? ValidDragDrop(DragDropEventArgs eventArgs)
+        {
+            bool? valid = null;
+
+            foreach (var comp in eventArgs.Target.GetAllComponents<IDragDropOn>())
+            {
+                if (!comp.CanDragDropOn(eventArgs))
+                {
+                    valid = false;
+                    // dragDropOn.Add(comp);
+                    continue;
+                }
+
+                valid = true;
+                break;
+            }
+
+            if (valid != true) return valid;
+
+            // Need at least one IDraggable to return true or else we can't do shit
+            valid = false;
+
+            foreach (var comp in eventArgs.User.GetAllComponents<IDraggable>())
+            {
+                if (!comp.CanDrop(eventArgs)) continue;
+                valid = true;
+                break;
+            }
+
+            return valid;
         }
 
         public override void Update(float frameTime)

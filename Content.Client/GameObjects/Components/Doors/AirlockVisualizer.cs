@@ -84,7 +84,7 @@ namespace Content.Client.GameObjects.Components.Doors
                 var flick = new AnimationTrackSpriteFlick();
                 DenyAnimation.AnimationTracks.Add(flick);
                 flick.LayerKey = DoorVisualLayers.BaseUnlit;
-                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("deny", 0f));
+                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("deny_unlit", 0f));
 
                 var sound = new AnimationTrackPlaySound();
                 DenyAnimation.AnimationTracks.Add(sound);
@@ -128,7 +128,7 @@ namespace Content.Client.GameObjects.Components.Doors
                 case DoorVisualState.Closed:
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
-                    sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted");
+                    sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted_unlit");
                     sprite.LayerSetState(WiresVisualizer.WiresVisualLayers.MaintenancePanel, "panel_open");
                     break;
                 case DoorVisualState.Opening:

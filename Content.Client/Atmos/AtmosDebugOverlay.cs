@@ -105,7 +105,8 @@ namespace Content.Client.Atmos
                                 {
                                     if (data.BlockDirection.HasFlag(dir))
                                     {
-                                        var atmosAngle = dir.ToAngle();
+                                        // Account for South being 0.
+                                        var atmosAngle = dir.ToAngle() - Angle.FromDegrees(90);
                                         var atmosAngleOfs = atmosAngle.ToVec() * 0.45f;
                                         var atmosAngleOfsR90 = new Vector2(atmosAngleOfs.Y, -atmosAngleOfs.X);
                                         var tileCentre = new Vector2(tile.X + 0.5f, tile.Y + 0.5f);
@@ -121,7 +122,8 @@ namespace Content.Client.Atmos
                                 // -- Pressure Direction --
                                 if (data.PressureDirection != AtmosDirection.Invalid)
                                 {
-                                    var atmosAngle = data.PressureDirection.ToAngle();
+                                    // Account for South being 0.
+                                    var atmosAngle = data.PressureDirection.ToAngle() - Angle.FromDegrees(90);
                                     var atmosAngleOfs = atmosAngle.ToVec() * 0.4f;
                                     var tileCentre = new Vector2(tile.X + 0.5f, tile.Y + 0.5f);
                                     var basisA = mapGrid.LocalToWorld(tileCentre);

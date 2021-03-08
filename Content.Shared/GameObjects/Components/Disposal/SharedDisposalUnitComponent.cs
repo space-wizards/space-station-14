@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body;
@@ -167,8 +167,16 @@ namespace Content.Shared.GameObjects.Components.Disposal
             if (!Anchored)
                 return false;
 
+            // TODO: Probably just need a disposable tag.
+            if (!entity.TryGetComponent(out SharedItemComponent? storable) &&
+                !entity.HasComponent<IBody>())
+            {
+                return false;
+            }
+
+
             if (!entity.TryGetComponent(out IPhysBody? physics) ||
-                !physics.CanCollide)
+                !physics.CanCollide && storable == null)
             {
                 if (!(entity.TryGetComponent(out IMobStateComponent? damageState) && damageState.IsDead())) {
                     return false;
@@ -180,7 +188,6 @@ namespace Content.Shared.GameObjects.Components.Disposal
             {
                 return false;
             }
-
             return true;
         }
 

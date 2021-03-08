@@ -136,7 +136,7 @@ namespace Content.Client.UserInterface
                 MinSize = (2, 0)
             });
             _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager, entityManager);
-            _humanoidProfileEditor.OnProfileChanged += newProfile => { UpdateUI(); };
+            _humanoidProfileEditor.OnProfileChanged += ProfileChanged;
             hBox.AddChild(_humanoidProfileEditor);
 
             UpdateUI();
@@ -154,6 +154,12 @@ namespace Content.Client.UserInterface
         }
 
         public void Save() => _humanoidProfileEditor.Save();
+
+        private void ProfileChanged(ICharacterProfile profile, int profileSlot)
+        {
+            _humanoidProfileEditor.UpdateControls();
+            UpdateUI();
+        }
 
         private void UpdateUI()
         {
