@@ -132,6 +132,32 @@
 
 - type: entity
   parent: VendingMachine
+  id: VendingMachineClothing
+  name: ClothesMate
+  components:
+  - type: VendingMachine
+    pack: ClothesMate
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/clothing.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      denyUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+# slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this swag!;Why leave style up to fate? Use the ClothesMate!"
+
+- type: entity
+  parent: VendingMachine
   id: VendingMachineCoffee
   name: hot drinks machine
   components:
@@ -367,7 +393,6 @@
     visuals:
     - type: VendingMachineVisualizer
       normalUnshaded: true
-      ejectUnshaded: true
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
