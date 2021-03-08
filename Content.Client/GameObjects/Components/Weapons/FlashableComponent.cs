@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Content.Client.Graphics.Overlays;
 using Content.Shared.GameObjects.Components.Weapons;
@@ -16,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Weapons
         private TimeSpan _startTime;
         private double _duration;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState == null)
             {

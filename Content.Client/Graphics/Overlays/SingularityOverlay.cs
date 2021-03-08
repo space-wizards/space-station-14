@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -81,7 +82,7 @@ namespace Content.Client.Graphics.Overlays
             var activeShaderUids = _singularities.Keys;
             foreach (var activeSinguloUid in activeShaderUids)
             {
-                if (_entityManager.TryGetEntity(activeSinguloUid, out IEntity singuloEntity))
+                if (_entityManager.TryGetEntity(activeSinguloUid, out IEntity? singuloEntity))
                 {
                     if (!singuloEntity.Transform.Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, singuloEntity.Transform.ParentUid, currentEyeLoc), _maxDist))
                     {
