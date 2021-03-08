@@ -545,3 +545,14 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.35
+
+- type: tile
+  name: floor_beware
+  display_name: Beware Floor
+  texture: beware
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
