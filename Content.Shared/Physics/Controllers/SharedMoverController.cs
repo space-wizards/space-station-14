@@ -83,6 +83,11 @@ namespace Content.Shared.Physics.Controllers
             // Target velocity.
             var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed);
 
+            if (weightless)
+            {
+                total *= mobMover.PushStrength;
+            }
+
             if (total != Vector2.Zero)
             {
                 // This should have its event run during island solver soooo
