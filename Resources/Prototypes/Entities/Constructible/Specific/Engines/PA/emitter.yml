@@ -83,7 +83,7 @@
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
     - type: Physics
-      anchored: false
+      bodyType: Dynamic
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/emitter_left.rsi
       state: left
@@ -100,7 +100,7 @@
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
     - type: Physics
-      anchored: false
+      bodyType: Dynamic
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/emitter_center.rsi
       state: center
@@ -117,7 +117,7 @@
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
     - type: Physics
-      anchored: false
+      bodyType: Dynamic
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/emitter_right.rsi
       state: right

@@ -16,9 +16,10 @@
     key: full
     base: carpet_
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5, -0.5, 0.5, 0.5"
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5, -0.5, 0.5, 0.5"
         layer: [ Passable ]
   - type: Damageable
   - type: Destructible

@@ -14,11 +14,11 @@ namespace Content.Client.GameObjects.Components.Movement
 
             if (curState is not SlipperyComponentState state) return;
 
-            Slippery = state.Slippery;
-            IntersectPercentage = state.IntersectPercentage;
-            ParalyzeTime = state.ParalyzeTime;
-            RequiredSlipSpeed = state.RequiredSlipSpeed;
-            LaunchForwardsMultiplier = state.LaunchForwardsMultiplier;
+            _slippery = state.Slippery;
+            _intersectPercentage = state.IntersectPercentage;
+            _paralyzeTime = state.ParalyzeTime;
+            _requiredSlipSpeed = state.RequiredSlipSpeed;
+            _launchForwardsMultiplier = state.LaunchForwardsMultiplier;
         }
     }
 }

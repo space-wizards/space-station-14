@@ -1,24 +1,20 @@
 ﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class SetStackCount : IGraphAction
     {
-        public int Amount { get; private set; }
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.Amount, "amount", 1);
-        }
+        [DataField("amount")] public int Amount { get; private set; } = 1;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {

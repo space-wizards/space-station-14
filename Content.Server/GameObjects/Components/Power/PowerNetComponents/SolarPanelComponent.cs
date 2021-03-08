@@ -4,7 +4,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -23,6 +23,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         /// <summary>
         /// Maximum supply output by this panel (coverage = 1)
         /// </summary>
+        [DataField("maxsupply")]
         private int _maxSupply = 1500;
         [ViewVariables(VVAccess.ReadWrite)]
         public int MaxSupply
@@ -76,13 +77,6 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             Owner.EnsureComponentWarn<PowerSupplierComponent>();
 
             UpdateSupply();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _maxSupply, "maxsupply", 1500);
         }
 
         public void OnBreak(BreakageEventArgs args)

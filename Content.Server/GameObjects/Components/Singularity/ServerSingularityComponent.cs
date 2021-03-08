@@ -12,6 +12,8 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics.Shapes;
 using Robust.Shared.Random;
 using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Singularity;
@@ -22,7 +24,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
-    public class ServerSingularityComponent : SharedSingularityComponent, ICollideBehavior
+    public class ServerSingularityComponent : SharedSingularityComponent, IStartCollide
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -37,8 +39,6 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _energy = value;
                 if (_energy <= 0)
                 {
-                    if(_singularityController != null) _singularityController.LinearVelocity = Vector2.Zero;
-
                     Owner.Delete();
                     return;
                 }
@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
 
-                if (_collidableComponent != null && _collidableComponent.PhysicsShapes.Any() && _collidableComponent.PhysicsShapes[0] is PhysShapeCircle circle)
+                if(_collidableComponent != null && _collidableComponent.Fixtures.Any() && _collidableComponent.Fixtures[0].Shape is PhysShapeCircle circle)
                 {
                     circle.Radius = _level - 0.5f;
                 }
@@ -92,11 +92,10 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _ => 0
             };
 
-        private SingularityController? _singularityController;
         private PhysicsComponent? _collidableComponent;
         private RadiationPulseComponent? _radiationPulseComponent;
         private AudioSystem _audioSystem = null!;
-        private AudioSystem.AudioSourceServer? _playingSound;
+        private IPlayingAudioStream? _playingSound;
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
@@ -121,136 +120,44 @@ namespace Content.Server.GameObjects.Components.Singularity
                 Logger.Error("SingularityComponent was spawned without CollidableComponent!");
             else
                 _collidableComponent.Hard = false;
-
-            _singularityController = _collidableComponent?.EnsureController<SingularityController>();
-            if(_singularityController != null)
-                _singularityController.ControlledComponent = _collidableComponent;
-
             Level = 1;
         }
 
-        public void Update()
+        public void Update(int seconds)
         {
-            Energy -= EnergyDrain;
-
-            if(Level == 1) return;
-            //pushing
-            var pushVector = new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10));
-            while (pushVector.X == 0 && pushVector.Y == 0)
-            {
-                pushVector = new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10));
-            }
-            _singularityController?.Push(pushVector.Normalized, 2);
+            Energy -= EnergyDrain * seconds;
         }
 
-
-        public void FrameUpdate(float frameTime)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            foreach (var key in _delayTiming.Keys.ToList())
+            var otherEntity = otherBody.Entity;
+
+            if (otherEntity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
             {
-                _delayTiming[key] += frameTime;
-            }
-        }
-
-        private readonly List<IEntity> _previousPulledEntities = new();
-        public void CleanupPulledEntities()
-        {
-            foreach (var previousPulledEntity in _previousPulledEntities)
-            {
-                if(previousPulledEntity.Deleted) continue;
-                if (!previousPulledEntity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
-                var controller = collidableComponent.EnsureController<SingularityPullController>();
-                controller.StopPull();
-            }
-            _previousPulledEntities.Clear();
-        }
-
-        public void PullUpdate()
-        {
-            CleanupPulledEntities();
-            var entitiesToPull = Owner.EntityManager.GetEntitiesInRange(Owner.Transform.Coordinates, Level * 10);
-            foreach (var entity in entitiesToPull)
-            {
-                if (entity.Deleted) continue;
-                if (entity.HasComponent<GhostComponent>()) continue; //Temporary fix for ghosts
-                if (entity.HasComponent<ServerSingularityComponent>()) continue;
-                if (!entity.Transform.ParentUid.IsValid()) continue; //Don't move root node of grid (root node has no parent)
-                if (!entity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
-                if (entity.HasComponent<GhostComponent>()) continue;
-                var controller = collidableComponent.EnsureController<SingularityPullController>();
-                if(Owner.Transform.Coordinates.EntityId != entity.Transform.Coordinates.EntityId) continue;
-                var vec = (Owner.Transform.Coordinates - entity.Transform.Coordinates).Position;
-                if (vec == Vector2.Zero) continue;
-
-                var speed = 10 / vec.Length * Level;
-
-                controller.Pull(vec.Normalized, speed);
-                _previousPulledEntities.Add(entity);
-            }
-        }
-
-        private Dictionary<IEntity, float> _delayTiming = new Dictionary<IEntity, float>();
-        void ICollideBehavior.CollideWith(IEntity entity)
-        {
-            if (entity.Deleted)
-                return;
-
-            if (!entity.Transform.ParentUid.IsValid())
-                return;
-
-            if (_collidableComponent == null) return; //how did it even collide then? :D
-
-            if (entity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
-            {
-                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(((IPhysBody) _collidableComponent).WorldAABB))
+                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(ourBody.GetWorldAABB()))
                 {
                     mapGridComponent.Grid.SetTile(tile.GridIndices, Tile.Empty);
                     Energy++;
                 }
                 return;
             }
-            if (entity.TryGetComponent<ServerSingularityComponent>(out var otherSingularity))
-            {
-                if (otherSingularity.Energy > Energy)
-                {
-                    return;
-                }
-                else
-                {
-                    Energy += otherSingularity.Energy;
-                    entity.Delete();
-                    return;
-                }
-            }
 
-            if (entity.HasComponent<ContainmentFieldComponent>() || (entity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.CanRepell(Owner)))
+            if (otherEntity.HasComponent<ContainmentFieldComponent>() || (otherEntity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.CanRepell(Owner)))
             {
                 return;
             }
 
-            if (entity.IsInContainer()) return;
+            if (otherEntity.IsInContainer())
+                return;
 
-            if (_delayTiming.ContainsKey(entity))
-            {
-                if (_delayTiming[entity] > 0.1f)
-                {
-                    _delayTiming.Remove(entity);
-                    entity.Delete();
-                    Energy++;
-                }
-            }
-            else
-            {
-                _delayTiming.Add(entity, 0f);
-            }
-
+            otherEntity.Delete();
+            Energy++;
         }
 
         public override void OnRemove()
         {
             _playingSound?.Stop();
             _audioSystem.PlayAtCoords("/Audio/Effects/singularity_collapse.ogg", Owner.Transform.Coordinates);
-            CleanupPulledEntities();
             base.OnRemove();
         }
     }

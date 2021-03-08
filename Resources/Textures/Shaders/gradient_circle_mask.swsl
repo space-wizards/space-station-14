@@ -1,7 +1,7 @@
 //This shader defines two circles - everything inside the inner circle will be darkened, while everything outside the outer circle
 //will be full black. Between the inner and outer circle it LERPs from the inner darkness to full black.
 
-//If you ever edit this to have input variables, be sure to edit CriticalState.cs
+light_mode unshaded;
 
 const highp float darknessAlphaInner =  0.6; 
 const highp float innerCircleRadius = 40; //Note: this is in pixels

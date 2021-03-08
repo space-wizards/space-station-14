@@ -4,20 +4,16 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class WirePanel : IEdgeCondition
     {
-        public bool Open { get; private set; }
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.Open, "open", true);
-        }
+        [DataField("open")] public bool Open { get; private set; } = true;
 
         public async Task<bool> Condition(IEntity entity)
         {

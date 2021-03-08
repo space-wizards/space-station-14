@@ -123,3 +123,199 @@ Entries:
   - {message: Cargo passive point gen tweaked from 20 -> 150  every 10 seconds., type: Tweak}
   id: 22
   time: '2021-03-02T02:31:38.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Added rules, type: Add}
+  - {message: Added admeen aboose, type: Add}
+  - {message: Removed fun, type: Remove}
+  id: 23
+  time: '2021-03-03T06:56:52.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: You can burn yourself on wall lights again., type: Fix}
+  id: 24
+  time: '2021-03-03T15:30:18.279719+00:00'
+- author: PJB
+  changes:
+  - {message: Moved content builds over to a better server and threw it behind Cloudflare
+      caching. Should download MUCH faster now!, type: Tweak}
+  id: 25
+  time: '2021-03-04T01:20:22.853950+00:00'
+- author: walrusfromspace
+  changes:
+  - {message: Fixed a fatal error which crashed the client when opening the particle
+      accelerator control computer., type: Fix}
+  id: 26
+  time: '2021-03-04T08:38:43.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Radio messages not showing up, type: Fix}
+  id: 27
+  time: '2021-03-04T10:31:22.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: Fixed the Particle Accelerator, type: Fix}
+  id: 28
+  time: '2021-03-04T11:18:51.765790+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added a basic slime person mob., type: Add}
+  id: 29
+  time: '2021-03-04T12:58:43.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed machine frames not correctly taking material sheets., type: Fix}
+  id: 30
+  time: '2021-03-04T15:16:49.762593+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Cargo teleporter works again, type: Fix}
+  id: 31
+  time: '2021-03-05T01:38:41.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Ejected casings now have much more variation and look cooler, type: Tweak}
+  id: 32
+  time: '2021-03-05T07:23:09.0000000+00:00'
+- author: daniel-cr
+  changes: []
+  id: 33
+  time: '2021-03-05T08:33:01.0000000+00:00'
+- author: PaulRitter
+  changes:
+  - {message: Fixes all alertonclicks, type: Fix}
+  id: 34
+  time: '2021-03-05T11:46:04.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: "Water vapor now makes puddles if under 100\xBAC.", type: Add}
+  id: 35
+  time: '2021-03-05T21:15:37.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Tiles do damage when thrown at someone else, type: Add}
+  - {message: You can craft tiles, type: Add}
+  - {message: Tile max stack size changed from 8 to 30, type: Tweak}
+  - {message: 'Removed unobtainable, player placeable tiles like snow/rock', type: Remove}
+  id: 36
+  time: '2021-03-06T05:41:53.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Hands and inventory (pockets) no longer block the light from flashlights,
+    type: Fix}
+  id: 37
+  time: '2021-03-06T10:32:24.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes emitters shooting sideway bolts and in the wrong direction., type: Fix}
+  id: 38
+  time: '2021-03-06T12:28:13.757819+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes wood table and poker table constructions having the wrong material.,
+    type: Fix}
+  id: 39
+  time: '2021-03-06T12:28:13.759792+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes torch crafting recipe having incorrect materials., type: Fix}
+  id: 40
+  time: '2021-03-06T12:28:13.760916+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes bug where deconstructing computers wouldn't return the circuit
+      board., type: Fix}
+  id: 41
+  time: '2021-03-06T13:48:07.041235+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Glass shards can be turned into glass sheets with a welder again, type: Fix}
+  id: 42
+  time: '2021-03-07T09:05:57.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The Red-and-White Shrine Maiden outfit complete with gohei is now available
+      in the theater vendor!, type: Add}
+  id: 43
+  time: '2021-03-07T12:41:42.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Added ammovend, type: Add}
+  id: 44
+  time: '2021-03-07T19:17:58.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: 'Mags/Batteries stop spawning at 0, 0.', type: Fix}
+  id: 45
+  time: '2021-03-07T19:43:07.0000000+00:00'
+- author: Rember
+  changes:
+  - {message: Character eye customization, type: Add}
+  id: 46
+  time: '2021-03-07T19:48:24.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Reworked the construction UI so that the recipe is easier to see, type: Tweak}
+  id: 47
+  time: '2021-03-07T22:09:41.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: 'Reinforced glass, plasma glass, and reinforced plasma glass can now
+      be constructed.', type: Add}
+  id: 48
+  time: '2021-03-07T23:22:25.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Player join/leave messages are now only shown to admins., type: Tweak}
+  id: 49
+  time: '2021-03-08T00:15:31.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Added a radio message to announce latejoins., type: Add}
+  id: 50
+  time: '2021-03-08T00:15:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nerfed throwing while weightless, type: Tweak}
+  - {message: Fixed weightless movement to use push strength again, type: Fix}
+  - {message: Throwing pushback implemented again, type: Fix}
+  id: 51
+  time: '2021-03-08T01:10:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pushing strength, type: Fix}
+  id: 52
+  time: '2021-03-08T01:48:15.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: The client being able to set character age and other values outside
+      their limits., type: Fix}
+  id: 53
+  time: '2021-03-08T02:07:53.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Stuns and slips are now properly predicted, type: Fix}
+  - {message: Slipping on a puddle with galoshes on no longer causes you to stay stunned
+      forever client-side., type: Fix}
+  id: 54
+  time: '2021-03-08T04:00:51.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Protolathes can now be built again., type: Fix}
+  id: 55
+  time: '2021-03-08T04:09:30.0000000+00:00'
+- author: tmtmtl30
+  changes:
+  - {message: Crit overlay is now unaffected by lights., type: Fix}
+  id: 56
+  time: '2021-03-08T04:11:29.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Gas canisters to cargo computer, type: Add}
+  id: 57
+  time: '2021-03-08T04:15:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Monke kitchen spikes, type: Fix}
+  id: 58
+  time: '2021-03-08T10:24:35.0000000+00:00'

@@ -6,92 +6,26 @@
   },
   "states": [
     {
-      "name": "cuff",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "cuff"
     },
 	{
-      "name": "cuff-broken",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "cuff-broken"
     },
 	{
       "name": "body-overlay-2",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
 	{
       "name": "body-overlay-4",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "inhand-left",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "inhand-right",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     }
   ]
 }

@@ -14,6 +14,9 @@ using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using System.Linq;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
@@ -55,6 +58,7 @@ namespace Content.Server.GameObjects.Components.Cargo
             }
         }
 
+        [DataField("requestOnly")]
         private bool _requestOnly = false;
 
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
@@ -86,16 +90,6 @@ namespace Content.Server.GameObjects.Components.Cargo
             }
 
             base.OnRemove();
-        }
-
-        /// <summary>
-        ///    Reads data from YAML
-        /// </summary>
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _requestOnly, "requestOnly", false);
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)

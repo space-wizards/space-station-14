@@ -3,7 +3,9 @@ using System;
 using System.Diagnostics;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
@@ -18,6 +20,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int DrawRate { get => _drawRate; set => SetDrawRate(value); }
+        [DataField("drawRate")]
         private int _drawRate;
 
         /// <summary>
@@ -26,7 +29,8 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public Priority Priority { get => _priority; set => SetPriority(value); }
-        private Priority _priority;
+        [DataField("priority")]
+        private Priority _priority = Priority.First;
 
         /// <summary>
         ///     How much power this is currently receiving from <see cref="PowerSupplierComponent"/>s.
@@ -36,13 +40,6 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         private int _receivedPower;
 
         public event EventHandler<ReceivedPowerChangedEventArgs>? OnReceivedPowerChanged;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _drawRate, "drawRate", 0);
-            serializer.DataField(ref _priority, "priority", Priority.First);
-        }
 
         protected override void AddSelfToNet(IPowerNet powerNet)
         {

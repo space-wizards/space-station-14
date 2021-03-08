@@ -39,20 +39,22 @@
     visuals:
     - type: GasCanisterVisualizer
       stateConnected: can-connector
-      stateO0: can-o0
-      stateO1: can-o1
-      stateO2: can-o2
-      stateO3: can-o3
+      pressureStates:
+        - can-o0
+        - can-o1
+        - can-o2
+        - can-o3
   - type: UserInterface
     interfaces:
       - key: enum.GasCanisterUiKey.Key
         type: GasCanisterBoundUserInterface
   - type: Physics
     mass: 25
-    anchored: false
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5,-0.25,0.5,0.25"
+    bodyType: Dynamic
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.25,0.5,0.25"
         mask:
           - Impassable
           - MobImpassable

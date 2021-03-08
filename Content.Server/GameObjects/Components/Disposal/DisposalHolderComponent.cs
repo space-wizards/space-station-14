@@ -9,7 +9,10 @@ using Content.Shared.GameObjects.Components.Body;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -50,14 +53,9 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         public HashSet<string> Tags { get; set; } = new();
 
-        [ViewVariables] public GasMixture Air { get; set; } = default!;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.Air, "air", new GasMixture(Atmospherics.CellVolume));
-        }
+        [ViewVariables]
+        [DataField("air")]
+        public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
 
         public override void Initialize()
         {
@@ -79,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+            if (!entity.TryGetComponent(out IPhysBody? physics) ||
                 !physics.CanCollide)
             {
                 return false;
@@ -96,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (entity.TryGetComponent(out IPhysicsComponent? physics))
+            if (entity.TryGetComponent(out IPhysBody? physics))
             {
                 physics.CanCollide = false;
             }
@@ -128,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in _contents.ContainedEntities.ToArray())
             {
-                if (entity.TryGetComponent(out IPhysicsComponent? physics))
+                if (entity.TryGetComponent(out IPhysBody? physics))
                 {
                     physics.CanCollide = true;
                 }

@@ -12,8 +12,10 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -27,7 +29,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private bool _connected;
         private bool _broken;
-        private string _clangSound = default!;
+        [DataField("clangSound")]
+        private string _clangSound = "/Audio/Effects/clang.ogg";
 
         /// <summary>
         ///     Container of entities that are currently inside this tube
@@ -211,12 +214,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             Disconnect();
             UpdateVisualState();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _clangSound, "clangSound", "/Audio/Effects/clang.ogg");
         }
 
         public override void Initialize()

@@ -1,6 +1,6 @@
-﻿#nullable enable
+#nullable enable
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Body.Part.Property
 {
@@ -15,13 +15,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part.Property
         /// <summary>
         ///     Current distance in tiles.
         /// </summary>
-        public float Distance { get; set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, e => e.Distance, "distance", 3f);
-        }
+        [DataField("distance")]
+        public float Distance { get; set; } = 3f;
     }
 }

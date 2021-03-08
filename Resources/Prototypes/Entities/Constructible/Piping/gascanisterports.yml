@@ -29,6 +29,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: GasCanisterPort
+  - type: PipeNetDevice
 
 - type: entity
   parent: GasCanisterPortBase

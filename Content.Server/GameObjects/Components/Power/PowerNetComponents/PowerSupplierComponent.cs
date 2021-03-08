@@ -1,7 +1,9 @@
 #nullable enable
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
@@ -13,13 +15,8 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int SupplyRate { get => _supplyRate; set => SetSupplyRate(value); }
+        [DataField("supplyRate")]
         private int _supplyRate;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _supplyRate, "supplyRate", 0);
-        }
 
         protected override void AddSelfToNet(IPowerNet powerNet)
         {

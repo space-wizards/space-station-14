@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -766,7 +767,7 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.Connected:
                 {
-                    _chatManager.DispatchServerAnnouncement($"Player {args.Session.Name} joined server!");
+                    _chatManager.SendAdminAnnouncement(Loc.GetString("player-join-message", ("name", args.Session.Name)));
 
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                     {
@@ -813,7 +814,8 @@ namespace Content.Server.GameTicking
                 {
                     if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
 
-                    _chatManager.DispatchServerAnnouncement($"Player {args.Session} left server!");
+                    _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
+
                     ServerEmptyUpdateRestartCheck();
                     _prefsManager.OnClientDisconnected(session);
                     break;
@@ -895,6 +897,15 @@ namespace Content.Server.GameTicking
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new Job(data.Mind, jobPrototype);
             data.Mind.AddRole(job);
+
+            if (lateJoin)
+            {
+                _chatManager.DispatchStationAnnouncement(Loc.GetString(
+                    "latejoin-arrival-announcement",
+                    ("character", character.Name),
+                    ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
+                    ));
+            }
 
             var mob = _spawnPlayerMob(job, character, lateJoin);
             data.Mind.TransferTo(mob);

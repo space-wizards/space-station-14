@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Linq;
 using System.Threading;
@@ -25,6 +25,9 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Physics.Broadphase;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
@@ -34,11 +37,11 @@ namespace Content.Server.GameObjects.Components.Doors
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedDoorComponent))]
-    public class ServerDoorComponent : SharedDoorComponent, IActivate, ICollideBehavior, IInteractUsing, IMapInit
+    public class ServerDoorComponent : SharedDoorComponent, IActivate, IStartCollide, IInteractUsing, IMapInit
     {
         [ComponentDependency]
         private readonly IDoorCheck? _doorCheck = null;
-        
+
         public override DoorState State
         {
             get => base.State;
@@ -79,31 +82,36 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         /// Whether the door will ever crush.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("inhibitCrush")]
         private bool _inhibitCrush;
 
         /// <summary>
         /// Whether the door blocks light.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] private bool _occludes;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("occludes")]
+        private bool _occludes = true;
         public bool Occludes => _occludes;
 
         /// <summary>
         /// Whether the door will open when it is bumped into.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] private bool _bumpOpen;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("bumpOpen")]
+        private bool _bumpOpen = true;
 
         /// <summary>
         /// Whether the door starts open when it's first loaded from prototype. A door won't start open if its prototype is also welded shut.
         /// Handled in Startup().
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("startOpen")]
         private bool _startOpen;
 
         /// <summary>
         /// Whether the airlock is welded shut. Can be set by the prototype, although this will fail if the door isn't weldable.
         /// When set by prototype, handled in Startup().
         /// </summary>
+        [DataField("welded")]
         private bool _isWeldedShut;
+
         /// <summary>
         /// Whether the airlock is welded shut.
         /// </summary>
@@ -127,6 +135,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// Whether the door can ever be welded shut.
         /// </summary>
         private bool _weldable;
+
         /// <summary>
         /// Whether the door can currently be welded.
         /// </summary>
@@ -135,19 +144,11 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
         /// </summary>
-        private bool _beingWelded = false;
+        private bool _beingWelded;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _isWeldedShut, "welded", false);
-            serializer.DataField(ref _startOpen, "startOpen", false);
-            serializer.DataField(ref _weldable, "weldable", true);
-            serializer.DataField(ref _bumpOpen, "bumpOpen", true);
-            serializer.DataField(ref _occludes, "occludes", true);
-            serializer.DataField(ref _inhibitCrush, "inhibitCrush", false);
-        }
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("canCrush")]
+        private bool _canCrush = true;
 
         protected override void Startup()
         {
@@ -202,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        void ICollideBehavior.CollideWith(IEntity entity)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (State != DoorState.Closed)
             {
@@ -216,9 +217,9 @@ namespace Content.Server.GameObjects.Components.Doors
 
             // Disabled because it makes it suck hard to walk through double doors.
 
-            if (entity.HasComponent<IBody>())
+            if (otherBody.Entity.HasComponent<IBody>())
             {
-                if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
+                if (!otherBody.Entity.TryGetComponent<IMoverComponent>(out var mover)) return;
 
                 /*
                 // TODO: temporary hack to fix the physics system raising collision events akwardly.
@@ -231,7 +232,7 @@ namespace Content.Server.GameObjects.Components.Doors
                     TryOpen(entity);
                 */
 
-                TryOpen(entity);
+                TryOpen(otherBody.Entity);
             }
         }
 
@@ -308,7 +309,7 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 return _doorCheck.OpenCheck();
             }
-            
+
             return true;
         }
 
@@ -412,18 +413,14 @@ namespace Content.Server.GameObjects.Components.Doors
         {
             var safety = SafetyCheck();
 
-            if (safety && PhysicsComponent != null)
+            if (safety && Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
-                var physics = IoCManager.Resolve<IPhysicsManager>();
+                var broadPhaseSystem = EntitySystem.Get<SharedBroadPhaseSystem>();
 
-                foreach(var e in physics.GetCollidingEntities(Owner.Transform.MapID, PhysicsComponent.WorldAABB))
+                // Use this version so we can ignore the CanCollide being false
+                foreach(var e in broadPhaseSystem.GetCollidingEntities(physicsComponent.Entity.Transform.MapID, physicsComponent.GetWorldAABB()))
                 {
-                    if (e.CanCollide &&
-                       ((PhysicsComponent.CollisionMask & e.CollisionLayer) != 0x0 ||
-                        (PhysicsComponent.CollisionLayer & e.CollisionMask) != 0x0))
-                    {
-                        return true;
-                    }
+                    if ((physicsComponent.CollisionMask & e.CollisionLayer) != 0 && broadPhaseSystem.IntersectionPercent(physicsComponent, e) > 0.01f) return true;
                 }
             }
             return false;
@@ -452,7 +449,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 OnPartialClose();
                 await Timer.Delay(CloseTimeTwo, _stateChangeCancelTokenSource.Token);
-                
+
                 if (Occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
                 {
                     occluder.Enabled = true;
@@ -495,26 +492,25 @@ namespace Content.Server.GameObjects.Components.Doors
                 return false;
             }
 
-            var doorAABB = PhysicsComponent.WorldAABB;
+            var doorAABB = PhysicsComponent.GetWorldAABB();
             var hitsomebody = false;
 
             // Crush
             foreach (var e in collidingentities)
             {
-                if (!e.TryGetComponent(out StunnableComponent? stun)
-                    || !e.TryGetComponent(out IDamageableComponent? damage)
-                    || !e.TryGetComponent(out IPhysicsComponent? otherBody))
+                if (!e.Entity.TryGetComponent(out StunnableComponent? stun)
+                    || !e.Entity.TryGetComponent(out IDamageableComponent? damage))
                 {
                     continue;
                 }
 
-                var percentage = otherBody.WorldAABB.IntersectPercentage(doorAABB);
+                var percentage = e.GetWorldAABB().IntersectPercentage(doorAABB);
 
                 if (percentage < 0.1f)
                     continue;
 
                 hitsomebody = true;
-                CurrentlyCrushing.Add(e.Uid);
+                CurrentlyCrushing.Add(e.Entity.Uid);
 
                 damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
                 stun.Paralyze(DoorStunTime);

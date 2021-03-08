@@ -12,7 +12,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Nutrition
@@ -29,7 +31,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
             get => _baseDecayRate;
             set => _baseDecayRate = value;
         }
-        private float _baseDecayRate;
+        [DataField("base_decay_rate")]
+        private float _baseDecayRate = 0.1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float ActualDecayRate
@@ -64,13 +67,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {HungerThreshold.Starving, 150.0f},
             {HungerThreshold.Dead, 0.0f},
         };
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _baseDecayRate, "base_decay_rate", 0.1f);
-        }
-
 
         public static readonly Dictionary<HungerThreshold, AlertType> HungerThresholdAlertTypes = new()
         {

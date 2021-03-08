@@ -13,7 +13,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
@@ -32,17 +34,12 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         private CellChargerStatus _status;
 
         [ViewVariables]
-        private int _chargeRate;
+        [DataField("chargeRate")]
+        private int _chargeRate = 100;
 
         [ViewVariables]
-        private float _transferEfficiency;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _chargeRate, "chargeRate", 100);
-            serializer.DataField(ref _transferEfficiency, "transferEfficiency", 0.85f);
-        }
+        [DataField("transferEfficiency")]
+        private float _transferEfficiency = 0.85f;
 
         public override void Initialize()
         {

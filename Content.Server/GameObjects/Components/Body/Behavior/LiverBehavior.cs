@@ -3,9 +3,10 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body.Networks;
+using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Behavior
@@ -27,21 +28,25 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         /// <summary>
         ///     Modifier for alcohol damage.
         /// </summary>
+        [DataField("alcoholLethality")]
         [ViewVariables] private float _alcoholLethality = 0.005f;
 
         /// <summary>
         ///     Modifier for alcohol damage.
         /// </summary>
+        [DataField("alcoholExponent")]
         [ViewVariables] private float _alcoholExponent = 1.6f;
 
         /// <summary>
         ///     Toxin volume that can be purged without damage.
         /// </summary>
+        [DataField("toxinTolerance")]
         [ViewVariables] private float _toxinTolerance = 3f;
 
         /// <summary>
         ///     Toxin damage modifier.
         /// </summary>
+        [DataField("toxinLethality")]
         [ViewVariables] private float _toxinLethality = 0.01f;
 
         /// <summary>
@@ -101,16 +106,6 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
                     bloodstream.Solution.TryRemoveReagent(reagent.ReagentId, reagentDelta);
                 }
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            //Uses typical human values for defaults.
-            base.ExposeData(serializer);
-            serializer.DataField(ref _alcoholLethality, "alcoholLethality", 0.005f);
-            serializer.DataField(ref _alcoholExponent, "alcoholExponent", 1.6f);
-            serializer.DataField(ref _toxinTolerance, "toxinTolerance", 3f);
-            serializer.DataField(ref _toxinLethality, "toxinLethality", 0.01f);
         }
     }
 }

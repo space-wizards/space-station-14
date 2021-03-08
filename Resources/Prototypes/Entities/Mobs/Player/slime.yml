@@ -1,0 +1,24 @@
+- type: entity
+  save: false
+  name: Slime Person
+  parent: BaseSlimeMob_Content
+  id: SlimeMob_Content
+  description: A miserable pile of slime
+  components:
+    - type: Mind
+      showExamineInfo: true
+    - type: Input
+      context: "human"
+    - type: Alerts
+    - type: Actions
+      innateActions:
+        - HumanScream
+        - Disarm
+    - type: Eye
+      zoom: 0.5, 0.5
+    - type: CameraRecoil
+    - type: Examiner
+    - type: HumanInventoryController
+    - type: AiFactionTag
+      factions:
+        - NanoTrasen

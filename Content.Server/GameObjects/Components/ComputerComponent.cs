@@ -5,7 +5,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
@@ -14,13 +16,8 @@ namespace Content.Server.GameObjects.Components
     public sealed class ComputerComponent : SharedComputerComponent, IMapInit
     {
         [ViewVariables]
+        [DataField("board")]
         private string _boardPrototype;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _boardPrototype, "board", string.Empty);
-        }
 
         public override void Initialize()
         {
@@ -68,6 +65,10 @@ namespace Content.Server.GameObjects.Components
         /// </summary>
         private void CreateComputerBoard()
         {
+            // Ensure that the construction component is aware of the board container.
+            if (Owner.TryGetComponent(out ConstructionComponent construction))
+                construction.AddContainer("board");
+
             // We don't do anything if this is null or empty.
             if (string.IsNullOrEmpty(_boardPrototype))
                 return;
@@ -85,9 +86,6 @@ namespace Content.Server.GameObjects.Components
 
             if(!container.Insert(board))
                 Logger.Warning($"Couldn't insert board {board} to computer {Owner}!");
-
-            if (Owner.TryGetComponent(out ConstructionComponent construction))
-                construction.AddContainer("board");
         }
 
         public void MapInit()

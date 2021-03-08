@@ -56,7 +56,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
   - type: SolutionContainer
-    fillingState: glass
     maxVol: 50
   - type: SolutionTransfer
     transferAmount: 5

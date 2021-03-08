@@ -1,6 +1,4 @@
-//Creates a border on the edges of the screen of the specified color and of the specified size.
-
-//If you ever edit this to have input variables, be sure to edit CriticalState.cs
+//Creates a border on the edges of the screen of the specified color and of the specified size (no uniforms yet cause I'm lazy)
 
 const highp vec4 borderColor = vec4(230.0, 0.0, 0.0, 1.0); 
 const highp float borderSize = 30; //Pixel size of border

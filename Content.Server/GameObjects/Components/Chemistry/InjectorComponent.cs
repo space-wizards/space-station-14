@@ -12,6 +12,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Chemistry
@@ -28,18 +29,24 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// Whether or not the injector is able to draw from containers or if it's a single use
         /// device that can only inject.
         /// </summary>
-        [ViewVariables] private bool _injectOnly;
+        [ViewVariables]
+        [DataField("injectOnly")]
+        private bool _injectOnly;
 
         /// <summary>
         /// Amount to inject or draw on each usage. If the injector is inject only, it will
         /// attempt to inject it's entire contents upon use.
         /// </summary>
-        [ViewVariables] private ReagentUnit _transferAmount;
+        [ViewVariables]
+        [DataField("transferAmount")]
+        private ReagentUnit _transferAmount = ReagentUnit.New(5);
 
         /// <summary>
         /// Initial storage volume of the injector
         /// </summary>
-        [ViewVariables] private ReagentUnit _initialMaxVolume;
+        [ViewVariables]
+        [DataField("initialMaxVolume")]
+        private ReagentUnit _initialMaxVolume = ReagentUnit.New(15);
 
         private InjectorToggleMode _toggleState;
 
@@ -57,16 +64,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 _toggleState = value;
                 Dirty();
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _injectOnly, "injectOnly", false);
-            serializer.DataField(ref _initialMaxVolume, "initialMaxVolume", ReagentUnit.New(15));
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5));
-            serializer.DataField(ref _toggleState, "toggleState",
-                _injectOnly ? InjectorToggleMode.Inject : InjectorToggleMode.Draw);
         }
 
         protected override void Startup()

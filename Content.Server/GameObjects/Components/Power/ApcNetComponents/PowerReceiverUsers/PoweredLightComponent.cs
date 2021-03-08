@@ -19,8 +19,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -46,12 +45,23 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private TimeSpan _lastThunk;
         private TimeSpan? _lastGhostBlink;
-        private bool _hasLampOnSpawn;
 
-        [ViewVariables] private bool _on;
-        [ViewVariables] private bool _isBlinking;
-        [ViewVariables] private bool _ignoreGhostsBoo;
+        [DataField("hasLampOnSpawn")]
+        private bool _hasLampOnSpawn = true;
 
+        [ViewVariables] [DataField("on")]
+        private bool _on = true;
+
+        [ViewVariables]
+        private bool _currentLit;
+
+        [ViewVariables]
+        private bool _isBlinking;
+
+        [ViewVariables] [DataField("ignoreGhostsBoo")]
+        private bool _ignoreGhostsBoo;
+
+        [DataField("bulb")]
         private LightBulbType BulbType = LightBulbType.Tube;
         [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
 
@@ -98,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 if (LightBulb == null)
                     return false;
 
-                return _lightState && heatResistance < LightBulb.BurningTemperature;
+                return _currentLit && heatResistance < LightBulb.BurningTemperature;
             }
 
             void Burn()
@@ -155,14 +165,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 bulb.Owner.Transform.Coordinates = user.Transform.Coordinates;
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref BulbType, "bulb", LightBulbType.Tube);
-            serializer.DataField(ref _on, "on", true);
-            serializer.DataField(ref _hasLampOnSpawn, "hasLampOnSpawn", true);
-            serializer.DataField(ref _ignoreGhostsBoo, "ignoreGhostsBoo", false);
-        }
-
         /// <summary>
         ///     For attaching UpdateLight() to events.
         /// </summary>
@@ -170,8 +172,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             UpdateLight();
         }
-
-        private bool _lightState => Owner.GetComponent<PointLightComponent>().Enabled;
 
         /// <summary>
         ///     Updates the light's power drain, sprite and actual light state.
@@ -182,6 +182,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             if (LightBulb == null) // No light bulb.
             {
+                _currentLit = false;
                 powerReceiver.Load = 0;
                 _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
                 return;
@@ -192,6 +193,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 case LightBulbState.Normal:
                     if (powerReceiver.Powered && _on)
                     {
+                        _currentLit = true;
                         powerReceiver.Load = LightBulb.PowerUse;
                         _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
                         _appearance?.SetData(PoweredLightVisuals.BulbColor, LightBulb.Color);
@@ -204,13 +206,16 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     }
                     else
                     {
+                        _currentLit = false;
                         _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
                     }
                     break;
                 case LightBulbState.Broken:
+                    _currentLit = false;
                     _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
                     break;
                 case LightBulbState.Burned:
+                    _currentLit = false;
                     _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                     break;
             }
