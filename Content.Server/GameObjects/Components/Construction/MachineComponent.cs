@@ -113,6 +113,17 @@ namespace Content.Server.GameObjects.Components.Construction
                         throw new Exception($"Couldn't insert machine component part with default prototype '{compName}' to machine with prototype {Owner.Prototype?.ID ?? "N/A"}");
                 }
             }
+
+            foreach (var (tagName, info) in machineBoard.TagRequirements)
+            {
+                for (var i = 0; i < info.Amount; i++)
+                {
+                    var c = entityManager.SpawnEntity(info.DefaultPrototype, Owner.Transform.Coordinates);
+
+                    if(!partContainer.Insert(c))
+                        throw new Exception($"Couldn't insert machine component part with default prototype '{tagName}' to machine with prototype {Owner.Prototype?.ID ?? "N/A"}");
+                }
+            }
         }
 
         public void MapInit()
