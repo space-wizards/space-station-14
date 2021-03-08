@@ -129,7 +129,7 @@
   name: help me carving
   parent: BaseItem
   id: CarvingHelpMe
-  description: Help me
+  description: Help me!
   components:
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
