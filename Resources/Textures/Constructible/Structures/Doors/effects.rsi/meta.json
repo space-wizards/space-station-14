@@ -8,7 +8,7 @@
   },
   "states": [
     {
-      "name": "bolted"
+      "name": "bolted_unlit"
     },
     {
       "name": "closed_unlit"
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "name": "deny",
+      "name": "deny_unlit",
       "delays": [
         [
           0.1,

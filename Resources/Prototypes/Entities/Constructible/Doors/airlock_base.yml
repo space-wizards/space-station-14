@@ -18,7 +18,7 @@
       map: ["enum.DoorVisualLayers.BaseUnlit"]
     - state: welded
       map: ["enum.DoorVisualLayers.BaseWelded"]
-    - state: bolted
+    - state: bolted_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: panel_open

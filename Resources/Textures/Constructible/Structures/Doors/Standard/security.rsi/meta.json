@@ -11,7 +11,7 @@
       "name": "assembly"
     },
     {
-      "name": "bolted"
+      "name": "bolted_unlit"
     },
     {
       "name": "locked"
@@ -54,7 +54,7 @@
       ]
     },
     {
-      "name": "deny",
+      "name": "deny_unlit",
       "delays": [
         [
           0.1,
