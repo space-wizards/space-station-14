@@ -31,7 +31,7 @@ namespace Content.Client.GameObjects.Components.Items
         private readonly List<ClientHand> _hands = new();
 
         [ViewVariables]
-        public IEntity? ActiveItem => ActiveHand != null ? Hands.ElementAtOrDefault(ActiveHand.Value)?.Entity : null;
+        public IEntity? ActiveItem => ActiveHand != null ? Hands.ElementAtOrDefault(ActiveHand.Value)?.HeldItem : null;
 
         [ViewVariables]
         private ISpriteComponent? _sprite;
@@ -74,7 +74,7 @@ namespace Content.Client.GameObjects.Components.Items
                 if (heldItemUid != null)
                     Owner.EntityManager.TryGetEntity(heldItemUid.Value, out heldItem);
 
-                var newHand = new ClientHand(this, handState, heldItem);
+                var newHand = new ClientHand(handState, heldItem);
                 _hands.Add(newHand);
                 _sprite?.LayerMapReserveBlank($"hand-{newHand.Name}");
             }
@@ -118,7 +118,7 @@ namespace Content.Client.GameObjects.Components.Items
         {
             foreach (var hand in Hands)
             {
-                if (hand.Entity == entity)
+                if (hand.HeldItem == entity)
                     return true;
             }
             return false;
@@ -168,7 +168,7 @@ namespace Content.Client.GameObjects.Components.Items
 
             foreach (var hand in _hands)
             {
-                var handState = new GuiHand(hand.Name, hand.Location, hand.Entity);
+                var handState = new GuiHand(hand.Name, hand.Location, hand.HeldItem);
                 handStates.Add(handState);
             }
             return new HandsGuiState(handStates, ActiveHand);
@@ -177,17 +177,15 @@ namespace Content.Client.GameObjects.Components.Items
 
     public class ClientHand
     {
-        public ClientHand(HandsComponent parent, SharedHand hand, IEntity? heldItem, HandButton? button = null)
+        public string Name { get; }
+        public HandLocation Location { get; }
+        public IEntity? HeldItem { get; }
+
+        public ClientHand(SharedHand hand, IEntity? heldItem)
         {
             Name = hand.Name;
             Location = hand.Location;
-            Button = button;
-            Entity = heldItem;
+            HeldItem = heldItem;
         }
-
-        public string Name { get; }
-        public HandLocation Location { get; set; }
-        public IEntity? Entity { get; set; }
-        public HandButton? Button { get; set; }
     }
 }
