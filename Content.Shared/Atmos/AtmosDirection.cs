@@ -90,12 +90,12 @@ namespace Content.Shared.Atmos
             {
                 AtmosDirection.East => Angle.FromDegrees(90),
                 AtmosDirection.North => Angle.FromDegrees(180),
-                AtmosDirection.West => Angle.FromDegrees(-90),
+                AtmosDirection.West => Angle.FromDegrees(270),
                 AtmosDirection.South => Angle.FromDegrees(0),
 
                 AtmosDirection.NorthEast => Angle.FromDegrees(135),
-                AtmosDirection.NorthWest => Angle.FromDegrees(-135),
-                AtmosDirection.SouthWest => Angle.FromDegrees(-45),
+                AtmosDirection.NorthWest => Angle.FromDegrees(205),
+                AtmosDirection.SouthWest => Angle.FromDegrees(315),
                 AtmosDirection.SouthEast => Angle.FromDegrees(45),
 
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), $"It was {direction}."),

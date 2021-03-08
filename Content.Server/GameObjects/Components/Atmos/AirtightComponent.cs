@@ -39,6 +39,10 @@ namespace Content.Server.GameObjects.Components.Atmos
         [DataField("fixAirBlockedDirectionInitialize")]
         private bool _fixAirBlockedDirectionInitialize = true;
 
+        [ViewVariables]
+        [field: DataField("noAirWhenFullyAirBlocked")]
+        public bool NoAirWhenFullyAirBlocked { get; } = true;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public bool AirBlocked
         {
@@ -78,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             Owner.EnsureComponentWarn(out SnapGridComponent _);
 
             if (_fixAirBlockedDirectionInitialize)
-                RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.LocalRotation));
+                RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.WorldRotation));
 
             UpdatePosition();
         }

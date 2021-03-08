@@ -319,3 +319,9 @@ Entries:
   - {message: Monke kitchen spikes, type: Fix}
   id: 58
   time: '2021-03-08T10:24:35.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Having four edge firelocks in a single tile no longer destroys any air
+      within it., type: Fix}
+  id: 59
+  time: '2021-03-08T13:58:21.036238+00:00'
