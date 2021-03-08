@@ -18,7 +18,7 @@ void fragment() {
     highp vec4 grad = vec4(0.8 - length( uv - center )/res_xy.y * gradientfalloffwidth);
 
     highp vec4 layer1 = vec4(vec3(255.0),0.0);
-    
+
     highp vec4 layer2 = circle(uv, center, radius, grad.rgb);
 
     COLOR = mix(layer1, layer2, layer2.a);
