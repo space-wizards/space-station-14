@@ -316,6 +316,6 @@ Entries:
   time: '2021-03-08T04:15:48.0000000+00:00'
 - author: metalgearsloth
   changes:
-  - {message: Monke kitchen spikes, type: Add}
+  - {message: Monke kitchen spikes, type: Fix}
   id: 58
   time: '2021-03-08T10:24:35.0000000+00:00'
