@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         /// <inheritdoc />
         [ViewVariables(VVAccess.ReadWrite)]
-        public float PushStrength { get; set; }
+        public float PushStrength { get; set; } = 0.4f;
 
         /// <inheritdoc />
         [ViewVariables(VVAccess.ReadWrite)]

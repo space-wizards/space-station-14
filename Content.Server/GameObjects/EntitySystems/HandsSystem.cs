@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
@@ -180,8 +181,17 @@ namespace Content.Server.GameObjects.EntitySystems
             if (direction == Vector2.Zero) return true;
 
             direction = direction.Normalized * MathF.Min(direction.Length, 8.0f);
+            var yeet = direction * ThrowForce * 15;
 
-            throwEnt.TryThrow(direction * ThrowForce * 15, playerEnt);
+            // Softer yeet in weightlessness
+            if (playerEnt.IsWeightless())
+            {
+                throwEnt.TryThrow(yeet / 4, playerEnt, 10.0f);
+            }
+            else
+            {
+                throwEnt.TryThrow(yeet, playerEnt);
+            }
 
             return true;
         }

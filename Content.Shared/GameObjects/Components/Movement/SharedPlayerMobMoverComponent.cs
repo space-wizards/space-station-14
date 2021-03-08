@@ -27,7 +27,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         [DataField("grabRange")]
         private float _grabRange = 0.2f;
         [DataField("pushStrength")]
-        private float _pushStrength = 600.0f;
+        private float _pushStrength = 0.4f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public EntityCoordinates LastPosition { get; set; }
