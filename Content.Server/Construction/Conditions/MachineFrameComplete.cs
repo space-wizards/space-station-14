@@ -65,6 +65,15 @@ namespace Content.Server.Construction.Conditions
                 message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
             }
 
+            foreach (var (tagName, info) in machineFrame.TagRequirements)
+            {
+                var amount = info.Amount - machineFrame.TagProgress[tagName];
+
+                if(amount == 0) continue;
+
+                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
+            }
+
             return true;
         }
     }

@@ -16,12 +16,15 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class FlammableComponent : SharedFlammableComponent, ICollideBehavior, IFireAct, IReagentReaction
+    public class FlammableComponent : SharedFlammableComponent, IStartCollide, IFireAct, IReagentReaction
     {
         private bool _resisting = false;
         private readonly List<EntityUid> _collided = new();
@@ -129,19 +132,19 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
 
                 var entity = Owner.EntityManager.GetEntity(uid);
-                var physics = Owner.GetComponent<IPhysicsComponent>();
-                var otherPhysics = entity.GetComponent<IPhysicsComponent>();
+                var physics = Owner.GetComponent<IPhysBody>();
+                var otherPhysics = entity.GetComponent<IPhysBody>();
 
-                if (!physics.WorldAABB.Intersects(otherPhysics.WorldAABB))
+                if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                 {
                     _collided.Remove(uid);
                 }
             }
         }
 
-        public void CollideWith(IEntity collidedWith)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            if (!collidedWith.TryGetComponent(out FlammableComponent otherFlammable))
+            if (!otherBody.Entity.TryGetComponent(out FlammableComponent otherFlammable))
                 return;
 
             if (!FireSpread || !otherFlammable.FireSpread)

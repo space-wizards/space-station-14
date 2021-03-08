@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -23,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     {
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
-        [ViewVariables] [ComponentDependency] private readonly IPhysicsComponent? _physicsComponent = null;
+        [ViewVariables] [ComponentDependency] private readonly IPhysBody? _physicsComponent = null;
 
         public override string Name => "PowerReceiver";
 
@@ -53,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// </summary>
         public bool Connectable => Anchored;
 
-        private bool Anchored => _physicsComponent == null || _physicsComponent.Anchored;
+        private bool Anchored => _physicsComponent == null || _physicsComponent.BodyType == BodyType.Static;
 
         [ViewVariables]
         public bool NeedsProvider { get; private set; } = true;

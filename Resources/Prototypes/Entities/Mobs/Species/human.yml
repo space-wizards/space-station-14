@@ -116,11 +116,13 @@
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
   - type: Physics
-    anchored: false
-    mass: 85
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.35,-0.35,0.35,0.35"
+    bodyType: KinematicController
+    mass: 70
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+          radius: 0.35
+      restitution: 0.0
       mask:
       - Impassable
       - MobImpassable
@@ -128,7 +130,6 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: PlayerInputMover
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
@@ -298,11 +299,12 @@
       - map: ["hand-left"]
       - map: ["hand-right"]
     - type: Physics
-      anchored: false
+      bodyType: Dynamic
       mass: 85
-      shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.35,-0.35,0.35,0.35"
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.35,-0.35,0.35,0.35"
         mask:
         - Impassable
         - MobImpassable

@@ -5,10 +5,11 @@
   components:
   - type: Clickable
   - type: Physics
-    anchored: false
-    shapes:
-    - !type:PhysShapeCircle
-      radius: 0.5
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+          radius: 0.5
       layer: [Impassable]
       mask:
       - AllMask

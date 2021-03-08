@@ -38,28 +38,24 @@ namespace Content.Client.GameObjects.Components
             _sprite.LayerMapSet(CornerLayers.SE, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.SE, SpriteComponent.DirectionOffset.None);
             _sprite.LayerMapSet(WindowDamageLayers.DamageSE, _sprite.AddLayerState("0_1", cracksRSIPath));
-            _sprite.LayerSetShader(WindowDamageLayers.DamageSE, "unshaded");
             _sprite.LayerSetVisible(WindowDamageLayers.DamageSE, false);
 
             _sprite.LayerMapSet(CornerLayers.NE, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.NE, SpriteComponent.DirectionOffset.CounterClockwise);
             _sprite.LayerMapSet(WindowDamageLayers.DamageNE, _sprite.AddLayerState("0_1", cracksRSIPath));
             _sprite.LayerSetDirOffset(WindowDamageLayers.DamageNE, SpriteComponent.DirectionOffset.CounterClockwise);
-            _sprite.LayerSetShader(WindowDamageLayers.DamageNE, "unshaded");
             _sprite.LayerSetVisible(WindowDamageLayers.DamageNE, false);
 
             _sprite.LayerMapSet(CornerLayers.NW, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.NW, SpriteComponent.DirectionOffset.Flip);
             _sprite.LayerMapSet(WindowDamageLayers.DamageNW, _sprite.AddLayerState("0_1", cracksRSIPath));
             _sprite.LayerSetDirOffset(WindowDamageLayers.DamageNW, SpriteComponent.DirectionOffset.Flip);
-            _sprite.LayerSetShader(WindowDamageLayers.DamageNW, "unshaded");
             _sprite.LayerSetVisible(WindowDamageLayers.DamageNW, false);
 
             _sprite.LayerMapSet(CornerLayers.SW, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.SW, SpriteComponent.DirectionOffset.Clockwise);
             _sprite.LayerMapSet(WindowDamageLayers.DamageSW, _sprite.AddLayerState("0_1", cracksRSIPath));
             _sprite.LayerSetDirOffset(WindowDamageLayers.DamageSW, SpriteComponent.DirectionOffset.Clockwise);
-            _sprite.LayerSetShader(WindowDamageLayers.DamageSW, "unshaded");
             _sprite.LayerSetVisible(WindowDamageLayers.DamageSW, false);
         }
 

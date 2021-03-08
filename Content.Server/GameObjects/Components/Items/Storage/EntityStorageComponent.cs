@@ -12,6 +12,7 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -19,6 +20,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Physics;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -37,6 +40,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
         private TimeSpan _lastInternalOpenAttempt;
+
+        private const int OpenMask = (int) (
+            CollisionGroup.MobImpassable |
+            CollisionGroup.VaultImpassable |
+            CollisionGroup.SmallImpassable);
 
         [ViewVariables]
         [DataField("Capacity")]
@@ -229,15 +237,21 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private void ModifyComponents()
         {
-            if (!_isCollidableWhenOpen && Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+            if (!_isCollidableWhenOpen && Owner.TryGetComponent<IPhysBody>(out var physics))
             {
                 if (Open)
                 {
-                    physics.Hard = false;
+                    foreach (var fixture in physics.Fixtures)
+                    {
+                        fixture.CollisionLayer &= ~OpenMask;
+                    }
                 }
                 else
                 {
-                    physics.Hard = true;
+                    foreach (var fixture in physics.Fixtures)
+                    {
+                        fixture.CollisionLayer |= OpenMask;
+                    }
                 }
             }
 
@@ -255,10 +269,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         protected virtual bool AddToContents(IEntity entity)
         {
             if (entity == Owner) return false;
-            if (entity.TryGetComponent(out IPhysicsComponent? entityPhysicsComponent))
+            if (entity.TryGetComponent(out IPhysBody? entityPhysicsComponent))
             {
-                if(MaxSize < entityPhysicsComponent.WorldAABB.Size.X
-                    || MaxSize < entityPhysicsComponent.WorldAABB.Size.Y)
+                if(MaxSize < entityPhysicsComponent.GetWorldAABB().Size.X
+                    || MaxSize < entityPhysicsComponent.GetWorldAABB().Size.Y)
                 {
                     return false;
                 }
@@ -285,10 +299,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             foreach (var contained in Contents.ContainedEntities.ToArray())
             {
-                if(Contents.Remove(contained))
+                if (Contents.Remove(contained))
                 {
                     contained.Transform.WorldPosition = ContentsDumpPosition();
-                    if (contained.TryGetComponent<IPhysicsComponent>(out var physics))
+                    if (contained.TryGetComponent<IPhysBody>(out var physics))
                     {
                         physics.CanCollide = true;
                     }

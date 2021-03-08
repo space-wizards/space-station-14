@@ -185,6 +185,7 @@
 - type: alert
   alertType: Pulled
   icon: /Textures/Interface/Alerts/Pull/pulled.png
+  onClick: !type:StopBeingPulled  { }
   name: Pulled
   description: You're being pulled. Move to break free.
 

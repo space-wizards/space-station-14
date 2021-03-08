@@ -1,10 +1,12 @@
 using Content.Server.GameObjects.Components.Explosion;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
     [RegisterComponent]
-    public class ExplosiveProjectileComponent : Component, ICollideBehavior
+    public class ExplosiveProjectileComponent : Component, IStartCollide
     {
         public override string Name => "ExplosiveProjectile";
 
@@ -15,18 +17,12 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Owner.EnsureComponent<ExplosiveComponent>();
         }
 
-        void ICollideBehavior.CollideWith(IEntity entity)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
             if (Owner.TryGetComponent(out ExplosiveComponent explosive))
             {
                 explosive.Explosion();
             }
-        }
-
-        // Projectile should handle the deleting
-        void ICollideBehavior.PostCollide(int collisionCount)
-        {
-            return;
         }
     }
 }
