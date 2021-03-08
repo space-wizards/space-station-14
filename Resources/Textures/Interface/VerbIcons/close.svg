@@ -1,3 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="152" height="147" viewBox="0 0 152 147">
-  <image width="152" height="147" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJgAAACTCAYAAAByBdDiAAAEhUlEQVR4nO3cTU7bQBiA4UlDK6VCot6w8QHKKmKJuuNC5Sz0Iu0N2k3F3ivotkKKWASIQiK1ilJZikWg+fHPfDPfzLzvhp1nbB5i7NjTu76+/np8fHxuEm02m43yPD9Jdf+l643H44csy47i3s3tLRaLZb/ff6N1fqHHgSXRAEaiAYxEAxiJBjASDWAkGsBINICRaAAj0QBGogGMRAMYiQYwEg1gJBrAFDedTp+KorgMeR8AprT5fP7n8PDw/XA4/BwyMoAprMQ1GAzeVjMLGRnAlPUaV1WoyACmqG24qkJEBjAl7cNVFRoygCmoLq6qkJAdSG68fGNnMplMJMfo2uq1NW/jN8VVtUJW/rwQm5yFRF9bu7+/f8yy7IPrnQqltrjWK4rii2ZknCI9ZQOXCeB0CTAP2cJVpRkZwBxnG1eVVmQAc5gUriqNyADmKGlcVdqQAcxBrnBVaUIGMOFc46rSggxggvnCpSmACeUbl5YbsAATCFzPAcxy4HoZwCwGrv8DmKXAtTmAWQhc2wNYx8C1O4B1CFz7A1jLwFUvgLUIXPUDWMPA1SyANQhczQNYzcDVLoDVCFztA9iewNUtgO0IXN0D2JbAZSeAbQhc9gLYq8BlN4CtBS77AWwVuGQCGLhESx4YuGRLGhi45EsS2NXV1aflcrkEl3zJAStxnZ2d/ez1et7mkAoukxowcLkvmTVaNeBKrfL3n8wn2Onp6Q9wuS8JYKxy46/ogYHLb1EDA5f/ogUGLh1FCQxceooOGLh0FRUwcOkrGmDg0lkUwMClt+CBgUt3QQObTqdP4NJd0MAeHx9/K5gG7ShoYHmen9ze3t4omAptKfj/wUCmuyiuIkGmt2jug4FMZ1HdyQeZvqL7LhJkuoryaQqQ6Sna58FApqOon2gFmf+ifyYfZH5L4q0ikPnrIJUdXSG7zvP8o895LBaLpc/xXTabzUbJADNKkI1Go1/lPHyN77I8z9Nb/MT36bLEXSL3Nb7rkly+CWTuSnYBOpC5KekVDkEmX/JrtIJMtuSBGZCJBrBVIJMJYGuBzH4AexXI7AawDYHMXgDbEsjsBLAdgax7ANsTyLoFsBqBrH0AqxnI2gWwBoGseQBrGMiaBbAWgax+AGsZyOoFsA6BbH8A6xjIdgcwC4FsewCzFMg2BzCLgez/AGY5kL0MYAKB7DmACaUBWVEUl77GrwKYYD6Rzefzv8Ph8MLH2OsBTDgfyEpcg8HgnY/9fR3AHOQSmSZcBmDucoFMGy4DMLdJItOIywDMfRLItOIyAPOTTWSacRmA+csGMu24DMD81gVZCLjKeuPx+CHLsiOJjZcrKk8mk4nEtm1VroTse1HepgsTh4LLSAMLofKPoN/ve/8kr4ssJFyGU6Se6pwuQ8NlAKarXchCxGUApq9NyELFZQCms3VkIeMyANNbiezm5uZbyLgMV5F6riJjjQNLogGMRAMYiQYwEg1gJBrASDSAkWgAI9EARqIBjEQDGIkGMBINYCQawEg0gJFoB3d3d9+NMeepHubVa2sKZhJhxph/hn6A2oZi4SsAAAAASUVORK5CYII="/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.3.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 120 120" style="enable-background:new 0 0 120 120;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#010101;}
+</style>
+<path class="st0" d="M52.8,48.2l42.3,42.3l-11.7,11.7L41.1,60L52.8,48.2z"/>
+<path class="st0" d="M119.2,69.6H58.9V50.5h60.2V69.6z"/>
+<polygon class="st0" points="41,60 83.3,17.7 95,29.4 52.7,71.8 "/>
+<rect x="5" y="8.5" class="st0" width="17" height="103"/>
+<path class="st0" d="M5,5h48v17H5V5z M5,97h48v17H5V97z"/>
 </svg>
