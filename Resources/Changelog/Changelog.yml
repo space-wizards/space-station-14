@@ -336,3 +336,9 @@ Entries:
   - {message: Adds combat knife and fire axe., type: Add}
   id: 61
   time: '2021-03-08T18:16:09.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Assistants won't spawn in walls anymore, type: Fix}
+  - {message: More late-join spawn-points to arrivals, type: Tweak}
+  id: 62
+  time: '2021-03-08T19:17:06.0000000+00:00'
