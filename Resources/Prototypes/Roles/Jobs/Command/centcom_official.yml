@@ -1,7 +1,6 @@
 - type: job
   id: CentcomOfficial
   name: "centcom official"
-
   startingGear: CentcomGear
   access:
   - Maintenance
