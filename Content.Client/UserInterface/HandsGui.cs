@@ -146,7 +146,7 @@ namespace Content.Client.UserInterface
                 hand.Button!.SetPositionInParent(i);
                 _itemSlotManager.SetItemSlot(hand.Button, hand.Entity);
 
-                hand.Button!.SetActiveHand(State.ActiveHand == hand.Name);
+                //hand.Button!.SetActiveHand(State.ActiveHand == hand.Name);
             }
 
             _leftPanel.SetPositionFirst();
@@ -176,7 +176,7 @@ namespace Content.Client.UserInterface
             IEntity? entity = null; // Creator.GetEntity(slotName);
             if (entity == null)
             {
-                if (args.Function == EngineKeyFunctions.UIClick && State.ActiveHand != slotName)
+                if (args.Function == EngineKeyFunctions.UIClick)// && State.ActiveHand != slotName
                 {
                     Creator.SendChangeHand(slotName);
                     args.Handle();
@@ -192,10 +192,12 @@ namespace Content.Client.UserInterface
 
             if (args.Function == EngineKeyFunctions.UIClick)
             {
+                /*
                 if (State.ActiveHand == slotName)
                     Creator.UseActiveHand();
                 else
                     Creator.AttackByInHand(slotName);
+                */
                 args.Handle();
             }
         }
@@ -205,7 +207,7 @@ namespace Content.Client.UserInterface
             if (args.Function != EngineKeyFunctions.UIClick)
                 return;
 
-            Creator.ActivateItemInHand(handIndex);
+            //Creator.ActivateItemInHand(handIndex);
         }
 
         //per-frame update of hands
@@ -336,11 +338,11 @@ namespace Content.Client.UserInterface
         ///     The name of the hand that is currently selected by this player.
         /// </summary>
         [ViewVariables]
-        public string? ActiveHand { get; }
+        public int ActiveHand { get; }
 
         public HandsGuiState() { }
 
-        public HandsGuiState(List<GuiHand> guiHands, string? activeHand)
+        public HandsGuiState(List<GuiHand> guiHands, int activeHand)
         {
             GuiHands = guiHands;
             ActiveHand = activeHand;

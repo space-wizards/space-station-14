@@ -39,9 +39,9 @@ namespace Content.Shared.GameObjects.Components.Items
     public class HandsComponentState : ComponentState
     {
         public readonly SharedHand[] Hands;
-        public readonly string? ActiveIndex;
+        public readonly int ActiveIndex;
 
-        public HandsComponentState(SharedHand[] hands, string? activeIndex) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(SharedHand[] hands, int activeIndex) : base(ContentNetIDs.HANDS)
         {
             Hands = hands;
             ActiveIndex = activeIndex;

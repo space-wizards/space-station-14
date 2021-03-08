@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Client.GameObjects.Components.Items;
 using Content.Client.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
@@ -61,7 +61,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            var held = hands.ActiveHand;
+            var held = hands.ActiveItem;
             if (held == null || !held.TryGetComponent(out ClientRangedWeaponComponent weapon))
             {
                 _blocked = true;

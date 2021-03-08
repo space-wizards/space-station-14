@@ -1,4 +1,4 @@
-﻿using Content.Client.GameObjects.Components.Disposal;
+using Content.Client.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -45,7 +45,9 @@ namespace Content.Client.GameObjects.Components.Items
                 _equippedPrefix = value;
                 if (!Owner.TryGetContainer(out IContainer container)) return;
                 if(container.Owner.TryGetComponent(out HandsComponent hands))
-                    hands.RefreshInHands();
+                {
+                    //hands.RefreshInHands();
+                }
             }
         }
 

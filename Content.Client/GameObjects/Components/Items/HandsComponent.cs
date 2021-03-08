@@ -9,7 +9,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Content.Client.GameObjects.Components.Items
@@ -22,17 +21,23 @@ namespace Content.Client.GameObjects.Components.Items
         [Dependency] private readonly IGameHud _gameHud = default!;
 
         [ViewVariables]
-        private HandsGui? Gui { get; set; } //Should only have state sent to it
+        private HandsGui? Gui { get; set; }
 
         [ViewVariables]
-        public string? ActiveHand { get; private set; }
+        private int ActiveHand { get; set; }
 
         [ViewVariables]
         public IReadOnlyList<ClientHand> Hands => _hands;
         private readonly List<ClientHand> _hands = new();
 
         [ViewVariables]
+        public IEntity? ActiveItem => Hands.Any() ? Hands[ActiveHand].Entity : null;
+
+        [ViewVariables]
         private ISpriteComponent? _sprite;
+
+        [ViewVariables]
+        private string? ActiveHandName => Hands.Any() ? Hands[ActiveHand].Name : null; //debug var
 
         public override void Initialize()
         {
@@ -77,10 +82,10 @@ namespace Content.Client.GameObjects.Components.Items
 
             switch (message)
             {
-                case PlayerAttachedMsg _:
+                case PlayerAttachedMsg:
                     HandlePlayerAttachedMsg();
                     break;
-                case PlayerDetachedMsg _:
+                case PlayerDetachedMsg:
                     HandlePlayerDetachedMsg();
                     break;
                 case HandEnabledMsg msg:
@@ -106,7 +111,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         public override bool IsHolding(IEntity entity)
         {
-            foreach (var hand in _hands)
+            foreach (var hand in Hands)
             {
                 if (hand.Entity == entity)
                     return true;
@@ -116,20 +121,18 @@ namespace Content.Client.GameObjects.Components.Items
 
         private void HandleAnimatePickupEntityMessage(AnimatePickupEntityMessage msg)
         {
-            if (Owner.EntityManager.TryGetEntity(msg.EntityId, out var entity))
-            {
-                ReusableAnimations.AnimateEntityPickup(entity, msg.EntityPosition, Owner.Transform.WorldPosition);
-            }
+            if (!Owner.EntityManager.TryGetEntity(msg.EntityId, out var entity))
+                return;
+
+            ReusableAnimations.AnimateEntityPickup(entity, msg.EntityPosition, Owner.Transform.WorldPosition);
         }
 
         private void HandlePlayerAttachedMsg()
         {
-
         }
 
         private void HandlePlayerDetachedMsg()
         {
-
         }
 
         private void HandleHandEnabledMsg(HandEnabledMsg msg)
@@ -141,18 +144,6 @@ namespace Content.Client.GameObjects.Components.Items
         }
 
         public void SendChangeHand(string index)
-        {
-        }
-
-        public void AttackByInHand(string index)
-        {
-        }
-
-        public void UseActiveHand()
-        {
-        }
-
-        public void ActivateItemInHand(string handIndex)
         {
         }
 
@@ -186,7 +177,6 @@ namespace Content.Client.GameObjects.Components.Items
         public ClientHand(HandsComponent parent, SharedHand hand, IEntityManager manager, HandButton? button = null)
         {
             Parent = parent;
-            Index = hand.Index;
             Name = hand.Name;
             Location = hand.Location;
             Button = button;
@@ -201,7 +191,6 @@ namespace Content.Client.GameObjects.Components.Items
         }
 
         private HandsComponent Parent { get; }
-        public int Index { get; }
         public string Name { get; }
         public HandLocation Location { get; set; }
         public IEntity? Entity { get; set; }
