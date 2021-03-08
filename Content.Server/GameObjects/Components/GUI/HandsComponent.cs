@@ -513,7 +513,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 hands[i] = hand;
             }
 
-            return new HandsComponentState(hands, ActiveHand != null ? _hands.FindIndex(hand => hand.Name == ActiveHand) : 0);
+            return new HandsComponentState(hands, ActiveHand != null ? _hands.FindIndex(hand => hand.Name == ActiveHand) : null);
         }
 
         private HandLocation IndexToHandLocation(int index)

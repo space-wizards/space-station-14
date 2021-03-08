@@ -129,11 +129,11 @@ namespace Content.Client.UserInterface
         ///     The name of the hand that is currently selected by this player.
         /// </summary>
         [ViewVariables]
-        public int ActiveHand { get; }
+        public int? ActiveHand { get; }
 
         public HandsGuiState() { }
 
-        public HandsGuiState(List<GuiHand> guiHands, int activeHand)
+        public HandsGuiState(List<GuiHand> guiHands, int? activeHand)
         {
             GuiHands = guiHands;
             ActiveHand = activeHand;

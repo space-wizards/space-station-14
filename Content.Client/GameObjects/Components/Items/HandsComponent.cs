@@ -24,20 +24,20 @@ namespace Content.Client.GameObjects.Components.Items
         private HandsGui? Gui { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private int ActiveHand { get; set; }
+        private int? ActiveHand { get; set; }
 
         [ViewVariables]
         public IReadOnlyList<ClientHand> Hands => _hands;
         private readonly List<ClientHand> _hands = new();
 
         [ViewVariables]
-        public IEntity? ActiveItem => Hands.ElementAtOrDefault(ActiveHand)?.Entity;
+        public IEntity? ActiveItem => ActiveHand != null ? Hands.ElementAtOrDefault(ActiveHand.Value)?.Entity : null;
 
         [ViewVariables]
         private ISpriteComponent? _sprite;
 
         [ViewVariables]
-        private string? ActiveHandName => Hands.ElementAtOrDefault(ActiveHand)?.Name; //debug var
+        private string? ActiveHandName => ActiveHand != null ? Hands.ElementAtOrDefault(ActiveHand.Value)?.Name : null; //debug var
 
         public override void Initialize()
         {
@@ -69,7 +69,12 @@ namespace Content.Client.GameObjects.Components.Items
 
             foreach (var handState in state.Hands)
             {
-                var newHand = new ClientHand(this, handState, Owner.EntityManager);
+                var heldItemUid = handState.EntityUid;
+                IEntity? heldItem = null;
+                if (heldItemUid != null)
+                    Owner.EntityManager.TryGetEntity(heldItemUid.Value, out heldItem);
+
+                var newHand = new ClientHand(this, handState, heldItem);
                 _hands.Add(newHand);
                 _sprite?.LayerMapReserveBlank($"hand-{newHand.Name}");
             }
@@ -172,16 +177,12 @@ namespace Content.Client.GameObjects.Components.Items
 
     public class ClientHand
     {
-        public ClientHand(HandsComponent parent, SharedHand hand, IEntityManager manager, HandButton? button = null)
+        public ClientHand(HandsComponent parent, SharedHand hand, IEntity? heldItem, HandButton? button = null)
         {
             Name = hand.Name;
             Location = hand.Location;
             Button = button;
-
-            if (!hand.EntityUid.HasValue)
-                return;
-            manager.TryGetEntity(hand.EntityUid.Value, out var entity);
-            Entity = entity;
+            Entity = heldItem;
         }
 
         public string Name { get; }
