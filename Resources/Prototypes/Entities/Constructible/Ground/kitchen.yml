@@ -14,7 +14,7 @@
       mask:
       - Impassable
       layer:
-      - Impassable
+      - MobImpassable
   - type: Sprite
     # temp to make clickmask work
     sprite: Constructible/Misc/kitchen.rsi
