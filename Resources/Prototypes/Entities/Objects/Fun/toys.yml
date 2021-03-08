@@ -614,7 +614,10 @@
   parent: BaseItem
   id: SingularityToy
   description: Mass-produced by a sadistic corporate conglomerate!
-  components:
+  components:  
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: singularitytoy
   - type: Icon
     sprite: Objects/Fun/toys.rsi
     state: singularitytoy

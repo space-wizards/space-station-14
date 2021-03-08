@@ -70,7 +70,10 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
 
-                if(_collidableComponent != null && _collidableComponent.Fixtures.Any() && _collidableComponent.Fixtures[0].Shape is PhysShapeCircle circle)
+                _spriteComponent?.LayerSetRSI(0, "Constructible/Power/Singularity/singularity_" + _level + ".rsi");
+                _spriteComponent?.LayerSetState(0, "singularity_" + _level);
+
+                if (_collidableComponent != null && _collidableComponent.Fixtures.Any() && _collidableComponent.Fixtures[0].Shape is PhysShapeCircle circle)
                 {
                     circle.Radius = _level - 0.5f;
                 }
@@ -93,6 +96,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             };
 
         private PhysicsComponent? _collidableComponent;
+        private SpriteComponent? _spriteComponent;
         private RadiationPulseComponent? _radiationPulseComponent;
         private AudioSystem _audioSystem = null!;
         private IPlayingAudioStream? _playingSound;
@@ -114,6 +118,8 @@ namespace Content.Server.GameObjects.Components.Singularity
             _audioSystem.PlayFromEntity("/Audio/Effects/singularity_form.ogg", Owner);
             Timer.Spawn(5200,() => _playingSound = _audioSystem.PlayFromEntity("/Audio/Effects/singularity.ogg", Owner, audioParams));
 
+            if (!Owner.TryGetComponent(out _spriteComponent))
+                Logger.Error("SingularityComponent was spawned without SpriteComponent");
             if (!Owner.TryGetComponent(out _radiationPulseComponent))
                 Logger.Error("SingularityComponent was spawned without RadiationPulseComponent");
             if (!Owner.TryGetComponent(out _collidableComponent))
