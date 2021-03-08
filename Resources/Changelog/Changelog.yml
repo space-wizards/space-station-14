@@ -286,3 +286,9 @@ Entries:
   - {message: Pushing strength, type: Fix}
   id: 52
   time: '2021-03-08T01:48:15.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: The client being able to set character age and other values outside
+      their limits., type: Fix}
+  id: 53
+  time: '2021-03-08T02:07:53.0000000+00:00'
