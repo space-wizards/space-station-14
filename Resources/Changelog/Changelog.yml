@@ -331,3 +331,8 @@ Entries:
       what., type: Fix}
   id: 60
   time: '2021-03-08T14:23:04.819646+00:00'
+- author: Tarlan2
+  changes:
+  - {message: Adds combat knife and fire axe., type: Add}
+  id: 61
+  time: '2021-03-08T18:16:09.0000000+00:00'
