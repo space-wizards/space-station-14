@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
+using Content.Client.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class ClientInventoryComponent : SharedInventoryComponent
+    public class ClientInventoryComponent : SharedInventoryComponent, IEffectBlocker
     {
         private readonly Dictionary<Slots, IEntity> _slots = new();
 
@@ -30,6 +30,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
 
+        [ComponentDependency]
         private ISpriteComponent? _sprite;
 
         private bool _playerAttached = false;
@@ -54,7 +55,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             InterfaceController = DynamicTypeFactory.CreateInstance<InventoryInterfaceController>(controllerType, args);
             InterfaceController.Initialize();
 
-            if (Owner.TryGetComponent(out _sprite))
+            if (_sprite != null)
             {
                 foreach (var mask in InventoryInstance.SlotMasks.OrderBy(s => InventoryInstance.SlotDrawingOrder(s)))
                 {
@@ -188,6 +189,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                     var (rsi, state) = data.Value;
                     _sprite.LayerSetVisible(slot, true);
                     _sprite.LayerSetState(slot, state, rsi);
+                    _sprite.LayerSetAutoAnimated(slot, true);
 
                     if (slot == Slots.INNERCLOTHING)
                     {
@@ -285,6 +287,11 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
 
             return false;
+        }
+
+        bool IEffectBlocker.CanSlip()
+        {
+            return !TryGetSlot(Slots.SHOES, out var shoes) || shoes == null || EffectBlockerSystem.CanSlip(shoes);
         }
     }
 }

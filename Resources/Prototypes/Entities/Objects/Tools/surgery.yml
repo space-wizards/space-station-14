@@ -75,7 +75,7 @@
   name: bone saw
   parent: BaseSurgeryTool
   id: BoneSaw
-  description: A surgical tool used to cauterize open wounds.
+  description: A surgical tool used for amputations.
   components:
   - type: SurgeryTool
     surgeryType: Amputation

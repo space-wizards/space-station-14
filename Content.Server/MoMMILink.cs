@@ -7,9 +7,9 @@ using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Shared;
 using Newtonsoft.Json;
-using Robust.Server.Interfaces.ServerStatus;
+using Robust.Server.ServerStatus;
 using Robust.Shared.Asynchronous;
-using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 
@@ -113,7 +113,7 @@ namespace Content.Server
 
             context.Respond("Success", HttpStatusCode.OK);
 
-            return false;
+            return true;
         }
 
         [JsonObject(MemberSerialization.Fields)]

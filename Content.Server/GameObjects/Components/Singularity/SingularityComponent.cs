@@ -2,29 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.StationEvents;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Shared.GameObjects;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Map;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
-using Robust.Shared.Timers;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics.Shapes;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
-    public class SingularityComponent : Component, ICollideBehavior
+    public class SingularityComponent : Component, IStartCollide
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -42,7 +40,6 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _energy = value;
                 if (_energy <= 0)
                 {
-                    if(_singularityController != null) _singularityController.LinearVelocity = Vector2.Zero;
                     _spriteComponent?.LayerSetVisible(0, false);
 
                     Owner.Delete();
@@ -76,10 +73,10 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
 
-                _spriteComponent?.LayerSetRSI(0, "Effects/Singularity/singularity_" + _level + ".rsi");
+                _spriteComponent?.LayerSetRSI(0, "Constructible/Power/Singularity/singularity_" + _level + ".rsi");
                 _spriteComponent?.LayerSetState(0, "singularity_" + _level);
 
-                if(_collidableComponent != null && _collidableComponent.PhysicsShapes.Any() && _collidableComponent.PhysicsShapes[0] is PhysShapeCircle circle)
+                if(_collidableComponent != null && _collidableComponent.Fixtures.Any() && _collidableComponent.Fixtures[0].Shape is PhysShapeCircle circle)
                 {
                     circle.Radius = _level - 0.5f;
                 }
@@ -99,12 +96,11 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _ => 0
             };
 
-        private SingularityController? _singularityController;
         private PhysicsComponent? _collidableComponent;
         private SpriteComponent? _spriteComponent;
         private RadiationPulseComponent? _radiationPulseComponent;
         private AudioSystem _audioSystem = null!;
-        private AudioSystem.AudioSourceServer? _playingSound;
+        private IPlayingAudioStream? _playingSound;
 
         public override void Initialize()
         {
@@ -133,9 +129,6 @@ namespace Content.Server.GameObjects.Components.Singularity
                 Logger.Error("SingularityComponent was spawned without SpriteComponent");
             }
 
-            _singularityController = _collidableComponent?.EnsureController<SingularityController>();
-            if(_singularityController!=null)_singularityController.ControlledComponent = _collidableComponent;
-
             if (!Owner.TryGetComponent(out _radiationPulseComponent))
             {
                 Logger.Error("SingularityComponent was spawned without RadiationPulseComponent");
@@ -144,55 +137,18 @@ namespace Content.Server.GameObjects.Components.Singularity
             Level = 1;
         }
 
-        public void Update()
+        public void Update(int seconds)
         {
-            Energy -= EnergyDrain;
-
-            if(Level == 1) return;
-            //pushing
-            var pushVector = new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10));
-            while (pushVector.X == 0 && pushVector.Y == 0)
-            {
-                pushVector = new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10));
-            }
-            _singularityController?.Push(pushVector.Normalized, 2);
+            Energy -= EnergyDrain * seconds;
         }
 
-        private readonly List<IEntity> _previousPulledEntities = new();
-        public void PullUpdate()
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            foreach (var previousPulledEntity in _previousPulledEntities)
+            var otherEntity = otherBody.Entity;
+
+            if (otherEntity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
             {
-                if(previousPulledEntity.Deleted) continue;
-                if (!previousPulledEntity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
-                var controller = collidableComponent.EnsureController<SingularityPullController>();
-                controller.StopPull();
-            }
-            _previousPulledEntities.Clear();
-
-            var entitiesToPull = Owner.EntityManager.GetEntitiesInRange(Owner.Transform.Coordinates, Level * 10);
-            foreach (var entity in entitiesToPull)
-            {
-                if (!entity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
-                var controller = collidableComponent.EnsureController<SingularityPullController>();
-                if(Owner.Transform.Coordinates.EntityId != entity.Transform.Coordinates.EntityId) continue;
-                var vec = (Owner.Transform.Coordinates - entity.Transform.Coordinates).Position;
-                if (vec == Vector2.Zero) continue;
-
-                var speed = 10 / vec.Length * Level;
-
-                controller.Pull(vec.Normalized, speed);
-                _previousPulledEntities.Add(entity);
-            }
-        }
-
-        void ICollideBehavior.CollideWith(IEntity entity)
-        {
-            if (_collidableComponent == null) return; //how did it even collide then? :D
-
-            if (entity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
-            {
-                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(((IPhysBody) _collidableComponent).WorldAABB))
+                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(ourBody.GetWorldAABB()))
                 {
                     mapGridComponent.Grid.SetTile(tile.GridIndices, Tile.Empty);
                     Energy++;
@@ -200,14 +156,14 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            if (entity.HasComponent<ContainmentFieldComponent>() || (entity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.CanRepell(Owner)))
+            if (otherEntity.HasComponent<ContainmentFieldComponent>() || (otherEntity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.CanRepell(Owner)))
             {
                 return;
             }
 
-            if (entity.IsInContainer()) return;
+            if (otherEntity.IsInContainer()) return;
 
-            entity.Delete();
+            otherEntity.Delete();
             Energy++;
         }
 

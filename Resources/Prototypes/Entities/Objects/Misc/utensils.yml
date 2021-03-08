@@ -12,9 +12,11 @@
   name: fork
   description: An eating utensil, perfect for stabbing.
   components:
+  - type: Tag
+    tags:
+    - Hoe
   - type: Sprite
     state: fork
-  - type: Hoe
   - type: Utensil
     types:
     - Fork
@@ -27,7 +29,6 @@
   components:
   - type: Sprite
     state: plastic_fork
-
   - type: Utensil
     types:
     - Fork
@@ -41,7 +42,6 @@
   components:
   - type: Sprite
     state: spoon
-
   - type: Utensil
     types:
     - Spoon
@@ -54,7 +54,6 @@
   components:
   - type: Sprite
     state: plastic_spoon
-
   - type: Utensil
     types:
     - Spoon
@@ -68,7 +67,6 @@
   components:
   - type: Sprite
     state: plastic_knife
-
   - type: Utensil
     types:
     - Knife

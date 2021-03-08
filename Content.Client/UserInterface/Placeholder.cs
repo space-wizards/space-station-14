@@ -1,4 +1,4 @@
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface
@@ -19,8 +19,7 @@ namespace Content.Client.UserInterface
         {
             _label = new Label
             {
-                SizeFlagsHorizontal = SizeFlags.Fill,
-                SizeFlagsVertical = SizeFlags.Fill,
+                VerticalAlignment = VAlignment.Stretch,
                 Align = Label.AlignMode.Center,
                 VAlign = Label.VAlignMode.Center
             };

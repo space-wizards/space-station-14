@@ -3,10 +3,11 @@ using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Chemistry
@@ -23,18 +24,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override string Name => "Rehydratable";
 
         [ViewVariables]
-        private string _catalystPrototype = "";
+        [DataField("catalyst")]
+        private string _catalystPrototype = "chem.Water";
         [ViewVariables]
+        [DataField("target")]
         private string? _targetPrototype;
 
         private bool _expanding;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _catalystPrototype, "catalyst", "chem.Water");
-            serializer.DataField(ref _targetPrototype, "target", null);
-        }
 
         ReagentUnit IReagentReaction.ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume) => Reaction(reagent, volume);
         ReagentUnit IReagentReaction.ReagentReactInjection(ReagentPrototype reagent, ReagentUnit volume) => Reaction(reagent, volume);

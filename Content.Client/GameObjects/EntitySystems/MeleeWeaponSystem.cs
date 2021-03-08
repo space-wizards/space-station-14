@@ -1,20 +1,15 @@
-﻿using System;
+using System;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Weapons.Melee;
 using Content.Shared.GameObjects.Components.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.EntitySystemMessages;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timers;
+using Robust.Shared.Timing;
 using static Content.Shared.GameObjects.EntitySystemMessages.MeleeWeaponSystemMessages;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -35,7 +30,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.FrameUpdate(frameTime);
 
-            foreach (var arcAnimationComponent in EntityManager.ComponentManager.EntityQuery<MeleeWeaponArcAnimationComponent>())
+            foreach (var arcAnimationComponent in EntityManager.ComponentManager.EntityQuery<MeleeWeaponArcAnimationComponent>(true))
             {
                 arcAnimationComponent.Update(frameTime);
             }
@@ -49,7 +44,12 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            var attacker = EntityManager.GetEntity(msg.Attacker);
+            if (!EntityManager.TryGetEntity(msg.Attacker, out var attacker))
+            {
+                //FIXME: This should never happen.
+                Logger.Error($"Tried to play a weapon arc {msg.ArcPrototype}, but the attacker does not exist. attacker={msg.Attacker}, source={msg.Source}");
+                return;
+            }
 
             if (!attacker.Deleted)
             {

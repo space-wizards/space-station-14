@@ -5,12 +5,10 @@ using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.MachineLinking
@@ -22,6 +20,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
         private List<SignalTransmitterComponent> _transmitters;
 
+        [DataField("maxTransmitters")]
         private int? _maxTransmitters = default;
 
         public override void Initialize()
@@ -29,11 +28,6 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             base.Initialize();
 
             _transmitters = new List<SignalTransmitterComponent>();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x=> x._maxTransmitters, "maxTransmitters", null);
         }
 
         public void DistributeSignal<T>(T state)
@@ -114,7 +108,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             return true;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;

@@ -3,20 +3,16 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Construction;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class AddContainer : IGraphAction
     {
-        public void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.Container, "container", null);
-        }
-
-        public string? Container { get; private set; } = null;
+        [DataField("container")] public string? Container { get; private set; } = null;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {

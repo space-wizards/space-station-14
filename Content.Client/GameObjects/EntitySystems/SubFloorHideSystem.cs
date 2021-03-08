@@ -1,9 +1,7 @@
 ﻿using Content.Client.GameObjects.Components;
 using Content.Shared.Maps;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Map;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -35,7 +33,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void UpdateAll()
         {
-            foreach (var comp in EntityManager.ComponentManager.EntityQuery<SubFloorHideComponent>())
+            foreach (var comp in EntityManager.ComponentManager.EntityQuery<SubFloorHideComponent>(true))
             {
                 if (!_mapManager.TryGetGrid(comp.Owner.Transform.GridID, out var grid)) return;
 
@@ -87,13 +85,22 @@ namespace Content.Client.GameObjects.EntitySystems
             foreach (var snapGridComponent in grid.GetSnapGridCell(position, SnapGridOffset.Center))
             {
                 var entity = snapGridComponent.Owner;
-                if (!entity.TryGetComponent(out SubFloorHideComponent subFloorComponent) ||
-                    !entity.TryGetComponent(out ISpriteComponent spriteComponent))
+                if (!entity.TryGetComponent(out SubFloorHideComponent subFloorComponent))
                 {
                     continue;
                 }
 
-                spriteComponent.Visible = EnableAll || !subFloorComponent.Running || tileDef.IsSubFloor;
+                var enabled = EnableAll || !subFloorComponent.Running || tileDef.IsSubFloor;
+
+                if (entity.TryGetComponent(out ISpriteComponent spriteComponent))
+                {
+                    spriteComponent.Visible = enabled;
+                }
+
+                if (entity.TryGetComponent(out PhysicsComponent physicsComponent))
+                {
+                    physicsComponent.CanCollide = enabled;
+                }
             }
         }
     }

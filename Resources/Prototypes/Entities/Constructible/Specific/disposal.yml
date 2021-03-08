@@ -9,7 +9,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    anchored: true
+    bodyType: Static
   - type: SnapGrid
     offset: Center
   - type: Anchorable
@@ -17,10 +17,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Breakage"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Rotatable
   - type: Pullable
 
@@ -49,9 +51,10 @@
       state_anchored: pipe-s
       state_broken: pipe-b
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5,-0.25,0.5,0.25"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
       layer: [ Underplating ]
 
 - type: entity
@@ -76,9 +79,10 @@
     - key: enum.DisposalTaggerUiKey.Key
       type: DisposalTaggerBoundUserInterface
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5,-0.25,0.5,0.25"
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.25,0.5,0.25"
         layer: [ Underplating ]
 
 - type: entity
@@ -99,9 +103,10 @@
       state_anchored: pipe-t
       state_broken: pipe-b
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5,-0.25,0.4,0.25"
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.25,0.4,0.25"
         layer: [ Underplating ]
 
 - type: entity
@@ -129,10 +134,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.3,-0.35,0.3,0.35"
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.3,-0.35,0.3,0.35"
       mask:
       - Impassable
       - MobImpassable
@@ -151,10 +157,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: DisposalUnitVisualizer
@@ -202,9 +210,10 @@
     - key: enum.DisposalRouterUiKey.Key
       type: DisposalRouterBoundUserInterface
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.25"
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.25"
         layer: [ Underplating ]
 
 - type: entity
@@ -230,10 +239,11 @@
   - type: Flippable
     entity: DisposalRouter
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5,-0.25,0.5,0.5"
-        layer: [ Underplating ]
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.5"
+      layer: [ Underplating ]
 
 - type: entity
   id: DisposalJunction
@@ -259,10 +269,11 @@
   - type: Flippable
     entity: DisposalJunctionFlipped
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.25"
-        layer: [ Underplating ]
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.25"
+      layer: [ Underplating ]
 
 - type: entity
   id: DisposalJunctionFlipped
@@ -287,10 +298,11 @@
   - type: Flippable
     entity: DisposalJunction
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5,-0.25,0.5,0.5"
-        layer: [ Underplating ]
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.5"
+      layer: [ Underplating ]
 
 - type: entity
   id: DisposalYJunction
@@ -314,10 +326,11 @@
       state_anchored: pipe-y
       state_broken: pipe-b
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.25,0.5"
-        layer: [ Underplating ]
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.5"
+      layer: [ Underplating ]
 
 - type: entity
   id: DisposalBend
@@ -337,10 +350,11 @@
       state_anchored: pipe-c
       state_broken: pipe-b
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.25,0.25"
-        layer: [ Underplating ]
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.25"
+      layer: [ Underplating ]
 
 - type: entity
   id: DisposalMailingUnit
@@ -370,10 +384,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.35,-0.3,0.35,0.3"
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.35,-0.3,0.35,0.3"
       mask:
       - Impassable
       - MobImpassable
@@ -392,10 +407,12 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: DisposalUnitVisualizer

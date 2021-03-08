@@ -1,7 +1,7 @@
-﻿using Content.Shared.Alert;
+﻿#nullable enable
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Mobs.State
 {
@@ -16,7 +16,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         {
             base.EnterState(entity);
 
-            if (entity.TryGetComponent(out SharedAlertsComponent status))
+            if (entity.TryGetComponent(out SharedAlertsComponent? status))
             {
                 status.ShowAlert(AlertType.HumanCrit); // TODO: combine humancrit-0 and humancrit-1 into a gif and display it
             }

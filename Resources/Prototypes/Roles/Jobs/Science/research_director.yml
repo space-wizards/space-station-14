@@ -10,7 +10,6 @@
   icon: "ResearchDirector"
   access:
   - Research
-  - ResearchDirector
   - Command
   - Maintenance
 
@@ -24,4 +23,4 @@
     ears: ClothingHeadsetScience
   innerclothingskirt: ClothingUniformJumpskirtResearchDirector
   satchel: ClothingBackpackSatchelScienceFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  duffelbag: ClothingBackpackDuffelScienceFilled

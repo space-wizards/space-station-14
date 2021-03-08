@@ -13,7 +13,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHelmetCosmonaut
   name: cosmonaut
-  description:
+  description: A deceptively well armored space helmet. Ancient design, but advanced manufacturing.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/cosmonaut.rsi
@@ -79,7 +79,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHelmetSpaceNinja
   name: space ninja helmet
-  description:
+  description: What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/spaceninja.rsi

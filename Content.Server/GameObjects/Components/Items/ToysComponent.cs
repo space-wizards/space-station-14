@@ -1,14 +1,13 @@
 ﻿using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items
@@ -22,13 +21,8 @@ namespace Content.Server.GameObjects.Components.Items
         public override string Name => "Toys";
 
         [ViewVariables]
+        [DataField("toySqueak")]
         public string _soundCollectionName = "ToySqueak";
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _soundCollectionName, "toySqueak", "ToySqueak");
-        }
 
         public void Squeak()
         {
@@ -45,17 +39,18 @@ namespace Content.Server.GameObjects.Components.Items
             }
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             Squeak();
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             Squeak();
             return false;
         }
-        public void Land(LandEventArgs eventArgs)
+
+        void ILand.Land(LandEventArgs eventArgs)
         {
             Squeak();
         }

@@ -1,17 +1,16 @@
+#nullable enable
 using System;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
@@ -41,9 +40,10 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         /// <summary>
         ///     Invoked whenever the state of the light bulb changes.
         /// </summary>
-        public event EventHandler<EventArgs> OnLightBulbStateChange;
-        public event EventHandler<EventArgs> OnLightColorChange;
+        public event EventHandler<EventArgs>? OnLightBulbStateChange;
+        public event EventHandler<EventArgs?>? OnLightColorChange;
 
+        [DataField("color")]
         private Color _color = Color.White;
 
         [ViewVariables(VVAccess.ReadWrite)] public Color Color
@@ -59,12 +59,15 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         public override string Name => "LightBulb";
 
+        [DataField("bulb")]
         public LightBulbType Type = LightBulbType.Tube;
 
-        private int _burningTemperature;
+        [DataField("BurningTemperature")]
+        private int _burningTemperature = 1400;
         public int BurningTemperature => _burningTemperature;
 
-        private int _powerUse;
+        [DataField("PowerUse")]
+        private int _powerUse = 40;
         public int PowerUse => _powerUse;
 
         /// <summary>
@@ -96,17 +99,9 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private LightBulbState _state = LightBulbState.Normal;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref Type, "bulb", LightBulbType.Tube);
-            serializer.DataField(ref _color, "color", Color.White);
-            serializer.DataFieldCached(ref _burningTemperature, "BurningTemperature", 1400);
-            serializer.DataFieldCached(ref _powerUse, "PowerUse", 40);
-        }
-
         public void UpdateColor()
         {
-            if (!Owner.TryGetComponent(out SpriteComponent sprite))
+            if (!Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 return;
             }
@@ -120,20 +115,23 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             UpdateColor();
         }
 
-        public void Land(LandEventArgs eventArgs)
+        void ILand.Land(LandEventArgs eventArgs)
         {
-
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("GlassBreak");
-            var file = _random.Pick(soundCollection.PickFiles);
-
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner);
-
+            PlayBreakSound();
             State = LightBulbState.Broken;
         }
 
         public void OnBreak(BreakageEventArgs eventArgs)
         {
             State = LightBulbState.Broken;
+        }
+
+        public void PlayBreakSound()
+        {
+            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("GlassBreak");
+            var file = _random.Pick(soundCollection.PickFiles);
+
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner);
         }
     }
 }

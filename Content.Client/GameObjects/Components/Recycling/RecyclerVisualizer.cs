@@ -1,8 +1,8 @@
 ﻿using Content.Shared.GameObjects.Components.Recycling;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -11,23 +11,10 @@ namespace Content.Client.GameObjects.Components.Recycling
     [UsedImplicitly]
     public class RecyclerVisualizer : AppearanceVisualizer
     {
+        [DataField("state_clean")]
         private string _stateClean;
+        [DataField("state_bloody")]
         private string _stateBloody;
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            if (node.TryGetNode("state_clean", out var child))
-            {
-                _stateClean = child.AsString();
-            }
-
-            if (node.TryGetNode("state_bloody", out child))
-            {
-                _stateBloody = child.AsString();
-            }
-        }
 
         public override void InitializeEntity(IEntity entity)
         {

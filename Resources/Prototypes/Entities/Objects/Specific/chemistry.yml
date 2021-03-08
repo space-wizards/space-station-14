@@ -1,9 +1,13 @@
+# TODO: Add description (1)
 - type: entity
   name: beaker
   parent: BaseItem
   description: Used to contain a moderate amount of chemicals and solutions.
   id: Beaker
   components:
+  - type: Tag
+    tags:
+    - GlassBeaker
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beakers.rsi
     state: beaker
@@ -11,34 +15,32 @@
     sprite: Objects/Specific/Chemistry/beakers.rsi
     HeldPrefix: beaker
   - type: SolutionContainer
-    fillingState: beaker
     maxVol: 50
-    caps: CanExamine, AddTo, RemoveFrom, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
-  - type: Pourable
+    caps: OpenContainer, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
+  - type: SolutionTransfer
     transferAmount: 5.0
   - type: Spillable
-  - type: GlassBeaker
+  - type: Drink
+    isOpen: true
 
 - type: entity
   name: large beaker
-  parent: BaseItem
+  parent: Beaker
   description: Used to contain a large amount of chemicals or solutions.
   id: LargeBeaker
   components:
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/beakers.rsi
     state: beakerlarge
   - type: Item
-    sprite: Objects/Specific/Chemistry/beakers.rsi
     HeldPrefix: beaker
   - type: SolutionContainer
-    fillingState: beakerlarge
     maxVol: 100
-    caps: CanExamine, AddTo, RemoveFrom, FitsInDispenser
-  - type: Pourable
+    caps: OpenContainer, FitsInDispenser
+  - type: SolutionTransfer
     transferAmount: 5.0
   - type: Spillable
-  - type: GlassBeaker
+  - type: Drink
+    isOpen: true
 
 - type: entity
   name: dropper
@@ -50,10 +52,8 @@
     sprite: Objects/Specific/Chemistry/dropper.rsi
     state: dropper
   - type: SolutionContainer
-    fillingState: dropper
-    fillingSteps: 2
     maxVol: 5
-  - type: Pourable
+  - type: SolutionTransfer
     transferAmount: 5.0
   - type: Spillable
 
@@ -67,8 +67,6 @@
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: 0
   - type: SolutionContainer
-    fillingState: syringe
-    fillingSteps: 5
     maxVol: 15
   - type: Injector
     injectOnly: false
@@ -85,13 +83,13 @@
   - type: Drink
   - type: SolutionContainer
     maxVol: 30
-  - type: Pourable
+  - type: SolutionTransfer
     transferAmount: 5
   - type: Spillable
 
 - type: entity
   name: pill
-  parent: FoodBase
+  parent: BaseItem
   id: pill
   description: It's not a suppository.
   components:

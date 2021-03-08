@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Content.Client.Changelog;
 using Content.Client.UserInterface;
 using Robust.Client;
-using Robust.Client.Interfaces;
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -253,7 +250,7 @@ namespace Content.Client.State
                 UserNameBox = new LineEdit
                 {
                     Text = currentUserName, PlaceHolder = "Username",
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
+                    HorizontalExpand = true
                 };
 
                 userNameHBox.AddChild(UserNameBox);
@@ -272,13 +269,13 @@ namespace Content.Client.State
                 vBox.AddChild(JoinPublicServerButton);
 
                 // Separator.
-                vBox.AddChild(new Control {CustomMinimumSize = (0, 2)});
+                vBox.AddChild(new Control {MinSize = (0, 2)});
 
                 AddressBox = new LineEdit
                 {
                     Text = "localhost",
                     PlaceHolder = "server address:port",
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
+                    HorizontalExpand = true
                 };
 
                 vBox.AddChild(AddressBox);
@@ -293,7 +290,7 @@ namespace Content.Client.State
                 vBox.AddChild(DirectConnectButton);
 
                 // Separator.
-                vBox.AddChild(new Control {CustomMinimumSize = (0, 2)});
+                vBox.AddChild(new Control {MinSize = (0, 2)});
 
                 OptionsButton = new Button
                 {
@@ -312,6 +309,8 @@ namespace Content.Client.State
                 };
 
                 vBox.AddChild(QuitButton);
+
+                vBox.AddChild(new ChangelogButton());
 
                 VersionLabel = new Label
                 {

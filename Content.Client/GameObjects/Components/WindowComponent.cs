@@ -2,10 +2,8 @@
 using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Client.GameObjects.Components.IconSmoothing.IconSmoothComponent;
 
 namespace Content.Client.GameObjects.Components
@@ -14,7 +12,8 @@ namespace Content.Client.GameObjects.Components
     [ComponentReference(typeof(SharedWindowComponent))]
     public sealed class WindowComponent : SharedWindowComponent
     {
-        private string _stateBase;
+        [DataField("base")]
+        private string _stateBase = default;
         private ISpriteComponent _sprite;
         private SnapGridComponent _snapGrid;
 
@@ -39,28 +38,24 @@ namespace Content.Client.GameObjects.Components
             _sprite.LayerMapSet(CornerLayers.SE, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.SE, SpriteComponent.DirectionOffset.None);
             _sprite.LayerMapSet(WindowDamageLayers.DamageSE, _sprite.AddLayerState("0_1", cracksRSIPath));
-            _sprite.LayerSetShader(WindowDamageLayers.DamageSE, "unshaded");
             _sprite.LayerSetVisible(WindowDamageLayers.DamageSE, false);
 
             _sprite.LayerMapSet(CornerLayers.NE, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.NE, SpriteComponent.DirectionOffset.CounterClockwise);
             _sprite.LayerMapSet(WindowDamageLayers.DamageNE, _sprite.AddLayerState("0_1", cracksRSIPath));
             _sprite.LayerSetDirOffset(WindowDamageLayers.DamageNE, SpriteComponent.DirectionOffset.CounterClockwise);
-            _sprite.LayerSetShader(WindowDamageLayers.DamageNE, "unshaded");
             _sprite.LayerSetVisible(WindowDamageLayers.DamageNE, false);
 
             _sprite.LayerMapSet(CornerLayers.NW, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.NW, SpriteComponent.DirectionOffset.Flip);
             _sprite.LayerMapSet(WindowDamageLayers.DamageNW, _sprite.AddLayerState("0_1", cracksRSIPath));
             _sprite.LayerSetDirOffset(WindowDamageLayers.DamageNW, SpriteComponent.DirectionOffset.Flip);
-            _sprite.LayerSetShader(WindowDamageLayers.DamageNW, "unshaded");
             _sprite.LayerSetVisible(WindowDamageLayers.DamageNW, false);
 
             _sprite.LayerMapSet(CornerLayers.SW, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.SW, SpriteComponent.DirectionOffset.Clockwise);
             _sprite.LayerMapSet(WindowDamageLayers.DamageSW, _sprite.AddLayerState("0_1", cracksRSIPath));
             _sprite.LayerSetDirOffset(WindowDamageLayers.DamageSW, SpriteComponent.DirectionOffset.Clockwise);
-            _sprite.LayerSetShader(WindowDamageLayers.DamageSW, "unshaded");
             _sprite.LayerSetVisible(WindowDamageLayers.DamageSW, false);
         }
 
@@ -102,13 +97,6 @@ namespace Content.Client.GameObjects.Components
             }
 
             return null;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _stateBase, "base", null);
         }
     }
 

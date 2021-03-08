@@ -14,18 +14,15 @@ using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Robust.Server.Console;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.Interfaces.Console;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -35,7 +32,7 @@ namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
+    public class InventoryComponent : SharedInventoryComponent, IExAct, IPressureProtection, IEffectBlocker
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -148,14 +145,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         bool IEffectBlocker.CanSlip()
         {
-            if (Owner.TryGetComponent(out InventoryComponent inventoryComponent) &&
-                inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent shoes)
-            )
-            {
-                return EffectBlockerSystem.CanSlip(shoes.Owner);
-            }
-
-            return true;
+            return !TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent shoes) || EffectBlockerSystem.CanSlip(shoes.Owner);
         }
 
         public override void OnRemove()
@@ -429,7 +419,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
             Dirty();
 
-            _slotContainers[slot] = ContainerManagerComponent.Create<ContainerSlot>(GetSlotString(slot), Owner);
+            var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, GetSlotString(slot));
+            container.OccludesLight = false;
+            _slotContainers[slot] = container;
 
             OnItemChanged?.Invoke();
 
@@ -607,7 +599,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             var list = new List<KeyValuePair<Slots, EntityUid>>();
             foreach (var (slot, container) in _slotContainers)
@@ -687,9 +679,10 @@ namespace Content.Server.GameObjects.Components.GUI
                 var entityId = target.Uid.ToString();
 
                 var command = new SetOutfitCommand();
-                var shell = IoCManager.Resolve<IConsoleShell>();
+                var host = IoCManager.Resolve<IServerConsoleHost>();
                 var args = new string[] {entityId};
-                command.Execute(shell, user.PlayerSession(), args);
+                var session = user.PlayerSession();
+                command.Execute(new ConsoleShell(host, session), $"{command.Command} {entityId}", args);
             }
 
             private static bool CanCommand(IEntity user)

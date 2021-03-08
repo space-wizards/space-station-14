@@ -4,20 +4,21 @@ using System.Collections.Generic;
 using Content.Client.GameObjects.Components;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.EntitySystems.DoAfter
 {
     public sealed class DoAfterGui : VBoxContainer
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -70,7 +71,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
 
             var doAfterBar = new DoAfterBar
             {
-                SizeFlagsVertical = SizeFlags.ShrinkCenter
+                VerticalAlignment = VAlignment.Center
             };
 
             _doAfterBars[message.ID] = doAfterBar;
@@ -83,7 +84,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                     {
                         Texture = StaticIoC.ResC.GetTexture("/Textures/Interface/Misc/progress_bar.rsi/icon.png"),
                         TextureScale = Vector2.One * DoAfterBar.DoAfterBarScale,
-                        SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                        VerticalAlignment = VAlignment.Center,
                     },
 
                     doAfterBar
@@ -107,12 +108,11 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
 
             var control = _doAfterControls[id];
             RemoveChild(control);
+            control.DisposeAllChildren();
             _doAfterControls.Remove(id);
             _doAfterBars.Remove(id);
 
-            if (_cancelledDoAfters.ContainsKey(id))
-                _cancelledDoAfters.Remove(id);
-
+            _cancelledDoAfters.Remove(id);
         }
 
         /// <summary>
@@ -125,10 +125,20 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             if (_cancelledDoAfters.ContainsKey(id))
                 return;
 
-            if (!_doAfterBars.TryGetValue(id, out var doAfterBar))
+            DoAfterBar doAfterBar;
+
+            if (!_doAfterControls.TryGetValue(id, out var doAfterControl))
             {
+                doAfterControl = new PanelContainer();
+                AddChild(doAfterControl);
+                DebugTools.Assert(!_doAfterBars.ContainsKey(id));
                 doAfterBar = new DoAfterBar();
+                doAfterControl.AddChild(doAfterBar);
                 _doAfterBars[id] = doAfterBar;
+            }
+            else
+            {
+                doAfterBar = _doAfterBars[id];
             }
 
             doAfterBar.Cancelled = true;
@@ -149,7 +159,8 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             if (doAfters.Count == 0)
                 return;
 
-            if (_eyeManager.CurrentMap != AttachedEntity.Transform.MapID)
+            if (_eyeManager.CurrentMap != AttachedEntity.Transform.MapID ||
+                !AttachedEntity.Transform.Coordinates.IsValid(_entityManager))
             {
                 Visible = false;
                 return;
@@ -173,19 +184,21 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
 
             Visible = true;
             var currentTime = _gameTiming.CurTime;
-            var toCancel = new List<byte>();
+            var toRemove = new List<byte>();
 
             // Cleanup cancelled DoAfters
             foreach (var (id, cancelTime) in _cancelledDoAfters)
             {
                 if ((currentTime - cancelTime).TotalSeconds > DoAfterSystem.ExcessTime)
-                    toCancel.Add(id);
+                    toRemove.Add(id);
             }
 
-            foreach (var id in toCancel)
+            foreach (var id in toRemove)
             {
                 RemoveDoAfter(id);
             }
+
+            toRemove.Clear();
 
             // Update 0 -> 1.0f of the things
             foreach (var (id, message) in doAfters)
@@ -194,8 +207,20 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                     continue;
 
                 var doAfterBar = _doAfterBars[id];
+                var ratio = (currentTime - message.StartTime).TotalSeconds;
                 doAfterBar.Ratio = MathF.Min(1.0f,
-                    (float) (currentTime - message.StartTime).TotalSeconds / message.Delay);
+                    (float) ratio / message.Delay);
+
+                // Just in case it doesn't get cleaned up by the system for whatever reason.
+                if (ratio > message.Delay + DoAfterSystem.ExcessTime)
+                {
+                    toRemove.Add(id);
+                }
+            }
+
+            foreach (var id in toRemove)
+            {
+                RemoveDoAfter(id);
             }
         }
     }

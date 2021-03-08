@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
@@ -35,10 +35,10 @@ namespace Content.Client.UserInterface.Cargo
             var amountLabel = new Label { Text = Loc.GetString("Amount:") };
             Amount = new SpinBox
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 Value = 1
             };
-            Amount.SetButtons(new List<int>() { -100, -10, -1 }, new List<int>() { 1, 10, 100 });
+            Amount.SetButtons(new List<int>() { -3, -2, -1 }, new List<int>() { 1, 2, 3 });
             Amount.IsValid = (n) => {
                 return (n > 0);
             };

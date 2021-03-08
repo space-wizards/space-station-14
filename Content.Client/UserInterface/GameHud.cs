@@ -1,15 +1,11 @@
-﻿using System;
-using System.Transactions;
+using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.Input;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Client.UserInterface;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -17,9 +13,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using YamlDotNet.Core.Tokens;
 using static Robust.Client.Input.Keyboard.Key;
 using Control = Robust.Client.UserInterface.Control;
+using LC = Robust.Client.UserInterface.Controls.LayoutContainer;
 
 namespace Content.Client.UserInterface
 {
@@ -66,7 +62,8 @@ namespace Content.Client.UserInterface
 
         Control HandsContainer { get; }
         Control SuspicionContainer { get; }
-        Control InventoryQuickButtonContainer { get; }
+        Control RightInventoryQuickButtonContainer { get; }
+        Control LeftInventoryQuickButtonContainer { get; }
 
         bool CombatPanelVisible { get; set; }
         bool CombatModeActive { get; set; }
@@ -74,6 +71,9 @@ namespace Content.Client.UserInterface
         Action<bool> OnCombatModeChanged { get; set; }
         Action<TargetingZone> OnTargetingZoneChanged { get; set; }
 
+        Control VoteContainer { get; }
+
+        void AddTopNotification(TopNotification notification);
 
         // Init logic.
         void Initialize();
@@ -83,24 +83,26 @@ namespace Content.Client.UserInterface
     {
         private HBoxContainer _topButtonsContainer;
         private TopButton _buttonEscapeMenu;
-        private TopButton _buttonTutorial;
+        private TopButton _buttonInfo;
         private TopButton _buttonCharacterMenu;
         private TopButton _buttonInventoryMenu;
         private TopButton _buttonCraftingMenu;
         private TopButton _buttonActionsMenu;
         private TopButton _buttonAdminMenu;
         private TopButton _buttonSandboxMenu;
-        private TutorialWindow _tutorialWindow;
+        private InfoWindow _infoWindow;
         private TargetingDoll _targetingDoll;
         private Button _combatModeButton;
         private VBoxContainer _combatPanelContainer;
+        private VBoxContainer _topNotificationContainer;
 
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
 
         public Control HandsContainer { get; private set; }
         public Control SuspicionContainer { get; private set; }
-        public Control InventoryQuickButtonContainer { get; private set; }
+        public Control RightInventoryQuickButtonContainer { get; private set; }
+        public Control LeftInventoryQuickButtonContainer { get; private set; }
 
         public bool CombatPanelVisible
         {
@@ -123,19 +125,24 @@ namespace Content.Client.UserInterface
         public Action<bool> OnCombatModeChanged { get; set; }
         public Action<TargetingZone> OnTargetingZoneChanged { get; set; }
 
+        public void AddTopNotification(TopNotification notification)
+        {
+            _topNotificationContainer.AddChild(notification);
+        }
+
         public void Initialize()
         {
-            RootControl = new LayoutContainer();
-            LayoutContainer.SetAnchorPreset(RootControl, LayoutContainer.LayoutPreset.Wide);
+            RootControl = new LC { Name = "AAAAAAAAAAAAAAAAAAAAAA"};
+            LC.SetAnchorPreset(RootControl, LC.LayoutPreset.Wide);
 
-            var escapeTexture = _resourceCache.GetTexture("/Textures/Interface/hamburger.svg.96dpi.png");
-            var characterTexture = _resourceCache.GetTexture("/Textures/Interface/character.svg.96dpi.png");
-            var inventoryTexture = _resourceCache.GetTexture("/Textures/Interface/inventory.svg.96dpi.png");
-            var craftingTexture = _resourceCache.GetTexture("/Textures/Interface/hammer.svg.96dpi.png");
-            var actionsTexture = _resourceCache.GetTexture("/Textures/Interface/fist.svg.96dpi.png");
-            var adminTexture = _resourceCache.GetTexture("/Textures/Interface/gavel.svg.96dpi.png");
-            var tutorialTexture = _resourceCache.GetTexture("/Textures/Interface/tutorial.svg.96dpi.png");
-            var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.96dpi.png");
+            var escapeTexture = _resourceCache.GetTexture("/Textures/Interface/hamburger.svg.192dpi.png");
+            var characterTexture = _resourceCache.GetTexture("/Textures/Interface/character.svg.192dpi.png");
+            var inventoryTexture = _resourceCache.GetTexture("/Textures/Interface/inventory.svg.192dpi.png");
+            var craftingTexture = _resourceCache.GetTexture("/Textures/Interface/hammer.svg.192dpi.png");
+            var actionsTexture = _resourceCache.GetTexture("/Textures/Interface/fist.svg.192dpi.png");
+            var adminTexture = _resourceCache.GetTexture("/Textures/Interface/gavel.svg.192dpi.png");
+            var infoTexture = _resourceCache.GetTexture("/Textures/Interface/info.svg.192dpi.png");
+            var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.192dpi.png");
 
             _topButtonsContainer = new HBoxContainer
             {
@@ -144,7 +151,7 @@ namespace Content.Client.UserInterface
 
             RootControl.AddChild(_topButtonsContainer);
 
-            LayoutContainer.SetAnchorAndMarginPreset(_topButtonsContainer, LayoutContainer.LayoutPreset.TopLeft,
+            LC.SetAnchorAndMarginPreset(_topButtonsContainer, LC.LayoutPreset.TopLeft,
                 margin: 10);
 
             // the icon textures here should all have the same image height (32) but different widths, so in order to ensure
@@ -155,7 +162,7 @@ namespace Content.Client.UserInterface
             _buttonEscapeMenu = new TopButton(escapeTexture, EngineKeyFunctions.EscapeMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open escape menu."),
-                CustomMinimumSize = (70, 64),
+                MinSize = (70, 64),
                 StyleClasses = {StyleBase.ButtonOpenRight}
             };
 
@@ -167,7 +174,7 @@ namespace Content.Client.UserInterface
             _buttonCharacterMenu = new TopButton(characterTexture, ContentKeyFunctions.OpenCharacterMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open character menu."),
-                CustomMinimumSize = topMinSize,
+                MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -180,7 +187,7 @@ namespace Content.Client.UserInterface
             _buttonInventoryMenu = new TopButton(inventoryTexture, ContentKeyFunctions.OpenInventoryMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open inventory menu."),
-                CustomMinimumSize = topMinSize,
+                MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -193,7 +200,7 @@ namespace Content.Client.UserInterface
             _buttonCraftingMenu = new TopButton(craftingTexture, ContentKeyFunctions.OpenCraftingMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open crafting menu."),
-                CustomMinimumSize = topMinSize,
+                MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -206,7 +213,7 @@ namespace Content.Client.UserInterface
             _buttonActionsMenu = new TopButton(actionsTexture, ContentKeyFunctions.OpenActionsMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open actions menu."),
-                CustomMinimumSize = topMinSize,
+                MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -219,7 +226,7 @@ namespace Content.Client.UserInterface
             _buttonAdminMenu = new TopButton(adminTexture, ContentKeyFunctions.OpenAdminMenu, _inputManager)
             {
                 ToolTip = Loc.GetString("Open admin menu."),
-                CustomMinimumSize = topMinSize,
+                MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -232,7 +239,7 @@ namespace Content.Client.UserInterface
             _buttonSandboxMenu = new TopButton(sandboxTexture, ContentKeyFunctions.OpenSandboxWindow, _inputManager)
             {
                 ToolTip = Loc.GetString("Open sandbox menu."),
-                CustomMinimumSize = topMinSize,
+                MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
@@ -241,40 +248,25 @@ namespace Content.Client.UserInterface
 
             _buttonSandboxMenu.OnToggled += args => SandboxButtonToggled?.Invoke(args.Pressed);
 
-            // Tutorial
-            _buttonTutorial = new TopButton(tutorialTexture, ContentKeyFunctions.OpenTutorial, _inputManager)
+            // Info Window
+            _buttonInfo = new TopButton(infoTexture, ContentKeyFunctions.OpenInfo, _inputManager)
             {
-                ToolTip = Loc.GetString("Open tutorial."),
-                CustomMinimumSize = topMinSize,
+                ToolTip = Loc.GetString("ui-options-function-open-info"),
+                MinSize = topMinSize,
                 StyleClasses = {StyleBase.ButtonOpenLeft, TopButton.StyleClassRedTopButton},
             };
 
-            _topButtonsContainer.AddChild(_buttonTutorial);
+            _topButtonsContainer.AddChild(_buttonInfo);
 
-            _buttonTutorial.OnToggled += a => ButtonTutorialOnOnToggled();
+            _buttonInfo.OnToggled += a => ButtonInfoOnOnToggled();
 
-            _tutorialWindow = new TutorialWindow();
+            _infoWindow = new InfoWindow();
 
-            _tutorialWindow.OnClose += () => _buttonTutorial.Pressed = false;
+            _infoWindow.OnClose += () => _buttonInfo.Pressed = false;
 
-            _inputManager.SetInputCommand(ContentKeyFunctions.OpenTutorial,
-                InputCmdHandler.FromDelegate(s => ButtonTutorialOnOnToggled()));
+            _inputManager.SetInputCommand(ContentKeyFunctions.OpenInfo,
+                InputCmdHandler.FromDelegate(s => ButtonInfoOnOnToggled()));
 
-            var inventoryContainer = new HBoxContainer
-            {
-                SeparationOverride = 10
-            };
-
-            RootControl.AddChild(inventoryContainer);
-
-            LayoutContainer.SetGrowHorizontal(inventoryContainer, LayoutContainer.GrowDirection.Begin);
-            LayoutContainer.SetGrowVertical(inventoryContainer, LayoutContainer.GrowDirection.Begin);
-            LayoutContainer.SetAnchorAndMarginPreset(inventoryContainer, LayoutContainer.LayoutPreset.BottomRight);
-
-            InventoryQuickButtonContainer = new MarginContainer
-            {
-                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
-            };
 
             _combatPanelContainer = new VBoxContainer
             {
@@ -289,57 +281,91 @@ namespace Content.Client.UserInterface
                 }
             };
 
+            LC.SetGrowHorizontal(_combatPanelContainer, LC.GrowDirection.Begin);
+            LC.SetGrowVertical(_combatPanelContainer, LC.GrowDirection.Begin);
+            LC.SetAnchorAndMarginPreset(_combatPanelContainer, LC.LayoutPreset.BottomRight);
+            LC.SetMarginBottom(_combatPanelContainer, -10f);
+            RootControl.AddChild(_combatPanelContainer);
+
             _combatModeButton.OnToggled += args => OnCombatModeChanged?.Invoke(args.Pressed);
             _targetingDoll.OnZoneChanged += args => OnTargetingZoneChanged?.Invoke(args);
 
-            inventoryContainer.Children.Add(InventoryQuickButtonContainer);
-            inventoryContainer.Children.Add(_combatPanelContainer);
-
-
-            HandsContainer = new MarginContainer
+            var centerBottomContainer = new HBoxContainer
             {
-                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
+                SeparationOverride = 5
             };
+            LC.SetAnchorAndMarginPreset(centerBottomContainer, LC.LayoutPreset.CenterBottom);
+            LC.SetGrowHorizontal(centerBottomContainer, LC.GrowDirection.Both);
+            LC.SetGrowVertical(centerBottomContainer, LC.GrowDirection.Begin);
+            LC.SetMarginBottom(centerBottomContainer, -10f);
+            RootControl.AddChild(centerBottomContainer);
 
-            RootControl.AddChild(HandsContainer);
-
-            LayoutContainer.SetAnchorAndMarginPreset(HandsContainer, LayoutContainer.LayoutPreset.CenterBottom);
-            LayoutContainer.SetGrowHorizontal(HandsContainer, LayoutContainer.GrowDirection.Both);
-            LayoutContainer.SetGrowVertical(HandsContainer, LayoutContainer.GrowDirection.Begin);
-
-            SuspicionContainer = new MarginContainer
+            HandsContainer = new Control
             {
-                SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter
+                VerticalAlignment = Control.VAlignment.Bottom,
+            };
+            RightInventoryQuickButtonContainer = new Control
+            {
+                VerticalAlignment = Control.VAlignment.Bottom,
+            };
+            LeftInventoryQuickButtonContainer = new Control
+            {
+                VerticalAlignment = Control.VAlignment.Bottom,
+            };
+            centerBottomContainer.AddChild(LeftInventoryQuickButtonContainer);
+            centerBottomContainer.AddChild(HandsContainer);
+            centerBottomContainer.AddChild(RightInventoryQuickButtonContainer);
+
+            SuspicionContainer = new Control
+            {
+                HorizontalAlignment = Control.HAlignment.Center
             };
 
             RootControl.AddChild(SuspicionContainer);
 
-            LayoutContainer.SetAnchorAndMarginPreset(SuspicionContainer, LayoutContainer.LayoutPreset.BottomLeft,
+            LC.SetAnchorAndMarginPreset(SuspicionContainer, LC.LayoutPreset.BottomLeft,
                 margin: 10);
-            LayoutContainer.SetGrowHorizontal(SuspicionContainer, LayoutContainer.GrowDirection.End);
-            LayoutContainer.SetGrowVertical(SuspicionContainer, LayoutContainer.GrowDirection.Begin);
+            LC.SetGrowHorizontal(SuspicionContainer, LC.GrowDirection.End);
+            LC.SetGrowVertical(SuspicionContainer, LC.GrowDirection.Begin);
+
+            _topNotificationContainer = new VBoxContainer
+            {
+                MinSize = (600, 0)
+            };
+            RootControl.AddChild(_topNotificationContainer);
+            LC.SetAnchorPreset(_topNotificationContainer, LC.LayoutPreset.CenterTop);
+            LC.SetGrowHorizontal(_topNotificationContainer, LC.GrowDirection.Both);
+            LC.SetGrowVertical(_topNotificationContainer, LC.GrowDirection.End);
+
+            VoteContainer = new VBoxContainer();
+            RootControl.AddChild(VoteContainer);
+            LC.SetAnchorPreset(VoteContainer, LC.LayoutPreset.TopLeft);
+            LC.SetMarginLeft(VoteContainer, 180);
+            LC.SetMarginTop(VoteContainer, 100);
+            LC.SetGrowHorizontal(VoteContainer, LC.GrowDirection.End);
+            LC.SetGrowVertical(VoteContainer, LC.GrowDirection.End);
         }
 
-        private void ButtonTutorialOnOnToggled()
+        private void ButtonInfoOnOnToggled()
         {
-            _buttonTutorial.StyleClasses.Remove(TopButton.StyleClassRedTopButton);
-            if (_tutorialWindow.IsOpen)
+            _buttonInfo.StyleClasses.Remove(TopButton.StyleClassRedTopButton);
+            if (_infoWindow.IsOpen)
             {
-                if (!_tutorialWindow.IsAtFront())
+                if (!_infoWindow.IsAtFront())
                 {
-                    _tutorialWindow.MoveToFront();
-                    _buttonTutorial.Pressed = true;
+                    _infoWindow.MoveToFront();
+                    _buttonInfo.Pressed = true;
                 }
                 else
                 {
-                    _tutorialWindow.Close();
-                    _buttonTutorial.Pressed = false;
+                    _infoWindow.Close();
+                    _buttonInfo.Pressed = false;
                 }
             }
             else
             {
-                _tutorialWindow.OpenCentered();
-                _buttonTutorial.Pressed = true;
+                _infoWindow.OpenCentered();
+                _buttonInfo.Pressed = true;
             }
         }
 
@@ -437,6 +463,8 @@ namespace Content.Client.UserInterface
 
         public Action<bool> SandboxButtonToggled { get; set; }
 
+        public Control VoteContainer { get; private set; }
+
         public sealed class TopButton : ContainerButton
         {
             public const string StyleClassLabelTopButton = "topButtonLabel";
@@ -470,20 +498,21 @@ namespace Content.Client.UserInterface
                     {
                         Children =
                         {
-                            new Control {CustomMinimumSize = (0, VertPad)},
                             (_textureRect = new TextureRect
                             {
+                                TextureScale = (0.5f, 0.5f),
                                 Texture = texture,
-                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                                SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
+                                HorizontalAlignment = HAlignment.Center,
+                                VerticalAlignment = VAlignment.Center,
+                                VerticalExpand = true,
+                                Margin = new Thickness(0, VertPad),
                                 ModulateSelfOverride = NormalColor,
                                 Stretch = TextureRect.StretchMode.KeepCentered
                             }),
-                            new Control {CustomMinimumSize = (0, VertPad)},
                             (_label = new Label
                             {
                                 Text = ShortKeyName(_function),
-                                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                                HorizontalAlignment = HAlignment.Center,
                                 ModulateSelfOverride = NormalColor,
                                 StyleClasses = {StyleClassLabelTopButton}
                             })

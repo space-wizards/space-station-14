@@ -6,17 +6,13 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.GUI;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -24,6 +20,7 @@ using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefine
 namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedStrippableComponent))]
     public sealed class StrippableComponent : SharedStrippableComponent
     {
         public const float StripDelay = 2f;
@@ -79,6 +76,11 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public override bool Drop(DragDropEventArgs args)
         {
+            if (args.User == null)
+            {
+                return false;
+            }
+
             if (!args.User.TryGetComponent(out IActorComponent? actor)) return false;
 
             OpenUserInterface(actor.playerSession);

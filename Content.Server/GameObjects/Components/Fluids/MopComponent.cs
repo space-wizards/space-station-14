@@ -4,12 +4,15 @@ using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using System.Threading.Tasks;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Robust.Server.GameObjects;
+using Robust.Shared.ViewVariables;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -20,6 +23,11 @@ namespace Content.Server.GameObjects.Components.Fluids
     public class MopComponent : Component, IAfterInteract
     {
         public override string Name => "Mop";
+
+        /// <summary>
+        ///     Used to prevent do_after spam if we're currently mopping.
+        /// </summary>
+        public bool Mopping { get; private set; }
 
         public SolutionContainerComponent? Contents => Owner.GetComponentOrNull<SolutionContainerComponent>();
 
@@ -42,18 +50,18 @@ namespace Content.Server.GameObjects.Components.Fluids
         // Picking up a puddle requires multiple clicks
         // Dumping in a bucket requires 1 click
         // Long-term you'd probably use a cooldown and start the pickup once we have some form of global cooldown
-        public ReagentUnit PickupAmount => _pickupAmount;
-        private ReagentUnit _pickupAmount;
+        [field: DataField("pickup_amount")]
+        public ReagentUnit PickupAmount { get; } = ReagentUnit.New(5);
 
-        private string _pickupSound = "";
+        [DataField("pickup_sound")]
+        private string? _pickupSound = "/Audio/Effects/Fluids/slosh.ogg";
 
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataFieldCached(ref _pickupSound, "pickup_sound", "/Audio/Effects/Fluids/slosh.ogg");
-            // The turbo mop will pickup more
-            serializer.DataFieldCached(ref _pickupAmount, "pickup_amount", ReagentUnit.New(5));
-        }
+        /// <summary>
+        ///     Multiplier for the do_after delay for how fast the mop works.
+        /// </summary>
+        [ViewVariables]
+        [DataField("speed")]
+        private float _mopSpeed = 1;
 
         public override void Initialize()
         {
@@ -62,34 +70,71 @@ namespace Content.Server.GameObjects.Components.Fluids
             Owner.EnsureComponentWarn(out SolutionContainerComponent _);
         }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents)) return;
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
+            /*
+             * Functionality:
+             * Essentially if we click on an empty tile spill our contents there
+             * Otherwise, try to mop up the puddle (if it is a puddle).
+             * It will try to destroy solution on the mop to do so, and if it is successful
+             * will spill some of the mop's solution onto the puddle which will evaporate eventually.
+             */
 
-            if (CurrentVolume <= 0)
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents) ||
+                Mopping ||
+                !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
-                return;
+                return false;
             }
+
+            var currentVolume = CurrentVolume;
 
             if (eventArgs.Target == null)
             {
-                // Drop the liquid on the mop on to the ground
-                contents.SplitSolution(CurrentVolume).SpillAt(eventArgs.ClickLocation, "PuddleSmear");
+                if (currentVolume > 0)
+                {
+                    // Drop the liquid on the mop on to the ground
+                    contents.SplitSolution(CurrentVolume).SpillAt(eventArgs.ClickLocation, "PuddleSmear");
+                    return true;
+                }
 
-                return;
+                return false;
             }
 
             if (!eventArgs.Target.TryGetComponent(out PuddleComponent? puddleComponent))
             {
-                return;
+                return false;
             }
-            // Essentially pickup either:
-            // - _pickupAmount,
-            // - whatever's left in the puddle, or
-            // - whatever we can still hold (whichever's smallest)
+
+            var puddleVolume = puddleComponent.CurrentVolume;
+
+            if (currentVolume <= 0)
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("Mop needs to be wet!"));
+                return false;
+            }
+
+            Mopping = true;
+
+            // So if the puddle has 20 units we mop in 2 seconds. Don't just store CurrentVolume given it can change so need to re-calc it anyway.
+            var doAfterArgs = new DoAfterEventArgs(eventArgs.User, _mopSpeed * puddleVolume.Float() / 10.0f, target: eventArgs.Target)
+            {
+                BreakOnUserMove = true,
+                BreakOnStun = true,
+                BreakOnDamage = true,
+            };
+            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterArgs);
+
+            Mopping = false;
+
+            if (result == DoAfterStatus.Cancelled ||
+                Owner.Deleted ||
+                puddleComponent.Deleted)
+                return false;
+
+            // Annihilate the puddle
             var transferAmount = ReagentUnit.Min(ReagentUnit.New(5), puddleComponent.CurrentVolume, CurrentVolume);
-            bool puddleCleaned = puddleComponent.CurrentVolume - transferAmount <= 0;
+            var puddleCleaned = puddleComponent.CurrentVolume - transferAmount <= 0;
 
             if (transferAmount == 0)
             {
@@ -101,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 }
                 else
                 {
-                    return;
+                    return true;
                 }
             }
             else
@@ -118,15 +163,12 @@ namespace Content.Server.GameObjects.Components.Fluids
                 contents.SplitSolution(transferAmount);
             }
 
-            // Give some visual feedback shit's happening (for anyone who can't hear sound)
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("Swish"));
-
-            if (string.IsNullOrWhiteSpace(_pickupSound))
+            if (!string.IsNullOrWhiteSpace(_pickupSound))
             {
-                return;
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_pickupSound, Owner);
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_pickupSound, Owner);
+            return true;
         }
     }
 }

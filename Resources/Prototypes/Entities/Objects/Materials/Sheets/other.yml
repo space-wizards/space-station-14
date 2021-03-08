@@ -1,0 +1,156 @@
+- type: entity
+  id: SheetOtherBase
+  abstract: true
+  parent: BaseItem
+  description: A sheet of material, used often on the station in various applications.
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Materials/Sheets/other.rsi
+    - type: Item
+      sprite: Objects/Materials/Sheets/other.rsi
+    - type: ItemStatus
+    - type: Tag
+      tags:
+        - Sheet
+
+- type: entity
+  name: paper
+  id: SheetPaper
+  parent: SheetOtherBase
+  components:
+    - type: Stack
+      stackType: Paper
+    - type: Sprite
+      state: paper_3
+    - type: Item
+      HeldPrefix: paper
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - paper
+            - paper_2
+            - paper_3
+
+- type: entity
+  id: SheetPaper1
+  name: paper
+  parent: SheetPaper
+  components:
+    - type: Sprite
+      state: paper
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: phoron
+  id: SheetPhoron
+  parent: SheetOtherBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: phoron
+    - type: Stack
+      stackType: Phoron
+    - type: Sprite
+      state: phoron
+    - type: Item
+      HeldPrefix: phoron
+
+- type: entity
+  id: SheetPhoron1
+  name: phoron
+  parent: SheetPhoron
+  suffix: 1
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: plasma
+  id: SheetPlasma
+  parent: SheetOtherBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: plasma
+    - type: Stack
+      stackType: Plasma
+    - type: Sprite
+      state: plasma_3
+    - type: Item
+      HeldPrefix: plasma
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - plasma
+            - plasma_2
+            - plasma_3
+
+- type: entity
+  id: SheetPlasma1
+  name: plasma
+  parent: SheetPlasma
+  components:
+    - type: Sprite
+      state: plasma
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: plastic
+  id: SheetPlastic
+  parent: SheetOtherBase
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: plastic
+    - type: Stack
+      stackType: Plastic
+    - type: Sprite
+      state: plastic_3
+    - type: Item
+      HeldPrefix: plastic
+    - type: Appearance
+      visuals:
+        - type: StackVisualizer
+          stackLayers:
+            - plastic
+            - plastic_2
+            - plastic_3
+
+- type: entity
+  id: SheetPlastic1
+  name: plastic
+  parent: SheetPlastic
+  components:
+    - type: Sprite
+      state: plastic
+    - type: Stack
+      count: 1
+
+- type: entity
+  name: uranium
+  id: SheetUranium
+  parent: SheetOtherBase
+  components:
+    - type: Stack
+      stackType: Uranium
+    - type: Sprite
+      state: uranium
+    - type: Item
+      HeldPrefix: uranium
+
+- type: entity
+  id: SheetUranium1
+  name: uranium
+  parent: SheetUranium
+  suffix: 1
+  components:
+    - type: Stack
+      count: 1

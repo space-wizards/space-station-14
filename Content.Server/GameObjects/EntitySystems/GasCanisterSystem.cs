@@ -1,7 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.Components.Recycling;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -10,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var component in ComponentManager.EntityQuery<GasCanisterComponent>())
+            foreach (var component in ComponentManager.EntityQuery<GasCanisterComponent>(true))
             {
                 component.Update(frameTime);
             }

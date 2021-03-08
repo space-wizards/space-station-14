@@ -1,19 +1,18 @@
-﻿using System;
+﻿#nullable enable
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction.ConstructionConditions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class LowWallInTile : IConstructionCondition
     {
-        public void ExposeData(ObjectSerializer serializer) { }
-
         public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
         {
             var lowWall = false;

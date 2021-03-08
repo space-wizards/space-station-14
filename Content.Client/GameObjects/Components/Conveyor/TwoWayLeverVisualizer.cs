@@ -1,11 +1,8 @@
-﻿using System;
-using Content.Shared.GameObjects.Components.Conveyor;
-using Content.Shared.GameObjects.Components.MachineLinking;
+﻿using Content.Shared.GameObjects.Components.MachineLinking;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -14,8 +11,11 @@ namespace Content.Client.GameObjects.Components.Conveyor
     [UsedImplicitly]
     public class TwoWayLeverVisualizer : AppearanceVisualizer
     {
+        [DataField("state_forward")]
         private string _stateForward;
+        [DataField("state_off")]
         private string _stateOff;
+        [DataField("state_reversed")]
         private string _stateReversed;
 
         private void ChangeState(AppearanceComponent appearance)
@@ -36,15 +36,6 @@ namespace Content.Client.GameObjects.Components.Conveyor
             };
 
             sprite.LayerSetState(0, texture);
-        }
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            _stateForward = node.GetNode("state_forward").AsString();
-            _stateOff = node.GetNode("state_off").AsString();
-            _stateReversed = node.GetNode("state_reversed").AsString();
         }
 
         public override void InitializeEntity(IEntity entity)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -31,7 +32,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             }
         }
 
-        protected enum InjectorToggleMode
+        public enum InjectorToggleMode
         {
             Inject,
             Draw

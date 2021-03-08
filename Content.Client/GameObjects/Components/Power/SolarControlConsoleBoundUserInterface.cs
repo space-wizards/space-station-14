@@ -1,15 +1,15 @@
 using System;
 using Content.Shared.GameObjects.Components.Power;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.Components.Power
 {
@@ -139,18 +139,14 @@ namespace Content.Client.GameObjects.Components.Power
                 rows.AddChild(new Label {Text = "Press Enter to confirm."});
                 rows.AddChild(new Label {Text = ""});
 
-                PanelRotation.SizeFlagsHorizontal = SizeFlags.FillExpand;
-                PanelVelocity.SizeFlagsHorizontal = SizeFlags.FillExpand;
-                rows.SizeFlagsHorizontal = SizeFlags.Fill;
-                rows.SizeFlagsVertical = SizeFlags.Fill;
+                PanelRotation.HorizontalExpand = true;
+                PanelVelocity.HorizontalExpand = true;
 
                 NotARadar = new SolarControlNotARadar(igt);
 
                 var outerColumns = new HBoxContainer();
                 outerColumns.AddChild(rows);
                 outerColumns.AddChild(NotARadar);
-                outerColumns.SizeFlagsHorizontal = SizeFlags.Fill;
-                outerColumns.SizeFlagsVertical = SizeFlags.Fill;
                 Contents.AddChild(outerColumns);
                 Resizable = false;
             }
@@ -173,17 +169,13 @@ namespace Content.Client.GameObjects.Components.Power
             public SolarControlNotARadar(IGameTiming igt)
             {
                 _gameTiming = igt;
+                MinSize = (SizeFull, SizeFull);
             }
 
             public void UpdateState(SolarControlConsoleBoundInterfaceState ls)
             {
                 _lastState = ls;
                 _lastStateTime = _gameTiming.CurTime;
-            }
-
-            protected override Vector2 CalculateMinimumSize()
-            {
-                return (SizeFull, SizeFull);
             }
 
             protected override void Draw(DrawingHandleScreen handle)

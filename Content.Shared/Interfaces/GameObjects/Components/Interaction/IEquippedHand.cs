@@ -1,9 +1,8 @@
-﻿using System;
-using Content.Shared.GameObjects.Components.Inventory;
+﻿#nullable enable
 using Content.Shared.GameObjects.Components.Items;
 using JetBrains.Annotations;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
@@ -13,6 +12,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     This includes moving the entity from a non-hand slot into a hand slot
     ///     (which would also fire <see cref="IUnequipped"/>).
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IEquippedHand
     {
         void EquippedHand(EquippedHandEventArgs eventArgs);

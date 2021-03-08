@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using Robust.Shared.Reflection;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -26,14 +28,8 @@ namespace Content.Shared.GameObjects.Components.Inventory
         protected Inventory InventoryInstance { get; private set; }
 
         [ViewVariables]
+        [DataField("Template")]
         private string _templateName = "HumanInventory"; //stored for serialization purposes
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _templateName, "Template", "HumanInventory");
-        }
 
         public override void Initialize()
         {

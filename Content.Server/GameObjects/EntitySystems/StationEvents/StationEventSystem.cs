@@ -1,24 +1,25 @@
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Content.Server.GameTicking;
-using Content.Server.Interfaces.GameTicking;
 using Content.Server.StationEvents;
+using Content.Server.Interfaces.GameTicking;
 using Content.Shared;
 using Content.Shared.GameTicking;
 using Content.Shared.Network.NetMessages;
 using JetBrains.Annotations;
 using Robust.Server.Console;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Reflection;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Server.Player;
+using Robust.Shared.Configuration;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Network;
+using Robust.Shared.Random;
+using Robust.Shared.Reflection;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.EntitySystems.StationEvents
 {
@@ -34,7 +35,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        public StationEvent CurrentEvent { get; private set; }
+        public StationEvent? CurrentEvent { get; private set; }
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
 
         private readonly List<StationEvent> _stationEvents = new();
@@ -105,7 +106,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
                 CurrentEvent?.Shutdown();
                 CurrentEvent = stationEvent;
-                stationEvent.Startup();
+                stationEvent.Announce();
                 return Loc.GetString("Running event ") + stationEvent.Name;
             }
 
@@ -114,13 +115,12 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         }
 
         /// <summary>
-        /// Randomly run a valid event immediately, ignoring earlieststart
+        /// Randomly run a valid event <b>immediately</b>, ignoring earlieststart
         /// </summary>
         /// <returns></returns>
         public string RunRandomEvent()
         {
-            var availableEvents = AvailableEvents(true);
-            var randomEvent = FindEvent(availableEvents);
+            var randomEvent = PickRandomEvent();
 
             if (randomEvent == null)
             {
@@ -132,6 +132,15 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             CurrentEvent.Startup();
 
             return Loc.GetString("Running ") + randomEvent.Name;
+        }
+
+        /// <summary>
+        /// Randomly picks a valid event.
+        /// </summary>
+        public StationEvent? PickRandomEvent()
+        {
+            var availableEvents = AvailableEvents(true);
+            return FindEvent(availableEvents);
         }
 
         /// <summary>
@@ -246,7 +255,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             else
             {
                 CurrentEvent = stationEvent;
-                CurrentEvent.Startup();
+                CurrentEvent.Announce();
             }
         }
 
@@ -263,7 +272,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         /// Pick a random event from the available events at this time, also considering their weightings.
         /// </summary>
         /// <returns></returns>
-        private StationEvent FindEvent(List<StationEvent> availableEvents)
+        private StationEvent? FindEvent(List<StationEvent> availableEvents)
         {
             if (availableEvents.Count == 0)
             {
@@ -347,13 +356,13 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
         public override void Shutdown()
         {
-            base.Shutdown();
             CurrentEvent?.Shutdown();
+            base.Shutdown();
         }
 
         public void Reset()
         {
-            if (CurrentEvent != null && CurrentEvent.Running)
+            if (CurrentEvent?.Running == true)
             {
                 CurrentEvent.Shutdown();
                 CurrentEvent = null;

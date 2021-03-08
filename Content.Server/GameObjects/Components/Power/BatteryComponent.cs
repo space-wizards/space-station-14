@@ -1,7 +1,10 @@
-﻿using System;
+#nullable enable
+using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -15,34 +18,27 @@ namespace Content.Server.GameObjects.Components.Power
         /// Maximum charge of the battery in joules (ie. watt seconds)
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] public int MaxCharge { get => _maxCharge; set => SetMaxCharge(value); }
-        private int _maxCharge;
+        [DataField("maxCharge")]
+        private int _maxCharge = 1000;
 
         /// <summary>
         /// Current charge of the battery in joules (ie. watt seconds)
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentCharge { get => _currentCharge; set => SetCurrentCharge(value); }
-        private float _currentCharge;
+        [DataField("startingCharge")]
+        private float _currentCharge = 500;
 
         /// <summary>
         /// True if the battery is fully charged.
         /// </summary>
         [ViewVariables] public bool IsFullyCharged => MathHelper.CloseTo(CurrentCharge, MaxCharge);
 
-        [ViewVariables(VVAccess.ReadWrite)] public bool AutoRecharge { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRecharge")] public bool AutoRecharge { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public float AutoRechargeRate { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRechargeRate")] public float AutoRechargeRate { get; set; }
 
         [ViewVariables] public BatteryState BatteryState { get; private set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _maxCharge, "maxCharge", 1000);
-            serializer.DataField(ref _currentCharge, "startingCharge", 500);
-            serializer.DataField(this, x => x.AutoRecharge, "autoRecharge", false);
-            serializer.DataField(this, x => x.AutoRechargeRate, "autoRechargeRate", 0);
-        }
 
         public override void Initialize()
         {
@@ -53,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         ///     If sufficient charge is avaiable on the battery, use it. Otherwise, don't.
         /// </summary>
-        public bool TryUseCharge(float chargeToUse)
+        public virtual bool TryUseCharge(float chargeToUse)
         {
             if (chargeToUse >= CurrentCharge)
             {
@@ -66,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        public float UseCharge(float toDeduct)
+        public virtual float UseCharge(float toDeduct)
         {
             var chargeChangedBy = Math.Min(CurrentCharge, toDeduct);
             CurrentCharge -= chargeChangedBy;

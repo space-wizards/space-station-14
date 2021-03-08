@@ -9,8 +9,8 @@
             - !type:SetStackCount
               amount: 2
           steps:
-            - material: Metal
+            - material: Steel
               amount: 1
 
     - node: MetalRod
-      entity: MetalRod
+      entity: PartRodMetal

@@ -2,10 +2,9 @@
 using Content.Client.GameObjects.Components.VendingMachines;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -18,8 +17,6 @@ namespace Content.Client.VendingMachines
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        protected override Vector2? CustomSize => (300, 450);
-
         private readonly ItemList _items;
         private List<VendingMachineInventoryEntry> _cachedInventory;
 
@@ -27,12 +24,13 @@ namespace Content.Client.VendingMachines
 
         public VendingMachineMenu()
         {
+            SetSize = MinSize = (300, 450);
             IoCManager.InjectDependencies(this);
 
             _items = new ItemList()
             {
                 SizeFlagsStretchRatio = 8,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
             };
             _items.OnItemSelected += ItemSelected;
 

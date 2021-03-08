@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
 using Content.Shared.Preferences;
-using Content.Shared.Preferences.Appearance;
-using Content.Shared.Text;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Maths;
+using Content.Shared.Prototypes;
+using Content.Shared.Utility;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Client.UserInterface
@@ -12,6 +9,7 @@ namespace Content.Client.UserInterface
     public partial class HumanoidProfileEditor
     {
         private readonly IRobustRandom _random;
+        private readonly IPrototypeManager _prototypeManager;
 
         private void RandomizeEverything()
         {
@@ -22,14 +20,13 @@ namespace Content.Client.UserInterface
             UpdateAgeEdit();
             UpdateNameEdit();
             UpdateHairPickers();
+            UpdateEyePickers();
         }
 
         private void RandomizeName()
         {
-            var firstName = _random.Pick(Profile.Sex == Sex.Male
-                ? Names.MaleFirstNames
-                : Names.FemaleFirstNames);
-            var lastName = _random.Pick(Names.LastNames);
+            var firstName = _random.Pick(Profile.Sex.FirstNames(_prototypeManager).Values);
+            var lastName = _random.Pick(_prototypeManager.Index<DatasetPrototype>("names_last"));
             SetName($"{firstName} {lastName}");
             UpdateNameEdit();
         }

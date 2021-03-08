@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.EntitySystemMessages;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.EntitySystems

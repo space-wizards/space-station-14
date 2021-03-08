@@ -1,24 +1,24 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Throw;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystemMessages;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
@@ -115,16 +115,23 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!ent.TryGetComponent(out HandsComponent handsComp))
                 return false;
 
-            if (handsComp.GetActiveHand == null)
+            if (handsComp.ActiveHand == null || handsComp.GetActiveHand == null)
                 return false;
 
-            var entCoords = ent.Transform.Coordinates.Position;
-            var entToDesiredDropCoords = coords.Position - entCoords;
-            var targetLength = Math.Min(entToDesiredDropCoords.Length, SharedInteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
-            var newCoords = coords.WithPosition(entToDesiredDropCoords.Normalized * targetLength + entCoords).ToMap(EntityManager);
-            var rayLength = Get<SharedInteractionSystem>().UnobstructedDistance(ent.Transform.MapPosition, newCoords, ignoredEnt: ent);
+            var entMap = ent.Transform.MapPosition;
+            var targetPos = coords.ToMapPos(EntityManager);
+            var dropVector = targetPos - entMap.Position;
+            var targetVector = Vector2.Zero;
 
-            handsComp.Drop(handsComp.ActiveHand, coords.WithPosition(entCoords + entToDesiredDropCoords.Normalized * rayLength));
+            if (dropVector != Vector2.Zero)
+            {
+                var targetLength = MathF.Min(dropVector.Length, SharedInteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
+                var newCoords = coords.WithPosition(dropVector.Normalized * targetLength + entMap.Position).ToMap(EntityManager);
+                var rayLength = Get<SharedInteractionSystem>().UnobstructedDistance(entMap, newCoords, ignoredEnt: ent);
+                targetVector = dropVector.Normalized * rayLength;
+            }
+
+            handsComp.Drop(handsComp.ActiveHand, coords.WithPosition(entMap.Position + targetVector));
 
             return true;
         }
@@ -139,12 +146,12 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private bool HandleThrowItem(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
-            var plyEnt = ((IPlayerSession)session).AttachedEntity;
+            var playerEnt = ((IPlayerSession)session).AttachedEntity;
 
-            if (plyEnt == null || !plyEnt.IsValid())
+            if (playerEnt == null || !playerEnt.IsValid())
                 return false;
 
-            if (!plyEnt.TryGetComponent(out HandsComponent handsComp))
+            if (!playerEnt.TryGetComponent(out HandsComponent handsComp))
                 return false;
 
             if (!handsComp.CanDrop(handsComp.ActiveHand))
@@ -163,14 +170,28 @@ namespace Content.Server.GameObjects.EntitySystems
             else
             {
                 stackComp.Use(1);
-                throwEnt = throwEnt.EntityManager.SpawnEntity(throwEnt.Prototype.ID, plyEnt.Transform.Coordinates);
+                throwEnt = throwEnt.EntityManager.SpawnEntity(throwEnt.Prototype.ID, playerEnt.Transform.Coordinates);
 
                 // can only throw one item at a time, regardless of what the prototype stack size is.
                 if (throwEnt.TryGetComponent<StackComponent>(out var newStackComp))
                     newStackComp.Count = 1;
             }
 
-            throwEnt.ThrowTo(ThrowForce, coords, plyEnt.Transform.Coordinates, false, plyEnt);
+            var direction = coords.ToMapPos(EntityManager) - playerEnt.Transform.WorldPosition;
+            if (direction == Vector2.Zero) return true;
+
+            direction = direction.Normalized * MathF.Min(direction.Length, 8.0f);
+            var yeet = direction * ThrowForce * 15;
+
+            // Softer yeet in weightlessness
+            if (playerEnt.IsWeightless())
+            {
+                throwEnt.TryThrow(yeet / 4, playerEnt, 10.0f);
+            }
+            else
+            {
+                throwEnt.TryThrow(yeet, playerEnt);
+            }
 
             return true;
         }
@@ -208,7 +229,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (heldItem != null)
             {
-                storageComponent.PlayerInsertEntity(plyEnt);
+                storageComponent.PlayerInsertHeldEntity(plyEnt);
             }
             else
             {

@@ -9,19 +9,13 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5,-0.25,0.5,0.25"
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
       mask:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
       - VaultImpassable
       - SmallImpassable
   - type: Sprite
@@ -34,26 +28,31 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      50:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   name: chair
   id: Chair
   parent: SeatBase
-  description: Apply butt.
   components:
   - type: Rotatable
   - type: Sprite
     state: chair
     color: "#8e9799"
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.45, -0.45, 0.05, 0.45"
-        layer: [ Passable ]
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.45, 0.05, 0.45"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
 
 - type: entity
   name: stool
@@ -65,10 +64,14 @@
     state: stool_base
     color: "#8e9799"
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5, -0.25, 0.05, 0.25"
-        layer: [ Passable ]
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.25, 0.05, 0.25"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
 
 - type: entity
   name: bar stool
@@ -79,10 +82,14 @@
     state: bar_stool
     color: "white"
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5, -0.2, 0.2, 0.25"
-        layer: [ Passable ]
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.2, 0.2, 0.25"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
 
 - type: entity
   name: white office chair
@@ -94,10 +101,14 @@
   - type: Sprite
     state: officechair_white
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.49, -0.25, 0.37, 0.25"
-        layer: [ Passable ]
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.49, -0.25, 0.37, 0.25"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
 
 - type: entity
   name: dark office chair
@@ -116,10 +127,14 @@
   - type: Sprite
     state: comfychair_preview
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.45, -0.3, 0.35, 0.3"
-        layer: [ Passable ]
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.3, 0.35, 0.3"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
 
 - type: entity
   name: wooden chair
@@ -130,7 +145,11 @@
     state: wooden_chair
     color: "white"
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.37, -0.25, 0.49, 0.24"
-        layer: [ Passable ]
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.37, -0.25, 0.49, 0.24"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable

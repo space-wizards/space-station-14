@@ -1,12 +1,10 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Mobs.State
 {
@@ -26,11 +24,6 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                 status.ShowAlert(AlertType.HumanDead);
             }
 
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
-            {
-                overlayComponent.AddOverlay(SharedOverlayID.CircleMaskOverlay);
-            }
-
             if (entity.TryGetComponent(out StunnableComponent stun))
             {
                 stun.CancelAll();
@@ -38,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             EntitySystem.Get<StandingStateSystem>().Down(entity);
 
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
+            if (entity.TryGetComponent(out IPhysBody physics))
             {
                 physics.CanCollide = false;
             }
@@ -48,14 +41,9 @@ namespace Content.Server.GameObjects.Components.Mobs.State
         {
             base.ExitState(entity);
 
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
+            if (entity.TryGetComponent(out IPhysBody physics))
             {
                 physics.CanCollide = true;
-            }
-
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))
-            {
-                overlay.ClearOverlays();
             }
         }
     }

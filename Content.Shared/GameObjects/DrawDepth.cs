@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared.Serialization;
 using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
 
@@ -22,7 +23,9 @@ namespace Content.Shared.GameObjects
         Objects = DrawDepthTag.Default,
         Items = DrawDepthTag.Default + 1,
         Mobs = DrawDepthTag.Default + 2,
-        Ghosts = DrawDepthTag.Default + 3,
-        Overlays = DrawDepthTag.Default + 4,
+        HighlightedItems = DrawDepthTag.Default + 3,
+        Effects = DrawDepthTag.Default + 4,
+        Ghosts = DrawDepthTag.Default + 5,
+        Overlays = DrawDepthTag.Default + 6,
     }
 }

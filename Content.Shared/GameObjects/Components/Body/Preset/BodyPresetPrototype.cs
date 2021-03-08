@@ -1,10 +1,11 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.GameObjects.Components.Body.Preset
 {
@@ -13,24 +14,19 @@ namespace Content.Shared.GameObjects.Components.Body.Preset
     /// </summary>
     [Prototype("bodyPreset")]
     [Serializable, NetSerializable]
-    public class BodyPresetPrototype : IPrototype, IIndexedPrototype
+    public class BodyPresetPrototype : IPrototype
     {
-        private string _id;
-        private string _name;
-        private Dictionary<string, string> _partIDs;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        [ViewVariables] public string ID => _id;
+        [DataField("partIDs")]
+        private Dictionary<string, string> _partIDs = new();
 
-        [ViewVariables] public string Name => _name;
+        [ViewVariables]
+        [field: DataField("name")]
+        public string Name { get; } = string.Empty;
 
         [ViewVariables] public Dictionary<string, string> PartIDs => new(_partIDs);
-
-        public virtual void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _name, "name", string.Empty);
-            serializer.DataField(ref _partIDs, "partIDs", new Dictionary<string, string>());
-        }
     }
 }

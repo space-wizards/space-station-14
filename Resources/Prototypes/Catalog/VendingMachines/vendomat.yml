@@ -1,5 +1,5 @@
 - type: vendingMachineInventory
   id: Vendomat
   name: Vendomat
-  description: A vending machine containing generic parts.
+  description: "Only the finest robust equipment in space!"
   spriteName: vendomat

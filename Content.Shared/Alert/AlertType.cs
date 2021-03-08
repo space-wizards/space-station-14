@@ -1,4 +1,5 @@
-﻿namespace Content.Shared.Alert
+﻿#nullable enable
+namespace Content.Shared.Alert
 {
     /// <summary>
     /// Every category of alert. Corresponds to category field in alert prototypes defined in YML

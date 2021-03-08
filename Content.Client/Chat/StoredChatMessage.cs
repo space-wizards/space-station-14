@@ -1,4 +1,6 @@
 using Content.Shared.Chat;
+using Robust.Shared.Log;
+using Robust.Shared.Maths;
 
 namespace Content.Client.Chat
 {
@@ -26,6 +28,11 @@ namespace Content.Client.Chat
         public string MessageWrap { get; set; }
 
         /// <summary>
+        /// The override color of the message
+        /// </summary>
+        public Color MessageColorOverride { get; set; }
+
+        /// <summary>
         ///     Constructor to copy a net message into stored client variety
         /// </summary>
         public StoredChatMessage(MsgChatMessage netMsg)
@@ -33,6 +40,7 @@ namespace Content.Client.Chat
             Message = netMsg.Message;
             Channel = netMsg.Channel;
             MessageWrap = netMsg.MessageWrap;
+            MessageColorOverride = netMsg.MessageColorOverride;
         }
     }
 }

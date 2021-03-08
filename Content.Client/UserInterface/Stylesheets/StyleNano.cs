@@ -1,10 +1,10 @@
-﻿using System.Linq;
+﻿#nullable enable
+using System.Linq;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Utility;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -16,6 +16,8 @@ namespace Content.Client.UserInterface.Stylesheets
     public sealed class StyleNano : StyleBase
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
+        public const string StyleClassInventorySlotBackground = "InventorySlotBackground";
+        public const string StyleClassHandSlotHighlight = "HandSlotHighlight";
         public const string StyleClassTransparentBorderedWindowPanel = "TransparentBorderedWindowPanel";
         public const string StyleClassHotbarPanel = "HotbarPanel";
         public const string StyleClassTooltipPanel = "tooltipBox";
@@ -29,7 +31,7 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string StyleClassHotbarSlotNumber = "hotbarSlotNumber";
         public const string StyleClassActionSearchBox = "actionSearchBox";
         public const string StyleClassActionMenuItemRevoked = "actionMenuItemRevoked";
-
+        public const string StyleClassContextMenuCount = "contextMenuCount";
 
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
@@ -79,7 +81,6 @@ namespace Content.Client.UserInterface.Stylesheets
             var notoSansBold16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 16);
             var notoSansBold18 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 18);
             var notoSansBold20 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 20);
-            var textureCloseButton = resCache.GetTexture("/Textures/Interface/Nano/cross.svg.png");
             var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
             {
@@ -102,6 +103,21 @@ namespace Content.Client.UserInterface.Stylesheets
                 Texture = borderedWindowBackgroundTex,
             };
             borderedWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
+
+            var invSlotBgTex = resCache.GetTexture("/Textures/Interface/Inventory/inv_slot_background.png");
+            var invSlotBg = new StyleBoxTexture
+            {
+                Texture = invSlotBgTex,
+            };
+            invSlotBg.SetPatchMargin(StyleBox.Margin.All, 2);
+            invSlotBg.SetContentMarginOverride(StyleBox.Margin.All, 0);
+
+            var handSlotHighlightTex = resCache.GetTexture("/Textures/Interface/Inventory/hand_slot_highlight.png");
+            var handSlotHighlight = new StyleBoxTexture
+            {
+                Texture = handSlotHighlightTex,
+            };
+            handSlotHighlight.SetPatchMargin(StyleBox.Margin.All, 2);
 
             var borderedTransparentWindowBackgroundTex = resCache.GetTexture("/Textures/Interface/Nano/transparent_window_background_bordered.png");
             var borderedTransparentWindowBackground = new StyleBoxTexture
@@ -221,35 +237,6 @@ namespace Content.Client.UserInterface.Stylesheets
             tabContainerBoxActive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
             var tabContainerBoxInactive = new StyleBoxFlat {BackgroundColor = new Color(32, 32, 32)};
             tabContainerBoxInactive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
-
-            var vScrollBarGrabberNormal = new StyleBoxFlat
-            {
-                BackgroundColor = Color.Gray.WithAlpha(0.35f), ContentMarginLeftOverride = 10,
-                ContentMarginTopOverride = 10
-            };
-            var vScrollBarGrabberHover = new StyleBoxFlat
-            {
-                BackgroundColor = new Color(140, 140, 140).WithAlpha(0.35f), ContentMarginLeftOverride = 10,
-                ContentMarginTopOverride = 10
-            };
-            var vScrollBarGrabberGrabbed = new StyleBoxFlat
-            {
-                BackgroundColor = new Color(160, 160, 160).WithAlpha(0.35f), ContentMarginLeftOverride = 10,
-                ContentMarginTopOverride = 10
-            };
-
-            var hScrollBarGrabberNormal = new StyleBoxFlat
-            {
-                BackgroundColor = Color.Gray.WithAlpha(0.35f), ContentMarginTopOverride = 10
-            };
-            var hScrollBarGrabberHover = new StyleBoxFlat
-            {
-                BackgroundColor = new Color(140, 140, 140).WithAlpha(0.35f), ContentMarginTopOverride = 10
-            };
-            var hScrollBarGrabberGrabbed = new StyleBoxFlat
-            {
-                BackgroundColor = new Color(160, 160, 160).WithAlpha(0.35f), ContentMarginTopOverride = 10
-            };
 
             var progressBarBackground = new StyleBoxFlat
             {
@@ -385,6 +372,20 @@ namespace Content.Client.UserInterface.Stylesheets
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, borderedTransparentWindowBackground),
                     }),
+                // inventory slot background
+                new StyleRule(
+                    new SelectorElement(null, new[] {StyleClassInventorySlotBackground}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, invSlotBg),
+                    }),
+                // hand slot highlight
+                new StyleRule(
+                    new SelectorElement(null, new[] {StyleClassHandSlotHighlight}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, handSlotHighlight),
+                    }),
                 // Hotbar background
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {StyleClassHotbarPanel}, null, null),
                     new[]
@@ -397,31 +398,6 @@ namespace Content.Client.UserInterface.Stylesheets
                     new[]
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, windowHeader),
-                    }),
-                // Window close button base texture.
-                new StyleRule(
-                    new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
-                        null),
-                    new[]
-                    {
-                        new StyleProperty(TextureButton.StylePropertyTexture, textureCloseButton),
-                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#4B596A")),
-                    }),
-                // Window close button hover.
-                new StyleRule(
-                    new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
-                        new[] {TextureButton.StylePseudoClassHover}),
-                    new[]
-                    {
-                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
-                    }),
-                // Window close button pressed.
-                new StyleRule(
-                    new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
-                        new[] {TextureButton.StylePseudoClassPressed}),
-                    new[]
-                    {
-                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
                     }),
 
                 // Shapes for the buttons.
@@ -581,53 +557,6 @@ namespace Content.Client.UserInterface.Stylesheets
                         new StyleProperty(TabContainer.StylePropertyTabStyleBoxInactive, tabContainerBoxInactive),
                     }),
 
-                // Scroll bars
-                new StyleRule(new SelectorElement(typeof(VScrollBar), null, null, null),
-                    new[]
-                    {
-                        new StyleProperty(ScrollBar.StylePropertyGrabber,
-                            vScrollBarGrabberNormal),
-                    }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(VScrollBar), null, null, new[] {ScrollBar.StylePseudoClassHover}),
-                    new[]
-                    {
-                        new StyleProperty(ScrollBar.StylePropertyGrabber,
-                            vScrollBarGrabberHover),
-                    }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(VScrollBar), null, null, new[] {ScrollBar.StylePseudoClassGrabbed}),
-                    new[]
-                    {
-                        new StyleProperty(ScrollBar.StylePropertyGrabber,
-                            vScrollBarGrabberGrabbed),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(HScrollBar), null, null, null),
-                    new[]
-                    {
-                        new StyleProperty(ScrollBar.StylePropertyGrabber,
-                            hScrollBarGrabberNormal),
-                    }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(HScrollBar), null, null, new[] {ScrollBar.StylePseudoClassHover}),
-                    new[]
-                    {
-                        new StyleProperty(ScrollBar.StylePropertyGrabber,
-                            hScrollBarGrabberHover),
-                    }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(HScrollBar), null, null, new[] {ScrollBar.StylePseudoClassGrabbed}),
-                    new[]
-                    {
-                        new StyleProperty(ScrollBar.StylePropertyGrabber,
-                            hScrollBarGrabberGrabbed),
-                    }),
-
                 // ProgressBar
                 new StyleRule(new SelectorElement(typeof(ProgressBar), null, null, null),
                     new[]
@@ -706,6 +635,13 @@ namespace Content.Client.UserInterface.Stylesheets
                 new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionRequirements}, null, null), new[]
                 {
                     new StyleProperty("font", notoSans15)
+                }),
+
+                // small number for the context menu
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassContextMenuCount}, null, null), new[]
+                {
+                    new StyleProperty("font", notoSans10),
+                    new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Right),
                 }),
 
                 // hotbar slot
@@ -1031,7 +967,12 @@ namespace Content.Client.UserInterface.Stylesheets
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new []{ ClassHighDivider}, null, null), new []
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = NanoGold, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2}),
-                })
+                }),
+
+                Element<PanelContainer>().Class(ClassAngleRect)
+                    .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
+
             }).ToList());
         }
     }

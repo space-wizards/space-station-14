@@ -1,5 +1,5 @@
-﻿using Lidgren.Network;
-using Robust.Shared.Interfaces.Network;
+#nullable enable
+using Lidgren.Network;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Chat

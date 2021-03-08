@@ -1,10 +1,10 @@
-﻿using System.IO;
+﻿#nullable enable
+using System.IO;
 using Content.Shared.Preferences;
 using Lidgren.Network;
-using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Network.NetMessages
 {
@@ -22,8 +22,8 @@ namespace Content.Shared.Network.NetMessages
 
         #endregion
 
-        public PlayerPreferences Preferences;
-        public GameSettings Settings;
+        public PlayerPreferences Preferences = default!;
+        public GameSettings Settings = default!;
 
         public override void ReadFromBuffer(NetIncomingMessage buffer)
         {

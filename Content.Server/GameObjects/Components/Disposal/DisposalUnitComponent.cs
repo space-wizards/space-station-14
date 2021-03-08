@@ -6,40 +6,32 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Physics;
+using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -70,18 +62,31 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Prevents it from flushing if it is not equal to or bigger than 1.
         /// </summary>
         [ViewVariables]
+        [DataField("pressure")]
         private float _pressure;
 
         private bool _engaged;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private TimeSpan _automaticEngageTime;
+        [DataField("autoEngageTime")]
+        private readonly TimeSpan _automaticEngageTime = TimeSpan.FromSeconds(30);
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private TimeSpan _flushDelay;
+        [DataField("flushDelay")]
+        private readonly TimeSpan _flushDelay = TimeSpan.FromSeconds(3);
 
+        /// <summary>
+        ///     Delay from trying to enter disposals ourselves.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _entryDelay;
+        [DataField("entryDelay")]
+        private float _entryDelay = 0.5f;
+
+        /// <summary>
+        ///     Delay from trying to shove someone else into disposals.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float _draggedEntryDelay;
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -132,27 +137,13 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         private (PressureState State, string Localized) _locState;
 
-        public GasMixture Air { get; set; } = default!;
+        [DataField("air")]
+        public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
 
         public override bool CanInsert(IEntity entity)
         {
             if (!base.CanInsert(entity))
                 return false;
-
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
-                !physics.CanCollide)
-            {
-                if (entity.TryGetComponent(out IMobStateComponent? state) && state.IsDead())
-                {
-                    return false;
-                }
-            }
-
-            if (!entity.HasComponent<ItemComponent>() &&
-                !entity.HasComponent<IBody>())
-            {
-                return false;
-            }
 
             return _container.CanInsert(entity);
         }
@@ -192,11 +183,15 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (!CanInsert(entity))
                 return false;
 
-            if (user != null && _entryDelay > 0f)
+            var delay = user == entity ? _entryDelay : _draggedEntryDelay;
+
+            if (user != null && delay > 0.0f)
             {
                 var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
 
-                var doAfterArgs = new DoAfterEventArgs(user, _entryDelay, default, Owner)
+                // Can't check if our target AND disposals moves currently so we'll just check target.
+                // if you really want to check if disposals moves then add a predicate.
+                var doAfterArgs = new DoAfterEventArgs(user, delay, default, entity)
                 {
                     BreakOnDamage = true,
                     BreakOnStun = true,
@@ -209,7 +204,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 if (result == DoAfterStatus.Cancelled)
                     return false;
-
             }
 
             if (!_container.Insert(entity))
@@ -512,37 +506,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "pressure",
-                1.0f,
-                pressure => _pressure = pressure,
-                () => _pressure);
-
-            serializer.DataReadWriteFunction(
-                "automaticEngageTime",
-                30,
-                seconds => _automaticEngageTime = TimeSpan.FromSeconds(seconds),
-                () => (int) _automaticEngageTime.TotalSeconds);
-
-            serializer.DataReadWriteFunction(
-                "flushDelay",
-                3,
-                seconds => _flushDelay = TimeSpan.FromSeconds(seconds),
-                () => (int) _flushDelay.TotalSeconds);
-
-            serializer.DataField(this, x => x.Air, "air", new GasMixture(Atmospherics.CellVolume));
-            serializer.DataField(ref _entryDelay, "entryDelay", 0.5f);
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
-            _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
+            _container = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
 
             if (UserInterface != null)
             {
