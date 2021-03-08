@@ -90,11 +90,14 @@ namespace Content.Server.GameObjects.Components.Movement
 
         /// <inheritdoc />
         [ViewVariables(VVAccess.ReadWrite)]
-        public float PushStrength { get; set; } = 0.4f;
+        public float PushStrength { get; set; } = IMobMoverComponent.PushStrengthDefault;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float WeightlessStrength { get; set; } = IMobMoverComponent.WeightlessStrengthDefault;
 
         /// <inheritdoc />
         [ViewVariables(VVAccess.ReadWrite)]
-        public float GrabRange { get; set; } = 0.2f;
+        public float GrabRange { get; set; } = IMobMoverComponent.GrabRangeDefault;
 
         /// <summary>
         ///     Is the entity Sprinting (running)?

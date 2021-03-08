@@ -25,9 +25,12 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         private float _stepSoundDistance;
         [DataField("grabRange")]
-        private float _grabRange = 0.2f;
+        private float _grabRange = IMobMoverComponent.GrabRangeDefault;
         [DataField("pushStrength")]
-        private float _pushStrength = 0.4f;
+        private float _pushStrength = IMobMoverComponent.PushStrengthDefault;
+
+        [DataField("weightlessStrength")]
+        private float _weightlessStrength = IMobMoverComponent.WeightlessStrengthDefault;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public EntityCoordinates LastPosition { get; set; }
@@ -70,6 +73,18 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float WeightlessStrength
+        {
+            get => _weightlessStrength;
+            set
+            {
+                if (MathHelper.CloseTo(_weightlessStrength, value)) return;
+                _weightlessStrength = value;
+                Dirty();
+            }
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -86,7 +101,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         public override ComponentState GetComponentState(ICommonSession session)
         {
-            return new PlayerMobMoverComponentState(_grabRange, _pushStrength);
+            return new PlayerMobMoverComponentState(_grabRange, _pushStrength, _weightlessStrength);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -112,11 +127,13 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             public float GrabRange;
             public float PushStrength;
+            public float WeightlessStrength;
 
-            public PlayerMobMoverComponentState(float grabRange, float pushStrength) : base(ContentNetIDs.PLAYER_MOB_MOVER)
+            public PlayerMobMoverComponentState(float grabRange, float pushStrength, float weightlessStrength) : base(ContentNetIDs.PLAYER_MOB_MOVER)
             {
                 GrabRange = grabRange;
                 PushStrength = pushStrength;
+                WeightlessStrength = weightlessStrength;
             }
         }
     }

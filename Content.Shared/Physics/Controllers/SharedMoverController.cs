@@ -85,7 +85,7 @@ namespace Content.Shared.Physics.Controllers
 
             if (weightless)
             {
-                total *= mobMover.PushStrength;
+                total *= mobMover.WeightlessStrength;
             }
 
             if (total != Vector2.Zero)
