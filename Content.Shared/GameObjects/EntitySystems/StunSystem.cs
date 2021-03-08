@@ -1,8 +1,8 @@
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Shared.GameObjects.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class StunSystem : EntitySystem
@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var component in ComponentManager.EntityQuery<StunnableComponent>(true))
+            foreach (var component in ComponentManager.EntityQuery<SharedStunnableComponent>(true))
             {
                 component.Update(frameTime);
             }

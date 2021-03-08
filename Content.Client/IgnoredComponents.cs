@@ -114,7 +114,6 @@ namespace Content.Client
             "EmitSoundOnThrow",
             "Flash",
             "DamageOnToolInteract",
-            "NoSlip",
             "TrashSpawner",
             "Pill",
             "RCD",

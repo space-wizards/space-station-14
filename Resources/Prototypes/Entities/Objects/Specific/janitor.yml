@@ -106,12 +106,18 @@
   - type: Slippery
     paralyzeTime: 2.5
   - type: Physics
+    bodyType: Dynamic
+    mass: 5
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
+      - shape:
+          !type:PhysShapeAabb
           bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - MobImpassable
+        layer:
+          - SmallImpassable
+        mask:
+          - SmallImpassable
+          - MobImpassable
+        hard: false
 
 - type: entity
   name: soap

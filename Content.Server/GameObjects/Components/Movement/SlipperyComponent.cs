@@ -12,81 +12,12 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(SharedSlipperyComponent))]
     public class SlipperyComponent : SharedSlipperyComponent
     {
-        private float _paralyzeTime = 2f;
-        private float _intersectPercentage = 0.3f;
-        private float _requiredSlipSpeed = 0f;
-        private bool _slippery;
-        private float _launchForwardsMultiplier = 1f;
-
         /// <summary>
         ///     Path to the sound to be played when a mob slips.
         /// </summary>
         [ViewVariables]
         [DataField("slipSound")]
-        private string SlipSound { get; set; } = "/Audio/Effects/slip.ogg";
-
-        /// <summary>
-        ///     How many seconds the mob will be paralyzed for.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public override float ParalyzeTime
-        {
-            get => _paralyzeTime;
-            set
-            {
-                _paralyzeTime = value;
-                Dirty();
-            }
-        }
-
-        /// <summary>
-        ///     Percentage of shape intersection for a slip to occur.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public override float IntersectPercentage
-        {
-            get => _intersectPercentage;
-            set
-            {
-                _intersectPercentage = value;
-                Dirty();
-            }
-        }
-
-        /// <summary>
-        ///     Entities will only be slipped if their speed exceeds this limit.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public override float RequiredSlipSpeed
-        {
-            get => _requiredSlipSpeed;
-            set
-            {
-                _requiredSlipSpeed = value;
-                Dirty();
-            }
-        }
-
-        /// <summary>
-        ///     Whether or not this component will try to slip entities.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public override bool Slippery
-        {
-            get => _slippery;
-            set
-            {
-                _slippery = value;
-                Dirty();
-            }
-        }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public override float LaunchForwardsMultiplier
-        {
-            get => _launchForwardsMultiplier;
-            set => _launchForwardsMultiplier = value;
-        }
+        public string SlipSound { get; set; } = "/Audio/Effects/slip.ogg";
 
         protected override void OnSlip()
         {
@@ -99,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new SlipperyComponentState(_paralyzeTime, _intersectPercentage, _requiredSlipSpeed, _launchForwardsMultiplier, _slippery);
+            return new SlipperyComponentState(ParalyzeTime, IntersectPercentage, RequiredSlipSpeed, LaunchForwardsMultiplier, Slippery);
         }
     }
 }
