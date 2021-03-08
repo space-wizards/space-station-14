@@ -9,107 +9,31 @@
   "states": [
     {
       "name": "rcle-inhand-left",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "rcle-inhand-right",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "rcl-inhand-left",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "rcl-inhand-right",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
-      "name": "rcl-0",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "rcl-0"
     },
     {
-      "name": "rcl-10",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "rcl-10"
     },
     {
-      "name": "rcl-20",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "rcl-20"
     },
     {
-      "name": "rcl-30",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "rcl-30"
     }
   ]
 }

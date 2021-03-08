@@ -18,7 +18,7 @@
     - type: Sprite
       netsync: false
       drawdepth: Mobs # They're on the same layer as mobs, perspective.
-      sprite: Constructible/Structures/Doors/firelock.rsi
+      sprite: Constructible/Structures/Doors/Standard/firelock.rsi
       layers:
         - state: closed
           map: ["enum.DoorVisualLayers.Base"]
@@ -27,12 +27,11 @@
           map: ["enum.DoorVisualLayers.BaseUnlit"]
         - state: welded
           map: ["enum.DoorVisualLayers.BaseWelded"]
-        - state: bolted
+        - state: bolted_unlit
           shader: unshaded
           map: ["enum.DoorVisualLayers.BaseBolted"]
         - state: panel_open
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
-
     - type: Physics
       canCollide: false
       fixtures:
@@ -79,7 +78,6 @@
     - type: Construction
       graph: Firelock
       node: Firelock
-
   placement:
     mode: SnapgridCenter
 
@@ -93,8 +91,7 @@
     - type: Occluder
       enabled: false
     - type: Sprite
-      sprite: Constructible/Structures/Doors/firelock_glass.rsi
-
+      sprite: Constructible/Structures/Doors/Glass/firelock.rsi
 
 - type: entity
   id: FirelockEdge

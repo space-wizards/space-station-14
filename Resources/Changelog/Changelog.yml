@@ -238,3 +238,57 @@ Entries:
       in the theater vendor!, type: Add}
   id: 43
   time: '2021-03-07T12:41:42.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Added ammovend, type: Add}
+  id: 44
+  time: '2021-03-07T19:17:58.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: 'Mags/Batteries stop spawning at 0, 0.', type: Fix}
+  id: 45
+  time: '2021-03-07T19:43:07.0000000+00:00'
+- author: Rember
+  changes:
+  - {message: Character eye customization, type: Add}
+  id: 46
+  time: '2021-03-07T19:48:24.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Reworked the construction UI so that the recipe is easier to see, type: Tweak}
+  id: 47
+  time: '2021-03-07T22:09:41.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: 'Reinforced glass, plasma glass, and reinforced plasma glass can now
+      be constructed.', type: Add}
+  id: 48
+  time: '2021-03-07T23:22:25.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Player join/leave messages are now only shown to admins., type: Tweak}
+  id: 49
+  time: '2021-03-08T00:15:31.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Added a radio message to announce latejoins., type: Add}
+  id: 50
+  time: '2021-03-08T00:15:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nerfed throwing while weightless, type: Tweak}
+  - {message: Fixed weightless movement to use push strength again, type: Fix}
+  - {message: Throwing pushback implemented again, type: Fix}
+  id: 51
+  time: '2021-03-08T01:10:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pushing strength, type: Fix}
+  id: 52
+  time: '2021-03-08T01:48:15.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: The client being able to set character age and other values outside
+      their limits., type: Fix}
+  id: 53
+  time: '2021-03-08T02:07:53.0000000+00:00'

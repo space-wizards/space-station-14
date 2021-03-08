@@ -17,7 +17,9 @@ namespace Content.Server.GameObjects.Components.Items
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="direction">Will use the vector's magnitude as the strength of the impulse</param>
-        internal static void TryThrow(this IEntity entity, Vector2 direction, IEntity? user = null)
+        /// <param name="user"></param>
+        /// <param name="pushbackRatio">The ratio of impulse applied to the thrower</param>
+        internal static void TryThrow(this IEntity entity, Vector2 direction, IEntity? user = null, float pushbackRatio = 1.0f)
         {
             if (direction == Vector2.Zero || !entity.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
@@ -45,6 +47,11 @@ namespace Content.Server.GameObjects.Components.Items
             }
 
             physicsComponent.ApplyLinearImpulse(direction);
+            // Give thrower an impulse in the other direction
+            if (user != null && pushbackRatio > 0.0f && user.TryGetComponent(out IPhysBody? body))
+            {
+                body.ApplyLinearImpulse(-direction * pushbackRatio);
+            }
         }
     }
 }

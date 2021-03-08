@@ -8,24 +8,6 @@
   },
   "states": [
     {
-      "name": "cig1"
-    },
-    {
-      "name": "cig2"
-    },
-    {
-      "name": "cig3"
-    },
-    {
-      "name": "cig4"
-    },
-    {
-      "name": "cig5"
-    },
-    {
-      "name": "cig6"
-    },
-    {
       "name": "closed"
     },
     {

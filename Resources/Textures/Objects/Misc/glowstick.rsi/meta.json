@@ -10,75 +10,19 @@
     [
         {
             "name": "off-inhand-left",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "off-inhand-right",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
 		{
             "name": "on-inhand-left",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "on-inhand-right",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "glowstick_base",

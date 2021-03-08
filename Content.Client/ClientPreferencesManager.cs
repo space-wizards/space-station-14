@@ -47,6 +47,7 @@ namespace Content.Client
 
         public void UpdateCharacter(ICharacterProfile profile, int slot)
         {
+            profile.EnsureValid();
             var characters = new Dictionary<int, ICharacterProfile>(Preferences.Characters) {[slot] = profile};
             Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
             var msg = _netManager.CreateNetMessage<MsgUpdateCharacter>();
