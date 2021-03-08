@@ -11,15 +11,18 @@
     sprite: Constructible/Power/ame_controller.rsi
     state: control
   - type: Physics
-    # Mass of 1? Unmovable. Mass of 25? Fine. What on earth is going on?
     mass: 25
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.45, 0.45, 0.45"
       layer:
       - Opaque
       - Impassable
-      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      mask:
+      - Impassable
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
