@@ -1,12 +1,12 @@
 #nullable enable
+using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
@@ -21,41 +21,36 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         /// <summary>
         ///     If the generator is producing gas.
         /// </summary>
+        [DataField("generatorEnabled")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool GeneratorEnabled { get; set; }
+        public bool GeneratorEnabled { get; set; } = true;
 
         /// <summary>
         ///     What gas is being generated.
         /// </summary>
+        [DataField("generatedGas")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public Gas GeneratedGas { get; set; }
+        public Gas GeneratedGas { get; set; } = Gas.Oxygen;
 
         /// <summary>
         ///     Molar rate of gas generation.
         /// </summary>
+        [DataField("gasGenerationRate")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float GasGenerationRate { get; set; }
+        public float GasGenerationRate { get; set; } = 10;
 
         /// <summary>
         ///     The pipe pressure above which the generator stops producing gas.
         /// </summary>
+        [DataField("generatorPressureCap")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float GeneratorPressureCap { get; set; }
+        public float GeneratorPressureCap { get; set; } = 10;
 
         /// <summary>
         ///     The pipe to which generated gas is added.
         /// </summary>
         [ViewVariables]
         private PipeNode? Pipe { get; set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.GeneratorEnabled, "generatorEnabled", true);
-            serializer.DataField(this, x => x.GeneratedGas, "generatedGas", Gas.Oxygen);
-            serializer.DataField(this, x => x.GasGenerationRate, "gasGenerationRate", 10);
-            serializer.DataField(this, x => x.GeneratorPressureCap, "generatorPressureCap", 10);
-        }
 
         public override void Initialize()
         {

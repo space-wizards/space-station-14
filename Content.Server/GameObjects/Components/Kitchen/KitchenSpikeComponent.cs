@@ -7,10 +7,10 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Kitchen;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Content.Shared.GameObjects.Components.Kitchen;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {

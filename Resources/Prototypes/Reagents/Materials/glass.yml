@@ -29,7 +29,7 @@
 - type: material
   id: rpglass
   name: reinforced plasma glass
-  icon: Objects/Materials/Sheets/glass.rsi/prglass.png
+  icon: Objects/Materials/Sheets/glass.rsi/rpglass.png
   parent: GlassMaterialBase
 
 - type: material

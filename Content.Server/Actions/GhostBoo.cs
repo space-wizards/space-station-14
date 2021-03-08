@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Actions
 {
@@ -13,18 +14,12 @@ namespace Content.Server.Actions
     ///     Blink lights and scare livings
     /// </summary>
     [UsedImplicitly]
+    [DataDefinition]
     public class GhostBoo : IInstantAction
     {
-        private float _radius;
-        private float _cooldown;
-        private int _maxTargets;
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _radius, "radius", 3);
-            serializer.DataField(ref _cooldown, "cooldown", 120);
-            serializer.DataField(ref _maxTargets, "maxTargets", 3);
-        }
+        [DataField("radius")] private float _radius = 3;
+        [DataField("cooldown")] private float _cooldown = 120;
+        [DataField("maxTargets")] private int _maxTargets = 3;
 
         public void DoInstantAction(InstantActionEventArgs args)
         {

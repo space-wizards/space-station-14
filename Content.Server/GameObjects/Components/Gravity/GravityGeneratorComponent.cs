@@ -7,7 +7,10 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Gravity
@@ -17,9 +20,11 @@ namespace Content.Server.GameObjects.Components.Gravity
     {
         [ComponentDependency] private readonly AppearanceComponent? _appearance = default!;
 
-        private bool _switchedOn;
+        [DataField("switchedOn")]
+        private bool _switchedOn = true;
 
-        private bool _intact;
+        [DataField("intact")]
+        private bool _intact = true;
 
         private GravityGeneratorStatus _status;
 
@@ -68,14 +73,6 @@ namespace Content.Server.GameObjects.Components.Gravity
             _intact = true;
             _status = GravityGeneratorStatus.On;
             UpdateState();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _switchedOn, "switchedOn", true);
-            serializer.DataField(ref _intact, "intact", true);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)

@@ -5,7 +5,9 @@ using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -36,19 +38,14 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         private EmergencyLightState _state = EmergencyLightState.Empty;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _wattage;
+        [DataField("wattage")]
+        private float _wattage = 5;
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _chargingWattage;
+        [DataField("chargingWattage")]
+        private float _chargingWattage = 60;
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _chargingEfficiency;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _wattage, "wattage", 5);
-            serializer.DataField(ref _chargingWattage, "chargingWattage", 60);
-            serializer.DataField(ref _chargingEfficiency, "chargingEfficiency", 0.85f);
-        }
+        [DataField("chargingEfficiency")]
+        private float _chargingEfficiency = 0.85f;
 
         /// <summary>
         ///     For attaching UpdateState() to events.

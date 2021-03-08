@@ -12,12 +12,12 @@
     sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
     state: bullet
   - type: Physics
-    anchored: false
-    edgeslide: false
-    hard: false
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.1,0.1,0.1"
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+      hard: false
       layer: [Clickable]
       mask:
       - Impassable
@@ -123,24 +123,14 @@
       - state: projectile
         shader: unshaded
   - type: Physics
-    anchored: false
-    edgeslide: false
-    hard: false
-    shapes:
-      # - !type:PhysShapePoly # uncomment in event of physics
-      #   bounds: "-0.5,-0.15,0.5,0.2"
-      #   layer:
-      #     - Impassable
-      #     - MobImpassable
-      #   mask:
-      #     - Opaque
-      - !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-        layer:
-          - Impassable
-          - MobImpassable
-        mask:
-          - Opaque
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+      hard: false
+      layer: 32
+      mask: 30
   - type: Projectile
     soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
@@ -148,7 +138,6 @@
   - type: Tag
     tags:
     - EmitterBolt
-
 # Launcher projectiles (grenade / rocket)
 - type: entity
   id: BulletRocket
@@ -162,7 +151,7 @@
     state: frag
   - type: ExplosiveProjectile
   - type: Projectile
-    deleteOnCollide: false
+    delete_on_collide: false
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
@@ -184,7 +173,7 @@
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: Projectile
-    deleteOnCollide: false
+    delete_on_collide: false
     soundHit: /Audio/Effects/gen_hit.ogg
   - type: StunnableProjectile
     paralyzeAmount: 8
@@ -201,7 +190,7 @@
     state: grenade
   - type: ExplosiveProjectile
   - type: Projectile
-    deleteOnCollide: false
+    delete_on_collide: false
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
@@ -219,7 +208,7 @@
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: Projectile
-    deleteOnCollide: false
+    delete_on_collide: false
     soundHit: /Audio/Effects/flash_bang.ogg
   - type: FlashProjectile
     range: 7
@@ -237,7 +226,7 @@
     state: grenade
   - type: ExplosiveProjectile
   - type: Projectile
-    deleteOnCollide: false
+    delete_on_collide: false
   - type: Explosive
     devastationRange: 0
     heavyImpactRange: 1
@@ -255,7 +244,7 @@
     sprite: Objects/Fun/toys.rsi
     state: foamdart
   - type: Projectile
-    deleteOnCollide: true
+    delete_on_collide: true
     soundHit: /Audio/Guns/Hits/snap.ogg
     damages:
       Blunt: 2
@@ -271,6 +260,6 @@
     sprite: Objects/Fun/toys.rsi
     state: capbullet
   - type: Projectile
-    deleteOnCollide: true
+    delete_on_collide: true
     damages:
       Piercing: 0

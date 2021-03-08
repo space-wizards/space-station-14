@@ -6,10 +6,13 @@ using Content.Shared.AI;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -73,6 +76,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         private readonly List<PathfindingRegion> _queuedCacheDeletions = new();
 
 #if DEBUG
+        private HashSet<IPlayerSession> _subscribedSessions = new();
         private int _runningCacheIdx = 0;
 #endif
 
@@ -81,7 +85,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             _pathfindingSystem = Get<PathfindingSystem>();
             SubscribeLocalEvent<PathfindingChunkUpdateMessage>(RecalculateNodeRegions);
 #if DEBUG
-            SubscribeLocalEvent<PlayerAttachSystemMessage>(SendDebugMessage);
+            SubscribeNetworkEvent<SharedAiDebug.SubscribeReachableMessage>(HandleSubscription);
+            SubscribeNetworkEvent<SharedAiDebug.UnsubscribeReachableMessage>(HandleUnsubscription);
 #endif
             _mapManager.OnGridRemoved += GridRemoved;
         }
@@ -99,8 +104,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                 GenerateRegions(chunk);
             }
 
+            // TODO: Only send diffs instead
 #if DEBUG
-            if (_queuedUpdates.Count > 0)
+            if (_subscribedSessions.Count > 0 && _queuedUpdates.Count > 0)
             {
                 foreach (var (gridId, regs) in _regions)
                 {
@@ -129,7 +135,27 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             _cachedAccessible.Clear();
             _queuedCacheDeletions.Clear();
             _mapManager.OnGridRemoved -= GridRemoved;
+            UnsubscribeLocalEvent<PathfindingChunkUpdateMessage>();
+            UnsubscribeLocalEvent<PlayerAttachSystemMessage>();
+            UnsubscribeNetworkEvent<SharedAiDebug.SubscribeReachableMessage>();
+            UnsubscribeNetworkEvent<SharedAiDebug.UnsubscribeReachableMessage>();
         }
+
+#if DEBUG
+        private void HandleSubscription(SharedAiDebug.SubscribeReachableMessage message, EntitySessionEventArgs eventArgs)
+        {
+            _subscribedSessions.Add((IPlayerSession) eventArgs.SenderSession);
+            foreach (var (gridId, _) in _regions)
+            {
+                SendRegionsDebugMessage(gridId);
+            }
+        }
+
+        private void HandleUnsubscription(SharedAiDebug.UnsubscribeReachableMessage message, EntitySessionEventArgs eventArgs)
+        {
+            _subscribedSessions.Remove((IPlayerSession) eventArgs.SenderSession);
+        }
+#endif
 
         private void RecalculateNodeRegions(PathfindingChunkUpdateMessage message)
         {
@@ -154,7 +180,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 
             var collisionMask = 0;
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
+            if (entity.TryGetComponent(out IPhysBody physics))
             {
                 collisionMask = physics.CollisionMask;
             }
@@ -681,15 +707,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         }
 
 #if DEBUG
-        private void SendDebugMessage(PlayerAttachSystemMessage message)
-        {
-            var playerGrid = message.Entity.Transform.GridID;
-            if(playerGrid.IsValid())
-                SendRegionsDebugMessage(playerGrid);
-        }
-
         private void SendRegionsDebugMessage(GridId gridId)
         {
+            if (_subscribedSessions.Count == 0) return;
             var grid = _mapManager.GetGrid(gridId);
             // Chunk / Regions / Nodes
             var debugResult = new Dictionary<int, Dictionary<int, List<Vector2>>>();
@@ -722,17 +742,23 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 
                 chunkIdx++;
             }
-            RaiseNetworkEvent(new SharedAiDebug.ReachableChunkRegionsDebugMessage(gridId, debugResult));
+
+            foreach (var session in _subscribedSessions)
+            {
+                RaiseNetworkEvent(new SharedAiDebug.ReachableChunkRegionsDebugMessage(gridId, debugResult), session.ConnectedClient);
+            }
         }
 
         /// <summary>
-        /// Sent whenever the reachable cache for a particular mob is built or retrieved
+        ///     Sent whenever the reachable cache for a particular mob is built or retrieved
         /// </summary>
         /// <param name="gridId"></param>
         /// <param name="regions"></param>
         /// <param name="cached"></param>
         private void SendRegionCacheMessage(GridId gridId, IEnumerable<PathfindingRegion> regions, bool cached)
         {
+            if (_subscribedSessions.Count == 0) return;
+
             var grid = _mapManager.GetGrid(gridId);
             var debugResult = new Dictionary<int, List<Vector2>>();
 
@@ -750,7 +776,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                 _runningCacheIdx++;
             }
 
-            RaiseNetworkEvent(new SharedAiDebug.ReachableCacheDebugMessage(gridId, debugResult, cached));
+            foreach (var session in _subscribedSessions)
+            {
+                RaiseNetworkEvent(new SharedAiDebug.ReachableCacheDebugMessage(gridId, debugResult, cached), session.ConnectedClient);
+            }
         }
 #endif
     }

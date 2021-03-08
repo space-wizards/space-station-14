@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Chemistry;
@@ -11,8 +10,7 @@ using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -42,13 +40,8 @@ namespace Content.Server.GameObjects.Components.Fluids
             ? solution.CurrentVolume
             : ReagentUnit.Zero;
 
-        private string? _sound;
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataFieldCached(ref _sound, "sound", "/Audio/Effects/Fluids/watersplash.ogg");
-        }
+        [DataField("sound")]
+        private string? _sound = "/Audio/Effects/Fluids/watersplash.ogg";
 
         /// <inheritdoc />
         public override void Initialize()

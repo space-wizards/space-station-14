@@ -3,8 +3,10 @@ using System.Linq;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -19,6 +21,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     The angles to connect to.
         /// </summary>
         [ViewVariables]
+        [DataField("degrees")]
         private List<Angle> _degrees;
 
         public override string Name => "DisposalJunction";
@@ -42,13 +45,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             return next;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _degrees, "degrees", null);
         }
     }
 }

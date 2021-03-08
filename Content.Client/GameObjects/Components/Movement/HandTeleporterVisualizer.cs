@@ -1,4 +1,6 @@
 using System;
+using Content.Client.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Portal;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;

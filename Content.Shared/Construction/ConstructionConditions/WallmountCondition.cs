@@ -1,22 +1,22 @@
 #nullable enable
+using System.Linq;
 using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
-using System.Linq;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Shared.Construction.ConstructionConditions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class WallmountCondition : IConstructionCondition
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer) { }
-
         public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
@@ -34,7 +34,7 @@ namespace Content.Shared.Construction.ConstructionConditions
                 return false;
 
             // now we need to check that user actually tries to build wallmount on a wall
-            var physics = IoCManager.Resolve<IPhysicsManager>();
+            var physics = EntitySystem.Get<SharedBroadPhaseSystem>();
             var rUserToObj = new CollisionRay(userWorldPosition, userToObject.Normalized, (int) CollisionGroup.Impassable);
             var length = userToObject.Length;
             var userToObjRaycastResults = physics.IntersectRayWithPredicate(user.Transform.MapID, rUserToObj, maxLength: length,

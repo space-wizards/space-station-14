@@ -7,7 +7,7 @@ using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
@@ -16,6 +16,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     ///     Connects with other <see cref="PipeNode"/>s whose <see cref="PipeDirection"/>
     ///     correctly correspond.
     /// </summary>
+    [DataDefinition]
     public class PipeNode : Node, IGasMixtureHolder, IRotatableNode
     {
         /// <summary>
@@ -30,6 +31,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         ///     Used to check if this pipe can connect to another pipe in a given direction.
         /// </summary>
         [ViewVariables]
+        [DataField("pipeDirection")]
         public PipeDirection PipeDirection { get; private set; }
 
         /// <summary>
@@ -80,7 +82,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         ///     Only for usage by <see cref="IPipeNet"/>s.
         /// </summary>
         [ViewVariables]
-        public GasMixture LocalAir { get; set; } = default!;
+        [DataField("gasMixture")]
+        public GasMixture LocalAir { get; set; } = new(DefaultVolume);
 
         [ViewVariables]
         public float Volume => LocalAir.Volume;
@@ -88,13 +91,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         private AppearanceComponent? _appearance;
 
         private const float DefaultVolume = 1;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.PipeDirection, "pipeDirection", PipeDirection.None);
-            serializer.DataField(this, x => x.LocalAir, "gasMixture", new GasMixture(DefaultVolume));
-        }
 
         public override void Initialize(IEntity owner)
         {

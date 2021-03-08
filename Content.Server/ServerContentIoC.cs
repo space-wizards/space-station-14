@@ -62,6 +62,7 @@ namespace Content.Server
             IoCManager.Register<IHolidayManager, HolidayManager>();
             IoCManager.Register<IVoteManager, VoteManager>();
             IoCManager.Register<INpcBehaviorManager, NpcBehaviorManager>();
+            IoCManager.Register<IPlayerLocator, PlayerLocator>();
         }
     }
 }

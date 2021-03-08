@@ -8,7 +8,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Nutrition
@@ -25,21 +27,16 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override string Name => "FoodContainer";
 
         private AppearanceComponent _appearance;
-        private Dictionary<string, int> _prototypes;
-        private uint _capacity;
+        [DataField("prototypes")]
+        private Dictionary<string, int> _prototypes = default;
+        [DataField("capacity")]
+        private uint _capacity = 5;
 
         public int Capacity => (int)_capacity;
         [ViewVariables]
         public int Count => _count;
 
         private int _count = 0;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _prototypes, "prototypes", null);
-            serializer.DataField<uint>(ref _capacity, "capacity", 5);
-        }
 
         public override void Initialize()
         {

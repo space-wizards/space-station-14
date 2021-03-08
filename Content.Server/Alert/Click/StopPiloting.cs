@@ -1,7 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.Movement;
- using Content.Shared.Alert;
- using JetBrains.Annotations;
-using Robust.Shared.Serialization;
+using Content.Shared.Alert;
+using JetBrains.Annotations;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Alert.Click
 {
@@ -9,10 +9,9 @@ namespace Content.Server.Alert.Click
     /// Stop piloting shuttle
     /// </summary>
     [UsedImplicitly]
+    [DataDefinition]
     public class StopPiloting : IAlertClick
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer) { }
-
         public void AlertClicked(ClickAlertEventArgs args)
         {
             if (args.Player.TryGetComponent(out ShuttleControllerComponent controller))
