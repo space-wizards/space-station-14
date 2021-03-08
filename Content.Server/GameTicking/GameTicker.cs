@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -896,6 +897,15 @@ namespace Content.Server.GameTicking
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new Job(data.Mind, jobPrototype);
             data.Mind.AddRole(job);
+
+            if (lateJoin)
+            {
+                _chatManager.DispatchStationAnnouncement(Loc.GetString(
+                    "latejoin-arrival-announcement",
+                    ("character", character.Name),
+                    ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
+                    ));
+            }
 
             var mob = _spawnPlayerMob(job, character, lateJoin);
             data.Mind.TransferTo(mob);
