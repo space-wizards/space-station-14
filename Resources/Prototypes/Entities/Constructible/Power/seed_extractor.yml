@@ -12,10 +12,11 @@
       state: seedextractor
     - type: Physics
       mass: 25
-      anchored: true
-      shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.4,-0.25,0.4,0.25"
+      bodyType: Static
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+              bounds: "-0.4,-0.25,0.4,0.25"
           layer:
             - Opaque
             - Impassable

@@ -18,11 +18,12 @@
       state: alive
       sprite: Mobs/Aliens/Carps/space.rsi
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 50
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.35,-0.35,0.35,0.35"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
       mask:
       - Impassable
       - MobImpassable

@@ -12,10 +12,11 @@
     state: rack
   - type: Physics
     mass: 25
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.4,0.4,0.4"
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
       layer:
       - Opaque
       - Impassable
@@ -60,10 +61,11 @@
     state: shelf
   - type: Physics
     mass: 25
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.4,0.4,0.4"
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
       layer:
       - Opaque
       - Impassable

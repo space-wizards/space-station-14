@@ -12,11 +12,12 @@
     sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
     state: bullet
   - type: Physics
-    anchored: false
-    hard: false
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.1,0.1,0.1"
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+      hard: false
       layer: [Clickable]
       mask:
       - Impassable
@@ -96,12 +97,12 @@
     - state: spark
       shader: unshaded
   - type: Physics
-    anchored: false
-
-    hard: false
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.2,0.2,0.2"
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+      hard: false
       layer: 32
       mask: 30
 

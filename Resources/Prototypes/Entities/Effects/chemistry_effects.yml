@@ -40,9 +40,10 @@
     - type: SnapGrid
       offset: Center
     - type: Physics
-      shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
         layer:
         - MobImpassable
     - type: FoamSolutionAreaEffect
@@ -104,14 +105,15 @@
       netsync: false
       drawdepth: Walls
     - type: Physics
-      shapes:
-        - !type:PhysShapeAabb
-          layer:
-            - Opaque
-            - Impassable
-            - MobImpassable
-            - VaultImpassable
-            - SmallImpassable
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb {}
+        mask:
+          - Opaque
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - SmallImpassable
     - type: Occluder
       sizeX: 32
       sizeY: 32
