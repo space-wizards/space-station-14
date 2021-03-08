@@ -12165,10 +12165,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 903
-  type: SpawnPointLatejoin
+  type: SpawnPointAssistant
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -36.5,-1.5
+  - pos: -31.5,4.5
     parent: 853
     type: Transform
 - uid: 904
@@ -13063,8 +13062,7 @@ entities:
 - uid: 1024
   type: SpawnPointAssistant
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -27.5,10.5
+  - pos: -29.5,4.5
     parent: 853
     type: Transform
 - uid: 1025
@@ -13077,8 +13075,7 @@ entities:
 - uid: 1026
   type: SpawnPointAssistant
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -27.5,8.5
+  - pos: -36.5,8.5
     parent: 853
     type: Transform
 - uid: 1027
@@ -13667,22 +13664,19 @@ entities:
 - uid: 1090
   type: SpawnPointAssistant
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -23.5,-2.5
+  - pos: -36.5,4.5
     parent: 853
     type: Transform
 - uid: 1091
   type: SpawnPointAssistant
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -29.5,-0.5
+  - pos: -36.5,-0.5
     parent: 853
     type: Transform
 - uid: 1092
-  type: SpawnPointLatejoin
+  type: SpawnPointAssistant
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -36.5,0.5
+  - pos: -28.5,1.5
     parent: 853
     type: Transform
 - uid: 1093
@@ -24413,17 +24407,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 2483
-  type: SpawnPointLatejoin
+  type: SpawnPointAssistant
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -36.5,-5.5
+  - pos: -28.5,-1.5
     parent: 853
     type: Transform
 - uid: 2484
-  type: SpawnPointLatejoin
+  type: SpawnPointAssistant
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -36.5,-3.5
+  - pos: -28.5,-4.5
     parent: 853
     type: Transform
 - uid: 2485
@@ -37384,6 +37376,12 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 4255
+  type: SpawnPointLatejoin
+  components:
+  - pos: -36.5,-0.5
+    parent: 853
+    type: Transform
 - uid: 4256
   type: BodyBag_Container
   components:
@@ -40699,6 +40697,36 @@ entities:
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -20.5,-1.5
+    parent: 853
+    type: Transform
+- uid: 4719
+  type: SpawnPointLatejoin
+  components:
+  - pos: -36.5,-2.5
+    parent: 853
+    type: Transform
+- uid: 4720
+  type: SpawnPointLatejoin
+  components:
+  - pos: -36.5,-4.5
+    parent: 853
+    type: Transform
+- uid: 4721
+  type: SpawnPointLatejoin
+  components:
+  - pos: -36.5,8.5
+    parent: 853
+    type: Transform
+- uid: 4722
+  type: SpawnPointLatejoin
+  components:
+  - pos: -36.5,6.5
+    parent: 853
+    type: Transform
+- uid: 4723
+  type: SpawnPointLatejoin
+  components:
+  - pos: -36.5,4.5
     parent: 853
     type: Transform
 ...
