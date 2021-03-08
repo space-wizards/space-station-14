@@ -14,7 +14,7 @@
   name: spawn point (assistant)
   components:
   - type: SpawnPoint
-    job_id: Assistant
+    job_id: CentcomOfficial
   - type: Sprite
     state: Assistant
 

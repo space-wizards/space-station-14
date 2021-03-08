@@ -16,7 +16,6 @@
   - type: SpawnPoint
     spawn_type: LateJoin
 
-
 - type: entity
   name: observer spawn point
   id: SpawnPointObserver
@@ -27,3 +26,13 @@
   - type: SpawnPoint
     spawn_type: Observer
 
+- type: entity
+  name: centcom official spawn point
+  id: SpawnPointCentcomOfficial
+  parent: SpawnPoint
+  components:
+  - type: GhostRoleMobSpawnerComponent
+  - type: Sprite
+    state: Centcom
+  - type: SpawnPoint
+    job_id: SpawnPoint
