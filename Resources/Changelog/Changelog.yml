@@ -276,8 +276,8 @@ Entries:
   time: '2021-03-08T00:15:51.0000000+00:00'
 - author: metalgearsloth
   changes:
-  - {message: Nerfed throwing while weightless, type: Add}
-  - {message: Fixed weightless movement to use push strength again, type: Add}
-  - {message: Throwing pushback implemented again, type: Add}
+  - {message: Nerfed throwing while weightless, type: Tweak}
+  - {message: Fixed weightless movement to use push strength again, type: Fix}
+  - {message: Throwing pushback implemented again, type: Fix}
   id: 51
   time: '2021-03-08T01:10:56.0000000+00:00'
