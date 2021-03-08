@@ -264,3 +264,13 @@ Entries:
       be constructed.', type: Add}
   id: 48
   time: '2021-03-07T23:22:25.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Player join/leave messages are now only shown to admins., type: Tweak}
+  id: 49
+  time: '2021-03-08T00:15:31.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Added a radio message to announce latejoins., type: Add}
+  id: 50
+  time: '2021-03-08T00:15:51.0000000+00:00'
