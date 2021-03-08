@@ -16,6 +16,6 @@ void fragment() {
 		smallestLength = pixelSize.y-FRAGCOORD.y;
 	}
 	if(smallestLength <= borderSize){
-		COLOR = vec4(borderColor.r, borderColor.g, borderColor.b, abs((1.0-(smallestLength/borderSize))*sin(TIME*1.4)));
+		COLOR = vec4(borderColor.r, borderColor.g, borderColor.b, abs((1.0-(smallestLength/borderSize))*(abs(sin(TIME))*0.8+0.2)));
 	}
 }

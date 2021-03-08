@@ -24,7 +24,7 @@ namespace Content.Client.Graphics.Overlays
 
         protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
-            if (!GradientCircleMaskOverlay.LocalPlayerHasState(_playerManager, false, true))
+            if (!CritOverlay.LocalPlayerHasState(_playerManager, false, true))
                 return;
             handle.UseShader(_shader);
             var worldHandle = (DrawingHandleWorld)handle;
