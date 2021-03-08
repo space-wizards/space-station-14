@@ -304,3 +304,8 @@ Entries:
   - {message: Protolathes can now be built again., type: Fix}
   id: 55
   time: '2021-03-08T04:09:30.0000000+00:00'
+- author: tmtmtl30
+  changes:
+  - {message: Crit overlay is now unaffected by lights., type: Fix}
+  id: 56
+  time: '2021-03-08T04:11:29.0000000+00:00'
