@@ -21,6 +21,7 @@
 - type: entity
   id: OxygenTank
   name: oxygen tank
+  description: A tank designed to hold oxygen.
   parent: GasTankBase
   suffix: ent-gas-tank-suffix-empty
   components:
@@ -63,6 +64,7 @@
 - type: entity
   id: EmergencyOxygenTank
   name: emergency oxygen tank
+  description: A more compact tank for short-term emergency use.
   parent: OxygenTank
   suffix: ent-gas-tank-suffix-empty
   components:
