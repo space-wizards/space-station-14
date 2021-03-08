@@ -1,4 +1,0 @@
-author: Zumorica
-changes:
-  - type: Fix
-    message: Having four edge firelocks in a single tile no longer destroys any air within it.
