@@ -69,16 +69,20 @@ namespace Content.Client.GameObjects.Components.Items
 
             foreach (var handState in state.Hands)
             {
-                var heldItemUid = handState.EntityUid;
-                IEntity? heldItem = null;
-                if (heldItemUid != null)
-                    Owner.EntityManager.TryGetEntity(heldItemUid.Value, out heldItem);
-
-                var newHand = new ClientHand(handState, heldItem);
+                var newHand = new ClientHand(handState, GetHeldItem(handState.EntityUid));
                 _hands.Add(newHand);
                 _sprite?.LayerMapReserveBlank($"hand-{newHand.Name}");
             }
             OnHandsModified();
+
+            IEntity? GetHeldItem(EntityUid? uid)
+            {
+                IEntity? heldItem = null;
+                if (uid != null)
+                    Owner.EntityManager.TryGetEntity(uid.Value, out heldItem);
+
+                return heldItem;
+            }
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -172,6 +176,11 @@ namespace Content.Client.GameObjects.Components.Items
                 handStates.Add(handState);
             }
             return new HandsGuiState(handStates, ActiveHand);
+        }
+
+        public void RefreshInHands()
+        {
+            //TODO: handle updating stuff when item's EquippedPrefix changes, whatever that meant
         }
     }
 
