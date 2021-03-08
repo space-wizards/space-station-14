@@ -1,41 +1,26 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/59fe5dd2841f47a8abce60eecb9fafad34282bd0",
   "size": {
     "x": 32,
     "y": 32
   },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/d86e175508b8553ca8396f39f2af7ecec4595375/icons/obj/doors/Doorminingglass.dmi",
   "states": [
     {
-      "name": "bolted",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "assembly"
     },
     {
-      "name": "locked",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "bolted"
     },
     {
-      "name": "closed",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "locked"
     },
     {
-      "name": "closed_unlit",
-      "delays": [
-        []
-      ]
+      "name": "closed"
+    },
+    {
+      "name": "closed_unlit"
     },
     {
       "name": "closing",
@@ -76,12 +61,7 @@
       ]
     },
     {
-      "name": "open",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "open"
     },
     {
       "name": "opening",
@@ -126,12 +106,7 @@
       ]
     },
     {
-      "name": "panel_open",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "panel_open"
     },
     {
       "name": "panel_opening",
@@ -201,12 +176,7 @@
       ]
     },
     {
-      "name": "welded",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "welded"
     }
   ]
 }

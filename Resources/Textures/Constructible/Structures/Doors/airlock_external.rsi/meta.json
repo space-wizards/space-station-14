@@ -1,27 +1,20 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/59fe5dd2841f47a8abce60eecb9fafad34282bd0",
   "size": {
     "x": 32,
     "y": 32
   },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/doors/Doorext.dmi",
   "states": [
     {
-      "name": "closed",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "bolted"
     },
     {
-      "name": "locked",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "locked"
+    },
+    {
+      "name": "closed"
     },
     {
       "name": "closed_unlit"
@@ -36,6 +29,7 @@
           0.1,
           0.1,
           0.1,
+          0.1,
           0.3
         ]
       ]
@@ -44,7 +38,9 @@
       "name": "closing_unlit",
       "delays": [
         [
-          0.6,
+          0.5,
+          0.1,
+          0.1,
           0.1,
           0.1,
           0.3
@@ -62,48 +58,7 @@
       ]
     },
     {
-      "name": "bolted",
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "panel_closing",
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.3
-        ]
-      ]
-    },
-    {
-      "name": "panel_opening",
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.3
-        ]
-      ]
-    },
-    {
-      "name": "open",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "open"
     },
     {
       "name": "opening",
@@ -111,6 +66,7 @@
         [
           0.2,
           0.2,
+          0.1,
           0.1,
           0.1,
           0.1,
@@ -126,15 +82,40 @@
           0.2,
           0.2,
           0.1,
-          0.6
+          0.1,
+          0.1,
+          0.5
         ]
       ]
     },
     {
-      "name": "panel_open",
+      "name": "panel_closing",
       "delays": [
         [
-          1
+          0.2,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "panel_open"
+    },
+    {
+      "name": "panel_opening",
+      "delays": [
+        [
+          0.4,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.3
         ]
       ]
     },
@@ -142,6 +123,7 @@
       "name": "spark",
       "delays": [
         [
+          0.1,
           0.1,
           0.1,
           0.1,
@@ -154,6 +136,7 @@
       "name": "sparks_broken",
       "delays": [
         [
+          0.1,
           0.1,
           0.1,
           0.1,
@@ -171,6 +154,7 @@
           0.1,
           0.1,
           0.1,
+          0.1,
           1.7
         ]
       ]
@@ -183,17 +167,13 @@
           0.1,
           0.1,
           0.1,
+          0.1,
           0.1
         ]
       ]
     },
     {
-      "name": "welded",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "welded"
     }
   ]
 }
