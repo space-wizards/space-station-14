@@ -9,6 +9,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -19,13 +20,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     /// Generally used for bullets but can be used for other things like bananas
     /// </summary>
     [RegisterComponent]
-    public class AmmoComponent : Component, IExamine
+    public class AmmoComponent : Component, IExamine, ISerializationHooks
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "Ammo";
-        public BallisticCaliber Caliber => _caliber;
-        private BallisticCaliber _caliber;
+
+        [field: DataField("caliber")]
+        public BallisticCaliber Caliber { get; } = BallisticCaliber.Unspecified;
+
         public bool Spent
         {
             get
@@ -38,64 +41,60 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 return _spent;
             }
         }
+
         private bool _spent;
 
         /// <summary>
         /// Used for anything without a case that fires itself
         /// </summary>
+        [DataField("isProjectile")]
         private bool _ammoIsProjectile;
 
         /// <summary>
         /// Used for something that is deleted when the projectile is retrieved
         /// </summary>
-        public bool Caseless => _caseless;
-        private bool _caseless;
+        [field: DataField("caseless")]
+        public bool Caseless { get; }
+
         // Rather than managing bullet / case state seemed easier to just have 2 toggles
         // ammoIsProjectile being for a beanbag for example and caseless being for ClRifle rounds
 
         /// <summary>
         /// For shotguns where they might shoot multiple entities
         /// </summary>
-        public int ProjectilesFired => _projectilesFired;
-        private int _projectilesFired;
+        [field: DataField("projectilesFired")]
+        public int ProjectilesFired { get; } = 1;
+
+        [DataField("projectile")]
         private string _projectileId;
+
         // How far apart each entity is if multiple are shot
-        public float EvenSpreadAngle => _evenSpreadAngle;
-        private float _evenSpreadAngle;
+        [field: DataField("ammoSpread")]
+        public float EvenSpreadAngle { get; } = default;
+
         /// <summary>
         /// How fast the shot entities travel
         /// </summary>
-        public float Velocity => _velocity;
-        private float _velocity;
+        [field: DataField("ammoVelocity")]
+        public float Velocity { get; } = 20f;
 
-        private string _muzzleFlashSprite;
+        [DataField("muzzleFlash")]
+        private string _muzzleFlashSprite = "Objects/Weapons/Guns/Projectiles/bullet_muzzle.png";
 
-        public string SoundCollectionEject => _soundCollectionEject;
-        private string _soundCollectionEject;
+        [field: DataField("soundCollectionEject")]
+        public string SoundCollectionEject { get; } = "CasingEject";
 
-        public override void ExposeData(ObjectSerializer serializer)
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.ExposeData(serializer);
-            // For shotty of whatever as well
-            serializer.DataField(ref _projectileId, "projectile", null);
-            serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-            serializer.DataField(ref _projectilesFired, "projectilesFired", 1);
-            // Used for shotty to determine overall pellet spread
-            serializer.DataField(ref _evenSpreadAngle, "ammoSpread", 0);
-            serializer.DataField(ref _velocity, "ammoVelocity", 20.0f);
-            serializer.DataField(ref _ammoIsProjectile, "isProjectile", false);
-            serializer.DataField(ref _caseless, "caseless", false);
             // Being both caseless and shooting yourself doesn't make sense
-            DebugTools.Assert(!(_ammoIsProjectile && _caseless));
-            serializer.DataField(ref _muzzleFlashSprite, "muzzleFlash", "Objects/Weapons/Guns/Projectiles/bullet_muzzle.png");
-            serializer.DataField(ref _soundCollectionEject, "soundCollectionEject", "CasingEject");
+            DebugTools.Assert(!(_ammoIsProjectile == true && Caseless == true));
 
-            if (_projectilesFired < 1)
+            if (ProjectilesFired < 1)
             {
                 Logger.Error("Ammo can't have less than 1 projectile");
             }
 
-            if (_evenSpreadAngle > 0 && _projectilesFired == 1)
+            if (EvenSpreadAngle > 0 && ProjectilesFired == 1)
             {
                 Logger.Error("Can't have an even spread if only 1 projectile is fired");
                 throw new InvalidOperationException();

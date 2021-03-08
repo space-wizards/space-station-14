@@ -43,3 +43,47 @@
 #        amount: 3
 #      - name: PowerCellSmallAutorecharge
 #        amount: 3
+
+- type: entity
+  id: CrateEngineeringCableLV
+  name: LV cable crate
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - name: ApcExtensionCableStack
+        amount: 3
+
+- type: entity
+  id: CrateEngineeringCableMV
+  name: MV cable crate
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - name: MVWireStack
+        amount: 3
+
+- type: entity
+  id: CrateEngineeringCableHV
+  name: HV cable crate
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - name: HVWireStack
+        amount: 3
+
+- type: entity
+  id: CrateEngineeringCableBulk
+  name: bulk cable crate
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - name: HVWireStack
+        amount: 2
+      - name: MVWireStack
+        amount: 2
+      - name: ApcExtensionCableStack
+        amount: 2

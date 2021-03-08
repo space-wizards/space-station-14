@@ -4,21 +4,16 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction.ConstructionConditions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class TileNotBlocked : IConstructionCondition
     {
-        private bool _filterMobs = false;
-        private bool _failIfSpace = true;
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _filterMobs, "filterMobs", false);
-            serializer.DataField(ref _failIfSpace, "failIfSpace", true);
-        }
+        [DataField("filterMobs")] private bool _filterMobs = false;
+        [DataField("failIfSpace")] private bool _failIfSpace = true;
 
         public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
         {

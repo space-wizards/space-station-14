@@ -71,6 +71,7 @@ namespace Content.Client.UserInterface
                                         {
                                             Text = Loc.GetString("ui-options-binds-reset-all"),
                                             StyleClasses = {StyleBase.ButtonCaution},
+                                            HorizontalExpand = true,
                                             HorizontalAlignment = HAlignment.Right
                                         })
                                     }
@@ -148,7 +149,7 @@ namespace Content.Client.UserInterface
                 AddButton(ContentKeyFunctions.OpenContextMenu);
                 AddButton(ContentKeyFunctions.OpenCraftingMenu);
                 AddButton(ContentKeyFunctions.OpenInventoryMenu);
-                AddButton(ContentKeyFunctions.OpenTutorial);
+                AddButton(ContentKeyFunctions.OpenInfo);
                 AddButton(ContentKeyFunctions.OpenActionsMenu);
                 AddButton(ContentKeyFunctions.OpenEntitySpawnWindow);
                 AddButton(ContentKeyFunctions.OpenSandboxWindow);

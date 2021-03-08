@@ -9,10 +9,13 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -27,6 +30,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         public override string Name => "MorgueEntityStorage";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("trayPrototype")]
         private string? _trayPrototypeId;
 
         [ViewVariables]
@@ -36,6 +40,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         public ContainerSlot? TrayContainer { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("doSoulBeep")]
         public bool DoSoulBeep = true;
 
         [ViewVariables]
@@ -46,15 +51,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             base.Initialize();
             Appearance?.SetData(MorgueVisuals.Open, false);
-            TrayContainer = ContainerManagerComponent.Ensure<ContainerSlot>("morgue_tray", Owner, out _);
-        }
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _trayPrototypeId, "trayPrototype", "");
-            serializer.DataField(ref DoSoulBeep, "doSoulBeep", true);
+            TrayContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "morgue_tray", out _);
         }
 
         public override Vector2 ContentsDumpPosition()

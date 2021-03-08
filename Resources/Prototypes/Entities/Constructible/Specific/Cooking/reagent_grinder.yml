@@ -21,9 +21,10 @@
   - type: PowerReceiver
   - type: LoopingSound
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.35,-0.08,0.25,0.15"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.35,-0.08,0.25,0.15"
       layer:
       - Opaque
       - Impassable

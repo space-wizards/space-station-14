@@ -6,7 +6,7 @@
       entity: ParticleAcceleratorControlBoxUnfinished
       actions:
         - !type:SpriteStateChange
-          state: "control_box"
+          state: "box"
       edges:
         - to: wired
           conditions:
@@ -19,7 +19,7 @@
       entity: ParticleAcceleratorControlBoxUnfinished
       actions:
         - !type:SpriteStateChange
-          state: "control_boxw"
+          state: "boxw"
       edges:
         - to: completed
           conditions:
@@ -58,7 +58,7 @@
       entity: ParticleAcceleratorPowerBoxUnfinished
       actions:
         - !type:SpriteStateChange
-          state: "power_box"
+          state: "box"
       edges:
         - to: wired
           conditions:
@@ -71,7 +71,7 @@
       entity: ParticleAcceleratorPowerBoxUnfinished
       actions:
         - !type:SpriteStateChange
-          state: "power_boxw"
+          state: "boxw"
       edges:
         - to: completed
           conditions:
@@ -110,7 +110,7 @@
       entity: ParticleAcceleratorFuelChamberUnfinished
       actions:
         - !type:SpriteStateChange
-          state: "fuel_chamber"
+          state: "chamber"
       edges:
         - to: wired
           conditions:
@@ -123,7 +123,7 @@
       entity: ParticleAcceleratorFuelChamberUnfinished
       actions:
         - !type:SpriteStateChange
-          state: "fuel_chamberw"
+          state: "chamberw"
       edges:
         - to: completed
           conditions:
@@ -161,7 +161,7 @@
       entity: ParticleAcceleratorEndCapUnfinished
       actions:
         - !type:SpriteStateChange
-          state: "end_cap"
+          state: "cap"
       edges:
         - to: wired
           conditions:
@@ -174,7 +174,7 @@
       entity: ParticleAcceleratorEndCapUnfinished
       actions:
         - !type:SpriteStateChange
-          state: "end_capw"
+          state: "capw"
       edges:
         - to: completed
           conditions:
@@ -212,7 +212,7 @@
       entity: ParticleAcceleratorEmitterLeftUnfinished
       actions:
         - !type:SpriteStateChange
-          state: "emitter_left"
+          state: "left"
       edges:
         - to: wired
           conditions:
@@ -225,7 +225,7 @@
       entity: ParticleAcceleratorEmitterLeftUnfinished
       actions:
         - !type:SpriteStateChange
-          state: "emitter_leftw"
+          state: "leftw"
       edges:
         - to: completed
           conditions:
@@ -263,7 +263,7 @@
       entity: ParticleAcceleratorEmitterCenterUnfinished
       actions:
         - !type:SpriteStateChange
-          state: "emitter_center"
+          state: "center"
       edges:
         - to: wired
           conditions:
@@ -276,7 +276,7 @@
       entity: ParticleAcceleratorEmitterCenterUnfinished
       actions:
         - !type:SpriteStateChange
-          state: "emitter_centerw"
+          state: "centerw"
       edges:
         - to: completed
           conditions:
@@ -314,7 +314,7 @@
       entity: ParticleAcceleratorEmitterRightUnfinished
       actions:
         - !type:SpriteStateChange
-          state: "emitter_right"
+          state: "right"
       edges:
         - to: wired
           conditions:
@@ -327,7 +327,7 @@
       entity: ParticleAcceleratorEmitterRightUnfinished
       actions:
         - !type:SpriteStateChange
-          state: "emitter_rightw"
+          state: "rightw"
       edges:
         - to: completed
           conditions:

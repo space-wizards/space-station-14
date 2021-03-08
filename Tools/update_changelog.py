@@ -61,6 +61,9 @@ def main():
             "time", datetime.datetime.now(datetime.timezone.utc).isoformat()
         )
         changes = partyaml["changes"]
+        if not isinstance(changes, list):
+            changes = [changes]
+
         max_id += 1
         new_id = max_id
 

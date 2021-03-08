@@ -3,7 +3,9 @@ using Content.Server.Construction;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -31,19 +33,11 @@ namespace Content.Server.GameObjects.Components.Construction
 
         public override string Name => "MachinePart";
 
-        [ViewVariables]
-        public MachinePart PartType { get; private set; }
+        [ViewVariables] [DataField("part")] public MachinePart PartType { get; private set; } = MachinePart.Capacitor;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Rating { get; private set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.PartType, "part", MachinePart.Capacitor);
-            serializer.DataField(this, x => x.Rating, "rating", 1);
-        }
+        [DataField("rating")]
+        public int Rating { get; private set; } = 1;
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {

@@ -4,3 +4,16 @@
   id: AdminObserver
   name: admin observer
   abstract: true
+  components:
+  - type: PlayerInputMover
+  - type: Physics
+    bodyType: Kinematic
+    mass: 5
+    # TODO: Even need these? Don't think so but CBF checking right now.
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
+        mask:
+          - GhostImpassable
+    status: InAir

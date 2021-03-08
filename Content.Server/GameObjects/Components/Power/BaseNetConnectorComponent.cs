@@ -1,10 +1,10 @@
-#nullable enable
+﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -13,7 +13,8 @@ namespace Content.Server.GameObjects.Components.Power
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public Voltage Voltage { get => _voltage; set => SetVoltage(value); }
-        private Voltage _voltage;
+        [DataField("voltage")]
+        private Voltage _voltage = Voltage.High;
 
         [ViewVariables]
         public TNetType Net { get => _net; set => SetNet(value); }
@@ -28,12 +29,6 @@ namespace Content.Server.GameObjects.Components.Power
         {
             base.OnAdd();
             _net = NullNet;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _voltage, "voltage", Voltage.High);
         }
 
         public override void Initialize()

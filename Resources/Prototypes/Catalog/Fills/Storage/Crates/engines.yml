@@ -1,3 +1,5 @@
+# AME
+
 - type: entity
   id: CrateEngineeringAMEShielding
   name: packaged antimatter reactor crate
@@ -30,6 +32,90 @@
     contents:
       - name: AMEControllerUnanchored
         amount: 1
+
+# Singularity
+
+- type: entity
+  id: CrateEngineeringSingularityEmitter
+  name: emitter crate
+  description: "An emitter, best used for singularity engines."
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - name: Emitter
+        amount: 1
+
+- type: entity
+  id: CrateEngineeringSingularityCollector
+  name: radiation collector crate
+  description: "A radiation collector, best used for singularity engines."
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - name: RadiationCollector
+        amount: 1
+
+- type: entity
+  id: CrateEngineeringSingularityContainment
+  name: containment field generator crate
+  description: "A containment field generator, keeps the singulo in submission."
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - name: ContainmentFieldGenerator
+        amount: 1
+
+- type: entity
+  id: CrateEngineeringSingularityGenerator
+  name: singularity generator crate
+  description: "A singularity generator, the mother of the beast."
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - name: SingularityGenerator
+        amount: 1
+
+# Particle Accelerator
+
+- type: entity
+  id: CrateEngineeringParticleAccelerator
+  name: PA crate
+  description: "Complex to setup, but rewarding as fuck."
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - name: MachineParticleAcceleratorEndCapCircuitboard
+        amount: 1
+      - name: MachineParticleAcceleratorEmitterLeftCircuitboard
+        amount: 1
+      - name: MachineParticleAcceleratorEmitterCenterCircuitboard
+        amount: 1
+      - name: MachineParticleAcceleratorEmitterRightCircuitboard
+        amount: 1
+      - name: MachineParticleAcceleratorFuelChamberCircuitboard
+        amount: 1
+      - name: MachineParticleAcceleratorPowerBoxCircuitboard
+        amount: 1
+      - name: ParticleAcceleratorComputerCircuitboard
+        amount: 1
+
+# Non-functional for some reason
+
+#- type: entity
+#  id: CrateEngineeringSingularity
+#  name: singularity crate
+#  description: "Prank the station!"
+#  parent: CrateEngineeringSecure
+#  components:
+#  - type: StorageFill
+#    contents:
+#      - name: Singularity
+#        amount: 1
 
 - type: entity
   id: CrateEngineeringGenerator

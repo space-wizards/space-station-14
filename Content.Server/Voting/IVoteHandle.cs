@@ -1,4 +1,5 @@
-﻿using Robust.Server.Player;
+﻿using System.Collections.Generic;
+using Robust.Server.Player;
 
 namespace Content.Server.Voting
 {
@@ -9,6 +10,8 @@ namespace Content.Server.Voting
         string InitiatorText { get; }
         bool Finished { get; }
         bool Cancelled { get; }
+
+        IReadOnlyDictionary<object, int> VotesPerOption { get; }
 
         event VoteFinishedEventHandler OnFinished;
         bool IsValidOption(int optionId);

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Preferences;
+using Content.Shared.Preferences;
 using Content.Shared.Prototypes;
 using Content.Shared.Utility;
 using Robust.Shared.Prototypes;
@@ -20,6 +20,7 @@ namespace Content.Client.UserInterface
             UpdateAgeEdit();
             UpdateNameEdit();
             UpdateHairPickers();
+            UpdateEyePickers();
         }
 
         private void RandomizeName()

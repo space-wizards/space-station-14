@@ -5,7 +5,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Explosion
 {
@@ -17,22 +17,14 @@ namespace Content.Server.GameObjects.Components.Explosion
     {
         public override string Name => "FlashExplosive";
 
-        private float _range;
-
-        private float _duration;
-
-        private string _sound;
-        private bool _deleteOnFlash;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _range, "range", 7.0f);
-            serializer.DataField(ref _duration, "duration", 8.0f);
-            serializer.DataField(ref _sound, "sound", "/Audio/Effects/flash_bang.ogg");
-            serializer.DataField(ref _deleteOnFlash, "deleteOnFlash", true);
-        }
+        [DataField("range")]
+        private float _range = 7.0f;
+        [DataField("duration")]
+        private float _duration = 8.0f;
+        [DataField("sound")]
+        private string _sound = "/Audio/Effects/flash_bang.ogg";
+        [DataField("deleteOnFlash")]
+        private bool _deleteOnFlash = true;
 
         public bool Explode()
         {

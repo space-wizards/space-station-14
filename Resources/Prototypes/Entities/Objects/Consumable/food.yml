@@ -53,7 +53,6 @@
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 4
-    trash: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Consumable/Food/aesirsalad.rsi
 
@@ -776,7 +775,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/donut2.rsi
   - type: Item
-    sprite: Objects/Consumable/Food/donut2.rsi.rsi
+    sprite: Objects/Consumable/Food/donut2.rsi
 
 - type: entity
   parent: FoodBase
@@ -792,7 +791,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-blue.rsi
   - type: Item
-    sprite: Objects/Consumable/Food/egg-blue.rsi.rsi
+    sprite: Objects/Consumable/Food/egg-blue.rsi
 
 - type: entity
   parent: FoodBase
@@ -808,7 +807,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-green.rsi
   - type: Item
-    sprite: Objects/Consumable/Food/egg-green.rsi.rsi
+    sprite: Objects/Consumable/Food/egg-green.rsi
 
 - type: entity
   parent: FoodBase
@@ -824,7 +823,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-mime.rsi
   - type: Item
-    sprite: Objects/Consumable/Food/egg-mime.rsi.rsi
+    sprite: Objects/Consumable/Food/egg-mime.rsi
 
 - type: entity
   parent: FoodBase
@@ -840,7 +839,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-orange.rsi
   - type: Item
-    sprite: Objects/Consumable/Food/egg-orange.rsi.rsi
+    sprite: Objects/Consumable/Food/egg-orange.rsi
 
 - type: entity
   parent: FoodBase
@@ -856,7 +855,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-purple.rsi
   - type: Item
-    sprite: Objects/Consumable/Food/egg-purple.rsi.rsi
+    sprite: Objects/Consumable/Food/egg-purple.rsi
 
 - type: entity
   parent: FoodBase
@@ -872,7 +871,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-rainbow.rsi
   - type: Item
-    sprite: Objects/Consumable/Food/egg-rainbow.rsi.rsi
+    sprite: Objects/Consumable/Food/egg-rainbow.rsi
 
 - type: entity
   parent: FoodBase
@@ -888,8 +887,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-red.rsi
   - type: Item
-    sprite: Objects/Consumable/Food/egg-red.rsi.rsi
-
+    sprite: Objects/Consumable/Food/egg-red.rsi
 
 - type: entity
   parent: FoodBase
@@ -1941,7 +1939,6 @@
   - type: Food
     trash: TrashPopcorn
   - type: SolutionContainer
-    transfer_amount: 1
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2173,7 +2170,6 @@
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 4
-    trash: TrashSOSJerky
   - type: Sprite
     sprite: Objects/Consumable/Food/sosjerky.rsi
   - type: Item

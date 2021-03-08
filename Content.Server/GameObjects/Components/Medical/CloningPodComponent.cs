@@ -14,11 +14,14 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Medical
@@ -42,14 +45,8 @@ namespace Content.Server.GameObjects.Components.Medical
         private Mind? _capturedMind;
         private CloningPodStatus _status;
         private float _cloningProgress = 0;
-        private float _cloningTime;
-
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _cloningTime, "cloningTime", 10f);
-        }
+        [DataField("cloningTime")]
+        private float _cloningTime = 10f;
 
         public override void Initialize()
         {
@@ -59,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
-            _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
+            _bodyContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-bodyContainer");
 
             //TODO: write this so that it checks for a change in power events for GORE POD cases
             var newState = GetUserInterfaceState();

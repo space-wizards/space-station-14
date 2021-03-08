@@ -1,9 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Interfaces.Chat;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 
 namespace Content.Server.StationEvents
 {
@@ -121,7 +120,7 @@ namespace Content.Server.StationEvents
 
             if (StartAudio != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayGlobal(StartAudio, AudioParams.Default.WithVolume(-10f));
+                SoundSystem.Play(Filter.Broadcast(), StartAudio, AudioParams.Default.WithVolume(-10f));
             }
 
             Announced = true;
@@ -141,7 +140,7 @@ namespace Content.Server.StationEvents
 
             if (EndAudio != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayGlobal(EndAudio, AudioParams.Default.WithVolume(-10f));
+                SoundSystem.Play(Filter.Broadcast(), EndAudio, AudioParams.Default.WithVolume(-10f));
             }
 
             Started = false;

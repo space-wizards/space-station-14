@@ -1,21 +1,15 @@
 #nullable enable
-using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Tag;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction
 {
+    [DataDefinition]
     public class TagConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
+        [DataField("tag")]
         private string? _tag = null;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _tag, "tag", null);
-        }
 
         public override bool EntityValid(IEntity entity)
         {

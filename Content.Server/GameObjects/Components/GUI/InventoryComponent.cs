@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
+    public class InventoryComponent : SharedInventoryComponent, IExAct, IPressureProtection, IEffectBlocker
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -145,14 +145,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         bool IEffectBlocker.CanSlip()
         {
-            if (Owner.TryGetComponent(out InventoryComponent inventoryComponent) &&
-                inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent shoes)
-            )
-            {
-                return EffectBlockerSystem.CanSlip(shoes.Owner);
-            }
-
-            return true;
+            return !TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent shoes) || EffectBlockerSystem.CanSlip(shoes.Owner);
         }
 
         public override void OnRemove()
@@ -426,7 +419,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
             Dirty();
 
-            _slotContainers[slot] = ContainerManagerComponent.Create<ContainerSlot>(GetSlotString(slot), Owner);
+            var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, GetSlotString(slot));
+            container.OccludesLight = false;
+            _slotContainers[slot] = container;
 
             OnItemChanged?.Invoke();
 

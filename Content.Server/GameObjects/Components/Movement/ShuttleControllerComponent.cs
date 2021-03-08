@@ -10,7 +10,11 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Movement
@@ -19,8 +23,6 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(IMoverComponent))]
     internal class ShuttleControllerComponent : Component, IMoverComponent
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-
         private bool _movingUp;
         private bool _movingDown;
         private bool _movingLeft;
@@ -29,7 +31,8 @@ namespace Content.Server.GameObjects.Components.Movement
         /// <summary>
         ///     ID of the alert to show when piloting
         /// </summary>
-        private AlertType _pilotingAlertType;
+        [DataField("pilotingAlertType")]
+        private AlertType _pilotingAlertType = AlertType.PilotingShuttle;
 
         /// <summary>
         ///     The entity that's currently controlling this component.
@@ -39,43 +42,19 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public override string Name => "ShuttleController";
 
+        public bool IgnorePaused => false;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentWalkSpeed { get; } = 8;
         public float CurrentSprintSpeed => 0;
 
-        /// <inheritdoc />
-        [ViewVariables]
-        public float CurrentPushSpeed => 0.0f;
-
-        /// <inheritdoc />
-        [ViewVariables]
-        public float GrabRange => 0.0f;
-
         public bool Sprinting => false;
 
-        public (Vector2 walking, Vector2 sprinting) VelocityDir { get; } = (Vector2.Zero, Vector2.Zero);
-        public EntityCoordinates LastPosition { get; set; }
-        public float StepSoundDistance { get; set; }
+        public (Vector2 walking, Vector2 sprinting) VelocityDir { get; set; } = (Vector2.Zero, Vector2.Zero);
 
         public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled)
         {
-            var gridId = Owner.Transform.GridID;
-
-            if (_mapManager.TryGetGrid(gridId, out var grid) &&
-                Owner.EntityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
-            {
-                //TODO: Switch to shuttle component
-                if (!gridEntity.TryGetComponent(out IPhysicsComponent? physics))
-                {
-                    physics = gridEntity.AddComponent<PhysicsComponent>();
-                    physics.Mass = 1;
-                    physics.CanCollide = true;
-                    physics.PhysicsShapes.Add(new PhysShapeGrid(grid));
-                }
-
-                var controller = physics.EnsureController<ShuttleController>();
-                controller.Push(CalcNewVelocity(direction, enabled), CurrentWalkSpeed);
-            }
+            VelocityDir = (CalcNewVelocity(direction, enabled), Vector2.Zero);
         }
 
         public void SetSprinting(ushort subTick, bool walking)
@@ -201,13 +180,6 @@ namespace Content.Server.GameObjects.Components.Movement
             {
                 RemoveController(entity);
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _pilotingAlertType, "pilotingAlertType", AlertType.PilotingShuttle);
         }
 
         public override void Initialize()

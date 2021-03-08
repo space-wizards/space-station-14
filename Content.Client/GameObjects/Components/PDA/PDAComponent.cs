@@ -1,8 +1,8 @@
 using Content.Shared.GameObjects.Components.PDA;
-using Robust.Client.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.PDA
@@ -16,11 +16,11 @@ namespace Content.Client.GameObjects.Components.PDA
             switch(message)
             {
                 case PDAUplinkBuySuccessMessage _ :
-                    EntitySystem.Get<AudioSystem>().Play("/Audio/Effects/kaching.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                    SoundSystem.Play(Filter.Local(), "/Audio/Effects/kaching.ogg", Owner, AudioParams.Default.WithVolume(-2f));
                     break;
 
                 case PDAUplinkInsufficientFundsMessage _ :
-                    EntitySystem.Get<AudioSystem>().Play("/Audio/Effects/error.ogg", Owner, AudioParams.Default);
+                    SoundSystem.Play(Filter.Local(), "/Audio/Effects/error.ogg", Owner, AudioParams.Default);
                     break;
 
             }

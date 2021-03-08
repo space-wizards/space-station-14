@@ -2,14 +2,15 @@
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Body.Behavior
 {
     /// <summary>
     ///     Gives functionality to a <see cref="IMechanism"/> when added to it.
     /// </summary>
-    public interface IMechanismBehavior : IExposeData
+    [ImplicitDataDefinitionForInheritors]
+    public interface IMechanismBehavior
     {
         /// <summary>
         ///     The body that owns the <see cref="IBodyPart"/> in which the

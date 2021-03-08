@@ -24,10 +24,7 @@
             ]]
         },
         {
-            "name": "icon",
-            "delays": [[
-                1.0,
-            ]]
+            "name": "icon"
         }
 
     ]

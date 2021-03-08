@@ -8,7 +8,9 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
@@ -31,19 +33,23 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
                 UpdateAppearance();
             }
         }
+
+        [DataField("pumpEnabled")]
         private bool _pumpEnabled;
 
         /// <summary>
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="PipeNode"/> on this entity.
         /// </summary>
         [ViewVariables]
-        private PipeDirection _initialInletDirection;
+        [DataField("initialInletDirection")]
+        private PipeDirection _initialInletDirection = PipeDirection.None;
 
         /// <summary>
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="PipeNode"/> on this entity.
         /// </summary>
         [ViewVariables]
-        private PipeDirection _initialOutletDirection;
+        [DataField("initialOutletDirection")]
+        private PipeDirection _initialOutletDirection = PipeDirection.None;
 
         [ViewVariables]
         private PipeNode? _inletPipe;
@@ -52,14 +58,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
         private PipeNode? _outletPipe;
 
         private AppearanceComponent? _appearance;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _initialInletDirection, "inletDirection", PipeDirection.None);
-            serializer.DataField(ref _initialOutletDirection, "outletDirection", PipeDirection.None);
-            serializer.DataField(ref _pumpEnabled, "pumpEnabled", false);
-        }
 
         public override void Initialize()
         {

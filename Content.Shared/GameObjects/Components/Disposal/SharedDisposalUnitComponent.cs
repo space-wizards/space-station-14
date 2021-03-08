@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
@@ -20,8 +21,8 @@ namespace Content.Shared.GameObjects.Components.Disposal
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out IPhysicsComponent? physics) ||
-            physics.Anchored;
+            !Owner.TryGetComponent(out IPhysBody? physics) ||
+            physics.BodyType == BodyType.Static;
 
         [Serializable, NetSerializable]
         public enum Visuals
@@ -166,18 +167,20 @@ namespace Content.Shared.GameObjects.Components.Disposal
             if (!Anchored)
                 return false;
 
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
-                !physics.CanCollide)
+            // TODO: Probably just need a disposable tag.
+            if (!entity.TryGetComponent(out SharedStorableComponent? storable) &&
+                !entity.HasComponent<IBody>())
+            {
+                return false;
+            }
+
+
+            if (!entity.TryGetComponent(out IPhysBody? physics) ||
+                !physics.CanCollide && storable == null)
             {
                 if (!(entity.TryGetComponent(out IMobStateComponent? damageState) && damageState.IsDead())) {
                     return false;
                 }
-            }
-
-            if (!entity.HasComponent<SharedStorableComponent>() &&
-                !entity.HasComponent<IBody>())
-            {
-                return false;
             }
 
             return true;

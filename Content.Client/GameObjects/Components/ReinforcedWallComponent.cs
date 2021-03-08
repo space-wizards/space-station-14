@@ -1,6 +1,8 @@
 using Content.Client.GameObjects.Components.IconSmoothing;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Robust.Client.GameObjects.SpriteComponent;
 
@@ -13,14 +15,8 @@ namespace Content.Client.GameObjects.Components
         public override string Name => "ReinforcedWall";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private string _reinforcedStateBase;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _reinforcedStateBase, "reinforcedBase", null);
-        }
+        [DataField("reinforcedBase")]
+        private string _reinforcedStateBase = default;
 
         protected override void Startup()
         {
