@@ -1,17 +1,18 @@
-﻿#nullable enable
+#nullable enable
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Kitchen
+namespace Content.Shared.GameObjects.Components.Nutrition
 {
     /// <summary>
     /// Indicates that the entity can be thrown on a kitchen spike for butchering.
     /// </summary>
     [RegisterComponent]
-    public class ButcherableComponent : Component
+    public class SharedButcherableComponent : Component, IDraggable
     {
         public override string Name => "Butcherable";
 
@@ -21,6 +22,10 @@ namespace Content.Server.GameObjects.Components.Kitchen
         [ViewVariables]
         [DataField("meat")]
         private string? _meatPrototype;
+
+        public bool CanDrop(CanDropEventArgs args)
+        {
+            return true;
+        }
     }
 }
-

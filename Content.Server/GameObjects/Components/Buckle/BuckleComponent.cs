@@ -168,11 +168,6 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (!to.TryGetComponent(out strap))
             {
-                var message = Loc.GetString(Owner == user
-                    ? "You can't buckle yourself there!"
-                    : "You can't buckle {0:them} there!", Owner);
-                Owner.PopupMessage(user, message);
-
                 return false;
             }
 
