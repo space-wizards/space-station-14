@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Items
         [ViewVariables]
         private HandsGui? Gui { get; set; }
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private int ActiveHand { get; set; }
 
         [ViewVariables]
@@ -31,13 +31,13 @@ namespace Content.Client.GameObjects.Components.Items
         private readonly List<ClientHand> _hands = new();
 
         [ViewVariables]
-        public IEntity? ActiveItem => Hands.Any() ? Hands[ActiveHand].Entity : null;
+        public IEntity? ActiveItem => Hands.ElementAtOrDefault(ActiveHand)?.Entity;
 
         [ViewVariables]
         private ISpriteComponent? _sprite;
 
         [ViewVariables]
-        private string? ActiveHandName => Hands.Any() ? Hands[ActiveHand].Name : null; //debug var
+        private string? ActiveHandName => Hands.ElementAtOrDefault(ActiveHand)?.Name; //debug var
 
         public override void Initialize()
         {
@@ -172,50 +172,21 @@ namespace Content.Client.GameObjects.Components.Items
 
     public class ClientHand
     {
-        private bool _enabled = true;
-
         public ClientHand(HandsComponent parent, SharedHand hand, IEntityManager manager, HandButton? button = null)
         {
-            Parent = parent;
             Name = hand.Name;
             Location = hand.Location;
             Button = button;
 
             if (!hand.EntityUid.HasValue)
-            {
                 return;
-            }
-
             manager.TryGetEntity(hand.EntityUid.Value, out var entity);
             Entity = entity;
         }
 
-        private HandsComponent Parent { get; }
         public string Name { get; }
         public HandLocation Location { get; set; }
         public IEntity? Entity { get; set; }
         public HandButton? Button { get; set; }
-
-        public bool Enabled
-        {
-            get => _enabled;
-            set
-            {
-                if (_enabled == value)
-                {
-                    return;
-                }
-
-                _enabled = value;
-                Parent.Dirty();
-
-                var message = value
-                    ? (ComponentMessage) new HandEnabledMsg(Name)
-                    : new HandDisabledMsg(Name);
-
-                Parent.HandleMessage(message, Parent);
-                Parent.Owner.SendMessage(Parent, message);
-            }
-        }
     }
 }

@@ -18,11 +18,11 @@ namespace Content.Shared.GameObjects.Components.Items
     [Serializable, NetSerializable]
     public sealed class SharedHand
     {
-        public readonly int Index;
-        public readonly string Name;
-        public readonly EntityUid? EntityUid;
-        public readonly HandLocation Location;
-        public readonly bool Enabled;
+        public int Index { get; }
+        public string Name { get; }
+        public EntityUid? EntityUid { get; }
+        public HandLocation Location { get; }
+        public bool Enabled { get; }
 
         public SharedHand(int index, string name, EntityUid? entityUid, HandLocation location, bool enabled)
         {
@@ -38,8 +38,8 @@ namespace Content.Shared.GameObjects.Components.Items
     [Serializable, NetSerializable]
     public class HandsComponentState : ComponentState
     {
-        public readonly SharedHand[] Hands;
-        public readonly int ActiveIndex;
+        public SharedHand[] Hands { get; }
+        public int ActiveIndex { get; }
 
         public HandsComponentState(SharedHand[] hands, int activeIndex) : base(ContentNetIDs.HANDS)
         {
