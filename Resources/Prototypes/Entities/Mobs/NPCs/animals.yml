@@ -492,6 +492,7 @@
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 5
+  - type: MouseAccent
 
 - type: entity
   parent: MouseMob_Content
