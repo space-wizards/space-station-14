@@ -77,6 +77,11 @@ namespace Content.Client.UserInterface
 
             RightPanel.SetPositionFirst();
             LeftPanel.SetPositionLast();
+
+            foreach (HandLocation location in Enum.GetValues(typeof(HandLocation)))
+            {
+                GetStatusPanel(location).Update(null);
+            }
         }
 
         public void SetState(HandsGuiState state)
@@ -92,13 +97,17 @@ namespace Content.Client.UserInterface
 
             foreach (var hand in Hands)
             {
-                var newButton = MakeHandButton(hand.HandLocation);
+                var location = hand.HandLocation;
+                var heldItem = hand.HeldItem;
+
+                var newButton = MakeHandButton(location);
                 HandsContainer.AddChild(newButton);
                 hand.HandButton = newButton;
 
-                var heldItem = hand.HeldItem;
+                GetStatusPanel(location).Update(heldItem);
                 _itemSlotManager.SetItemSlot(newButton, heldItem);
                 _itemSlotManager.UpdateCooldown(newButton, heldItem);
+
             }
             if (ActiveHand != null)
             {
@@ -127,11 +136,6 @@ namespace Content.Client.UserInterface
                 _itemSlotManager.SetItemSlot(button, heldItem);
                 _itemSlotManager.UpdateCooldown(button, heldItem);
             }
-            //RightPanel.Update();
-            //TopPanel.Update();
-            //LeftPanel.Update();
-
-            //.Visible = true;
         }
 
         private ItemStatusPanel GetStatusPanel(HandLocation handLocation)
