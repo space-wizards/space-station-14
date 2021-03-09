@@ -5,6 +5,7 @@ using Content.Server.Utility;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.EntityLookup;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Atmos.Reactions
@@ -13,7 +14,7 @@ namespace Content.Server.Atmos.Reactions
     [DataDefinition]
     public class PlasmaFireReaction : IGasReactionEffect
     {
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, GridTileLookupSystem gridTileLookup)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, SharedEntityLookupSystem gridTileLookup)
         {
             var energyReleased = 0f;
             var oldHeatCapacity = mixture.HeatCapacity;

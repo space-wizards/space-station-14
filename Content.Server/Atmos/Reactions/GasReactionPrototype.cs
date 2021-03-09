@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
+using Robust.Shared.EntityLookup;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;

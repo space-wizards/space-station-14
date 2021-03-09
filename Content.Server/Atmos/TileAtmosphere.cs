@@ -1,4 +1,4 @@
-#nullable enable annotations
+﻿#nullable enable annotations
 using System;
 using System.Buffers;
 using System.Collections.Generic;
@@ -13,6 +13,7 @@ using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.EntityLookup;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -1088,13 +1089,13 @@ namespace Content.Server.Atmos
         {
             var reconsiderAdjacent = false;
 
-            foreach (var entity in GridIndices.GetEntitiesInTileFast(GridIndex, _gridAtmosphereComponent.GridTileLookupSystem))
+            foreach (var entity in GridIndices.GetEntitiesInTileFast(GridIndex, _gridAtmosphereComponent.EntityLookupSystem))
             {
                 if (!entity.TryGetComponent(out FirelockComponent firelock)) continue;
                 reconsiderAdjacent |= firelock.EmergencyPressureStop();
             }
 
-            foreach (var entity in other.GridIndices.GetEntitiesInTileFast(other.GridIndex, _gridAtmosphereComponent.GridTileLookupSystem))
+            foreach (var entity in other.GridIndices.GetEntitiesInTileFast(other.GridIndex, _gridAtmosphereComponent.EntityLookupSystem))
             {
                 if (!entity.TryGetComponent(out FirelockComponent firelock)) continue;
                 reconsiderAdjacent |= firelock.EmergencyPressureStop();

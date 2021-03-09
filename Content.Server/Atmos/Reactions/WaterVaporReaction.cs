@@ -5,6 +5,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.EntityLookup;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -22,7 +23,7 @@ namespace Content.Server.Atmos.Reactions
 
         [field: DataField("puddlePrototype")] public string? PuddlePrototype { get; } = "PuddleSmear";
 
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, GridTileLookupSystem gridTileLookup)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, SharedEntityLookupSystem gridTileLookup)
         {
             // If any of the prototypes is invalid, we do nothing.
             if (string.IsNullOrEmpty(Reagent) || string.IsNullOrEmpty(PuddlePrototype)) return ReactionResult.NoReaction;

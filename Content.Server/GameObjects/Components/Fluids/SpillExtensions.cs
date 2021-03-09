@@ -5,6 +5,7 @@ using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Server.GameObjects;
+using Robust.Shared.EntityLookup;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;

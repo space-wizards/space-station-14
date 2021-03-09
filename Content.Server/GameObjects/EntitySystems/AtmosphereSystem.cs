@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,7 @@ using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using Robust.Shared.EntityLookup;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -32,7 +33,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
 
         private SpaceGridAtmosphereComponent _spaceAtmos = default!;
-        private SharedEntityLookupSystem? _gridTileLookup = null;
+        private SharedEntityLookupSystem? _gridTileLookup;
 
         /// <summary>
         ///     List of gas reactions ordered by priority.

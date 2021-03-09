@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 // ReSharper disable once RedundantUsingDirective
 using System;
 using System.Collections;
@@ -13,6 +13,7 @@ using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects;
+using Robust.Shared.EntityLookup;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -37,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private IServerEntityManager _serverEntityManager = default!;
 
-        public SharedEntityLookupSystem GridTileLookupSystem { get; private set; } = default!;
+        public SharedEntityLookupSystem EntityLookupSystem { get; private set; } = default!;
         internal GasTileOverlaySystem GasTileOverlaySystem { get; private set; } = default!;
         public AtmosphereSystem AtmosphereSystem { get; private set; } = default!;
 
@@ -226,7 +227,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
             }
 
-            GridTileLookupSystem = EntitySystem.Get<GridTileLookupSystem>();
+            EntityLookupSystem = EntitySystem.Get<SharedEntityLookupSystem>();
             GasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
             AtmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
