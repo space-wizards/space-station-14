@@ -347,3 +347,8 @@ Entries:
   - {message: Water vapor canister from cargo console, type: Remove}
   id: 63
   time: '2021-03-09T07:54:22.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Items no longer collide with vending machines, type: Fix}
+  id: 64
+  time: '2021-03-09T08:47:29.0000000+00:00'
