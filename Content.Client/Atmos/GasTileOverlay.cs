@@ -1,5 +1,6 @@
 ﻿using Content.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -17,7 +18,7 @@ namespace Content.Client.Atmos
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-        public GasTileOverlay() : base(nameof(GasTileOverlay))
+        public GasTileOverlay()
         {
             IoCManager.InjectDependencies(this);
 
@@ -40,7 +41,7 @@ namespace Content.Client.Atmos
                     continue;
 
                 var gridBounds = new Box2(mapGrid.WorldToLocal(worldBounds.BottomLeft), mapGrid.WorldToLocal(worldBounds.TopRight));
-                
+
                 foreach (var tile in mapGrid.GetTilesIntersecting(gridBounds))
                 {
                     foreach (var (texture, color) in _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices))
