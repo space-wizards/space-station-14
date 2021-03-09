@@ -229,9 +229,10 @@
   - type: InteractionOutline
   - type: Physics
     mass: 100
-    anchored: false
-    shapes:
-    - !type:PhysShapeAabb
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       mask:
       - Impassable
       - MobImpassable
@@ -284,14 +285,14 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 50
-    anchored: false
-    shapes:
-    - !type:PhysShapeAabb
+    mass: 75
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       mask:
       - VaultImpassable
       layer:
-      - Opaque
       - VaultImpassable
   - type: Sprite
     sprite: Constructible/Power/solar_panel.rsi
@@ -322,15 +323,21 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 50
-    anchored: false
-    shapes:
-    - !type:PhysShapeAabb
+    mass: 100
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       mask:
+      - Impassable
+      - MobImpassable
       - VaultImpassable
+      - SmallImpassable
       layer:
       - Opaque
+      - MobImpassable
       - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     sprite: Constructible/Power/solar_panel.rsi
     state: solar_tracker

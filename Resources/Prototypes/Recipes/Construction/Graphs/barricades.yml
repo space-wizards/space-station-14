@@ -17,7 +17,7 @@
           completed:
             - !type:SpawnPrototype
               prototype: MaterialWoodPlank1
-              amount: 5
+              amount: 4 #returns 1 less as one breaks
             - !type:DeleteEntity {}
           conditions:
             - !type:EntityAnchored

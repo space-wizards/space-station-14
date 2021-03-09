@@ -11,9 +11,12 @@
     state: barricadewooden
   - type: Physics
     mass: 75
+    bodyType: Static
     anchored: true
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
       layer:
       - Opaque
       - Impassable
@@ -33,7 +36,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          WoodPlank:
+          MaterialWoodPlank1:
             min: 3
             max: 3
       - !type:DoActsBehavior
