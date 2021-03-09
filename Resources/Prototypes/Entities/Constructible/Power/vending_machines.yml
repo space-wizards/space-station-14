@@ -24,10 +24,7 @@
       - SmallImpassable
       layer:
       - Opaque
-      - Impassable
       - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
   - type: SnapGrid
     offset: Center
   - type: Damageable
