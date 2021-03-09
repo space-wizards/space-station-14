@@ -30,7 +30,7 @@
   parent: HumanMob_Content
   id: HumanMob_CentcomOfficial
   components:
-  - type: Sprite
+  - type: Icon
     sprite: Interface/Misc/markers.rsi
     state: Centcom
   - type: GhostRoleMobSpawner
