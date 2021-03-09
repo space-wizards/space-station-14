@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Check changed files
+      - id: file_changes
+        name: Check changed files
         uses: trilom/file-changes-action@v1.2.4
         with:
           fileOutput: 'yml'
