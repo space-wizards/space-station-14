@@ -156,6 +156,42 @@
           1
         ]
       ]
+    },
+    {
+      "name": "0-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "1-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "2-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "0-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "1-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "2-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "0-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "1-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "2-inhand-right",
+      "directions": 4
     }
   ]
 }
