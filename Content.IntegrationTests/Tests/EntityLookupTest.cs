@@ -17,8 +17,9 @@ namespace Content.IntegrationTests.Tests
   id: MobDummy
   components:
   - type: Physics
-  shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
       layer:
       - Impassable
       - MobImpassable
