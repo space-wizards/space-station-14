@@ -1,6 +1,6 @@
 - type: entity
   name: Trash Spawner
-  id: TrashSpawner
+  id: RandomSpawner
   components:
     - type: Sprite
       netsync: false
@@ -12,7 +12,7 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Physics
-    - type: TrashSpawner
+    - type: RandomSpawner
       rarePrototypes:
         - PuddleVomit
         - TrashPlate

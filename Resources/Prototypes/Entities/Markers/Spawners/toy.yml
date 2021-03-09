@@ -8,7 +8,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_toy
-    - type: TrashSpawner
+    - type: RandomSpawner
       rarePrototypes:
         - CarvingHelpMe
         - CarvingHello
@@ -39,7 +39,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_figure
-    - type: TrashSpawner
+    - type: RandomSpawner
       prototypes:
         - ToyAi
         - ToyNuke

@@ -11,7 +11,7 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Physics
-    - type: TrashSpawner
+    - type: RandomSpawner
       rarePrototypes:
         - BedsheetIan
         - BedsheetCosmos
