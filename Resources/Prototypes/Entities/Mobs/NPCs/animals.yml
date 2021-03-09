@@ -434,3 +434,70 @@
     - type: DamageStateVisualizer
       normal: penguin
       dead: penguin_dead
+
+- type: entity
+  name: mouse
+  parent: SimpleMobBase
+  id: MouseMob_Content
+  description: Squeak!
+  components:
+  - type: GhostTakeoverAvailableComponent
+    makeSentient: true
+    name: mouse
+    description: A mouse in maint.
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mouse-0
+      sprite: Mobs/Animals/mouse.rsi
+  - type: Physics
+    bodyType: Dynamic
+    mass: 10
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.50,-0.30,0.35,0.30"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: mouse-0
+      dead: splat-0
+
+- type: entity
+  parent: MouseMob_Content
+  id: MouseMob1_Content
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mouse-1
+      sprite: Mobs/Animals/mouse.rsi
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: mouse-1
+      dead: splat-1
+
+- type: entity
+  parent: MouseMob_Content
+  id: MouseMob2_Content
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mouse-2
+      sprite: Mobs/Animals/mouse.rsi
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: mouse-2
+      dead: splat-2
