@@ -82,7 +82,6 @@
     range: 1.5
     arcwidth: 0
     arc: bite
-    damage: 50
   - type: Appearance
     visuals:
     - type: BuckleVisualizer
