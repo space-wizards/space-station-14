@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Content.IntegrationTests;
 using Content.MapRenderer.Painters;
 using Content.Shared;
-using Robust.Client;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Map;
@@ -33,8 +32,7 @@ namespace Content.MapRenderer
                 CVarOverrides =
                 {
                     [CVars.NetPVS.Name] = "false"
-                },
-                Mode = DisplayMode.Clyde
+                }
             };
 
             var serverOptions = new ServerContentIntegrationOption
