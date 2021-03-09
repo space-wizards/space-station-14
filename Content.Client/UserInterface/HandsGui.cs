@@ -1,6 +1,8 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Client.GameObjects.Components.Items;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
@@ -10,6 +12,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.UserInterface
@@ -17,6 +20,7 @@ namespace Content.Client.UserInterface
     public class HandsGui : Control
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
         private Texture LeftHandTexture { get; }
         private Texture MiddleHandTexture { get; }
@@ -41,6 +45,8 @@ namespace Content.Client.UserInterface
         ///     The hands component that created this. Should only be used for sending network messages.
         /// </summary>
         private HandsComponent Creator { get; set; }
+
+        private int? ActiveHand { get; set; } = null;
 
         public HandsGui(HandsComponent creator)
         {
@@ -68,11 +74,14 @@ namespace Content.Client.UserInterface
             RightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
             StorageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
             BlockedTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
+
+            RightPanel.SetPositionFirst();
+            LeftPanel.SetPositionLast();
         }
 
         public void SetState(HandsGuiState state)
         {
-            var oldHands = Hands.ToArray();
+            ActiveHand = state.ActiveHand;
             Hands = state.GuiHands;
             UpdateGui();
         }
@@ -85,8 +94,39 @@ namespace Content.Client.UserInterface
             {
                 var newButton = MakeHandButton(hand.HandLocation);
                 HandsContainer.AddChild(newButton);
+                hand.HandButton = newButton;
+            }
+            if (ActiveHand != null)
+            {
+                if (TryGetHandButton(ActiveHand.Value, out var handButton))
+                {
+                    handButton.SetActiveHand(true);
+                }
             }
         }
+
+        private bool TryGetHandButton(int handNumber, [NotNullWhen(true)] out HandButton? handButton)
+        {
+            handButton = Hands.ElementAtOrDefault(handNumber)?.HandButton;
+            return handButton != null;
+        }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+            //RightPanel.Update();
+            //TopPanel.Update();
+            //LeftPanel.Update();
+
+            //.Visible = true;
+        }
+
+        /*public void UpdateHandIcons()
+        {
+                hand.Button!.SetPositionInParent(i);
+                _itemSlotManager.SetItemSlot(Button, Entity);
+                _itemSlotManager.UpdateCooldown(Button, Entity);
+        }*/
 
         private ItemStatusPanel GetStatusPanel(HandLocation handLocation)
         {
@@ -160,6 +200,9 @@ namespace Content.Client.UserInterface
         /// </summary>
         [ViewVariables]
         public IEntity? HeldItem { get; }
+
+        [ViewVariables]
+        public HandButton? HandButton { get; set; }
 
         public GuiHand(string name, HandLocation handLocation, IEntity? heldItem)
         {

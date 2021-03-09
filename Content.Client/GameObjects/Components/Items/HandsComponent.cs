@@ -118,6 +118,11 @@ namespace Content.Client.GameObjects.Components.Items
             }
         }
 
+        public void RefreshInHands()
+        {
+            SetGuiState(); //might be a more straightforward way to handle updating just th eitem names
+        }
+
         public override bool IsHolding(IEntity entity)
         {
             foreach (var hand in Hands)
@@ -176,11 +181,6 @@ namespace Content.Client.GameObjects.Components.Items
                 handStates.Add(handState);
             }
             return new HandsGuiState(handStates, ActiveHand);
-        }
-
-        public void RefreshInHands()
-        {
-            //TODO: handle updating stuff when item's EquippedPrefix changes, whatever that meant
         }
     }
 
