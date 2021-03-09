@@ -33,5 +33,5 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore /m
-      - name: Run Linter
+      - name: Create map images
         run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-build -- ${{ steps.file_changes.outputs.files_added }} ${{ steps.file_changes.outputs.files_modified }}
