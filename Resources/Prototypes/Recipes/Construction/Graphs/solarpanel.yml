@@ -29,7 +29,6 @@
           conditions:
             - !type:EntityAnchored
               value: true
-          actions:
           steps:
             - material: Glass
               amount: 2
@@ -41,7 +40,6 @@
           conditions:
             - !type:EntityAnchored
               value: true
-          actions:
           steps:
             - prototype: SolarTrackerElectronics
               name: Solar Tracker Electronics

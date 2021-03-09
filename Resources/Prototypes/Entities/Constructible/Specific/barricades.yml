@@ -12,7 +12,6 @@
   - type: Physics
     mass: 75
     bodyType: Static
-    anchored: true
     fixtures:
     - shape:
         !type:PhysShapeAabb
