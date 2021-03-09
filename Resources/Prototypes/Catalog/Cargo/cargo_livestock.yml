@@ -1,0 +1,23 @@
+- type: cargoProduct
+  name: "goat crate"
+  id: livestockgoat
+  description: "goat"
+  icon:
+    sprite: Mobs/Animals/goat.rsi
+    state: goat
+  product: CrateNPCGoat
+  cost: 1000
+  category: Livestock
+  group: market
+  
+- type: cargoProduct
+  name: "butterfly crate"
+  id: livestockbutterfly
+  description: "butterfly"
+  icon:
+    sprite: Mobs/Animals/butterfly.rsi
+    state: butterfly
+  product: CrateNPCButterflies
+  cost: 1000
+  category: Livestock
+  group: market

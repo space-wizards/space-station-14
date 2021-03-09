@@ -510,3 +510,22 @@
       state_open: weaponcrate_open
       state_closed: weaponcrate_door
 
+- type: entity
+  id: CrateLivestock
+  name: livestock crate
+  parent: CrateGeneric
+  components:
+  - type: Sprite
+    sprite: Constructible/Storage/Crates/livestock.rsi
+    layers:
+    - state: livestockcrate
+    - state: livestockcrate_door
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Constructible/Storage/Crates/livestock.rsi
+    state: livestockcrate
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: livestockcrate_open
+      state_closed: livestockcrate_door
