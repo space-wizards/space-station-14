@@ -342,3 +342,8 @@ Entries:
   - {message: More late-join spawn-points to arrivals, type: Tweak}
   id: 62
   time: '2021-03-08T19:17:06.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Water vapor canister from cargo console, type: Remove}
+  id: 63
+  time: '2021-03-09T07:54:22.0000000+00:00'
