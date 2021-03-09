@@ -75,13 +75,14 @@ namespace Content.Client.UserInterface
             StorageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
             BlockedTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
 
-            RightPanel.SetPositionFirst();
-            LeftPanel.SetPositionLast();
+
 
             foreach (HandLocation location in Enum.GetValues(typeof(HandLocation)))
             {
                 GetStatusPanel(location).Update(null);
             }
+            RightPanel.SetPositionFirst();
+            LeftPanel.SetPositionLast();
         }
 
         public void SetState(HandsGuiState state)
@@ -106,8 +107,6 @@ namespace Content.Client.UserInterface
 
                 GetStatusPanel(location).Update(heldItem);
                 _itemSlotManager.SetItemSlot(newButton, heldItem);
-                _itemSlotManager.UpdateCooldown(newButton, heldItem);
-
             }
             if (ActiveHand != null)
             {
@@ -129,13 +128,7 @@ namespace Content.Client.UserInterface
             base.FrameUpdate(args);
 
             foreach (var hand in Hands)
-            {
-                var button = hand.HandButton;
-                var heldItem = hand.HeldItem;
-
-                _itemSlotManager.SetItemSlot(button, heldItem);
-                _itemSlotManager.UpdateCooldown(button, heldItem);
-            }
+                _itemSlotManager.UpdateCooldown(hand.HandButton, hand.HeldItem);
         }
 
         private ItemStatusPanel GetStatusPanel(HandLocation handLocation)

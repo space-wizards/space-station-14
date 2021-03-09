@@ -21,10 +21,10 @@ namespace Content.Client.GameObjects.Components.Items
         [Dependency] private readonly IGameHud _gameHud = default!;
 
         [ViewVariables]
-        private HandsGui? Gui { get; set; }
+        private HandsGui Gui { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private int? ActiveHand { get; set; }
+        private int? ActiveHand { get; set; } //TODO: should this be nullable?
 
         [ViewVariables]
         public IReadOnlyList<ClientHand> Hands => _hands;
@@ -33,25 +33,30 @@ namespace Content.Client.GameObjects.Components.Items
         [ViewVariables]
         public IEntity? ActiveItem => ActiveHand != null ? Hands.ElementAtOrDefault(ActiveHand.Value)?.HeldItem : null;
 
-        [ViewVariables]
-        private ISpriteComponent? _sprite;
+        [ComponentDependency]
+        private ISpriteComponent? _sprite = default!;
 
         [ViewVariables]
         private string? ActiveHandName => ActiveHand != null ? Hands.ElementAtOrDefault(ActiveHand.Value)?.Name : null; //debug var
+
+        public override void OnAdd()
+        {
+            base.OnAdd();
+            Gui = new HandsGui(this); //TODO: subscripe msg sends to ui events
+        }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            Gui = new HandsGui(this);
             _gameHud.HandsContainer.AddChild(Gui);
             Owner.TryGetComponent(out _sprite); //TODO: use component dependency?
         }
 
         public override void OnRemove()
         {
+            Gui.Dispose();
             base.OnRemove();
-            Gui?.Dispose();
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -63,7 +68,13 @@ namespace Content.Client.GameObjects.Components.Items
 
             foreach (var hand in _hands)
             {
-                _sprite?.LayerMapRemove($"hand-{hand.Name}");
+                if (_sprite == null)
+                    continue;
+
+                var layerKey = GetHandLayerKey(hand.Name);
+                var layer = _sprite.LayerMapGet(layerKey);
+                _sprite.RemoveLayer(layer);
+                _sprite.LayerMapRemove(layerKey);
             }
             _hands.Clear();
 
@@ -71,7 +82,6 @@ namespace Content.Client.GameObjects.Components.Items
             {
                 var newHand = new ClientHand(handState, GetHeldItem(handState.EntityUid));
                 _hands.Add(newHand);
-                _sprite?.LayerMapReserveBlank($"hand-{newHand.Name}");
             }
             OnHandsModified();
 
@@ -161,14 +171,48 @@ namespace Content.Client.GameObjects.Components.Items
         {
         }
 
-        private void OnHandsModified() //TODO: Have methods call this when appropriate
+        private void OnHandsModified()
         {
+            MakeHandTextures();
             SetGuiState();
+        }
+
+        private void MakeHandTextures()
+        {
+            if (_sprite == null)
+                return;
+
+            foreach (var hand in Hands)
+            {
+                var key = GetHandLayerKey(hand.Name);
+                _sprite.LayerMapReserveBlank(key);
+
+                var heldItem = hand.HeldItem;
+                if (heldItem == null || !heldItem.TryGetComponent(out ItemComponent? item))
+                    continue;
+
+                var maybeInHands = item.GetInHandStateInfo(hand.Location);
+                if (maybeInHands == null)
+                    continue;
+
+                var (rsi, state, color) = maybeInHands.Value;
+
+                if (rsi == null)
+                {
+                    _sprite.LayerSetVisible(key, false);
+                }
+                else
+                {
+                    _sprite.LayerSetColor(key, color);
+                    _sprite.LayerSetVisible(key, true);
+                    _sprite.LayerSetState(key, state, rsi);
+                }
+            }
         }
 
         private void SetGuiState()
         {
-            Gui?.SetState(GetHandsGuiState());
+            Gui.SetState(GetHandsGuiState());
         }
 
         private HandsGuiState GetHandsGuiState()
@@ -181,6 +225,11 @@ namespace Content.Client.GameObjects.Components.Items
                 handStates.Add(handState);
             }
             return new HandsGuiState(handStates, ActiveHand);
+        }
+
+        private object GetHandLayerKey(string handName)
+        {
+            return $"hand-{handName}";
         }
     }
 
