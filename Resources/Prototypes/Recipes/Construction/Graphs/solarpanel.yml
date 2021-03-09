@@ -43,8 +43,7 @@
               value: true
           actions:
           steps:
-            - component: SolarTrackerElectronics
-              store:
+            - prototype: SolarTrackerElectronics
               name: Solar Tracker Electronics
               icon: 
                 sprite: Constructible/Misc/module.rsi
