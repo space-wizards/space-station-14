@@ -39,13 +39,8 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when being clicked on or "attacked" by a user with an object in their hand
     /// </summary>
     [PublicAPI]
-    public class InteractUsingMessage : EntitySystemMessage
+    public class InteractUsingMessage : HandledEntityEventArgs
     {
-        /// <summary>
-        ///     If this message has already been "handled" by a previous system.
-        /// </summary>
-        public bool Handled { get; set; }
-
         /// <summary>
         ///     Entity that triggered the attack.
         /// </summary>

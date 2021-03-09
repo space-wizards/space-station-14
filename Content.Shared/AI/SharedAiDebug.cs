@@ -12,7 +12,7 @@ namespace Content.Shared.AI
     {
         #region Mob Debug
         [Serializable, NetSerializable]
-        public class UtilityAiDebugMessage : EntitySystemMessage
+        public class UtilityAiDebugMessage : EntityEventArgs
         {
             public EntityUid EntityUid { get; }
             public double PlanningTime { get; }
@@ -40,10 +40,10 @@ namespace Content.Shared.AI
         /// Client asks the server for the pathfinding graph details
         /// </summary>
         [Serializable, NetSerializable]
-        public class RequestPathfindingGraphMessage : EntitySystemMessage {}
+        public class RequestPathfindingGraphMessage : EntityEventArgs {}
 
         [Serializable, NetSerializable]
-        public class PathfindingGraphMessage : EntitySystemMessage
+        public class PathfindingGraphMessage : EntityEventArgs
         {
             public Dictionary<int, List<Vector2>> Graph { get; }
 
@@ -97,7 +97,7 @@ namespace Content.Shared.AI
         }
 
         [Serializable, NetSerializable]
-        public class AStarRouteMessage : EntitySystemMessage
+        public class AStarRouteMessage : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
             public readonly IEnumerable<Vector2> Route;
@@ -121,7 +121,7 @@ namespace Content.Shared.AI
         }
 
         [Serializable, NetSerializable]
-        public class JpsRouteMessage : EntitySystemMessage
+        public class JpsRouteMessage : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
             public readonly IEnumerable<Vector2> Route;
@@ -143,7 +143,7 @@ namespace Content.Shared.AI
         #endregion
         #region Reachable Debug
         [Serializable, NetSerializable]
-        public sealed class ReachableChunkRegionsDebugMessage : EntitySystemMessage
+        public sealed class ReachableChunkRegionsDebugMessage : EntityEventArgs
         {
             public GridId GridId { get; }
             public Dictionary<int, Dictionary<int, List<Vector2>>> Regions { get; }
@@ -156,7 +156,7 @@ namespace Content.Shared.AI
         }
 
         [Serializable, NetSerializable]
-        public sealed class ReachableCacheDebugMessage : EntitySystemMessage
+        public sealed class ReachableCacheDebugMessage : EntityEventArgs
         {
             public GridId GridId { get; }
             public Dictionary<int, List<Vector2>> Regions { get; }
@@ -174,13 +174,13 @@ namespace Content.Shared.AI
         ///     Send if someone is subscribing to reachable regions for NPCs.
         /// </summary>
         [Serializable, NetSerializable]
-        public sealed class SubscribeReachableMessage : EntitySystemMessage {}
+        public sealed class SubscribeReachableMessage : EntityEventArgs {}
 
         /// <summary>
         ///     Send if someone is unsubscribing to reachable regions for NPCs.
         /// </summary>
         [Serializable, NetSerializable]
-        public sealed class UnsubscribeReachableMessage : EntitySystemMessage {}
+        public sealed class UnsubscribeReachableMessage : EntityEventArgs {}
         #endregion
     }
 }
