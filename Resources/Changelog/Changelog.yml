@@ -352,3 +352,8 @@ Entries:
   - {message: Items no longer collide with vending machines, type: Fix}
   id: 64
   time: '2021-03-09T08:47:29.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Removed unused vending machines, type: Remove}
+  id: 65
+  time: '2021-03-09T09:42:26.0000000+00:00'
