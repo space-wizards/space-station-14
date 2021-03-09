@@ -52,7 +52,7 @@
       - atmosphericsoxygen
       - atmosphericsnitrogen
       - atmosphericscarbondioxide
-      - atmosphericswatervapor
+#      - atmosphericswatervapor
 #      - atmosphericsplasma
 #      - atmosphericstritium
   - type: UserInterface
