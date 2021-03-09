@@ -4,13 +4,8 @@ using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable
@@ -26,12 +21,13 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <summary>
         /// How long will matchstick last in seconds.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)] private int _duration;
+        [ViewVariables(VVAccess.ReadOnly)] [DataField("duration")]
+        private int _duration = 10;
 
         /// <summary>
         /// Sound played when you ignite the matchstick.
         /// </summary>
-        private string? _igniteSound;
+        [DataField("igniteSound")] private string? _igniteSound;
 
         /// <summary>
         /// Point light component. Gives matches a glow in dark effect.
@@ -62,14 +58,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _duration, "duration", 10);
-            serializer.DataField(ref _igniteSound, "igniteSound", null);
-        }
-
         bool IHotItem.IsCurrentlyHot()
         {
             return CurrentState == SharedBurningStates.Lit;
@@ -89,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             Owner.SpawnTimer(_duration * 1000, () => CurrentState = SharedBurningStates.Burnt);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Target.TryGetComponent<IHotItem>(out var hotItem)
                 && hotItem.IsCurrentlyHot()

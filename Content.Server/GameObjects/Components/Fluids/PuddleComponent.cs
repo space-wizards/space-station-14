@@ -10,19 +10,16 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -51,7 +48,8 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override string Name => "Puddle";
 
         private CancellationTokenSource _evaporationToken;
-        private ReagentUnit _evaporateThreshold; // How few <Solution Quantity> we can hold prior to self-destructing
+        [DataField("evaporate_threshold")]
+        private ReagentUnit _evaporateThreshold = ReagentUnit.New(20); // How few <Solution Quantity> we can hold prior to self-destructing
         public ReagentUnit EvaporateThreshold
         {
             get => _evaporateThreshold;
@@ -67,9 +65,11 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <summary>
         ///     The time that it will take this puddle to evaporate, in seconds.
         /// </summary>
-        public float EvaporateTime { get; private set; }
+        [DataField("evaporate_time")]
+        public float EvaporateTime { get; private set; } = 5f;
 
-        private string _spillSound;
+        [DataField("spill_sound")]
+        private string _spillSound = "/Audio/Effects/Fluids/splat.ogg";
 
         /// <summary>
         /// Whether or not this puddle is currently overflowing onto its neighbors
@@ -92,28 +92,19 @@ namespace Content.Server.GameObjects.Components.Fluids
         // Currently a random number, potentially change
         public ReagentUnit OverflowVolume => _overflowVolume;
         [ViewVariables]
-        private ReagentUnit _overflowVolume;
+        [DataField("overflow_volume")]
+        private ReagentUnit _overflowVolume = ReagentUnit.New(20);
         private ReagentUnit OverflowLeft => CurrentVolume - OverflowVolume;
 
         private SolutionContainerComponent _contents;
         public bool EmptyHolder => _contents.ReagentList.Count == 0;
-        private int _spriteVariants;
+        [DataField("variants")]
+        private int _spriteVariants = 1;
         // Whether the underlying solution color should be used
-        private bool _recolor;
+        [DataField("recolor")]
+        private bool _recolor = default;
 
         private bool Slippery => Owner.TryGetComponent(out SlipperyComponent slippery) && slippery.Slippery;
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataFieldCached(ref _spillSound, "spill_sound", "/Audio/Effects/Fluids/splat.ogg");
-            serializer.DataField(ref _overflowVolume, "overflow_volume", ReagentUnit.New(20));
-            serializer.DataField(this, x => x.EvaporateTime, "evaporate_time", 5.0f);
-            // Long-term probably have this based on the underlying reagents
-            serializer.DataField(ref _evaporateThreshold, "evaporate_threshold", ReagentUnit.New(20));
-            serializer.DataField(ref _spriteVariants, "variants", 1);
-            serializer.DataField(ref _recolor, "recolor", false);
-        }
 
         public override void Initialize()
         {
@@ -378,7 +369,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             foreach (var entity in _snapGrid.GetInDir(direction))
             {
-                if (entity.TryGetComponent(out IPhysicsComponent physics) &&
+                if (entity.TryGetComponent(out IPhysBody physics) &&
                     (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
                 {
                     puddle = default;

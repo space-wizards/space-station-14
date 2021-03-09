@@ -1,9 +1,10 @@
-﻿using Content.Shared.Interfaces;
+﻿#nullable enable
+using Content.Shared.Interfaces;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Actions
 {
@@ -11,63 +12,64 @@ namespace Content.Shared.Actions
     /// An action which is granted to an entity via an item (such as toggling a flashlight).
     /// </summary>
     [Prototype("itemAction")]
-    public class ItemActionPrototype : BaseActionPrototype
+    [DataDefinition]
+    public class ItemActionPrototype : BaseActionPrototype, ISerializationHooks
     {
         /// <summary>
         /// Type of item action, no 2 itemAction prototypes should have the same one.
         /// </summary>
-        public ItemActionType ActionType { get; private set; }
+        [DataField("actionType")]
+        public ItemActionType ActionType { get; private set; } = ItemActionType.Error;
 
         /// <see cref="ItemActionIconStyle"/>
-        public ItemActionIconStyle IconStyle { get; private set; }
+        [DataField("iconStyle")]
+        public ItemActionIconStyle IconStyle { get; private set; } = ItemActionIconStyle.BigItem;
 
         /// <summary>
         /// The IInstantItemAction that should be invoked when performing this
         /// action. Null if this is not an Instant ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public IInstantItemAction InstantAction { get; private set; }
+        public IInstantItemAction InstantAction { get; private set; } = default!;
 
         /// <summary>
         /// The IToggleItemAction that should be invoked when performing this
         /// action. Null if this is not a Toggle ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public IToggleItemAction ToggleAction { get; private set; }
+        public IToggleItemAction ToggleAction { get; private set; } = default!;
 
         /// <summary>
         /// The ITargetEntityItemAction that should be invoked when performing this
         /// action. Null if this is not a TargetEntity ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public ITargetEntityItemAction TargetEntityAction { get; private set; }
+        public ITargetEntityItemAction TargetEntityAction { get; private set; } = default!;
 
         /// <summary>
         /// The ITargetPointItemAction that should be invoked when performing this
         /// action. Null if this is not a TargetPoint ActionBehaviorType.
         /// Will be null on client side if the behavior is not in Content.Client.
         /// </summary>
-        public ITargetPointItemAction TargetPointAction { get; private set; }
+        public ITargetPointItemAction TargetPointAction { get; private set; } = default!;
 
-        public override void LoadFrom(YamlMappingNode mapping)
+        [DataField("behavior", readOnly: true, serverOnly: true)]
+        public IItemActionBehavior? ItemActionBehavior { get; private set; }
+
+        public override string ID => ActionType.ToString();
+
+        public override void AfterDeserialization()
         {
-            base.LoadFrom(mapping);
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(this, x => x.ActionType, "actionType", ItemActionType.Error);
+            base.AfterDeserialization();
             if (ActionType == ItemActionType.Error)
             {
                 Logger.ErrorS("action", "missing or invalid actionType for action with name {0}", Name);
             }
 
-            serializer.DataField(this, x => x.IconStyle, "iconStyle", ItemActionIconStyle.BigItem);
-
             // TODO: Split this class into server/client after RobustToolbox#1405
             if (IoCManager.Resolve<IModuleManager>().IsClientModule) return;
 
-            IItemActionBehavior behavior = null;
-            serializer.DataField(ref behavior, "behavior", null);
-            switch (behavior)
+            switch (ItemActionBehavior)
             {
                 case null:
                     BehaviorType = BehaviorType.None;

@@ -2,8 +2,7 @@ using Content.Server.Cargo;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Cargo;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.IoC;
+using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
@@ -20,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Cargo
             Database = EntitySystem.Get<CargoConsoleSystem>().StationOrderDatabase;
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             if (!ConnectedToDatabase)
                 return new CargoOrderDatabaseState(null);

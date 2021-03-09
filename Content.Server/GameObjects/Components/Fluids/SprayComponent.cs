@@ -6,24 +6,18 @@ using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Fluids;
 using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Fluids
@@ -36,18 +30,28 @@ namespace Content.Server.GameObjects.Components.Fluids
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
-        private ReagentUnit _transferAmount;
+        [DataField("transferAmount")]
+        private ReagentUnit _transferAmount = ReagentUnit.New(10);
+        [DataField("spraySound")]
         private string _spraySound;
-        private float _sprayVelocity;
-        private float _sprayAliveTime;
+        [DataField("sprayVelocity")]
+        private float _sprayVelocity = 1.5f;
+        [DataField("sprayAliveTime")]
+        private float _sprayAliveTime = 0.75f;
         private TimeSpan _lastUseTime;
         private TimeSpan _cooldownEnd;
-        private float _cooldownTime;
-        private string _vaporPrototype;
-        private int _vaporAmount;
-        private float _vaporSpread;
+        [DataField("cooldownTime")]
+        private float _cooldownTime = 0.5f;
+        [DataField("sprayedPrototype")]
+        private string _vaporPrototype = "Vapor";
+        [DataField("vaporAmount")]
+        private int _vaporAmount = 1;
+        [DataField("vaporSpread")]
+        private float _vaporSpread = 90f;
+        [DataField("hasSafety")]
         private bool _hasSafety;
-        private bool _safety;
+        [DataField("safety")]
+        private bool _safety = true;
 
         /// <summary>
         ///     The amount of solution to be sprayer from this solution when using it
@@ -85,49 +89,34 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _vaporPrototype, "sprayedPrototype", "Vapor");
-            serializer.DataField(ref _vaporAmount, "vaporAmount", 1);
-            serializer.DataField(ref _vaporSpread, "vaporSpread", 90f);
-            serializer.DataField(ref _cooldownTime, "cooldownTime", 0.5f);
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(10));
-            serializer.DataField(ref _sprayVelocity, "sprayVelocity", 1.5f);
-            serializer.DataField(ref _spraySound, "spraySound", string.Empty);
-            serializer.DataField(ref _sprayAliveTime, "sprayAliveTime", 0.75f);
-            serializer.DataField(ref _hasSafety, "hasSafety", false);
-            serializer.DataField(ref _safety, "safety", true);
-        }
-
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
-                return;
+                return false;
 
             if (_hasSafety && _safety)
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("Its safety is on!"));
-                return;
+                return true;
             }
 
             if (CurrentVolume <= 0)
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("It's empty!"));
-                return;
+                return true;
             }
 
             var curTime = _gameTiming.CurTime;
 
             if(curTime < _cooldownEnd)
-                return;
+                return true;
 
             var playerPos = eventArgs.User.Transform.Coordinates;
             if (eventArgs.ClickLocation.GetGridId(_serverEntityManager) != playerPos.GetGridId(_serverEntityManager))
-                return;
+                return true;
 
             if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
-                return;
+                return true;
 
             var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
             var threeQuarters = direction * 0.75f;
@@ -183,15 +172,17 @@ namespace Content.Server.GameObjects.Components.Fluids
                 cooldown.CooldownStart = _lastUseTime;
                 cooldown.CooldownEnd = _cooldownEnd;
             }
+
+            return true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             ToggleSafety(eventArgs.User);
             return true;
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             ToggleSafety(eventArgs.User);
         }
@@ -212,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 appearance.SetData(SprayVisuals.Safety, _safety);
         }
 
-        public void Dropped(DroppedEventArgs eventArgs)
+        void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
             if(_hasSafety && Owner.TryGetComponent(out AppearanceComponent appearance))
                 appearance.SetData(SprayVisuals.Safety, _safety);

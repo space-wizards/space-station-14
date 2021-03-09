@@ -1,5 +1,6 @@
+#nullable enable
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.Verbs
@@ -16,12 +17,12 @@ namespace Content.Shared.GameObjects.Verbs
         /// <summary>
         ///     The text that the user sees on the verb button.
         /// </summary>
-        public string Text { get; set; }
+        public string Text { get; set; } = string.Empty;
 
         /// <summary>
         ///     Sprite of the icon that the user sees on the verb button.
         /// </summary>
-        public SpriteSpecifier Icon { get; set; }
+        public SpriteSpecifier? Icon { get; set; }
 
         /// <summary>
         ///     Name of the category this button is under.
@@ -31,7 +32,7 @@ namespace Content.Shared.GameObjects.Verbs
         /// <summary>
         ///     Sprite of the icon that the user sees on the verb button.
         /// </summary>
-        public SpriteSpecifier CategoryIcon { get; set; }
+        public SpriteSpecifier? CategoryIcon { get; set; }
 
         /// <summary>
         ///     Whether this verb is visible, disabled (greyed out) or hidden.

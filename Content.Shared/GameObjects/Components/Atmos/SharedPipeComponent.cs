@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using System;
@@ -13,15 +14,19 @@ namespace Content.Shared.GameObjects.Components.Atmos
     [Serializable, NetSerializable]
     public class PipeVisualState
     {
-        public readonly PipeDirection PipeDirection;
+        public readonly PipeShape PipeShape;
 
-        public PipeVisualState(PipeDirection pipeDirection)
+        public readonly PipeDirection ConnectedDirections;
+
+        public PipeVisualState(PipeShape pipeShape, PipeDirection connectedDirections)
         {
-            PipeDirection = pipeDirection;
+            PipeShape = pipeShape;
+            ConnectedDirections = connectedDirections;
         }
     }
 
     [Flags]
+    [Serializable, NetSerializable]
     public enum PipeDirection
     {
         None = 0,
@@ -63,6 +68,25 @@ namespace Content.Shared.GameObjects.Components.Atmos
         Fourway
     }
 
+    public static class PipeShapeHelpers
+    {
+        /// <summary>
+        ///     Gets the direction of a shape when facing 0 degrees (the initial direction of entities).
+        /// </summary>
+        public static PipeDirection ToBaseDirection(this PipeShape shape)
+        {
+            return shape switch
+            {
+                PipeShape.Half => PipeDirection.South,
+                PipeShape.Straight => PipeDirection.Longitudinal,
+                PipeShape.Bend => PipeDirection.SWBend,
+                PipeShape.TJunction => PipeDirection.TSouth,
+                PipeShape.Fourway => PipeDirection.Fourway,
+                _ => throw new ArgumentOutOfRangeException(nameof(shape), $"{shape} does not have an associated {nameof(PipeDirection)}."),
+            };
+        }
+    }
+
     public static class PipeDirectionHelpers
     {
         public const int PipeDirections = 4;
@@ -74,14 +98,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
 
         public static Angle ToAngle(this PipeDirection pipeDirection)
         {
-            return pipeDirection switch
-            {
-                PipeDirection.East  => Angle.FromDegrees(0),
-                PipeDirection.North => Angle.FromDegrees(90),
-                PipeDirection.West  => Angle.FromDegrees(180),
-                PipeDirection.South => Angle.FromDegrees(270),
-                _ => throw new ArgumentOutOfRangeException(nameof(pipeDirection), $"{pipeDirection} does not have an associated angle."),
-            };
+            return pipeDirection.ToDirection().ToAngle();
         }
 
         public static PipeDirection ToPipeDirection(this Direction direction)

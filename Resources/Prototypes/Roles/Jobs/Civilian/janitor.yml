@@ -9,6 +9,10 @@
   access:
   - Janitor
   - Maintenance
+  special:
+    !type:JanitorSpecial
+    holiday: GarbageDay
+    prototype: RevolverInspector
 
 - type: startingGear
   id: JanitorGear

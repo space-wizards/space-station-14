@@ -1,26 +1,26 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
-using Robust.Server.Interfaces.Console;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Server.Player;
+using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Commands.GameTicking
 {
     [AdminCommand(AdminFlags.Mapping)]
-    class TileWallsCommand : IClientCommand
+    class TileWallsCommand : IConsoleCommand
     {
         // ReSharper disable once StringLiteralTypo
         public string Command => "tilewalls";
         public string Description => "Puts an underplating tile below every wall on a grid.";
         public string Help => $"Usage: {Command} <gridId> | {Command}";
 
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             GridId gridId;
 
             switch (args.Length)
@@ -28,7 +28,7 @@ namespace Content.Server.Commands.GameTicking
                 case 0:
                     if (player?.AttachedEntity == null)
                     {
-                        shell.SendText((IPlayerSession) null, "Only a player can run this command.");
+                        shell.WriteLine("Only a player can run this command.");
                         return;
                     }
 
@@ -37,32 +37,33 @@ namespace Content.Server.Commands.GameTicking
                 case 1:
                     if (!int.TryParse(args[0], out var id))
                     {
-                        shell.SendText(player, $"{args[0]} is not a valid integer.");
+                        shell.WriteLine($"{args[0]} is not a valid integer.");
                         return;
                     }
 
                     gridId = new GridId(id);
                     break;
                 default:
-                    shell.SendText(player, Help);
+                    shell.WriteLine(Help);
                     return;
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
             if (!mapManager.TryGetGrid(gridId, out var grid))
             {
-                shell.SendText(player, $"No grid exists with id {gridId}");
+                shell.WriteLine($"No grid exists with id {gridId}");
                 return;
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             if (!entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
             {
-                shell.SendText(player, $"Grid {gridId} doesn't have an associated grid entity.");
+                shell.WriteLine($"Grid {gridId} doesn't have an associated grid entity.");
                 return;
             }
 
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var underplating = tileDefinitionManager["underplating"];
             var underplatingTile = new Tile(underplating.TileId);
             var changed = 0;
@@ -81,7 +82,7 @@ namespace Content.Server.Commands.GameTicking
                         break;
                     }
 
-                    prototype = prototype.Parent;
+                    prototype = prototypeManager.Index<EntityPrototype>(prototype.Parent);
                 }
 
                 if (prototype?.ID != "base_wall")
@@ -106,7 +107,7 @@ namespace Content.Server.Commands.GameTicking
                 changed++;
             }
 
-            shell.SendText(player, $"Changed {changed} tiles.");
+            shell.WriteLine($"Changed {changed} tiles.");
         }
     }
 }

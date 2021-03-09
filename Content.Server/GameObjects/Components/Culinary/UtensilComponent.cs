@@ -1,19 +1,15 @@
 ﻿#nullable enable
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Culinary
@@ -23,6 +19,7 @@ namespace Content.Server.GameObjects.Components.Culinary
     {
         public override string Name => "Utensil";
 
+        [DataField("types")]
         private UtensilType _types = UtensilType.None;
 
         [ViewVariables]
@@ -43,13 +40,15 @@ namespace Content.Server.GameObjects.Components.Culinary
         /// A value of 0 means that it is unbreakable.
         /// </summary>
         [ViewVariables]
+        [DataField("breakChance")]
         private float _breakChance;
 
         /// <summary>
         /// The sound to be played if the utensil breaks.
         /// </summary>
         [ViewVariables]
-        private string? _breakSound;
+        [DataField("breakSound")]
+        private string? _breakSound = "/Audio/Items/snap.ogg";
 
         public void AddType(UtensilType type)
         {
@@ -81,35 +80,10 @@ namespace Content.Server.GameObjects.Components.Culinary
             }
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction("types",
-                new List<UtensilType>(),
-                types => types.ForEach(AddType),
-                () =>
-                {
-                    var types = new List<UtensilType>();
-
-                    foreach (UtensilType type in Enum.GetValues(typeof(UtensilType)))
-                    {
-                        if ((Types & type) != 0)
-                        {
-                            types.Add(type);
-                        }
-                    }
-
-                    return types;
-                });
-
-            serializer.DataField(ref _breakChance, "breakChance", 0);
-            serializer.DataField(ref _breakSound, "breakSound", "/Audio/Items/snap.ogg");
-        }
-
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             TryUseUtensil(eventArgs.User, eventArgs.Target);
+            return true;
         }
 
         private void TryUseUtensil(IEntity user, IEntity? target)

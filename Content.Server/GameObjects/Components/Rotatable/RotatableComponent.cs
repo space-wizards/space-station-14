@@ -1,13 +1,13 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+﻿using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Rotatable
@@ -21,19 +21,14 @@ namespace Content.Server.GameObjects.Components.Rotatable
         ///     If true, this entity can be rotated even while anchored.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("rotateWhileAnchored")]
         public bool RotateWhileAnchored { get; private set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.RotateWhileAnchored, "rotateWhileAnchored", false);
-        }
 
         private void TryRotate(IEntity user, Angle angle)
         {
-            if (!RotateWhileAnchored && Owner.TryGetComponent(out IPhysicsComponent physics))
+            if (!RotateWhileAnchored && Owner.TryGetComponent(out IPhysBody physics))
             {
-                if (physics.Anchored)
+                if (physics.BodyType == BodyType.Static)
                 {
                     Owner.PopupMessage(user, Loc.GetString("It's stuck."));
                     return;
@@ -48,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
         {
             protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysicsComponent physics) && physics.Anchored))
+                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody physics) && physics.BodyType == BodyType.Static))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -70,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
         {
             protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysicsComponent physics) && physics.Anchored))
+                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody physics) && physics.BodyType == BodyType.Static))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

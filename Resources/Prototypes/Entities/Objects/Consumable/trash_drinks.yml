@@ -12,7 +12,7 @@
 
   - type: SolutionContainer
     maxVol: 10
-  - type: Pourable
+  - type: SolutionTransfer
     transferAmount: 5
   - type: Drink
     isOpen: true

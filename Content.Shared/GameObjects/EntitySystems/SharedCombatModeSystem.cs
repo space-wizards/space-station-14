@@ -1,7 +1,7 @@
+#nullable enable
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -19,7 +19,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             var entity = eventArgs.SenderSession?.AttachedEntity;
 
-            if (entity == null || !entity.TryGetComponent(out SharedCombatModeComponent combatModeComponent))
+            if (entity == null || !entity.TryGetComponent(out SharedCombatModeComponent? combatModeComponent))
             {
                 return;
             }

@@ -1,21 +1,18 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
-using Robust.Shared.EntityLookup;
-using Robust.Shared.Serialization;
+using Robust.Server.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Atmos.Reactions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class TritiumFireReaction : IGasReactionEffect
     {
-        public void ExposeData(ObjectSerializer serializer)
-        {
-        }
-
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, SharedEntityLookupSystem gridTileLookup)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, GridTileLookupSystem gridTileLookup)
         {
             var energyReleased = 0f;
             var oldHeatCapacity = mixture.HeatCapacity;
@@ -45,7 +42,7 @@ namespace Content.Server.Atmos.Reactions
             if (burnedFuel > 0)
             {
                 energyReleased += (Atmospherics.FireHydrogenEnergyReleased * burnedFuel);
-
+                
                 // TODO ATMOS Radiation pulse here!
 
                 // Conservation of mass is important.

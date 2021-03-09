@@ -1,6 +1,6 @@
 using System.Threading;
 using Content.Server.GameObjects.EntitySystems.JobQueues.Queues;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
 {

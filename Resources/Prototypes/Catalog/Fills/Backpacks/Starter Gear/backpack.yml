@@ -24,7 +24,6 @@
   - type: StorageFill
     contents:
       - name: BoxSurvival
-      - name: Stunbaton
       - name: Flash
 
 - type: entity
@@ -35,6 +34,7 @@
   - type: StorageFill
     contents:
       - name: BoxSurvival
+      - name: Medkit
 
 - type: entity
   abstract: true

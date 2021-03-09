@@ -4,14 +4,14 @@
   graph:
     - node: start
       edges:
-        - to: phoronWindow
+        - to: plasmaWindow
           steps:
-            - material: Metal
+            - material: Steel
               amount: 2
               doAfter: 2
             - material: Glass
               amount: 2
-            - material: Phoron
+            - material: Plasma
               amount: 2
               doAfter: 3
 
@@ -33,7 +33,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: GlassSheet1
+              prototype: SheetGlass1
               amount: 2
             - !type:DeleteEntity {}
           steps:
@@ -48,7 +48,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: RGlassSheet1
+              prototype: SheetRGlass1
               amount: 2
             - !type:DeleteEntity {}
           steps:
@@ -61,19 +61,19 @@
             - tool: Anchoring
               doAfter: 2
 
-    - node: phoronWindow
-      entity: PhoronWindow
+    - node: plasmaWindow
+      entity: PlasmaWindow
       edges:
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: GlassSheet1
+              prototype: SheetGlass1
               amount: 2
             - !type:SpawnPrototype
-              prototype: MetalSheet1
+              prototype: SheetSteel1
               amount: 2
             - !type:SpawnPrototype
-              prototype: PhoronSheet1
+              prototype: SheetPlasma1
               amount: 2
             - !type:DeleteEntity {}
           steps:

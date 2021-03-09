@@ -11,21 +11,17 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
+using Timer = Robust.Shared.Timing.Timer;
 
 #nullable enable
 
@@ -54,26 +50,13 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         [ViewVariables(VVAccess.ReadWrite)] private int _fireShotCounter;
 
-        [ViewVariables(VVAccess.ReadWrite)] private string _fireSound = default!;
-        [ViewVariables(VVAccess.ReadWrite)] private string _boltType = default!;
-        [ViewVariables(VVAccess.ReadWrite)] private int _powerUseActive;
-        [ViewVariables(VVAccess.ReadWrite)] private int _fireBurstSize;
-        [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _fireInterval;
-        [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _fireBurstDelayMin;
-        [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _fireBurstDelayMax;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _fireBurstDelayMin, "fireBurstDelayMin", TimeSpan.FromSeconds(2));
-            serializer.DataField(ref _fireBurstDelayMax, "fireBurstDelayMax", TimeSpan.FromSeconds(10));
-            serializer.DataField(ref _fireInterval, "fireInterval", TimeSpan.FromSeconds(2));
-            serializer.DataField(ref _fireBurstSize, "fireBurstSize", 3);
-            serializer.DataField(ref _powerUseActive, "powerUseActive", 500);
-            serializer.DataField(ref _boltType, "boltType", "EmitterBolt");
-            serializer.DataField(ref _fireSound, "fireSound", "/Audio/Weapons/emitter.ogg");
-        }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireSound")] private string _fireSound = "/Audio/Weapons/emitter.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("boltType")] private string _boltType = "EmitterBolt";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("powerUseActive")] private int _powerUseActive = 500;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstSize")] private int _fireBurstSize = 3;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireInterval")] private TimeSpan _fireInterval = TimeSpan.FromSeconds(2);
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstDelayMin")] private TimeSpan _fireBurstDelayMin = TimeSpan.FromSeconds(2);
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstDelayMax")] private TimeSpan _fireBurstDelayMax = TimeSpan.FromSeconds(10);
 
         public override void Initialize()
         {
@@ -102,23 +85,6 @@ namespace Content.Server.GameObjects.Components.Singularity
             {
                 PowerOn();
             }
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case AnchoredChangedMessage anchoredChanged:
-                    OnAnchoredChanged(anchoredChanged);
-                    break;
-            }
-        }
-
-        private void OnAnchoredChanged(AnchoredChangedMessage anchoredChanged)
-        {
-            if (anchoredChanged.Anchored)
-                Owner.SnapToGrid();
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -260,7 +226,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            physicsComponent.Status = BodyStatus.InAir;
+            physicsComponent.BodyStatus = BodyStatus.InAir;
 
             if (!projectile.TryGetComponent<ProjectileComponent>(out var projectileComponent))
             {
@@ -271,10 +237,9 @@ namespace Content.Server.GameObjects.Components.Singularity
             projectileComponent.IgnoreEntity(Owner);
 
             physicsComponent
-                .EnsureController<BulletController>()
-                .LinearVelocity = Owner.Transform.WorldRotation.ToVec() * 20f;
+                .LinearVelocity = Owner.Transform.WorldRotation.ToWorldVec() * 20f;
 
-            projectile.Transform.LocalRotation = Owner.Transform.WorldRotation;
+            projectile.Transform.WorldRotation = Owner.Transform.WorldRotation;
 
             // TODO: Move to projectile's code.
             Timer.Spawn(3000, () => projectile.Delete());

@@ -107,18 +107,18 @@
   canRotate: false
 
 - type: construction
-  name: phoron window
-  id: PhoronWindow
+  name: plasma window
+  id: PlasmaWindow
   graph: window
   startNode: start
-  targetNode: phoronWindow
+  targetNode: plasmaWindow
   category: Structures
   description: Clear and even tougher, with an orange tint. Must be built on top of a low wall.
   conditions:
     - !type:LowWallInTile {}
     - !type:NoWindowsInTile {}
   icon:
-    sprite: Constructible/Structures/Windows/phoron_window.rsi
+    sprite: Constructible/Structures/Windows/plasma_window.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -133,7 +133,7 @@
   category: Structures
   description: This is a firelock - it locks an area when a fire alarm in the area is triggered. Don't get squished!
   icon:
-    sprite: Constructible/Structures/Doors/firelock.rsi
+    sprite: Constructible/Structures/Doors/Standard/firelock.rsi
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
@@ -209,5 +209,5 @@
     sprite: Constructible/Power/apc.rsi
     state: apc0
   objectType: Structure
-  placementMode: AlignWallProper
+  placementMode: SnapgridCenter
   canBuildInImpassable: true

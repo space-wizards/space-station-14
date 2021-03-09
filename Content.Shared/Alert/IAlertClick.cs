@@ -1,15 +1,14 @@
-﻿using System;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+﻿#nullable enable
+using System;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Alert
 {
     /// <summary>
     /// Defines what should happen when an alert is clicked.
     /// </summary>
-    public interface IAlertClick : IExposeData
+    public interface IAlertClick
     {
-
         /// <summary>
         /// Invoked on server side when user clicks an alert.
         /// </summary>

@@ -1,23 +1,18 @@
 ﻿using System;
 using Content.Server.Atmos;
-using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.TileReactions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class FlammableTileReaction : ITileReaction
     {
-        private float _temperatureMultiplier = 1.25f;
-
-        public void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _temperatureMultiplier, "temperatureMultiplier", 1.15f);
-        }
+        [DataField("temperatureMultiplier")] private float _temperatureMultiplier = 1.15f;
 
         public ReagentUnit TileReact(TileRef tile, ReagentPrototype reagent, ReagentUnit reactVolume)
         {

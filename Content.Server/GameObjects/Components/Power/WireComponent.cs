@@ -1,10 +1,13 @@
-﻿using System.Threading.Tasks;
+#nullable enable
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -18,7 +21,8 @@ namespace Content.Server.GameObjects.Components.Power
         public override string Name => "Wire";
 
         [ViewVariables]
-        private string _wireDroppedOnCutPrototype;
+        [DataField("wireDroppedOnCutPrototype")]
+        private string? _wireDroppedOnCutPrototype = "HVWireStack1";
 
         /// <summary>
         ///     Checked by <see cref="WirePlacerComponent"/> to determine if there is
@@ -26,18 +30,15 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         [ViewVariables]
         public WireType WireType => _wireType;
-        private WireType _wireType;
+        [DataField("wireType")]
+        private WireType _wireType = WireType.HighVoltage;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _wireDroppedOnCutPrototype, "wireDroppedOnCutPrototype", "HVWireStack1");
-            serializer.DataField(ref _wireType, "wireType", WireType.HighVoltage);
-        }
+            if (_wireDroppedOnCutPrototype == null)
+                return false;
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            if (!eventArgs.Using.TryGetComponent(out ToolComponent tool)) return false;
+            if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool)) return false;
             if (!await tool.UseTool(eventArgs.User, Owner, 0.25f, ToolQuality.Cutting)) return false;
 
             Owner.Delete();

@@ -12,14 +12,13 @@ using Content.Shared.GameObjects.Components.Body.Surgery;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Surgery
@@ -36,13 +35,15 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
 
         private readonly Dictionary<int, object> _optionsCache = new();
 
-        private float _baseOperateTime;
+        [DataField("baseOperateTime")]
+        private float _baseOperateTime = 5;
 
         private ISurgeon.MechanismRequestCallback? _callbackCache;
 
         private int _idHash;
 
-        private SurgeryType _surgeryType;
+        [DataField("surgeryType")]
+        private SurgeryType _surgeryType = SurgeryType.Incision;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
 
@@ -50,16 +51,16 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
 
         public IEntity? PerformerCache { get; private set; }
 
-        async Task IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {
-                return;
+                return false;
             }
 
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
-                return;
+                return false;
             }
 
             CloseAllSurgeryUIs();
@@ -101,20 +102,22 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 if (!part.SurgeryCheck(_surgeryType))
                 {
                     NotUsefulPopup();
-                    return;
+                    return true;
                 }
 
                 // ...do the surgery.
                 if (part.AttemptSurgery(_surgeryType, part, this,
                     eventArgs.User))
                 {
-                    return;
+                    return true;
                 }
 
                 // Log error if the surgery fails somehow.
                 Logger.Debug($"Error when trying to perform surgery on ${nameof(IBodyPart)} {eventArgs.User.Name}");
                 throw new InvalidOperationException();
             }
+
+            return true;
         }
 
         public float BaseOperationTime { get => _baseOperateTime; set => _baseOperateTime = value; }
@@ -140,14 +143,6 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 Logger.Debug("Error on callback from mechanisms: there were no viable options to choose from!");
                 throw new InvalidOperationException();
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _surgeryType, "surgeryType", SurgeryType.Incision);
-            serializer.DataField(ref _baseOperateTime, "baseOperateTime", 5);
         }
 
         public override void Initialize()

@@ -2,7 +2,7 @@ using System.Text;
 using Content.Shared.Damage;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -14,10 +14,10 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
     {
         public readonly Button ScanButton;
         private readonly Label _diagnostics;
-        protected override Vector2? CustomSize => (485, 90);
-
         public MedicalScannerWindow()
         {
+            MinSize = SetSize = (485, 90);
+
             Contents.AddChild(new VBoxContainer
             {
                 Children =

@@ -3,24 +3,25 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Projectiles;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
     [RegisterComponent]
-    public class ProjectileComponent : SharedProjectileComponent, ICollideBehavior
+    public class ProjectileComponent : SharedProjectileComponent, IStartCollide
     {
         protected override EntityUid Shooter => _shooter;
 
         private EntityUid _shooter = EntityUid.Invalid;
 
-        private Dictionary<DamageType, int> _damages;
+        [DataField("damages")] private Dictionary<DamageType, int> _damages = new();
 
         [ViewVariables]
         public Dictionary<DamageType, int> Damages
@@ -30,23 +31,16 @@ namespace Content.Server.GameObjects.Components.Projectiles
         }
 
         public bool DeleteOnCollide => _deleteOnCollide;
-        private bool _deleteOnCollide;
+        [DataField("delete_on_collide")]
+        private bool _deleteOnCollide = true;
 
         // Get that juicy FPS hit sound
-        private string _soundHit;
-        private string _soundHitSpecies;
+        [DataField("soundHit")]
+        private string _soundHit = default;
+        [DataField("soundHitSpecies")]
+        private string _soundHitSpecies = default;
 
         private bool _damagedEntity;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _deleteOnCollide, "delete_on_collide", true);
-            // If not specified 0 damage
-            serializer.DataField(ref _damages, "damages", new Dictionary<DamageType, int>());
-            serializer.DataField(ref _soundHit, "soundHit", null);
-            serializer.DataField(ref _soundHitSpecies, "soundHitSpecies", null);
-        }
 
         public float TimeLeft { get; set; } = 10;
 
@@ -60,39 +54,27 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Dirty();
         }
 
-        private bool _internalDeleteOnCollide;
-
         /// <summary>
-        /// Applies the damage when our projectile collides with its victim
+        ///     Applies the damage when our projectile collides with its victim
         /// </summary>
-        /// <param name="entity"></param>
-        void ICollideBehavior.CollideWith(IEntity entity)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            if (_damagedEntity)
-            {
-                return;
-            }
-
             // This is so entities that shouldn't get a collision are ignored.
-            if (entity.TryGetComponent(out IPhysicsComponent otherPhysics) && otherPhysics.Hard == false)
+            if (!otherBody.Hard || _damagedEntity)
             {
-                _internalDeleteOnCollide = false;
                 return;
             }
-            else
+
+            if (otherBody.Entity.TryGetComponent(out IDamageableComponent damage) && _soundHitSpecies != null)
             {
-                _internalDeleteOnCollide = true;
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, otherBody.Entity.Transform.Coordinates);
+            }
+            else if (_soundHit != null)
+            {
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, otherBody.Entity.Transform.Coordinates);
             }
 
-            if (_soundHitSpecies != null && entity.HasComponent<IDamageableComponent>())
-            {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, entity.Transform.Coordinates);
-            } else if (_soundHit != null)
-            {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, entity.Transform.Coordinates);
-            }
-
-            if (entity.TryGetComponent(out IDamageableComponent damage))
+            if (damage != null)
             {
                 Owner.EntityManager.TryGetEntity(_shooter, out var shooter);
 
@@ -104,20 +86,17 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 _damagedEntity = true;
             }
 
-            if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
-                                && Owner.TryGetComponent(out IPhysicsComponent ownPhysics))
+            // Damaging it can delete it
+            if (!otherBody.Entity.Deleted && otherBody.Entity.TryGetComponent(out CameraRecoilComponent recoilComponent))
             {
-                var direction = ownPhysics.LinearVelocity.Normalized;
+                var direction = ourBody.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);
             }
+
+            Owner.Delete();
         }
 
-        void ICollideBehavior.PostCollide(int collideCount)
-        {
-            if (collideCount > 0 && DeleteOnCollide && _internalDeleteOnCollide) Owner.Delete();
-        }
-
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new ProjectileComponentState(NetID!.Value, _shooter, IgnoreShooter);
         }

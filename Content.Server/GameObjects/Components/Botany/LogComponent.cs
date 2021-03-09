@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using Content.Shared.GameObjects.EntitySystems;
+using System.Threading.Tasks;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -12,12 +12,12 @@ namespace Content.Server.GameObjects.Components.Botany
     {
         public override string Name => "Log";
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
                 return false;
 
-            if (eventArgs.Using.HasComponent<BotanySharpComponent>())
+            if (eventArgs.Using.HasTag("BotanySharp"))
             {
                 for (var i = 0; i < 2; i++)
                 {

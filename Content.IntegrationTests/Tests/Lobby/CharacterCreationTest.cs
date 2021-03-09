@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Client;
 using Content.Client.Interfaces;
 using Content.Client.State;
@@ -9,9 +9,9 @@ using Content.Server.Preferences;
 using Content.Shared;
 using Content.Shared.Preferences;
 using NUnit.Framework;
-using Robust.Client.Interfaces.State;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Network;
+using Robust.Client.State;
+using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 
 namespace Content.IntegrationTests.Tests.Lobby
 {

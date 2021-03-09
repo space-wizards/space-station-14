@@ -1,5 +1,5 @@
-﻿using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
+﻿#nullable enable
+using Robust.Shared.Analyzers;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
@@ -10,6 +10,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     /// However say you hold an item that is always hot like lava rock,
     /// it will be permanently hot.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IHotItem
     {
         bool IsCurrentlyHot();

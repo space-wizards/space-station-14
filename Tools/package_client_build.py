@@ -92,7 +92,8 @@ def build(skip_build: bool) -> None:
             "--nologo",
             "/v:m",
             "/t:Rebuild",
-            "/p:FullRelease=True"
+            "/p:FullRelease=True",
+            "/m"
         ], check=True)
 
     print(Fore.GREEN + "Packaging client..." + Style.RESET_ALL)

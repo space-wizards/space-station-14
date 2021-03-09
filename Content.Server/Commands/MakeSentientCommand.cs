@@ -1,34 +1,36 @@
 #nullable enable
+using System.Threading;
 using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Console;
-using Robust.Server.Interfaces.Player;
+using Content.Shared.GameObjects.Components.Mobs.Speech;
+using Content.Shared.GameObjects.Components.Movement;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public class MakeSentientCommand : IClientCommand
+    public class MakeSentientCommand : IConsoleCommand
     {
         public string Command => "makesentient";
         public string Description => "Makes an entity sentient (able to be controlled by a player)";
         public string Help => "makesentient <entity id>";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {
-                shell.SendText(player, "Wrong number of arguments.");
+                shell.WriteLine("Wrong number of arguments.");
                 return;
             }
 
             if (!int.TryParse(args[0], out var id))
             {
-                shell.SendText(player, "Invalid argument.");
+                shell.WriteLine("Invalid argument.");
                 return;
             }
 
@@ -38,15 +40,27 @@ namespace Content.Server.Commands
 
             if (!entityManager.TryGetEntity(entId, out var entity) || entity.Deleted)
             {
-                shell.SendText(player, "Invalid entity specified!");
+                shell.WriteLine("Invalid entity specified!");
                 return;
             }
 
+            MakeSentient(entity);
+        }
+
+        public static void MakeSentient(IEntity entity)
+        {
             if(entity.HasComponent<AiControllerComponent>())
                 entity.RemoveComponent<AiControllerComponent>();
 
-            entity.EnsureComponent<MindComponent>();
-            entity.EnsureComponent<PlayerInputMoverComponent>();
+            // Delay spawning these components to avoid race conditions with the deferred removal of AiController.
+            Timer.Spawn(100, () =>
+            {
+                entity.EnsureComponent<MindComponent>();
+                entity.EnsureComponent<SharedPlayerInputMoverComponent>();
+                entity.EnsureComponent<SharedPlayerMobMoverComponent>();
+                entity.EnsureComponent<SharedSpeechComponent>();
+                entity.EnsureComponent<SharedEmotingComponent>();
+            });
         }
     }
 }

@@ -14,12 +14,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Random;
@@ -58,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
             UpdateSprite();
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // are player trying place or lift of cistern lid?
             if (eventArgs.Using.TryGetComponent(out ToolComponent? tool)
@@ -92,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
             return false;
         }
 
-        public bool InteractHand(InteractHandEventArgs eventArgs)
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             // trying get something from stash?
             if (LidOpen)
@@ -104,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
             }
 
             // just want to up/down seat?
-            // check that nobody seats on seat right now 
+            // check that nobody seats on seat right now
             if (Owner.TryGetComponent(out StrapComponent? strap))
             {
                 if (strap.BuckledEntities.Count != 0)
@@ -144,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
             }
         }
 
-        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             // check that victim even have head
             if (victim.TryGetComponent<IBody>(out var body) &&

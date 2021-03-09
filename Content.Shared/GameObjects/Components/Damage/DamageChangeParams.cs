@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Body;
 
 namespace Content.Shared.GameObjects.Components.Damage

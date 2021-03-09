@@ -1,8 +1,8 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+using Content.Client.UserInterface.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.Power.AME.SharedAMEControllerComponent;
@@ -147,6 +147,15 @@ namespace Content.Client.GameObjects.Components.Power.AME
             if(!castState.IsMaster)
             {
                 ToggleInjection.Disabled = true;
+            }
+
+            if (!castState.Injecting)
+            {
+                InjectionStatus.Text = Loc.GetString("Not Injecting");
+            }
+            else
+            {
+                InjectionStatus.Text = Loc.GetString("Injecting...");
             }
 
             RefreshPartsButton.Disabled = castState.Injecting;

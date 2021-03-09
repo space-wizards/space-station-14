@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;

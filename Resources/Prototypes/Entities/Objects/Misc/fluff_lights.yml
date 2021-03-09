@@ -2,7 +2,6 @@
   name: lantern
   parent: BaseItem
   id: BaseLamp
-  description:
   abstract: true
   components:
   - type: HandheldLight
@@ -76,36 +75,10 @@
       - type: FlashLightVisualizer
 
 - type: entity
-  name: torch
-  id: Torch
-  parent: BaseLamp
-  description:
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/torch.rsi
-    layers:
-      - state: torch
-      - state: torch_on
-        shader: unshaded
-        visible: false
-  - type: Item
-    sprite: Objects/Misc/torch.rsi
-    HeldPrefix: off
-  - type: PointLight
-    enabled: false
-    radius: 1
-    energy: 4
-    color: "#FFC458"
-  - type: LoopingSound
-  - type: Appearance
-    visuals:
-      - type: LanternVisualizer
-
-- type: entity
   name: floodlight
   id: Floodlight
   parent: BaseLamp
-  description:
+  description: A pole with powerful mounted lights on it.
   components:
   - type: Sprite
     layers:
@@ -114,8 +87,9 @@
         shader: unshaded
         visible: false
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       layer:
       - Opaque
       - Impassable
@@ -131,17 +105,19 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      10:
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound: /Audio/Effects/glass_break1.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            FloodlightBroken:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/glass_break1.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FloodlightBroken:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Appearance
     visuals:
       - type: FlashLightVisualizer
@@ -150,7 +126,7 @@
   name: broken floodlight
   id: FloodlightBroken
   parent: BaseItem
-  description:
+  description: A pole with powerful mounted lights on it. It's broken.
   components:
   - type: Sprite
     sprite: Objects/Misc/lights.rsi
@@ -160,20 +136,23 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      20:
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound: /Audio/Effects/metalbreak.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SteelSheet1:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       layer:
       - Opaque
       - Impassable

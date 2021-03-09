@@ -9,11 +9,12 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    anchored: false
+    bodyType: KinematicController
     mass: 5
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.35,-0.35,0.35,0.35"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
       mask:
       - GhostImpassable
     status: InAir
@@ -29,6 +30,7 @@
   - type: Ghost
   - type: Sprite
     netsync: false
+    noRot: true
     drawdepth: Ghosts
     sprite: Mobs/Ghosts/ghost_human.rsi
     state: animated
@@ -40,5 +42,6 @@
     baseSprintSpeed: 14
     baseWalkSpeed: 7
   - type: MovementIgnoreGravity
-  - type: Grammar
-    proper: true
+  - type: Actions
+    innateActions:
+      - GhostBoo

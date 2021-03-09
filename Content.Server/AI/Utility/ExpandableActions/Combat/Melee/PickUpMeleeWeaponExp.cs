@@ -35,7 +35,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
 
             foreach (var entity in context.GetState<NearbyMeleeWeapons>().GetValue())
             {
-                yield return new PickUpMeleeWeapon(owner, entity, Bonus);
+                yield return new PickUpMeleeWeapon() {Owner = owner, Target = entity, Bonus = Bonus};
             }
         }
     }

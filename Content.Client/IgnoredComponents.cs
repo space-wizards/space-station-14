@@ -1,3 +1,4 @@
+// ReSharper disable ArrangeTrailingCommaInMultilineLists
 namespace Content.Client
 {
     public static class IgnoredComponents
@@ -6,7 +7,6 @@ namespace Content.Client
         {
             "Anchorable",
             "AmmoBox",
-            "Breakable",
             "Pickaxe",
             "Interactable",
             "CloningPod",
@@ -19,7 +19,6 @@ namespace Content.Client
             "EmitSoundOnUse",
             "FootstepModifier",
             "HeatResistance",
-            "Teleportable",
             "ItemTeleporter",
             "EntityStorage",
             "Wirecutter",
@@ -31,7 +30,6 @@ namespace Content.Client
             "MeleeChemicalInjector",
             "Dice",
             "Construction",
-            "Door",
             "PoweredLight",
             "Smes",
             "LightBulb",
@@ -61,7 +59,6 @@ namespace Content.Client
             "Rotatable",
             "MagicMirror",
             "FloorTile",
-            "FootstepSound",
             "ShuttleController",
             "HumanInventoryController",
             "UseDelay",
@@ -117,7 +114,6 @@ namespace Content.Client
             "EmitSoundOnThrow",
             "Flash",
             "DamageOnToolInteract",
-            "NoSlip",
             "TrashSpawner",
             "Pill",
             "RCD",
@@ -154,6 +150,8 @@ namespace Content.Client
             "PressureVent",
             "VolumePump",
             "PressureSiphon",
+            "PipeHeater",
+            "PipeNetDevice",
             "SignalReceiver",
             "SignalSwitch",
             "SignalTransmitter",
@@ -165,6 +163,7 @@ namespace Content.Client
             "Firelock",
             "AtmosPlaque",
             "Spillable",
+            "StorageCounter",
             "SpaceVillainArcade",
             "Flammable",
             "CreamPie",
@@ -173,12 +172,9 @@ namespace Content.Client
             "Matchstick",
             "Matchbox",
             "BlockGameArcade",
-            "KitchenSpike",
-            "Butcherable",
             "Rehydratable",
             "Headset",
             "ComputerBoard",
-            "BreakableConstruction",
             "GasCanister",
             "GasCanisterPort",
             "Cleanable",
@@ -235,12 +231,19 @@ namespace Content.Client
             "SliceableFood",
             "DamageOtherOnHit",
             "DamageOnLand",
+            "SmokeSolutionAreaEffect",
+            "FoamSolutionAreaEffect",
             "GasFilter",
             "Recyclable",
             "SecretStash",
             "Toilet",
             "ClusterFlash",
-            "GasGenerator"
+            "Repairable",
+            "GasGenerator",
+            "SolutionTransfer",
+            "Shovel",
+            "ReagentTank",
+            "UtilityAI",
         };
     }
 }

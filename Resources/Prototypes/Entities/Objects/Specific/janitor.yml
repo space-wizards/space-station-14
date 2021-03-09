@@ -1,3 +1,4 @@
+# TODO: Add description (1)
 - type: entity
   parent: BaseItem
   name: mop
@@ -13,12 +14,12 @@
   - type: Mop
   - type: SolutionContainer
     maxVol: 10
-  - type: LoopingSound
 
 - type: entity
   name: mop bucket
   id: MopBucket
   description: Holds water and the tears of the janitor.
+  suffix: Full
   components:
   - type: Clickable
   - type: Sprite
@@ -32,18 +33,23 @@
   - type: LoopingSound
   - type: SolutionContainer
     maxVol: 500
+    contents:
+      reagents:
+        - ReagentId: chem.Water
+          Quantity: 500
+
   - type: Physics
     mass: 5
-    anchored: false
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.40,-0.25,0.25,0.25"
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.40,-0.25,0.25,0.25"
       mask:
       - Impassable
       - Opaque
       layer:
       - Opaque
-  - type: Spillable
   - type: Pullable
 
 - type: entity
@@ -65,10 +71,11 @@
     maxVol: 500
   - type: Physics
     mass: 5
-    anchored: false
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
       mask:
       - Impassable
   - type: Spillable
@@ -99,17 +106,24 @@
   - type: Slippery
     paralyzeTime: 2.5
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - MobImpassable
+    bodyType: Dynamic
+    mass: 5
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.4,0.3,0.4"
+        layer:
+          - SmallImpassable
+        mask:
+          - SmallImpassable
+          - MobImpassable
+        hard: false
 
 - type: entity
   name: soap
   id: SoapNT
   parent: Soap
-  description: A Nanotrasen brand bar of soap. Smells of phoron.
+  description: A Nanotrasen brand bar of soap. Smells of plasma.
   components:
     - type: Sprite
       state: soapnt
@@ -173,15 +187,16 @@
         - state: chempuff
           map: [ "enum.VaporVisualLayers.Base" ]
     - type: Physics
-      anchored: false
-      hard: false
-      shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-          mask:
-            - Impassable
-            - MobImpassable
-            - SmallImpassable
+      bodyType: Dynamic
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+        hard: false
+        mask:
+          - Impassable
+          - MobImpassable
+          - SmallImpassable
     - type: Appearance
       visuals:
         - type: VaporVisualizer
@@ -198,8 +213,8 @@
     state: cleaner
   - type: SolutionContainer
     maxVol: 100
-    caps: AddTo, RemoveFrom
-  - type: Pourable
+    caps: Refillable, Drainable
+  - type: SolutionTransfer
     transferAmount: 5.0
   - type: Spillable
   - type: ItemCooldown
@@ -234,3 +249,18 @@
         reagents:
           - ReagentId: chem.SpaceCleaner
             Quantity: 100
+
+
+- type: entity
+  name: trash bag
+  id: TrashBag
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+    state: icon
+  - type: Storage
+    capacity: 125
+    quickInsert: true
+    areaInsert: true
+    storageSoundCollection: trashBagRustle

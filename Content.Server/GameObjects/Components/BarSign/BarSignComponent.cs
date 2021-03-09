@@ -2,16 +2,14 @@
 using System.Linq;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Robust.Server.GameObjects;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.BarSign
@@ -24,6 +22,7 @@ namespace Content.Server.GameObjects.Components.BarSign
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
+        [DataField("current")]
         private string? _currentSign;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -46,7 +45,7 @@ namespace Content.Server.GameObjects.Components.BarSign
                 return;
             }
 
-            if (!_prototypeManager.TryIndex(_currentSign, out BarSignPrototype prototype))
+            if (!_prototypeManager.TryIndex(_currentSign, out BarSignPrototype? prototype))
             {
                 Logger.ErrorS("barSign", $"Invalid bar sign prototype: \"{_currentSign}\"");
                 return;
@@ -99,13 +98,6 @@ namespace Content.Server.GameObjects.Components.BarSign
         private void PowerOnOnPowerStateChanged(PowerChangedMessage e)
         {
             UpdateSignInfo();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _currentSign, "current", null);
         }
 
         public void MapInit()

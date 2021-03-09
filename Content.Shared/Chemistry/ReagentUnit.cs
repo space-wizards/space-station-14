@@ -1,7 +1,8 @@
+#nullable enable
 using System;
 using System.Globalization;
 using System.Linq;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry
 {
@@ -204,7 +205,7 @@ namespace Content.Shared.Chemistry
             return reagent < min ? min : reagent > max ? max : reagent;
         }
 
-        public override readonly bool Equals(object obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is ReagentUnit unit &&
                    _value == unit._value;

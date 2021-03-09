@@ -1,18 +1,18 @@
-﻿using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
 using Content.Shared.Utility;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Items
 {
@@ -22,14 +22,8 @@ namespace Content.Server.GameObjects.Components.Items
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
         public override string Name => "FloorTile";
+        [DataField("outputs")]
         private List<string> _outputTiles;
-
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _outputTiles, "outputs", null);
-        }
 
         public override void Initialize()
         {
@@ -56,14 +50,20 @@ namespace Content.Server.GameObjects.Components.Items
             EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Items/genhit.ogg", location, AudioHelpers.WithVariation(0.125f));
         }
 
-        public async Task AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
-            if (!Owner.TryGetComponent(out StackComponent stack)) return;
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+                return true;
+
+            if (!Owner.TryGetComponent(out StackComponent stack))
+                return true;
+
             var mapManager = IoCManager.Resolve<IMapManager>();
 
             var location = eventArgs.ClickLocation.AlignWithClosestGridTile();
             var locationMap = location.ToMap(Owner.EntityManager);
+            if (locationMap.MapId == MapId.Nullspace)
+                return true;
             mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid);
             foreach (var currentTile in _outputTiles)
             {
@@ -88,10 +88,9 @@ namespace Content.Server.GameObjects.Components.Items
                     PlaceAt(mapGrid, location, _tileDefinitionManager[_outputTiles[0]].TileId, mapGrid.TileSize / 2f);
                     break;
                 }
-
-
             }
 
+            return true;
         }
     }
 }

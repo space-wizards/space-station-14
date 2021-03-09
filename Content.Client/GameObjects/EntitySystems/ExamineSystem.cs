@@ -5,15 +5,12 @@ using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -74,7 +71,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var popupPos = _userInterfaceManager.MousePositionScaled;
 
             // Actually open the tooltip.
-            _examineTooltipOpen = new Popup();
+            _examineTooltipOpen = new Popup { MaxWidth = 400};
             _userInterfaceManager.ModalRoot.AddChild(_examineTooltipOpen);
             var panel = new PanelContainer();
             panel.AddStyleClass(StyleClassEntityTooltip);
@@ -93,10 +90,11 @@ namespace Content.Client.GameObjects.EntitySystems
             hBox.AddChild(new Label
             {
                 Text = entity.Name,
-                SizeFlagsHorizontal = Control.SizeFlags.FillExpand,
+                HorizontalExpand = true,
             });
 
-            var size = Vector2.ComponentMax((minWidth, 0), panel.CombinedMinimumSize);
+            panel.Measure(Vector2.Infinity);
+            var size = Vector2.ComponentMax((minWidth, 0), panel.DesiredSize);
 
             _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos, size));
 

@@ -17,7 +17,6 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
         private readonly Menu _window;
-        private bool _closed;
 
         public AdminAddReagentEui()
         {
@@ -32,8 +31,6 @@ namespace Content.Client.UserInterface
 
         public override void Closed()
         {
-            _closed = true;
-
             _window.Close();
         }
 
@@ -85,11 +82,11 @@ namespace Content.Client.UserInterface
                                 (_amountEdit = new LineEdit
                                 {
                                     PlaceHolder = Loc.GetString("A number..."),
-                                    SizeFlagsHorizontal = SizeFlags.FillExpand
+                                    HorizontalExpand = true
                                 }),
                             },
-                            SizeFlagsHorizontal = SizeFlags.FillExpand,
-                            SizeFlagsVertical = SizeFlags.FillExpand
+                            HorizontalExpand = true,
+                            VerticalExpand = true
                         },
                         new HBoxContainer
                         {
@@ -97,7 +94,7 @@ namespace Content.Client.UserInterface
                             {
                                 (_errorLabel = new Label
                                 {
-                                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                    HorizontalExpand = true,
                                     ClipText = true
                                 }),
 

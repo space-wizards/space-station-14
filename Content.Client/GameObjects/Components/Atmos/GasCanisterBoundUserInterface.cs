@@ -1,11 +1,8 @@
 ﻿#nullable enable
-using System;
-using System.Diagnostics;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Shared.GameObjects.Components.UserInterface;
-using Content.Client.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
 namespace Content.Client.GameObjects.Components.Atmos

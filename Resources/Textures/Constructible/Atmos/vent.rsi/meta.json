@@ -9,11 +9,9 @@
    "states":[
       {
          "name":"ventOff",
-         "directions":4
       },
       {
          "name":"ventOn",
-         "directions":1,
          "delays":[ [ 0.08, 0.08, 0.08, 0.08 ] ]
       }
    ]

@@ -1,16 +1,17 @@
 ﻿- type: entity
   abstract: true
   id: WireBase
-  description: A flexible superconducting cable for heavy-duty power transfer.
   placement:
     mode: SnapgridCenter
   components:
   - type: Clickable
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5, -0.5, 0.5, 0.5"
-        layer: [ Underplating ]
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5, -0.5, 0.5, 0.5"
+        layer:
+        - Underplating
   - type: InteractionOutline
   - type: SnapGrid
     offset: Center
@@ -22,22 +23,25 @@
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: SubFloorHide
 
 - type: entity
   parent: WireBase
   id: HVWire
   name: HV Wire
+  description: "An orange high voltage power cable."
   components:
   - type: Sprite
-    sprite: Constructible/Power/hv_cable.rsi
+    sprite: Constructible/Power/Wires/hv_cable.rsi
     state: hvcable_0
   - type: Icon
-    sprite: Constructible/Power/hv_cable.rsi
+    sprite: Constructible/Power/Wires/hv_cable.rsi
     state: hvcable_4
   - type: IconSmooth
     base: hvcable_
@@ -53,28 +57,31 @@
     wireType: HighVoltage
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            HVWireStack1:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          HVWireStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: WireBase
   id: MVWire
   name: MV Wire
+  description: "A medium voltage power cable."
   components:
   - type: Sprite
     color: Yellow
-    sprite: Constructible/Power/mv_cable.rsi
+    sprite: Constructible/Power/Wires/mv_cable.rsi
     state: mvcable_0
   - type: Icon
     color: Yellow
-    sprite: Constructible/Power/mv_cable.rsi
+    sprite: Constructible/Power/Wires/mv_cable.rsi
     state: mvcable_4
   - type: IconSmooth
     base: mvcable_
@@ -90,28 +97,31 @@
     wireType: MediumVoltage
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            MVWireStack1:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MVWireStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: WireBase
   id: ApcExtensionCable
   name: Apc Extension Cable
+  description: "A cable used to connect machines to an APC." #ACPs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
   components:
   - type: Sprite
     color: Green
-    sprite: Constructible/Power/lv_cable.rsi
+    sprite: Constructible/Power/Wires/lv_cable.rsi
     state: lvcable_0
   - type: Icon
     color: Green
-    sprite: Constructible/Power/lv_cable.rsi
+    sprite: Constructible/Power/Wires/lv_cable.rsi
     state: lvcable_4
   - type: IconSmooth
     base: lvcable_
@@ -129,15 +139,17 @@
     wireType: Apc
   - type: Destructible
     thresholds:
-      100:
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            ApcExtensionCableStack1:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ApcExtensionCableStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 #Dummy wires
 
@@ -153,8 +165,8 @@
     drawdepth: BelowFloor
   - type: IconSmooth
     mode: CardinalFlags
-  - type: SubFloorHide 
-  
+  - type: SubFloorHide
+
 - type: entity
   abstract: true
   parent: BaseDummyWire
@@ -162,12 +174,12 @@
   name: HV Connector Wire
   components:
   - type: Sprite
-    sprite: Constructible/Power/hv_cable.rsi
+    sprite: Constructible/Power/Wires/hv_cable.rsi
     state: hvcable_0
   - type: IconSmooth
     base: hvcable_
     key: hv_cables
-    
+
 - type: entity
   abstract: true
   parent: BaseDummyWire
@@ -175,13 +187,13 @@
   name: MV Connector Wire
   components:
   - type: Sprite
-    sprite: Constructible/Power/mv_cable.rsi
+    sprite: Constructible/Power/Wires/mv_cable.rsi
     state: mvcable_0
     color: Yellow
   - type: IconSmooth
     base: mvcable_
     key: mv_cables
-    
+
 - type: entity
   abstract: true
   parent: BaseDummyWire
@@ -189,7 +201,7 @@
   name: LV Connector Wire
   components:
   - type: Sprite
-    sprite: Constructible/Power/lv_cable.rsi
+    sprite: Constructible/Power/Wires/lv_cable.rsi
     state: lvcable_0
     color: Green
   - type: IconSmooth

@@ -4,17 +4,16 @@ using System.Collections.Generic;
 using Content.Client.Interfaces;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared;
-using Robust.Client.Interfaces.Console;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -103,7 +102,8 @@ namespace Content.Client
             };
 
             _userInterfaceManager.PopupRoot.AddChild(label);
-            var minimumSize = label.CombinedMinimumSize;
+            label.Measure(Vector2.Infinity);
+            var minimumSize = label.DesiredSize;
 
             label.InitialPos = (coordinates.Position / _userInterfaceManager.UIScale) - minimumSize / 2;
             LayoutContainer.SetPosition(label, label.InitialPos);
@@ -150,7 +150,7 @@ namespace Content.Client
 
                 var position = Entity == null
                     ? InitialPos
-                    : (_eyeManager.CoordinatesToScreen(Entity.Transform.Coordinates).Position / UIScale) - CombinedMinimumSize / 2;
+                    : (_eyeManager.CoordinatesToScreen(Entity.Transform.Coordinates).Position / UIScale) - DesiredSize / 2;
 
                 LayoutContainer.SetPosition(this, position - (0, 20 * (TimeLeft * TimeLeft + TimeLeft)));
 
@@ -168,12 +168,11 @@ namespace Content.Client
         public string Description => "";
         public string Help => "";
 
-        public bool Execute(IDebugConsole console, params string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var arg = args[0];
             var mgr = IoCManager.Resolve<IClientNotifyManager>();
             mgr.PopupMessage(arg);
-            return false;
         }
     }
 }

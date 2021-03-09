@@ -8,11 +8,11 @@ using Content.Shared;
 using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Network;
+using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -48,7 +48,6 @@ namespace Content.Server.Preferences
                 HandleDeleteCharacterMessage);
         }
 
-
         private async void HandleSelectCharacterMessage(MsgSelectCharacter message)
         {
             var index = message.SelectedCharacterIndex;
@@ -73,7 +72,7 @@ namespace Content.Server.Preferences
                 return;
             }
 
-            prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, index);
+            prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, index, curPrefs.AdminOOCColor);
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
@@ -107,12 +106,14 @@ namespace Content.Server.Preferences
 
             var curPrefs = prefsData.Prefs!;
 
+            profile.EnsureValid();
+
             var profiles = new Dictionary<int, ICharacterProfile>(curPrefs.Characters)
             {
-                [slot] = HumanoidCharacterProfile.EnsureValid((HumanoidCharacterProfile) profile, _protos)
+                [slot] = profile
             };
 
-            prefsData.Prefs = new PlayerPreferences(profiles, slot);
+            prefsData.Prefs = new PlayerPreferences(profiles, slot, curPrefs.AdminOOCColor);
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
@@ -157,7 +158,7 @@ namespace Content.Server.Preferences
             var arr = new Dictionary<int, ICharacterProfile>(curPrefs.Characters);
             arr.Remove(slot);
 
-            prefsData.Prefs = new PlayerPreferences(arr, nextSlot ?? curPrefs.SelectedCharacterIndex);
+            prefsData.Prefs = new PlayerPreferences(arr, nextSlot ?? curPrefs.SelectedCharacterIndex, curPrefs.AdminOOCColor);
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
@@ -182,7 +183,7 @@ namespace Content.Server.Preferences
                     PrefsLoaded = Task.CompletedTask,
                     Prefs = new PlayerPreferences(
                         new[] {new KeyValuePair<int, ICharacterProfile>(0, HumanoidCharacterProfile.Default())},
-                        0)
+                        0, Color.Transparent)
                 };
 
                 _cachedPlayerPrefs[session.UserId] = prefsData;
@@ -280,7 +281,7 @@ namespace Content.Server.Preferences
                 }
 
                 return new KeyValuePair<int, ICharacterProfile>(p.Key, newProf);
-            }), prefs.SelectedCharacterIndex);
+            }), prefs.SelectedCharacterIndex, prefs.AdminOOCColor);
         }
 
         public IEnumerable<KeyValuePair<NetUserId, ICharacterProfile>> GetSelectedProfilesForPlayers(

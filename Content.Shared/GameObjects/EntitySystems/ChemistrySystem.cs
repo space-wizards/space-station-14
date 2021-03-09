@@ -1,8 +1,8 @@
+#nullable enable
 using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -19,7 +19,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
     public class SolutionChangeEventArgs : EventArgs
     {
-        public IEntity Owner { get; set; }
+        public IEntity Owner { get; set; } = default!;
     }
 
     [UsedImplicitly]

@@ -5,14 +5,11 @@ using Content.Client.Interfaces.Chat;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Robust.Client.Console;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -78,7 +75,7 @@ namespace Content.Client.Chat
         private ChatChannel _filteredChannels;
 
         [Dependency] private readonly IClientNetManager _netManager = default!;
-        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
@@ -208,26 +205,24 @@ namespace Content.Client.Chat
                 messageText = string.Format(message.MessageWrap, messageText);
             }
 
-            switch (message.Channel)
+            if (message.MessageColorOverride != Color.Transparent)
             {
-                case ChatChannel.Server:
-                    color = Color.Orange;
-                    break;
-                case ChatChannel.Radio:
-                    color = Color.Green;
-                    break;
-                case ChatChannel.OOC:
-                    color = Color.LightSkyBlue;
-                    break;
-                case ChatChannel.Dead:
-                    color = Color.MediumPurple;
-                    break;
-                case ChatChannel.AdminChat:
-                    color = Color.Red;
-                    break;
+                color = message.MessageColorOverride;
+            }
+            else
+            {
+                color = message.Channel switch
+                {
+                    ChatChannel.Server => Color.Orange,
+                    ChatChannel.Radio => Color.Green,
+                    ChatChannel.OOC => Color.LightSkyBlue,
+                    ChatChannel.Dead => Color.MediumPurple,
+                    ChatChannel.AdminChat => Color.Red,
+                    _ => color
+                };
             }
 
-            _currentChatBox?.AddLine(messageText, message.Channel, color);
+            _currentChatBox?.AddLine(FormattedMessage.FromMarkup(messageText), color);
         }
 
         private void OnChatBoxTextSubmitted(ChatBox chatBox, string text)
@@ -242,7 +237,8 @@ namespace Content.Client.Chat
             {
                 if (_currentChatBox != null)
                 {
-                    string locWarning = Loc.GetString("Your message exceeds {0} character limit", _maxMessageLength);
+                    string locWarning = Loc.GetString("chat-manager-max-message-length",
+                                            ("maxMessageLength", _maxMessageLength));
                     _currentChatBox.AddLine(locWarning, ChatChannel.Server, Color.Orange);
                     _currentChatBox.ClearOnEnter = false; // The text shouldn't be cleared if it hasn't been sent
                 }
@@ -255,7 +251,7 @@ namespace Content.Client.Chat
                 {
                     // run locally
                     var conInput = text.Substring(1);
-                    _console.ProcessCommand(conInput);
+                    _consoleHost.ExecuteCommand(conInput);
                     break;
                 }
                 case OOCAlias:
@@ -263,7 +259,7 @@ namespace Content.Client.Chat
                     var conInput = text.Substring(1);
                     if (string.IsNullOrWhiteSpace(conInput))
                         return;
-                    _console.ProcessCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
+                    _consoleHost.ExecuteCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
                     break;
                 }
                 case AdminChatAlias:
@@ -273,11 +269,11 @@ namespace Content.Client.Chat
                         return;
                     if (_groupController.CanCommand("asay"))
                     {
-                        _console.ProcessCommand($"asay \"{CommandParsing.Escape(conInput)}\"");
+                        _consoleHost.ExecuteCommand($"asay \"{CommandParsing.Escape(conInput)}\"");
                     }
                     else
                     {
-                        _console.ProcessCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
+                        _consoleHost.ExecuteCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
                     }
 
                     break;
@@ -287,7 +283,7 @@ namespace Content.Client.Chat
                     var conInput = text.Substring(1);
                     if (string.IsNullOrWhiteSpace(conInput))
                         return;
-                    _console.ProcessCommand($"me \"{CommandParsing.Escape(conInput)}\"");
+                    _consoleHost.ExecuteCommand($"me \"{CommandParsing.Escape(conInput)}\"");
                     break;
                 }
                 default:
@@ -295,7 +291,7 @@ namespace Content.Client.Chat
                     var conInput = _currentChatBox?.DefaultChatFormat != null
                         ? string.Format(_currentChatBox.DefaultChatFormat, CommandParsing.Escape(text))
                         : text;
-                    _console.ProcessCommand(conInput);
+                    _consoleHost.ExecuteCommand(conInput);
                     break;
                 }
             }
@@ -355,6 +351,7 @@ namespace Content.Client.Chat
                     chatBox.OOCButton.Pressed ^= true;
                     if (chatBox.AdminButton != null)
                         chatBox.AdminButton.Pressed ^= true;
+                    chatBox.DeadButton.Pressed ^= true;
                     _allState = !_allState;
                     break;
             }
@@ -426,7 +423,7 @@ namespace Content.Client.Chat
                 return;
             }
 
-            var messages = SplitMessage(msg.Message);
+            var messages = SplitMessage(FormattedMessage.RemoveMarkup(msg.Message));
 
             foreach (var message in messages)
             {

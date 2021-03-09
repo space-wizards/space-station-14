@@ -1,53 +1,56 @@
 #nullable enable
 using System;
 using System.Linq;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Actions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class DisarmAction : ITargetEntityAction
     {
-        private float _failProb;
-        private float _pushProb;
-        private float _cooldown;
-
-        public void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _failProb, "failProb", 0.4f);
-            serializer.DataField(ref _pushProb, "pushProb", 0.4f);
-            serializer.DataField(ref _cooldown, "cooldown", 1.5f);
-        }
+        [DataField("failProb")] private float _failProb = 0.4f;
+        [DataField("pushProb")] private float _pushProb = 0.4f;
+        [DataField("cooldown")] private float _cooldown = 1.5f;
 
         public void DoTargetEntityAction(TargetEntityActionEventArgs args)
         {
             var disarmedActs = args.Target.GetAllComponents<IDisarmedAct>().ToArray();
 
-            if (disarmedActs.Length == 0 || !args.Performer.InRangeUnobstructed(args.Target)) return;
+            if (!args.Performer.InRangeUnobstructed(args.Target)) return;
+
+            if (disarmedActs.Length == 0)
+            {
+                if (args.Performer.TryGetComponent(out IActorComponent? actor))
+                {
+                    // Fall back to a normal interaction with the entity
+                    var player = actor.playerSession;
+                    var coordinates = args.Target.Transform.Coordinates;
+                    var target = args.Target.Uid;
+                    EntitySystem.Get<InteractionSystem>().HandleClientUseItemInHand(player, coordinates, target);
+                    return;
+                }
+
+                return;
+            }
+
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
             if (args.Target == args.Performer || !args.Performer.CanAttack()) return;
 
@@ -55,7 +58,8 @@ namespace Content.Server.Actions
             var audio = EntitySystem.Get<AudioSystem>();
             var system = EntitySystem.Get<MeleeWeaponSystem>();
 
-            var angle = new Angle(args.Target.Transform.MapPosition.Position - args.Performer.Transform.MapPosition.Position);
+            var diff = args.Target.Transform.MapPosition.Position - args.Performer.Transform.MapPosition.Position;
+            var angle = Angle.FromWorldVec(diff);
 
             actions.Cooldown(ActionType.Disarm, Cooldowns.SecondsFromNow(_cooldown));
 

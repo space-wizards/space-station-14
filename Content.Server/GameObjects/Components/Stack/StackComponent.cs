@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
@@ -7,8 +7,6 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -16,7 +14,6 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Stack
 {
-
     // TODO: Naming and presentation and such could use some improvement.
     [RegisterComponent]
     [ComponentReference(typeof(SharedStackComponent))]
@@ -82,12 +79,12 @@ namespace Content.Server.GameObjects.Components.Stack
             return false;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent<StackComponent>(out var stack))
                 return false;
 
-            if (!stack.StackType.Equals(StackType))
+            if (!stack.StackTypeId.Equals(StackTypeId))
             {
                 return false;
             }
@@ -109,12 +106,21 @@ namespace Content.Server.GameObjects.Components.Stack
 
                 if (stack.AvailableSpace == 0)
                 {
-                    eventArgs.Using.SpawnTimer(300, () => popupPos.PopupMessage(eventArgs.User, "Stack is now full."));
+                    eventArgs.Using.SpawnTimer(
+                        300,
+                        () => popupPos.PopupMessage(
+                            eventArgs.User,
+                            Loc.GetString("comp-stack-becomes-full")
+                        )
+                    );
                 }
             }
             else if (toTransfer == 0 && stack.AvailableSpace == 0)
             {
-                popupPos.PopupMessage(eventArgs.User, "Stack is already full.");
+                popupPos.PopupMessage(
+                    eventArgs.User,
+                    Loc.GetString("comp-stack-already-full")
+                );
             }
 
             return true;
@@ -124,9 +130,13 @@ namespace Content.Server.GameObjects.Components.Stack
         {
             if (inDetailsRange)
             {
-                message.AddMarkup(Loc.GetPluralString(
-                    "There is [color=lightgray]1[/color] thing in the stack",
-                    "There are [color=lightgray]{0}[/color] things in the stack.", Count, Count));
+                message.AddMarkup(
+                    Loc.GetString(
+                        "comp-stack-examine-detail-count",
+                        ("count", Count),
+                        ("markupCountColor", "lightgray")
+                    )
+                );
             }
         }
     }

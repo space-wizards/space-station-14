@@ -1,15 +1,16 @@
+#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -19,10 +20,12 @@ namespace Content.Shared.Chemistry
     ///     A solution of reagents.
     /// </summary>
     [Serializable, NetSerializable]
-    public class Solution : IExposeData, IEnumerable<Solution.ReagentQuantity>
+    [DataDefinition]
+    public class Solution : IEnumerable<Solution.ReagentQuantity>, ISerializationHooks
     {
         // Most objects on the station hold only 1 or 2 reagents
         [ViewVariables]
+        [DataField("reagents")]
         private List<ReagentQuantity> _contents = new(2);
 
         public IReadOnlyList<ReagentQuantity> Contents => _contents;
@@ -50,19 +53,10 @@ namespace Content.Shared.Chemistry
             AddReagent(reagentId, quantity);
         }
 
-        /// <inheritdoc />
-        public void ExposeData(ObjectSerializer serializer)
+        void ISerializationHooks.AfterDeserialization()
         {
-            serializer.DataReadWriteFunction(
-                "reagents",
-                new List<ReagentQuantity>(),
-                quantities =>
-                {
-                    _contents = quantities;
-                    TotalVolume = ReagentUnit.New(0);
-                    quantities.ForEach(reagent => TotalVolume += reagent.Quantity);
-                },
-                () => _contents);
+            TotalVolume = ReagentUnit.Zero;
+            _contents.ForEach(reagent => TotalVolume += reagent.Quantity);
         }
 
         public bool ContainsReagent(string reagentId)
@@ -92,7 +86,7 @@ namespace Content.Shared.Chemistry
                 return "";
             }
 
-            var majorReagent = Contents.OrderByDescending(reagent => reagent.Quantity).First(); ;
+            var majorReagent = Contents.OrderByDescending(reagent => reagent.Quantity).First();
             return majorReagent.ReagentId;
         }
 
@@ -279,12 +273,13 @@ namespace Content.Shared.Chemistry
 
             Color mixColor = default;
             var runningTotalQuantity = ReagentUnit.New(0);
+            var protoManager = IoCManager.Resolve<IPrototypeManager>();
 
             foreach (var reagent in Contents)
             {
                 runningTotalQuantity += reagent.Quantity;
 
-                if (!IoCManager.Resolve<IPrototypeManager>().TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                if (!protoManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
                     continue;
                 }
@@ -323,7 +318,7 @@ namespace Content.Shared.Chemistry
 
             foreach (var (reagentId, quantity) in _contents.ToArray())
             {
-                if (!proto.TryIndex(reagentId, out ReagentPrototype reagent))
+                if (!proto.TryIndex(reagentId, out ReagentPrototype? reagent))
                     continue;
 
                 var removedAmount = reagent.ReactionEntity(entity, method, quantity);
@@ -332,9 +327,12 @@ namespace Content.Shared.Chemistry
         }
 
         [Serializable, NetSerializable]
+        [DataDefinition]
         public readonly struct ReagentQuantity: IComparable<ReagentQuantity>
         {
+            [DataField("ReagentId")]
             public readonly string ReagentId;
+            [DataField("Quantity")]
             public readonly ReagentUnit Quantity;
 
             public ReagentQuantity(string reagentId, ReagentUnit quantity)

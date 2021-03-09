@@ -4,8 +4,7 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
@@ -22,8 +21,6 @@ namespace Content.IntegrationTests.Tests.Commands
   components:
   - type: Damageable
     damagePrototype: biologicalDamageContainer
-    criticalThreshold: 100
-    deadThreshold: 200
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}

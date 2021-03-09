@@ -1,5 +1,7 @@
-﻿using System;
-using Robust.Shared.Interfaces.GameObjects;
+﻿#nullable enable
+using System;
+using Robust.Shared.Analyzers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
@@ -8,6 +10,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     This interface allows a local client to initiate dragging of the component's
     ///     entity by mouse, for drag and drop interactions.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IDraggable
     {
         /// <summary>

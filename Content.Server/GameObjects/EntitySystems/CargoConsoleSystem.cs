@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Robust.Shared.GameObjects.Systems;
 using Content.Shared.Prototypes.Cargo;
 using Content.Shared.GameTicking;
 using Content.Server.Cargo;
 using Content.Server.GameObjects.Components.Cargo;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// How many points to give to every bank account every <see cref="Delay"/> seconds.
         /// </summary>
-        private const int PointIncrease = 10;
+        private const int PointIncrease = 150;
 
         /// <summary>
         /// Keeps track of how much time has elapsed since last balance increase.
@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Initialize()
         {
-            CreateBankAccount("Orbital Monitor IV Station", 100000);
+            CreateBankAccount("Space Station 14", 1000);
             CreateOrderDatabase(0);
         }
 
@@ -180,7 +180,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void SyncComponentsWithId(int id)
         {
-            foreach (var comp in ComponentManager.EntityQuery<CargoOrderDatabaseComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<CargoOrderDatabaseComponent>(true))
             {
                 if (!comp.ConnectedToDatabase || comp.Database.Id != id)
                     continue;

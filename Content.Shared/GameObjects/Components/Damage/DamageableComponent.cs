@@ -5,13 +5,14 @@ using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Damage
@@ -22,29 +23,31 @@ namespace Content.Shared.GameObjects.Components.Damage
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
-    public class DamageableComponent : Component, IDamageableComponent, IRadiationAct
+    public class DamageableComponent : Component, IDamageableComponent, IRadiationAct, ISerializationHooks
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-        // TODO define these in yaml?
-        public const string DefaultDamageContainer = "metallicDamageContainer";
-        public const string DefaultResistanceSet = "defaultResistances";
-
         public override string Name => "Damageable";
 
         public override uint? NetID => ContentNetIDs.DAMAGEABLE;
 
+        // TODO define these in yaml?
+        public const string DefaultResistanceSet = "defaultResistances";
+        public const string DefaultDamageContainer = "metallicDamageContainer";
+
         private readonly Dictionary<DamageType, int> _damageList = DamageTypeExtensions.ToNewDictionary();
+
         private readonly HashSet<DamageType> _supportedTypes = new();
+
         private readonly HashSet<DamageClass> _supportedClasses = new();
+
+        [DataField("flags")]
         private DamageFlag _flags;
 
-        public event Action<DamageChangedEventArgs>? HealthChangedEvent;
+        [DataField("resistances")] public string ResistanceSetId = DefaultResistanceSet;
 
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
-        [ViewVariables] public string DamageContainerId { get; set; } = default!;
+        [ViewVariables] [DataField("damageContainer")] public string DamageContainerId { get; set; } = DefaultDamageContainer;
 
-        [ViewVariables] private ResistanceSet Resistances { get; set; } = default!;
+        [ViewVariables] private ResistanceSet Resistances { get; set; } = new();
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
@@ -95,70 +98,24 @@ namespace Content.Shared.GameObjects.Components.Damage
             return _supportedTypes.Contains(type);
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public override void Initialize()
         {
-            base.ExposeData(serializer);
+            base.Initialize();
 
-            serializer.DataReadWriteFunction(
-                "flags",
-                new List<DamageFlag>(),
-                flags =>
-                {
-                    var result = DamageFlag.None;
-
-                    foreach (var flag in flags)
-                    {
-                        result |= flag;
-                    }
-
-                    Flags = result;
-                },
-                () =>
-                {
-                    var writeFlags = new List<DamageFlag>();
-
-                    if (Flags == DamageFlag.None)
-                    {
-                        return writeFlags;
-                    }
-
-                    foreach (var flag in (DamageFlag[]) Enum.GetValues(typeof(DamageFlag)))
-                    {
-                        if ((Flags & flag) == flag)
-                        {
-                            writeFlags.Add(flag);
-                        }
-                    }
-
-                    return writeFlags;
-                });
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             // TODO DAMAGE Serialize damage done and resistance changes
-            serializer.DataReadWriteFunction(
-                "damageContainer",
-                DefaultDamageContainer,
-                prototype =>
-                {
-                    var damagePrototype = _prototypeManager.Index<DamageContainerPrototype>(prototype);
+            var damagePrototype = prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
 
-                    _supportedClasses.Clear();
-                    _supportedTypes.Clear();
+            _supportedClasses.Clear();
+            _supportedTypes.Clear();
 
-                    DamageContainerId = damagePrototype.ID;
-                    _supportedClasses.UnionWith(damagePrototype.SupportedClasses);
-                    _supportedTypes.UnionWith(damagePrototype.SupportedTypes);
-                },
-                () => DamageContainerId);
+            DamageContainerId = damagePrototype.ID;
+            _supportedClasses.UnionWith(damagePrototype.SupportedClasses);
+            _supportedTypes.UnionWith(damagePrototype.SupportedTypes);
 
-            serializer.DataReadWriteFunction(
-                "resistances",
-                DefaultResistanceSet,
-                prototype =>
-                {
-                    var resistancePrototype = _prototypeManager.Index<ResistanceSetPrototype>(prototype);
-                    Resistances = new ResistanceSet(resistancePrototype);
-                },
-                () => Resistances.ID);
+            var resistancePrototype = prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
+            Resistances = new ResistanceSet(resistancePrototype);
         }
 
         protected override void Startup()
@@ -168,7 +125,7 @@ namespace Content.Shared.GameObjects.Components.Damage
             ForceHealthChangedEvent();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new DamageableComponentState(_damageList, _flags);
         }
@@ -460,7 +417,6 @@ namespace Content.Shared.GameObjects.Components.Damage
         protected virtual void OnHealthChanged(DamageChangedEventArgs e)
         {
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, e);
-            HealthChangedEvent?.Invoke(e);
 
             var message = new DamageChangedMessage(this, e.Data);
             SendMessage(message);
@@ -468,7 +424,7 @@ namespace Content.Shared.GameObjects.Components.Damage
             Dirty();
         }
 
-        public void RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
+        void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
         {
             var totalDamage = Math.Max((int)(frameTime * radiation.RadsPerSecond), 1);
 

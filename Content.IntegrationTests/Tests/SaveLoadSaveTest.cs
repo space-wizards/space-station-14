@@ -1,12 +1,11 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Robust.Server.Interfaces.Maps;
-using Robust.Server.Interfaces.Timing;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Resources;
+using Robust.Server.Maps;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests
@@ -30,7 +29,7 @@ namespace Content.IntegrationTests.Tests
                 mapLoader.SaveBlueprint(new GridId(1), "save load save 1.yml");
                 var mapId = mapManager.CreateMap();
                 var grid = mapLoader.LoadBlueprint(mapId, "save load save 1.yml");
-                mapLoader.SaveBlueprint(grid.Index, "save load save 2.yml");
+                mapLoader.SaveBlueprint(grid!.Index, "save load save 2.yml");
             });
 
             await server.WaitIdleAsync();
@@ -77,7 +76,7 @@ namespace Content.IntegrationTests.Tests
         ///     Loads the default map, runs it for 5 ticks, then assert that it did not change.
         /// </summary>
         [Test]
-        public async Task LoadSaveTicksSaveStationStation()
+        public async Task LoadSaveTicksSaveSaltern()
         {
             var server = StartServerDummyTicker();
             await server.WaitIdleAsync();
@@ -92,7 +91,8 @@ namespace Content.IntegrationTests.Tests
             {
                 var mapId = mapManager.CreateMap();
                 pauseMgr.AddUninitializedMap(mapId);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
+                pauseMgr.SetMapPaused(mapId, true);
+                grid = mapLoader.LoadBlueprint(mapId, "Maps/saltern.yml");
                 mapLoader.SaveBlueprint(grid.Index, "load save ticks save 1.yml");
             });
 

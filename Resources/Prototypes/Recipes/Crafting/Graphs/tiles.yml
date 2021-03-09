@@ -1,0 +1,25 @@
+- type: constructionGraph
+  id: tileSteel
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: steeltile
+          steps:
+            - material: Steel
+              amount: 1
+    - node: steeltile
+      entity: FloorTileItemSteel
+
+- type: constructionGraph
+  id: tileWood
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: woodtile
+          steps:
+            # Needs StackType ID
+            - material: WoodPlank
+    - node: woodtile
+      entity: FloorTileItemWood

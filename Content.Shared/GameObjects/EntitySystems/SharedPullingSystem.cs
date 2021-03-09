@@ -6,12 +6,9 @@ using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Players;
 
 namespace Content.Shared.GameObjects.EntitySystems
@@ -62,7 +59,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 return;
             }
 
-            if (!pulled.TryGetComponent(out IPhysicsComponent? physics))
+            if (!pulled.TryGetComponent(out IPhysBody? physics))
             {
                 return;
             }

@@ -5,14 +5,10 @@ using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Research;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -59,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Research
             switch (message.Message)
             {
                 case ConsoleUnlockTechnologyMessage msg:
-                    if (!_prototypeManager.TryIndex(msg.Id, out TechnologyPrototype tech)) break;
+                    if (!_prototypeManager.TryIndex(msg.Id, out TechnologyPrototype? tech)) break;
                     if (client.Server == null) break;
                     if (!client.Server.CanUnlockTechnology(tech)) break;
                     if (client.Server.UnlockTechnology(tech))

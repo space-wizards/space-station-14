@@ -6,11 +6,11 @@ using Content.Client.Utility;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
@@ -36,12 +36,9 @@ namespace Content.Client.UserInterface
         {
             _entityManager = entityManager;
             _preferencesManager = preferencesManager;
-            var margin = new MarginContainer
+            var margin = new Control
             {
-                MarginBottomOverride = 20,
-                MarginLeftOverride = 20,
-                MarginRightOverride = 20,
-                MarginTopOverride = 20
+                Margin = new Thickness(20),
             };
 
             AddChild(margin);
@@ -67,32 +64,25 @@ namespace Content.Client.UserInterface
 
             var topHBox = new HBoxContainer
             {
-                CustomMinimumSize = (0, 40),
+                MinSize = (0, 40),
                 Children =
                 {
-                    new MarginContainer
+                    new Label
                     {
-                        MarginLeftOverride = 8,
-                        Children =
-                        {
-                            new Label
-                            {
-                                Text = Loc.GetString("Character Setup"),
-                                StyleClasses = {StyleNano.StyleClassLabelHeadingBigger},
-                                VAlign = Label.VAlignMode.Center,
-                                SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.ShrinkCenter
-                            }
-                        }
+                        Margin = new Thickness(8, 0, 0, 0),
+                        Text = Loc.GetString("Character Setup"),
+                        StyleClasses = {StyleNano.StyleClassLabelHeadingBigger},
+                        VAlign = Label.VAlignMode.Center,
                     },
                     (SaveButton = new Button
                     {
-                        SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.ShrinkEnd,
+                        HorizontalExpand = true,
+                        HorizontalAlignment = HAlignment.Right,
                         Text = Loc.GetString("Save"),
                         StyleClasses = {StyleNano.StyleClassButtonBig},
                     }),
                     (CloseButton = new Button
                     {
-                        SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                         Text = Loc.GetString("Close"),
                         StyleClasses = {StyleNano.StyleClassButtonBig},
                     })
@@ -112,29 +102,20 @@ namespace Content.Client.UserInterface
 
             var hBox = new HBoxContainer
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SeparationOverride = 0
             };
             vBox.AddChild(hBox);
 
             _charactersVBox = new VBoxContainer();
 
-            hBox.AddChild(new MarginContainer
+            hBox.AddChild(new ScrollContainer
             {
-                CustomMinimumSize = (330, 0),
-                SizeFlagsHorizontal = SizeFlags.Fill,
-                MarginTopOverride = 5,
-                MarginLeftOverride = 5,
+                MinSize = (325, 0),
+                Margin = new Thickness(5, 5, 0, 0),
                 Children =
                 {
-                    new ScrollContainer
-                    {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                        Children =
-                        {
-                            _charactersVBox
-                        }
-                    }
+                    _charactersVBox
                 }
             });
 
@@ -152,10 +133,10 @@ namespace Content.Client.UserInterface
             hBox.AddChild(new PanelContainer
             {
                 PanelOverride = new StyleBoxFlat {BackgroundColor = StyleNano.NanoGold},
-                CustomMinimumSize = (2, 0)
+                MinSize = (2, 0)
             });
             _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager, entityManager);
-            _humanoidProfileEditor.OnProfileChanged += newProfile => { UpdateUI(); };
+            _humanoidProfileEditor.OnProfileChanged += ProfileChanged;
             hBox.AddChild(_humanoidProfileEditor);
 
             UpdateUI();
@@ -173,6 +154,12 @@ namespace Content.Client.UserInterface
         }
 
         public void Save() => _humanoidProfileEditor.Save();
+
+        private void ProfileChanged(ICharacterProfile profile, int profileSlot)
+        {
+            _humanoidProfileEditor.UpdateControls();
+            UpdateUI();
+        }
 
         private void UpdateUI()
         {
@@ -266,7 +253,7 @@ namespace Content.Client.UserInterface
                 {
                     Text = description,
                     ClipText = true,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
+                    HorizontalExpand = true
                 };
                 var deleteButton = new Button
                 {
@@ -281,7 +268,7 @@ namespace Content.Client.UserInterface
 
                 var internalHBox = new HBoxContainer
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    HorizontalExpand = true,
                     SeparationOverride = 0,
                     Children =
                     {

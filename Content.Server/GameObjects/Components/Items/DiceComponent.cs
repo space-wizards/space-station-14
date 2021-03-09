@@ -2,16 +2,14 @@
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -25,26 +23,29 @@ namespace Content.Server.GameObjects.Components.Items
 
         public override string Name => "Dice";
 
+        [DataField("step")]
         private int _step = 1;
         private int _sides = 20;
         private int _currentSide = 20;
         [ViewVariables]
+        [DataField("diceSoundCollection")]
         public string _soundCollectionName = "dice";
         [ViewVariables]
         public int Step => _step;
         [ViewVariables]
-        public int Sides => _sides;
+        [DataField("sides")]
+        public int Sides
+        {
+            get => _sides;
+            set
+            {
+                _sides = value;
+                _currentSide = value;
+            }
+        }
+
         [ViewVariables]
         public int CurrentSide => _currentSide;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _step, "step", 1);
-            serializer.DataField(ref _sides, "sides", 20);
-            serializer.DataField(ref _soundCollectionName, "diceSoundCollection", "dice");
-            _currentSide = _sides;
-        }
 
         public void Roll()
         {
@@ -64,18 +65,18 @@ namespace Content.Server.GameObjects.Components.Items
             }
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             Roll();
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             Roll();
             return false;
         }
 
-        public void Land(LandEventArgs eventArgs)
+        void ILand.Land(LandEventArgs eventArgs)
         {
             Roll();
         }

@@ -1,25 +1,16 @@
+using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Atmos;
-using YamlDotNet.RepresentationModel;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Atmos
+namespace Content.Client.GameObjects.Components.Atmos.Piping
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class SiphonVisualizer : AppearanceVisualizer
     {
-        private string _siphonOnState;
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            var serializer = YamlObjectSerializer.NewReader(node);
-            serializer.DataField(ref _siphonOnState, "siphonOnState", "scrubOn");
-        }
+        [DataField("siphonOnState")] private string _siphonOnState = "scrubOn";
 
         public override void InitializeEntity(IEntity entity)
         {

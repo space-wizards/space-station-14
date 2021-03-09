@@ -1,6 +1,6 @@
 using Content.Server.GameObjects.Components.Nutrition;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (_accumulatedFrameTime > 1)
             {
-                foreach (var comp in ComponentManager.EntityQuery<HungerComponent>())
+                foreach (var comp in ComponentManager.EntityQuery<HungerComponent>(true))
                 {
                     comp.OnUpdate(_accumulatedFrameTime);
                 }

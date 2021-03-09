@@ -1,11 +1,11 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.IO;
 using Content.Shared.Eui;
 using Lidgren.Network;
-using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Network.NetMessages
 {
@@ -21,7 +21,7 @@ namespace Content.Shared.Network.NetMessages
         #endregion
 
         public uint Id;
-        public EuiStateBase State;
+        public EuiStateBase State = default!;
 
         public override void ReadFromBuffer(NetIncomingMessage buffer)
         {

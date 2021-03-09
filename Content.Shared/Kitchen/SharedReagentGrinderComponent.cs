@@ -1,8 +1,8 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen
@@ -111,8 +111,8 @@ namespace Content.Shared.Kitchen
         public bool CanJuice;
         public bool CanGrind;
         public EntityUid[] ChamberContents;
-        public Solution.ReagentQuantity[] ReagentQuantities;
-        public ReagentGrinderInterfaceState(bool isBusy, bool hasBeaker, bool powered, bool canJuice, bool canGrind, EntityUid[] chamberContents, Solution.ReagentQuantity[] heldBeakerContents)
+        public Solution.ReagentQuantity[]? ReagentQuantities;
+        public ReagentGrinderInterfaceState(bool isBusy, bool hasBeaker, bool powered, bool canJuice, bool canGrind, EntityUid[] chamberContents, Solution.ReagentQuantity[]? heldBeakerContents)
         {
             IsBusy = isBusy;
             HasBeakerIn = hasBeaker;

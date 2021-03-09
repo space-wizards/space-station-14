@@ -1,8 +1,8 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.GameObjects.EntitySystems
@@ -20,12 +20,12 @@ namespace Content.Shared.GameObjects.EntitySystems
 
     public class DestructionEventArgs : EventArgs
     {
-        public IEntity Owner { get; set; }
+        public IEntity Owner { get; set; } = default!;
     }
 
     public class BreakageEventArgs : EventArgs
     {
-        public IEntity Owner { get; set; }
+        public IEntity Owner { get; set; } = default!;
     }
 
     public interface IBreakAct
@@ -47,7 +47,7 @@ namespace Content.Shared.GameObjects.EntitySystems
     public class ExplosionEventArgs : EventArgs
     {
         public EntityCoordinates Source { get; set; }
-        public IEntity Target { get; set; }
+        public IEntity Target { get; set; } = default!;
         public ExplosionSeverity Severity { get; set; }
     }
 

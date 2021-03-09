@@ -12,13 +12,13 @@ namespace Content.Shared.GameObjects.Components.GUI
     {
         public override string Name => "Stripping";
 
-        public bool CanDragDropOn(DragDropEventArgs eventArgs)
+        bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
         {
             if (!eventArgs.Dragged.TryGetComponent(out SharedStrippableComponent? strippable)) return false;
             return strippable.CanBeStripped(Owner);
         }
 
-        public bool DragDropOn(DragDropEventArgs eventArgs)
+        bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
         {
             // Handled by StrippableComponent
             return true;

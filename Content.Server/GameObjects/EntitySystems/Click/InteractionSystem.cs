@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Pulling;
@@ -17,18 +17,16 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems.Click
@@ -205,7 +203,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private bool HandleClientUseItemInHand(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        public bool HandleClientUseItemInHand(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!coords.IsValid(_entityManager))
@@ -399,7 +397,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 var diff = coordinates.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
                 if (diff.LengthSquared > 0.01f)
                 {
-                    player.Transform.LocalRotation = new Angle(diff);
+                    player.Transform.LocalRotation = Angle.FromWorldVec(diff);
                 }
             }
         }
@@ -416,13 +414,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            var afterInteracts = weapon.GetAllComponents<IAfterInteract>().ToList();
             var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, null, canReach);
-
-            foreach (var afterInteract in afterInteracts)
-            {
-                await afterInteract.AfterInteract(afterInteractEventArgs);
-            }
+            await DoAfterInteract(weapon, afterInteractEventArgs);
         }
 
         /// <summary>
@@ -465,13 +458,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
-            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
             var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: true);
 
-            foreach (var afterAttack in afterAttacks)
-            {
-                await afterAttack.AfterInteract(afterAttackEventArgs);
-            }
+            await DoAfterInteract(weapon, afterAttackEventArgs);
         }
 
         /// <summary>
@@ -581,61 +570,12 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             var comps = thrown.GetAllComponents<IThrown>().ToList();
+            var args = new ThrownEventArgs(user);
 
             // Call Thrown on all components that implement the interface
             foreach (var comp in comps)
             {
-                comp.Thrown(new ThrownEventArgs(user));
-            }
-        }
-
-        /// <summary>
-        ///     Calls Land on all components that implement the ILand interface
-        ///     on an entity that has landed after being thrown.
-        /// </summary>
-        public void LandInteraction(IEntity user, IEntity landing, EntityCoordinates landLocation)
-        {
-            var landMsg = new LandMessage(user, landing, landLocation);
-            RaiseLocalEvent(landMsg);
-            if (landMsg.Handled)
-            {
-                return;
-            }
-
-            var comps = landing.GetAllComponents<ILand>().ToList();
-
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.Land(new LandEventArgs(user, landLocation));
-            }
-        }
-
-        /// <summary>
-        ///     Calls ThrowCollide on all components that implement the IThrowCollide interface
-        ///     on a thrown entity and the target entity it hit.
-        /// </summary>
-        public void ThrowCollideInteraction(IEntity user, IEntity thrown, IEntity target, EntityCoordinates location)
-        {
-            var collideMsg = new ThrowCollideMessage(user, thrown, target, location);
-            RaiseLocalEvent(collideMsg);
-            if (collideMsg.Handled)
-            {
-                return;
-            }
-
-            var eventArgs = new ThrowCollideEventArgs(user, thrown, target, location);
-
-            foreach (var comp in thrown.GetAllComponents<IThrowCollide>().ToArray())
-            {
-                if (thrown.Deleted) break;
-                comp.DoHit(eventArgs);
-            }
-
-            foreach (var comp in target.GetAllComponents<IThrowCollide>().ToArray())
-            {
-                if (target.Deleted) break;
-                comp.HitBy(eventArgs);
+                comp.Thrown(args);
             }
         }
 
@@ -729,11 +669,11 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// Activates the Dropped behavior of an object
         /// Verifies that the user is capable of doing the drop interaction first
         /// </summary>
-        public bool TryDroppedInteraction(IEntity user, IEntity item)
+        public bool TryDroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
             if (user == null || item == null || !ActionBlockerSystem.CanDrop(user)) return false;
 
-            DroppedInteraction(user, item);
+            DroppedInteraction(user, item, intentional);
             return true;
         }
 
@@ -741,9 +681,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         ///     Calls Dropped on all components that implement the IDropped interface
         ///     on an entity that has been dropped.
         /// </summary>
-        public void DroppedInteraction(IEntity user, IEntity item)
+        public void DroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
-            var dropMsg = new DroppedMessage(user, item);
+            var dropMsg = new DroppedMessage(user, item, intentional);
             RaiseLocalEvent(dropMsg);
             if (dropMsg.Handled)
             {
@@ -755,7 +695,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
             {
-                comp.Dropped(new DroppedEventArgs(user));
+                comp.Dropped(new DroppedEventArgs(user, intentional));
             }
         }
 
@@ -835,13 +775,21 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (afterAtkMsg.Handled)
                 return;
 
-            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
+            // See if we have a ranged attack interaction
             var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: false);
+            await DoAfterInteract(weapon, afterAttackEventArgs);
+        }
 
-            //See if we have a ranged attack interaction
+        private static async Task DoAfterInteract(IEntity weapon, AfterInteractEventArgs afterAttackEventArgs)
+        {
+            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().OrderByDescending(x => x.Priority).ToList();
+
             foreach (var afterAttack in afterAttacks)
             {
-                await afterAttack.AfterInteract(afterAttackEventArgs);
+                if (await afterAttack.AfterInteract(afterAttackEventArgs))
+                {
+                    return;
+                }
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Content.Shared.Damage;
 using Robust.Shared.GameObjects;
 
@@ -31,5 +32,21 @@ namespace Content.Shared.GameObjects.Components.Damage
         ///     List containing data on each <see cref="DamageType"/> that was changed.
         /// </summary>
         public IReadOnlyList<DamageChangeData> Data { get; }
+
+        public bool TookDamage
+        {
+            get
+            {
+                foreach (var datum in Data)
+                {
+                    if (datum.Delta > 0)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
     }
 }

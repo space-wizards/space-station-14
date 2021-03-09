@@ -3,7 +3,7 @@
   parent: BaseItem
   id: BaseHandheldInstrument
   abstract: true
-  description: That's an Instrument.
+  description: That's an instrument.
   components:
   - type: Instrument
     handheld: true
@@ -12,7 +12,7 @@
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
   - type: Item
-    Size: 24
+    size: 24
 
 - type: entity
   name: synthesizer
@@ -67,8 +67,11 @@
   - type: Instrument
     program: 56
   - type: Sprite
-    sprite: Objects/Fun/Instruments/otherinstruments.rsi
-    state: trumpet
+    sprite: Objects/Fun/Instruments/trumpet.rsi
+    state: icon
+  - type: Item
+    size: 24
+    sprite: Objects/Fun/Instruments/trumpet.rsi
 
 - type: entity
   name: electric guitar

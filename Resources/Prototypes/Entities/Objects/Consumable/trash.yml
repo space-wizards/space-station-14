@@ -155,17 +155,6 @@
 
 
 - type: entity
-  name: trash bag
-  parent: TrashBase
-  id: TrashBag
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Trash/trashbag.rsi
-
-  - type: Storage
-    capacity: 125
-
-- type: entity
   name: tray (trash)
   parent: TrashBase
   id: TrashTray
@@ -194,8 +183,9 @@
   - type: Slippery
     intersectPercentage: 0.2
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.2,0.2,0.2"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
       layer:
       - MobImpassable

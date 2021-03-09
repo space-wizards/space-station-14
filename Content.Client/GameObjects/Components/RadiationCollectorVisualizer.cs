@@ -3,22 +3,20 @@ using Content.Shared.GameObjects.Components.Singularity;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Client.GameObjects.Components
 {
     [UsedImplicitly]
-    public class RadiationCollectorVisualizer : AppearanceVisualizer
+    public class RadiationCollectorVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "radiationcollector_animation";
 
         private Animation ActivateAnimation;
         private Animation DeactiveAnimation;
 
-        public override void LoadData(YamlMappingNode node)
+        void ISerializationHooks.AfterDeserialization()
         {
             ActivateAnimation = new Animation {Length = TimeSpan.FromSeconds(0.8f)};
             {
@@ -52,7 +50,6 @@ namespace Content.Client.GameObjects.Components
                 entity.AddComponent<AnimationPlayerComponent>();
             }
         }
-
 
         public override void OnChangeData(AppearanceComponent component)
         {
@@ -93,7 +90,6 @@ namespace Content.Client.GameObjects.Components
                     break;
             }
         }
-
     }
     public enum RadiationCollectorVisualLayers : byte
     {

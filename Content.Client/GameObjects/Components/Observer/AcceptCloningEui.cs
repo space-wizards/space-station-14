@@ -1,5 +1,4 @@
 ﻿using Content.Client.Eui;
-using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.GameObjects.Components.Observer;
 using JetBrains.Annotations;
 

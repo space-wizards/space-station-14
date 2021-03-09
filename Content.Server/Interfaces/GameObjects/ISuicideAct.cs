@@ -1,8 +1,10 @@
 ﻿using Content.Server.Interfaces.Chat;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Analyzers;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Interfaces.GameObjects
 {
+    [RequiresExplicitImplementation]
     public interface ISuicideAct
     {
         public SuicideKind Suicide(IEntity victim, IChatManager chat);

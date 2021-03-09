@@ -1,10 +1,9 @@
-﻿using Content.Shared;
-using Robust.Client.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
+﻿using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared;
-using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -39,78 +38,72 @@ namespace Content.Client.UserInterface
                 _cfg = cfg;
                 var vBox = new VBoxContainer();
 
-                var contents = new VBoxContainer();
+                var contents = new VBoxContainer
+                {
+                    Margin = new Thickness(2, 2, 2, 0),
+                    VerticalExpand = true,
+                };
 
-                VSyncCheckBox = new CheckBox {Text = Loc.GetString("VSync")};
+                VSyncCheckBox = new CheckBox {Text = Loc.GetString("ui-options-vsync")};
                 contents.AddChild(VSyncCheckBox);
                 VSyncCheckBox.OnToggled += OnCheckBoxToggled;
 
-                FullscreenCheckBox = new CheckBox {Text = Loc.GetString("Fullscreen")};
+                FullscreenCheckBox = new CheckBox {Text = Loc.GetString("ui-options-fullscreen")};
                 contents.AddChild(FullscreenCheckBox);
                 FullscreenCheckBox.OnToggled += OnCheckBoxToggled;
 
-                LightingPresetOption = new OptionButton {CustomMinimumSize = (100, 0)};
-                LightingPresetOption.AddItem(Loc.GetString("Very Low"));
-                LightingPresetOption.AddItem(Loc.GetString("Low"));
-                LightingPresetOption.AddItem(Loc.GetString("Medium"));
-                LightingPresetOption.AddItem(Loc.GetString("High"));
+                LightingPresetOption = new OptionButton {MinSize = (100, 0)};
+                LightingPresetOption.AddItem(Loc.GetString("ui-options-lighting-very-low"));
+                LightingPresetOption.AddItem(Loc.GetString("ui-options-lighting-low"));
+                LightingPresetOption.AddItem(Loc.GetString("ui-options-lighting-medium"));
+                LightingPresetOption.AddItem(Loc.GetString("ui-options-lighting-high"));
                 LightingPresetOption.OnItemSelected += OnLightingQualityChanged;
 
                 contents.AddChild(new HBoxContainer
                 {
                     Children =
                     {
-                        new Label {Text = Loc.GetString("Lighting Quality:")},
-                        new Control {CustomMinimumSize = (4, 0)},
+                        new Label {Text = Loc.GetString("ui-options-lighting-label")},
+                        new Control {MinSize = (4, 0)},
                         LightingPresetOption
                     }
                 });
 
                 ApplyButton = new Button
                 {
-                    Text = Loc.GetString("Apply"), TextAlign = Label.AlignMode.Center,
-                    SizeFlagsHorizontal = SizeFlags.ShrinkEnd
+                    Text = Loc.GetString("ui-options-apply"), TextAlign = Label.AlignMode.Center,
+                    HorizontalAlignment = HAlignment.Right
                 };
 
                 var resourceCache = IoCManager.Resolve<IResourceCache>();
 
                 _uiScaleOption = new OptionButton();
-                _uiScaleOption.AddItem(Loc.GetString("Automatic ({0}%)", UserInterfaceManager.DefaultUIScale * 100));
-                _uiScaleOption.AddItem(Loc.GetString("75%"));
-                _uiScaleOption.AddItem(Loc.GetString("100%"));
-                _uiScaleOption.AddItem(Loc.GetString("125%"));
-                _uiScaleOption.AddItem(Loc.GetString("150%"));
-                _uiScaleOption.AddItem(Loc.GetString("175%"));
-                _uiScaleOption.AddItem(Loc.GetString("200%"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-auto", ("scale", UserInterfaceManager.DefaultUIScale)));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-75"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-100"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-125"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-150"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-175"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-200"));
                 _uiScaleOption.OnItemSelected += OnUIScaleChanged;
 
                 contents.AddChild(new HBoxContainer
                 {
                     Children =
                     {
-                        new Label {Text = Loc.GetString("UI Scale:")},
-                        new Control {CustomMinimumSize = (4, 0)},
+                        new Label {Text = Loc.GetString("ui-options-scale-label")},
+                        new Control {MinSize = (4, 0)},
                         _uiScaleOption
                     }
                 });
 
                 contents.AddChild(new Placeholder(resourceCache)
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    PlaceholderText = "Viewport settings"
+                    VerticalExpand = true,
+                    PlaceholderText = Loc.GetString("ui-options-placeholder-viewport")
                 });
 
-                vBox.AddChild(new MarginContainer
-                {
-                    MarginLeftOverride = 2,
-                    MarginTopOverride = 2,
-                    MarginRightOverride = 2,
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    Children =
-                    {
-                        contents
-                    }
-                });
+                vBox.AddChild(contents);
 
                 vBox.AddChild(new StripeBack
                 {

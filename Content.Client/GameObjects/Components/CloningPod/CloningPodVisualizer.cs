@@ -1,7 +1,6 @@
 ﻿using System;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;
 using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent.CloningPodStatus;
 

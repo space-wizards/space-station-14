@@ -1,14 +1,10 @@
 ﻿using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Atmos;
-using Robust.Client.Graphics.ClientEye;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Graphics.Overlays;
-using Robust.Client.Interfaces.Graphics;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Map;
+using Robust.Client.Graphics;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Atmos
@@ -109,7 +105,8 @@ namespace Content.Client.Atmos
                                 {
                                     if (data.BlockDirection.HasFlag(dir))
                                     {
-                                        var atmosAngle = dir.ToAngle();
+                                        // Account for South being 0.
+                                        var atmosAngle = dir.ToAngle() - Angle.FromDegrees(90);
                                         var atmosAngleOfs = atmosAngle.ToVec() * 0.45f;
                                         var atmosAngleOfsR90 = new Vector2(atmosAngleOfs.Y, -atmosAngleOfs.X);
                                         var tileCentre = new Vector2(tile.X + 0.5f, tile.Y + 0.5f);
@@ -125,7 +122,8 @@ namespace Content.Client.Atmos
                                 // -- Pressure Direction --
                                 if (data.PressureDirection != AtmosDirection.Invalid)
                                 {
-                                    var atmosAngle = data.PressureDirection.ToAngle();
+                                    // Account for South being 0.
+                                    var atmosAngle = data.PressureDirection.ToAngle() - Angle.FromDegrees(90);
                                     var atmosAngleOfs = atmosAngle.ToVec() * 0.4f;
                                     var tileCentre = new Vector2(tile.X + 0.5f, tile.Y + 0.5f);
                                     var basisA = mapGrid.LocalToWorld(tileCentre);

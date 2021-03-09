@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.GameMode;
 using Content.Server.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Mobs.Roles.Suspicion;
@@ -12,9 +12,8 @@ using Content.Shared.GameObjects.Components.Suspicion;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Players;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -142,7 +141,7 @@ namespace Content.Server.GameObjects.Components.Suspicion
             message.AddMarkup(tooltip);
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return Role == null
                 ? new SuspicionRoleComponentState(null, null, Array.Empty<(string, EntityUid)>())

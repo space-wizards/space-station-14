@@ -1,5 +1,6 @@
 ﻿using Content.Shared.GameObjects.Components.Storage;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
@@ -25,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new StorableComponentState(_size);
         }

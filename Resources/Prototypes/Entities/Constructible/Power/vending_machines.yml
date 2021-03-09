@@ -1,4 +1,5 @@
-﻿- type: entity
+﻿# Vending machine descriptions are stored in vendingMachineInventory YAML files.
+- type: entity
   id: VendingMachine
   name: vending machine
   abstract: true
@@ -11,31 +12,30 @@
     sprite: Constructible/Power/VendingMachines/empty.rsi
     netsync: false
   - type: Physics
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5,-0.25,0.5,0.25"
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
       mask:
       - Impassable
-      - MobImpassable
       - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
-      - Impassable
       - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
   - type: SnapGrid
     offset: Center
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
     thresholds:
-      50:
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Breakage"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: UserInterface
     interfaces:
     - key: enum.VendingMachineUiKey.Key
@@ -51,9 +51,36 @@
 
 - type: entity
   parent: VendingMachine
+  id: VendingMachineAmmo
+  name: Liberation Station
+  description: An overwhelming amount of ancient patriotism washes over you just by looking at the machine.
+# Ads cause I remember somebody was working on these
+# product_slogans = "Liberation Station: Your one-stop shop for all things second amendment!;Be a patriot today, pick up a gun!;Quality weapons for cheap prices!;Better dead than red!"
+# product_ads = "Float like an astronaut, sting like a bullet!;Express your second amendment today!;Guns don't kill people, but you can!;Who needs responsibilities when you have guns?"
+  components:
+  - type: VendingMachine
+    pack: AmmoVend
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/ammo.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+
+- type: entity
+  parent: VendingMachine
   id: VendingMachineBooze
   name: Booze-O-Mat
-  description: A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one.
   components:
   - type: VendingMachine
     pack: Booze-O-Mat
@@ -65,7 +92,7 @@
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
+    - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
     visuals:
@@ -74,7 +101,7 @@
       broken: true
     - type: WiresVisualizer
   - type: AccessReader
-    access: [["Bar"]]
+    access: [["Service"]]
 
 - type: entity
   parent: VendingMachine
@@ -131,7 +158,6 @@
   parent: VendingMachine
   id: VendingMachineCigs
   name: cigarette machine
-  description: If you want to smoke, might as well do it in style.
   components:
   - type: VendingMachine
     pack: Cigarette machine
@@ -235,7 +261,7 @@
       broken: true
     - type: WiresVisualizer
   - type: AccessReader
-    access: [["Kitchen"]]
+    access: [["Service"]]
 
 - type: entity
   parent: VendingMachine
@@ -293,7 +319,6 @@
   parent: VendingMachine
   id: VendingMachineHats
   name: Hatlord 9000
-  description: Hats for the hatlord. Skulls for the hat-throne!
   components:
   - type: VendingMachine
     pack: Hatlord 9000
@@ -417,7 +442,7 @@
       broken: true
     - type: WiresVisualizer
   - type: AccessReader
-    access: [["Hydroponics"]]
+    access: [["Service"]]
 
 - type: entity
   parent: VendingMachine
@@ -525,13 +550,12 @@
       broken: true
     - type: WiresVisualizer
   - type: AccessReader
-    access: [["Hydroponics"]]
+    access: [["Service"]]
 
 - type: entity
   parent: VendingMachine
   id: VendingMachineShoes
   name: Shoelord 9000
-  description: Finest shoes on all of station.
   components:
   - type: VendingMachine
     pack: Shoelord 9000
@@ -582,7 +606,6 @@
   parent: VendingMachine
   id: VendingMachineSnack
   name: Getmore Chocolate Corp
-  description: A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars.
   components:
   - type: VendingMachine
     pack: Getmore Chocolate Corp
@@ -637,7 +660,6 @@
   parent: VendingMachine
   id: VendingMachineSuits
   name: Suitlord 9000
-  description: Suits for every ocassion!
   components:
   - type: VendingMachine
     pack: Suitlord 9000
@@ -663,7 +685,6 @@
   parent: VendingMachine
   id: VendingMachineTheater
   name: AutoDrobe
-  description: Enchance RP with costumes!
   components:
   - type: VendingMachine
     pack: AutoDrobe
@@ -695,7 +716,6 @@
   parent: VendingMachine
   id: VendingMachineVendomat
   name: Vendomat
-  description: Only the finest robust equipment in space!
   components:
   - type: VendingMachine
     pack: Vendomat
