@@ -18,6 +18,16 @@
   - type: Sprite
     state: Assistant
 
+- type: entity
+  id: SpawnPointCentcomOfficial
+  parent: SpawnPointJobBase
+  name: spawn point (assistant)
+  components:
+  - type: SpawnPoint
+    job_id: Assistant
+  - type: Sprite
+    state: Centcom
+
 # Quartermaster
 #- type: entity
 #  id: SpawnPointQuartermaster
