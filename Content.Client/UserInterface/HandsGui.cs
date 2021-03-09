@@ -36,7 +36,6 @@ namespace Content.Client.UserInterface
         private VBoxContainer HandsColumn { get; }
         private HBoxContainer HandsContainer { get; }
 
-        private int LastHands { get; set; }
 
         [ViewVariables]
         private List<GuiHand> Hands { get; set; } = new();
@@ -57,7 +56,7 @@ namespace Content.Client.UserInterface
                 SeparationOverride = 0,
                 Children =
                 {
-                    (RightPanel = ItemStatusPanel.FromSide(HandLocation.Right)),
+                    (LeftPanel = ItemStatusPanel.FromSide(HandLocation.Left)),
                     (HandsColumn = new VBoxContainer
                     {
                         Children =
@@ -66,7 +65,7 @@ namespace Content.Client.UserInterface
                             (HandsContainer = new HBoxContainer())
                         }
                     }),
-                    (LeftPanel = ItemStatusPanel.FromSide(HandLocation.Left))
+                    (RightPanel = ItemStatusPanel.FromSide(HandLocation.Right))
                 }
             });
             LeftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
@@ -75,14 +74,10 @@ namespace Content.Client.UserInterface
             StorageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
             BlockedTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
 
-
-
             foreach (HandLocation location in Enum.GetValues(typeof(HandLocation)))
             {
                 GetStatusPanel(location).Update(null);
             }
-            RightPanel.SetPositionFirst();
-            LeftPanel.SetPositionLast();
         }
 
         public void SetState(HandsGuiState state)
@@ -135,9 +130,9 @@ namespace Content.Client.UserInterface
         {
             return handLocation switch
             {
-                HandLocation.Left => LeftPanel,
+                HandLocation.Left => RightPanel, //The player's left hand is the rightmost panel
                 HandLocation.Middle => TopPanel,
-                HandLocation.Right => RightPanel,
+                HandLocation.Right => LeftPanel, //The player's right hand is the leftmost panel
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
@@ -205,7 +200,7 @@ namespace Content.Client.UserInterface
         public IEntity? HeldItem { get; }
 
         [ViewVariables]
-        public HandButton? HandButton { get; set; }
+        public HandButton HandButton { get; set; } = default!;
 
         public GuiHand(string name, HandLocation handLocation, IEntity? heldItem)
         {
