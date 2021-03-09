@@ -1,4 +1,0 @@
-author: Zumorica
-changes:
-  - type: Fix
-    message: Fixes water vapor reaction removing oxygen instead of water vapor.

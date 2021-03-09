@@ -357,3 +357,9 @@ Entries:
   - {message: Removed unused vending machines, type: Remove}
   id: 65
   time: '2021-03-09T09:42:26.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes water vapor reaction removing oxygen instead of water vapor.,
+    type: Fix}
+  id: 66
+  time: '2021-03-09T20:32:22.626361+00:00'
