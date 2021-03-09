@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Check changed files
+        uses: trilom/file-changes-action@v1.2.4
+        with:
+          fileOutput: 'yml'
       - name: Setup submodule
         run: |
           git submodule update --init --recursive
@@ -29,4 +33,4 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore /m
       - name: Run Linter
-        run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-build -- ${{ github.payload.before }} ${{ github.payload.after }}
+        run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-build -- ${{ steps.file_changes.outputs.files_added }} ${{ steps.file_changes.outputs.files_modified }}
