@@ -9,10 +9,9 @@
     state: solar_assembly_parts
     
 - type: entity
-  id: SolarTrackerMachineCircuitboard
-  parent: BaseMachineCircuitboard
+  id: SolarTrackerElectronics
+  parent: BaseItem
   components:
-    - type: MachineBoard
-      prototype: Autolathe
-      materialRequirements:
-        Glass: 1
+    - type: Sprite
+      sprite: Constructible/Misc/module.rsi
+      state: generic
