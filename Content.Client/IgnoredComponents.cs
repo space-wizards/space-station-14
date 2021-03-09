@@ -244,6 +244,7 @@ namespace Content.Client
             "Shovel",
             "ReagentTank",
             "UtilityAI",
+            "GhostRoleMobSpawner",
         };
     }
 }
