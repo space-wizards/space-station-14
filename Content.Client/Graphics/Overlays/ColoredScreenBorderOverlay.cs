@@ -1,31 +1,29 @@
+#nullable enable
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using System;
 
 namespace Content.Client.Graphics.Overlays
 {
-    public class CircleMaskOverlay : Overlay
+    public class ColoredScreenBorderOverlay : Overlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _shader;
 
-        public CircleMaskOverlay()
+        public ColoredScreenBorderOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _shader = _prototypeManager.Index<ShaderPrototype>("CircleMask").Instance();
+            _shader = _prototypeManager.Index<ShaderPrototype>("ColoredScreenBorder").Instance();
         }
 
         protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
-            if (!CritOverlay.LocalPlayerHasState(_playerManager, false, true))
-                return;
             handle.UseShader(_shader);
             var worldHandle = (DrawingHandleWorld)handle;
             var viewport = _eyeManager.GetWorldViewport();

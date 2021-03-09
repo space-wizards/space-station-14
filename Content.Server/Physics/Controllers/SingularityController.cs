@@ -32,7 +32,7 @@ namespace Content.Server.Physics.Controllers
             {
                 _pullAccumulator -= 0.5f;
 
-                foreach (var singularity in ComponentManager.EntityQuery<SingularityComponent>())
+                foreach (var singularity in ComponentManager.EntityQuery<ServerSingularityComponent>())
                 {
                     // TODO: Use colliders instead probably yada yada
                     PullEntities(singularity);
@@ -45,7 +45,7 @@ namespace Content.Server.Physics.Controllers
             {
                 _moveAccumulator -= 1.0f;
 
-                foreach (var (singularity, physics) in ComponentManager.EntityQuery<SingularityComponent, PhysicsComponent>())
+                foreach (var (singularity, physics) in ComponentManager.EntityQuery<ServerSingularityComponent, PhysicsComponent>())
                 {
                     if (singularity.Owner.HasComponent<BasicActorComponent>()) continue;
 
@@ -57,7 +57,7 @@ namespace Content.Server.Physics.Controllers
             }
         }
 
-        private void MoveSingulo(SingularityComponent singularity, PhysicsComponent physics)
+        private void MoveSingulo(ServerSingularityComponent singularity, PhysicsComponent physics)
         {
             if (singularity.Level <= 1) return;
             // TODO: Could try gradual changes instead but for now just try to replicate
@@ -70,7 +70,7 @@ namespace Content.Server.Physics.Controllers
             physics.LinearVelocity = pushVector.Normalized * 2;
         }
 
-        private void PullEntities(SingularityComponent component)
+        private void PullEntities(ServerSingularityComponent component)
         {
             var singularityCoords = component.Owner.Transform.Coordinates;
             // TODO: Maybe if we have named fixtures needs to pull out the outer circle collider (inner will be for deleting).
@@ -89,7 +89,7 @@ namespace Content.Server.Physics.Controllers
             }
         }
 
-        private void DestroyTiles(SingularityComponent component)
+        private void DestroyTiles(ServerSingularityComponent component)
         {
             if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
             var worldBox = physicsComponent.GetWorldAABB();

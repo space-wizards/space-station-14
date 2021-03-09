@@ -1,25 +1,26 @@
-﻿using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Graphics.Overlays
 {
-    public class GradientCircleMaskOverlay : Overlay
+    public class CritOverlay : Overlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
-        private readonly ShaderInstance _shader;
+        private readonly ShaderInstance _gradientCircleShader, _glowingBorderShader;
 
-        public GradientCircleMaskOverlay() : base(nameof(GradientCircleMaskOverlay))
+        public CritOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _shader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").Instance();
+            _gradientCircleShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").Instance();
         }
 
         public static bool LocalPlayerHasState(IPlayerManager pm, bool critical, bool dead) {
@@ -48,9 +49,9 @@ namespace Content.Client.Graphics.Overlays
             if (!LocalPlayerHasState(_playerManager, true, false))
                 return;
 
-            handle.UseShader(_shader);
-            var worldHandle = (DrawingHandleWorld)handle;
+            var worldHandle = (DrawingHandleWorld) handle;
             var viewport = _eyeManager.GetWorldViewport();
+            handle.UseShader(_gradientCircleShader);
             worldHandle.DrawRect(viewport, Color.White);
         }
     }

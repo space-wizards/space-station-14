@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Shared.AI;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -106,7 +107,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
             _overlay.Modes = 0;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            overlayManager.RemoveOverlay(_overlay.ID);
+            overlayManager.RemoveOverlay(_overlay);
             _overlay = null;
         }
 
@@ -205,7 +206,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
         public readonly List<SharedAiDebug.AStarRouteMessage> AStarRoutes = new();
         public readonly List<SharedAiDebug.JpsRouteMessage> JpsRoutes = new();
 
-        public DebugPathfindingOverlay() : base(nameof(DebugPathfindingOverlay))
+        public DebugPathfindingOverlay()
         {
             _shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
             _eyeManager = IoCManager.Resolve<IEyeManager>();
