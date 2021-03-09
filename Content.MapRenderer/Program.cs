@@ -19,6 +19,7 @@ namespace Content.MapRenderer
     {
         internal static void Main(string[] args)
         {
+            Console.WriteLine(string.Join("\n--------------\n", args));
             new Program().Run().GetAwaiter().GetResult();
         }
 
