@@ -444,7 +444,7 @@
   - type: Tag
     tags:
     - Grindable
-  - type: GhostTakeoverAvailableComponent
+  - type: GhostTakeoverAvailable
     makeSentient: true
     name: mouse
     description: A mouse in maint.

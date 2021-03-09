@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
         public override string Name => "MouseAccent";
 
         private static readonly IReadOnlyList<string> Squeek = new List<string>{
-            "Squeak!", "Piep!", "Chuu!", "Chilla!"
+            "Squeak!", "Piep!", "Chuu!"
         }.AsReadOnly();
         private string RandomSqueek => _random.Pick(Squeek);
 
