@@ -95,6 +95,10 @@ namespace Content.Client.UserInterface
                 var newButton = MakeHandButton(hand.HandLocation);
                 HandsContainer.AddChild(newButton);
                 hand.HandButton = newButton;
+
+                var heldItem = hand.HeldItem;
+                _itemSlotManager.SetItemSlot(newButton, heldItem);
+                _itemSlotManager.UpdateCooldown(newButton, heldItem);
             }
             if (ActiveHand != null)
             {
@@ -114,19 +118,21 @@ namespace Content.Client.UserInterface
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
+
+            foreach (var hand in Hands)
+            {
+                var button = hand.HandButton;
+                var heldItem = hand.HeldItem;
+
+                _itemSlotManager.SetItemSlot(button, heldItem);
+                _itemSlotManager.UpdateCooldown(button, heldItem);
+            }
             //RightPanel.Update();
             //TopPanel.Update();
             //LeftPanel.Update();
 
             //.Visible = true;
         }
-
-        /*public void UpdateHandIcons()
-        {
-                hand.Button!.SetPositionInParent(i);
-                _itemSlotManager.SetItemSlot(Button, Entity);
-                _itemSlotManager.UpdateCooldown(Button, Entity);
-        }*/
 
         private ItemStatusPanel GetStatusPanel(HandLocation handLocation)
         {
