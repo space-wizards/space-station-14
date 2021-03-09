@@ -304,6 +304,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 chunk.Dirty(currentTick);
             }
 
+            // TODO: Look at ServerEntityManager for an idea on optimising this for parallelism.
             // Now we'll go through each player, then through each chunk in range of that player checking if the player is still in range
             // If they are, check if they need the new data to send (i.e. if there's an overlay for the gas).
             // Afterwards we reset all the chunk data for the next time we tick.
