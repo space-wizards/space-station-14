@@ -1,19 +1,15 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Client.GameObjects.Components.Items;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
 using Robust.Shared.IoC;
-using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.UserInterface
@@ -21,7 +17,6 @@ namespace Content.Client.UserInterface
     public class HandsGui : Control
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
         private Texture LeftHandTexture { get; }
         private Texture MiddleHandTexture { get; }
@@ -77,16 +72,19 @@ namespace Content.Client.UserInterface
 
         public void SetState(HandsGuiState state)
         {
-            Hands.Clear();
+            var oldHands = Hands.ToArray();
+            Hands = state.GuiHands;
+            UpdateGui();
+        }
 
-            LeftPanel.DisposeAllChildren();
-            TopPanel.DisposeAllChildren();
-            RightPanel.DisposeAllChildren();
+        private void UpdateGui()
+        {
+            HandsContainer.DisposeAllChildren();
 
-            foreach (var hand in state.GuiHands)
+            foreach (var hand in Hands)
             {
-                var handButton = MakeHandButton(hand.HandLocation);
-                Hands.Add(hand);
+                var newButton = MakeHandButton(hand.HandLocation);
+                HandsContainer.AddChild(newButton);
             }
         }
 
