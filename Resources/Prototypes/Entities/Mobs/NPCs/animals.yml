@@ -441,6 +441,9 @@
   id: MouseMob_Content
   description: Squeak!
   components:
+  - type: Tag
+    tags:
+    - Grindable
   - type: GhostTakeoverAvailableComponent
     makeSentient: true
     name: mouse
@@ -472,8 +475,8 @@
       layer:
       - Opaque
   - type: MovementSpeedModifier
-    baseWalkSpeed : 6
-    baseSprintSpeed : 6
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
