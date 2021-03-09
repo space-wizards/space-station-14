@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Actions;
@@ -13,35 +14,29 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Actions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class ScreamAction : IInstantAction
     {
         private const float Variation = 0.125f;
         private const float Volume = 4f;
 
-        private List<string> _male;
-        private List<string> _female;
-        private string _wilhelm;
-        /// seconds
-        private float _cooldown;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
-        private IRobustRandom _random;
+        [DataField("male")] private List<string>? _male;
+        [DataField("female")] private List<string>? _female;
+        [DataField("wilhelm")] private string? _wilhelm;
+
+        /// seconds
+        [DataField("cooldown")] private float _cooldown = 10;
 
         public ScreamAction()
         {
-            _random = IoCManager.Resolve<IRobustRandom>();
-        }
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _male, "male", null);
-            serializer.DataField(ref _female, "female", null);
-            serializer.DataField(ref _wilhelm, "wilhelm", null);
-            serializer.DataField(ref _cooldown, "cooldown", 10);
+            IoCManager.InjectDependencies(this);
         }
 
         public void DoInstantAction(InstantActionEventArgs args)

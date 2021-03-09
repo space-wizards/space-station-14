@@ -1,6 +1,8 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -8,7 +10,8 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalBendComponent : DisposalTubeComponent
     {
-        private int _sideDegrees;
+        [DataField("sideDegrees")]
+        private int _sideDegrees = -90;
 
         public override string Name => "DisposalBend";
 
@@ -32,12 +35,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             var previousDirection = DirectionTo(previousTube);
             return previousDirection == directions[0] ? directions[1] : directions[0];
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _sideDegrees, "sideDegrees", -90);
         }
     }
 }

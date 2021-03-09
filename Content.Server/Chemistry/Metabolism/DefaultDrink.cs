@@ -2,7 +2,7 @@
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.Metabolism
 {
@@ -10,21 +10,16 @@ namespace Content.Server.Chemistry.Metabolism
     /// Default metabolism for drink reagents. Attempts to find a ThirstComponent on the target,
     /// and to update it's thirst values.
     /// </summary>
+    [DataDefinition]
     public class DefaultDrink : IMetabolizable
     {
         //Rate of metabolism in units / second
-        private ReagentUnit _metabolismRate;
-        public ReagentUnit MetabolismRate => _metabolismRate;
+        [DataField("rate")]
+        public ReagentUnit MetabolismRate { get; set; } = ReagentUnit.New(1);
 
         //How much thirst is satiated when 1u of the reagent is metabolized
-        private float _hydrationFactor;
-        public float HydrationFactor => _hydrationFactor;
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _metabolismRate, "rate", ReagentUnit.New(1));
-            serializer.DataField(ref _hydrationFactor, "nutrimentFactor", 30.0f);
-        }
+        [DataField("hydrationFactor")]
+        public float HydrationFactor { get; set; } = 30.0f;
 
         //Remove reagent at set rate, satiate thirst if a ThirstComponent can be found
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)

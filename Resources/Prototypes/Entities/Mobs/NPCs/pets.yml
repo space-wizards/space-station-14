@@ -15,9 +15,10 @@
       state: corgi
   - type: Physics
     mass: 10
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.50,-0.25,0.30,0.25"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.50,-0.25,0.30,0.25"
       mask:
       - Impassable
       - VaultImpassable
@@ -62,9 +63,10 @@
       state: cat
   - type: Physics
     mass: 10
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.45,-0.20,0.30,0.20"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45,-0.20,0.30,0.20"
       mask:
       - Impassable
       - VaultImpassable
@@ -112,9 +114,10 @@
       state: sloth
   - type: Physics
     mass: 10
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.45,-0.35,0.15,0.35"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45,-0.35,0.15,0.35"
       mask:
       - Impassable
       - VaultImpassable

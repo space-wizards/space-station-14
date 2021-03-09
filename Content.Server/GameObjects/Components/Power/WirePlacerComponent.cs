@@ -7,6 +7,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Threading.Tasks;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -20,17 +22,12 @@ namespace Content.Server.GameObjects.Components.Power
         public override string Name => "WirePlacer";
 
         [ViewVariables]
-        private string? _wirePrototypeID;
+        [DataField("wirePrototypeID")]
+        private string? _wirePrototypeID = "HVWire";
 
         [ViewVariables]
-        private WireType _blockingWireType;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _wirePrototypeID, "wirePrototypeID", "HVWire");
-            serializer.DataField(ref _blockingWireType, "blockingWireType", WireType.HighVoltage);
-        }
+        [DataField("blockingWireType")]
+        private WireType _blockingWireType = WireType.HighVoltage;
 
         /// <inheritdoc />
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)

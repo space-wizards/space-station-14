@@ -5,7 +5,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
@@ -15,38 +15,33 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     public class MultiToolComponent : Component, IUse
     {
-        public class ToolEntry : IExposeData
+        [DataDefinition]
+        public class ToolEntry
         {
-            private string _state;
-            private string _sound;
-            private string _soundCollection;
-            private string _texture;
-            private string _sprite;
-            private string _changeSound;
+            [DataField("behavior")] public ToolQuality Behavior { get; private set; } = ToolQuality.None;
 
-            public ToolQuality Behavior { get; private set; }
-            public string State => _state;
-            public string Texture => _texture;
-            public string Sprite => _sprite;
-            public string Sound => _sound;
-            public string SoundCollection => _soundCollection;
-            public string ChangeSound => _changeSound;
+            [field: DataField("state")]
+            public string State { get; } = string.Empty;
 
-            void IExposeData.ExposeData(ObjectSerializer serializer)
-            {
-                serializer.DataField(this, x => x.Behavior, "behavior", ToolQuality.None);
-                serializer.DataField(ref _state, "state", string.Empty);
-                serializer.DataField(ref _sprite, "sprite", string.Empty);
-                serializer.DataField(ref _texture, "texture", string.Empty);
-                serializer.DataField(ref _sound, "useSound", string.Empty);
-                serializer.DataField(ref _soundCollection, "useSoundCollection", string.Empty);
-                serializer.DataField(ref _changeSound, "changeSound", string.Empty);
-            }
+            [field: DataField("texture")]
+            public string Texture { get; } = string.Empty;
+
+            [field: DataField("sprite")]
+            public string Sprite { get; } = string.Empty;
+
+            [field: DataField("useSound")]
+            public string Sound { get; } = string.Empty;
+
+            [field: DataField("useSoundCollection")]
+            public string SoundCollection { get; } = string.Empty;
+
+            [field: DataField("changeSound")]
+            public string ChangeSound { get; } = string.Empty;
         }
 
         public override string Name => "MultiTool";
         public override uint? NetID => ContentNetIDs.MULTITOOLS;
-        private List<ToolEntry> _tools;
+        [DataField("tools")] private List<ToolEntry> _tools = new();
         private int _currentTool = 0;
 
         private AudioSystem _audioSystem;
@@ -94,12 +89,6 @@ namespace Content.Server.GameObjects.Components.Interactable
                 _sprite.LayerSetTexture(0, current.Texture);
 
             Dirty();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _tools, "tools", new List<ToolEntry>());
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)

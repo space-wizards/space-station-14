@@ -16,7 +16,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
@@ -140,10 +140,9 @@ namespace Content.Server.GameObjects.Components
     }
 
     [UsedImplicitly]
+    [DataDefinition]
     public sealed class ToggleMagbootsAction : IToggleItemAction
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer) { }
-
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
             if (!args.Item.TryGetComponent<MagbootsComponent>(out var magboots))

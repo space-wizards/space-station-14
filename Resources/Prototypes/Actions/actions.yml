@@ -48,7 +48,7 @@
 
 - type: action
   actionType: DebugInstant
-  icon: Interface/Alerts/Human/human1.png
+  icon: Interface/Alerts/human_health.rsi/health1.png
   name: "[color=red]Debug Instant[/color]"
   description: "This is a [color=red]debug message[/color]."
   requires: "Requires blah blah"
@@ -60,7 +60,7 @@
 
 - type: action
   actionType: DebugToggle
-  icon: Interface/Alerts/Human/human3.png
+  icon: Interface/Alerts/human_health.rsi/health3.png
   name: "[color=red]Debug Toggle[/color]"
   description: "This is a [color=red]debug message[/color]."
   requires: "Requires blah blah"
@@ -73,7 +73,7 @@
 
 - type: action
   actionType: DebugTargetPoint
-  icon: Interface/Alerts/Human/human4.png
+  icon: Interface/Alerts/human_health.rsi/health4.png
   name: "[color=red]Debug Target Position[/color]"
   description: "This is a [color=red]debug message[/color]."
   filters:
@@ -83,7 +83,7 @@
 
 - type: action
   actionType: DebugTargetPointRepeat
-  icon: Interface/Alerts/Human/human2.png
+  icon: Interface/Alerts/human_health.rsi/health2.png
   name: "[color=red]Repeating Debug Target Position[/color]"
   description: "This is a [color=red]debug message[/color]."
   filters:
@@ -94,7 +94,7 @@
 
 - type: action
   actionType: DebugTargetEntity
-  icon: Interface/Alerts/Human/human6.png
+  icon: Interface/Alerts/human_health.rsi/health6.png
   name: "[color=red]Debug Target Entity[/color]"
   description: "This is a [color=red]debug message[/color]."
   filters:
@@ -104,7 +104,7 @@
 
 - type: action
   actionType: DebugTargetEntityRepeat
-  icon: Interface/Alerts/Human/human5.png
+  icon: Interface/Alerts/human_health.rsi/health5.png
   name: "[color=red]Repeating Debug Target Entity[/color]"
   description: "This is a [color=red]debug message[/color]."
   filters:

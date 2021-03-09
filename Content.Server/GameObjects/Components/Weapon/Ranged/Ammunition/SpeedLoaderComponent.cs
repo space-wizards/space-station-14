@@ -10,7 +10,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 {
@@ -22,26 +24,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     {
         public override string Name => "SpeedLoader";
 
-        private BallisticCaliber _caliber;
+        [DataField("caliber")]
+        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
         public int Capacity => _capacity;
-        private int _capacity;
+        [DataField("capacity")]
+        private int _capacity = 6;
         private Container _ammoContainer;
-        private Stack<IEntity> _spawnedAmmo;
+        private Stack<IEntity> _spawnedAmmo = new();
         private int _unspawnedCount;
 
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
 
-        private string _fillPrototype;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-            serializer.DataField(ref _capacity, "capacity", 6);
-            serializer.DataField(ref _fillPrototype, "fillPrototype", null);
-
-            _spawnedAmmo = new Stack<IEntity>(_capacity);
-        }
+        [DataField("fillPrototype")]
+        private string _fillPrototype = default;
 
         public override void Initialize()
         {

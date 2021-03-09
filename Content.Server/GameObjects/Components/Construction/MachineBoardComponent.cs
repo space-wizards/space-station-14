@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using Content.Server.Construction;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Stacks;
-using Microsoft.Extensions.Logging;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -23,17 +21,27 @@ namespace Content.Server.GameObjects.Components.Construction
         public override string Name => "MachineBoard";
 
         [ViewVariables]
-        private Dictionary<MachinePart, int> _requirements;
+        [DataField("requirements")]
+        private Dictionary<MachinePart, int> _requirements = new();
 
         [ViewVariables]
-        private Dictionary<string, int> _materialIdRequirements;
+        [DataField("materialRequirements")]
+        private Dictionary<string, int> _materialIdRequirements = new();
 
         [ViewVariables]
-        private Dictionary<string, ComponentPartInfo> _componentRequirements;
+        [DataField("tagRequirements")]
+        private Dictionary<string, GenericPartInfo> _tagRequirements = new();
+
+        [ViewVariables]
+        [DataField("componentRequirements")]
+        private Dictionary<string, GenericPartInfo> _componentRequirements = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("prototype")]
         public string Prototype { get; private set; }
+
         public IReadOnlyDictionary<MachinePart, int> Requirements => _requirements;
+
         public IReadOnlyDictionary<string, int> MaterialIdRequirements => _materialIdRequirements;
 
         public IEnumerable<KeyValuePair<StackPrototype, int>> MaterialRequirements
@@ -48,29 +56,9 @@ namespace Content.Server.GameObjects.Components.Construction
             }
         }
 
-        public IReadOnlyDictionary<string, ComponentPartInfo> ComponentRequirements => _componentRequirements;
+        public IReadOnlyDictionary<string, GenericPartInfo> ComponentRequirements => _componentRequirements;
+        public IReadOnlyDictionary<string, GenericPartInfo> TagRequirements => _tagRequirements;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.Prototype, "prototype", null);
-            serializer.DataField(ref _requirements, "requirements", new Dictionary<MachinePart, int>());
-            serializer.DataField(ref _materialIdRequirements, "materialRequirements", new Dictionary<string, int>());
-            serializer.DataField(ref _componentRequirements, "componentRequirements", new Dictionary<string, ComponentPartInfo>());
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            foreach (var material in _materialIdRequirements.Keys)
-            {
-                if (!_prototypeManager.HasIndex<StackPrototype>(material))
-                {
-                    Logger.Error($"No {nameof(StackPrototype)} found with id {material}");
-                }
-            }
-        }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
@@ -89,14 +77,23 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
             }
+
+            foreach (var (_, info) in TagRequirements)
+            {
+                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
+            }
         }
     }
 
     [Serializable]
-    public struct ComponentPartInfo
+    [DataDefinition]
+    public struct GenericPartInfo
     {
+        [DataField("Amount")]
         public int Amount;
+        [DataField("ExamineName")]
         public string ExamineName;
+        [DataField("DefaultPrototype")]
         public string DefaultPrototype;
     }
 }

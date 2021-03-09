@@ -9,31 +9,20 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
 {
     [UsedImplicitly]
     public class PoweredLightVisualizer : AppearanceVisualizer
     {
-        private float _minBlinkingTime;
-        private float _maxBlinkingTime;
-        private string? _blinkingSound;
+        [DataField("minBlinkingTime")] private float _minBlinkingTime = 0.5f;
+        [DataField("maxBlinkingTime")] private float _maxBlinkingTime = 2;
+        [DataField("blinkingSound")] private string? _blinkingSound;
 
         private bool _wasBlinking;
 
         private Action<string>? _blinkingCallback;
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            var serializer = YamlObjectSerializer.NewReader(node);
-            serializer.DataField(ref _minBlinkingTime, "minBlinkingTime", 0.5f);
-            serializer.DataField(ref _maxBlinkingTime, "maxBlinkingTime", 2.0f);
-            serializer.DataField(ref _blinkingSound, "blinkingSound", null);
-        }
 
         public override void OnChangeData(AppearanceComponent component)
         {

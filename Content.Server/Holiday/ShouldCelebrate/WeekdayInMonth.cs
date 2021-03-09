@@ -1,7 +1,7 @@
 using System;
 using System.Globalization;
 using JetBrains.Annotations;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Holiday.ShouldCelebrate
 {
@@ -9,16 +9,11 @@ namespace Content.Server.Holiday.ShouldCelebrate
     ///     For a holiday that happens the first instance of a weekday on a month.
     /// </summary>
     [UsedImplicitly]
-    public class WeekdayInMonth : DefaultHolidayShouldCelebrate, IExposeData
+    public class WeekdayInMonth : DefaultHolidayShouldCelebrate
     {
-        private DayOfWeek _weekday;
-        private uint _occurrence;
+        [DataField("weekday")] private DayOfWeek _weekday = DayOfWeek.Monday;
 
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _weekday, "weekday", DayOfWeek.Monday);
-            serializer.DataField(ref _occurrence, "occurrence", 1u);
-        }
+        [DataField("occurrence")] private uint _occurrence = 1;
 
         public override bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
         {

@@ -2,7 +2,7 @@
 using Content.Server.GameObjects.Components.ActionBlocking;
 using Content.Shared.Alert;
 using JetBrains.Annotations;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Alert.Click
 {
@@ -10,10 +10,9 @@ namespace Content.Server.Alert.Click
     ///     Try to remove handcuffs from yourself
     /// </summary>
     [UsedImplicitly]
+    [DataDefinition]
     public class RemoveCuffs : IAlertClick
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer) {}
-
         public void AlertClicked(ClickAlertEventArgs args)
         {
             if (args.Player.TryGetComponent(out CuffableComponent? cuffableComponent))

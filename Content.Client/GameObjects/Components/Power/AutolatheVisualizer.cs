@@ -20,10 +20,8 @@ namespace Content.Client.GameObjects.Components.Power
         private Animation _insertingPlasmaAnimation;
         private Animation _insertingPlasticAnimation;
 
-        public override void LoadData(YamlMappingNode node)
+        public AutolatheVisualizer()
         {
-            base.LoadData(node);
-
             _buildingAnimation = PopulateAnimation("building", "building_unlit", 0.5f);
             _insertingMetalAnimation = PopulateAnimation("inserting_metal", "inserting_unlit", 0.5f);
             _insertingGlassAnimation = PopulateAnimation("inserting_glass", "inserting_unlit", 0.5f);
@@ -123,6 +121,7 @@ namespace Content.Client.GameObjects.Components.Power
             var glowingPartsVisible = !(component.TryGetData(PowerDeviceVisuals.Powered, out bool powered) && !powered);
             sprite.LayerSetVisible(AutolatheVisualLayers.BaseUnlit, glowingPartsVisible);
         }
+
         public enum AutolatheVisualLayers : byte
         {
             Base,

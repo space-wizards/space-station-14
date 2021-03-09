@@ -86,9 +86,10 @@
   - type: Slippery
     paralyzeTime: 4
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
       layer:
       - MobImpassable
 

@@ -5,6 +5,8 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using static Robust.Shared.Utility.SpriteSpecifier;
@@ -12,21 +14,15 @@ using static Robust.Shared.Utility.SpriteSpecifier;
 namespace Content.Client.GameObjects.Components.Storage
 {
     [UsedImplicitly]
-    public class BagOpenCloseVisualizer : AppearanceVisualizer
+    public class BagOpenCloseVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string OpenIcon = "openIcon";
+        [DataField(OpenIcon)]
         private string? _openIcon;
 
-        public override void LoadData(YamlMappingNode node)
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.LoadData(node);
-
-            if (node.TryGetNode<YamlScalarNode>(OpenIcon, out var openIconNode))
-            {
-                _openIcon = openIconNode.Value;
-            }
-            else
-            {
+            if(_openIcon == null){
                 Logger.Warning("BagOpenCloseVisualizer is useless with no `openIcon`");
             }
         }

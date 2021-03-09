@@ -8,11 +8,12 @@
   - type: InteractionOutline
   - type: Clickable
   - type: Physics
-    anchored: false
+    bodyType: Dynamic
     mass: 25
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
       layer:
       - Impassable
       - MobImpassable
@@ -51,10 +52,11 @@
   - type: InteractionOutline
   - type: Clickable
   - type: Physics
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
       layer:
       - Impassable
       - MobImpassable

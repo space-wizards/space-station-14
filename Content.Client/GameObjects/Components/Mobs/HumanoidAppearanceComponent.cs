@@ -1,4 +1,4 @@
-﻿using Content.Client.GameObjects.Components.ActionBlocking;
+using Content.Client.GameObjects.Components.ActionBlocking;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -62,6 +62,8 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             sprite.LayerSetColor(HumanoidVisualLayers.Hair, Appearance.HairColor);
             sprite.LayerSetColor(HumanoidVisualLayers.FacialHair, Appearance.FacialHairColor);
+
+            sprite.LayerSetColor(HumanoidVisualLayers.Eyes, Appearance.EyeColor);
 
             sprite.LayerSetState(HumanoidVisualLayers.Chest, Sex == Sex.Male ? "torso_m" : "torso_f");
             sprite.LayerSetState(HumanoidVisualLayers.Head, Sex == Sex.Male ? "head_m" : "head_f");

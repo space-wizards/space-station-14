@@ -1,7 +1,7 @@
 #nullable enable
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 using System.Collections.Generic;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -13,15 +13,9 @@ namespace Content.Client.GameObjects.Components
     {
         public override string Name => "ClientEntitySpawner";
 
-        private List<string> _prototypes = default!;
+        [DataField("prototypes")] private List<string> _prototypes =  new() { "HVDummyWire" };
 
-        private List<IEntity> _entity = new();
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _prototypes, "prototypes", new List<string> { "HVDummyWire" });
-        }
+        private readonly List<IEntity> _entity = new();
 
         public override void Initialize()
         {

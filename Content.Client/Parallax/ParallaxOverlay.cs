@@ -1,5 +1,6 @@
-﻿using Content.Client.Interfaces.Parallax;
+using Content.Client.Interfaces.Parallax;
 using Robust.Client.Graphics;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -13,7 +14,6 @@ namespace Content.Client.Parallax
         [Dependency] private readonly IClyde _displayManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public override bool AlwaysDirty => true;
         private const float Slowness = 0.5f;
 
         private Texture _parallaxTexture;
@@ -21,7 +21,7 @@ namespace Content.Client.Parallax
         public override OverlaySpace Space => OverlaySpace.ScreenSpaceBelowWorld;
         private readonly ShaderInstance _shader;
 
-        public ParallaxOverlay() : base(nameof(ParallaxOverlay))
+        public ParallaxOverlay()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("unshaded").Instance();

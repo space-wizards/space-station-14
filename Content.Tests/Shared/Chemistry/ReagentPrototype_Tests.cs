@@ -1,7 +1,10 @@
 ﻿using System.IO;
 using Content.Shared.Chemistry;
 using NUnit.Framework;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -22,8 +25,10 @@ namespace Content.Tests.Shared.Chemistry
                 var proto = (YamlMappingNode)rootNode[0];
 
                 var defType = proto.GetNode("type").AsString();
-                var newReagent = new ReagentPrototype();
-                newReagent.LoadFrom(proto);
+                var serializationManager = IoCManager.Resolve<ISerializationManager>();
+                serializationManager.Initialize();
+
+                var newReagent = serializationManager.ReadValue<ReagentPrototype>(new MappingDataNode(proto));
 
                 Assert.That(defType, Is.EqualTo("reagent"));
                 Assert.That(newReagent.ID, Is.EqualTo("chem.H2"));

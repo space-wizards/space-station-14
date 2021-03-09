@@ -42,7 +42,7 @@
   description: This controls the density of the particles. It looks unfinished.
   components:
     - type: Physics
-      anchored: false
+      bodyType: Dynamic
     - type: Sprite
       sprite: Constructible/Specific/Engines/PA/control_box.rsi
       state: box

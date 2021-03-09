@@ -1,6 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components.Fluids;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -9,23 +10,10 @@ namespace Content.Client.GameObjects.Components.Fluids
     [UsedImplicitly]
     public class SprayVisualizer : AppearanceVisualizer
     {
+        [DataField("safety_on_state")]
         private string _safetyOnState;
+        [DataField("safety_off_state")]
         private string _safetyOffState;
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            if (node.TryGetNode("safety_on_state", out var safetyOn))
-            {
-                _safetyOnState = safetyOn.AsString();
-            }
-
-            if (node.TryGetNode("safety_off_state", out var safetyOff))
-            {
-                _safetyOffState = safetyOff.AsString();
-            }
-        }
 
         public override void OnChangeData(AppearanceComponent component)
         {

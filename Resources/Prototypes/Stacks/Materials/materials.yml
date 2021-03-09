@@ -1,7 +1,7 @@
 - type: stack
   id: Banananium
   name: banananium
-  icon: /Textures/Objects/Materials/materials.rsi/banananium.png
+  icon: /Textures/Objects/Materials/materials.rsi/bananium.png
   spawn: MaterialBanananium1
 
 - type: stack
