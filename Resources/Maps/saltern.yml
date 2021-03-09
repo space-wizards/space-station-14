@@ -5386,7 +5386,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 589
-  type: AirlockServiceGlassLocked
+  type: AirlockEngineering
   components:
   - name: Tool Storage
     type: MetaData
@@ -5395,7 +5395,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 590
-  type: AirlockServiceGlassLocked
+  type: AirlockEngineering
   components:
   - name: Tool Storage
     type: MetaData

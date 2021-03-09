@@ -26,7 +26,6 @@ namespace Content.Client.GameObjects.Components.Suspicion
             IEntityManager entityManager,
             IResourceCache resourceCache,
             IEyeManager eyeManager)
-            : base(nameof(TraitorOverlay))
         {
             _playerManager = IoCManager.Resolve<IPlayerManager>();
 

@@ -1,25 +1,25 @@
+//This shader defines two circles - everything inside the inner circle will be darkened, while everything outside the outer circle
+//will be full black. Between the inner and outer circle it LERPs from the inner darkness to full black.
+
 light_mode unshaded;
 
-const highp float percentagedistanceshow = 0.05;
-const highp float gradientfalloffwidth = 3.0;
-
-highp vec4 circle(in highp vec2 uv, in highp vec2 pos, highp float rad, in highp vec3 color) {
-    highp float d = length(pos - uv) - rad;
-    highp float t = clamp(d, 0.0, 1.0);
-    return vec4(color, t);
-}
+const highp float darknessAlphaInner =  0.6; 
+const highp float innerCircleRadius = 40; //Note: this is in pixels
+const highp float outerCircleRadius = 80;
 
 void fragment() {
-    highp vec2 uv = FRAGCOORD.xy;
-    highp vec2 res_xy = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
-    highp vec2 center = res_xy*0.5;
-    highp float radius = percentagedistanceshow * res_xy.y;
-
-    highp vec4 grad = vec4(0.8 - length( uv - center )/res_xy.y * gradientfalloffwidth);
-
-    highp vec4 layer1 = vec4(vec3(255.0),0.0);
-
-    highp vec4 layer2 = circle(uv, center, radius, grad.rgb);
-
-    COLOR = mix(layer1, layer2, layer2.a);
+	highp vec2 pixelSize = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
+    highp vec2 pixelCenter = pixelSize*0.5;
+	highp float distance = length(FRAGCOORD.xy - pixelCenter);
+	if(distance > outerCircleRadius){
+		COLOR = vec4(0.0, 0.0, 0.0, 1.0);
+	}
+	else if(distance < innerCircleRadius){
+		COLOR = vec4(0.0, 0.0, 0.0, darknessAlphaInner);
+	}
+	else{
+		highp float intensity = (distance-innerCircleRadius)/(outerCircleRadius-innerCircleRadius);
+		COLOR = vec4(0.0, 0.0, 0.0, (1-intensity)*darknessAlphaInner + intensity);
+	}
 }
+

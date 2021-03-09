@@ -1,4 +1,5 @@
-﻿using Content.Client.GameObjects.EntitySystems;
+using Content.Client.GameObjects.EntitySystems;
+using Robust.Shared.Enums;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
@@ -16,7 +17,7 @@ namespace Content.Client.Atmos
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IClyde _clyde = default!;
 
-        public override OverlaySpace Space => OverlaySpace.WorldSpace;
+        public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
         public GasTileOverlay()
         {
