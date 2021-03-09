@@ -1,8 +1,6 @@
 - type: vendingMachineInventory
-  id: Hatlord 9000
-  name: Hatlord 9000
-  description: "Hats for the hatlord. Skulls for the hat-throne!"
-  spriteName: hats
+  id: ClothesMate
+  name: ClothesMate
   startingInventory:
     HatBandBlack: 3
     HatBandBlue: 3
@@ -19,3 +17,14 @@
     ClothingHeadHatCargosoft: 3
     ClothingHeadHatCentcom: 3
     ClothingHeadHatChef: 3
+    ClothingShoesColorWhite: 3
+    ClothingShoesClown: 3
+    ClothingShoesBootsJack: 3
+    ClothingShoesColorBrown: 3
+    ClothingUniformJumpsuitJanitor: 3
+    ClothingUniformJumpsuitColorGrey: 3
+    ClothingUniformJumpsuitEngineering: 3
+    ClothingUniformJumpsuitClown: 3
+    ClothingUniformJumpsuitSec: 3
+    ClothingUniformJumpsuitChef: 3
+    ClothingUniformJumpsuitCaptain: 3
