@@ -245,6 +245,7 @@ namespace Content.Client
             "ReagentTank",
             "UtilityAI",
             "MouseAccent",
+            "GhostTakeoverAvailable",
         };
     }
 }
