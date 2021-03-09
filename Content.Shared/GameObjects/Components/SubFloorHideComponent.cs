@@ -1,7 +1,6 @@
-﻿using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Shared.GameObjects.Components
 {
     /// <summary>
     /// Simple component that automatically hides the sibling

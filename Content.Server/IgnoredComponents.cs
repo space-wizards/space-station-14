@@ -6,7 +6,6 @@ namespace Content.Server
         public static string[] List => new [] {
             "ConstructionGhost",
             "IconSmooth",
-            "SubFloorHide",
             "LowWall",
             "ReinforcedWall",
             "InteractionOutline",
