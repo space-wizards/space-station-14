@@ -150,7 +150,14 @@ namespace Content.MapRenderer
                 }
             });
 
-            await TearDown();
+            // It fails locally otherwise. We don't care if it fails as we have already saved the images.
+            try
+            {
+                await TearDown();
+            }
+            catch (InvalidOperationException)
+            {
+            }
 
             Console.WriteLine($"Saved map image for {map} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
