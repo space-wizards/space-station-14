@@ -194,7 +194,6 @@ namespace Content.Client
             "ContainmentFieldGenerator",
             "ContainmentField",
             "Emitter",
-            "Singularity",
             "SingularityGenerator",
             "EmitterBoltComponent",
             "ParticleProjectile",
@@ -246,6 +245,7 @@ namespace Content.Client
             "UtilityAI",
             "MouseAccent",
             "GhostTakeoverAvailable",
+            "GhostRoleMobSpawner",
         };
     }
 }

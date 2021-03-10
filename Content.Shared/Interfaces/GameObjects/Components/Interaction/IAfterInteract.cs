@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -50,13 +50,8 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when clicking on another object and no attack event was handled.
     /// </summary>
     [PublicAPI]
-    public class AfterInteractMessage : EntitySystemMessage
+    public class AfterInteractMessage : HandledEntityEventArgs
     {
-        /// <summary>
-        ///     If this message has already been "handled" by a previous system.
-        /// </summary>
-        public bool Handled { get; set; }
-
         /// <summary>
         ///     Entity that triggered the attack.
         /// </summary>

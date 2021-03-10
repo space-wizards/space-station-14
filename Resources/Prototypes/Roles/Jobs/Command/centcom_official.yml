@@ -1,0 +1,13 @@
+- type: startingGear
+  id: CentcomGear
+  equipment:
+    innerclothing: ClothingUniformJumpsuitCentcomOfficial
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHatCentcom
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesColorBlack
+    outerclothing: ClothingOuterVestKevlar
+    idcard: CentcomPDA
+    ears: ClothingHeadsetAltCommand
+    pocket1: Paper
+    pocket2: Pen

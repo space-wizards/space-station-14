@@ -3,8 +3,6 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Nutrition
 {
@@ -12,7 +10,7 @@ namespace Content.Client.GameObjects.Components.Nutrition
     public class CreamPiedVisualizer : AppearanceVisualizer
     {
         [DataField("state")]
-        private string _state;
+        private string? _state;
 
         public override void InitializeEntity(IEntity entity)
         {

@@ -18,7 +18,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         public override string Name => "BoltActionBarrel";
         public override uint? NetID => ContentNetIDs.BOLTACTION_BARREL;
 
-        private StatusControl _statusControl;
+        private StatusControl? _statusControl;
 
         /// <summary>
         ///     chambered is true when a bullet is chambered
@@ -36,7 +36,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         [ViewVariables]
         public (int count, int max)? MagazineCount { get; private set; }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 

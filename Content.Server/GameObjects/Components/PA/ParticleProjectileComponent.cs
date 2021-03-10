@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Projectiles;
+using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Singularity;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Physics;
@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.PA
         private ParticleAcceleratorPowerState _state;
         void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            if (otherBody.Entity.TryGetComponent<SingularityComponent>(out var singularityComponent))
+            if (otherBody.Entity.TryGetComponent<ServerSingularityComponent>(out var singularityComponent))
             {
                 var multiplier = _state switch
                 {

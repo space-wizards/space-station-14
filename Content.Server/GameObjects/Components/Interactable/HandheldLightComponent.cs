@@ -275,7 +275,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         }
     }
 
-    internal sealed class ActivateHandheldLightMessage : EntitySystemMessage
+    internal sealed class ActivateHandheldLightMessage : EntityEventArgs
     {
         public HandheldLightComponent Component { get; }
 
@@ -285,7 +285,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         }
     }
 
-    internal sealed class DeactivateHandheldLightMessage : EntitySystemMessage
+    internal sealed class DeactivateHandheldLightMessage : EntityEventArgs
     {
         public HandheldLightComponent Component { get; }
 

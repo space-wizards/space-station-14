@@ -460,7 +460,7 @@ namespace Content.IntegrationTests.Tests.Networking
             }
         }
 
-        private sealed class SetFooMessage : EntitySystemMessage
+        private sealed class SetFooMessage : EntityEventArgs
         {
             public SetFooMessage(EntityUid uid, bool newFoo)
             {

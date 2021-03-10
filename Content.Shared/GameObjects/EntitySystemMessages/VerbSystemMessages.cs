@@ -10,7 +10,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
     public static class VerbSystemMessages
     {
         [Serializable, NetSerializable]
-        public class RequestVerbsMessage : EntitySystemMessage
+        public class RequestVerbsMessage : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
 
@@ -21,7 +21,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
         }
 
         [Serializable, NetSerializable]
-        public class VerbsResponseMessage : EntitySystemMessage
+        public class VerbsResponseMessage : EntityEventArgs
         {
             public readonly NetVerbData[] Verbs;
             public readonly EntityUid Entity;
@@ -55,7 +55,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
         }
 
         [Serializable, NetSerializable]
-        public class UseVerbMessage : EntitySystemMessage
+        public class UseVerbMessage : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
             public readonly string VerbKey;

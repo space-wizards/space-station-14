@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Power.AME
         public Button IncreaseFuelButton { get; set; }
         public Button DecreaseFuelButton { get; set; }
         public Button RefreshPartsButton { get; set; }
-        public ProgressBar FuelMeter { get; set; }
+        public ProgressBar? FuelMeter { get; set; }
         public Label FuelAmount { get; set; }
         public Label InjectionAmount { get; set; }
         public Label CoreCount { get; set; }
@@ -89,9 +89,7 @@ namespace Content.Client.GameObjects.Components.Power.AME
                         }
                     }
             });
-
         }
-
 
         /// <summary>
         /// This searches recursively through all the children of "parent"
@@ -162,7 +160,6 @@ namespace Content.Client.GameObjects.Components.Power.AME
 
             CoreCount.Text = $"{castState.CoreCount}";
             InjectionAmount.Text = $"{castState.InjectionAmount}";
-
         }
     }
 }
