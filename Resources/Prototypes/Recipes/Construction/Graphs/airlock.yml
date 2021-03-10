@@ -4,22 +4,20 @@
   graph:
     - node: start
       edges:
-        - to: assemblyUnsecured
+        - to: assembly
           steps:
             - material: Steel
               amount: 4
               doAfter: 1
 
-    - node: assemblyUnsecured
+    - node: assembly
       entity: AirlockAssembly
       actions:
         - !type:SpriteStateChange
           state: assembly
+        - !type:SnapToGrid {}
+        - !type:SetAnchor {}
       edges:
-        - to: assembly
-          steps:
-            - tool: Anchoring
-              doAfter: 0.5
         - to: wired
           conditions:
             - !type:EntityAnchored {}
@@ -40,23 +38,6 @@
             - tool: Welding
               doAfter: 2
 
-    - node: assembly
-      actions:
-        - !type:SnapToGrid {}
-        - !type:SetAnchor {}
-      edges:
-        - to: wired
-          conditions:
-            - !type:EntityAnchored {}
-          steps:
-            - material: Cable
-              amount: 5
-              doAfter: 1
-        - to: assemblyUnsecured
-          steps:
-            - tool: Anchoring
-              doAfter: 0.5
-
     - node: wired
       entity: AirlockAssembly
       edges:
@@ -66,12 +47,12 @@
           steps:
             - tag: DoorElectronics
               store: board
-              name: "[color=cyan]airlock electronics[/color] circuit board"
+              name: "[color=cyan]door electronics[/color] circuit board"
               icon:
                 sprite: "Constructible/Misc/module.rsi"
                 state: "door_electronics"
               doAfter: 0.25
-        - to: assemblyUnsecured
+        - to: assembly
           completed:
             - !type:SpawnPrototype
               prototype: ApcExtensionCableStack1
@@ -98,6 +79,7 @@
             - !type:DoorWelded {}
             - !type:AirlockBolted
               value: false
+            - !type:PanelOpen {}
           completed:
             - !type:EmptyAllContainers {}
           steps:

@@ -93,6 +93,7 @@
     sprite: Constructible/Structures/Doors/Standard/basic.rsi
     state: "assembly"
   - type: Physics
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb

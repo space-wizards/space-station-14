@@ -1,7 +1,7 @@
 - type: entity
   id: DoorElectronics
   parent: BaseItem
-  name: airlock electronics
+  name: door electronics
   components:
     - type: Tag
       tags:
