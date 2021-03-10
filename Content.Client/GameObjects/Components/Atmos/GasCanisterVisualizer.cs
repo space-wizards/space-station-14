@@ -2,15 +2,14 @@
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
     public class GasCanisterVisualizer : AppearanceVisualizer
     {
         [DataField("stateConnected")]
-        private string _stateConnected;
+        private string? _stateConnected;
+
         [DataField("pressureStates")]
         private string[] _statePressure = new string[] {"", "", "", ""};
 
@@ -20,11 +19,14 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             var sprite = entity.GetComponent<ISpriteComponent>();
 
-            sprite.LayerMapSet(Layers.ConnectedToPort, sprite.AddLayerState(_stateConnected));
-            sprite.LayerSetVisible(Layers.ConnectedToPort, false);
+            if (_stateConnected != null)
+            {
+                sprite.LayerMapSet(Layers.ConnectedToPort, sprite.AddLayerState(_stateConnected));
+                sprite.LayerSetVisible(Layers.ConnectedToPort, false);
 
-            sprite.LayerMapSet(Layers.PressureLight, sprite.AddLayerState(_stateConnected));
-            sprite.LayerSetShader(Layers.PressureLight, "unshaded");
+                sprite.LayerMapSet(Layers.PressureLight, sprite.AddLayerState(_stateConnected));
+                sprite.LayerSetShader(Layers.PressureLight, "unshaded");
+            }
         }
 
         public override void OnChangeData(AppearanceComponent component)
@@ -36,7 +38,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                 return;
             }
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }

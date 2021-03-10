@@ -5,8 +5,8 @@ namespace Content.Client.Interfaces.Parallax
 {
     public interface IParallaxManager
     {
-        event Action<Texture> OnTextureLoaded;
-        Texture ParallaxTexture { get; }
+        event Action<Texture>? OnTextureLoaded;
+        Texture? ParallaxTexture { get; }
         void LoadParallax();
     }
 }

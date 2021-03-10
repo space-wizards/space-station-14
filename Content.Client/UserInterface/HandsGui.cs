@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.GameObjects.Components.Items;
 using Content.Client.Utility;
@@ -125,7 +126,7 @@ namespace Content.Client.UserInterface
         /// </summary>
         /// <param name="hands"></param>
         /// <returns>true if successful and false if failure</returns>
-        private bool TryGetHands(out HandsComponent hands)
+        private bool TryGetHands([NotNullWhen(true)] out HandsComponent? hands)
         {
             hands = default;
 

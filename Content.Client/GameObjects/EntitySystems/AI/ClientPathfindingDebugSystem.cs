@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.AI;
@@ -20,7 +20,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
     {
         private PathfindingDebugMode _modes = PathfindingDebugMode.None;
         private float _routeDuration = 4.0f; // How long before we remove a route from the overlay
-        private DebugPathfindingOverlay _overlay;
+        private DebugPathfindingOverlay? _overlay;
 
         public override void Initialize()
         {
@@ -45,7 +45,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
             if ((_modes & PathfindingDebugMode.Nodes) != 0 ||
                 (_modes & PathfindingDebugMode.Route) != 0)
             {
-                _overlay.AStarRoutes.Add(message);
+                _overlay?.AStarRoutes.Add(message);
                 Timer.Spawn(TimeSpan.FromSeconds(_routeDuration), () =>
                 {
                     if (_overlay == null) return;
@@ -59,7 +59,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
             if ((_modes & PathfindingDebugMode.Nodes) != 0 ||
                     (_modes & PathfindingDebugMode.Route) != 0)
             {
-                _overlay.JpsRoutes.Add(message);
+                _overlay?.JpsRoutes.Add(message);
                 Timer.Spawn(TimeSpan.FromSeconds(_routeDuration), () =>
                 {
                     if (_overlay == null) return;
@@ -70,32 +70,31 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
         private void HandleGraphMessage(SharedAiDebug.PathfindingGraphMessage message)
         {
-            EnableOverlay();
-            _overlay.UpdateGraph(message.Graph);
+            EnableOverlay().UpdateGraph(message.Graph);
         }
 
         private void HandleRegionsMessage(SharedAiDebug.ReachableChunkRegionsDebugMessage message)
         {
-            EnableOverlay();
-            _overlay.UpdateRegions(message.GridId, message.Regions);
+            EnableOverlay().UpdateRegions(message.GridId, message.Regions);
         }
 
         private void HandleCachedRegionsMessage(SharedAiDebug.ReachableCacheDebugMessage message)
         {
-            EnableOverlay();
-            _overlay.UpdateCachedRegions(message.GridId, message.Regions, message.Cached);
+            EnableOverlay().UpdateCachedRegions(message.GridId, message.Regions, message.Cached);
         }
 
-        private void EnableOverlay()
+        private DebugPathfindingOverlay EnableOverlay()
         {
             if (_overlay != null)
             {
-                return;
+                return _overlay;
             }
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
             _overlay = new DebugPathfindingOverlay {Modes = _modes};
             overlayManager.AddOverlay(_overlay);
+
+            return _overlay;
         }
 
         private void DisableOverlay()
@@ -125,7 +124,11 @@ namespace Content.Client.GameObjects.EntitySystems.AI
             {
                 EnableOverlay();
             }
-            _overlay.Modes = _modes;
+
+            if (_overlay != null)
+            {
+                _overlay.Modes = _modes;
+            }
 
             if (tooltip == PathfindingDebugMode.Graph)
             {
@@ -153,7 +156,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
             {
                 DisableOverlay();
             }
-            else
+            else if (_overlay != null)
             {
                 _overlay.Modes = _modes;
             }

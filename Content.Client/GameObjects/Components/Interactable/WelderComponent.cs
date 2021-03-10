@@ -7,7 +7,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -26,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Interactable
         [ViewVariables] public bool Activated { get; private set; }
         [ViewVariables] public override ToolQuality Qualities => _behavior;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 

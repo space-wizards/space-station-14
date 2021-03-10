@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Shared.Alert;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

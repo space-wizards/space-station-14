@@ -65,12 +65,12 @@ namespace Content.Client.GameObjects.EntitySystems
             UpdateTile(grid, indices);
         }
 
-        private void MapManagerOnTileChanged(object sender, TileChangedEventArgs e)
+        private void MapManagerOnTileChanged(object? sender, TileChangedEventArgs e)
         {
             UpdateTile(_mapManager.GetGrid(e.NewTile.GridIndex), e.NewTile.GridIndices);
         }
 
-        private void MapManagerOnGridChanged(object sender, GridChangedEventArgs e)
+        private void MapManagerOnGridChanged(object? sender, GridChangedEventArgs e)
         {
             foreach (var modified in e.Modified)
             {
@@ -85,19 +85,19 @@ namespace Content.Client.GameObjects.EntitySystems
             foreach (var snapGridComponent in grid.GetSnapGridCell(position, SnapGridOffset.Center))
             {
                 var entity = snapGridComponent.Owner;
-                if (!entity.TryGetComponent(out SubFloorHideComponent subFloorComponent))
+                if (!entity.TryGetComponent(out SubFloorHideComponent? subFloorComponent))
                 {
                     continue;
                 }
 
                 var enabled = EnableAll || !subFloorComponent.Running || tileDef.IsSubFloor;
 
-                if (entity.TryGetComponent(out ISpriteComponent spriteComponent))
+                if (entity.TryGetComponent(out ISpriteComponent? spriteComponent))
                 {
                     spriteComponent.Visible = enabled;
                 }
 
-                if (entity.TryGetComponent(out PhysicsComponent physicsComponent))
+                if (entity.TryGetComponent(out PhysicsComponent? physicsComponent))
                 {
                     physicsComponent.CanCollide = enabled;
                 }
