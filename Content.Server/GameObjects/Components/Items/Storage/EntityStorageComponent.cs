@@ -135,10 +135,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             get => _canWeldShut;
             set
             {
-                if (_canWeldShut == value)
-                    return;
-
                 _canWeldShut = value;
+
                 if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
                     appearance.SetData(StorageVisuals.CanWeld, value);
@@ -424,6 +422,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             _beingWelded = false;
+            CanWeldShut = true;
             IsWeldedShut ^= true;
             return true;
         }
