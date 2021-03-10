@@ -3,7 +3,6 @@ meta:
   name: DemoStation
   author: Space-Wizards
   postmapinit: false
-
 tilemap:
   0: space
   1: floor_asteroid_coarse_sand0
