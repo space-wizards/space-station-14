@@ -135,12 +135,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             get => _canWeldShut;
             set
             {
-                _canWeldShut = value;
+                if (_canWeldShut == value)
+                    return;
 
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-                {
-                    appearance.SetData(StorageVisuals.CanWeld, value);
-                }
+                _canWeldShut = value;
             }
         }
 
@@ -157,6 +155,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
             {
                 placeableSurfaceComponent.IsPlaceable = Open;
+            }
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(StorageVisuals.CanWeld, _canWeldShut);
             }
         }
 
@@ -422,7 +425,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             _beingWelded = false;
-            CanWeldShut = true;
             IsWeldedShut ^= true;
             return true;
         }
