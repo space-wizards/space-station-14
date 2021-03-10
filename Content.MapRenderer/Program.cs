@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
 using Content.MapRenderer.Painters;
@@ -22,6 +23,9 @@ namespace Content.MapRenderer
     {
         internal static void Main()
         {
+            Console.WriteLine(Directory.GetCurrentDirectory());
+            Console.WriteLine(Assembly.GetExecutingAssembly().Location);
+
             var created = Environment.GetEnvironmentVariable("MAPS_ADDED");
             var modified = Environment.GetEnvironmentVariable("MAPS_MODIFIED");
 
