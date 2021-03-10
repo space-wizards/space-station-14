@@ -125,7 +125,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: chicken-0
-      sprite: Mobs/Animals/chicken.rsi
+      sprite: Mobs/Animals/chicken.rsi #needs randomiser similar to RandomPottedPlantComponent.cs
   - type: Physics
     bodyType: Dynamic
     mass: 20
