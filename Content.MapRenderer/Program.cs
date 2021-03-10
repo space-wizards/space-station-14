@@ -50,7 +50,7 @@ namespace Content.MapRenderer
                 }
             }
 
-            var maps = new List<string>{"Resources/Maps/saltern.yml"};
+            var maps = new List<string>();
 
             foreach (var node in files)
             {
