@@ -49,7 +49,7 @@ namespace Content.MapRenderer
                 }
             }
 
-            var maps = new List<string>();
+            var maps = new List<string>{"Resources/Maps/saltern.yml"};
 
             foreach (var node in files)
             {
@@ -145,6 +145,8 @@ namespace Content.MapRenderer
                     await gridCanvas.SaveAsync($"{directory}/{file.Filename}");
                 }
             });
+
+            await TearDown();
 
             Console.WriteLine($"Saved all map images in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
