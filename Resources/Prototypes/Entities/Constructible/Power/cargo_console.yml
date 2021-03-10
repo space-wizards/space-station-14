@@ -40,8 +40,16 @@
       - cargo.funplushies
       - cargo.funartsupplies
       - cargo.funinstruments
-      - livestockgoat
       - livestockbutterfly
+      - livestockcat
+      - livestockcorgi
+      - livestockcow
+      - livestockgoat
+      - livestockgoose
+      - livestockmonkeycube
+      - livestockparrot
+      - livestockpenguin
+      - livestocksnake
       - cargo.materialsteel
       - cargo.materialglass
       - cargo.materialplastic

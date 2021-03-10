@@ -240,6 +240,37 @@
     - type: DamageStateVisualizer
       normal: goat
       dead: dead
+      
+- type: entity
+  name: cow
+  parent: SimpleMobBase
+  id: CowMob_Content
+  description: Moo.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cow
+      sprite: Mobs/Animals/cow.rsi
+  - type: Physics
+    bodyType: Dynamic
+    mass: 20
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.60,-0.50,0.05,0.50"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: cow
+      dead: dead
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin
 - type: entity
