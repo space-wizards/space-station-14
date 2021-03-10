@@ -4,7 +4,7 @@
   description: "A crate containing a swarm of eight bees"
   icon:
     sprite: Mobs/Animals/bee.rsi
-    state: bee
+    state: 0
   product: CrateNPCBee
   cost: 1000
   category: Livestock
@@ -39,8 +39,8 @@
   id: livestockchicken
   description: "A crate containing a four fully grown chickens"
   icon:
-    sprite: Mobs/Pets/chicken.rsi
-    state: chicken
+    sprite: Mobs/Animals/chicken.rsi
+    state: icon-1
   product: CrateNPCChicken
   cost: 1500
   category: Livestock
@@ -100,7 +100,7 @@
   description: "A crate containing a single gorilla"
   icon:
     sprite: Mobs/Animals/gorilla.rsi
-    state: gorilla
+    state: icon
   product: CrateNPCGorilla
   cost: 2000
   category: Livestock
