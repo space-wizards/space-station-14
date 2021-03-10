@@ -14,7 +14,8 @@ namespace Content.Server.Construction.Conditions
     [DataDefinition]
     public class DoorWelded : IEdgeCondition
     {
-        [DataField("welded")] public bool Welded { get; private set; } = true;
+        [DataField("welded")]
+        public bool Welded { get; private set; } = true;
 
         public async Task<bool> Condition(IEntity entity)
         {

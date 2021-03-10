@@ -10,15 +10,12 @@ using System.Threading.Tasks;
 
 namespace Content.Server.Construction.Conditions
 {
-    /// <summary>
-    ///     A condition that requires the airlock to have bolts up.
-    ///     Returns true if the entity doesn't have an airlock component.
-    /// </summary>
     [UsedImplicitly]
     [DataDefinition]
     public class AirlockBolted : IEdgeCondition
     {
-        [DataField("value")] public bool Value { get; private set; } = true;
+        [DataField("value")]
+        public bool Value { get; private set; } = true;
 
         public async Task<bool> Condition(IEntity entity)
         {

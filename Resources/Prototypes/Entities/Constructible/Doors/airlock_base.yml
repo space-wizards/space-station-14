@@ -123,7 +123,7 @@
         acts: ["Destruction"]
   - type: Construction
     graph: airlock
-    node: assemblyUnsecured
+    node: assembly
   placement:
     mode: SnapgridCenter
 

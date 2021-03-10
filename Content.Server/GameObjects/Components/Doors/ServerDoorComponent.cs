@@ -675,7 +675,7 @@ namespace Content.Server.GameObjects.Components.Doors
             var board = Owner.EntityManager.SpawnEntity(_boardPrototype, Owner.Transform.Coordinates);
 
             if(!container.Insert(board))
-                Logger.Warning($"Couldn't insert board {board} to computer {Owner}!");
+                Logger.Warning($"Couldn't insert board {board} into door {Owner}!");
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
