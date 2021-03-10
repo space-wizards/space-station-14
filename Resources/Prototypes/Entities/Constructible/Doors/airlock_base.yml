@@ -101,11 +101,8 @@
       mask:
       - MobImpassable
       layer:
-      - Opaque
-      - Impassable
       - MobImpassable
       - VaultImpassable
-      - SmallImpassable
   - type: Anchorable
     snap: true
   - type: Pullable

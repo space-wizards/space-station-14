@@ -8,7 +8,7 @@
           steps:
             - material: Steel
               amount: 4
-              doAfter: 1
+              doAfter: 2
 
     - node: assembly
       entity: AirlockAssembly
@@ -51,7 +51,7 @@
               icon:
                 sprite: "Constructible/Misc/module.rsi"
                 state: "door_electronics"
-              doAfter: 0.25
+              doAfter: 1
         - to: assembly
           completed:
             - !type:SpawnPrototype
@@ -59,7 +59,7 @@
               amount: 5
           steps:
             - tool: Cutting
-              doAfter: 0.5
+              doAfter: 1
 
     - node: electronics
       edges:
@@ -79,9 +79,9 @@
             - !type:DoorWelded {}
             - !type:AirlockBolted
               value: false
-            - !type:PanelOpen {}
+            - !type:WirePanel {}
           completed:
             - !type:EmptyAllContainers {}
           steps:
             - tool: Prying
-              doAfter: 2
+              doAfter: 1
