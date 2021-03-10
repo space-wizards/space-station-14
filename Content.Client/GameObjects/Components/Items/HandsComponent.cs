@@ -23,6 +23,9 @@ namespace Content.Client.GameObjects.Components.Items
         [ViewVariables]
         private HandsGui Gui { get; set; } = default!;
 
+        /// <summary>
+        ///     The index of the currently active hand. not guranteed to be in bounds of hand list.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         private int ActiveHand { get; set; }
 
@@ -67,12 +70,12 @@ namespace Content.Client.GameObjects.Components.Items
             _hands.Clear();
 
             ActiveHand = state.ActiveIndex;
-
             foreach (var handState in state.Hands)
             {
-                var newHand = new ClientHand(handState, GetHeldItem(handState.EntityUid));
+                var newHand = new ClientHand(handState, GetHeldItem(handState.EntityUid), handState.Enabled);
                 _hands.Add(newHand);
             }
+
             MakeHandLayers();
             SetGuiState();
 
@@ -144,10 +147,12 @@ namespace Content.Client.GameObjects.Components.Items
 
         private void HandlePlayerAttachedMsg()
         {
+            Gui.Visible = true;
         }
 
         private void HandlePlayerDetachedMsg()
         {
+            Gui.Visible = false;
         }
 
         private void HandleHandEnabledMsg(HandEnabledMsg msg)
@@ -155,10 +160,6 @@ namespace Content.Client.GameObjects.Components.Items
         }
 
         private void HandleHandDisabledMsg(HandDisabledMsg msg)
-        {
-        }
-
-        public void SendChangeHand(string index)
         {
         }
 
@@ -222,7 +223,7 @@ namespace Content.Client.GameObjects.Components.Items
 
             foreach (var hand in _hands)
             {
-                var handState = new GuiHand(hand.Name, hand.Location, hand.HeldItem);
+                var handState = new GuiHand(hand.Name, hand.Location, hand.HeldItem, hand.Enabled);
                 handStates.Add(handState);
             }
             return new HandsGuiState(handStates, ActiveHand);
@@ -234,12 +235,14 @@ namespace Content.Client.GameObjects.Components.Items
         public string Name { get; }
         public HandLocation Location { get; }
         public IEntity? HeldItem { get; }
+        public bool Enabled { get; }
 
-        public ClientHand(SharedHand hand, IEntity? heldItem)
+        public ClientHand(SharedHand hand, IEntity? heldItem, bool enabled)
         {
             Name = hand.Name;
             Location = hand.Location;
             HeldItem = heldItem;
+            Enabled = enabled;
         }
     }
 }

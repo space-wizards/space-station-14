@@ -38,7 +38,7 @@ namespace Content.Client.UserInterface
         [ViewVariables]
         private List<GuiHand> Hands { get; set; } = new();
 
-        private int? ActiveHand { get; set; } = null;
+        private int ActiveHand { get; set; }
 
         public HandsGui()
         {
@@ -92,15 +92,13 @@ namespace Content.Client.UserInterface
                 HandsContainer.AddChild(newButton);
                 hand.HandButton = newButton;
 
+                newButton.Blocked.Visible = !hand.Enabled;
                 GetStatusPanel(location).Update(heldItem);
                 _itemSlotManager.SetItemSlot(newButton, heldItem);
             }
-            if (ActiveHand != null)
+            if (TryGetHandButton(ActiveHand, out var handButton))
             {
-                if (TryGetHandButton(ActiveHand.Value, out var handButton))
-                {
-                    handButton.SetActiveHand(true);
-                }
+                handButton.SetActiveHand(true);
             }
         }
 
@@ -154,14 +152,14 @@ namespace Content.Client.UserInterface
         public List<GuiHand> GuiHands { get; } = new();
 
         /// <summary>
-        ///     The name of the hand that is currently selected by this player.
+        ///     The index of the currently active hand. not guranteed to be in bounds of hand list.
         /// </summary>
         [ViewVariables]
-        public int? ActiveHand { get; }
+        public int ActiveHand { get; }
 
         public HandsGuiState() { }
 
-        public HandsGuiState(List<GuiHand> guiHands, int? activeHand)
+        public HandsGuiState(List<GuiHand> guiHands, int activeHand)
         {
             GuiHands = guiHands;
             ActiveHand = activeHand;
@@ -194,11 +192,18 @@ namespace Content.Client.UserInterface
         [ViewVariables]
         public HandButton HandButton { get; set; } = default!;
 
-        public GuiHand(string name, HandLocation handLocation, IEntity? heldItem)
+        /// <summary>
+        ///     If this hand can be used by the player.
+        /// </summary>
+        [ViewVariables]
+        public bool Enabled { get; }
+
+        public GuiHand(string name, HandLocation handLocation, IEntity? heldItem, bool enabled)
         {
             Name = name;
             HandLocation = handLocation;
             HeldItem = heldItem;
+            Enabled = enabled;
         }
     }
 }
