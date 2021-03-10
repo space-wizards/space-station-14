@@ -70,7 +70,7 @@ namespace Content.Client.GameObjects.EntitySystems
             UpdateTile(_mapManager.GetGrid(e.NewTile.GridIndex), e.NewTile.GridIndices);
         }
 
-        private void MapManagerOnGridChanged(object sender, GridChangedEventArgs e)
+        private void MapManagerOnGridChanged(object? sender, GridChangedEventArgs e)
         {
             foreach (var modified in e.Modified)
             {
