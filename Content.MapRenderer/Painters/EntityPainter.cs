@@ -82,41 +82,40 @@ namespace Content.MapRenderer.Painters
                         continue;
                     }
 
-                    if (layer.RsiState.IsValid)
+                    if (!layer.RsiState.IsValid)
                     {
-                        // Pull texture from RSI state instead.
-                        var rsi = layer.ActualRsi;
-                        if (rsi == null || !rsi.TryGetState(layer.RsiState, out var state))
-                        {
-                            state = _cResourceCache.GetResource<RSIResource>("/Textures/error.rsi").RSI["error"];
-                        }
-
-                        var stateId = state.StateId;
-                        Stream stream;
-
-                        if (!_cResourceCache.TryContentFileRead($"{rsi.Path}/full.png", out stream))
-                        {
-                            if (rsi.Path.ToString().EndsWith("low_wall.rsi"))
-                            {
-                                stream = _cResourceCache.ContentFileRead($"{rsi.Path}/metal.png");
-                            }
-                            else if (rsi.Path.ToString().EndsWith("catwalk.rsi"))
-                            {
-                                stream = _cResourceCache.ContentFileRead($"{rsi.Path}/catwalk_preview.png");
-                            }
-                            else
-                            {
-                                stream = _cResourceCache.ContentFileRead($"{rsi.Path}/{stateId}.png");
-                            }
-                        }
-
-
-                        var image = Image.Load<Rgba32>(stream);
-
-                        image.Mutate(o => o.Resize(32, 32).Flip(FlipMode.Vertical));
-
-                        gridCanvas.Mutate(o => o.DrawImage(image, new Point((entity.X + xOffset - 1) * 32, (entity.Y + yOffset - 1) * 32), 1));
+                        continue;
                     }
+
+                    var rsi = layer.ActualRsi;
+                    Stream stream;
+
+                    if (rsi == null || rsi.Path == null || !rsi.TryGetState(layer.RsiState, out var state))
+                    {
+                        stream = _cResourceCache.ContentFileRead("/Textures/error.rsi/error.png");
+                    }
+                    else if (!_cResourceCache.TryContentFileRead($"{rsi.Path}/full.png", out stream))
+                    {
+                        if (rsi.Path.ToString().EndsWith("low_wall.rsi"))
+                        {
+                            stream = _cResourceCache.ContentFileRead($"{rsi.Path}/metal.png");
+                        }
+                        else if (rsi.Path.ToString().EndsWith("catwalk.rsi"))
+                        {
+                            stream = _cResourceCache.ContentFileRead($"{rsi.Path}/catwalk_preview.png");
+                        }
+                        else
+                        {
+                            var stateId = state.StateId;
+                            stream = _cResourceCache.ContentFileRead($"{rsi.Path}/{stateId}.png");
+                        }
+                    }
+
+                    var image = Image.Load<Rgba32>(stream);
+
+                    image.Mutate(o => o.Resize(32, 32).Flip(FlipMode.Vertical));
+
+                    gridCanvas.Mutate(o => o.DrawImage(image, new Point((entity.X + xOffset) * 32, (entity.Y + yOffset) * 32), 1));
                 }
             }
 
