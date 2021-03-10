@@ -141,8 +141,11 @@ namespace Content.MapRenderer
                     var directoryPath =
                         $"{Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!}/Resources/{file.Directory}";
                     var directory = Directory.CreateDirectory(directoryPath);
+                    var path = $"{directory}/{file.Filename}";
 
-                    await gridCanvas.SaveAsync($"{directory}/{file.Filename}");
+                    Console.WriteLine($"Saving {file.Filename} to {path}");
+
+                    await gridCanvas.SaveAsync(path);
                 }
             });
 
