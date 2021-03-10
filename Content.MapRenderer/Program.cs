@@ -146,8 +146,6 @@ namespace Content.MapRenderer
                 }
             });
 
-            await TearDown();
-
             Console.WriteLine($"Saved all map images in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
     }
