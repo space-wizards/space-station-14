@@ -2,6 +2,8 @@ name: Map Diff
 
 on:
   push:
+    branches:
+    - master
     paths:
     - 'Resources/Maps/**.yml'
 
