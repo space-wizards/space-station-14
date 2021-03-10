@@ -229,10 +229,10 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 climbMode.TryMoveTo(userPos, endPoint);
 
-                var othersMessage = Loc.GetString("{0:theName} jumps onto {1:theName}!", user, Owner);
+                var othersMessage = Loc.GetString("climable-component-user-climbs-other", ("user", user), ("climable", Owner));
                 user.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("You jump onto {0:theName}!", Owner);
+                var selfMessage = Loc.GetString("climable-component-user-climbs", ("climable", Owner));
                 user.PopupMessage(selfMessage);
             }
         }
