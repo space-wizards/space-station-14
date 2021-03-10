@@ -1,0 +1,11 @@
+﻿- type: stack
+  id: Ointment
+  name: ointment
+
+- type: stack
+  id: Gauze
+  name: gauze
+
+- type: stack
+  id: Brutepack
+  name: brutepack

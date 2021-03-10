@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -18,7 +18,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         bool ClickAttack(AttackEventArgs eventArgs);
     }
 
-    public class AttackEventArgs : EventArgs
+    public class AttackEventArgs : EntityEventArgs
     {
         public AttackEventArgs(IEntity user, EntityCoordinates clickLocation, bool wideAttack, EntityUid target = default)
         {

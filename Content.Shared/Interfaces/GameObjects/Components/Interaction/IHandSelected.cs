@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -28,13 +29,8 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when an entity item in a hand is selected.
     /// </summary>
     [PublicAPI]
-    public class HandSelectedMessage : EntitySystemMessage
+    public class HandSelectedMessage : HandledEntityEventArgs
     {
-        /// <summary>
-        ///     If this message has already been "handled" by a previous system.
-        /// </summary>
-        public bool Handled { get; set; }
-
         /// <summary>
         ///     Entity that owns the selected hand.
         /// </summary>

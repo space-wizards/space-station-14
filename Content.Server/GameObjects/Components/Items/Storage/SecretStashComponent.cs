@@ -3,10 +3,10 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
-using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -19,21 +19,20 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     {
         public override string Name => "SecretStash";
 
-        [ViewVariables] private int _maxItemSize;
-        [ViewVariables] private string _secretPartName = "";
+        [ViewVariables] [DataField("maxItemSize")]
+        private int _maxItemSize = (int) ReferenceSizes.Pocket;
+
+        [ViewVariables] [DataField("secretPartName")]
+        private readonly string? _secretPartNameOverride = null;
 
         [ViewVariables] private ContainerSlot _itemContainer = default!;
+
+        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("{0:theName}", Owner);
 
         public override void Initialize()
         {
             base.Initialize();
-            _itemContainer = ContainerManagerComponent.Ensure<ContainerSlot>("stash", Owner, out _);
-        }
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _maxItemSize, "maxItemSize", (int) ReferenceSizes.Pocket);
-            serializer.DataField(ref _secretPartName, "secretPartName", Loc.GetString("{0:theName}"));
+            _itemContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "stash", out _);
         }
 
         /// <summary>
@@ -56,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (item.Size > _maxItemSize)
             {
                 Owner.PopupMessage(user,
-                    Loc.GetString("{0:TheName} is too big to fit in {1}!", itemToHide, _secretPartName));
+                    Loc.GetString("{0:TheName} is too big to fit in {1}!", itemToHide, SecretPartName));
                 return false;
             }
 
@@ -66,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (!hands.Drop(itemToHide, _itemContainer))
                 return false;
 
-            Owner.PopupMessage(user, Loc.GetString("You hide {0:theName} in {1}.", itemToHide, _secretPartName));
+            Owner.PopupMessage(user, Loc.GetString("You hide {0:theName} in {1}.", itemToHide, SecretPartName));
             return true;
         }
 
@@ -81,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (_itemContainer.ContainedEntity == null)
                 return false;
 
-            Owner.PopupMessage(user, Loc.GetString("There was something inside {0}!", _secretPartName));
+            Owner.PopupMessage(user, Loc.GetString("There was something inside {0}!", SecretPartName));
 
             if (user.TryGetComponent(out HandsComponent? hands))
             {

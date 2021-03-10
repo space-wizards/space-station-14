@@ -1,16 +1,17 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.AI;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timers;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.EntitySystems.AI
 {
@@ -106,7 +107,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
             _overlay.Modes = 0;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            overlayManager.RemoveOverlay(_overlay.ID);
+            overlayManager.RemoveOverlay(_overlay);
             _overlay = null;
         }
 
@@ -128,8 +129,12 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
             if (tooltip == PathfindingDebugMode.Graph)
             {
-                var systemMessage = new SharedAiDebug.RequestPathfindingGraphMessage();
-                EntityManager.EntityNetManager.SendSystemNetworkMessage(systemMessage);
+                EntityManager.EntityNetManager.SendSystemNetworkMessage(new SharedAiDebug.RequestPathfindingGraphMessage());
+            }
+
+            if (tooltip == PathfindingDebugMode.Regions)
+            {
+                EntityManager.EntityNetManager.SendSystemNetworkMessage(new SharedAiDebug.SubscribeReachableMessage());
             }
 
             // TODO: Request region graph, although the client system messages didn't seem to be going through anymore
@@ -138,6 +143,11 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
         private void DisableMode(PathfindingDebugMode mode)
         {
+            if (mode == PathfindingDebugMode.Regions && (_modes & PathfindingDebugMode.Regions) != 0)
+            {
+                EntityManager.EntityNetManager.SendSystemNetworkMessage(new SharedAiDebug.UnsubscribeReachableMessage());
+            }
+
             _modes &= ~mode;
             if (_modes == 0)
             {
@@ -196,7 +206,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
         public readonly List<SharedAiDebug.AStarRouteMessage> AStarRoutes = new();
         public readonly List<SharedAiDebug.JpsRouteMessage> JpsRoutes = new();
 
-        public DebugPathfindingOverlay() : base(nameof(DebugPathfindingOverlay))
+        public DebugPathfindingOverlay()
         {
             _shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
             _eyeManager = IoCManager.Resolve<IEyeManager>();

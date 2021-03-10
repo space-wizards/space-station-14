@@ -15,9 +15,10 @@
     state: wall_girder
   - type: Physics
     mass: 25
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       layer:
       - Opaque
       - Impassable
@@ -38,7 +39,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          SteelSheet1:
+          SheetSteel1:
             min: 1
             max: 1
       - !type:DoActsBehavior

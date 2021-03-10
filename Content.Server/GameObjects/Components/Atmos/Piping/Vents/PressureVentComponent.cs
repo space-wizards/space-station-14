@@ -5,6 +5,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
 {
@@ -23,7 +25,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
             get => _ventPressureTarget;
             set => _ventPressureTarget = Math.Clamp(value, 0, MaxVentPressureTarget);
         }
-        private float _ventPressureTarget;
+        [DataField("startingVentPressureTarget")]
+        private float _ventPressureTarget = Atmospherics.OneAtmosphere;
 
         /// <summary>
         ///     Max value <see cref="VentPressureTarget"/> can be set to.
@@ -34,7 +37,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
             get => _maxVentPressureTarget;
             set => Math.Max(value, 0);
         }
-        private float _maxVentPressureTarget;
+        [DataField("maxVentPressureTarget")]
+        private float _maxVentPressureTarget = Atmospherics.OneAtmosphere * 2;
 
         /// <summary>
         ///     Every update, this vent will only increase the outlet pressure by this fraction of the amount needed to reach the <see cref="VentPressureTarget"/>.
@@ -45,15 +49,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
             get => _transferRatio;
             set => _transferRatio = Math.Clamp(value, 0, 1);
         }
-        private float _transferRatio;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _ventPressureTarget, "startingVentPressureTarget", Atmospherics.OneAtmosphere);
-            serializer.DataField(ref _maxVentPressureTarget, "maxVentPressureTarget", Atmospherics.OneAtmosphere * 2);
-            serializer.DataField(ref _transferRatio, "transferRatio", 0.5f);
-        }
+        [DataField("transferRatio")]
+        private float _transferRatio = 0.5f;
 
         protected override void VentGas(GasMixture inletGas, GasMixture outletGas)
         {

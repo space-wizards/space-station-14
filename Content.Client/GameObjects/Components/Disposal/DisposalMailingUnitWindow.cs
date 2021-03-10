@@ -26,189 +26,167 @@ namespace Content.Client.GameObjects.Components.Disposal
         public List<string> TargetList;
         private readonly Label _tagLabel;
 
-        protected override Vector2? CustomSize => (460, 220);
-
         public DisposalMailingUnitWindow()
         {
+            MinSize = SetSize = (460, 220);
             TargetList = new List<string>();
             Contents.AddChild(new HBoxContainer
             {
                 Children =
                 {
-                    new MarginContainer
+                    new VBoxContainer
                     {
-                        MarginLeftOverride = 8,
-                        MarginRightOverride = 8,
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        HorizontalExpand = true,
+                        Margin = new Thickness(8, 0),
                         Children =
                         {
-                            new VBoxContainer
+                            new HBoxContainer
                             {
-                                SizeFlagsHorizontal = SizeFlags.FillExpand,
                                 Children =
                                 {
-                                    new HBoxContainer
+                                    new Label {Text = Loc.GetString("State: ")},
+                                    new Control {MinSize = (4, 0)},
+                                    (_unitState = new Label {Text = Loc.GetString("Ready")})
+                                }
+                            },
+                            new Control {MinSize = (0, 10)},
+                            new HBoxContainer
+                            {
+                                HorizontalExpand = true,
+                                Children =
+                                {
+                                    new Label {Text = Loc.GetString("Pressure:")},
+                                    new Control {MinSize = (4, 0)},
+                                    (_pressureBar = new ProgressBar
                                     {
+                                        MinSize = (100, 20),
+                                        HorizontalExpand = true,
+                                        MinValue = 0,
+                                        MaxValue = 1,
+                                        Page = 0,
+                                        Value = 0.5f,
                                         Children =
                                         {
-                                            new Label {Text = Loc.GetString("State: ")},
-                                            new Control {CustomMinimumSize = (4, 0)},
-                                            (_unitState = new Label {Text = Loc.GetString("Ready")})
+                                            (_pressurePercentage = new Label())
                                         }
+                                    })
+                                }
+                            },
+                            new Control {MinSize = (0, 10)},
+                            new HBoxContainer
+                            {
+                                HorizontalExpand = true,
+                                Children =
+                                {
+                                    new Label {Text = Loc.GetString("Handle:")},
+                                    new Control
+                                    {
+                                        MinSize = (4, 0),
+                                        HorizontalExpand = true
                                     },
-                                    new Control {CustomMinimumSize = (0, 10)},
-                                    new HBoxContainer
+                                    (Engage = new Button
                                     {
-                                        SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                        Children =
-                                        {
-                                            new Label {Text = Loc.GetString("Pressure:")},
-                                            new Control {CustomMinimumSize = (4, 0)},
-                                            (_pressureBar = new ProgressBar
-                                            {
-                                                CustomMinimumSize = (100, 20),
-                                                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                                MinValue = 0,
-                                                MaxValue = 1,
-                                                Page = 0,
-                                                Value = 0.5f,
-                                                Children =
-                                                {
-                                                    (_pressurePercentage = new Label())
-                                                }
-                                            })
-                                        }
+                                        MinSize = (16, 0),
+                                        Text = Loc.GetString("Engage"),
+                                        ToggleMode = true,
+                                        Disabled = true
+                                    })
+                                }
+                            },
+                            new Control {MinSize = (0, 10)},
+                            new HBoxContainer
+                            {
+                                HorizontalExpand = true,
+                                Children =
+                                {
+                                    new Label {Text = Loc.GetString("Eject:")},
+                                    new Control
+                                    {
+                                        MinSize = (4, 0),
+                                        HorizontalExpand = true
                                     },
-                                    new Control {CustomMinimumSize = (0, 10)},
-                                    new HBoxContainer
+                                    (Eject = new Button
                                     {
-                                        SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                        Children =
-                                        {
-                                            new Label {Text = Loc.GetString("Handle:")},
-                                            new Control {
-                                                CustomMinimumSize = (4, 0),
-                                                SizeFlagsHorizontal = SizeFlags.FillExpand
-                                            },
-                                            (Engage = new Button
-                                            {
-                                                CustomMinimumSize = (16, 0),
-                                                Text = Loc.GetString("Engage"),
-                                                ToggleMode = true,
-                                                Disabled = true
-                                            })
-                                        }
-                                    },
-                                    new Control {CustomMinimumSize = (0, 10)},
-                                    new HBoxContainer
+                                        MinSize = (16, 0),
+                                        Text = Loc.GetString("Eject Contents"),
+                                        //HorizontalAlignment = HAlignment.Right
+                                    })
+                                }
+                            },
+                            new Control {MinSize = (0, 10)},
+                            new HBoxContainer
+                            {
+                                Children =
+                                {
+                                    (Power = new CheckButton {Text = Loc.GetString("Power")}),
+                                }
+                            }
+                        }
+                    },
+                    new VBoxContainer
+                    {
+                        Margin = new Thickness(12, 0, 8, 0),
+                        Children =
+                        {
+                            new HBoxContainer
+                            {
+                                Children =
+                                {
+                                    new Label
                                     {
-                                        SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                        Children =
-                                        {
-                                            new Label {Text = Loc.GetString("Eject:")},
-                                            new Control {
-                                                CustomMinimumSize = (4, 0),
-                                                SizeFlagsHorizontal = SizeFlags.FillExpand
-                                            },
-                                            (Eject = new Button {
-                                                CustomMinimumSize = (16, 0),
-                                                Text = Loc.GetString("Eject Contents"),
-                                                //SizeFlagsHorizontal = SizeFlags.ShrinkEnd
-                                            })
-                                        }
-                                    },
-                                    new Control {CustomMinimumSize = (0, 10)},
-                                    new HBoxContainer
-                                    {
-                                        Children =
-                                        {
-                                            (Power = new CheckButton {Text = Loc.GetString("Power")}),
-                                        }
+                                        Text = Loc.GetString("Select a destination:")
                                     }
                                 }
                             },
-                        }
-                    },
-                    new MarginContainer
-                    {
-                        MarginLeftOverride = 12,
-                        MarginRightOverride = 8,
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
-                        Children =
-                        {
-                            new VBoxContainer
+                            new Control {MinSize = new Vector2(0, 8)},
+                            new HBoxContainer
                             {
-                                SizeFlagsHorizontal = SizeFlags.Fill,
+                                VerticalExpand = true,
                                 Children =
                                 {
-                                    new HBoxContainer
+                                    (TargetListContainer = new ItemList
+                                    {
+                                        SelectMode = ItemList.ItemListSelectMode.Single,
+                                        HorizontalExpand = true,
+                                        VerticalExpand = true
+                                    })
+                                }
+                            },
+                            new PanelContainer
+                            {
+                                PanelOverride = new StyleBoxFlat
+                                {
+                                    BackgroundColor = Color.FromHex("#ACBDBA")
+                                },
+                                HorizontalExpand = true,
+                                MinSize = new Vector2(0, 1),
+                            },
+                            new HBoxContainer
+                            {
+                                Children =
+                                {
+                                    new VBoxContainer
                                     {
                                         Children =
                                         {
-                                            new Label
+                                            new HBoxContainer
                                             {
-                                                Text = Loc.GetString("Select a destination:")
-                                            }
-                                        }
-                                    },
-                                    new Control { CustomMinimumSize = new Vector2(0, 8) },
-                                    new HBoxContainer
-                                    {
-                                        SizeFlagsVertical = SizeFlags.FillExpand,
-                                        Children =
-                                        {
-                                            (TargetListContainer = new ItemList
-                                            {
-                                                SelectMode = ItemList.ItemListSelectMode.Single,
-                                                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                                SizeFlagsVertical = SizeFlags.FillExpand
-                                            })
-                                        }
-                                    },
-                                    new PanelContainer
-                                    {
-                                        PanelOverride = new StyleBoxFlat
-                                        {
-                                            BackgroundColor = Color.FromHex("#ACBDBA")
-                                        },
-                                        SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                        CustomMinimumSize = new Vector2(0, 1),
-                                    },
-                                    new HBoxContainer
-                                    {
-                                        Children =
-                                        {
-                                            new VBoxContainer
-                                            {
+                                                Margin = new Thickness(4, 0, 0, 0),
                                                 Children =
                                                 {
-                                                    new MarginContainer
+                                                    new Label
                                                     {
-                                                        MarginLeftOverride = 4,
-                                                        Children =
-                                                        {
-                                                            new HBoxContainer
-                                                            {
-                                                                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                                                Children =
-                                                                {
-                                                                    new Label
-                                                                    {
-                                                                        Text = Loc.GetString("This unit:")
-                                                                    },
-                                                                    new Control
-                                                                    {
-                                                                        CustomMinimumSize = new Vector2(4, 0)
-                                                                    },
-                                                                    (_tagLabel = new Label
-                                                                    {
-                                                                        Text = "-",
-                                                                        SizeFlagsVertical = SizeFlags.ShrinkEnd
-                                                                    })
-                                                                }
-                                                            }
-                                                        }
+                                                        Text = Loc.GetString("This unit:")
                                                     },
+                                                    new Control
+                                                    {
+                                                        MinSize = new Vector2(4, 0)
+                                                    },
+                                                    (_tagLabel = new Label
+                                                    {
+                                                        Text = "-",
+                                                        VerticalAlignment = VAlignment.Bottom
+                                                    })
                                                 }
                                             }
                                         }

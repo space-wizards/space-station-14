@@ -8,11 +8,11 @@
         </HBoxContainer>
         <HBoxContainer>
             <Label Name="RoleNameLabel" Text="Role Name" />
-            <LineEdit Name="RoleName" SizeFlagsHorizontal="FillExpand" />
+            <LineEdit Name="RoleName" HorizontalExpand="True" />
         </HBoxContainer>
         <HBoxContainer>
             <Label Name="RoleDescriptionLabel" Text="Role Description" />
-            <LineEdit Name="RoleDescription" SizeFlagsHorizontal="FillExpand" />
+            <LineEdit Name="RoleDescription" HorizontalExpand="True" />
         </HBoxContainer>
         <HBoxContainer>
             <Label Name="MakeSentientLabel" Text="Make Sentient" />

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +13,7 @@ using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Botany;
 using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
@@ -27,6 +28,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -51,6 +53,7 @@ namespace Content.Server.GameObjects.Components.Botany
         [ViewVariables(VVAccess.ReadWrite)] private bool _updateSpriteAfterUpdate;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("drawWarnings")]
         public bool DrawWarnings { get; private set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -121,12 +124,6 @@ namespace Content.Server.GameObjects.Components.Botany
             base.Initialize();
 
             Owner.EnsureComponentWarn<SolutionContainerComponent>();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.DrawWarnings, "drawWarnings", false);
         }
 
         public void WeedInvasion()
@@ -681,7 +678,7 @@ namespace Content.Server.GameObjects.Components.Botany
                 return false;
             }
 
-            if (usingItem.HasComponent<HoeComponent>())
+            if (usingItem.HasTag("Hoe"))
             {
                 if (WeedLevel > 0)
                 {
@@ -698,7 +695,7 @@ namespace Content.Server.GameObjects.Components.Botany
                 return true;
             }
 
-            if (usingItem.HasComponent<ShovelComponent>())
+            if (usingItem.HasTag("Shovel"))
             {
                 if (Seed != null)
                 {
@@ -744,7 +741,7 @@ namespace Content.Server.GameObjects.Components.Botany
                 return true;
             }
 
-            if (usingItem.HasComponent<PlantSampleTakerComponent>())
+            if (usingItem.HasTag("PlantSampleTaker"))
             {
                 if (Seed == null)
                 {
@@ -779,7 +776,7 @@ namespace Content.Server.GameObjects.Components.Botany
                 return true;
             }
 
-            if (usingItem.HasComponent<BotanySharpComponent>())
+            if (usingItem.HasTag("BotanySharp"))
             {
                 return DoHarvest(user);
             }

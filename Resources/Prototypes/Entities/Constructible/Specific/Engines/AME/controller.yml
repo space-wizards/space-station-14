@@ -1,6 +1,7 @@
 - type: entity
   id: AMEController
   name: AME Controller
+  description: "It's a controller for the antimatter engine."
   placement:
     mode: SnapgridCenter
   components:
@@ -10,14 +11,18 @@
     sprite: Constructible/Power/ame_controller.rsi
     state: control
   - type: Physics
-    # Mass of 1? Unmovable. Mass of 25? Fine. What on earth is going on?
     mass: 25
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.45, 0.45, 0.45"
       layer:
       - Opaque
       - Impassable
-      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      mask:
+      - Impassable
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
@@ -30,7 +35,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          SteelSheet1:
+          SheetSteel1:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -66,4 +71,4 @@
   abstract: true
   components:
   - type: Physics
-    anchored: false
+    bodyType: Dynamic

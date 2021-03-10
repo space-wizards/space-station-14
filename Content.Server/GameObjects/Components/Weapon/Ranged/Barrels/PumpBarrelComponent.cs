@@ -3,16 +3,17 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -22,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     /// Bolt-action rifles
     /// </summary>
     [RegisterComponent]
-    public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit, IExamine
+    public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit, ISerializationHooks
     {
         public override string Name => "PumpBarrel";
         public override uint? NetID => ContentNetIDs.PUMP_BARREL;
@@ -36,43 +37,36 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
 
-        public override int Capacity => _capacity;
-        private int _capacity;
+        private const int DefaultCapacity = 6;
+        [field: DataField("capacity")]
+        public override int Capacity { get; } = DefaultCapacity;
 
         // Even a point having a chamber? I guess it makes some of the below code cleaner
         private ContainerSlot _chamberContainer;
-        private Stack<IEntity> _spawnedAmmo;
+        private Stack<IEntity> _spawnedAmmo = new (DefaultCapacity-1);
         private Container _ammoContainer;
 
         [ViewVariables]
-        private BallisticCaliber _caliber;
+        [DataField("caliber")]
+        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
 
         [ViewVariables]
+        [DataField("fillPrototype")]
         private string _fillPrototype;
         [ViewVariables]
         private int _unspawnedCount;
 
-        private bool _manualCycle;
+        [DataField("manualCycle")]
+        private bool _manualCycle = true;
 
         private AppearanceComponent _appearanceComponent;
 
         // Sounds
-        private string _soundCycle;
-        private string _soundInsert;
+        [DataField("soundCycle")]
+        private string _soundCycle = "/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg";
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-            serializer.DataField(ref _capacity, "capacity", 6);
-            serializer.DataField(ref _fillPrototype, "fillPrototype", null);
-            serializer.DataField(ref _manualCycle, "manualCycle", true);
-
-            serializer.DataField(ref _soundCycle, "soundCycle", "/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg");
-            serializer.DataField(ref _soundInsert, "soundInsert", "/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
-
-            _spawnedAmmo = new Stack<IEntity>(_capacity - 1);
-        }
+        [DataField("soundInsert")]
+        private string _soundInsert = "/Audio/Weapons/Guns/MagIn/bullet_insert.ogg";
 
         void IMapInit.MapInit()
         {
@@ -100,12 +94,17 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 SoundGunshot);
         }
 
+        void ISerializationHooks.AfterDeserialization()
+        {
+            _spawnedAmmo = new Stack<IEntity>(Capacity - 1);
+        }
+
         public override void Initialize()
         {
             base.Initialize();
 
             _ammoContainer =
-                ContainerManagerComponent.Ensure<Container>($"{Name}-ammo-container", Owner, out var existing);
+                ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-ammo-container", out var existing);
 
             if (existing)
             {
@@ -117,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             _chamberContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-chamber-container", Owner, out existing);
+                ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-chamber-container", out existing);
             if (existing)
             {
                 _unspawnedCount--;

@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Lidgren.Network;
@@ -133,7 +135,7 @@ namespace Content.Shared.GameTicking
 
             #endregion
 
-            public string TextBlob { get; set; }
+            public string TextBlob { get; set; } = string.Empty;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
@@ -192,7 +194,7 @@ namespace Content.Shared.GameTicking
             /// <summary>
             /// The Status of the Player in the lobby (ready, observer, ...)
             /// </summary>
-            public Dictionary<NetUserId, PlayerStatus> PlayerStatus { get; set; }
+            public Dictionary<NetUserId, PlayerStatus> PlayerStatus { get; set; } = new();
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
@@ -287,14 +289,14 @@ namespace Content.Shared.GameTicking
 
             #endregion
 
-            public string GamemodeTitle;
-            public string RoundEndText;
+            public string GamemodeTitle = string.Empty;
+            public string RoundEndText = string.Empty;
             public TimeSpan RoundDuration;
 
 
             public int PlayerCount;
 
-            public List<RoundEndPlayerInfo> AllPlayersEndInfo;
+            public List<RoundEndPlayerInfo> AllPlayersEndInfo = new();
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {

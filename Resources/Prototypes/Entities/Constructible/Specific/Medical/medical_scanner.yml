@@ -7,6 +7,7 @@
   components:
   - type: Sprite
     netsync: false
+    noRot: true
     sprite: Constructible/Specific/Medical/scanner.rsi
     layers:
     - state: open
@@ -14,21 +15,22 @@
     - state: idle_unlit
       map: ["enum.MedicalScannerVisualLayers.Terminal"]
   - type: PowerReceiver
-  - type: Anchorable
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
     mass: 25
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       layer:
-      - Opaque
       - Impassable
-      - MobImpassable
       - VaultImpassable
   - type: SnapGrid
     offset: Center
+  - type: Anchorable
+    snap: true
+  - type: Pullable
   - type: MedicalScanner
   - type: Damageable
     resistances: metallicResistances

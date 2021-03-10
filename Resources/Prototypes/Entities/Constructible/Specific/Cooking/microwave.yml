@@ -22,9 +22,10 @@
     - key: enum.MicrowaveUiKey.Key
       type: MicrowaveBoundUserInterface
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.16,-0.3,0.16,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.16,-0.3,0.16,0.3"
       layer:
       - Opaque
       - Impassable
@@ -33,7 +34,7 @@
   - type: Sprite
     netsync: false
     sprite: Constructible/Power/microwave.rsi
-    drawdepth: Items
+    drawdepth: WallMountedItems
     layers:
     - state: mw0
       map: ["enum.MicrowaveVisualizerLayers.Base"]
@@ -41,4 +42,3 @@
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
   - type: PowerReceiver
-

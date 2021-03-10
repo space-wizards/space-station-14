@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Lidgren.Network;
 using Robust.Shared.Network;
 
@@ -17,11 +18,11 @@ namespace Content.Shared.Network.NetMessages
 
         public int VoteId;
         public bool VoteActive;
-        public string VoteTitle;
-        public string VoteInitiator;
+        public string VoteTitle = string.Empty;
+        public string VoteInitiator = string.Empty;
         public TimeSpan StartTime; // Server RealTime.
         public TimeSpan EndTime; // Server RealTime.
-        public (ushort votes, string name)[] Options;
+        public (ushort votes, string name)[] Options = default!;
         public bool IsYourVoteDirty;
         public byte? YourVote;
 

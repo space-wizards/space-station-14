@@ -5,13 +5,15 @@ using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds
 {
-    public class Threshold : IExposeData
+    [DataDefinition]
+    public class Threshold
     {
+        [DataField("behaviors")]
         private List<IThresholdBehavior> _behaviors = new();
 
         /// <summary>
@@ -23,7 +25,9 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
         /// <summary>
         ///     Whether or not this threshold has already been triggered.
         /// </summary>
-        [ViewVariables] public bool Triggered { get; private set; }
+        [ViewVariables]
+        [DataField("triggered")]
+        public bool Triggered { get; private set; }
 
         /// <summary>
         ///     Whether or not this threshold only triggers once.
@@ -31,25 +35,21 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds
         ///     and then damaged to reach this threshold once again.
         ///     It will not repeatedly trigger as damage rises beyond that.
         /// </summary>
-        [ViewVariables] public bool TriggersOnce { get; set; }
+        [ViewVariables]
+        [DataField("triggersOnce")]
+        public bool TriggersOnce { get; set; }
 
         /// <summary>
         ///     The trigger that decides if this threshold has been reached.
         /// </summary>
-        [ViewVariables] public IThresholdTrigger? Trigger { get; set; }
+        [ViewVariables]
+        [DataField("trigger")]
+        public IThresholdTrigger? Trigger { get; set; }
 
         /// <summary>
         ///     Behaviors to activate once this threshold is triggered.
         /// </summary>
         [ViewVariables] public IReadOnlyList<IThresholdBehavior> Behaviors => _behaviors;
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.Triggered, "triggered", false);
-            serializer.DataField(this, x => x.TriggersOnce, "triggersOnce", false);
-            serializer.DataField(this, x => x.Trigger, "trigger", null);
-            serializer.DataField(ref _behaviors, "behaviors", new List<IThresholdBehavior>());
-        }
 
         public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
         {

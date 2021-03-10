@@ -1,25 +1,18 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Prototypes
 {
     [Prototype("dataset")]
-    public class DatasetPrototype : IPrototype, IIndexedPrototype
+    public class DatasetPrototype : IPrototype
     {
-        private string _id;
-        public string ID => _id;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        private List<string> _values;
-        public IReadOnlyList<string> Values => _values;
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var ser = YamlObjectSerializer.NewReader(mapping);
-
-            ser.DataField(ref _id, "id", "");
-            ser.DataField(ref _values, "values", new List<string>());
-        }
+        [field: DataField("values")] public IReadOnlyList<string> Values { get; } = new List<string>();
     }
 }

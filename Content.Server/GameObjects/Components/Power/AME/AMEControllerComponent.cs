@@ -15,6 +15,7 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
@@ -56,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
             _injecting = false;
             InjectionAmount = 2;
-            _jarSlot = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-fuelJarContainer", Owner);
+            _jarSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-fuelJarContainer");
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -84,7 +85,11 @@ namespace Content.Server.GameObjects.Components.Power.AME
                 return;
             }
 
-            _jarSlot.ContainedEntity.TryGetComponent<AMEFuelContainerComponent>(out var fuelJar);
+            var jar = _jarSlot.ContainedEntity;
+            if(jar is null)
+                return;
+
+            jar.TryGetComponent<AMEFuelContainerComponent>(out var fuelJar);
             if(fuelJar != null && _powerSupplier != null)
             {
                 var availableInject = fuelJar.FuelAmount >= InjectionAmount ? InjectionAmount : fuelJar.FuelAmount;
@@ -222,7 +227,10 @@ namespace Content.Server.GameObjects.Components.Power.AME
                 return;
 
             var jar = _jarSlot.ContainedEntity;
-            _jarSlot.Remove(_jarSlot.ContainedEntity);
+            if(jar is null)
+                return;
+
+            _jarSlot.Remove(jar);
             UpdateUserInterface();
 
             if (!user.TryGetComponent<HandsComponent>(out var hands) || !jar.TryGetComponent<ItemComponent>(out var item))

@@ -2,7 +2,7 @@
 
 namespace Content.Client.State
 {
-    public sealed class OutlineToggleMessage : EntitySystemMessage
+    public sealed class OutlineToggleMessage : EntityEventArgs
     {
         public bool Enabled { get; }
 

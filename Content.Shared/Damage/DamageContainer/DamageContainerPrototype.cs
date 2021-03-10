@@ -1,9 +1,10 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Damage.DamageContainer
 {
@@ -12,29 +13,23 @@ namespace Content.Shared.Damage.DamageContainer
     /// </summary>
     [Prototype("damageContainer")]
     [Serializable, NetSerializable]
-    public class DamageContainerPrototype : IPrototype, IIndexedPrototype
+    public class DamageContainerPrototype : IPrototype, ISerializationHooks
     {
-        private bool _supportAll;
-        private HashSet<DamageClass> _supportedClasses;
-        private HashSet<DamageType> _supportedTypes;
-        private string _id;
+        [DataField("supportAll")] private bool _supportAll;
+        [DataField("supportedClasses")] private HashSet<DamageClass> _supportedClasses = new();
+        [DataField("supportedTypes")] private HashSet<DamageType> _supportedTypes = new();
 
         // TODO NET 5 IReadOnlySet
         [ViewVariables] public IReadOnlyCollection<DamageClass> SupportedClasses => _supportedClasses;
 
         [ViewVariables] public IReadOnlyCollection<DamageType> SupportedTypes => _supportedTypes;
 
-        [ViewVariables] public string ID => _id;
+        [ViewVariables]
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        public virtual void LoadFrom(YamlMappingNode mapping)
+        void ISerializationHooks.AfterDeserialization()
         {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _supportAll, "supportAll", false);
-            serializer.DataField(ref _supportedClasses, "supportedClasses", new HashSet<DamageClass>());
-            serializer.DataField(ref _supportedTypes, "supportedTypes", new HashSet<DamageType>());
-
             if (_supportAll)
             {
                 _supportedClasses.UnionWith(Enum.GetValues<DamageClass>());

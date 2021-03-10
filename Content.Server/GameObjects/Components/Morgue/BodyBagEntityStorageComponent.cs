@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Paper;
@@ -17,6 +17,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Threading.Tasks;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Robust.Shared.Containers;
 
 namespace Content.Server.GameObjects.Components.Morgue
 {
@@ -37,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             base.Initialize();
             _appearance?.SetData(BodyBagVisuals.Label, false);
-            LabelContainer = ContainerManagerComponent.Ensure<ContainerSlot>("body_bag_label", Owner, out _);
+            LabelContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "body_bag_label", out _);
         }
 
         protected override bool AddToContents(IEntity entity)
@@ -83,14 +84,18 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             if (LabelContainer == null) return;
 
+            var ent = LabelContainer.ContainedEntity;
+            if(ent is null)
+                return;
+
             if (user.TryGetComponent(out HandsComponent? hands))
             {
-                hands.PutInHandOrDrop(LabelContainer.ContainedEntity.GetComponent<ItemComponent>());
+                hands.PutInHandOrDrop(ent.GetComponent<ItemComponent>());
                 _appearance?.SetData(BodyBagVisuals.Label, false);
             }
-            else if (LabelContainer.Remove(LabelContainer.ContainedEntity))
+            else if (LabelContainer.Remove(ent))
             {
-                LabelContainer.ContainedEntity.Transform.Coordinates = Owner.Transform.Coordinates;
+                ent.Transform.Coordinates = Owner.Transform.Coordinates;
                 _appearance?.SetData(BodyBagVisuals.Label, false);
             }
         }

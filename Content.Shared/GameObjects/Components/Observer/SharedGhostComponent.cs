@@ -41,19 +41,6 @@ namespace Content.Shared.GameObjects.Components.Observer
     }
 
     [Serializable, NetSerializable]
-    public class GhostWarpRequestMessage : ComponentMessage
-    {
-        public EntityUid PlayerTarget;
-        public string WarpName;
-        public GhostWarpRequestMessage(EntityUid playerTarget = default, string warpTarget = default)
-        {
-            WarpName = warpTarget;
-            PlayerTarget = playerTarget;
-            Directed = true;
-        }
-    }
-
-    [Serializable, NetSerializable]
     public class GhostRequestWarpPointData : ComponentMessage
     {
         public GhostRequestWarpPointData()

@@ -8,7 +8,10 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -20,7 +23,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     public class SecureEntityStorageComponent : EntityStorageComponent
     {
         public override string Name => "SecureEntityStorage";
-        private bool _locked;
+        [DataField("locked")]
+        private bool _locked = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Locked
@@ -35,13 +39,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     appearance.SetData(StorageVisuals.Locked, _locked);
                 }
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _locked, "locked", true);
         }
 
         protected override void Startup()

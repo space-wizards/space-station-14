@@ -7,7 +7,10 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -21,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     {
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
-        [ViewVariables] [ComponentDependency] private readonly IPhysicsComponent? _physicsComponent = null;
+        [ViewVariables] [ComponentDependency] private readonly IPhysBody? _physicsComponent = null;
 
         public override string Name => "PowerReceiver";
 
@@ -39,7 +42,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int PowerReceptionRange { get => _powerReceptionRange; set => SetPowerReceptionRange(value); }
-        private int _powerReceptionRange;
+        [DataField("powerReceptionRange")]
+        private int _powerReceptionRange = 3;
 
         [ViewVariables]
         public IPowerProvider Provider { get => _provider; set => SetProvider(value); }
@@ -50,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// </summary>
         public bool Connectable => Anchored;
 
-        private bool Anchored => _physicsComponent == null || _physicsComponent.Anchored;
+        private bool Anchored => _physicsComponent == null || _physicsComponent.BodyType == BodyType.Static;
 
         [ViewVariables]
         public bool NeedsProvider { get; private set; } = true;
@@ -60,30 +64,24 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int Load { get => _load; set => SetLoad(value); }
-        private int _load;
+        [DataField("powerLoad")]
+        private int _load = 5;
 
         /// <summary>
         ///     When false, causes this to appear powered even if not receiving power from an Apc.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public bool NeedsPower { get => _needsPower; set => SetNeedsPower(value); }
-        private bool _needsPower;
+        [DataField("needsPower")]
+        private bool _needsPower = true;
 
         /// <summary>
         ///     When true, causes this to never appear powered.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public bool PowerDisabled { get => _powerDisabled; set => SetPowerDisabled(value); }
+        [DataField("powerDisabled")]
         private bool _powerDisabled;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _powerReceptionRange, "powerReceptionRange", 3);
-            serializer.DataField(ref _load, "powerLoad", 5);
-            serializer.DataField(ref _needsPower, "needsPower", true);
-            serializer.DataField(ref _powerDisabled, "powerDisabled", false);
-        }
 
         protected override void Startup()
         {
@@ -98,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             }
         }
 
-        public override void OnRemove() 
+        public override void OnRemove()
         {
             _provider.RemoveReceiver(this);
             base.OnRemove();

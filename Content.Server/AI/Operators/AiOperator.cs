@@ -8,7 +8,7 @@ namespace Content.Server.AI.Operators
         public bool HasShutdown { get; private set; }
 
         /// <summary>
-        /// Called once when the AiLogicProcessor starts this action
+        /// Called once when the NPC starts this action
         /// </summary>
         /// <returns>true if it hasn't started up previously</returns>
         public virtual bool Startup()
@@ -24,7 +24,7 @@ namespace Content.Server.AI.Operators
         }
 
         /// <summary>
-        /// Called once when the AiLogicProcessor is done with this action if the outcome is successful or fails.
+        /// Called once when the NPC is done with this action if the outcome is successful or fails.
         /// </summary>
         public virtual bool Shutdown(Outcome outcome)
         {

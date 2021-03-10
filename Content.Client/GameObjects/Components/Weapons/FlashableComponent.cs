@@ -1,8 +1,10 @@
-﻿using System;
+#nullable enable
+using System;
 using Content.Client.Graphics.Overlays;
 using Content.Shared.GameObjects.Components.Weapons;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
@@ -15,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Weapons
         private TimeSpan _startTime;
         private double _duration;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState == null)
             {
@@ -55,7 +57,7 @@ namespace Content.Client.GameObjects.Components.Weapons
             _duration = newState.Duration;
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            var overlay = overlayManager.GetOverlay<FlashOverlay>(nameof(FlashOverlay));
+            var overlay = overlayManager.GetOverlay<FlashOverlay>();
             overlay.ReceiveFlash(_duration);
         }
     }

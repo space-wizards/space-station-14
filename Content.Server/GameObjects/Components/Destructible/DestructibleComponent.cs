@@ -4,7 +4,7 @@ using Content.Server.GameObjects.Components.Destructible.Thresholds;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Destructible
@@ -20,16 +20,11 @@ namespace Content.Server.GameObjects.Components.Destructible
 
         public override string Name => "Destructible";
 
-        [ViewVariables] private List<Threshold> _thresholds = new();
+        [ViewVariables]
+        [DataField("thresholds")]
+        private List<Threshold> _thresholds = new();
 
         public IReadOnlyList<Threshold> Thresholds => _thresholds;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _thresholds, "thresholds", new List<Threshold>());
-        }
 
         public override void Initialize()
         {

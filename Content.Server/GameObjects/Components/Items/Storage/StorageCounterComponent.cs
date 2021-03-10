@@ -1,12 +1,14 @@
-﻿#nullable enable
+#nullable enable
 
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Tag;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
@@ -21,9 +23,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     ///    countTag: Cigarette # Note: field doesn't point to entity Id, but its tag
     /// </code>
     [RegisterComponent]
-    public class StorageCounterComponent : Component
+    public class StorageCounterComponent : Component, ISerializationHooks
     {
+        [DataField("countTag")]
         private string? _countTag;
+
+        [DataField("amount")]
         private int? _maxAmount;
 
         /// <summary>
@@ -33,16 +38,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         public override string Name => "StorageCounter";
 
-        public override void ExposeData(ObjectSerializer serializer)
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _countTag, "countTag", null);
             if (_countTag == null)
             {
                 Logger.Warning("StorageCounterComponent without a `countTag` is useless");
             }
-            serializer.DataField(ref _maxAmount, "amount", null);
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)

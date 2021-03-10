@@ -2,10 +2,11 @@
 using System;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components
@@ -17,14 +18,7 @@ namespace Content.Client.GameObjects.Components
 
         [Dependency] private readonly IClickMapManager _clickMapManager = default!;
 
-        [ViewVariables] private DirBoundData _data = default!;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _data, "bounds", DirBoundData.Default);
-        }
+        [ViewVariables] [DataField("bounds")] private DirBoundData _data = DirBoundData.Default;
 
         /// <summary>
         /// Used to check whether a click worked.
@@ -43,21 +37,14 @@ namespace Content.Client.GameObjects.Components
                 return false;
             }
 
-            var localPos = Owner.Transform.InvWorldMatrix.Transform(worldPos);
+            var transform = Owner.Transform;
+            var localPos = transform.InvWorldMatrix.Transform(worldPos);
+            var spriteMatrix = Matrix3.Invert(sprite.GetLocalMatrix());
 
-            var worldRotation = new Angle(Owner.Transform.WorldRotation - sprite.Rotation);
-            if (sprite.Directional)
-            {
-                localPos = new Angle(worldRotation).RotateVec(localPos);
-            }
-            else
-            {
-                localPos = new Angle(MathHelper.PiOver2).RotateVec(localPos);
-            }
-
-            var localOffset = localPos * EyeManager.PixelsPerMeter * (1, -1);
+            localPos = spriteMatrix.Transform(localPos);
 
             var found = false;
+            var worldRotation = transform.WorldRotation;
 
             if (_data.All.Contains(localPos))
             {
@@ -66,7 +53,14 @@ namespace Content.Client.GameObjects.Components
             else
             {
                 // TODO: diagonal support?
-                var dir = sprite.Directional ? worldRotation.GetCardinalDir() : Direction.South;
+
+                var modAngle = sprite.NoRotation ? SpriteComponent.CalcRectWorldAngle(worldRotation, 4) : Angle.Zero;
+                var dir = sprite.EnableDirectionOverride ? sprite.DirectionOverride : worldRotation.GetCardinalDir();
+
+                modAngle += dir.ToAngle();
+
+                var layerPos = modAngle.RotateVec(localPos);
+
                 var boundsForDir = dir switch
                 {
                     Direction.East => _data.East,
@@ -76,7 +70,7 @@ namespace Content.Client.GameObjects.Components
                     _ => throw new InvalidOperationException()
                 };
 
-                if (boundsForDir.Contains(localPos))
+                if (boundsForDir.Contains(layerPos))
                 {
                     found = true;
                 }
@@ -88,6 +82,14 @@ namespace Content.Client.GameObjects.Components
                 {
                     if (!layer.Visible) continue;
 
+                    var dirCount = sprite.GetLayerDirectionCount(layer);
+                    var dir = layer.EffectiveDirection(worldRotation);
+                    var modAngle = sprite.NoRotation ? SpriteComponent.CalcRectWorldAngle(worldRotation, dirCount) : Angle.Zero;
+                    modAngle += dir.Convert().ToAngle();
+
+                    var layerPos = modAngle.RotateVec(localPos);
+
+                    var localOffset = layerPos * EyeManager.PixelsPerMeter * (1, -1);
                     if (layer.Texture != null)
                     {
                         if (_clickMapManager.IsOccluding(layer.Texture,
@@ -107,7 +109,6 @@ namespace Content.Client.GameObjects.Components
 
                         var (mX, mY) = localOffset + rsi.Size / 2;
 
-                        var dir = layer.EffectiveDirection(worldRotation);
                         if (_clickMapManager.IsOccluding(rsi, layer.RsiState, dir,
                             layer.AnimationFrame, ((int) mX, (int) mY)))
                         {
@@ -123,24 +124,16 @@ namespace Content.Client.GameObjects.Components
             return found;
         }
 
-        private sealed class DirBoundData : IExposeData
+        [DataDefinition]
+        public sealed class DirBoundData
         {
-            [ViewVariables] public Box2 All;
-            [ViewVariables] public Box2 North;
-            [ViewVariables] public Box2 South;
-            [ViewVariables] public Box2 East;
-            [ViewVariables] public Box2 West;
+            [ViewVariables] [DataField("all")] public Box2 All;
+            [ViewVariables] [DataField("north")] public Box2 North;
+            [ViewVariables] [DataField("south")] public Box2 South;
+            [ViewVariables] [DataField("east")] public Box2 East;
+            [ViewVariables] [DataField("west")] public Box2 West;
 
             public static DirBoundData Default { get; } = new();
-
-            void IExposeData.ExposeData(ObjectSerializer serializer)
-            {
-                serializer.DataField(ref All, "all", default);
-                serializer.DataField(ref North, "north", default);
-                serializer.DataField(ref South, "south", default);
-                serializer.DataField(ref East, "east", default);
-                serializer.DataField(ref West, "west", default);
-            }
         }
     }
 }

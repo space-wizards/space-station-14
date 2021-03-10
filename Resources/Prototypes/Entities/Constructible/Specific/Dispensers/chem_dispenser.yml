@@ -17,27 +17,27 @@
 - type: reagentDispenserInventory
   id: ChemDispenserStandardInventory
   inventory:
-  - chem.SulfuricAcid
-  - chem.Water
-  - chem.Ethanol
-  - chem.Glucose
-  - chem.Sugar
-  - chem.Hydrogen
-  - chem.Oxygen
-  - chem.Sulfur
-  - chem.Carbon
-  - chem.Copper
-  - chem.Nitrogen
-  - chem.Nutriment
-  - chem.Iron
-  - chem.Fluorine
   - chem.Aluminium
-  - chem.Silicon
+  - chem.Carbon
   - chem.Chlorine
+  - chem.Copper
+  - chem.Ethanol
+  - chem.Fluorine
+  - chem.Glucose
+  - chem.Hydrogen
+  - chem.Iron
   - chem.Lithium
   - chem.Mercury
+  - chem.Nitrogen
+  - chem.Nutriment
+  - chem.Oxygen
   - chem.Phosphorus
   - chem.Potassium
   - chem.Radium
+  - chem.Silicon
   - chem.Sodium
+  - chem.Sugar
+  - chem.Sulfur
+  - chem.SulfuricAcid
   - chem.Uranium
+  - chem.Water

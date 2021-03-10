@@ -1,10 +1,7 @@
-using Robust.Shared.Serialization;
-
 namespace Content.Server.Holiday.Interfaces
 {
-    public interface IHolidayGreet : IExposeData
+    public interface IHolidayGreet
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer) { }
         string Greet(HolidayPrototype holiday);
     }
 }

@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Mobs.State
 {
@@ -30,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             EntitySystem.Get<StandingStateSystem>().Down(entity);
 
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
+            if (entity.TryGetComponent(out IPhysBody physics))
             {
                 physics.CanCollide = false;
             }
@@ -40,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
         {
             base.ExitState(entity);
 
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
+            if (entity.TryGetComponent(out IPhysBody physics))
             {
                 physics.CanCollide = true;
             }

@@ -26,10 +26,12 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -37,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalMailingUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalMailingUnitComponent : SharedDisposalMailingUnitComponent, IInteractHand, IActivate, IInteractUsing
+    public class DisposalMailingUnitComponent : SharedDisposalMailingUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -61,18 +63,22 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Prevents it from flushing if it is not equal to or bigger than 1.
         /// </summary>
         [ViewVariables]
-        private float _pressure;
+        [DataField("pressure")]
+        private float _pressure = 1f;
 
         private bool _engaged;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private TimeSpan _automaticEngageTime;
+        [DataField("autoEngageTime")]
+        private readonly TimeSpan _automaticEngageTime = TimeSpan.FromSeconds(30);
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private TimeSpan _flushDelay;
+        [DataField("flushDelay")]
+        private readonly TimeSpan _flushDelay = TimeSpan.FromSeconds(3);
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _entryDelay;
+        [DataField("entryDelay")]
+        private float _entryDelay = 0.5f;
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -95,10 +101,11 @@ namespace Content.Server.GameObjects.Components.Disposal
         private readonly List<string> _targetList = new();
 
         [ViewVariables]
-        private string _target = "";
+        private string? _target;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private string _tag = "";
+        [DataField("Tag")]
+        private string _tag = string.Empty;
 
         [ViewVariables]
         public bool Powered =>
@@ -142,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+            if (!entity.TryGetComponent(out IPhysBody? physics) ||
                 !physics.CanCollide)
             {
                 return false;
@@ -286,6 +293,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             foreach (var entity in _container.ContainedEntities.ToList())
             {
                 _container.Remove(entity);
+            }
+
+            if (_target == null)
+            {
+                return false;
             }
 
             var holder = CreateTaggedHolder(entities, _target);
@@ -441,7 +453,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
             }
 
-            if (obj.Message is UiTargetUpdateMessage tagMessage && TagRegex.IsMatch(tagMessage.Target))
+            if (obj.Message is UiTargetUpdateMessage tagMessage && TagRegex.IsMatch(tagMessage.Target ?? string.Empty))
             {
                 _target = tagMessage.Target;
             }
@@ -553,38 +565,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "pressure",
-                1.0f,
-                pressure => _pressure = pressure,
-                () => _pressure);
-
-            serializer.DataReadWriteFunction(
-                "automaticEngageTime",
-                30,
-                seconds => _automaticEngageTime = TimeSpan.FromSeconds(seconds),
-                () => (int) _automaticEngageTime.TotalSeconds);
-
-            serializer.DataReadWriteFunction(
-                "flushDelay",
-                3,
-                seconds => _flushDelay = TimeSpan.FromSeconds(seconds),
-                () => (int) _flushDelay.TotalSeconds);
-
-            serializer.DataField(ref _entryDelay, "entryDelay", 0.5f);
-
-            serializer.DataField(ref _tag, "Tag", "");
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
-            _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
+            _container = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
 
             if (UserInterface != null)
             {
@@ -714,6 +699,11 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
+            if (eventArgs.User == null)
+            {
+                return false;
+            }
+
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return false;

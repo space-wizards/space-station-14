@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
@@ -18,6 +19,8 @@ namespace Content.Shared.GameObjects.Components.Projectiles
             get => _ignoreShooter;
             set
             {
+                if (_ignoreShooter == value) return;
+
                 _ignoreShooter = value;
                 Dirty();
             }

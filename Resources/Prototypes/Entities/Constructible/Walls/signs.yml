@@ -6,8 +6,9 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -34,9 +35,10 @@
   description: Return to monky.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
       - Impassable
@@ -57,9 +59,10 @@
   components:
   - type: Rotatable
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
       - Impassable
@@ -78,9 +81,10 @@
   components:
   - type: Rotatable
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
       - Impassable
@@ -100,9 +104,10 @@
   components:
   - type: Rotatable
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
       - Impassable
@@ -122,9 +127,10 @@
   components:
   - type: Rotatable
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
       - Impassable
@@ -144,9 +150,10 @@
   components:
   - type: Rotatable
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
       - Impassable
@@ -165,9 +172,10 @@
   components:
   - type: Rotatable
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
       - Impassable
@@ -186,9 +194,10 @@
   components:
   - type: Rotatable
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
       - Opaque
       - Impassable
@@ -208,9 +217,10 @@
   name: armory sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -228,9 +238,10 @@
   name: tool storage sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -248,9 +259,10 @@
   name: anomaly lab sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -268,9 +280,10 @@
   name: atmos sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -288,9 +301,10 @@
   name: bar sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -308,9 +322,10 @@
   name: library sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -328,9 +343,10 @@
   name: chapel sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -348,9 +364,10 @@
   name: head sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -368,9 +385,10 @@
   name: conference room sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -388,9 +406,10 @@
   name: drones sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -408,9 +427,10 @@
   name: engine sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -428,9 +448,10 @@
   name: cloning sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -448,9 +469,10 @@
   name: interrogation sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -468,9 +490,10 @@
   name: surgery sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -488,9 +511,10 @@
   name: telecomms sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -508,9 +532,10 @@
   name: cargo sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -528,9 +553,10 @@
   name: cargo dock sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -548,9 +574,10 @@
   name: chemistry sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -568,9 +595,10 @@
   name: docking sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -588,9 +616,10 @@
   name: engineering sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -608,9 +637,10 @@
   name: EVA sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -628,9 +658,10 @@
   name: gravity sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -648,9 +679,10 @@
   name: medbay sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -668,9 +700,10 @@
   name: morgue sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -688,9 +721,10 @@
   name: prison sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -708,9 +742,10 @@
   name: research and development sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -728,9 +763,10 @@
   name: science sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -748,9 +784,10 @@
   name: toxins sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -768,9 +805,10 @@
   name: bridge sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -791,9 +829,10 @@
   description: WARNING! Air flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.3,0.2,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.3"
       layer:
       - Opaque
       - Impassable
@@ -812,9 +851,10 @@
   description: WARNING! CO2 flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.3,0.2,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.3"
       layer:
       - Opaque
       - Impassable
@@ -833,9 +873,10 @@
   description: WARNING! N2 flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.3,0.2,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.3"
       layer:
       - Opaque
       - Impassable
@@ -854,9 +895,10 @@
   description: WARNING! N2O flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.3,0.2,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.3"
       layer:
       - Opaque
       - Impassable
@@ -875,9 +917,10 @@
   description: WARNING! O2 flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.3,0.2,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.3"
       layer:
       - Opaque
       - Impassable
@@ -896,9 +939,10 @@
   description: WARNING! Plasma flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.3,0.2,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.3"
       layer:
       - Opaque
       - Impassable
@@ -917,9 +961,10 @@
   description: WARNING! Waste flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.3,0.2,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.3"
       layer:
       - Opaque
       - Impassable
@@ -938,9 +983,10 @@
   description: A warning sign which reads 'NO SMOKING'
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -959,9 +1005,10 @@
   description: Technical information of some sort, shame its too worn-out to read.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable
@@ -980,9 +1027,10 @@
   description: Looks like a planet crashing by some station above it. Its kinda scary.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
       - Opaque
       - Impassable

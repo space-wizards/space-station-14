@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -28,13 +28,8 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when using the entity in your hands.
     /// </summary>
     [PublicAPI]
-    public class UseInHandMessage : EntitySystemMessage
+    public class UseInHandMessage : HandledEntityEventArgs
     {
-        /// <summary>
-        ///     If this message has already been "handled" by a previous system.
-        /// </summary>
-        public bool Handled { get; set; }
-
         /// <summary>
         ///     Entity holding the item in their hand.
         /// </summary>

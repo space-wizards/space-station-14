@@ -9,6 +9,7 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Mobs.State
@@ -29,12 +30,12 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         ///     States that this <see cref="SharedMobStateComponent"/> mapped to
         ///     the amount of damage at which they are triggered.
         ///     A threshold is reached when the total damage of an entity is equal
-        ///     A threshold is reached when the total damage of an entity is equal
         ///     to or higher than the int key, but lower than the next threshold.
         ///     Ordered from lowest to highest.
         /// </summary>
         [ViewVariables]
-        private SortedDictionary<int, IMobState> _lowestToHighestStates = default!;
+        [DataField("thresholds")]
+        private readonly SortedDictionary<int, IMobState> _lowestToHighestStates = default!;
 
         // TODO Remove Nullability?
         [ViewVariables]
@@ -43,19 +44,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         [ViewVariables]
         public int? CurrentThreshold { get; private set; }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "thresholds",
-                new Dictionary<int, IMobState>(),
-                thresholds =>
-                {
-                    _lowestToHighestStates = new SortedDictionary<int, IMobState>(thresholds);
-                },
-                () => new Dictionary<int, IMobState>(_lowestToHighestStates));
-        }
+        public IEnumerable<KeyValuePair<int, IMobState>> _highestToLowestStates => _lowestToHighestStates.Reverse();
 
         protected override void Startup()
         {
@@ -175,16 +164,12 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             return true;
         }
 
-        public (IMobState state, int threshold)? GetEarliestIncapacitatedState(int minimumDamage)
+        private (IMobState state, int threshold)? GetEarliestState(int minimumDamage, Predicate<IMobState> predicate)
         {
             foreach (var (threshold, state) in _lowestToHighestStates)
             {
-                if (!state.IsIncapacitated())
-                {
-                    continue;
-                }
-
-                if (threshold < minimumDamage)
+                if (threshold < minimumDamage ||
+                    !predicate(state))
                 {
                     continue;
                 }
@@ -195,6 +180,68 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             return null;
         }
 
+        private (IMobState state, int threshold)? GetPreviousState(int maximumDamage, Predicate<IMobState> predicate)
+        {
+            foreach (var (threshold, state) in _highestToLowestStates)
+            {
+                if (threshold > maximumDamage ||
+                    !predicate(state))
+                {
+                    continue;
+                }
+
+                return (state, threshold);
+            }
+
+            return null;
+        }
+
+        public (IMobState state, int threshold)? GetEarliestCriticalState(int minimumDamage)
+        {
+            return GetEarliestState(minimumDamage, s => s.IsCritical());
+        }
+
+        public (IMobState state, int threshold)? GetEarliestIncapacitatedState(int minimumDamage)
+        {
+            return GetEarliestState(minimumDamage, s => s.IsIncapacitated());
+        }
+
+        public (IMobState state, int threshold)? GetEarliestDeadState(int minimumDamage)
+        {
+            return GetEarliestState(minimumDamage, s => s.IsDead());
+        }
+
+        public (IMobState state, int threshold)? GetPreviousCriticalState(int minimumDamage)
+        {
+            return GetPreviousState(minimumDamage, s => s.IsCritical());
+        }
+
+        private bool TryGetState(
+            (IMobState state, int threshold)? tuple,
+            [NotNullWhen(true)] out IMobState? state,
+            out int threshold)
+        {
+            if (tuple == null)
+            {
+                state = default;
+                threshold = default;
+                return false;
+            }
+
+            (state, threshold) = tuple.Value;
+            return true;
+        }
+
+        public bool TryGetEarliestCriticalState(
+            int minimumDamage,
+            [NotNullWhen(true)] out IMobState? state,
+            out int threshold)
+        {
+            var earliestState = GetEarliestCriticalState(minimumDamage);
+
+            return TryGetState(earliestState, out state, out threshold);
+        }
+
         public bool TryGetEarliestIncapacitatedState(
             int minimumDamage,
             [NotNullWhen(true)] out IMobState? state,
@@ -202,15 +249,27 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         {
             var earliestState = GetEarliestIncapacitatedState(minimumDamage);
 
-            if (earliestState == null)
-            {
-                state = default;
-                threshold = default;
-                return false;
-            }
+            return TryGetState(earliestState, out state, out threshold);
+        }
 
-            (state, threshold) = earliestState.Value;
-            return true;
+        public bool TryGetEarliestDeadState(
+            int minimumDamage,
+            [NotNullWhen(true)] out IMobState? state,
+            out int threshold)
+        {
+            var earliestState = GetEarliestDeadState(minimumDamage);
+
+            return TryGetState(earliestState, out state, out threshold);
+        }
+
+        public bool TryGetPreviousCriticalState(
+            int maximumDamage,
+            [NotNullWhen(true)] out IMobState? state,
+            out int threshold)
+        {
+            var earliestState = GetPreviousCriticalState(maximumDamage);
+
+            return TryGetState(earliestState, out state, out threshold);
         }
 
         private void RemoveState(bool syncing = false)

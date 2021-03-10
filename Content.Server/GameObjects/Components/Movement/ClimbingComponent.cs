@@ -1,10 +1,13 @@
 ﻿#nullable enable
+using System;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -12,23 +15,41 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(SharedClimbingComponent))]
     public class ClimbingComponent : SharedClimbingComponent
     {
-        private bool _isClimbing;
-        private ClimbController? _climbController;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override bool IsClimbing
         {
-            get => _isClimbing;
+            get => base.IsClimbing;
             set
             {
                 if (_isClimbing == value)
                     return;
 
-                if (!value)
+                base.IsClimbing = value;
+
+                if (value)
                 {
-                    Body?.TryRemoveController<ClimbController>();
+                    StartClimbTime = IoCManager.Resolve<IGameTiming>().CurTime;
+                    EntitySystem.Get<ClimbSystem>().AddActiveClimber(this);
+                    OwnerIsTransitioning = true;
+                }
+                else
+                {
+                    EntitySystem.Get<ClimbSystem>().RemoveActiveClimber(this);
+                    OwnerIsTransitioning = false;
                 }
 
-                _isClimbing = value;
+                Dirty();
+            }
+        }
+
+        protected override bool OwnerIsTransitioning
+        {
+            get => base.OwnerIsTransitioning;
+            set
+            {
+                if (value == base.OwnerIsTransitioning) return;
+                base.OwnerIsTransitioning = value;
                 Dirty();
             }
         }
@@ -51,38 +72,36 @@ namespace Content.Server.GameObjects.Components.Movement
         /// </summary>
         public void TryMoveTo(Vector2 from, Vector2 to)
         {
-            if (Body == null)
-                return;
+            if (Body == null) return;
 
-            _climbController = Body.EnsureController<ClimbController>();
-            _climbController.TryMoveTo(from, to);
+            var velocity = (to - from).Length;
+
+            if (velocity <= 0.0f) return;
+
+            Body.ApplyLinearImpulse((to - from).Normalized * velocity * 400);
+            OwnerIsTransitioning = true;
+
+            Owner.SpawnTimer((int) (BufferTime * 1000), () =>
+            {
+                if (Deleted) return;
+                OwnerIsTransitioning = false;
+            });
         }
 
         public void Update()
         {
-            if (!IsClimbing || Body == null)
-                return;
-
-            if (_climbController != null && (_climbController.IsBlocked || !_climbController.IsActive))
+            if (!IsClimbing || _gameTiming.CurTime < TimeSpan.FromSeconds(BufferTime) + StartClimbTime)
             {
-                if (Body.TryRemoveController<ClimbController>())
-                {
-                    _climbController = null;
-                }
+                return;
             }
 
-            if (IsClimbing)
-                Body.WakeBody();
-
-            if (!IsOnClimbableThisFrame && IsClimbing && _climbController == null)
+            if (!IsOnClimbableThisFrame && IsClimbing)
                 IsClimbing = false;
-
-            IsOnClimbableThisFrame = false;
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new ClimbModeComponentState(_isClimbing);
+            return new ClimbModeComponentState(_isClimbing, OwnerIsTransitioning);
         }
     }
 }

@@ -130,7 +130,7 @@
   id: chem.FluorosulfuricAcid
   name: fluorosulfuric acid
   desc: An extremely corrosive chemical substance.
-  physicalDecs: strong-smelling
+  physicalDesc: strong-smelling
   color: "#5050ff"
   boilingPoint: 165
   meltingPoint: -87

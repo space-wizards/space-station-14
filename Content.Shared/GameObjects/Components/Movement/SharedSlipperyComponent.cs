@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -6,15 +7,24 @@ using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Physics;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
-    public abstract class SharedSlipperyComponent : Component, ICollideBehavior
+    public abstract class SharedSlipperyComponent : Component, IStartCollide
     {
-
         public sealed override string Name => "Slippery";
+
+        protected float _paralyzeTime = 3f;
+        protected float _intersectPercentage = 0.3f;
+        protected float _requiredSlipSpeed = 0.1f;
+        protected float _launchForwardsMultiplier = 1f;
+        protected bool _slippery = true;
 
         /// <summary>
         ///     The list of entities that have been slipped by this component,
@@ -26,40 +36,93 @@ namespace Content.Shared.GameObjects.Components.Movement
         ///     How many seconds the mob will be paralyzed for.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public virtual float ParalyzeTime { get; set; } = 2f;
+        [DataField("paralyzeTime")]
+        public float ParalyzeTime
+        {
+            get => _paralyzeTime;
+            set
+            {
+                if (MathHelper.CloseTo(_paralyzeTime, value)) return;
+
+                _paralyzeTime = value;
+                Dirty();
+            }
+        }
 
         /// <summary>
         ///     Percentage of shape intersection for a slip to occur.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public virtual float IntersectPercentage { get; set; } = 0.3f;
+        [DataField("intersectPercentage")]
+        public float IntersectPercentage
+        {
+            get => _intersectPercentage;
+            set
+            {
+                if (MathHelper.CloseTo(_intersectPercentage, value)) return;
+
+                _intersectPercentage = value;
+                Dirty();
+            }
+        }
 
         /// <summary>
         ///     Entities will only be slipped if their speed exceeds this limit.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public virtual float RequiredSlipSpeed { get; set; } = 0f;
+        [DataField("requiredSlipSpeed")]
+        public float RequiredSlipSpeed
+        {
+            get => _requiredSlipSpeed;
+            set
+            {
+                if (MathHelper.CloseTo(_requiredSlipSpeed, value)) return;
+
+                _requiredSlipSpeed = value;
+                Dirty();
+            }
+        }
 
         /// <summary>
         ///     The entity's speed will be multiplied by this to slip it forwards.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public virtual float LaunchForwardsMultiplier { get; set; } = 1f;
+        [DataField("launchForwardsMultiplier")]
+        public float LaunchForwardsMultiplier
+        {
+            get => _launchForwardsMultiplier;
+            set
+            {
+                if (MathHelper.CloseTo(_launchForwardsMultiplier, value)) return;
+
+                _launchForwardsMultiplier = value;
+                Dirty();
+            }
+        }
 
         /// <summary>
         ///     Whether or not this component will try to slip entities.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public virtual bool Slippery { get; set; }
+        [DataField("slippery")]
+        public bool Slippery
+        {
+            get => _slippery;
+            set
+            {
+                if (_slippery == value) return;
 
-        private bool TrySlip(IEntity entity)
+                _slippery = value;
+                Dirty();
+            }
+        }
+
+        private bool TrySlip(IPhysBody ourBody, IPhysBody otherBody)
         {
             if (!Slippery
                 || Owner.IsInContainer()
-                ||  _slipped.Contains(entity.Uid)
-                ||  !entity.TryGetComponent(out SharedStunnableComponent stun)
-                ||  !entity.TryGetComponent(out IPhysicsComponent otherBody)
-                ||  !Owner.TryGetComponent(out IPhysicsComponent body))
+                ||  _slipped.Contains(otherBody.Entity.Uid)
+                ||  !otherBody.Entity.TryGetComponent(out SharedStunnableComponent? stun))
             {
                 return false;
             }
@@ -69,26 +132,22 @@ namespace Content.Shared.GameObjects.Components.Movement
                 return false;
             }
 
-            var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
+            var percentage = otherBody.GetWorldAABB().IntersectPercentage(ourBody.GetWorldAABB());
 
             if (percentage < IntersectPercentage)
             {
                 return false;
             }
 
-            if (!EffectBlockerSystem.CanSlip(entity))
+            if (!EffectBlockerSystem.CanSlip(otherBody.Entity))
             {
                 return false;
             }
 
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
-            {
-                var controller = physics.EnsureController<SlipController>();
-                controller.LinearVelocity = physics.LinearVelocity * LaunchForwardsMultiplier;
-            }
+            otherBody.LinearVelocity *= LaunchForwardsMultiplier;
 
             stun.Paralyze(5);
-            _slipped.Add(entity.Uid);
+            _slipped.Add(otherBody.Entity.Uid);
 
             OnSlip();
 
@@ -97,13 +156,16 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         protected virtual void OnSlip() { }
 
-        public void CollideWith(IEntity collidedWith)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            TrySlip(collidedWith);
+            TrySlip(ourBody, otherBody);
         }
 
         public void Update()
         {
+            if (!Slippery)
+                return;
+
             foreach (var uid in _slipped.ToArray())
             {
                 if (!uid.IsValid() || !Owner.EntityManager.EntityExists(uid))
@@ -113,42 +175,14 @@ namespace Content.Shared.GameObjects.Components.Movement
                 }
 
                 var entity = Owner.EntityManager.GetEntity(uid);
-                var physics = Owner.GetComponent<IPhysicsComponent>();
-                var otherPhysics = entity.GetComponent<IPhysicsComponent>();
+                var physics = Owner.GetComponent<IPhysBody>();
+                var otherPhysics = entity.GetComponent<IPhysBody>();
 
-                if (!physics.WorldAABB.Intersects(otherPhysics.WorldAABB))
+                if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                 {
                     _slipped.Remove(uid);
                 }
             }
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            var physics = Owner.EnsureComponent<PhysicsComponent>();
-
-            physics.Hard = false;
-
-            var shape = physics.PhysicsShapes.FirstOrDefault();
-
-            if (shape != null)
-            {
-                shape.CollisionLayer |= (int) CollisionGroup.SmallImpassable;
-                shape.CollisionMask = (int) CollisionGroup.None;
-            }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.ParalyzeTime, "paralyzeTime", 3f);
-            serializer.DataField(this, x  => x.IntersectPercentage, "intersectPercentage", 0.3f);
-            serializer.DataField(this, x => x.RequiredSlipSpeed, "requiredSlipSpeed", 0.1f);
-            serializer.DataField(this, x => x.LaunchForwardsMultiplier, "launchForwardsMultiplier", 1f);
-            serializer.DataField(this, x => x.Slippery, "slippery", true);
         }
     }
 

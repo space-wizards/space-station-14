@@ -20,7 +20,7 @@ namespace Content.Shared.GameObjects.Verbs
         /// <param name="contextEntities"></param>
         /// <param name="buffer">Whether we should slightly extend out the ignored range for the ray predicated</param>
         /// <returns></returns>
-        protected bool TryGetContextEntities(IEntity player, MapCoordinates targetPos, [NotNullWhen(true)] out List<IEntity>? contextEntities, bool buffer = false)
+        public bool TryGetContextEntities(IEntity player, MapCoordinates targetPos, [NotNullWhen(true)] out List<IEntity>? contextEntities, bool buffer = false)
         {
             contextEntities = null;
             var length = buffer ? 1.0f: 0.5f;

@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Tests.Server.GameObjects.Components.Mobs
 {
@@ -15,11 +16,13 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
     {
         const string PROTOTYPES = @"
 - type: alert
+  name: AlertLowPressure
   alertType: LowPressure
   category: Pressure
   icon: /Textures/Interface/Alerts/Pressure/lowpressure.png
 
 - type: alert
+  name: AlertHighPressure
   alertType: HighPressure
   category: Pressure
   icon: /Textures/Interface/Alerts/Pressure/highpressure.png
@@ -32,9 +35,10 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
             // but wanted to keep it anyway to see what's possible w.r.t. testing components
             // in a unit test
 
+            IoCManager.Resolve<ISerializationManager>().Initialize();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var factory = IoCManager.Resolve<IComponentFactory>();
-            factory.Register<ServerAlertsComponent>();
+            factory.RegisterClass<ServerAlertsComponent>();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
             prototypeManager.Resync();
             var alertManager = IoCManager.Resolve<AlertManager>();

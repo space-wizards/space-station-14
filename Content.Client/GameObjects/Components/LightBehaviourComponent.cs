@@ -12,6 +12,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components
@@ -22,36 +23,42 @@ namespace Content.Client.GameObjects.Components
     /// This AnimationTrack derivative does not rely on keyframes since it often needs to have a randomized duration.
     /// </summary>
     [Serializable]
-    public abstract class LightBehaviourAnimationTrack : AnimationTrackProperty, IExposeData
+    [ImplicitDataDefinitionForInheritors]
+    public abstract class LightBehaviourAnimationTrack : AnimationTrackProperty
     {
-        [ViewVariables] public string ID { get; set; }
-        [ViewVariables] public string Property { get; protected set; }
-        [ViewVariables] public bool IsLooped { get; set; }
-        [ViewVariables] public bool Enabled { get; set; }
-        [ViewVariables] public float StartValue { get; set; }
-        [ViewVariables] public float EndValue { get; set; }
-        [ViewVariables] public float MinDuration { get; set; }
-        [ViewVariables] public float MaxDuration { get; set; }
-        [ViewVariables] public AnimationInterpolationMode InterpolateMode { get; set; }
+        [DataField("id")] [ViewVariables] public string ID { get; set; } = string.Empty;
+
+        [DataField("property")]
+        [ViewVariables]
+        public virtual string Property { get; protected set; } = "Radius";
+
+        [DataField("isLooped")] [ViewVariables] public bool IsLooped { get; set; }
+
+        [DataField("enabled")] [ViewVariables] public bool Enabled { get; set; }
+
+        [DataField("startValue")] [ViewVariables] public float StartValue { get; set; }
+
+        [DataField("endValue")]
+        [ViewVariables]
+        public float EndValue { get; set; } = 2f;
+
+        [DataField("minDuration")]
+        [ViewVariables]
+        public float MinDuration { get; set; } = -1f;
+
+        [DataField("maxDuration")]
+        [ViewVariables]
+        public float MaxDuration { get; set; } = 2f;
+
+        [DataField("interpolate")]
+        [ViewVariables]
+        public AnimationInterpolationMode InterpolateMode { get; set; } = AnimationInterpolationMode.Linear;
 
         [ViewVariables] protected float MaxTime { get; set; }
-        protected PointLightComponent Light = default;
-        protected IRobustRandom RobustRandom = default;
+        protected PointLightComponent Light;
+        protected IRobustRandom RobustRandom;
 
         private float _maxTime = default;
-
-        public virtual void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.ID, "id", string.Empty);
-            serializer.DataField(this, x => x.IsLooped, "isLooped", false);
-            serializer.DataField(this, x => x.Enabled, "enabled", false);
-            serializer.DataField(this, x => x.StartValue, "startValue", 0f);
-            serializer.DataField(this, x => x.EndValue, "endValue", 2f);
-            serializer.DataField(this, x => x.MinDuration, "minDuration", -1f);
-            serializer.DataField(this, x => x.MaxDuration, "maxDuration", 2f);
-            serializer.DataField(this, x => x.Property, "property", "Radius");
-            serializer.DataField(this, x => x.InterpolateMode, "interpolate", AnimationInterpolationMode.Linear);
-        }
 
         public void Initialize(PointLightComponent light)
         {
@@ -212,10 +219,10 @@ namespace Content.Client.GameObjects.Components
     [UsedImplicitly]
     public class RandomizeBehaviour : LightBehaviourAnimationTrack
     {
-        private object _randomValue1 = default;
-        private object _randomValue2 = default;
-        private object _randomValue3 = default;
-        private object _randomValue4 = default;
+        private object _randomValue1;
+        private object _randomValue2;
+        private object _randomValue3;
+        private object _randomValue4;
 
         public override void OnInitialize()
         {
@@ -275,11 +282,16 @@ namespace Content.Client.GameObjects.Components
     /// A light behaviour that cycles through a list of colors.
     /// </summary>
     [UsedImplicitly]
-    public class ColorCycleBehaviour : LightBehaviourAnimationTrack
+    [DataDefinition]
+    public class ColorCycleBehaviour : LightBehaviourAnimationTrack, ISerializationHooks
     {
-        public List<Color> ColorsToCycle { get; set; }
+        [DataField("property")]
+        [ViewVariables]
+        public override string Property { get; protected set; } = "Color";
 
-        private int _colorIndex = 0;
+        [DataField("colors")] public List<Color> ColorsToCycle { get; set; } = new();
+
+        private int _colorIndex;
 
         public override void OnStart()
         {
@@ -320,23 +332,13 @@ namespace Content.Client.GameObjects.Components
             return (-1, playingTime);
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
+        void ISerializationHooks.AfterDeserialization()
         {
-            serializer.DataField(this, x => x.ID, "id", string.Empty);
-            serializer.DataField(this, x => x.IsLooped, "isLooped", false);
-            serializer.DataField(this, x => x.Enabled, "enabled", false);
-            serializer.DataField(this, x => x.MinDuration, "minDuration", -1f);
-            serializer.DataField(this, x => x.MaxDuration, "maxDuration", 2f);
-            serializer.DataField(this, x => x.InterpolateMode, "interpolate", AnimationInterpolationMode.Linear);
-            ColorsToCycle = serializer.ReadDataField("colors", new List<Color>());
-            Property = "Color";
-
             if (ColorsToCycle.Count < 2)
             {
                 throw new InvalidOperationException($"{nameof(ColorCycleBehaviour)} has less than 2 colors to cycle");
             }
         }
-
     }
     #endregion
 
@@ -344,11 +346,11 @@ namespace Content.Client.GameObjects.Components
     /// A component which applies a specific behaviour to a PointLightComponent on its owner.
     /// </summary>
     [RegisterComponent]
-    public class LightBehaviourComponent : SharedLightBehaviourComponent
+    public class LightBehaviourComponent : SharedLightBehaviourComponent, ISerializationHooks
     {
         private const string KeyPrefix = nameof(LightBehaviourComponent);
 
-        private class AnimationContainer
+        public class AnimationContainer
         {
             public AnimationContainer(int key, Animation animation, LightBehaviourAnimationTrack track)
             {
@@ -364,15 +366,35 @@ namespace Content.Client.GameObjects.Components
         }
 
         [ViewVariables(VVAccess.ReadOnly)]
+        [DataField("behaviours")]
+        public readonly List<LightBehaviourAnimationTrack> Behaviours = new();
+
+        [ViewVariables(VVAccess.ReadOnly)]
         private readonly List<AnimationContainer> _animations = new();
 
-        private float _originalRadius = default;
-        private float _originalEnergy = default;
-        private Angle _originalRotation = default;
-        private Color _originalColor = default;
-        private bool _originalEnabled = default;
-        private PointLightComponent _lightComponent = default;
-        private AnimationPlayerComponent _animationPlayer = default;
+        private float _originalRadius;
+        private float _originalEnergy;
+        private Angle _originalRotation;
+        private Color _originalColor;
+        private bool _originalEnabled;
+        private PointLightComponent _lightComponent;
+        private AnimationPlayerComponent _animationPlayer;
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            var key = 0;
+
+            foreach (var behaviour in Behaviours)
+            {
+                var animation = new Animation()
+                {
+                    AnimationTracks = { behaviour }
+                };
+
+                _animations.Add(new AnimationContainer(key, animation, behaviour));
+                key++;
+            }
+        }
 
         protected override void Startup()
         {
@@ -380,7 +402,7 @@ namespace Content.Client.GameObjects.Components
 
             CopyLightSettings();
             _animationPlayer = Owner.EnsureComponent<AnimationPlayerComponent>();
-            _animationPlayer.AnimationCompleted += s => OnAnimationCompleted(s);
+            _animationPlayer.AnimationCompleted += OnAnimationCompleted;
 
             foreach (var container in _animations)
             {
@@ -514,25 +536,6 @@ namespace Content.Client.GameObjects.Components
             if (playImmediately)
             {
                 StartLightBehaviour(behaviour.ID);
-            }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            var behaviours = serializer.ReadDataField("behaviours", new List<LightBehaviourAnimationTrack>());
-            var key = 0;
-
-            foreach (LightBehaviourAnimationTrack behaviour in behaviours)
-            {
-                var animation = new Animation()
-                {
-                    AnimationTracks = { behaviour }
-                };
-
-                _animations.Add(new AnimationContainer(key, animation, behaviour));
-                key++;
             }
         }
     }

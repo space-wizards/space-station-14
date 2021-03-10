@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components;
@@ -6,6 +6,7 @@ using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -15,7 +16,7 @@ namespace Content.Client.GameObjects.Components
     /// Visualizer for items that come in stacks and have different appearance
     /// depending on the size of the stack. Visualizer can work by switching between different
     /// icons in <c>_spriteLayers</c> or if the sprite layers are supposed to be composed as transparent layers.
-    /// The former behavior is default and the latter behavior can be defined in prototypes. 
+    /// The former behavior is default and the latter behavior can be defined in prototypes.
     ///
     /// <example>
     /// <para>To define a Stack Visualizer prototype insert the following
@@ -59,6 +60,7 @@ namespace Content.Client.GameObjects.Components
         /// Sprite layers used in stack visualizer. Sprites first in layer correspond to lower stack states
         /// e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
         /// </summary>
+        [DataField("stackLayers")]
         private readonly List<string> _spriteLayers = new();
 
         /// <summary>
@@ -72,27 +74,12 @@ namespace Content.Client.GameObjects.Components
         /// <description>true: they are transparent and thus layered one over another in ascending order first</description>
         /// </item>
         /// </list>
-        /// 
+        ///
         /// </summary>
+        [DataField("composite")]
         private bool _isComposite;
-
-        public override void LoadData(YamlMappingNode mapping)
-        {
-            base.LoadData(mapping);
-
-            if (mapping.TryGetNode<YamlSequenceNode>("stackLayers", out var spriteSequenceNode))
-            {
-                foreach (var yamlNode in spriteSequenceNode)
-                {
-                    _spriteLayers.Add(((YamlScalarNode) yamlNode).Value!);
-                }
-            }
-
-            if (mapping.TryGetNode<YamlScalarNode>("composite", out var transparent))
-            {
-                _isComposite = transparent.AsBool();
-            }
-        }
+        [DataField("sprite")]
+        private ResourcePath? _spritePath;
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -102,11 +89,12 @@ namespace Content.Client.GameObjects.Components
                 && _spriteLayers.Count > 0
                 && entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
             {
+                var spritePath = _spritePath ?? spriteComponent.BaseRSI!.Path!;
+
                 foreach (var sprite in _spriteLayers)
                 {
-                    var rsiPath = spriteComponent.BaseRSI!.Path!;
                     spriteComponent.LayerMapReserveBlank(sprite);
-                    spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(rsiPath, sprite));
+                    spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(spritePath, sprite));
                     spriteComponent.LayerSetVisible(sprite, false);
                 }
             }
@@ -145,8 +133,8 @@ namespace Content.Client.GameObjects.Components
         private void ProcessCompositeSprites(AppearanceComponent component, ISpriteComponent spriteComponent)
         {
             // If hidden, don't render any sprites
-            if (!component.TryGetData<bool>(StackVisuals.Hide, out var hide)
-                || hide)
+            if (component.TryGetData<bool>(StackVisuals.Hide, out var hide)
+                && hide)
             {
                 foreach (var transparentSprite in _spriteLayers)
                 {

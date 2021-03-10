@@ -32,7 +32,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Nutrition
 
             foreach (var entity in context.GetState<NearbyFoodState>().GetValue())
             {
-                yield return new PickUpFood(owner, entity, Bonus);
+                yield return new PickUpFood {Owner = owner, Target = entity, Bonus = Bonus};
             }
         }
     }

@@ -34,7 +34,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                     // Left half
                     new ScrollContainer
                     {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        HorizontalExpand = true,
                         Children =
                         {
                             (BodyPartList = new ItemList())
@@ -43,13 +43,13 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                     // Right half
                     new VBoxContainer
                     {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        HorizontalExpand = true,
                         Children =
                         {
                             // Top half of the right half
                             new VBoxContainer
                             {
-                                SizeFlagsVertical = SizeFlags.FillExpand,
+                                VerticalExpand = true,
                                 Children =
                                 {
                                     (BodyPartLabel = new Label()),
@@ -66,7 +66,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                                     },
                                     new ScrollContainer
                                     {
-                                        SizeFlagsVertical = SizeFlags.FillExpand,
+                                        VerticalExpand = true,
                                         Children =
                                         {
                                             (MechanismList = new ItemList())
@@ -77,7 +77,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                             // Bottom half of the right half
                             (MechanismInfoLabel = new RichTextLabel
                             {
-                                SizeFlagsVertical = SizeFlags.FillExpand
+                                VerticalExpand = true
                             })
                         }
                     }
@@ -88,11 +88,10 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
 
             BodyPartList.OnItemSelected += BodyPartOnItemSelected;
             MechanismList.OnItemSelected += MechanismOnItemSelected;
+            MinSize = SetSize = (800, 600);
         }
 
         public BodyScannerBoundUserInterface Owner { get; }
-
-        protected override Vector2? CustomSize => (800, 600);
 
         private ItemList BodyPartList { get; }
 

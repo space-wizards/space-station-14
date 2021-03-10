@@ -1,7 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.Buckle;
 using Content.Shared.Alert;
-using Robust.Shared.Serialization;
 using JetBrains.Annotations;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Alert.Click
 {
@@ -9,10 +9,9 @@ namespace Content.Server.Alert.Click
     /// Unbuckles if player is currently buckled.
     /// </summary>
 	[UsedImplicitly]
+    [DataDefinition]
     public class Unbuckle : IAlertClick
     {
-        void IExposeData.ExposeData(ObjectSerializer serializer) { }
-
         public void AlertClicked(ClickAlertEventArgs args)
         {
             if (args.Player.TryGetComponent(out BuckleComponent buckle))

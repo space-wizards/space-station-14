@@ -9,19 +9,17 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Temperature;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
-using Content.Shared.Chemistry;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Metabolism
@@ -40,77 +38,65 @@ namespace Content.Server.GameObjects.Components.Metabolism
         private bool _isShivering;
         private bool _isSweating;
 
-        [ViewVariables(VVAccess.ReadWrite)] private int _suffocationDamage;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] private int _suffocationDamage = 1;
 
-        [ViewVariables(VVAccess.ReadWrite)] private int _suffocationDamageRecovery;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamageRecovery")] private int _suffocationDamageRecovery = 1;
 
-        [ViewVariables] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
+        [ViewVariables] [DataField("needsGases")] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
-        [ViewVariables] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
+        [ViewVariables] [DataField("producesGases")] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
 
-        [ViewVariables] public Dictionary<Gas, float> DeficitGases { get; set; } = new();
+        [ViewVariables] [DataField("deficitGases")] public Dictionary<Gas, float> DeficitGases { get; set; } = new();
 
         /// <summary>
         /// Heat generated due to metabolism. It's generated via metabolism
         /// </summary>
         [ViewVariables]
+        [DataField("metabolismHeat")]
         public float MetabolismHeat { get; private set; }
 
         /// <summary>
         /// Heat output via radiation.
         /// </summary>
         [ViewVariables]
+        [DataField("radiatedHeat")]
         public float RadiatedHeat { get; private set; }
 
         /// <summary>
         /// Maximum heat regulated via sweat
         /// </summary>
         [ViewVariables]
+        [DataField("sweatHeatRegulation")]
         public float SweatHeatRegulation { get; private set; }
 
         /// <summary>
         /// Maximum heat regulated via shivering
         /// </summary>
         [ViewVariables]
+        [DataField("shiveringHeatRegulation")]
         public float ShiveringHeatRegulation { get; private set; }
 
         /// <summary>
         /// Amount of heat regulation that represents thermal regulation processes not
         /// explicitly coded.
         /// </summary>
+        [DataField("implicitHeatRegulation")]
         public float ImplicitHeatRegulation { get; private set; }
 
         /// <summary>
         /// Normal body temperature
         /// </summary>
         [ViewVariables]
+        [DataField("normalBodyTemperature")]
         public float NormalBodyTemperature { get; private set; }
 
         /// <summary>
         /// Deviation from normal temperature for body to start thermal regulation
         /// </summary>
+        [DataField("thermalRegulationTemperatureThreshold")]
         public float ThermalRegulationTemperatureThreshold { get; private set; }
 
         [ViewVariables] public bool Suffocating { get; private set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, b => b.NeedsGases, "needsGases", new Dictionary<Gas, float>());
-            serializer.DataField(this, b => b.ProducesGases, "producesGases", new Dictionary<Gas, float>());
-            serializer.DataField(this, b => b.DeficitGases, "deficitGases", new Dictionary<Gas, float>());
-            serializer.DataField(this, b => b.MetabolismHeat, "metabolismHeat", 0);
-            serializer.DataField(this, b => b.RadiatedHeat, "radiatedHeat", 0);
-            serializer.DataField(this, b => b.SweatHeatRegulation, "sweatHeatRegulation", 0);
-            serializer.DataField(this, b => b.ShiveringHeatRegulation, "shiveringHeatRegulation", 0);
-            serializer.DataField(this, b => b.ImplicitHeatRegulation, "implicitHeatRegulation", 0);
-            serializer.DataField(this, b => b.NormalBodyTemperature, "normalBodyTemperature", 0);
-            serializer.DataField(this, b => b.ThermalRegulationTemperatureThreshold,
-                "thermalRegulationTemperatureThreshold", 0);
-            serializer.DataField(ref _suffocationDamage, "suffocationDamage", 1);
-            serializer.DataField(ref _suffocationDamageRecovery, "suffocationDamageRecovery", 1);
-        }
 
         private Dictionary<Gas, float> NeedsAndDeficit(float frameTime)
         {
@@ -317,43 +303,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
         }
 
         /// <summary>
-        ///     Loops through each reagent in _internalSolution,
-        ///     and calls <see cref="IMetabolizable.Metabolize"/> for each of them.
-        /// </summary>
-        /// <param name="frameTime">The time since the last metabolism tick in seconds.</param>
-        private void ProcessNutrients(float frameTime)
-        {
-            if (!Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
-            {
-                return;
-            }
-
-            if (bloodstream.Solution.CurrentVolume == 0)
-            {
-                return;
-            }
-
-            // Run metabolism for each reagent, remove metabolized reagents
-            // Using ToList here lets us edit reagents while iterating
-            foreach (var reagent in bloodstream.Solution.ReagentList.ToList())
-            {
-                if (!_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype prototype))
-                {
-                    continue;
-                }
-
-                // Run metabolism code for each reagent
-                foreach (var metabolizable in prototype.Metabolism)
-                {
-                    var reagentDelta = metabolizable.Metabolize(Owner, reagent.ReagentId, frameTime);
-                    bloodstream.Solution.TryRemoveReagent(reagent.ReagentId, reagentDelta);
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Processes gases in the bloodstream and triggers metabolism of the
-        ///     reagents inside of it.
+        ///     Processes gases in the bloodstream.
         /// </summary>
         /// <param name="frameTime">
         ///     The time since the last metabolism tick in seconds.
@@ -374,7 +324,6 @@ namespace Content.Server.GameObjects.Components.Metabolism
             }
 
             ProcessGases(_accumulatedFrameTime);
-            ProcessNutrients(_accumulatedFrameTime);
             ProcessThermalRegulation(_accumulatedFrameTime);
 
             _accumulatedFrameTime -= 1;
