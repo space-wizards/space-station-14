@@ -15,6 +15,10 @@ jobs:
         uses: trilom/file-changes-action@v1.2.4
         with:
           fileOutput: 'yml'
+      - name: Set environment variables
+        run: |
+            echo "MAPS_ADDED=${{ steps.file_changes.outputs.files_added }}" >> $GITHUB_ENV
+            echo "MAPS_MODIFIED=${{ steps.file_changes.outputs.files_modified }}" >> $GITHUB_ENV
       - name: Setup submodule
         run: |
           git submodule update --init --recursive

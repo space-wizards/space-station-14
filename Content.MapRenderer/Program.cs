@@ -26,6 +26,8 @@ namespace Content.MapRenderer
             Console.WriteLine(Environment.GetEnvironmentVariable("STEPS.FILE_CHANGES.OUTPUTS.FILES_MODIFIED"));
             var created = Environment.GetEnvironmentVariable("MAPS_ADDED");
             var modified = Environment.GetEnvironmentVariable("MAPS_MODIFIED");
+            Console.WriteLine(created);
+            Console.WriteLine(modified);
 
             var yamlStream = new YamlStream();
             var files = new YamlSequenceNode();
