@@ -9,6 +9,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Content.Client.GameObjects.Components.Items
@@ -34,7 +35,7 @@ namespace Content.Client.GameObjects.Components.Items
         private readonly List<ClientHand> _hands = new();
 
         [ViewVariables]
-        public IEntity? ActiveItem => Hands.ElementAtOrDefault(ActiveHand)?.HeldItem;
+        public IEntity? ActiveItem => TryGetHand(ActiveHand, out var hand) ? hand.HeldItem : null;
 
         [ComponentDependency]
         private ISpriteComponent? _sprite = default!;
@@ -45,13 +46,58 @@ namespace Content.Client.GameObjects.Components.Items
         public override void OnAdd()
         {
             base.OnAdd();
-            Gui = new HandsGui(); //TODO: subscripe msg sends to ui events
+            Gui = new HandsGui();
+            _gameHud.HandsContainer.AddChild(Gui);
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            _gameHud.HandsContainer.AddChild(Gui);
+            Gui.HandPressed += args => OnHandPressed(args.HandPressed);
+        }
+
+        private void OnHandPressed(int handPressed)
+        {
+            if (!TryGetHand(handPressed, out var pressedHand))
+                return;
+
+            if (!TryGetHand(ActiveHand, out var activeHand))
+                return;
+
+            var pressedItem = pressedHand.HeldItem;
+            var activeItem = activeHand.HeldItem;
+
+            if (pressedItem == null && pressedHand != activeHand)
+            {
+                SendNetworkMessage(new ClientChangedHandMsg(pressedHand.Name)); //swap hand
+                return;
+            }
+
+            if (handPressed == ActiveHand && activeItem != null)
+            {
+                SendNetworkMessage(new UseInHandMsg()); //use item in hand
+                return;
+            }
+
+            if (handPressed != ActiveHand && activeItem == null && pressedItem != null)
+            {
+                SendNetworkMessage(new ClientAttackByInHandMsg(pressedHand.Name)); //use active item on held item
+                return;
+            }
+        }
+
+        private void OnActivateInHand(int handActivated)
+        {
+            if (!TryGetHand(handActivated, out var activatedHand))
+                return;
+
+            SendNetworkMessage(new ActivateInHandMsg(activatedHand.Name));
+        }
+
+        private bool TryGetHand(int handIndex, [NotNullWhen(true)] out ClientHand? hand)
+        {
+            hand = Hands.ElementAtOrDefault(handIndex);
+            return hand != null;
         }
 
         public override void OnRemove()
@@ -65,8 +111,7 @@ namespace Content.Client.GameObjects.Components.Items
             if (curState is not HandsComponentState state)
                 return;
 
-            foreach (var hand in _hands)
-                RemoveHandLayer(hand);
+            RemoveHandLayers();
             _hands.Clear();
 
             ActiveHand = state.ActiveIndex;
@@ -100,12 +145,6 @@ namespace Content.Client.GameObjects.Components.Items
                     break;
                 case PlayerDetachedMsg:
                     HandlePlayerDetachedMsg();
-                    break;
-                case HandEnabledMsg msg:
-                    HandleHandEnabledMsg(msg);
-                    break;
-                case HandDisabledMsg msg:
-                    HandleHandDisabledMsg(msg);
                     break;
             }
         }
@@ -155,23 +194,19 @@ namespace Content.Client.GameObjects.Components.Items
             Gui.Visible = false;
         }
 
-        private void HandleHandEnabledMsg(HandEnabledMsg msg)
-        {
-        }
-
-        private void HandleHandDisabledMsg(HandDisabledMsg msg)
-        {
-        }
-
-        private void RemoveHandLayer(ClientHand hand)
+        private void RemoveHandLayers()
         {
             if (_sprite == null)
                 return;
 
-            var layerKey = GetHandLayerKey(hand.Name);
-            var layer = _sprite.LayerMapGet(layerKey);
-            _sprite.RemoveLayer(layer);
-            _sprite.LayerMapRemove(layerKey);
+            foreach (var hand in Hands)
+            {
+                var layerKey = GetHandLayerKey(hand.Name);
+                var layer = _sprite.LayerMapGet(layerKey);
+                _sprite.RemoveLayer(layer);
+                _sprite.LayerMapRemove(layerKey);
+            }
+
         }
 
         private void MakeHandLayers()

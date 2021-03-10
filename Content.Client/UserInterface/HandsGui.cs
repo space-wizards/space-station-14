@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Client.GameObjects.Components.Items;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
@@ -36,9 +35,12 @@ namespace Content.Client.UserInterface
 
 
         [ViewVariables]
-        private List<GuiHand> Hands { get; set; } = new();
+        public IReadOnlyList<GuiHand> Hands => _hands;
+        private List<GuiHand> _hands = new();
 
         private int ActiveHand { get; set; }
+
+        public Action<HandPressedEventArgs>? HandPressed;
 
         public HandsGui()
         {
@@ -75,7 +77,7 @@ namespace Content.Client.UserInterface
         public void SetState(HandsGuiState state)
         {
             ActiveHand = state.ActiveHand;
-            Hands = state.GuiHands;
+            _hands = state.GuiHands;
             UpdateGui();
         }
 
@@ -83,7 +85,7 @@ namespace Content.Client.UserInterface
         {
             HandsContainer.DisposeAllChildren();
 
-            foreach (var hand in Hands)
+            foreach (var hand in _hands)
             {
                 var location = hand.HandLocation;
                 var heldItem = hand.HeldItem;
@@ -92,6 +94,7 @@ namespace Content.Client.UserInterface
                 HandsContainer.AddChild(newButton);
                 hand.HandButton = newButton;
 
+                newButton.OnPressed += _ => HandPressed?.Invoke(new HandPressedEventArgs(_hands.IndexOf(hand)));
                 newButton.Blocked.Visible = !hand.Enabled;
                 GetStatusPanel(location).Update(heldItem);
                 _itemSlotManager.SetItemSlot(newButton, heldItem);
@@ -104,7 +107,7 @@ namespace Content.Client.UserInterface
 
         private bool TryGetHandButton(int handNumber, [NotNullWhen(true)] out HandButton? handButton)
         {
-            handButton = Hands.ElementAtOrDefault(handNumber)?.HandButton;
+            handButton = _hands.ElementAtOrDefault(handNumber)?.HandButton;
             return handButton != null;
         }
 
@@ -112,7 +115,7 @@ namespace Content.Client.UserInterface
         {
             base.FrameUpdate(args);
 
-            foreach (var hand in Hands)
+            foreach (var hand in _hands)
                 _itemSlotManager.UpdateCooldown(hand.HandButton, hand.HeldItem);
         }
 
@@ -166,6 +169,16 @@ namespace Content.Client.UserInterface
         }
     }
 
+    public class HandPressedEventArgs
+    {
+        public int HandPressed { get; }
+
+        public HandPressedEventArgs(int handPressed)
+        {
+            HandPressed = handPressed;
+        }
+    }
+
     /// <summary>
     ///     Info on an individual hand to be displayed.
     /// </summary>
@@ -189,6 +202,9 @@ namespace Content.Client.UserInterface
         [ViewVariables]
         public IEntity? HeldItem { get; }
 
+        /// <summary>
+        ///     The button in the gui associayted with this hand.
+        /// </summary>
         [ViewVariables]
         public HandButton HandButton { get; set; } = default!;
 
