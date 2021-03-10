@@ -50,7 +50,7 @@ namespace Content.Client.GameObjects.Components
         /// </summary>
         public void Enable()
         {
-            if (Gui != null && !Gui.Disposed)
+            if (Gui?.Disposed == false)
                 return;
 
             Gui = new DoAfterGui {AttachedEntity = Owner, FirstDraw = true};
@@ -69,6 +69,7 @@ namespace Content.Client.GameObjects.Components
         public void Disable()
         {
             Gui?.Dispose();
+            Gui = null;
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -127,8 +128,7 @@ namespace Content.Client.GameObjects.Components
         /// <param name="clientDoAfter"></param>
         public void Remove(ClientDoAfter clientDoAfter)
         {
-            if (_doAfters.ContainsKey(clientDoAfter.ID))
-                _doAfters.Remove(clientDoAfter.ID);
+            _doAfters.Remove(clientDoAfter.ID);
 
             var found = false;
 

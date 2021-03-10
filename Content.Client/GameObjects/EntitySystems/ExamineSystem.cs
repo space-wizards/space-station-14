@@ -71,7 +71,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var popupPos = _userInterfaceManager.MousePositionScaled;
 
             // Actually open the tooltip.
-            _examineTooltipOpen = new Popup();
+            _examineTooltipOpen = new Popup { MaxWidth = 400};
             _userInterfaceManager.ModalRoot.AddChild(_examineTooltipOpen);
             var panel = new PanelContainer();
             panel.AddStyleClass(StyleClassEntityTooltip);

@@ -3,7 +3,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Sound
@@ -18,17 +18,9 @@ namespace Content.Server.GameObjects.Components.Sound
         ///
         public override string Name => "EmitSoundOnUse";
 
-        [ViewVariables(VVAccess.ReadWrite)] public string _soundName;
-        [ViewVariables(VVAccess.ReadWrite)] public float _pitchVariation;
-        [ViewVariables(VVAccess.ReadWrite)] public int _semitoneVariation;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _soundName, "sound", string.Empty);
-            serializer.DataField(ref _pitchVariation, "variation", 0.0f);
-            serializer.DataField(ref _semitoneVariation, "semitoneVariation", 0);
-        }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("sound")] public string _soundName;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("variation")] public float _pitchVariation;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("semitoneVariation")] public int _semitoneVariation;
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {

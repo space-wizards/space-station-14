@@ -16,7 +16,7 @@ namespace Content.Client.Voting
         {
             IoCManager.InjectDependencies(this);
 
-            Text = Loc.GetString("Call vote");
+            Text = Loc.GetString("ui-vote-menu-button");
             OnPressed += OnOnPressed;
         }
 

@@ -2,7 +2,9 @@
 using System;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
@@ -11,23 +13,26 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
+using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Pulling
 {
-    public abstract class SharedPullableComponent : Component, ICollideSpecial
+    public abstract class SharedPullableComponent : Component, ICollideSpecial, IRelayMoveInput
     {
         public override string Name => "Pullable";
         public override uint? NetID => ContentNetIDs.PULLABLE;
 
-        [ComponentDependency] private readonly IPhysicsComponent? _physics = default!;
+        [ComponentDependency] private readonly PhysicsComponent? _physics = default!;
 
         /// <summary>
         /// Only set in Puller->set! Only set in unison with _pullerPhysics!
         /// </summary>
         private IEntity? _puller;
-        private IPhysicsComponent? _pullerPhysics;
-        public IPhysicsComponent? PullerPhysics => _pullerPhysics;
+        private IPhysBody? _pullerPhysics;
+        public IPhysBody? PullerPhysics => _pullerPhysics;
+
+        private DistanceJoint? _pullJoint;
 
         /// <summary>
         /// The current entity pulling this component.
@@ -53,7 +58,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     Dirty();
                     _pullerPhysics = null;
 
-                    if (_physics != null)
+                    if (_physics != null && oldPullerPhysics != null)
                     {
                         var message = new PullStoppedMessage(oldPullerPhysics, _physics);
 
@@ -62,7 +67,6 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                         oldPuller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
                         _physics.WakeBody();
-                        _physics.TryRemoveController<PullController>();
                     }
                     // else-branch warning is handled below
                 }
@@ -70,7 +74,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 // Now that is settled, prepare to be pulled by a new object.
                 if (_physics == null)
                 {
-                    Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? SharedPullableComponent on {0} didn't have an IPhysicsComponent.", Owner);
+                    Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? SharedPullableComponent on {0} didn't have an IPhysBody.", Owner);
                     return;
                 }
 
@@ -83,7 +87,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                         return;
                     }
 
-                    if (!value.TryGetComponent<IPhysicsComponent>(out var valuePhysics))
+                    if (!value.TryGetComponent<PhysicsComponent>(out var pullerPhysics))
                     {
                         return;
                     }
@@ -102,7 +106,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     {
                         if (oldPulling.TryGetComponent(out SharedPullableComponent? pullable))
                         {
-                            pullable.Puller = null;
+                            pullable.TryStopPull();
                         }
                         else
                         {
@@ -113,7 +117,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                     // Continue with pulling process.
 
-                    var pullAttempt = new PullAttemptMessage(valuePhysics, _physics);
+                    var pullAttempt = new PullAttemptMessage(pullerPhysics, _physics);
 
                     value.SendMessage(null, pullAttempt);
 
@@ -133,9 +137,8 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                     _puller = value;
                     Dirty();
-                    _pullerPhysics = valuePhysics;
+                    _pullerPhysics = pullerPhysics;
 
-                    _physics.EnsureController<PullController>().Manager = this;
                     var message = new PullStartedMessage(_pullerPhysics, _physics);
 
                     _puller.SendMessage(null, message);
@@ -143,7 +146,15 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                     _puller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
+                    var union = _pullerPhysics.GetWorldAABB().Union(_physics.GetWorldAABB());
+                    var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
+
                     _physics.WakeBody();
+                    _pullJoint = pullerPhysics.CreateDistanceJoint(_physics);
+                    // _physics.BodyType = BodyType.Kinematic; // TODO: Need to consider their original bodytype
+                    _pullJoint.CollideConnected = true;
+                    _pullJoint.Length = length * 0.75f;
+                    _pullJoint.MaxLength = length;
                 }
                 // Code here will not run if pulling a new object was attempted and failed because of the returns from the refactor.
             }
@@ -212,6 +223,12 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return false;
             }
 
+            if (_physics != null && _pullJoint != null)
+            {
+                _physics.RemoveJoint(_pullJoint);
+            }
+
+            _pullJoint = null;
             Puller = null;
             return true;
         }
@@ -246,12 +263,16 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return false;
             }
 
+            /*
             if (!_physics.TryGetController(out PullController controller))
             {
                 return false;
             }
+            */
 
-            return controller.TryMoveTo(Puller.Transform.Coordinates, to);
+            return true;
+
+            //return controller.TryMoveTo(Puller.Transform.Coordinates, to);
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
@@ -312,15 +333,6 @@ namespace Content.Shared.GameObjects.Components.Pulling
             }
         }
 
-        private void OnClickAlert(ClickAlertEventArgs args)
-        {
-            EntitySystem
-                .Get<SharedPullingSystem>()
-                .GetPulled(args.Player)?
-                .GetComponentOrNull<SharedPullableComponent>()?
-                .TryStopPull();
-        }
-
         public override void OnRemove()
         {
             TryStopPull();
@@ -336,6 +348,14 @@ namespace Content.Shared.GameObjects.Components.Pulling
             }
 
             return (_physics.CollisionLayer & collidedWith.CollisionMask) == (int) CollisionGroup.MobImpassable;
+        }
+
+        // TODO: Need a component bus relay so all entities can use this and not just players
+        void IRelayMoveInput.MoveInputPressed(ICommonSession session)
+        {
+            var entity = session.AttachedEntity;
+            if (entity == null || !ActionBlockerSystem.CanMove(entity)) return;
+            TryStopPull();
         }
     }
 

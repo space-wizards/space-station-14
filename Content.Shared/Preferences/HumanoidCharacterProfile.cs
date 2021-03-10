@@ -6,9 +6,9 @@ using Content.Shared.GameTicking;
 using Content.Shared.Prototypes;
 using Content.Shared.Roles;
 using Content.Shared.Utility;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Localization.Macros;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -19,7 +19,7 @@ namespace Content.Shared.Preferences
     /// Character profile. Looks immutable, but uses non-immutable semantics internally for serialization/code sanity purposes.
     /// </summary>
     [Serializable, NetSerializable]
-    public class HumanoidCharacterProfile : ICharacterProfile, IGenderable
+    public class HumanoidCharacterProfile : ICharacterProfile
     {
         private readonly Dictionary<string, JobPriority> _jobPriorities;
         private readonly List<string> _antagPreferences;
@@ -201,92 +201,13 @@ namespace Content.Shared.Preferences
             return new(this, _jobPriorities, list);
         }
 
-        /// <summary>
-        ///     Makes this profile valid so there's no bad data like negative ages.
-        /// </summary>
-        public static HumanoidCharacterProfile EnsureValid(
-            HumanoidCharacterProfile profile,
-            IPrototypeManager prototypeManager)
-        {
-            var age = Math.Clamp(profile.Age, MinimumAge, MaximumAge);
-            var sex = profile.Sex switch
-            {
-                Sex.Male => Sex.Male,
-                Sex.Female => Sex.Female,
-                _ => Sex.Male // Invalid enum values.
-            };
-            var gender = profile.Gender switch
-            {
-                Gender.Epicene => Gender.Epicene,
-                Gender.Female => Gender.Female,
-                Gender.Male => Gender.Male,
-                Gender.Neuter => Gender.Neuter,
-                _ => Gender.Epicene // Invalid enum values.
-            };
-
-            string name;
-            if (string.IsNullOrEmpty(profile.Name))
-            {
-                name = "Urist McHands";
-            }
-            else if (profile.Name.Length > MaxNameLength)
-            {
-                name = profile.Name[..MaxNameLength];
-            }
-            else
-            {
-                name = profile.Name;
-            }
-
-            // TODO: Avoid Z̨͇̙͉͎̭͔̼̿͋A͚̖̞̗̞͈̓̾̀ͩͩ̔L̟ͮ̈͝G̙O͍͎̗̺̺ͫ̀̽͊̓͝ͅ tier shenanigans.
-            // And other stuff like RTL overrides and such.
-            // Probably also emojis...
-
-            name = name.Trim();
-
-            var appearance = HumanoidCharacterAppearance.EnsureValid(profile.Appearance);
-
-            var prefsUnavailableMode = profile.PreferenceUnavailable switch
-            {
-                PreferenceUnavailableMode.StayInLobby => PreferenceUnavailableMode.StayInLobby,
-                PreferenceUnavailableMode.SpawnAsOverflow => PreferenceUnavailableMode.SpawnAsOverflow,
-                _ => PreferenceUnavailableMode.StayInLobby // Invalid enum values.
-            };
-
-            var clothing = profile.Clothing switch
-            {
-                ClothingPreference.Jumpsuit => ClothingPreference.Jumpsuit,
-                ClothingPreference.Jumpskirt => ClothingPreference.Jumpskirt,
-                _ => ClothingPreference.Jumpsuit // Invalid enum values.
-            };
-
-            var backpack = profile.Backpack switch
-            {
-                BackpackPreference.Backpack => BackpackPreference.Backpack,
-                BackpackPreference.Satchel => BackpackPreference.Satchel,
-                BackpackPreference.Duffelbag => BackpackPreference.Duffelbag,
-                _ => BackpackPreference.Backpack // Invalid enum values.
-            };
-
-            var priorities = new Dictionary<string, JobPriority>(profile.JobPriorities
-                .Where(p => prototypeManager.HasIndex<JobPrototype>(p.Key) && p.Value switch
-                {
-                    JobPriority.Never => false, // Drop never since that's assumed default.
-                    JobPriority.Low => true,
-                    JobPriority.Medium => true,
-                    JobPriority.High => true,
-                    _ => false
-                }));
-
-            var antags = profile.AntagPreferences
-                .Where(prototypeManager.HasIndex<AntagPrototype>)
-                .ToList();
-
-            return new HumanoidCharacterProfile(name, age, sex, gender, appearance, clothing, backpack, priorities, prefsUnavailableMode, antags);
-        }
-
         public string Summary =>
-             Loc.GetString(" This is {0}. {2:They} {2:are} {1} years old.", Name, Age, this);
+            Loc.GetString(
+                "humanoid-character-profile-summary",
+                ("name", Name),
+                ("gender", Gender.ToString().ToLowerInvariant()),
+                ("age", Age)
+            );
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
@@ -301,6 +222,107 @@ namespace Content.Shared.Preferences
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
             return Appearance.MemberwiseEquals(other.Appearance);
+        }
+
+        public void EnsureValid()
+        {
+            var age = Math.Clamp(Age, MinimumAge, MaximumAge);
+
+            var sex = Sex switch
+            {
+                Sex.Male => Sex.Male,
+                Sex.Female => Sex.Female,
+                _ => Sex.Male // Invalid enum values.
+            };
+
+            var gender = Gender switch
+            {
+                Gender.Epicene => Gender.Epicene,
+                Gender.Female => Gender.Female,
+                Gender.Male => Gender.Male,
+                Gender.Neuter => Gender.Neuter,
+                _ => Gender.Epicene // Invalid enum values.
+            };
+
+            string name;
+            if (string.IsNullOrEmpty(Name))
+            {
+                name = "Urist McHands";
+            }
+            else if (Name.Length > MaxNameLength)
+            {
+                name = Name[..MaxNameLength];
+            }
+            else
+            {
+                name = Name;
+            }
+
+            // TODO: Avoid Z̨͇̙͉͎̭͔̼̿͋A͚̖̞̗̞͈̓̾̀ͩͩ̔L̟ͮ̈͝G̙O͍͎̗̺̺ͫ̀̽͊̓͝ͅ tier shenanigans.
+            // And other stuff like RTL overrides and such.
+            // Probably also emojis...
+
+            name = name.Trim();
+
+            var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance);
+
+            var prefsUnavailableMode = PreferenceUnavailable switch
+            {
+                PreferenceUnavailableMode.StayInLobby => PreferenceUnavailableMode.StayInLobby,
+                PreferenceUnavailableMode.SpawnAsOverflow => PreferenceUnavailableMode.SpawnAsOverflow,
+                _ => PreferenceUnavailableMode.StayInLobby // Invalid enum values.
+            };
+
+            var clothing = Clothing switch
+            {
+                ClothingPreference.Jumpsuit => ClothingPreference.Jumpsuit,
+                ClothingPreference.Jumpskirt => ClothingPreference.Jumpskirt,
+                _ => ClothingPreference.Jumpsuit // Invalid enum values.
+            };
+
+            var backpack = Backpack switch
+            {
+                BackpackPreference.Backpack => BackpackPreference.Backpack,
+                BackpackPreference.Satchel => BackpackPreference.Satchel,
+                BackpackPreference.Duffelbag => BackpackPreference.Duffelbag,
+                _ => BackpackPreference.Backpack // Invalid enum values.
+            };
+
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            var priorities = new Dictionary<string, JobPriority>(JobPriorities
+                .Where(p => prototypeManager.HasIndex<JobPrototype>(p.Key) && p.Value switch
+                {
+                    JobPriority.Never => false, // Drop never since that's assumed default.
+                    JobPriority.Low => true,
+                    JobPriority.Medium => true,
+                    JobPriority.High => true,
+                    _ => false
+                }));
+
+            var antags = AntagPreferences
+                .Where(prototypeManager.HasIndex<AntagPrototype>)
+                .ToList();
+
+            Name = name;
+            Age = age;
+            Sex = sex;
+            Gender = gender;
+            Appearance = appearance;
+            Clothing = clothing;
+            Backpack = backpack;
+
+            _jobPriorities.Clear();
+
+            foreach (var (job, priority) in priorities)
+            {
+                _jobPriorities.Add(job, priority);
+            }
+
+            PreferenceUnavailable = prefsUnavailableMode;
+
+            _antagPreferences.Clear();
+            _antagPreferences.AddRange(antags);
         }
 
         public override bool Equals(object? obj)
@@ -323,7 +345,7 @@ namespace Content.Shared.Preferences
                 PreferenceUnavailable,
                 _jobPriorities,
                 _antagPreferences
-                );
+            );
         }
     }
 }

@@ -154,6 +154,20 @@ namespace Content.Client.Chat
             Contents.AddMessage(formatted);
         }
 
+        public void AddLine(FormattedMessage message, Color color)
+        {
+            if (Disposed)
+            {
+                return;
+            }
+
+            var formatted = new FormattedMessage(3);
+            formatted.PushColor(color);
+            formatted.AddMessage(message);
+            formatted.Pop();
+            Contents.AddMessage(formatted);
+        }
+
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
         {
             // We set it there to true so it's set to false by TextSubmitted.Invoke if necessary

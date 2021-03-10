@@ -1,23 +1,26 @@
 <SS14Window xmlns="https://spacestation14.io">
     <HBoxContainer HorizontalExpand="True">
-        <VBoxContainer HorizontalExpand="True" SizeFlagsStretchRatio="0.45">
-            <HBoxContainer HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="0.1">
-                <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True" SizeFlagsStretchRatio="0.6"/>
-                <OptionButton Name="Category" HorizontalExpand="True" SizeFlagsStretchRatio="0.4"/>
+        <VBoxContainer HorizontalExpand="True" SizeFlagsStretchRatio="0.4">
+            <HBoxContainer HorizontalExpand="True">
+                <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True"/>
+                <OptionButton Name="Category" MinSize="130 0"/>
             </HBoxContainer>
-            <ItemList Name="RecipesList" SelectMode="Single" VerticalExpand="True" SizeFlagsStretchRatio="0.9"/>
+            <ItemList Name="RecipesList" SelectMode="Single" VerticalExpand="True"/>
         </VBoxContainer>
-        <Control HorizontalExpand="True" SizeFlagsStretchRatio="0.05"/>
-        <VBoxContainer HorizontalExpand="True" SizeFlagsStretchRatio="0.45">
-            <HBoxContainer Align="Center" VerticalExpand="True" SizeFlagsStretchRatio="0.25">
-                <TextureRect Name="TargetTexture" HorizontalExpand="True" SizeFlagsStretchRatio="0.15" Stretch="KeepCentered"/>
-                <VBoxContainer HorizontalExpand="True" SizeFlagsStretchRatio="0.85">
-                    <RichTextLabel Name="TargetName" VerticalExpand="True" SizeFlagsStretchRatio="0.1"/>
-                    <RichTextLabel Name="TargetDesc" VerticalExpand="True" SizeFlagsStretchRatio="0.9"/>
-                </VBoxContainer>
-            </HBoxContainer>
-            <ItemList Name="StepList" VerticalExpand="True" SizeFlagsStretchRatio="0.1"/>
-            <VBoxContainer VerticalExpand="True" SizeFlagsStretchRatio="0.1">
+        <Control MinSize="10 0"/>
+        <VBoxContainer HorizontalExpand="True" SizeFlagsStretchRatio="0.6">
+            <Control>
+                <HBoxContainer Align="Center">
+                    <TextureRect Name="TargetTexture" HorizontalAlignment="Right" Stretch="Keep"/>
+                    <Control MinSize="10 0"/>
+                    <VBoxContainer>
+                        <RichTextLabel Name="TargetName"/>
+                        <RichTextLabel Name="TargetDesc"/>
+                    </VBoxContainer>
+                </HBoxContainer>
+            </Control>
+            <ItemList Name="StepList" VerticalExpand="True"/>
+            <VBoxContainer>
                 <Button Name="BuildButton" Disabled="True" ToggleMode="True" VerticalExpand="True" SizeFlagsStretchRatio="0.5"/>
                 <HBoxContainer VerticalExpand="True" SizeFlagsStretchRatio="0.5">
                     <Button Name="EraseButton" ToggleMode="True" HorizontalExpand="True" SizeFlagsStretchRatio="0.7"/>

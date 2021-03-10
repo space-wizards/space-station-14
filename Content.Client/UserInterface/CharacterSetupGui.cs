@@ -136,7 +136,7 @@ namespace Content.Client.UserInterface
                 MinSize = (2, 0)
             });
             _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager, entityManager);
-            _humanoidProfileEditor.OnProfileChanged += _ => { UpdateUI(); };
+            _humanoidProfileEditor.OnProfileChanged += ProfileChanged;
             hBox.AddChild(_humanoidProfileEditor);
 
             UpdateUI();
@@ -155,15 +155,19 @@ namespace Content.Client.UserInterface
 
         public void Save() => _humanoidProfileEditor.Save();
 
+        private void ProfileChanged(ICharacterProfile profile, int profileSlot)
+        {
+            _humanoidProfileEditor.UpdateControls();
+            UpdateUI();
+        }
+
         private void UpdateUI()
         {
             var numberOfFullSlots = 0;
             var characterButtonsGroup = new ButtonGroup();
             _charactersVBox.RemoveAllChildren();
 
-            if (!_preferencesManager.ServerDataLoaded ||
-                _preferencesManager.Settings == null ||
-                _preferencesManager.Preferences == null)
+            if (!_preferencesManager.ServerDataLoaded)
             {
                 return;
             }
@@ -204,7 +208,7 @@ namespace Content.Client.UserInterface
 
         private class CharacterPickerButton : ContainerButton
         {
-            private IEntity? _previewDummy;
+            private IEntity _previewDummy;
 
             public CharacterPickerButton(
                 IEntityManager entityManager,
@@ -224,7 +228,7 @@ namespace Content.Client.UserInterface
                     LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy, humanoid);
                 }
 
-                var isSelectedCharacter = profile == preferencesManager.Preferences?.SelectedCharacter;
+                var isSelectedCharacter = profile == preferencesManager.Preferences.SelectedCharacter;
 
                 if (isSelectedCharacter)
                     Pressed = true;
@@ -256,9 +260,9 @@ namespace Content.Client.UserInterface
                     Text = "Delete",
                     Visible = !isSelectedCharacter,
                 };
-                deleteButton.OnPressed += _ =>
+                deleteButton.OnPressed += args =>
                 {
-                    Parent?.RemoveChild(this);
+                    Parent.RemoveChild(this);
                     preferencesManager.DeleteCharacter(profile);
                 };
 
@@ -280,11 +284,10 @@ namespace Content.Client.UserInterface
             protected override void Dispose(bool disposing)
             {
                 base.Dispose(disposing);
-
                 if (!disposing)
                     return;
 
-                _previewDummy?.Delete();
+                _previewDummy.Delete();
                 _previewDummy = null;
             }
         }

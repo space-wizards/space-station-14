@@ -13,6 +13,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 #nullable enable
@@ -22,18 +23,15 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     public sealed class HyposprayComponent : SharedHyposprayComponent, IAttack, ISolutionChange, IAfterInteract
     {
-        [ViewVariables(VVAccess.ReadWrite)] public float ClumsyFailChance { get; set; }
-        [ViewVariables(VVAccess.ReadWrite)] public ReagentUnit TransferAmount { get; set; }
+        [DataField("ClumsyFailChance")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ClumsyFailChance { get; set; } = 0.5f;
+
+        [DataField("TransferAmount")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
 
         [ComponentDependency] private readonly SolutionContainerComponent? _solution = default!;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.ClumsyFailChance, "ClumsyFailChance", 0.5f);
-            serializer.DataField(this, x => x.TransferAmount, "TransferAmount", ReagentUnit.New(5));
-        }
 
         public override void Initialize()
         {
@@ -86,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 target.PopupMessage(Loc.GetString("You feel a tiny prick!"));
                 var meleeSys = EntitySystem.Get<MeleeWeaponSystem>();
-                var angle = new Angle(target.Transform.WorldPosition - user.Transform.WorldPosition);
+                var angle = Angle.FromWorldVec(target.Transform.WorldPosition - user.Transform.WorldPosition);
                 meleeSys.SendLunge(angle, user);
             }
 

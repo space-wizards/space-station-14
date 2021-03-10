@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.Eui;
 using Robust.Shared.Network;
@@ -11,15 +12,15 @@ namespace Content.Shared.Administration
     {
         public bool IsLoading;
 
-        public AdminData[] Admins;
-        public Dictionary<int, AdminRankData> AdminRanks;
+        public AdminData[] Admins = Array.Empty<AdminData>();
+        public Dictionary<int, AdminRankData> AdminRanks = new();
 
         [Serializable, NetSerializable]
         public struct AdminData
         {
             public NetUserId UserId;
-            public string UserName;
-            public string Title;
+            public string? UserName;
+            public string? Title;
             public AdminFlags PosFlags;
             public AdminFlags NegFlags;
             public int? RankId;
@@ -43,8 +44,8 @@ namespace Content.Shared.Administration
         [Serializable, NetSerializable]
         public sealed class AddAdmin : EuiMessageBase
         {
-            public string UserNameOrId;
-            public string Title;
+            public string UserNameOrId = string.Empty;
+            public string? Title;
             public AdminFlags PosFlags;
             public AdminFlags NegFlags;
             public int? RankId;
@@ -60,7 +61,7 @@ namespace Content.Shared.Administration
         public sealed class UpdateAdmin : EuiMessageBase
         {
             public NetUserId UserId;
-            public string Title;
+            public string? Title;
             public AdminFlags PosFlags;
             public AdminFlags NegFlags;
             public int? RankId;
@@ -70,7 +71,7 @@ namespace Content.Shared.Administration
         [Serializable, NetSerializable]
         public sealed class AddAdminRank : EuiMessageBase
         {
-            public string Name;
+            public string Name = string.Empty;
             public AdminFlags Flags;
         }
 
@@ -85,7 +86,7 @@ namespace Content.Shared.Administration
         {
             public int Id;
 
-            public string Name;
+            public string Name = string.Empty;
             public AdminFlags Flags;
         }
     }

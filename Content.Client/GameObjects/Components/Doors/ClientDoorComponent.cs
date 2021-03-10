@@ -86,7 +86,7 @@ namespace Content.Client.GameObjects.Components.Doors
         }
     }
 
-    public sealed class DoorStateMessage : EntitySystemMessage
+    public sealed class DoorStateMessage : EntityEventArgs
     {
         public ClientDoorComponent Component { get; }
         public SharedDoorComponent.DoorState State { get; }

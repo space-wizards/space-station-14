@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Cargo
             base.HandleComponentState(curState, nextState);
             if (curState is not GalacticMarketState state)
                 return;
-            _products.Clear();
+            _productIds.Clear();
             foreach (var productId in state.Products)
             {
                 if (!_prototypeManager.TryIndex(productId, out CargoProductPrototype product))

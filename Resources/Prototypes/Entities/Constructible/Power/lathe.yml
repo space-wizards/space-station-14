@@ -9,20 +9,18 @@
   - type: InteractionOutline
   - type: Physics
     mass: 25
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.4,0.4,0.4"
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
       mask:
       - Impassable
-      - MobImpassable
       - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
-      - Impassable
       - MobImpassable
-      - VaultImpassable
   - type: SnapGrid
     offset: Center
   - type: Lathe
@@ -44,13 +42,15 @@
   - type: Sprite
     sprite: Constructible/Power/autolathe.rsi
     layers:
-    - state: autolathe
+    - state: icon
       map: ["enum.AutolatheVisualLayers.Base"]
-    - state: autolathe_unlit
+    - state: unlit
       shader: unshaded
       map: ["enum.AutolatheVisualLayers.BaseUnlit"]
-    - state: autolathe_panel
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+    - state: icon
+      map: ["enum.AutolatheVisualLayers.AnimationLayer"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Construction
     graph: machine
     node: machine
@@ -78,7 +78,7 @@
       - Ointment
       - LightTube
       - LightBulb
-      - MetalStack
+      - SheetSteel
       - GlassStack
       - Wirecutter
       - Screwdriver
@@ -106,15 +106,15 @@
   - type: Sprite
     sprite: Constructible/Power/protolathe.rsi
     layers:
-    - state: protolathe
+    - state: icon
       map: ["enum.ProtolatheVisualLayers.Base"]
-    - state: protolathe_unlit
+    - state: unlit
       shader: unshaded
       map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
-    - state: protolathe
+    - state: icon
       map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
-    - state: protolathe_panel
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ResearchClient
   - type: Construction
     graph: machine
@@ -143,7 +143,7 @@
       - Ointment
       - LightTube
       - LightBulb
-      - MetalStack
+      - SheetSteel
       - GlassStack
       - Wirecutter
       - Screwdriver

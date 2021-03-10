@@ -1,11 +1,9 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
+using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Client.GameObjects.Components.IconSmoothing.IconSmoothComponent;
 
 namespace Content.Client.GameObjects.Components
@@ -14,68 +12,59 @@ namespace Content.Client.GameObjects.Components
     [ComponentReference(typeof(SharedWindowComponent))]
     public sealed class WindowComponent : SharedWindowComponent
     {
-        private string? _stateBase;
-        [ComponentDependency(nameof(OnSpriteAdded))] private readonly ISpriteComponent? _sprite = default!;
-        [ComponentDependency(nameof(OnSnapGridAdded))] private readonly SnapGridComponent? _snapGrid = default!;
+        [DataField("base")]
+        private string _stateBase = default;
+        private ISpriteComponent _sprite;
+        private SnapGridComponent _snapGrid;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            _sprite = Owner.GetComponent<ISpriteComponent>();
+            _snapGrid = Owner.GetComponent<SnapGridComponent>();
+        }
 
         /// <inheritdoc />
         protected override void Startup()
         {
             base.Startup();
 
+            _snapGrid.OnPositionChanged += SnapGridOnPositionChanged;
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new WindowSmoothDirtyEvent(Owner));
-        }
-
-        /// <inheritdoc />
-        protected override void Shutdown()
-        {
-            if (_snapGrid != null)
-            {
-                _snapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
-            }
-
-            base.Shutdown();
-        }
-
-        private void OnSpriteAdded()
-        {
-            DebugTools.AssertNotNull(_sprite);
 
             var state0 = $"{_stateBase}0";
             const string cracksRSIPath = "/Textures/Constructible/Structures/Windows/cracks.rsi";
-
-            _sprite!.LayerMapSet(CornerLayers.SE, _sprite.AddLayerState(state0));
+            _sprite.LayerMapSet(CornerLayers.SE, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.SE, SpriteComponent.DirectionOffset.None);
             _sprite.LayerMapSet(WindowDamageLayers.DamageSE, _sprite.AddLayerState("0_1", cracksRSIPath));
-            _sprite.LayerSetShader(WindowDamageLayers.DamageSE, "unshaded");
             _sprite.LayerSetVisible(WindowDamageLayers.DamageSE, false);
 
             _sprite.LayerMapSet(CornerLayers.NE, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.NE, SpriteComponent.DirectionOffset.CounterClockwise);
             _sprite.LayerMapSet(WindowDamageLayers.DamageNE, _sprite.AddLayerState("0_1", cracksRSIPath));
             _sprite.LayerSetDirOffset(WindowDamageLayers.DamageNE, SpriteComponent.DirectionOffset.CounterClockwise);
-            _sprite.LayerSetShader(WindowDamageLayers.DamageNE, "unshaded");
             _sprite.LayerSetVisible(WindowDamageLayers.DamageNE, false);
 
             _sprite.LayerMapSet(CornerLayers.NW, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.NW, SpriteComponent.DirectionOffset.Flip);
             _sprite.LayerMapSet(WindowDamageLayers.DamageNW, _sprite.AddLayerState("0_1", cracksRSIPath));
             _sprite.LayerSetDirOffset(WindowDamageLayers.DamageNW, SpriteComponent.DirectionOffset.Flip);
-            _sprite.LayerSetShader(WindowDamageLayers.DamageNW, "unshaded");
             _sprite.LayerSetVisible(WindowDamageLayers.DamageNW, false);
 
             _sprite.LayerMapSet(CornerLayers.SW, _sprite.AddLayerState(state0));
             _sprite.LayerSetDirOffset(CornerLayers.SW, SpriteComponent.DirectionOffset.Clockwise);
             _sprite.LayerMapSet(WindowDamageLayers.DamageSW, _sprite.AddLayerState("0_1", cracksRSIPath));
             _sprite.LayerSetDirOffset(WindowDamageLayers.DamageSW, SpriteComponent.DirectionOffset.Clockwise);
-            _sprite.LayerSetShader(WindowDamageLayers.DamageSW, "unshaded");
             _sprite.LayerSetVisible(WindowDamageLayers.DamageSW, false);
         }
 
-        private void OnSnapGridAdded()
+        /// <inheritdoc />
+        protected override void Shutdown()
         {
-            DebugTools.AssertNotNull(_snapGrid);
-            _snapGrid!.OnPositionChanged += SnapGridOnPositionChanged;
+            _snapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
+
+            base.Shutdown();
         }
 
         private void SnapGridOnPositionChanged()
@@ -85,11 +74,11 @@ namespace Content.Client.GameObjects.Components
 
         public void UpdateSprite()
         {
-            if (_sprite == null) return;
-
             var lowWall = FindLowWall();
-
-            if (lowWall == null) return;
+            if (lowWall == null)
+            {
+                return;
+            }
 
             _sprite.LayerSetState(CornerLayers.NE, $"{_stateBase}{(int) lowWall.LastCornerNE}");
             _sprite.LayerSetState(CornerLayers.SE, $"{_stateBase}{(int) lowWall.LastCornerSE}");
@@ -97,26 +86,17 @@ namespace Content.Client.GameObjects.Components
             _sprite.LayerSetState(CornerLayers.NW, $"{_stateBase}{(int) lowWall.LastCornerNW}");
         }
 
-        private LowWallComponent? FindLowWall()
+        private LowWallComponent FindLowWall()
         {
-            if (_snapGrid == null) return null;
-
             foreach (var entity in _snapGrid.GetLocal())
             {
-                if (entity.TryGetComponent(out LowWallComponent? lowWall))
+                if (entity.TryGetComponent(out LowWallComponent lowWall))
                 {
                     return lowWall;
                 }
             }
 
             return null;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _stateBase, "base", null);
         }
     }
 

@@ -1,16 +1,16 @@
 ﻿#nullable enable
 using System;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.Interfaces.Chemistry;
 using Content.Server.Utility;
 using Content.Shared.Audio;
+using Content.Shared.Interfaces.Chemistry;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
@@ -18,6 +18,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// Basically smoke and foam reactions.
     /// </summary>
     [UsedImplicitly]
+    [ImplicitDataDefinitionForInheritors]
     public abstract class AreaReactionEffect : IReactionEffect
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -25,80 +26,63 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// <summary>
         /// Used for calculating the spread range of the effect based on the intensity of the reaction.
         /// </summary>
-        private float _rangeConstant;
-        private float _rangeMultiplier;
-        private int _maxRange;
+        [DataField("rangeConstant")] private float _rangeConstant;
+        [DataField("rangeMultiplier")] private float _rangeMultiplier = 1.1f;
+        [DataField("maxRange")] private int _maxRange = 10;
 
         /// <summary>
         /// If true the reagents get diluted or concentrated depending on the range of the effect
         /// </summary>
-        private bool _diluteReagents;
+        [DataField("diluteReagents")] private bool _diluteReagents;
 
         /// <summary>
         /// At what range should the reagents volume stay the same. If the effect range is higher than this then the reagents
         /// will get diluted. If the effect range is lower than this then the reagents will get concentrated.
         /// </summary>
-        private int _reagentDilutionStart;
+        [DataField("reagentDilutionStart")] private int _reagentDilutionStart = 4;
 
         /// <summary>
         /// Used to calculate dilution. Increasing this makes the reagents get more diluted. This means that a lower range
         /// will be needed to make the reagents volume get closer to zero.
         /// </summary>
-        private float _reagentDilutionFactor;
+        [DataField("reagentDilutionFactor")] private float _reagentDilutionFactor = 1;
 
         /// <summary>
         /// Used to calculate concentration. Reagents get linearly more concentrated as the range goes from
         /// _reagentDilutionStart to zero. When the range is zero the reagents volume gets multiplied by this.
         /// </summary>
-        private float _reagentMaxConcentrationFactor;
+        [DataField("reagentMaxConcentrationFactor")]
+        private float _reagentMaxConcentrationFactor = 2;
 
         /// <summary>
         /// How many seconds will the effect stay, counting after fully spreading.
         /// </summary>
-        private float _duration;
+        [DataField("duration")] private float _duration = 10;
 
         /// <summary>
         /// How many seconds between each spread step.
         /// </summary>
-        private float _spreadDelay;
+        [DataField("spreadDelay")] private float _spreadDelay = 0.5f;
 
         /// <summary>
         /// How many seconds between each remove step.
         /// </summary>
-        private float _removeDelay;
+        [DataField("removeDelay")] private float _removeDelay = 0.5f;
 
         /// <summary>
         /// The entity prototype that will be spawned as the effect. It needs a component derived from SolutionAreaEffectComponent.
         /// </summary>
-        private string? _prototypeId;
+        [DataField("prototypeId", required: true)]
+        private string _prototypeId = default!;
 
         /// <summary>
         /// Sound that will get played when this reaction effect occurs.
         /// </summary>
-        private string? _sound;
+        [DataField("sound")] private string? _sound;
 
         protected AreaReactionEffect()
         {
             IoCManager.InjectDependencies(this);
-        }
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _rangeConstant, "rangeConstant",0f);
-            serializer.DataField(ref _rangeMultiplier, "rangeMultiplier",1.1f);
-            serializer.DataField(ref _maxRange, "maxRange", 10);
-            serializer.DataField(ref _diluteReagents, "diluteReagents", false);
-            serializer.DataField(ref _reagentDilutionStart, "reagentDilutionStart", 4);
-            serializer.DataField(ref _reagentDilutionFactor, "reagentDilutionFactor", 1f);
-            serializer.DataField(ref _reagentMaxConcentrationFactor, "reagentMaxConcentrationFactor",2f);
-            serializer.DataField(ref _duration, "duration", 10f);
-            serializer.DataField(ref _spreadDelay, "spreadDelay", 0.5f);
-            serializer.DataField(ref _removeDelay, "removeDelay", 0.5f);
-            serializer.DataField(ref _sound, "sound", null);
-            serializer.DataField(ref _prototypeId, "prototypeId", null);
-
-            if (_prototypeId == null)
-                Logger.Error("prototypeId wasn't provided to AreaReactionEffect, check yaml");
         }
 
         public void React(IEntity solutionEntity, double intensity)

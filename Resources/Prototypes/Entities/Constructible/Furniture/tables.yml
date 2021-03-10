@@ -17,10 +17,13 @@
     key: state
     base: state_
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       layer:
       - VaultImpassable
+      mask:
+      - Impassable
   - type: SnapGrid
     offset: Center
   - type: Climbable
@@ -47,7 +50,7 @@
         sound: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
-          SteelSheet1:
+          SheetSteel1:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -75,7 +78,7 @@
         sound: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
-          SteelSheet1:
+          SheetSteel1:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -106,7 +109,7 @@
         sound: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
-          SteelSheet1:
+          SheetSteel1:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -134,7 +137,7 @@
         sound: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
-          SteelSheet1:
+          SheetSteel1:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -165,7 +168,7 @@
         sound: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
-          SteelSheet1:
+          SheetSteel1:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -258,7 +261,7 @@
         sound: /Audio/Effects/woodhit.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
-          WoodPlank:
+          MaterialWoodPlank:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -289,7 +292,7 @@
         sound: /Audio/Effects/woodhit.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
-          WoodPlank:
+          MaterialWoodPlank:
             min: 1
             max: 1
       - !type:DoActsBehavior

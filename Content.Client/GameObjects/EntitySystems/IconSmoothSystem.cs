@@ -129,7 +129,7 @@ namespace Content.Client.GameObjects.EntitySystems
     /// <summary>
     ///     Event raised by a <see cref="IconSmoothComponent"/> when it needs to be recalculated.
     /// </summary>
-    public sealed class IconSmoothDirtyEvent : EntitySystemMessage
+    public sealed class IconSmoothDirtyEvent : EntityEventArgs
     {
         public IconSmoothDirtyEvent(IEntity sender, (GridId grid, Vector2i pos)? lastPosition, SnapGridOffset offset, IconSmoothingMode mode)
         {

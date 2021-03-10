@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+#nullable enable
+using System;
+using System.Collections.Generic;
 using Content.Client.Atmos;
-using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Shared.Atmos;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
@@ -42,7 +44,7 @@ namespace Content.Client.GameObjects.EntitySystems
             _mapManager.OnGridRemoved += OnGridRemoved;
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay(nameof(AtmosDebugOverlay)))
+            if(!overlayManager.HasOverlay<AtmosDebugOverlay>())
                 overlayManager.AddOverlay(new AtmosDebugOverlay());
         }
 
@@ -61,8 +63,8 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Shutdown();
             _mapManager.OnGridRemoved -= OnGridRemoved;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay(nameof(GasTileOverlay)))
-                overlayManager.RemoveOverlay(nameof(GasTileOverlay));
+            if(!overlayManager.HasOverlay<GasTileOverlay>())
+                overlayManager.RemoveOverlay<GasTileOverlay>();
         }
 
         public void Reset()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -13,7 +14,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         ///     a structure-construction.
         /// </summary>
         [Serializable, NetSerializable]
-        public class TryStartStructureConstructionMessage : EntitySystemMessage
+        public class TryStartStructureConstructionMessage : EntityEventArgs
         {
             /// <summary>
             ///     Position to start building.
@@ -46,7 +47,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         ///     an item-construction.
         /// </summary>
         [Serializable, NetSerializable]
-        public class TryStartItemConstructionMessage : EntitySystemMessage
+        public class TryStartItemConstructionMessage : EntityEventArgs
         {
             /// <summary>
             ///     The construction prototype to start building.
@@ -63,7 +64,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         /// Send server -> client to tell the client that a ghost has started to be constructed.
         /// </summary>
         [Serializable, NetSerializable]
-        public class AckStructureConstructionMessage : EntitySystemMessage
+        public class AckStructureConstructionMessage : EntityEventArgs
         {
             public readonly int GhostId;
 

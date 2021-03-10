@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
@@ -13,7 +13,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -30,9 +32,9 @@ namespace Content.Server.GameObjects.Components.Items.RCD
         public override string Name => "RCD";
         private RcdMode _mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
         private readonly RcdMode[] _modes = (RcdMode[])  Enum.GetValues(typeof(RcdMode));
-        [ViewVariables(VVAccess.ReadWrite)] public int maxAmmo;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("maxAmmo")] public int maxAmmo = 5;
         public int _ammo; //How much "ammo" we have left. You can refill this with RCD ammo.
-        [ViewVariables(VVAccess.ReadWrite)] private float _delay;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("delay")] private float _delay = 2f;
         private DoAfterSystem doAfterSystem;
 
 
@@ -43,14 +45,6 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             Walls,
             Airlock,
             Deconstruct
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref maxAmmo, "maxAmmo", 5);
-            serializer.DataField(ref _delay, "delay", 2f);
         }
 
         public override void Initialize()
@@ -80,12 +74,26 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             int mode = (int) _mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             _mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("The RCD is now set to {0} mode.", _mode)); //Prints an overhead message above the RCD
+            Owner.PopupMessage(eventArgs.User,
+                Loc.GetString(
+                    "rcd-component-change-mode",
+                    ("mode", _mode.ToString())
+                )
+            ); //Prints an overhead message above the RCD
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("It's currently on {0} mode, and holds {1} charges.",_mode.ToString(), _ammo));
+            if (inDetailsRange)
+            {
+                message.AddMarkup(
+                    Loc.GetString(
+                        "rcd-component-examine-detail-count",
+                        ("mode", _mode),
+                        ("ammoCount", _ammo)
+                    )
+                );
+            }
         }
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs   eventArgs)

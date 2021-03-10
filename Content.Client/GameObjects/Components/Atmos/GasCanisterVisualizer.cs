@@ -1,6 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -8,20 +9,10 @@ namespace Content.Client.GameObjects.Components.Atmos
 {
     public class GasCanisterVisualizer : AppearanceVisualizer
     {
-        private string? _stateConnected;
-        private readonly string[] _statePressure = new string[] {"", "", "", ""};
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            _stateConnected = node.GetNode("stateConnected").AsString();
-
-            for (var i = 0; i < _statePressure.Length; i++)
-            {
-                _statePressure[i] = node.GetNode("stateO" + i).AsString();
-            }
-        }
+        [DataField("stateConnected")]
+        private string _stateConnected;
+        [DataField("pressureStates")]
+        private string[] _statePressure = new string[] {"", "", "", ""};
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -29,14 +20,10 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             var sprite = entity.GetComponent<ISpriteComponent>();
 
-            if (_stateConnected != null)
-            {
-                sprite.LayerMapSet(Layers.ConnectedToPort, sprite.AddLayerState(_stateConnected));
-                sprite.LayerSetVisible(Layers.ConnectedToPort, false);
+            sprite.LayerMapSet(Layers.ConnectedToPort, sprite.AddLayerState(_stateConnected));
+            sprite.LayerSetVisible(Layers.ConnectedToPort, false);
 
-                sprite.LayerMapSet(Layers.PressureLight, sprite.AddLayerState(_stateConnected));
-            }
-
+            sprite.LayerMapSet(Layers.PressureLight, sprite.AddLayerState(_stateConnected));
             sprite.LayerSetShader(Layers.PressureLight, "unshaded");
         }
 
@@ -49,7 +36,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                 return;
             }
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
+            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
             {
                 return;
             }
@@ -61,15 +48,12 @@ namespace Content.Client.GameObjects.Components.Atmos
             }
 
             // Update the visuals : Canister lights
-            if (component.TryGetData(GasCanisterVisuals.PressureState, out int pressureState) &&
-                pressureState >= 0 &&
-                pressureState < _statePressure.Length)
-            {
-                sprite.LayerSetState(Layers.PressureLight, _statePressure[pressureState]);
-            }
+            if (component.TryGetData(GasCanisterVisuals.PressureState, out int pressureState))
+                if ((pressureState >= 0) && (pressureState < _statePressure.Length))
+                    sprite.LayerSetState(Layers.PressureLight, _statePressure[pressureState]);
         }
 
-        private enum Layers
+        enum Layers
         {
             ConnectedToPort,
             PressureLight

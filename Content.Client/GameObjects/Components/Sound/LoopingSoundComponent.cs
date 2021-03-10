@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Sound;
 using Content.Shared.Physics;
-using Robust.Client.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Sound
 {
@@ -17,7 +18,13 @@ namespace Content.Client.GameObjects.Components.Sound
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private readonly Dictionary<ScheduledSound, IPlayingAudioStream> _audioStreams = new();
-        private AudioSystem _audioSystem = default!;
+
+        [DataField("schedules", true)]
+        private List<ScheduledSound> _scheduledSounds
+        {
+            set => value.ForEach(AddScheduledSound);
+            get => new();
+        }
 
         public override void StopAllSounds()
         {
@@ -50,32 +57,27 @@ namespace Content.Client.GameObjects.Components.Sound
             if (!schedule.Play) return;
 
             Owner.SpawnTimer((int) schedule.Delay + (_random.Next((int) schedule.RandomDelay)),() =>
-            {
-                if (!schedule.Play) return; // We make sure this hasn't changed.
-
-                var stream = _audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams);
-
-                if (stream != null)
                 {
+                    if (!schedule.Play) return; // We make sure this hasn't changed.
+
                     if (!_audioStreams.ContainsKey(schedule))
                     {
-                        _audioStreams.Add(schedule, stream);
+                        _audioStreams.Add(schedule,SoundSystem.Play(Filter.Local(), schedule.Filename, Owner, schedule.AudioParams));
                     }
                     else
                     {
-                        _audioStreams[schedule] = stream;
+                        _audioStreams[schedule] = SoundSystem.Play(Filter.Local(), schedule.Filename, Owner, schedule.AudioParams);
                     }
-                }
 
-                if (schedule.Times == 0) return;
+                    if (schedule.Times == 0) return;
 
-                if (schedule.Times > 0) schedule.Times--;
+                    if (schedule.Times > 0) schedule.Times--;
 
-                Play(schedule);
-            });
+                    Play(schedule);
+                });
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
             switch (message)
@@ -97,19 +99,7 @@ namespace Content.Client.GameObjects.Components.Sound
         public override void Initialize()
         {
             base.Initialize();
-
-            _audioSystem = EntitySystem.Get<AudioSystem>();
-            _audioSystem.OcclusionCollisionMask = (int) CollisionGroup.Impassable;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadFunction(
-                "schedules",
-                new List<ScheduledSound>(),
-                schedules => schedules.ForEach(AddScheduledSound));
+            SoundSystem.OcclusionCollisionMask = (int) CollisionGroup.Impassable;
         }
     }
 }

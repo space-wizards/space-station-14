@@ -77,9 +77,10 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
-  - shapes:
-    - !type:PhysShapeGrid
-      grid: 0
+  - fixtures:
+    - shape:
+        !type:PhysShapeGrid
+          grid: 0
     type: Physics
   - uniqueMixes:
     - volume: 2500
@@ -1993,8 +1994,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 238
   type: Poweredlight
@@ -2006,8 +2006,7 @@ entities:
   - powerLoad: 0
     type: PowerReceiver
   - containers:
-      light_bulb:
-        type: Content.Server.GameObjects.ContainerSlot
+      light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 239
   type: ApcExtensionCable

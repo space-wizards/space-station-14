@@ -4,19 +4,19 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization;
 
 namespace Content.Client.GameObjects.Components
 {
     [UsedImplicitly]
-    public class RadiationCollectorVisualizer : AppearanceVisualizer
+    public class RadiationCollectorVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "radiationcollector_animation";
 
         private Animation ActivateAnimation = default!;
         private Animation DeactiveAnimation = default!;
 
-        public override void LoadData(YamlMappingNode node)
+        void ISerializationHooks.AfterDeserialization()
         {
             ActivateAnimation = new Animation {Length = TimeSpan.FromSeconds(0.8f)};
             {

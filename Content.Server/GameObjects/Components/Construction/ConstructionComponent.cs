@@ -11,13 +11,15 @@ using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -33,8 +35,11 @@ namespace Content.Server.GameObjects.Components.Construction
         private bool _handling = false;
 
         private TaskCompletionSource<object>? _handlingTask = null;
+        [DataField("graph")]
         private string _graphIdentifier = string.Empty;
+        [DataField("node")]
         private string _startingNodeIdentifier = string.Empty;
+        [DataField("defaultTarget")]
         private string _startingTargetNodeIdentifier = string.Empty;
 
         [ViewVariables]
@@ -77,18 +82,8 @@ namespace Content.Server.GameObjects.Components.Construction
         public int EdgeStep { get; private set; } = 0;
 
         [ViewVariables]
+        [DataField("deconstructionTarget")]
         public string DeconstructionNodeIdentifier { get; private set; } = "start";
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _graphIdentifier, "graph", string.Empty);
-            serializer.DataField(ref _startingNodeIdentifier, "node", string.Empty);
-            serializer.DataField(ref _startingTargetNodeIdentifier, "defaultTarget", string.Empty);
-            serializer.DataField(this, x => x.DeconstructionNodeIdentifier, "deconstructionTarget", "start");
-        }
 
         /// <summary>
         ///     Attempts to set a new pathfinding target.
@@ -186,8 +181,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 {
                     case MaterialConstructionGraphStep _:
                     case ToolConstructionGraphStep _:
-                    case PrototypeConstructionGraphStep _:
-                    case ComponentConstructionGraphStep _:
+                    case ArbitraryInsertConstructionGraphStep _:
                         if (await HandleStep(eventArgs, edge, firstStep))
                         {
                             if(edge.Steps.Count > 1)
@@ -258,17 +252,8 @@ namespace Content.Server.GameObjects.Components.Construction
 
                     switch (insertStep)
                     {
-                        case PrototypeConstructionGraphStep prototypeStep:
-                            if (prototypeStep.EntityValid(eventArgs.Using)
-                                && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
-                            {
-                                valid = true;
-                            }
-
-                            break;
-
-                        case ComponentConstructionGraphStep componentStep:
-                            if (componentStep.EntityValid(eventArgs.Using)
+                        case ArbitraryInsertConstructionGraphStep arbitraryStep:
+                            if (arbitraryStep.EntityValid(eventArgs.Using)
                                 && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
                             {
                                 valid = true;
@@ -296,7 +281,7 @@ namespace Content.Server.GameObjects.Components.Construction
                     else
                     {
                         _containers.Add(insertStep.Store);
-                        var container = ContainerManagerComponent.Ensure<Container>(insertStep.Store, Owner);
+                        var container = Owner.EnsureContainer<Container>(insertStep.Store);
                         container.Insert(entityUsing);
                     }
 
@@ -435,7 +420,7 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 foreach (var container in _containers)
                 {
-                    var otherContainer = ContainerManagerComponent.Ensure<Container>(container, entity);
+                    var otherContainer = entity.EnsureContainer<Container>(container);
                     var ourContainer = containerComp.GetContainer(container);
 
                     foreach (var ent in ourContainer.ContainedEntities.ToArray())
@@ -446,10 +431,10 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
             }
 
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics) &&
-                entity.TryGetComponent(out IPhysicsComponent? otherPhysics))
+            if (Owner.TryGetComponent(out IPhysBody? physics) &&
+                entity.TryGetComponent(out IPhysBody? otherPhysics))
             {
-                otherPhysics.Anchored = physics.Anchored;
+                otherPhysics.BodyType = physics.BodyType;
             }
 
             Owner.Delete();
@@ -480,7 +465,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 return;
             }
 
-            if (_prototypeManager.TryIndex(_graphIdentifier, out ConstructionGraphPrototype graph))
+            if (_prototypeManager.TryIndex(_graphIdentifier, out ConstructionGraphPrototype? graph))
             {
                 GraphPrototype = graph;
 

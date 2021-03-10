@@ -1,16 +1,17 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.Preferences;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization.Macros;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Mobs
 {
-    public abstract class SharedHumanoidAppearanceComponent : Component, IGenderable
+    public abstract class SharedHumanoidAppearanceComponent : Component
     {
-        private HumanoidCharacterAppearance _appearance;
+        private HumanoidCharacterAppearance _appearance = default!;
         private Sex _sex;
         private Gender _gender;
 
@@ -55,7 +56,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             return new HumanoidAppearanceComponentState(Appearance, Sex, Gender);
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 

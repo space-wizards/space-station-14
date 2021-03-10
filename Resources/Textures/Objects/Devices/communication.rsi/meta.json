@@ -17,72 +17,24 @@
       ]
     },
     {
-      "name": "beacon_dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "beacon_dead"
     },
     {
-      "name": "signaller",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "signaller"
     },
     {
       "name": "signaller-inhand-right",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "signaller-inhand-left",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
-      "name": "walkietalkie",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "walkietalkie"
     },
     {
-      "name": "walkietalkie-off",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "walkietalkie-off"
     }
   ]
 }

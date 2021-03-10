@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -31,12 +32,12 @@ namespace Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels
         public FireRateSelector FireRateSelector { get; }
         public (int count, int max)? Magazine { get; }
         public string SoundGunshot { get; }
-        
+
         public MagazineBarrelComponentState(
-            bool chambered, 
-            FireRateSelector fireRateSelector, 
+            bool chambered,
+            FireRateSelector fireRateSelector,
             (int count, int max)? magazine,
-            string soundGunshot) : 
+            string soundGunshot) :
             base(ContentNetIDs.MAGAZINE_BARREL)
         {
             Chambered = chambered;

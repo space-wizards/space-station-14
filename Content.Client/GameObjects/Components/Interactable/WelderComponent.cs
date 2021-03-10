@@ -26,11 +26,7 @@ namespace Content.Client.GameObjects.Components.Interactable
         [ViewVariables] public bool Activated { get; private set; }
         [ViewVariables] public override ToolQuality Qualities => _behavior;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
 

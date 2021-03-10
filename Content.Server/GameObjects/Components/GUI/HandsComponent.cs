@@ -27,6 +27,9 @@ using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Map;
+using Robust.Shared.Network;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.GUI
 {
@@ -457,7 +460,8 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new InvalidOperationException($"Hand '{name}' already exists.");
             }
 
-            var container = ContainerManagerComponent.Create<ContainerSlot>($"hand {_nextHand++}", Owner);
+            var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, $"hand {_nextHand++}");
+            container.OccludesLight = false;
             var hand = new Hand(this, name, container);
 
             _hands.Add(hand);
@@ -717,13 +721,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 Dirty();
 
-                if (!message.Entity.TryGetComponent(out IPhysicsComponent? physics))
+                if (!message.Entity.TryGetComponent(out IPhysBody? physics))
                 {
                     return;
                 }
 
                 // set velocity to zero
-                physics.Stop();
+                physics.LinearVelocity = Vector2.Zero;
                 return;
             }
         }
@@ -835,7 +839,7 @@ namespace Content.Server.GameObjects.Components.GUI
         }
     }
 
-    public class HandCountChangedEvent : EntitySystemMessage
+    public class HandCountChangedEvent : EntityEventArgs
     {
         public HandCountChangedEvent(IEntity sender)
         {

@@ -18,23 +18,17 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Actions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class DisarmAction : ITargetEntityAction
     {
-        private float _failProb;
-        private float _pushProb;
-        private float _cooldown;
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _failProb, "failProb", 0.4f);
-            serializer.DataField(ref _pushProb, "pushProb", 0.4f);
-            serializer.DataField(ref _cooldown, "cooldown", 1.5f);
-        }
+        [DataField("failProb")] private float _failProb = 0.4f;
+        [DataField("pushProb")] private float _pushProb = 0.4f;
+        [DataField("cooldown")] private float _cooldown = 1.5f;
 
         public void DoTargetEntityAction(TargetEntityActionEventArgs args)
         {
@@ -64,7 +58,8 @@ namespace Content.Server.Actions
             var audio = EntitySystem.Get<AudioSystem>();
             var system = EntitySystem.Get<MeleeWeaponSystem>();
 
-            var angle = new Angle(args.Target.Transform.MapPosition.Position - args.Performer.Transform.MapPosition.Position);
+            var diff = args.Target.Transform.MapPosition.Position - args.Performer.Transform.MapPosition.Position;
+            var angle = Angle.FromWorldVec(diff);
 
             actions.Cooldown(ActionType.Disarm, Cooldowns.SecondsFromNow(_cooldown));
 

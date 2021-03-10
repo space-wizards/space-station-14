@@ -5,10 +5,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.45, -0.95, 0.45, 1"
-        layer: [ Passable ]
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.95, 0.45, 1"
+      layer: [ Passable ]
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/barsign.rsi

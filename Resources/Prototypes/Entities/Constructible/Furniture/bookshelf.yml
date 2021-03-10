@@ -11,8 +11,9 @@
   - type: Sprite
     sprite: Constructible/Misc/bookshelf.rsi
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       layer:
       - Opaque
       - Impassable
@@ -31,15 +32,12 @@
         sound: /Audio/Effects/woodhit.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
-          WoodPlank:
+          MaterialWoodPlank:
             min: 1
             max: 1
       - !type:DoActsBehavior
         acts: ["Destruction"]
-
   - type: Occluder
-    sizeX: 32
-    sizeY: 32
 
 - type: entity
   id: Bookshelf0

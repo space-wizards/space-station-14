@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -14,7 +15,8 @@ namespace Content.Client.GameObjects.Components.PDA
         /// <summary>
         /// The base PDA sprite state, eg. "pda", "pda-clown"
         /// </summary>
-        private string? _state;
+        [DataField("state")]
+        private string _state;
 
         private enum PDAVisualLayers : byte
         {
@@ -23,30 +25,18 @@ namespace Content.Client.GameObjects.Components.PDA
             IDLight
         }
 
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-            if (node.TryGetNode("state", out var child))
-            {
-                _state = child.AsString();
-            }
-        }
-
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
             var sprite = entity.GetComponent<ISpriteComponent>();
 
-            if (_state != null)
-            {
-                sprite.LayerMapSet(PDAVisualLayers.Base, sprite.AddLayerState(_state));
-            }
-
+            sprite.LayerMapSet(PDAVisualLayers.Base, sprite.AddLayerState(_state));
             sprite.LayerMapSet(PDAVisualLayers.Flashlight, sprite.AddLayerState("light_overlay"));
             sprite.LayerSetShader(PDAVisualLayers.Flashlight, "unshaded");
             sprite.LayerMapSet(PDAVisualLayers.IDLight, sprite.AddLayerState("id_overlay"));
             sprite.LayerSetShader(PDAVisualLayers.IDLight, "unshaded");
         }
+
 
         public override void OnChangeData(AppearanceComponent component)
         {
@@ -63,6 +53,7 @@ namespace Content.Client.GameObjects.Components.PDA
             {
                 sprite.LayerSetVisible(PDAVisualLayers.IDLight, isCardInserted);
             }
+
         }
     }
 }

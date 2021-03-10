@@ -1,34 +1,51 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.Console;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedConfigurationComponent))]
-    public class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing
+    public class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing, ISerializationHooks
     {
         [ViewVariables] private BoundUserInterface UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
+
+        [DataField("keys")] private List<string> _keys = new();
 
         [ViewVariables]
         private readonly Dictionary<string, string> _config = new();
 
-        private Regex _validation;
+        [DataField("validation")]
+        private readonly Regex _validation = new ("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
+
+        void ISerializationHooks.BeforeSerialization()
+        {
+            _keys = _config.Keys.ToList();
+        }
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            foreach (var key in _keys)
+            {
+                _config.Add(key, "");
+            }
+        }
 
         public override void OnAdd()
         {
@@ -46,17 +63,6 @@ namespace Content.Server.GameObjects.Components
             {
                 UserInterface.OnReceiveMessage -= UserInterfaceOnReceiveMessage;
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction("keys", new List<string>(),
-                (list) => FillConfiguration(list, _config, ""),
-                () => _config.Keys.ToList());
-
-            serializer.DataReadFunction("validation", "^[a-zA-Z0-9 ]*$", value => _validation = new Regex("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled));
         }
 
         public string GetConfig(string name)

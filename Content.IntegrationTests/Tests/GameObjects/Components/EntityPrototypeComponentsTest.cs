@@ -47,7 +47,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
                 var reader = new StreamReader(file, Encoding.UTF8);
 
                 var yamlStream = new YamlStream();
-                yamlStream.Load(reader);
+
+                Assert.DoesNotThrow(() => yamlStream.Load(reader), "Error while parsing yaml file {0}", path);
 
                 foreach (var document in yamlStream.Documents)
                 {

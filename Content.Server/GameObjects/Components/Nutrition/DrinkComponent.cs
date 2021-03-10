@@ -20,7 +20,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -40,9 +40,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private bool _opened;
 
         [ViewVariables]
-        private string _useSound = string.Empty;
+        [DataField("useSound")]
+        private string _useSound = "/Audio/Items/drink.ogg";
 
         [ViewVariables]
+        [DataField("isOpen")]
         private bool _defaultToOpened;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -67,19 +69,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables]
         public bool Empty => Owner.GetComponentOrNull<ISolutionInteractionsComponent>()?.DrainAvailable <= 0;
 
-        private string _soundCollection = string.Empty;
-        private bool _pressurized;
-        private string _burstSound = string.Empty;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _useSound, "useSound", "/Audio/Items/drink.ogg");
-            serializer.DataField(ref _defaultToOpened, "isOpen", false); // For things like cups of coffee.
-            serializer.DataField(ref _soundCollection, "openSounds", "canOpenSounds");
-            serializer.DataField(ref _pressurized, "pressurized", false);
-            serializer.DataField(ref _burstSound, "burstSound", "/Audio/Effects/flash_bang.ogg");
-        }
+        [DataField("openSounds")]
+        private string _soundCollection = "canOpenSounds";
+        [DataField("pressurized")]
+        private bool _pressurized = default;
+        [DataField("burstSound")]
+        private string _burstSound = "/Audio/Effects/flash_bang.ogg";
 
         public override void Initialize()
         {

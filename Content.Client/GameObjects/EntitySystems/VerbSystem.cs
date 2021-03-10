@@ -1,35 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
-using Content.Client.State;
-using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
-using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -38,52 +30,67 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class VerbSystem : SharedVerbSystem, IResettingEntitySystem
     {
-        [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
-        private EntityList? _currentEntityList;
-        private VerbPopup? _currentVerbListRoot;
-        private VerbPopup? _currentGroupList;
+        private ContextMenuPresenter _contextMenuPresenter;
+        public event EventHandler<PointerInputCmdHandler.PointerInputCmdArgs> ToggleContextMenu;
+        public event EventHandler<bool> ToggleContainerVisibility;
 
+        private VerbPopup _currentVerbListRoot;
+        private VerbPopup _currentGroupList;
         private EntityUid _currentEntity;
 
-        private bool IsAnyContextMenuOpen => _currentEntityList != null || _currentVerbListRoot != null;
-
-        private bool _playerCanSeeThroughContainers;
-
+        // TODO: Move presenter out of the system
+        // TODO: Separate the rest of the UI from the logic
         public override void Initialize()
         {
             base.Initialize();
+            IoCManager.InjectDependencies(this);
 
             SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
             SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
 
-            IoCManager.InjectDependencies(this);
+            _contextMenuPresenter = new ContextMenuPresenter(this);
+            SubscribeLocalEvent<MoveEvent>(_contextMenuPresenter.HandleMoveEvent);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.OpenContextMenu,
-                    new PointerInputCmdHandler(OnOpenContextMenu))
+                    new PointerInputCmdHandler(HandleOpenContextMenu))
                 .Register<VerbSystem>();
         }
 
         public override void Shutdown()
         {
+            UnsubscribeLocalEvent<MoveEvent>();
+            _contextMenuPresenter?.Dispose();
+
             CommandBinds.Unregister<VerbSystem>();
             base.Shutdown();
         }
 
         public void Reset()
         {
-            _playerCanSeeThroughContainers = false;
+            ToggleContainerVisibility?.Invoke(this, false);
         }
 
+        private bool HandleOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
+        {
+            if (args.State == BoundKeyState.Down)
+            {
+                ToggleContextMenu?.Invoke(this, args);
+            }
+            return true;
+        }
         private void HandleContainerVisibilityMessage(PlayerContainerVisibilityMessage ev)
         {
-            _playerCanSeeThroughContainers = ev.CanSeeThrough;
+            ToggleContainerVisibility?.Invoke(this, ev.CanSeeThrough);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            _contextMenuPresenter?.Update();
         }
 
         public void OpenContextMenu(IEntity entity, ScreenCoordinates screenCoordinates)
@@ -100,7 +107,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             if (!entity.Uid.IsClientSide())
             {
-                _currentVerbListRoot.List.AddChild(new Label {Text = "Waiting on Server..."});
+                _currentVerbListRoot.List.AddChild(new Label { Text = Loc.GetString("Waiting on Server...") });
                 RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
             }
 
@@ -108,84 +115,7 @@ namespace Content.Client.GameObjects.EntitySystems
             _currentVerbListRoot.Open(box);
         }
 
-        public bool CanSeeOnContextMenu(IEntity entity)
-        {
-            if (!entity.TryGetComponent(out SpriteComponent? sprite) || !sprite.Visible)
-            {
-                return false;
-            }
-
-            if (entity.GetAllComponents<IShowContextMenu>().Any(s => !s.ShowContextMenu(entity)))
-            {
-                return false;
-            }
-
-            if (!_playerCanSeeThroughContainers &&
-                entity.TryGetContainer(out var container) &&
-                !container.ShowContents)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool OnOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
-        {
-            if (IsAnyContextMenuOpen)
-            {
-                CloseAllMenus();
-                return true;
-            }
-
-            if (_stateManager.CurrentState is not GameScreenBase)
-            {
-                return false;
-            }
-
-            var mapCoordinates = args.Coordinates.ToMap(EntityManager);
-            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
-
-            if (playerEntity == null || !TryGetContextEntities(playerEntity, mapCoordinates, out var entities))
-            {
-                return false;
-            }
-
-            _currentEntityList = new EntityList();
-            _currentEntityList.OnPopupHide += CloseAllMenus;
-            var first = true;
-            foreach (var entity in entities)
-            {
-                if (!CanSeeOnContextMenu(entity))
-                {
-                    continue;
-                }
-
-                if (!first)
-                {
-                    _currentEntityList.List.AddChild(new PanelContainer
-                    {
-                        MinSize = (0, 2),
-                        PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
-                    });
-                }
-
-                var debugEnabled = _userInterfaceManager.DebugMonitors.Visible;
-                _currentEntityList.List.AddChild(new EntityButton(this, entity, debugEnabled));
-                first = false;
-            }
-
-            _userInterfaceManager.ModalRoot.AddChild(_currentEntityList);
-
-            _currentEntityList.List.Measure(Vector2.Infinity);
-            var size = _currentEntityList.List.DesiredSize;
-            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled, size);
-            _currentEntityList.Open(box);
-
-            return true;
-        }
-
-        private void OnContextButtonPressed(IEntity entity)
+        public void OnContextButtonPressed(IEntity entity)
         {
             OpenContextMenu(entity, new ScreenCoordinates(_userInterfaceManager.MousePositionScaled));
         }
@@ -202,7 +132,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var buttons = new Dictionary<string, List<ListedVerbData>>();
             var groupIcons = new Dictionary<string, SpriteSpecifier>();
 
-            var vBox = _currentVerbListRoot!.List;
+            var vBox = _currentVerbListRoot.List;
             vBox.DisposeAllChildren();
 
             // Local variable so that scope capture ensures this is the correct value.
@@ -217,7 +147,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     groupIcons.Add(data.Category, data.CategoryIcon);
                 }
 
-                list.Add(new ListedVerbData(data.Text, !data.Available, data.Key, entity.ToString()!, () =>
+                list.Add(new ListedVerbData(data.Text, !data.Available, data.Key, entity.ToString(), () =>
                 {
                     RaiseNetworkEvent(new VerbSystemMessages.UseVerbMessage(curEntity, data.Key));
                     CloseAllMenus();
@@ -245,7 +175,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     groupIcons.Add(verbData.Category, verbData.CategoryIcon);
                 }
 
-                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, verb.ToString()!, entity.ToString()!,
+                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, verb.ToString(), entity.ToString(),
                     () => verb.Activate(user, component), verbData.Icon));
             }
 
@@ -269,8 +199,8 @@ namespace Content.Client.GameObjects.EntitySystems
                     groupIcons.Add(verbData.Category, verbData.CategoryIcon);
                 }
 
-                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, globalVerb.ToString()!,
-                    entity.ToString()!,
+                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, globalVerb.ToString(),
+                    entity.ToString(),
                     () => globalVerb.Activate(user, entity), verbData.Icon));
             }
 
@@ -287,16 +217,15 @@ namespace Content.Client.GameObjects.EntitySystems
                         vBox.AddChild(new PanelContainer
                         {
                             MinSize = (0, 2),
-                            PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
+                            PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
                         });
                     }
 
                     first = false;
 
-                    if (groupIcons.TryGetValue(category, out var icon))
-                    {
-                        vBox.AddChild(CreateCategoryButton(category, verbs, icon));
-                    }
+                    groupIcons.TryGetValue(category, out var icon);
+
+                    vBox.AddChild(CreateCategoryButton(category, verbs, icon));
                 }
 
                 if (buttons.ContainsKey(""))
@@ -310,7 +239,7 @@ namespace Content.Client.GameObjects.EntitySystems
                             vBox.AddChild(new PanelContainer
                             {
                                 MinSize = (0, 2),
-                                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
+                                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
                             });
                         }
 
@@ -323,7 +252,7 @@ namespace Content.Client.GameObjects.EntitySystems
             else
             {
                 var panel = new PanelContainer();
-                panel.AddChild(new Label {Text = "No verbs!"});
+                panel.AddChild(new Label { Text = Loc.GetString("No verbs!") });
                 vBox.AddChild(panel);
             }
         }
@@ -332,7 +261,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             var button = new VerbButton
             {
-                Text = data.Text,
+                Text = Loc.GetString(data.Text),
                 Disabled = data.Disabled
             };
 
@@ -366,31 +295,25 @@ namespace Content.Client.GameObjects.EntitySystems
 
             return new VerbGroupButton(this, verbButtons, icon)
             {
-                Text = text,
+                Text = Loc.GetString(text),
             };
         }
 
-        private void CloseVerbMenu()
+        public void CloseVerbMenu()
         {
             _currentVerbListRoot?.Dispose();
             _currentVerbListRoot = null;
             _currentEntity = EntityUid.Invalid;
         }
 
-        private void CloseEntityList()
-        {
-            _currentEntityList?.Dispose();
-            _currentEntityList = null;
-        }
-
         private void CloseAllMenus()
         {
             CloseVerbMenu();
-            CloseEntityList();
+            // CloseContextPopups();
             CloseGroupMenu();
         }
 
-        private void CloseGroupMenu()
+        public void CloseGroupMenu()
         {
             _currentGroupList?.Dispose();
             _currentGroupList = null;
@@ -398,22 +321,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private IEntity GetUserEntity()
         {
-            DebugTools.AssertNull(_playerManager.LocalPlayer?.ControlledEntity);
-            return _playerManager.LocalPlayer!.ControlledEntity!;
-        }
-
-        private sealed class EntityList : Popup
-        {
-            public VBoxContainer List { get; }
-
-            public EntityList()
-            {
-                AddChild(new PanelContainer
-                {
-                    Children = {(List = new VBoxContainer())},
-                    PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#111E")}
-                });
-            }
+            return _playerManager.LocalPlayer.ControlledEntity;
         }
 
         private sealed class VerbPopup : Popup
@@ -430,114 +338,18 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
-        private sealed class EntityButton : Control
-        {
-            private readonly VerbSystem _master;
-            private readonly IEntity _entity;
-
-            public EntityButton(VerbSystem master, IEntity entity, bool showUid)
-            {
-                _master = master;
-                _entity = entity;
-
-                MouseFilter = MouseFilterMode.Stop;
-
-                var control = new HBoxContainer {SeparationOverride = 6};
-                if (entity.TryGetComponent(out ISpriteComponent? sprite))
-                {
-                    control.AddChild(new SpriteView {Sprite = sprite});
-                }
-
-                var text = entity.Name;
-                if (showUid)
-                {
-                    text = $"{text} ({entity.Uid})";
-                }
-
-                control.AddChild(new Label
-                {
-                    Margin = new Thickness(4, 0),
-                    Text = text
-                });
-
-                AddChild(control);
-            }
-
-            protected override void KeyBindDown(GUIBoundKeyEventArgs args)
-            {
-                base.KeyBindDown(args);
-
-                if (args.Function == ContentKeyFunctions.OpenContextMenu)
-                {
-                    _master.OnContextButtonPressed(_entity);
-                    return;
-                }
-
-                if (args.Function == EngineKeyFunctions.Use ||
-                    args.Function == ContentKeyFunctions.Point ||
-                    args.Function == ContentKeyFunctions.TryPullObject ||
-                    args.Function == ContentKeyFunctions.MovePulledObject)
-                {
-                    // TODO: Remove an entity from the menu when it is deleted
-                    if (_entity.Deleted)
-                    {
-                        _master.CloseAllMenus();
-                        return;
-                    }
-
-                    var inputSys = _master.EntitySystemManager.GetEntitySystem<InputSystem>();
-
-                    var func = args.Function;
-                    var funcId = _master._inputManager.NetworkBindMap.KeyFunctionID(args.Function);
-
-                    var message = new FullInputCmdMessage(_master._gameTiming.CurTick, _master._gameTiming.TickFraction,
-                        funcId, BoundKeyState.Down,
-                        _entity.Transform.Coordinates,
-                        args.PointerLocation, _entity.Uid);
-
-                    // client side command handlers will always be sent the local player session.
-                    var session = _master._playerManager.LocalPlayer?.Session;
-                    inputSys.HandleInputCommand(session, func, message);
-
-                    _master.CloseAllMenus();
-                    return;
-                }
-
-                if (args.Function == ContentKeyFunctions.ExamineEntity)
-                {
-                    Get<ExamineSystem>().DoExamine(_entity);
-                    return;
-                }
-
-                if (_master._itemSlotManager.OnButtonPressed(args, _entity))
-                {
-                    _master.CloseAllMenus();
-                }
-            }
-
-            protected override void Draw(DrawingHandleScreen handle)
-            {
-                base.Draw(handle);
-
-                if (UserInterfaceManager.CurrentlyHovered == this)
-                {
-                    handle.DrawRect(PixelSizeBox, Color.DarkSlateGray);
-                }
-            }
-        }
-
         private sealed class VerbButton : BaseButton
         {
             private readonly Label _label;
             private readonly TextureRect _icon;
 
-            public Texture? Icon
+            public Texture Icon
             {
                 get => _icon.Texture;
                 set => _icon.Texture = value;
             }
 
-            public string? Text
+            public string Text
             {
                 get => _label.Text;
                 set => _label.Text = value;
@@ -581,15 +393,15 @@ namespace Content.Client.GameObjects.EntitySystems
             private readonly Label _label;
             private readonly TextureRect _icon;
 
-            private CancellationTokenSource? _openCancel;
+            private CancellationTokenSource _openCancel;
 
-            public string? Text
+            public string Text
             {
                 get => _label.Text;
                 set => _label.Text = value;
             }
 
-            public Texture? Icon
+            public Texture Icon
             {
                 get => _icon.Texture;
                 set => _icon.Texture = value;
@@ -614,7 +426,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
                         (_label = new Label
                         {
-                            HorizontalExpand = true
+                            SizeFlagsHorizontal = SizeFlags.FillExpand
                         }),
 
                         // Padding

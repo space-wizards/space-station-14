@@ -22,10 +22,11 @@ using Content.Shared.Kitchen;
 using Content.Shared.Prototypes.Kitchen;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Kitchen
@@ -37,11 +38,16 @@ namespace Content.Server.GameObjects.Components.Kitchen
         [Dependency] private readonly RecipeManager _recipeManager = default!;
 
         #region YAMLSERIALIZE
-        private int _cookTimeDefault;
-        private int _cookTimeMultiplier; //For upgrades and stuff I guess?
-        private string _badRecipeName = "";
-        private string _startCookingSound = "";
-        private string _cookingCompleteSound = "";
+        [DataField("cookTime")]
+        private int _cookTimeDefault = 5;
+        [DataField("cookTimeMultiplier")]
+        private int _cookTimeMultiplier = 1000; //For upgrades and stuff I guess?
+        [DataField("failureResult")]
+        private string _badRecipeName = "FoodBadRecipe";
+        [DataField("beginCookingSound")]
+        private string _startCookingSound = "/Audio/Machines/microwave_start_beep.ogg";
+        [DataField("foodDoneSound")]
+        private string _cookingCompleteSound = "/Audio/Machines/microwave_done_beep.ogg";
 #endregion
 
 [ViewVariables]
@@ -67,23 +73,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MicrowaveUiKey.Key);
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _badRecipeName, "failureResult", "FoodBadRecipe");
-            serializer.DataField(ref _cookTimeDefault, "cookTime", 5);
-            serializer.DataField(ref _cookTimeMultiplier, "cookTimeMultiplier", 1000);
-            serializer.DataField(ref _startCookingSound, "beginCookingSound","/Audio/Machines/microwave_start_beep.ogg" );
-            serializer.DataField(ref _cookingCompleteSound, "foodDoneSound","/Audio/Machines/microwave_done_beep.ogg" );
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
             Owner.EnsureComponent<SolutionContainerComponent>();
 
-            _storage = ContainerManagerComponent.Ensure<Container>("microwave_entity_container", Owner, out var existed);
+            _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "microwave_entity_container", out var existed);
             _audioSystem = EntitySystem.Get<AudioSystem>();
 
             if (UserInterface != null)
@@ -300,9 +296,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 recipeToCook = r;
             }
 
-            var goodMeal = (recipeToCook != null)
-                           &&
-                           (_currentCookTimerTime == (uint)recipeToCook.CookTime);
             SetAppearance(MicrowaveVisualState.Cooking);
             _audioSystem.PlayFromEntity(_startCookingSound, Owner, AudioParams.Default);
             Owner.SpawnTimer((int)(_currentCookTimerTime * _cookTimeMultiplier), (Action)(() =>
@@ -319,20 +312,16 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 }
                 else
                 {
-                    if (goodMeal)
+                    if (recipeToCook != null)
                     {
-                        SubtractContents(recipeToCook!);
+                        SubtractContents(recipeToCook);
+                        Owner.EntityManager.SpawnEntity(recipeToCook.Result, Owner.Transform.Coordinates);
                     }
                     else
                     {
                         VaporizeReagents();
                         VaporizeSolids();
-                    }
-
-                    if (recipeToCook != null)
-                    {
-                        var entityToSpawn = goodMeal ? recipeToCook.Result : _badRecipeName;
-                        Owner.EntityManager.SpawnEntity(entityToSpawn, Owner.Transform.Coordinates);
+                        Owner.EntityManager.SpawnEntity(_badRecipeName, Owner.Transform.Coordinates);
                     }
                 }
                 _audioSystem.PlayFromEntity(_cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
@@ -427,6 +416,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private MicrowaveSuccessState CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string,int> solids)
         {
+            if (_currentCookTimerTime != (uint) recipe.CookTime)
+            {
+                return MicrowaveSuccessState.RecipeFail;
+            }
+
             if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 return MicrowaveSuccessState.RecipeFail;
@@ -457,7 +451,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     return MicrowaveSuccessState.RecipeFail;
                 }
             }
-
 
             return MicrowaveSuccessState.RecipePass;
         }

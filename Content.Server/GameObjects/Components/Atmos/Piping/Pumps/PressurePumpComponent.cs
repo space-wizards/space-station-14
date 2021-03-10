@@ -3,7 +3,9 @@ using System;
 using Content.Server.Atmos;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
@@ -24,6 +26,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             get => _pressurePumpTarget;
             set => _pressurePumpTarget = Math.Clamp(value, 0, MaxPressurePumpTarget);
         }
+
+        [DataField("startingPressurePumpTarget")]
         private int _pressurePumpTarget;
 
         /// <summary>
@@ -35,7 +39,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             get => _maxPressurePumpTarget;
             set => Math.Max(value, 0);
         }
-        private int _maxPressurePumpTarget;
+        [DataField("maxPressurePumpTarget")]
+        private int _maxPressurePumpTarget = 100;
 
         /// <summary>
         ///     Every update, this pump will only increase the outlet pressure by this fraction of the amount needed to reach the <see cref="PressurePumpTarget"/>.
@@ -46,15 +51,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             get => _transferRatio;
             set => _transferRatio = Math.Clamp(value, 0, 1);
         }
-        private float _transferRatio;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _pressurePumpTarget, "startingPressurePumpTarget", 0);
-            serializer.DataField(ref _maxPressurePumpTarget, "maxPressurePumpTarget", 100);
-            serializer.DataField(ref _transferRatio, "transferRatio", 0.5f);
-        }
+        [DataField("transferRatio")]
+        private float _transferRatio = 0.5f;
 
         protected override void PumpGas(GasMixture inletGas, GasMixture outletGas)
         {
