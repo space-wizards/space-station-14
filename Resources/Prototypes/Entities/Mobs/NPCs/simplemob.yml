@@ -41,7 +41,6 @@
       - SmallImpassable
       layer:
       - Opaque
-#      - MobImpassable
   - type: Bloodstream
     max_volume: 100
   - type: Damageable
