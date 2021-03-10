@@ -61,13 +61,14 @@ namespace Content.Client.UserInterface
                     {
                         Children =
                         {
-                            (TopPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
                             (HandsContainer = new HBoxContainer())
                         }
                     }),
                     (RightPanel = ItemStatusPanel.FromSide(HandLocation.Right))
                 }
             });
+            TopPanel = ItemStatusPanel.FromSide(HandLocation.Middle);
+
             LeftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
             MiddleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
             RightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");

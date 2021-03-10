@@ -121,6 +121,9 @@ namespace Content.Shared.GameObjects.Components.Items
         }
     }
 
+    /// <summary>
+    ///     Whether a hand is a left or right hand, or some other type of hand.
+    /// </summary>
     public enum HandLocation : byte
     {
         Left,
