@@ -24,20 +24,20 @@ namespace Content.Client.GameObjects.Components.Items
         private HandsGui Gui { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private int? ActiveHand { get; set; } //TODO: should this be nullable?
+        private int ActiveHand { get; set; } //TODO: should this be nullable?
 
         [ViewVariables]
         public IReadOnlyList<ClientHand> Hands => _hands;
         private readonly List<ClientHand> _hands = new();
 
         [ViewVariables]
-        public IEntity? ActiveItem => ActiveHand != null ? Hands.ElementAtOrDefault(ActiveHand.Value)?.HeldItem : null;
+        public IEntity? ActiveItem => Hands.ElementAtOrDefault(ActiveHand)?.HeldItem;
 
         [ComponentDependency]
         private ISpriteComponent? _sprite = default!;
 
         [ViewVariables]
-        private string? ActiveHandName => ActiveHand != null ? Hands.ElementAtOrDefault(ActiveHand.Value)?.Name : null; //debug var
+        private string? ActiveHandName => Hands.ElementAtOrDefault(ActiveHand)?.Name; //debug var
 
         public override void OnAdd()
         {
