@@ -115,87 +115,9 @@ namespace Content.MapRenderer.Painters
 
                         image.Mutate(o => o.Resize(32, 32).Flip(FlipMode.Vertical));
 
-                        gridCanvas.Mutate(o => o.DrawImage(image, new Point((entity.X + xOffset) * 32, (entity.Y + yOffset) * 32), 1));
+                        gridCanvas.Mutate(o => o.DrawImage(image, new Point((entity.X + xOffset - 1) * 32, (entity.Y + yOffset - 1) * 32), 1));
                     }
                 }
-
-                // if (wall.Specifiers.Count == 0)
-                // {
-                //     continue;
-                // }
-                //
-                // if (wall.Specifiers[0] is not Rsi rsi)
-                // {
-                //     continue;
-                // }
-                //
-                // Image image;
-                //
-                // if (_cResourceCache.TryContentFileRead($"{rsi.RsiPath}/full.png", out var stream))
-                // {
-                //     image = Image.Load<Rgba32>(stream);
-                // }
-                // else
-                // {
-                //     image = new Image<Rgba32>(64, 64);
-                //
-                //     foreach (var specifier in wall.Specifiers)
-                //     {
-                //         switch (specifier)
-                //         {
-                //             case Rsi specifierRsi:
-                //             {
-                //                 if (!_cResourceCache.TryContentFileRead($"{specifierRsi.RsiPath}/{specifierRsi.RsiState}.png", out var specifierStream))
-                //                 {
-                //                     continue;
-                //                 }
-                //
-                //                 var specifierImage = Image.Load<Rgba32>(specifierStream);
-                //
-                //                 image.Mutate(o => o.DrawImage(specifierImage, new Point(0, 0), 1));
-                //
-                //                 break;
-                //             }
-                //         }
-                //     }
-                // }
-
-
-                // foreach (var specifier in wall.Specifiers)
-                // {
-                //     switch (specifier)
-                //     {
-                //         case Rsi rsi:
-                //         {
-                //             if (!_cResourceCache.TryContentFileRead($"{rsi.RsiPath}/full.png"))
-                //             {
-                //                 continue;
-                //             }
-                //             using var stream = _cResourceCache.ContentFileRead($"{rsi.RsiPath}/full.png");
-                //
-                //             image = Image.Load<Rgba32>(stream);
-                //             break;
-                //         }
-                //         case Texture texture:
-                //         {
-                //             using var stream = _cResourceCache.ContentFileRead(texture.TexturePath);
-                //
-                //             image = Image.Load<Rgba32>(stream);
-                //             break;
-                //         }
-                //         default:
-                //             throw new ArgumentOutOfRangeException(nameof(specifier));
-                //     }
-                // }
-
-
-                // image.Mutate(o => o.Resize(new ResizeOptions
-                // {
-                //     Mode = ResizeMode.Stretch,
-                //     Size = new Size(32, 32)
-                // }));
-                //
-                // gridCanvas.Mutate(o => o.DrawImage(image, new Point((wall.X + xOffset) * 32, (wall.Y + yOffset) * 32), 1));
             }
 
             Console.WriteLine($"{nameof(EntityPainter)} painted {walls.Count} walls on grid {grid.Index} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
@@ -227,65 +149,6 @@ namespace Content.MapRenderer.Painters
                     throw new InvalidOperationException(
                         $"No sprite component found on an entity for which a server sprite component exists. Prototype id: {entity.Prototype?.ID}");
                 }
-
-                // var specifiers = new List<SpriteSpecifier>();
-                //
-                // if (clientEntity.TryGetComponent(out AppearanceComponent appearance))
-                // {
-                //     foreach (var layer in appearance.Visualizers)
-                //     {
-                //         layer.OnChangeData(appearance);
-                //     }
-                // }
-                //
-                // foreach (var layer in sprite.AllLayers)
-                // {
-                //     if (layer.Texture != null)
-                //     {
-                //         var specifier = _textures[layer.Texture];
-                //         specifiers.Add(specifier);
-                //     }
-                //
-                //     if (!layer.RsiState.IsValid || !layer.Visible)
-                //     {
-                //         continue;
-                //     }
-                //
-                //     var rsi = layer.Rsi ?? sprite.BaseRSI;
-                //     if (rsi != null &&
-                //         rsi.TryGetState(layer.RsiState, out var state))
-                //     {
-                //         var specifier = new Rsi(rsi.Path, layer.RsiState.Name);
-                //         specifiers.Add(specifier);
-                //     }
-                // }
-
-
-
-                // foreach (var layer in sprite.AllLayers)
-                // {
-                //     var texture = layer.Texture;
-                //
-                //     if (texture != null)
-                //     {
-                //
-                //         specifiers = new List<SpriteSpecifier> {new SpriteSpecifier.Texture(texture.)};
-                //     }
-                //
-                //     var rsi = layer.ActualRsi;
-                //
-                //     if (rsi != null && spri != null)
-                //     {
-                //         specifiers = new List<SpriteSpecifier>
-                //             {new Rsi(new ResourcePath(sprite.BaseRSIPath), sprite.State)};
-                //     }
-                //
-                //     if (sprite.Texture != null)
-                //     {
-                //     }
-                //
-                //     var state = layer.RsiState;
-                // }
 
                 var position = entity.Transform.WorldPosition;
                 var x = (int) Math.Floor(position.X);
