@@ -15,11 +15,10 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
         private static readonly IReadOnlyList<string> Squeek = new List<string>{
             "Squeak!", "Piep!", "Chuu!"
         }.AsReadOnly();
-        private string RandomSqueek => _random.Pick(Squeek);
 
         public string Accentuate(string message)
         {
-            return RandomSqueek;
+            return _random.Pick(Squeek);
         }
     }
 }
