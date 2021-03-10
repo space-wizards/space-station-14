@@ -19,8 +19,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
 
         public string Accentuate(string message)
         {
-            var squeak = message.Replace(message, RandomSqueek);
-            return new string(squeak);
+            return RandomSqueek;
         }
     }
 }
