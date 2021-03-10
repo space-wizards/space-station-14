@@ -34,7 +34,7 @@ namespace Content.Tests.Server.GameObjects.Components.Access
         public void TestOneList()
         {
             var reader = new AccessReader();
-            reader.AccessLists.Add(new HashSet<string> {"A"});
+            reader.AccessList.Add(new HashSet<string> {"A"});
 
             Assert.That(reader.IsAllowed(new[] {"A"}), Is.True);
             Assert.That(reader.IsAllowed(new[] {"B"}), Is.False);
@@ -46,7 +46,7 @@ namespace Content.Tests.Server.GameObjects.Components.Access
         public void TestOneListTwoItems()
         {
             var reader = new AccessReader();
-            reader.AccessLists.Add(new HashSet<string> {"A", "B"});
+            reader.AccessList.Add(new HashSet<string> {"A", "B"});
 
             Assert.That(reader.IsAllowed(new[] {"A"}), Is.False);
             Assert.That(reader.IsAllowed(new[] {"B"}), Is.False);
@@ -58,8 +58,8 @@ namespace Content.Tests.Server.GameObjects.Components.Access
         public void TestTwoList()
         {
             var reader = new AccessReader();
-            reader.AccessLists.Add(new HashSet<string> {"A"});
-            reader.AccessLists.Add(new HashSet<string> {"B", "C"});
+            reader.AccessList.Add(new HashSet<string> {"A"});
+            reader.AccessList.Add(new HashSet<string> {"B", "C"});
 
             Assert.That(reader.IsAllowed(new[] {"A"}), Is.True);
             Assert.That(reader.IsAllowed(new[] {"B"}), Is.False);
@@ -73,7 +73,7 @@ namespace Content.Tests.Server.GameObjects.Components.Access
         public void TestDenyList()
         {
             var reader = new AccessReader();
-            reader.AccessLists.Add(new HashSet<string> {"A"});
+            reader.AccessList.Add(new HashSet<string> {"A"});
             reader.DenyTags.Add("B");
 
             Assert.That(reader.IsAllowed(new[] {"A"}), Is.True);

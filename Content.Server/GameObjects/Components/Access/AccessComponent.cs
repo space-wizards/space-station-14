@@ -18,15 +18,14 @@ namespace Content.Server.GameObjects.Components.Access
 
         [DataField("tags")]
         [ViewVariables]
-        private readonly HashSet<string> _tags = new();
+        private AccessTags _tags;
 
-        public ISet<string> Tags => _tags;
+        public AccessTags Tags => _tags;
         public bool IsReadOnly => false;
 
-        public void SetTags(IEnumerable<string> newTags)
+        public void SetTags(AccessTags newTags)
         {
-            _tags.Clear();
-            _tags.UnionWith(newTags);
+            _tags = newTags;
         }
     }
 }

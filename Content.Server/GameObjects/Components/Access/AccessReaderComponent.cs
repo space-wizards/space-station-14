@@ -28,7 +28,10 @@ namespace Content.Server.GameObjects.Components.Access
     {
         public override string Name => "AccessReader";
 
-        private readonly HashSet<string> _denyTags = new();
+        //private readonly HashSet<string> _denyTags = new();
+        private readonly AccessTags _denyTags;
+
+
 
         /// <summary>
         ///     List of access lists to check allowed against. For an access check to pass
@@ -36,12 +39,12 @@ namespace Content.Server.GameObjects.Components.Access
         /// </summary>
         [field: DataField("access")]
         [ViewVariables]
-        public List<HashSet<string>> AccessLists { get; } = new();
+        public AccessTags AccessList { get; }
 
         /// <summary>
         ///     The set of tags that will automatically deny an allowed check, if any of them are present.
         /// </summary>
-        [ViewVariables] public ISet<string> DenyTags => _denyTags;
+        [ViewVariables] public AccessTags DenyTags => _denyTags;
 
         /// <summary>
         /// Searches an <see cref="IAccess"/> in the entity itself, in its active hand or in its ID slot.
@@ -62,18 +65,22 @@ namespace Content.Server.GameObjects.Components.Access
             return IsAllowed(access.Tags);
         }
 
-        public bool IsAllowed(ICollection<string> accessTags)
+        public bool IsAllowed(AccessTags accessFlags)
         {
-            if (_denyTags.Overlaps(accessTags))
-            {
-                // Sec owned by cargo.
-                return false;
-            }
 
-            return AccessLists.Count == 0 || AccessLists.Any(a => a.IsSubsetOf(accessTags));
+
+            return AccessList == 0 || (AccessList & accessFlags) != 0;
+
+            // if (_denyTags.Overlaps(accessTags))
+            // {
+            //     // Sec owned by cargo.
+            //     return false;
+            // }
+
+            // return AccessLists.Count == 0 || AccessLists.Any(a => a.IsSubsetOf(accessTags));
         }
 
-        public static ICollection<string> FindAccessTags(IEntity entity)
+        public static AccessTags FindAccessTags(IEntity entity)
         {
             if (entity.TryGetComponent(out IAccess? accessComponent))
             {
@@ -91,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Access
             }
             else
             {
-                return Array.Empty<string>();
+                return AccessTags.None;
             }
 
             if (entity.TryGetComponent(out InventoryComponent? inventoryComponent))
@@ -105,21 +112,22 @@ namespace Content.Server.GameObjects.Components.Access
                 }
             }
 
-            return Array.Empty<string>();
+            return AccessTags.None;
         }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            var proto = IoCManager.Resolve<IPrototypeManager>();
-            foreach (var level in AccessLists.SelectMany(c => c).Union(DenyTags))
-            {
-                if (!proto.HasIndex<AccessLevelPrototype>(level))
-                {
-                    Logger.ErrorS("access", $"Invalid access level: {level}");
-                }
-            }
+            // var proto = IoCManager.Resolve<IPrototypeManager>();
+            // foreach (var level in AccessLists.SelectMany(c => c).Union(DenyTags))
+            // {
+            //     if (!proto.HasIndex<AccessLevelPrototype>(level))
+            //     {
+            //         Logger.ErrorS("access", $"Invalid access level: {level}");
+            //     }
+            // }
         }
+
     }
 }

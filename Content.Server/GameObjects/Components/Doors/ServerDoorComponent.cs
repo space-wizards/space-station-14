@@ -270,7 +270,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
 
             var doorSystem = EntitySystem.Get<ServerDoorSystem>();
-            var isAirlockExternal = HasAccessType("External");
+            var isAirlockExternal = HasAccessType(AccessTags.External);
 
             return doorSystem.AccessType switch
             {
@@ -285,11 +285,12 @@ namespace Content.Server.GameObjects.Components.Doors
         /// Returns whether a door has a certain access type. For example, maintenance doors will have access type
         /// "Maintenance" in their AccessReader.
         /// </summary>
-        private bool HasAccessType(string accessType)
+        private bool HasAccessType(AccessTags accessFlag)
         {
             if (Owner.TryGetComponent(out AccessReader? access))
             {
-                return access.AccessLists.Any(list => list.Contains(accessType));
+                return (access.AccessList.HasFlag(accessFlag));
+                //return access.AccessList.Any(list => list.Contains(accessType));
             }
 
             return true;

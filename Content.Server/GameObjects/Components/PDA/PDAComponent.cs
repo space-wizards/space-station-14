@@ -429,16 +429,16 @@ namespace Content.Server.GameObjects.Components.PDA
             }
         }
 
-        private ISet<string>? GetContainedAccess()
+        private AccessTags? GetContainedAccess()
         {
             return ContainedID?.Owner?.GetComponent<AccessComponent>()?.Tags;
         }
 
-        ISet<string> IAccess.Tags => _accessSet;
+        AccessTags IAccess.Tags => _accessSet;
 
         bool IAccess.IsReadOnly => true;
 
-        void IAccess.SetTags(IEnumerable<string> newTags)
+        void IAccess.SetTags(AccessTags newTags)
         {
             throw new NotSupportedException("PDA access list is read-only.");
         }

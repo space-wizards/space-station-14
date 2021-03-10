@@ -16,7 +16,7 @@ namespace Content.Server.Interfaces
         /// <remarks>
         ///     This set may be read-only. Check <see cref="IsReadOnly"/> if you want to mutate it.
         /// </remarks>
-        ISet<string> Tags { get; }
+        AccessTags Tags { get; }
 
         /// <summary>
         ///     Whether the <see cref="Tags"/> list is read-only.
@@ -28,6 +28,6 @@ namespace Content.Server.Interfaces
         /// </summary>
         /// <param name="newTags">The new access tags</param>
         /// <exception cref="NotSupportedException">If this access tag list is read-only.</exception>
-        void SetTags(IEnumerable<string> newTags);
+        void SetTags(AccessTags newTags);
     }
 }
