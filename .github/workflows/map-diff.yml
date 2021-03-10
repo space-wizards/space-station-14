@@ -2,6 +2,8 @@ name: Map Diff
 
 on:
   push:
+#    branches:
+#    - master
     paths:
     - 'Resources/Maps/**.yml'
 
@@ -39,8 +41,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore /m
       - name: Create map images
         run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-build
-      - name: Create pull request
-        uses: peter-evans/create-pull-request@v3.8.2
+      - name: Commit & Push
+        uses: actions-js/push@v1.2
         with:
-          title: Update map images
-          commit-message: Update map images
+          message: Update map images
