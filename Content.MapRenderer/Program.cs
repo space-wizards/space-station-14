@@ -26,25 +26,22 @@ namespace Content.MapRenderer
             var modified = Environment.GetEnvironmentVariable("MAPS_MODIFIED");
 
             var yamlStream = new YamlStream();
-            var files = new YamlSequenceNode();
 
             if (created != null)
             {
                 yamlStream.Load(new StringReader(created));
-
-                var filesCreated = (YamlSequenceNode) yamlStream.Documents[0].RootNode;
-
-                foreach (var node in filesCreated)
-                {
-                    files.Add(node);
-                }
             }
 
             if (modified != null)
             {
                 yamlStream.Load(new StringReader(modified));
+            }
 
-                var filesModified = (YamlSequenceNode) yamlStream.Documents[1].RootNode;
+            var files = new YamlSequenceNode();
+
+            foreach (var doc in yamlStream.Documents)
+            {
+                var filesModified = (YamlSequenceNode) doc.RootNode;
 
                 foreach (var node in filesModified)
                 {
