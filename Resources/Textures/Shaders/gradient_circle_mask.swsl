@@ -4,8 +4,8 @@
 light_mode unshaded;
 
 const highp float darknessAlphaInner =  0.6; 
-const highp float innerCircleRadius = 40; //Note: this is in pixels
-const highp float outerCircleRadius = 80;
+const highp float innerCircleRadius = 40.0; //Note: this is in pixels
+const highp float outerCircleRadius = 80.0;
 
 void fragment() {
 	highp vec2 pixelSize = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
