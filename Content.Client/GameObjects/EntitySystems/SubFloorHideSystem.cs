@@ -65,7 +65,7 @@ namespace Content.Client.GameObjects.EntitySystems
             UpdateTile(grid, indices);
         }
 
-        private void MapManagerOnTileChanged(object sender, TileChangedEventArgs e)
+        private void MapManagerOnTileChanged(object? sender, TileChangedEventArgs e)
         {
             UpdateTile(_mapManager.GetGrid(e.NewTile.GridIndex), e.NewTile.GridIndices);
         }
