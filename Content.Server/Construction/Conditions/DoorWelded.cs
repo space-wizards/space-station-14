@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+#nullable enable
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
@@ -17,25 +18,26 @@ namespace Content.Server.Construction.Conditions
 
         public async Task<bool> Condition(IEntity entity)
         {
-            if (!entity.TryGetComponent(out ServerDoorComponent doorComponent)) return false;
+            if (!entity.TryGetComponent(out ServerDoorComponent? doorComponent)) return false;
+
             return doorComponent.IsWeldedShut == Welded;
         }
 
         public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
         {
-            if (!entity.TryGetComponent(out ServerDoorComponent doorComponent)) return false;
+            if (!entity.TryGetComponent(out ServerDoorComponent? door)) return false;
 
-            if (doorComponent.State == ServerDoorComponent.DoorState.Closed && Welded)
+            switch (Welded)
             {
-                message.AddMarkup(Loc.GetString("First, weld the door.\n"));
-                return true;
+                case true when !door.IsWeldedShut:
+                    message.AddMarkup(Loc.GetString("construction-condition-door-weld", ("entityName", entity.Name)));
+                    return true;
+                case false when door.IsWeldedShut:
+                    message.AddMarkup(Loc.GetString("construction-condition-door-unweld", ("entityName", entity.Name)));
+                    return true;
             }
 
-            if (!doorComponent.IsWeldedShut || Welded) return false;
-
-            message.AddMarkup(Loc.GetString("First, unweld the door.\n"));
-            return true;
-
+            return false;
         }
     }
 }

@@ -1,0 +1,105 @@
+- type: constructionGraph
+  id: airlock
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: assemblyUnsecured
+          steps:
+            - material: Steel
+              amount: 4
+              doAfter: 1
+
+    - node: assemblyUnsecured
+      entity: AirlockAssembly
+      actions:
+        - !type:SpriteStateChange
+          state: assembly
+      edges:
+        - to: assembly
+          steps:
+            - tool: Anchoring
+              doAfter: 0.5
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              amount: 5
+              doAfter: 1
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+    - node: assembly
+      actions:
+        - !type:SnapToGrid {}
+        - !type:SetAnchor {}
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              amount: 5
+              doAfter: 1
+        - to: assemblyUnsecured
+          steps:
+            - tool: Anchoring
+              doAfter: 0.5
+
+    - node: wired
+      entity: AirlockAssembly
+      edges:
+        - to: electronics
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tag: DoorElectronics
+              store: board
+              name: "[color=cyan]airlock electronics[/color] circuit board"
+              icon:
+                sprite: "Constructible/Misc/module.rsi"
+                state: "door_electronics"
+              doAfter: 0.25
+        - to: assemblyUnsecured
+          completed:
+            - !type:SpawnPrototype
+              prototype: ApcExtensionCableStack1
+              amount: 5
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: electronics
+      edges:
+        - to: airlock
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+    - node: airlock
+      entity: Airlock
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+            - !type:AirlockBolted
+              value: false
+          completed:
+            - !type:EmptyAllContainers {}
+          steps:
+            - tool: Prying
+              doAfter: 2
