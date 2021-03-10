@@ -24,7 +24,7 @@ namespace Content.Client.GameObjects.Components.Items
         private HandsGui Gui { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private int ActiveHand { get; set; } //TODO: should this be nullable?
+        private int ActiveHand { get; set; }
 
         [ViewVariables]
         public IReadOnlyList<ClientHand> Hands => _hands;
@@ -42,15 +42,13 @@ namespace Content.Client.GameObjects.Components.Items
         public override void OnAdd()
         {
             base.OnAdd();
-            Gui = new HandsGui(this); //TODO: subscripe msg sends to ui events
+            Gui = new HandsGui(); //TODO: subscripe msg sends to ui events
         }
 
         public override void Initialize()
         {
             base.Initialize();
-
             _gameHud.HandsContainer.AddChild(Gui);
-            Owner.TryGetComponent(out _sprite); //TODO: use component dependency?
         }
 
         public override void OnRemove()
@@ -64,26 +62,19 @@ namespace Content.Client.GameObjects.Components.Items
             if (curState is not HandsComponentState state)
                 return;
 
-            ActiveHand = state.ActiveIndex;
-
             foreach (var hand in _hands)
-            {
-                if (_sprite == null)
-                    continue;
-
-                var layerKey = GetHandLayerKey(hand.Name);
-                var layer = _sprite.LayerMapGet(layerKey);
-                _sprite.RemoveLayer(layer);
-                _sprite.LayerMapRemove(layerKey);
-            }
+                RemoveHandLayer(hand);
             _hands.Clear();
+
+            ActiveHand = state.ActiveIndex;
 
             foreach (var handState in state.Hands)
             {
                 var newHand = new ClientHand(handState, GetHeldItem(handState.EntityUid));
                 _hands.Add(newHand);
             }
-            OnHandsModified();
+            MakeHandLayers();
+            SetGuiState();
 
             IEntity? GetHeldItem(EntityUid? uid)
             {
@@ -171,13 +162,18 @@ namespace Content.Client.GameObjects.Components.Items
         {
         }
 
-        private void OnHandsModified()
+        private void RemoveHandLayer(ClientHand hand)
         {
-            MakeHandTextures();
-            SetGuiState();
+            if (_sprite == null)
+                return;
+
+            var layerKey = GetHandLayerKey(hand.Name);
+            var layer = _sprite.LayerMapGet(layerKey);
+            _sprite.RemoveLayer(layer);
+            _sprite.LayerMapRemove(layerKey);
         }
 
-        private void MakeHandTextures()
+        private void MakeHandLayers()
         {
             if (_sprite == null)
                 return;
@@ -210,6 +206,11 @@ namespace Content.Client.GameObjects.Components.Items
             }
         }
 
+        private object GetHandLayerKey(string handName)
+        {
+            return $"hand-{handName}";
+        }
+
         private void SetGuiState()
         {
             Gui.SetState(GetHandsGuiState());
@@ -225,11 +226,6 @@ namespace Content.Client.GameObjects.Components.Items
                 handStates.Add(handState);
             }
             return new HandsGuiState(handStates, ActiveHand);
-        }
-
-        private object GetHandLayerKey(string handName)
-        {
-            return $"hand-{handName}";
         }
     }
 

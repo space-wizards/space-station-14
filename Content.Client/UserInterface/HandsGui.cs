@@ -38,16 +38,10 @@ namespace Content.Client.UserInterface
         [ViewVariables]
         private List<GuiHand> Hands { get; set; } = new();
 
-        /// <summary>
-        ///     The hands component that created this. Should only be used for sending network messages.
-        /// </summary>
-        private HandsComponent Creator { get; set; }
-
         private int? ActiveHand { get; set; } = null;
 
-        public HandsGui(HandsComponent creator)
+        public HandsGui()
         {
-            Creator = creator;
             IoCManager.InjectDependencies(this);
             AddChild(new VBoxContainer
             {
