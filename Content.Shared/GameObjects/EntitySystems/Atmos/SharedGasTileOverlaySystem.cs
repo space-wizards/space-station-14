@@ -100,7 +100,7 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         ///     No point re-sending every tile if only a subset might have been updated.
         /// </summary>
         [Serializable, NetSerializable]
-        public sealed class GasOverlayMessage : EntitySystemMessage
+        public sealed class GasOverlayMessage : EntityEventArgs
         {
             public GridId GridId { get; }
 

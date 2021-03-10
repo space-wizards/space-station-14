@@ -36,5 +36,5 @@
     - 1  # water vapor
   effects:
     - !type:WaterVaporReaction
-      gasId: 5
+      gas: 5
       reagent: chem.Water

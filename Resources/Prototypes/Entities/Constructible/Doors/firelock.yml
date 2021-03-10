@@ -53,6 +53,7 @@
       openTimeTwo: 0.6
       startOpen: true
       bumpOpen: false
+      inhibitCrush: false
     - type: Firelock
     - type: Appearance
       visuals:
@@ -88,6 +89,7 @@
   components:
     - type: Door
       occludes: false
+      inhibitCrush: false
     - type: Occluder
       enabled: false
     - type: Sprite
@@ -100,13 +102,14 @@
   components:
     - type: Door
       occludes: false
-      inhibitCrush: true
+      inhibitCrush: false
     - type: Sprite
       sprite: Constructible/Structures/Doors/edge_door_hazard.rsi
     - type: Airtight
       fixVacuum: true
+      noAirWhenFullyAirBlocked: false
       airBlockedDirection:
-        - East
+        - South
     - type: Physics
       fixtures:
       - shape:

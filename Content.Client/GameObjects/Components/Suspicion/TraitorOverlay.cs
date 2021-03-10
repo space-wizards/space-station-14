@@ -2,6 +2,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -25,7 +26,6 @@ namespace Content.Client.GameObjects.Components.Suspicion
             IEntityManager entityManager,
             IResourceCache resourceCache,
             IEyeManager eyeManager)
-            : base(nameof(TraitorOverlay))
         {
             _playerManager = IoCManager.Resolve<IPlayerManager>();
 

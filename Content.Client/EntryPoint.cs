@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Client.Administration;
 using Content.Client.Changelog;
 using Content.Client.Eui;
@@ -152,12 +152,15 @@ namespace Content.Client
             IoCManager.Resolve<IGameHud>().Initialize();
             IoCManager.Resolve<IClientNotifyManager>().Initialize();
             IoCManager.Resolve<IClientGameTicker>().Initialize();
+
             var overlayMgr = IoCManager.Resolve<IOverlayManager>();
             overlayMgr.AddOverlay(new ParallaxOverlay());
-            overlayMgr.AddOverlay(new GradientCircleMaskOverlay());
+            overlayMgr.AddOverlay(new SingularityOverlay());
+            overlayMgr.AddOverlay(new CritOverlay()); //Hopefully we can cut down on this list... don't see why a death overlay needs to be instantiated here.
             overlayMgr.AddOverlay(new CircleMaskOverlay());
             overlayMgr.AddOverlay(new FlashOverlay());
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
+
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();

@@ -4,7 +4,7 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.GameObjects.EntitySystemMessages.Gravity
 {
-    public class GravityChangedMessage : EntitySystemMessage
+    public class GravityChangedMessage : EntityEventArgs
     {
         public GravityChangedMessage(IMapGrid grid)
         {

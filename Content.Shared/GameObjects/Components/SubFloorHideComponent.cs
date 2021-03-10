@@ -51,7 +51,7 @@ namespace Content.Shared.GameObjects.Components
         }
     }
 
-    internal sealed class SubFloorHideDirtyEvent : EntitySystemMessage
+    internal sealed class SubFloorHideDirtyEvent : EntityEventArgs
     {
         public IEntity Sender { get; }
 
