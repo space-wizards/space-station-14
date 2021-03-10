@@ -23,9 +23,9 @@
       - Clickable
       mask:
       - Impassable
-      - SmallImpassable
-      restitution: 0.8  # We want them items B O U N C Y
-      friction: 0.2
+      - VaultImpassable
+      restitution: 0.05  # We want them items B O U N C Y (They look fucking stupid)
+      friction: 0.9
   - type: Sprite
     drawdepth: Items
   - type: Pullable
