@@ -1,6 +1,6 @@
 name: RSI Validator
 
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   validate_rsis:
     name: Validate RSIs
