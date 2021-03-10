@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Cargo
             _productIds.Clear();
             foreach (var productId in state.Products)
             {
-                if (!_prototypeManager.TryIndex(productId, out CargoProductPrototype product))
+                if (!_prototypeManager.TryIndex(productId, out CargoProductPrototype? product))
                     continue;
                 _products.Add(product);
             }

@@ -27,7 +27,7 @@ namespace Content.Client.GameObjects.Components.Research
 
             foreach (var techID in state.Technologies)
             {
-                if (!protoManager.TryIndex(techID, out TechnologyPrototype technology)) continue;
+                if (!protoManager.TryIndex(techID, out TechnologyPrototype? technology)) continue;
                 _technologies.Add(technology);
             }
 

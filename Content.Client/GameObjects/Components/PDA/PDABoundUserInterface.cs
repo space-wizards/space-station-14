@@ -99,8 +99,12 @@ namespace Content.Client.GameObjects.Components.PDA
                 case PDAUpdateState msg:
                 {
                     _menu.FlashLightToggleButton.Pressed = msg.FlashlightEnabled;
-                    _menu.PDAOwnerLabel.SetMarkup(Loc.GetString("Owner: [color=white]{0}[/color]",
-                        msg.PDAOwnerInfo.ActualOwnerName));
+
+                    if (msg.PDAOwnerInfo.ActualOwnerName != null)
+                    {
+                        _menu.PDAOwnerLabel.SetMarkup(Loc.GetString("Owner: [color=white]{0}[/color]",
+                            msg.PDAOwnerInfo.ActualOwnerName));
+                    }
 
                     if (msg.PDAOwnerInfo.JobTitle == null || msg.PDAOwnerInfo.IdOwner == null)
                     {
@@ -465,7 +469,7 @@ namespace Content.Client.GameObjects.Components.PDA
 
             public void AddListingGui(UplinkListingData listing)
             {
-                if (!_prototypeManager.TryIndex(listing.ItemId, out EntityPrototype prototype) || listing.Category != CurrentFilterCategory)
+                if (!_prototypeManager.TryIndex(listing.ItemId, out EntityPrototype? prototype) || listing.Category != CurrentFilterCategory)
                 {
                     return;
                 }
@@ -516,7 +520,6 @@ namespace Content.Client.GameObjects.Components.PDA
 
                 var pdaUplinkListingButton = new PDAUplinkItemButton(listing)
                 {
-                    ButtonListing = listing,
                     Children =
                     {
                         listingButtonPanelContainer

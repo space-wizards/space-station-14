@@ -332,7 +332,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             {
                 var name = Loc.GetString("Unknown reagent");
                 //Try to the prototype for the given reagent. This gives us it's name.
-                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
                     name = proto.Name;
                 }
@@ -387,7 +387,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             {
                 var name = Loc.GetString("Unknown reagent");
                 //Try to the prototype for the given reagent. This gives us it's name.
-                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
                     name = proto.Name;
                 }

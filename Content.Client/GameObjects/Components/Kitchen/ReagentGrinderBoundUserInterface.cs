@@ -10,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using static Content.Shared.Chemistry.Solution;
 
 namespace Content.Client.GameObjects.Components.Kitchen
 {
@@ -20,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
         private GrinderMenu? _menu;
         private readonly Dictionary<int, EntityUid> _chamberVisualContents = new();
-        private readonly Dictionary<int, Solution.ReagentQuantity> _beakerVisualContents = new();
+        private readonly Dictionary<int, ReagentQuantity> _beakerVisualContents = new();
 
         public ReagentGrinderBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
 
@@ -109,7 +110,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
             }
         }
 
-        private void RefreshContentsDisplay(IList<Solution.ReagentQuantity> reagents, IReadOnlyList<EntityUid> containedSolids, bool isBeakerAttached)
+        private void RefreshContentsDisplay(IList<ReagentQuantity>? reagents, IReadOnlyList<EntityUid> containedSolids, bool isBeakerAttached)
         {
             //Refresh chamber contents
             _chamberVisualContents.Clear();
@@ -151,8 +152,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
             {
                 for (var i = 0; i < reagents.Count; i++)
                 {
-                    var goodIndex = _prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype proto);
-                    var reagentName = goodIndex ? Loc.GetString($"{reagents[i].Quantity} {proto.Name}") : Loc.GetString("???");
+                    var goodIndex = _prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype? proto);
+                    var reagentName = goodIndex ? Loc.GetString($"{reagents[i].Quantity} {proto!.Name}") : Loc.GetString("???");
                     var reagentAdded = _menu.BeakerContentBox.BoxContents.AddItem(reagentName);
                     var reagentIndex = _menu.BeakerContentBox.BoxContents.IndexOf(reagentAdded);
                     _beakerVisualContents.Add(reagentIndex, reagents[i]);

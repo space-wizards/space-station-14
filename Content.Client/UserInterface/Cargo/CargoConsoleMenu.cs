@@ -306,11 +306,11 @@ namespace Content.Client.UserInterface.Cargo
                 var row = new CargoOrderRow
                 {
                     Order = order,
-                    Icon = {Texture = Owner.Market.GetProduct(order.ProductId).Icon.Frame0()},
+                    Icon = {Texture = Owner.Market.GetProduct(order.ProductId)?.Icon.Frame0()},
                     ProductName =
                     {
                         Text =
-                            $"{Owner.Market.GetProduct(order.ProductId).Name} (x{order.Amount}) by {order.Requester}"
+                            $"{Owner.Market.GetProduct(order.ProductId)?.Name} (x{order.Amount}) by {order.Requester}"
                     },
                     Description = {Text = $"Reasons: {order.Reason}"}
                 };

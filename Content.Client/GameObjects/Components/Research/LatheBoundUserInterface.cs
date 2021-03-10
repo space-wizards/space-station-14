@@ -81,7 +81,7 @@ namespace Content.Client.GameObjects.Components.Research
             switch (message)
             {
                 case LatheProducingRecipeMessage msg:
-                    if (!_prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe)) break;
+                    if (!_prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype? recipe)) break;
                     _queueMenu?.SetInfo(recipe);
                     break;
                 case LatheStoppedProducingRecipeMessage _:
@@ -91,7 +91,7 @@ namespace Content.Client.GameObjects.Components.Research
                     _queuedRecipes.Clear();
                     foreach (var id in msg.Recipes)
                     {
-                        if (!_prototypeManager.TryIndex(id, out LatheRecipePrototype recipePrototype)) break;
+                        if (!_prototypeManager.TryIndex(id, out LatheRecipePrototype? recipePrototype)) break;
                         _queuedRecipes.Enqueue(recipePrototype);
                     }
                     _queueMenu?.PopulateList();

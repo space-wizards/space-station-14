@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Content.Client.State;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.EntitySystemMessages;
@@ -261,7 +260,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private bool OnUseMouseUp(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (_dragDropHelper.IsDragging == false)
+            if (_dragDropHelper.IsDragging == false || _dragDropHelper.Dragged == null)
             {
                 // haven't started the drag yet, quick mouseup, definitely treat it as a normal click by
                 // replaying the original cmd

@@ -7,7 +7,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Research
@@ -161,7 +160,7 @@ namespace Content.Client.Research
 
             foreach (var (id, amount) in Owner.Storage)
             {
-                if (!_prototypeManager.TryIndex(id, out MaterialPrototype materialPrototype)) continue;
+                if (!_prototypeManager.TryIndex(id, out MaterialPrototype? materialPrototype)) continue;
                 var material = materialPrototype;
                 _materials.AddItem($"{material.Name} {amount} cm³", material.Icon.Frame0(), false);
             }

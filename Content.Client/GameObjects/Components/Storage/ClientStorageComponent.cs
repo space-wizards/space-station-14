@@ -333,7 +333,6 @@ namespace Content.Client.GameObjects.Components.Storage
             public EntityUid EntityUid { get; set; }
             public Button ActualButton { get; }
             public SpriteView EntitySpriteView { get; }
-            public Control SizeControl { get; }
             public Label EntityName { get; }
             public Label EntitySize { get; }
 

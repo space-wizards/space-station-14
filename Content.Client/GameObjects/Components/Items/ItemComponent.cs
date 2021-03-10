@@ -8,8 +8,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -27,38 +25,43 @@ namespace Content.Client.GameObjects.Components.Items
 
         [ViewVariables]
         [DataField("sprite")]
-        protected ResourcePath RsiPath;
+        protected ResourcePath? RsiPath;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("color")]
         protected Color Color = Color.White;
 
         [DataField("HeldPrefix")]
-        private string _equippedPrefix;
+        private string? _equippedPrefix;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string EquippedPrefix
+        public string? EquippedPrefix
         {
             get => _equippedPrefix;
             set
             {
                 _equippedPrefix = value;
-                if (!Owner.TryGetContainer(out IContainer container)) return;
-                if(container.Owner.TryGetComponent(out HandsComponent hands))
+
+                if (!Owner.TryGetContainer(out var container))
+                    return;
+
+                if (container.Owner.TryGetComponent(out HandsComponent? hands))
                     hands.RefreshInHands();
             }
         }
 
         public (RSI rsi, RSI.StateId stateId, Color color)? GetInHandStateInfo(HandLocation hand)
         {
-            if (RsiPath == null)
+            var rsi = GetRSI();
+
+            if (rsi == null)
             {
                 return null;
             }
 
             var handName = hand.ToString().ToLowerInvariant();
-            var rsi = GetRSI();
             var stateId = EquippedPrefix != null ? $"{EquippedPrefix}-inhand-{handName}" : $"inhand-{handName}";
+
             if (rsi.TryGetState(stateId, out _))
             {
                 return (rsi, stateId, Color);
@@ -67,18 +70,22 @@ namespace Content.Client.GameObjects.Components.Items
             return null;
         }
 
-        protected RSI GetRSI()
+        protected RSI? GetRSI()
         {
+            if (RsiPath == null)
+            {
+                return null;
+            }
+
             return _resourceCache.GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / RsiPath).RSI;
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            if(curState == null)
+            if (curState is not ItemComponentState state)
                 return;
 
-            var itemComponentState = (ItemComponentState)curState;
-            EquippedPrefix = itemComponentState.EquippedPrefix;
+            EquippedPrefix = state.EquippedPrefix;
         }
 
         bool IDraggable.CanDrop(CanDropEventArgs args)

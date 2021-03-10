@@ -157,7 +157,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
 
             foreach (var entry in inventory)
             {
-                if (_prototypeManager.TryIndex(entry.ID, out ReagentPrototype proto))
+                if (_prototypeManager.TryIndex(entry.ID, out ReagentPrototype? proto))
                 {
                     ChemicalList.AddChild(new Button {Text = proto.Name});
                 }
@@ -285,7 +285,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
             {
                 var name = Loc.GetString("Unknown reagent");
                 //Try to the prototype for the given reagent. This gives us it's name.
-                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
                     name = proto.Name;
                 }

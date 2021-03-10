@@ -50,7 +50,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
             var viewport = _eyeManager.GetWorldViewport();
 
             var ent = _playerManager.LocalPlayer?.ControlledEntity;
-            if (ent == null || ent.TryGetComponent(out SuspicionRoleComponent sus) != true)
+            if (ent == null || ent.TryGetComponent(out SuspicionRoleComponent? sus) != true)
             {
                 return;
             }
@@ -63,7 +63,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     continue;
                 }
 
-                if (!ally.TryGetComponent(out IPhysBody physics))
+                if (!ally.TryGetComponent(out IPhysBody? physics))
                 {
                     continue;
                 }

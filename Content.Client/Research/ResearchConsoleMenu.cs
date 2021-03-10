@@ -7,7 +7,6 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Research
@@ -274,7 +273,7 @@ namespace Content.Client.Research
             for (var i = 0; i < TechnologySelected.RequiredTechnologies.Count; i++)
             {
                 var requiredId = TechnologySelected.RequiredTechnologies[i];
-                if (!prototypeMan.TryIndex(requiredId, out TechnologyPrototype prototype)) continue;
+                if (!prototypeMan.TryIndex(requiredId, out TechnologyPrototype? prototype)) continue;
                 if (i == 0)
                     _technologyRequirements.Text = Loc.GetString("Requires") + $": {prototype.Name}";
                 else

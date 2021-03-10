@@ -103,10 +103,12 @@ namespace Content.Client.GameObjects.Components.Kitchen
             _menu.IngredientsListReagents.Clear();
             for (var i = 0; i < reagents.Length; i++)
             {
-                _prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype proto);
-                var reagentAdded = _menu.IngredientsListReagents.AddItem($"{reagents[i].Quantity} {proto.Name}");
-                var reagentIndex = _menu.IngredientsListReagents.IndexOf(reagentAdded);
-                _reagents.Add(reagentIndex, reagents[i]);
+                if (_prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype? proto))
+                {
+                    var reagentAdded = _menu.IngredientsListReagents.AddItem($"{reagents[i].Quantity} {proto.Name}");
+                    var reagentIndex = _menu.IngredientsListReagents.IndexOf(reagentAdded);
+                    _reagents.Add(reagentIndex, reagents[i]);
+                }
             }
 
             _solids.Clear();

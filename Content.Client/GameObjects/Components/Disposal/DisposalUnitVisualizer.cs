@@ -15,36 +15,36 @@ namespace Content.Client.GameObjects.Components.Disposal
         private const string AnimationKey = "disposal_unit_animation";
 
         [DataField("state_anchored", required: true)]
-        private string _stateAnchored;
+        private string? _stateAnchored;
 
         [DataField("state_unanchored", required: true)]
-        private string _stateUnAnchored;
+        private string? _stateUnAnchored;
 
         [DataField("state_charging", required: true)]
-        private string _stateCharging;
+        private string? _stateCharging;
 
         [DataField("overlay_charging", required: true)]
-        private string _overlayCharging;
+        private string? _overlayCharging;
 
         [DataField("overlay_ready", required: true)]
-        private string _overlayReady;
+        private string? _overlayReady;
 
         [DataField("overlay_full", required: true)]
-        private string _overlayFull;
+        private string? _overlayFull;
 
         [DataField("overlay_engaged", required: true)]
-        private string _overlayEngaged;
+        private string? _overlayEngaged;
 
         [DataField("state_flush", required: true)]
-        private string _stateFlush;
+        private string? _stateFlush;
 
         [DataField("flush_sound", required: true)]
-        private string _flushSound;
+        private string? _flushSound;
 
         [DataField("flush_time", required: true)]
         private float _flushTime;
 
-        private Animation _flushAnimation;
+        private Animation _flushAnimation = default!;
 
         void ISerializationHooks.AfterDeserialization()
         {
@@ -57,7 +57,11 @@ namespace Content.Client.GameObjects.Components.Disposal
 
             var sound = new AnimationTrackPlaySound();
             _flushAnimation.AnimationTracks.Add(sound);
-            sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_flushSound, 0));
+
+            if (_flushSound != null)
+            {
+                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_flushSound, 0));
+            }
         }
 
         private void ChangeState(AppearanceComponent appearance)
@@ -67,7 +71,7 @@ namespace Content.Client.GameObjects.Components.Disposal
                 return;
             }
 
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!appearance.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }

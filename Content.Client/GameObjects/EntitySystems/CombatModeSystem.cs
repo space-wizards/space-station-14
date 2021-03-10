@@ -25,8 +25,8 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            _gameHud.CombatModeChanged = OnCombatModeChanged;
-            _gameHud.TargetingZoneChanged = OnTargetingZoneChanged;
+            _gameHud.OnCombatModeChanged = OnCombatModeChanged;
+            _gameHud.OnTargetingZoneChanged = OnTargetingZoneChanged;
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ToggleCombatMode,

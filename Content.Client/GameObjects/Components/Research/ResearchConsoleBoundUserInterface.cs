@@ -42,7 +42,10 @@ namespace Content.Client.GameObjects.Components.Research
 
             _consoleMenu.UnlockButton.OnPressed += (_) =>
             {
-                SendMessage(new ConsoleUnlockTechnologyMessage(_consoleMenu.TechnologySelected?.ID));
+                if (_consoleMenu.TechnologySelected != null)
+                {
+                    SendMessage(new ConsoleUnlockTechnologyMessage(_consoleMenu.TechnologySelected.ID));
+                }
             };
 
             _consoleMenu.OpenCentered();

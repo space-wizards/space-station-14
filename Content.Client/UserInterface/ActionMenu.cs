@@ -88,7 +88,7 @@ namespace Content.Client.UserInterface
                             (_filterButton = new MultiselectOptionButton<string>()
                             {
                                 Label = Loc.GetString("Filter")
-                            }),
+                            })
                         }
                     },
                     (_clearButton = new Button

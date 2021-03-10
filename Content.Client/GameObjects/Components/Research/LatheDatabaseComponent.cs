@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Research
 
             foreach (var ID in state.Recipes)
             {
-                if (!_prototypeManager.TryIndex(ID, out LatheRecipePrototype recipe)) continue;
+                if (!_prototypeManager.TryIndex(ID, out LatheRecipePrototype? recipe)) continue;
                 AddRecipe(recipe);
             }
         }

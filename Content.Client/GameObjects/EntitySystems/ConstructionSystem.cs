@@ -154,8 +154,14 @@ namespace Content.Client.GameObjects.EntitySystems
         private void TryStartConstruction(int ghostId)
         {
             var ghost = _ghosts[ghostId];
+
+            if (ghost.Prototype == null)
+            {
+                throw new ArgumentException($"Can't start construction for a ghost with no prototype. Ghost id: {ghostId}");
+            }
+
             var transform = ghost.Owner.Transform;
-            var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype?.ID, transform.LocalRotation, ghostId);
+            var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
             RaiseNetworkEvent(msg);
         }
 

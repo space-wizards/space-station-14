@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Construction
 
             message.AddMarkup(Loc.GetString("Building: [color=cyan]{0}[/color]\n", Prototype.Name));
 
-            if (!_prototypeManager.TryIndex(Prototype.Graph, out ConstructionGraphPrototype graph)) return;
+            if (!_prototypeManager.TryIndex(Prototype.Graph, out ConstructionGraphPrototype? graph)) return;
             var startNode = graph.Nodes[Prototype.StartNode];
             var path = graph.Path(Prototype.StartNode, Prototype.TargetNode);
             var edge = startNode.GetEdge(path[0].Name);

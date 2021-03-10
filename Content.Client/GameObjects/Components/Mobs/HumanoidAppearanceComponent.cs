@@ -1,4 +1,4 @@
-using Content.Client.GameObjects.Components.ActionBlocking;
+﻿using Content.Client.GameObjects.Components.ActionBlocking;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -12,7 +12,7 @@ namespace Content.Client.GameObjects.Components.Mobs
     [RegisterComponent]
     public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent, IBodyPartAdded, IBodyPartRemoved
     {
-        public override HumanoidCharacterAppearance? Appearance
+        public override HumanoidCharacterAppearance Appearance
         {
             get => base.Appearance;
             set

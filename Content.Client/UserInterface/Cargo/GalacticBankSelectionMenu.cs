@@ -1,8 +1,8 @@
-﻿using Robust.Client.UserInterface.Controls;
+﻿using Content.Client.GameObjects.Components.Cargo;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface.Cargo
 {
@@ -14,9 +14,7 @@ namespace Content.Client.UserInterface.Cargo
         private int[] _accountIds = new int[] { };
         private int _selectedAccountId = -1;
 
-        public CargoConsoleBoundUserInterface Owner;
-
-        public GalacticBankSelectionMenu()
+        public GalacticBankSelectionMenu(CargoConsoleBoundUserInterface owner)
         {
             MinSize = SetSize = (300, 300);
             IoCManager.InjectDependencies(this);

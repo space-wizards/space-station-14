@@ -15,7 +15,8 @@ namespace Content.Client.Graphics.Overlays
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
-        private readonly ShaderInstance _gradientCircleShader, _glowingBorderShader;
+        private readonly ShaderInstance _gradientCircleShader;
+        private readonly ShaderInstance? _glowingBorderShader;
 
         public CritOverlay()
         {

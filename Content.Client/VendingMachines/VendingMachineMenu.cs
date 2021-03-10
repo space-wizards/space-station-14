@@ -6,7 +6,6 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Content.Shared.GameObjects.Components.VendingMachines.SharedVendingMachineComponent;
 
@@ -48,7 +47,7 @@ namespace Content.Client.VendingMachines
                 var itemName = _prototypeManager.Index<EntityPrototype>(entry.ID).Name;
 
                 Texture? icon = null;
-                if(_prototypeManager.TryIndex(entry.ID, out EntityPrototype prototype))
+                if(_prototypeManager.TryIndex(entry.ID, out EntityPrototype? prototype))
                 {
                     icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache).Default;
                 }

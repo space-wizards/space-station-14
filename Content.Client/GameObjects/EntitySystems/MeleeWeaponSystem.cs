@@ -38,7 +38,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void PlayWeaponArc(PlayMeleeWeaponAnimationMessage msg)
         {
-            if (!_prototypeManager.TryIndex(msg.ArcPrototype, out MeleeWeaponAnimationPrototype weaponArc))
+            if (!_prototypeManager.TryIndex(msg.ArcPrototype, out MeleeWeaponAnimationPrototype? weaponArc))
             {
                 Logger.Error("Tried to play unknown weapon arc prototype '{0}'", msg.ArcPrototype);
                 return;
