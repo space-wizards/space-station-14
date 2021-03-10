@@ -20,14 +20,10 @@ namespace Content.MapRenderer
 {
     internal class Program : ContentIntegrationTest
     {
-        internal static void Main(string[] args)
+        internal static void Main()
         {
-            var (created, modified) = args.Length switch
-            {
-                0 => (null, null),
-                1 => (args[0], null),
-                _ => (args[0], args[1])
-            };
+            var created = Environment.GetEnvironmentVariable("MAPS_ADDED");
+            var modified = Environment.GetEnvironmentVariable("MAPS_MODIFIED");
 
             var yamlStream = new YamlStream();
             var files = new YamlSequenceNode();
