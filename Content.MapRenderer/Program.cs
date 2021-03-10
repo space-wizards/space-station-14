@@ -22,6 +22,8 @@ namespace Content.MapRenderer
     {
         internal static void Main()
         {
+            Console.WriteLine(Environment.GetEnvironmentVariable("steps.file_changes.outputs.files_modified"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("STEPS.FILE_CHANGES.OUTPUTS.FILES_MODIFIED"));
             var created = Environment.GetEnvironmentVariable("MAPS_ADDED");
             var modified = Environment.GetEnvironmentVariable("MAPS_MODIFIED");
 

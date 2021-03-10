@@ -35,6 +35,3 @@ jobs:
         run: dotnet build --configuration Release --no-restore /m
       - name: Create map images
         run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-build
-        with:
-          MAPS_ADDED: ${{ steps.file_changes.outputs.files_added }}
-          MAPS_MODIFIED: ${{ steps.file_changes.outputs.files_modified }}
