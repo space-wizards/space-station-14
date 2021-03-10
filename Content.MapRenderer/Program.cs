@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
@@ -8,9 +10,11 @@ using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.MapRenderer
 {
@@ -18,12 +22,69 @@ namespace Content.MapRenderer
     {
         internal static void Main(string[] args)
         {
-            Console.WriteLine(string.Join("\n--------------\n", args));
-            new Program().Run().GetAwaiter().GetResult();
+            var (created, modified) = args.Length switch
+            {
+                0 => (null, null),
+                1 => (args[0], null),
+                _ => (args[0], args[1])
+            };
+
+            var yamlStream = new YamlStream();
+            var files = new YamlSequenceNode();
+
+            if (created != null)
+            {
+                yamlStream.Load(new StringReader(created));
+
+                var filesCreated = (YamlSequenceNode) yamlStream.Documents[0].RootNode;
+
+                foreach (var node in filesCreated)
+                {
+                    files.Add(node);
+                }
+            }
+
+            if (modified != null)
+            {
+                yamlStream.Load(new StringReader(modified));
+
+                var filesModified = (YamlSequenceNode) yamlStream.Documents[1].RootNode;
+
+                foreach (var node in filesModified)
+                {
+                    files.Add(node);
+                }
+            }
+
+            var maps = new List<string>();
+
+            foreach (var node in files)
+            {
+                var fileName = node.AsString();
+
+                if (!fileName.StartsWith("Resources/Maps/") ||
+                    !fileName.EndsWith("yml"))
+                {
+                    continue;
+                }
+
+                maps.Add(fileName);
+            }
+
+            maps.Add("Resources/Maps/Test/empty.yml");
+
+            var program = new Program();
+
+            foreach (var map in maps)
+            {
+                program.Run(map).GetAwaiter().GetResult();
+            }
         }
 
-        private async Task Run()
+        private async Task Run(string map)
         {
+            map = map.Substring(10); // Resources/
+
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -39,7 +100,7 @@ namespace Content.MapRenderer
             {
                 CVarOverrides =
                 {
-                    [CCVars.GameMap.Name] = "Maps/saltern.yml",
+                    [CCVars.GameMap.Name] = map,
                     [CVars.NetPVS.Name] = "false"
                 }
             };
@@ -85,7 +146,12 @@ namespace Content.MapRenderer
 
                     gridCanvas.Mutate(e => e.Flip(FlipMode.Vertical));
 
-                    await gridCanvas.SaveAsync($"C:\\Projects\\C#\\space-station-14\\grid-{grid.Index}.png");
+                    var file = new ResourcePath($"MapImages/{map.Substring(5, map.Length - 9)}.png");
+                    var directoryPath =
+                        $"{Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!}/Resources/{file.Directory}";
+                    var directory = Directory.CreateDirectory(directoryPath);
+
+                    await gridCanvas.SaveAsync($"{directory}/{file.Filename}");
                 }
             });
 
