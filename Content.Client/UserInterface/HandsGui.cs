@@ -32,8 +32,6 @@ namespace Content.Client.UserInterface
         private ItemStatusPanel TopPanel { get; }
         private ItemStatusPanel RightPanel { get; }
 
-        private HBoxContainer GuiContainer { get; }
-        private VBoxContainer HandsColumn { get; }
         private HBoxContainer HandsContainer { get; }
 
 
@@ -51,24 +49,23 @@ namespace Content.Client.UserInterface
         {
             Creator = creator;
             IoCManager.InjectDependencies(this);
-            AddChild(GuiContainer = new HBoxContainer
+            AddChild(new VBoxContainer
             {
                 SeparationOverride = 0,
                 Children =
                 {
-                    (LeftPanel = ItemStatusPanel.FromSide(HandLocation.Left)),
-                    (HandsColumn = new VBoxContainer
+                    (TopPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
+                    new HBoxContainer
                     {
                         Children =
                         {
-                            (HandsContainer = new HBoxContainer())
+                            (LeftPanel = ItemStatusPanel.FromSide(HandLocation.Left)),
+                            (HandsContainer = new HBoxContainer()),
+                            (RightPanel = ItemStatusPanel.FromSide(HandLocation.Right))
                         }
-                    }),
-                    (RightPanel = ItemStatusPanel.FromSide(HandLocation.Right))
+                    },
                 }
             });
-            TopPanel = ItemStatusPanel.FromSide(HandLocation.Middle);
-
             LeftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
             MiddleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
             RightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
