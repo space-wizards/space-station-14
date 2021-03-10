@@ -23,9 +23,6 @@ namespace Content.MapRenderer
     {
         internal static void Main()
         {
-            Console.WriteLine(Directory.GetCurrentDirectory());
-            Console.WriteLine(Assembly.GetExecutingAssembly().Location);
-
             var created = Environment.GetEnvironmentVariable("MAPS_ADDED");
             var modified = Environment.GetEnvironmentVariable("MAPS_MODIFIED");
 
@@ -143,7 +140,7 @@ namespace Content.MapRenderer
 
                     var file = new ResourcePath($"MapImages/{map.Substring(5, map.Length - 9)}.png");
                     var directoryPath =
-                        $"{Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!}/Resources/{file.Directory}";
+                        $"{Directory.GetParent(Assembly.GetExecutingAssembly().Location)!.Parent!.Parent}/Resources/{file.Directory}";
                     var directory = Directory.CreateDirectory(directoryPath);
                     var path = $"{directory}/{file.Filename}";
 
@@ -155,7 +152,7 @@ namespace Content.MapRenderer
 
             await TearDown();
 
-            Console.WriteLine($"Saved all map images in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+            Console.WriteLine($"Saved map image for {map} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
     }
 }
