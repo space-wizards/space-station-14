@@ -2,146 +2,6 @@
 #1D2L3U4R
 
 - type: entity
-  name: monkey
-  id: MonkeyMob_Content
-  parent: SimpleMobBase
-  description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: monkey
-      sprite: Mobs/Animals/monkey.rsi
-  - type: Physics
-    bodyType: Dynamic
-    mass: 50
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.30,-0.25,0.40,0.25"
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: monkey
-      dead: dead
-    - type: FireVisualizer
-      sprite: Mobs/Effects/onfire.rsi
-      normalState: Monkey_burning
-
-- type: entity
-  name: gorilla
-  parent: SimpleMobBase
-  id: GorillaMob_Content
-  description: Smashes, roars, looks cool. Don't stand near one.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: crawling
-      sprite: Mobs/Animals/gorilla.rsi
-  - type: Physics
-    bodyType: Dynamic
-    mass: 90
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.90,-0.50,0.05,0.50"
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: crawling
-      dead: dead
-
-- type: entity
-  name: chicken
-  parent: SimpleMobBase
-  id: ChickenMob_Content
-  description: Comes before an egg, and IS a dinosaur!
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: chicken-0
-      sprite: Mobs/Animals/chicken.rsi
-  - type: Physics
-    bodyType: Dynamic
-    mass: 20
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.45,-0.20,0.10,0.20"
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: chicken-0
-      dead: dead-0
-
-- type: entity
-  name: butterfly
-  parent: SimpleMobBase
-  id: ButterflyMob_Content
-  description: Despite popular misconceptions, it's not actually made of butter.
-  components:
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 6
-    baseSprintSpeed : 6
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: butterfly
-      sprite: Mobs/Animals/butterfly.rsi
-  - type: Physics
-    bodyType: Dynamic
-    mass: 5
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.20,-0.20,0.20,0.20"
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-  - type: RandomSpriteColor
-    state: butterfly
-    colors:
-      blue: "#1861d5"
-      red: "#951710"
-      pink: "#d5188d"
-      brown: "#a05212"
-      green: "#0e7f1b"
-      cyan: "#18a2d5"
-      yellow: "#d58c18"
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: butterfly
-      dead: dead
-
-- type: entity
   name: bat
   parent: SimpleMobBase
   id: BatMob_Content
@@ -211,24 +71,68 @@
       dead: dead
 
 - type: entity
-  name: goat
+  name: butterfly
   parent: SimpleMobBase
-  id: GoatMob_Content
-  description: His spine consists of long sharp segments, no wonder he is so grumpy.
+  id: ButterflyMob_Content
+  description: Despite popular misconceptions, it's not actually made of butter.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 6
+    baseSprintSpeed : 6
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: butterfly
+      sprite: Mobs/Animals/butterfly.rsi
+  - type: Physics
+    bodyType: Dynamic
+    mass: 5
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.20,-0.20,0.20,0.20"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: RandomSpriteColor
+    state: butterfly
+    colors:
+      blue: "#1861d5"
+      red: "#951710"
+      pink: "#d5188d"
+      brown: "#a05212"
+      green: "#0e7f1b"
+      cyan: "#18a2d5"
+      yellow: "#d58c18"
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: butterfly
+      dead: dead
+
+- type: entity
+  name: chicken
+  parent: SimpleMobBase
+  id: ChickenMob_Content
+  description: Comes before an egg, and IS a dinosaur!
   components:
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: goat
-      sprite: Mobs/Animals/goat.rsi
+      state: chicken-0
+      sprite: Mobs/Animals/chicken.rsi
   - type: Physics
     bodyType: Dynamic
     mass: 20
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.60,-0.50,0.05,0.50"
+          bounds: "-0.45,-0.20,0.10,0.20"
       mask:
       - Impassable
       - VaultImpassable
@@ -238,9 +142,9 @@
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
-      normal: goat
-      dead: dead
-      
+      normal: chicken-0
+      dead: dead-0
+
 - type: entity
   name: cow
   parent: SimpleMobBase
@@ -272,7 +176,69 @@
       normal: cow
       dead: dead
 
-# Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin
+- type: entity
+  name: crab
+  parent: SimpleMobBase
+  id: CrabMob_Content
+  description: A folk legend goes around that his claw snaps spacemen out of existance over distasteful remarks. Be polite and tolerant for your own safety.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: crab
+      sprite: Mobs/Animals/crab.rsi
+  - type: Physics
+    bodyType: Dynamic
+    mass: 10
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.40,-0.35,0.20,0.35"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: crab
+      dead: dead
+
+- type: entity
+  name: goat
+  parent: SimpleMobBase
+  id: GoatMob_Content
+  description: His spine consists of long sharp segments, no wonder he is so grumpy.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: goat
+      sprite: Mobs/Animals/goat.rsi
+  - type: Physics
+    bodyType: Dynamic
+    mass: 20
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.60,-0.50,0.05,0.50"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: goat
+      dead: dead
+
+# Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
   name: goose
   parent: SimpleMobBase
@@ -303,6 +269,71 @@
     - type: DamageStateVisualizer
       normal: goose
       dead: dead
+
+- type: entity
+  name: gorilla
+  parent: SimpleMobBase
+  id: GorillaMob_Content
+  description: Smashes, roars, looks cool. Don't stand near one.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: crawling
+      sprite: Mobs/Animals/gorilla.rsi
+  - type: Physics
+    bodyType: Dynamic
+    mass: 90
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.90,-0.50,0.05,0.50"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: crawling
+      dead: dead
+
+- type: entity
+  name: monkey
+  id: MonkeyMob_Content
+  parent: SimpleMobBase
+  description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: monkey
+      sprite: Mobs/Animals/monkey.rsi
+  - type: Physics
+    bodyType: Dynamic
+    mass: 50
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.30,-0.25,0.40,0.25"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: monkey
+      dead: dead
+    - type: FireVisualizer
+      sprite: Mobs/Effects/onfire.rsi
+      normalState: Monkey_burning
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
@@ -338,6 +369,37 @@
     - type: DamageStateVisualizer
       normal: parrot
       dead: dead
+
+- type: entity
+  name: penguin
+  parent: SimpleMobBase
+  id: PenguinMob_Content
+  description: Their lives are constant pain due to their inner-body knees.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: penguin
+      sprite: Mobs/Animals/penguin.rsi
+  - type: Physics
+    bodyType: Dynamic
+    mass: 10
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.50,-0.30,0.35,0.30"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: penguin
+      dead: penguin_dead
 
 - type: entity
   name: snake
@@ -403,65 +465,3 @@
     - type: DamageStateVisualizer
       normal: tarantula
       dead: tarantula_dead
-
-- type: entity
-  name: crab
-  parent: SimpleMobBase
-  id: CrabMob_Content
-  description: A folk legend goes around that his claw snaps spacemen out of existance over distasteful remarks. Be polite and tolerant for your own safety.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: crab
-      sprite: Mobs/Animals/crab.rsi
-  - type: Physics
-    bodyType: Dynamic
-    mass: 10
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.40,-0.35,0.20,0.35"
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: crab
-      dead: dead
-
-- type: entity
-  name: penguin
-  parent: SimpleMobBase
-  id: PenguinMob_Content
-  description: Their lives are constant pain due to their inner-body knees.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: penguin
-      sprite: Mobs/Animals/penguin.rsi
-  - type: Physics
-    bodyType: Dynamic
-    mass: 10
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.50,-0.30,0.35,0.30"
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: penguin
-      dead: penguin_dead
