@@ -39,3 +39,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore /m
       - name: Create map images
         run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-build
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v3.8.2
+        with:
+          title: Update map images
