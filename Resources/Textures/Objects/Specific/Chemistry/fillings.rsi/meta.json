@@ -6,248 +6,89 @@
 	},
 	"states": [
 		{
-			"name": "backpack1",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "backpack1"
 		},
 		{
-			"name": "backpack2",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "backpack2"
 		},
 		{
-			"name": "backpackmob1",
-			"directions": 4,
-			"delays": [
-				[
-					1.0
-				],
-				[
-					1.0
-				],
-				[
-					1.0
-				],
-				[
-					1.0
-				]
-			]
+			"name": "backpackmob1"
 		},
 		{
 			"name": "backpackmob2",
-			"directions": 4,
-			"delays": [
-				[
-					1.0
-				],
-				[
-					1.0
-				],
-				[
-					1.0
-				],
-				[
-					1.0
-				]
-			]
+			"directions": 4
 		},
 		{
-			"name": "glass1",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "glass1"
 		},
 		{
-			"name": "glass2",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "glass2"
 		},
 		{
-			"name": "glass3",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "glass3"
 		},
 		{
-			"name": "glass4",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "glass4"
 		},
 		{
-			"name": "glass5",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "glass5"
 		},
 		{
-			"name": "glass6",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "glass6"
 		},
 		{
-			"name": "largebottle1",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "largebottle1"
 		},
 		{
-			"name": "largebottle2",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "largebottle2"
 		},
 		{
-			"name": "largebottle3",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "largebottle3"
 		},
 		{
-			"name": "largebottle4",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "largebottle4"
 		},
 		{
-			"name": "largebottle5",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "largebottle5"
 		},
 		{
-			"name": "largebottle6",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "largebottle6"
 		},
 		{
-			"name": "smallbottle1",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "smallbottle1"
 		},
 		{
-			"name": "smallbottle2",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "smallbottle2"
 		},
 		{
-			"name": "smallbottle3",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "smallbottle3"
 		},
 		{
-			"name": "smallbottle4",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "smallbottle4"
 		},
 		{
-			"name": "smallbottle5",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "smallbottle5"
 		},
 		{
-			"name": "smallbottle6",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "smallbottle6"
 		},
 		{
-			"name": "vial1",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "vial1"
 		},
 		{
-			"name": "vial2",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "vial2"
 		},
 		{
-			"name": "vial3",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "vial3"
 		},
 		{
-			"name": "vial4",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "vial4"
 		},
 		{
-			"name": "vial5",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "vial5"
 		},
 		{
-			"name": "vial6",
-			"delays": [
-				[
-					1.0
-				]
-			]
+			"name": "vial6"
 		}
 	]
 }
