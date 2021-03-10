@@ -11,10 +11,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
-      mask:
-      - Impassable
       layer:
-      - MobImpassable
+      - SmallImpassable
+      mask:
+      - VaultImpassable
   - type: Sprite
     # temp to make clickmask work
     sprite: Constructible/Misc/kitchen.rsi
