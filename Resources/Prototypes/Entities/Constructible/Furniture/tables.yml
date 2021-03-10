@@ -23,7 +23,7 @@
       layer:
       - VaultImpassable
       mask:
-      - Impassable
+      - MobImpassable
   - type: SnapGrid
     offset: Center
   - type: Climbable
