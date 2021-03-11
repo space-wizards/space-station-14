@@ -380,3 +380,10 @@ Entries:
   - {message: Mobs controlled by players are much easier to - control, type: Tweak}
   id: 69
   time: '2021-03-11T05:00:16.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: 'Beakers, syringes and chemistry bottles show fill level by different
+      sprites', type: Add}
+  - {message: Add bluespace beaker and cryostasis beaker (non-obtainable yet), type: Add}
+  id: 70
+  time: '2021-03-11T09:24:17.0000000+00:00'
