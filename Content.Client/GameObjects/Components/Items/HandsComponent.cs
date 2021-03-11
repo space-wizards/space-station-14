@@ -55,7 +55,7 @@ namespace Content.Client.GameObjects.Components.Items
             base.Initialize();
             Gui.HandClick += args => OnHandClick(args.HandClicked);
             Gui.HandRightClick += args => OnHandRightClick(args.HandClicked);
-            Gui.HandUse += args => OnActivateInHand(args.HandUsed);
+            Gui.HandActivate += args => OnActivateInHand(args.HandUsed);
         }
 
         private void OnHandClick(int handClicked)

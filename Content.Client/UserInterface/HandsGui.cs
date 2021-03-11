@@ -46,7 +46,7 @@ namespace Content.Client.UserInterface
 
         public Action<HandRightClickEventArgs>? HandRightClick;
 
-        public Action<HandActivateEventArgs>? HandUse;
+        public Action<HandActivateEventArgs>? HandActivate;
 
         public HandsGui()
         {
@@ -100,7 +100,10 @@ namespace Content.Client.UserInterface
                 HandsContainer.AddChild(newButton);
                 hand.HandButton = newButton;
 
-                newButton.OnPressed += args => OnHandPressed(args, hand);
+                var handIndex = _hands.IndexOf(hand);
+                newButton.OnPressed += args => OnHandPressed(args, handIndex);
+                newButton.OnStoragePressed += args => OnStoragePressed(handIndex);
+
                 newButton.Blocked.Visible = !hand.Enabled;
                 GetStatusPanel(location).Update(heldItem);
                 _itemSlotManager.SetItemSlot(newButton, heldItem);
@@ -112,9 +115,9 @@ namespace Content.Client.UserInterface
             HandleTopPanel();
         }
 
-        private void OnHandPressed(GUIBoundKeyEventArgs pressed, GuiHand hand)
+        private void OnHandPressed(GUIBoundKeyEventArgs pressed, int handIndex)
         {
-            var handIndex = _hands.IndexOf(hand);
+            
             if (pressed.Function == EngineKeyFunctions.UIClick)
             {
                 HandClick?.Invoke(new HandClickEventArgs(handIndex));
@@ -123,10 +126,11 @@ namespace Content.Client.UserInterface
             {
                 HandRightClick?.Invoke(new HandRightClickEventArgs(handIndex));
             }
-            else if (pressed.Function == EngineKeyFunctions.) //TODO: figure out how to hand activate of inhand item
-            {
-                HandUse?.Invoke(new HandActivateEventArgs(handIndex));
-            }
+        }
+
+        private void OnStoragePressed(int handIndex)
+        {
+            HandActivate?.Invoke(new HandActivateEventArgs(handIndex));
         }
 
         private bool TryGetHandButton(int handNumber, [NotNullWhen(true)] out HandButton? handButton)
