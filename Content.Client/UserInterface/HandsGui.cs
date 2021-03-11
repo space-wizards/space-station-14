@@ -73,11 +73,6 @@ namespace Content.Client.UserInterface
             RightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
             StorageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
             BlockedTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
-
-            foreach (HandLocation location in Enum.GetValues(typeof(HandLocation)))
-            {
-                GetStatusPanel(location).Update(null);
-            }
         }
 
         public void SetState(HandsGuiState state)
@@ -117,7 +112,6 @@ namespace Content.Client.UserInterface
 
         private void OnHandPressed(GUIBoundKeyEventArgs pressed, int handIndex)
         {
-            
             if (pressed.Function == EngineKeyFunctions.UIClick)
             {
                 HandClick?.Invoke(new HandClickEventArgs(handIndex));

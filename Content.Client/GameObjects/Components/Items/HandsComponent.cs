@@ -81,7 +81,7 @@ namespace Content.Client.GameObjects.Components.Items
                 return;
             }
 
-            if (handClicked != ActiveHand && activeItem == null && pressedItem != null)
+            if (handClicked != ActiveHand && activeItem != null && pressedItem != null)
             {
                 SendNetworkMessage(new ClientAttackByInHandMsg(pressedHand.Name)); //use active item on held item
                 return;
@@ -90,7 +90,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         private void OnHandRightClick(int handClicked)
         {
-
+            //TODO: make this work
         }
 
         private void OnActivateInHand(int handActivated)
