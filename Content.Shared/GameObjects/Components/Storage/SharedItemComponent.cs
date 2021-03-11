@@ -99,9 +99,6 @@ namespace Content.Shared.GameObjects.Components.Storage
         {
             base.HandleComponentState(curState, nextState);
 
-            if (curState == null)
-                return;
-
             if (curState is not ItemComponentState state)
                 return;
 
