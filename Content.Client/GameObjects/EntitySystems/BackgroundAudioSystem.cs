@@ -116,6 +116,10 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 StartAmbience();
             }
+            else
+            {
+                EndAmbience();
+            }
         }
 
         private void StartAmbience()
