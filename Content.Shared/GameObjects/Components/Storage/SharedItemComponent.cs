@@ -2,10 +2,8 @@
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Physics;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
@@ -19,7 +17,7 @@ namespace Content.Shared.GameObjects.Components.Storage
     /// <summary>
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.
     /// </summary>
-    public abstract class SharedItemComponent : Component, IEquipped, IUnequipped, IExAct, IInteractHand, IThrown, ILand
+    public abstract class SharedItemComponent : Component, IEquipped, IUnequipped, IExAct, IInteractHand
     {
         public override string Name => "Item";
 
@@ -153,26 +151,6 @@ namespace Content.Shared.GameObjects.Components.Storage
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             return TryPutInHand(eventArgs.User);
-        }
-
-        void IThrown.Thrown(ThrownEventArgs eventArgs)
-        {
-            if (!Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
-
-            foreach (var fixture in physicsComponent.Fixtures)
-            {
-                fixture.CollisionLayer |= (int) CollisionGroup.MobImpassable;
-            }
-        }
-
-        void ILand.Land(LandEventArgs eventArgs)
-        {
-            if (!Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
-
-            foreach (var fixture in physicsComponent.Fixtures)
-            {
-                fixture.CollisionLayer &= ~(int) CollisionGroup.MobImpassable;
-            }
         }
 
         /// <summary>

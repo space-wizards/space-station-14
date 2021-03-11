@@ -8,7 +8,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
@@ -47,11 +46,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             hands.PutInHand(this, activeHand, false);
             return true;
-        }
-
-        protected override void ThrowItem(Vector2 direction)
-        {
-            Owner.TryThrow(direction);
         }
 
         [Verb]
