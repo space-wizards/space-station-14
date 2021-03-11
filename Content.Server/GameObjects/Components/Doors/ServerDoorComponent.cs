@@ -134,7 +134,8 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         /// Whether the door can ever be welded shut.
         /// </summary>
-        private bool _weldable;
+        [DataField("weldable")]
+        private bool _weldable = true;
 
         /// <summary>
         /// Whether the door can currently be welded.

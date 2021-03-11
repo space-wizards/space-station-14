@@ -29,7 +29,7 @@ namespace Content.Client.GameObjects.Components.Storage
         private List<IEntity> _storedEntities = new();
         private int StorageSizeUsed;
         private int StorageCapacityMax;
-        private StorageWindow Window;
+        private StorageWindow? _window;
         private SharedBagState _bagState;
 
         public override IReadOnlyList<IEntity> StoredEntities => _storedEntities;
@@ -46,17 +46,16 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             base.OnAdd();
 
-            Window = new StorageWindow()
-            { StorageEntity = this, Title = Owner.Name };
+            _window = new StorageWindow(this) {Title = Owner.Name};
         }
 
         public override void OnRemove()
         {
-            Window.Dispose();
+            _window?.Dispose();
             base.OnRemove();
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
@@ -70,7 +69,7 @@ namespace Content.Client.GameObjects.Components.Storage
                 .ToList();
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 
@@ -105,7 +104,7 @@ namespace Content.Client.GameObjects.Components.Storage
             _storedEntities = storageState.StoredEntities.Select(id => Owner.EntityManager.GetEntity(id)).ToList();
             StorageSizeUsed = storageState.StorageSizeUsed;
             StorageCapacityMax = storageState.StorageSizeMax;
-            Window.BuildEntityList();
+            _window?.BuildEntityList();
         }
 
         /// <summary>
@@ -131,16 +130,17 @@ namespace Content.Client.GameObjects.Components.Storage
         /// </summary>
         private void ToggleUI()
         {
-            if (Window.IsOpen)
+            if (_window == null) return;
 
-                Window.Close();
+            if (_window.IsOpen)
+                _window.Close();
             else
-                Window.Open();
+                _window.Open();
         }
 
         private void CloseUI()
         {
-            Window.Close();
+            _window?.Close();
         }
 
         private void ChangeStorageVisualization(SharedBagState state)
@@ -185,8 +185,9 @@ namespace Content.Client.GameObjects.Components.Storage
             private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
             private readonly StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
 
-            public StorageWindow()
+            public StorageWindow(ClientStorageComponent storageEntity)
             {
+                StorageEntity = storageEntity;
                 MinSize = SetSize = (180, 320);
                 Title = "Storage Item";
                 RectClipContent = true;
@@ -205,9 +206,9 @@ namespace Content.Client.GameObjects.Components.Storage
                 containerButton.AddChild(innerContainerButton);
                 containerButton.OnPressed += args =>
                 {
-                    var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
+                    var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
 
-                    if (controlledEntity.TryGetComponent(out HandsComponent hands))
+                    if (controlledEntity?.TryGetComponent(out HandsComponent? hands) ?? false)
                     {
                         StorageEntity.SendNetworkMessage(new InsertEntityMessage());
                     }
@@ -288,7 +289,7 @@ namespace Content.Client.GameObjects.Components.Storage
                     button.EntitySize.Text = group.Amount.ToString();
 
                     //Gets entity sprite and assigns it to button texture
-                    if (entity.TryGetComponent(out ISpriteComponent sprite))
+                    if (entity.TryGetComponent(out ISpriteComponent? sprite))
                     {
                         button.EntitySpriteView.Sprite = sprite;
                     }
@@ -314,9 +315,13 @@ namespace Content.Client.GameObjects.Components.Storage
             /// <param name="args"></param>
             private void OnItemButtonToggled(BaseButton.ButtonToggledEventArgs args)
             {
-                var control = (EntityButton) args.Button.Parent;
+                if (args.Button.Parent is not EntityButton button)
+                {
+                    return;
+                }
+
                 args.Button.Pressed = false;
-                StorageEntity.Interact(control.EntityUid);
+                StorageEntity.Interact(button.EntityUid);
             }
         }
 
@@ -328,7 +333,6 @@ namespace Content.Client.GameObjects.Components.Storage
             public EntityUid EntityUid { get; set; }
             public Button ActualButton { get; }
             public SpriteView EntitySpriteView { get; }
-            public Control SizeControl { get; }
             public Label EntityName { get; }
             public Label EntitySize { get; }
 

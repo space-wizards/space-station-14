@@ -53,9 +53,8 @@ namespace Content.Client.GameObjects.Components
             }
         };
 
-        private Action<string> _radiatingCallback;
-        private Action<string> _blinkingCallback;
-
+        private Action<string>? _radiatingCallback;
+        private Action<string>? _blinkingCallback;
 
         public override void OnChangeData(AppearanceComponent component)
         {

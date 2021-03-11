@@ -7,9 +7,9 @@ namespace Content.Client.GameObjects.Components.Instruments
     public class InstrumentBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
-        private InstrumentMenu _instrumentMenu;
+        private InstrumentMenu? _instrumentMenu;
 
-        public InstrumentComponent Instrument { get; set; }
+        public InstrumentComponent? Instrument { get; set; }
 
         public InstrumentBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {

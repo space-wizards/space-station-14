@@ -16,6 +16,10 @@ You can put your name after the :cl: symbol to change the name that shows in the
 Like so: :cl: PJB
 
 Generally, only put things in changelogs that players actually care about. Stuff like "Refactored X system, no changes should be visible" shouldn't be on a changelog.
+
+For writing actual entries, don't consider the entry type suffix (e.g. add) to be "part" of the sentence:
+bad: - add: a new tool for engineers
+good: - add: added a new tool for engineers
 -->
 
 :cl:

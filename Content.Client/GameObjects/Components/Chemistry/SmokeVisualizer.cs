@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.GameObjects.Components.Chemistry;
+﻿using Content.Shared.GameObjects.Components.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Maths;

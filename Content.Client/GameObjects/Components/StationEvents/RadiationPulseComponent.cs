@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects;

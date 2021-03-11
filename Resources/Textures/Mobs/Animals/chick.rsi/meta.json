@@ -16,25 +16,11 @@
       ]
     },
     {
-      "name": "cow",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "name": "chick",
+      "directions": 4
     },
     {
-      "name": "chick_gib",
+      "name": "gib",
       "delays": [
         [
           0.6,

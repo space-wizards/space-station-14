@@ -1,7 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -22,11 +23,18 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<MoveEvent>(MoveEvent);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(ContainerModified);
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(ContainerModified);
+
+            SubscribeLocalEvent<BuckleComponent, AttackHandMessage>(HandleAttackHand);
+        }
+
+        private void HandleAttackHand(EntityUid uid, BuckleComponent component, AttackHandMessage args)
+        {
+            args.Handled = component.TryUnbuckle(args.User);
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<BuckleComponent>(false))
+            foreach (var comp in ComponentManager.EntityQuery<BuckleComponent>())
             {
                 comp.Update();
             }
@@ -37,6 +45,7 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Shutdown();
 
             UnsubscribeLocalEvent<MoveEvent>();
+            UnsubscribeLocalEvent<BuckleComponent, AttackHandMessage>(HandleAttackHand);
         }
 
         private void MoveEvent(MoveEvent ev)

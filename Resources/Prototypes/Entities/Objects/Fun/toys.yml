@@ -4,7 +4,7 @@
   name: bee plushie
   parent: BaseItem
   id: PlushieBee
-  description: A cute toy that resembles an even cuter coder.
+  description: A cute toy that resembles an even cuter programmer.
   components:
   - type: Toys
   - type: LoopingSound
@@ -49,7 +49,7 @@
   name: nar'sie plushie
   parent: BaseItem
   id: PlushieNar
-  description: A small stuffed doll of the elder goddess Nar'Sie. Who thought this was a good children's toy?
+  description: A small stuffed doll of the elder goddess Nar'Sie. 
   components:
   - type: Toys
   - type: LoopingSound
@@ -64,7 +64,7 @@
   name: carp plushie
   parent: BaseItem
   id: PlushieCarp
-  description: An adorable stuffed toy that resembles a space carp.
+  description: An adorable stuffed toy that resembles the monstrous space carp.
   components:
   - type: Toys
   - type: LoopingSound
@@ -97,7 +97,7 @@
   name: snake plushie
   parent: BaseItem
   id: PlushieSnake
-  description: An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing.
+  description: An adorable stuffed toy that resembles a snake.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -129,7 +129,7 @@
   name: help me carving
   parent: BaseItem
   id: CarvingHelpMe
-  description: Help me...
+  description: Help me!
   components:
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
@@ -191,7 +191,7 @@
   name: very good carving
   parent: BaseItem
   id: CarvingVeryGood
-  description: Very Good!
+  description: Very good!
   components:
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
@@ -211,7 +211,7 @@
   name: sorry carving
   parent: BaseItem
   id: CarvingImSorry
-  description: I'm sorry...
+  description: I'm sorry.
   components:
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
@@ -233,7 +233,7 @@
   name: AI toy
   parent: BaseItem
   id: ToyAi
-  description: A little toy model AI core.
+  description: A scaled-down toy AI core. 
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -243,7 +243,7 @@
   name: nuke toy
   parent: BaseItem
   id: ToyNuke
-  description: A plastic model of a Nuclear Fission Explosive. What child plays with this?
+  description: A plastic model of a Nuclear Fission Explosive. No uranium included... probably.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -276,7 +276,7 @@
   name: h.o.n.k. toy
   parent: BaseItem
   id: ToyHonk
-  description: Mini-Mecha action figure! Collect them all! 6/12.
+  description: Mini-Mecha action figure! 'Mecha No. 6/12' is written on the back.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -286,7 +286,7 @@
   name: ian toy
   parent: BaseItem
   id: ToyIan
-  description: Ian action figure.
+  description: Unable to eat, but just as fluffy as the real guy!
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -302,7 +302,7 @@
   name: marauder toy
   parent: BaseItem
   id: ToyMarauder
-  description: Mini-Mecha action figure! Collect them all! 7/12.
+  description: Mini-Mecha action figure! 'Mecha No. 7/12' is written on the back.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -312,7 +312,7 @@
   name: mauler toy
   parent: BaseItem
   id: ToyMauler
-  description: Mini-Mecha action figure! Collect them all! 9/12.
+  description: Mini-Mecha action figure! 'Mecha No. 9/12' is written on the back.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -322,7 +322,7 @@
   name: gygax toy
   parent: BaseItem
   id: ToyGygax
-  description: Mini-Mecha action figure! Collect them all! 4/12.
+  description: Mini-Mecha action figure! 'Mecha No. 4/12' is written on the back.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -332,7 +332,7 @@
   name: odysseus toy
   parent: BaseItem
   id: ToyOdysseus
-  description: Mini-Mecha action figure! Collect them all! 10/12.
+  description: Mini-Mecha action figure! 'Mecha No. 10/12' is written on the back.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -352,7 +352,7 @@
   name: deathripley toy
   parent: BaseItem
   id: ToyDeathRipley
-  description: Mini-Mecha action figure! Collect them all! 3/12.
+  description: Mini-Mecha action figure! 'Mecha No. 3/12' is written on the back.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -362,7 +362,7 @@
   name: phazon toy
   parent: BaseItem
   id: ToyPhazon
-  description: Mini-Mecha action figure! Collect them all! 11/12.
+  description: Mini-Mecha action figure! 'Mecha No. 11/12' is written on the back.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -372,7 +372,7 @@
   name: fire ripley
   parent: BaseItem
   id: ToyFireRipley
-  description: Mini-Mecha action figure! Collect them all! 2/12.
+  description: Mini-Mecha action figure! 'Mecha No. 2/12' is written on the back.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -382,7 +382,7 @@
   name: reticence toy
   parent: BaseItem
   id: ToyReticence
-  description: Mini-Mecha action figure! Collect them all! 12/12.
+  description: Mini-Mecha action figure! 'Mecha No. 12/12' is written on the back.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -392,7 +392,7 @@
   name: ripley toy
   parent: BaseItem
   id: ToyRipley
-  description: Mini-Mecha action figure! Collect them all! 1/12.
+  description: Mini-Mecha action figure! 'Mecha No. 1/12' is written on the back.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -403,7 +403,7 @@
   name: seraph toy
   parent: BaseItem
   id: ToySeraph
-  description: Mini-Mecha action figure! Collect them all! 8/12.
+  description: Mini-Mecha action figure! 'Mecha No. 8/12' is written on the back.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -414,7 +414,7 @@
   name: durand toy
   parent: BaseItem
   id: ToyDurand
-  description: Mini-Mecha action figure! Collect them all! 5/12.
+  description: Mini-Mecha action figure! 'Mecha No. 5/12' is written on the back.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -427,7 +427,7 @@
   name: skeleton toy
   parent: BaseItem
   id: ToySkeleton
-  description: Spooked yah!
+  description: Spooked ya!
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -567,7 +567,7 @@
   name: football
   parent: BaseItem
   id: Football
-  description: Go Sports Go!
+  description: Otherwise known as a handegg.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -583,7 +583,7 @@
   name: syndie balloon
   parent: BaseItem
   id: BalloonSyn
-  description: Loud and proud.
+  description: Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -598,7 +598,7 @@
   name: corgi balloon
   parent: BaseItem
   id: BalloonCorgi
-  description: Cute.
+  description: Just like owning a real dog - but a lot floatier.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -608,3 +608,22 @@
     size: 24
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: corgib
+
+- type: entity
+  name: singuloth-brand toy
+  parent: BaseItem
+  id: SingularityToy
+  description: Mass-produced by a sadistic corporate conglomerate!
+  components:  
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: singularitytoy
+  - type: Icon
+    sprite: Objects/Fun/toys.rsi
+    state: singularitytoy
+  - type: ToySingularity
+  
+  - type: Item
+    size: 12
+    sprite: Objects/Fun/toys.rsi
+    HeldPrefix: singularitytoy
