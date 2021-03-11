@@ -58,7 +58,7 @@ namespace Content.Client.Commands
 
             foreach (var component in components)
             {
-                if (component.Owner.TryGetComponent(out ISpriteComponent sprite))
+                if (component.Owner.TryGetComponent(out ISpriteComponent? sprite))
                 {
                     sprite.DrawDepth = (int) DrawDepth.Overlays;
                 }

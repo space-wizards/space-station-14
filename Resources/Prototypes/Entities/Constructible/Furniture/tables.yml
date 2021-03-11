@@ -17,10 +17,13 @@
     key: state
     base: state_
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       layer:
       - VaultImpassable
+      mask:
+      - Impassable
   - type: SnapGrid
     offset: Center
   - type: Climbable

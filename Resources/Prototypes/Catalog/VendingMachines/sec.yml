@@ -2,7 +2,7 @@
   id: SecTech
   name: SecTech
   description: "A vending machine containing Security equipment. A label reads \"SECURITY PERSONNEL ONLY\"."
-  animationDuration: 1.4
+  animationDuration: 2.8
   spriteName: sec
   startingInventory:
     Handcuffs: 8
@@ -14,4 +14,3 @@
     ClothingEyesGlassesSunglasses: 2
     ClothingBeltSecurityWebbing: 5
     #box evidence
-

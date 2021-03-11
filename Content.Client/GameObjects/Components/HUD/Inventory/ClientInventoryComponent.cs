@@ -1,10 +1,11 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
+using Content.Client.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -20,7 +21,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class ClientInventoryComponent : SharedInventoryComponent
+    public class ClientInventoryComponent : SharedInventoryComponent, IEffectBlocker
     {
         private readonly Dictionary<Slots, IEntity> _slots = new();
 
@@ -28,6 +29,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
 
+        [ComponentDependency]
         private ISpriteComponent? _sprite;
 
         private bool _playerAttached = false;
@@ -52,7 +54,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             InterfaceController = DynamicTypeFactory.CreateInstance<InventoryInterfaceController>(controllerType, args);
             InterfaceController.Initialize();
 
-            if (Owner.TryGetComponent(out _sprite))
+            if (_sprite != null)
             {
                 foreach (var mask in InventoryInstance.SlotMasks.OrderBy(s => InventoryInstance.SlotDrawingOrder(s)))
                 {
@@ -265,7 +267,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
         }
 
-        public bool TryGetSlot(Slots slot, out IEntity? item)
+        public bool TryGetSlot(Slots slot, [NotNullWhen(true)] out IEntity? item)
         {
             return _slots.TryGetValue(slot, out item);
         }
@@ -284,6 +286,11 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
 
             return false;
+        }
+
+        bool IEffectBlocker.CanSlip()
+        {
+            return !TryGetSlot(Slots.SHOES, out var shoes) || shoes == null || EffectBlockerSystem.CanSlip(shoes);
         }
     }
 }

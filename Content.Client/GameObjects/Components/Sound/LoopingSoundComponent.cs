@@ -8,7 +8,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Sound
 {
@@ -18,6 +18,13 @@ namespace Content.Client.GameObjects.Components.Sound
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private readonly Dictionary<ScheduledSound, IPlayingAudioStream> _audioStreams = new();
+
+        [DataField("schedules", true)]
+        private List<ScheduledSound> _scheduledSounds
+        {
+            set => value.ForEach(AddScheduledSound);
+            get => new();
+        }
 
         public override void StopAllSounds()
         {
@@ -55,11 +62,11 @@ namespace Content.Client.GameObjects.Components.Sound
 
                     if (!_audioStreams.ContainsKey(schedule))
                     {
-                        _audioStreams.Add(schedule,SoundSystem.Play(Filter.Local(), schedule.Filename, Owner, schedule.AudioParams));
+                        _audioStreams.Add(schedule, SoundSystem.Play(Filter.Local(), schedule.Filename, Owner, schedule.AudioParams)!);
                     }
                     else
                     {
-                        _audioStreams[schedule] = SoundSystem.Play(Filter.Local(), schedule.Filename, Owner, schedule.AudioParams);
+                        _audioStreams[schedule] = SoundSystem.Play(Filter.Local(), schedule.Filename, Owner, schedule.AudioParams)!;
                     }
 
                     if (schedule.Times == 0) return;
@@ -70,7 +77,7 @@ namespace Content.Client.GameObjects.Components.Sound
                 });
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
             switch (message)
@@ -93,16 +100,6 @@ namespace Content.Client.GameObjects.Components.Sound
         {
             base.Initialize();
             SoundSystem.OcclusionCollisionMask = (int) CollisionGroup.Impassable;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadFunction(
-                "schedules",
-                new List<ScheduledSound>(),
-                schedules => schedules.ForEach(AddScheduledSound));
         }
     }
 }

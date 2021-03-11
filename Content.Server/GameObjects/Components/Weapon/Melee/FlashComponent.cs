@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
@@ -7,7 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -18,11 +19,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     {
         public override string Name => "Flash";
 
-        [ViewVariables(VVAccess.ReadWrite)] private int _flashDuration = 5000;
-        [ViewVariables(VVAccess.ReadWrite)] private int _uses = 5;
-        [ViewVariables(VVAccess.ReadWrite)] private float _range = 3f;
-        [ViewVariables(VVAccess.ReadWrite)] private int _aoeFlashDuration = 5000 / 3;
-        [ViewVariables(VVAccess.ReadWrite)] private float _slowTo = 0.75f;
+        public FlashComponent() { Range = 7f; }
+
+        [DataField("duration")] [ViewVariables(VVAccess.ReadWrite)] private int _flashDuration = 5000;
+        [DataField("uses")] [ViewVariables(VVAccess.ReadWrite)] private int _uses = 5;
+        [ViewVariables(VVAccess.ReadWrite)] private float _range => Range;
+        [ViewVariables(VVAccess.ReadWrite)] private int _aoeFlashDuration => _internalAoeFlashDuration ?? _flashDuration / 3;
+        [DataField("aoeFlashDuration")] private int? _internalAoeFlashDuration;
+        [DataField("slowTo")] [ViewVariables(VVAccess.ReadWrite)] private float _slowTo = 0.75f;
         private bool _flashing;
 
         private int Uses
@@ -36,17 +40,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         }
 
         private bool HasUses => _uses > 0;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _flashDuration, "duration", 5000);
-            serializer.DataField(ref _uses, "uses", 5);
-            serializer.DataField(ref _range, "range", 7f);
-            serializer.DataField(ref _aoeFlashDuration, "aoeFlashDuration", _flashDuration / 3);
-            serializer.DataField(ref _slowTo, "slowTo", 0.75f);
-        }
 
         protected override bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
         {
@@ -123,12 +116,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         // TODO: Merge with the code in FlashableComponent
         private void Flash(IEntity entity, IEntity user, int flashDuration)
         {
-            if (entity.TryGetComponent(out FlashableComponent flashable))
+            if (entity.TryGetComponent<FlashableComponent>(out var flashable))
             {
                 flashable.Flash(flashDuration / 1000d);
             }
 
-            if (entity.TryGetComponent(out StunnableComponent stunnableComponent))
+            if (entity.TryGetComponent<StunnableComponent>(out var stunnableComponent))
             {
                 stunnableComponent.Slowdown(flashDuration / 1000f, _slowTo, _slowTo);
             }

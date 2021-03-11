@@ -13,7 +13,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
@@ -34,11 +36,11 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(Color.Red, 0.1f),
-                        new AnimationTrackProperty.KeyFrame(null, 0.3f),
+                        new AnimationTrackProperty.KeyFrame(null!, 0.3f),
                         new AnimationTrackProperty.KeyFrame(Color.Red, 0.2f),
-                        new AnimationTrackProperty.KeyFrame(null, 0.3f),
+                        new AnimationTrackProperty.KeyFrame(null!, 0.3f),
                         new AnimationTrackProperty.KeyFrame(Color.Red, 0.2f),
-                        new AnimationTrackProperty.KeyFrame(null, 0.3f),
+                        new AnimationTrackProperty.KeyFrame(null!, 0.3f),
                     }
                 }
             }
@@ -57,11 +59,11 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(Color.Red, 0.0f),
-                        new AnimationTrackProperty.KeyFrame(null, 0.15f),
+                        new AnimationTrackProperty.KeyFrame(null!, 0.15f),
                         new AnimationTrackProperty.KeyFrame(Color.Red, 0.15f),
-                        new AnimationTrackProperty.KeyFrame(null, 0.15f),
+                        new AnimationTrackProperty.KeyFrame(null!, 0.15f),
                         new AnimationTrackProperty.KeyFrame(Color.Red, 0.15f),
-                        new AnimationTrackProperty.KeyFrame(null, 0.15f),
+                        new AnimationTrackProperty.KeyFrame(null!, 0.15f),
                     }
                 }
             }
@@ -70,7 +72,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         public override string Name => "MagazineBarrel";
         public override uint? NetID => ContentNetIDs.MAGAZINE_BARREL;
 
-        private StatusControl _statusControl;
+        private StatusControl? _statusControl;
 
         /// <summary>
         ///     True if a bullet is chambered.
@@ -87,16 +89,9 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         [ViewVariables]
         public (int count, int max)? MagazineCount { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] private bool _isLmgAlarmAnimation;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("lmg_alarm_animation")] private bool _isLmgAlarmAnimation = default;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _isLmgAlarmAnimation, "lmg_alarm_animation", false);
-        }
-
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
@@ -108,7 +103,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
             _statusControl?.Update();
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 

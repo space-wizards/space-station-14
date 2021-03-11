@@ -8,11 +8,11 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
     [UsedImplicitly]
     public class MedicalScannerBoundUserInterface : BoundUserInterface
     {
+        private MedicalScannerWindow? _window;
+
         public MedicalScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
-
-        private MedicalScannerWindow _window;
 
         protected override void Open()
         {
@@ -29,7 +29,8 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            _window.Populate((MedicalScannerBoundUserInterfaceState) state);
+
+            _window?.Populate((MedicalScannerBoundUserInterfaceState) state);
         }
 
         protected override void Dispose(bool disposing)
@@ -37,7 +38,8 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
             base.Dispose(disposing);
             if (!disposing)
                 return;
-            _window.Dispose();
+
+            _window?.Dispose();
         }
     }
 }

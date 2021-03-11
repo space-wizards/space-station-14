@@ -7,19 +7,15 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class BuildComputer : IGraphAction
     {
-        public string Container { get; private set; } = string.Empty;
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.Container, "container", string.Empty);
-        }
+        [DataField("container")] public string Container { get; private set; } = string.Empty;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {

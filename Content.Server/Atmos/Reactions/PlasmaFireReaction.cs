@@ -5,11 +5,12 @@ using Content.Server.Utility;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Atmos.Reactions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class PlasmaFireReaction : IGasReactionEffect
     {
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, GridTileLookupSystem gridTileLookup)
@@ -86,10 +87,6 @@ namespace Content.Server.Atmos.Reactions
             }
 
             return mixture.ReactionResults[GasReaction.Fire] != 0 ? ReactionResult.Reacting : ReactionResult.NoReaction;
-        }
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
         }
     }
 }

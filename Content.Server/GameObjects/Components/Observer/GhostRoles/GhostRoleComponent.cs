@@ -1,15 +1,16 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Observer.GhostRoles
 {
     public abstract class GhostRoleComponent : Component
     {
-        private string _roleName;
-        private string _roleDescription;
+        [DataField("name")] private string _roleName = "Unknown";
+
+        [DataField("description")] private string _roleDescription = "Unknown";
 
         // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
 
@@ -40,14 +41,6 @@ namespace Content.Server.GameObjects.Components.Observer.GhostRoles
 
         [ViewVariables]
         public uint Identifier { get; set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _roleName, "name", "Unknown");
-            serializer.DataField(ref _roleDescription, "description", "Unknown");
-        }
 
         public override void Initialize()
         {

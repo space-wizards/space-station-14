@@ -20,6 +20,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Chemistry
@@ -275,7 +278,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(30));
                 for (int i = 0; i < bottleAmount; i++)
                 {
-                    var bottle = Owner.EntityManager.SpawnEntity("bottle", Owner.Transform.Coordinates);
+                    var bottle = Owner.EntityManager.SpawnEntity("ChemistryEmptyBottle01", Owner.Transform.Coordinates);
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
 

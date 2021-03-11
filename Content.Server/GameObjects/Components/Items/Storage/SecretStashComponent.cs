@@ -6,7 +6,7 @@ using Content.Shared.Interfaces;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -19,24 +19,20 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     {
         public override string Name => "SecretStash";
 
-        [ViewVariables] private int _maxItemSize;
-        [ViewVariables] private string? _secretPartName;
+        [ViewVariables] [DataField("maxItemSize")]
+        private int _maxItemSize = (int) ReferenceSizes.Pocket;
+
+        [ViewVariables] [DataField("secretPartName")]
+        private readonly string? _secretPartNameOverride = null;
 
         [ViewVariables] private ContainerSlot _itemContainer = default!;
 
-        public string SecretPartName => _secretPartName ?? Loc.GetString("{0:theName}", Owner);
+        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("{0:theName}", Owner);
 
         public override void Initialize()
         {
             base.Initialize();
             _itemContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "stash", out _);
-        }
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _maxItemSize, "maxItemSize", (int) ReferenceSizes.Pocket);
-            serializer.DataField(ref _secretPartName, "secretPartName", null);
         }
 
         /// <summary>

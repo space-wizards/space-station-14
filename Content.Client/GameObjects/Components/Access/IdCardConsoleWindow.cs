@@ -31,8 +31,8 @@ namespace Content.Client.GameObjects.Components.Access
 
         private readonly Dictionary<string, Button> _accessButtons = new();
 
-        private string _lastFullName;
-        private string _lastJobTitle;
+        private string? _lastFullName;
+        private string? _lastJobTitle;
 
         public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager)
         {
@@ -165,7 +165,7 @@ namespace Content.Client.GameObjects.Components.Access
             _fullNameLineEdit.Editable = interfaceEnabled;
             if (!fullNameDirty)
             {
-                _fullNameLineEdit.Text = state.TargetIdFullName;
+                _fullNameLineEdit.Text = state.TargetIdFullName ?? "";
             }
 
             _fullNameSaveButton.Disabled = !interfaceEnabled || !fullNameDirty;
@@ -174,7 +174,7 @@ namespace Content.Client.GameObjects.Components.Access
             _jobTitleLineEdit.Editable = interfaceEnabled;
             if (!jobTitleDirty)
             {
-                _jobTitleLineEdit.Text = state.TargetIdJobTitle;
+                _jobTitleLineEdit.Text = state.TargetIdJobTitle ?? "";
             }
 
             _jobTitleSaveButton.Disabled = !interfaceEnabled || !jobTitleDirty;
@@ -184,7 +184,7 @@ namespace Content.Client.GameObjects.Components.Access
                 button.Disabled = !interfaceEnabled;
                 if (interfaceEnabled)
                 {
-                    button.Pressed = state.TargetIdAccessList.Contains(accessName);
+                    button.Pressed = state.TargetIdAccessList?.Contains(accessName) ?? false;
                 }
             }
 

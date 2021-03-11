@@ -3,8 +3,6 @@ name: Publish
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
   build:
@@ -19,10 +17,18 @@ jobs:
       with:
         dotnet-version: 5.0.200
 
+    - name: Get Engine Tag
+      run: |
+        cd RobustToolbox
+        git fetch --depth=1
+
     - name: Package client
       run: |
         Tools/package_server_build.py -p win-x64 linux-x64 osx-x64 linux-arm64
         Tools/package_client_build.py
+
+    - name: Update Build Info
+      run: Tools/gen_build_info.py
 
     - name: Shuffle files around
       run: |

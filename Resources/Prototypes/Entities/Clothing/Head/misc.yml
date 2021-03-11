@@ -107,3 +107,14 @@
     sprite: Clothing/Head/Misc/xenos.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/xenos.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatShrineMaidenWig
+  name: shrine maiden's wig
+  description: The tag reads "All proceeds go to the Hakurei Shrine."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/shrine-maidens-wig.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/shrine-maidens-wig.rsi

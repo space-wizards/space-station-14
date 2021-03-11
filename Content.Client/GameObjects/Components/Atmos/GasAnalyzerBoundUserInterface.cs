@@ -10,13 +10,13 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
         }
 
-        private GasAnalyzerWindow _menu;
+        private GasAnalyzerWindow? _menu;
 
         protected override void Open()
         {
             base.Open();
-            _menu = new GasAnalyzerWindow(this);
 
+            _menu = new GasAnalyzerWindow(this);
             _menu.OnClose += Close;
             _menu.OpenCentered();
         }
@@ -24,7 +24,8 @@ namespace Content.Client.GameObjects.Components.Atmos
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            _menu.Populate((GasAnalyzerBoundUserInterfaceState) state);
+
+            _menu?.Populate((GasAnalyzerBoundUserInterfaceState) state);
         }
 
         public void Refresh()
@@ -35,10 +36,8 @@ namespace Content.Client.GameObjects.Components.Atmos
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!disposing)
-                return;
 
-            _menu?.Dispose();
+            if (disposing) _menu?.Dispose();
         }
     }
 }

@@ -23,7 +23,9 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -41,14 +43,19 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private Container? _storage;
         private readonly Dictionary<IEntity, int> _sizeCache = new();
 
-        private bool _occludesLight;
+        [DataField("occludesLight")]
+        private bool _occludesLight = true;
+        [DataField("quickInsert")]
         private bool _quickInsert; //Can insert storables by "attacking" them with the storage entity
+        [DataField("areaInsert")]
         private bool _areaInsert;  //"Attacking" with the storage entity causes it to insert all nearby storables after a delay
         private bool _storageInitialCalculated;
         private int _storageUsed;
-        private int _storageCapacityMax;
+        [DataField("capacity")]
+        private int _storageCapacityMax = 10000;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
+        [DataField("storageSoundCollection")]
         public string? StorageSoundCollection { get; set; }
 
         [ViewVariables]
@@ -353,18 +360,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             // ReSharper disable once StringLiteralTypo
             _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "storagebase");
             _storage.OccludesLight = _occludesLight;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _storageCapacityMax, "capacity", 10000);
-            serializer.DataField(ref _occludesLight, "occludesLight", true);
-            serializer.DataField(ref _quickInsert, "quickInsert", false);
-            serializer.DataField(ref _areaInsert, "areaInsert", false);
-            serializer.DataField(this, x => x.StorageSoundCollection, "storageSoundCollection", string.Empty);
-            //serializer.DataField(ref StorageUsed, "used", 0);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)

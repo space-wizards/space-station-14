@@ -7,8 +7,23 @@
   id: GradientCircleMask
   kind: source
   path: "/Textures/Shaders/gradient_circle_mask.swsl"
+  
+- type: shader
+  id: ColoredScreenBorder
+  kind: source
+  path: "/Textures/Shaders/colored_screen_border.swsl"
 
 - type: shader
   id: FlashedEffect
   kind: source
   path: "/Textures/Shaders/flashed_effect.swsl"
+
+- type: shader
+  id: Singularity
+  kind: source
+  path: "/Textures/Shaders/singularity.swsl"
+
+- type: shader
+  id: Texture
+  kind: source
+  path: "/Textures/Shaders/texture.swsl"

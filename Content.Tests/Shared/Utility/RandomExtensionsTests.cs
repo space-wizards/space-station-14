@@ -1,11 +1,11 @@
 ﻿using System.IO;
-using System.Threading.Tasks;
 using Content.Shared.Prototypes;
 using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Tests.Shared.Utility
 {
@@ -24,6 +24,7 @@ namespace Content.Tests.Shared.Utility
         [Test]
         public void RandomDataSetValueTest()
         {
+            IoCManager.Resolve<ISerializationManager>().Initialize();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             prototypeManager.LoadFromStream(new StringReader(Prototypes));

@@ -32,24 +32,25 @@ namespace Content.Server.GameObjects.Components.Power.AME
                 return true;
             }
 
-            if (args.Using.TryGetComponent<ToolComponent>(out var multitool) && multitool.Qualities == ToolQuality.Multitool)
+            if (!args.Using.TryGetComponent<ToolComponent>(out var multitool) || multitool.Qualities != ToolQuality.Multitool)
+                return true;
+
+            if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(_serverEntityManager), out var mapGrid))
+                return false; // No AME in space.
+
+            var snapPos = mapGrid.SnapGridCellFor(args.ClickLocation, SnapGridOffset.Center);
+            if (mapGrid.GetSnapGridCell(snapPos, SnapGridOffset.Center).Any(sc => sc.Owner.HasComponent<AMEShieldComponent>()))
             {
-
-                var mapGrid = _mapManager.GetGrid(args.ClickLocation.GetGridId(_serverEntityManager));
-                var snapPos = mapGrid.SnapGridCellFor(args.ClickLocation, SnapGridOffset.Center);
-                if (mapGrid.GetSnapGridCell(snapPos, SnapGridOffset.Center).Any(sc => sc.Owner.HasComponent<AMEShieldComponent>()))
-                {
-                    Owner.PopupMessage(args.User, Loc.GetString("Shielding is already there!"));
-                    return true;
-                }
-
-                var ent = _serverEntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
-                ent.Transform.LocalRotation = Owner.Transform.LocalRotation;
-
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_unwrap, Owner);
-
-                Owner.Delete();
+                Owner.PopupMessage(args.User, Loc.GetString("Shielding is already there!"));
+                return true;
             }
+
+            var ent = _serverEntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
+            ent.Transform.LocalRotation = Owner.Transform.LocalRotation;
+
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_unwrap, Owner);
+
+            Owner.Delete();
 
             return true;
         }

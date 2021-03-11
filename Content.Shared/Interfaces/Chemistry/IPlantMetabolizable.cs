@@ -1,10 +1,9 @@
-﻿#nullable enable
+#nullable enable
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Interfaces.Chemistry
 {
-    public interface IPlantMetabolizable : IExposeData
+    public interface IPlantMetabolizable
     {
         /// <summary>
         ///     Metabolize <paramref name="customPlantMetabolism"/> unit(s) of a reagent.

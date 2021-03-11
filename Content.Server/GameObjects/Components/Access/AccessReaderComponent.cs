@@ -13,7 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Access
@@ -28,14 +28,15 @@ namespace Content.Server.GameObjects.Components.Access
     {
         public override string Name => "AccessReader";
 
-        private readonly List<ISet<string>> _accessLists = new();
         private readonly HashSet<string> _denyTags = new();
 
         /// <summary>
         ///     List of access lists to check allowed against. For an access check to pass
         ///     there has to be an access list that is a subset of the access in the checking list.
         /// </summary>
-        [ViewVariables] public IList<ISet<string>> AccessLists => _accessLists;
+        [field: DataField("access")]
+        [ViewVariables]
+        public List<HashSet<string>> AccessLists { get; } = new();
 
         /// <summary>
         ///     The set of tags that will automatically deny an allowed check, if any of them are present.
@@ -69,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Access
                 return false;
             }
 
-            return _accessLists.Count == 0 || _accessLists.Any(a => a.IsSubsetOf(accessTags));
+            return AccessLists.Count == 0 || AccessLists.Any(a => a.IsSubsetOf(accessTags));
         }
 
         public static ICollection<string> FindAccessTags(IEntity entity)
@@ -119,22 +120,6 @@ namespace Content.Server.GameObjects.Components.Access
                     Logger.ErrorS("access", $"Invalid access level: {level}");
                 }
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction("access", new List<List<string>>(),
-                v =>
-                {
-                    if (v.Count != 0)
-                    {
-                        _accessLists.Clear();
-                        _accessLists.AddRange(v.Select(a => new HashSet<string>(a)));
-                    }
-                },
-                () => _accessLists.Select(p => new List<string>(p)).ToList());
         }
     }
 }

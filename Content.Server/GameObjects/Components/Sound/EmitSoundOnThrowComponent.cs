@@ -3,7 +3,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Sound
 {
@@ -17,16 +17,11 @@ namespace Content.Server.GameObjects.Components.Sound
         ///
         public override string Name => "EmitSoundOnThrow";
 
+        [DataField("sound")]
         public string _soundName;
+        [DataField("variation")]
         public float _pitchVariation;
 
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _soundName, "sound", string.Empty);
-            serializer.DataField(ref _pitchVariation, "variation", 0.0f);
-        }
         public void PlaySoundEffect()
         {
             if (!string.IsNullOrWhiteSpace(_soundName))

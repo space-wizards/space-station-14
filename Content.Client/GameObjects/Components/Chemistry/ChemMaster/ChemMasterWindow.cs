@@ -13,6 +13,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Content.Shared.GameObjects.Components.Chemistry.ChemMaster.SharedChemMasterComponent;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
 {
@@ -38,7 +39,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
 
         public bool BufferModeTransfer = true;
 
-        public event Action<BaseButton.ButtonEventArgs, ChemButton> OnChemButtonPressed;
+        public event Action<ButtonEventArgs, ChemButton>? OnChemButtonPressed;
 
         public HBoxContainer PillInfo { get; set; }
         public HBoxContainer BottleInfo { get; set; }
@@ -331,7 +332,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             {
                 var name = Loc.GetString("Unknown reagent");
                 //Try to the prototype for the given reagent. This gives us it's name.
-                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
                     name = proto.Name;
                 }
@@ -386,7 +387,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             {
                 var name = Loc.GetString("Unknown reagent");
                 //Try to the prototype for the given reagent. This gives us it's name.
-                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
                     name = proto.Name;
                 }

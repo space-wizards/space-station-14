@@ -1,18 +1,14 @@
 using Content.Server.Holiday.Interfaces;
 using JetBrains.Annotations;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Holiday.Greet
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class Custom : IHolidayGreet
     {
-        private string _greet;
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _greet, "text", string.Empty);
-        }
+        [DataField("text")] private string _greet = string.Empty;
 
         public string Greet(HolidayPrototype holiday)
         {

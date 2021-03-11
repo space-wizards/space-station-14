@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.GameObjects.Components.Mobs.State;
+﻿using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Mobs.State

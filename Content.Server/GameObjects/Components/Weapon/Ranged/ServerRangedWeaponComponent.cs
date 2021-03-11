@@ -18,8 +18,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged
@@ -33,9 +33,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
         private TimeSpan _lastFireTime;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool ClumsyCheck { get; set; }
+        [DataField("clumsyCheck")]
+        public bool ClumsyCheck { get; set; } = true;
+
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ClumsyExplodeChance { get; set; }
+        [DataField("clumsyExplodeChance")]
+        public float ClumsyExplodeChance { get; set; } = 0.5f;
 
         public Func<bool> WeaponCanFireHandler;
         public Func<IEntity, bool> UserCanFireHandler;
@@ -68,14 +71,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
         private bool UserCanFire(IEntity user)
         {
             return (UserCanFireHandler == null || UserCanFireHandler(user)) && ActionBlockerSystem.CanAttack(user);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, p => p.ClumsyCheck, "clumsyCheck", true);
-            serializer.DataField(this, p => p.ClumsyExplodeChance, "clumsyExplodeChance", 0.5f);
         }
 
         /// <inheritdoc />

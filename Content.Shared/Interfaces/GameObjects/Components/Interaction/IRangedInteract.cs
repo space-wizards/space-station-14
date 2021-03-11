@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -32,13 +32,8 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when being clicked by objects outside the range of direct use.
     /// </summary>
     [PublicAPI]
-    public class RangedInteractMessage : EntitySystemMessage
+    public class RangedInteractMessage : HandledEntityEventArgs
     {
-        /// <summary>
-        ///     If this message has already been "handled" by a previous system.
-        /// </summary>
-        public bool Handled { get; set; }
-
         /// <summary>
         ///     Entity that triggered the attack.
         /// </summary>

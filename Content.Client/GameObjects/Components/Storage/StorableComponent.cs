@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.GameObjects.Components.Storage;
+﻿using Content.Shared.GameObjects.Components.Storage;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Storage

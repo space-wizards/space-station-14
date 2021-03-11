@@ -7,6 +7,7 @@
   - type: Ammo
     caliber: Shotgun
     ammoSpread: 40
+    projectilesFired: 6
     soundCollectionEject: ShellEject
   - type: Sprite
     netsync: false
@@ -53,7 +54,6 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
   - type: Ammo
     projectile: PelletShotgun
-    projectilesFired: 6
 
 - type: entity
   id: ShellShotgunFlash
@@ -64,7 +64,6 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flash.rsi
   - type: Ammo
     projectile: PelletShotgunFlash
-    projectilesFired: 6
 
 - type: entity
   id: ShellShotgunIncendiary
@@ -75,7 +74,6 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_incendiary.rsi
   - type: Ammo
     projectile: PelletShotgun
-    projectilesFired: 6
 
 - type: entity
   id: ShellShotgunPractice
@@ -86,7 +84,6 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_practice.rsi
   - type: Ammo
     projectile: PelletShotgun
-    projectilesFired: 6
 
 - type: entity
   id: ShellTranquilizer

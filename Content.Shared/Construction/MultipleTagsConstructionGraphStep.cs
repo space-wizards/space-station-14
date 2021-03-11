@@ -1,24 +1,18 @@
 #nullable enable
-using System.Collections;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Tag;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction
 {
     public class MultipleTagsConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
-        private List<string>? _allTags = null;
-        private List<string>? _anyTags = null;
+        [DataField("allTags")]
+        private List<string>? _allTags;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _allTags, "allTags", null);
-            serializer.DataField(ref _anyTags, "anyTags", null);
-        }
+        [DataField("anyTags")]
+        private List<string>? _anyTags;
 
         private static bool IsNullOrEmpty<T>(ICollection<T>? list)
         {
