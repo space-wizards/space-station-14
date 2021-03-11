@@ -10,8 +10,6 @@
   - type: UtilityAI
     behaviorSets:
     - Clothing
-    - Hunger
-    - Thirst
     - Idle
   - type: Hunger
   - type: Thirst
@@ -45,8 +43,7 @@
       - VaultImpassable
       - SmallImpassable
       layer:
-      - Opaque
-#      - MobImpassable
+      - MobImpassable
   - type: Bloodstream
     max_volume: 100
   - type: Damageable
