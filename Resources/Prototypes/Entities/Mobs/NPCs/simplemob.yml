@@ -10,9 +10,11 @@
   - type: UtilityAI
     behaviorSets:
     - Clothing
-    - Hunger
-    - Thirst
     - Idle
+  - type: Hunger
+  - type: Thirst
+  - type: Input
+    context: "human"
   - type: AiFactionTag
     factions:
     - SimpleNeutral
@@ -28,6 +30,7 @@
     noRot: true
     drawdepth: Mobs
   - type: Clickable
+  - type: InteractionOutline
   - type: Physics
     bodyType: Dynamic
     mass: 50
@@ -40,8 +43,7 @@
       - VaultImpassable
       - SmallImpassable
       layer:
-      - Opaque
-#      - MobImpassable
+      - MobImpassable
   - type: Bloodstream
     max_volume: 100
   - type: Damageable
@@ -78,11 +80,12 @@
   - type: CombatMode
   - type: Internals
   - type: Stunnable
+  - type: Examiner
   - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
     arc: bite
-    damage: 50
+    damage: 5
   - type: Appearance
     visuals:
     - type: BuckleVisualizer
