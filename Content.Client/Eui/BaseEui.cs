@@ -3,8 +3,6 @@ using Content.Shared.Network.NetMessages;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-#nullable enable
-
 namespace Content.Client.Eui
 {
     public abstract class BaseEui

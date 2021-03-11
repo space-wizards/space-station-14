@@ -19,8 +19,8 @@ namespace Content.Client.UserInterface.AdminMenu
         [Dependency] private readonly IClientAdminManager _clientAdminManager = default!;
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
 
-        private AdminMenuWindow _window;
-        private List<SS14Window> _commandWindows;
+        private AdminMenuWindow? _window;
+        private List<SS14Window> _commandWindows = new();
 
         public void Initialize()
         {
@@ -29,10 +29,10 @@ namespace Content.Client.UserInterface.AdminMenu
 
             _commandWindows = new List<SS14Window>();
             // Reset the AdminMenu Window on disconnect
-            _netManager.Disconnect += (sender, channel) => ResetWindow();
+            _netManager.Disconnect += (_, _) => ResetWindow();
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
-                InputCmdHandler.FromDelegate(session => Toggle()));
+                InputCmdHandler.FromDelegate(_ => Toggle()));
 
             _clientAdminManager.AdminStatusUpdated += () =>
             {
@@ -68,7 +68,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
         private void HandlePlayerListMessage(AdminMenuPlayerListMessage msg)
         {
-            _window.RefreshPlayerList(msg.NamesToPlayers);
+            _window?.RefreshPlayerList(msg.NamesToPlayers);
         }
 
         public void ResetWindow()

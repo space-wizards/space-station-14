@@ -1,6 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Content.Client.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;

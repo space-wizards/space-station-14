@@ -9,7 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 {
-    public class PathfindingChunkUpdateMessage : EntitySystemMessage
+    public class PathfindingChunkUpdateMessage : EntityEventArgs
     {
         public PathfindingChunk Chunk { get; }
 

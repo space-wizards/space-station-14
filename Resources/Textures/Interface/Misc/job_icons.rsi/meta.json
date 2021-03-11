@@ -1,145 +1,113 @@
 {
     "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi",
     "size": {
         "x": 8,
         "y": 8
     },
     "states": [
         {
-            "name": "Detective",
-
+            "name": "Detective"
         },
         {
-            "name": "QuarterMaster",
-
+            "name": "QuarterMaster"
         },
         {
-            "name": "Botanist",
-
+            "name": "Botanist"
         },
         {
-            "name": "AtmosphericTechnician",
-
+            "name": "AtmosphericTechnician"
         },
         {
-            "name": "Nanotrasen",
-
+            "name": "Nanotrasen"
         },
         {
-            "name": "Prisoner",
-
+            "name": "Prisoner"
         },
         {
-            "name": "Janitor",
-
+            "name": "Janitor"
         },
         {
-            "name": "Chemist",
-
+            "name": "Chemist"
         },
         {
-            "name": "StationEngineer",
-
+            "name": "StationEngineer"
         },
         {
-            "name": "SecurityOfficer",
-
+            "name": "SecurityOfficer"
         },
         {
-            "name": "NoId",
-
+            "name": "NoId"
         },
         {
-            "name": "ChiefMedicalOfficer",
-
+            "name": "ChiefMedicalOfficer"
         },
         {
-            "name": "Roboticist",
-
+            "name": "Roboticist"
         },
         {
-            "name": "Chaplain",
-
+            "name": "Chaplain"
         },
         {
-            "name": "Lawyer",
-
+            "name": "Lawyer"
         },
         {
-            "name": "Unknown",
-
+            "name": "Unknown"
         },
         {
-            "name": "Librarian",
-
+            "name": "Librarian"
         },
         {
-            "name": "CargoTechnician",
-
+            "name": "CargoTechnician"
         },
         {
-            "name": "Scientist",
-
+            "name": "Scientist"
         },
         {
-            "name": "Geneticist",
-
+            "name": "Geneticist"
         },
         {
-            "name": "Clown",
-
+            "name": "Clown"
         },
         {
-            "name": "Captain",
-
+            "name": "Captain"
         },
         {
-            "name": "HeadOfPersonnel",
-
+            "name": "HeadOfPersonnel"
         },
         {
-            "name": "Virologist",
-
+            "name": "Virologist"
         },
         {
-            "name": "ShaftMiner",
-
+            "name": "ShaftMiner"
         },
         {
-            "name": "Assistant",
-
+            "name": "Assistant"
         },
         {
-            "name": "ChiefEngineer",
-
+            "name": "ChiefEngineer"
         },
         {
-            "name": "Bartender",
-
+            "name": "Bartender"
         },
         {
-            "name": "HeadOfSecurity",
-
+            "name": "HeadOfSecurity"
         },
         {
-            "name": "MedicalDoctor",
-
+            "name": "MedicalDoctor"
         },
         {
-            "name": "Chef",
-
+            "name": "Chef"
         },
         {
-            "name": "Warden",
-
+            "name": "Warden"
         },
         {
-            "name": "ResearchDirector",
-
+            "name": "ResearchDirector"
         },
         {
-            "name": "Mime",
-
+            "name": "Mime"
         }
     ]
 }

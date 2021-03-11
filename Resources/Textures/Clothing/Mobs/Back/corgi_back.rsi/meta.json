@@ -39,8 +39,9 @@
       "name": "petcollar",
       "directions": 4
     },
-    {
-      "name": "walkietalkie",
-      "directions": 4
+      {
+          "name": "walkietalkie",
+          "directions": 4
+      }
   ]
 }

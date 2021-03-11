@@ -1,9 +1,7 @@
-#nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Doors;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
-using System;
 
 namespace Content.Client.GameObjects.Components.Doors
 {
@@ -88,7 +86,7 @@ namespace Content.Client.GameObjects.Components.Doors
         }
     }
 
-    public sealed class DoorStateMessage : EntitySystemMessage
+    public sealed class DoorStateMessage : EntityEventArgs
     {
         public ClientDoorComponent Component { get; }
         public SharedDoorComponent.DoorState State { get; }
