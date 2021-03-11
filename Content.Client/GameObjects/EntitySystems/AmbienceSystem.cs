@@ -141,7 +141,7 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 EndLobbyMusic();
             }
-            else if (_stateManager.CurrentState is GameScreen)
+            else if (_stateManager.CurrentState is LobbyState)
             {
                 StartLobbyMusic();
             }
