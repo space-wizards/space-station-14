@@ -387,3 +387,8 @@ Entries:
   - {message: Add bluespace beaker and cryostasis beaker (non-obtainable yet), type: Add}
   id: 70
   time: '2021-03-11T09:24:17.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Delete ghost when player respawns, type: Fix}
+  id: 71
+  time: '2021-03-11T09:37:17.0000000+00:00'
