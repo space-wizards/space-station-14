@@ -374,3 +374,9 @@ Entries:
   - {message: Adds mice as a ghost role, type: Add}
   id: 68
   time: '2021-03-11T00:06:57.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Mobs aren't OP, type: Tweak}
+  - {message: Mobs controlled by players are much easier to - control, type: Tweak}
+  id: 69
+  time: '2021-03-11T05:00:16.0000000+00:00'
