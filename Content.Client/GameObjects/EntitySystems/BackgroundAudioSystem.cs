@@ -17,7 +17,7 @@ using Content.Client.State;
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class AmbienceSystem : EntitySystem
+    public class BackgroundAudioSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
