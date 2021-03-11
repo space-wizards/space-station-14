@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
@@ -62,14 +62,14 @@ namespace Content.Server.Mobs
         ///     Can be null.
         /// </summary>
         [ViewVariables]
-        public MindComponent OwnedMob { get; private set; }
+        public MindComponent OwnedComponent { get; private set; }
 
         /// <summary>
         ///     The entity currently owned by this mind.
         ///     Can be null.
         /// </summary>
         [ViewVariables]
-        public IEntity OwnedEntity => OwnedMob?.Owner;
+        public IEntity OwnedEntity => OwnedComponent?.Owner;
 
         /// <summary>
         ///     An enumerable over all the roles this mind has.
@@ -121,7 +121,7 @@ namespace Content.Server.Mobs
             role.Greet();
 
             var message = new RoleAddedMessage(role);
-            OwnedEntity?.SendMessage(OwnedMob, message);
+            OwnedEntity?.SendMessage(OwnedComponent, message);
 
             return role;
         }
@@ -143,7 +143,7 @@ namespace Content.Server.Mobs
             _roles.Remove(role);
 
             var message = new RoleRemovedMessage(role);
-            OwnedEntity?.SendMessage(OwnedMob, message);
+            OwnedEntity?.SendMessage(OwnedComponent, message);
         }
 
         public bool HasRole<T>() where T : Role
@@ -220,17 +220,23 @@ namespace Content.Server.Mobs
                 }
             }
 
-            OwnedMob?.InternalEjectMind();
-            OwnedMob = component;
-            OwnedMob?.InternalAssignMind(this);
+            OwnedComponent?.InternalEjectMind();
+
+            OwnedComponent = component;
+            OwnedComponent?.InternalAssignMind(this);
 
             // Player is CURRENTLY connected.
-            if (Session != null && OwnedMob != null && !alreadyAttached)
+            if (Session != null && !alreadyAttached)
             {
                 Session.AttachToEntity(entity);
             }
 
             VisitingEntity = null;
+        }
+
+        public void RemoveOwningPlayer()
+        {
+            UserId = null;
         }
 
         public void ChangeOwningPlayer(NetUserId? newOwner)
