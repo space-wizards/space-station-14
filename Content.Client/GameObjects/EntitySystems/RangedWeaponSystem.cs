@@ -24,8 +24,8 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private InputSystem _inputSystem;
-        private CombatModeSystem _combatModeSystem;
+        private InputSystem _inputSystem = default!;
+        private CombatModeSystem _combatModeSystem = default!;
         private bool _blocked;
         private int _shotCounter;
 
@@ -34,8 +34,8 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Initialize();
 
             IoCManager.InjectDependencies(this);
-            _inputSystem = EntitySystemManager.GetEntitySystem<InputSystem>();
-            _combatModeSystem = EntitySystemManager.GetEntitySystem<CombatModeSystem>();
+            _inputSystem = Get<InputSystem>();
+            _combatModeSystem = Get<CombatModeSystem>();
         }
 
         public override void Update(float frameTime)
@@ -55,14 +55,14 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            var entity = _playerManager.LocalPlayer.ControlledEntity;
-            if (entity == null || !entity.TryGetComponent(out HandsComponent hands))
+            var entity = _playerManager.LocalPlayer?.ControlledEntity;
+            if (entity == null || !entity.TryGetComponent(out HandsComponent? hands))
             {
                 return;
             }
 
             var held = hands.ActiveHand;
-            if (held == null || !held.TryGetComponent(out ClientRangedWeaponComponent weapon))
+            if (held == null || !held.TryGetComponent(out ClientRangedWeaponComponent? weapon))
             {
                 _blocked = true;
                 return;

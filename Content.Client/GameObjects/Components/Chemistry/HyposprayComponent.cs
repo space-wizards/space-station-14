@@ -9,8 +9,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-#nullable enable
-
 namespace Content.Client.GameObjects.Components.Chemistry
 {
     [RegisterComponent]

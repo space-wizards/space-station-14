@@ -16,7 +16,7 @@ namespace Content.Client.Parallax
 
         private const float Slowness = 0.5f;
 
-        private Texture _parallaxTexture;
+        private Texture? _parallaxTexture;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpaceBelowWorld;
         private readonly ShaderInstance _shader;

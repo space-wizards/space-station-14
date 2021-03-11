@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;

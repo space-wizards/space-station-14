@@ -18,12 +18,12 @@ namespace Content.Client.UserInterface
         public BaseButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
 
-        public Action<GUIBoundKeyEventArgs> OnPressed { get; set; }
-        public Action<GUIBoundKeyEventArgs> OnStoragePressed { get; set; }
-        public Action<GUIMouseHoverEventArgs> OnHover { get; set; }
+        public Action<GUIBoundKeyEventArgs>? OnPressed { get; set; }
+        public Action<GUIBoundKeyEventArgs>? OnStoragePressed { get; set; }
+        public Action<GUIMouseHoverEventArgs>? OnHover { get; set; }
 
         public bool EntityHover => HoverSpriteView.Sprite != null;
-        public bool MouseIsHovering = false;
+        public bool MouseIsHovering;
 
         private readonly PanelContainer _highlightRect;
 

@@ -1,11 +1,8 @@
-using System.Diagnostics;
 using Content.Shared.GameObjects.Components.Power;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Power
 {
@@ -13,7 +10,7 @@ namespace Content.Client.GameObjects.Components.Power
     public class PowerCellVisualizer : AppearanceVisualizer
     {
         [DataField("prefix")]
-        private string _prefix;
+        private string? _prefix;
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -21,8 +18,11 @@ namespace Content.Client.GameObjects.Components.Power
 
             var sprite = entity.GetComponent<ISpriteComponent>();
 
-            sprite.LayerMapSet(Layers.Charge, sprite.AddLayerState($"{_prefix}_100"));
-            sprite.LayerSetShader(Layers.Charge, "unshaded");
+            if (_prefix != null)
+            {
+                sprite.LayerMapSet(Layers.Charge, sprite.AddLayerState($"{_prefix}_100"));
+                sprite.LayerSetShader(Layers.Charge, "unshaded");
+            }
         }
 
         public override void OnChangeData(AppearanceComponent component)

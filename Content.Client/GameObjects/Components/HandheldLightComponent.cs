@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components
             return new StatusControl(this);
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
@@ -40,12 +40,12 @@ namespace Content.Client.GameObjects.Components
 
             private float _timer;
 
-            private static readonly StyleBoxFlat _styleBoxLit = new()
+            private static readonly StyleBoxFlat StyleBoxLit = new()
             {
                 BackgroundColor = Color.Green
             };
 
-            private static readonly StyleBoxFlat _styleBoxUnlit = new()
+            private static readonly StyleBoxFlat StyleBoxUnlit = new()
             {
                 BackgroundColor = Color.Black
             };
@@ -88,22 +88,22 @@ namespace Content.Client.GameObjects.Components
                     {
                         if (level == 0)
                         {
-                            _sections[0].PanelOverride = _styleBoxUnlit;
+                            _sections[0].PanelOverride = StyleBoxUnlit;
                         }
                         else if (level == 1)
                         {
                             // Flash the last light.
-                            _sections[0].PanelOverride = _timer > TimerCycle / 2 ? _styleBoxLit : _styleBoxUnlit;
+                            _sections[0].PanelOverride = _timer > TimerCycle / 2 ? StyleBoxLit : StyleBoxUnlit;
                         }
                         else
                         {
-                            _sections[0].PanelOverride = _styleBoxLit;
+                            _sections[0].PanelOverride = StyleBoxLit;
                         }
 
                         continue;
                     }
 
-                    _sections[i].PanelOverride = level >= i + 2 ? _styleBoxLit : _styleBoxUnlit;
+                    _sections[i].PanelOverride = level >= i + 2 ? StyleBoxLit : StyleBoxUnlit;
                 }
             }
         }

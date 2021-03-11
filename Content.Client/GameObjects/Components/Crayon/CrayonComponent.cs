@@ -24,7 +24,7 @@ namespace Content.Client.GameObjects.Components.Crayon
             return new StatusControl(this);
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState is not CrayonComponentState state)
                 return;

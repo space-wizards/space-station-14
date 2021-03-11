@@ -27,7 +27,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
         void IItemStatus.DestroyControl(Control control) { }
 
         //Handle net updates
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState is not InjectorComponentState state)
             {

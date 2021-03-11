@@ -1,4 +1,5 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+﻿using System.Collections.Generic;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
@@ -7,7 +8,7 @@ using Robust.Client.Utility;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using System.Collections.Generic;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.GameObjects.Components.Crayon
 {
@@ -16,8 +17,8 @@ namespace Content.Client.GameObjects.Components.Crayon
         public CrayonBoundUserInterface Owner { get; }
         private readonly LineEdit _search;
         private readonly GridContainer _grid;
-        private Dictionary<string, Texture> _decals;
-        private string _selected;
+        private Dictionary<string, Texture>? _decals;
+        private string? _selected;
         private Color _color;
 
         public CrayonWindow(CrayonBoundUserInterface owner)
@@ -30,7 +31,7 @@ namespace Content.Client.GameObjects.Components.Crayon
             Contents.AddChild(vbox);
 
             _search = new LineEdit();
-            _search.OnTextChanged += (e) => RefreshList();
+            _search.OnTextChanged += (_) => RefreshList();
             vbox.AddChild(_search);
 
             _grid = new GridContainer()
@@ -68,7 +69,7 @@ namespace Content.Client.GameObjects.Components.Crayon
                     ToolTip = decal,
                     Modulate = _color
                 };
-                button.OnPressed += Button_OnPressed;
+                button.OnPressed += ButtonOnPressed;
                 if (_selected == decal)
                 {
                     var panelContainer = new PanelContainer()
@@ -91,11 +92,14 @@ namespace Content.Client.GameObjects.Components.Crayon
             }
         }
 
-        private void Button_OnPressed(BaseButton.ButtonEventArgs obj)
+        private void ButtonOnPressed(ButtonEventArgs obj)
         {
-            Owner.Select(obj.Button.Name);
-            _selected = obj.Button.Name;
-            RefreshList();
+            if (obj.Button.Name != null)
+            {
+                Owner.Select(obj.Button.Name);
+                _selected = obj.Button.Name;
+                RefreshList();
+            }
         }
 
         public void UpdateState(CrayonBoundUserInterfaceState state)
