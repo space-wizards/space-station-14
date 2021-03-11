@@ -183,6 +183,12 @@ namespace Content.Shared
         public static readonly CVarDef<bool> AmbienceBasicEnabled =
             CVarDef.Create("ambience.basicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        /*
+         * Lobby music
+         */
+
+        public static readonly CVarDef<bool> LobbyMusicEnabled =
+            CVarDef.Create("ambience.lobbymusicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * AI

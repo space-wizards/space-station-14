@@ -1,0 +1,4 @@
+﻿- type: soundCollection
+  id: LobbyMusic
+  files:
+    - /Audio/Lobby/thunderdome.ogg
