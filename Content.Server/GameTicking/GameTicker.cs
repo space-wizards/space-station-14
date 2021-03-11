@@ -236,7 +236,7 @@ namespace Content.Server.GameTicking
             }
             else
             {
-                Preset = null
+                Preset = null;
 
                 if (PlayerManager.PlayerCount == 0)
                     _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
