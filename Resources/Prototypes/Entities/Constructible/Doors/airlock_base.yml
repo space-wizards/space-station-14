@@ -82,7 +82,6 @@
   id: AirlockAssembly
   name: airlock assembly
   description: It opens, it closes, and maybe crushes you.
-  anchored: false
   components:
   - type: Clickable
   - type: RCDDeconstructWhitelist
@@ -93,7 +92,6 @@
     sprite: Constructible/Structures/Doors/Standard/basic.rsi
     state: "assembly"
   - type: Physics
-    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb

@@ -5,6 +5,9 @@
     - node: start
       edges:
         - to: assembly
+          completed:
+          - !type:SetAnchor
+            value: false
           steps:
             - material: Steel
               amount: 4
