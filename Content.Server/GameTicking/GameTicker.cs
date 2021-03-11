@@ -410,7 +410,7 @@ namespace Content.Server.GameTicking
         {
             targetPlayer.AttachedEntity.TryGetComponent<GhostComponent>(out var ghost);
             targetPlayer.ContentData()?.WipeMind();
-            if (ghost != null && ghost.Deleted == false)
+            if (ghost?.Deleted == false)
                 ghost.Owner.Delete();
 
             if (LobbyEnabled)
