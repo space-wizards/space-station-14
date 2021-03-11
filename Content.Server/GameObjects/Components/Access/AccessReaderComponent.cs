@@ -118,6 +118,7 @@ namespace Content.Server.GameObjects.Components.Access
         public override void Initialize()
         {
             base.Initialize();
+            //TODO: verify valid access levels
 
             // var proto = IoCManager.Resolve<IPrototypeManager>();
             // foreach (var level in AccessLists.SelectMany(c => c).Union(DenyTags))

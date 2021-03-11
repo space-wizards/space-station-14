@@ -3,6 +3,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Content.Shared.Access;
 using static Content.Shared.GameObjects.Components.Access.SharedIdCardConsoleComponent;
 
 namespace Content.Client.GameObjects.Components.Access
@@ -38,7 +39,7 @@ namespace Content.Client.GameObjects.Components.Access
             SendMessage(new IdButtonPressedMessage(button));
         }
 
-        public void SubmitData(string newFullName, string newJobTitle, List<string> newAccessList)
+        public void SubmitData(string newFullName, string newJobTitle, AccessTags newAccessList)
         {
             SendMessage(new WriteToTargetIdMessage(
                 newFullName,

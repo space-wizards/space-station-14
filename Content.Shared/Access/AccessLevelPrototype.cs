@@ -12,9 +12,11 @@ namespace Content.Shared.Access
     [Prototype("accessLevel")]
     public class AccessLevelPrototype : IPrototype
     {
+
         [ViewVariables]
-        [field: DataField("id", required: true)]
-        public string ID { get; } = default!;
+        [DataField("id", required: true)]
+        public AccessTags AccessLevel;
+        public string ID => AccessLevel.ToString()!;
 
         /// <summary>
         ///     The player-visible name of the access level, in the ID card console and such.

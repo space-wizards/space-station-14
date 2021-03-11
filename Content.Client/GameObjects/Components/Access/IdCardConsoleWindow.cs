@@ -29,7 +29,7 @@ namespace Content.Client.GameObjects.Components.Access
 
         private readonly IdCardConsoleBoundUserInterface _owner;
 
-        private readonly Dictionary<string, Button> _accessButtons = new();
+        private readonly Dictionary<AccessTags, Button> _accessButtons = new();
 
         private string? _lastFullName;
         private string? _lastJobTitle;
@@ -133,7 +133,7 @@ namespace Content.Client.GameObjects.Components.Access
                         ToggleMode = true,
                     };
                     grid.AddChild(newButton);
-                    _accessButtons.Add(accessLevel.ID, newButton);
+                    _accessButtons.Add(accessLevel.AccessLevel, newButton);
                     newButton.OnPressed += _ => SubmitData();
                 }
             }
@@ -179,12 +179,12 @@ namespace Content.Client.GameObjects.Components.Access
 
             _jobTitleSaveButton.Disabled = !interfaceEnabled || !jobTitleDirty;
 
-            foreach (var (accessName, button) in _accessButtons)
+            foreach (var (accessLvl, button) in _accessButtons)
             {
                 button.Disabled = !interfaceEnabled;
                 if (interfaceEnabled)
                 {
-                    button.Pressed = state.TargetIdAccessList?.Contains(accessName) ?? false;
+                    button.Pressed = state.TargetIdAccessList?.Contains(accessLvl.ToString()) ?? false;
                 }
             }
 
@@ -198,7 +198,8 @@ namespace Content.Client.GameObjects.Components.Access
                 _fullNameLineEdit.Text,
                 _jobTitleLineEdit.Text,
                 // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
-                _accessButtons.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
+                //_accessButtons.Where(x => x.Value.Pressed).Select(x => x) as AccessTags;
+                //_accessButtons.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
         }
     }
 }

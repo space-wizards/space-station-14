@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using Content.Shared.Access;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -32,9 +33,9 @@ namespace Content.Shared.GameObjects.Components.Access
         {
             public readonly string FullName;
             public readonly string JobTitle;
-            public readonly List<string> AccessList;
+            public readonly AccessTags AccessList;
 
-            public WriteToTargetIdMessage(string fullName, string jobTitle, List<string> accessList)
+            public WriteToTargetIdMessage(string fullName, string jobTitle, AccessTags accessList)
             {
                 FullName = fullName;
                 JobTitle = jobTitle;

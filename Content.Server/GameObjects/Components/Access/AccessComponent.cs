@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using Content.Server.Interfaces;
+using Content.Shared.Access;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;

@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Shared.Access;
 using Content.Server.GameObjects.Components.Access;
 
 namespace Content.Server.Interfaces

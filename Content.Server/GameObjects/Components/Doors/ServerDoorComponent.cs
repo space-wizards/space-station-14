@@ -11,6 +11,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Doors;
 using Content.Shared.Damage;
+using Content.Shared.Access;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Doors;

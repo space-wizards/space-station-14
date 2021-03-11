@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Access
         /// Called when the "Submit" button in the UI gets pressed.
         /// Writes data passed from the UI into the ID stored in <see cref="_targetIdContainer"/>, if present.
         /// </summary>
-        private void TryWriteToTargetId(string newFullName, string newJobTitle, List<string> newAccessList)
+        private void TryWriteToTargetId(string newFullName, string newJobTitle, AccessTags newAccessList)
         {
             if (!PrivilegedIdIsAuthorized() || _targetIdContainer.ContainedEntity == null)
             {
