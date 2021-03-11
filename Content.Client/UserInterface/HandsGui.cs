@@ -110,15 +110,20 @@ namespace Content.Client.UserInterface
             HandleTopPanel();
         }
 
-        private void OnHandPressed(GUIBoundKeyEventArgs pressed, int handIndex)
+        private void OnHandPressed(GUIBoundKeyEventArgs args, int handIndex)
         {
-            if (pressed.Function == EngineKeyFunctions.UIClick)
+            if (args.Function == EngineKeyFunctions.UIClick)
             {
                 HandClick?.Invoke(new HandClickEventArgs(handIndex));
             }
-            else if (pressed.Function == EngineKeyFunctions.UIRightClick)
+            else if (args.Function == EngineKeyFunctions.UIRightClick)
             {
                 HandRightClick?.Invoke(new HandRightClickEventArgs(handIndex));
+            }
+            else
+            {
+                var heldItem = _hands[handIndex].HeldItem;
+                _itemSlotManager.OnButtonPressed(args, heldItem);
             }
         }
 
