@@ -145,6 +145,10 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 StartLobbyMusic();
             }
+            else
+            {
+                EndLobbyMusic();
+            }
         }
 
         private void StartLobbyMusic()
