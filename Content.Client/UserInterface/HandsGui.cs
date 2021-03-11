@@ -95,7 +95,7 @@ namespace Content.Client.UserInterface
                 HandsContainer.AddChild(newButton);
                 hand.HandButton = newButton;
 
-                newButton.OnPressed += _ => HandPressed?.Invoke(new HandPressedEventArgs(_hands.IndexOf(hand)));
+                newButton.OnPressed += _ => OnHandPressed(hand);
                 newButton.Blocked.Visible = !hand.Enabled;
                 GetStatusPanel(location).Update(heldItem);
                 _itemSlotManager.SetItemSlot(newButton, heldItem);
@@ -105,6 +105,11 @@ namespace Content.Client.UserInterface
                 handButton.SetActiveHand(true);
             }
             HandleTopPanel();
+        }
+
+        private void OnHandPressed(GuiHand hand)
+        {
+            HandPressed?.Invoke(new HandPressedEventArgs(_hands.IndexOf(hand)));
         }
 
         private bool TryGetHandButton(int handNumber, [NotNullWhen(true)] out HandButton? handButton)
