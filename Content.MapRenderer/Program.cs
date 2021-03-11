@@ -50,7 +50,7 @@ namespace Content.MapRenderer
                 }
             }
 
-            var maps = new List<string>();
+            var maps = new List<string> {"Resources/Maps/saltern.yml"};
 
             foreach (var node in files)
             {
@@ -100,6 +100,8 @@ namespace Content.MapRenderer
             var (client, server) = await StartConnectedServerClientPair(clientOptions, serverOptions);
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+            await RunTicksSync(client, server, 10);
+            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             Console.WriteLine($"Loaded client and server in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
 
@@ -109,7 +111,7 @@ namespace Content.MapRenderer
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
 
             var tilePainter = new TilePainter(client, server);
-            var wallPainter = new EntityPainter(client, server);
+            var entityPainter = new EntityPainter(client, server);
 
             await server.WaitPost(async () =>
             {
@@ -134,7 +136,7 @@ namespace Content.MapRenderer
                     var gridCanvas = new Image<Rgba32>(w, h);
 
                     tilePainter.Run(gridCanvas, grid);
-                    wallPainter.Run(gridCanvas, grid);
+                    entityPainter.Run(gridCanvas, grid);
 
                     gridCanvas.Mutate(e => e.Flip(FlipMode.Vertical));
 
