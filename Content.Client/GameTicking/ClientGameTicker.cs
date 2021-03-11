@@ -24,6 +24,7 @@ namespace Content.Client.GameTicking
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
+        [ViewVariables] public string? LobbySong { get; private set; }
         [ViewVariables] public bool DisallowedLateJoin { get; private set; }
         [ViewVariables] public string? ServerInfoBlob { get; private set; }
         [ViewVariables] public TimeSpan StartTime { get; private set; }
@@ -82,6 +83,7 @@ namespace Content.Client.GameTicking
             StartTime = message.StartTime;
             IsGameStarted = message.IsRoundStarted;
             AreWeReady = message.YouAreReady;
+            LobbySong = message.LobbySong;
             Paused = message.Paused;
             if (IsGameStarted)
                 Status.Clear();

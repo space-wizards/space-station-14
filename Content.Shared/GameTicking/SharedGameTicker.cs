@@ -96,6 +96,8 @@ namespace Content.Shared.GameTicking
             public TimeSpan StartTime { get; set; }
             public bool Paused { get; set; }
 
+            public string? LobbySong { get; set; }
+
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
                 IsRoundStarted = buffer.ReadBoolean();
@@ -108,6 +110,7 @@ namespace Content.Shared.GameTicking
                 YouAreReady = buffer.ReadBoolean();
                 StartTime = new TimeSpan(buffer.ReadInt64());
                 Paused = buffer.ReadBoolean();
+                LobbySong = buffer.ReadString();
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
@@ -122,6 +125,7 @@ namespace Content.Shared.GameTicking
                 buffer.Write(YouAreReady);
                 buffer.Write(StartTime.Ticks);
                 buffer.Write(Paused);
+                buffer.Write(LobbySong);
             }
         }
 

@@ -1,4 +1,5 @@
 #nullable enable
+using Content.Client.Interfaces;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -23,11 +24,11 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IBaseClient _client = default!;
+        [Dependency] private readonly IClientGameTicker _clientGameTicker = default!;
 
         private AudioSystem _audioSystem = default!;
 
         private SoundCollectionPrototype _ambientCollection = default!;
-        private SoundCollectionPrototype _lobbyCollection = default!;
 
         private AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, AudioMixTarget.Stereo, true, 0f);
         private AudioParams _lobbyParams = new(5f, 1, "Master", 0, 0, AudioMixTarget.Stereo, true, 0f);
@@ -42,7 +43,6 @@ namespace Content.Client.GameObjects.EntitySystems
             _audioSystem = EntitySystemManager.GetEntitySystem<AudioSystem>();
 
             _ambientCollection = _prototypeManager.Index<SoundCollectionPrototype>("AmbienceBase");
-            _lobbyCollection = _prototypeManager.Index<SoundCollectionPrototype>("LobbyMusic");
 
             _configManager.OnValueChanged(CCVars.AmbienceBasicEnabled, AmbienceCVarChanged);
             _configManager.OnValueChanged(CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
@@ -150,7 +150,12 @@ namespace Content.Client.GameObjects.EntitySystems
         private void StartLobbyMusic()
         {
             EndLobbyMusic();
-            var file = _robustRandom.Pick(_lobbyCollection.PickFiles);
+            var file = _clientGameTicker.LobbySong;
+            if (file == null) // Just in case we fail to get a song from the server, play one at random.
+            {
+                var lobbyCollection = _prototypeManager.Index<SoundCollectionPrototype>("LobbyMusic");
+                file = _robustRandom.Pick(lobbyCollection.PickFiles);
+            }
             _lobbyStream = _audioSystem.Play(file, _lobbyParams);
         }
 
