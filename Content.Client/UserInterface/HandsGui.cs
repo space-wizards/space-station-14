@@ -31,6 +31,7 @@ namespace Content.Client.UserInterface
         private ItemStatusPanel TopPanel { get; }
         private ItemStatusPanel RightPanel { get; }
 
+        private VBoxContainer HandBox { get; }
         private HBoxContainer HandsContainer { get; }
 
 
@@ -45,22 +46,22 @@ namespace Content.Client.UserInterface
         public HandsGui()
         {
             IoCManager.InjectDependencies(this);
-            AddChild(new VBoxContainer
+            AddChild(new HBoxContainer
             {
                 SeparationOverride = 0,
                 Children =
-                {
-                    (TopPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
-                    new HBoxContainer
-                    {
-                        Children =
                         {
                             (LeftPanel = ItemStatusPanel.FromSide(HandLocation.Left)),
-                            (HandsContainer = new HBoxContainer()),
+                            (HandBox = new VBoxContainer
+                            {
+                                Children =
+                                {
+                                    (TopPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
+                                    (HandsContainer = new HBoxContainer()),
+                                }
+                            }),
                             (RightPanel = ItemStatusPanel.FromSide(HandLocation.Right))
                         }
-                    },
-                }
             });
             LeftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
             MiddleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
@@ -103,6 +104,7 @@ namespace Content.Client.UserInterface
             {
                 handButton.SetActiveHand(true);
             }
+            HandleTopPanel();
         }
 
         private bool TryGetHandButton(int handNumber, [NotNullWhen(true)] out HandButton? handButton)
@@ -140,6 +142,26 @@ namespace Content.Client.UserInterface
                 _ => throw new ArgumentOutOfRangeException()
             };
             return new HandButton(buttonTexture, StorageTexture, BlockedTexture, buttonLocation);
+        }
+
+        /// <summary>
+        ///     Hack to keep invisible top panel from pushing out other panels when there is no middle hand (only 2 hands),
+        ///     by making it not attached unless needed.
+        /// </summary>
+        private void HandleTopPanel()
+        {
+            if (HandBox.Children.Contains(TopPanel))
+            {
+                HandBox.RemoveChild(TopPanel);
+            }
+            foreach (var hand in Hands)
+            {
+                if (hand.HandLocation == HandLocation.Middle)
+                {
+                    HandBox.AddChild(TopPanel);
+                    break;
+                }
+            }
         }
     }
 
