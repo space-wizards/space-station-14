@@ -1,6 +1,7 @@
 ﻿- type: entity
   name: baseinstrument
   id: BasePlaceableInstrument
+  parent: BaseConstructibleDynamic
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -15,17 +16,6 @@
     snap: true
   - type: Sprite
     sprite: Objects/Fun/Instruments/otherinstruments.rsi
-  - type: Physics
-    mass: 50
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.45,-0.35,0.45,0.35"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: SnapGrid
     offset: Center
   - type: Damageable
