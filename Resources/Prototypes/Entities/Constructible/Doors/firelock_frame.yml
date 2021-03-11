@@ -4,7 +4,7 @@
   description: That is a firelock frame.
   components:
     - type: Sprite
-      sprite: Constructible/Structures/Doors/firelock.rsi
+      sprite: Constructible/Structures/Doors/Standard/firelock.rsi
       state: frame1
     - type: Construction
       graph: Firelock

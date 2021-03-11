@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/59fe5dd2841f47a8abce60eecb9fafad34282bd0",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bolted_unlit"
+    },
+    {
+      "name": "closed_unlit"
+    },
+    {
+      "name": "closing_unlit",
+      "delays": [
+        [
+          0.25,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "deny_unlit",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "opening_unlit",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.25
+        ]
+      ]
+    },
+    {
+      "name": "panel_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.27
+        ]
+      ]
+    },
+    {
+      "name": "panel_open"
+    },
+    {
+      "name": "panel_opening",
+      "delays": [
+        [
+          0.2,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "sparks_broken",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "sparks_damaged",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          1.7
+        ]
+      ]
+    },
+    {
+      "name": "sparks_open",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "welded"
+    }
+  ]
+}

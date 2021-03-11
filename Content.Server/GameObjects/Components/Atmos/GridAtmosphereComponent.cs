@@ -288,7 +288,19 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 } else if (isAirBlocked)
                 {
-                    tile.Air = null;
+                    var nullAir = false;
+
+                    foreach (var airtight in GetObstructingComponents(indices))
+                    {
+                        if (airtight.NoAirWhenFullyAirBlocked)
+                        {
+                            nullAir = true;
+                            break;
+                        }
+                    }
+
+                    if(nullAir)
+                        tile.Air = null;
                 }
                 else
                 {

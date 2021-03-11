@@ -78,9 +78,9 @@ namespace Content.Client.GameObjects.EntitySystems
             // delegate to the ActionsUI, simulating a click on it
             return new((in PointerInputCmdHandler.PointerInputCmdArgs args) =>
                 {
-                    var playerEntity = _playerManager.LocalPlayer.ControlledEntity;
+                    var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
                     if (playerEntity == null ||
-                        !playerEntity.TryGetComponent<ClientActionsComponent>( out var actionsComponent)) return false;
+                        !playerEntity.TryGetComponent<ClientActionsComponent>(out var actionsComponent)) return false;
 
                     actionsComponent.HandleHotbarKeybind(slot, args);
                     return true;
@@ -92,7 +92,7 @@ namespace Content.Client.GameObjects.EntitySystems
             // delegate to the ActionsUI, simulating a click on it
             return new((in PointerInputCmdHandler.PointerInputCmdArgs args) =>
                 {
-                    var playerEntity = _playerManager.LocalPlayer.ControlledEntity;
+                    var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
                     if (playerEntity == null ||
                         !playerEntity.TryGetComponent<ClientActionsComponent>( out var actionsComponent)) return false;
 
@@ -104,7 +104,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private bool TargetingOnUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            var playerEntity = _playerManager.LocalPlayer.ControlledEntity;
+            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
             if (playerEntity == null ||
                 !playerEntity.TryGetComponent<ClientActionsComponent>( out var actionsComponent)) return false;
 
@@ -113,7 +113,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void ToggleActionsMenu()
         {
-            var playerEntity = _playerManager.LocalPlayer.ControlledEntity;
+            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
             if (playerEntity == null ||
                 !playerEntity.TryGetComponent<ClientActionsComponent>( out var actionsComponent)) return;
 

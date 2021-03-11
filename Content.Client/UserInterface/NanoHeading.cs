@@ -23,7 +23,7 @@ namespace Content.Client.UserInterface
             HorizontalAlignment = HAlignment.Left;
         }
 
-        public string Text
+        public string? Text
         {
             get => _label.Text;
             set => _label.Text = value;

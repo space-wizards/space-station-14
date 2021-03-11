@@ -22,6 +22,8 @@
         !type:PhysShapeAabb {}
       layer:
       - VaultImpassable
+      mask:
+      - Impassable
   - type: SnapGrid
     offset: Center
   - type: Climbable

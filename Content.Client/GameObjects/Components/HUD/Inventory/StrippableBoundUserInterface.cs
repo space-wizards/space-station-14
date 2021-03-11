@@ -13,12 +13,12 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     [UsedImplicitly]
     public class StrippableBoundUserInterface : BoundUserInterface
     {
-        public Dictionary<Slots, string> Inventory { get; private set; }
-        public Dictionary<string, string> Hands { get; private set; }
-        public Dictionary<EntityUid, string> Handcuffs { get; private set; }
+        public Dictionary<Slots, string>? Inventory { get; private set; }
+        public Dictionary<string, string>? Hands { get; private set; }
+        public Dictionary<EntityUid, string>? Handcuffs { get; private set; }
 
         [ViewVariables]
-        private StrippingMenu _strippingMenu;
+        private StrippingMenu? _strippingMenu;
 
         public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -41,7 +41,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             if (!disposing)
                 return;
 
-            _strippingMenu.Dispose();
+            _strippingMenu?.Dispose();
         }
 
         private void UpdateMenu()

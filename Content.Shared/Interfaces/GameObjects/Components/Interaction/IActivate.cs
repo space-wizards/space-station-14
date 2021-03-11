@@ -31,13 +31,8 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when an entity is activated in the world.
     /// </summary>
     [PublicAPI]
-    public class ActivateInWorldMessage : EntitySystemMessage
+    public class ActivateInWorldMessage : HandledEntityEventArgs
     {
-        /// <summary>
-        ///     If this message has already been "handled" by a previous system.
-        /// </summary>
-        public bool Handled { get; set; }
-
         /// <summary>
         ///     Entity that activated the world entity.
         /// </summary>

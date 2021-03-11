@@ -7,6 +7,7 @@ using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Physics;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Serialization;
@@ -19,6 +20,12 @@ namespace Content.Shared.GameObjects.Components.Movement
     {
         public sealed override string Name => "Slippery";
 
+        protected float _paralyzeTime = 3f;
+        protected float _intersectPercentage = 0.3f;
+        protected float _requiredSlipSpeed = 0.1f;
+        protected float _launchForwardsMultiplier = 1f;
+        protected bool _slippery = true;
+
         /// <summary>
         ///     The list of entities that have been slipped by this component,
         ///     and which have not stopped colliding with its owner yet.
@@ -30,35 +37,85 @@ namespace Content.Shared.GameObjects.Components.Movement
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("paralyzeTime")]
-        public virtual float ParalyzeTime { get; set; } = 3f;
+        public float ParalyzeTime
+        {
+            get => _paralyzeTime;
+            set
+            {
+                if (MathHelper.CloseTo(_paralyzeTime, value)) return;
+
+                _paralyzeTime = value;
+                Dirty();
+            }
+        }
 
         /// <summary>
         ///     Percentage of shape intersection for a slip to occur.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("intersectPercentage")]
-        public virtual float IntersectPercentage { get; set; } = 0.3f;
+        public float IntersectPercentage
+        {
+            get => _intersectPercentage;
+            set
+            {
+                if (MathHelper.CloseTo(_intersectPercentage, value)) return;
+
+                _intersectPercentage = value;
+                Dirty();
+            }
+        }
 
         /// <summary>
         ///     Entities will only be slipped if their speed exceeds this limit.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("requiredSlipSpeed")]
-        public virtual float RequiredSlipSpeed { get; set; } = 0.1f;
+        public float RequiredSlipSpeed
+        {
+            get => _requiredSlipSpeed;
+            set
+            {
+                if (MathHelper.CloseTo(_requiredSlipSpeed, value)) return;
+
+                _requiredSlipSpeed = value;
+                Dirty();
+            }
+        }
 
         /// <summary>
         ///     The entity's speed will be multiplied by this to slip it forwards.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("launchForwardsMultiplier")]
-        public virtual float LaunchForwardsMultiplier { get; set; } = 1f;
+        public float LaunchForwardsMultiplier
+        {
+            get => _launchForwardsMultiplier;
+            set
+            {
+                if (MathHelper.CloseTo(_launchForwardsMultiplier, value)) return;
+
+                _launchForwardsMultiplier = value;
+                Dirty();
+            }
+        }
 
         /// <summary>
         ///     Whether or not this component will try to slip entities.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("slippery")]
-        public virtual bool Slippery { get; set; } = true;
+        public bool Slippery
+        {
+            get => _slippery;
+            set
+            {
+                if (_slippery == value) return;
+
+                _slippery = value;
+                Dirty();
+            }
+        }
 
         private bool TrySlip(IPhysBody ourBody, IPhysBody otherBody)
         {
@@ -106,6 +163,9 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         public void Update()
         {
+            if (!Slippery)
+                return;
+
             foreach (var uid in _slipped.ToArray())
             {
                 if (!uid.IsValid() || !Owner.EntityManager.EntityExists(uid))
@@ -122,23 +182,6 @@ namespace Content.Shared.GameObjects.Components.Movement
                 {
                     _slipped.Remove(uid);
                 }
-            }
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            var physics = Owner.EnsureComponent<PhysicsComponent>();
-
-            physics.Hard = false;
-
-            var fixtures = physics.Fixtures.FirstOrDefault();
-
-            if (fixtures != null)
-            {
-                fixtures.CollisionLayer |= (int) CollisionGroup.SmallImpassable;
-                fixtures.CollisionMask = (int) CollisionGroup.None;
             }
         }
     }

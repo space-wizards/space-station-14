@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Construction;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components.Construction;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -48,6 +49,12 @@ namespace Content.Server.GameObjects.Components.Construction
                         return false;
                 }
 
+                foreach (var (tagName, info) in TagRequirements)
+                {
+                    if (_tagProgress[tagName] < info.Amount)
+                        return false;
+                }
+
                 return true;
             }
         }
@@ -56,13 +63,16 @@ namespace Content.Server.GameObjects.Components.Construction
         public bool HasBoard => _boardContainer?.ContainedEntities.Count != 0;
 
         [ViewVariables]
-        private Dictionary<MachinePart, int> _progress;
+        private readonly Dictionary<MachinePart, int> _progress = new();
 
         [ViewVariables]
-        private Dictionary<string, int> _materialProgress;
+        private readonly Dictionary<string, int> _materialProgress = new();
 
         [ViewVariables]
-        private Dictionary<string, int> _componentProgress;
+        private readonly Dictionary<string, int> _componentProgress = new();
+
+        [ViewVariables]
+        private readonly Dictionary<string, int> _tagProgress = new();
 
         [ViewVariables]
         private Container _boardContainer;
@@ -77,11 +87,15 @@ namespace Content.Server.GameObjects.Components.Construction
         public IReadOnlyDictionary<string, int> MaterialRequirements { get; private set; }
 
         [ViewVariables]
-        public IReadOnlyDictionary<string, ComponentPartInfo> ComponentRequirements { get; private set; }
+        public IReadOnlyDictionary<string, GenericPartInfo> ComponentRequirements { get; private set; }
+
+        [ViewVariables]
+        public IReadOnlyDictionary<string, GenericPartInfo> TagRequirements { get; private set; }
 
         public IReadOnlyDictionary<MachinePart, int> Progress => _progress;
         public IReadOnlyDictionary<string, int> MaterialProgress => _materialProgress;
         public IReadOnlyDictionary<string, int> ComponentProgress => _componentProgress;
+        public IReadOnlyDictionary<string, int> TagProgress => _tagProgress;
 
         public override void Initialize()
         {
@@ -109,9 +123,12 @@ namespace Content.Server.GameObjects.Components.Construction
             Requirements = machineBoard.Requirements;
             MaterialRequirements = machineBoard.MaterialIdRequirements;
             ComponentRequirements = machineBoard.ComponentRequirements;
-            _progress = new Dictionary<MachinePart, int>();
-            _materialProgress = new Dictionary<string, int>();
-            _componentProgress = new Dictionary<string, int>();
+            TagRequirements = machineBoard.TagRequirements;
+
+            _progress.Clear();
+            _materialProgress.Clear();
+            _componentProgress.Clear();
+            _tagProgress.Clear();
 
             foreach (var (machinePart, _) in Requirements)
             {
@@ -126,6 +143,11 @@ namespace Content.Server.GameObjects.Components.Construction
             foreach (var (compName, _) in ComponentRequirements)
             {
                 _componentProgress[compName] = 0;
+            }
+
+            foreach (var (compName, _) in TagRequirements)
+            {
+                _tagProgress[compName] = 0;
             }
         }
 
@@ -143,9 +165,11 @@ namespace Content.Server.GameObjects.Components.Construction
                 Requirements = null;
                 MaterialRequirements = null;
                 ComponentRequirements = null;
-                _progress = null;
-                _materialProgress = null;
-                _componentProgress = null;
+                TagRequirements = null;
+                _progress.Clear();
+                _materialProgress.Clear();
+                _componentProgress.Clear();
+                _tagProgress.Clear();
 
                 return;
             }
@@ -190,7 +214,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
 
                 // I have many regrets.
-                foreach (var (compName, amount) in ComponentRequirements)
+                foreach (var (compName, _) in ComponentRequirements)
                 {
                     var registration = _componentFactory.GetRegistration(compName);
 
@@ -201,6 +225,18 @@ namespace Content.Server.GameObjects.Components.Construction
                         _componentProgress[compName] = 1;
                     else
                         _componentProgress[compName]++;
+                }
+
+                // I have MANY regrets.
+                foreach (var (tagName, _) in TagRequirements)
+                {
+                    if (!part.HasTag(tagName))
+                        continue;
+
+                    if (!_tagProgress.ContainsKey(tagName))
+                        _tagProgress[tagName] = 1;
+                    else
+                        _tagProgress[tagName]++;
                 }
             }
         }
@@ -289,6 +325,19 @@ namespace Content.Server.GameObjects.Components.Construction
 
                     if (!eventArgs.Using.TryRemoveFromContainer() || !_partContainer.Insert(eventArgs.Using)) continue;
                     _componentProgress[compName]++;
+                    return true;
+                }
+
+                foreach (var (tagName, info) in TagRequirements)
+                {
+                    if (_tagProgress[tagName] >= info.Amount)
+                        continue;
+
+                    if (!eventArgs.Using.HasTag(tagName))
+                        continue;
+
+                    if (!eventArgs.Using.TryRemoveFromContainer() || !_partContainer.Insert(eventArgs.Using)) continue;
+                    _tagProgress[tagName]++;
                     return true;
                 }
             }

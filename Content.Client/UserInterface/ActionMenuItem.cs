@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-using System;
+﻿using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
 using Robust.Client.UserInterface;

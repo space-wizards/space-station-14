@@ -2,8 +2,6 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Fluids
 {
@@ -11,9 +9,9 @@ namespace Content.Client.GameObjects.Components.Fluids
     public class SprayVisualizer : AppearanceVisualizer
     {
         [DataField("safety_on_state")]
-        private string _safetyOnState;
+        private string? _safetyOnState;
         [DataField("safety_off_state")]
-        private string _safetyOffState;
+        private string? _safetyOffState;
 
         public override void OnChangeData(AppearanceComponent component)
         {

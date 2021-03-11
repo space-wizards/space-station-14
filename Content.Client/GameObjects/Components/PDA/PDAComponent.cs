@@ -10,7 +10,7 @@ namespace Content.Client.GameObjects.Components.PDA
     [RegisterComponent]
     public class PDAComponent : SharedPDAComponent
     {
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
             switch(message)
@@ -22,10 +22,7 @@ namespace Content.Client.GameObjects.Components.PDA
                 case PDAUplinkInsufficientFundsMessage _ :
                     SoundSystem.Play(Filter.Local(), "/Audio/Effects/error.ogg", Owner, AudioParams.Default);
                     break;
-
             }
         }
-
-
     }
 }

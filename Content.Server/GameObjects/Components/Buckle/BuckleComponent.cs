@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.GUI;
@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Buckle
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedBuckleComponent))]
-    public class BuckleComponent : SharedBuckleComponent, IInteractHand
+    public class BuckleComponent : SharedBuckleComponent
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -168,11 +168,6 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (!to.TryGetComponent(out strap))
             {
-                var message = Loc.GetString(Owner == user
-                    ? "You can't buckle yourself there!"
-                    : "You can't buckle {0:them} there!", Owner);
-                Owner.PopupMessage(user, message);
-
                 return false;
             }
 
@@ -415,12 +410,7 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             return new BuckleComponentState(Buckled, drawDepth, LastEntityBuckledTo, DontCollide);
         }
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            return TryUnbuckle(eventArgs.User);
-        }
-
+        
         public void Update()
         {
             if (!DontCollide || Physics == null)

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Suspicion;
@@ -68,7 +68,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
 
         private void AddTraitorOverlay()
         {
-            if (_overlayManager.HasOverlay(nameof(TraitorOverlay)))
+            if (_overlayManager.HasOverlay<TraitorOverlay>())
             {
                 return;
             }
@@ -85,7 +85,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 return;
             }
 
-            _overlayManager.RemoveOverlay(nameof(TraitorOverlay));
+            _overlayManager.RemoveOverlay<TraitorOverlay>();
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)

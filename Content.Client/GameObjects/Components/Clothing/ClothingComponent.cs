@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Client.GameObjects.Components.HUD.Inventory;
+﻿using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.GameObjects.Components.Items;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -70,6 +69,12 @@ namespace Content.Client.GameObjects.Components.Clothing
             }
 
             var rsi = GetRSI();
+
+            if (rsi == null)
+            {
+                return null;
+            }
+
             var prefix = ClothingEquippedPrefix ?? EquippedPrefix;
             var stateId = prefix != null ? $"{prefix}-equipped-{slot}" : $"equipped-{slot}";
             if (rsi.TryGetState(stateId, out _))

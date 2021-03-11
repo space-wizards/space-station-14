@@ -1,251 +1,196 @@
 {
     "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi",
     "size": {
         "x": 32,
         "y": 32
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi",
     "states": [
         {
-            "name": "AI",
+            "name": "AI"
+        },
+        {
+            "name": "Assistant"
+        },
+        {
+            "name": "Atmospheric Technician"
+        },
+        {
+            "name": "Bartender"
+        },
+        {
+            "name": "Botanist"
+        },
+        {
+            "name": "Captain"
+        },
+        {
+            "name": "Cargo Technician"
+        },
+        {
+            "name": "Centcom"
+        },
+        {
+            "name": "Chaplain"
+        },
+        {
+            "name": "Chemist"
+        },
+        {
+            "name": "Chief Engineer"
+        },
+        {
+            "name": "Chief Medical Officer"
+        },
+        {
+            "name": "Clown"
+        },
+        {
+            "name": "Cook"
+        },
+        {
+            "name": "Curator"
 
         },
         {
-            "name": "Assistant",
+            "name": "Cyborg"
 
         },
         {
-            "name": "Atmospheric Technician",
-
+            "name": "Detective"
         },
         {
-            "name": "Bartender",
-
+            "name": "Geneticist"
         },
         {
-            "name": "Botanist",
-
+            "name": "Head of Personnel"
         },
         {
-            "name": "Captain",
-
+            "name": "Head of Security"
         },
         {
-            "name": "Cargo Technician",
-
+            "name": "Janitor"
         },
         {
-            "name": "Chaplain",
-
+            "name": "Lawyer"
         },
         {
-            "name": "Chemist",
-
+            "name": "Medical Doctor"
         },
         {
-            "name": "Chief Engineer",
-
+            "name": "Mime"
         },
         {
-            "name": "Chief Medical Officer",
-
+            "name": "Paramedic"
         },
         {
-            "name": "Clown",
-
+            "name": "Prisoner"
         },
         {
-            "name": "Cook",
-
+            "name": "Psychologist"
         },
         {
-            "name": "Curator",
-
+            "name": "Quartermaster"
         },
         {
-            "name": "Cyborg",
-
+            "name": "Research Director"
         },
         {
-            "name": "Detective",
-
+            "name": "Roboticist"
         },
         {
-            "name": "Geneticist",
-
+            "name": "Scientist"
         },
         {
-            "name": "Head of Personnel",
-
+            "name": "Security Officer"
         },
         {
-            "name": "Head of Security",
-
+            "name": "Shaft Miner"
         },
         {
-            "name": "Janitor",
-
+            "name": "Station Engineer"
         },
         {
-            "name": "Lawyer",
-
+            "name": "Virologist"
         },
         {
-            "name": "Medical Doctor",
-
+            "name": "Warden"
         },
         {
-            "name": "Mime",
-
+            "name": "cross_blue"
         },
         {
-            "name": "Paramedic",
-
+            "name": "cross_green"
         },
         {
-            "name": "Prisoner",
-
+            "name": "cross_pink"
         },
         {
-            "name": "Psychologist",
-
+            "name": "cross_red"
         },
         {
-            "name": "Quartermaster",
-
+            "name": "observer_start"
         },
         {
-            "name": "Research Director",
-
+            "name": "spawner_ai"
         },
         {
-            "name": "Roboticist",
-
+            "name": "spawner_grenade"
         },
         {
-            "name": "Scientist",
-
+            "name": "spawner_hitscan"
         },
         {
-            "name": "Security Officer",
-
+            "name": "spawner_launcher"
         },
         {
-            "name": "Shaft Miner",
-
+            "name": "spawner_launcher_ammo"
         },
         {
-            "name": "Station Engineer",
-
+            "name": "spawner_magnum_ammo"
         },
         {
-            "name": "Virologist",
-
+            "name": "spawner_melee"
         },
         {
-            "name": "Warden",
-
+            "name": "spawner_pistol"
         },
         {
-            "name": "cross_blue",
-
+            "name": "spawner_pistol_ammo"
         },
         {
-            "name": "cross_green",
-
+            "name": "spawner_revolver"
         },
         {
-            "name": "cross_pink",
-
+            "name": "spawner_rifle"
         },
         {
-            "name": "cross_red",
-
+            "name": "spawner_rifle_ammo"
         },
         {
-            "name": "observer_start",
-
+            "name": "spawner_shotgun"
         },
         {
-            "name": "spawner_ai",
-
+            "name": "spawner_shotgun_ammo"
         },
         {
-            "name": "spawner_grenade",
-
+            "name": "spawner_smg"
         },
         {
-            "name": "spawner_hitscan",
-
+            "name": "spawner_sniper"
         },
         {
-            "name": "spawner_launcher",
-
+            "name": "spawner_trash"
         },
         {
-            "name": "spawner_launcher_ammo",
-
+            "name": "spawner_xenoai"
         },
         {
-            "name": "spawner_magnum_ammo",
-
+            "name": "spawner_toy"
         },
         {
-            "name": "spawner_melee",
-
-        },
-        {
-            "name": "spawner_pistol",
-
-        },
-        {
-            "name": "spawner_pistol_ammo",
-
-        },
-        {
-            "name": "spawner_revolver",
-
-        },
-        {
-            "name": "spawner_rifle",
-
-        },
-        {
-            "name": "spawner_rifle_ammo",
-
-        },
-        {
-            "name": "spawner_shotgun",
-
-        },
-        {
-            "name": "spawner_shotgun_ammo",
-
-        },
-        {
-            "name": "spawner_smg",
-
-        },
-        {
-            "name": "spawner_sniper",
-
-        },
-        {
-            "name": "spawner_trash",
-
-        },
-        {
-            "name": "spawner_xenoai",
-
-        },
-        {
-            "name": "spawner_toy",
-
-        },
-        {
-            "name": "spawner_figure",
-
+            "name": "spawner_figure"
         }
     ]
 }

@@ -9,8 +9,8 @@ namespace Content.Client.Interfaces
 
         bool ServerDataLoaded => Settings != null;
 
-        GameSettings Settings { get; }
-        PlayerPreferences Preferences { get; }
+        GameSettings? Settings { get; }
+        PlayerPreferences? Preferences { get; }
         void Initialize();
         void SelectCharacter(ICharacterProfile profile);
         void SelectCharacter(int slot);

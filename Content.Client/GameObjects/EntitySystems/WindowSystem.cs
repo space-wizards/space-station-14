@@ -46,7 +46,7 @@ namespace Content.Client.GameObjects.EntitySystems
     /// <summary>
     ///     Event raised by a <see cref="WindowComponent"/> when it needs to be recalculated.
     /// </summary>
-    public sealed class WindowSmoothDirtyEvent : EntitySystemMessage
+    public sealed class WindowSmoothDirtyEvent : EntityEventArgs
     {
         public IEntity Sender { get; }
 
