@@ -53,12 +53,14 @@ namespace Content.Client.GameObjects.Components.Items
         public override void Initialize()
         {
             base.Initialize();
-            Gui.HandPressed += args => OnHandPressed(args.HandPressed);
+            Gui.HandClick += args => OnHandClick(args.HandClicked);
+            Gui.HandRightClick += args => OnHandRightClick(args.HandClicked);
+            Gui.HandUse += args => OnActivateInHand(args.HandUsed);
         }
 
-        private void OnHandPressed(int handPressed)
+        private void OnHandClick(int handClicked)
         {
-            if (!TryGetHand(handPressed, out var pressedHand))
+            if (!TryGetHand(handClicked, out var pressedHand))
                 return;
 
             if (!TryGetHand(ActiveHand, out var activeHand))
@@ -73,17 +75,22 @@ namespace Content.Client.GameObjects.Components.Items
                 return;
             }
 
-            if (handPressed == ActiveHand && activeItem != null)
+            if (handClicked == ActiveHand && activeItem != null)
             {
                 SendNetworkMessage(new UseInHandMsg()); //use item in hand
                 return;
             }
 
-            if (handPressed != ActiveHand && activeItem == null && pressedItem != null)
+            if (handClicked != ActiveHand && activeItem == null && pressedItem != null)
             {
                 SendNetworkMessage(new ClientAttackByInHandMsg(pressedHand.Name)); //use active item on held item
                 return;
             }
+        }
+
+        private void OnHandRightClick(int handClicked)
+        {
+
         }
 
         private void OnActivateInHand(int handActivated)
@@ -161,9 +168,12 @@ namespace Content.Client.GameObjects.Components.Items
             }
         }
 
+        /// <summary>
+        ///     Temporary hack for items to notify when they have changed their texture.
+        /// </summary>
         public void RefreshInHands()
         {
-            SetGuiState(); //might be a more straightforward way to handle updating just th eitem names
+            SetGuiState();
         }
 
         public override bool IsHolding(IEntity entity)
@@ -194,7 +204,7 @@ namespace Content.Client.GameObjects.Components.Items
             Gui.Visible = false;
         }
 
-        private void RemoveHandLayers()
+        private void RemoveHandLayers() //TODO: Replace with visualizer
         {
             if (_sprite == null)
                 return;
@@ -209,7 +219,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         }
 
-        private void MakeHandLayers()
+        private void MakeHandLayers() //TODO: Replace with visualizer
         {
             if (_sprite == null)
                 return;

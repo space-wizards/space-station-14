@@ -10,6 +10,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -41,7 +42,11 @@ namespace Content.Client.UserInterface
 
         private int ActiveHand { get; set; }
 
-        public Action<HandPressedEventArgs>? HandPressed;
+        public Action<HandClickEventArgs>? HandClick;
+
+        public Action<HandRightClickEventArgs>? HandRightClick;
+
+        public Action<HandActivateEventArgs>? HandUse;
 
         public HandsGui()
         {
@@ -95,7 +100,7 @@ namespace Content.Client.UserInterface
                 HandsContainer.AddChild(newButton);
                 hand.HandButton = newButton;
 
-                newButton.OnPressed += _ => OnHandPressed(hand);
+                newButton.OnPressed += args => OnHandPressed(args, hand);
                 newButton.Blocked.Visible = !hand.Enabled;
                 GetStatusPanel(location).Update(heldItem);
                 _itemSlotManager.SetItemSlot(newButton, heldItem);
@@ -107,9 +112,21 @@ namespace Content.Client.UserInterface
             HandleTopPanel();
         }
 
-        private void OnHandPressed(GuiHand hand)
+        private void OnHandPressed(GUIBoundKeyEventArgs pressed, GuiHand hand)
         {
-            HandPressed?.Invoke(new HandPressedEventArgs(_hands.IndexOf(hand)));
+            var handIndex = _hands.IndexOf(hand);
+            if (pressed.Function == EngineKeyFunctions.UIClick)
+            {
+                HandClick?.Invoke(new HandClickEventArgs(handIndex));
+            }
+            else if (pressed.Function == EngineKeyFunctions.UIRightClick)
+            {
+                HandRightClick?.Invoke(new HandRightClickEventArgs(handIndex));
+            }
+            else if (pressed.Function == EngineKeyFunctions.) //TODO: figure out how to hand activate of inhand item
+            {
+                HandUse?.Invoke(new HandActivateEventArgs(handIndex));
+            }
         }
 
         private bool TryGetHandButton(int handNumber, [NotNullWhen(true)] out HandButton? handButton)
@@ -196,13 +213,33 @@ namespace Content.Client.UserInterface
         }
     }
 
-    public class HandPressedEventArgs
+    public class HandClickEventArgs
     {
-        public int HandPressed { get; }
+        public int HandClicked { get; }
 
-        public HandPressedEventArgs(int handPressed)
+        public HandClickEventArgs(int handClicked)
         {
-            HandPressed = handPressed;
+            HandClicked = handClicked;
+        }
+    }
+
+    public class HandRightClickEventArgs
+    {
+        public int HandClicked { get; }
+
+        public HandRightClickEventArgs(int handClicked)
+        {
+            HandClicked = handClicked;
+        }
+    }
+
+    public class HandActivateEventArgs
+    {
+        public int HandUsed { get; }
+
+        public HandActivateEventArgs(int handUsed)
+        {
+            HandUsed = handUsed;
         }
     }
 
