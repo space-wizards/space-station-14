@@ -5,8 +5,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Reflection;
 
-#nullable enable
-
 namespace Content.Client.Eui
 {
     public sealed class EuiManager

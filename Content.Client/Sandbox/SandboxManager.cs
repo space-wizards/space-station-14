@@ -117,11 +117,11 @@ namespace Content.Client.Sandbox
 
         public bool SandboxAllowed { get; private set; }
 
-        public event Action<bool> AllowedChanged;
+        public event Action<bool>? AllowedChanged;
 
-        private SandboxWindow _window;
-        private EntitySpawnWindow _spawnWindow;
-        private TileSpawnWindow _tilesSpawnWindow;
+        private SandboxWindow? _window;
+        private EntitySpawnWindow? _spawnWindow;
+        private TileSpawnWindow? _tilesSpawnWindow;
         private bool _sandboxWindowToggled;
 
         public void Initialize()

@@ -116,9 +116,9 @@ namespace Content.Client.UserInterface
             GetActualStyleBox()?.Draw(handle, centerBox);
         }
 
-        private StyleBox GetActualStyleBox()
+        private StyleBox? GetActualStyleBox()
         {
-            return TryGetStyleProperty(StylePropertyBackground, out StyleBox box) ? box : null;
+            return TryGetStyleProperty(StylePropertyBackground, out StyleBox? box) ? box : null;
         }
     }
 }

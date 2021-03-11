@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
@@ -16,7 +15,7 @@ using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.ParticleAccelerator
+namespace Content.Client.UserInterface.ParticleAccelerator
 {
     public sealed class ParticleAcceleratorControlMenu : BaseWindow
     {
@@ -101,11 +100,7 @@ namespace Content.Client.ParticleAccelerator
                 MouseFilter = MouseFilterMode.Pass
             });
 
-            _stateSpinBox = new SpinBox
-            {
-                Value = 0,
-            };
-            _stateSpinBox.IsValid = StrengthSpinBoxValid;
+            _stateSpinBox = new SpinBox {Value = 0, IsValid = StrengthSpinBoxValid,};
             _stateSpinBox.InitDefaultButtons();
             _stateSpinBox.ValueChanged += PowerStateChanged;
             _stateSpinBox.LineEditDisabled = true;
@@ -336,7 +331,7 @@ namespace Content.Client.ParticleAccelerator
             return (n >= 0 && n <= 4 && !_blockSpinBox);
         }
 
-        private void PowerStateChanged(object sender, ValueChangedEventArgs e)
+        private void PowerStateChanged(object? sender, ValueChangedEventArgs e)
         {
             ParticleAcceleratorPowerState newState;
             switch (e.Value)

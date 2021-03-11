@@ -1,6 +1,8 @@
 - type: latheRecipe
   id: Beaker
-  icon: Objects/Specific/Chemistry/beakers.rsi
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+    state: beaker
   result: Beaker
   completetime: 500
   materials:
@@ -8,7 +10,9 @@
 
 - type: latheRecipe
   id: LargeBeaker
-  icon: Objects/Specific/Chemistry/beakers.rsi
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker_large.rsi
+    state: beakerlarge
   result: LargeBeaker
   completetime: 500
   materials:

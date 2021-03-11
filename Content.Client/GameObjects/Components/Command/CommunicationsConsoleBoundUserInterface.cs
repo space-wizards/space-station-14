@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Client.Command;
 using Content.Shared.GameObjects.Components.Command;
 using Robust.Client.GameObjects;

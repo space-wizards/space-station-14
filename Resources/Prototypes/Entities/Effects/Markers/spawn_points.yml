@@ -16,7 +16,6 @@
   - type: SpawnPoint
     spawn_type: LateJoin
 
-
 - type: entity
   name: observer spawn point
   id: SpawnPointObserver
@@ -26,4 +25,3 @@
     state: observer_start
   - type: SpawnPoint
     spawn_type: Observer
-
