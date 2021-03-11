@@ -244,7 +244,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             // figure out if it's in hand or inventory and highlight it
             foreach (var hand in _handsComponent!.Hands)
             {
-                /* TODO: Fix this
+                /* TODO: Fix this -- make guihand have hilighted property, have this tell handcomp to change highlighted on clienthand then resend guistate
                 if (hand.HeldItem != item || hand.Button == null) continue;
                 _highlightingItemSlots.Add(hand.Button);
                 hand.Button.Highlight(true);
