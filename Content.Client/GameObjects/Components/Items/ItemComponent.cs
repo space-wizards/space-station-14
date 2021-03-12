@@ -41,11 +41,12 @@ namespace Content.Client.GameObjects.Components.Items
             set
             {
                 _equippedPrefix = value;
-                if (!Owner.TryGetContainer(out IContainer? container)) return;
-                if(container.Owner.TryGetComponent(out HandsComponent? hands))
-                {
+
+                if (!Owner.TryGetContainer(out var container))
+                    return;
+
+                if (container.Owner.TryGetComponent(out HandsComponent? hands))
                     hands.RefreshInHands();
-                }
             }
         }
 
