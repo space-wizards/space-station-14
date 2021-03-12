@@ -159,7 +159,7 @@ namespace Content.MapRenderer
                     var gridCanvas = new Image<Rgba32>(w, h);
 
                     tilePainter.Run(gridCanvas, grid);
-                    await entityPainter.Run(gridCanvas, grid);
+                    entityPainter.Run(gridCanvas, grid);
 
                     gridCanvas.Mutate(e => e.Flip(FlipMode.Vertical));
 
