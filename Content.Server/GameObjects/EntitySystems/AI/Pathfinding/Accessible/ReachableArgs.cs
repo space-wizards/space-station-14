@@ -4,16 +4,16 @@ using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
-
+using Content.Shared.Access;
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 {
     public sealed class ReachableArgs
     {
         public float VisionRadius { get; set; }
-        public ICollection<string> Access { get; }
+        public AccessTags Access { get; }
         public int CollisionMask { get; }
 
-        public ReachableArgs(float visionRadius, ICollection<string> access, int collisionMask)
+        public ReachableArgs(float visionRadius, AccessTags access, int collisionMask)
         {
             VisionRadius = visionRadius;
             Access = access;

@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Content.Shared.Access;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 {
@@ -30,7 +31,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             return true;
         }
 
-        public static bool DirectionTraversable(int collisionMask, ICollection<string> access, PathfindingNode currentNode, Direction direction)
+        public static bool DirectionTraversable(int collisionMask, AccessTags access, PathfindingNode currentNode, Direction direction)
          {
             // If it's a diagonal we need to check NSEW to see if we can get to it and stop corner cutting, NE needs N and E etc.
             // Given there's different collision layers stored for each node in the graph it's probably not worth it to cache this
@@ -110,7 +111,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             return true;
         }
 
-        public static bool Traversable(int collisionMask, ICollection<string> access, PathfindingNode node)
+        public static bool Traversable(int collisionMask, AccessTags access, PathfindingNode node)
         {
             if ((collisionMask & node.BlockedCollisionMask) != 0)
             {

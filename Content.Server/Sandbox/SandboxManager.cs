@@ -154,7 +154,7 @@ namespace Content.Server.Sandbox
             void UpgradeId(IEntity id)
             {
                 var access = id.GetComponent<AccessComponent>();
-                access.SetTags(allAccess);
+                access.SetTags(AccessTags.AllAccess);
 
                 if (id.TryGetComponent(out SpriteComponent sprite))
                 {
