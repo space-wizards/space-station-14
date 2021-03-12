@@ -91,12 +91,11 @@ namespace Content.Shared.GameTicking
             #endregion
 
             public bool IsRoundStarted { get; set; }
+            public string? LobbySong { get; set; }
             public bool YouAreReady { get; set; }
             // UTC.
             public TimeSpan StartTime { get; set; }
             public bool Paused { get; set; }
-
-            public string? LobbySong { get; set; }
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
