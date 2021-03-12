@@ -17,14 +17,17 @@ namespace Content.Server.GameObjects.Components.PDA
         /// <returns>The id card component.</returns>
         public static IdCardComponent? PlayerGetId(this IEntity player)
         {
+            IdCardComponent? firstIdInPda = null;
+
             if (player.TryGetComponent(out IHandsComponent? hands))
             {
                 foreach (var item in hands.GetAllHeldItems())
                 {
-                    if (item.Owner.TryGetComponent(out PDAComponent? pda) &&
+                    if (firstIdInPda == null &&
+                        item.Owner.TryGetComponent(out PDAComponent? pda) &&
                         pda.ContainedID != null)
                     {
-                        return pda.ContainedID;
+                        firstIdInPda = pda.ContainedID;
                     }
 
                     if (item.Owner.TryGetComponent(out IdCardComponent? card))
@@ -32,6 +35,11 @@ namespace Content.Server.GameObjects.Components.PDA
                         return card;
                     }
                 }
+            }
+
+            if (firstIdInPda != null)
+            {
+                return firstIdInPda;
             }
 
             if (player.TryGetComponent(out InventoryComponent? inventory))
