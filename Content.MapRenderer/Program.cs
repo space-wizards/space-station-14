@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using Content.IntegrationTests;
 using Content.MapRenderer.Painters;
 using Content.Shared;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Map;
@@ -106,6 +108,18 @@ namespace Content.MapRenderer
             Console.WriteLine($"Loaded client and server in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
 
             stopwatch.Restart();
+
+            var cPlayerManager = client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
+
+            await client.WaitPost(() =>
+            {
+                if (cPlayerManager.LocalPlayer!.ControlledEntity!.TryGetComponent(out SpriteComponent? sprite))
+                {
+                    sprite.Visible = false;
+                }
+            });
+
+            await RunTicksSync(client, server, 5);
 
             var sMapManager = server.ResolveDependency<IMapManager>();
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
