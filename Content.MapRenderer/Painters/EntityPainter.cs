@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Content.Client.GameObjects.Components;
 using Robust.Client.Graphics;
@@ -24,6 +23,9 @@ namespace Content.MapRenderer.Painters
         private readonly IEntityManager _cEntityManager;
         private readonly IEntityManager _sEntityManager;
 
+        private readonly Dictionary<(string path, string state), Image> _images;
+        private readonly Image _errorImage;
+
         private readonly ConcurrentDictionary<GridId, List<EntityData>> _entities;
 
         public EntityPainter(ClientIntegrationInstance client, ServerIntegrationInstance server)
@@ -31,6 +33,10 @@ namespace Content.MapRenderer.Painters
             _cResourceCache = client.ResolveDependency<IResourceCache>();
             _cEntityManager = client.ResolveDependency<IEntityManager>();
             _sEntityManager = server.ResolveDependency<IEntityManager>();
+
+            _errorImage = Image.Load<Rgba32>(_cResourceCache.ContentFileRead("/Textures/error.rsi/error.png"));
+            _images = new Dictionary<(string path, string state), Image>();
+
             _entities = GetEntities();
         }
 
@@ -53,7 +59,7 @@ namespace Content.MapRenderer.Painters
             // TODO cache this shit what are we insane
             entities.Sort(Comparer<EntityData>.Create((x, y) => x.Sprite.DrawDepth.CompareTo(y.Sprite.DrawDepth)));
 
-            foreach (var entity in entities.AsParallel())
+            foreach (var entity in entities)
             {
                 if (entity.Sprite.Owner.HasComponent<SubFloorHideComponent>())
                 {
@@ -78,19 +84,30 @@ namespace Content.MapRenderer.Painters
                     }
 
                     var rsi = layer.ActualRsi;
-                    Stream stream;
+                    Image image;
 
                     if (rsi == null || rsi.Path == null || !rsi.TryGetState(layer.RsiState, out var state))
                     {
-                        stream = _cResourceCache.ContentFileRead("/Textures/error.rsi/error.png");
+                        image = _errorImage;
                     }
                     else
                     {
-                        var stateId = state.StateId;
-                        stream = _cResourceCache.ContentFileRead($"{rsi.Path}/{stateId}.png");
+                        var key = (rsi.Path.ToString(), state.StateId.Name);
+
+                        if (_images.TryGetValue(key, out image))
+                        {
+                            image = image;
+                        }
+                        else
+                        {
+                            var stream = _cResourceCache.ContentFileRead($"{rsi.Path}/{state.StateId}.png");
+                            image = Image.Load<Rgba32>(stream);
+
+                            _images[key] = image;
+                        }
                     }
 
-                    var image = Image.Load<Rgba32>(stream);
+                    image = image.CloneAs<Rgba32>();
 
                     var directions = entity.Sprite.GetLayerDirectionCount(layer);
 
