@@ -4,7 +4,7 @@ namespace Content.MapRenderer.Painters
 {
     public class EntityData
     {
-        public EntityData(SpriteComponent sprite, int x, int y)
+        public EntityData(SpriteComponent sprite, float x, float y)
         {
             Sprite = sprite;
             X = x;
@@ -13,8 +13,8 @@ namespace Content.MapRenderer.Painters
 
         public SpriteComponent Sprite { get; }
 
-        public int X { get; }
+        public float X { get; }
 
-        public int Y { get; }
+        public float Y { get; }
     }
 }

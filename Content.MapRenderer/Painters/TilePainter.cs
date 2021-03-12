@@ -31,8 +31,8 @@ namespace Content.MapRenderer.Painters
             stopwatch.Start();
 
             var bounds = grid.WorldBounds;
-            var xOffset = (int) Math.Abs(bounds.Left);
-            var yOffset = (int) Math.Abs(bounds.Bottom);
+            var xOffset = Math.Abs(bounds.Left);
+            var yOffset = Math.Abs(bounds.Bottom);
             var tileSize = grid.TileSize * TileImageSize;
 
             var images = GetTileImages(_sTileDefinitionManager, _cResourceCache, tileSize);
@@ -40,8 +40,8 @@ namespace Content.MapRenderer.Painters
 
             grid.GetAllTiles().AsParallel().ForAll(tile =>
             {
-                var x = tile.X + xOffset;
-                var y = tile.Y + yOffset;
+                var x = (int) (tile.X + xOffset);
+                var y = (int) (tile.Y + yOffset);
                 var sprite = _sTileDefinitionManager[tile.Tile.TypeId].SpriteName;
                 var image = images[sprite];
 
