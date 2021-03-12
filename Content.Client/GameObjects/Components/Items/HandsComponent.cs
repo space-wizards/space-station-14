@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Items
         [Dependency] private readonly IGameHud _gameHud = default!;
 
         [ViewVariables]
-        private HandsGui Gui { get; set; } = default!;
+        public HandsGui Gui { get; private set; } = default!;
 
         /// <summary>
         ///     The name of the currently active hand.
