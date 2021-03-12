@@ -392,3 +392,8 @@ Entries:
   - {message: Delete ghost when player respawns, type: Fix}
   id: 71
   time: '2021-03-11T09:37:17.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Remove Mouse spawns on Saltern, type: Remove}
+  id: 72
+  time: '2021-03-12T08:43:55.0000000+00:00'
