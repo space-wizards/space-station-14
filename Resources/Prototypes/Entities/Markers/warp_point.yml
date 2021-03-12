@@ -5,8 +5,4 @@
   components:
   - type: WarpPoint
   - type: Sprite
-    state: cross_pink
-
-
-
-
+    state: pink

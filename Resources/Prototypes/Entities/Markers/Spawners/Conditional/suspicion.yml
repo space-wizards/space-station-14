@@ -1,22 +1,12 @@
 - type: entity
-  name: base conditional spawner
-  id: BaseConditionalSpawner
-  parent: MarkerBase
-  abstract: true
-  components:
-    - type: ConditionalSpawner
-
-- type: entity
   name: Suspicion Rifle Spawner
   id: SuspicionRifleSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_rifle
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Guns/Rifles/ak.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - RifleAk
@@ -34,14 +24,12 @@
 - type: entity
   name: Suspicion Pistol Spawner
   id: SuspicionPistolSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_pistol
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Guns/Pistols/colt.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - PistolClarissa
@@ -62,14 +50,12 @@
 - type: entity
   name: Suspicion Melee Spawner
   id: SuspicionMeleeSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_melee
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Melee/kitchen_knife.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - ButchCleaver
@@ -85,14 +71,12 @@
 - type: entity
   name: Suspicion Revolver Spawner
   id: SuspicionRevolverSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_revolver
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Guns/Revolvers/inspector.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - RevolverDeckard
@@ -105,14 +89,12 @@
 - type: entity
   name: Suspicion Shotgun Spawner
   id: SuspicionShotgunSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_shotgun
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Guns/Shotguns/pump.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - ShotgunBojevic
@@ -129,14 +111,12 @@
 - type: entity
   name: Suspicion SMG Spawner
   id: SuspicionSMGSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_smg
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Guns/SMGs/c20r.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - SmgAtreides
@@ -151,14 +131,12 @@
 - type: entity
   name: Suspicion Sniper Spawner
   id: SuspicionSniperSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_sniper
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - SniperBoltGun
@@ -171,14 +149,12 @@
 - type: entity
   name: Suspicion Hitscan Spawner
   id: SuspicionHitscanSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_hitscan
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Guns/Battery/xray.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - RedLaser
@@ -195,14 +171,12 @@
 - type: entity
   name: Suspicion Launchers Spawner
   id: SuspicionLaunchersSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_launcher
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Guns/Launchers/rocket.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - LauncherChinaLake
@@ -214,14 +188,12 @@
 - type: entity
   name: Suspicion Grenades Spawner
   id: SuspicionGrenadesSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_grenade
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Grenades/grenade.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - ExGrenade
@@ -239,14 +211,12 @@
 - type: entity
   name: Suspicion Rifle Ammo Spawner
   id: SuspicionRifleMagazineSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_rifle_ammo
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Guns/Ammunition/Boxes/LRifle/l_rifle_big_box.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - MagazineSRifle
@@ -262,14 +232,12 @@
 - type: entity
   name: Suspicion Shotgun Ammo Spawner
   id: SuspicionShotgunMagazineSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_shotgun_ammo
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi/base.png
     - type: ConditionalSpawner
       prototypes:
         - MagazineShotgun
@@ -280,14 +248,12 @@
 - type: entity
   name: Suspicion Pistol Ammo Spawner
   id: SuspicionPistolMagazineSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_pistol_ammo
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - MagazinePistol
@@ -299,14 +265,12 @@
 - type: entity
   name: Suspicion Magnum Ammo Spawner
   id: SuspicionMagnumMagazineSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_magnum_ammo
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - MagazineMagnum
@@ -318,14 +282,12 @@
 - type: entity
   name: Suspicion Launcher Ammo Spawner
   id: SuspicionLauncherAmmoSpawner
-  parent: BaseConditionalSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_launcher_ammo
-
+      layers:
+        - state: blue
+        - texture: Objects/Weapons/Guns/Ammunition/Explosives/rpg.rsi/frag.png
     - type: ConditionalSpawner
       prototypes:
         - RocketAmmo
@@ -333,22 +295,3 @@
       chance: 0.95
       gameRules:
         - RuleSuspicion
-
-- type: entity
-  name: Traitor DeathMatch PDA Redemption Machine Spawner
-  id: TraitorDMRedemptionMachineSpawner
-  parent: BaseConditionalSpawner
-  components:
-    - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Objects/Misc/traitordm.rsi
-      state: redemption
-
-    - type: ConditionalSpawner
-      prototypes:
-        - TraitorDMRedemptionMachine
-      chance: 1.0
-      gameRules:
-        - RuleTraitorDeathMatch
-
