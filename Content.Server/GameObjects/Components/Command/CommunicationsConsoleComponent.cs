@@ -1,13 +1,23 @@
 #nullable enable
+using System;
+using System.Threading;
+using Content.Server.GameObjects.Components.Access;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.Chat;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Command;
+using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameObjects.Components.Command
 {
@@ -15,11 +25,17 @@ namespace Content.Server.GameObjects.Components.Command
     [ComponentReference(typeof(IActivate))]
     public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent, IActivate
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         private RoundEndSystem RoundEndSystem => EntitySystem.Get<RoundEndSystem>();
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CommunicationsConsoleUiKey.Key);
+
+        public TimeSpan LastAnnounceTime { get; private set; } = TimeSpan.Zero;
+        public TimeSpan AnnounceCooldown { get; } = TimeSpan.FromSeconds(90);
+        private CancellationTokenSource _announceCooldownEndedTokenSource = new();
 
         public override void Initialize()
         {
@@ -49,8 +65,17 @@ namespace Content.Server.GameObjects.Components.Command
             {
                 var system = RoundEndSystem;
 
-                UserInterface?.SetState(new CommunicationsConsoleInterfaceState(system.CanCall(), system.ExpectedCountdownEnd));
+                UserInterface?.SetState(new CommunicationsConsoleInterfaceState(CanAnnounce(), system.CanCall(), system.ExpectedCountdownEnd));
             }
+        }
+
+        public bool CanAnnounce()
+        {
+            if (LastAnnounceTime == TimeSpan.Zero)
+            {
+                return true;
+            }
+            return _gameTiming.CurTime >= LastAnnounceTime + AnnounceCooldown;
         }
 
         public override void OnRemove()
@@ -71,6 +96,29 @@ namespace Content.Server.GameObjects.Components.Command
 
                 case CommunicationsConsoleRecallEmergencyShuttleMessage _:
                     RoundEndSystem.CancelRoundEndCountdown();
+                    break;
+                case CommunicationsConsoleAnnounceMessage msg:
+                    _announceCooldownEndedTokenSource.Cancel();
+                    _announceCooldownEndedTokenSource = new CancellationTokenSource();
+                    LastAnnounceTime = _gameTiming.CurTime;
+                    Timer.Spawn(AnnounceCooldown, () => UpdateBoundInterface(), _announceCooldownEndedTokenSource.Token);
+                    UpdateBoundInterface();
+
+                    var author = "Unknown";
+                    var mob = obj.Session.AttachedEntity;
+                    if (mob != null && mob.TryGetComponent(out InventoryComponent? inventoryComponent))
+                    {
+                        if (inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
+                            inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent item) &&
+                            item.Owner.TryGetComponent(out IdCardComponent? idCardComponent)
+                        )
+                        {
+                            author = $"{idCardComponent.FullName} ({idCardComponent.JobTitle})";
+                        }
+                    }
+
+                    var message = msg.Message + $"\nSent by {author}";
+                    _chatManager.DispatchStationAnnouncement(message, "Communications Console");
                     break;
             }
         }
