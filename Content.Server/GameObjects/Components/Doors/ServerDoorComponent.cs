@@ -665,6 +665,8 @@ namespace Content.Server.GameObjects.Components.Doors
 
             var container = ContainerHelpers.EnsureContainer<Container>(Owner, "board", out var existed);
 
+            return;
+            /* // TODO ShadowCommander: Re-enable when access is added to boards. Requires map update.
             if (existed)
             {
                 // We already contain a board. Note: We don't check if it's the right one!
@@ -676,6 +678,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             if(!container.Insert(board))
                 Logger.Warning($"Couldn't insert board {board} into door {Owner}!");
+            */
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
