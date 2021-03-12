@@ -14,7 +14,7 @@ namespace Content.Shared.Access
     {
 
         [ViewVariables]
-        [DataField("id", required: true)]
+        [DataField("accessTags", required: true)]
         public AccessTags AccessLevel;
         public string ID => AccessLevel.ToString()!;
 
