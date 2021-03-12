@@ -474,7 +474,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 51
-  type: BoneSaw
+  type: Saw
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 19.49593,-21.552101
