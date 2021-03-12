@@ -48,7 +48,6 @@ namespace Content.Server.Preferences
                 HandleDeleteCharacterMessage);
         }
 
-
         private async void HandleSelectCharacterMessage(MsgSelectCharacter message)
         {
             var index = message.SelectedCharacterIndex;
@@ -107,9 +106,11 @@ namespace Content.Server.Preferences
 
             var curPrefs = prefsData.Prefs!;
 
+            profile.EnsureValid();
+
             var profiles = new Dictionary<int, ICharacterProfile>(curPrefs.Characters)
             {
-                [slot] = HumanoidCharacterProfile.EnsureValid((HumanoidCharacterProfile) profile, _protos)
+                [slot] = profile
             };
 
             prefsData.Prefs = new PlayerPreferences(profiles, slot, curPrefs.AdminOOCColor);

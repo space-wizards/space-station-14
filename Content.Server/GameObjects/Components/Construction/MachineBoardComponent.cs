@@ -29,8 +29,12 @@ namespace Content.Server.GameObjects.Components.Construction
         private Dictionary<string, int> _materialIdRequirements = new();
 
         [ViewVariables]
+        [DataField("tagRequirements")]
+        private Dictionary<string, GenericPartInfo> _tagRequirements = new();
+
+        [ViewVariables]
         [DataField("componentRequirements")]
-        private Dictionary<string, ComponentPartInfo> _componentRequirements = new();
+        private Dictionary<string, GenericPartInfo> _componentRequirements = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("prototype")]
@@ -52,7 +56,9 @@ namespace Content.Server.GameObjects.Components.Construction
             }
         }
 
-        public IReadOnlyDictionary<string, ComponentPartInfo> ComponentRequirements => _componentRequirements;
+        public IReadOnlyDictionary<string, GenericPartInfo> ComponentRequirements => _componentRequirements;
+        public IReadOnlyDictionary<string, GenericPartInfo> TagRequirements => _tagRequirements;
+
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
@@ -71,12 +77,17 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
             }
+
+            foreach (var (_, info) in TagRequirements)
+            {
+                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
+            }
         }
     }
 
     [Serializable]
     [DataDefinition]
-    public struct ComponentPartInfo
+    public struct GenericPartInfo
     {
         [DataField("Amount")]
         public int Amount;

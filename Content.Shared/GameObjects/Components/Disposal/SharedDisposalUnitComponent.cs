@@ -167,18 +167,20 @@ namespace Content.Shared.GameObjects.Components.Disposal
             if (!Anchored)
                 return false;
 
+            // TODO: Probably just need a disposable tag.
+            if (!entity.TryGetComponent(out SharedStorableComponent? storable) &&
+                !entity.HasComponent<IBody>())
+            {
+                return false;
+            }
+
+
             if (!entity.TryGetComponent(out IPhysBody? physics) ||
-                !physics.CanCollide)
+                !physics.CanCollide && storable == null)
             {
                 if (!(entity.TryGetComponent(out IMobStateComponent? damageState) && damageState.IsDead())) {
                     return false;
                 }
-            }
-
-            if (!entity.HasComponent<SharedStorableComponent>() &&
-                !entity.HasComponent<IBody>())
-            {
-                return false;
             }
 
             return true;

@@ -16,14 +16,11 @@
           bounds: "-0.4,-0.4,0.4,0.4"
       mask:
       - Impassable
-      - MobImpassable
       - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
-      - Impassable
       - MobImpassable
-      - VaultImpassable
   - type: SnapGrid
     offset: Center
   - type: Lathe

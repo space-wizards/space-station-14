@@ -7,16 +7,13 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Physics;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -25,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [ComponentReference(typeof(StorableComponent))]
     [ComponentReference(typeof(SharedStorableComponent))]
     [ComponentReference(typeof(IItemComponent))]
-    public class ItemComponent : StorableComponent, IInteractHand, IExAct, IEquipped, IUnequipped, IItemComponent, IThrown, ILand
+    public class ItemComponent : StorableComponent, IInteractHand, IExAct, IEquipped, IUnequipped, IItemComponent
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
@@ -154,27 +151,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             Owner.TryThrow(dirVec * throwForce);
-        }
-
-        // TODO: Predicted
-        void IThrown.Thrown(ThrownEventArgs eventArgs)
-        {
-            if (!Owner.TryGetComponent(out PhysicsComponent physicsComponent)) return;
-
-            foreach (var fixture in physicsComponent.Fixtures)
-            {
-                fixture.CollisionLayer |= (int) CollisionGroup.MobImpassable;
-            }
-        }
-
-        void ILand.Land(LandEventArgs eventArgs)
-        {
-            if (!Owner.TryGetComponent(out PhysicsComponent physicsComponent)) return;
-
-            foreach (var fixture in physicsComponent.Fixtures)
-            {
-                fixture.CollisionLayer &= ~(int) CollisionGroup.MobImpassable;
-            }
         }
     }
 }

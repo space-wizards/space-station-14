@@ -288,7 +288,19 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 } else if (isAirBlocked)
                 {
-                    tile.Air = null;
+                    var nullAir = false;
+
+                    foreach (var airtight in GetObstructingComponents(indices))
+                    {
+                        if (airtight.NoAirWhenFullyAirBlocked)
+                        {
+                            nullAir = true;
+                            break;
+                        }
+                    }
+
+                    if(nullAir)
+                        tile.Air = null;
                 }
                 else
                 {
@@ -919,18 +931,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         public virtual void BurnTile(Vector2i gridIndices)
         {
             // TODO ATMOS
-        }
-    }
-
-    public struct IntermediateTileAtmosphere
-    {
-        public readonly Vector2i Indices;
-        public readonly GasMixture GasMixture;
-
-        public IntermediateTileAtmosphere(Vector2i indices, GasMixture gasMixture)
-        {
-            Indices = indices;
-            GasMixture = gasMixture;
         }
     }
 }

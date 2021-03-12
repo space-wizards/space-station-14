@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

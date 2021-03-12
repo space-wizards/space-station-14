@@ -25,6 +25,7 @@ namespace Content.Client.UserInterface
 
         private void RandomizeName()
         {
+            if (Profile == null) return;
             var firstName = _random.Pick(Profile.Sex.FirstNames(_prototypeManager).Values);
             var lastName = _random.Pick(_prototypeManager.Index<DatasetPrototype>("names_last"));
             SetName($"{firstName} {lastName}");

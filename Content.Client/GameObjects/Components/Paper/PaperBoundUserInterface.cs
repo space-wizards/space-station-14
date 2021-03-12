@@ -1,15 +1,15 @@
-using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using static Content.Shared.GameObjects.Components.SharedPaperComponent;
 
 namespace Content.Client.GameObjects.Components.Paper
 {
     [UsedImplicitly]
     public class PaperBoundUserInterface : BoundUserInterface
     {
-        private PaperWindow _window;
+        private PaperWindow? _window;
 
         public PaperBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -31,15 +31,19 @@ namespace Content.Client.GameObjects.Components.Paper
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            _window.Populate((SharedPaperComponent.PaperBoundUserInterfaceState)state);
+            _window?.Populate((PaperBoundUserInterfaceState) state);
         }
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs obj)
         {
-            if(!string.IsNullOrEmpty(obj.Text))
+            if (!string.IsNullOrEmpty(obj.Text))
             {
-                SendMessage(new SharedPaperComponent.PaperInputText(obj.Text));
-                _window.Input.Text = string.Empty;
+                SendMessage(new PaperInputText(obj.Text));
+
+                if (_window != null)
+                {
+                    _window.Input.Text = string.Empty;
+                }
             }
         }
     }

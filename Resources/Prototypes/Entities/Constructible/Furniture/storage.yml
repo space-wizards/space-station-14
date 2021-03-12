@@ -18,15 +18,9 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+        - VaultImpassable
       mask:
       - Impassable
-      - MobImpassable
-      - VaultImpassable
   - type: Pullable
   - type: Anchorable
   - type: Damageable

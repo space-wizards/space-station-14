@@ -5,6 +5,6 @@ namespace Content.Client
 {
     public sealed class ClientModuleTestingCallbacks : SharedModuleTestingCallbacks
     {
-        public Action ClientBeforeIoC { get; set; }
+        public Action? ClientBeforeIoC { get; set; }
     }
 }
