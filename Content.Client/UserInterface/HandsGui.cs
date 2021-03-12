@@ -40,11 +40,9 @@ namespace Content.Client.UserInterface
         public IReadOnlyList<GuiHand> Hands => _hands;
         private List<GuiHand> _hands = new();
 
-        private int ActiveHand { get; set; }
+        private string? ActiveHand { get; set; }
 
         public Action<HandClickEventArgs>? HandClick;
-
-        public Action<HandRightClickEventArgs>? HandRightClick;
 
         public Action<HandActivateEventArgs>? HandActivate;
 
@@ -55,18 +53,18 @@ namespace Content.Client.UserInterface
             {
                 SeparationOverride = 0,
                 Children =
+                {
+                    (LeftPanel = ItemStatusPanel.FromSide(HandLocation.Left)),
+                    (HandBox = new VBoxContainer
+                    {
+                        Children =
                         {
-                            (LeftPanel = ItemStatusPanel.FromSide(HandLocation.Left)),
-                            (HandBox = new VBoxContainer
-                            {
-                                Children =
-                                {
-                                    (TopPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
-                                    (HandsContainer = new HBoxContainer()),
-                                }
-                            }),
-                            (RightPanel = ItemStatusPanel.FromSide(HandLocation.Right))
+                            (TopPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
+                            (HandsContainer = new HBoxContainer()),
                         }
+                    }),
+                    (RightPanel = ItemStatusPanel.FromSide(HandLocation.Right))
+                }
             });
             LeftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
             MiddleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
@@ -95,9 +93,9 @@ namespace Content.Client.UserInterface
                 HandsContainer.AddChild(newButton);
                 hand.HandButton = newButton;
 
-                var handIndex = _hands.IndexOf(hand);
-                newButton.OnPressed += args => OnHandPressed(args, handIndex);
-                newButton.OnStoragePressed += args => OnStoragePressed(handIndex);
+                var handName = hand.Name;
+                newButton.OnPressed += args => OnHandPressed(args, handName);
+                newButton.OnStoragePressed += args => OnStoragePressed(handName);
 
                 newButton.Blocked.Visible = !hand.Enabled;
                 GetStatusPanel(location).Update(heldItem);
@@ -110,32 +108,43 @@ namespace Content.Client.UserInterface
             HandleTopPanel();
         }
 
-        private void OnHandPressed(GUIBoundKeyEventArgs args, int handIndex)
+        private void OnHandPressed(GUIBoundKeyEventArgs args, string handName)
         {
             if (args.Function == EngineKeyFunctions.UIClick)
             {
-                HandClick?.Invoke(new HandClickEventArgs(handIndex));
+                HandClick?.Invoke(new HandClickEventArgs(handName));
             }
-            else if (args.Function == EngineKeyFunctions.UIRightClick)
+            else if (TryGetHand(handName, out var hand))
             {
-                HandRightClick?.Invoke(new HandRightClickEventArgs(handIndex));
-            }
-            else
-            {
-                var heldItem = _hands[handIndex].HeldItem;
-                _itemSlotManager.OnButtonPressed(args, heldItem);
+                _itemSlotManager.OnButtonPressed(args, hand.HeldItem);
             }
         }
 
-        private void OnStoragePressed(int handIndex)
+        private void OnStoragePressed(string handName)
         {
-            HandActivate?.Invoke(new HandActivateEventArgs(handIndex));
+            HandActivate?.Invoke(new HandActivateEventArgs(handName));
         }
 
-        private bool TryGetHandButton(int handNumber, [NotNullWhen(true)] out HandButton? handButton)
+        private bool TryGetHand(string? handName, [NotNullWhen(true)] out GuiHand? foundHand)
         {
-            handButton = _hands.ElementAtOrDefault(handNumber)?.HandButton;
-            return handButton != null;
+            foundHand = null;
+
+            if (handName == null)
+                return false;
+
+            foreach (var hand in _hands)
+            {
+                if (hand.Name == handName)
+                    foundHand = hand;
+            }
+            return foundHand != null;
+        }
+
+        private bool TryGetHandButton(string? handName, [NotNullWhen(true)] out HandButton? handButton)
+        {
+            var foundHand = TryGetHand(handName, out var hand);
+            handButton = hand?.HandButton;
+            return foundHand;
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -189,6 +198,25 @@ namespace Content.Client.UserInterface
             }
         }
     }
+    public class HandClickEventArgs
+    {
+        public string HandClicked { get; }
+
+        public HandClickEventArgs(string handClicked)
+        {
+            HandClicked = handClicked;
+        }
+    }
+
+    public class HandActivateEventArgs
+    {
+        public string HandUsed { get; }
+
+        public HandActivateEventArgs(string handUsed)
+        {
+            HandUsed = handUsed;
+        }
+    }
 
     /// <summary>
     ///     Info on a set of hands to be displayed.
@@ -202,47 +230,17 @@ namespace Content.Client.UserInterface
         public List<GuiHand> GuiHands { get; } = new();
 
         /// <summary>
-        ///     The index of the currently active hand. not guranteed to be in bounds of hand list.
+        ///     The name of the currently active hand.
         /// </summary>
         [ViewVariables]
-        public int ActiveHand { get; }
+        public string? ActiveHand { get; }
 
         public HandsGuiState() { }
 
-        public HandsGuiState(List<GuiHand> guiHands, int activeHand)
+        public HandsGuiState(List<GuiHand> guiHands, string? activeHand = null)
         {
             GuiHands = guiHands;
             ActiveHand = activeHand;
-        }
-    }
-
-    public class HandClickEventArgs
-    {
-        public int HandClicked { get; }
-
-        public HandClickEventArgs(int handClicked)
-        {
-            HandClicked = handClicked;
-        }
-    }
-
-    public class HandRightClickEventArgs
-    {
-        public int HandClicked { get; }
-
-        public HandRightClickEventArgs(int handClicked)
-        {
-            HandClicked = handClicked;
-        }
-    }
-
-    public class HandActivateEventArgs
-    {
-        public int HandUsed { get; }
-
-        public HandActivateEventArgs(int handUsed)
-        {
-            HandUsed = handUsed;
         }
     }
 

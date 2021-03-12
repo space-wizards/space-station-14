@@ -39,12 +39,12 @@ namespace Content.Shared.GameObjects.Components.Items
     public class HandsComponentState : ComponentState
     {
         public SharedHand[] Hands { get; }
-        public int ActiveIndex { get; }
+        public string? ActiveHand { get; }
 
-        public HandsComponentState(SharedHand[] hands, int activeIndex) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(SharedHand[] hands, string? activeHand = null) : base(ContentNetIDs.HANDS)
         {
             Hands = hands;
-            ActiveIndex = activeIndex;
+            ActiveHand = activeHand;
         }
     }
 

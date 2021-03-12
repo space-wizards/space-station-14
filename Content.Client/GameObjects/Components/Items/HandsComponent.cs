@@ -25,23 +25,20 @@ namespace Content.Client.GameObjects.Components.Items
         private HandsGui Gui { get; set; } = default!;
 
         /// <summary>
-        ///     The index of the currently active hand. not guranteed to be in bounds of hand list.
+        ///     The name of the currently active hand.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private int ActiveHand { get; set; }
+        private string? ActiveHand { get; set; }
 
         [ViewVariables]
         public IReadOnlyList<ClientHand> Hands => _hands;
         private readonly List<ClientHand> _hands = new();
 
         [ViewVariables]
-        public IEntity? ActiveItem => TryGetHand(ActiveHand, out var hand) ? hand.HeldItem : null;
+        public IEntity? ActiveItem => TryGetActiveHand(out var hand) ? hand.HeldItem : null;
 
         [ComponentDependency]
         private ISpriteComponent? _sprite = default!;
-
-        [ViewVariables]
-        private string? ActiveHandName => Hands.ElementAtOrDefault(ActiveHand)?.Name; //debug var
 
         public override void OnAdd()
         {
@@ -54,16 +51,15 @@ namespace Content.Client.GameObjects.Components.Items
         {
             base.Initialize();
             Gui.HandClick += args => OnHandClick(args.HandClicked);
-            Gui.HandRightClick += args => OnHandRightClick(args.HandClicked);
             Gui.HandActivate += args => OnActivateInHand(args.HandUsed);
         }
 
-        private void OnHandClick(int handClicked)
+        private void OnHandClick(string handClicked)
         {
             if (!TryGetHand(handClicked, out var pressedHand))
                 return;
 
-            if (!TryGetHand(ActiveHand, out var activeHand))
+            if (!TryGetActiveHand(out var activeHand))
                 return;
 
             var pressedItem = pressedHand.HeldItem;
@@ -81,19 +77,14 @@ namespace Content.Client.GameObjects.Components.Items
                 return;
             }
 
-            if (handClicked != ActiveHand && activeItem != null && pressedItem != null)
+            if (handClicked != ActiveHand && pressedItem != null)
             {
                 SendNetworkMessage(new ClientAttackByInHandMsg(pressedHand.Name)); //use active item on held item
                 return;
             }
         }
 
-        private void OnHandRightClick(int handClicked)
-        {
-            //TODO: make this work
-        }
-
-        private void OnActivateInHand(int handActivated)
+        private void OnActivateInHand(string handActivated)
         {
             if (!TryGetHand(handActivated, out var activatedHand))
                 return;
@@ -101,10 +92,24 @@ namespace Content.Client.GameObjects.Components.Items
             SendNetworkMessage(new ActivateInHandMsg(activatedHand.Name));
         }
 
-        private bool TryGetHand(int handIndex, [NotNullWhen(true)] out ClientHand? hand)
+        private bool TryGetHand(string? handName, [NotNullWhen(true)] out ClientHand? foundHand)
         {
-            hand = Hands.ElementAtOrDefault(handIndex);
-            return hand != null;
+            foundHand = null;
+
+            if (handName == null)
+                return false;
+
+            foreach (var hand in Hands)
+            {
+                if (hand.Name == handName)
+                    foundHand = hand;
+            }
+            return foundHand != null;
+        }
+
+        private bool TryGetActiveHand([NotNullWhen(true)] out ClientHand? activeHand)
+        {
+            return TryGetHand(ActiveHand, out activeHand);
         }
 
         public override void OnRemove()
@@ -121,7 +126,7 @@ namespace Content.Client.GameObjects.Components.Items
             RemoveHandLayers();
             _hands.Clear();
 
-            ActiveHand = state.ActiveIndex;
+            ActiveHand = state.ActiveHand;
             foreach (var handState in state.Hands)
             {
                 var newHand = new ClientHand(handState, GetHeldItem(handState.EntityUid), handState.Enabled);
