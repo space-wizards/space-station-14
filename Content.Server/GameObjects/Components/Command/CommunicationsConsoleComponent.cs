@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Globalization;
 using System.Threading;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
@@ -113,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Command
                             item.Owner.TryGetComponent(out IdCardComponent? idCardComponent)
                         )
                         {
-                            author = $"{idCardComponent.FullName} ({idCardComponent.JobTitle})";
+                            author = $"{idCardComponent.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(idCardComponent.JobTitle)})";
                         }
                     }
 
