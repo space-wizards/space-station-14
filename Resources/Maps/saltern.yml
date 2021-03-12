@@ -4102,245 +4102,245 @@ entities:
     parent: 853
     type: Transform
 - uid: 417
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 9.5,13.5
     parent: 853
     type: Transform
 - uid: 418
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,15.5
     parent: 853
     type: Transform
 - uid: 419
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 13.5,19.5
     parent: 853
     type: Transform
 - uid: 420
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,16.5
     parent: 853
     type: Transform
 - uid: 421
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 4.5,9.5
     parent: 853
     type: Transform
 - uid: 422
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -22.5,-6.5
     parent: 853
     type: Transform
 - uid: 423
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -25.5,0.5
     parent: 853
     type: Transform
 - uid: 424
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -17.5,3.5
     parent: 853
     type: Transform
 - uid: 425
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -8.5,-1.5
     parent: 853
     type: Transform
 - uid: 426
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,-0.5
     parent: 853
     type: Transform
 - uid: 427
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -7.5,5.5
     parent: 853
     type: Transform
 - uid: 428
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 19.5,3.5
     parent: 853
     type: Transform
 - uid: 429
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,6.5
     parent: 853
     type: Transform
 - uid: 430
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,1.5
     parent: 853
     type: Transform
 - uid: 431
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,7.5
     parent: 853
     type: Transform
 - uid: 432
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,12.5
     parent: 853
     type: Transform
 - uid: 433
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 24.5,11.5
     parent: 853
     type: Transform
 - uid: 434
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 27.5,13.5
     parent: 853
     type: Transform
 - uid: 435
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 26.5,10.5
     parent: 853
     type: Transform
 - uid: 436
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 28.5,8.5
     parent: 853
     type: Transform
 - uid: 437
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 27.5,0.5
     parent: 853
     type: Transform
 - uid: 438
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 35.5,2.5
     parent: 853
     type: Transform
 - uid: 439
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 44.5,6.5
     parent: 853
     type: Transform
 - uid: 440
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 42.5,-2.5
     parent: 853
     type: Transform
 - uid: 441
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 37.5,-3.5
     parent: 853
     type: Transform
 - uid: 442
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 37.5,-7.5
     parent: 853
     type: Transform
 - uid: 443
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 32.5,-6.5
     parent: 853
     type: Transform
 - uid: 444
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,0.5
     parent: 853
     type: Transform
 - uid: 445
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 21.5,-2.5
     parent: 853
     type: Transform
 - uid: 446
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,-1.5
     parent: 853
     type: Transform
 - uid: 447
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 27.5,-3.5
     parent: 853
     type: Transform
 - uid: 448
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 27.5,-7.5
     parent: 853
     type: Transform
 - uid: 449
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 24.5,-9.5
     parent: 853
     type: Transform
 - uid: 450
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 27.5,-13.5
     parent: 853
     type: Transform
 - uid: 451
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 26.5,-17.5
@@ -4354,84 +4354,84 @@ entities:
     parent: 853
     type: Transform
 - uid: 453
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 21.5,-17.5
     parent: 853
     type: Transform
 - uid: 454
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 21.5,-20.5
     parent: 853
     type: Transform
 - uid: 455
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 22.5,-23.5
     parent: 853
     type: Transform
 - uid: 456
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 18.5,-25.5
     parent: 853
     type: Transform
 - uid: 457
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 14.5,-24.5
     parent: 853
     type: Transform
 - uid: 458
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 14.5,-21.5
     parent: 853
     type: Transform
 - uid: 459
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,-19.5
     parent: 853
     type: Transform
 - uid: 460
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 7.5,-18.5
     parent: 853
     type: Transform
 - uid: 461
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-17.5
     parent: 853
     type: Transform
 - uid: 462
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,-22.5
     parent: 853
     type: Transform
 - uid: 463
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,-26.5
     parent: 853
     type: Transform
 - uid: 464
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -5.5,-27.5
@@ -4445,7 +4445,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 466
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -9.5,-25.5
@@ -4459,98 +4459,98 @@ entities:
     parent: 853
     type: Transform
 - uid: 468
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,-27.5
     parent: 853
     type: Transform
 - uid: 469
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,-23.5
     parent: 853
     type: Transform
 - uid: 470
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,-6.5
     parent: 853
     type: Transform
 - uid: 471
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,-8.5
     parent: 853
     type: Transform
 - uid: 472
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,-9.5
     parent: 853
     type: Transform
 - uid: 473
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,-10.5
     parent: 853
     type: Transform
 - uid: 474
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-9.5
     parent: 853
     type: Transform
 - uid: 475
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,-5.5
     parent: 853
     type: Transform
 - uid: 476
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,-6.5
     parent: 853
     type: Transform
 - uid: 477
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -8.5,-11.5
     parent: 853
     type: Transform
 - uid: 478
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -9.5,-12.5
     parent: 853
     type: Transform
 - uid: 479
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -8.5,-15.5
     parent: 853
     type: Transform
 - uid: 480
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,-15.5
     parent: 853
     type: Transform
 - uid: 481
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,-13.5
@@ -4564,63 +4564,63 @@ entities:
     parent: 853
     type: Transform
 - uid: 483
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,-10.5
     parent: 853
     type: Transform
 - uid: 484
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -28.5,-11.5
     parent: 853
     type: Transform
 - uid: 485
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -32.5,-5.5
     parent: 853
     type: Transform
 - uid: 486
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -33.5,-11.5
     parent: 853
     type: Transform
 - uid: 487
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -33.5,-7.5
     parent: 853
     type: Transform
 - uid: 488
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -32.5,-0.5
     parent: 853
     type: Transform
 - uid: 489
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -19.5,-5.5
     parent: 853
     type: Transform
 - uid: 490
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,-8.5
     parent: 853
     type: Transform
 - uid: 491
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,1.5
@@ -4634,63 +4634,63 @@ entities:
     parent: 853
     type: Transform
 - uid: 493
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -32.5,5.5
     parent: 853
     type: Transform
 - uid: 494
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -35.5,-2.5
     parent: 853
     type: Transform
 - uid: 495
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -36.5,10.5
     parent: 853
     type: Transform
 - uid: 496
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,8.5
     parent: 853
     type: Transform
 - uid: 497
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,7.5
     parent: 853
     type: Transform
 - uid: 498
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,20.5
     parent: 853
     type: Transform
 - uid: 499
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -4.5,22.5
     parent: 853
     type: Transform
 - uid: 500
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -7.5,23.5
     parent: 853
     type: Transform
 - uid: 501
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -8.5,25.5
@@ -4709,77 +4709,77 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 503
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,25.5
     parent: 853
     type: Transform
 - uid: 504
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,19.5
     parent: 853
     type: Transform
 - uid: 505
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,9.5
     parent: 853
     type: Transform
 - uid: 506
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -17.5,13.5
     parent: 853
     type: Transform
 - uid: 507
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,12.5
     parent: 853
     type: Transform
 - uid: 508
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -23.5,14.5
     parent: 853
     type: Transform
 - uid: 509
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -25.5,13.5
     parent: 853
     type: Transform
 - uid: 510
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,14.5
     parent: 853
     type: Transform
 - uid: 511
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -32.5,11.5
     parent: 853
     type: Transform
 - uid: 512
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -31.5,7.5
     parent: 853
     type: Transform
 - uid: 513
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,10.5
@@ -12374,7 +12374,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 933
-  type: RandomSpawner
+  type: TrashSpawner
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 7.5,13.5
@@ -40727,6 +40727,36 @@ entities:
   type: SpawnPointLatejoin
   components:
   - pos: -36.5,4.5
+    parent: 853
+    type: Transform
+- uid: 4724
+  type: MouseAITimedSpawner
+  components:
+  - pos: -15.5,25.5
+    parent: 853
+    type: Transform
+- uid: 4725
+  type: MouseAITimedSpawner
+  components:
+  - pos: 13.5,18.5
+    parent: 853
+    type: Transform
+- uid: 4726
+  type: MouseAITimedSpawner
+  components:
+  - pos: 27.5,-1.5
+    parent: 853
+    type: Transform
+- uid: 4727
+  type: MouseAITimedSpawner
+  components:
+  - pos: -9.5,-25.5
+    parent: 853
+    type: Transform
+- uid: 4728
+  type: MouseAITimedSpawner
+  components:
+  - pos: -33.5,-11.5
     parent: 853
     type: Transform
 ...

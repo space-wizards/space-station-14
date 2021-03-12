@@ -1,13 +1,17 @@
 - type: entity
   name: Random Sheet Spawner
   id: BedsheetSpawner
-  parent: MarkerBase
   components:
     - type: Sprite
-      layers:
-        - state: red
-        - texture: Objects/Misc/bedsheets.rsi/random_bedsheet.png
-    - type: RandomSpawner
+      netsync: false
+      visible: false
+      sprite: Objects/Misc/bedsheets.rsi
+      state: random_bedsheet
+    - type: Marker
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Physics
+    - type: TrashSpawner
       rarePrototypes:
         - BedsheetIan
         - BedsheetCosmos
@@ -28,3 +32,5 @@
         - BedsheetRainbow
       chance: 0.97
       offset: 0
+  placement:
+    mode: AlignTileAny

@@ -6,9 +6,12 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    sprite: Markers/cross.rsi
-# If serialization was cool this would work.
-#    layers:
-#      - state: blue
+    netsync: false
+    visible: false
+    sprite: Interface/Misc/markers.rsi
+    state: cross_blue
   placement:
     mode: AlignTileAny
+
+
+

@@ -1,0 +1,74 @@
+﻿- type: entity
+  name: base timed spawner
+  id: BaseTimedSpawner
+  abstract: true
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Interface/Misc/markers.rsi
+      state: cross_blue
+    - type: Marker
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Physics
+    - type: TimedSpawner
+  placement:
+    mode: AlignTileAny
+
+- type: entity
+  name: AI Timed Spawner
+  id: AITimedSpawner
+  parent: BaseTimedSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_ai
+    - type: TimedSpawner
+      prototypes:
+        - HumanMob_Spirate
+        - HumanMob_Civilian
+      chance: 0.75
+      intervalSeconds: 60
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 5
+
+- type: entity
+  name: Xeno AI Timed Spawner
+  id: XenoAITimedSpawner
+  parent: BaseTimedSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_xenoai
+    - type: TimedSpawner
+      prototypes:
+        - XenoMob_Content
+      chance: 0.85
+      intervalSeconds: 30
+      minimumEntitiesSpawned: 2
+      maximumEntitiesSpawned: 4
+
+- type: entity
+  name: Mouse AI Timed Spawner
+  id: MouseAITimedSpawner
+  parent: BaseTimedSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Mobs/Animals/mouse.rsi
+      state: icon-2
+    - type: TimedSpawner
+      prototypes:
+        - MouseMob_Content
+        - MouseMob1_Content
+        - MouseMob2_Content
+      chance: 0.75
+      intervalSeconds: 100
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 1
