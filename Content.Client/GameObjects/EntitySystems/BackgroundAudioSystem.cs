@@ -183,11 +183,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void EndLobbyMusic()
         {
-            if (_lobbyStream == null)
-            {
-                return;
-            }
-            _lobbyStream.Stop();
+            _lobbyStream?.Stop();
             _lobbyStream = null;
         }
     }
