@@ -51,6 +51,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _client.PlayerJoinedServer += OnJoin;
             _client.PlayerLeaveServer += OnLeave;
+
+            _clientGameTicker.LobbyStatusUpdated += LobbySongReceived;
         }
 
         public override void Shutdown()
@@ -61,6 +63,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _client.PlayerJoinedServer -= OnJoin;
             _client.PlayerLeaveServer -= OnLeave;
+
+            _clientGameTicker.LobbyStatusUpdated -= LobbySongReceived;
 
             EndAmbience();
             EndLobbyMusic();
@@ -155,14 +159,20 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
+        private void LobbySongReceived()
+        {
+            if (_stateManager.CurrentState is LobbyState && _configManager.GetCVar(CCVars.LobbyMusicEnabled))
+            {
+                StartLobbyMusic();
+            }
+        }
         private void StartLobbyMusic()
         {
             EndLobbyMusic();
             var file = _clientGameTicker.LobbySong;
-            if (file == null) // Just in case we fail to get a song from the server, play one at random.
+            if (file == null) // We have not received the lobby song yet.
             {
-                var lobbyCollection = _prototypeManager.Index<SoundCollectionPrototype>("LobbyMusic");
-                file = _robustRandom.Pick(lobbyCollection.PickFiles);
+                return;
             }
             _lobbyStream = _audioSystem.Play(file, _lobbyParams);
         }
