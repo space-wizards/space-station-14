@@ -1,0 +1,36 @@
+﻿- type: entity
+  name: AI Timed Spawner
+  id: AITimedSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - texture: Mobs/Species/Human/parts.rsi/full.png
+        - state: ai
+    - type: TimedSpawner
+      prototypes:
+        - HumanMob_Spirate
+        - HumanMob_Civilian
+      chance: 0.75
+      intervalSeconds: 60
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 5
+
+- type: entity
+  name: Xeno AI Timed Spawner
+  id: XenoAITimedSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - texture: Mobs/Aliens/Xenos/xeno.rsi/crit.png
+        - state: ai
+    - type: TimedSpawner
+      prototypes:
+        - XenoMob_Content
+      chance: 0.85
+      intervalSeconds: 30
+      minimumEntitiesSpawned: 2
+      maximumEntitiesSpawned: 4

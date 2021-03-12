@@ -5,18 +5,17 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Markers
 {
     [RegisterComponent]
-    public class TrashSpawnerComponent : ConditionalSpawnerComponent
+    public class RandomSpawnerComponent : ConditionalSpawnerComponent
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        public override string Name => "TrashSpawner";
+        public override string Name => "RandomSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("rarePrototypes")]
@@ -45,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Markers
 
             if (Prototypes.Count == 0)
             {
-                Logger.Warning($"Prototype list in TrashSpawnComponent is empty! Entity: {Owner}");
+                Logger.Warning($"Prototype list in RandomSpawnerComponent is empty! Entity: {Owner}");
                 return;
             }
 

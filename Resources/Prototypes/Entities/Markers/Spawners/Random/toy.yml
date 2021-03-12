@@ -4,11 +4,10 @@
   parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_toy
-    - type: TrashSpawner
+      layers:
+        - state: red
+        - texture: Objects/Fun/toys.rsi/plushie_h.png
+    - type: RandomSpawner
       rarePrototypes:
         - CarvingHelpMe
         - CarvingHello
@@ -35,11 +34,10 @@
   parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_figure
-    - type: TrashSpawner
+      layers:
+        - state: red
+        - texture: Objects/Fun/toys.rsi/ripleytoy.png
+    - type: RandomSpawner
       prototypes:
         - ToyAi
         - ToyNuke
