@@ -40,7 +40,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            _audioSystem = EntitySystemManager.GetEntitySystem<AudioSystem>();
+            _audioSystem = Get<AudioSystem>();
 
             _ambientCollection = _prototypeManager.Index<SoundCollectionPrototype>("AmbienceBase");
 
@@ -192,4 +192,3 @@ namespace Content.Client.GameObjects.EntitySystems
         }
     }
 }
-
