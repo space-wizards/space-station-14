@@ -1,0 +1,17 @@
+# Base
+
+- type: entity
+  name: Mouse AI Timed Spawner
+  id: SpawnMobMouse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - texture: Mobs/Animals/mouse.rsi/icon-2.png
+      - state: ai
+  - type: MobSpawner
+    prototypes:
+      - MouseMob_Content
+      - MouseMob1_Content
+      - MouseMob2_Content
