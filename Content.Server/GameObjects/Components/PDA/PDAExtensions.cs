@@ -42,14 +42,17 @@ namespace Content.Server.GameObjects.Components.PDA
                 return firstIdInPda;
             }
 
+            IdCardComponent? firstIdInInventory = null;
+
             if (player.TryGetComponent(out InventoryComponent? inventory))
             {
                 foreach (var item in inventory.GetAllHeldItems())
                 {
-                    if (item.TryGetComponent(out PDAComponent? pda) &&
+                    if (firstIdInInventory == null &&
+                        item.TryGetComponent(out PDAComponent? pda) &&
                         pda.ContainedID != null)
                     {
-                        return pda.ContainedID;
+                        firstIdInInventory = pda.ContainedID;
                     }
 
                     if (item.TryGetComponent(out IdCardComponent? card))
@@ -59,7 +62,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 }
             }
 
-            return null;
+            return firstIdInInventory;
         }
 
         /// <summary>
