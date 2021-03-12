@@ -10,7 +10,7 @@
       - state: green
       - texture: Mobs/Animals/mouse.rsi/icon-2.png
       - state: ai
-  - type: MobSpawner
+  - type: ConditionalSpawner
     prototypes:
       - MouseMob_Content
       - MouseMob1_Content
