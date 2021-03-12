@@ -138,8 +138,8 @@ namespace Content.MapRenderer.Painters
                         .DrawImage(coloredImage, PixelColorBlendingMode.Multiply, PixelAlphaCompositionMode.SrcAtop, 1)
                         .Resize(32, 32).Flip(FlipMode.Vertical));
 
-                    var pointX = (int) (entity.X + xOffset) * 32;
-                    var pointY = (int) (entity.Y + yOffset) * 32;
+                    var pointX = (int) ((entity.X + xOffset) * 32) - 16;
+                    var pointY = (int) ((entity.Y + yOffset) * 32) - 16;
                     gridCanvas.Mutate(o => o.DrawImage(image, new Point(pointX, pointY), 1));
                 }
             }
