@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.PDA
         /// </summary>
         /// <param name="player">The player to check in.</param>
         /// <returns>The id card component.</returns>
-        public static IdCardComponent? PlayerGetId(this IEntity player)
+        public static IdCardComponent? GetHeldId(this IEntity player)
         {
             IdCardComponent? firstIdInPda = null;
 
@@ -72,9 +72,9 @@ namespace Content.Server.GameObjects.Components.PDA
         /// <param name="player">The player to check in.</param>
         /// <param name="id">The id card component.</param>
         /// <returns>true if found, false otherwise.</returns>
-        public static bool TryPlayerGetId(this IEntity player, [NotNullWhen(true)] out IdCardComponent? id)
+        public static bool TryGetHeldId(this IEntity player, [NotNullWhen(true)] out IdCardComponent? id)
         {
-            return (id = player.PlayerGetId()) != null;
+            return (id = player.GetHeldId()) != null;
         }
     }
 }

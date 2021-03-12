@@ -59,8 +59,8 @@ namespace Content.IntegrationTests.Tests.PDA
                 Assert.NotNull(player);
 
                 // The player spawns with an ID on by default
-                Assert.NotNull(player.PlayerGetId());
-                Assert.True(player.TryPlayerGetId(out var id));
+                Assert.NotNull(player.GetHeldId());
+                Assert.True(player.TryGetHeldId(out var id));
                 Assert.NotNull(id);
 
                 // Put PDA in hand
@@ -74,8 +74,8 @@ namespace Content.IntegrationTests.Tests.PDA
                 var pdaContainedId = pdaComponent.ContainedID;
 
                 // The PDA in the hand should be found first
-                Assert.NotNull(player.PlayerGetId());
-                Assert.True(player.TryPlayerGetId(out id));
+                Assert.NotNull(player.GetHeldId());
+                Assert.True(player.TryGetHeldId(out id));
                 Assert.NotNull(id);
                 Assert.That(id, Is.EqualTo(pdaContainedId));
 
@@ -87,8 +87,8 @@ namespace Content.IntegrationTests.Tests.PDA
                 var idCardComponent = idDummy.GetComponent<IdCardComponent>();
 
                 // The ID in the hand should be found first
-                Assert.NotNull(player.PlayerGetId());
-                Assert.True(player.TryPlayerGetId(out id));
+                Assert.NotNull(player.GetHeldId());
+                Assert.True(player.TryGetHeldId(out id));
                 Assert.NotNull(id);
                 Assert.That(id, Is.EqualTo(idCardComponent));
 
@@ -116,8 +116,8 @@ namespace Content.IntegrationTests.Tests.PDA
                 hands.Drop(idDummy, false);
 
                 // No ID
-                Assert.Null(player.PlayerGetId());
-                Assert.False(player.TryPlayerGetId(out id));
+                Assert.Null(player.GetHeldId());
+                Assert.False(player.TryGetHeldId(out id));
                 Assert.Null(id);
             });
         }
