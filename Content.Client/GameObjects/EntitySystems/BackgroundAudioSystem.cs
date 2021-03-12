@@ -161,6 +161,10 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void LobbySongReceived()
         {
+            if (_lobbyStream != null)
+            {
+                return;
+            }
             if (_stateManager.CurrentState is LobbyState && _configManager.GetCVar(CCVars.LobbyMusicEnabled))
             {
                 StartLobbyMusic();
