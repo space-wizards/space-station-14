@@ -1,7 +1,6 @@
 using Content.Shared.GameObjects.Components.Singularity;
 using Robust.Shared.GameObjects;
 
-
 namespace Content.Client.GameObjects.Components.Singularity
 {
     [RegisterComponent]
@@ -21,7 +20,7 @@ namespace Content.Client.GameObjects.Components.Singularity
         }
         private int _level;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState is not SingularityComponentState state)
             {

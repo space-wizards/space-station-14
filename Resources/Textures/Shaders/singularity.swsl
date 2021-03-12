@@ -1,32 +1,32 @@
 //Gravitational lensing effect. Edited from https://unionassets.com/blog/the-effect-of-the-gravitational-lens-195 to be Clyde based (based on what)
 
 uniform sampler2D SCREEN_TEXTURE;
-uniform highp vec2 positionInput = vec2(0,0);
-uniform highp float falloff = 5.0;
-uniform highp float intensity = 5.0;
+uniform highp vec2 positionInput;
+uniform highp float falloff;
+uniform highp float intensity;
 
 
 
 void fragment() {
-	float distanceToCenter = length(FRAGCOORD.xy-positionInput);
+	highp float distanceToCenter = length(FRAGCOORD.xy-positionInput);
 
-	vec2 finalCoords = FRAGCOORD.xy - positionInput;
-	highp float deformation = (pow(intensity, 2)*500) / pow(distanceToCenter, pow(falloff, 0.5));
+	highp vec2 finalCoords = FRAGCOORD.xy - positionInput;
+	highp float deformation = (pow(intensity, 2.0)*500.0) / pow(distanceToCenter, pow(falloff, 0.5));
 	if(deformation > 0.8) //Edit this for inward effect
-		deformation = pow(deformation, 0.3); 
+		deformation = pow(deformation, 0.3);
 	if(deformation > 0.001){
-		finalCoords *= 1-deformation; //Change this to 1+deformation for inward effect
+		finalCoords *= 1.0-deformation; //Change this to 1+deformation for inward effect
 		finalCoords += positionInput;
 		//float darkenCircleSize = 600; //Calculate optional darkening effect (darker the closer we are to the center of the singularity)
 		//float alph = (distanceToCenter-30)/(darkenCircleSize-30);
 		//float darkening = 0.9-(alph*0.9);
-			
+
 		//Darkening effect optional (Darker the closer you are to the center)
 		//COLOR = mix(texture(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE), vec4(0.0, 0.0, 0.0, 1.0), darkening);
-		COLOR = texture(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE);
+		COLOR = zTextureSpec(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE);
 	}
 	else{
-		COLOR = texture(SCREEN_TEXTURE, FRAGCOORD.xy*SCREEN_PIXEL_SIZE);
+		COLOR = zTextureSpec(SCREEN_TEXTURE, FRAGCOORD.xy*SCREEN_PIXEL_SIZE);
 	}
 
 }

@@ -53,7 +53,7 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
             {
                 FireState = fireState;
                 FireTemperature = fireTemperature;
-                Gas = gas ?? Array.Empty<GasData>();
+                Gas = gas;
 
                 Array.Sort(Gas, (a, b) => a.Index.CompareTo(b.Index));
 

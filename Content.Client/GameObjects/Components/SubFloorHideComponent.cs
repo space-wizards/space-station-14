@@ -1,5 +1,7 @@
-﻿using Robust.Client.GameObjects;
+﻿using System.Diagnostics;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -12,7 +14,8 @@ namespace Content.Client.GameObjects.Components
     [RegisterComponent]
     public sealed class SubFloorHideComponent : Component
     {
-        private SnapGridComponent _snapGridComponent;
+        [ComponentDependency(nameof(OnAddSnapGrid))]
+        private SnapGridComponent? _snapGridComponent;
 
         /// <inheritdoc />
         public override string Name => "SubFloorHide";
@@ -30,7 +33,6 @@ namespace Content.Client.GameObjects.Components
         {
             base.Startup();
 
-            _snapGridComponent.OnPositionChanged += SnapGridOnPositionChanged;
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new SubFloorHideDirtyEvent(Owner));
         }
 
@@ -39,11 +41,21 @@ namespace Content.Client.GameObjects.Components
         {
             base.Shutdown();
 
-            if(Owner.Transform.Running == false)
+            if (Owner.Transform.Running == false)
                 return;
 
-            _snapGridComponent.OnPositionChanged -= SnapGridOnPositionChanged;
+            if (_snapGridComponent != null)
+            {
+                _snapGridComponent.OnPositionChanged -= SnapGridOnPositionChanged;
+            }
+
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new SubFloorHideDirtyEvent(Owner));
+        }
+
+        private void OnAddSnapGrid()
+        {
+            DebugTools.AssertNotNull(_snapGridComponent);
+            _snapGridComponent!.OnPositionChanged += SnapGridOnPositionChanged;
         }
 
         private void SnapGridOnPositionChanged()

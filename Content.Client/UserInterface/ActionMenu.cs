@@ -18,6 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface
 {
@@ -45,7 +46,7 @@ namespace Content.Client.UserInterface
         public bool IsDragging => _dragDropHelper.IsDragging;
 
         // parallel list of actions currently selectable in itemList
-        private BaseActionPrototype[] _actionList;
+        private BaseActionPrototype[] _actionList = new BaseActionPrototype[0];
 
         private readonly ActionManager _actionManager;
         private readonly ClientActionsComponent _actionsComponent;
@@ -87,7 +88,7 @@ namespace Content.Client.UserInterface
                             (_filterButton = new MultiselectOptionButton<string>()
                             {
                                 Label = Loc.GetString("Filter")
-                            }),
+                            })
                         }
                     },
                     (_clearButton = new Button
@@ -155,7 +156,7 @@ namespace Content.Client.UserInterface
             _gameHud.ActionsButtonDown = true;
             foreach (var actionMenuControl in _resultsGrid.Children)
             {
-                var actionMenuItem = (actionMenuControl as ActionMenuItem);
+                var actionMenuItem = (ActionMenuItem) actionMenuControl;
                 actionMenuItem.OnButtonDown += OnItemButtonDown;
                 actionMenuItem.OnButtonUp += OnItemButtonUp;
                 actionMenuItem.OnPressed += OnItemPressed;
@@ -172,7 +173,7 @@ namespace Content.Client.UserInterface
             _gameHud.ActionsButtonDown = false;
             foreach (var actionMenuControl in _resultsGrid.Children)
             {
-                var actionMenuItem = (actionMenuControl as ActionMenuItem);
+                var actionMenuItem = (ActionMenuItem) actionMenuControl;
                 actionMenuItem.OnButtonDown -= OnItemButtonDown;
                 actionMenuItem.OnButtonUp -= OnItemButtonUp;
                 actionMenuItem.OnPressed -= OnItemPressed;
@@ -195,7 +196,7 @@ namespace Content.Client.UserInterface
 
         private bool OnBeginActionDrag()
         {
-            _dragShadow.Texture = _dragDropHelper.Dragged.Action.Icon.Frame0();
+            _dragShadow.Texture = _dragDropHelper.Dragged!.Action.Icon.Frame0();
             // don't make visible until frameupdate, otherwise it'll flicker
             LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
             return true;
@@ -215,13 +216,18 @@ namespace Content.Client.UserInterface
             _dragShadow.Visible = false;
         }
 
-        private void OnItemButtonDown(BaseButton.ButtonEventArgs args)
+        private void OnItemButtonDown(ButtonEventArgs args)
         {
-            if (args.Event.Function != EngineKeyFunctions.UIClick) return;
-            _dragDropHelper.MouseDown(args.Button as ActionMenuItem);
+            if (args.Event.Function != EngineKeyFunctions.UIClick ||
+                args.Button is not ActionMenuItem action)
+            {
+                return;
+            }
+
+            _dragDropHelper.MouseDown(action);
         }
 
-        private void OnItemButtonUp(BaseButton.ButtonEventArgs args)
+        private void OnItemButtonUp(ButtonEventArgs args)
         {
             // note the buttonup only fires on the control that was originally
             // pressed to initiate the drag, NOT the one we are currently hovering
@@ -288,7 +294,7 @@ namespace Content.Client.UserInterface
             _dragDropHelper.EndDrag();
         }
 
-        private void OnItemPressed(BaseButton.ButtonEventArgs args)
+        private void OnItemPressed(ButtonEventArgs args)
         {
             if (args.Button is not ActionMenuItem actionMenuItem) return;
             switch (actionMenuItem.Action)
@@ -307,7 +313,7 @@ namespace Content.Client.UserInterface
             _actionsUI.UpdateUI();
         }
 
-        private void OnClearButtonPressed(BaseButton.ButtonEventArgs args)
+        private void OnClearButtonPressed(ButtonEventArgs args)
         {
             _searchBar.Clear();
             _filterButton.DeselectAll();

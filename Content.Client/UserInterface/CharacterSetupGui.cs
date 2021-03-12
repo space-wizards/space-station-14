@@ -173,9 +173,9 @@ namespace Content.Client.UserInterface
             }
 
             _createNewCharacterButton.ToolTip =
-                $"A maximum of {_preferencesManager.Settings.MaxCharacterSlots} characters are allowed.";
+                $"A maximum of {_preferencesManager.Settings!.MaxCharacterSlots} characters are allowed.";
 
-            foreach (var (slot, character) in _preferencesManager.Preferences.Characters)
+            foreach (var (slot, character) in _preferencesManager.Preferences!.Characters)
             {
                 if (character is null)
                 {
@@ -228,7 +228,7 @@ namespace Content.Client.UserInterface
                     LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy, humanoid);
                 }
 
-                var isSelectedCharacter = profile == preferencesManager.Preferences.SelectedCharacter;
+                var isSelectedCharacter = profile == preferencesManager.Preferences?.SelectedCharacter;
 
                 if (isSelectedCharacter)
                     Pressed = true;
@@ -260,9 +260,9 @@ namespace Content.Client.UserInterface
                     Text = "Delete",
                     Visible = !isSelectedCharacter,
                 };
-                deleteButton.OnPressed += args =>
+                deleteButton.OnPressed += _ =>
                 {
-                    Parent.RemoveChild(this);
+                    Parent?.RemoveChild(this);
                     preferencesManager.DeleteCharacter(profile);
                 };
 
@@ -288,7 +288,7 @@ namespace Content.Client.UserInterface
                     return;
 
                 _previewDummy.Delete();
-                _previewDummy = null;
+                _previewDummy = null!;
             }
         }
     }

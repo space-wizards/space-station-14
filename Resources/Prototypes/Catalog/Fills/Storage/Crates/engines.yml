@@ -126,3 +126,13 @@
     contents:
       - name: DebugGenerator
         amount: 1
+
+- type: entity
+  id: CrateEngineeringSolar
+  name: solar assembly crate
+  parent: CrateEngineering
+  components:
+  - type: StorageFill
+    contents:
+      - name: SolarAssemblyPart
+        amount: 6

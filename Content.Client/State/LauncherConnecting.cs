@@ -21,13 +21,13 @@ namespace Content.Client.State
         [Dependency] private readonly IGameController _gameController = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
 
-        private Control _control;
-        private Label _connectStatus;
+        private Control? _control;
+        private Label? _connectStatus;
 
-        private Control _connectingStatus;
-        private Control _connectFail;
-        private Label _connectFailReason;
-        private Control _disconnected;
+        private Control? _connectingStatus;
+        private Control? _connectFail;
+        private Label? _connectFailReason;
+        private Control? _disconnected;
 
         public override void Startup()
         {
@@ -203,21 +203,24 @@ namespace Content.Client.State
             LayoutContainer.SetGrowHorizontal(_control, LayoutContainer.GrowDirection.Both);
             LayoutContainer.SetGrowVertical(_control, LayoutContainer.GrowDirection.Both);
 
-            exitButton.OnPressed += args =>
+            exitButton.OnPressed += _ =>
             {
                 _gameController.Shutdown("Exit button pressed");
             };
 
             void Retry(BaseButton.ButtonEventArgs args)
             {
-                _baseClient.ConnectToServer(_gameController.LaunchState.ConnectEndpoint);
-                SetActivePage(Page.Connecting);
+                if (_gameController.LaunchState.ConnectEndpoint != null)
+                {
+                    _baseClient.ConnectToServer(_gameController.LaunchState.ConnectEndpoint);
+                    SetActivePage(Page.Connecting);
+                }
             }
 
             reconnectButton.OnPressed += Retry;
             retryButton.OnPressed += Retry;
 
-            _clientNetManager.ConnectFailed += (sender, args) =>
+            _clientNetManager.ConnectFailed += (_, args) =>
             {
                 _connectFailReason.Text = Loc.GetString("Failed to connect to server:\n{0}", args.Reason);
                 SetActivePage(Page.ConnectFailed);
@@ -232,6 +235,8 @@ namespace Content.Client.State
 
         private void ConnectStateChanged(ClientConnectionState state)
         {
+            if (_connectStatus == null) return;
+
             _connectStatus.Text = Loc.GetString(state switch
             {
                 ClientConnectionState.NotConnecting => "You should not be seeing this",
@@ -245,7 +250,7 @@ namespace Content.Client.State
 
         public override void Shutdown()
         {
-            _control.Dispose();
+            _control?.Dispose();
         }
 
         public void SetDisconnected()
@@ -255,9 +260,9 @@ namespace Content.Client.State
 
         private void SetActivePage(Page page)
         {
-            _connectingStatus.Visible = page == Page.Connecting;
-            _connectFail.Visible = page == Page.ConnectFailed;
-            _disconnected.Visible = page == Page.Disconnected;
+            if (_connectingStatus != null) _connectingStatus.Visible = page == Page.Connecting;
+            if (_connectFail != null) _connectFail.Visible = page == Page.ConnectFailed;
+            if (_disconnected != null) _disconnected.Visible = page == Page.Disconnected;
         }
 
         private enum Page : byte

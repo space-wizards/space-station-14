@@ -6,7 +6,6 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Content.Shared.GameObjects.Components.VendingMachines.SharedVendingMachineComponent;
 
@@ -18,14 +17,16 @@ namespace Content.Client.VendingMachines
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private readonly ItemList _items;
-        private List<VendingMachineInventoryEntry> _cachedInventory;
+        private List<VendingMachineInventoryEntry> _cachedInventory = new();
 
-        public VendingMachineBoundUserInterface Owner { get; set; }
+        public VendingMachineBoundUserInterface Owner { get; }
 
-        public VendingMachineMenu()
+        public VendingMachineMenu(VendingMachineBoundUserInterface owner)
         {
             SetSize = MinSize = (300, 450);
             IoCManager.InjectDependencies(this);
+
+            Owner = owner;
 
             _items = new ItemList()
             {
@@ -45,10 +46,10 @@ namespace Content.Client.VendingMachines
             {
                 var itemName = _prototypeManager.Index<EntityPrototype>(entry.ID).Name;
 
-                Texture icon = null;
-                if(_prototypeManager.TryIndex(entry.ID, out EntityPrototype prototype))
+                Texture? icon = null;
+                if(_prototypeManager.TryIndex(entry.ID, out EntityPrototype? prototype))
                 {
-                    icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache)?.Default;
+                    icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache).Default;
                 }
                 _items.AddItem($"{itemName} ({entry.Amount} left)", icon);
             }

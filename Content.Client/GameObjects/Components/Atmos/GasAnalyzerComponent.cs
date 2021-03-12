@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Client.UserInterface.Stylesheets;
+﻿using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.UserInterface;
@@ -22,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             return new StatusControl(this);
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState is not GasAnalyzerComponentState state)
                 return;
@@ -55,15 +54,17 @@ namespace Content.Client.GameObjects.Components.Atmos
                 }
 
                 _parent._uiUpdateNeeded = false;
+
                 var color = _parent.Danger switch
                 {
                     GasAnalyzerDanger.Warning => "orange",
                     GasAnalyzerDanger.Hazard => "red",
                     _ => "green",
                 };
+
                 _label.SetMarkup(Loc.GetString("Pressure: [color={0}]{1}[/color]",
                     color,
-                    Enum.GetName(typeof(GasAnalyzerDanger), _parent.Danger)));
+                   _parent.Danger));
             }
         }
     }

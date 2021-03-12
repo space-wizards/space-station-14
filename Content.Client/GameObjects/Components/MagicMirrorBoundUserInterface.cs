@@ -19,7 +19,7 @@ namespace Content.Client.GameObjects.Components
     [UsedImplicitly]
     public class MagicMirrorBoundUserInterface : BoundUserInterface
     {
-        private MagicMirrorWindow _window;
+        private MagicMirrorWindow? _window;
 
         public MagicMirrorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -39,7 +39,7 @@ namespace Content.Client.GameObjects.Components
             switch (message)
             {
                 case MagicMirrorInitialDataMessage initialData:
-                    _window.SetInitialData(initialData);
+                    _window?.SetInitialData(initialData);
                     break;
             }
         }
@@ -66,7 +66,7 @@ namespace Content.Client.GameObjects.Components
 
             if (disposing)
             {
-                _window.Dispose();
+                _window?.Dispose();
             }
         }
     }
@@ -78,7 +78,7 @@ namespace Content.Client.GameObjects.Components
         private byte _colorValue;
         private bool _ignoreEvents;
 
-        public event Action OnValueChanged;
+        public event Action? OnValueChanged;
 
         public byte ColorValue
         {
@@ -170,8 +170,8 @@ namespace Content.Client.GameObjects.Components
 
     public class HairStylePicker : Control
     {
-        public event Action<Color> OnHairColorPicked;
-        public event Action<string> OnHairStylePicked;
+        public event Action<Color>? OnHairColorPicked;
+        public event Action<string>? OnHairStylePicked;
 
         protected readonly ItemList Items;
 
@@ -257,7 +257,12 @@ namespace Content.Client.GameObjects.Components
 
         private void ItemSelected(ItemList.ItemListSelectedEventArgs args)
         {
-            OnHairStylePicked?.Invoke(Items[args.ItemIndex].Text);
+            var hairColor = Items[args.ItemIndex].Text;
+
+            if (hairColor != null)
+            {
+                OnHairStylePicked?.Invoke(hairColor);
+            }
         }
 
         // ColorSlider
@@ -265,7 +270,7 @@ namespace Content.Client.GameObjects.Components
 
     public class EyeColorPicker : Control
     {
-        public event Action<Color> OnEyeColorPicked;
+        public event Action<Color>? OnEyeColorPicked;
 
         private readonly ColorSlider _colorSliderR;
         private readonly ColorSlider _colorSliderG;

@@ -243,6 +243,13 @@ namespace Content.Client
             "Shovel",
             "ReagentTank",
             "UtilityAI",
+            "MouseAccent",
+            "GhostTakeoverAvailable",
+            "GhostRoleMobSpawner",
+            "BedsheetSpawner",
+            "ToySpawner",
+            "FigureSpawner",
+            "RandomSpawner",
         };
     }
 }

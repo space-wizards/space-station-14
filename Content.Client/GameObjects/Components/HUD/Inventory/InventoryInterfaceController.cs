@@ -22,10 +22,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         public virtual void Initialize()
         {
-
         }
 
-        public abstract SS14Window Window { get; }
+        public abstract SS14Window? Window { get; }
         protected ClientInventoryComponent Owner { get; }
 
         public virtual void PlayerAttached()
@@ -35,11 +34,11 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             {
                 if (b)
                 {
-                    Window.Open();
+                    Window?.Open();
                 }
                 else
                 {
-                    Window.Close();
+                    Window?.Close();
                 }
             };
         }
@@ -47,7 +46,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         public virtual void PlayerDetached()
         {
             GameHud.InventoryButtonVisible = false;
-            Window.Close();
+            Window?.Close();
         }
 
         public virtual void Dispose()
