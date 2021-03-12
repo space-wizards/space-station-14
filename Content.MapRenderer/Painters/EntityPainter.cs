@@ -92,13 +92,9 @@ namespace Content.MapRenderer.Painters
                     }
                     else
                     {
-                        var key = (rsi.Path.ToString(), state.StateId.Name);
+                        var key = (rsi.Path!.ToString(), state.StateId.Name);
 
-                        if (_images.TryGetValue(key, out image))
-                        {
-                            image = image;
-                        }
-                        else
+                        if (!_images.TryGetValue(key, out image))
                         {
                             var stream = _cResourceCache.ContentFileRead($"{rsi.Path}/{state.StateId}.png");
                             image = Image.Load<Rgba32>(stream);
