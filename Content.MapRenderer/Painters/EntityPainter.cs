@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Client.GameObjects.Components;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -26,7 +27,8 @@ namespace Content.MapRenderer.Painters
         private readonly Dictionary<(string path, string state), Image> _images;
         private readonly Image _errorImage;
 
-        private readonly ConcurrentDictionary<GridId, List<EntityData>> _entities;
+        // TODO turn this into an array maybe
+        private readonly ConcurrentDictionary<GridId, ConcurrentDictionary<int, ConcurrentQueue<EntityData>>> _entities;
 
         public EntityPainter(ClientIntegrationInstance client, ServerIntegrationInstance server)
         {
@@ -35,31 +37,16 @@ namespace Content.MapRenderer.Painters
             _sEntityManager = server.ResolveDependency<IEntityManager>();
 
             _errorImage = Image.Load<Rgba32>(_cResourceCache.ContentFileRead("/Textures/error.rsi/error.png"));
+            _errorImage.Mutate(o => o.Flip(FlipMode.Vertical));
+
             _images = new Dictionary<(string path, string state), Image>();
 
             _entities = GetEntities();
         }
 
-        public void Run(Image gridCanvas, IMapGrid grid)
+        private async IAsyncEnumerable<(Image image, int x, int y)> GetImages(GridId grid, int drawDepth, int xOffset, int yOffset)
         {
-            if (!_entities.TryGetValue(grid.Index, out var entities))
-            {
-                Console.WriteLine($"No entities found on grid {grid.Index}");
-                return;
-            }
-
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
-            var bounds = grid.WorldBounds;
-            var xOffset = (int) Math.Abs(bounds.Left);
-            var yOffset = (int) Math.Abs(bounds.Bottom);
-
-
-            // TODO cache this shit what are we insane
-            entities.Sort(Comparer<EntityData>.Create((x, y) => x.Sprite.DrawDepth.CompareTo(y.Sprite.DrawDepth)));
-
-            foreach (var entity in entities)
+            foreach (var entity in _entities[grid][drawDepth])
             {
                 if (entity.Sprite.Owner.HasComponent<SubFloorHideComponent>())
                 {
@@ -97,7 +84,9 @@ namespace Content.MapRenderer.Painters
                         if (!_images.TryGetValue(key, out image))
                         {
                             var stream = _cResourceCache.ContentFileRead($"{rsi.Path}/{state.StateId}.png");
-                            image = Image.Load<Rgba32>(stream);
+
+                            image = await Image.LoadAsync<Rgba32>(stream);
+                            image.Mutate(o => o.Flip(FlipMode.Vertical));
 
                             _images[key] = image;
                         }
@@ -149,34 +138,62 @@ namespace Content.MapRenderer.Painters
 
                     image.Mutate(o => o
                         .DrawImage(coloredImage, PixelColorBlendingMode.Multiply, PixelAlphaCompositionMode.SrcAtop, 1)
-                        .Resize(32, 32).Flip(FlipMode.Vertical));
+                        .Resize(32, 32));
 
-                    var pointX = (int) ((entity.X + xOffset) * 32) - 16;
-                    var pointY = (int) ((entity.Y + yOffset) * 32) - 16;
-                    gridCanvas.Mutate(o => o.DrawImage(image, new Point(pointX, pointY), 1));
+                    var imageX = (int) ((entity.X + xOffset) * 32) - 16;
+                    var imageY = (int) ((entity.Y + yOffset) * 32) - 16;
+
+                    yield return (image, imageX, imageY);
+                }
+            }
+        }
+
+        public async Task Run(Image gridCanvas, IMapGrid grid)
+        {
+            if (!_entities.TryGetValue(grid.Index, out var entities))
+            {
+                Console.WriteLine($"No entities found on grid {grid.Index}");
+                return;
+            }
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            var bounds = grid.WorldBounds;
+            var xOffset = (int) Math.Abs(bounds.Left);
+            var yOffset = (int) Math.Abs(bounds.Bottom);
+
+            var depths = entities.Keys.OrderBy(k => k);
+
+            foreach (var depth in depths)
+            {
+                await foreach (var imageTuple in GetImages(grid.Index, depth, xOffset, yOffset))
+                {
+                    var (image, x, y) = imageTuple;
+                    gridCanvas.Mutate(o => o.DrawImage(image, new Point(x, y), 1));
                 }
             }
 
             Console.WriteLine($"{nameof(EntityPainter)} painted {entities.Count} entities on grid {grid.Index} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
 
-        private ConcurrentDictionary<GridId, List<EntityData>> GetEntities()
+        private ConcurrentDictionary<GridId, ConcurrentDictionary<int, ConcurrentQueue<EntityData>>> GetEntities()
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var components = new ConcurrentDictionary<GridId, List<EntityData>>();
+            var components = new ConcurrentDictionary<GridId, ConcurrentDictionary<int, ConcurrentQueue<EntityData>>>();
 
-            foreach (var entity in _sEntityManager.GetEntities())
+            _sEntityManager.GetEntities().AsParallel().ForAll(entity =>
             {
                 if (!entity.HasComponent<ISpriteRenderableComponent>())
                 {
-                    continue;
+                    return;
                 }
 
                 if (entity.Prototype == null)
                 {
-                    continue;
+                    return;
                 }
 
                 var clientEntity = _cEntityManager.GetEntity(entity.Uid);
@@ -192,8 +209,11 @@ namespace Content.MapRenderer.Painters
                 var y = position.Y;
                 var data = new EntityData(sprite, x, y);
 
-                components.GetOrAdd(entity.Transform.GridID, _ => new List<EntityData>()).Add(data);
-            }
+                components
+                    .GetOrAdd(entity.Transform.GridID, _ => new ConcurrentDictionary<int, ConcurrentQueue<EntityData>>())
+                    .GetOrAdd(sprite.DrawDepth, _ => new ConcurrentQueue<EntityData>())
+                    .Enqueue(data);
+            });
 
             Console.WriteLine($"Found {components.Values.Sum(l => l.Count)} entities on {components.Count} grids in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
 
