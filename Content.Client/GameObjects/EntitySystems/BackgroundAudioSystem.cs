@@ -135,11 +135,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void EndAmbience()
         {
-            if (_ambientStream == null)
-            {
-                return;
-            }
-            _ambientStream.Stop();
+            _ambientStream?.Stop();
             _ambientStream = null;
         }
 
