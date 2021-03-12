@@ -161,7 +161,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void LobbySongReceived()
         {
-            if (_lobbyStream != null)
+            if (_lobbyStream != null) //Toggling Ready status fires this method. This check ensures we only start the lobby music if it's not playing.
             {
                 return;
             }
