@@ -1,31 +1,13 @@
 ﻿- type: entity
-  name: base timed spawner
-  id: BaseTimedSpawner
-  abstract: true
-  components:
-    - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: cross_blue
-    - type: Marker
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
-    - type: TimedSpawner
-  placement:
-    mode: AlignTileAny
-
-- type: entity
   name: AI Timed Spawner
   id: AITimedSpawner
-  parent: BaseTimedSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_ai
+      layers:
+        - state: blue
+        - texture: Mobs/Species/Human/parts.rsi/full.png
+        - state: ai
     - type: TimedSpawner
       prototypes:
         - HumanMob_Spirate
@@ -38,13 +20,13 @@
 - type: entity
   name: Xeno AI Timed Spawner
   id: XenoAITimedSpawner
-  parent: BaseTimedSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_xenoai
+      layers:
+        - state: blue
+        - texture: Mobs/Aliens/Xenos/xeno.rsi/crit.png
+        - state: ai
     - type: TimedSpawner
       prototypes:
         - XenoMob_Content
@@ -56,13 +38,13 @@
 - type: entity
   name: Mouse AI Timed Spawner
   id: MouseAITimedSpawner
-  parent: BaseTimedSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Mobs/Animals/mouse.rsi
-      state: icon-2
+      layers:
+        - state: blue
+        - texture: Mobs/Animals/mouse.rsi/icon-2.png
+        - state: ai
     - type: TimedSpawner
       prototypes:
         - MouseMob_Content
