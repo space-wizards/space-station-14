@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-
+using Content.Shared.Access;
 namespace Content.Shared.Roles
 {
     /// <summary>
@@ -58,6 +58,6 @@ namespace Content.Shared.Roles
         public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();
 
         [field: DataField("access")]
-        public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
+        public AccessTags Access { get; } = AccessTags.None;
     }
 }

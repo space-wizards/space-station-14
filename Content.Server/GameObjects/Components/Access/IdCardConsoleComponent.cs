@@ -114,11 +114,12 @@ namespace Content.Server.GameObjects.Components.Access
             targetIdComponent.FullName = newFullName;
             targetIdComponent.JobTitle = newJobTitle;
 
-            if (!newAccessList.TrueForAll(x => _prototypeManager.HasIndex<AccessLevelPrototype>(x)))
-            {
-                Logger.Warning("Tried to write unknown access tag.");
-                return;
-            }
+            //TODO: re-add validation check....
+            // if (!newAccessList.TrueForAll(x => _prototypeManager.HasIndex<AccessLevelPrototype>(x)))
+            // {
+            //     Logger.Warning("Tried to write unknown access tag.");
+            //     return;
+            // }
             var targetIdAccess = targetIdEntity.GetComponent<AccessComponent>();
             targetIdAccess.SetTags(newAccessList);
         }
@@ -205,7 +206,7 @@ namespace Content.Server.GameObjects.Components.Access
                     true,
                     targetIdComponent.FullName,
                     targetIdComponent.JobTitle,
-                    targetAccessComponent.Tags.ToArray(),
+                    targetAccessComponent.Tags,
                     _privilegedIdContainer.ContainedEntity?.Name ?? "",
                     _targetIdContainer.ContainedEntity?.Name ?? "");
             }

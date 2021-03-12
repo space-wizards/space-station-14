@@ -184,7 +184,7 @@ namespace Content.Client.GameObjects.Components.Access
                 button.Disabled = !interfaceEnabled;
                 if (interfaceEnabled)
                 {
-                    button.Pressed = state.TargetIdAccessList?.Contains(accessLvl.ToString()) ?? false;
+                    button.Pressed = (state.TargetIdAccessList & accessLvl) == 0;
                 }
             }
 
@@ -194,12 +194,17 @@ namespace Content.Client.GameObjects.Components.Access
 
         private void SubmitData()
         {
+            AccessTags submitTags = AccessTags.None;
+
+            foreach(var b in _accessButtons)
+            {
+                submitTags |= b.Key;
+            }
+
             _owner.SubmitData(
                 _fullNameLineEdit.Text,
                 _jobTitleLineEdit.Text,
-                // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
-                //_accessButtons.Where(x => x.Value.Pressed).Select(x => x) as AccessTags;
-                //_accessButtons.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
+                submitTags);
         }
     }
 }
