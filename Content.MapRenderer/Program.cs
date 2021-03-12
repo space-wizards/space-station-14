@@ -113,16 +113,25 @@ namespace Content.MapRenderer
 
             await client.WaitPost(() =>
             {
-                if (cPlayerManager.LocalPlayer!.ControlledEntity!.TryGetComponent(out SpriteComponent? sprite))
+                if (cPlayerManager.LocalPlayer!.ControlledEntity!.TryGetComponent(out Robust.Client.GameObjects.SpriteComponent? sprite))
                 {
                     sprite.Visible = false;
                 }
             });
 
-            await RunTicksSync(client, server, 5);
+            var sPlayerManager = server.ResolveDependency<IPlayerManager>();
+
+            await server.WaitPost(() =>
+            {
+                if (sPlayerManager.GetAllPlayers().Single().AttachedEntity!.TryGetComponent(out SpriteComponent? sprite))
+                {
+                    sprite.Visible = false;
+                }
+            });
+
+            await RunTicksSync(client, server, 2);
 
             var sMapManager = server.ResolveDependency<IMapManager>();
-            var sPlayerManager = server.ResolveDependency<IPlayerManager>();
 
             var tilePainter = new TilePainter(client, server);
             var entityPainter = new EntityPainter(client, server);
