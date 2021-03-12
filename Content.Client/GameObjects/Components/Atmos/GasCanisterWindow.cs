@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Content.Shared.GameObjects.Components.Atmos;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
@@ -49,7 +49,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                                         Children =
                                         {
                                             new Label(){ Text = Loc.GetString("Label: ") },
-                                            (LabelInput = new LineEdit() { Text = Name, Editable = false,
+                                            (LabelInput = new LineEdit() { Text = Name ?? "", Editable = false,
                                                 MinSize = new Vector2(200, 30)}),
                                             (EditLabelBtn = new Button()),
                                         }

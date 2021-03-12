@@ -25,17 +25,17 @@ namespace Content.Client.GameTicking
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
         [ViewVariables] public bool DisallowedLateJoin { get; private set; }
-        [ViewVariables] public string ServerInfoBlob { get; private set; }
+        [ViewVariables] public string? ServerInfoBlob { get; private set; }
         [ViewVariables] public TimeSpan StartTime { get; private set; }
         [ViewVariables] public bool Paused { get; private set; }
-        [ViewVariables] public Dictionary<NetUserId, PlayerStatus> Status { get; private set; }
+        [ViewVariables] public Dictionary<NetUserId, PlayerStatus> Status { get; private set; } = new();
         [ViewVariables] public IReadOnlyList<string> JobsAvailable => _jobsAvailable;
 
-        public event Action InfoBlobUpdated;
-        public event Action LobbyStatusUpdated;
-        public event Action LobbyReadyUpdated;
-        public event Action LobbyLateJoinStatusUpdated;
-        public event Action<IReadOnlyList<string>> LobbyJobsAvailableUpdated;
+        public event Action? InfoBlobUpdated;
+        public event Action? LobbyStatusUpdated;
+        public event Action? LobbyReadyUpdated;
+        public event Action? LobbyLateJoinStatusUpdated;
+        public event Action<IReadOnlyList<string>>? LobbyJobsAvailableUpdated;
 
         public void Initialize()
         {
@@ -121,7 +121,6 @@ namespace Content.Client.GameTicking
         {
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
             var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.AllPlayersEndInfo);
-
         }
     }
 }

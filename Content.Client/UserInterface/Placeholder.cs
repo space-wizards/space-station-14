@@ -1,4 +1,3 @@
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface
@@ -9,13 +8,13 @@ namespace Content.Client.UserInterface
 
         private readonly Label _label;
 
-        public string PlaceholderText
+        public string? PlaceholderText
         {
             get => _label.Text;
             set => _label.Text = value;
         }
 
-        public Placeholder(IResourceCache _resourceCache)
+        public Placeholder()
         {
             _label = new Label
             {

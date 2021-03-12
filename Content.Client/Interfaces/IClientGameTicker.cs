@@ -8,7 +8,7 @@ namespace Content.Client.Interfaces
     public interface IClientGameTicker
     {
         bool IsGameStarted { get; }
-        string ServerInfoBlob { get; }
+        string? ServerInfoBlob { get; }
         bool AreWeReady { get; }
         bool DisallowedLateJoin { get; }
         TimeSpan StartTime { get; }

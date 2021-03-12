@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.GUI;
@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Buckle
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedBuckleComponent))]
-    public class BuckleComponent : SharedBuckleComponent, IInteractHand
+    public class BuckleComponent : SharedBuckleComponent
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -410,12 +410,7 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             return new BuckleComponentState(Buckled, drawDepth, LastEntityBuckledTo, DontCollide);
         }
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            return TryUnbuckle(eventArgs.User);
-        }
-
+        
         public void Update()
         {
             if (!DontCollide || Physics == null)

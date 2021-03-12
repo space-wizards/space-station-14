@@ -10,7 +10,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
     /// Requests a drag / drop interaction to be performed
     /// </summary>
     [Serializable, NetSerializable]
-    public class DragDropMessage : EntitySystemMessage
+    public class DragDropMessage : EntityEventArgs
     {
         public EntityCoordinates DropLocation { get; }
         public EntityUid Dropped { get; }

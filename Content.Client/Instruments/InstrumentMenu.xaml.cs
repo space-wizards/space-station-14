@@ -18,6 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 using Range = Robust.Client.UserInterface.Controls.Range;
 
 namespace Content.Client.Instruments
@@ -37,14 +38,15 @@ namespace Content.Client.Instruments
 
             _owner = owner;
 
-            _owner.Instrument.OnMidiPlaybackEnded += InstrumentOnMidiPlaybackEnded;
-
-            Title = _owner.Instrument.Owner.Name;
-
-            LoopButton.Disabled = !_owner.Instrument.IsMidiOpen;
-            LoopButton.Pressed = _owner.Instrument.LoopMidi;
-            StopButton.Disabled = !_owner.Instrument.IsMidiOpen;
-            PlaybackSlider.MouseFilter = _owner.Instrument.IsMidiOpen ? MouseFilterMode.Pass : MouseFilterMode.Ignore;
+            if (_owner.Instrument != null)
+            {
+                _owner.Instrument.OnMidiPlaybackEnded += InstrumentOnMidiPlaybackEnded;
+                Title = _owner.Instrument.Owner.Name;
+                LoopButton.Disabled = !_owner.Instrument.IsMidiOpen;
+                LoopButton.Pressed = _owner.Instrument.LoopMidi;
+                StopButton.Disabled = !_owner.Instrument.IsMidiOpen;
+                PlaybackSlider.MouseFilter = _owner.Instrument.IsMidiOpen ? MouseFilterMode.Pass : MouseFilterMode.Ignore;
+            }
 
             if (!_midiManager.IsAvailable)
             {
@@ -77,7 +79,7 @@ namespace Content.Client.Instruments
             PlaybackSlider.MouseFilter = !disabled ? MouseFilterMode.Pass : MouseFilterMode.Ignore;
         }
 
-        private async void MidiFileButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+        private async void MidiFileButtonOnOnPressed(ButtonEventArgs obj)
         {
             var filters = new FileDialogFilters(new FileDialogFilters.Group("mid", "midi"));
             await using var file = await _fileDialogManager.OpenFile(filters);
@@ -102,7 +104,7 @@ namespace Content.Client.Instruments
             // While we're waiting, load it into memory.
             await Task.WhenAll(Timer.Delay(100), file.CopyToAsync(memStream));
 
-            if (!_owner.Instrument.OpenMidi(memStream.GetBuffer().AsSpan(0, (int) memStream.Length)))
+            if (!_owner.Instrument?.OpenMidi(memStream.GetBuffer().AsSpan(0, (int) memStream.Length)) ?? true)
                 return;
 
             MidiPlaybackSetButtonsDisabled(false);
@@ -110,7 +112,7 @@ namespace Content.Client.Instruments
                 InputButton.Pressed = false;
         }
 
-        private void MidiInputButtonOnOnToggled(BaseButton.ButtonToggledEventArgs obj)
+        private void MidiInputButtonOnOnToggled(ButtonToggledEventArgs obj)
         {
             if (obj.Pressed)
             {
@@ -118,18 +120,21 @@ namespace Content.Client.Instruments
                     return;
 
                 MidiStopButtonOnPressed(null);
-                _owner.Instrument.OpenInput();
+                _owner.Instrument?.OpenInput();
             }
             else
-                _owner.Instrument.CloseInput();
+                _owner.Instrument?.CloseInput();
         }
 
         private bool PlayCheck()
         {
-            var instrumentEnt = _owner.Instrument.Owner;
             var instrument = _owner.Instrument;
 
-            _owner.Instrument.Owner.TryGetContainerMan(out var conMan);
+            if (instrument == null ||
+                !instrument.Owner.TryGetContainerMan(out var conMan))
+            {
+                return false;
+            }
 
             var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalPlayer;
 
@@ -137,42 +142,47 @@ namespace Content.Client.Instruments
             if (localPlayer?.ControlledEntity == null) return false;
 
             // If the instrument is handheld and we're not holding it, we return.
-            if ((instrument.Handheld && (conMan == null
-                                         || conMan.Owner != localPlayer.ControlledEntity))) return false;
+            if (instrument.Handheld && (conMan.Owner != localPlayer.ControlledEntity)) return false;
+
+            var instrumentEnt = instrument.Owner;
 
             // We check that we're in range unobstructed just in case.
             return localPlayer.InRangeUnobstructed(instrumentEnt,
                 predicate: (e) => e == instrumentEnt || e == localPlayer.ControlledEntity);
         }
 
-        private void MidiStopButtonOnPressed(BaseButton.ButtonEventArgs obj)
+        private void MidiStopButtonOnPressed(ButtonEventArgs? obj)
         {
             MidiPlaybackSetButtonsDisabled(true);
-            _owner.Instrument.CloseMidi();
+            _owner.Instrument?.CloseMidi();
         }
 
-        private void MidiLoopButtonOnOnToggled(BaseButton.ButtonToggledEventArgs obj)
+        private void MidiLoopButtonOnOnToggled(ButtonToggledEventArgs obj)
         {
-            _owner.Instrument.LoopMidi = obj.Pressed;
+            if (_owner.Instrument != null)
+                _owner.Instrument.LoopMidi = obj.Pressed;
         }
 
         private void PlaybackSliderSeek(Range _)
         {
             // Do not seek while still grabbing.
-            if (PlaybackSlider.Grabbed) return;
+            if (PlaybackSlider.Grabbed || _owner.Instrument == null) return;
 
             _owner.Instrument.PlayerTick = (int)Math.Ceiling(PlaybackSlider.Value);
         }
 
         private void PlaybackSliderKeyUp(GUIBoundKeyEventArgs args)
         {
-            if (args.Function != EngineKeyFunctions.UIClick) return;
+            if (args.Function != EngineKeyFunctions.UIClick || _owner.Instrument == null) return;
+
             _owner.Instrument.PlayerTick = (int)Math.Ceiling(PlaybackSlider.Value);
         }
 
         protected override void Update(FrameEventArgs args)
         {
             base.Update(args);
+
+            if (_owner.Instrument == null) return;
 
             if (!_owner.Instrument.IsMidiOpen)
             {

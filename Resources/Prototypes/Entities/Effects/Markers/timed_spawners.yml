@@ -8,7 +8,6 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: cross_blue
-
     - type: Marker
     - type: Clickable
     - type: InteractionOutline
@@ -27,7 +26,6 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_ai
-
     - type: TimedSpawner
       prototypes:
         - HumanMob_Spirate
@@ -47,7 +45,6 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_xenoai
-
     - type: TimedSpawner
       prototypes:
         - XenoMob_Content
@@ -55,3 +52,23 @@
       intervalSeconds: 30
       minimumEntitiesSpawned: 2
       maximumEntitiesSpawned: 4
+
+- type: entity
+  name: Mouse AI Timed Spawner
+  id: MouseAITimedSpawner
+  parent: BaseTimedSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Mobs/Animals/mouse.rsi
+      state: icon-2
+    - type: TimedSpawner
+      prototypes:
+        - MouseMob_Content
+        - MouseMob1_Content
+        - MouseMob2_Content
+      chance: 0.75
+      intervalSeconds: 100
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 1

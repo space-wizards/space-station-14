@@ -11,9 +11,9 @@ namespace Content.Client.GameObjects.Components.Research
     {
         protected override Dictionary<string, int> Storage { get; set; } = new();
 
-        public event Action OnMaterialStorageChanged;
+        public event Action? OnMaterialStorageChanged;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
             if (curState is not MaterialStorageState state) return;

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.GameObjects.Components.ActionBlocking;
+﻿using Content.Shared.GameObjects.Components.ActionBlocking;
 using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;

@@ -3,8 +3,6 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Conveyor
 {
@@ -12,15 +10,17 @@ namespace Content.Client.GameObjects.Components.Conveyor
     public class TwoWayLeverVisualizer : AppearanceVisualizer
     {
         [DataField("state_forward")]
-        private string _stateForward;
+        private string? _stateForward;
+
         [DataField("state_off")]
-        private string _stateOff;
+        private string? _stateOff;
+
         [DataField("state_reversed")]
-        private string _stateReversed;
+        private string? _stateReversed;
 
         private void ChangeState(AppearanceComponent appearance)
         {
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!appearance.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }

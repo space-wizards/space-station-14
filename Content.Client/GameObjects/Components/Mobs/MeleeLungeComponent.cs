@@ -38,7 +38,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 offset *= (ResetTime - _time) / ResetTime;
             }
 
-            if (Owner.TryGetComponent(out ISpriteComponent spriteComponent))
+            if (Owner.TryGetComponent(out ISpriteComponent? spriteComponent))
             {
                 spriteComponent.Offset = offset;
             }

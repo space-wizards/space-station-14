@@ -19,7 +19,7 @@ namespace Content.Client.Graphics.Overlays
         private readonly ShaderInstance _shader;
         private double _startTime = -1;
         private double _lastsFor = 1;
-        private Texture _screenshotTexture;
+        private Texture? _screenshotTexture;
 
         public FlashOverlay()
         {

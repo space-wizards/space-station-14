@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
@@ -268,7 +267,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
         }
 
-        public bool TryGetSlot(Slots slot, out IEntity? item)
+        public bool TryGetSlot(Slots slot, [NotNullWhen(true)] out IEntity? item)
         {
             return _slots.TryGetValue(slot, out item);
         }

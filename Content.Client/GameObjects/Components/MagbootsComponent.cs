@@ -1,8 +1,6 @@
 ﻿using Content.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects;
 
-#nullable enable
-
 namespace Content.Client.GameObjects.Components
 {
     [RegisterComponent]
