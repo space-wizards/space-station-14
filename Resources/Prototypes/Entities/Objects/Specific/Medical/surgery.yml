@@ -36,6 +36,7 @@
   parent: BaseToolSurgery
   description: A surgical drill for making holes into hard material.
   components:
+#  - type: PowerCellSlot
   - type: SurgeryTool
     surgeryType: Drilling
     baseOperateTime: 3
@@ -106,6 +107,7 @@
   parent: Scalpel
   description: A scalpel which uses a directed laser to slice instead of a blade, for more precise surgery while also cauterizing as it cuts.
   components:
+#  - type: PowerCellSlot
   - type: SurgeryTool
     surgeryType: Incision
     baseOperateTime: 2
@@ -214,6 +216,7 @@
   parent: Saw
   description: For heavy duty cutting.
   components:
+#  - type: PowerCellSlot
   - type: SurgeryTool
     surgeryType: Amputation
     baseOperateTime: 4
@@ -231,6 +234,7 @@
   parent: Saw
   description: You think you can cut anything with it.
   components:
+#  - type: PowerCellSlot
   - type: SurgeryTool
     surgeryType: Amputation
     baseOperateTime: 2
