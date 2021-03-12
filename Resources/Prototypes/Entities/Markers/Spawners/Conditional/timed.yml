@@ -34,23 +34,3 @@
       intervalSeconds: 30
       minimumEntitiesSpawned: 2
       maximumEntitiesSpawned: 4
-
-- type: entity
-  name: Mouse AI Timed Spawner
-  id: MouseAITimedSpawner
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: blue
-        - texture: Mobs/Animals/mouse.rsi/icon-2.png
-        - state: ai
-    - type: TimedSpawner
-      prototypes:
-        - MouseMob_Content
-        - MouseMob1_Content
-        - MouseMob2_Content
-      chance: 0.75
-      intervalSeconds: 100
-      minimumEntitiesSpawned: 1
-      maximumEntitiesSpawned: 1

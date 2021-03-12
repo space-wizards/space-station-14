@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  name: Mouse AI Timed Spawner
+  name: Mouse Spawner
   id: SpawnMobMouse
   parent: MarkerBase
   components:
