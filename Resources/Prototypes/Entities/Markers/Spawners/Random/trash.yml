@@ -1,18 +1,13 @@
 - type: entity
   name: Trash Spawner
-  id: TrashSpawner
+  id: RandomSpawner
+  parent: MarkerBase
   components:
     - type: Sprite
-      netsync: false
-      visible: false
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_trash
-
-    - type: Marker
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
-    - type: TrashSpawner
+      layers:
+        - state: red
+        - texture: Objects/Consumable/Trash/candy.rsi/icon.png
+    - type: RandomSpawner
       rarePrototypes:
         - PuddleVomit
         - TrashPlate
