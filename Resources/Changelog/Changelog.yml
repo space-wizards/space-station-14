@@ -429,3 +429,8 @@ Entries:
   - {message: Fix pulling held items, type: Fix}
   id: 78
   time: '2021-03-13T03:24:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Disable subfloor collisions server-side, type: Tweak}
+  id: 79
+  time: '2021-03-13T03:46:22.0000000+00:00'
