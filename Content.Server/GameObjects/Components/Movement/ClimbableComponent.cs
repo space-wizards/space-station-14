@@ -71,27 +71,27 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             if (!ActionBlockerSystem.CanInteract(user))
             {
-                reason = Loc.GetString("You can't do that!");
+                reason = Loc.GetString("climbable-component-cant-interact");
                 return false;
             }
 
             if (!user.HasComponent<ClimbingComponent>() ||
                 !user.TryGetComponent(out IBody body))
             {
-                reason = Loc.GetString("You are incapable of climbing!");
+                reason = Loc.GetString("climbable-component-cant-climb");
                 return false;
             }
 
             if (body.GetPartsOfType(BodyPartType.Leg).Count == 0 ||
                 body.GetPartsOfType(BodyPartType.Foot).Count == 0)
             {
-                reason = Loc.GetString("You are unable to climb!");
+                reason = Loc.GetString("climbable-component-cant-climb");
                 return false;
             }
 
             if (!user.InRangeUnobstructed(target, Range))
             {
-                reason = Loc.GetString("You can't reach there!");
+                reason = Loc.GetString("climbable-component-cant-reach");
                 return false;
             }
 
@@ -111,13 +111,13 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             if (!ActionBlockerSystem.CanInteract(user))
             {
-                reason = Loc.GetString("You can't do that!");
+                reason = Loc.GetString("climbable-component-cant-interact");
                 return false;
             }
 
             if (target == null || !dragged.HasComponent<ClimbingComponent>())
             {
-                reason = Loc.GetString("You can't do that!");
+                reason = Loc.GetString("climbable-component-cant-climb");
                 return false;
             }
 
@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Movement
             if (!user.InRangeUnobstructed(target, Range, predicate: Ignored) ||
                 !user.InRangeUnobstructed(dragged, Range, predicate: Ignored))
             {
-                reason = Loc.GetString("You can't reach there!");
+                reason = Loc.GetString("climbable-component-cant-reach");
                 return false;
             }
 
@@ -250,7 +250,7 @@ namespace Content.Server.GameObjects.Components.Movement
                     data.Visibility = VerbVisibility.Invisible;
                 }
 
-                data.Text = Loc.GetString("Vault");
+                data.Text = Loc.GetString("climbable-component-verb-climb");
             }
 
             protected override void Activate(IEntity user, ClimbableComponent component)
