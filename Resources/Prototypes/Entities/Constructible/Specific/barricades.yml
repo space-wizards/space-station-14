@@ -1,0 +1,57 @@
+- type: entity
+  id: Barricade
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Construction
+    graph: barricade
+    node: barricadewooden
+  - type: Sprite
+    sprite: Constructible/Structures/barricades.rsi
+    state: barricadewooden
+  - type: Physics
+    mass: 75
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Tag
+    tags:
+    - ExplosivePassable
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 3
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
+  - type: Appearance
+    visuals:
+    - type: FireVisualizer
+      sprite: Effects/fire.rsi
+      normalState: 1
+      Sprite:
+        drawdepth: Overlays
+  - type: SnapGrid
+    offset: Edge
+  placement:
+    snap:
+    - Wall

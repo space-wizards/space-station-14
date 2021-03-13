@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Parse files
-        uses: snapcart/json-schema-validator@v1.0.0
+        uses: space-wizards/json-schema-validator@v1.0.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           json_schema: .github/rsi-schema.json
