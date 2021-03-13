@@ -72,7 +72,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             AddButton(out _hudButtonPocket1, Slots.POCKET1, "pocket");
             AddButton(out _hudButtonPocket2, Slots.POCKET2, "pocket");
             AddButton(out _hudButtonBack, Slots.BACKPACK, "back");
-            AddButton(out _hudButtonOClothing, Slots.OUTERCLOTHING, "suit_storage");
+            AddButton(out _hudButtonOClothing, Slots.OUTERCLOTHING, "suit");
             AddButton(out _hudButtonBelt, Slots.BELT, "belt");
             AddButton(out _hudButtonId, Slots.IDCARD, "id");
             AddButton(out _hudButtonEyes, Slots.EYES, "glasses");
