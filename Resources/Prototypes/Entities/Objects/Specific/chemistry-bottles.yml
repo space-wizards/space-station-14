@@ -10,7 +10,7 @@
     netsync: false
     state: bottle-1
   - type: Drink
-    isOpen: true
+  - type: ContainerCap
   - type: SolutionContainer
     maxVol: 30
     caps: OpenContainer

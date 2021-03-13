@@ -277,7 +277,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
     [Serializable, NetSerializable]
     public enum SolutionContainerVisuals : byte
     {
-        VisualState
+        VisualState,
+        IsCapClosed
     }
 
     [Serializable, NetSerializable]
@@ -304,7 +305,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
     public enum SolutionContainerLayers : byte
     {
         Fill,
-        Base
+        Base,
+        Cap
     }
 
     [Serializable, NetSerializable]

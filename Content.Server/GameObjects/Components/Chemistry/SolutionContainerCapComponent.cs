@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         [DataField("isOpen")] private bool _defaultToOpened = false;
         [DataField("canBeClosed")] private bool _canBeClosed = true;
-        [DataField("openSounds")] private string _soundCollection = "canOpenSounds";
+        [DataField("openSounds")] private string? _openSounds = null;
         [DataField("pressurized")] private bool _pressurized = false;
         [DataField("burstSound")] private string _burstSound = "/Audio/Effects/flash_bang.ogg";
 
@@ -84,6 +84,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             // update appearance
+            if (_appearance != null)
+            {
+                _appearance.SetData(SolutionContainerVisuals.IsCapClosed, !_opened);
+            }
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
@@ -144,10 +148,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public void PlayOpeningSound()
         {
-            if (string.IsNullOrEmpty(_soundCollection))
+            if (string.IsNullOrEmpty(_openSounds))
                 return;
 
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollection);
+            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_openSounds);
             var file = _random.Pick(soundCollection.PickFiles);
             EntitySystem.Get<AudioSystem>().Play(Filter.Broadcast(), file, Owner, AudioParams.Default);
         }

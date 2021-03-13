@@ -15,6 +15,9 @@
       - state: beaker1  
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
+      - state: lid_beaker  
+        map: ["enum.SolutionContainerLayers.Cap"]
+        visible: false
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: SolutionContainer
@@ -24,12 +27,14 @@
     transferAmount: 5.0
   - type: Spillable
   - type: Drink
+  - type: ContainerCap
     isOpen: true
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
       maxFillLevels: 6
       fillBaseName: beaker
+    - type: SolutionContainerCupVisualizer
 
 - type: entity
   name: large beaker
@@ -44,6 +49,9 @@
       - state: beakerlarge1  
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
+      - state: lid_beakerlarge  
+        map: ["enum.SolutionContainerLayers.Cap"]
+        visible: false
   - type: SolutionContainer
     maxVol: 100
   - type: Appearance
@@ -51,6 +59,7 @@
     - type: SolutionContainerVisualizer
       maxFillLevels: 6
       fillBaseName: beakerlarge
+    - type: SolutionContainerCupVisualizer
 
 - type: entity
   name: cryostasis beaker
