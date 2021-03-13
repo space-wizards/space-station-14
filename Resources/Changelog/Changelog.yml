@@ -414,3 +414,8 @@ Entries:
   - {message: Lobby music volume has been significantly reduced., type: Tweak}
   id: 75
   time: '2021-03-13T01:06:52.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes structure instruments (like the piano) not playing at all., type: Fix}
+  id: 76
+  time: '2021-03-13T01:47:41.227978+00:00'
