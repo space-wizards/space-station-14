@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Command
                     Timer.Spawn(AnnounceCooldown, () => UpdateBoundInterface(), _announceCooldownEndedTokenSource.Token);
                     UpdateBoundInterface();
 
-                    var message = msg.Message.Length <= 256 ? msg.Message : $"{msg.Message.Substring(0, 256)}...";
+                    var message = msg.Message.Length <= 256 ? msg.Message.Trim() : $"{msg.Message.Trim().Substring(0, 256)}...";
 
                     var author = "Unknown";
                     var mob = obj.Session.AttachedEntity;
