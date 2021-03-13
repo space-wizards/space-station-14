@@ -1,7 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
 
 namespace Content.Shared.GameObjects.Components.Mobs.State
 {
@@ -20,6 +21,14 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             {
                 status.ShowAlert(AlertType.HumanCrit); // TODO: combine humancrit-0 and humancrit-1 into a gif and display it
             }
+
+            // TODO: Predicted sharedstunnablecomp here instead of CriticalMobState
+
+            entity.EnsureComponent<CollisionWakeComponent>();
+            if (entity.TryGetComponent(out IPhysBody? body))
+            {
+                body.BodyType = BodyType.Dynamic;
+            }
         }
 
         public override void ExitState(IEntity entity)
@@ -27,6 +36,11 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             base.ExitState(entity);
 
             EntitySystem.Get<SharedStandingStateSystem>().Standing(entity);
+            entity.RemoveComponent<CollisionWakeComponent>();
+            if (entity.TryGetComponent(out IPhysBody? body))
+            {
+                body.BodyType = BodyType.KinematicController;
+            }
         }
 
         public override bool CanInteract()

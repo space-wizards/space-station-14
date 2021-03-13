@@ -1,9 +1,32 @@
-﻿#nullable enable
+#nullable enable
+using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
+
 namespace Content.Shared.GameObjects.Components.Mobs.State
 {
     public abstract class SharedDeadMobState : BaseMobState
     {
         protected override DamageState DamageState => DamageState.Dead;
+
+        public override void EnterState(IEntity entity)
+        {
+            base.EnterState(entity);
+            entity.EnsureComponent<CollisionWakeComponent>();
+            if (entity.TryGetComponent(out IPhysBody? physics))
+            {
+                physics.BodyType = BodyType.Dynamic;
+            }
+        }
+
+        public override void ExitState(IEntity entity)
+        {
+            base.ExitState(entity);
+            entity.RemoveComponent<CollisionWakeComponent>();
+            if (entity.TryGetComponent(out IPhysBody? physics))
+            {
+                physics.BodyType = BodyType.KinematicController;
+            }
+        }
 
         public override bool CanInteract()
         {

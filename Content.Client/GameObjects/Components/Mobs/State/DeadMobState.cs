@@ -1,8 +1,9 @@
-﻿using Content.Client.GameObjects.EntitySystems;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
 
 namespace Content.Client.GameObjects.Components.Mobs.State
 {
@@ -18,11 +19,6 @@ namespace Content.Client.GameObjects.Components.Mobs.State
             }
 
             EntitySystem.Get<StandingStateSystem>().Down(entity);
-
-            if (entity.TryGetComponent(out PhysicsComponent? physics))
-            {
-                physics.CanCollide = false;
-            }
         }
 
         public override void ExitState(IEntity entity)
@@ -30,11 +26,6 @@ namespace Content.Client.GameObjects.Components.Mobs.State
             base.ExitState(entity);
 
             EntitySystem.Get<StandingStateSystem>().Standing(entity);
-
-            if (entity.TryGetComponent(out PhysicsComponent? physics))
-            {
-                physics.CanCollide = true;
-            }
         }
     }
 }
