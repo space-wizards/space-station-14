@@ -39,9 +39,6 @@ namespace Content.Server.GameObjects.Components.GUI
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-        private string? _activeHand;
-        private uint _nextHand;
-
         public event Action? OnItemChanged;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -59,6 +56,8 @@ namespace Content.Server.GameObjects.Components.GUI
                 Dirty();
             }
         }
+
+        private string? _activeHand;
 
         [ViewVariables] private readonly List<ServerHand> _hands = new();
 
@@ -456,7 +455,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new InvalidOperationException($"Hand '{name}' already exists.");
             }
 
-            var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, $"hand {_nextHand++}");
+            var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, name);
             container.OccludesLight = false;
 
             var handLocation = HandLocation.Left; //TODO: Set this appropriately
@@ -480,7 +479,6 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 throw new InvalidOperationException($"Hand '{name}' does not exist.");
             }
-
             Drop(hand.Name, false);
             _hands.Remove(hand);
 
@@ -491,6 +489,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             OnItemChanged?.Invoke();
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
+            hand.Container.Shutdown();
 
             Dirty();
         }
