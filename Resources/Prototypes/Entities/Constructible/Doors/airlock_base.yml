@@ -24,6 +24,7 @@
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Physics
+    mass: 100
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -88,14 +89,15 @@
   - type: InteractionOutline
   - type: Sprite
     netsync: false
-    drawdepth: Mobs # They're on the same layer as mobs, perspective.
+    drawdepth: Mobs
     sprite: Constructible/Structures/Doors/Standard/basic.rsi
     state: "assembly"
   - type: Physics
+    mass: 100
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+          bounds: "-0.49,-0.49,0.49,0.49"
       mask:
       - MobImpassable
       layer:

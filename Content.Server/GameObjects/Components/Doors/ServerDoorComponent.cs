@@ -663,7 +663,7 @@ namespace Content.Server.GameObjects.Components.Doors
             if (string.IsNullOrEmpty(_boardPrototype))
                 return;
 
-            var container = ContainerHelpers.EnsureContainer<Container>(Owner, "board", out var existed);
+            var container = Owner.EnsureContainer<Container>("board", out var existed);
 
             return;
             /* // TODO ShadowCommander: Re-enable when access is added to boards. Requires map update.

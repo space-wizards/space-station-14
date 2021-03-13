@@ -50,7 +50,7 @@
           steps:
             - tag: DoorElectronics
               store: board
-              name: "[color=cyan]door electronics[/color] circuit board"
+              name: "door electronics circuit board"
               icon:
                 sprite: "Constructible/Misc/module.rsi"
                 state: "door_electronics"
