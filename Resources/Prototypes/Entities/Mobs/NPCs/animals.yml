@@ -462,7 +462,7 @@
     Slots:
     - Helmet
   - type: Physics
-    bodyType: Dynamic
+    bodyType: KinematicController
     mass: 10
     fixtures:
     - shape:

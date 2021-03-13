@@ -7,7 +7,7 @@
   id: GradientCircleMask
   kind: source
   path: "/Textures/Shaders/gradient_circle_mask.swsl"
-  
+
 - type: shader
   id: ColoredScreenBorder
   kind: source
@@ -22,8 +22,17 @@
   id: Singularity
   kind: source
   path: "/Textures/Shaders/singularity.swsl"
+  params:
+    positionInput: 0,0
+    falloff: 5
+    intensity: 5
 
 - type: shader
   id: Texture
   kind: source
   path: "/Textures/Shaders/texture.swsl"
+  params:
+    positionInput: 0, 0
+    pixelSize: 32, 32
+    alphaCutoff: 0
+    removeTransparency: false

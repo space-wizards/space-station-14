@@ -9,6 +9,7 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -143,30 +144,26 @@ namespace Content.Client.GameObjects.EntitySystems
             return _tileData.ContainsKey(gridId);
         }
 
-        public (Texture, Color color)[] GetOverlays(GridId gridIndex, Vector2i indices)
+        public IEnumerable<(Texture, Color)> GetOverlays(GridId gridIndex, Vector2i indices)
         {
             if (!_tileData.TryGetValue(gridIndex, out var chunks))
-                return Array.Empty<(Texture, Color)>();
+                yield break;
 
             var chunkIndex = GetGasChunkIndices(indices);
             if (!chunks.TryGetValue(chunkIndex, out var chunk))
-                return Array.Empty<(Texture, Color)>();
+                yield break;
 
             var overlays = chunk.GetData(indices);
 
             if (overlays.Gas == null)
-                return Array.Empty<(Texture, Color)>();
+                yield break;
 
             var fire = overlays.FireState != 0;
-            var length = overlays.Gas.Length + (fire ? 1 : 0);
 
-            var list = new (Texture, Color)[length];
-
-            for (var i = 0; i < overlays.Gas.Length; i++)
+            foreach (var gasData in overlays.Gas)
             {
-                var gasData = overlays.Gas[i];
                 var frames = _frames[gasData.Index];
-                list[i] = (frames[_frameCounter[gasData.Index]], Color.White.WithAlpha(gasData.Opacity));
+                yield return (frames[_frameCounter[gasData.Index]], Color.White.WithAlpha(gasData.Opacity));
             }
 
             if (fire)
@@ -174,10 +171,8 @@ namespace Content.Client.GameObjects.EntitySystems
                 var state = overlays.FireState - 1;
                 var frames = _fireFrames[state];
                 // TODO ATMOS Set color depending on temperature
-                list[length - 1] = (frames[_fireFrameCounter[state]], Color.White);
+                yield return (frames[_fireFrameCounter[state]], Color.White);
             }
-
-            return list;
         }
 
         public override void FrameUpdate(float frameTime)

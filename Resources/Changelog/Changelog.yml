@@ -380,3 +380,57 @@ Entries:
   - {message: Mobs controlled by players are much easier to - control, type: Tweak}
   id: 69
   time: '2021-03-11T05:00:16.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: 'Beakers, syringes and chemistry bottles show fill level by different
+      sprites', type: Add}
+  - {message: Add bluespace beaker and cryostasis beaker (non-obtainable yet), type: Add}
+  id: 70
+  time: '2021-03-11T09:24:17.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Delete ghost when player respawns, type: Fix}
+  id: 71
+  time: '2021-03-11T09:37:17.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Remove Mouse spawns on Saltern, type: Remove}
+  id: 72
+  time: '2021-03-12T08:43:55.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Added construction of wooden barricades, solar panels & solar trackers
+      (WIP)', type: Add}
+  id: 73
+  time: '2021-03-12T21:11:06.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Added lobby music. It can be disabled in the audio settings., type: Add}
+  - {message: Fixed the ambience continuing to play after you disconnect., type: Fix}
+  id: 74
+  time: '2021-03-12T22:40:28.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Lobby music volume has been significantly reduced., type: Tweak}
+  id: 75
+  time: '2021-03-13T01:06:52.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes structure instruments (like the piano) not playing at all., type: Fix}
+  id: 76
+  time: '2021-03-13T01:47:41.227978+00:00'
+- author: ike709
+  changes:
+  - {message: Significantly reduced the bounciness of thrown items., type: Tweak}
+  id: 77
+  time: '2021-03-13T02:10:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix pulling held items, type: Fix}
+  id: 78
+  time: '2021-03-13T03:24:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Disable subfloor collisions server-side, type: Tweak}
+  id: 79
+  time: '2021-03-13T03:46:22.0000000+00:00'

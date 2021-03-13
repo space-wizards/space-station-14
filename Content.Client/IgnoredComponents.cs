@@ -245,6 +245,10 @@ namespace Content.Client
             "MouseAccent",
             "GhostTakeoverAvailable",
             "GhostRoleMobSpawner",
+            "BedsheetSpawner",
+            "ToySpawner",
+            "FigureSpawner",
+            "RandomSpawner",
         };
     }
 }

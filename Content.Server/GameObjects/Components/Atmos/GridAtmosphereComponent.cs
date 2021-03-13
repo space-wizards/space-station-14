@@ -933,16 +933,4 @@ namespace Content.Server.GameObjects.Components.Atmos
             // TODO ATMOS
         }
     }
-
-    public struct IntermediateTileAtmosphere
-    {
-        public readonly Vector2i Indices;
-        public readonly GasMixture GasMixture;
-
-        public IntermediateTileAtmosphere(Vector2i indices, GasMixture gasMixture)
-        {
-            Indices = indices;
-            GasMixture = gasMixture;
-        }
-    }
 }
