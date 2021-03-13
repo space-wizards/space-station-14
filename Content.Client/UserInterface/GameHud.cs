@@ -64,16 +64,12 @@ namespace Content.Client.UserInterface
 
         Control HandsContainer { get; }
         Control SuspicionContainer { get; }
-        Control RightInventoryQuickButtonContainer { get; }
-        Control LeftInventoryQuickButtonContainer { get; }
         Control BottomInventoryQuickButtonContainer { get; }
         Control MiddleInventoryQuickButtonContainer { get; }
         Control TopInventoryQuickButtonContainer { get; }
 
         bool CombatPanelVisible { get; set; }
-        bool CombatModeActive { get; set; }
         TargetingZone TargetingZone { get; set; }
-        Action<bool>? OnCombatModeChanged { get; set; }
         Action<TargetingZone>? OnTargetingZoneChanged { get; set; }
 
         Control VoteContainer { get; }
@@ -97,7 +93,6 @@ namespace Content.Client.UserInterface
         private TopButton _buttonSandboxMenu = default!;
         private InfoWindow _infoWindow = default!;
         private TargetingDoll _targetingDoll = default!;
-        private Button _combatModeButton = default!;
         private VBoxContainer _combatPanelContainer = default!;
         private VBoxContainer _topNotificationContainer = default!;
 
@@ -119,19 +114,11 @@ namespace Content.Client.UserInterface
             set => _combatPanelContainer.Visible = value;
         }
 
-        public bool CombatModeActive
-        {
-            get => _combatModeButton.Pressed;
-            set => _combatModeButton.Pressed = value;
-        }
-
         public TargetingZone TargetingZone
         {
             get => _targetingDoll.ActiveZone;
             set => _targetingDoll.ActiveZone = value;
         }
-
-        public Action<bool>? OnCombatModeChanged { get; set; }
         public Action<TargetingZone>? OnTargetingZoneChanged { get; set; }
 
         public void AddTopNotification(TopNotification notification)
@@ -279,14 +266,10 @@ namespace Content.Client.UserInterface
 
             _combatPanelContainer = new VBoxContainer
             {
+                HorizontalAlignment = Control.HAlignment.Right,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 Children =
                 {
-                    (_combatModeButton = new Button
-                    {
-                        Text = Loc.GetString("Combat Mode"),
-                        ToggleMode = true
-                    }),
                     (_targetingDoll = new TargetingDoll(_resourceCache))
                 }
             };
@@ -296,7 +279,6 @@ namespace Content.Client.UserInterface
             LC.SetAnchorAndMarginPreset(_combatPanelContainer, LC.LayoutPreset.BottomRight);
             LC.SetMarginBottom(_combatPanelContainer, -10f);
 
-            _combatModeButton.OnToggled += args => OnCombatModeChanged?.Invoke(args.Pressed);
             _targetingDoll.OnZoneChanged += args => OnTargetingZoneChanged?.Invoke(args);
 
             var centerBottomContainer = new HBoxContainer

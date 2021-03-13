@@ -33,8 +33,6 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         private ItemSlotButton _hudButtonId = default!;
         private ItemSlotButton _hudButtonMask = default!;
         private ItemSlotButton _hudButtonEyes = default!;
-        private Control _rightQuickButtonsContainer = default!;
-        private Control _leftQuickButtonsContainer = default!;
 
         private Control _topQuickButtonsContainer = default!;
         private Control _middleQuickButtonsContainer = default!;
@@ -216,8 +214,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.PlayerDetached();
 
-            GameHud.RightInventoryQuickButtonContainer.RemoveChild(_rightQuickButtonsContainer);
-            GameHud.LeftInventoryQuickButtonContainer.RemoveChild(_leftQuickButtonsContainer);
+            GameHud.BottomInventoryQuickButtonContainer.RemoveChild(_bottomQuickButtonsContainer);
+            GameHud.MiddleInventoryQuickButtonContainer.RemoveChild(_middleQuickButtonsContainer);
+            GameHud.TopInventoryQuickButtonContainer.RemoveChild(_topQuickButtonsContainer);
 
             foreach (var (slot, list) in _inventoryButtons)
             {
