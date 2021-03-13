@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Movement
         /// </summary>
         [ViewVariables]
         [DataField("delay")]
-        private float _climbDelay = 0.8f;
+        private float _climbDelay = 3.0f;
 
         public override void Initialize()
         {
