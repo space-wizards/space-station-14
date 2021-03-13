@@ -338,8 +338,7 @@ entities:
 - uid: 32
   type: LowWall
   components:
-  - rot: 3.141592653589793 rad
-    pos: 14.5,-1.5
+  - pos: 14.5,-1.5
     parent: 853
     type: Transform
 - uid: 33
@@ -2888,17 +2887,15 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 301
-  type: ReinforcedWindow
+  type: LowWall
   components:
-  - rot: 3.141592653589793 rad
-    pos: 14.5,0.5
+  - pos: 14.5,-0.5
     parent: 853
     type: Transform
 - uid: 302
-  type: ReinforcedWindow
+  type: LowWall
   components:
-  - rot: 3.141592653589793 rad
-    pos: 14.5,-0.5
+  - pos: 14.5,0.5
     parent: 853
     type: Transform
 - uid: 303
@@ -14386,8 +14383,7 @@ entities:
 - uid: 1169
   type: ReinforcedWindow
   components:
-  - rot: 3.141592653589793 rad
-    pos: 14.5,-1.5
+  - pos: 14.5,-1.5
     parent: 853
     type: Transform
 - uid: 1170
@@ -22071,10 +22067,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 2139
-  type: LowWall
+  type: ReinforcedWindow
   components:
-  - rot: 3.141592653589793 rad
-    pos: 14.5,0.5
+  - pos: 14.5,-0.5
     parent: 853
     type: Transform
 - uid: 2140
@@ -22113,10 +22108,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 2145
-  type: LowWall
+  type: ReinforcedWindow
   components:
-  - rot: 3.141592653589793 rad
-    pos: 14.5,-0.5
+  - pos: 14.5,0.5
     parent: 853
     type: Transform
 - uid: 2146
@@ -22134,20 +22128,6 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: 16.5,-0.5
-    parent: 853
-    type: Transform
-- uid: 2148
-  type: SpawnMobCat
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 24.5,-12.5
-    parent: 853
-    type: Transform
-- uid: 2149
-  type: SpawnMobCorgi
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 8.5,21.5
     parent: 853
     type: Transform
 - uid: 2153
