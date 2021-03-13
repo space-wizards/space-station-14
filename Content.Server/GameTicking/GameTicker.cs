@@ -24,6 +24,7 @@ using Content.Server.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
+using Content.Shared.Audio;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.Network.NetMessages;
@@ -133,6 +134,9 @@ namespace Content.Server.GameTicking
         private TimeSpan LobbyDuration =>
             TimeSpan.FromSeconds(_configurationManager.GetCVar(CCVars.GameLobbyDuration));
 
+        private SoundCollectionPrototype _lobbyCollection = default!;
+        [ViewVariables] public string LobbySong { get; private set; }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -154,6 +158,9 @@ namespace Content.Server.GameTicking
             }
 
             Presets = presets.ToImmutableDictionary();
+
+            _lobbyCollection = _prototypeManager.Index<SoundCollectionPrototype>("LobbyMusic");
+            LobbySong = _robustRandom.Pick(_lobbyCollection.PickFiles);
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
@@ -219,6 +226,7 @@ namespace Content.Server.GameTicking
             RoundNumberMetric.Inc();
 
             RunLevel = GameRunLevel.PreRoundLobby;
+            LobbySong = _robustRandom.Pick(_lobbyCollection.PickFiles);
             _resettingCleanup();
             _preRoundSetup();
 
@@ -1042,6 +1050,7 @@ namespace Content.Server.GameTicking
             msg.StartTime = _roundStartTime;
             msg.YouAreReady = status == PlayerStatus.Ready;
             msg.Paused = Paused;
+            msg.LobbySong = LobbySong;
             return msg;
         }
 

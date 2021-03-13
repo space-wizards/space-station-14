@@ -198,16 +198,18 @@
   canBuildInImpassable: false
 
 - type: construction
-  name: APC
-  id: apc
-  graph: apc
+  name: Wooden Barricade
+  id: Barricade
+  graph: barricade
   startNode: start
-  targetNode: apc
+  targetNode: barricadewooden
   category: Structures
-  description: Area Power Controller (APC). Controls power. In an area.
+  description: An improvised barricade made out of wooden planks.
   icon:
-    sprite: Constructible/Power/apc.rsi
-    state: apc0
+    sprite: Constructible/Structures/barricades.rsi
+    state: barricadewooden
   objectType: Structure
   placementMode: SnapgridCenter
-  canBuildInImpassable: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}

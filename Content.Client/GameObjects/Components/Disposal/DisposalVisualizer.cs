@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Disposal;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
