@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Pulling;
@@ -76,7 +76,6 @@ namespace Content.Shared.GameObjects.EntitySystems
             if (message.Entity.TryGetComponent(out SharedPullableComponent? pullable))
             {
                 pullable.TryStopPull();
-                return;
             }
 
             if (message.Entity.TryGetComponent(out SharedPullerComponent? puller))
