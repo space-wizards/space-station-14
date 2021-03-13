@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 
@@ -22,63 +21,42 @@ namespace Content.IntegrationTests.Database
     {
         [Dependency] private readonly IConfigurationManager _configuration = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
-        [Dependency] private readonly ILogManager _logger = default!;
 
-        private static string _engine = default!;
-        private static ServerDbBase _db = default!;
-        private static readonly object _dbLock = new();
+        private static readonly string Engine;
+        private static readonly ServerDbBase Db;
+
+        static IntegrationServerDbManager()
+        {
+            Engine = "sqlite";
+            var options = CreateSqliteOptions();
+            Db = new ServerDbSqlite(options);
+        }
 
         public void Init()
         {
             var engine = _configuration.GetCVar(CCVars.DatabaseEngine).ToLower();
 
-            if (_engine != null && engine != _engine)
+            if (engine != Engine)
             {
-                throw new InvalidDataException($"Unknown database engine {engine}.");
+                throw new InvalidDataException($"Requested engine {engine} does not match used engine {Engine}.");
             }
 
-            _engine = engine;
+            var inMemory = _resources.UserData.RootDir == null;
 
-            if (_db == null!)
+            if (!inMemory)
             {
-                lock (_dbLock)
-                {
-                    if (_db == null!)
-                    {
-                        switch (engine)
-                        {
-                            case "sqlite":
-                                var options = CreateSqliteOptions();
-                                _db = new ServerDbSqlite(options);
-                                break;
-                            default:
-                                throw new InvalidDataException($"Unknown database engine {engine}.");
-                        }
-                    }
-                }
+                throw new InvalidDataException($"Requested a not inMemory database for an integration test.");
             }
         }
 
-        private DbContextOptions<ServerDbContext> CreateSqliteOptions()
+        private static DbContextOptions<ServerDbContext> CreateSqliteOptions()
         {
             var builder = new DbContextOptionsBuilder<ServerDbContext>();
 
-            var configPreferencesDbPath = _configuration.GetCVar(CCVars.DatabaseSqliteDbPath);
-            var inMemory = _resources.UserData.RootDir == null;
-
-            SqliteConnection connection;
-            if (!inMemory)
-            {
-                var finalPreferencesDbPath = Path.Combine(_resources.UserData.RootDir!, configPreferencesDbPath);
-                connection = new SqliteConnection($"Data Source={finalPreferencesDbPath}");
-            }
-            else
-            {
-                connection = new SqliteConnection("Data Source=:memory:");
-                // When using an in-memory DB we have to open it manually
-                // so EFCore doesn't open, close and wipe it.
-                connection.Open();
-            }
+            SqliteConnection connection = new("Data Source=:memory:");
+            // When using an in-memory DB we have to open it manually
+            // so EFCore doesn't open, close and wipe it.
+            connection.Open();
 
             builder.UseSqlite(connection);
             return builder.Options;
@@ -86,133 +64,133 @@ namespace Content.IntegrationTests.Database
 
         public Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
         {
-            return _db.InitPrefsAsync(userId, defaultProfile);
+            return Db.InitPrefsAsync(userId, defaultProfile);
         }
 
         public Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index)
         {
-            return _db.SaveSelectedCharacterIndexAsync(userId, index);
+            return Db.SaveSelectedCharacterIndexAsync(userId, index);
         }
 
         public Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot)
         {
-            return _db.SaveCharacterSlotAsync(userId, profile, slot);
+            return Db.SaveCharacterSlotAsync(userId, profile, slot);
         }
 
         public Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot)
         {
-            return _db.DeleteSlotAndSetSelectedIndex(userId, deleteSlot, newSlot);
+            return Db.DeleteSlotAndSetSelectedIndex(userId, deleteSlot, newSlot);
         }
 
         public Task SaveAdminOOCColorAsync(NetUserId userId, Color color)
         {
-            return _db.SaveAdminOOCColorAsync(userId, color);
+            return Db.SaveAdminOOCColorAsync(userId, color);
         }
 
         public Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
         {
-            return _db.GetPlayerPreferencesAsync(userId);
+            return Db.GetPlayerPreferencesAsync(userId);
         }
 
         public Task AssignUserIdAsync(string name, NetUserId userId)
         {
-            return _db.AssignUserIdAsync(name, userId);
+            return Db.AssignUserIdAsync(name, userId);
         }
 
         public Task<NetUserId?> GetAssignedUserIdAsync(string name)
         {
-            return _db.GetAssignedUserIdAsync(name);
+            return Db.GetAssignedUserIdAsync(name);
         }
 
         public Task<ServerBanDef?> GetServerBanAsync(int id)
         {
-            return _db.GetServerBanAsync(id);
+            return Db.GetServerBanAsync(id);
         }
 
         public Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId)
         {
-            return _db.GetServerBanAsync(address, userId);
+            return Db.GetServerBanAsync(address, userId);
         }
 
         public Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId)
         {
-            return _db.GetServerBansAsync(address, userId);
+            return Db.GetServerBansAsync(address, userId);
         }
 
         public Task AddServerBanAsync(ServerBanDef serverBan)
         {
-            return _db.AddServerBanAsync(serverBan);
+            return Db.AddServerBanAsync(serverBan);
         }
 
         public Task AddServerUnbanAsync(ServerUnbanDef serverUnban)
         {
-            return _db.AddServerUnbanAsync(serverUnban);
+            return Db.AddServerUnbanAsync(serverUnban);
         }
 
         public Task UpdatePlayerRecordAsync(NetUserId userId, string userName, IPAddress address)
         {
-            return _db.UpdatePlayerRecord(userId, userName, address);
+            return Db.UpdatePlayerRecord(userId, userName, address);
         }
 
         public Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel = default)
         {
-            return _db.GetPlayerRecordByUserName(userName, cancel);
+            return Db.GetPlayerRecordByUserName(userName, cancel);
         }
 
         public Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel = default)
         {
-            return _db.GetPlayerRecordByUserId(userId, cancel);
+            return Db.GetPlayerRecordByUserId(userId, cancel);
         }
 
         public Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address)
         {
-            return _db.AddConnectionLogAsync(userId, userName, address);
+            return Db.AddConnectionLogAsync(userId, userName, address);
         }
 
         public Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel = default)
         {
-            return _db.GetAdminDataForAsync(userId, cancel);
+            return Db.GetAdminDataForAsync(userId, cancel);
         }
 
         public Task<AdminRank?> GetAdminRankAsync(int id, CancellationToken cancel = default)
         {
-            return _db.GetAdminRankDataForAsync(id, cancel);
+            return Db.GetAdminRankDataForAsync(id, cancel);
         }
 
         public Task<((Admin, string? lastUserName)[] admins, AdminRank[])> GetAllAdminAndRanksAsync(
             CancellationToken cancel = default)
         {
-            return _db.GetAllAdminAndRanksAsync(cancel);
+            return Db.GetAllAdminAndRanksAsync(cancel);
         }
 
         public Task RemoveAdminAsync(NetUserId userId, CancellationToken cancel = default)
         {
-            return _db.RemoveAdminAsync(userId, cancel);
+            return Db.RemoveAdminAsync(userId, cancel);
         }
 
         public Task AddAdminAsync(Admin admin, CancellationToken cancel = default)
         {
-            return _db.AddAdminAsync(admin, cancel);
+            return Db.AddAdminAsync(admin, cancel);
         }
 
         public Task UpdateAdminAsync(Admin admin, CancellationToken cancel = default)
         {
-            return _db.UpdateAdminAsync(admin, cancel);
+            return Db.UpdateAdminAsync(admin, cancel);
         }
 
         public Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default)
         {
-            return _db.RemoveAdminRankAsync(rankId, cancel);
+            return Db.RemoveAdminRankAsync(rankId, cancel);
         }
 
         public Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel = default)
         {
-            return _db.AddAdminRankAsync(rank, cancel);
+            return Db.AddAdminRankAsync(rank, cancel);
         }
 
         public Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default)
         {
-            return _db.UpdateAdminRankAsync(rank, cancel);
+            return Db.UpdateAdminRankAsync(rank, cancel);
         }
     }
 }
