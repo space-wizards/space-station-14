@@ -214,7 +214,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <exception cref="InvalidOperationException">
         ///     Thrown if a hand with specified name already exists.
         /// </exception>
-        void AddHand(string name);
+        void AddHand(string name, bool enabled = true);
 
         /// <summary>
         ///     Removes a hand from this hands component.

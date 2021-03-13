@@ -282,12 +282,11 @@ namespace Content.Client.GameObjects.Components.Items
 
     public class ClientHand : SharedHand
     {
-        public IEntity? HeldItem { get; }
+        public override IEntity? HeldItem { get; }
 
         public ClientHand(string name, HandLocation location, IEntity? heldItem, bool enabled) : base(name, enabled, location)
         {
             HeldItem = heldItem;
-            Enabled = enabled;
         }
     }
 }

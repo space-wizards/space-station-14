@@ -19,7 +19,18 @@ namespace Content.Shared.GameObjects.Components.Items
         public abstract bool IsHolding(IEntity item);
     }
 
-    public abstract class SharedHand
+    public interface IReadOnlyHand
+    {
+        public string Name { get; }
+
+        public bool Enabled { get; }
+
+        public HandLocation Location { get; }
+
+        public abstract IEntity? HeldItem { get; }
+    }
+
+    public abstract class SharedHand : IReadOnlyHand
     {
         public string Name { get; set; }
 
@@ -27,26 +38,31 @@ namespace Content.Shared.GameObjects.Components.Items
 
         public HandLocation Location { get; set; }
 
+        public abstract IEntity? HeldItem { get; }
+
         public SharedHand(string name, bool enabled, HandLocation location)
         {
             Name = name;
             Enabled = enabled;
             Location = location;
         }
+
+        public HandState ToHandState()
+        {
+            return new(Name, HeldItem?.Uid, Location, Enabled);
+        }
     }
 
     [Serializable, NetSerializable]
     public sealed class HandState
     {
-        public int Index { get; }
         public string Name { get; }
         public EntityUid? EntityUid { get; }
         public HandLocation Location { get; }
         public bool Enabled { get; }
 
-        public HandState(int index, string name, EntityUid? entityUid, HandLocation location, bool enabled)
+        public HandState(string name, EntityUid? entityUid, HandLocation location, bool enabled)
         {
-            Index = index;
             Name = name;
             EntityUid = entityUid;
             Location = location;

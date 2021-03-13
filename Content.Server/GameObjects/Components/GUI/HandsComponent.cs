@@ -458,7 +458,10 @@ namespace Content.Server.GameObjects.Components.GUI
 
             var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, $"hand {_nextHand++}");
             container.OccludesLight = false;
-            var hand = new ServerHand(name, container, enabled);
+
+            var handLocation = HandLocation.Left; //TODO: Set this appropriately
+
+            var hand = new ServerHand(name, container, enabled, handLocation);
 
             _hands.Add(hand);
 
@@ -787,17 +790,15 @@ namespace Content.Server.GameObjects.Components.GUI
 
     public class ServerHand : SharedHand
     {
+        public override IEntity? HeldItem => Container.ContainedEntity;
+
+        public IEntity? Entity => Container.ContainedEntity; //TODO: remove this duplicate API
+
+        public ContainerSlot Container { get; }
+
         public ServerHand(string name, ContainerSlot container, bool enabled, HandLocation location) : base(name, enabled, location)
         {
             Container = container;
-        }
-
-        public IEntity? Entity => Container.ContainedEntity;
-        public ContainerSlot Container { get; }
-
-        public HandState ToShared(int index, HandLocation location)
-        {
-            return new(index, Name, Entity?.Uid, location, Enabled);
         }
     }
 
