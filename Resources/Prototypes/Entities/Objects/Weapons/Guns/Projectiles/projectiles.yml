@@ -116,10 +116,7 @@
   - type: Sprite
     color: "#ffff33"
     sprite: Constructible/Power/Singularity/emitter.rsi
-    state: ''
-    layer:
-      - state: projectile
-        shader: unshaded
+    state: 'projectile'
   - type: Physics
     bodyType: Dynamic
     fixtures:
