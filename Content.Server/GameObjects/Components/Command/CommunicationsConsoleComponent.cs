@@ -106,6 +106,8 @@ namespace Content.Server.GameObjects.Components.Command
                     Timer.Spawn(AnnounceCooldown, () => UpdateBoundInterface(), _announceCooldownEndedTokenSource.Token);
                     UpdateBoundInterface();
 
+                    var message = msg.Message.Length <= 256 ? msg.Message : $"{msg.Message.Substring(0, 256)}...";
+
                     var author = "Unknown";
                     var mob = obj.Session.AttachedEntity;
                     if (mob != null && mob.TryGetHeldId(out var id))
@@ -113,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Command
                         author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle)})";
                     }
 
-                    var message = msg.Message + $"\nSent by {author}";
+                    message += $"\nSent by {author}";
                     _chatManager.DispatchStationAnnouncement(message, "Communications Console");
                     break;
             }
