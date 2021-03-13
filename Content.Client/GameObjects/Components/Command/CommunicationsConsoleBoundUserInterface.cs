@@ -47,7 +47,8 @@ namespace Content.Client.GameObjects.Components.Command
 
         public void AnnounceButtonPressed(string message)
         {
-            SendMessage(new CommunicationsConsoleAnnounceMessage(message));
+            var msg = message.Length <= 256 ? message.Trim() : $"{message.Trim().Substring(0, 256)}...";
+            SendMessage(new CommunicationsConsoleAnnounceMessage(msg));
         }
 
         public void CallShuttle()
