@@ -20,14 +20,6 @@ namespace Content.Shared.GameObjects.Components
         public override string Name => "SubFloorHide";
 
         /// <inheritdoc />
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _snapGridComponent = Owner.GetComponent<SnapGridComponent>();
-        }
-
-        /// <inheritdoc />
         protected override void Startup()
         {
             base.Startup();
