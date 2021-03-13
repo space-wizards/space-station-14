@@ -3,6 +3,7 @@ using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Items
 {
@@ -11,12 +12,31 @@ namespace Content.Shared.GameObjects.Components.Items
         public sealed override string Name => "Hands";
         public sealed override uint? NetID => ContentNetIDs.HANDS;
 
+        [DataField("pickupRange")]
+        public float PickupRange { get; private set; } = 2;
+
         /// <returns>true if the item is in one of the hands</returns>
         public abstract bool IsHolding(IEntity item);
     }
 
+    public abstract class SharedHand
+    {
+        public string Name { get; set; }
+
+        public bool Enabled { get; set; }
+
+        public HandLocation Location { get; set; }
+
+        public SharedHand(string name, bool enabled, HandLocation location)
+        {
+            Name = name;
+            Enabled = enabled;
+            Location = location;
+        }
+    }
+
     [Serializable, NetSerializable]
-    public sealed class SharedHand
+    public sealed class HandState
     {
         public int Index { get; }
         public string Name { get; }
@@ -24,7 +44,7 @@ namespace Content.Shared.GameObjects.Components.Items
         public HandLocation Location { get; }
         public bool Enabled { get; }
 
-        public SharedHand(int index, string name, EntityUid? entityUid, HandLocation location, bool enabled)
+        public HandState(int index, string name, EntityUid? entityUid, HandLocation location, bool enabled)
         {
             Index = index;
             Name = name;
@@ -38,10 +58,10 @@ namespace Content.Shared.GameObjects.Components.Items
     [Serializable, NetSerializable]
     public class HandsComponentState : ComponentState
     {
-        public SharedHand[] Hands { get; }
+        public HandState[] Hands { get; }
         public string? ActiveHand { get; }
 
-        public HandsComponentState(SharedHand[] hands, string? activeHand = null) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(HandState[] hands, string? activeHand = null) : base(ContentNetIDs.HANDS)
         {
             Hands = hands;
             ActiveHand = activeHand;

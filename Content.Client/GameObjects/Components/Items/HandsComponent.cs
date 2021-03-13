@@ -129,7 +129,7 @@ namespace Content.Client.GameObjects.Components.Items
             ActiveHand = state.ActiveHand;
             foreach (var handState in state.Hands)
             {
-                var newHand = new ClientHand(handState, GetHeldItem(handState.EntityUid), handState.Enabled);
+                var newHand = new ClientHand(handState.Name, handState.Location, GetHeldItem(handState.EntityUid), handState.Enabled);
                 _hands.Add(newHand);
             }
 
@@ -280,17 +280,12 @@ namespace Content.Client.GameObjects.Components.Items
         }
     }
 
-    public class ClientHand
+    public class ClientHand : SharedHand
     {
-        public string Name { get; }
-        public HandLocation Location { get; }
         public IEntity? HeldItem { get; }
-        public bool Enabled { get; }
 
-        public ClientHand(SharedHand hand, IEntity? heldItem, bool enabled)
+        public ClientHand(string name, HandLocation location, IEntity? heldItem, bool enabled) : base(name, enabled, location)
         {
-            Name = hand.Name;
-            Location = hand.Location;
             HeldItem = heldItem;
             Enabled = enabled;
         }

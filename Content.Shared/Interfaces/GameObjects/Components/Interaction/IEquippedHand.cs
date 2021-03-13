@@ -20,12 +20,12 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 
     public class EquippedHandEventArgs : UserEventArgs
     {
-        public EquippedHandEventArgs(IEntity user, SharedHand hand) : base(user)
+        public EquippedHandEventArgs(IEntity user, HandState hand) : base(user)
         {
             Hand = hand;
         }
 
-        public SharedHand Hand { get; }
+        public HandState Hand { get; }
     }
 
     /// <summary>
@@ -47,9 +47,9 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         ///     Hand the item is going into.
         /// </summary>
-        public SharedHand Hand { get; }
+        public HandState Hand { get; }
 
-        public EquippedHandMessage(IEntity user, IEntity equipped, SharedHand hand)
+        public EquippedHandMessage(IEntity user, IEntity equipped, HandState hand)
         {
             User = user;
             Equipped = equipped;

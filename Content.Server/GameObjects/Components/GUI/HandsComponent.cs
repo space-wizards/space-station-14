@@ -64,9 +64,6 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public IEnumerable<string> Hands => _hands.Select(h => h.Name);
 
-        // Mostly arbitrary.
-        public const float PickupRange = 2;
-
         [ViewVariables] public int Count => _hands.Count;
 
         // TODO: This does not serialize what objects are held.
@@ -452,7 +449,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return hand.Container.CanRemove(hand.Entity);
         }
 
-        public void AddHand(string name)
+        public void AddHand(string name, bool enabled = true)
         {
             if (HasHand(name))
             {
@@ -461,7 +458,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, $"hand {_nextHand++}");
             container.OccludesLight = false;
-            var hand = new ServerHand(this, name, container);
+            var hand = new ServerHand(name, container, enabled);
 
             _hands.Add(hand);
 
@@ -502,7 +499,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            var hands = new SharedHand[_hands.Count];
+            var hands = new HandState[_hands.Count];
 
             for (var i = 0; i < _hands.Count; i++)
             {
@@ -522,7 +519,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     : HandLocation.Middle;
         }
 
-        private SharedHand ToSharedHand(ServerHand hand)
+        private HandState ToSharedHand(ServerHand hand)
         {
             var index = _hands.IndexOf(hand);
             return hand.ToShared(index, IndexToHandLocation(index));
@@ -788,45 +785,17 @@ namespace Content.Server.GameObjects.Components.GUI
         }
     }
 
-    public class ServerHand
+    public class ServerHand : SharedHand
     {
-        private bool _enabled = true;
-
-        public ServerHand(HandsComponent parent, string name, ContainerSlot container)
+        public ServerHand(string name, ContainerSlot container, bool enabled, HandLocation location) : base(name, enabled, location)
         {
-            Parent = parent;
-            Name = name;
             Container = container;
         }
 
-        private HandsComponent Parent { get; }
-        public string Name { get; }
         public IEntity? Entity => Container.ContainedEntity;
         public ContainerSlot Container { get; }
 
-        public bool Enabled
-        {
-            get => _enabled;
-            set
-            {
-                if (_enabled == value)
-                {
-                    return;
-                }
-
-                _enabled = value;
-                Parent.Dirty();
-
-                var message = value
-                    ? (ComponentMessage) new HandEnabledMsg(Name)
-                    : new HandDisabledMsg(Name);
-
-                Parent.HandleMessage(message, Parent);
-                Parent.Owner.SendMessage(Parent, message);
-            }
-        }
-
-        public SharedHand ToShared(int index, HandLocation location)
+        public HandState ToShared(int index, HandLocation location)
         {
             return new(index, Name, Entity?.Uid, location, Enabled);
         }

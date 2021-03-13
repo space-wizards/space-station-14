@@ -625,7 +625,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         ///     Calls EquippedHand on all components that implement the IEquippedHand interface
         ///     on an item.
         /// </summary>
-        public void EquippedHandInteraction(IEntity user, IEntity item, SharedHand hand)
+        public void EquippedHandInteraction(IEntity user, IEntity item, HandState hand)
         {
             var equippedHandMessage = new EquippedHandMessage(user, item, hand);
             RaiseLocalEvent(item.Uid, equippedHandMessage);
@@ -646,7 +646,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         ///     Calls UnequippedHand on all components that implement the IUnequippedHand interface
         ///     on an item.
         /// </summary>
-        public void UnequippedHandInteraction(IEntity user, IEntity item, SharedHand hand)
+        public void UnequippedHandInteraction(IEntity user, IEntity item, HandState hand)
         {
             var unequippedHandMessage = new UnequippedHandMessage(user, item, hand);
             RaiseLocalEvent(item.Uid, unequippedHandMessage);

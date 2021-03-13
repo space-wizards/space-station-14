@@ -19,12 +19,12 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 
     public class UnequippedHandEventArgs : UserEventArgs
     {
-        public UnequippedHandEventArgs(IEntity user, SharedHand hand) : base(user)
+        public UnequippedHandEventArgs(IEntity user, HandState hand) : base(user)
         {
             Hand = hand;
         }
 
-        public SharedHand Hand { get; }
+        public HandState Hand { get; }
     }
 
     /// <summary>
@@ -46,9 +46,9 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         ///     Hand the item is removed from.
         /// </summary>
-        public SharedHand Hand { get; }
+        public HandState Hand { get; }
 
-        public UnequippedHandMessage(IEntity user, IEntity unequipped, SharedHand hand)
+        public UnequippedHandMessage(IEntity user, IEntity unequipped, HandState hand)
         {
             User = user;
             Unequipped = unequipped;
