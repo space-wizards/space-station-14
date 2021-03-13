@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -357,6 +357,12 @@ namespace Content.Server.GameObjects.Components.Construction
             Edge = null;
             Node = GraphPrototype.Nodes[edge.Target];
 
+            foreach (var completed in edge.Completed)
+            {
+                await completed.PerformAction(Owner, user);
+                if (Owner.Deleted) return true;
+            }
+
             // Perform node actions!
             foreach (var action in Node.Actions)
             {
@@ -368,12 +374,6 @@ namespace Content.Server.GameObjects.Components.Construction
 
             if (Target == Node)
                 ClearTarget();
-
-            foreach (var completed in edge.Completed)
-            {
-                await completed.PerformAction(Owner, user);
-                if (Owner.Deleted) return true;
-            }
 
             await HandleEntityChange(Node, user);
 
