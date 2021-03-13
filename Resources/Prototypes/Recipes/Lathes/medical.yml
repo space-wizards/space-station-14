@@ -34,7 +34,7 @@
 
 - type: latheRecipe
   id: Retractor
-  icon: Objects/Specific/Medical/Surgery/scissors.rsi/retractor
+  icon: Objects/Specific/Medical/Surgery/scissors.rsi/retractor.png
   result: Scalpel
   completetime: 500
   materials:
@@ -74,7 +74,7 @@
 
 - type: latheRecipe
   id: BodyBag_Item
-  icon: Objects/Specific/Morgue/bodybags.rsi
+  icon: Objects/Specific/Morgue/bodybags.rsi/item.png
   result: BodyBag_Item
   completetime: 300
   materials:
