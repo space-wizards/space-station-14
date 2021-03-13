@@ -440,3 +440,8 @@ Entries:
   - {message: Chemistry is more secure on Saltern, type: Tweak}
   id: 80
   time: '2021-03-13T09:27:53.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Increased cloning time from 10 seconds to 2 minutes, type: Tweak}
+  id: 81
+  time: '2021-03-13T09:57:52.0000000+00:00'
