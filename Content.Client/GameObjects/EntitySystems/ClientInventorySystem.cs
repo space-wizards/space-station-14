@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.OpenInventoryMenu,
-                    InputCmdHandler.FromDelegate(s => HandleOpenInventoryMenu()))
+                    InputCmdHandler.FromDelegate(_ => HandleOpenInventoryMenu()))
                 .Register<ClientInventorySystem>();
         }
 
@@ -34,13 +34,15 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void HandleOpenInventoryMenu()
         {
-            if (_playerManager.LocalPlayer.ControlledEntity == null
-                || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out ClientInventoryComponent clientInventory))
+            if (_playerManager.LocalPlayer?.ControlledEntity == null
+                || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out ClientInventoryComponent? clientInventory))
             {
                 return;
             }
 
             var menu = clientInventory.InterfaceController.Window;
+
+            if (menu == null) return;
 
             if (menu.IsOpen)
             {

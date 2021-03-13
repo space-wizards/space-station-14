@@ -1,0 +1,93 @@
+- type: entity
+  name: bottle
+  parent: BaseItem
+  id: BaseChemistryEmptyBottle
+  abstract: true
+  description: A small bottle.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    netsync: false
+    state: bottle-1
+  - type: Drink
+    isOpen: true
+  - type: SolutionContainer
+    maxVol: 30
+    caps: OpenContainer
+  - type: SolutionTransfer
+    transferAmount: 5
+  - type: Item
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+  - type: Spillable
+
+- type: entity
+  name: bottle
+  parent: BaseChemistryEmptyBottle
+  id: ChemistryEmptyBottle01
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    layers:
+      - state: bottle-1
+      - state: bottle-1-1  
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 6
+      fillBaseName: bottle-1-
+
+- type: entity
+  name: bottle
+  parent: BaseChemistryEmptyBottle
+  id: ChemistryEmptyBottle02
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    layers:
+      - state: bottle-2
+      - state: bottle-2-1  
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 6
+      fillBaseName: bottle-2-
+
+- type: entity
+  name: bottle
+  parent: BaseChemistryEmptyBottle
+  id: ChemistryEmptyBottle03
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    layers:
+      - state: bottle-3
+      - state: bottle-3-1  
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 6
+      fillBaseName: bottle-3-
+
+- type: entity
+  name: bottle
+  parent: BaseChemistryEmptyBottle
+  id: ChemistryEmptyBottle04
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    layers:
+      - state: bottle-4
+      - state: bottle-4-1  
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 6
+      fillBaseName: bottle-4-

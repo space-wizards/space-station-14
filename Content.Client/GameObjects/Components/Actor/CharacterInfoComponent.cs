@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
@@ -91,7 +90,7 @@ namespace Content.Client.GameObjects.Components.Actor
                     }
                 });
 
-                AddChild(new Placeholder(resourceCache)
+                AddChild(new Placeholder()
                 {
                     PlaceholderText = Loc.GetString("Health & status effects")
                 });
@@ -104,7 +103,7 @@ namespace Content.Client.GameObjects.Components.Actor
                 ObjectivesContainer = new VBoxContainer();
                 AddChild(ObjectivesContainer);
 
-                AddChild(new Placeholder(resourceCache)
+                AddChild(new Placeholder()
                 {
                     PlaceholderText = Loc.GetString("Antagonist Roles")
                 });

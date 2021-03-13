@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Weapons
             }
 
             var playerManager = IoCManager.Resolve<IPlayerManager>();
-            if (playerManager?.LocalPlayer != null && playerManager.LocalPlayer.ControlledEntity != Owner)
+            if (playerManager.LocalPlayer != null && playerManager.LocalPlayer.ControlledEntity != Owner)
             {
                 return;
             }

@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components.VendingMachines
         // but we have no good way of passing that data from the server
         // to the client at the moment. Rework Visualizers?
 
-        private Dictionary<string, bool> _baseStates;
+        private Dictionary<string, bool> _baseStates = new();
 
         private static readonly Dictionary<string, VendingMachineVisualLayers> LayerMap =
             new()

@@ -13,7 +13,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
         {
         }
 
-        private CloningPodWindow _window;
+        private CloningPodWindow? _window;
 
         protected override void Open()
         {
@@ -39,7 +39,8 @@ namespace Content.Client.GameObjects.Components.CloningPod
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            _window.Populate((CloningPodBoundUserInterfaceState) state);
+
+            _window?.Populate((CloningPodBoundUserInterfaceState) state);
         }
 
         protected override void Dispose(bool disposing)

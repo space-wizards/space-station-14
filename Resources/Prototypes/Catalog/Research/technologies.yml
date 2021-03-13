@@ -54,7 +54,7 @@
   id: ChemistryTechnology
   description: A crash course in chemistry.
   icon:
-    sprite: Objects/Specific/Chemistry/beakers.rsi
+    sprite: Objects/Specific/Chemistry/beaker_large.rsi
     state: beakerlarge
   requiredPoints: 1000
   requiredTechnologies:

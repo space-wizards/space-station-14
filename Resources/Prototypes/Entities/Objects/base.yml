@@ -24,8 +24,8 @@
       mask:
       - Impassable
       - VaultImpassable
-      restitution: 0.05  # We want them items B O U N C Y (They look fucking stupid)
-      friction: 0.9
+      restitution: 0.05 # RIP Bouncy 2021-2021
+      friction: 0.2
   - type: Sprite
     drawdepth: Items
   - type: Pullable

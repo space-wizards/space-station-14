@@ -9,7 +9,7 @@ namespace Content.Client.GameObjects.Components.Observer.GhostRoles
     [GenerateTypedNameReferences]
     public partial class GhostRolesWindow : SS14Window
     {
-        public event Action<uint> RoleRequested;
+        public event Action<uint>? RoleRequested;
 
         public void ClearEntries()
         {
