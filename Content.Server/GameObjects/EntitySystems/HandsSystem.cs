@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             if (args.Container.Owner.TryGetComponent(out IHandsComponent handsComponent))
             {
-                handsComponent.HandleSlotModifiedMaybe(args);
+                handsComponent.Dirty();
             }
         }
 

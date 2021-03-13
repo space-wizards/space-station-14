@@ -92,7 +92,7 @@ namespace Content.Client.GameObjects.Components.Items
             SendNetworkMessage(new ActivateInHandMsg(activatedHand.Name));
         }
 
-        private bool TryGetHand(string? handName, [NotNullWhen(true)] out ClientHand? foundHand)
+        private bool TryGetHand(string? handName, [NotNullWhen(true)] out SharedHand? foundHand)
         {
             foundHand = null;
 
@@ -107,7 +107,7 @@ namespace Content.Client.GameObjects.Components.Items
             return foundHand != null;
         }
 
-        private bool TryGetActiveHand([NotNullWhen(true)] out ClientHand? activeHand)
+        private bool TryGetActiveHand([NotNullWhen(true)] out SharedHand? activeHand)
         {
             return TryGetHand(ActiveHand, out activeHand);
         }

@@ -616,117 +616,82 @@ namespace Content.Server.GameObjects.Components.GUI
             base.HandleNetworkMessage(message, channel, session);
 
             if (session == null)
-            {
                 throw new ArgumentNullException(nameof(session));
-            }
+
+            var playerEntity = session.AttachedEntity;
+            var used = GetActiveHand?.Owner;
 
             switch (message)
             {
                 case ClientChangedHandMsg msg:
-                {
-                    var playerEntity = session.AttachedEntity;
-
-                    if (playerEntity == Owner && HasHand(msg.Index))
-                    {
-                        ActiveHand = msg.Index;
-                    }
-
+                    ClientChangedHandMsg(msg, playerEntity);
                     break;
-                }
-
                 case ClientAttackByInHandMsg msg:
-                {
-                    var hand = GetHand(msg.Index);
-                    if (hand == null)
-                    {
-                        Logger.WarningS("go.comp.hands", "Got a ClientAttackByInHandMsg with invalid hand name '{0}'",
-                            msg.Index);
-                        return;
-                    }
-
-                    var playerEntity = session.AttachedEntity;
-                    var used = GetActiveHand?.Owner;
-
-                    if (playerEntity == Owner && hand.Entity != null)
-                    {
-                        var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                        if (used != null)
-                        {
-                                await interactionSystem.Interaction(Owner, used, hand.Entity,
-                                    EntityCoordinates.Invalid);
-                        }
-                        else
-                        {
-                            var entity = hand.Entity;
-                            if (!Drop(entity))
-                            {
-                                break;
-                            }
-
-                            interactionSystem.Interaction(Owner, entity);
-                        }
-                    }
-
+                    HandleClientAttackByInHandMsg(msg, playerEntity, used);
                     break;
-                }
-
-                case UseInHandMsg _:
-                {
-                    var playerEntity = session.AttachedEntity;
-                    var used = GetActiveHand?.Owner;
-
-                    if (playerEntity == Owner && used != null)
-                    {
-                        var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                        interactionSystem.TryUseInteraction(Owner, used);
-                    }
-
+                case UseInHandMsg:
+                    HandleUseInHandMsg(playerEntity, used);
                     break;
-                }
-
                 case ActivateInHandMsg msg:
-                {
-                    var playerEntity = session.AttachedEntity;
-                    var used = GetItem(msg.Index)?.Owner;
-
-                    if (playerEntity == Owner && used != null)
-                    {
-                        var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                        interactionSystem.TryInteractionActivate(Owner, used);
-                    }
+                    HandleActivateInHandMsg(msg, playerEntity, used);
                     break;
+            }
+        }
+
+        private void ClientChangedHandMsg(ClientChangedHandMsg msg, IEntity? playerEntity)
+        {
+            if (playerEntity == Owner && HasHand(msg.Index))
+                ActiveHand = msg.Index;
+        }
+
+        private async void HandleClientAttackByInHandMsg(ClientAttackByInHandMsg msg, IEntity? playerEntity, IEntity? used)
+        {
+            var hand = GetHand(msg.Index);
+            if (hand == null)
+            {
+                Logger.WarningS("go.comp.hands", "Got a ClientAttackByInHandMsg with invalid hand name '{0}'", msg.Index);
+                return;
+            }
+            if (playerEntity == Owner && hand.Entity != null)
+            {
+                var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+                if (used != null)
+                {
+                    await interactionSystem.Interaction(Owner, used, hand.Entity, EntityCoordinates.Invalid);
+                }
+                else
+                {
+                    var entity = hand.Entity;
+                    if (!Drop(entity))
+                        return;
+
+                    interactionSystem.Interaction(Owner, entity);
                 }
             }
         }
 
-        public void HandleSlotModifiedMaybe(ContainerModifiedMessage message)
+        private void HandleUseInHandMsg(IEntity? playerEntity, IEntity? used)
         {
-            foreach (var hand in _hands)
+            if (playerEntity == Owner && used != null)
             {
-                if (hand.Container != message.Container)
-                {
-                    continue;
-                }
+                var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+                interactionSystem.TryUseInteraction(Owner, used);
+            }
+        }
 
-                Dirty();
-
-                if (!message.Entity.TryGetComponent(out IPhysBody? physics))
-                {
-                    return;
-                }
-
-                // set velocity to zero
-                physics.LinearVelocity = Vector2.Zero;
-                return;
+        private void HandleActivateInHandMsg(ActivateInHandMsg msg, IEntity? playerEntity, IEntity? used)
+        {
+            if (playerEntity == Owner && used != null)
+            {
+                var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+                interactionSystem.TryInteractionActivate(Owner, used);
             }
         }
 
         void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs args)
         {
             if (args.Part.PartType != BodyPartType.Hand)
-            {
                 return;
-            }
 
             AddHand(args.Slot);
         }
@@ -734,12 +699,12 @@ namespace Content.Server.GameObjects.Components.GUI
         void IBodyPartRemoved.BodyPartRemoved(BodyPartRemovedEventArgs args)
         {
             if (args.Part.PartType != BodyPartType.Hand)
-            {
                 return;
-            }
 
             RemoveHand(args.Slot);
         }
+
+        #region Pulling & Disarm Bandaid
 
         bool IDisarmedAct.Disarmed(DisarmedActEventArgs eventArgs)
         {
@@ -777,6 +742,8 @@ namespace Content.Server.GameObjects.Components.GUI
 
             return pullable.TryStopPull();
         }
+
+        #endregion
     }
 
     public class ServerHand : SharedHand

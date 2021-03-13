@@ -231,7 +231,5 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="name">The hand name to check.</param>
         /// <returns>True if the hand exists, false otherwise.</returns>
         bool HasHand(string name);
-
-        void HandleSlotModifiedMaybe(ContainerModifiedMessage message);
     }
 }
