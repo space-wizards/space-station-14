@@ -3,7 +3,6 @@ using System;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
@@ -12,8 +11,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
-using Robust.Shared.Players;
 using Robust.Shared.Physics.Dynamics.Joints;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Pulling
@@ -78,7 +77,11 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     return;
                 }
 
-                if (value != null)
+                if (value == null)
+                {
+                    MovingTo = null;
+                }
+                else
                 {
                     // Pulling a new object : Perform sanity checks.
 
@@ -161,6 +164,8 @@ namespace Content.Shared.GameObjects.Components.Pulling
         }
 
         public bool BeingPulled => Puller != null;
+
+        public EntityCoordinates? MovingTo { get; set; }
 
         /// <summary>
         /// Sanity-check pull. This is called from Puller setter, so it will never deny a pull that's valid by setting Puller.
@@ -263,16 +268,8 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return false;
             }
 
-            /*
-            if (!_physics.TryGetController(out PullController controller))
-            {
-                return false;
-            }
-            */
-
+            MovingTo = to;
             return true;
-
-            //return controller.TryMoveTo(Puller.Transform.Coordinates, to);
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
@@ -314,21 +311,15 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return;
             }
 
-            SharedAlertsComponent? pulledStatus = Owner.GetComponentOrNull<SharedAlertsComponent>();
+            var pulledStatus = Owner.GetComponentOrNull<SharedAlertsComponent>();
 
             switch (message)
             {
                 case PullStartedMessage msg:
-                    if (pulledStatus != null)
-                    {
-                        pulledStatus.ShowAlert(AlertType.Pulled);
-                    }
+                    pulledStatus?.ShowAlert(AlertType.Pulled);
                     break;
                 case PullStoppedMessage msg:
-                    if (pulledStatus != null)
-                    {
-                        pulledStatus.ClearAlert(AlertType.Pulled);
-                    }
+                    pulledStatus?.ClearAlert(AlertType.Pulled);
                     break;
             }
         }
