@@ -16,7 +16,7 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
         private readonly Label _diagnostics;
         public MedicalScannerWindow()
         {
-            MinSize = SetSize = (485, 90);
+            MinSize = SetSize = (250, 100);
 
             Contents.AddChild(new VBoxContainer
             {

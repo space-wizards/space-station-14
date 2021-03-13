@@ -188,7 +188,7 @@ namespace Content.Client.GameObjects.Components.Storage
             public StorageWindow(ClientStorageComponent storageEntity)
             {
                 StorageEntity = storageEntity;
-                MinSize = SetSize = (180, 320);
+                MinSize = SetSize = (200, 320);
                 Title = "Storage Item";
                 RectClipContent = true;
 
