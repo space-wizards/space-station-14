@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Fluids;
-using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Chemistry;
@@ -22,7 +21,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Nutrition
@@ -30,9 +28,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
     [RegisterComponent]
     public class DrinkComponent : Component, IUse, IAfterInteract, ISolutionChange
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-
         public override string Name => "Drink";
 
         int IAfterInteract.Priority => 10;

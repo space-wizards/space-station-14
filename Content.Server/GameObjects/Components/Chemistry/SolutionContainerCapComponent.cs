@@ -9,6 +9,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -23,12 +24,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
     ///     Users can't drink from closed containers and need to open them first.
     ///     Thrown container with closed cap won't spill on floor.
     /// </summary>
+    [RegisterComponent]
     public class SolutionContainerCapComponent : Component, IUse, ILand, IExamine
     {
         public override string Name => "ContainerCap";
 
         [DataField("isOpen")] private bool _defaultToOpened = false;
-        [DataField("canClose")] private bool _canClose = true;
+        [DataField("canBeClosed")] private bool _canBeClosed = true;
         [DataField("openSounds")] private string _soundCollection = "canOpenSounds";
         [DataField("pressurized")] private bool _pressurized = false;
         [DataField("burstSound")] private string _burstSound = "/Audio/Effects/flash_bang.ogg";
@@ -82,13 +84,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            /*if (!Opened || !inDetailsRange)
-            {
+            if (!inDetailsRange)
                 return;
-            }
-            var color = Empty ? "gray" : "yellow";
-            var openedText = Loc.GetString(Empty ? "Empty" : "Opened");
-            message.AddMarkup(Loc.GetString("[color={0}]{1}[/color]", color, openedText));*/
+
+            if (!Opened)
+            {
+                var closedText = Loc.GetString("comp-solutioncontainercap-examine-closed");
+                message.AddMarkup(closedText);
+            }            
         }
 
         bool IUse.UseEntity(UseEntityEventArgs args)
@@ -116,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 SpillSolution();
             }
             // there is small chance that thrown closed pressurized container will explode
-            // imagine something like soda can
+            // imagine something like soda can thrown into wall
             else if (_pressurized && !Opened &&  _random.Prob(0.25f))
             {
                 Opened = true;
