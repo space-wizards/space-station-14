@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/firstaidkits.rsi
+    netsync: false
     state: firstaid
   - type: Storage
     capacity: 50
