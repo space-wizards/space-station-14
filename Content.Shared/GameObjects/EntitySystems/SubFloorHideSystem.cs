@@ -1,31 +1,32 @@
-﻿using Content.Client.GameObjects.Components;
+#nullable enable
+using Content.Shared.GameObjects.Components;
 using Content.Shared.Maps;
-using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Shared.GameObjects.EntitySystems
 {
     /// <summary>
     ///     Entity system backing <see cref="SubFloorHideComponent"/>.
     /// </summary>
-    internal sealed class SubFloorHideSystem : EntitySystem
+    public class SubFloorHideSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
-        private bool _enableAll;
+        private bool _showAll;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool EnableAll
+        public bool ShowAll
         {
-            get => _enableAll;
+            get => _showAll;
             set
             {
-                _enableAll = value;
+                if (_showAll == value) return;
+                _showAll = value;
 
                 UpdateAll();
             }
@@ -90,16 +91,16 @@ namespace Content.Client.GameObjects.EntitySystems
                     continue;
                 }
 
-                var enabled = EnableAll || !subFloorComponent.Running || tileDef.IsSubFloor;
-
-                if (entity.TryGetComponent(out ISpriteComponent? spriteComponent))
+                // Show sprite
+                if (entity.TryGetComponent(out SharedSpriteComponent? spriteComponent))
                 {
-                    spriteComponent.Visible = enabled;
+                    spriteComponent.Visible = ShowAll || !subFloorComponent.Running || tileDef.IsSubFloor;
                 }
 
+                // So for collision all we care about is that the component is running.
                 if (entity.TryGetComponent(out PhysicsComponent? physicsComponent))
                 {
-                    physicsComponent.CanCollide = enabled;
+                    physicsComponent.CanCollide = !subFloorComponent.Running;
                 }
             }
         }

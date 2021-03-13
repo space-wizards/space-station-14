@@ -1,9 +1,8 @@
-﻿using System.Diagnostics;
-using Robust.Client.GameObjects;
+#nullable enable
 using Robust.Shared.GameObjects;
-using Robust.Shared.Utility;
+using Robust.Shared.Log;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Shared.GameObjects.Components
 {
     /// <summary>
     /// Simple component that automatically hides the sibling
@@ -19,14 +18,6 @@ namespace Content.Client.GameObjects.Components
 
         /// <inheritdoc />
         public override string Name => "SubFloorHide";
-
-        /// <inheritdoc />
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _snapGridComponent = Owner.GetComponent<SnapGridComponent>();
-        }
 
         /// <inheritdoc />
         protected override void Startup()
@@ -54,8 +45,13 @@ namespace Content.Client.GameObjects.Components
 
         private void OnAddSnapGrid()
         {
-            DebugTools.AssertNotNull(_snapGridComponent);
-            _snapGridComponent!.OnPositionChanged += SnapGridOnPositionChanged;
+            if (_snapGridComponent == null)
+            {
+                // Shouldn't happen but allows us to use nullables. OnPositionChanged needs to be componentbus anyway.
+                Logger.Error("Snapgrid was null for subfloor {Owner}");
+                return;
+            }
+            _snapGridComponent.OnPositionChanged += SnapGridOnPositionChanged;
         }
 
         private void SnapGridOnPositionChanged()
