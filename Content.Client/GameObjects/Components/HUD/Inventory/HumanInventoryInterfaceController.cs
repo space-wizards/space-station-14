@@ -31,7 +31,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         private ItemSlotButton _hudButtonBack = default!;
         private ItemSlotButton _hudButtonOClothing = default!;
         private ItemSlotButton _hudButtonId = default!;
-        private ItemSlotButton _hudButtonEars = default!;
+        private ItemSlotButton _hudButtonMask = default!;
         private ItemSlotButton _hudButtonEyes = default!;
         private Control _rightQuickButtonsContainer = default!;
         private Control _leftQuickButtonsContainer = default!;
@@ -78,14 +78,14 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             AddButton(out _hudButtonBelt, Slots.BELT, "belt");
             AddButton(out _hudButtonId, Slots.IDCARD, "id");
             AddButton(out _hudButtonEyes, Slots.EYES, "glasses");
-            AddButton(out _hudButtonEars, Slots.EARS, "ears");
+            AddButton(out _hudButtonMask, Slots.MASK, "mask");
 
             _topQuickButtonsContainer = new HBoxContainer
             {
                 Children =
                 {
                     _hudButtonEyes,
-                    _hudButtonEars
+                    _hudButtonMask
                 },
                 SeparationOverride = 5
             };
@@ -108,7 +108,6 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                     _hudButtonPocket1,
                     _hudButtonPocket2,
                     _hudButtonBelt,
-                    //new Control{MinSize = (64, 64)}
                 },
                 SeparationOverride = 5
             };

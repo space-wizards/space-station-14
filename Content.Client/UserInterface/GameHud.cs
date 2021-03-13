@@ -279,6 +279,7 @@ namespace Content.Client.UserInterface
 
             _combatPanelContainer = new VBoxContainer
             {
+                VerticalAlignment = Control.VAlignment.Bottom,
                 Children =
                 {
                     (_combatModeButton = new Button
@@ -294,7 +295,6 @@ namespace Content.Client.UserInterface
             LC.SetGrowVertical(_combatPanelContainer, LC.GrowDirection.Begin);
             LC.SetAnchorAndMarginPreset(_combatPanelContainer, LC.LayoutPreset.BottomRight);
             LC.SetMarginBottom(_combatPanelContainer, -10f);
-            RootControl.AddChild(_combatPanelContainer);
 
             _combatModeButton.OnToggled += args => OnCombatModeChanged?.Invoke(args.Pressed);
             _targetingDoll.OnZoneChanged += args => OnTargetingZoneChanged?.Invoke(args);
@@ -331,7 +331,7 @@ namespace Content.Client.UserInterface
                 HorizontalAlignment = Control.HAlignment.Center
             };
 
-            var rightBottomContainer = new VBoxContainer
+            var rightBottomContainer = new HBoxContainer
             {
                 SeparationOverride = 5
             };
@@ -359,9 +359,13 @@ namespace Content.Client.UserInterface
                 VerticalAlignment = Control.VAlignment.Bottom,
                 HorizontalAlignment = Control.HAlignment.Right,
             };
-            rightBottomContainer.AddChild(TopInventoryQuickButtonContainer);
-            rightBottomContainer.AddChild(MiddleInventoryQuickButtonContainer);
-            rightBottomContainer.AddChild(BottomInventoryQuickButtonContainer);
+            var inventoryContainer = new VBoxContainer();
+            inventoryContainer.AddChild(TopInventoryQuickButtonContainer);
+            inventoryContainer.AddChild(MiddleInventoryQuickButtonContainer);
+            inventoryContainer.AddChild(BottomInventoryQuickButtonContainer);
+
+            rightBottomContainer.AddChild(_combatPanelContainer);
+            rightBottomContainer.AddChild(inventoryContainer);
 
             RootControl.AddChild(SuspicionContainer);
 
