@@ -55,7 +55,6 @@
 #   prototype: someId
 #   snap: Center
 
-
 - type: entity
   id: Morgue
   name: morgue
@@ -63,7 +62,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Specific/Morgue/morgue.rsi
+    sprite: Objects/Specific/Medical/Morgue/morgue.rsi
     layers:
     - state: morgue_closed
       map: ["enum.MorgueVisualLayers.Base"]
