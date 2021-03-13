@@ -98,24 +98,6 @@
       dead: cat2_dead
 
 - type: entity
-  name: caracal cat
-  id: CatCaracalMob_Content
-  parent: CatMob_Content
-  description: Hilarious.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/caracal.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: caracal_flop
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: caracal_flop
-      dead: caracal_dead
-
-- type: entity
   name: sloth
   parent: SimpleMobBase
   id: SlothMob_Content
