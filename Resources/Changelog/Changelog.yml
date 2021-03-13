@@ -419,3 +419,8 @@ Entries:
   - {message: Fixes structure instruments (like the piano) not playing at all., type: Fix}
   id: 76
   time: '2021-03-13T01:47:41.227978+00:00'
+- author: ike709
+  changes:
+  - {message: Significantly reduced the bounciness of thrown items., type: Tweak}
+  id: 77
+  time: '2021-03-13T02:10:55.0000000+00:00'
