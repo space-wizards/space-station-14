@@ -93,3 +93,15 @@
   cost: 10000
   category: Engineering
   group: market
+  
+- type: cargoProduct
+  name: "solar assembly parts"
+  id: cargo.enginessolar
+  description: "Parts for constructing solar panels and trackers."
+  icon:
+    sprite: Objects/Power/solar_parts.rsi
+    state: solar_assembly_parts
+  product: CrateEngineeringSolar
+  cost: 500
+  category: Engineering
+  group: market
