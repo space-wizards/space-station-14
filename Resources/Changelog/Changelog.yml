@@ -409,3 +409,8 @@ Entries:
   - {message: Fixed the ambience continuing to play after you disconnect., type: Fix}
   id: 74
   time: '2021-03-12T22:40:28.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Lobby music volume has been significantly reduced., type: Tweak}
+  id: 75
+  time: '2021-03-13T01:06:52.0000000+00:00'
