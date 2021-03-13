@@ -88,8 +88,6 @@
     - state: spark
       shader: unshaded
   - type: Physics
-    anchored: false
-    edgeslide: false
     hard: false
     shapes:
     - !type:PhysShapeAabb
@@ -119,7 +117,7 @@
     color: "#ffff33"
     sprite: Constructible/Power/Singularity/emitter.rsi
     state: ''
-    layers:
+    layer:
       - state: projectile
         shader: unshaded
   - type: Physics
@@ -129,8 +127,11 @@
         !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
-      layer: 32
-      mask: 30
+      layer:
+        - Impassable
+        - MobImpassable
+      mask:
+        - Opaque
   - type: Projectile
     soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
@@ -138,6 +139,7 @@
   - type: Tag
     tags:
     - EmitterBolt
+
 # Launcher projectiles (grenade / rocket)
 - type: entity
   id: BulletRocket
