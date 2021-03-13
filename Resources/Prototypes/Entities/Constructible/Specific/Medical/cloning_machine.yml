@@ -30,7 +30,6 @@
   - type: SnapGrid
     offset: Center
   - type: CloningPod
-    cloningTime: 10.0
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
