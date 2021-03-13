@@ -66,6 +66,9 @@ namespace Content.Client.UserInterface
         Control SuspicionContainer { get; }
         Control RightInventoryQuickButtonContainer { get; }
         Control LeftInventoryQuickButtonContainer { get; }
+        Control BottomInventoryQuickButtonContainer { get; }
+        Control MiddleInventoryQuickButtonContainer { get; }
+        Control TopInventoryQuickButtonContainer { get; }
 
         bool CombatPanelVisible { get; set; }
         bool CombatModeActive { get; set; }
@@ -105,6 +108,10 @@ namespace Content.Client.UserInterface
         public Control SuspicionContainer { get; private set; } = default!;
         public Control RightInventoryQuickButtonContainer { get; private set; } = default!;
         public Control LeftInventoryQuickButtonContainer { get; private set; } = default!;
+
+        public Control TopInventoryQuickButtonContainer { get; private set; } = default!;
+        public Control MiddleInventoryQuickButtonContainer { get; private set; } = default!;
+        public Control BottomInventoryQuickButtonContainer { get; private set; } = default!;
 
         public bool CombatPanelVisible
         {
@@ -300,6 +307,7 @@ namespace Content.Client.UserInterface
             LC.SetGrowHorizontal(centerBottomContainer, LC.GrowDirection.Both);
             LC.SetGrowVertical(centerBottomContainer, LC.GrowDirection.Begin);
             LC.SetMarginBottom(centerBottomContainer, -10f);
+            LC.SetMarginRight(centerBottomContainer, 10f);
             RootControl.AddChild(centerBottomContainer);
 
             HandsContainer = new Control
@@ -322,6 +330,38 @@ namespace Content.Client.UserInterface
             {
                 HorizontalAlignment = Control.HAlignment.Center
             };
+
+            var rightBottomContainer = new VBoxContainer
+            {
+                SeparationOverride = 5
+            };
+            LC.SetAnchorAndMarginPreset(rightBottomContainer, LC.LayoutPreset.BottomRight);
+            LC.SetGrowHorizontal(rightBottomContainer, LC.GrowDirection.Begin);
+            LC.SetGrowVertical(rightBottomContainer, LC.GrowDirection.Begin);
+            LC.SetMarginBottom(rightBottomContainer, -10f);
+            LC.SetMarginRight(rightBottomContainer, -10f);
+            RootControl.AddChild(rightBottomContainer);
+
+            TopInventoryQuickButtonContainer = new HBoxContainer()
+            {
+                HorizontalAlignment = Control.HAlignment.Right,
+                VerticalAlignment = Control.VAlignment.Bottom,
+            };
+
+            MiddleInventoryQuickButtonContainer = new HBoxContainer()
+            {
+                HorizontalAlignment = Control.HAlignment.Right,
+                VerticalAlignment = Control.VAlignment.Bottom,
+            };
+
+            BottomInventoryQuickButtonContainer = new HBoxContainer()
+            {
+                VerticalAlignment = Control.VAlignment.Bottom,
+                HorizontalAlignment = Control.HAlignment.Right,
+            };
+            rightBottomContainer.AddChild(TopInventoryQuickButtonContainer);
+            rightBottomContainer.AddChild(MiddleInventoryQuickButtonContainer);
+            rightBottomContainer.AddChild(BottomInventoryQuickButtonContainer);
 
             RootControl.AddChild(SuspicionContainer);
 

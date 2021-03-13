@@ -29,9 +29,16 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         private ItemSlotButton _hudButtonPocket2 = default!;
         private ItemSlotButton _hudButtonBelt = default!;
         private ItemSlotButton _hudButtonBack = default!;
+        private ItemSlotButton _hudButtonOClothing = default!;
         private ItemSlotButton _hudButtonId = default!;
+        private ItemSlotButton _hudButtonEars = default!;
+        private ItemSlotButton _hudButtonEyes = default!;
         private Control _rightQuickButtonsContainer = default!;
         private Control _leftQuickButtonsContainer = default!;
+
+        private Control _topQuickButtonsContainer = default!;
+        private Control _middleQuickButtonsContainer = default!;
+        private Control _bottomQuickButtonsContainer = default!;
 
         public HumanInventoryInterfaceController(ClientInventoryComponent owner) : base(owner)
         {
@@ -67,27 +74,41 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             AddButton(out _hudButtonPocket1, Slots.POCKET1, "pocket");
             AddButton(out _hudButtonPocket2, Slots.POCKET2, "pocket");
             AddButton(out _hudButtonBack, Slots.BACKPACK, "back");
+            AddButton(out _hudButtonOClothing, Slots.OUTERCLOTHING, "suit_storage");
             AddButton(out _hudButtonBelt, Slots.BELT, "belt");
             AddButton(out _hudButtonId, Slots.IDCARD, "id");
+            AddButton(out _hudButtonEyes, Slots.EYES, "glasses");
+            AddButton(out _hudButtonEars, Slots.EARS, "ears");
 
-            _leftQuickButtonsContainer = new HBoxContainer
+            _topQuickButtonsContainer = new HBoxContainer
+            {
+                Children =
+                {
+                    _hudButtonEyes,
+                    _hudButtonEars
+                },
+                SeparationOverride = 5
+            };
+
+            _middleQuickButtonsContainer = new HBoxContainer
             {
                 Children =
                 {
                     _hudButtonId,
                     _hudButtonBack,
-                    _hudButtonBelt,
+                    _hudButtonOClothing,
                 },
                 SeparationOverride = 5
             };
-            _rightQuickButtonsContainer = new HBoxContainer
+            _bottomQuickButtonsContainer = new HBoxContainer
             {
                 Children =
                 {
+
                     _hudButtonPocket1,
                     _hudButtonPocket2,
-                    // keeps this "balanced" with the left, so the hands will appear perfectly in the center
-                    new Control{MinSize = (64, 64)}
+                    _hudButtonBelt,
+                    //new Control{MinSize = (64, 64)}
                 },
                 SeparationOverride = 5
             };
@@ -172,8 +193,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.PlayerAttached();
 
-            GameHud.RightInventoryQuickButtonContainer.AddChild(_rightQuickButtonsContainer);
-            GameHud.LeftInventoryQuickButtonContainer.AddChild(_leftQuickButtonsContainer);
+            GameHud.BottomInventoryQuickButtonContainer.AddChild(_bottomQuickButtonsContainer);
+            GameHud.MiddleInventoryQuickButtonContainer.AddChild(_middleQuickButtonsContainer);
+            GameHud.TopInventoryQuickButtonContainer.AddChild(_topQuickButtonsContainer);
 
             // Update all the buttons to make sure they check out.
 
