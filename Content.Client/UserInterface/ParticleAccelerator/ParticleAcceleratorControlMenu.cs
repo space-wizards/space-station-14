@@ -52,7 +52,7 @@ namespace Content.Client.UserInterface.ParticleAccelerator
 
         public ParticleAcceleratorControlMenu(ParticleAcceleratorBoundUserInterface owner)
         {
-            MinSize = SetSize = (400, 320);
+            SetSize = (400, 320);
             _greyScaleShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("Greyscale").Instance();
 
             Owner = owner;

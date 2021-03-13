@@ -23,7 +23,7 @@ namespace Content.Client.VendingMachines
 
         public VendingMachineMenu(VendingMachineBoundUserInterface owner)
         {
-            SetSize = MinSize = (300, 450);
+            SetSize = (300, 450);
             IoCManager.InjectDependencies(this);
 
             Owner = owner;
@@ -60,7 +60,7 @@ namespace Content.Client.VendingMachines
                 _items.AddItem($"{itemName} ({entry.Amount} left)", icon);
             }
 
-            MinSize = SetSize = ((longestEntry.Length + 8) * 12, _items.Count * 40 + 50);
+            SetSize = ((longestEntry.Length + 8) * 12, _items.Count * 40 + 50);
         }
 
         public void ItemSelected(ItemList.ItemListSelectedEventArgs args)
