@@ -45,7 +45,6 @@ namespace Content.IntegrationTests
                         }
 
                         IoCManager.Register<IParallaxManager, DummyParallaxManager>(true);
-                        IoCManager.Register<IServerDbManager, IntegrationServerDbManager>(true);
                         IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
                     }
                 });
