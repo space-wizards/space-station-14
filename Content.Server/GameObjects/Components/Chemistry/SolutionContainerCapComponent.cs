@@ -4,6 +4,8 @@ using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -58,6 +60,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
+        public bool CanBeClosed => _canBeClosed;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -99,11 +103,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             // check if container can be opened
             if (!_opened)
             {
-                //Do the opening stuff like playing the sounds.
-                var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollection);
-                var file = _random.Pick(soundCollection.PickFiles);
-                EntitySystem.Get<AudioSystem>().Play(Filter.Broadcast(), file, args.User, AudioParams.Default);
-
+                PlayOpeningSound();
                 Opened = true;
                 return true;
             }
@@ -140,6 +140,41 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             var solution = interactions.Drain(interactions.DrainAvailable);
             solution.SpillAt(Owner, "PuddleSmear");
+        }
+
+        public void PlayOpeningSound()
+        {
+            if (string.IsNullOrEmpty(_soundCollection))
+                return;
+
+            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollection);
+            var file = _random.Pick(soundCollection.PickFiles);
+            EntitySystem.Get<AudioSystem>().Play(Filter.Broadcast(), file, Owner, AudioParams.Default);
+        }
+
+        [Verb]
+        public sealed class ToggleLid : Verb<SolutionContainerCapComponent>
+        {
+            protected override void Activate(IEntity user, SolutionContainerCapComponent component)
+            {
+                component.Opened = !component.Opened;
+                if (component.Opened)
+                    component.PlayOpeningSound();
+            }
+
+            protected override void GetData(IEntity user, SolutionContainerCapComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user) ||
+                    component.Opened && !component.CanBeClosed)
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                var verbName = component.Opened ? "comp-solutioncontainercap-verb-close" :
+                    "comp-solutioncontainercap-verb-open";
+                data.Text = Loc.GetString(verbName);
+            }
         }
     }
 }
