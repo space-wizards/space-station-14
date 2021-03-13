@@ -2,15 +2,12 @@
 using System;
 using System.Globalization;
 using System.Threading;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Command;
-using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -107,15 +104,9 @@ namespace Content.Server.GameObjects.Components.Command
 
                     var author = "Unknown";
                     var mob = obj.Session.AttachedEntity;
-                    if (mob != null && mob.TryGetComponent(out InventoryComponent? inventoryComponent))
+                    if (mob != null && mob.TryGetHeldId(out var id))
                     {
-                        if (inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
-                            inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent item) &&
-                            item.Owner.TryGetComponent(out IdCardComponent? idCardComponent)
-                        )
-                        {
-                            author = $"{idCardComponent.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(idCardComponent.JobTitle)})";
-                        }
+                        author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle)})";
                     }
 
                     var message = msg.Message + $"\nSent by {author}";
