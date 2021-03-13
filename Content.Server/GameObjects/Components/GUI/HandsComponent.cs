@@ -506,26 +506,17 @@ namespace Content.Server.GameObjects.Components.GUI
 
             for (var i = 0; i < _hands.Count; i++)
             {
-                var hand = _hands[i].ToShared(i, IndexToHandLocation(i));
+                var hand = _hands[i].ToHandState();
                 hands[i] = hand;
             }
 
             return new HandsComponentState(hands, ActiveHand);
         }
 
-        private HandLocation IndexToHandLocation(int index)
-        {
-            return index == 0
-                ? HandLocation.Right
-                : index == _hands.Count - 1
-                    ? HandLocation.Left
-                    : HandLocation.Middle;
-        }
-
         private HandState ToSharedHand(ServerHand hand)
         {
             var index = _hands.IndexOf(hand);
-            return hand.ToShared(index, IndexToHandLocation(index));
+            return hand.ToHandState();
         }
 
         public void SwapHands()

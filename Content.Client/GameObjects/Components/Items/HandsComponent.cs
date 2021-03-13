@@ -31,8 +31,8 @@ namespace Content.Client.GameObjects.Components.Items
         private string? ActiveHand { get; set; }
 
         [ViewVariables]
-        public IReadOnlyList<ClientHand> Hands => _hands;
-        private readonly List<ClientHand> _hands = new();
+        public IReadOnlyList<IReadOnlyHand> Hands => _hands;
+        private readonly List<SharedHand> _hands = new();
 
         [ViewVariables]
         public IEntity? ActiveItem => TryGetActiveHand(out var hand) ? hand.HeldItem : null;
@@ -99,7 +99,7 @@ namespace Content.Client.GameObjects.Components.Items
             if (handName == null)
                 return false;
 
-            foreach (var hand in Hands)
+            foreach (var hand in _hands)
             {
                 if (hand.Name == handName)
                     foundHand = hand;
