@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Fix
+    message: Fixes structure instruments (like the piano) not playing at all.
