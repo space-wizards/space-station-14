@@ -96,6 +96,10 @@ namespace Content.Server.GameObjects.Components.Command
                     RoundEndSystem.CancelRoundEndCountdown();
                     break;
                 case CommunicationsConsoleAnnounceMessage msg:
+                    if (!CanAnnounce())
+                    {
+                        return;
+                    }
                     _announceCooldownEndedTokenSource.Cancel();
                     _announceCooldownEndedTokenSource = new CancellationTokenSource();
                     LastAnnounceTime = _gameTiming.CurTime;
