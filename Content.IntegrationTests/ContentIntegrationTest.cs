@@ -2,7 +2,9 @@ using System;
 using System.Threading.Tasks;
 using Content.Client;
 using Content.Client.Interfaces.Parallax;
+using Content.IntegrationTests.Database;
 using Content.Server;
+using Content.Server.Database;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared;
 using NUnit.Framework;
@@ -43,6 +45,7 @@ namespace Content.IntegrationTests
                         }
 
                         IoCManager.Register<IParallaxManager, DummyParallaxManager>(true);
+                        IoCManager.Register<IServerDbManager, IntegrationServerDbManager>(true);
                         IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
                     }
                 });
@@ -75,6 +78,8 @@ namespace Content.IntegrationTests
                         {
                             contentOptions.ContentBeforeIoC?.Invoke();
                         }
+
+                        IoCManager.Register<IServerDbManager, IntegrationServerDbManager>(true);
                     }
                 });
 
