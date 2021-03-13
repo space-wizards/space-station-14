@@ -27,8 +27,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.GUI
@@ -62,7 +60,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        [ViewVariables] private readonly List<Hand> _hands = new();
+        [ViewVariables] private readonly List<ServerHand> _hands = new();
 
         public IEnumerable<string> Hands => _hands.Select(h => h.Name);
 
@@ -102,7 +100,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        private Hand? GetHand(string name)
+        private ServerHand? GetHand(string name)
         {
             return _hands.FirstOrDefault(hand => hand.Name == name);
         }
@@ -463,7 +461,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, $"hand {_nextHand++}");
             container.OccludesLight = false;
-            var hand = new Hand(this, name, container);
+            var hand = new ServerHand(this, name, container);
 
             _hands.Add(hand);
 
@@ -484,7 +482,6 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             Drop(hand.Name, false);
-            hand!.Dispose();
             _hands.Remove(hand);
 
             if (name == ActiveHand)
@@ -525,7 +522,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     : HandLocation.Middle;
         }
 
-        private SharedHand ToSharedHand(Hand hand)
+        private SharedHand ToSharedHand(ServerHand hand)
         {
             var index = _hands.IndexOf(hand);
             return hand.ToShared(index, IndexToHandLocation(index));
@@ -791,11 +788,11 @@ namespace Content.Server.GameObjects.Components.GUI
         }
     }
 
-    public class Hand : IDisposable
+    public class ServerHand
     {
         private bool _enabled = true;
 
-        public Hand(HandsComponent parent, string name, ContainerSlot container)
+        public ServerHand(HandsComponent parent, string name, ContainerSlot container)
         {
             Parent = parent;
             Name = name;
@@ -827,11 +824,6 @@ namespace Content.Server.GameObjects.Components.GUI
                 Parent.HandleMessage(message, Parent);
                 Parent.Owner.SendMessage(Parent, message);
             }
-        }
-
-        public void Dispose()
-        {
-            Container.Shutdown(); // TODO verify this
         }
 
         public SharedHand ToShared(int index, HandLocation location)
