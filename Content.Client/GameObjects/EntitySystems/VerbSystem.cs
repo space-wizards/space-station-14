@@ -365,7 +365,8 @@ namespace Content.Client.GameObjects.EntitySystems
                         (_icon = new TextureRect
                         {
                             MinSize = (32, 32),
-                            Stretch = TextureRect.StretchMode.KeepCentered
+                            Stretch = TextureRect.StretchMode.KeepCentered,
+                            TextureScale = (0.5f, 0.5f)
                         }),
                         (_label = new Label()),
                         // Padding
@@ -424,6 +425,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         (_icon = new TextureRect
                         {
                             MinSize = (32, 32),
+                            TextureScale = (0.5f, 0.5f),
                             Stretch = TextureRect.StretchMode.KeepCentered
                         }),
 
@@ -438,7 +440,8 @@ namespace Content.Client.GameObjects.EntitySystems
                         new TextureRect
                         {
                             Texture = IoCManager.Resolve<IResourceCache>()
-                                .GetTexture("/Textures/Interface/VerbIcons/group.svg.96dpi.png"),
+                                .GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png"),
+                            TextureScale = (0.5f, 0.5f),
                             Stretch = TextureRect.StretchMode.KeepCentered,
                         }
                     }
