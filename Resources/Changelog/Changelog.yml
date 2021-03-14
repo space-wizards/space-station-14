@@ -460,3 +460,8 @@ Entries:
   - {message: Added icons for a bunch of verbs, type: Add}
   id: 84
   time: '2021-03-14T13:23:32.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Fix nonexistent bulbs in built wall light, type: Fix}
+  id: 85
+  time: '2021-03-14T21:59:04.0000000+00:00'
