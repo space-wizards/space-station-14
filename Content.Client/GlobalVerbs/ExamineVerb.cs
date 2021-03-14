@@ -16,6 +16,7 @@ namespace Content.Client.GlobalVerbs
         {
             data.Visibility = VerbVisibility.Visible;
             data.Text = Loc.GetString("Examine");
+            data.IconTexture = "/Textures/Interface/VerbIcons/examine.svg.96dpi.png";
         }
 
         public override void Activate(IEntity user, IEntity target)

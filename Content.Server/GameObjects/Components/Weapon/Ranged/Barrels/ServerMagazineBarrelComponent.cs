@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
@@ -463,6 +463,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
 
                 data.Text = Loc.GetString("Eject magazine");
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.96dpi.png";
                 if (component.MagNeedsOpenBolt)
                 {
                     data.Visibility = component.HasMagazine && component.BoltOpen

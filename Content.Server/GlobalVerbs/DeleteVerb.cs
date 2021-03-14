@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -33,6 +33,7 @@ namespace Content.Server.GlobalVerbs
             data.Text = Loc.GetString("Delete");
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Visible;
+            data.IconTexture = "/Textures/Interface/VerbIcons/delete.svg.96dpi.png";
         }
 
         public override void Activate(IEntity user, IEntity target)

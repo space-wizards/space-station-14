@@ -703,6 +703,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 data.Visibility = VerbVisibility.Visible;
                 data.Text = Loc.GetString("Flush");
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.96dpi.png";
             }
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)

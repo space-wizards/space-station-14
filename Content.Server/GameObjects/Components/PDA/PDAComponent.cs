@@ -380,6 +380,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 data.Text = Loc.GetString("Eject ID");
                 data.Visibility = component.IdSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.96dpi.png";
             }
 
             protected override void Activate(IEntity user, PDAComponent component)
@@ -401,6 +402,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 data.Text = Loc.GetString("Eject Pen");
                 data.Visibility = component.PenSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.96dpi.png";
             }
 
             protected override void Activate(IEntity user, PDAComponent component)
@@ -421,6 +423,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 }
 
                 data.Text = Loc.GetString("Toggle flashlight");
+                data.IconTexture = "/Textures/Interface/VerbIcons/light.svg.96dpi.png";
             }
 
             protected override void Activate(IEntity user, PDAComponent component)

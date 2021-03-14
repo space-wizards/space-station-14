@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
@@ -302,12 +302,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 if (component.PowerCell == null)
                 {
-                    data.Text = Loc.GetString("Eject cell (cell missing)");
+                    data.Text = Loc.GetString("No cell");
                     data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
                     data.Text = Loc.GetString("Eject cell");
+                    data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.96dpi.png";
                 }
             }
 

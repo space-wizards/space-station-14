@@ -472,6 +472,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             data.Text = Loc.GetString(component.Open ? "Close" : "Open");
+            data.IconTexture = component.Open ? "/Textures/Interface/VerbIcons/close.svg.96dpi.png" : "/Textures/Interface/VerbIcons/open.svg.96dpi.png";
         }
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)

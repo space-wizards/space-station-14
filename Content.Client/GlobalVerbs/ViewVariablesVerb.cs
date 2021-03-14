@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Verbs;
+using Content.Shared.GameObjects.Verbs;
 using Robust.Client.Console;
 using Robust.Client.ViewVariables;
 using Robust.Shared.GameObjects;
@@ -26,6 +26,7 @@ namespace Content.Client.GlobalVerbs
 
             data.Text = "View Variables";
             data.CategoryData = VerbCategories.Debug;
+            data.IconTexture = "/Textures/Interface/VerbIcons/vv.svg.96dpi.png";
         }
 
         public override void Activate(IEntity user, IEntity target)

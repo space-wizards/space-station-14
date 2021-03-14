@@ -134,14 +134,14 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
                 if (component._container.ContainedEntity != null || handsComponent.GetActiveHand == null)
                 {
-                    data.Visibility = VerbVisibility.Disabled;
-                    data.Text = Loc.GetString("Insert");
+                    data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
                 var heldItemName = Loc.GetString(handsComponent.GetActiveHand.Owner.Name);
 
                 data.Text = Loc.GetString("Insert {0}", heldItemName);
+                data.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.96dpi.png";
             }
 
             protected override void Activate(IEntity user, BaseCharger component)
@@ -173,14 +173,14 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 }
                 if (component._container.ContainedEntity == null)
                 {
-                    data.Text = Loc.GetString("Eject");
-                    data.Visibility = VerbVisibility.Disabled;
+                    data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
                 var containerItemName = Loc.GetString(component._container.ContainedEntity.Name);
 
                 data.Text = Loc.GetString("Eject {0}", containerItemName);
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.96dpi.png";
             }
 
             protected override void Activate(IEntity user, BaseCharger component)

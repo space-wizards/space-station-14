@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -263,6 +263,7 @@ namespace Content.Server.GameObjects.Components.Access
                 }
 
                 data.Text = Loc.GetString("Eject Privileged ID");
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.96dpi.png";
                 data.Visibility = component.PrivilegedIDEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
@@ -288,6 +289,7 @@ namespace Content.Server.GameObjects.Components.Access
 
                 data.Text = Loc.GetString("Eject Target ID");
                 data.Visibility = component.TargetIDEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.96dpi.png";
             }
 
             protected override void Activate(IEntity user, IdCardConsoleComponent component)

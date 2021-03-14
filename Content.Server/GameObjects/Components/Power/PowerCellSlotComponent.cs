@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -187,11 +187,13 @@ namespace Content.Server.GameObjects.Components.Power
 
                 if (component.Cell == null)
                 {
-                    data.Text = Loc.GetString("Eject cell (cell missing)");
+                    data.Text = Loc.GetString("No cell");
+                    data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
                     data.Text = Loc.GetString("Eject cell");
+                    data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.96dpi.png";
                 }
 
                 if (component.Cell == null || !component.CanRemoveCell)

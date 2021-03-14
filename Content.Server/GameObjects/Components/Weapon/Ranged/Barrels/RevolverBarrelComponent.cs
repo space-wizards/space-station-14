@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Shared.GameObjects;
@@ -294,6 +294,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
 
                 data.Visibility = component.ShotsLeft > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
+                data.IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.96dpi.png";
             }
 
             protected override void Activate(IEntity user, RevolverBarrelComponent component)

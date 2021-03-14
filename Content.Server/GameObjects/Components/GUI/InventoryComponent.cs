@@ -666,6 +666,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 data.Visibility = VerbVisibility.Visible;
                 data.Text = Loc.GetString("Set Outfit");
                 data.CategoryData = VerbCategories.Debug;
+                data.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.96dpi.png";
             }
 
             protected override void Activate(IEntity user, InventoryComponent component)

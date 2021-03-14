@@ -1,0 +1,3 @@
+All icons are public domain.
+
+Pulled mostly from this source https://github.com/apancik/public-domain-icons.

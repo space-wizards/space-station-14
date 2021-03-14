@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects.Components.Damage;
@@ -26,6 +26,7 @@ namespace Content.Server.GlobalVerbs
             data.Text = Loc.GetString("Rejuvenate");
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Invisible;
+            data.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.96dpi.png";
 
             var groupController = IoCManager.Resolve<IConGroupController>();
 
