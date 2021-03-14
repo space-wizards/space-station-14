@@ -100,9 +100,9 @@ namespace Content.Client.GameObjects.Components.Suspicion
         {
             var baseLine = new Vector2(pos.X, font.GetAscent(1) + pos.Y);
 
-            foreach (var chr in str)
+            foreach (var rune in str.EnumerateRunes())
             {
-                var advance = font.DrawChar(handle, chr, baseLine, 1, color);
+                var advance = font.DrawChar(handle, rune, baseLine, 1, color);
                 baseLine += new Vector2(advance, 0);
             }
         }
