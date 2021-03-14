@@ -18,7 +18,7 @@ namespace Content.Server.GlobalVerbs
         public override void GetData(IEntity user, IEntity target, VerbData data)
         {
             data.Visibility = VerbVisibility.Invisible;
-            data.IconTexture = "/Textures/Interface/VerbIcons/point.svg.96dpi.png";
+            data.IconTexture = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
 
             if (!user.HasComponent<IActorComponent>())
             {

@@ -26,7 +26,7 @@ namespace Content.Client.GlobalVerbs
 
             data.Text = "View Variables";
             data.CategoryData = VerbCategories.Debug;
-            data.IconTexture = "/Textures/Interface/VerbIcons/vv.svg.96dpi.png";
+            data.IconTexture = "/Textures/Interface/VerbIcons/vv.svg.192dpi.png";
         }
 
         public override void Activate(IEntity user, IEntity target)

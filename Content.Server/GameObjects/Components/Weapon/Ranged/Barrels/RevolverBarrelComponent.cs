@@ -294,7 +294,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
 
                 data.Visibility = component.ShotsLeft > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
-                data.IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.96dpi.png";
+                data.IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, RevolverBarrelComponent component)

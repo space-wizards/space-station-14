@@ -26,7 +26,7 @@ namespace Content.Server.GlobalVerbs
             data.Text = Loc.GetString("Rejuvenate");
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Invisible;
-            data.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.96dpi.png";
+            data.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png";
 
             var groupController = IoCManager.Resolve<IConGroupController>();
 

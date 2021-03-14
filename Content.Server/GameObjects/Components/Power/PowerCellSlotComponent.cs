@@ -193,7 +193,7 @@ namespace Content.Server.GameObjects.Components.Power
                 else
                 {
                     data.Text = Loc.GetString("Eject cell");
-                    data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.96dpi.png";
+                    data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                 }
 
                 if (component.Cell == null || !component.CanRemoveCell)

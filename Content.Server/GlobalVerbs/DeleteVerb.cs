@@ -33,7 +33,7 @@ namespace Content.Server.GlobalVerbs
             data.Text = Loc.GetString("Delete");
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Visible;
-            data.IconTexture = "/Textures/Interface/VerbIcons/delete.svg.96dpi.png";
+            data.IconTexture = "/Textures/Interface/VerbIcons/delete.svg.192dpi.png";
         }
 
         public override void Activate(IEntity user, IEntity target)

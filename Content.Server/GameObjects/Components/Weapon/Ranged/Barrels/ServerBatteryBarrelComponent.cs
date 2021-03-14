@@ -308,7 +308,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 else
                 {
                     data.Text = Loc.GetString("Eject cell");
-                    data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.96dpi.png";
+                    data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                 }
             }
 

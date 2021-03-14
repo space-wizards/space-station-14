@@ -31,7 +31,7 @@ namespace Content.Server.GlobalVerbs
                 data.Visibility = VerbVisibility.Visible;
                 data.Text = Loc.GetString("Make Sentient");
                 data.CategoryData = VerbCategories.Debug;
-                data.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.96dpi.png";
+                data.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
             }
         }
 

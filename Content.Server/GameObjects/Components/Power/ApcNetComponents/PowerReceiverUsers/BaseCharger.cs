@@ -141,7 +141,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 var heldItemName = Loc.GetString(handsComponent.GetActiveHand.Owner.Name);
 
                 data.Text = Loc.GetString("Insert {0}", heldItemName);
-                data.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.96dpi.png";
+                data.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, BaseCharger component)
@@ -180,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 var containerItemName = Loc.GetString(component._container.ContainedEntity.Name);
 
                 data.Text = Loc.GetString("Eject {0}", containerItemName);
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.96dpi.png";
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, BaseCharger component)

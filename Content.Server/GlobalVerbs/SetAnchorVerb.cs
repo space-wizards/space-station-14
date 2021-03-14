@@ -17,7 +17,7 @@ namespace Content.Server.GlobalVerbs
         {
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Invisible;
-            data.IconTexture = "/Textures/Interface/VerbIcons/anchor.svg.96dpi.png";
+            data.IconTexture = "/Textures/Interface/VerbIcons/anchor.svg.192dpi.png";
 
             var groupController = IoCManager.Resolve<IConGroupController>();
 

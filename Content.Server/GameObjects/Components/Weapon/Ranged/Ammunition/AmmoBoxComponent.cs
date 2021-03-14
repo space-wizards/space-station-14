@@ -216,7 +216,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
                 data.Text = Loc.GetString("Dump 10");
                 data.Visibility = component.AmmoLeft > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.96dpi.png";
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, AmmoBoxComponent component)
