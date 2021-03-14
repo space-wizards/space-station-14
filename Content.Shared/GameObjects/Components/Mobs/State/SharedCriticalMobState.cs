@@ -36,7 +36,11 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             base.ExitState(entity);
 
             EntitySystem.Get<SharedStandingStateSystem>().Standing(entity);
-            entity.RemoveComponent<CollisionWakeComponent>();
+            if (entity.HasComponent<CollisionWakeComponent>())
+            {
+                entity.RemoveComponent<CollisionWakeComponent>();
+            }
+
             if (entity.TryGetComponent(out IPhysBody? body))
             {
                 body.BodyType = BodyType.KinematicController;

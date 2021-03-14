@@ -21,7 +21,11 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         public override void ExitState(IEntity entity)
         {
             base.ExitState(entity);
-            entity.RemoveComponent<CollisionWakeComponent>();
+            if (entity.HasComponent<CollisionWakeComponent>())
+            {
+                entity.RemoveComponent<CollisionWakeComponent>();
+            }
+            
             if (entity.TryGetComponent(out IPhysBody? physics))
             {
                 physics.BodyType = BodyType.KinematicController;
