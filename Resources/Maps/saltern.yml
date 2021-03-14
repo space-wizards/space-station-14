@@ -43182,76 +43182,82 @@ entities:
 - uid: 4401
   type: Emitter
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 45.5,-17.5
+  - pos: 45.5,-17.5
     parent: 853
     type: Transform
 - uid: 4402
   type: Emitter
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 49.5,-17.5
+  - pos: 49.5,-17.5
     parent: 853
     type: Transform
 - uid: 4403
   type: Emitter
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 53.5,-17.5
+  - pos: 53.5,-17.5
     parent: 853
     type: Transform
 - uid: 4404
   type: Emitter
   components:
-  - pos: 56.5,-20.5
+  - rot: -1.5707963267948966 rad
+    pos: 56.5,-20.5
     parent: 853
     type: Transform
 - uid: 4405
   type: Emitter
   components:
-  - pos: 56.5,-24.5
+  - rot: -1.5707963267948966 rad
+    pos: 56.5,-24.5
     parent: 853
     type: Transform
 - uid: 4406
   type: Emitter
   components:
-  - pos: 56.5,-28.5
+  - rot: -1.5707963267948966 rad
+    pos: 56.5,-28.5
     parent: 853
     type: Transform
 - uid: 4407
   type: Emitter
   components:
-  - pos: 53.5,-31.5
+  - rot: 3.141592653589793 rad
+    pos: 53.5,-31.5
     parent: 853
     type: Transform
 - uid: 4408
   type: Emitter
   components:
-  - pos: 49.5,-31.5
+  - rot: 3.141592653589793 rad
+    pos: 49.5,-31.5
     parent: 853
     type: Transform
 - uid: 4409
   type: Emitter
   components:
-  - pos: 45.5,-31.5
+  - rot: 3.141592653589793 rad
+    pos: 45.5,-31.5
     parent: 853
     type: Transform
 - uid: 4410
   type: Emitter
   components:
-  - pos: 42.5,-28.5
+  - rot: 1.5707963267948966 rad
+    pos: 42.5,-28.5
     parent: 853
     type: Transform
 - uid: 4411
   type: Emitter
   components:
-  - pos: 42.5,-24.5
+  - rot: 1.5707963267948966 rad
+    pos: 42.5,-24.5
     parent: 853
     type: Transform
 - uid: 4412
   type: Emitter
   components:
-  - pos: 42.5,-20.5
+  - rot: 1.5707963267948966 rad
+    pos: 42.5,-20.5
     parent: 853
     type: Transform
 - uid: 4413
