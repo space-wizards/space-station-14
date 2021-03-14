@@ -89,7 +89,9 @@
       - name: ClothingOuterHardsuitEngineering
       - name: ClothingMaskBreath
       - name: OxygenTankFilled
-
+      - name: ClothingShoesBootsMag
+        prob: 0.15
+        
 - type: entity
   id: LockerRadiationSuitFilled
   parent: LockerRadiationSuit
