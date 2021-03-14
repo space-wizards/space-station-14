@@ -465,3 +465,10 @@ Entries:
   - {message: Fix nonexistent bulbs in built wall light, type: Fix}
   id: 85
   time: '2021-03-14T21:59:04.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Fixes rotation bugs with emitters and containment fields, and some
+      other stuff', type: Fix}
+  - {message: Fixes default emitter rotation on Saltern, type: Fix}
+  id: 86
+  time: '2021-03-14T22:02:22.0000000+00:00'
