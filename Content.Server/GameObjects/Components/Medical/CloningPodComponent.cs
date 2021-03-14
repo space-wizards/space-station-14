@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
             if (_cloningProgress >= _cloningTime &&
                 _bodyContainer.ContainedEntity != null &&
-                _capturedMind?.Session.AttachedEntity == _bodyContainer.ContainedEntity &&
+                _capturedMind?.Session?.AttachedEntity == _bodyContainer.ContainedEntity &&
                 Powered)
             {
                 _bodyContainer.Remove(_bodyContainer.ContainedEntity);
