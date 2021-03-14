@@ -37,6 +37,7 @@
       - cargo.engineameshielding
       - cargo.engineamejar
       - cargo.engineamecontrol
+      - cargo.enginessolar
       - cargo.funplushies
       - cargo.funartsupplies
       - cargo.funinstruments
@@ -52,7 +53,7 @@
       - atmosphericsoxygen
       - atmosphericsnitrogen
       - atmosphericscarbondioxide
-      - atmosphericswatervapor
+#      - atmosphericswatervapor
 #      - atmosphericsplasma
 #      - atmosphericstritium
   - type: UserInterface

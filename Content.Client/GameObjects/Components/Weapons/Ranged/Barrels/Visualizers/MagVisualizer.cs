@@ -4,8 +4,6 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualizers
 {
@@ -14,7 +12,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
     {
         private bool _magLoaded;
         [DataField("magState")]
-        private string _magState;
+        private string? _magState;
         [DataField("steps")]
         private int _magSteps;
         [DataField("zeroVisible")]

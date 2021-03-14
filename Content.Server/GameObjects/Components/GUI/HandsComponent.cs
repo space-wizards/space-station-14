@@ -839,7 +839,7 @@ namespace Content.Server.GameObjects.Components.GUI
         }
     }
 
-    public class HandCountChangedEvent : EntitySystemMessage
+    public class HandCountChangedEvent : EntityEventArgs
     {
         public HandCountChangedEvent(IEntity sender)
         {

@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.Components.Rotation
         {
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
 
-            if (!sprite.Owner.TryGetComponent(out AnimationPlayerComponent animation))
+            if (!sprite.Owner.TryGetComponent(out AnimationPlayerComponent? animation))
             {
                 sprite.Rotation = rotation;
                 return;

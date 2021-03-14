@@ -34,7 +34,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
@@ -53,7 +53,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void UpdateHud()
         {
-            if (Owner != _playerManager.LocalPlayer.ControlledEntity)
+            if (Owner != _playerManager.LocalPlayer?.ControlledEntity)
             {
                 return;
             }

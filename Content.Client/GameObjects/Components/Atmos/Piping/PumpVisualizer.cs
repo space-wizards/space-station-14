@@ -16,7 +16,7 @@ namespace Content.Client.GameObjects.Components.Atmos.Piping
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent(out ISpriteComponent sprite)) return;
+            if (!entity.TryGetComponent(out ISpriteComponent? sprite)) return;
 
             sprite.LayerMapReserveBlank(Layer.PumpEnabled);
             var pumpEnabledLayer = sprite.LayerMapGet(Layer.PumpEnabled);
@@ -27,7 +27,7 @@ namespace Content.Client.GameObjects.Components.Atmos.Piping
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite)) return;
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
             if (!component.TryGetData(PumpVisuals.VisualState, out PumpVisualState pumpVisualState)) return;
 
             var pumpEnabledLayer = sprite.LayerMapGet(Layer.PumpEnabled);

@@ -50,12 +50,33 @@
       - name: ClothingShoesBootsJack
         prob: 1
 
-#- type: entity
-#  id: LockerDetectiveFilled
-#  suffix: Filled
-#  parent: LockerDetective
+- type: entity
+  id: LockerDetectiveFilled
+  suffix: Filled
+  parent: LockerDetective
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHeadHatFedoraBrown
+        prob: 1
+      - name: ClothingNeckTieDet
+        prob: 1
+      - name: ClothingOuterVestDetective
+        prob: 1
+      - name: ClothingOuterCoatDetective
+        prob: 1
+
 
 - type: entity
   id: LockerBombFilled
   parent: LockerBomb
   suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - name: ClothingHeadHelmetBombSuit
+        prob: 1
+      - name: ClothingOuterSuitBomb
+        prob: 1
+      - name: ClothingMaskGas
+        prob: 1

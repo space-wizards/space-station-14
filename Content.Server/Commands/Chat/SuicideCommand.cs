@@ -69,7 +69,7 @@ namespace Content.Server.Commands.Chat
                 return;
 
             var chat = IoCManager.Resolve<IChatManager>();
-            var owner = player.ContentData()?.Mind?.OwnedMob.Owner;
+            var owner = player.ContentData()?.Mind?.OwnedComponent.Owner;
 
             if (owner == null)
             {

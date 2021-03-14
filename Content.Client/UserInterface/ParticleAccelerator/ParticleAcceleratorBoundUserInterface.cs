@@ -1,15 +1,14 @@
 ﻿using Content.Shared.GameObjects.Components;
-using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.ParticleAccelerator
+namespace Content.Client.UserInterface.ParticleAccelerator
 {
     public class ParticleAcceleratorBoundUserInterface : BoundUserInterface
     {
-        private ParticleAcceleratorControlMenu _menu;
+        private ParticleAcceleratorControlMenu? _menu;
 
-        public ParticleAcceleratorBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] object uiKey) : base(owner, uiKey)
+        public ParticleAcceleratorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
 
@@ -39,14 +38,14 @@ namespace Content.Client.ParticleAccelerator
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
-            _menu.DataUpdate((ParticleAcceleratorUIState) state);
+            _menu?.DataUpdate((ParticleAcceleratorUIState) state);
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
 
-            _menu.Close();
+            _menu?.Close();
         }
     }
 }

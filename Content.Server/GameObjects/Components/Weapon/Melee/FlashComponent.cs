@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
@@ -115,12 +116,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         // TODO: Merge with the code in FlashableComponent
         private void Flash(IEntity entity, IEntity user, int flashDuration)
         {
-            if (entity.TryGetComponent(out FlashableComponent flashable))
+            if (entity.TryGetComponent<FlashableComponent>(out var flashable))
             {
                 flashable.Flash(flashDuration / 1000d);
             }
 
-            if (entity.TryGetComponent(out StunnableComponent stunnableComponent))
+            if (entity.TryGetComponent<StunnableComponent>(out var stunnableComponent))
             {
                 stunnableComponent.Slowdown(flashDuration / 1000f, _slowTo, _slowTo);
             }

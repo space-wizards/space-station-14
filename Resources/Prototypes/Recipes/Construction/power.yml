@@ -1,0 +1,31 @@
+- type: construction
+  name: APC
+  id: apc
+  graph: apc
+  startNode: start
+  targetNode: apc
+  category: Utility
+  description: "Area Power Controller (APC). Controls power. In an area."
+  icon:
+    sprite: Constructible/Power/apc.rsi
+    state: apc0
+  objectType: Structure
+  placementMode: AlignWallProper
+  canBuildInImpassable: true
+  
+- type: construction
+  name: Solar Assembly
+  id: SolarPanel
+  graph: solarpanel
+  startNode: start
+  targetNode: solarpanel
+  category: Utility
+  description: "Can be turned into a solar panel or solar tracker."
+  icon:
+    sprite: Constructible/Power/solar_panel.rsi
+    state: solar_assembly
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}

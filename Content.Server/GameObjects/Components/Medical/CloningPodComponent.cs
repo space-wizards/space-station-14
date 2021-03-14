@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Medical
         private CloningPodStatus _status;
         private float _cloningProgress = 0;
         [DataField("cloningTime")]
-        private float _cloningTime = 10f;
+        private float _cloningTime = 120f;
 
         public override void Initialize()
         {

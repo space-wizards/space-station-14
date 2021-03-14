@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -60,7 +59,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
                     {
                         MinSize = (200, 20),
                         MinValue = 0,
-                        MaxValue = 10,
+                        MaxValue = 120, // todo make this actually derive from cloning time
                         Page = 0,
                         Value = 0.5f,
                         Children =
