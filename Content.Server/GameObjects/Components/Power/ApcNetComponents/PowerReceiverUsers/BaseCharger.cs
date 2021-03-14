@@ -132,14 +132,14 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     return;
                 }
 
-                if (component._container.ContainedEntity != null || handsComponent.GetActiveHand == null)
+                if (component._container.ContainedEntity != null || handsComponent.GetActiveHeldItem == null)
                 {
                     data.Visibility = VerbVisibility.Disabled;
                     data.Text = Loc.GetString("Insert");
                     return;
                 }
 
-                var heldItemName = Loc.GetString(handsComponent.GetActiveHand.Owner.Name);
+                var heldItemName = Loc.GetString(handsComponent.GetActiveHeldItem.Owner.Name);
 
                 data.Text = Loc.GetString("Insert {0}", heldItemName);
             }
@@ -151,11 +151,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     return;
                 }
 
-                if (handsComponent.GetActiveHand == null)
+                if (handsComponent.GetActiveHeldItem == null)
                 {
                     return;
                 }
-                var userItem = handsComponent.GetActiveHand.Owner;
+                var userItem = handsComponent.GetActiveHeldItem.Owner;
                 handsComponent.Drop(userItem);
                 component.TryInsertItem(userItem);
             }

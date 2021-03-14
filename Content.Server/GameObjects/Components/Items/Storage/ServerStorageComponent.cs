@@ -196,12 +196,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             EnsureInitialCalculated();
 
             if (!player.TryGetComponent(out IHandsComponent? hands) ||
-                hands.GetActiveHand == null)
+                hands.GetActiveHeldItem == null)
             {
                 return false;
             }
 
-            var toInsert = hands.GetActiveHand;
+            var toInsert = hands.GetActiveHeldItem;
 
             if (!hands.Drop(toInsert.Owner))
             {

@@ -497,10 +497,10 @@ namespace Content.Server.GameObjects.Components.GUI
                 case ClientInventoryUpdate.Equip:
                 {
                     var hands = Owner.GetComponent<HandsComponent>();
-                    var activeHand = hands.GetActiveHand;
+                    var activeHand = hands.GetActiveHeldItem;
                     if (activeHand != null && activeHand.Owner.TryGetComponent(out ItemComponent clothing))
                     {
-                        hands.Drop(hands.ActiveHand, doDropInteraction: false);
+                        hands.Drop(hands.ActiveHandName, doDropInteraction: false);
                         if (!Equip(msg.Inventoryslot, clothing, true, out var reason))
                         {
                             hands.PutInHand(clothing);
@@ -516,7 +516,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 {
                     var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
                     var hands = Owner.GetComponent<HandsComponent>();
-                    var activeHand = hands.GetActiveHand;
+                    var activeHand = hands.GetActiveHeldItem;
                     var itemContainedInSlot = GetSlotItem(msg.Inventoryslot);
                     if (itemContainedInSlot != null)
                     {
@@ -536,7 +536,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 case ClientInventoryUpdate.Hover:
                 {
                     var hands = Owner.GetComponent<HandsComponent>();
-                    var activeHand = hands.GetActiveHand;
+                    var activeHand = hands.GetActiveHeldItem;
                     if (activeHand != null && GetSlotItem(msg.Inventoryslot) == null)
                     {
                         var canEquip = CanEquip(msg.Inventoryslot, activeHand, true, out var reason);

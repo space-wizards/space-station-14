@@ -88,11 +88,11 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var interactionSystem = Get<InteractionSystem>();
 
-            var oldItem = handsComp.GetActiveHand;
+            var oldItem = handsComp.GetActiveHeldItem;
 
             handsComp.SwapHands();
 
-            var newItem = handsComp.GetActiveHand;
+            var newItem = handsComp.GetActiveHeldItem;
 
             if (oldItem != null)
             {
@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!ent.TryGetComponent(out HandsComponent handsComp))
                 return false;
 
-            if (handsComp.ActiveHand == null || handsComp.GetActiveHand == null)
+            if (handsComp.ActiveHandName == null || handsComp.GetActiveHeldItem == null)
                 return false;
 
             var entMap = ent.Transform.MapPosition;
@@ -131,7 +131,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 targetVector = dropVector.Normalized * rayLength;
             }
 
-            handsComp.Drop(handsComp.ActiveHand, coords.WithPosition(entMap.Position + targetVector));
+            handsComp.Drop(handsComp.ActiveHandName, coords.WithPosition(entMap.Position + targetVector));
 
             return true;
         }
@@ -154,10 +154,10 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!playerEnt.TryGetComponent(out HandsComponent handsComp))
                 return false;
 
-            if (!handsComp.CanDrop(handsComp.ActiveHand))
+            if (!handsComp.CanDrop(handsComp.ActiveHandName))
                 return false;
 
-            var throwEnt = handsComp.GetItem(handsComp.ActiveHand).Owner;
+            var throwEnt = handsComp.GetItem(handsComp.ActiveHandName).Owner;
 
             if (!handsComp.ThrowItem())
                 return false;
@@ -165,7 +165,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // throw the item, split off from a stack if it's meant to be thrown individually
             if (!throwEnt.TryGetComponent(out StackComponent stackComp) || stackComp.Count < 2 || !stackComp.ThrowIndividually)
             {
-                handsComp.Drop(handsComp.ActiveHand);
+                handsComp.Drop(handsComp.ActiveHandName);
             }
             else
             {
@@ -225,7 +225,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            var heldItem = handsComp.GetItem(handsComp.ActiveHand)?.Owner;
+            var heldItem = handsComp.GetItem(handsComp.ActiveHandName)?.Owner;
 
             if (heldItem != null)
             {

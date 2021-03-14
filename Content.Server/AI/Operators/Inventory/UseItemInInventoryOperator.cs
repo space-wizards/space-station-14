@@ -35,7 +35,7 @@ namespace Content.Server.AI.Operators.Inventory
             foreach (var slot in handsComponent.ActivePriorityEnumerable())
             {
                 if (handsComponent.GetItem(slot) != itemComponent) continue;
-                handsComponent.ActiveHand = slot;
+                handsComponent.ActiveHandName = slot;
                 handsComponent.ActivateItem();
                 return Outcome.Success;
             }

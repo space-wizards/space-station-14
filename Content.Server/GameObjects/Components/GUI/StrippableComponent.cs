@@ -130,7 +130,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 return dictionary;
             }
 
-            foreach (var hand in hands.Hands)
+            foreach (var hand in hands.HandNames)
             {
                 dictionary[hand] = hands.GetItem(hand)?.Owner.Name ?? "None";
             }
@@ -150,7 +150,7 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             var inventory = Owner.GetComponent<InventoryComponent>();
             var userHands = user.GetComponent<HandsComponent>();
-            var item = userHands.GetActiveHand;
+            var item = userHands.GetActiveHeldItem;
 
             bool Check()
             {
@@ -163,7 +163,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     return false;
                 }
 
-                if (!userHands.CanDrop(userHands.ActiveHand!))
+                if (!userHands.CanDrop(userHands.ActiveHandName!))
                 {
                     user.PopupMessageCursor(Loc.GetString("You can't drop that!"));
                     return false;
@@ -215,7 +215,7 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             var hands = Owner.GetComponent<HandsComponent>();
             var userHands = user.GetComponent<HandsComponent>();
-            var item = userHands.GetActiveHand;
+            var item = userHands.GetActiveHeldItem;
 
             bool Check()
             {
@@ -228,7 +228,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     return false;
                 }
 
-                if (!userHands.CanDrop(userHands.ActiveHand!))
+                if (!userHands.CanDrop(userHands.ActiveHandName!))
                 {
                     user.PopupMessageCursor(Loc.GetString("You can't drop that!"));
                     return false;
@@ -379,7 +379,7 @@ namespace Content.Server.GameObjects.Components.GUI
             var user = obj.Session.AttachedEntity;
             if (user == null || !(user.TryGetComponent(out HandsComponent? userHands))) return;
 
-            var placingItem = userHands.GetActiveHand != null;
+            var placingItem = userHands.GetActiveHeldItem != null;
 
             switch (obj.Message)
             {

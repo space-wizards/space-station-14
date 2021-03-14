@@ -167,7 +167,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 return true;
             }
 
-            if (cuffed.CuffedHandCount == hands.Count)
+            if (cuffed.CuffedHandCount == hands.HandCount)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("{0:theName} has no free hands to handcuff!", eventArgs.Target));
                 return true;

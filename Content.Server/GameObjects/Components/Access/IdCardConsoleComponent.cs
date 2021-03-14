@@ -146,18 +146,18 @@ namespace Content.Server.GameObjects.Components.Access
 
         private void InsertIdFromHand(IEntity user, ContainerSlot container, IHandsComponent hands)
         {
-            var isId = hands.GetActiveHand?.Owner.HasComponent<IdCardComponent>();
+            var isId = hands.GetActiveHeldItem?.Owner.HasComponent<IdCardComponent>();
             if (isId != true)
             {
                 return;
             }
 
-            if (hands.ActiveHand == null)
+            if (hands.ActiveHandName == null)
             {
                 return;
             }
 
-            if (!hands.Drop(hands.ActiveHand, container))
+            if (!hands.Drop(hands.ActiveHandName, container))
             {
                 Owner.PopupMessage(user, Loc.GetString("You can't let go of the ID card!"));
                 return;

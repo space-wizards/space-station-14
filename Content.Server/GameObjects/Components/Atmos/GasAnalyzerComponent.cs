@@ -167,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (!session.AttachedEntity.TryGetComponent(out IHandsComponent? handsComponent))
                     return;
 
-                var activeHandEntity = handsComponent?.GetActiveHand?.Owner;
+                var activeHandEntity = handsComponent?.GetActiveHeldItem?.Owner;
                 if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent? gasAnalyzer))
                 {
                     return;
@@ -236,7 +236,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                         return;
                     }
 
-                    var activeHandEntity = handsComponent.GetActiveHand?.Owner;
+                    var activeHandEntity = handsComponent.GetActiveHeldItem?.Owner;
                     if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent? gasAnalyzer))
                     {
                         serverMsg.Session.AttachedEntity.PopupMessage(Loc.GetString("You need a Gas Analyzer in your hand!"));

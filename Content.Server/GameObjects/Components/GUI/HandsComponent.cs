@@ -42,9 +42,9 @@ namespace Content.Server.GameObjects.Components.GUI
         public event Action? OnItemChanged;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string? ActiveHand
+        public string? ActiveHandName
         {
-            get => _activeHand;
+            get => _activeHandName;
             set
             {
                 if (value != null && GetHand(value) == null)
@@ -52,35 +52,36 @@ namespace Content.Server.GameObjects.Components.GUI
                     throw new ArgumentException($"No hand '{value}'");
                 }
 
-                _activeHand = value;
+                _activeHandName = value;
                 Dirty();
             }
         }
-
-        private string? _activeHand;
+        private string? _activeHandName;
 
         [ViewVariables] private readonly List<ServerHand> _hands = new();
 
-        public IEnumerable<string> Hands => _hands.Select(h => h.Name);
+        [ViewVariables]
+        public IEnumerable<string> HandNames => _hands.Select(h => h.Name);
 
-        [ViewVariables] public int Count => _hands.Count;
+        [ViewVariables]
+        public int HandCount => _hands.Count;
 
         // TODO: This does not serialize what objects are held.
         protected override void Startup()
         {
             base.Startup();
-            ActiveHand = _hands.LastOrDefault()?.Name;
+            ActiveHandName = _hands.LastOrDefault()?.Name;
             Dirty();
         }
 
-        public IEnumerable<ItemComponent> GetAllHeldItems()
+        IEnumerable<ItemComponent> IHandsComponent.GetAllHeldItems()
         {
             foreach (var hand in _hands)
             {
-                if (hand.Entity != null)
-                {
-                    yield return hand.Entity.GetComponent<ItemComponent>();
-                }
+                var heldEntity = hand.HeldEntity;
+                if (heldEntity == null)
+                    continue;
+                yield return heldEntity.GetComponent<ItemComponent>();
             }
         }
 
@@ -88,22 +89,42 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             foreach (var hand in _hands)
             {
-                if (hand.Entity == entity)
-                {
+                if (hand.HeldEntity == entity)
                     return true;
-                }
             }
             return false;
         }
 
-        private ServerHand? GetHand(string name)
+        private bool TryGetHand(string handName, [NotNullWhen(true)] out ServerHand? foundHand)
         {
-            return _hands.FirstOrDefault(hand => hand.Name == name);
+            foundHand = null;
+
+            if (handName == null)
+                return false;
+
+            foreach (var hand in _hands)
+            {
+                if (hand.Name == handName)
+                    foundHand = hand;
+            }
+            return foundHand != null;
         }
 
-        public ItemComponent? GetItem(string handName)
+        private ServerHand? GetHand(string handName) //Old api
         {
-            return GetHand(handName)?.Entity?.GetComponent<ItemComponent>();
+            return TryGetHand(handName, out var hand) ? hand : null;
+        }
+
+        public ItemComponent? GetItem(string handName) //Old api
+        {
+            if (!TryGetHand(handName, out var hand))
+                return null;
+
+            var heldEntity = hand.HeldEntity;
+            if (heldEntity == null)
+                return null;
+
+            return heldEntity.GetComponent<ItemComponent>();
         }
 
         public bool TryGetItem(string handName, [NotNullWhen(true)] out ItemComponent? item)
@@ -111,49 +132,47 @@ namespace Content.Server.GameObjects.Components.GUI
             return (item = GetItem(handName)) != null;
         }
 
-        public ItemComponent? GetActiveHand => ActiveHand == null
-            ? null
-            : GetItem(ActiveHand);
+        public ItemComponent? GetActiveHeldItem
+        {
+            get
+            {
+                if (ActiveHandName == null)
+                    return null;
+
+                return GetItem(ActiveHandName);
+            }
+        }
 
         /// <summary>
-        ///     Enumerates over the enabled hand keys,
-        ///     returning the active hand first.
+        ///     Enumerates over the enabled hand keys, returning the active hand first.
         /// </summary>
         public IEnumerable<string> ActivePriorityEnumerable()
         {
-            if (ActiveHand != null)
-            {
-                yield return ActiveHand;
-            }
+            if (ActiveHandName != null)
+                yield return ActiveHandName;
 
             foreach (var hand in _hands)
             {
-                if (hand.Name == ActiveHand)
-                {
+                if (hand.Name == ActiveHandName || !hand.Enabled)
                     continue;
-                }
-
-                if (!hand.Enabled)
-                {
-                    continue;
-                }
 
                 yield return hand.Name;
             }
         }
 
+        /// <summary>
+        ///     Attempts to put item into a hand, prefering the active hand.
+        /// </summary>
         public bool PutInHand(ItemComponent item, bool mobCheck = true)
         {
             foreach (var hand in ActivePriorityEnumerable())
             {
-                if (PutInHand(item, hand, false, mobCheck))
-                {
-                    OnItemChanged?.Invoke();
+                if (!PutInHand(item, hand, false, mobCheck))
+                    continue;
 
-                    return true;
-                }
+                OnItemChanged?.Invoke();
+                return true;
             }
-
             return false;
         }
 
@@ -189,31 +208,10 @@ namespace Content.Server.GameObjects.Components.GUI
             return success;
         }
 
-        /// <summary>
-        ///     Drops the item if <paramref name="mob"/> doesn't have hands.
-        /// </summary>
-        public static void PutInHandOrDropStatic(IEntity mob, ItemComponent item, bool mobCheck = true)
-        {
-            if (!mob.TryGetComponent(out HandsComponent? hands))
-            {
-                DropAtFeet(mob, item);
-                return;
-            }
-
-            hands.PutInHandOrDrop(item, mobCheck);
-        }
-
         public void PutInHandOrDrop(ItemComponent item, bool mobCheck = true)
         {
             if (!PutInHand(item, mobCheck))
-            {
-                DropAtFeet(Owner, item);
-            }
-        }
-
-        private static void DropAtFeet(IEntity mob, ItemComponent item)
-        {
-            item.Owner.Transform.Coordinates = mob.Transform.Coordinates;
+                item.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
         }
 
         public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
@@ -245,13 +243,6 @@ namespace Content.Server.GameObjects.Components.GUI
                    hand.Container.CanInsert(item.Owner);
         }
 
-        /// <summary>
-        /// Calls the Dropped Interaction with the item.
-        /// </summary>
-        /// <param name="item">The itemcomponent of the item to be dropped</param>
-        /// <param name="doMobChecks">Check if the item can be dropped</param>
-        /// <param name="intentional">If the item was dropped intentionally</param>
-        /// <returns>True if IDropped.Dropped was called, otherwise false</returns>
         private bool DroppedInteraction(ItemComponent item, bool doMobChecks, bool intentional)
         {
             var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
@@ -283,10 +274,10 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        public bool Drop(string slot, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true)
+        public bool Drop(string handName, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true)
         {
-            var hand = GetHand(slot);
-            if (!CanDrop(slot, doMobChecks) || hand?.Entity == null)
+            var hand = GetHand(handName);
+            if (!CanDrop(handName, doMobChecks) || hand?.Entity == null)
             {
                 return false;
             }
@@ -326,28 +317,16 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
-
             if (targetContainer == null)
             {
                 throw new ArgumentNullException(nameof(targetContainer));
             }
 
             var hand = GetHand(slot);
-            if (!CanDrop(slot, doMobChecks) || hand?.Entity == null)
-            {
-                return false;
-            }
-
-            if (!hand.Container.CanRemove(hand.Entity))
-            {
-                return false;
-            }
-
-            if (!targetContainer.CanInsert(hand.Entity))
+            if (!CanDrop(slot, doMobChecks) ||
+                hand?.Entity == null ||
+                !hand.Container.CanRemove(hand.Entity) ||
+                !targetContainer.CanInsert(hand.Entity))
             {
                 return false;
             }
@@ -380,11 +359,6 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public bool Drop(IEntity entity, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
             if (!TryHand(entity, out var slot))
             {
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
@@ -428,13 +402,6 @@ namespace Content.Server.GameObjects.Components.GUI
             return Drop(slot, targetContainer, doMobChecks, doDropInteraction, intentional);
         }
 
-        /// <summary>
-        ///     Checks whether an item can be dropped from the specified slot.
-        /// </summary>
-        /// <param name="name">The slot to check for.</param>
-        /// <returns>
-        ///     True if there is an item in the slot and it can be dropped, false otherwise.
-        /// </returns>
         public bool CanDrop(string name, bool mobCheck = true)
         {
             var hand = GetHand(name);
@@ -464,7 +431,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             _hands.Add(hand);
 
-            ActiveHand ??= name;
+            ActiveHandName ??= name;
 
             OnItemChanged?.Invoke();
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
@@ -482,9 +449,9 @@ namespace Content.Server.GameObjects.Components.GUI
             Drop(hand.Name, false);
             _hands.Remove(hand);
 
-            if (name == ActiveHand)
+            if (name == ActiveHandName)
             {
-                _activeHand = _hands.FirstOrDefault()?.Name;
+                _activeHandName = _hands.FirstOrDefault()?.Name;
             }
 
             OnItemChanged?.Invoke();
@@ -509,7 +476,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 hands[i] = hand;
             }
 
-            return new HandsComponentState(hands, ActiveHand);
+            return new HandsComponentState(hands, ActiveHandName);
         }
 
         private HandState ToSharedHand(ServerHand hand)
@@ -520,15 +487,15 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public void SwapHands()
         {
-            if (ActiveHand == null)
+            if (ActiveHandName == null)
             {
                 return;
             }
 
-            var hand = GetHand(ActiveHand);
+            var hand = GetHand(ActiveHandName);
             if (hand == null)
             {
-                throw new InvalidOperationException($"No hand found with name {ActiveHand}");
+                throw new InvalidOperationException($"No hand found with name {ActiveHandName}");
             }
 
             var index = _hands.IndexOf(hand);
@@ -538,12 +505,12 @@ namespace Content.Server.GameObjects.Components.GUI
                 index = 0;
             }
 
-            ActiveHand = _hands[index].Name;
+            ActiveHandName = _hands[index].Name;
         }
 
         public void ActivateItem()
         {
-            var used = GetActiveHand?.Owner;
+            var used = GetActiveHeldItem?.Owner;
             if (used != null)
             {
                 var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
@@ -553,7 +520,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public bool ThrowItem()
         {
-            var item = GetActiveHand?.Owner;
+            var item = GetActiveHeldItem?.Owner;
             if (item != null)
             {
                 var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
@@ -618,7 +585,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentNullException(nameof(session));
 
             var playerEntity = session.AttachedEntity;
-            var used = GetActiveHand?.Owner;
+            var used = GetActiveHeldItem?.Owner;
 
             switch (message)
             {
@@ -640,7 +607,7 @@ namespace Content.Server.GameObjects.Components.GUI
         private void ClientChangedHandMsg(ClientChangedHandMsg msg, IEntity? playerEntity)
         {
             if (playerEntity == Owner && HasHand(msg.Index))
-                ActiveHand = msg.Index;
+                ActiveHandName = msg.Index;
         }
 
         private async void HandleClientAttackByInHandMsg(ClientAttackByInHandMsg msg, IEntity? playerEntity, IEntity? used)
@@ -715,7 +682,7 @@ namespace Content.Server.GameObjects.Components.GUI
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/thudswoosh.ogg", source,
                 AudioHelpers.WithVariation(0.025f));
 
-            if (ActiveHand != null && Drop(ActiveHand, false))
+            if (ActiveHandName != null && Drop(ActiveHandName, false))
             {
                 source.PopupMessageOtherClients(Loc.GetString("{0} disarms {1}!", source.Name, eventArgs.Target.Name));
                 source.PopupMessageCursor(Loc.GetString("You disarm {0}!", eventArgs.Target.Name));
@@ -747,7 +714,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
     public class ServerHand : SharedHand
     {
-        public override IEntity? HeldItem => Container.ContainedEntity;
+        public override IEntity? HeldEntity => Container.ContainedEntity;
 
         public IEntity? Entity => Container.ContainedEntity; //TODO: remove this duplicate API
 

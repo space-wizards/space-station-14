@@ -22,12 +22,12 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         ///     The hands in this component.
         /// </summary>
-        IEnumerable<string> Hands { get; }
+        IEnumerable<string> HandNames { get; }
 
         /// <summary>
         ///     The hand name of the currently active hand.
         /// </summary>
-        string? ActiveHand { get; set; }
+        string? ActiveHandName { get; set; }
 
         /// <summary>
         ///     Enumerates over every held item.
@@ -52,7 +52,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         /// Gets item held by the current active hand
         /// </summary>
-        ItemComponent? GetActiveHand { get; }
+        ItemComponent? GetActiveHeldItem { get; }
 
         /// <summary>
         ///     Puts an item into any empty hand, preferring the active hand.

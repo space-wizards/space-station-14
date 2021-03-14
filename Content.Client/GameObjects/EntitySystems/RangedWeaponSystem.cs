@@ -61,7 +61,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            var held = hands.ActiveItem;
+            var held = hands.ActiveHeldEntity;
             if (held == null || !held.TryGetComponent(out ClientRangedWeaponComponent? weapon))
             {
                 _blocked = true;

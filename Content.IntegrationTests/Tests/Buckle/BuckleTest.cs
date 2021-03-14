@@ -242,7 +242,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
 
                 // Put an item into every hand
-                for (var i = 0; i < hands.Count; i++)
+                for (var i = 0; i < hands.HandCount; i++)
                 {
                     var akms = entityManager.SpawnEntity(ItemDummyId, coordinates);
 
@@ -260,7 +260,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
 
                 // With items in all hands
-                foreach (var slot in hands.Hands)
+                foreach (var slot in hands.HandNames)
                 {
                     Assert.NotNull(hands.GetItem(slot));
                 }
@@ -282,7 +282,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
 
                 // Now with no item in any hand
-                foreach (var slot in hands.Hands)
+                foreach (var slot in hands.HandNames)
                 {
                     Assert.Null(hands.GetItem(slot));
                 }

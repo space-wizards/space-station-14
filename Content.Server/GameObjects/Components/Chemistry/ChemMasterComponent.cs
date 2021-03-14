@@ -358,7 +358,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
-            var activeHandEntity = hands.GetActiveHand?.Owner;
+            var activeHandEntity = hands.GetActiveHeldItem?.Owner;
             if (activeHandEntity == null)
             {
                 UserInterface?.Open(actor.playerSession);
@@ -380,13 +380,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return true;
             }
 
-            if (hands.GetActiveHand == null)
+            if (hands.GetActiveHeldItem == null)
             {
                 Owner.PopupMessage(args.User, Loc.GetString("You have nothing in your hand!"));
                 return false;
             }
 
-            var activeHandEntity = hands.GetActiveHand.Owner;
+            var activeHandEntity = hands.GetActiveHeldItem.Owner;
             if (activeHandEntity.TryGetComponent<SolutionContainerComponent>(out var solution))
             {
                 if (HasBeaker)

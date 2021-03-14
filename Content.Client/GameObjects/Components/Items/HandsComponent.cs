@@ -28,14 +28,14 @@ namespace Content.Client.GameObjects.Components.Items
         ///     The name of the currently active hand.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private string? ActiveHand { get; set; }
+        private string? ActiveHandName { get; set; }
 
         [ViewVariables]
         public IReadOnlyList<IReadOnlyHand> Hands => _hands;
         private readonly List<SharedHand> _hands = new();
 
         [ViewVariables]
-        public IEntity? ActiveItem => TryGetActiveHand(out var hand) ? hand.HeldItem : null;
+        public IEntity? ActiveHeldEntity => TryGetActiveHand(out var hand) ? hand.HeldEntity : null;
 
         [ComponentDependency]
         private ISpriteComponent? _sprite = default!;
@@ -62,22 +62,22 @@ namespace Content.Client.GameObjects.Components.Items
             if (!TryGetActiveHand(out var activeHand))
                 return;
 
-            var pressedItem = pressedHand.HeldItem;
-            var activeItem = activeHand.HeldItem;
+            var pressedEntity = pressedHand.HeldEntity;
+            var activeEntity = activeHand.HeldEntity;
 
-            if (pressedItem == null && pressedHand != activeHand)
+            if (pressedEntity == null && pressedHand != activeHand)
             {
                 SendNetworkMessage(new ClientChangedHandMsg(pressedHand.Name)); //swap hand
                 return;
             }
 
-            if (handClicked == ActiveHand && activeItem != null)
+            if (handClicked == ActiveHandName && activeEntity != null)
             {
                 SendNetworkMessage(new UseInHandMsg()); //use item in hand
                 return;
             }
 
-            if (handClicked != ActiveHand && pressedItem != null)
+            if (handClicked != ActiveHandName && pressedEntity != null)
             {
                 SendNetworkMessage(new ClientAttackByInHandMsg(pressedHand.Name)); //use active item on held item
                 return;
@@ -92,7 +92,7 @@ namespace Content.Client.GameObjects.Components.Items
             SendNetworkMessage(new ActivateInHandMsg(activatedHand.Name));
         }
 
-        private bool TryGetHand(string? handName, [NotNullWhen(true)] out SharedHand? foundHand)
+        private bool TryGetHand(string handName, [NotNullWhen(true)] out SharedHand? foundHand)
         {
             foundHand = null;
 
@@ -109,7 +109,12 @@ namespace Content.Client.GameObjects.Components.Items
 
         private bool TryGetActiveHand([NotNullWhen(true)] out SharedHand? activeHand)
         {
-            return TryGetHand(ActiveHand, out activeHand);
+            activeHand = null;
+
+            if (ActiveHandName == null)
+                return false;
+
+            return TryGetHand(ActiveHandName, out activeHand);
         }
 
         public override void OnRemove()
@@ -126,23 +131,23 @@ namespace Content.Client.GameObjects.Components.Items
             RemoveHandLayers();
             _hands.Clear();
 
-            ActiveHand = state.ActiveHand;
+            ActiveHandName = state.ActiveHand;
             foreach (var handState in state.Hands)
             {
-                var newHand = new ClientHand(handState.Name, handState.Location, GetHeldItem(handState.EntityUid), handState.Enabled);
+                var newHand = new ClientHand(handState.Name, handState.Location, GetHeldEntity(handState.HeldEntityUid), handState.Enabled);
                 _hands.Add(newHand);
             }
 
             MakeHandLayers();
             SetGuiState();
 
-            IEntity? GetHeldItem(EntityUid? uid)
+            IEntity? GetHeldEntity(EntityUid? uid)
             {
-                IEntity? heldItem = null;
+                IEntity? heldEntity = null;
                 if (uid != null)
-                    Owner.EntityManager.TryGetEntity(uid.Value, out heldItem);
+                    Owner.EntityManager.TryGetEntity(uid.Value, out heldEntity);
 
-                return heldItem;
+                return heldEntity;
             }
         }
 
@@ -185,7 +190,7 @@ namespace Content.Client.GameObjects.Components.Items
         {
             foreach (var hand in Hands)
             {
-                if (hand.HeldItem == entity)
+                if (hand.HeldEntity == entity)
                     return true;
             }
             return false;
@@ -234,8 +239,8 @@ namespace Content.Client.GameObjects.Components.Items
                 var key = GetHandLayerKey(hand.Name);
                 _sprite.LayerMapReserveBlank(key);
 
-                var heldItem = hand.HeldItem;
-                if (heldItem == null || !heldItem.TryGetComponent(out ItemComponent? item))
+                var heldEntity = hand.HeldEntity;
+                if (heldEntity == null || !heldEntity.TryGetComponent(out ItemComponent? item))
                     continue;
 
                 var maybeInHands = item.GetInHandStateInfo(hand.Location);
@@ -273,20 +278,20 @@ namespace Content.Client.GameObjects.Components.Items
 
             foreach (var hand in _hands)
             {
-                var handState = new GuiHand(hand.Name, hand.Location, hand.HeldItem, hand.Enabled);
+                var handState = new GuiHand(hand.Name, hand.Location, hand.HeldEntity, hand.Enabled);
                 handStates.Add(handState);
             }
-            return new HandsGuiState(handStates, ActiveHand);
+            return new HandsGuiState(handStates, ActiveHandName);
         }
     }
 
     public class ClientHand : SharedHand
     {
-        public override IEntity? HeldItem { get; }
+        public override IEntity? HeldEntity { get; }
 
-        public ClientHand(string name, HandLocation location, IEntity? heldItem, bool enabled) : base(name, enabled, location)
+        public ClientHand(string name, HandLocation location, IEntity? heldEntity, bool enabled) : base(name, enabled, location)
         {
-            HeldItem = heldItem;
+            HeldEntity = heldEntity;
         }
     }
 }

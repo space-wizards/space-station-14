@@ -313,7 +313,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            var item = hands.GetActiveHand?.Owner;
+            var item = hands.GetActiveHeldItem?.Owner;
 
             ClickFace(player, coordinates);
 
@@ -814,7 +814,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Verify player has a hand, and find what object he is currently holding in his active hand
             if (player.TryGetComponent<IHandsComponent>(out var hands))
             {
-                var item = hands.GetActiveHand?.Owner;
+                var item = hands.GetActiveHeldItem?.Owner;
 
                 if (item != null)
                 {

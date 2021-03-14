@@ -23,6 +23,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -125,19 +126,24 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 case PDAUplinkBuyListingMessage buyMsg:
                 {
-                    if (message.Session.AttachedEntity == null)
+                        var player = message.Session.AttachedEntity;
+
+                    if (player == null)
                         break;
 
                     if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId,
-                        message.Session.AttachedEntity.Transform.Coordinates, out var entity))
+                        player.Transform.Coordinates, out var entity))
                     {
                         SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
                         break;
                     }
-
-                    HandsComponent.PutInHandOrDropStatic(
-                        message.Session.AttachedEntity,
-                        entity.GetComponent<ItemComponent>());
+                    if (!player.TryGetComponent(out HandsComponent? hands))
+                    {
+                        Logger.Error($"{nameof(PDAComponent)} on {Owner} was used by {player} to buy an item, but they did not have a {nameof(HandsComponent)}");
+                        entity.Transform.Coordinates = player.Transform.Coordinates;
+                        break;
+                    }
+                    hands.PutInHandOrDrop(entity.GetComponent<ItemComponent>());
 
                     SendNetworkMessage(new PDAUplinkBuySuccessMessage(), message.Session.ConnectedClient);
                     break;

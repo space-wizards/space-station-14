@@ -19,7 +19,7 @@ namespace Content.Server.AI.WorldState.States.Inventory
                 return null;
             }
 
-            return handsComponent.GetActiveHand?.Owner;
+            return handsComponent.GetActiveHeldItem?.Owner;
         }
     }
 }

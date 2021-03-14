@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -27,7 +28,7 @@ namespace Content.Shared.GameObjects.Components.Items
 
         public HandLocation Location { get; }
 
-        public abstract IEntity? HeldItem { get; }
+        public abstract IEntity? HeldEntity { get; }
     }
 
     public abstract class SharedHand : IReadOnlyHand
@@ -38,7 +39,7 @@ namespace Content.Shared.GameObjects.Components.Items
 
         public HandLocation Location { get; set; }
 
-        public abstract IEntity? HeldItem { get; }
+        public abstract IEntity? HeldEntity { get; }
 
         public SharedHand(string name, bool enabled, HandLocation location)
         {
@@ -47,9 +48,15 @@ namespace Content.Shared.GameObjects.Components.Items
             Location = location;
         }
 
+        public bool TryGetHeldEntity([NotNullWhen(true)] out IEntity? heldEntity)
+        {
+            heldEntity = HeldEntity;
+            return heldEntity != null;
+        }
+
         public HandState ToHandState()
         {
-            return new(Name, HeldItem?.Uid, Location, Enabled);
+            return new(Name, HeldEntity?.Uid, Location, Enabled);
         }
     }
 
@@ -57,14 +64,14 @@ namespace Content.Shared.GameObjects.Components.Items
     public sealed class HandState
     {
         public string Name { get; }
-        public EntityUid? EntityUid { get; }
+        public EntityUid? HeldEntityUid { get; }
         public HandLocation Location { get; }
         public bool Enabled { get; }
 
-        public HandState(string name, EntityUid? entityUid, HandLocation location, bool enabled)
+        public HandState(string name, EntityUid? heldEntityUid, HandLocation location, bool enabled)
         {
             Name = name;
-            EntityUid = entityUid;
+            HeldEntityUid = heldEntityUid;
             Location = location;
             Enabled = enabled;
         }
