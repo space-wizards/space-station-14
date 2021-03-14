@@ -88,12 +88,14 @@
     - state: spark
       shader: unshaded
   - type: Physics
-    shape:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.2,0.2,0.2"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+      hard: false
       mask:
-        - Impassable
-        - MobImpassable
+          - Impassable
+          - MobImpassable
   - type: Ammo
     isProjectile: true
     ammoVelocity: 20
