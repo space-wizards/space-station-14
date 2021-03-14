@@ -88,8 +88,7 @@
     - state: spark
       shader: unshaded
   - type: Physics
-    hard: false
-    shapes:
+    shape:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.2,0.2,0.2"
       mask:
@@ -118,7 +117,6 @@
     sprite: Constructible/Power/Singularity/emitter.rsi
     state: 'projectile'
   - type: Physics
-    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
