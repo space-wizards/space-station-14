@@ -121,24 +121,24 @@ namespace Content.Shared.GameObjects.Components.Items
     [Serializable, NetSerializable]
     public class ClientAttackByInHandMsg : ComponentMessage
     {
-        public string Index { get; }
+        public string HandName { get; }
 
         public ClientAttackByInHandMsg(string index)
         {
             Directed = true;
-            Index = index;
+            HandName = index;
         }
     }
 
     [Serializable, NetSerializable]
     public class ClientChangedHandMsg : ComponentMessage
     {
-        public string Index { get; }
+        public string HandName { get; }
 
         public ClientChangedHandMsg(string index)
         {
             Directed = true;
-            Index = index;
+            HandName = index;
         }
     }
 

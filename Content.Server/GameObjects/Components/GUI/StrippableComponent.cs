@@ -234,7 +234,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     return false;
                 }
 
-                if (!hands.HasHand(hand))
+                if (!hands.HasHandOfName(hand))
                     return false;
 
                 if (hands.TryGetItem(hand, out var _))
@@ -268,7 +268,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(hand, false);
-            hands.PutInHand(item!, hand, false, false);
+            hands.TryPutItemInHand(item!, hand, false, false);
             UpdateSubscribed();
         }
 
@@ -336,7 +336,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 if (!ActionBlockerSystem.CanInteract(user))
                     return false;
 
-                if (!hands.HasHand(hand))
+                if (!hands.HasHandOfName(hand))
                     return false;
 
                 if (!hands.TryGetItem(hand, out var heldItem))

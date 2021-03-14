@@ -626,7 +626,7 @@ namespace Content.Server.GameTicking
                 foreach (var (hand, prototype) in inhand)
                 {
                     var inhandEntity = _entityManager.SpawnEntity(prototype, entity.Transform.Coordinates);
-                    handsComponent.PutInHand(inhandEntity.GetComponent<ItemComponent>(), hand);
+                    handsComponent.TryPutItemInHand(inhandEntity.GetComponent<ItemComponent>(), hand);
                 }
             }
         }

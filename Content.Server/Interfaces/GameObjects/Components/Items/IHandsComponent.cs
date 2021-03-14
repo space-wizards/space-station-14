@@ -72,7 +72,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
         /// </param>
         /// <returns>True if the item was inserted into a hand, false otherwise.</returns>
-        bool PutInHand(ItemComponent item, string index, bool fallback=true, bool mobCheck = true);
+        bool TryPutItemInHand(ItemComponent item, string index, bool fallback=true, bool mobCheck = true);
 
         /// <summary>
         ///     Checks to see if an item can be put in any hand.
@@ -230,6 +230,6 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// </summary>
         /// <param name="name">The hand name to check.</param>
         /// <returns>True if the hand exists, false otherwise.</returns>
-        bool HasHand(string name);
+        bool HasHandOfName(string name);
     }
 }

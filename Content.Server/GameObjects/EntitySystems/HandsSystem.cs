@@ -16,6 +16,7 @@ using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -159,7 +160,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var throwEnt = handsComp.GetItem(handsComp.ActiveHandName).Owner;
 
-            if (!handsComp.ThrowItem())
+            if (!ThrowItem())
                 return false;
 
             // throw the item, split off from a stack if it's meant to be thrown individually
@@ -194,6 +195,17 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             return true;
+
+            bool ThrowItem()
+            {
+                var item = handsComp.GetActiveHeldItem?.Owner;
+                if (item != null)
+                {
+                    var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
+                    return interactionSystem.TryThrowInteraction(handsComp.Owner, item);
+                }
+                return false;
+            }
         }
 
         private void HandleSmartEquipBackpack(ICommonSession session)
