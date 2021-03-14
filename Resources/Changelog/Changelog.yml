@@ -455,3 +455,8 @@ Entries:
   - {message: Updated chemistry layout on Saltern, type: Add}
   id: 83
   time: '2021-03-14T05:24:22.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Added icons for a bunch of verbs, type: Add}
+  id: 84
+  time: '2021-03-14T13:23:32.0000000+00:00'
