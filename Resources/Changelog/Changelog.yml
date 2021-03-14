@@ -472,3 +472,8 @@ Entries:
   - {message: Fixes default emitter rotation on Saltern, type: Fix}
   id: 86
   time: '2021-03-14T22:02:22.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes rotatable verbs not showing in the context menu., type: Fix}
+  id: 87
+  time: '2021-03-14T22:23:42.555325+00:00'
