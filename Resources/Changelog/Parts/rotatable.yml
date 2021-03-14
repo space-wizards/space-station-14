@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Fix
+    message: Fixes rotatable verbs not showing in the context menu.

@@ -223,10 +223,9 @@ namespace Content.Client.GameObjects.EntitySystems
 
                     first = false;
 
-                    if (groupIcons.TryGetValue(category, out var icon))
-                    {
-                        vBox.AddChild(CreateCategoryButton(category, verbs, icon));
-                    }
+                    groupIcons.TryGetValue(category, out var icon);
+
+                    vBox.AddChild(CreateCategoryButton(category, verbs, icon));
                 }
 
                 if (buttons.ContainsKey(""))
@@ -290,7 +289,7 @@ namespace Content.Client.GameObjects.EntitySystems
             return button;
         }
 
-        private Control CreateCategoryButton(string text, List<ListedVerbData> verbButtons, SpriteSpecifier icon)
+        private Control CreateCategoryButton(string text, List<ListedVerbData> verbButtons, SpriteSpecifier? icon)
         {
             verbButtons.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.CurrentCulture));
 
@@ -411,7 +410,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 set => _icon.Texture = value;
             }
 
-            public VerbGroupButton(VerbSystem system, List<ListedVerbData> verbButtons, SpriteSpecifier icon)
+            public VerbGroupButton(VerbSystem system, List<ListedVerbData> verbButtons, SpriteSpecifier? icon)
             {
                 _system = system;
                 VerbButtons = verbButtons;
