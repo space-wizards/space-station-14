@@ -25,4 +25,4 @@ comp-climbable-cant-reach = You can't reach there!
 comp-climbable-cant-interact = You can't do that!
 
 # Shown to you when your character can't climb
-comp-climbable-cant-climb = You are incapable of climbing!"
+comp-climbable-cant-climb = You are incapable of climbing!
