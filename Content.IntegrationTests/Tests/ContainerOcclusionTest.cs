@@ -1,6 +1,4 @@
-using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Storage;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
@@ -35,12 +33,12 @@ namespace Content.IntegrationTests.Tests
   - type: PointLight
 ";
 
-        private async Task<(ClientIntegrationInstance c, ServerIntegrationInstance s)> Start()
+        private (ClientIntegrationInstance c, ServerIntegrationInstance s) Start()
         {
             var optsServer = new ServerIntegrationOptions {ExtraPrototypes = ExtraPrototypes};
             var optsClient = new ClientIntegrationOptions {ExtraPrototypes = ExtraPrototypes};
 
-            var (c, s) = await StartConnectedServerDummyTickerClientPair(optsClient, optsServer);
+            var (c, s) = StartConnectedServerDummyTickerClientPair(optsClient, optsServer);
 
             s.Post(() =>
             {
@@ -57,9 +55,9 @@ namespace Content.IntegrationTests.Tests
         }
 
         [Test]
-        public async Task TestA()
+        public void TestA()
         {
-            var (c, s) = await Start();
+            var (c, s) = Start();
 
             EntityUid dummyUid = default;
             s.Post(() =>
@@ -73,7 +71,7 @@ namespace Content.IntegrationTests.Tests
                 container.GetComponent<EntityStorageComponent>().Insert(dummy);
             });
 
-            await RunTicksSync(c, s, 5);
+            RunTicksSync(c, s, 5);
 
             c.Assert(() =>
             {
@@ -83,14 +81,12 @@ namespace Content.IntegrationTests.Tests
                 Assert.True(sprite.ContainerOccluded);
                 Assert.True(light.ContainerOccluded);
             });
-
-            await Task.WhenAll(c.WaitIdleAsync(), s.WaitIdleAsync());
         }
 
         [Test]
-        public async Task TestB()
+        public void TestB()
         {
-            var (c, s) = await Start();
+            var (c, s) = Start();
 
             EntityUid dummyUid = default;
             s.Post(() =>
@@ -104,7 +100,7 @@ namespace Content.IntegrationTests.Tests
                 container.GetComponent<EntityStorageComponent>().Insert(dummy);
             });
 
-            await RunTicksSync(c, s, 5);
+            RunTicksSync(c, s, 5);
 
             c.Assert(() =>
             {
@@ -114,14 +110,12 @@ namespace Content.IntegrationTests.Tests
                 Assert.False(sprite.ContainerOccluded);
                 Assert.False(light.ContainerOccluded);
             });
-
-            await Task.WhenAll(c.WaitIdleAsync(), s.WaitIdleAsync());
         }
 
         [Test]
-        public async Task TestAb()
+        public void TestAb()
         {
-            var (c, s) = await Start();
+            var (c, s) = Start();
 
             EntityUid dummyUid = default;
             s.Post(() =>
@@ -137,7 +131,7 @@ namespace Content.IntegrationTests.Tests
                 containerB.GetComponent<EntityStorageComponent>().Insert(dummy);
             });
 
-            await RunTicksSync(c, s, 5);
+            RunTicksSync(c, s, 5);
 
             c.Assert(() =>
             {
@@ -147,8 +141,6 @@ namespace Content.IntegrationTests.Tests
                 Assert.True(sprite.ContainerOccluded);
                 Assert.True(light.ContainerOccluded);
             });
-
-            await Task.WhenAll(c.WaitIdleAsync(), s.WaitIdleAsync());
         }
     }
 }

@@ -1,5 +1,4 @@
 using System.Text;
-using System.Threading.Tasks;
 using Content.Server.Construction.Completions;
 using Content.Shared.Construction;
 using NUnit.Framework;
@@ -46,11 +45,11 @@ namespace Content.IntegrationTests.Tests.Construction
         }
 
         [Test]
-        public async Task ConstructionGraphSpawnPrototypeValid()
+        public void ConstructionGraphSpawnPrototypeValid()
         {
             var server = StartServerDummyTicker();
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
@@ -86,11 +85,11 @@ namespace Content.IntegrationTests.Tests.Construction
         }
 
         [Test]
-        public async Task ConstructionGraphNodeEntityPrototypeValid()
+        public void ConstructionGraphNodeEntityPrototypeValid()
         {
             var server = StartServerDummyTicker();
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
@@ -112,11 +111,11 @@ namespace Content.IntegrationTests.Tests.Construction
         }
 
         [Test]
-        public async Task ConstructionGraphEdgeValid()
+        public void ConstructionGraphEdgeValid()
         {
             var server = StartServerDummyTicker();
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 

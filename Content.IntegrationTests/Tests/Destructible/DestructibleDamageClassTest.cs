@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
+﻿using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using NUnit.Framework;
@@ -16,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Destructible
     public class DestructibleDamageClassTest : ContentIntegrationTest
     {
         [Test]
-        public async Task AndTest()
+        public void AndTest()
         {
             var server = StartServerDummyTicker(new ServerContentIntegrationOption
             {
@@ -27,7 +26,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 }
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
@@ -36,7 +35,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             IDamageableComponent sDamageableComponent = null;
             TestThresholdListenerComponent sThresholdListenerComponent = null;
 
-            await server.WaitPost(() =>
+            server.WaitPost(() =>
             {
                 var mapId = new MapId(1);
                 var coordinates = new MapCoordinates(0, 0, mapId);
@@ -47,14 +46,14 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sThresholdListenerComponent = sDestructibleEntity.GetComponent<TestThresholdListenerComponent>();
             });
 
-            await server.WaitRunTicks(5);
+            server.WaitRunTicks(5);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
             });
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 // Raise brute damage to 5
                 Assert.True(sDamageableComponent.ChangeDamage(DamageClass.Brute, 5, true));

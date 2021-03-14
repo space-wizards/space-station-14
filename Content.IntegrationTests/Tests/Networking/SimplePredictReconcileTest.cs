@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.GameObjects;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
@@ -33,11 +32,11 @@ namespace Content.IntegrationTests.Tests.Networking
     public class SimplePredictReconcileTest : ContentIntegrationTest
     {
         [Test]
-        public async Task Test()
+        public void Test()
         {
             // Initialize client & server with text component and system registered.
             // They can't be registered/detected automatically.
-            var (client, server) = await StartConnectedServerDummyTickerClientPair(
+            var (client, server) = StartConnectedServerDummyTickerClientPair(
                 new ClientContentIntegrationOption
                 {
                     // This test is designed around specific timing values and when I wrote it interpolation was off.
@@ -90,18 +89,18 @@ namespace Content.IntegrationTests.Tests.Networking
             });
 
             // Run some ticks so that
-            await RunTicksSync(client, server, 3);
+            RunTicksSync(client, server, 3);
 
             // Due to technical things with the game state processor it has an extra state in the buffer here.
             // This burns through it real quick, but I'm not sure it should be there?
             // Under normal operation (read: not integration test) this gets corrected for via tick time adjustment,
             // so it's probably not an issue?
-            await client.WaitRunTicks(1);
+            client.WaitRunTicks(1);
 
             // 2 is target buffer size.
             Assert.That(cGameStateManager.CurrentBufferSize, Is.EqualTo(2));
 
-            await client.WaitPost(() =>
+            client.WaitPost(() =>
             {
                 clientComponent = cEntityManager.GetEntity(serverEnt.Uid)
                     .GetComponent<PredictionTestComponent>();
@@ -126,7 +125,7 @@ namespace Content.IntegrationTests.Tests.Networking
             // Send an event to change the flag and instantly see the effect replicate client side,
             // while it's queued on server and reconciling works (constantly needs re-firing on client).
             {
-                await client.WaitPost(() =>
+                client.WaitPost(() =>
                 {
                     cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt.Uid, true));
 
@@ -143,12 +142,12 @@ namespace Content.IntegrationTests.Tests.Networking
                 // client is still replaying the past prediction.
                 for (var i = 0; i < 2; i++)
                 {
-                    await server.WaitRunTicks(1);
+                    server.WaitRunTicks(1);
 
                     // Event did not arrive on server.
                     Assert.That(serverSystem.EventTriggerList, Is.Empty);
 
-                    await client.WaitRunTicks(1);
+                    client.WaitRunTicks(1);
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList,
@@ -157,7 +156,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 }
 
                 {
-                    await server.WaitRunTicks(1);
+                    server.WaitRunTicks(1);
 
                     // Event arrived on server at tick 16.
                     Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(17)));
@@ -165,7 +164,7 @@ namespace Content.IntegrationTests.Tests.Networking
                         Is.EquivalentTo(new[] {(new GameTick(16), true, false, true, true)}));
                     serverSystem.EventTriggerList.Clear();
 
-                    await client.WaitRunTicks(1);
+                    client.WaitRunTicks(1);
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList,
@@ -174,12 +173,12 @@ namespace Content.IntegrationTests.Tests.Networking
                 }
 
                 {
-                    await server.WaitRunTicks(1);
+                    server.WaitRunTicks(1);
 
                     // Nothing happened on server.
                     Assert.That(serverSystem.EventTriggerList, Is.Empty);
 
-                    await client.WaitRunTicks(1);
+                    client.WaitRunTicks(1);
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList, Is.Empty);
@@ -198,7 +197,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             {
                 // Send event to server to change flag again, this time to disable it..
-                await client.WaitPost(() =>
+                client.WaitPost(() =>
                 {
                     cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt.Uid, false));
 
@@ -212,12 +211,12 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 for (var i = 0; i < 2; i++)
                 {
-                    await server.WaitRunTicks(1);
+                    server.WaitRunTicks(1);
 
                     // Event did not arrive on server.
                     Assert.That(serverSystem.EventTriggerList, Is.Empty);
 
-                    await client.WaitRunTicks(1);
+                    client.WaitRunTicks(1);
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList,
@@ -226,7 +225,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 }
 
                 {
-                    await server.WaitRunTicks(1);
+                    server.WaitRunTicks(1);
 
                     // Event arrived on server at tick 20.
                     Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(21)));
@@ -235,7 +234,7 @@ namespace Content.IntegrationTests.Tests.Networking
                         Is.EquivalentTo(new[] {(new GameTick(20), true, true, true, false)}));
                     serverSystem.EventTriggerList.Clear();
 
-                    await client.WaitRunTicks(1);
+                    client.WaitRunTicks(1);
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList,
@@ -244,12 +243,12 @@ namespace Content.IntegrationTests.Tests.Networking
                 }
 
                 {
-                    await server.WaitRunTicks(1);
+                    server.WaitRunTicks(1);
 
                     // Nothing happened on server.
                     Assert.That(serverSystem.EventTriggerList, Is.Empty);
 
-                    await client.WaitRunTicks(1);
+                    client.WaitRunTicks(1);
 
                     // Event no longer got repeated and flag was *not* set by server state.
                     // Mispredict gracefully handled!
@@ -269,7 +268,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             {
                 // Send first event to disable the flag (reminder: it never got accepted by the server).
-                await client.WaitPost(() =>
+                client.WaitPost(() =>
                 {
                     cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt.Uid, false));
 
@@ -283,12 +282,12 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 // Run one tick, everything checks out.
                 {
-                    await server.WaitRunTicks(1);
+                    server.WaitRunTicks(1);
 
                     // Event did not arrive on server.
                     Assert.That(serverSystem.EventTriggerList, Is.Empty);
 
-                    await client.WaitRunTicks(1);
+                    client.WaitRunTicks(1);
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList,
@@ -297,7 +296,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 }
 
                 // Send another event, to re-enable it.
-                await client.WaitPost(() =>
+                client.WaitPost(() =>
                 {
                     cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt.Uid, true));
 
@@ -311,12 +310,12 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 // Next tick we run, both events come in, but at different times.
                 {
-                    await server.WaitRunTicks(1);
+                    server.WaitRunTicks(1);
 
                     // Event did not arrive on server.
                     Assert.That(serverSystem.EventTriggerList, Is.Empty);
 
-                    await client.WaitRunTicks(1);
+                    client.WaitRunTicks(1);
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList,
@@ -329,13 +328,13 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 // FIRST event arrives on server!
                 {
-                    await server.WaitRunTicks(1);
+                    server.WaitRunTicks(1);
 
                     Assert.That(serverSystem.EventTriggerList,
                         Is.EquivalentTo(new[] {(new GameTick(24), true, true, false, false)}));
                     serverSystem.EventTriggerList.Clear();
 
-                    await client.WaitRunTicks(1);
+                    client.WaitRunTicks(1);
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList,
@@ -349,13 +348,13 @@ namespace Content.IntegrationTests.Tests.Networking
                 // SECOND event arrived on server, client receives ack for first event,
                 // still runs second event as past prediction.
                 {
-                    await server.WaitRunTicks(1);
+                    server.WaitRunTicks(1);
 
                     Assert.That(serverSystem.EventTriggerList,
                         Is.EquivalentTo(new[] {(new GameTick(25), true, false, true, true)}));
                     serverSystem.EventTriggerList.Clear();
 
-                    await client.WaitRunTicks(1);
+                    client.WaitRunTicks(1);
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList,
@@ -368,11 +367,11 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 // Finally, second event acknowledged on client and we're good.
                 {
-                    await server.WaitRunTicks(1);
+                    server.WaitRunTicks(1);
 
                     Assert.That(serverSystem.EventTriggerList, Is.Empty);
 
-                    await client.WaitRunTicks(1);
+                    client.WaitRunTicks(1);
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList, Is.Empty);

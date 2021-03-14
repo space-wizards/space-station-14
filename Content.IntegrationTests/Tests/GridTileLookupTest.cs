@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -19,11 +18,11 @@ namespace Content.IntegrationTests.Tests
 ";
 
         [Test]
-        public async Task Test()
+        public void Test()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var entityManager = server.ResolveDependency<IEntityManager>();
             var tileLookup = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GridTileLookupSystem>();
@@ -66,7 +65,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(entities.Count, Is.EqualTo(2));
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

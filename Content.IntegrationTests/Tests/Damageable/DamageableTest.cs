@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using NUnit.Framework;
@@ -23,14 +22,14 @@ namespace Content.IntegrationTests.Tests.Damageable
     damageContainer: allDamageContainer";
 
         [Test]
-        public async Task TestDamageTypeDamageAndHeal()
+        public void TestDamageTypeDamageAndHeal()
         {
             var server = StartServerDummyTicker(new ServerContentIntegrationOption
             {
                 ExtraPrototypes = Prototypes
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
@@ -38,7 +37,7 @@ namespace Content.IntegrationTests.Tests.Damageable
             IEntity sDamageableEntity;
             IDamageableComponent sDamageableComponent = null;
 
-            await server.WaitPost(() =>
+            server.WaitPost(() =>
             {
                 var mapId = sMapManager.NextMapId();
                 var coordinates = new MapCoordinates(0, 0, mapId);
@@ -48,9 +47,9 @@ namespace Content.IntegrationTests.Tests.Damageable
                 sDamageableComponent = sDamageableEntity.GetComponent<IDamageableComponent>();
             });
 
-            await server.WaitRunTicks(5);
+            server.WaitRunTicks(5);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
 
@@ -76,14 +75,14 @@ namespace Content.IntegrationTests.Tests.Damageable
         }
 
         [Test]
-        public async Task TestDamageClassDamageAndHeal()
+        public void TestDamageClassDamageAndHeal()
         {
             var server = StartServerDummyTicker(new ServerContentIntegrationOption
             {
                 ExtraPrototypes = Prototypes
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
@@ -91,7 +90,7 @@ namespace Content.IntegrationTests.Tests.Damageable
             IEntity sDamageableEntity;
             IDamageableComponent sDamageableComponent = null;
 
-            await server.WaitPost(() =>
+            server.WaitPost(() =>
             {
                 var mapId = sMapManager.NextMapId();
                 var coordinates = new MapCoordinates(0, 0, mapId);
@@ -101,9 +100,9 @@ namespace Content.IntegrationTests.Tests.Damageable
                 sDamageableComponent = sDamageableEntity.GetComponent<IDamageableComponent>();
             });
 
-            await server.WaitRunTicks(5);
+            server.WaitRunTicks(5);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
 
@@ -148,14 +147,14 @@ namespace Content.IntegrationTests.Tests.Damageable
         }
 
         [Test]
-        public async Task TotalDamageTest()
+        public void TotalDamageTest()
         {
             var server = StartServerDummyTicker(new ServerContentIntegrationOption
             {
                 ExtraPrototypes = Prototypes
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
@@ -163,7 +162,7 @@ namespace Content.IntegrationTests.Tests.Damageable
             IEntity sDamageableEntity;
             IDamageableComponent sDamageableComponent = null;
 
-            await server.WaitPost(() =>
+            server.WaitPost(() =>
             {
                 var mapId = sMapManager.NextMapId();
                 var coordinates = new MapCoordinates(0, 0, mapId);
@@ -173,7 +172,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 sDamageableComponent = sDamageableEntity.GetComponent<IDamageableComponent>();
             });
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var damageType = DamageClass.Brute;
                 var damage = 10;

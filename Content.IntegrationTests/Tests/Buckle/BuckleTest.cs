@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -52,18 +51,18 @@ namespace Content.IntegrationTests.Tests.Buckle
   - type: Item
 ";
         [Test]
-        public async Task BuckleUnbuckleCooldownRangeTest()
+        public void BuckleUnbuckleCooldownRangeTest()
         {
             var cOptions = new ClientIntegrationOptions {ExtraPrototypes = Prototypes};
             var sOptions = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
-            var (client, server) = await StartConnectedServerClientPair(cOptions, sOptions);
+            var (client, server) = StartConnectedServerClientPair(cOptions, sOptions);
 
             IEntity human = null;
             IEntity chair = null;
             BuckleComponent buckle = null;
             StrapComponent strap = null;
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -117,9 +116,9 @@ namespace Content.IntegrationTests.Tests.Buckle
             });
 
             // Wait enough ticks for the unbuckling cooldown to run out
-            await server.WaitRunTicks(60);
+            server.WaitRunTicks(60);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 // Still buckled
                 Assert.True(buckle.Buckled);
@@ -150,9 +149,9 @@ namespace Content.IntegrationTests.Tests.Buckle
             });
 
             // Wait enough ticks for the unbuckling cooldown to run out
-            await server.WaitRunTicks(60);
+            server.WaitRunTicks(60);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 // Still buckled
                 Assert.True(buckle.Buckled);
@@ -194,9 +193,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 human.Transform.WorldPosition += (1, 0);
             });
 
-            await server.WaitRunTicks(1);
+            server.WaitRunTicks(1);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 // No longer buckled
                 Assert.False(buckle.Buckled);
@@ -206,7 +205,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         }
 
         [Test]
-        public async Task BuckledDyingDropItemsTest()
+        public void BuckledDyingDropItemsTest()
         {
             var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
@@ -216,9 +215,9 @@ namespace Content.IntegrationTests.Tests.Buckle
             HandsComponent hands = null;
             IBody body = null;
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -252,9 +251,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 }
             });
 
-            await server.WaitRunTicks(10);
+            server.WaitRunTicks(10);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 // Still buckled
                 Assert.True(buckle.Buckled);
@@ -274,9 +273,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 }
             });
 
-            await server.WaitRunTicks(10);
+            server.WaitRunTicks(10);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 // Still buckled
                 Assert.True(buckle.Buckled);
@@ -292,7 +291,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         }
 
         [Test]
-        public async Task ForceUnbuckleBuckleTest()
+        public void ForceUnbuckleBuckleTest()
         {
             var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
@@ -301,7 +300,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             IEntity chair = null;
             BuckleComponent buckle = null;
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -326,11 +325,11 @@ namespace Content.IntegrationTests.Tests.Buckle
                 human.Transform.LocalPosition += (100, 0);
             });
 
-            await WaitUntil(server, () => !buckle.Buckled, 10);
+            WaitUntil(server, () => !buckle.Buckled, 10);
 
             Assert.False(buckle.Buckled);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 // Move the now unbuckled entity back onto the chair
                 human.Transform.LocalPosition -= (100, 0);
@@ -341,9 +340,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
             });
 
-            await server.WaitRunTicks(60);
+            server.WaitRunTicks(60);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 // Still buckled
                 Assert.NotNull(buckle.BuckledTo);

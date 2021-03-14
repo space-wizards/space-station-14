@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Fluids;
 using Content.Shared.Chemistry;
 using Content.Shared.Utility;
@@ -15,11 +14,11 @@ namespace Content.IntegrationTests.Tests.Fluids
     public class PuddleTest : ContentIntegrationTest
     {
         [Test]
-        public async Task TilePuddleTest()
+        public void TilePuddleTest()
         {
             var server = StartServerDummyTicker();
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var pauseManager = server.ResolveDependency<IPauseManager>();
@@ -51,7 +50,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 pauseManager.DoMapInitialize(mapId);
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             server.Assert(() =>
             {
@@ -60,15 +59,15 @@ namespace Content.IntegrationTests.Tests.Fluids
                 Assert.NotNull(puddle);
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         [Test]
-        public async Task SpaceNoPuddleTest()
+        public void SpaceNoPuddleTest()
         {
             var server = StartServerDummyTicker();
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
             var mapManager = server.ResolveDependency<IMapManager>();
             var pauseManager = server.ResolveDependency<IPauseManager>();
             IMapGrid grid = null;
@@ -88,7 +87,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 }
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             server.Assert(() =>
             {
@@ -98,15 +97,15 @@ namespace Content.IntegrationTests.Tests.Fluids
                 Assert.Null(puddle);
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         [Test]
-        public async Task PuddlePauseTest()
+        public void PuddlePauseTest()
         {
             var server = StartServer();
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var sMapManager = server.ResolveDependency<IMapManager>();
             var sPauseManager = server.ResolveDependency<IPauseManager>();
@@ -121,7 +120,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             EntityCoordinates sCoordinates = default;
 
             // Spawn a paused map with one tile to spawn puddles on
-            await server.WaitPost(() =>
+            server.WaitPost(() =>
             {
                 sMapId = sMapManager.CreateMap();
                 sPauseManager.SetMapPaused(sMapId, true);
@@ -138,7 +137,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             });
 
             // Check that the map and grid are paused
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.True(sPauseManager.IsGridPaused(sGridId));
                 Assert.True(sPauseManager.IsMapPaused(sMapId));
@@ -150,7 +149,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             ReagentUnit sPuddleStartingVolume = default;
 
             // Spawn a puddle
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var solution = new Solution("water", ReagentUnit.New(20));
                 sPuddle = solution.SpillAt(sCoordinates, "PuddleSmear");
@@ -174,10 +173,10 @@ namespace Content.IntegrationTests.Tests.Fluids
 
             // Wait enough time for it to evaporate if it was unpaused
             var sTimeToWait = (5 + (int) Math.Ceiling(sEvaporateTime * sGameTiming.TickRate)) * 2;
-            await server.WaitRunTicks(sTimeToWait);
+            server.WaitRunTicks(sTimeToWait);
 
             // No evaporation due to being paused
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.True(sPuddle.Owner.Paused);
                 Assert.True(sPuddle.Owner.TryGetComponent(out TimerComponent _));
@@ -187,13 +186,13 @@ namespace Content.IntegrationTests.Tests.Fluids
             });
 
             // Unpause the map
-            await server.WaitPost(() =>
+            server.WaitPost(() =>
             {
                 sPauseManager.SetMapPaused(sMapId, false);
             });
 
             // Check that the map, grid and puddle are unpaused
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.False(sPauseManager.IsMapPaused(sMapId));
                 Assert.False(sPauseManager.IsGridPaused(sGridId));
@@ -204,10 +203,10 @@ namespace Content.IntegrationTests.Tests.Fluids
             });
 
             // Wait enough time for it to evaporate
-            await server.WaitRunTicks(sTimeToWait);
+            server.WaitRunTicks(sTimeToWait);
 
             // Puddle evaporation should have ticked
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 // Check that the puddle is unpaused
                 Assert.False(sPuddle.Owner.Paused);

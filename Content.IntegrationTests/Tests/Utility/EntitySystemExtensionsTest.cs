@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System.Threading.Tasks;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
 using NUnit.Framework;
@@ -30,18 +29,18 @@ namespace Content.IntegrationTests.Tests.Utility
 ";
 
         [Test]
-        public async Task Test()
+        public void Test()
         {
             var serverOptions = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
             var server = StartServer(serverOptions);
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var sMapManager = server.ResolveDependency<IMapManager>();
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var broady = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SharedBroadPhaseSystem>();
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var grid = sMapManager.GetGrid(new GridId(1));
                 var entityCoordinates = new EntityCoordinates(grid.GridEntityId, 0, 0);

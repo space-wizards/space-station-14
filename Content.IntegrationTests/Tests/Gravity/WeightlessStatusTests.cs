@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Gravity;
+﻿using Content.Server.GameObjects.Components.Gravity;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -24,12 +23,12 @@ namespace Content.IntegrationTests.Tests.Gravity
   - type: Alerts
 ";
         [Test]
-        public async Task WeightlessStatusTest()
+        public void WeightlessStatusTest()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -37,7 +36,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             IEntity human = null;
             SharedAlertsComponent alerts = null;
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var mapId = new MapId(1);
                 var gridId = new GridId(1);
@@ -54,11 +53,11 @@ namespace Content.IntegrationTests.Tests.Gravity
             });
 
             // Let WeightlessSystem and GravitySystem tick
-            await server.WaitRunTicks(1);
+            server.WaitRunTicks(1);
 
             GravityGeneratorComponent gravityGenerator = null;
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 // No gravity without a gravity generator
                 Assert.True(alerts.IsShowingAlert(AlertType.Weightless));
@@ -67,9 +66,9 @@ namespace Content.IntegrationTests.Tests.Gravity
             });
 
             // Let WeightlessSystem and GravitySystem tick
-            await server.WaitRunTicks(1);
+            server.WaitRunTicks(1);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.False(alerts.IsShowingAlert(AlertType.Weightless));
 
@@ -78,9 +77,9 @@ namespace Content.IntegrationTests.Tests.Gravity
                 gravityGenerator.OnBreak(args);
             });
 
-            await server.WaitRunTicks(1);
+            server.WaitRunTicks(1);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.True(alerts.IsShowingAlert(AlertType.Weightless));
             });

@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Content.Client;
 using NUnit.Framework;
 using Robust.Shared.ContentPack;
@@ -18,11 +17,11 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
     public class EntityPrototypeComponentsTest : ContentIntegrationTest
     {
         [Test]
-        public async Task Test()
+        public void Test()
         {
-            var (client, server) = await StartConnectedServerDummyTickerClientPair();
+            var (client, server) = StartConnectedServerDummyTickerClientPair();
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var sResourceManager = server.ResolveDependency<IResourceManager>();
             var prototypePath = new ResourcePath("/Prototypes/");

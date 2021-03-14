@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Content.Client;
 using Content.Client.Interfaces;
 using Content.Client.State;
@@ -21,9 +20,9 @@ namespace Content.IntegrationTests.Tests.Lobby
     public class CharacterCreationTest : ContentIntegrationTest
     {
         [Test]
-        public async Task CreateDeleteCreateTest()
+        public void CreateDeleteCreateTest()
         {
-            var (client, server) = await StartConnectedServerClientPair();
+            var (client, server) = StartConnectedServerClientPair();
 
             var clientNetManager = client.ResolveDependency<IClientNetManager>();
             var clientStateManager = client.ResolveDependency<IStateManager>();
@@ -33,10 +32,10 @@ namespace Content.IntegrationTests.Tests.Lobby
             var serverTicker = server.ResolveDependency<IGameTicker>();
             var serverPrefManager = server.ResolveDependency<IServerPreferencesManager>();
 
-            await server.WaitIdleAsync();
-            await client.WaitIdleAsync();
+            server.WaitIdleAsync();
+            client.WaitIdleAsync();
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 serverConfig.SetCVar(CCVars.GameLobbyEnabled, true);
                 serverTicker.RestartRound();
@@ -44,14 +43,14 @@ namespace Content.IntegrationTests.Tests.Lobby
 
             Assert.That(serverTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
 
-            await WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, maxTicks: 60);
+            WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, maxTicks: 60);
 
             Assert.NotNull(clientNetManager.ServerChannel);
 
             var clientNetId = clientNetManager.ServerChannel.UserId;
             HumanoidCharacterProfile profile = null;
 
-            await client.WaitAssertion(() =>
+            client.WaitAssertion(() =>
             {
                 clientPrefManager.SelectCharacter(0);
 
@@ -69,9 +68,9 @@ namespace Content.IntegrationTests.Tests.Lobby
                 Assert.That(clientCharacters[1].MemberwiseEquals(profile));
             });
 
-            await WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
+            WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var serverCharacters = serverPrefManager.GetPreferences(clientNetId).Characters;
 
@@ -79,7 +78,7 @@ namespace Content.IntegrationTests.Tests.Lobby
                 Assert.That(serverCharacters[1].MemberwiseEquals(profile));
             });
 
-            await client.WaitAssertion(() =>
+            client.WaitAssertion(() =>
             {
                 clientPrefManager.DeleteCharacter(1);
 
@@ -87,17 +86,17 @@ namespace Content.IntegrationTests.Tests.Lobby
                 Assert.That(clientCharacters, Is.EqualTo(1));
             });
 
-            await WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 1, maxTicks: 60);
+            WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 1, maxTicks: 60);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var serverCharacters = serverPrefManager.GetPreferences(clientNetId).Characters.Count;
                 Assert.That(serverCharacters, Is.EqualTo(1));
             });
 
-            await client.WaitIdleAsync();
+            client.WaitIdleAsync();
 
-            await client.WaitAssertion(() =>
+            client.WaitAssertion(() =>
             {
                 profile = HumanoidCharacterProfile.Random();
 
@@ -109,9 +108,9 @@ namespace Content.IntegrationTests.Tests.Lobby
                 Assert.That(clientCharacters[1].MemberwiseEquals(profile));
             });
 
-            await WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
+            WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var serverCharacters = serverPrefManager.GetPreferences(clientNetId).Characters;
 

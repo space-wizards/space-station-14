@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Shared.Exceptions;
 
@@ -11,16 +10,16 @@ namespace Content.IntegrationTests.Tests
         ///     Test that the server starts.
         /// </summary>
         [Test]
-        public async Task TestServerStart()
+        public void TestServerStart()
         {
             var server = StartServer();
             server.RunTicks(5);
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
             Assert.That(server.IsAlive);
             var runtimeLog = server.ResolveDependency<IRuntimeLog>();
             Assert.That(runtimeLog.ExceptionCount, Is.EqualTo(0), "No exceptions must be logged.");
             server.Stop();
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
             Assert.That(!server.IsAlive);
         }
 
@@ -28,18 +27,18 @@ namespace Content.IntegrationTests.Tests
         ///     Test that the client starts.
         /// </summary>
         [Test]
-        public async Task TestClientStart()
+        public void TestClientStart()
         {
             var client = StartClient();
-            await client.WaitIdleAsync();
+            client.WaitIdleAsync();
             Assert.That(client.IsAlive);
             client.RunTicks(5);
-            await client.WaitIdleAsync();
+            client.WaitIdleAsync();
             Assert.That(client.IsAlive);
             var runtimeLog = client.ResolveDependency<IRuntimeLog>();
             Assert.That(runtimeLog.ExceptionCount, Is.EqualTo(0), "No exceptions must be logged.");
             client.Stop();
-            await client.WaitIdleAsync();
+            client.WaitIdleAsync();
             Assert.That(!client.IsAlive);
         }
     }

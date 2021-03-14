@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
@@ -15,11 +14,11 @@ namespace Content.IntegrationTests.Tests
         public const string TestMapsPath = "/Maps/Test/";
 
         [Test]
-        public async Task NoSavedPostMapInitTest()
+        public void NoSavedPostMapInitTest()
         {
             var server = StartServerDummyTicker();
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var resourceManager = server.ResolveDependency<IResourceManager>();
             var mapFolder = new ResourcePath("/Maps");

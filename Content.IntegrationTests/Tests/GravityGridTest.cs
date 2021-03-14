@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Gravity;
+﻿using Content.Server.GameObjects.Components.Gravity;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.Utility;
@@ -25,7 +24,7 @@ namespace Content.IntegrationTests.Tests
   - type: PowerReceiver
 ";
         [Test]
-        public async Task Test()
+        public void Test()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
@@ -66,7 +65,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(grid2.HasGravity);
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

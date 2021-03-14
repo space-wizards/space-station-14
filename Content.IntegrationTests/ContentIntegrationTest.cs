@@ -114,34 +114,34 @@ namespace Content.IntegrationTests
             return StartServer(options);
         }
 
-        protected async Task<(ClientIntegrationInstance client, ServerIntegrationInstance server)>
+        protected (ClientIntegrationInstance client, ServerIntegrationInstance server)
             StartConnectedServerClientPair(ClientIntegrationOptions clientOptions = null,
                 ServerIntegrationOptions serverOptions = null)
         {
             var client = StartClient(clientOptions);
             var server = StartServer(serverOptions);
 
-            await StartConnectedPairShared(client, server);
+            StartConnectedPairShared(client, server);
 
             return (client, server);
         }
 
 
-        protected async Task<(ClientIntegrationInstance client, ServerIntegrationInstance server)>
+        protected (ClientIntegrationInstance client, ServerIntegrationInstance server)
             StartConnectedServerDummyTickerClientPair(ClientIntegrationOptions clientOptions = null,
                 ServerIntegrationOptions serverOptions = null)
         {
             var client = StartClient(clientOptions);
             var server = StartServerDummyTicker(serverOptions);
 
-            await StartConnectedPairShared(client, server);
+            StartConnectedPairShared(client, server);
 
             return (client, server);
         }
 
         protected async Task<IMapGrid> InitializeMap(ServerIntegrationInstance server, string mapPath)
         {
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var pauseManager = server.ResolveDependency<IPauseManager>();
@@ -160,7 +160,7 @@ namespace Content.IntegrationTests
                 pauseManager.DoMapInitialize(mapId);
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             return grid;
         }
@@ -171,7 +171,7 @@ namespace Content.IntegrationTests
             var ticksAwaited = 0;
             bool passed;
 
-            await instance.WaitIdleAsync();
+            instance.WaitIdleAsync();
 
             while (!(passed = func()) && ticksAwaited < maxTicks)
             {
@@ -182,7 +182,7 @@ namespace Content.IntegrationTests
                     ticksToRun = maxTicks - ticksAwaited;
                 }
 
-                await instance.WaitRunTicks(ticksToRun);
+                instance.WaitRunTicks(ticksToRun);
 
                 ticksAwaited += ticksToRun;
             }
@@ -190,28 +190,26 @@ namespace Content.IntegrationTests
             Assert.That(passed);
         }
 
-        private static async Task StartConnectedPairShared(ClientIntegrationInstance client,
+        private static void StartConnectedPairShared(ClientIntegrationInstance client,
             ServerIntegrationInstance server)
         {
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
-
             client.SetConnectTarget(server);
 
             client.Post(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null!, 0, null!));
 
-            await RunTicksSync(client, server, 10);
+            RunTicksSync(client, server, 10);
         }
 
         /// <summary>
         ///     Runs <paramref name="ticks"/> ticks on both server and client while keeping their main loop in sync.
         /// </summary>
-        protected static async Task RunTicksSync(ClientIntegrationInstance client, ServerIntegrationInstance server,
+        protected static void RunTicksSync(ClientIntegrationInstance client, ServerIntegrationInstance server,
             int ticks)
         {
             for (var i = 0; i < ticks; i++)
             {
-                await server.WaitRunTicks(1);
-                await client.WaitRunTicks(1);
+                server.WaitRunTicks(1);
+                client.WaitRunTicks(1);
             }
         }
 

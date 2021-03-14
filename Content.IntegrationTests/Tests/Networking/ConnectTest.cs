@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -13,12 +12,10 @@ namespace Content.IntegrationTests.Tests.Networking
     public class ConnectTest : ContentIntegrationTest
     {
         [Test]
-        public async Task TestConnect()
+        public void TestConnect()
         {
             var client = StartClient();
             var server = StartServer();
-
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             // Connect.
 
@@ -31,12 +28,10 @@ namespace Content.IntegrationTests.Tests.Networking
             for (var i = 0; i < 10; i++)
             {
                 server.RunTicks(1);
-                await server.WaitIdleAsync();
+                server.WaitIdleAsync();
                 client.RunTicks(1);
-                await client.WaitIdleAsync();
+                client.WaitIdleAsync();
             }
-
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             // Basic checks to ensure that they're connected and data got replicated.
 

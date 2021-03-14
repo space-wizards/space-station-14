@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
+﻿using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Utility;
@@ -42,7 +41,7 @@ namespace Content.IntegrationTests.Tests
     idCard: AssistantIDCard
 ";
         [Test]
-        public async Task SpawnItemInSlotTest()
+        public void SpawnItemInSlotTest()
         {
             var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
@@ -87,7 +86,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(id.Owner.Prototype != null && id.Owner.Prototype.ID == "InventoryIDCardDummy");
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

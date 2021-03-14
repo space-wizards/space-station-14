@@ -23,7 +23,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
 ";
 
         [Test]
-        public async Task TestFinished()
+        public void TestFinished()
         {
             Task<DoAfterStatus> task = null;
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
@@ -42,12 +42,12 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 task = EntitySystem.Get<DoAfterSystem>().DoAfter(args);
             });
 
-            await server.WaitRunTicks(1);
+            server.WaitRunTicks(1);
             Assert.That(task.Result == DoAfterStatus.Finished);
         }
 
         [Test]
-        public async Task TestCancelled()
+        public void TestCancelled()
         {
             Task<DoAfterStatus> task = null;
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
@@ -66,7 +66,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 cancelToken.Cancel();
             });
 
-            await server.WaitRunTicks(3);
+            server.WaitRunTicks(3);
             Assert.That(task.Result == DoAfterStatus.Cancelled, $"Result was {task.Result}");
         }
     }

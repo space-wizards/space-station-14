@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.EntitySystems.StationEvents;
+﻿using Content.Server.GameObjects.EntitySystems.StationEvents;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -11,7 +10,7 @@ namespace Content.IntegrationTests.Tests.StationEvents
     public class StationEventsSystemTest : ContentIntegrationTest
     {
         [Test]
-        public async Task Test()
+        public void Test()
         {
             var server = StartServerDummyTicker();
 
@@ -41,7 +40,7 @@ namespace Content.IntegrationTests.Tests.StationEvents
                 }
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

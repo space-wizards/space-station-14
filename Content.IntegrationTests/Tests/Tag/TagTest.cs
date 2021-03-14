@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Prototypes.Tag;
 using NUnit.Framework;
@@ -43,12 +42,12 @@ namespace Content.IntegrationTests.Tests.Tag
     - {StartingTag}";
 
         [Test]
-        public async Task TagComponentTest()
+        public void TagComponentTest()
         {
             var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var sMapManager = server.ResolveDependency<IMapManager>();
             var sEntityManager = server.ResolveDependency<IEntityManager>();
@@ -57,14 +56,14 @@ namespace Content.IntegrationTests.Tests.Tag
             IEntity sTagDummy = null!;
             TagComponent sTagComponent = null!;
 
-            await server.WaitPost(() =>
+            server.WaitPost(() =>
             {
                 sMapManager.CreateNewMapEntity(MapId.Nullspace);
                 sTagDummy = sEntityManager.SpawnEntity(TagEntityId, MapCoordinates.Nullspace);
                 sTagComponent = sTagDummy.GetComponent<TagComponent>();
             });
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 // Has one tag, the starting tag
                 Assert.That(sTagComponent.Tags.Count, Is.EqualTo(1));

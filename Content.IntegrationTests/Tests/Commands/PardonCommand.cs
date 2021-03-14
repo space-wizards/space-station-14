@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Database;
 using NUnit.Framework;
 using Robust.Server.Console;
@@ -15,17 +14,15 @@ namespace Content.IntegrationTests.Tests.Commands
         private static readonly TimeSpan MarginOfError = TimeSpan.FromMinutes(1);
 
         [Test]
-        public async Task PardonTest()
+        public void PardonTest()
         {
-            var (client, server) = await StartConnectedServerClientPair();
-
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+            var (client, server) = StartConnectedServerClientPair();
 
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
             var sConsole = server.ResolveDependency<IServerConsoleHost>();
             var sDatabase = server.ResolveDependency<IServerDbManager>();
 
-            await server.WaitAssertion(async () =>
+            server.WaitAssertion(async () =>
             {
                 var clientSession = sPlayerManager.GetAllPlayers().Single();
                 var clientId = clientSession.UserId;

@@ -1,8 +1,6 @@
-using System.Threading.Tasks;
 using Content.Shared.Chemistry;
 using Content.Shared.Prototypes.Kitchen;
 using NUnit.Framework;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Kitchen
@@ -11,14 +9,14 @@ namespace Content.IntegrationTests.Tests.Kitchen
     public class KitchenTest : ContentIntegrationTest
     {
         [Test]
-        public async Task TestRecipesValid()
+        public void TestRecipesValid()
         {
             var server = StartServerDummyTicker();
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var protoManager = server.ResolveDependency<IPrototypeManager>();
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 foreach (var recipe in protoManager.EnumeratePrototypes<FoodRecipePrototype>())
                 {

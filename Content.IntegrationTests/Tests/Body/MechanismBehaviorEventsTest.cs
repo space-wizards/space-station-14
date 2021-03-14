@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
@@ -113,12 +112,12 @@ namespace Content.IntegrationTests.Tests.Body
 ";
 
         [Test]
-        public async Task EventsTest()
+        public void EventsTest()
         {
             var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
 

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Utility;
@@ -26,11 +25,11 @@ namespace Content.IntegrationTests.Tests.Interaction
         private const float InteractionRangeDivided15Times3 = InteractionRangeDivided15 * 3;
 
         [Test]
-        public async Task EntityEntityTest()
+        public void EntityEntityTest()
         {
             var server = StartServerDummyTicker();
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var entityManager = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -55,7 +54,7 @@ namespace Content.IntegrationTests.Tests.Interaction
                 mapCoordinates = other.Transform.MapPosition;
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             server.Assert(() =>
             {
@@ -151,7 +150,7 @@ namespace Content.IntegrationTests.Tests.Interaction
                 Assert.True(mapCoordinates.InRangeUnobstructed(origin, InteractionRangeDivided15Times3));
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

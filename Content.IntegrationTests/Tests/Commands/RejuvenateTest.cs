@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GlobalVerbs;
+﻿using Content.Server.GlobalVerbs;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
@@ -29,12 +28,12 @@ namespace Content.IntegrationTests.Tests.Commands
 ";
 
         [Test]
-        public async Task RejuvenateDeadTest()
+        public void RejuvenateDeadTest()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
 

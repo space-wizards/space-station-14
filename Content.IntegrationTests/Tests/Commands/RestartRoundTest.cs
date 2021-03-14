@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using Content.Server.Commands.GameTicking;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
@@ -18,17 +17,17 @@ namespace Content.IntegrationTests.Tests.Commands
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task RestartRoundAfterStart(bool lobbyEnabled)
+        public void RestartRoundAfterStart(bool lobbyEnabled)
         {
-            var (_, server) = await StartConnectedServerClientPair();
+            var (_, server) = StartConnectedServerClientPair();
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var gameTicker = server.ResolveDependency<IGameTicker>();
             var configManager = server.ResolveDependency<IConfigurationManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
-            await server.WaitRunTicks(30);
+            server.WaitRunTicks(30);
 
             GameTick tickBeforeRestart = default;
 
@@ -49,8 +48,8 @@ namespace Content.IntegrationTests.Tests.Commands
                 }
             });
 
-            await server.WaitIdleAsync();
-            await server.WaitRunTicks(5);
+            server.WaitIdleAsync();
+            server.WaitRunTicks(5);
 
             server.Assert(() =>
             {
@@ -59,7 +58,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(tickBeforeRestart < tickAfterRestart);
             });
 
-            await server.WaitRunTicks(60);
+            server.WaitRunTicks(60);
         }
     }
 }

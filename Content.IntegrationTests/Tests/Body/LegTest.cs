@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Body;
+﻿using Content.Server.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Rotation;
@@ -29,14 +28,14 @@ namespace Content.IntegrationTests.Tests.Body
 ";
 
         [Test]
-        public async Task RemoveLegsFallTest()
+        public void RemoveLegsFallTest()
         {
             var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
             AppearanceComponent appearance = null;
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
 
@@ -59,7 +58,7 @@ namespace Content.IntegrationTests.Tests.Body
                 }
             });
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.That(appearance.TryGetData(RotationVisuals.RotationState, out RotationState state));
                 Assert.That(state, Is.EqualTo(RotationState.Horizontal));

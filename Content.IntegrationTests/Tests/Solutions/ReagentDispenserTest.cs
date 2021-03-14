@@ -1,5 +1,4 @@
 #nullable enable
-using System.Threading.Tasks;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
 using NUnit.Framework;
@@ -11,13 +10,13 @@ namespace Content.IntegrationTests.Tests.Solutions
     public sealed class ReagentDispenserTest : ContentIntegrationTest
     {
         [Test]
-        public async Task TestReagentDispenserInventory()
+        public void TestReagentDispenserInventory()
         {
             var server = StartServerDummyTicker();
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
             var protoManager = server.ResolveDependency<IPrototypeManager>();
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<ReagentDispenserInventoryPrototype>())
                 {

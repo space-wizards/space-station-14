@@ -1,6 +1,4 @@
 #nullable enable
-using System.Threading.Tasks;
-using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
@@ -116,7 +114,7 @@ namespace Content.IntegrationTests.Tests
     offset: Center
 ";
         [Test]
-        public async Task PowerNetTest()
+        public void PowerNetTest()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
@@ -163,11 +161,11 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(consumer2.ReceivedPower, Is.EqualTo(supplier.SupplyRate - consumer1.ReceivedPower)); //second should get remaining power
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         [Test]
-        public async Task ApcChargingTest()
+        public void ApcChargingTest()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
@@ -211,11 +209,11 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(apcBattery.CurrentCharge, Is.Not.EqualTo(0)); //apc battery should have gained charge
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         [Test]
-        public async Task ApcNetTest()
+        public void ApcNetTest()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
@@ -255,7 +253,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(receiver.Powered);
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

@@ -1,6 +1,5 @@
 #nullable enable
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Client.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.ActionBlocking;
 using Content.Server.Interfaces.GameObjects.Components.Items;
@@ -37,7 +36,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
   - type: Handcuff
 ";
         [Test]
-        public async Task Test()
+        public void Test()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
@@ -86,7 +85,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
 
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         private void AddHand(IEntity to)

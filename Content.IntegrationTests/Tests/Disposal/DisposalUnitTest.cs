@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Disposal;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
@@ -92,7 +91,7 @@ namespace Content.IntegrationTests.Tests.Disposal
 ";
 
         [Test]
-        public async Task Test()
+        public void Test()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
@@ -164,7 +163,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 Flush(unit, false);
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

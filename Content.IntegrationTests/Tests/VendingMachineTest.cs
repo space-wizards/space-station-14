@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Content.Shared.VendingMachines;
 using NUnit.Framework;
 using Robust.Shared.IoC;
@@ -11,10 +10,10 @@ namespace Content.IntegrationTests.Tests
     public sealed class VendingMachineTest : ContentIntegrationTest
     {
         [Test]
-        public async Task Test()
+        public void Test()
         {
             var server = StartServerDummyTicker();
-            
+
             server.Assert(() =>
             {
                 var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
@@ -34,7 +33,7 @@ namespace Content.IntegrationTests.Tests
                 }
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -14,7 +13,7 @@ namespace Content.IntegrationTests.Tests.Pathfinding
     public class PathfindingChunkTest : ContentIntegrationTest
     {
         [Test]
-        public async Task Test()
+        public void Test()
         {
             var server = StartServerDummyTicker();
 
@@ -58,7 +57,7 @@ namespace Content.IntegrationTests.Tests.Pathfinding
                 nodeNeighbors = node.GetNeighbors().ToList();
                 Assert.That(nodeNeighbors.Count == 4);
             });
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

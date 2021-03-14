@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using NUnit.Framework;
@@ -13,11 +12,11 @@ namespace Content.IntegrationTests.Tests.Atmos
     public class ConstantsTest : ContentIntegrationTest
     {
         [Test]
-        public async Task TotalGasesTest()
+        public void TotalGasesTest()
         {
             var server = StartServerDummyTicker();
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             server.Post(() =>
             {

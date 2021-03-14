@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Doors;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
-using static Content.Server.GameObjects.Components.Doors.ServerDoorComponent;
 
 namespace Content.IntegrationTests.Tests.Doors
 {
@@ -44,12 +42,12 @@ namespace Content.IntegrationTests.Tests.Doors
       - Impassable
 ";
         [Test]
-        public async Task OpenCloseDestroyTest()
+        public void OpenCloseDestroyTest()
         {
             var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -67,7 +65,7 @@ namespace Content.IntegrationTests.Tests.Doors
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             server.Assert(() =>
             {
@@ -75,9 +73,9 @@ namespace Content.IntegrationTests.Tests.Doors
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Opening));
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
-            await WaitUntil(server, () => doorComponent.State == SharedDoorComponent.DoorState.Open);
+            WaitUntil(server, () => doorComponent.State == SharedDoorComponent.DoorState.Open);
 
             Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Open));
 
@@ -87,7 +85,7 @@ namespace Content.IntegrationTests.Tests.Doors
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closing));
             });
 
-            await WaitUntil(server, () => doorComponent.State == SharedDoorComponent.DoorState.Closed);
+            WaitUntil(server, () => doorComponent.State == SharedDoorComponent.DoorState.Closed);
 
             Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
 
@@ -101,16 +99,16 @@ namespace Content.IntegrationTests.Tests.Doors
 
             server.RunTicks(5);
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         [Test]
-        public async Task AirlockBlockTest()
+        public void AirlockBlockTest()
         {
             var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -138,7 +136,7 @@ namespace Content.IntegrationTests.Tests.Doors
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             // Push the human towards the airlock
             Assert.That(physBody != null);
@@ -152,8 +150,8 @@ namespace Content.IntegrationTests.Tests.Doors
                 // Ensure that it is still closed
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
 
-                await server.WaitRunTicks(10);
-                await server.WaitIdleAsync();
+                server.WaitRunTicks(10);
+                server.WaitIdleAsync();
             }
 
             // Sanity check

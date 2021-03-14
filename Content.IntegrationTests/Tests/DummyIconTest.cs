@@ -1,6 +1,5 @@
 #nullable enable
 using System.Linq;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
@@ -12,15 +11,15 @@ namespace Content.IntegrationTests.Tests
     public class DummyIconTest : ContentIntegrationTest
     {
         [Test]
-        public async Task Test()
+        public void Test()
         {
             var client = StartClient();
-            await client.WaitIdleAsync();
+            client.WaitIdleAsync();
 
             var prototypeManager = client.ResolveDependency<IPrototypeManager>();
             var resourceCache = client.ResolveDependency<IResourceCache>();
 
-            await client.WaitAssertion(() =>
+            client.WaitAssertion(() =>
             {
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {

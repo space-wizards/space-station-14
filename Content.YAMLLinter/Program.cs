@@ -12,7 +12,7 @@ namespace Content.YAMLLinter
 {
     internal class Program : ContentIntegrationTest
     {
-        private static int Main(string[] args)
+        private static int Main()
         {
             return new Program().Run();
         }
@@ -42,42 +42,38 @@ namespace Content.YAMLLinter
             return -1;
         }
 
-        private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
+        private Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
         {
             var client = StartClient();
-
-            await client.WaitIdleAsync();
 
             var cPrototypeManager = client.ResolveDependency<IPrototypeManager>();
             var clientErrors = new Dictionary<string, HashSet<ErrorNode>>();
 
-            await client.WaitAssertion(() =>
+            client.WaitAssertion(() =>
             {
                 clientErrors = cPrototypeManager.ValidateDirectory(new ResourcePath("/Prototypes"));
             });
 
             client.Stop();
 
-            return clientErrors;
+            return Task.FromResult(clientErrors);
         }
 
-        private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateServer()
+        private Task<Dictionary<string, HashSet<ErrorNode>>> ValidateServer()
         {
             var server = StartServer();
-
-            await server.WaitIdleAsync();
 
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
             var serverErrors = new Dictionary<string, HashSet<ErrorNode>>();
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 serverErrors = sPrototypeManager.ValidateDirectory(new ResourcePath("/Prototypes"));
             });
 
             server.Stop();
 
-            return serverErrors;
+            return Task.FromResult(serverErrors);
         }
 
         public async Task<Dictionary<string, HashSet<ErrorNode>>> RunValidation()

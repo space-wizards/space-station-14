@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameTicking;
+﻿using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameTicking;
 using NUnit.Framework;
@@ -25,7 +24,7 @@ namespace Content.IntegrationTests.Tests
         }
 
         [Test]
-        public async Task ResettingEntitySystemResetTest()
+        public void ResettingEntitySystemResetTest()
         {
             var server = StartServer(new ServerContentIntegrationOption
             {
@@ -35,12 +34,12 @@ namespace Content.IntegrationTests.Tests
                 }
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var gameTicker = server.ResolveDependency<IGameTicker>();
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.That(gameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
 

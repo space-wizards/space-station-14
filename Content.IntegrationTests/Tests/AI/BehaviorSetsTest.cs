@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.AiLogic;
 using NUnit.Framework;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.IntegrationTests.Tests.AI
 {
@@ -16,11 +14,11 @@ namespace Content.IntegrationTests.Tests.AI
     public class BehaviorSetsTest : ContentIntegrationTest
     {
         [Test]
-        public async Task TestBehaviorSets()
+        public void TestBehaviorSets()
         {
             var options = new ServerIntegrationOptions();
             var server = StartServerDummyTicker(options);
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var protoManager = server.ResolveDependency<IPrototypeManager>();
             var reflectionManager = server.ResolveDependency<IReflectionManager>();
@@ -28,7 +26,7 @@ namespace Content.IntegrationTests.Tests.AI
             Dictionary<string, List<string>> behaviorSets = new();
 
             // Test that all BehaviorSet actions exist.
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<BehaviorSetPrototype>())
                 {
@@ -46,7 +44,7 @@ namespace Content.IntegrationTests.Tests.AI
             });
 
             // Test that all BehaviorSets on NPCs exist.
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 foreach (var entity in protoManager.EnumeratePrototypes<EntityPrototype>())
                 {

@@ -1,6 +1,5 @@
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
@@ -17,10 +16,10 @@ namespace Content.IntegrationTests.Tests
     public class SaveLoadSaveTest : ContentIntegrationTest
     {
         [Test]
-        public async Task SaveLoadSave()
+        public void SaveLoadSave()
         {
             var server = StartServer();
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
             server.Post(() =>
@@ -32,7 +31,7 @@ namespace Content.IntegrationTests.Tests
                 mapLoader.SaveBlueprint(grid!.Index, "save load save 2.yml");
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
             var userData = server.ResolveDependency<IResourceManager>().UserData;
 
             string one;
@@ -76,10 +75,10 @@ namespace Content.IntegrationTests.Tests
         ///     Loads the default map, runs it for 5 ticks, then assert that it did not change.
         /// </summary>
         [Test]
-        public async Task LoadSaveTicksSaveSaltern()
+        public void LoadSaveTicksSaveSaltern()
         {
             var server = StartServerDummyTicker();
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var pauseMgr = server.ResolveDependency<IPauseManager>();
@@ -104,7 +103,7 @@ namespace Content.IntegrationTests.Tests
                 mapLoader.SaveBlueprint(grid.Index, "/load save ticks save 2.yml");
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
             var userData = server.ResolveDependency<IResourceManager>().UserData;
 
             string one;

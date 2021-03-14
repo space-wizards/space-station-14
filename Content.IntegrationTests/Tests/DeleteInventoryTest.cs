@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
+﻿using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Clothing;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -15,7 +14,7 @@ namespace Content.IntegrationTests.Tests
         // Test that when deleting an entity with an InventoryComponent,
         // any equipped items also get deleted.
         [Test]
-        public async Task Test()
+        public void Test()
         {
             var server = StartServerDummyTicker();
 
@@ -44,7 +43,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(item.Deleted, Is.True);
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

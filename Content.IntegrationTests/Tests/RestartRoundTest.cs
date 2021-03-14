@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Content.Server.Interfaces.GameTicking;
 using NUnit.Framework;
 using Robust.Shared.IoC;
@@ -9,16 +8,16 @@ namespace Content.IntegrationTests.Tests
     public class RestartRoundTest : ContentIntegrationTest
     {
         [Test]
-        public async Task Test()
+        public void Test()
         {
-            var (client, server) = await StartConnectedServerClientPair();
+            var (client, server) = StartConnectedServerClientPair();
 
             server.Post(() =>
             {
                 IoCManager.Resolve<IGameTicker>().RestartRound();
             });
 
-            await RunTicksSync(client, server, 10);
+            RunTicksSync(client, server, 10);
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿#nullable enable
 
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Movement;
-using Content.Shared.Physics;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -32,7 +30,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
 ";
 
         [Test]
-        public async Task Test()
+        public void Test()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
@@ -68,7 +66,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
 
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

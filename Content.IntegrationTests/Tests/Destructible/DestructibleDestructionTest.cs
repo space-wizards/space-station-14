@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Destructible.Thresholds;
 using Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors;
 using Content.Shared.Damage;
@@ -15,7 +14,7 @@ namespace Content.IntegrationTests.Tests.Destructible
     public class DestructibleDestructionTest : ContentIntegrationTest
     {
         [Test]
-        public async Task Test()
+        public void Test()
         {
             var server = StartServerDummyTicker(new ServerContentIntegrationOption
             {
@@ -26,7 +25,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 }
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
@@ -35,7 +34,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             IDamageableComponent sDamageableComponent = null;
             TestThresholdListenerComponent sThresholdListenerComponent = null;
 
-            await server.WaitPost(() =>
+            server.WaitPost(() =>
             {
                 var mapId = new MapId(1);
                 var coordinates = new MapCoordinates(0, 0, mapId);
@@ -46,7 +45,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sThresholdListenerComponent = sDestructibleEntity.GetComponent<TestThresholdListenerComponent>();
             });
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var coordinates = sDestructibleEntity.Transform.Coordinates;
 

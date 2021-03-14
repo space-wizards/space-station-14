@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Content.Server.Atmos;
+﻿using Content.Server.Atmos;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -12,11 +11,11 @@ namespace Content.IntegrationTests.Tests.Atmos
     public class AtmosHelpersTest : ContentIntegrationTest
     {
         [Test]
-        public async Task GetTileAtmosphereEntityCoordinatesNotNullTest()
+        public void GetTileAtmosphereEntityCoordinatesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var entityManager = server.ResolveDependency<IEntityManager>();
 
@@ -32,11 +31,11 @@ namespace Content.IntegrationTests.Tests.Atmos
                 });
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         [Test]
-        public async Task GetTileAirEntityCoordinatesNotNullTest()
+        public void GetTileAirEntityCoordinatesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -50,11 +49,11 @@ namespace Content.IntegrationTests.Tests.Atmos
                 });
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         [Test]
-        public async Task TryGetTileAtmosphereEntityCoordinatesNotNullTest()
+        public void TryGetTileAtmosphereEntityCoordinatesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -69,11 +68,11 @@ namespace Content.IntegrationTests.Tests.Atmos
                 });
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         [Test]
-        public async Task TryGetTileTileAirEntityCoordinatesNotNullTest()
+        public void TryGetTileTileAirEntityCoordinatesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -88,12 +87,12 @@ namespace Content.IntegrationTests.Tests.Atmos
                 });
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         // ReSharper disable once InconsistentNaming
         [Test]
-        public async Task GetTileAtmosphereVector2iNotNullTest()
+        public void GetTileAtmosphereVector2iNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -107,12 +106,12 @@ namespace Content.IntegrationTests.Tests.Atmos
                 });
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         // ReSharper disable once InconsistentNaming
         [Test]
-        public async Task GetTileAirVector2iNotNullTest()
+        public void GetTileAirVector2iNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -126,12 +125,12 @@ namespace Content.IntegrationTests.Tests.Atmos
                 });
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         // ReSharper disable once InconsistentNaming
         [Test]
-        public async Task TryGetTileAtmosphereVector2iNotNullTest()
+        public void TryGetTileAtmosphereVector2iNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -146,12 +145,12 @@ namespace Content.IntegrationTests.Tests.Atmos
                 });
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         // ReSharper disable once InconsistentNaming
         [Test]
-        public async Task TryGetTileAirVector2iNotNullTest()
+        public void TryGetTileAirVector2iNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -166,7 +165,7 @@ namespace Content.IntegrationTests.Tests.Atmos
                 });
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

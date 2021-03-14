@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -56,7 +55,7 @@ namespace Content.IntegrationTests.Tests
     size: 9999
 ";
         [Test]
-        public async Task Test()
+        public void Test()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
@@ -118,7 +117,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(inventory.GetSlotItem(Slots.POCKET1), Is.Null);
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         private static bool IsDescendant(IEntity descendant, IEntity parent)

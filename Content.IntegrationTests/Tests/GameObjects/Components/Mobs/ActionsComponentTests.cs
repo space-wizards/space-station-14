@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
 using Content.Server.GameObjects.Components.GUI;
@@ -11,11 +10,11 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Client.UserInterface;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using IPlayerManager = Robust.Server.Player.IPlayerManager;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 {
@@ -57,17 +56,17 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 ";
 
         [Test]
-        public async Task GrantsAndRevokesActionsTest()
+        public void GrantsAndRevokesActionsTest()
         {
-            var (client, server) = await StartConnectedServerClientPair();
+            var (client, server) = StartConnectedServerClientPair();
 
-            await server.WaitIdleAsync();
-            await client.WaitIdleAsync();
+            server.WaitIdleAsync();
+            client.WaitIdleAsync();
 
             var serverPlayerManager = server.ResolveDependency<IPlayerManager>();
             var innateActions = new List<ActionType>();
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var player = serverPlayerManager.GetAllPlayers().Single();
                 var playerEnt = player.AttachedEntity;
@@ -87,14 +86,14 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             });
 
             // check that client has the actions
-            await server.WaitRunTicks(5);
-            await client.WaitRunTicks(5);
+            server.WaitRunTicks(5);
+            client.WaitRunTicks(5);
 
             var clientPlayerMgr = client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
             var clientUIMgr = client.ResolveDependency<IUserInterfaceManager>();
             var expectedOrder = new List<ActionType>();
 
-            await client.WaitAssertion(() =>
+            client.WaitAssertion(() =>
             {
                 var local = clientPlayerMgr.LocalPlayer;
                 var controlled = local!.ControlledEntity;
@@ -150,7 +149,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             });
 
             // now revoke the action and check that the client sees it as revoked
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var player = serverPlayerManager.GetAllPlayers().Single();
                 var playerEnt = player.AttachedEntity;
@@ -158,10 +157,10 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 actionsComponent.Revoke(ActionType.DebugInstant);
             });
 
-            await server.WaitRunTicks(5);
-            await client.WaitRunTicks(5);
+            server.WaitRunTicks(5);
+            client.WaitRunTicks(5);
 
-            await client.WaitAssertion(() =>
+            client.WaitAssertion(() =>
             {
                 var local = clientPlayerMgr.LocalPlayer;
                 var controlled = local!.ControlledEntity;
@@ -216,14 +215,14 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
         }
 
         [Test]
-        public async Task GrantsAndRevokesItemActions()
+        public void GrantsAndRevokesItemActions()
         {
             var serverOptions = new ServerIntegrationOptions { ExtraPrototypes = Prototypes };
             var clientOptions = new ClientIntegrationOptions { ExtraPrototypes = Prototypes };
-            var (client, server) = await StartConnectedServerClientPair(serverOptions: serverOptions, clientOptions: clientOptions);
+            var (client, server) = StartConnectedServerClientPair(serverOptions: serverOptions, clientOptions: clientOptions);
 
-            await server.WaitIdleAsync();
-            await client.WaitIdleAsync();
+            server.WaitIdleAsync();
+            client.WaitIdleAsync();
 
             var serverPlayerManager = server.ResolveDependency<IPlayerManager>();
             var serverEntManager = server.ResolveDependency<IEntityManager>();
@@ -236,7 +235,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             IEntity serverPlayerEnt = null;
             IEntity serverFlashlight = null;
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 serverPlayerEnt = serverPlayerManager.GetAllPlayers().Single().AttachedEntity;
                 serverActionsComponent = serverPlayerEnt!.GetComponent<ServerActionsComponent>();
@@ -268,14 +267,14 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.That(debugToggleState.Equals(new ActionState(false)));
             });
 
-            await server.WaitRunTicks(5);
-            await client.WaitRunTicks(5);
+            server.WaitRunTicks(5);
+            client.WaitRunTicks(5);
 
             // check that client has the actions, and toggle the light on via the action slot it was auto-assigned to
             var clientPlayerMgr = client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
             var clientUIMgr = client.ResolveDependency<IUserInterfaceManager>();
             EntityUid clientFlashlight = default;
-            await client.WaitAssertion(() =>
+            client.WaitAssertion(() =>
             {
                 var local = clientPlayerMgr.LocalPlayer;
                 var controlled = local!.ControlledEntity;
@@ -305,11 +304,11 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 clientActionsComponent.AttemptAction(toggleLightSlot);
             });
 
-            await server.WaitRunTicks(5);
-            await client.WaitRunTicks(5);
+            server.WaitRunTicks(5);
+            client.WaitRunTicks(5);
 
             // server should see the action toggled on
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.That(serverActionsComponent.ItemActionStates().TryGetValue(serverFlashlight.Uid, out var lightStates));
                 Assert.That(lightStates.TryGetValue(ItemActionType.ToggleLight, out var lightState));
@@ -317,14 +316,14 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             });
 
             // client should see it toggled on.
-            await client.WaitAssertion(() =>
+            client.WaitAssertion(() =>
             {
                 Assert.That(clientActionsComponent.ItemActionStates().TryGetValue(clientFlashlight, out var lightStates));
                 Assert.That(lightStates.TryGetValue(ItemActionType.ToggleLight, out var lightState));
                 Assert.That(lightState, Is.EqualTo(new ActionState(true, toggledOn: true)));
             });
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 // drop the item, and the item actions should go away
                 serverPlayerEnt.GetComponent<HandsComponent>()
@@ -332,16 +331,16 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.That(serverActionsComponent.ItemActionStates().ContainsKey(serverFlashlight.Uid), Is.False);
             });
 
-            await server.WaitRunTicks(5);
-            await client.WaitRunTicks(5);
+            server.WaitRunTicks(5);
+            client.WaitRunTicks(5);
 
             // client should see they have no item actions for that item either.
-            await client.WaitAssertion(() =>
+            client.WaitAssertion(() =>
             {
                 Assert.That(clientActionsComponent.ItemActionStates().ContainsKey(clientFlashlight), Is.False);
             });
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 // pick the item up again, the states should be back to what they were when dropped,
                 // as the states "stick" with the item
@@ -355,11 +354,11 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.That(debugToggleState.Equals(new ActionState(false)));
             });
 
-            await server.WaitRunTicks(5);
-            await client.WaitRunTicks(5);
+            server.WaitRunTicks(5);
+            client.WaitRunTicks(5);
 
             // client should see the actions again, with their states back to what they were
-            await client.WaitAssertion(() =>
+            client.WaitAssertion(() =>
             {
                 Assert.That(clientActionsComponent.ItemActionStates().TryGetValue(clientFlashlight, out var lightStates));
                 Assert.That(lightStates.TryGetValue(ItemActionType.ToggleLight, out var lightState));

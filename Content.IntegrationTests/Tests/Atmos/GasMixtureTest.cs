@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Content.Server.Atmos;
+﻿using Content.Server.Atmos;
 using Content.Shared.Atmos;
 using NUnit.Framework;
 
@@ -10,7 +9,7 @@ namespace Content.IntegrationTests.Tests.Atmos
     public class GasMixtureTest : ContentIntegrationTest
     {
         [Test]
-        public async Task TestMerge()
+        public void TestMerge()
         {
             var server = StartServerDummyTicker();
 
@@ -42,7 +41,7 @@ namespace Content.IntegrationTests.Tests.Atmos
                 Assert.That(a.GetMoles(Gas.Oxygen), Is.EqualTo(50));
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         [Test]
@@ -52,7 +51,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         [TestCase(1f)]
         [TestCase(0f)]
         [TestCase(Atmospherics.BreathPercentage)]
-        public async Task RemoveRatio(float ratio)
+        public void RemoveRatio(float ratio)
         {
             var server = StartServerDummyTicker();
 
@@ -79,7 +78,7 @@ namespace Content.IntegrationTests.Tests.Atmos
                 Assert.That(a.GetMoles(Gas.Nitrogen), Is.EqualTo(100 - b.GetMoles(Gas.Nitrogen)));
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

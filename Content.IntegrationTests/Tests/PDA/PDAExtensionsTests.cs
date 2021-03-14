@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -33,7 +32,7 @@ namespace Content.IntegrationTests.Tests.PDA
   - type: Item";
 
         [Test]
-        public async Task PlayerGetIdComponent()
+        public void PlayerGetIdComponent()
         {
             var clientOptions = new ClientIntegrationOptions
             {
@@ -45,14 +44,12 @@ namespace Content.IntegrationTests.Tests.PDA
                 ExtraPrototypes = Prototypes
             };
 
-            var (client, server) = await StartConnectedServerClientPair(clientOptions, serverOptions);
-
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+            var (client, server) = StartConnectedServerClientPair(clientOptions, serverOptions);
 
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
             var sEntityManager = server.ResolveDependency<IEntityManager>();
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var player = sPlayerManager.GetAllPlayers().Single().AttachedEntity;
 

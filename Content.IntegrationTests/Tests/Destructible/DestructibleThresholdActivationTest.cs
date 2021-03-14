@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Destructible;
 using Content.Server.GameObjects.Components.Destructible.Thresholds;
 using Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors;
@@ -20,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Destructible
     public class DestructibleThresholdActivationTest : ContentIntegrationTest
     {
         [Test]
-        public async Task Test()
+        public void Test()
         {
             var server = StartServerDummyTicker(new ServerContentIntegrationOption
             {
@@ -31,7 +30,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 }
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
@@ -41,7 +40,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             DestructibleComponent sDestructibleComponent = null;
             TestThresholdListenerComponent sThresholdListenerComponent = null;
 
-            await server.WaitPost(() =>
+            server.WaitPost(() =>
             {
                 var mapId = new MapId(1);
                 var coordinates = new MapCoordinates(0, 0, mapId);
@@ -53,14 +52,14 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sThresholdListenerComponent = sDestructibleEntity.GetComponent<TestThresholdListenerComponent>();
             });
 
-            await server.WaitRunTicks(5);
+            server.WaitRunTicks(5);
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
             });
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, 10, true));
 

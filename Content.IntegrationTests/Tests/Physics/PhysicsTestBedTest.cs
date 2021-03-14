@@ -25,7 +25,6 @@ These tests are derived from box2d's testbed tests but done in a way as to be au
  */
 
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -34,7 +33,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Dynamics.Shapes;
-using Robust.UnitTesting;
 
 namespace Content.IntegrationTests.Tests.Physics
 {
@@ -42,10 +40,10 @@ namespace Content.IntegrationTests.Tests.Physics
     public class PhysicsTestBedTest : ContentIntegrationTest
     {
         [Test]
-        public async Task TestBoxStack()
+        public void TestBoxStack()
         {
             var server = StartServer();
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
@@ -57,7 +55,7 @@ namespace Content.IntegrationTests.Tests.Physics
             PhysicsComponent[] bodies = new PhysicsComponent[columnCount * rowCount];
             Vector2 firstPos = Vector2.Zero;
 
-            await server.WaitPost(() =>
+            server.WaitPost(() =>
             {
                 mapId = mapManager.CreateMap();
                 physicsSystem.Maps[mapId].Gravity = new Vector2(0, -9.8f);
@@ -128,20 +126,20 @@ namespace Content.IntegrationTests.Tests.Physics
                 firstPos = bodies[0].Owner.Transform.WorldPosition;
             });
 
-            await server.WaitRunTicks(1);
+            server.WaitRunTicks(1);
 
             // Check that gravity workin
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.That(firstPos != bodies[0].Owner.Transform.WorldPosition);
             });
 
             // Assert
 
-            await server.WaitRunTicks(150);
+            server.WaitRunTicks(150);
 
             // Assert settled, none below 0, etc.
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 for (var j = 0; j < columnCount; j++)
                 {
@@ -159,10 +157,10 @@ namespace Content.IntegrationTests.Tests.Physics
         }
 
         [Test]
-        public async Task TestCircleStack()
+        public void TestCircleStack()
         {
             var server = StartServer();
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
@@ -174,7 +172,7 @@ namespace Content.IntegrationTests.Tests.Physics
             PhysicsComponent[] bodies = new PhysicsComponent[columnCount * rowCount];
             Vector2 firstPos = Vector2.Zero;
 
-            await server.WaitPost(() =>
+            server.WaitPost(() =>
             {
                 mapId = mapManager.CreateMap();
                 physicsSystem.Maps[mapId].Gravity = new Vector2(0, -9.8f);
@@ -237,20 +235,20 @@ namespace Content.IntegrationTests.Tests.Physics
                 firstPos = bodies[0].Owner.Transform.WorldPosition;
             });
 
-            await server.WaitRunTicks(1);
+            server.WaitRunTicks(1);
 
             // Check that gravity workin
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 Assert.That(firstPos != bodies[0].Owner.Transform.WorldPosition);
             });
 
             // Assert
 
-            await server.WaitRunTicks(150);
+            server.WaitRunTicks(150);
 
             // Assert settled, none below 0, etc.
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 for (var j = 0; j < columnCount; j++)
                 {

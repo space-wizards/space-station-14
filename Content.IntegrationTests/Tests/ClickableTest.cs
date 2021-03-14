@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Content.Client.GameObjects.Components;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
@@ -46,13 +45,13 @@ namespace Content.IntegrationTests.Tests
         [TestCase("ClickTestRotatingCornerInvisibleNoRot", -0.25f, -0.25f, DirNorth, 1, ExpectedResult = true)]
         [TestCase("ClickTestRotatingCornerInvisibleNoRot", 0, 0.35f, DirSouthEastJustShy, 1, ExpectedResult = false)]
         [TestCase("ClickTestRotatingCornerInvisibleNoRot", 0.25f, 0.25f, DirSouthEastJustShy, 1, ExpectedResult = true)]
-        public async Task<bool> Test(string prototype, float clickPosX, float clickPosY, double angle, float scale)
+        public bool Test(string prototype, float clickPosX, float clickPosY, double angle, float scale)
         {
-            var (client, server) = await StartConnectedServerClientPair();
+            var (client, server) = StartConnectedServerClientPair();
 
             EntityUid entity = default;
 
-            await server.WaitPost(() =>
+            server.WaitPost(() =>
             {
                 var entMgr = IoCManager.Resolve<IEntityManager>();
                 var ent = entMgr.SpawnEntity(prototype, new MapCoordinates(0, 0, new MapId(1)));
@@ -62,11 +61,11 @@ namespace Content.IntegrationTests.Tests
             });
 
             // Let client sync up.
-            await RunTicksSync(client, server, 5);
+            RunTicksSync(client, server, 5);
 
             var hit = false;
 
-            await client.WaitPost(() =>
+            client.WaitPost(() =>
             {
                 var entMgr = IoCManager.Resolve<IEntityManager>();
                 var ent = entMgr.GetEntity(entity);

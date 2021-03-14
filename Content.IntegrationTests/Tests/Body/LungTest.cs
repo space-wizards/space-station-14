@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Body.Circulatory;
@@ -48,7 +47,7 @@ namespace Content.IntegrationTests.Tests.Body
 ";
 
         [Test]
-        public async Task AirConsistencyTest()
+        public void AirConsistencyTest()
         {
             var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
@@ -131,16 +130,16 @@ namespace Content.IntegrationTests.Tests.Body
                 Assert.That(finalTotalNitrogen, Is.EqualTo(originalNitrogen).Within(0.000001f));
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         [Test]
-        public async Task NoSuffocationTest()
+        public void NoSuffocationTest()
         {
             var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -153,7 +152,7 @@ namespace Content.IntegrationTests.Tests.Body
 
             var testMapName = "Maps/Test/Breathing/3by3-20oxy-80nit.yml";
 
-            await server.WaitPost(() =>
+            server.WaitPost(() =>
             {
                 mapId = mapManager.CreateMap();
                 grid = mapLoader.LoadBlueprint(mapId, testMapName);
@@ -161,7 +160,7 @@ namespace Content.IntegrationTests.Tests.Body
 
             Assert.NotNull(grid, $"Test blueprint {testMapName} not found.");
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var center = new Vector2(0.5f, -1.5f);
                 var coordinates = new EntityCoordinates(grid.GridEntityId, center);
@@ -177,11 +176,11 @@ namespace Content.IntegrationTests.Tests.Body
 
             for (var tick = 0; tick < 600; tick += increment)
             {
-                await server.WaitRunTicks(increment);
+                server.WaitRunTicks(increment);
                 Assert.False(metabolism.Suffocating, $"Entity {human.Name} is suffocating on tick {tick}");
             }
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

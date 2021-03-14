@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Mobs;
 using Content.Server.Players;
 using Content.Shared.Utility;
@@ -17,9 +16,9 @@ namespace Content.IntegrationTests.Tests
     public class MindEntityDeletionTest : ContentIntegrationTest
     {
         [Test]
-        public async Task TestDeleteVisiting()
+        public void TestDeleteVisiting()
         {
-            var (_, server) = await StartConnectedServerDummyTickerClientPair();
+            var (_, server) = StartConnectedServerDummyTickerClientPair();
 
             IEntity playerEnt = null;
             IEntity visitEnt = null;
@@ -58,14 +57,14 @@ namespace Content.IntegrationTests.Tests
                 playerEnt.Delete();
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         [Test]
-        public async Task TestGhostOnDelete()
+        public void TestGhostOnDelete()
         {
             // Has to be a non-dummy ticker so we have a proper map.
-            var (_, server) = await StartConnectedServerClientPair();
+            var (_, server) = StartConnectedServerClientPair();
 
             IEntity playerEnt = null;
             Mind mind = null;
@@ -102,14 +101,14 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(mind.CurrentEntity.IsValid(), Is.True);
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         [Test]
-        public async Task TestGhostOnDeleteMap()
+        public void TestGhostOnDeleteMap()
         {
             // Has to be a non-dummy ticker so we have a proper map.
-            var (_, server) = await StartConnectedServerClientPair();
+            var (_, server) = StartConnectedServerClientPair();
 
             IEntity playerEnt = null;
             Mind mind = null;
@@ -154,7 +153,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(mind.CurrentEntity, Is.Not.EqualTo(playerEnt));
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

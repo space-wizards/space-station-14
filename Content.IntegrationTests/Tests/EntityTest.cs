@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -17,10 +16,10 @@ namespace Content.IntegrationTests.Tests
     public class EntityTest : ContentIntegrationTest
     {
         [Test]
-        public async Task SpawnTest()
+        public void SpawnTest()
         {
             var server = StartServerDummyTicker();
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityMan = server.ResolveDependency<IEntityManager>();
@@ -86,11 +85,11 @@ namespace Content.IntegrationTests.Tests
                 }
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         [Test]
-        public async Task AllComponentsOneToOneDeleteTest()
+        public void AllComponentsOneToOneDeleteTest()
         {
             var skipComponents = new[]
             {
@@ -107,7 +106,7 @@ namespace Content.IntegrationTests.Tests
   id: AllComponentsOneToOneDeleteTestEntity";
 
             var server = StartServerDummyTicker(new ServerContentIntegrationOption {ExtraPrototypes = testEntity});
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -181,11 +180,11 @@ namespace Content.IntegrationTests.Tests
                 }
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
 
         [Test]
-        public async Task AllComponentsOneEntityDeleteTest()
+        public void AllComponentsOneEntityDeleteTest()
         {
             var skipComponents = new[]
             {
@@ -202,7 +201,7 @@ namespace Content.IntegrationTests.Tests
   id: AllComponentsOneEntityDeleteTestEntity";
 
             var server = StartServerDummyTicker(new ServerContentIntegrationOption {ExtraPrototypes = testEntity});
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -311,7 +310,7 @@ namespace Content.IntegrationTests.Tests
                 }
             });
 
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
         }
     }
 }

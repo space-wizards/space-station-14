@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
@@ -14,12 +13,12 @@ namespace Content.IntegrationTests.Tests
     class SaveLoadMapTest : ContentIntegrationTest
     {
         [Test]
-        public async Task SaveLoadMultiGridMap()
+        public void SaveLoadMultiGridMap()
         {
             const string mapPath = @"/Maps/Test/TestMap.yml";
 
             var server = StartServer();
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -49,13 +48,13 @@ namespace Content.IntegrationTests.Tests
 
                 mapManager.DeleteMap(new MapId(5));
             });
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             server.Post(() =>
             {
                 mapLoader.LoadMap(new MapId(10), mapPath);
             });
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
 
             {
                 if(!mapManager.TryFindGridAt(new MapId(10), new Vector2(10,10), out var mapGrid))

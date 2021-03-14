@@ -1,10 +1,7 @@
 #nullable enable
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Storage;
 using NUnit.Framework;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -12,13 +9,13 @@ namespace Content.IntegrationTests.Tests
     public sealed class StorageFillTest : ContentIntegrationTest
     {
         [Test]
-        public async Task TestStorageFillPrototypes()
+        public void TestStorageFillPrototypes()
         {
             var server = StartServerDummyTicker();
-            await server.WaitIdleAsync();
+            server.WaitIdleAsync();
             var protoManager = server.ResolveDependency<IPrototypeManager>();
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
                 {

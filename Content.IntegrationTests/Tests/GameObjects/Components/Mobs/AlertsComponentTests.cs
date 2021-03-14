@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
@@ -7,7 +6,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Alert;
 using NUnit.Framework;
 using Robust.Client.UserInterface;
-using IPlayerManager = Robust.Server.Player.IPlayerManager;
+using Robust.Server.Player;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 {
@@ -17,16 +16,16 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
     public class AlertsComponentTests : ContentIntegrationTest
     {
         [Test]
-        public async Task AlertsTest()
+        public void AlertsTest()
         {
-            var (client, server) = await StartConnectedServerClientPair();
+            var (client, server) = StartConnectedServerClientPair();
 
-            await server.WaitIdleAsync();
-            await client.WaitIdleAsync();
+            server.WaitIdleAsync();
+            client.WaitIdleAsync();
 
             var serverPlayerManager = server.ResolveDependency<IPlayerManager>();
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var player = serverPlayerManager.GetAllPlayers().Single();
                 var playerEnt = player.AttachedEntity;
@@ -39,12 +38,12 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 alertsComponent.ShowAlert(AlertType.Debug2);
             });
 
-            await server.WaitRunTicks(5);
-            await client.WaitRunTicks(5);
+            server.WaitRunTicks(5);
+            client.WaitRunTicks(5);
 
             var clientPlayerMgr = client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
             var clientUIMgr = client.ResolveDependency<IUserInterfaceManager>();
-            await client.WaitAssertion(() =>
+            client.WaitAssertion(() =>
             {
 
                 var local = clientPlayerMgr.LocalPlayer;
@@ -67,7 +66,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.That(alertIDs, Is.SupersetOf(expectedIDs));
             });
 
-            await server.WaitAssertion(() =>
+            server.WaitAssertion(() =>
             {
                 var player = serverPlayerManager.GetAllPlayers().Single();
                 var playerEnt = player.AttachedEntity;
@@ -77,10 +76,10 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
                 alertsComponent.ClearAlert(AlertType.Debug1);
             });
-            await server.WaitRunTicks(5);
-            await client.WaitRunTicks(5);
+            server.WaitRunTicks(5);
+            client.WaitRunTicks(5);
 
-            await client.WaitAssertion(() =>
+            client.WaitAssertion(() =>
             {
 
                 var local = clientPlayerMgr.LocalPlayer;
