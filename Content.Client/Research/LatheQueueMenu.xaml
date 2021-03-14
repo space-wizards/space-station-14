@@ -1,0 +1,12 @@
+﻿<SS14Window xmlns="https://spacestation14.io">
+    <VBoxContainer>
+        <HBoxContainer HorizontalExpand="True" SizeFlagsStretchRatio="2">
+            <TextureRect Name="IconTexture" HorizontalExpand="true" SizeFlagsStretchRatio="2"/>
+            <VBoxContainer VerticalExpand="True" SizeFlagsStretchRatio="3">
+                <Label Name="NameLabel" RectClipContent="True"/>
+                <Label Name="DescriptionLabel" RectClipContent="True" VerticalAlignment="Stretch" VerticalExpand="True"/>
+            </VBoxContainer>
+        </HBoxContainer>
+        <ItemList Name="QueueItemList" VerticalExpand="True" SizeFlagsStretchRatio="3" SelectMode="None"/>
+    </VBoxContainer>
+</SS14Window>

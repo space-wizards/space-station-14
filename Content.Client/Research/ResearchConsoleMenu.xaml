@@ -1,0 +1,26 @@
+﻿<SS14Window xmlns="https://spacestation14.io">
+    <VBoxContainer>
+        <HBoxContainer>
+            <ItemList Name="UnlockedTechnologiesList" SelectMode="Button" HorizontalExpand="True" VerticalExpand="True"/>
+            <ItemList Name="UnlockableTechnologiesList" SelectMode="Button" HorizontalExpand="True" VerticalExpand="True"/>
+            <ItemList Name="FutureTechnologies" SelectMode="Button" HorizontalExpand="True" VerticalExpand="True"/>
+        </HBoxContainer>
+        <HBoxContainer>
+            <TextureRect HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="1" Stretch="KeepAspectCentered"/>
+            <VBoxContainer>
+                <Label Name="TechnologyNameLabel"/>
+                <Label Name="TechnologyDescriptionLabel"/>
+                <Label Name="TechnologyRequirements"/>
+            </VBoxContainer>
+            <VBoxContainer>
+                <Label Name="PointLabel" Text="Research Points: 0"/>
+                <Label Name="PointsPerSecondLabel" Text="Points per Second: 0"/>
+                <VBoxContainer>
+                    <Button Name="ServerSelectionButton" Text="Set R&D Server"/>
+                    <Button Name="ServerSyncButton" Text="Sync"/>
+                    <Button Name="UnlockButton" Text="Unlock" Disabled="True"/>
+                </VBoxContainer>
+            </VBoxContainer>
+        </HBoxContainer>
+    </VBoxContainer>
+</SS14Window>
