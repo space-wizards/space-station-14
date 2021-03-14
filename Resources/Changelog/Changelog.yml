@@ -450,3 +450,8 @@ Entries:
   - {message: Added announcements to the comms console. Cooldown is 90 seconds., type: Add}
   id: 82
   time: '2021-03-14T05:21:57.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Updated chemistry layout on Saltern, type: Add}
+  id: 83
+  time: '2021-03-14T05:24:22.0000000+00:00'
