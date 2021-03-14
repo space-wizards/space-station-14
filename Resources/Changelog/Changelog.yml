@@ -445,3 +445,8 @@ Entries:
   - {message: Increased cloning time from 10 seconds to 2 minutes, type: Tweak}
   id: 81
   time: '2021-03-13T09:57:52.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Added announcements to the comms console. Cooldown is 90 seconds., type: Add}
+  id: 82
+  time: '2021-03-14T05:21:57.0000000+00:00'
