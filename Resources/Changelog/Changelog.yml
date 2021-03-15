@@ -520,3 +520,8 @@ Entries:
   - {message: Fix text messages for climbable objects (like tables or windows), type: Fix}
   id: 95
   time: '2021-03-15T18:02:56.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes not being able to ghost when you are a brain or head., type: Fix}
+  id: 96
+  time: '2021-03-15T20:28:58.787181+00:00'
