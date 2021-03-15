@@ -15,13 +15,9 @@ namespace Content.Server.GameObjects.Components.Morgue
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(Morgue != null && !Morgue.Deleted && Morgue.TryGetComponent<MorgueEntityStorageComponent>(out var comp))
+            if (Morgue != null && !Morgue.Deleted && Morgue.TryGetComponent<MorgueEntityStorageComponent>(out var comp))
             {
-                comp.Activate(new ActivateEventArgs()
-                {
-                    User = eventArgs.User,
-                    Target = Morgue
-                });
+                comp.Activate(new ActivateEventArgs(eventArgs.User, Morgue));
             }
         }
     }

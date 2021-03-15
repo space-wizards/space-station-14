@@ -6,7 +6,6 @@ using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.Construction;
-using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Client.Graphics;
 using Robust.Client.Placement;
@@ -18,7 +17,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Construction
 {
@@ -224,15 +222,21 @@ namespace Content.Client.Construction
             var startNode = graph.Nodes[prototype.StartNode];
             var targetNode = graph.Nodes[prototype.TargetNode];
 
-            var path = graph.Path(startNode.Name, targetNode.Name);
+            if (!graph.TryPath(startNode.Name, targetNode.Name, out var path))
+            {
+                return;
+            }
 
             var current = startNode;
-
             var stepNumber = 1;
 
             foreach (var node in path)
             {
-                var edge = current.GetEdge(node.Name);
+                if (!current.TryGetEdge(node.Name, out var edge))
+                {
+                    continue;
+                }
+
                 var firstNode = current == startNode;
 
                 if (firstNode)
