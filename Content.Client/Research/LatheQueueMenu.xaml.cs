@@ -22,7 +22,7 @@ namespace Content.Client.Research
 
             Owner = owner;
             SetSize = MinSize = (300, 450);
-            Title = Loc.GetString("lathe-queue-title");
+            Title = Loc.GetString("ui-lathe-queue-title");
 
             ClearInfo();
         }
@@ -37,8 +37,8 @@ namespace Content.Client.Research
         public void ClearInfo()
         {
             IconTexture.Texture = Texture.Transparent;
-            NameLabel.Text = Loc.GetString("lathe-queue-empty-name");
-            DescriptionLabel.Text = Loc.GetString("lathe-queue-empty-desc");
+            NameLabel.Text = Loc.GetString("ui-lathe-queue-empty-name");
+            DescriptionLabel.Text = Loc.GetString("ui-lathe-queue-empty-desc");
         }
 
         public void PopulateList()
@@ -47,7 +47,7 @@ namespace Content.Client.Research
             var idx = 1;
             foreach (var recipe in Owner.QueuedRecipes)
             {
-                var itemstr = Loc.GetString("lathe-queue-item", ("number", idx), ("name", recipe.Name));
+                var itemstr = Loc.GetString("ui-lathe-queue-item", ("number", idx), ("name", recipe.Name));
                 QueueItemList.AddItem(itemstr, recipe.Icon.Frame0());
                 idx++;
             }

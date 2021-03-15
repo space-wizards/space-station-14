@@ -53,17 +53,17 @@ namespace Content.Client.GameObjects.Components.Research
             _menu.Populate();
             _menu.PopulateMaterials();
 
-            /*_menu.QueueButton.OnPressed += (_) => { _queueMenu.OpenCentered(); };
+            _menu.QueueButtonProp.OnPressed += (_) => { _queueMenu.OpenCentered(); };
 
-            _menu.ServerConnectButton.OnPressed += (_) =>
+            _menu.ServerConnectButtonProp.OnPressed += (_) =>
             {
                 SendMessage(new LatheServerSelectionMessage());
             };
 
-            _menu.ServerSyncButton.OnPressed += (_) =>
+            _menu.ServerSyncButtonProp.OnPressed += (_) =>
             {
                 SendMessage(new LatheServerSyncMessage());
-            };*/
+            };
 
             storage.OnMaterialStorageChanged += _menu.PopulateDisabled;
             storage.OnMaterialStorageChanged += _menu.PopulateMaterials;

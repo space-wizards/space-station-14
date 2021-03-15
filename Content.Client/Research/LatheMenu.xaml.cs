@@ -23,6 +23,10 @@ namespace Content.Client.Research
         private LatheBoundUserInterface Owner { get; }
         private readonly List<LatheRecipePrototype> _shownRecipes = new();
 
+        public Button ServerConnectButtonProp => ServerConnectButton;
+        public Button ServerSyncButtonProp => ServerSyncButton;
+        public Button QueueButtonProp => QueueButton;
+
         public LatheMenu(LatheBoundUserInterface owner)
         {
             RobustXamlLoader.Load(this);
@@ -33,22 +37,22 @@ namespace Content.Client.Research
 
             if (Owner.Database is ProtolatheDatabaseComponent database)
             {
-                Title = Loc.GetString("lathe-protolathe-title");
+                Title = Loc.GetString("ui-lathe-protolathe-title");
                 ServerConnectButton.Visible = true;
                 ServerSyncButton.Visible = true;
                 database.OnDatabaseUpdated += Populate;
             }
             else
             {
-                Title = Loc.GetString("lathe-autolathe-title");
+                Title = Loc.GetString("ui-lathe-autolathe-title");
             }
 
-            QueueButton.Text = Loc.GetString("lathe-queue-button-default");
-            ServerConnectButton.Text = Loc.GetString("lathe-connect-button-default");
-            ServerSyncButton.Text = Loc.GetString("lathe-sync-button-default");
-            SearchBar.PlaceHolder = Loc.GetString("lathe-search-placeholder");
-            FilterButton.Text = Loc.GetString("lathe-filter-button-default");
-            AmountLineEdit.PlaceHolder = Loc.GetString("lathe-amount-placeholder");
+            QueueButton.Text = Loc.GetString("ui-lathe-queue-button-default");
+            ServerConnectButton.Text = Loc.GetString("ui-lathe-connect-button-default");
+            ServerSyncButton.Text = Loc.GetString("ui-lathe-sync-button-default");
+            SearchBar.PlaceHolder = Loc.GetString("ui-lathe-search-placeholder");
+            FilterButton.Text = Loc.GetString("ui-lathe-filter-button-default");
+            AmountLineEdit.PlaceHolder = Loc.GetString("ui-lathe-amount-placeholder");
 
             SearchBar.OnTextChanged += Populate;
             ItemsItemList.OnItemSelected += ItemSelected;
@@ -73,7 +77,7 @@ namespace Content.Client.Research
             {
                 if (!_prototypeManager.TryIndex(id, out MaterialPrototype? materialPrototype)) continue;
                 var material = materialPrototype;
-                var matstring = Loc.GetString("lathe-material-item", ("material", material.Name), ("quantity", amount));
+                var matstring = Loc.GetString("ui-lathe-material-item", ("material", material.Name), ("quantity", amount));
                 MaterialsItemList.AddItem(matstring, material.Icon.Frame0(), false);
             }
         }

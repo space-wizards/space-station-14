@@ -30,17 +30,17 @@ namespace Content.Client.GameObjects.Components.Research
 
             _consoleMenu.OnClose += Close;
 
-            _consoleMenu.ServerSyncButton.OnPressed += (_) =>
+            _consoleMenu.ServerSyncButtonProp.OnPressed += (_) =>
             {
                 SendMessage(new ConsoleServerSyncMessage());
             };
 
-            _consoleMenu.ServerSelectionButton.OnPressed += (_) =>
+            _consoleMenu.ServerConnectButtonProp.OnPressed += (_) =>
             {
                 SendMessage(new ConsoleServerSelectionMessage());
             };
 
-            _consoleMenu.UnlockButton.OnPressed += (_) =>
+            _consoleMenu.UnlockButtonProp.OnPressed += (_) =>
             {
                 if (_consoleMenu.TechnologySelected != null)
                 {
