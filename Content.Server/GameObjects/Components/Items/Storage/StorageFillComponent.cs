@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
@@ -59,7 +61,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         [DataDefinition]
         public struct StorageFillEntry : IPopulateDefaultValues
         {
-            [DataField("name")]
+            [DataField("name", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
             public string? PrototypeName;
 
             [DataField("prob")]
