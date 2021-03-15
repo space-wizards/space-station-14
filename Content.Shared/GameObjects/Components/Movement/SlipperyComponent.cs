@@ -1,13 +1,17 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -15,7 +19,8 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
-    public abstract class SharedSlipperyComponent : Component, IStartCollide
+    [RegisterComponent]
+    public class SlipperyComponent : Component, IStartCollide
     {
         public sealed override string Name => "Slippery";
 
@@ -27,10 +32,14 @@ namespace Content.Shared.GameObjects.Components.Movement
         private string _slipSound = "/Audio/Effects/slip.ogg";
 
         /// <summary>
-        ///     The list of entities that have been slipped by this component,
-        ///     and which have not stopped colliding with its owner yet.
+        ///     List of entities that are currently colliding with the entity.
         /// </summary>
-        protected readonly List<EntityUid> _slipped = new();
+        private readonly HashSet<EntityUid> _colliding = new();
+
+        /// <summary>
+        ///     The list of entities that have been slipped by this component, which shouldn't be slipped again.
+        /// </summary>
+        private readonly HashSet<EntityUid> _slipped = new();
 
         /// <summary>
         ///     Path to the sound to be played when a mob slips.
@@ -166,17 +175,17 @@ namespace Content.Shared.GameObjects.Components.Movement
 
             stun.Paralyze(5);
             _slipped.Add(otherBody.Entity.Uid);
+            Dirty();
 
-            OnSlip();
+            if (!string.IsNullOrEmpty(SlipSound))
+                SoundSystem.Play(Filter.Broadcast(), SlipSound, Owner, AudioHelpers.WithVariation(0.2f));
 
             return true;
         }
 
-        protected virtual void OnSlip() { }
-
         void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            TrySlip(ourBody, otherBody);
+            _colliding.Add(otherBody.Owner.Uid);
         }
 
         public void Update()
@@ -184,11 +193,13 @@ namespace Content.Shared.GameObjects.Components.Movement
             if (!Slippery)
                 return;
 
-            foreach (var uid in _slipped.ToArray())
+            foreach (var uid in _colliding.ToArray())
             {
                 if (!uid.IsValid() || !Owner.EntityManager.EntityExists(uid))
                 {
+                    _colliding.Remove(uid);
                     _slipped.Remove(uid);
+                    Dirty();
                     continue;
                 }
 
@@ -198,20 +209,24 @@ namespace Content.Shared.GameObjects.Components.Movement
 
                 if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                 {
+                    _colliding.Remove(uid);
                     _slipped.Remove(uid);
+                    Dirty();
+                    continue;
                 }
+
+                if (!_slipped.Contains(uid))
+                    TrySlip(physics, otherPhysics);
             }
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new SlipperyComponentState(ParalyzeTime, IntersectPercentage, RequiredSlipSpeed, LaunchForwardsMultiplier, Slippery, SlipSound);
+            return new SlipperyComponentState(ParalyzeTime, IntersectPercentage, RequiredSlipSpeed, LaunchForwardsMultiplier, Slippery, SlipSound, _slipped.ToArray());
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            base.HandleComponentState(curState, nextState);
-
             if (curState is not SlipperyComponentState state) return;
 
             _slippery = state.Slippery;
@@ -220,6 +235,12 @@ namespace Content.Shared.GameObjects.Components.Movement
             _requiredSlipSpeed = state.RequiredSlipSpeed;
             _launchForwardsMultiplier = state.LaunchForwardsMultiplier;
             _slipSound = state.SlipSound;
+            _slipped.Clear();
+
+            foreach (var slipped in state.Slipped)
+            {
+                _slipped.Add(slipped);
+            }
         }
     }
 
@@ -232,8 +253,9 @@ namespace Content.Shared.GameObjects.Components.Movement
         public float LaunchForwardsMultiplier { get; }
         public bool Slippery { get; }
         public string SlipSound { get; }
+        public readonly EntityUid[] Slipped;
 
-        public SlipperyComponentState(float paralyzeTime, float intersectPercentage, float requiredSlipSpeed, float launchForwardsMultiplier, bool slippery, string slipSound) : base(ContentNetIDs.SLIP)
+        public SlipperyComponentState(float paralyzeTime, float intersectPercentage, float requiredSlipSpeed, float launchForwardsMultiplier, bool slippery, string slipSound, EntityUid[] slipped) : base(ContentNetIDs.SLIP)
         {
             ParalyzeTime = paralyzeTime;
             IntersectPercentage = intersectPercentage;
@@ -241,6 +263,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             LaunchForwardsMultiplier = launchForwardsMultiplier;
             Slippery = slippery;
             SlipSound = slipSound;
+            Slipped = slipped;
         }
     }
 }
