@@ -505,3 +505,8 @@ Entries:
     type: Fix}
   id: 92
   time: '2021-03-15T08:38:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Remove collisions for wall lights, carpets, catwalks', type: Tweak}
+  id: 93
+  time: '2021-03-15T09:45:43.0000000+00:00'
