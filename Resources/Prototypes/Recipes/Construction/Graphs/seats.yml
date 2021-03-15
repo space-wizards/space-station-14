@@ -7,57 +7,36 @@
         - !type:DeleteEntity {}
       edges:
         - to: chair
-          completed:
-            - !type:SetAnchor
-              value: true
           steps:
             - material: Steel
               amount: 1
               doAfter: 1
         - to: stool
-          completed:
-            - !type:SetAnchor
-              value: true
           steps:
             - material: Steel
               amount: 1
               doAfter: 1
         - to: stoolBar
-          completed:
-            - !type:SetAnchor
-              value: true
           steps:
             - material: Steel
               amount: 1
               doAfter: 1
         - to: chairOffice
-          completed:
-            - !type:SetAnchor
-              value: true
           steps:
             - material: Steel
               amount: 2
               doAfter: 1
         - to: chairOfficeDark
-          completed:
-            - !type:SetAnchor
-              value: true
           steps:
             - material: Steel
               amount: 2
               doAfter: 1
         - to: chairComfy
-          completed:
-            - !type:SetAnchor
-              value: true
           steps:
             - material: Steel
               amount: 5
               doAfter: 1
         - to: chairWood
-          completed:
-            - !type:SetAnchor
-              value: true
           steps:
             - material: WoodPlank
               amount: 3
