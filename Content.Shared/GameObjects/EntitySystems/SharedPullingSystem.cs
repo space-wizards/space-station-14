@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Pulling;
+using Content.Shared.GameObjects.EntitySystemMessages.Pulling;
+using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
 using JetBrains.Annotations;
@@ -14,13 +16,18 @@ using Robust.Shared.Players;
 namespace Content.Shared.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class SharedPullingSystem : EntitySystem
+    public abstract class SharedPullingSystem : EntitySystem, IResettingEntitySystem
     {
         /// <summary>
         ///     A mapping of pullers to the entity that they are pulling.
         /// </summary>
         private readonly Dictionary<IEntity, IEntity> _pullers =
             new();
+
+        private readonly HashSet<SharedPullableComponent> _moving = new();
+        private readonly HashSet<SharedPullableComponent> _stoppedMoving = new();
+
+        public IReadOnlySet<SharedPullableComponent> Moving => _moving;
 
         public override void Initialize()
         {
@@ -34,6 +41,21 @@ namespace Content.Shared.GameObjects.EntitySystems
                 .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
                 .Bind(ContentKeyFunctions.ReleasePulledObject, InputCmdHandler.FromDelegate(HandleReleasePulledObject))
                 .Register<SharedPullingSystem>();
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            _moving.ExceptWith(_stoppedMoving);
+            _stoppedMoving.Clear();
+        }
+
+        public void Reset()
+        {
+            _pullers.Clear();
+            _moving.Clear();
+            _stoppedMoving.Clear();
         }
 
         private void OnPullStarted(PullStartedMessage message)
@@ -50,6 +72,16 @@ namespace Content.Shared.GameObjects.EntitySystems
         private void OnPullStopped(PullStoppedMessage message)
         {
             RemovePuller(message.Puller.Owner);
+        }
+
+        protected void OnPullableMove(EntityUid uid, SharedPullableComponent component, PullableMoveMessage args)
+        {
+            _moving.Add(component);
+        }
+
+        protected void OnPullableStopMove(EntityUid uid, SharedPullableComponent component, PullableStopMovingMessage args)
+        {
+            _stoppedMoving.Add(component);
         }
 
         private void PullerMoved(MoveEvent ev)
@@ -86,7 +118,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 return false;
             }
 
-            pullable.TryMoveTo(coords);
+            pullable.TryMoveTo(coords.ToMap(EntityManager));
 
             return false;
         }

@@ -3,6 +3,7 @@ using System;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.EntitySystemMessages.Pulling;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
@@ -28,10 +29,14 @@ namespace Content.Shared.GameObjects.Components.Pulling
         /// Only set in Puller->set! Only set in unison with _pullerPhysics!
         /// </summary>
         private IEntity? _puller;
-        private IPhysBody? _pullerPhysics;
-        public IPhysBody? PullerPhysics => _pullerPhysics;
+
+        public IPhysBody? PullerPhysics { get; private set; }
 
         private DistanceJoint? _pullJoint;
+
+        public float? MaxDistance => _pullJoint?.MaxLength;
+
+        private MapCoordinates? _movingTo;
 
         /// <summary>
         /// The current entity pulling this component.
@@ -51,11 +56,11 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 if (_puller != null)
                 {
                     var oldPuller = _puller;
-                    var oldPullerPhysics = _pullerPhysics;
+                    var oldPullerPhysics = PullerPhysics;
 
                     _puller = null;
                     Dirty();
-                    _pullerPhysics = null;
+                    PullerPhysics = null;
 
                     if (_physics != null && oldPullerPhysics != null)
                     {
@@ -140,16 +145,16 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                     _puller = value;
                     Dirty();
-                    _pullerPhysics = pullerPhysics;
+                    PullerPhysics = pullerPhysics;
 
-                    var message = new PullStartedMessage(_pullerPhysics, _physics);
+                    var message = new PullStartedMessage(PullerPhysics, _physics);
 
                     _puller.SendMessage(null, message);
                     Owner.SendMessage(null, message);
 
                     _puller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
-                    var union = _pullerPhysics.GetWorldAABB().Union(_physics.GetWorldAABB());
+                    var union = PullerPhysics.GetWorldAABB().Union(_physics.GetWorldAABB());
                     var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
                     _physics.WakeBody();
@@ -165,7 +170,25 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
         public bool BeingPulled => Puller != null;
 
-        public EntityCoordinates? MovingTo { get; set; }
+        public MapCoordinates? MovingTo
+        {
+            get => _movingTo;
+            set
+            {
+                if (_movingTo == value)
+                {
+                    return;
+                }
+
+                _movingTo = value;
+
+                EntityEventArgs message = value == null
+                    ? new PullableStopMovingMessage()
+                    : new PullableMoveMessage();
+
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, message);
+            }
+        }
 
         /// <summary>
         /// Sanity-check pull. This is called from Puller setter, so it will never deny a pull that's valid by setting Puller.
@@ -256,7 +279,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
             return TryStartPull(puller);
         }
 
-        public bool TryMoveTo(EntityCoordinates to)
+        public bool TryMoveTo(MapCoordinates to)
         {
             if (Puller == null)
             {
@@ -315,10 +338,10 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
             switch (message)
             {
-                case PullStartedMessage msg:
+                case PullStartedMessage:
                     pulledStatus?.ShowAlert(AlertType.Pulled);
                     break;
-                case PullStoppedMessage msg:
+                case PullStoppedMessage:
                     pulledStatus?.ClearAlert(AlertType.Pulled);
                     break;
             }
@@ -327,6 +350,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
         public override void OnRemove()
         {
             TryStopPull();
+            MovingTo = null;
 
             base.OnRemove();
         }
