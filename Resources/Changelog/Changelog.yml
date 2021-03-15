@@ -525,3 +525,8 @@ Entries:
   - {message: Fixes not being able to ghost when you are a brain or head., type: Fix}
   id: 96
   time: '2021-03-15T20:28:58.787181+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes soap and banana peels going through walls when thrown., type: Fix}
+  id: 97
+  time: '2021-03-15T20:30:41.728992+00:00'
