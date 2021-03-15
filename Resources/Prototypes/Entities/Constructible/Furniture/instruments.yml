@@ -25,7 +25,6 @@
     interfaces:
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
-  - type: Climbable
 
 - type: entity
   name: piano
@@ -37,6 +36,7 @@
     program: 1
   - type: Sprite
     state: piano
+  - type: Climbable
 
 - type: entity
   name: minimoog
