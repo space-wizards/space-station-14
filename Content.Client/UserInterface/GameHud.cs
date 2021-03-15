@@ -64,8 +64,8 @@ namespace Content.Client.UserInterface
 
         Control HandsContainer { get; }
         Control SuspicionContainer { get; }
-        Control BottomInventoryQuickButtonContainer { get; }
-        Control MiddleInventoryQuickButtonContainer { get; }
+        Control BottomLeftInventoryQuickButtonContainer { get; }
+        Control BottomRightInventoryQuickButtonContainer { get; }
         Control TopInventoryQuickButtonContainer { get; }
 
         bool CombatPanelVisible { get; set; }
@@ -101,12 +101,9 @@ namespace Content.Client.UserInterface
 
         public Control HandsContainer { get; private set; } = default!;
         public Control SuspicionContainer { get; private set; } = default!;
-        public Control RightInventoryQuickButtonContainer { get; private set; } = default!;
-        public Control LeftInventoryQuickButtonContainer { get; private set; } = default!;
-
         public Control TopInventoryQuickButtonContainer { get; private set; } = default!;
-        public Control MiddleInventoryQuickButtonContainer { get; private set; } = default!;
-        public Control BottomInventoryQuickButtonContainer { get; private set; } = default!;
+        public Control BottomLeftInventoryQuickButtonContainer { get; private set; } = default!;
+        public Control BottomRightInventoryQuickButtonContainer { get; private set; } = default!;
 
         public bool CombatPanelVisible
         {
@@ -266,7 +263,7 @@ namespace Content.Client.UserInterface
 
             _combatPanelContainer = new VBoxContainer
             {
-                HorizontalAlignment = Control.HAlignment.Right,
+                HorizontalAlignment = Control.HAlignment.Left,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 Children =
                 {
@@ -281,7 +278,7 @@ namespace Content.Client.UserInterface
 
             _targetingDoll.OnZoneChanged += args => OnTargetingZoneChanged?.Invoke(args);
 
-            var centerBottomContainer = new HBoxContainer
+            var centerBottomContainer = new VBoxContainer
             {
                 SeparationOverride = 5
             };
@@ -295,18 +292,33 @@ namespace Content.Client.UserInterface
             HandsContainer = new Control
             {
                 VerticalAlignment = Control.VAlignment.Bottom,
+                HorizontalAlignment = Control.HAlignment.Center
             };
-            RightInventoryQuickButtonContainer = new Control
+            BottomRightInventoryQuickButtonContainer = new HBoxContainer()
             {
                 VerticalAlignment = Control.VAlignment.Bottom,
+                HorizontalAlignment = Control.HAlignment.Left
             };
-            LeftInventoryQuickButtonContainer = new Control
+            BottomLeftInventoryQuickButtonContainer = new HBoxContainer()
             {
                 VerticalAlignment = Control.VAlignment.Bottom,
+                HorizontalAlignment = Control.HAlignment.Right
             };
-            centerBottomContainer.AddChild(LeftInventoryQuickButtonContainer);
-            centerBottomContainer.AddChild(HandsContainer);
-            centerBottomContainer.AddChild(RightInventoryQuickButtonContainer);
+            TopInventoryQuickButtonContainer = new HBoxContainer()
+            {
+                VerticalAlignment = Control.VAlignment.Bottom,
+                HorizontalAlignment = Control.HAlignment.Center
+            };
+            var bottomRow = new HBoxContainer()
+            {
+                HorizontalAlignment = Control.HAlignment.Center
+            };
+            bottomRow.AddChild(BottomLeftInventoryQuickButtonContainer);
+            bottomRow.AddChild(HandsContainer);
+            bottomRow.AddChild(BottomRightInventoryQuickButtonContainer);
+
+            centerBottomContainer.AddChild(TopInventoryQuickButtonContainer);
+            centerBottomContainer.AddChild(bottomRow);
 
             SuspicionContainer = new Control
             {
@@ -324,27 +336,10 @@ namespace Content.Client.UserInterface
             LC.SetMarginRight(rightBottomContainer, -10f);
             RootControl.AddChild(rightBottomContainer);
 
-            TopInventoryQuickButtonContainer = new HBoxContainer()
-            {
-                HorizontalAlignment = Control.HAlignment.Right,
-                VerticalAlignment = Control.VAlignment.Bottom,
-            };
-
-            MiddleInventoryQuickButtonContainer = new HBoxContainer()
-            {
-                HorizontalAlignment = Control.HAlignment.Right,
-                VerticalAlignment = Control.VAlignment.Bottom,
-            };
-
-            BottomInventoryQuickButtonContainer = new HBoxContainer()
-            {
-                VerticalAlignment = Control.VAlignment.Bottom,
-                HorizontalAlignment = Control.HAlignment.Right,
-            };
             var inventoryContainer = new VBoxContainer();
-            inventoryContainer.AddChild(TopInventoryQuickButtonContainer);
-            inventoryContainer.AddChild(MiddleInventoryQuickButtonContainer);
-            inventoryContainer.AddChild(BottomInventoryQuickButtonContainer);
+            //inventoryContainer.AddChild(TopInventoryQuickButtonContainer);
+            //inventoryContainer.AddChild(MiddleInventoryQuickButtonContainer);
+            //inventoryContainer.AddChild(BottomInventoryQuickButtonContainer);
 
             rightBottomContainer.AddChild(_combatPanelContainer);
             rightBottomContainer.AddChild(inventoryContainer);
