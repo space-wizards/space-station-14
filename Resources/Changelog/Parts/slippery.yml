@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Fix
+    message: Fixes a misprediction that ocurred when walking over vomit puddles.

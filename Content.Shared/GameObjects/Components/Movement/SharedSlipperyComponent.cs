@@ -1,15 +1,14 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
-using Content.Shared.Physics;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -20,17 +19,36 @@ namespace Content.Shared.GameObjects.Components.Movement
     {
         public sealed override string Name => "Slippery";
 
-        protected float _paralyzeTime = 3f;
-        protected float _intersectPercentage = 0.3f;
-        protected float _requiredSlipSpeed = 0.1f;
-        protected float _launchForwardsMultiplier = 1f;
-        protected bool _slippery = true;
+        private float _paralyzeTime = 3f;
+        private float _intersectPercentage = 0.3f;
+        private float _requiredSlipSpeed = 0.1f;
+        private float _launchForwardsMultiplier = 1f;
+        private bool _slippery = true;
+        private string _slipSound = "/Audio/Effects/slip.ogg";
 
         /// <summary>
         ///     The list of entities that have been slipped by this component,
         ///     and which have not stopped colliding with its owner yet.
         /// </summary>
         protected readonly List<EntityUid> _slipped = new();
+
+        /// <summary>
+        ///     Path to the sound to be played when a mob slips.
+        /// </summary>
+        [ViewVariables]
+        [DataField("slipSound")]
+        public string SlipSound
+        {
+            get => _slipSound;
+            set
+            {
+                if (value == _slipSound)
+                    return;
+
+                _slipSound = value;
+                Dirty();
+            }
+        }
 
         /// <summary>
         ///     How many seconds the mob will be paralyzed for.
@@ -184,6 +202,25 @@ namespace Content.Shared.GameObjects.Components.Movement
                 }
             }
         }
+
+        public override ComponentState GetComponentState(ICommonSession player)
+        {
+            return new SlipperyComponentState(ParalyzeTime, IntersectPercentage, RequiredSlipSpeed, LaunchForwardsMultiplier, Slippery, SlipSound);
+        }
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not SlipperyComponentState state) return;
+
+            _slippery = state.Slippery;
+            _intersectPercentage = state.IntersectPercentage;
+            _paralyzeTime = state.ParalyzeTime;
+            _requiredSlipSpeed = state.RequiredSlipSpeed;
+            _launchForwardsMultiplier = state.LaunchForwardsMultiplier;
+            _slipSound = state.SlipSound;
+        }
     }
 
     [Serializable, NetSerializable]
@@ -194,14 +231,16 @@ namespace Content.Shared.GameObjects.Components.Movement
         public float RequiredSlipSpeed { get; }
         public float LaunchForwardsMultiplier { get; }
         public bool Slippery { get; }
+        public string SlipSound { get; }
 
-        public SlipperyComponentState(float paralyzeTime, float intersectPercentage, float requiredSlipSpeed, float launchForwardsMultiplier, bool slippery) : base(ContentNetIDs.SLIP)
+        public SlipperyComponentState(float paralyzeTime, float intersectPercentage, float requiredSlipSpeed, float launchForwardsMultiplier, bool slippery, string slipSound) : base(ContentNetIDs.SLIP)
         {
             ParalyzeTime = paralyzeTime;
             IntersectPercentage = intersectPercentage;
             RequiredSlipSpeed = requiredSlipSpeed;
             LaunchForwardsMultiplier = launchForwardsMultiplier;
             Slippery = slippery;
+            SlipSound = slipSound;
         }
     }
 }
