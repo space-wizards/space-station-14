@@ -53,6 +53,9 @@
       - Impassable
       - VaultImpassable
       - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: chair
 
 - type: entity
   name: stool
@@ -72,6 +75,9 @@
       - Impassable
       - VaultImpassable
       - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: stool
 
 - type: entity
   name: bar stool
@@ -90,6 +96,9 @@
       - Impassable
       - VaultImpassable
       - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: stoolBar
 
 - type: entity
   name: white office chair
@@ -109,6 +118,9 @@
       - Impassable
       - VaultImpassable
       - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: chairOffice
 
 - type: entity
   name: dark office chair
@@ -117,6 +129,9 @@
   components:
   - type: Sprite
     state: officechair_dark
+  - type: Construction
+    graph: seat
+    node: chairOfficeDark
 
 - type: entity
   name: comfy chair
@@ -135,6 +150,9 @@
       - Impassable
       - VaultImpassable
       - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: chairComfy
 
 - type: entity
   name: wooden chair
@@ -153,3 +171,6 @@
       - Impassable
       - VaultImpassable
       - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: chairWood
