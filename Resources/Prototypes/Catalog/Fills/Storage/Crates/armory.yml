@@ -6,9 +6,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: SmgWt550
+      - name: SmgDrozd
         amount: 3
-      - name: MagazinePistolSmg
+      - name: MagazineMagnum
         amount: 6
 
 - type: entity

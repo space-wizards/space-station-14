@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     return;
                 }
 
-                data.Text = Loc.GetString("Pick Up");
+                data.Text = Loc.GetString("Pick up");
             }
 
             protected override void Activate(IEntity user, ItemComponent component)

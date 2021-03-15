@@ -45,3 +45,6 @@
 
 - type: Tag
   id: Write
+
+- type: Tag
+  id: EmitterBolt

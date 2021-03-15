@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Medical
         private CloningPodStatus _status;
         private float _cloningProgress = 0;
         [DataField("cloningTime")]
-        private float _cloningTime = 10f;
+        private float _cloningTime = 120f;
 
         public override void Initialize()
         {
@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
             if (_cloningProgress >= _cloningTime &&
                 _bodyContainer.ContainedEntity != null &&
-                _capturedMind?.Session.AttachedEntity == _bodyContainer.ContainedEntity &&
+                _capturedMind?.Session?.AttachedEntity == _bodyContainer.ContainedEntity &&
                 Powered)
             {
                 _bodyContainer.Remove(_bodyContainer.ContainedEntity);

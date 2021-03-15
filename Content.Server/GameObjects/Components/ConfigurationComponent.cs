@@ -145,7 +145,7 @@ namespace Content.Server.GameObjects.Components
                 }
 
                 data.Text = Loc.GetString("Open Configuration");
-                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.96dpi.png";
+                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, ConfigurationComponent component)

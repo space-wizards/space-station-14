@@ -18,7 +18,7 @@ namespace Content.Server
         {
             data.Visibility = VerbVisibility.Visible;
             data.Text = "Rotate CCW";
-            data.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.96dpi.png";
+            data.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
         }
 
         public override void Activate(IEntity user, IEntity target)
@@ -36,7 +36,7 @@ namespace Content.Server
         {
             data.Visibility = VerbVisibility.Visible;
             data.Text = "Rotate CW";
-            data.IconTexture = "/Textures/Interface/VerbIcons/rotate_cw.svg.96dpi.png";
+            data.IconTexture = "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
         }
 
         public override void Activate(IEntity user, IEntity target)

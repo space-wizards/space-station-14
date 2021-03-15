@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Access;
+using Content.Server.GameObjects.Components.Access;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
@@ -77,6 +77,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (Locked)
             {
                 data.Visibility = VerbVisibility.Invisible;
+
                 return;
             }
 
