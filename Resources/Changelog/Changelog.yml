@@ -487,3 +487,15 @@ Entries:
   - {message: Cargo SMG crate now contains Drozd SMGs., type: Tweak}
   id: 89
   time: '2021-03-15T03:38:06.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: 'Added construction recipes for chair, stool, bar stool, office chair,
+      office chair dark, comfy chair, and wooden chair.', type: Add}
+  id: 90
+  time: '2021-03-15T05:40:18.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: 'Fixed burned, broken, and empty wall mounted light tube sprite positions',
+    type: Fix}
+  id: 91
+  time: '2021-03-15T05:40:25.0000000+00:00'
