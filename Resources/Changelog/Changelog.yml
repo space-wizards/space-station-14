@@ -482,3 +482,8 @@ Entries:
   - {message: Fix gibbing causing ghosts to return to their brain, type: Fix}
   id: 88
   time: '2021-03-15T02:28:44.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Cargo SMG crate now contains Drozd SMGs., type: Tweak}
+  id: 89
+  time: '2021-03-15T03:38:06.0000000+00:00'
