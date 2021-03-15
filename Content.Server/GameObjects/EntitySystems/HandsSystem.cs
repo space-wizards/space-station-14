@@ -132,7 +132,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 targetVector = dropVector.Normalized * rayLength;
             }
 
-            handsComp.Drop(handsComp.ActiveHandName, coords.WithPosition(entMap.Position + targetVector));
+            handsComp.DropFromHand(handsComp.ActiveHandName, coords.WithPosition(entMap.Position + targetVector));
 
             return true;
         }

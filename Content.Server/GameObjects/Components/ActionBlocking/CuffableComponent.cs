@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             }
 
             // Success!
-            if (user.TryGetComponent(out HandsComponent? handsComponent) && handsComponent.IsHolding(handcuff))
+            if (user.TryGetComponent(out HandsComponent? handsComponent) && handsComponent.IsHoldingEntity(handcuff))
             {
                 // Good lord handscomponent is scuffed, I hope some smug person will fix it someday
                 handsComponent.Drop(handcuff);

@@ -117,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             protected override void Activate(IEntity user, ItemComponent component)
             {
-                if (user.TryGetComponent(out HandsComponent hands) && !hands.IsHolding(component.Owner))
+                if (user.TryGetComponent(out HandsComponent hands) && !hands.IsHoldingEntity(component.Owner))
                 {
                     hands.PutInHand(component);
                 }

@@ -234,7 +234,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     return false;
                 }
 
-                if (!hands.HasHandOfName(hand))
+                if (!hands.HasHand(hand))
                     return false;
 
                 if (hands.TryGetItem(hand, out var _))
@@ -336,7 +336,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 if (!ActionBlockerSystem.CanInteract(user))
                     return false;
 
-                if (!hands.HasHandOfName(hand))
+                if (!hands.HasHand(hand))
                     return false;
 
                 if (!hands.TryGetItem(hand, out var heldItem))

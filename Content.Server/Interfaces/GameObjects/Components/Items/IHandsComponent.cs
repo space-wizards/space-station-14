@@ -136,7 +136,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="doMobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop()"/> for the mob or not.</param>
         /// <param name="doDropInteraction">Whether to perform Dropped interactions.</param>
         /// <returns>True if an item was dropped, false otherwise.</returns>
-        bool Drop(string slot, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true);
+        bool DropFromHand(string slot, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true);
 
         /// <summary>
         ///     Drop the specified entity in our hands to a certain position.
@@ -230,6 +230,6 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// </summary>
         /// <param name="name">The hand name to check.</param>
         /// <returns>True if the hand exists, false otherwise.</returns>
-        bool HasHandOfName(string name);
+        bool HasHand(string name);
     }
 }
