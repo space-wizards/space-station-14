@@ -200,6 +200,8 @@ namespace Content.Shared.GameObjects.Components.Movement
             if (!Slippery)
                 return;
 
+            var physics = Owner.GetComponent<IPhysBody>();
+
             foreach (var uid in _colliding.ToArray())
             {
                 if (!uid.IsValid() || !Owner.EntityManager.EntityExists(uid))
@@ -211,7 +213,6 @@ namespace Content.Shared.GameObjects.Components.Movement
                 }
 
                 var entity = Owner.EntityManager.GetEntity(uid);
-                var physics = Owner.GetComponent<IPhysBody>();
                 var otherPhysics = entity.GetComponent<IPhysBody>();
 
                 if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
