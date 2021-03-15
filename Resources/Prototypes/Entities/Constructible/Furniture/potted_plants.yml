@@ -1,10 +1,8 @@
 - type: entity
   id: PottedPlantBase
+  parent: BaseConstructibleDynamic
   abstract: true
   components:
-  - type: Anchorable
-    snap: true
-  - type: Clickable
   - type: InteractionOutline
   - type: Physics
     mass: 25

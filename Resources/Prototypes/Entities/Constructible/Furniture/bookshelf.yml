@@ -1,11 +1,9 @@
 - type: entity
   id: Bookshelf
+  parent: BaseConstructible
   name: "bookshelf"
   description: Mostly filled with erotica.
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Clickable
   - type: Sprite
     sprite: Constructible/Misc/bookshelf.rsi
     layers:
@@ -20,14 +18,6 @@
       - book-3
       - book-4
       - book-5
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      layer:
-      - VaultImpassable
-      mask:
-      - MobImpassable
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
