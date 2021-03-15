@@ -460,3 +460,48 @@ Entries:
   - {message: Added icons for a bunch of verbs, type: Add}
   id: 84
   time: '2021-03-14T13:23:32.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Fix nonexistent bulbs in built wall light, type: Fix}
+  id: 85
+  time: '2021-03-14T21:59:04.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Fixes rotation bugs with emitters and containment fields, and some
+      other stuff', type: Fix}
+  - {message: Fixes default emitter rotation on Saltern, type: Fix}
+  id: 86
+  time: '2021-03-14T22:02:22.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes rotatable verbs not showing in the context menu., type: Fix}
+  id: 87
+  time: '2021-03-14T22:23:42.555325+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fix gibbing causing ghosts to return to their brain, type: Fix}
+  id: 88
+  time: '2021-03-15T02:28:44.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Cargo SMG crate now contains Drozd SMGs., type: Tweak}
+  id: 89
+  time: '2021-03-15T03:38:06.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: 'Added construction recipes for chair, stool, bar stool, office chair,
+      office chair dark, comfy chair, and wooden chair.', type: Add}
+  id: 90
+  time: '2021-03-15T05:40:18.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: 'Fixed burned, broken, and empty wall mounted light tube sprite positions',
+    type: Fix}
+  id: 91
+  time: '2021-03-15T05:40:25.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Fixes default window sizes for vendors, chemistry machines, etc.',
+    type: Fix}
+  id: 92
+  time: '2021-03-15T08:38:08.0000000+00:00'

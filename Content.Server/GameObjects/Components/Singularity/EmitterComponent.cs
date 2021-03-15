@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -5,7 +6,7 @@ using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.Interfaces;
-using Content.Server.Utility;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Singularity;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -48,6 +49,11 @@ namespace Content.Server.GameObjects.Components.Singularity
         [ViewVariables] private bool _isPowered;
         [ViewVariables] private bool _isLocked;
 
+        // For the "emitter fired" sound
+        private const float Variation = 0.25f;
+        private const float Volume = 0.5f;
+        private const float Distance = 3f;
+
         [ViewVariables(VVAccess.ReadWrite)] private int _fireShotCounter;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("fireSound")] private string _fireSound = "/Audio/Weapons/emitter.ogg";
@@ -67,6 +73,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 Logger.Error($"EmitterComponent {Owner} created with no PowerConsumerComponent");
                 return;
             }
+
             _powerConsumer.OnReceivedPowerChanged += OnReceivedPowerChanged;
         }
 
@@ -91,19 +98,26 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             if (_isLocked)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("{0:TheName} is access locked!", Owner));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-access-locked", ("target", Owner)));
                 return;
             }
 
-            if (!_isOn)
+            if (Owner.TryGetComponent(out PhysicsComponent? phys) && phys.Anchored)
             {
-                SwitchOn();
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("{0:TheName} turns on.", Owner));
+                if (!_isOn)
+                {
+                    SwitchOn();
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-turned-on", ("target", Owner)));
+                }
+                else
+                {
+                    SwitchOff();
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-turned-off", ("target", Owner)));
+                }
             }
             else
             {
-                SwitchOff();
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("{0:TheName} turns off.", Owner));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-not-anchored", ("target", Owner)));
             }
         }
 
@@ -120,18 +134,18 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 if (_isLocked)
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("You lock {0:TheName}.", Owner));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-lock", ("target", Owner)));
                 }
                 else
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("You unlock {0:TheName}.", Owner));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-unlock", ("target", Owner)));
                 }
 
                 UpdateAppearance();
             }
             else
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Access denied."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-access-denied"));
             }
 
             return Task.FromResult(true);
@@ -222,7 +236,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             if (!projectile.TryGetComponent<PhysicsComponent>(out var physicsComponent))
             {
-                Logger.Error("Emitter tried firing a bolt, but it was spawned without a CollidableComponent");
+                Logger.Error("Emitter tried firing a bolt, but it was spawned without a PhysicsComponent");
                 return;
             }
 
@@ -238,13 +252,13 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             physicsComponent
                 .LinearVelocity = Owner.Transform.WorldRotation.ToWorldVec() * 20f;
-
             projectile.Transform.WorldRotation = Owner.Transform.WorldRotation;
 
             // TODO: Move to projectile's code.
             Timer.Spawn(3000, () => projectile.Delete());
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_fireSound, Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_fireSound, Owner,
+                AudioHelpers.WithVariation(Variation).WithVolume(Volume).WithMaxDistance(Distance));
         }
 
         private void UpdateAppearance()
