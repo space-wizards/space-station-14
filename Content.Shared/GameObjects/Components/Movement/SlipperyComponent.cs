@@ -5,9 +5,11 @@ using System.Linq;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
+using Content.Shared.Interfaces;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
@@ -22,7 +24,10 @@ namespace Content.Shared.GameObjects.Components.Movement
     [RegisterComponent]
     public class SlipperyComponent : Component, IStartCollide
     {
+        [Dependency] private IModuleManager _moduleManager = default!;
+
         public sealed override string Name => "Slippery";
+        public override uint? NetID => ContentNetIDs.SLIP;
 
         private float _paralyzeTime = 3f;
         private float _intersectPercentage = 0.3f;
@@ -177,8 +182,10 @@ namespace Content.Shared.GameObjects.Components.Movement
             _slipped.Add(otherBody.Entity.Uid);
             Dirty();
 
-            if (!string.IsNullOrEmpty(SlipSound))
+            if (!string.IsNullOrEmpty(SlipSound) && _moduleManager.IsServerModule)
+            {
                 SoundSystem.Play(Filter.Broadcast(), SlipSound, Owner, AudioHelpers.WithVariation(0.2f));
+            }
 
             return true;
         }
