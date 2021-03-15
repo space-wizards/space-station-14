@@ -59,17 +59,17 @@ namespace Content.Server.Physics.Controllers
 
                 var movingPosition = pullable.MovingTo.Value.Position;
                 var ownerPosition = pullable.Owner.Transform.MapPosition.Position;
+
+                if (movingPosition.EqualsApprox(ownerPosition, 0.01))
+                {
+                    pullable.MovingTo = null;
+                    continue;
+                }
+
                 var diff = movingPosition - ownerPosition;
                 var diffLength = diff.Length;
                 var multiplier = diffLength < 1 ? ImpulseModifier * diffLength : ImpulseModifier;
                 var impulse = diff.Normalized * multiplier;
-
-                if (movingPosition.EqualsApprox(ownerPosition, 0.01))
-                {
-                    physics.ApplyLinearImpulse(impulse * -3);
-                    pullable.MovingTo = null;
-                    continue;
-                }
 
                 physics.ApplyLinearImpulse(impulse);
             }
