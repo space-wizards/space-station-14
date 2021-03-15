@@ -510,3 +510,8 @@ Entries:
   - {message: 'Remove collisions for wall lights, carpets, catwalks', type: Tweak}
   id: 93
   time: '2021-03-15T09:45:43.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes many mispredictions with slips., type: Fix}
+  id: 94
+  time: '2021-03-15T18:01:15.0000000+00:00'
