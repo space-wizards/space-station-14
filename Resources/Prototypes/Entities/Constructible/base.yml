@@ -23,6 +23,7 @@
   # This means that it's not anchored on spawn.
   id: BaseConstructibleDynamic
   parent: BaseConstructible
+  abstract: true
   components:
 # These might/might not be a good idea
 #  - type: MovedByPressure

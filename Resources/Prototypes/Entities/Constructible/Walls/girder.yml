@@ -1,34 +1,22 @@
 - type: entity
   id: Girder
+  parent: BaseConstructibleDynamic
   name: girder
   description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
+  placement:
+    snap:
+    - Wall
   components:
-  - type: Clickable
   - type: InteractionOutline
-  - type: Anchorable
-    snap: true
   - type: Construction
     graph: girder
     node: girder
   - type: Sprite
     sprite: Constructible/Structures/Walls/solid.rsi
     state: wall_girder
-  - type: Physics
-    mass: 25
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
   - type: Tag
     tags:
     - ExplosivePassable
-  - type: Pullable
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -44,8 +32,3 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: SnapGrid
-    offset: Edge
-  placement:
-    snap:
-    - Wall
