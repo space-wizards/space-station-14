@@ -1,0 +1,44 @@
+- type: entity
+  name: ointment
+  description: "Used to treat those nasty burns."
+  parent: BaseItem
+  id: Ointment
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: ointment
+  - type: Healing
+    heal:
+      Heat: 10
+  - type: Stack
+    stackType: Ointment
+    max: 5
+    count: 5
+
+- type: entity
+  name: bruise pack
+  description: "A therapeutic gel pack and bandages designed to treat blunt-force trauma."
+  parent: Ointment
+  id: Brutepack
+  components:
+    - type: Sprite
+      state: brutepack
+    - type: Healing
+      heal:
+        Blunt: 10
+    - type: Stack
+      stackType: Brutepack
+
+- type: entity
+  name: roll of gauze
+  description: "Some sterile gauze to wrap around bloody stumps."
+  parent: Ointment
+  id: Gauze
+  components:
+  - type: Sprite
+    state: gauze
+  - type: Healing
+    heal:
+      Blunt: 10
+  - type: Stack
+    stackType: Gauze

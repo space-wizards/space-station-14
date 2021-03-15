@@ -12,7 +12,7 @@
   - type: InteractionOutline
   - type: Clickable
   - type: Physics
-    bodyType: Dynamic
+    bodyType: Static
     mass: 25
     fixtures:
     - shape:

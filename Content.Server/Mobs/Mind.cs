@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Mobs.Roles;
 using Content.Server.Objectives;
 using Content.Server.Players;
@@ -225,13 +226,14 @@ namespace Content.Server.Mobs
             OwnedComponent = component;
             OwnedComponent?.InternalAssignMind(this);
 
+            if (VisitingEntity?.HasComponent<GhostComponent>() == false)
+                VisitingEntity = null;
+
             // Player is CURRENTLY connected.
-            if (Session != null && !alreadyAttached)
+            if (Session != null && !alreadyAttached && VisitingEntity == null)
             {
                 Session.AttachToEntity(entity);
             }
-
-            VisitingEntity = null;
         }
 
         public void RemoveOwningPlayer()
