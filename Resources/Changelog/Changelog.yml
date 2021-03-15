@@ -499,3 +499,9 @@ Entries:
     type: Fix}
   id: 91
   time: '2021-03-15T05:40:25.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Fixes default window sizes for vendors, chemistry machines, etc.',
+    type: Fix}
+  id: 92
+  time: '2021-03-15T08:38:08.0000000+00:00'
