@@ -515,3 +515,8 @@ Entries:
   - {message: Fixes many mispredictions with slips., type: Fix}
   id: 94
   time: '2021-03-15T18:01:15.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Fix text messages for climbable objects (like tables or windows), type: Fix}
+  id: 95
+  time: '2021-03-15T18:02:56.0000000+00:00'
