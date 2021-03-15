@@ -97,6 +97,11 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
 
             physics.WakeBody();
+
+            if (pulled.TryGetComponent(out SharedPullableComponent? pullable))
+            {
+                pullable.MovingTo = null;
+            }
         }
 
         private bool HandleMovePulledObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
