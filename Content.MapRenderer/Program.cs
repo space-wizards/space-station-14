@@ -2,33 +2,27 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Reflection;
-using System.Threading.Tasks;
-using Content.IntegrationTests;
-using Content.MapRenderer.Painters;
-using Content.Shared;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared;
-using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.MapRenderer
 {
-    internal class Program : ContentIntegrationTest
+    internal class Program
     {
+        private static readonly HttpClient HttpClient = new();
+        private static readonly Painter Painter = new();
+
         internal static void Main()
         {
             new Program().Run();
         }
 
-        private void Run()
+        private async void Run()
         {
             var created = Environment.GetEnvironmentVariable("MAPS_ADDED");
             var modified = Environment.GetEnvironmentVariable("MAPS_MODIFIED");
@@ -76,127 +70,76 @@ namespace Content.MapRenderer
 
             foreach (var map in maps)
             {
-                program.Run(map).GetAwaiter().GetResult();
+                await foreach (var grid in Painter.Paint(map))
+                {
+                    program.Save(grid, map);
+                }
             }
 
             WriteComment();
         }
 
-        private async Task Run(string map)
+        private async void Save(Image image, string to)
         {
-            map = map.Substring(10); // Resources/
-
             var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
-            var clientOptions = new ClientContentIntegrationOption
-            {
-                CVarOverrides =
-                {
-                    [CVars.NetPVS.Name] = "false"
-                }
-            };
-
-            var serverOptions = new ServerContentIntegrationOption
-            {
-                CVarOverrides =
-                {
-                    [CCVars.GameMap.Name] = map,
-                    [CVars.NetPVS.Name] = "false"
-                }
-            };
-
-            var (client, server) = await StartConnectedServerClientPair(clientOptions, serverOptions);
-
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
-            await RunTicksSync(client, server, 10);
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
-
-            Console.WriteLine($"Loaded client and server in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
-
             stopwatch.Restart();
 
-            var cPlayerManager = client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
+            var file = new ResourcePath($"MapImages/{to.Substring(5, to.Length - 9)}.png");
+            var directoryPath = $"{GetRepositoryRoot()}/Resources/{file.Directory}";
+            var directory = Directory.CreateDirectory(directoryPath);
+            var path = $"{directory}/{file.Filename}";
 
-            await client.WaitPost(() =>
+            Console.WriteLine($"Saving {file.Filename} to {path}");
+
+            await image.SaveAsync(path);
+
+            Console.WriteLine($"Saved map image for {to} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+        }
+
+        private void Upload(Image image)
+        {
+            var request = WebRequest.Create("https://api.imgur.com/3/upload");
+            request.Method = "POST";
+
+            byte[] data;
+
+            using (var stream = new MemoryStream())
             {
-                if (cPlayerManager.LocalPlayer!.ControlledEntity!.TryGetComponent(out Robust.Client.GameObjects.SpriteComponent? sprite))
-                {
-                    sprite.Visible = false;
-                }
-            });
+                image.SaveAsPng(stream);
 
-            var sPlayerManager = server.ResolveDependency<IPlayerManager>();
-
-            await server.WaitPost(() =>
-            {
-                if (sPlayerManager.GetAllPlayers().Single().AttachedEntity!.TryGetComponent(out SpriteComponent? sprite))
-                {
-                    sprite.Visible = false;
-                }
-            });
-
-            await RunTicksSync(client, server, 2);
-
-            var sMapManager = server.ResolveDependency<IMapManager>();
-
-            var tilePainter = new TilePainter(client, server);
-            var entityPainter = new EntityPainter(client, server);
-
-            await server.WaitPost(async () =>
-            {
-                sPlayerManager.GetAllPlayers().Single().AttachedEntity?.Delete();
-
-                var grids = sMapManager.GetAllMapGrids(new MapId(1));
-                var tileXSize = 32;
-                var tileYSize = 32;
-
-                foreach (var grid in grids)
-                {
-                    var bounds = grid.WorldBounds;
-
-                    var left = Math.Abs(bounds.Left);
-                    var right = Math.Abs(bounds.Right);
-                    var top = Math.Abs(bounds.Top);
-                    var bottom = Math.Abs(bounds.Bottom);
-
-                    var w = (int) Math.Ceiling(left + right) * tileXSize;
-                    var h = (int) Math.Ceiling(top + bottom) * tileYSize;
-
-                    var gridCanvas = new Image<Rgba32>(w, h);
-
-                    tilePainter.Run(gridCanvas, grid);
-                    entityPainter.Run(gridCanvas, grid);
-
-                    gridCanvas.Mutate(e => e.Flip(FlipMode.Vertical));
-
-                    var file = new ResourcePath($"MapImages/{map.Substring(5, map.Length - 9)}.png");
-                    var directoryPath =
-                        $"{Directory.GetParent(Assembly.GetExecutingAssembly().Location)!.Parent!.Parent}/Resources/{file.Directory}";
-                    var directory = Directory.CreateDirectory(directoryPath);
-                    var path = $"{directory}/{file.Filename}";
-
-                    Console.WriteLine($"Saving {file.Filename} to {path}");
-
-                    await gridCanvas.SaveAsync(path);
-                }
-            });
-
-            // It fails locally otherwise. We don't care if it fails as we have already saved the images.
-            try
-            {
-                await TearDown();
-            }
-            catch (InvalidOperationException)
-            {
+                data = stream.ToArray();
             }
 
-            Console.WriteLine($"Saved map image for {map} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
+
+            var dataStream = request.GetRequestStream();
+            dataStream.Write(data, 0, data.Length);
+            dataStream.Close();
+
+            var response = request.GetResponse();
+
+            using (dataStream = response.GetResponseStream())
+            {
+                var reader = new StreamReader(dataStream);
+                string responseFromServer = reader.ReadToEnd();
+            }
+
+            response.Close();
         }
 
         private void WriteComment()
         {
-            Console.WriteLine(Assembly.GetExecutingAssembly().Location);
+
+        }
+
+        private DirectoryInfo GetRepositoryRoot()
+        {
+            // space-station-14/bin/Content.MapRenderer/Content.MapRenderer.dll
+            var currentLocation = Assembly.GetExecutingAssembly().Location;
+
+            // space-station-14/
+            return Directory.GetParent(currentLocation)!.Parent!.Parent!;
         }
     }
 }
