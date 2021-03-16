@@ -40,7 +40,6 @@ namespace Content.Client.UserInterface
         // Inventory top button.
         bool InventoryButtonDown { get; set; }
         bool InventoryButtonVisible { get; set; }
-        Action<bool>? InventoryButtonToggled { get; set; }
 
         // Crafting top button.
         bool CraftingButtonDown { get; set; }
@@ -187,7 +186,7 @@ namespace Content.Client.UserInterface
 
             _topButtonsContainer.AddChild(_buttonInventoryMenu);
 
-            _buttonInventoryMenu.OnToggled += args => InventoryButtonToggled?.Invoke(args.Pressed);
+            _buttonInventoryMenu.OnToggled += args => InventoryButtonDown = args.Pressed;
 
             // Crafting
             _buttonCraftingMenu = new TopButton(craftingTexture, ContentKeyFunctions.OpenCraftingMenu, _inputManager)
@@ -437,8 +436,6 @@ namespace Content.Client.UserInterface
             get => _buttonInventoryMenu.Visible;
             set => _buttonInventoryMenu.Visible = value;
         }
-
-        public Action<bool>? InventoryButtonToggled { get; set; }
 
         public bool CraftingButtonDown
         {
