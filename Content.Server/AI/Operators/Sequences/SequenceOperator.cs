@@ -9,7 +9,7 @@ namespace Content.Server.AI.Operators.Sequences
     /// </summary>
     public abstract class SequenceOperator : AiOperator
     {
-        public Queue<AiOperator> Sequence { get; protected set; }
+        public Queue<AiOperator> Sequence { get; protected set; } = new();
 
         public override Outcome Execute(float frameTime)
         {

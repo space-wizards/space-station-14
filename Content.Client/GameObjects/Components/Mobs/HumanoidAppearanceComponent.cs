@@ -41,7 +41,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void UpdateLooks()
         {
-            if (Appearance is null ||
+            if (Appearance is null! ||
                 !Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 return;

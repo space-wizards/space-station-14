@@ -9,7 +9,7 @@ namespace Content.Server.AI.Operators.Movement
     {
         // TODO: This and steering need to support InRangeUnobstructed now
         private readonly IEntity _owner;
-        private EntityTargetSteeringRequest _request;
+        private EntityTargetSteeringRequest? _request;
         private readonly IEntity _target;
         // For now we'll just get as close as we can because we're not doing LOS checks to be able to pick up at the max interaction range
         public float ArrivalDistance { get; }
@@ -56,7 +56,7 @@ namespace Content.Server.AI.Operators.Movement
 
         public override Outcome Execute(float frameTime)
         {
-            switch (_request.Status)
+            switch (_request?.Status)
             {
                 case SteeringStatus.Pending:
                     DebugTools.Assert(EntitySystem.Get<AiSteeringSystem>().IsRegistered(_owner));

@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Research
         [DataField("servername")]
         private string _serverName = "RDSERVER";
         private float _timer = 0f;
-        public TechnologyDatabaseComponent Database { get; private set; }
+        public TechnologyDatabaseComponent? Database { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("points")] private int _points = 0;
 
@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         // You could optimize research by keeping a list of unlocked recipes too.
         [ViewVariables(VVAccess.ReadOnly)]
-        public IReadOnlyList<TechnologyPrototype> UnlockedTechnologies => Database.Technologies;
+        public IReadOnlyList<TechnologyPrototype>? UnlockedTechnologies => Database?.Technologies;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public List<ResearchPointSourceComponent> PointSources { get; } = new();
@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Research
         [ViewVariables]
         public bool CanRun => _powerReceiver is null || _powerReceiver.Powered;
 
-        private PowerReceiverComponent _powerReceiver;
+        private PowerReceiverComponent? _powerReceiver;
 
         public override void Initialize()
         {
@@ -86,8 +86,14 @@ namespace Content.Server.GameObjects.Components.Research
 
         public bool CanUnlockTechnology(TechnologyPrototype technology)
         {
-            if (!Database.CanUnlockTechnology(technology) || _points < technology.RequiredPoints ||
-                Database.IsTechnologyUnlocked(technology)) return false;
+            if (Database == null)
+                return false;
+
+            if (!Database.CanUnlockTechnology(technology) ||
+                _points < technology.RequiredPoints ||
+                Database.IsTechnologyUnlocked(technology))
+                return false;
+
             return true;
         }
 
@@ -100,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Research
         public bool UnlockTechnology(TechnologyPrototype technology)
         {
             if (!CanUnlockTechnology(technology)) return false;
-            var result = Database.UnlockTechnology(technology);
+            var result = Database?.UnlockTechnology(technology) ?? false;
             if (result)
                 _points -= technology.RequiredPoints;
             return result;
@@ -113,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Research
         /// <returns></returns>
         public bool IsTechnologyUnlocked(TechnologyPrototype technology)
         {
-            return Database.IsTechnologyUnlocked(technology);
+            return Database?.IsTechnologyUnlocked(technology) ?? false;
         }
 
         /// <summary>

@@ -37,9 +37,9 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
         public int HeatResistance => _heatResistance;
 
         [DataField("ClothingPrefix")]
-        private string _clothingEquippedPrefix;
+        private string? _clothingEquippedPrefix;
         [ViewVariables(VVAccess.ReadWrite)]
-        public string ClothingEquippedPrefix
+        public string? ClothingEquippedPrefix
         {
             get => _clothingEquippedPrefix;
             set
@@ -57,15 +57,15 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!_quickEquipEnabled) return false;
-            if (!eventArgs.User.TryGetComponent(out InventoryComponent inv)
-            ||  !eventArgs.User.TryGetComponent(out HandsComponent hands)) return false;
+            if (!eventArgs.User.TryGetComponent(out InventoryComponent? inv)
+            ||  !eventArgs.User.TryGetComponent(out HandsComponent? hands)) return false;
 
             foreach (var (slot, flag) in SlotMasks)
             {
                 // We check if the clothing can be equipped in this slot.
                 if ((SlotFlags & flag) == 0) continue;
 
-                if (inv.TryGetSlotItem(slot, out ItemComponent item))
+                if (inv.TryGetSlotItem(slot, out ItemComponent? item))
                 {
                     if (!inv.CanUnequip(slot)) continue;
                     hands.Drop(Owner);

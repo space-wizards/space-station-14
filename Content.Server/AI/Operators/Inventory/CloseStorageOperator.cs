@@ -14,7 +14,7 @@ namespace Content.Server.AI.Operators.Inventory
     public sealed class CloseLastStorageOperator : AiOperator
     {
         private readonly IEntity _owner;
-        private IEntity _target;
+        private IEntity? _target;
 
         public CloseLastStorageOperator(IEntity owner)
         {
@@ -53,12 +53,12 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
-            if (!_owner.InRangeUnobstructed(_target, popup: true))
+            if (_target == null || !_owner.InRangeUnobstructed(_target, popup: true))
             {
                 return Outcome.Failed;
             }
 
-            if (!_target.TryGetComponent(out EntityStorageComponent storageComponent) ||
+            if (!_target.TryGetComponent(out EntityStorageComponent? storageComponent) ||
                 storageComponent.IsWeldedShut)
             {
                 return Outcome.Failed;

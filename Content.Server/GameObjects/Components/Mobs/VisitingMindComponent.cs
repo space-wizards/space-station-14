@@ -10,8 +10,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
         public override string Name => "VisitingMind";
 
-        [ViewVariables]
-        public Mind? Mind { get; set; }
+        [ViewVariables] public Mind Mind { get; set; } = default!;
 
         public override void OnRemove()
         {

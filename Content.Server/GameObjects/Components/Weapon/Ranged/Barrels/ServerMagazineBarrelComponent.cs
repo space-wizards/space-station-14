@@ -32,9 +32,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override uint? NetID => ContentNetIDs.MAGAZINE_BARREL;
 
         [ViewVariables]
-        private ContainerSlot _chamberContainer;
+        private ContainerSlot _chamberContainer = default!;
         [ViewVariables] public bool HasMagazine => _magazineContainer.ContainedEntity != null;
-        private ContainerSlot _magazineContainer;
+        private ContainerSlot _magazineContainer = default!;
 
         [ViewVariables] public MagazineType MagazineTypes => _magazineTypes;
         [DataField("magazineTypes")]
@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         }
 
         [DataField("magFillPrototype")]
-        private string _magFillPrototype;
+        private string? _magFillPrototype;
 
         public bool BoltOpen
         {
@@ -125,19 +125,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [DataField("magNeedsOpenBolt")]
         private bool _magNeedsOpenBolt = default;
 
-        private AppearanceComponent _appearanceComponent;
+        private AppearanceComponent? _appearanceComponent;
 
         // Sounds
         [DataField("soundBoltOpen")]
-        private string _soundBoltOpen = default;
+        private string? _soundBoltOpen = default;
         [DataField("soundBoltClosed")]
-        private string _soundBoltClosed = default;
+        private string? _soundBoltClosed = default;
         [DataField("soundRack")]
-        private string _soundRack = default;
+        private string? _soundRack = default;
         [DataField("soundMagInsert")]
-        private string _soundMagInsert = default;
+        private string? _soundMagInsert = default;
         [DataField("soundMagEject")]
-        private string _soundMagEject = default;
+        private string? _soundMagEject = default;
         [DataField("soundAutoEject")]
         private string _soundAutoEject = "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg";
 
@@ -160,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             (int, int)? count = null;
             var magazine = _magazineContainer.ContainedEntity;
-            if (magazine != null && magazine.TryGetComponent(out RangedMagazineComponent rangedMagazineComponent))
+            if (magazine != null && magazine.TryGetComponent(out RangedMagazineComponent? rangedMagazineComponent))
             {
                 count = (rangedMagazineComponent.ShotsLeft, rangedMagazineComponent.Capacity);
             }
@@ -176,7 +176,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -197,12 +197,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             UpdateAppearance();
         }
 
-        public override IEntity PeekAmmo()
+        public override IEntity? PeekAmmo()
         {
             return BoltOpen ? null : _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile(EntityCoordinates spawnAt)
+        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
         {
             if (BoltOpen)
             {
@@ -359,7 +359,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundMagEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             }
 
-            if (user.TryGetComponent(out HandsComponent handsComponent))
+            if (user.TryGetComponent(out HandsComponent? handsComponent))
             {
                 handsComponent.PutInHandOrDrop(mag.GetComponent<ItemComponent>());
             }
@@ -371,7 +371,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // Insert magazine
-            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent magazineComponent))
+            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent? magazineComponent))
             {
                 if ((MagazineTypes & magazineComponent.MagazineType) == 0)
                 {
@@ -409,7 +409,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             // Insert 1 ammo
-            if (eventArgs.Using.TryGetComponent(out AmmoComponent ammoComponent))
+            if (eventArgs.Using.TryGetComponent(out AmmoComponent? ammoComponent))
             {
                 if (!BoltOpen)
                 {

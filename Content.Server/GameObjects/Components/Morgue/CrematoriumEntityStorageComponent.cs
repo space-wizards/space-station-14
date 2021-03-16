@@ -1,7 +1,10 @@
 ﻿#nullable enable
+using System.Threading;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameTicking;
+using Content.Server.Players;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Morgue;
 using Content.Shared.GameObjects.EntitySystems;
@@ -9,16 +12,13 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using System.Threading;
-using Content.Server.Interfaces.GameTicking;
-using Content.Server.Players;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Morgue
 {
@@ -124,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Morgue
             if (mind != null)
             {
                 IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, false);
-                mind.OwnedEntity.PopupMessage(Loc.GetString("You cremate yourself!"));
+                mind.OwnedEntity?.PopupMessage(Loc.GetString("You cremate yourself!"));
             }
 
             victim.PopupMessageOtherClients(Loc.GetString("{0:theName} is cremating {0:themself}!", victim));

@@ -60,7 +60,7 @@ namespace Content.Server.Chat
         private const string MaxLengthExceededMessage = "Your message exceeded {0} character limit";
 
         //TODO: make prio based?
-        private List<TransformChat> _chatTransformHandlers;
+        private readonly List<TransformChat> _chatTransformHandlers = new();
         private bool _oocEnabled = true;
         private bool _adminOocEnabled = true;
 
@@ -73,8 +73,6 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
             msg.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendToAll(msg);
-
-            _chatTransformHandlers = new List<TransformChat>();
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
             _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
@@ -128,7 +126,7 @@ namespace Content.Server.Chat
             }
 
             // Check if message exceeds the character limit if the sender is a player
-            if (source.TryGetComponent(out IActorComponent actor) &&
+            if (source.TryGetComponent(out IActorComponent? actor) &&
                 message.Length > MaxMessageLength)
             {
                 var feedback = Loc.GetString(MaxLengthExceededMessage, MaxMessageLength);
@@ -158,9 +156,9 @@ namespace Content.Server.Chat
                 message = message[0].ToString().ToUpper() +
                           message.Remove(0, 1);
 
-                if (source.TryGetComponent(out InventoryComponent inventory) &&
-                    inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent item) &&
-                    item.Owner.TryGetComponent(out HeadsetComponent headset))
+                if (source.TryGetComponent(out InventoryComponent? inventory) &&
+                    inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent? item) &&
+                    item.Owner.TryGetComponent(out HeadsetComponent? headset))
                 {
                     headset.RadioRequested = true;
                 }
@@ -197,13 +195,13 @@ namespace Content.Server.Chat
             }
 
             // Check if entity is a player
-            if (!source.TryGetComponent(out IActorComponent actor))
+            if (!source.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
             // Check if message exceeds the character limit
-            if (actor.playerSession != null && action.Length > MaxMessageLength)
+            if (action.Length > MaxMessageLength)
             {
                 DispatchServerMessage(actor.playerSession, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
                 return;
@@ -282,7 +280,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
             msg.Message = message;
-            msg.MessageWrap = $"{Loc.GetString("DEAD")}: {player.AttachedEntity.Name}: {{0}}";
+            msg.MessageWrap = $"{Loc.GetString("DEAD")}: {player.AttachedEntity?.Name}: {{0}}";
             msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
             _netManager.ServerSendToMany(msg, clients.ToList());
         }

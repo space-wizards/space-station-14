@@ -52,12 +52,12 @@ namespace Content.Server.GlobalVerbs
                 return;
             }
 
-            var userMind = player.ContentData().Mind;
+            var userMind = player.ContentData()?.Mind;
 
             var targetMind = target.GetComponent<MindComponent>();
 
             targetMind.Mind?.TransferTo(null);
-            userMind.TransferTo(target);
+            userMind?.TransferTo(target);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             private set
             {
                 _creamPied = value;
-                if (Owner.TryGetComponent(out AppearanceComponent appearance))
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
                     appearance.SetData(CreamPiedVisuals.Creamed, CreamPied);
                 }
@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             Owner.PopupMessage(Loc.GetString("You have been creamed by {0:theName}!", eventArgs.Thrown));
             Owner.PopupMessageOtherClients(Loc.GetString("{0:theName} has been creamed by {1:theName}!", Owner, eventArgs.Thrown));
 
-            if (Owner.TryGetComponent(out StunnableComponent stun))
+            if (Owner.TryGetComponent(out StunnableComponent? stun))
             {
                 stun.Paralyze(1f);
             }

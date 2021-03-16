@@ -7,8 +7,6 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Medical
@@ -27,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 return false;
             }
 
-            if (!eventArgs.Target.TryGetComponent(out IDamageableComponent damageable))
+            if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable))
             {
                 return true;
             }
@@ -43,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 return true;
             }
 
-            if (Owner.TryGetComponent(out StackComponent stack) &&
+            if (Owner.TryGetComponent(out StackComponent? stack) &&
                 !stack.Use(1))
             {
                 return true;

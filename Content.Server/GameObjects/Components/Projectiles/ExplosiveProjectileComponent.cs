@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            if (Owner.TryGetComponent(out ExplosiveComponent explosive))
+            if (Owner.TryGetComponent(out ExplosiveComponent? explosive))
             {
                 explosive.Explosion();
             }

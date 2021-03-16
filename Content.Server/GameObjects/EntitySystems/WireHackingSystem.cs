@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
@@ -11,7 +12,7 @@ namespace Content.Server.GameObjects.EntitySystems
         [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts =
             new();
 
-        public bool TryGetLayout(string id, out WireLayout layout)
+        public bool TryGetLayout(string id, [NotNullWhen(true)] out WireLayout? layout)
         {
             return _layouts.TryGetValue(id, out layout);
         }

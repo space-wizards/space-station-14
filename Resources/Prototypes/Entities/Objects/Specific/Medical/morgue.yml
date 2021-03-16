@@ -5,7 +5,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Specific/Morgue/bodybags.rsi
+    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     layers:
     - state: bag
     - state: open_overlay
@@ -13,7 +13,7 @@
     - state: label_overlay
       map: ["enum.BodyBagVisualLayers.Label"]
   - type: Icon
-    sprite: Objects/Specific/Morgue/bodybags.rsi
+    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     state: bag
   - type: Clickable
   - type: InteractionOutline
@@ -48,13 +48,12 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Specific/Morgue/bodybags.rsi
+    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     state: item
 #  - type: BodyBagItem #TODO: we need some kind of generic placable, like thus:
 # - type: Placeable
 #   prototype: someId
 #   snap: Center
-
 
 - type: entity
   id: Morgue
@@ -63,7 +62,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Specific/Morgue/morgue.rsi
+    sprite: Objects/Specific/Medical/Morgue/morgue.rsi
     layers:
     - state: morgue_closed
       map: ["enum.MorgueVisualLayers.Base"]
@@ -115,7 +114,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Specific/Morgue/morgue.rsi
+    sprite: Objects/Specific/Medical/Morgue/morgue.rsi
     state: morgue_tray
   - type: Clickable
   - type: InteractionOutline
@@ -138,7 +137,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Specific/Morgue/morgue.rsi
+    sprite: Objects/Specific/Medical/Morgue/morgue.rsi
     layers:
     - state: crema_closed
       map: ["enum.CrematoriumVisualLayers.Base"]
@@ -191,7 +190,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Specific/Morgue/morgue.rsi
+    sprite: Objects/Specific/Medical/Morgue/morgue.rsi
     state: crema_tray
 
 - type: entity

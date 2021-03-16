@@ -4,6 +4,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Observer.GhostRoles
 {
@@ -24,10 +25,14 @@ namespace Content.Server.GameObjects.Components.Observer.GhostRoles
 
             var mind = Owner.EnsureComponent<MindComponent>();
 
-            if(mind.HasMind)
+            if (mind.HasMind)
                 throw new Exception("MindComponent already has a mind!");
 
-            session.ContentData().Mind.TransferTo(Owner);
+            var sessionMind = session.ContentData()?.Mind;
+
+            DebugTools.AssertNotNull(sessionMind);
+
+            sessionMind!.TransferTo(Owner);
 
             EntitySystem.Get<GhostRoleSystem>().UnregisterGhostRole(this);
 

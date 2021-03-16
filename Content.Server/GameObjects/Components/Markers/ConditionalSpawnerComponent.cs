@@ -1,15 +1,11 @@
-using System;
 using System.Collections.Generic;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Reflection;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -36,17 +32,6 @@ namespace Content.Server.GameObjects.Components.Markers
         [DataField("chance")]
         public float Chance { get; set; } = 1.0f;
 
-        public IEnumerable<Type> GameRules
-        {
-            get
-            {
-                foreach (var rule in _gameRules)
-                {
-                    yield return _reflectionManager.GetType(rule);
-                }
-            }
-        }
-
         private void RuleAdded(GameRuleAddedEventArgs obj)
         {
             if(_gameRules.Contains(obj.GameRule.GetType().Name))
@@ -61,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Markers
                 return;
             }
 
-            foreach (var rule in GameRules)
+            foreach (var rule in _gameRules)
             {
                 if (!_gameTicker.HasGameRule(rule)) continue;
                 Spawn();

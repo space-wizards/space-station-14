@@ -13,7 +13,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
 
         private readonly IEntity _owner;
         private readonly IEntity _target;
-        private UnarmedCombatComponent _unarmedCombat;
+        private UnarmedCombatComponent? _unarmedCombat;
 
         public UnarmedCombatOperator(IEntity owner, IEntity target, float burstTime = 1.0f)
         {
@@ -29,7 +29,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return true;
             }
 
-            if (!_owner.TryGetComponent(out CombatModeComponent combatModeComponent))
+            if (!_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
             {
                 return false;
             }
@@ -39,7 +39,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 combatModeComponent.IsInCombatMode = true;
             }
 
-            if (_owner.TryGetComponent(out UnarmedCombatComponent unarmedCombatComponent))
+            if (_owner.TryGetComponent(out UnarmedCombatComponent? unarmedCombatComponent))
             {
                 _unarmedCombat = unarmedCombatComponent;
             }
@@ -56,7 +56,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
             if (!base.Shutdown(outcome))
                 return false;
 
-            if (_owner.TryGetComponent(out CombatModeComponent combatModeComponent))
+            if (_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
             {
                 combatModeComponent.IsInCombatMode = false;
             }
@@ -71,7 +71,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return Outcome.Success;
             }
 
-            if (_unarmedCombat.Deleted)
+            if (_unarmedCombat?.Deleted ?? true)
             {
                 return Outcome.Failed;
             }

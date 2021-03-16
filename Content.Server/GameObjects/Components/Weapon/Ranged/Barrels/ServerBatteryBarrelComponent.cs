@@ -36,14 +36,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [ViewVariables] private int _baseFireCost = 300;
         // What gets fired
         [DataField("ammoPrototype")]
-        [ViewVariables] private string _ammoPrototype;
+        [ViewVariables] private string? _ammoPrototype;
 
-        [ViewVariables] public IEntity PowerCellEntity => _powerCellContainer.ContainedEntity;
-        public BatteryComponent PowerCell => _powerCellContainer.ContainedEntity?.GetComponent<BatteryComponent>();
-        private ContainerSlot _powerCellContainer;
-        private ContainerSlot _ammoContainer;
+        [ViewVariables] public IEntity? PowerCellEntity => _powerCellContainer.ContainedEntity;
+        public BatteryComponent? PowerCell => _powerCellContainer.ContainedEntity?.GetComponentOrNull<BatteryComponent>();
+        private ContainerSlot _powerCellContainer = default!;
+        private ContainerSlot _ammoContainer = default!;
         [DataField("powerCellPrototype")]
-        private string _powerCellPrototype = default;
+        private string? _powerCellPrototype = default;
         [DataField("powerCellRemovable")]
         [ViewVariables] private bool _powerCellRemovable = default;
 
@@ -77,13 +77,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
 
-        private AppearanceComponent _appearanceComponent;
+        private AppearanceComponent? _appearanceComponent;
 
         // Sounds
         [DataField("soundPowerCellInsert")]
-        private string _soundPowerCellInsert = default;
+        private string? _soundPowerCellInsert = default;
         [DataField("soundPowerCellEject")]
-        private string _soundPowerCellEject = default;
+        private string? _soundPowerCellEject = default;
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
@@ -109,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 _ammoContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-ammo-container");
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -143,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return ammo;
         }
 
-        public override IEntity TakeProjectile(EntityCoordinates spawnAt)
+        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
         {
             var powerCellEntity = _powerCellContainer.ContainedEntity;
 
@@ -180,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 entity = Owner.EntityManager.SpawnEntity(_ammoPrototype, spawnAt);
             }
 
-            if (entity.TryGetComponent(out ProjectileComponent projectileComponent))
+            if (entity.TryGetComponent(out ProjectileComponent? projectileComponent))
             {
                 if (energyRatio < 1.0)
                 {
@@ -192,7 +192,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                     projectileComponent.Damages = newDamages;
                 }
-            } else if (entity.TryGetComponent(out HitscanComponent hitscanComponent))
+            } else if (entity.TryGetComponent(out HitscanComponent? hitscanComponent))
             {
                 hitscanComponent.Damage *= energyRatio;
                 hitscanComponent.ColorModifier = energyRatio;
@@ -253,7 +253,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 return false;
             }
 
-            if (!user.TryGetComponent(out HandsComponent hands))
+            if (!user.TryGetComponent(out HandsComponent? hands))
             {
                 return false;
             }

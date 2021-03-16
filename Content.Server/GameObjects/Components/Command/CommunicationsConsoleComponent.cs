@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Command
                     var mob = obj.Session.AttachedEntity;
                     if (mob != null && mob.TryGetHeldId(out var id))
                     {
-                        author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle)})";
+                        author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
                     }
 
                     message += $"\nSent by {author}";
