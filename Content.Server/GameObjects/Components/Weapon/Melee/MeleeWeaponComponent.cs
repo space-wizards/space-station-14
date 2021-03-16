@@ -12,11 +12,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Physics.Broadphase;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
@@ -104,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 if (!entity.Transform.IsMapTransform || entity == eventArgs.User)
                     continue;
 
-                if (entity.TryGetComponent(out IDamageableComponent damageComponent))
+                if (entity.TryGetComponent(out IDamageableComponent? damageComponent))
                 {
                     damageComponent.ChangeDamage(DamageType, Damage, false, Owner);
                     hitEntities.Add(entity);
@@ -154,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return false;
             }
 
-            if (target.TryGetComponent(out IDamageableComponent damageComponent))
+            if (target.TryGetComponent(out IDamageableComponent? damageComponent))
             {
                 damageComponent.ChangeDamage(DamageType, Damage, false, Owner);
             }
@@ -231,7 +229,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         private void RefreshItemCooldown()
         {
-            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
+            if (Owner.TryGetComponent(out ItemCooldownComponent? cooldown))
             {
                 cooldown.CooldownStart = _lastAttackTime;
                 cooldown.CooldownEnd = _cooldownEnd;

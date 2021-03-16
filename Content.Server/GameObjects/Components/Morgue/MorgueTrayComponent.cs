@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         public override string Name => "MorgueTray";
 
         [ViewVariables]
-        public IEntity Morgue { get; set; }
+        public IEntity? Morgue { get; set; }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {

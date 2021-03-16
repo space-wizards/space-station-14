@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Shared.GameObjects;
@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [DataField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
 
-        private Container _ammoContainer;
+        private Container _ammoContainer = default!;
 
         [ViewVariables]
         private int _currentSlot;
@@ -45,13 +45,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private int _serializedCapacity = 6;
 
         [DataField("ammoSlots", readOnly: true)]
-        private IEntity[] _ammoSlots = Array.Empty<IEntity>();
+        private IEntity?[] _ammoSlots = Array.Empty<IEntity?>();
 
         public override int ShotsLeft => _ammoContainer.ContainedEntities.Count;
 
         [ViewVariables]
         [DataField("fillPrototype")]
-        private string _fillPrototype;
+        private string? _fillPrototype;
 
         [ViewVariables]
         private int _unspawnedCount;
@@ -82,7 +82,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             for (var i = 0; i < Capacity; i++)
             {
                 slotsSpent[i] = null;
-                if (_ammoSlots[i] != null && _ammoSlots[i].TryGetComponent(out AmmoComponent ammo))
+                var ammoEntity = _ammoSlots[i];
+                if (ammoEntity != null && ammoEntity.TryGetComponent(out AmmoComponent? ammo))
                 {
                     slotsSpent[i] = ammo.Spent;
                 }
@@ -126,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         private void UpdateAppearance()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -139,7 +140,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         public bool TryInsertBullet(IEntity user, IEntity entity)
         {
-            if (!entity.TryGetComponent(out AmmoComponent ammoComponent))
+            if (!entity.TryGetComponent(out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -191,14 +192,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             var random = _random.Next(_ammoSlots.Length - 1);
             _currentSlot = random;
-            if (_soundSpin != null)
+            if (!string.IsNullOrEmpty(_soundSpin))
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundSpin, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             }
             Dirty();
         }
 
-        public override IEntity PeekAmmo()
+        public override IEntity? PeekAmmo()
         {
             return _ammoSlots[_currentSlot];
         }
@@ -209,10 +210,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override IEntity TakeProjectile(EntityCoordinates spawnAt)
+        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
         {
             var ammo = _ammoSlots[_currentSlot];
-            IEntity bullet = null;
+            IEntity? bullet = null;
             if (ammo != null)
             {
                 var ammoComponent = ammo.GetComponent<AmmoComponent>();

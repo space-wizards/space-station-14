@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
@@ -11,6 +12,7 @@ using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Mobs
@@ -51,26 +53,26 @@ namespace Content.Server.Mobs
         public bool IsVisitingEntity => VisitingEntity != null;
 
         [ViewVariables]
-        public IEntity VisitingEntity { get; private set; }
+        public IEntity? VisitingEntity { get; private set; }
 
-        [ViewVariables] public IEntity CurrentEntity => VisitingEntity ?? OwnedEntity;
+        [ViewVariables] public IEntity? CurrentEntity => VisitingEntity ?? OwnedEntity;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string CharacterName { get; set; }
+        public string? CharacterName { get; set; }
 
         /// <summary>
         ///     The component currently owned by this mind.
         ///     Can be null.
         /// </summary>
         [ViewVariables]
-        public MindComponent OwnedComponent { get; private set; }
+        public MindComponent? OwnedComponent { get; private set; }
 
         /// <summary>
         ///     The entity currently owned by this mind.
         ///     Can be null.
         /// </summary>
         [ViewVariables]
-        public IEntity OwnedEntity => OwnedComponent?.Owner;
+        public IEntity? OwnedEntity => OwnedComponent?.Owner;
 
         /// <summary>
         ///     An enumerable over all the roles this mind has.
@@ -89,7 +91,7 @@ namespace Content.Server.Mobs
         ///     Can be null, in which case the player is currently not logged in.
         /// </summary>
         [ViewVariables]
-        public IPlayerSession Session
+        public IPlayerSession? Session
         {
             get
             {
@@ -193,10 +195,11 @@ namespace Content.Server.Mobs
         /// <exception cref="ArgumentException">
         ///     Thrown if <paramref name="entity"/> is already owned by another mind.
         /// </exception>
-        public void TransferTo(IEntity entity)
+        public void TransferTo(IEntity? entity)
         {
-            MindComponent component = null;
-            bool alreadyAttached = false;
+            MindComponent? component = null;
+            var alreadyAttached = false;
+
             if (entity != null)
             {
                 if (!entity.TryGetComponent(out component))
@@ -209,7 +212,7 @@ namespace Content.Server.Mobs
                     throw new ArgumentException("That entity already has a mind.", nameof(entity));
                 }
 
-                if (entity.TryGetComponent(out IActorComponent actor))
+                if (entity.TryGetComponent(out IActorComponent? actor))
                 {
                     // Happens when transferring to your currently visited entity.
                     if (actor.playerSession != Session)
@@ -244,7 +247,8 @@ namespace Content.Server.Mobs
         public void ChangeOwningPlayer(NetUserId? newOwner)
         {
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
-            PlayerData newOwnerData = null;
+            PlayerData? newOwnerData = null;
+
             if (newOwner.HasValue)
             {
                 if (!playerMgr.TryGetPlayerData(newOwner.Value, out var uncast))
@@ -264,7 +268,9 @@ namespace Content.Server.Mobs
 
             if (UserId.HasValue)
             {
-                playerMgr.GetPlayerData(UserId.Value).ContentData().Mind = null;
+                var data = playerMgr.GetPlayerData(UserId.Value).ContentData();
+                DebugTools.AssertNotNull(data);
+                data!.Mind = null;
             }
 
             UserId = newOwner;
@@ -275,7 +281,8 @@ namespace Content.Server.Mobs
 
             // Yank new owner out of their old mind too.
             // Can I mention how much I love the word yank?
-            newOwnerData.Mind?.ChangeOwningPlayer(null);
+            DebugTools.AssertNotNull(newOwnerData);
+            newOwnerData!.Mind?.ChangeOwningPlayer(null);
             newOwnerData.Mind = this;
         }
 
@@ -300,10 +307,17 @@ namespace Content.Server.Mobs
             // Null this before removing the component to avoid any infinite loops.
             VisitingEntity = null;
 
-            if (oldVisitingEnt.HasComponent<VisitingMindComponent>())
+            DebugTools.AssertNotNull(oldVisitingEnt);
+
+            if (oldVisitingEnt!.HasComponent<VisitingMindComponent>())
             {
                 oldVisitingEnt.RemoveComponent<VisitingMindComponent>();
             }
+        }
+
+        public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)
+        {
+            return (session = Session) != null;
         }
     }
 }

@@ -26,9 +26,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -720,7 +719,12 @@ namespace Content.Server.GameObjects.Components.Botany
                 {
                     sprayed = true;
                     amount = ReagentUnit.New(1);
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity(spray.SpraySound, usingItem, AudioHelpers.WithVariation(0.125f));
+
+                    if (!string.IsNullOrEmpty(spray.SpraySound))
+                    {
+                        EntitySystem.Get<AudioSystem>().PlayFromEntity(spray.SpraySound, usingItem,
+                            AudioHelpers.WithVariation(0.125f));
+                    }
                 }
 
                 var split = solution.Drain(amount);

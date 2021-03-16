@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void RotateEvent(RotateEvent ev)
         {
-            if (!ev.Sender.TryGetComponent(out NodeContainerComponent container))
+            if (!ev.Sender.TryGetComponent(out NodeContainerComponent? container))
             {
                 return;
             }

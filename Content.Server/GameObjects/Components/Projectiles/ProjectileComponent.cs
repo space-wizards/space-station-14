@@ -8,7 +8,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -30,15 +29,14 @@ namespace Content.Server.GameObjects.Components.Projectiles
             set => _damages = value;
         }
 
-        public bool DeleteOnCollide => _deleteOnCollide;
-        [DataField("delete_on_collide")]
-        private bool _deleteOnCollide = true;
+        [field: DataField("delete_on_collide")]
+        public bool DeleteOnCollide { get; } = true;
 
         // Get that juicy FPS hit sound
         [DataField("soundHit")]
-        private string _soundHit = default;
+        private string? _soundHit = default;
         [DataField("soundHitSpecies")]
-        private string _soundHitSpecies = default;
+        private string? _soundHitSpecies = default;
 
         private bool _damagedEntity;
 
@@ -65,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 return;
             }
 
-            if (otherBody.Entity.TryGetComponent(out IDamageableComponent damage) && _soundHitSpecies != null)
+            if (otherBody.Entity.TryGetComponent(out IDamageableComponent? damage) && _soundHitSpecies != null)
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, otherBody.Entity.Transform.Coordinates);
             }
@@ -87,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
 
             // Damaging it can delete it
-            if (!otherBody.Entity.Deleted && otherBody.Entity.TryGetComponent(out CameraRecoilComponent recoilComponent))
+            if (!otherBody.Entity.Deleted && otherBody.Entity.TryGetComponent(out CameraRecoilComponent? recoilComponent))
             {
                 var direction = ourBody.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);

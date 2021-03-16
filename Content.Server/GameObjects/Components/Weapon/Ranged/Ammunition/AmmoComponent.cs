@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         public int ProjectilesFired { get; } = 1;
 
         [DataField("projectile")]
-        private string _projectileId;
+        private string? _projectileId;
 
         // How far apart each entity is if multiple are shot
         [field: DataField("ammoSpread")]
@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         private string _muzzleFlashSprite = "Objects/Weapons/Guns/Projectiles/bullet_muzzle.png";
 
         [field: DataField("soundCollectionEject")]
-        public string SoundCollectionEject { get; } = "CasingEject";
+        public string? SoundCollectionEject { get; } = "CasingEject";
 
         void ISerializationHooks.AfterDeserialization()
         {
@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
         }
 
-        public IEntity TakeBullet(EntityCoordinates spawnAt)
+        public IEntity? TakeBullet(EntityCoordinates spawnAt)
         {
             if (_ammoIsProjectile)
             {
@@ -114,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
 
             _spent = true;
-            if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(AmmoVisuals.Spent, true);
             }

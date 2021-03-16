@@ -37,7 +37,7 @@ namespace Content.Server.Utility
             }
 
             // If this doesn't have an item component, then we can't do anything with it.
-            if (!item.TryGetComponent(out ItemComponent itemComp))
+            if (!item.TryGetComponent(out ItemComponent? itemComp))
                 return DeleteItem();
 
             // We finally try to equip the item, otherwise we delete it.

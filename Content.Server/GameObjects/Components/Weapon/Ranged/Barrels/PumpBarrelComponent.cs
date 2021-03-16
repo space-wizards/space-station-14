@@ -42,9 +42,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override int Capacity { get; } = DefaultCapacity;
 
         // Even a point having a chamber? I guess it makes some of the below code cleaner
-        private ContainerSlot _chamberContainer;
+        private ContainerSlot _chamberContainer = default!;
         private Stack<IEntity> _spawnedAmmo = new (DefaultCapacity-1);
-        private Container _ammoContainer;
+        private Container _ammoContainer = default!;
 
         [ViewVariables]
         [DataField("caliber")]
@@ -52,14 +52,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         [ViewVariables]
         [DataField("fillPrototype")]
-        private string _fillPrototype;
+        private string? _fillPrototype;
         [ViewVariables]
         private int _unspawnedCount;
 
         [DataField("manualCycle")]
         private bool _manualCycle = true;
 
-        private AppearanceComponent _appearanceComponent;
+        private AppearanceComponent? _appearanceComponent;
 
         // Sounds
         [DataField("soundCycle")]
@@ -83,7 +83,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var chamberedExists = _chamberContainer.ContainedEntity != null;
             // (Is one chambered?, is the bullet spend)
             var chamber = (chamberedExists, false);
-            if (chamberedExists && _chamberContainer.ContainedEntity.TryGetComponent<AmmoComponent>(out var ammo))
+
+            DebugTools.AssertNotNull(_chamberContainer.ContainedEntity);
+
+            if (chamberedExists && _chamberContainer.ContainedEntity!.TryGetComponent<AmmoComponent>(out var ammo))
             {
                 chamber.Item2 = ammo.Spent;
             }
@@ -122,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 _unspawnedCount--;
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -138,12 +141,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public override IEntity PeekAmmo()
+        public override IEntity? PeekAmmo()
         {
             return _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile(EntityCoordinates spawnAt)
+        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
         {
             var chamberEntity = _chamberContainer.ContainedEntity;
             if (!_manualCycle)
@@ -155,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 Dirty();
             }
 
-            return chamberEntity?.GetComponent<AmmoComponent>().TakeBullet(spawnAt);
+            return chamberEntity?.GetComponentOrNull<AmmoComponent>()?.TakeBullet(spawnAt);
         }
 
         private void Cycle(bool manual = false)
@@ -186,7 +189,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             if (manual)
             {
-                if (_soundCycle != null)
+                if (!string.IsNullOrEmpty(_soundCycle))
                 {
                     EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundCycle, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 }
@@ -198,7 +201,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         public bool TryInsertBullet(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.TryGetComponent(out AmmoComponent ammoComponent))
+            if (!eventArgs.Using.TryGetComponent(out AmmoComponent? ammoComponent))
             {
                 return false;
             }

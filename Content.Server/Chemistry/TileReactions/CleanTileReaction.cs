@@ -17,7 +17,7 @@ namespace Content.Server.Chemistry.TileReactions
             var amount = ReagentUnit.Zero;
             foreach (var entity in entities)
             {
-                if (entity.TryGetComponent(out CleanableComponent cleanable))
+                if (entity.TryGetComponent(out CleanableComponent? cleanable))
                 {
                     var next = amount + cleanable.CleanAmount;
                     // Nothing left?
