@@ -314,10 +314,14 @@ namespace Content.Client.UserInterface
             var bottomRow = new HBoxContainer()
             {
                 HorizontalAlignment = Control.HAlignment.Center
+
             };
+            bottomRow.AddChild(new Control {MinSize = (69, 0)}); //Padding (nice)
             bottomRow.AddChild(BottomLeftInventoryQuickButtonContainer);
             bottomRow.AddChild(HandsContainer);
             bottomRow.AddChild(BottomRightInventoryQuickButtonContainer);
+            bottomRow.AddChild(new Control {MinSize = (1, 0)}); //Padding
+
 
             centerBottomContainer.AddChild(TopInventoryQuickButtonContainer);
             centerBottomContainer.AddChild(bottomRow);
