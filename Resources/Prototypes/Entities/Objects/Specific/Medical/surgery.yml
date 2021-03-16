@@ -5,6 +5,8 @@
   id: BaseToolSurgery
   abstract: true
   components:
+  - type: Sprite
+    netsync: false
   - type: UserInterface
     interfaces:
     - key: enum.SurgeryUIKey.Key
