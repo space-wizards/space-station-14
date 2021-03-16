@@ -182,13 +182,15 @@
     state: peel
   - type: Slippery
     intersectPercentage: 0.2
+  - type: CollisionWake
+    enabled: false
   - type: Physics
     bodyType: KinematicController
     mass: 5
-    fixtures:
+    fixtures: # TODO: Make a second fixture. One should be for slipping, and the other for collisions.
       - shape:
           !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
+          bounds: "-0.2,-0.2,0.2,0.2"
         layer:
           - SmallImpassable
         mask:
