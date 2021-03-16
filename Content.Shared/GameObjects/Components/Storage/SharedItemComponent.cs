@@ -17,7 +17,7 @@ namespace Content.Shared.GameObjects.Components.Storage
     /// <summary>
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.
     /// </summary>
-    public abstract class SharedItemComponent : Component, IEquipped, IUnequipped, IExAct, IInteractHand
+    public abstract class SharedItemComponent : Component, IEquipped, IUnequipped, IInteractHand
     {
         public override string Name => "Item";
 
@@ -133,21 +133,6 @@ namespace Content.Shared.GameObjects.Components.Storage
             RemovedFromSlot();
         }
 
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
-        {
-            var source = eventArgs.Source;
-            var target = eventArgs.Target.Transform.Coordinates;
-            var dirVec = (target.ToMapPos(Owner.EntityManager) - source.ToMapPos(Owner.EntityManager)).Normalized;
-
-            var throwForce = eventArgs.Severity switch
-            {
-                ExplosionSeverity.Destruction => 3.0f,
-                ExplosionSeverity.Heavy => 2.0f,
-                _ => 1.0f,
-            };
-            ThrowItem(dirVec * throwForce);
-        }
-
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             return TryPutInHand(eventArgs.User);
@@ -164,9 +149,6 @@ namespace Content.Shared.GameObjects.Components.Storage
         public virtual void RemovedFromSlot() { }
 
         public virtual void EquippedToSlot() { }
-
-        //TODO: Move server implementation here once throwing is in shared
-        protected virtual void ThrowItem(Vector2 direction) { }
     }
 
     [Serializable, NetSerializable]
