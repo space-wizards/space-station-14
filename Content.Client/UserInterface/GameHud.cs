@@ -7,7 +7,6 @@ using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -341,13 +340,7 @@ namespace Content.Client.UserInterface
             LC.SetMarginRight(rightBottomContainer, -10f);
             RootControl.AddChild(rightBottomContainer);
 
-            var inventoryContainer = new VBoxContainer();
-            //inventoryContainer.AddChild(TopInventoryQuickButtonContainer);
-            //inventoryContainer.AddChild(MiddleInventoryQuickButtonContainer);
-            //inventoryContainer.AddChild(BottomInventoryQuickButtonContainer);
-
             rightBottomContainer.AddChild(_combatPanelContainer);
-            rightBottomContainer.AddChild(inventoryContainer);
 
             RootControl.AddChild(SuspicionContainer);
 
