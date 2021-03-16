@@ -104,6 +104,7 @@
       - name: ClothingEyesGlassesMeson
       - name: ClothingBeltChiefEngineerFilled
       - name: ClothingHeadHatBeretEngineering
+      - name: ClothingShoesBootsMag
       - name: CigarCase
         prob: 0.15
 
