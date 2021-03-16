@@ -29,10 +29,18 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 
     public class InteractUsingEventArgs : EventArgs, ITargetedInteractEventArgs
     {
-        public IEntity User { get; set; }
-        public EntityCoordinates ClickLocation { get; set; }
-        public IEntity Using { get; set; }
-        public IEntity Target { get; set; }
+        public InteractUsingEventArgs(IEntity user, EntityCoordinates clickLocation, IEntity @using, IEntity target)
+        {
+            User = user;
+            ClickLocation = clickLocation;
+            Using = @using;
+            Target = target;
+        }
+
+        public IEntity User { get; }
+        public EntityCoordinates ClickLocation { get; }
+        public IEntity Using { get; }
+        public IEntity Target { get; }
     }
 
     /// <summary>

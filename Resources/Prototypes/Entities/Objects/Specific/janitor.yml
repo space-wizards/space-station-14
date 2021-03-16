@@ -104,10 +104,11 @@
   - type: Item
     sprite: Objects/Specific/Janitorial/soap.rsi
   - type: Slippery
-    paralyzeTime: 2.5
+    paralyzeTime: 2
+    intersectPercentage: 0.2
   - type: Physics
-    bodyType: Dynamic
-    mass: 5
+    bodyType: KinematicController
+    mass: 2.5
     fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -115,9 +116,8 @@
         layer:
           - SmallImpassable
         mask:
-          - SmallImpassable
+          - Impassable
           - MobImpassable
-        hard: false
 
 - type: entity
   name: soap

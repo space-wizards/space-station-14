@@ -48,7 +48,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         private static void HandleDirChange(ICommonSession? session, Direction dir, ushort subTick, bool state)
         {
-            if (!TryGetAttachedComponent<SharedPlayerInputMoverComponent>(session, out var moverComp))
+            if (!TryGetAttachedComponent<IMoverComponent>(session, out var moverComp))
                 return;
 
             var owner = session?.AttachedEntity;

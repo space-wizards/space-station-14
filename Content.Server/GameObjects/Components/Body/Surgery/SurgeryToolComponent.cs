@@ -16,8 +16,6 @@ using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -246,7 +244,9 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
         private void HandleReceiveMechanism(int key)
         {
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
-            if (!_optionsCache.TryGetValue(key, out var targetObject) ||
+            if (BodyCache == null ||
+                !_optionsCache.TryGetValue(key, out var targetObject) ||
+                targetObject is not MechanismComponent target ||
                 PerformerCache == null ||
                 !PerformerCache.TryGetComponent(out IActorComponent? actor))
             {
@@ -254,20 +254,22 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 return;
             }
 
-            var target = targetObject as MechanismComponent;
-
             CloseSurgeryUI(actor.playerSession);
             _callbackCache?.Invoke(target, BodyCache, this, PerformerCache);
         }
 
         private void NotUsefulPopup()
         {
+            if (PerformerCache == null) return;
+
             BodyCache?.Owner.PopupMessage(PerformerCache,
                 Loc.GetString("You see no useful way to use {0:theName}.", Owner));
         }
 
         private void NotUsefulAnymorePopup()
         {
+            if (PerformerCache == null) return;
+
             BodyCache?.Owner.PopupMessage(PerformerCache,
                 Loc.GetString("You see no useful way to use {0:theName} anymore.", Owner));
         }

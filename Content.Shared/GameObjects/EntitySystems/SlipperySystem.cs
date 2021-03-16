@@ -11,7 +11,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            foreach (var slipperyComp in ComponentManager.EntityQuery<SharedSlipperyComponent>(true))
+            foreach (var slipperyComp in ComponentManager.EntityQuery<SlipperyComponent>(false))
             {
                 slipperyComp.Update();
             }

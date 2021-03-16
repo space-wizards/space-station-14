@@ -63,6 +63,9 @@
 #    criticalThreshold: 50
 #    deadThreshold: 120
   - type: Input
+    context: "ghost"
+  - type: DummyInputMover
+  - type: GhostOnMove
 
 - type: entity
   id: LeftArmHuman
