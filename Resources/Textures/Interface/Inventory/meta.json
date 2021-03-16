@@ -9,174 +9,60 @@
     "states": [
         {
             "name": "back",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
         },
         {
-            "name": "belt",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "belt"
         },
         {
-            "name": "block",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "block"
         },
         {
-            "name": "ears",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "ears"
         },
         {
-            "name": "glasses",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "glasses"
         },
         {
-            "name": "gloves",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "gloves"
         },
         {
-            "name": "hand_l",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "hand_l"
         },
         {
-            "name": "hand_l_active",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "hand_l_active"
         },
         {
-            "name": "hand_r",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "hand_r"
         },
         {
-            "name": "hand_r_active",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "hand_r_active"
         },
         {
-            "name": "head",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "head"
         },
         {
-            "name": "id",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "id"
         },
         {
-            "name": "invtoggle",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "invtoggle"
         },
         {
-            "name": "mask",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "mask"
         },
 		{
-            "name": "neck",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "neck"
         },
         {
-            "name": "pocket",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "pocket"
         },
         {
-            "name": "shoes",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "shoes"
         },
         {
-            "name": "suit",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "suit"
         },
         {
-            "name": "uniform",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "uniform"
         }
     ]
 }
