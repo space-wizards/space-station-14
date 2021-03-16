@@ -13,9 +13,6 @@ namespace Content.Shared.GameObjects.Components.Items
         public sealed override string Name => "Hands";
         public sealed override uint? NetID => ContentNetIDs.HANDS;
 
-        [DataField("pickupRange")]
-        public float PickupRange { get; private set; } = 2;
-
         /// <returns>true if the item is in one of the hands</returns>
         public abstract bool IsHolding(IEntity item);
     }
