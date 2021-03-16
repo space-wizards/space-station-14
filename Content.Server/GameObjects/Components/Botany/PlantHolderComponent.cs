@@ -426,7 +426,7 @@ namespace Content.Server.GameObjects.Components.Botany
             {
                 if (user.TryGetComponent(out HandsComponent? hands))
                 {
-                    if (!Seed.CheckHarvest(user, hands.GetActiveHeldItem?.Owner))
+                    if (!Seed.CheckHarvest(user, hands.GetActiveHand?.Owner))
                         return false;
 
                 } else if (!Seed.CheckHarvest(user))

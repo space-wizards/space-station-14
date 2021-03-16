@@ -28,8 +28,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
             out ISolutionInteractionsComponent? heldSolution)
         {
             if (!holder.TryGetComponent(out HandsComponent? hands)
-                || hands.GetActiveHeldItem == null
-                || !hands.GetActiveHeldItem.Owner.TryGetComponent(out heldSolution))
+                || hands.GetActiveHand == null
+                || !hands.GetActiveHand.Owner.TryGetComponent(out heldSolution))
             {
                 held = null;
                 heldSolution = null;

@@ -166,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            var activeHandEntity = hands.GetActiveHeldItem?.Owner;
+            var activeHandEntity = hands.GetActiveHand?.Owner;
             if (activeHandEntity == null)
             {
                 OpenUserInterface(actor);

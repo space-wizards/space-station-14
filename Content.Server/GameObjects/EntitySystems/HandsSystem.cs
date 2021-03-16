@@ -89,11 +89,11 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var interactionSystem = Get<InteractionSystem>();
 
-            var oldItem = handsComp.GetActiveHeldItem;
+            var oldItem = handsComp.GetActiveHand;
 
             handsComp.SwapHands();
 
-            var newItem = handsComp.GetActiveHeldItem;
+            var newItem = handsComp.GetActiveHand;
 
             if (oldItem != null)
             {
@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!ent.TryGetComponent(out HandsComponent handsComp))
                 return false;
 
-            if (handsComp.ActiveHandName == null || handsComp.GetActiveHeldItem == null)
+            if (handsComp.ActiveHandName == null || handsComp.GetActiveHand == null)
                 return false;
 
             var entMap = ent.Transform.MapPosition;
@@ -198,7 +198,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             bool ThrowItem()
             {
-                var item = handsComp.GetActiveHeldItem?.Owner;
+                var item = handsComp.GetActiveHand?.Owner;
                 if (item != null)
                 {
                     var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();

@@ -130,7 +130,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 return dictionary;
             }
 
-            foreach (var hand in hands.HandNames)
+            foreach (var hand in hands.Hands)
             {
                 dictionary[hand] = hands.GetItem(hand)?.Owner.Name ?? "None";
             }
@@ -150,7 +150,7 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             var inventory = Owner.GetComponent<InventoryComponent>();
             var userHands = user.GetComponent<HandsComponent>();
-            var item = userHands.GetActiveHeldItem;
+            var item = userHands.GetActiveHand;
 
             bool Check()
             {
@@ -215,7 +215,7 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             var hands = Owner.GetComponent<HandsComponent>();
             var userHands = user.GetComponent<HandsComponent>();
-            var item = userHands.GetActiveHeldItem;
+            var item = userHands.GetActiveHand;
 
             bool Check()
             {
@@ -379,7 +379,7 @@ namespace Content.Server.GameObjects.Components.GUI
             var user = obj.Session.AttachedEntity;
             if (user == null || !(user.TryGetComponent(out HandsComponent? userHands))) return;
 
-            var placingItem = userHands.GetActiveHeldItem != null;
+            var placingItem = userHands.GetActiveHand != null;
 
             switch (obj.Message)
             {

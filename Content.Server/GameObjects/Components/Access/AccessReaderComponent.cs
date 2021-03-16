@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Access
 
             if (entity.TryGetComponent(out IHandsComponent? handsComponent))
             {
-                var activeHandEntity = handsComponent.GetActiveHeldItem?.Owner;
+                var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                 if (activeHandEntity != null &&
                     activeHandEntity.TryGetComponent(out IAccess? handAccessComponent))
                 {

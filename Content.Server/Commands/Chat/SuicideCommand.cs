@@ -83,7 +83,7 @@ namespace Content.Server.Commands.Chat
 
             // Held item suicide
             var handsComponent = owner.GetComponent<HandsComponent>();
-            var itemComponent = handsComponent.GetActiveHeldItem;
+            var itemComponent = handsComponent.GetActiveHand;
             if (itemComponent != null)
             {
                 var suicide = itemComponent.Owner.GetAllComponents<ISuicideAct>().FirstOrDefault();

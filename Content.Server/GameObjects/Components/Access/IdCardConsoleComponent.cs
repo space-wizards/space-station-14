@@ -146,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Access
 
         private void InsertIdFromHand(IEntity user, ContainerSlot container, IHandsComponent hands)
         {
-            var isId = hands.GetActiveHeldItem?.Owner.HasComponent<IdCardComponent>();
+            var isId = hands.GetActiveHand?.Owner.HasComponent<IdCardComponent>();
             if (isId != true)
             {
                 return;

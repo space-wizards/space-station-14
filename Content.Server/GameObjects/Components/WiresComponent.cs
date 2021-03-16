@@ -407,7 +407,7 @@ namespace Content.Server.GameObjects.Components
                         return;
                     }
 
-                    var activeHandEntity = handsComponent.GetActiveHeldItem?.Owner;
+                    var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                     ToolComponent? tool = null;
                     activeHandEntity?.TryGetComponent(out tool);
 

@@ -195,7 +195,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return false;
             }
 
-            var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHeldItem?.Owner;
+            var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHand?.Owner;
 
             if (itemEntity == null)
             {

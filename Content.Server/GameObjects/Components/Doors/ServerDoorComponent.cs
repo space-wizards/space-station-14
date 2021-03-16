@@ -245,7 +245,7 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 Open();
 
-                if (user.TryGetComponent(out HandsComponent? hands) && hands.HandCount == 0)
+                if (user.TryGetComponent(out HandsComponent? hands) && hands.Count == 0)
                 {
                     EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/bang.ogg", Owner,
                                                                    AudioParams.Default.WithVolume(-2));

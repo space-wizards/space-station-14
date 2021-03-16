@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             if (eventArgs.NeedHand && eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
             {
                 _activeHand = handsComponent.ActiveHandName;
-                _activeItem = handsComponent.GetActiveHeldItem;
+                _activeItem = handsComponent.GetActiveHand;
             }
 
             Tcs = new TaskCompletionSource<DoAfterStatus>();
@@ -159,7 +159,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
                         return true;
                     }
 
-                    var currentItem = handsComponent.GetActiveHeldItem;
+                    var currentItem = handsComponent.GetActiveHand;
                     if (_activeItem != currentItem)
                     {
                         return true;

@@ -388,7 +388,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (user == null
                 || !ActionBlockerSystem.CanInteract(user)
-                || !user.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHeldItem == null
+                || !user.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand == null
                 || !user.InRangeUnobstructed(ev.Location, ignoreInsideBlocker:constructionPrototype.CanBuildInImpassable))
             {
                 Cleanup();
@@ -404,7 +404,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 throw new InvalidDataException($"Can't find edge from starting node to the next node in pathfinding! Recipe: {ev.PrototypeName}");
 
             var valid = false;
-            var holding = hands.GetActiveHeldItem?.Owner;
+            var holding = hands.GetActiveHand?.Owner;
 
             if (holding == null)
             {

@@ -62,12 +62,12 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return Outcome.Success;
             }
 
-            if (!_owner.TryGetComponent(out HandsComponent hands) || hands.GetActiveHeldItem == null)
+            if (!_owner.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand == null)
             {
                 return Outcome.Failed;
             }
 
-            var meleeWeapon = hands.GetActiveHeldItem.Owner;
+            var meleeWeapon = hands.GetActiveHand.Owner;
             meleeWeapon.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent);
 
             if ((_target.Transform.Coordinates.Position - _owner.Transform.Coordinates.Position).Length >

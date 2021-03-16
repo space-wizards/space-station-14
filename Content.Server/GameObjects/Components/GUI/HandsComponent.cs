@@ -1,8 +1,4 @@
 #nullable enable
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.EntitySystems.Click;
@@ -27,6 +23,10 @@ using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Server.GameObjects.Components.GUI
 {
@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.Components.GUI
         private string? _activeHandName;
 
         [ViewVariables]
-        public IReadOnlyList<IReadOnlyHand> Hands => _hands;
+        public IReadOnlyList<IReadOnlyHand> ReadOnlyHands => _hands;
         private readonly List<ServerHand> _hands = new();
 
         protected override void Startup()
@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             base.HandleNetworkMessage(message, channel, session);
 
-            var used = GetActiveHeldItem?.Owner;
+            var used = GetActiveHand?.Owner;
 
             switch (message)
             {
@@ -124,7 +124,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        private ServerHand? GetHand(string handName)
+        private ServerHand? GetServerHand(string handName)
         {
             foreach (var hand in _hands)
             {
@@ -134,34 +134,34 @@ namespace Content.Server.GameObjects.Components.GUI
             return null;
         }
 
-        private ServerHand? GetActiveHand()
+        private ServerHand? GetActiveServerHand()
         {
             if (ActiveHandName == null)
                 return null;
 
-            return GetHand(ActiveHandName);
+            return GetServerHand(ActiveHandName);
         }
 
-        private bool TryGetHand(string handName, [NotNullWhen(true)] out ServerHand? foundHand)
+        private bool TryGetServerHand(string handName, [NotNullWhen(true)] out ServerHand? foundHand)
         {
-            foundHand = GetHand(handName);
+            foundHand = GetServerHand(handName);
             return foundHand != null;
         }
 
         private bool TryGetActiveHand([NotNullWhen(true)] out ServerHand? activeHand)
         {
-            activeHand = GetActiveHand();
+            activeHand = GetActiveServerHand();
             return activeHand != null;
         }
 
         private IEntity? GetHeldEntity(string handName)
         {
-            return GetHand(handName)?.HeldEntity;
+            return GetServerHand(handName)?.HeldEntity;
         }
 
         private IEntity? GetActiveHeldEntity()
         {
-            return GetActiveHand()?.HeldEntity;
+            return GetActiveServerHand()?.HeldEntity;
         }
 
         public bool HasHand(string handName)
@@ -191,7 +191,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public void RemoveHand(string handName)
         {
-            if (!TryGetHand(handName, out var hand))
+            if (!TryGetServerHand(handName, out var hand))
                 return;
 
             Drop(hand.Name, false);
@@ -253,9 +253,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
         #region Hiding Hand Methods
 
-        [ViewVariables] public IEnumerable<string> HandNames => _hands.Select(h => h.Name);
+        [ViewVariables] public IEnumerable<string> Hands => _hands.Select(h => h.Name);
 
-        [ViewVariables] public int HandCount => _hands.Count;
+        [ViewVariables] public int Count => _hands.Count;
 
         /// <summary>
         ///     Checks if any hand is holding an entity.
@@ -311,7 +311,7 @@ namespace Content.Server.GameObjects.Components.GUI
         /// </summary>
         public bool DropFromHand(string handName, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true)
         {
-            if (!TryGetHand(handName, out var hand))
+            if (!TryGetServerHand(handName, out var hand))
                 return false;
 
             if (!CanDrop(handName, doMobChecks) || hand?.HeldEntity == null)
@@ -355,7 +355,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true)
         {
-            if (!TryGetHand(slot, out var hand))
+            if (!TryGetServerHand(slot, out var hand))
                 return false;
 
             if (!CanDrop(slot, doMobChecks) ||
@@ -428,7 +428,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public bool CanDrop(string name, bool mobCheck = true)
         {
-            if (!TryGetHand(name, out var hand))
+            if (!TryGetServerHand(name, out var hand))
                 return false;
 
             if (mobCheck && !ActionBlockerSystem.CanDrop(Owner))
@@ -462,7 +462,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public void ActivateItem()
         {
-            var used = GetActiveHeldItem?.Owner;
+            var used = GetActiveHand?.Owner;
             if (used != null)
             {
                 var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
@@ -478,7 +478,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         private async void ClientAttackByInHand(string handName, IEntity? used)
         {
-            if (!TryGetHand(handName, out var hand))
+            if (!TryGetServerHand(handName, out var hand))
             {
                 Logger.Warning($"{nameof(HandsComponent)} on {Owner} got a {nameof(ClientAttackByInHandMsg)} with invalid hand name {handName}");
                 return;
@@ -527,7 +527,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public ItemComponent? GetItem(string handName) //Old api
         {
-            if (!TryGetHand(handName, out var hand))
+            if (!TryGetServerHand(handName, out var hand))
                 return null;
 
             var heldEntity = hand.HeldEntity;
@@ -542,7 +542,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return (item = GetItem(handName)) != null;
         }
 
-        public ItemComponent? GetActiveHeldItem
+        public ItemComponent? GetActiveHand
         {
             get
             {
@@ -582,7 +582,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public bool TryPutItemInHand(ItemComponent item, string handName, bool fallback = true, bool mobChecks = true)
         {
-            if (!TryGetHand(handName, out var hand))
+            if (!TryGetServerHand(handName, out var hand))
                 return false;
 
             if (!CanPutInHand(item, handName, mobChecks))
@@ -644,7 +644,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
                 return false;
 
-            if (!TryGetHand(handName, out var hand))
+            if (!TryGetServerHand(handName, out var hand))
                 return false;
 
             return hand.Enabled &&

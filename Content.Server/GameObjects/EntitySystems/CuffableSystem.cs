@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 !cuffable.Initialized) return;
 
             var dirty = false;
-            var handCount = owner.GetComponentOrNull<HandsComponent>()?.HandCount ?? 0;
+            var handCount = owner.GetComponentOrNull<HandsComponent>()?.Count ?? 0;
 
             while (cuffable.CuffedHandCount > handCount && cuffable.CuffedHandCount > 0)
             {
