@@ -7,8 +7,6 @@
     - human
   behaviorType: Toggle
   behavior: !type:CombatMode
-    combatOn: You enter combat mode!
-    combatOff: You exit combat mode.
 
 - type: action
   actionType: Disarm
