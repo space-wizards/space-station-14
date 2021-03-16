@@ -191,7 +191,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             // If the user is holding the item
             if (user.TryGetComponent(out HandsComponent? handsComponent) &&
-                handsComponent.IsHoldingEntity(Owner))
+                handsComponent.IsHolding(Owner))
             {
                 Owner.Delete();
 

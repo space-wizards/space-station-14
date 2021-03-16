@@ -17,7 +17,7 @@ namespace Content.Shared.GameObjects.Components.Items
         public float PickupRange { get; private set; } = 2;
 
         /// <returns>true if the item is in one of the hands</returns>
-        public abstract bool IsHoldingEntity(IEntity item);
+        public abstract bool IsHolding(IEntity item);
     }
 
     public interface IReadOnlyHand
@@ -46,12 +46,6 @@ namespace Content.Shared.GameObjects.Components.Items
             Name = name;
             Enabled = enabled;
             Location = location;
-        }
-
-        public bool TryGetHeldEntity([NotNullWhen(true)] out IEntity? heldEntity)
-        {
-            heldEntity = HeldEntity;
-            return heldEntity != null;
         }
 
         public HandState ToHandState()
@@ -109,12 +103,12 @@ namespace Content.Shared.GameObjects.Components.Items
     [Serializable, NetSerializable]
     public class ActivateInHandMsg : ComponentMessage
     {
-        public string Index { get; }
+        public string HandName { get; }
 
         public ActivateInHandMsg(string index)
         {
             Directed = true;
-            Index = index;
+            HandName = index;
         }
     }
 

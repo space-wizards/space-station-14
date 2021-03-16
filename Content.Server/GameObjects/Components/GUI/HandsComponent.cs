@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 if (value != null && !HasHand(value))
                 {
-                    Logger.Warning($"{nameof(HandsComponent)} on {Owner} tried to set its hand to {value}, which was not a hand.");
+                    Logger.Warning($"{nameof(HandsComponent)} on {Owner} tried to set its active hand to {value}, which was not a hand.");
                     return;
                 }
                 _activeHandName = value;
@@ -58,6 +58,7 @@ namespace Content.Server.GameObjects.Components.GUI
         private string? _activeHandName;
 
         [ViewVariables]
+        public IReadOnlyList<IReadOnlyHand> Hands => _hands;
         private readonly List<ServerHand> _hands = new();
 
         protected override void Startup()
@@ -117,32 +118,137 @@ namespace Content.Server.GameObjects.Components.GUI
                 case UseInHandMsg:
                     UseHeldEntity(used);
                     break;
-                case ActivateInHandMsg:
-                    ActivateHeldEntity(used);
+                case ActivateInHandMsg msg:
+                    ActivateHeldEntity(msg.HandName);
                     break;
             }
         }
 
-        private bool TryGetHand(string handName, [NotNullWhen(true)] out ServerHand? foundHand)
+        private ServerHand? GetHand(string handName)
         {
-            foundHand = null;
-
             foreach (var hand in _hands)
             {
                 if (hand.Name == handName)
-                    foundHand = hand;
+                    return hand;
             }
+            return null;
+        }
+
+        private ServerHand? GetActiveHand()
+        {
+            if (ActiveHandName == null)
+                return null;
+
+            return GetHand(ActiveHandName);
+        }
+
+        private bool TryGetHand(string handName, [NotNullWhen(true)] out ServerHand? foundHand)
+        {
+            foundHand = GetHand(handName);
             return foundHand != null;
         }
 
         private bool TryGetActiveHand([NotNullWhen(true)] out ServerHand? activeHand)
         {
-            activeHand = null;
+            activeHand = GetActiveHand();
+            return activeHand != null;
+        }
 
-            if (ActiveHandName == null)
-                return false;
+        private IEntity? GetHeldEntity(string handName)
+        {
+            return GetHand(handName)?.HeldEntity;
+        }
 
-            return TryGetHand(ActiveHandName, out activeHand);
+        private IEntity? GetActiveHeldEntity()
+        {
+            return GetActiveHand()?.HeldEntity;
+        }
+
+        public bool HasHand(string handName)
+        {
+            foreach (var hand in _hands)
+            {
+                if (hand.Name == handName)
+                    return true;
+            }
+            return false;
+        }
+
+        public void AddHand(string handName)
+        {
+            if (HasHand(handName))
+                return;
+
+            var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, handName);
+            container.OccludesLight = false;
+            var handLocation = HandLocation.Left; //TODO: Set this appropriately
+
+            _hands.Add(new ServerHand(handName, container, true, handLocation));
+
+            HandCountChanged();
+            Dirty();
+        }
+
+        public void RemoveHand(string handName)
+        {
+            if (!TryGetHand(handName, out var hand))
+                return;
+
+            Drop(hand.Name, false);
+            hand.Container.Shutdown();
+            _hands.Remove(hand);
+
+            HandCountChanged();
+            Dirty();
+        }
+
+        private void HandCountChanged()
+        {
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
+        }
+
+        private void DropHeldEntity(ServerHand hand, EntityCoordinates dropLocation)
+        {
+            var heldEntity = hand.HeldEntity;
+
+            if (heldEntity == null)
+                return;
+
+            if (!hand.Container.Remove(heldEntity))
+            {
+                Logger.Error($"{nameof(HandsComponent)} on {Owner} could not remove {heldEntity} from {hand.Container}.");
+                return;
+            }
+            if (heldEntity.TryGetComponent(out ItemComponent? item))
+            {
+                item.RemovedFromSlot();
+                item.Owner.Transform.Coordinates = dropLocation;
+                _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, item.Owner, hand.ToHandState());
+            }
+            if (heldEntity.TryGetComponent(out SpriteComponent? sprite))
+            {
+                sprite.RenderOrder = heldEntity.EntityManager.CurrentTick.Value;
+            }
+            OnItemChanged?.Invoke();
+            Dirty();
+
+            //if (!DroppedInteraction(item, false, intentional))
+        }
+
+        private bool CanDropHeldEntity(ServerHand hand)
+        {
+            //TODO: Check if player is allowed to drop items RN
+            throw new NotImplementedException();
+        }
+
+        private bool TryDropHeldEntity(ServerHand hand, EntityCoordinates location)
+        {
+            if (CanDropHeldEntity(hand))
+            {
+                DropHeldEntity(hand, location);
+                return true;
+            }
+            return false;
         }
 
         #region Hiding Hand Methods
@@ -151,7 +257,10 @@ namespace Content.Server.GameObjects.Components.GUI
 
         [ViewVariables] public int HandCount => _hands.Count;
 
-        public override bool IsHoldingEntity(IEntity entity)
+        /// <summary>
+        ///     Checks if any hand is holding an entity.
+        /// </summary>
+        public override bool IsHolding(IEntity entity)
         {
             foreach (var hand in _hands)
             {
@@ -178,6 +287,9 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
+        /// <summary>
+        ///     Checks if any hand is holding an entity, and gets the name of that hand.
+        /// </summary>
         public bool TryHand(IEntity entity, [NotNullWhen(true)] out string? handName)
         {
             handName = null;
@@ -194,6 +306,9 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
+        /// <summary>
+        ///     Drops the contents of a specific hand.
+        /// </summary>
         public bool DropFromHand(string handName, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true)
         {
             if (!TryGetHand(handName, out var hand))
@@ -325,59 +440,6 @@ namespace Content.Server.GameObjects.Components.GUI
             return hand.Container.CanRemove(hand.Entity);
         }
 
-        public void AddHand(string name, bool enabled = true)
-        {
-            if (HasHand(name))
-            {
-                throw new InvalidOperationException($"Hand '{name}' already exists.");
-            }
-
-            var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, name);
-            container.OccludesLight = false;
-
-            var handLocation = HandLocation.Left; //TODO: Set this appropriately
-
-            var hand = new ServerHand(name, container, enabled, handLocation);
-
-            _hands.Add(hand);
-
-            ActiveHandName ??= name;
-
-            OnItemChanged?.Invoke();
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
-
-            Dirty();
-        }
-
-        public void RemoveHand(string name)
-        {
-            if (!TryGetHand(name, out var hand))
-                return;
-
-            if (hand == null)
-            {
-                throw new InvalidOperationException($"Hand '{name}' does not exist.");
-            }
-            Drop(hand.Name, false);
-            _hands.Remove(hand);
-
-            if (name == ActiveHandName)
-            {
-                _activeHandName = _hands.FirstOrDefault()?.Name;
-            }
-
-            OnItemChanged?.Invoke();
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
-            hand.Container.Shutdown();
-
-            Dirty();
-        }
-
-        public bool HasHand(string name)
-        {
-            return _hands.Any(hand => hand.Name == name);
-        }
-
         public void SwapHands()
         {
             if (ActiveHandName == null)
@@ -448,13 +510,15 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        private void ActivateHeldEntity(IEntity? entity)
+        private void ActivateHeldEntity(string handName)
         {
-            if (entity != null)
-            {
-                var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                interactionSystem.TryInteractionActivate(Owner, entity);
-            }
+            var heldEntity = GetHeldEntity(handName);
+
+            if (heldEntity == null)
+                return;
+
+            _entitySystemManager.GetEntitySystem<InteractionSystem>()
+                .TryInteractionActivate(Owner, heldEntity);
         }
 
         #endregion

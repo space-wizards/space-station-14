@@ -186,7 +186,7 @@ namespace Content.Client.GameObjects.Components.Items
             SetGuiState();
         }
 
-        public override bool IsHoldingEntity(IEntity entity)
+        public override bool IsHolding(IEntity entity)
         {
             foreach (var hand in Hands)
             {
