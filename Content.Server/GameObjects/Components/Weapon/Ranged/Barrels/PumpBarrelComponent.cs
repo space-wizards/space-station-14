@@ -84,8 +84,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             // (Is one chambered?, is the bullet spend)
             var chamber = (chamberedExists, false);
 
-            DebugTools.AssertNotNull(_chamberContainer.ContainedEntity);
-
             if (chamberedExists && _chamberContainer.ContainedEntity!.TryGetComponent<AmmoComponent>(out var ammo))
             {
                 chamber.Item2 = ammo.Spent;

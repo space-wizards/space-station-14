@@ -121,7 +121,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
             var entity = Owner.EntityManager.SpawnEntity(_projectileId, spawnAt);
 
-            DebugTools.AssertNotNull(entity);
             return entity;
         }
 
