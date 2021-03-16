@@ -86,7 +86,7 @@ namespace Content.Server.GameTicking.GameRules
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out IMobStateComponent mobState)
+                    || !playerSession.AttachedEntity.TryGetComponent(out IMobStateComponent? mobState)
                     || !playerSession.AttachedEntity.HasComponent<SuspicionRoleComponent>())
                 {
                     continue;

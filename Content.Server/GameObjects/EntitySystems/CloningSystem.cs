@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.EntitySystems
             return Minds.ContainsValue(mind);
         }
 
-        public Dictionary<int, string> GetIdToUser()
+        public Dictionary<int, string?> GetIdToUser()
         {
             return Minds.ToDictionary(m => m.Key, m => m.Value.CharacterName);
         }

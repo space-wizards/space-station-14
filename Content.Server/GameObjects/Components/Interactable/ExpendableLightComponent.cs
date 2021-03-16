@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         [ViewVariables]
         private float _stateExpiryTime = default;
-        private AppearanceComponent _appearance = default;
+        private AppearanceComponent? _appearance = default;
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                 CurrentState = ExpendableLightState.Lit;
                 _stateExpiryTime = GlowDuration;
-                
+
                 UpdateSpriteAndSounds(Activated);
                 UpdateVisualizer();
 
@@ -79,25 +79,22 @@ namespace Content.Server.GameObjects.Components.Interactable
             switch (CurrentState)
             {
                 case ExpendableLightState.Lit:
-                    _appearance.SetData(ExpendableLightVisuals.State, TurnOnBehaviourID);
+                    _appearance?.SetData(ExpendableLightVisuals.State, TurnOnBehaviourID);
                     break;
 
                 case ExpendableLightState.Fading:
-                    _appearance.SetData(ExpendableLightVisuals.State, FadeOutBehaviourID);
+                    _appearance?.SetData(ExpendableLightVisuals.State, FadeOutBehaviourID);
                     break;
 
                 case ExpendableLightState.Dead:
-                    _appearance.SetData(ExpendableLightVisuals.State, string.Empty);
-                    break;
-
-                default:
+                    _appearance?.SetData(ExpendableLightVisuals.State, string.Empty);
                     break;
             }
         }
 
         private void UpdateSpriteAndSounds(bool on)
         {
-            if (Owner.TryGetComponent(out SpriteComponent sprite))
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 switch (CurrentState)
                 {
@@ -145,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 }
             }
 
-            if (Owner.TryGetComponent(out ClothingComponent clothing))
+            if (Owner.TryGetComponent(out ClothingComponent? clothing))
             {
                 clothing.ClothingEquippedPrefix = on ? "Activated" : string.Empty;
             }

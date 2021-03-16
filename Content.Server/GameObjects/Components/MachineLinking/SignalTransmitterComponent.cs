@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
     {
         public override string Name => "SignalTransmitter";
 
-        private List<SignalReceiverComponent> _unresolvedReceivers;
+        private List<SignalReceiverComponent>? _unresolvedReceivers = new();
         private List<SignalReceiverComponent> _receivers = new();
 
         /// <summary>
@@ -74,6 +74,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                 {
                     receiver.Subscribe(this);
                 }
+
                 _unresolvedReceivers = null;
             }
         }
@@ -112,7 +113,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             _receivers.Remove(receiver);
         }
 
-        public SignalTransmitterComponent GetSignal(IEntity user)
+        public SignalTransmitterComponent GetSignal(IEntity? user)
         {
             if (user != null)
             {

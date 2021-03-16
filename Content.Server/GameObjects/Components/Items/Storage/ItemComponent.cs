@@ -12,8 +12,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Players;
 using Robust.Shared.Physics;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -28,14 +28,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override uint? NetID => ContentNetIDs.ITEM;
 
         [DataField("HeldPrefix")]
-        private string _equippedPrefix;
+        private string? _equippedPrefix;
 
-        public string EquippedPrefix
+        public string? EquippedPrefix
         {
-            get
-            {
-                return _equippedPrefix;
-            }
+            get => _equippedPrefix;
             set
             {
                 _equippedPrefix = value;
@@ -81,7 +78,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return false;
             }
 
-            if (Owner.TryGetComponent(out IPhysBody physics) &&
+            if (Owner.TryGetComponent(out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)
             {
                 return false;
@@ -92,9 +89,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!CanPickup(eventArgs.User)) return false;
+            if (!CanPickup(eventArgs.User) ||
+                !eventArgs.User.TryGetComponent(out IHandsComponent? hands) ||
+                hands.ActiveHand == null) return false;
 
-            var hands = eventArgs.User.GetComponent<IHandsComponent>();
             hands.PutInHand(this, hands.ActiveHand, false);
             return true;
         }
@@ -117,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             protected override void Activate(IEntity user, ItemComponent component)
             {
-                if (user.TryGetComponent(out HandsComponent hands) && !hands.IsHolding(component.Owner))
+                if (user.TryGetComponent(out HandsComponent? hands) && !hands.IsHolding(component.Owner))
                 {
                     hands.PutInHand(component);
                 }

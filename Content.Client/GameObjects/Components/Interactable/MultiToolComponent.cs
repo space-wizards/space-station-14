@@ -20,7 +20,7 @@ namespace Content.Client.GameObjects.Components.Interactable
 
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
         [ViewVariables] public bool StatusShowBehavior => _statusShowBehavior;
-        [ViewVariables] public ToolQuality Behavior => _behavior;
+        [ViewVariables] public ToolQuality? Behavior => _behavior;
 
         public override string Name => "MultiTool";
         public override uint? NetID => ContentNetIDs.MULTITOOLS;
@@ -63,11 +63,7 @@ namespace Content.Client.GameObjects.Components.Interactable
 
                 _parent._uiUpdateNeeded = false;
 
-                if(!_parent.StatusShowBehavior)
-                    _label.SetMarkup(string.Empty);
-                else
-                    _label.SetMarkup(_parent.Behavior.ToString());
-
+                _label.SetMarkup(_parent.StatusShowBehavior ? _parent.Behavior.ToString() ?? string.Empty : string.Empty);
             }
         }
     }

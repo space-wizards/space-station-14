@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return new WelderComponentState(FuelCapacity, Fuel, WelderLit);
         }
 
-        public override async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
+        public override async Task<bool> UseTool(IEntity user, IEntity? target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
         {
             bool ExtraCheck()
             {
@@ -108,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                 if (!CanWeld(DefaultFuelCost))
                 {
-                    target.PopupMessage(user, "Can't weld!");
+                    target?.PopupMessage(user, "Can't weld!");
 
                     return false;
                 }

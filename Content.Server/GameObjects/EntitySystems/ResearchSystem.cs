@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.EntitySystems
             _servers.Remove(server);
         }
 
-        public ResearchServerComponent GetServerById(int id)
+        public ResearchServerComponent? GetServerById(int id)
         {
             foreach (var server in Servers)
             {

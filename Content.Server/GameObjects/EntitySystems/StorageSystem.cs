@@ -2,7 +2,6 @@
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -34,7 +33,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var oldParentEntity = message.Container.Owner;
 
-            if (oldParentEntity.TryGetComponent(out ServerStorageComponent storageComp))
+            if (oldParentEntity.TryGetComponent(out ServerStorageComponent? storageComp))
             {
                 storageComp.HandleEntityMaybeRemoved(message);
             }
@@ -44,7 +43,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var oldParentEntity = message.Container.Owner;
 
-            if (oldParentEntity.TryGetComponent(out ServerStorageComponent storageComp))
+            if (oldParentEntity.TryGetComponent(out ServerStorageComponent? storageComp))
             {
                 storageComp.HandleEntityMaybeInserted(message);
             }

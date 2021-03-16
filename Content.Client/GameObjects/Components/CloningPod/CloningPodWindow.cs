@@ -11,7 +11,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
 {
     public sealed class CloningPodWindow : SS14Window
     {
-        private Dictionary<int, string> _scanManager;
+        private Dictionary<int, string?> _scanManager;
 
         private readonly VBoxContainer _scanList;
         public readonly Button CloneButton;
@@ -21,11 +21,11 @@ namespace Content.Client.GameObjects.Components.CloningPod
         private readonly ProgressBar _cloningProgressBar;
         private readonly Label _mindState;
 
-        private CloningPodBoundUserInterfaceState _lastUpdate = null!;
+        private CloningPodBoundUserInterfaceState? _lastUpdate;
 
         public int? SelectedScan;
 
-        public CloningPodWindow(Dictionary<int, string> scanManager)
+        public CloningPodWindow(Dictionary<int, string?> scanManager)
         {
             SetSize = MinSize = (250, 300);
             _scanManager = scanManager;
@@ -120,7 +120,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
             {
                 var button = new CloningScanButton
                 {
-                    Scan = scan.Value,
+                    Scan = scan.Value ?? string.Empty,
                     Id = scan.Key
                 };
                 button.ActualButton.OnToggled += OnItemButtonToggled;

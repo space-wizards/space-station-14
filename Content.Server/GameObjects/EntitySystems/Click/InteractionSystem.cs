@@ -61,6 +61,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         private void HandleDragDropMessage(DragDropMessage msg, EntitySessionEventArgs args)
         {
             var performer = args.SenderSession.AttachedEntity;
+
+            if (performer == null) return;
             if (!EntityManager.TryGetEntity(msg.Dropped, out var dropped)) return;
             if (!EntityManager.TryGetEntity(msg.Target, out var target)) return;
 
@@ -93,12 +95,12 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private bool HandleActivateItemInWorld(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleActivateItemInWorld(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             if (!EntityManager.TryGetEntity(uid, out var used))
                 return false;
 
-            var playerEnt = ((IPlayerSession) session).AttachedEntity;
+            var playerEnt = ((IPlayerSession?) session)?.AttachedEntity;
 
             if (playerEnt == null || !playerEnt.IsValid())
             {
@@ -118,7 +120,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// Activates the IActivate behavior of an object
         /// Verifies that the user is capable of doing the use interaction first
         /// </summary>
-        public void TryInteractionActivate(IEntity user, IEntity used)
+        public void TryInteractionActivate(IEntity? user, IEntity? used)
         {
             if (user != null && used != null && ActionBlockerSystem.CanUse(user))
             {
@@ -135,7 +137,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            if (!used.TryGetComponent(out IActivate activateComp))
+            if (!used.TryGetComponent(out IActivate? activateComp))
             {
                 return;
             }
@@ -148,7 +150,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private bool HandleWideAttack(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleWideAttack(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!coords.IsValid(_entityManager))
@@ -164,14 +166,14 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return true;
             }
 
-            var userEntity = ((IPlayerSession) session).AttachedEntity;
+            var userEntity = ((IPlayerSession?) session)?.AttachedEntity;
 
             if (userEntity == null || !userEntity.IsValid())
             {
                 return true;
             }
 
-            if (userEntity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
+            if (userEntity.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
                 DoAttack(userEntity, coords, true);
             }
@@ -193,7 +195,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 throw new InvalidOperationException();
             }
 
-            if (entity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
+            if (entity.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
                 DoAttack(entity, coords, false, uid);
             }
@@ -203,7 +205,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        public bool HandleClientUseItemInHand(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        public bool HandleClientUseItemInHand(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!coords.IsValid(_entityManager))
@@ -219,14 +221,14 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return true;
             }
 
-            var userEntity = ((IPlayerSession) session).AttachedEntity;
+            var userEntity = ((IPlayerSession?) session)?.AttachedEntity;
 
             if (userEntity == null || !userEntity.IsValid())
             {
                 return true;
             }
 
-            if (userEntity.TryGetComponent(out CombatModeComponent combat) && combat.IsInCombatMode)
+            if (userEntity.TryGetComponent(out CombatModeComponent? combat) && combat.IsInCombatMode)
                 DoAttack(userEntity, coords, false, uid);
             else
                 UserInteraction(userEntity, coords, uid);
@@ -234,7 +236,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             return true;
         }
 
-        private bool HandleTryPullObject(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!coords.IsValid(_entityManager))
@@ -250,7 +252,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            var player = session.AttachedEntity;
+            var player = session?.AttachedEntity;
 
             if (player == null)
             {
@@ -269,7 +271,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (!pulledObject.TryGetComponent(out PullableComponent pull))
+            if (!pulledObject.TryGetComponent(out PullableComponent? pull))
             {
                 return false;
             }

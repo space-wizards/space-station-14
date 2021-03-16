@@ -158,6 +158,11 @@ namespace Content.Server.GameObjects.Components.Observer
                     var warpName = new List<string>();
                     foreach (var point in warpPoints)
                     {
+                        if (point.Location == null)
+                        {
+                            continue;
+                        }
+
                         warpName.Add(point.Location);
                     }
                     SendNetworkMessage(new GhostReplyWarpPointData(warpName));

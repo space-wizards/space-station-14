@@ -14,8 +14,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Physics;
-using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Movement
@@ -76,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Movement
             }
 
             if (!user.HasComponent<ClimbingComponent>() ||
-                !user.TryGetComponent(out IBody body))
+                !user.TryGetComponent(out IBody? body))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;
@@ -160,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
             var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out PhysicsComponent body) && body.Fixtures.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out PhysicsComponent? body) && body.Fixtures.Count >= 1)
             {
                 var entityPos = entityToMove.Transform.WorldPosition;
 
@@ -194,7 +192,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         private async void TryClimb(IEntity user)
         {
-            if (!user.TryGetComponent(out ClimbingComponent climbingComponent) || climbingComponent.IsClimbing)
+            if (!user.TryGetComponent(out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
                 return;
 
             var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay, default, Owner)
@@ -207,7 +205,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
             var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out PhysicsComponent body) && body.Fixtures.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out PhysicsComponent? body) && body.Fixtures.Count >= 1)
             {
                 // TODO: Remove the copy-paste code
                 var userPos = user.Transform.WorldPosition;

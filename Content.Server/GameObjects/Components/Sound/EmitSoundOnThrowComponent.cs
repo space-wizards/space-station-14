@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Sound
         public override string Name => "EmitSoundOnThrow";
 
         [DataField("sound")]
-        public string _soundName;
+        public string? _soundName;
         [DataField("variation")]
         public float _pitchVariation;
 

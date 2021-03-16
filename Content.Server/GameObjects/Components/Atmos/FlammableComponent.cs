@@ -17,10 +17,9 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
@@ -84,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 FireStacks = MathF.Min(0, FireStacks + 1);
             }
 
-            Owner.TryGetComponent(out ServerAlertsComponent status);
+            Owner.TryGetComponent(out ServerAlertsComponent? status);
 
             if (!OnFire)
             {
@@ -96,12 +95,12 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             if (FireStacks > 0)
             {
-                if(Owner.TryGetComponent(out TemperatureComponent temp))
+                if (Owner.TryGetComponent(out TemperatureComponent? temp))
                 {
                     temp.ReceiveHeat(200 * FireStacks);
                 }
 
-                if (Owner.TryGetComponent(out IDamageableComponent damageable))
+                if (Owner.TryGetComponent(out IDamageableComponent? damageable))
                 {
                     // TODO ATMOS Fire resistance from armor
                     var damage = Math.Min((int) (FireStacks * 2.5f), 10);
@@ -117,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
 
             // If we're in an oxygenless environment, put the fire out.
-            if (tile?.Air?.GetMoles(Gas.Oxygen) < 1f)
+            if (tile.Air?.GetMoles(Gas.Oxygen) < 1f)
             {
                 Extinguish();
                 return;
@@ -147,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            if (!otherBody.Entity.TryGetComponent(out FlammableComponent otherFlammable))
+            if (!otherBody.Entity.TryGetComponent(out FlammableComponent? otherFlammable))
                 return;
 
             if (!FireSpread || !otherFlammable.FireSpread)
@@ -177,7 +176,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void UpdateAppearance()
         {
-            if (Owner.Deleted || !Owner.TryGetComponent(out AppearanceComponent appearanceComponent)) return;
+            if (Owner.Deleted || !Owner.TryGetComponent(out AppearanceComponent? appearanceComponent)) return;
             appearanceComponent.SetData(FireVisuals.OnFire, OnFire);
             appearanceComponent.SetData(FireVisuals.FireStacks, FireStacks);
         }
@@ -191,7 +190,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         // This needs some improvements...
         public void Resist()
         {
-            if (!OnFire || !ActionBlockerSystem.CanInteract(Owner) || _resisting || !Owner.TryGetComponent(out StunnableComponent stunnable)) return;
+            if (!OnFire || !ActionBlockerSystem.CanInteract(Owner) || _resisting || !Owner.TryGetComponent(out StunnableComponent? stunnable)) return;
 
             _resisting = true;
 

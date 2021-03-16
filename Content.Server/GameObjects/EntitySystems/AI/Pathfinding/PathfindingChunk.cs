@@ -177,12 +177,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             return _nodes[chunkX, chunkY];
         }
 
-        private void CreateNode(TileRef tile, PathfindingChunk parent = null)
+        private void CreateNode(TileRef tile, PathfindingChunk? parent = null)
         {
-            if (parent == null)
-            {
-                parent = this;
-            }
+            parent ??= this;
 
             var node = new PathfindingNode(parent, tile);
             var offsetX = tile.X - Indices.X;
