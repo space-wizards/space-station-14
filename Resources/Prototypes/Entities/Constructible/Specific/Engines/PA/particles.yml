@@ -15,13 +15,24 @@
       damages:
         Radiation: 10
     - type: Physics
+<<<<<<< HEAD
       fixtures:
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.48,-0.48,0.48,0.48"
         hard: false
         layer: [None]
+=======
+      anchored: false
+      edgeslide: false
+      hard: false
+      shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.48,-0.48,0.48,0.48"
+        layer:
+        - Impassable
+        - MobImpassable
+>>>>>>> 6a335d72d4d81d2def8da2a0684036d56d562e4e
         mask:
-        - MobMask
-        - Clickable
+        - Opaque
     - type: ParticleProjectile
