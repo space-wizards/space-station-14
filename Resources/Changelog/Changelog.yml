@@ -551,3 +551,8 @@ Entries:
   - {message: Shotguns and SMGs in armory crates 3 -> 2, type: Tweak}
   id: 100
   time: '2021-03-16T08:14:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix DoAfter flickering for a frame, type: Fix}
+  id: 101
+  time: '2021-03-16T08:16:55.0000000+00:00'
