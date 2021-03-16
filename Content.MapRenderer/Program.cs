@@ -25,6 +25,11 @@ namespace Content.MapRenderer
     {
         internal static void Main()
         {
+            new Program().Run();
+        }
+
+        private void Run()
+        {
             var created = Environment.GetEnvironmentVariable("MAPS_ADDED");
             var modified = Environment.GetEnvironmentVariable("MAPS_MODIFIED");
 
@@ -73,6 +78,8 @@ namespace Content.MapRenderer
             {
                 program.Run(map).GetAwaiter().GetResult();
             }
+
+            WriteComment();
         }
 
         private async Task Run(string map)
@@ -185,6 +192,11 @@ namespace Content.MapRenderer
             }
 
             Console.WriteLine($"Saved map image for {map} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+        }
+
+        private void WriteComment()
+        {
+            Console.WriteLine(Assembly.GetExecutingAssembly().Location);
         }
     }
 }

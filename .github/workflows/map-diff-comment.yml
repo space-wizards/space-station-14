@@ -1,4 +1,4 @@
-name: Map Diff
+name: Map Diff Comment
 
 on:
   push:
@@ -41,13 +41,8 @@ jobs:
         run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors= /m
       - name: Create map images
         run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-build
-      - name: Commit files
-        run: |
-          git config --local user.email "github-actions@users.noreply.github.com"
-          git config --local user.name "github-actions"
-          git commit -am "Update map images"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+      - uses: harupy/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          filename: map-diff-comment.md
