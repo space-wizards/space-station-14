@@ -538,3 +538,9 @@ Entries:
   - {message: Empty lockers on station are removed, type: Remove}
   id: 98
   time: '2021-03-16T05:46:31.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Resprites surgery tools, type: Add}
+  - {message: More advanced/unadvanced surgery tools, type: Add}
+  id: 99
+  time: '2021-03-16T07:48:55.0000000+00:00'
