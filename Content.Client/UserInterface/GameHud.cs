@@ -280,13 +280,14 @@ namespace Content.Client.UserInterface
 
             var centerBottomContainer = new VBoxContainer
             {
-                SeparationOverride = 5
+                SeparationOverride = 5,
+                HorizontalAlignment = Control.HAlignment.Center
             };
             LC.SetAnchorAndMarginPreset(centerBottomContainer, LC.LayoutPreset.CenterBottom);
             LC.SetGrowHorizontal(centerBottomContainer, LC.GrowDirection.Both);
             LC.SetGrowVertical(centerBottomContainer, LC.GrowDirection.Begin);
             LC.SetMarginBottom(centerBottomContainer, -10f);
-            LC.SetMarginRight(centerBottomContainer, 10f);
+            //LC.SetMarginRight(centerBottomContainer, 10f);
             RootControl.AddChild(centerBottomContainer);
 
             HandsContainer = new Control
@@ -297,15 +298,16 @@ namespace Content.Client.UserInterface
             BottomRightInventoryQuickButtonContainer = new HBoxContainer()
             {
                 VerticalAlignment = Control.VAlignment.Bottom,
-                HorizontalAlignment = Control.HAlignment.Left
+                HorizontalAlignment = Control.HAlignment.Right
             };
             BottomLeftInventoryQuickButtonContainer = new HBoxContainer()
             {
                 VerticalAlignment = Control.VAlignment.Bottom,
-                HorizontalAlignment = Control.HAlignment.Right
+                HorizontalAlignment = Control.HAlignment.Left
             };
             TopInventoryQuickButtonContainer = new HBoxContainer()
             {
+                Visible = false,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 HorizontalAlignment = Control.HAlignment.Center
             };
@@ -419,7 +421,11 @@ namespace Content.Client.UserInterface
         public bool InventoryButtonDown
         {
             get => _buttonInventoryMenu.Pressed;
-            set => _buttonInventoryMenu.Pressed = value;
+            set
+            {
+                TopInventoryQuickButtonContainer.Visible = value;
+                _buttonInventoryMenu.Pressed = value;
+            }
         }
 
         public bool InventoryButtonVisible
