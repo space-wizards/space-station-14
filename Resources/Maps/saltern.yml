@@ -14137,10 +14137,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1152
-  type: LockerMedical
+  type: LockerMedicalFilled
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 22.5,-7.5
+  - pos: 22.5,-7.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -14157,10 +14156,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1154
-  type: LockerMedical
+  type: LockerMedicalFilled
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 21.5,-7.5
+  - pos: 21.5,-7.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -46063,9 +46061,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4726
-  type: MagazinePistolSmgRubber
+  type: MagazineMagnumSmgRubber
   components:
-  - pos: -14.7352915,20.360342
+  - pos: -14.7353,20.40566
     parent: 853
     type: Transform
   - canCollide: False
@@ -46075,9 +46073,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4727
-  type: MagazinePistolSmgRubber
+  type: MagazineMagnumSmgRubber
   components:
-  - pos: -14.457996,20.344717
+  - pos: -14.536245,20.421286
     parent: 853
     type: Transform
   - canCollide: False
@@ -46087,9 +46085,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4728
-  type: MagazinePistolSmgRubber
+  type: MagazineMagnumSmgRubber
   components:
-  - pos: -14.239246,20.360342
+  - pos: -14.33312,20.40566
     parent: 853
     type: Transform
   - canCollide: False
