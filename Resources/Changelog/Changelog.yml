@@ -544,3 +544,10 @@ Entries:
   - {message: More advanced/unadvanced surgery tools, type: Add}
   id: 99
   time: '2021-03-16T07:48:55.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Correct mags for SMGs in Armory and crate, type: Fix}
+  - {message: Medical now has filled lockers, type: Fix}
+  - {message: Shotguns and SMGs in armory crates 3 -> 2, type: Tweak}
+  id: 100
+  time: '2021-03-16T08:14:11.0000000+00:00'
