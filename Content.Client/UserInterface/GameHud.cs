@@ -285,7 +285,6 @@ namespace Content.Client.UserInterface
             LC.SetGrowHorizontal(centerBottomContainer, LC.GrowDirection.Both);
             LC.SetGrowVertical(centerBottomContainer, LC.GrowDirection.Begin);
             LC.SetMarginBottom(centerBottomContainer, -10f);
-            //LC.SetMarginRight(centerBottomContainer, 10f);
             RootControl.AddChild(centerBottomContainer);
 
             HandsContainer = new Control
