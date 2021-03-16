@@ -283,7 +283,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 if (!inventory.HasSlot(slot))
                     return false;
 
-                if (!inventory.TryGetSlotItem(slot, out ItemComponent itemToTake))
+                if (!inventory.TryGetSlotItem(slot, out ItemComponent? itemToTake))
                 {
                     user.PopupMessageCursor(Loc.GetString("{0:They} {0:have} nothing there!", Owner));
                     return false;
@@ -314,7 +314,12 @@ namespace Content.Server.GameObjects.Components.GUI
 
             var item = inventory.GetSlotItem(slot);
             inventory.Unequip(slot, false);
-            userHands.PutInHandOrDrop(item);
+
+            if (item != null)
+            {
+                userHands.PutInHandOrDrop(item);
+            }
+
             UpdateSubscribed();
         }
 

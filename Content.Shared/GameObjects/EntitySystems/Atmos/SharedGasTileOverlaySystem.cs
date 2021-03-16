@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -52,7 +53,7 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
             {
                 FireState = fireState;
                 FireTemperature = fireTemperature;
-                Gas = gas ?? Array.Empty<GasData>();
+                Gas = gas;
 
                 Array.Sort(Gas, (a, b) => a.Index.CompareTo(b.Index));
 
@@ -99,7 +100,7 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         ///     No point re-sending every tile if only a subset might have been updated.
         /// </summary>
         [Serializable, NetSerializable]
-        public sealed class GasOverlayMessage : EntitySystemMessage
+        public sealed class GasOverlayMessage : EntityEventArgs
         {
             public GridId GridId { get; }
 

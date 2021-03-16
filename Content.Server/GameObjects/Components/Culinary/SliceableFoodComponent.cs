@@ -1,19 +1,19 @@
 using System.Threading.Tasks;
-using Content.Shared.Chemistry;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Nutrition;
+using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Containers;
-using Robust.Shared.Serialization;
-using Robust.Shared.Localization;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Utility;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Culinary
 {
@@ -24,19 +24,16 @@ namespace Content.Server.GameObjects.Components.Culinary
 
         int IInteractUsing.Priority => 1; // take priority over eating with utensils
 
-        [ViewVariables(VVAccess.ReadWrite)] private string _slice;
-        private ushort _totalCount;
-        [ViewVariables(VVAccess.ReadWrite)] private string _sound;
+        [DataField("slice")] [ViewVariables(VVAccess.ReadWrite)]
+        private string _slice = string.Empty;
+
+        [DataField("sound")] [ViewVariables(VVAccess.ReadWrite)]
+        private string _sound = "/Audio/Items/Culinary/chop.ogg";
+
+        [DataField("count")] [ViewVariables(VVAccess.ReadWrite)]
+        private ushort _totalCount = 5;
 
         [ViewVariables(VVAccess.ReadWrite)] public ushort Count;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _slice, "slice", string.Empty);
-            serializer.DataField(ref _sound, "sound", "/Audio/Items/Culinary/chop.ogg");
-            serializer.DataField<ushort>(ref _totalCount, "count", 5);
-        }
 
         public override void Initialize()
         {
@@ -52,17 +49,17 @@ namespace Content.Server.GameObjects.Components.Culinary
             {
                 return false;
             }
-            if (!Owner.TryGetComponent(out SolutionContainerComponent solution))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 return false;
             }
-            if (!eventArgs.Using.TryGetComponent(out UtensilComponent utensil) || !utensil.HasType(UtensilType.Knife))
+            if (!eventArgs.Using.TryGetComponent(out UtensilComponent? utensil) || !utensil.HasType(UtensilType.Knife))
             {
                 return false;
             }
 
             var itemToSpawn = Owner.EntityManager.SpawnEntity(_slice, Owner.Transform.Coordinates);
-            if (eventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+            if (eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
             {
                 if (ContainerHelpers.IsInContainer(Owner))
                 {

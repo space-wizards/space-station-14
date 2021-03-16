@@ -7,6 +7,7 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Shared;
 using NUnit.Framework;
 using Robust.Server.Maps;
+using Robust.Shared;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -52,6 +53,9 @@ namespace Content.IntegrationTests
             // Basically just makes the CI logs a mess.
             options.CVarOverrides["discord.enabled"] = "false";
 
+            // Avoid preloading textures in tests.
+            options.CVarOverrides.TryAdd(CVars.TexturePreloadingEnabled.Name, "false");
+
             return base.StartClient(options);
         }
 
@@ -64,6 +68,7 @@ namespace Content.IntegrationTests
                 typeof(Server.EntryPoint).Assembly,
                 typeof(ContentIntegrationTest).Assembly
             };
+
             options.BeforeStart += () =>
             {
                 IoCManager.Resolve<IModLoader>().SetModuleBaseCallbacks(new ServerModuleTestingCallbacks

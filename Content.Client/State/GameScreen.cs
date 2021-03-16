@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Client.Administration;
 using Content.Client.Chat;
 using Content.Client.Construction;

@@ -24,7 +24,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: SteelSheet1
+              prototype: SheetSteel1
               amount: 2
             - !type:DeleteEntity {}
           conditions:
@@ -60,7 +60,7 @@
         - to: girder
           completed:
             - !type:SpawnPrototype
-              prototype: SteelSheet1
+              prototype: SheetSteel1
               amount: 2
           steps:
             - tool: Welding

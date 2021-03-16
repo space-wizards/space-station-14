@@ -20,8 +20,14 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 
     public class InteractHandEventArgs : EventArgs, ITargetedInteractEventArgs
     {
-        public IEntity User { get; set; }
-        public IEntity Target { get; set; }
+        public InteractHandEventArgs(IEntity user, IEntity target)
+        {
+            User = user;
+            Target = target;
+        }
+
+        public IEntity User { get; }
+        public IEntity Target { get; }
     }
 
 
@@ -29,13 +35,8 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///      Raised when being clicked on or "attacked" by a user with an empty hand.
     /// </summary>
     [PublicAPI]
-    public class AttackHandMessage : EntitySystemMessage
+    public class AttackHandMessage : HandledEntityEventArgs
     {
-        /// <summary>
-        ///     If this message has already been "handled" by a previous system.
-        /// </summary>
-        public bool Handled { get; set; }
-
         /// <summary>
         ///     Entity that triggered the attack.
         /// </summary>

@@ -8,48 +8,15 @@
     "copyright": "@trerri#0107",
     "states": [
         {
-            "name": "cow_toolbox",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "cow_toolbox"
         },
         {
             "name": "inhand-left",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "inhand-right",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         }
         ]
         }

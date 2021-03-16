@@ -1,7 +1,7 @@
 using System;
 using Content.Server.Holiday.Interfaces;
 using JetBrains.Annotations;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Holiday.ShouldCelebrate
 {
@@ -9,14 +9,11 @@ namespace Content.Server.Holiday.ShouldCelebrate
     ///     For a holiday that occurs on a certain day of the year.
     /// </summary>
     [UsedImplicitly]
+    [DataDefinition]
     public class DayOfYear : IHolidayShouldCelebrate
     {
-        private uint _dayOfYear;
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _dayOfYear, "dayOfYear", 1u);
-        }
+        [DataField("dayOfYear")]
+        private uint _dayOfYear = 1;
 
         public bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
         {

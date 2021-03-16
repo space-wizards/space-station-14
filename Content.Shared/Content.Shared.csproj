@@ -10,6 +10,7 @@
     <Configurations>Release;Debug</Configurations>
     <Platforms>AnyCPU</Platforms>
     <WarningsAsErrors>nullable</WarningsAsErrors>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
@@ -32,4 +33,5 @@
     <Folder Include="GameObjects\Components\Visualizers" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
+
 </Project>

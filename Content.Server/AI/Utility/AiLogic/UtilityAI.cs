@@ -15,25 +15,27 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.AI.Utility.AiLogic
 {
     // TODO: Need to split out the IMover stuff for NPC to a generic one that can be used for hoomans as well.
     [RegisterComponent]
     [ComponentReference(typeof(AiControllerComponent)), ComponentReference(typeof(IMoverComponent))]
-    internal sealed class UtilityAi : AiControllerComponent
+    public sealed class UtilityAi : AiControllerComponent, ISerializationHooks
     {
         public override string Name => "UtilityAI";
 
         // TODO: Look at having ParallelOperators (probably no more than that as then you'd have a full-blown BT)
         // Also RepeatOperators (e.g. if we're following an entity keep repeating MoveToEntity)
-        private AiActionSystem _planner;
+        private AiActionSystem _planner = default!;
         public Blackboard Blackboard => _blackboard;
-        private Blackboard _blackboard;
+        private Blackboard _blackboard = default!;
 
         /// <summary>
         ///     The sum of all BehaviorSets gives us what actions the AI can take
         /// </summary>
+        [field: DataField("behaviorSets")]
         public HashSet<string> BehaviorSets { get; } = new();
 
         public List<IAiUtility> AvailableActions { get; set; } = new();
@@ -41,7 +43,7 @@ namespace Content.Server.AI.Utility.AiLogic
         /// <summary>
         /// The currently running action; most importantly are the operators.
         /// </summary>
-        public UtilityAction CurrentAction { get; private set; }
+        public UtilityAction? CurrentAction { get; private set; }
 
         /// <summary>
         /// How frequently we can re-plan. If an AI's in combat you could decrease the cooldown,
@@ -53,35 +55,39 @@ namespace Content.Server.AI.Utility.AiLogic
         /// <summary>
         /// If we've requested a plan then wait patiently for the action
         /// </summary>
-        private AiActionRequestJob _actionRequest;
+        private AiActionRequestJob? _actionRequest;
 
-        private CancellationTokenSource _actionCancellation;
+        private CancellationTokenSource? _actionCancellation;
 
         /// <summary>
         ///     If we can't do anything then stop thinking; should probably use ActionBlocker instead
         /// </summary>
         private bool _isDead;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        /*public void AfterDeserialization()
         {
-            base.ExposeData(serializer);
-            var bSets = serializer.ReadDataField("behaviorSets", new List<string>());
-
-            if (bSets.Count > 0)
+            if (BehaviorSets.Count > 0)
             {
                 var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
 
-                foreach (var bSet in bSets)
+                foreach (var bSet in BehaviorSets)
                 {
                     behaviorManager.AddBehaviorSet(this, bSet, false);
                 }
 
                 behaviorManager.RebuildActions(this);
             }
-        }
+        }*/
 
         public override void Initialize()
         {
+            if (BehaviorSets.Count > 0)
+            {
+                var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
+                behaviorManager.RebuildActions(this);
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(this, false));
+            }
+
             base.Initialize();
             _planCooldownRemaining = PlanCooldown;
             _blackboard = new Blackboard(Owner);
@@ -120,6 +126,11 @@ namespace Content.Server.AI.Utility.AiLogic
 
         private void ReceivedAction()
         {
+            if (_actionRequest == null)
+            {
+                return;
+            }
+
             switch (_actionRequest.Exception)
             {
                 case null:

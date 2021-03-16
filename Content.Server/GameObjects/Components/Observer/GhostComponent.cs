@@ -158,6 +158,11 @@ namespace Content.Server.GameObjects.Components.Observer
                     var warpName = new List<string>();
                     foreach (var point in warpPoints)
                     {
+                        if (point.Location == null)
+                        {
+                            continue;
+                        }
+
                         warpName.Add(point.Location);
                     }
                     SendNetworkMessage(new GhostReplyWarpPointData(warpName));
@@ -180,7 +185,7 @@ namespace Content.Server.GameObjects.Components.Observer
             message.AddMarkup(Loc.GetString("Died [color=yellow]{0}[/color].", deathTimeInfo));
         }
 
-        public class GhostReturnMessage : EntitySystemMessage
+        public class GhostReturnMessage : EntityEventArgs
         {
             public GhostReturnMessage(Mind sender)
             {

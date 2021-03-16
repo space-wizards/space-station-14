@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         public override string Name => "SignalLinker";
 
         [ViewVariables]
-        public SignalTransmitterComponent Link { get; set; }
+        public SignalTransmitterComponent? Link { get; set; }
 
         public override void Initialize()
         {

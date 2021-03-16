@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Shared.GameObjects;
@@ -15,8 +16,9 @@ namespace Content.Shared.GameObjects.Components.Cargo
     [NetSerializable, Serializable]
     public class CargoOrderDatabaseState : ComponentState
     {
-        public readonly List<CargoOrderData> Orders;
-        public CargoOrderDatabaseState(List<CargoOrderData> orders) : base(ContentNetIDs.CARGO_ORDER_DATABASE)
+        public readonly List<CargoOrderData>? Orders;
+
+        public CargoOrderDatabaseState(List<CargoOrderData>? orders) : base(ContentNetIDs.CARGO_ORDER_DATABASE)
         {
             Orders = orders;
         }

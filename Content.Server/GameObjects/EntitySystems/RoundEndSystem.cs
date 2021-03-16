@@ -3,10 +3,11 @@ using System.Threading;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameTicking;
-using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -31,16 +32,16 @@ namespace Content.Server.GameObjects.EntitySystems
         public TimeSpan CallCooldown { get; } = TimeSpan.FromSeconds(30);
 
         public delegate void RoundEndCountdownStarted();
-        public event RoundEndCountdownStarted OnRoundEndCountdownStarted;
+        public event RoundEndCountdownStarted? OnRoundEndCountdownStarted;
 
         public delegate void RoundEndCountdownCancelled();
-        public event RoundEndCountdownCancelled OnRoundEndCountdownCancelled;
+        public event RoundEndCountdownCancelled? OnRoundEndCountdownCancelled;
 
         public delegate void RoundEndCountdownFinished();
-        public event RoundEndCountdownFinished OnRoundEndCountdownFinished;
+        public event RoundEndCountdownFinished? OnRoundEndCountdownFinished;
 
         public delegate void CallCooldownEnded();
-        public event CallCooldownEnded OnCallCooldownEnded;
+        public event CallCooldownEnded? OnCallCooldownEnded;
 
         void IResettingEntitySystem.Reset()
         {
@@ -80,7 +81,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _chatManager.DispatchStationAnnouncement(Loc.GetString("An emergency shuttle has been sent. ETA: {0} minutes.", RoundEndCountdownTime.Minutes), Loc.GetString("Station"));
 
-            Get<AudioSystem>().PlayGlobal("/Audio/Announcements/shuttlecalled.ogg");
+            SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlecalled.ogg");
 
             ExpectedCountdownEnd = _gameTiming.CurTime + RoundEndCountdownTime;
             Timer.Spawn(RoundEndCountdownTime, EndRound, _roundEndCancellationTokenSource.Token);
@@ -104,7 +105,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _chatManager.DispatchStationAnnouncement(Loc.GetString("The emergency shuttle has been recalled."), Loc.GetString("Station"));
 
-            Get<AudioSystem>().PlayGlobal("/Audio/Announcements/shuttlerecalled.ogg");
+            SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlerecalled.ogg");
 
             _roundEndCancellationTokenSource.Cancel();
             _roundEndCancellationTokenSource = new CancellationTokenSource();

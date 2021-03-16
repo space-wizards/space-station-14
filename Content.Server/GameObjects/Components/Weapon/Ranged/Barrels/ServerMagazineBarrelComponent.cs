@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
@@ -19,7 +19,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -32,14 +32,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override uint? NetID => ContentNetIDs.MAGAZINE_BARREL;
 
         [ViewVariables]
-        private ContainerSlot _chamberContainer;
+        private ContainerSlot _chamberContainer = default!;
         [ViewVariables] public bool HasMagazine => _magazineContainer.ContainedEntity != null;
-        private ContainerSlot _magazineContainer;
+        private ContainerSlot _magazineContainer = default!;
 
         [ViewVariables] public MagazineType MagazineTypes => _magazineTypes;
-        private MagazineType _magazineTypes;
+        [DataField("magazineTypes")]
+        private MagazineType _magazineTypes = default;
         [ViewVariables] public BallisticCaliber Caliber => _caliber;
-        private BallisticCaliber _caliber;
+        [DataField("caliber")]
+        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
 
         public override int ShotsLeft
         {
@@ -77,7 +79,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
 
-        private string _magFillPrototype;
+        [DataField("magFillPrototype")]
+        private string? _magFillPrototype;
 
         public bool BoltOpen
         {
@@ -115,40 +118,28 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         }
         private bool _boltOpen = true;
 
+        [DataField("autoEjectMag")]
         private bool _autoEjectMag;
         // If the bolt needs to be open before we can insert / remove the mag (i.e. for LMGs)
         public bool MagNeedsOpenBolt => _magNeedsOpenBolt;
-        private bool _magNeedsOpenBolt;
+        [DataField("magNeedsOpenBolt")]
+        private bool _magNeedsOpenBolt = default;
 
-        private AppearanceComponent _appearanceComponent;
+        private AppearanceComponent? _appearanceComponent;
 
         // Sounds
-        private string _soundBoltOpen;
-        private string _soundBoltClosed;
-        private string _soundRack;
-        private string _soundMagInsert;
-        private string _soundMagEject;
-        private string _soundAutoEject;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "magazineTypes",
-                new List<MagazineType>(),
-                types => types.ForEach(mag => _magazineTypes |= mag), GetMagazineTypes);
-            serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-            serializer.DataField(ref _magFillPrototype, "magFillPrototype", null);
-            serializer.DataField(ref _autoEjectMag, "autoEjectMag", false);
-            serializer.DataField(ref _magNeedsOpenBolt, "magNeedsOpenBolt", false);
-            serializer.DataField(ref _soundBoltOpen, "soundBoltOpen", null);
-            serializer.DataField(ref _soundBoltClosed, "soundBoltClosed", null);
-            serializer.DataField(ref _soundRack, "soundRack", null);
-            serializer.DataField(ref _soundMagInsert, "soundMagInsert", null);
-            serializer.DataField(ref _soundMagEject, "soundMagEject", null);
-            serializer.DataField(ref _soundAutoEject, "soundAutoEject", "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
-        }
+        [DataField("soundBoltOpen")]
+        private string? _soundBoltOpen = default;
+        [DataField("soundBoltClosed")]
+        private string? _soundBoltClosed = default;
+        [DataField("soundRack")]
+        private string? _soundRack = default;
+        [DataField("soundMagInsert")]
+        private string? _soundMagInsert = default;
+        [DataField("soundMagEject")]
+        private string? _soundMagEject = default;
+        [DataField("soundAutoEject")]
+        private string _soundAutoEject = "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg";
 
         private List<MagazineType> GetMagazineTypes()
         {
@@ -169,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             (int, int)? count = null;
             var magazine = _magazineContainer.ContainedEntity;
-            if (magazine != null && magazine.TryGetComponent(out RangedMagazineComponent rangedMagazineComponent))
+            if (magazine != null && magazine.TryGetComponent(out RangedMagazineComponent? rangedMagazineComponent))
             {
                 count = (rangedMagazineComponent.ShotsLeft, rangedMagazineComponent.Capacity);
             }
@@ -185,13 +176,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
 
-            _chamberContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-chamber", Owner);
-            _magazineContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-magazine", Owner, out var existing);
+            _chamberContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-chamber");
+            _magazineContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-magazine", out var existing);
 
             if (!existing && _magFillPrototype != null)
             {
@@ -206,12 +197,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             UpdateAppearance();
         }
 
-        public override IEntity PeekAmmo()
+        public override IEntity? PeekAmmo()
         {
             return BoltOpen ? null : _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile(EntityCoordinates spawnAt)
+        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
         {
             if (BoltOpen)
             {
@@ -368,7 +359,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundMagEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             }
 
-            if (user.TryGetComponent(out HandsComponent handsComponent))
+            if (user.TryGetComponent(out HandsComponent? handsComponent))
             {
                 handsComponent.PutInHandOrDrop(mag.GetComponent<ItemComponent>());
             }
@@ -380,7 +371,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // Insert magazine
-            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent magazineComponent))
+            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent? magazineComponent))
             {
                 if ((MagazineTypes & magazineComponent.MagazineType) == 0)
                 {
@@ -418,7 +409,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             // Insert 1 ammo
-            if (eventArgs.Using.TryGetComponent(out AmmoComponent ammoComponent))
+            if (eventArgs.Using.TryGetComponent(out AmmoComponent? ammoComponent))
             {
                 if (!BoltOpen)
                 {
@@ -472,6 +463,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
 
                 data.Text = Loc.GetString("Eject magazine");
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                 if (component.MagNeedsOpenBolt)
                 {
                     data.Visibility = component.HasMagazine && component.BoltOpen
@@ -535,7 +527,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     [Flags]
     public enum MagazineType
     {
-
         Unspecified = 0,
         LPistol = 1 << 0, // Placeholder?
         Pistol = 1 << 1,

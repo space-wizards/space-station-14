@@ -17,8 +17,12 @@ using Content.Shared.Utility;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Chemistry
@@ -58,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             _beakerContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
+                ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
 
             //BufferSolution = Owner.BufferSolution
             BufferSolution.RemoveAllSolution();
@@ -185,7 +189,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
 
             var beaker = _beakerContainer.ContainedEntity;
-            _beakerContainer.Remove(_beakerContainer.ContainedEntity);
+
+            if(beaker is null)
+                return;
+
+            _beakerContainer.Remove(beaker);
             UpdateUserInterface();
 
             if(!user.TryGetComponent<HandsComponent>(out var hands) || !beaker.TryGetComponent<ItemComponent>(out var item))
@@ -198,6 +206,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (!HasBeaker && _bufferModeTransfer) return;
             var beaker = _beakerContainer.ContainedEntity;
+
+            if(beaker is null)
+                return;
+
             var beakerSolution = beaker.GetComponent<SolutionContainerComponent>();
             if (isBuffer)
             {
@@ -266,7 +278,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(30));
                 for (int i = 0; i < bottleAmount; i++)
                 {
-                    var bottle = Owner.EntityManager.SpawnEntity("bottle", Owner.Transform.Coordinates);
+                    var bottle = Owner.EntityManager.SpawnEntity("ChemistryEmptyBottle01", Owner.Transform.Coordinates);
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
 

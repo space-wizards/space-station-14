@@ -3,17 +3,17 @@
   start: start
   graph:
     - node: start
-      conditions:
-        - !type:ComponentInTile
-          value: false
-          component: Window
       actions:
         - !type:SpawnPrototype
-          prototype: SteelSheet1
+          prototype: SheetSteel1
           amount: 3
         - !type:DeleteEntity { }
       edges:
         - to: lowWall
+          conditions:
+            - !type:ComponentInTile
+              value: false
+              component: Window
           steps:
             - material: Steel
               amount: 3

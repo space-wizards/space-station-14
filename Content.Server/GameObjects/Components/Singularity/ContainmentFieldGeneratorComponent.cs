@@ -2,21 +2,22 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.GameObjects.Components.Projectiles;
-using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.ViewVariables;
 using Robust.Server.GameObjects;
+using Robust.Shared.Physics.Collision;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
-    public class ContainmentFieldGeneratorComponent : Component, ICollideBehavior
+    public class ContainmentFieldGeneratorComponent : Component, IStartCollide
     {
         [Dependency] private readonly IPhysicsManager _physicsManager = null!;
 
@@ -83,11 +84,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         private void OnAnchoredChanged()
         {
-            if(_collidableComponent?.Anchored == true)
-            {
-                Owner.SnapToGrid();
-            }
-            else
+            if(_collidableComponent?.Anchored != true)
             {
                 _connection1?.Item2.Dispose();
                 _connection2?.Item2.Dispose();
@@ -117,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 var dirVec = direction.ToVec();
                 var ray = new CollisionRay(Owner.Transform.WorldPosition, dirVec, (int) CollisionGroup.MobMask);
-                var rawRayCastResults = _physicsManager.IntersectRay(Owner.Transform.MapID, ray, 4.5f, Owner, false);
+                var rawRayCastResults = EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRay(Owner.Transform.MapID, ray, 4.5f, Owner, false);
 
                 var rayCastResults = rawRayCastResults as RayCastResults[] ?? rawRayCastResults.ToArray();
                 if(!rayCastResults.Any()) continue;
@@ -182,10 +179,9 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        public void CollideWith(IEntity collidedWith)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            if(collidedWith.HasComponent<EmitterBoltComponent>())
-            {
+			if(otherBody.Entity.HasTag("EmitterBolt"))            {
                 ReceivePower(4);
             }
         }

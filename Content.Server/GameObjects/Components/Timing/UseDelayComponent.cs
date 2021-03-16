@@ -3,7 +3,7 @@ using System.Threading;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -19,7 +19,8 @@ namespace Content.Server.GameObjects.Components.Timing
 
         private TimeSpan _lastUseTime;
 
-        private float _delay;
+        [DataField("delay")]
+        private float _delay = 1;
         /// <summary>
         /// The time, in seconds, between an object's use and when it can be used again
         /// </summary>
@@ -28,13 +29,7 @@ namespace Content.Server.GameObjects.Components.Timing
 
         public bool ActiveDelay{ get; private set; }
 
-        private CancellationTokenSource cancellationTokenSource;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _delay, "delay", 1);
-        }
+        private CancellationTokenSource? cancellationTokenSource;
 
         public void BeginDelay()
         {
@@ -51,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Timing
 
             _lastUseTime = IoCManager.Resolve<IGameTiming>().CurTime;
 
-            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
+            if (Owner.TryGetComponent(out ItemCooldownComponent? cooldown))
             {
                 cooldown.CooldownStart = _lastUseTime;
                 cooldown.CooldownEnd = _lastUseTime + TimeSpan.FromSeconds(Delay);
@@ -61,10 +56,10 @@ namespace Content.Server.GameObjects.Components.Timing
 
         public void Cancel()
         {
-            cancellationTokenSource.Cancel();
+            cancellationTokenSource?.Cancel();
             ActiveDelay = false;
 
-            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
+            if (Owner.TryGetComponent(out ItemCooldownComponent? cooldown))
             {
                 cooldown.CooldownEnd = IoCManager.Resolve<IGameTiming>().CurTime;
             }
@@ -72,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Timing
 
         public void Restart()
         {
-            cancellationTokenSource.Cancel();
+            cancellationTokenSource?.Cancel();
             ActiveDelay = false;
             BeginDelay();
         }

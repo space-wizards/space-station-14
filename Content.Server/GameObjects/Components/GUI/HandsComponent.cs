@@ -25,6 +25,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
@@ -98,12 +99,12 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        private Hand? GetHand(string name)
+        private Hand? GetHand(string? name)
         {
             return _hands.FirstOrDefault(hand => hand.Name == name);
         }
 
-        public ItemComponent? GetItem(string handName)
+        public ItemComponent? GetItem(string? handName)
         {
             return GetHand(handName)?.Entity?.GetComponent<ItemComponent>();
         }
@@ -457,7 +458,8 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new InvalidOperationException($"Hand '{name}' already exists.");
             }
 
-            var container = ContainerManagerComponent.Create<ContainerSlot>($"hand {_nextHand++}", Owner);
+            var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, $"hand {_nextHand++}");
+            container.OccludesLight = false;
             var hand = new Hand(this, name, container);
 
             _hands.Add(hand);
@@ -717,13 +719,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 Dirty();
 
-                if (!message.Entity.TryGetComponent(out IPhysicsComponent? physics))
+                if (!message.Entity.TryGetComponent(out IPhysBody? physics))
                 {
                     return;
                 }
 
                 // set velocity to zero
-                physics.Stop();
+                physics.LinearVelocity = Vector2.Zero;
                 return;
             }
         }
@@ -754,19 +756,26 @@ namespace Content.Server.GameObjects.Components.GUI
                 return false;
 
             var source = eventArgs.Source;
+            var target = eventArgs.Target;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/thudswoosh.ogg", source,
-                AudioHelpers.WithVariation(0.025f));
+            if (source != null)
+            {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/thudswoosh.ogg", source,
+                    AudioHelpers.WithVariation(0.025f));
 
-            if (ActiveHand != null && Drop(ActiveHand, false))
-            {
-                source.PopupMessageOtherClients(Loc.GetString("{0} disarms {1}!", source.Name, eventArgs.Target.Name));
-                source.PopupMessageCursor(Loc.GetString("You disarm {0}!", eventArgs.Target.Name));
-            }
-            else
-            {
-                source.PopupMessageOtherClients(Loc.GetString("{0} shoves {1}!", source.Name, eventArgs.Target.Name));
-                source.PopupMessageCursor(Loc.GetString("You shove {0}!", eventArgs.Target.Name));
+                if (target != null)
+                {
+                    if (ActiveHand != null && Drop(ActiveHand, false))
+                    {
+                        source.PopupMessageOtherClients(Loc.GetString("{0} disarms {1}!", source.Name, target.Name));
+                        source.PopupMessageCursor(Loc.GetString("You disarm {0}!", target.Name));
+                    }
+                    else
+                    {
+                        source.PopupMessageOtherClients(Loc.GetString("{0} shoves {1}!", source.Name, target.Name));
+                        source.PopupMessageCursor(Loc.GetString("You shove {0}!", target.Name));
+                    }
+                }
             }
 
             return true;
@@ -835,7 +844,7 @@ namespace Content.Server.GameObjects.Components.GUI
         }
     }
 
-    public class HandCountChangedEvent : EntitySystemMessage
+    public class HandCountChangedEvent : EntityEventArgs
     {
         public HandCountChangedEvent(IEntity sender)
         {

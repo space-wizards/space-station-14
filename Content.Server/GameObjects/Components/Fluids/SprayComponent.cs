@@ -14,7 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -28,18 +28,28 @@ namespace Content.Server.GameObjects.Components.Fluids
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
-        private ReagentUnit _transferAmount;
-        private string _spraySound;
-        private float _sprayVelocity;
-        private float _sprayAliveTime;
+        [DataField("transferAmount")]
+        private ReagentUnit _transferAmount = ReagentUnit.New(10);
+        [DataField("spraySound")]
+        private string? _spraySound;
+        [DataField("sprayVelocity")]
+        private float _sprayVelocity = 1.5f;
+        [DataField("sprayAliveTime")]
+        private float _sprayAliveTime = 0.75f;
         private TimeSpan _lastUseTime;
         private TimeSpan _cooldownEnd;
-        private float _cooldownTime;
-        private string _vaporPrototype;
-        private int _vaporAmount;
-        private float _vaporSpread;
+        [DataField("cooldownTime")]
+        private float _cooldownTime = 0.5f;
+        [DataField("sprayedPrototype")]
+        private string _vaporPrototype = "Vapor";
+        [DataField("vaporAmount")]
+        private int _vaporAmount = 1;
+        [DataField("vaporSpread")]
+        private float _vaporSpread = 90f;
+        [DataField("hasSafety")]
         private bool _hasSafety;
-        private bool _safety;
+        [DataField("safety")]
+        private bool _safety = true;
 
         /// <summary>
         ///     The amount of solution to be sprayer from this solution when using it
@@ -61,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             set => _sprayVelocity = value;
         }
 
-        public string SpraySound => _spraySound;
+        public string? SpraySound => _spraySound;
 
         public ReagentUnit CurrentVolume => Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
 
@@ -75,21 +85,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             {
                 SetSafety(Owner, _safety);
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _vaporPrototype, "sprayedPrototype", "Vapor");
-            serializer.DataField(ref _vaporAmount, "vaporAmount", 1);
-            serializer.DataField(ref _vaporSpread, "vaporSpread", 90f);
-            serializer.DataField(ref _cooldownTime, "cooldownTime", 0.5f);
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(10));
-            serializer.DataField(ref _sprayVelocity, "sprayVelocity", 1.5f);
-            serializer.DataField(ref _spraySound, "spraySound", string.Empty);
-            serializer.DataField(ref _sprayAliveTime, "sprayAliveTime", 0.75f);
-            serializer.DataField(ref _hasSafety, "hasSafety", false);
-            serializer.DataField(ref _safety, "safety", true);
         }
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
@@ -118,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             if (eventArgs.ClickLocation.GetGridId(_serverEntityManager) != playerPos.GetGridId(_serverEntityManager))
                 return true;
 
-            if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
                 return true;
 
             var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
@@ -150,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 var vapor = _serverEntityManager.SpawnEntity(_vaporPrototype, playerPos.Offset(distance < 1 ? quarter : threeQuarters));
                 vapor.Transform.LocalRotation = rotation;
 
-                if (vapor.TryGetComponent(out AppearanceComponent appearance)) // Vapor sprite should face down.
+                if (vapor.TryGetComponent(out AppearanceComponent? appearance)) // Vapor sprite should face down.
                 {
                     appearance.SetData(VaporVisuals.Rotation, -Angle.South + rotation);
                     appearance.SetData(VaporVisuals.Color, contents.Color.WithAlpha(1f));
@@ -165,12 +160,15 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
 
             //Play sound
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_spraySound, Owner, AudioHelpers.WithVariation(0.125f));
+            if (!string.IsNullOrEmpty(_spraySound))
+            {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_spraySound, Owner, AudioHelpers.WithVariation(0.125f));
+            }
 
             _lastUseTime = curTime;
             _cooldownEnd = _lastUseTime + TimeSpan.FromSeconds(_cooldownTime);
 
-            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
+            if (Owner.TryGetComponent(out ItemCooldownComponent? cooldown))
             {
                 cooldown.CooldownStart = _lastUseTime;
                 cooldown.CooldownEnd = _cooldownEnd;
@@ -202,13 +200,13 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             _safety = state;
 
-            if(Owner.TryGetComponent(out AppearanceComponent appearance))
+            if(Owner.TryGetComponent(out AppearanceComponent? appearance))
                 appearance.SetData(SprayVisuals.Safety, _safety);
         }
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if(_hasSafety && Owner.TryGetComponent(out AppearanceComponent appearance))
+            if(_hasSafety && Owner.TryGetComponent(out AppearanceComponent? appearance))
                 appearance.SetData(SprayVisuals.Safety, _safety);
         }
     }

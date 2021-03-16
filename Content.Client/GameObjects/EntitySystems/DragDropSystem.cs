@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Client.State;
 using Content.Client.Utility;
@@ -21,6 +20,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using DrawDepth = Content.Shared.GameObjects.DrawDepth;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -119,48 +119,60 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private bool OnUseMouseDown(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            var dragger = args.Session?.AttachedEntity;
+            if (args.Session?.AttachedEntity == null)
+            {
+                return false;
+            }
+
+            var dragger = args.Session.AttachedEntity;
             // cancel any current dragging if there is one (shouldn't be because they would've had to have lifted
             // the mouse, canceling the drag, but just being cautious)
             _dragDropHelper.EndDrag();
 
             // possibly initiating a drag
             // check if the clicked entity is draggable
-            if (EntityManager.TryGetEntity(args.EntityUid, out var entity))
+            if (!EntityManager.TryGetEntity(args.EntityUid, out var entity))
             {
-                // check if the entity is reachable
-                if (!_interactionSystem.InRangeUnobstructed(dragger, entity))
-                {
-                    return false;
-                }
-
-                var canDrag = false;
-                foreach (var draggable in entity.GetAllComponents<IDraggable>())
-                {
-                    var dragEventArgs = new StartDragDropEventArgs(dragger, entity);
-                    if (draggable.CanStartDrag(dragEventArgs))
-                    {
-                        _draggables.Add(draggable);
-                        canDrag = true;
-                    }
-                }
-
-                if (canDrag)
-                {
-                    // wait to initiate a drag
-                    _dragDropHelper.MouseDown(entity);
-                    _dragger = dragger;
-                    _mouseDownTime = 0;
-                    // don't want anything else to process the click,
-                    // but we will save the event so we can "re-play" it if this drag does
-                    // not turn into an actual drag so the click can be handled normally
-                    _savedMouseDown = args;
-                }
-
-                return canDrag;
+                return false;
             }
 
-            return false;
+            // check if the entity is reachable
+            if (!_interactionSystem.InRangeUnobstructed(dragger, entity))
+            {
+                return false;
+            }
+
+            var canDrag = false;
+            foreach (var draggable in entity.GetAllComponents<IDraggable>())
+            {
+                var dragEventArgs = new StartDragDropEventArgs(dragger, entity);
+
+                if (!draggable.CanStartDrag(dragEventArgs))
+                {
+                    continue;
+                }
+
+                _draggables.Add(draggable);
+                canDrag = true;
+            }
+
+            if (!canDrag)
+            {
+                return false;
+            }
+
+            // wait to initiate a drag
+            _dragDropHelper.MouseDown(entity);
+            _dragger = dragger;
+            _mouseDownTime = 0;
+
+            // don't want anything else to process the click,
+            // but we will save the event so we can "re-play" it if this drag does
+            // not turn into an actual drag so the click can be handled normally
+            _savedMouseDown = args;
+
+            return true;
+
         }
 
         private bool OnBeginDrag()
@@ -206,8 +218,11 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 return false;
             }
+
+            DebugTools.AssertNotNull(_dragger);
+
             // still in range of the thing we are dragging?
-            if (!_interactionSystem.InRangeUnobstructed(_dragger, _dragDropHelper.Dragged))
+            if (!_interactionSystem.InRangeUnobstructed(_dragger!, _dragDropHelper.Dragged))
             {
                 return false;
             }
@@ -249,7 +264,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private bool OnUseMouseUp(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (_dragDropHelper.IsDragging == false)
+            if (_dragDropHelper.IsDragging == false || _dragDropHelper.Dragged == null)
             {
                 // haven't started the drag yet, quick mouseup, definitely treat it as a normal click by
                 // replaying the original cmd
@@ -279,7 +294,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
-                // now when ending the drag, we will not replay the click because
+            // now when ending the drag, we will not replay the click because
             // by this time we've determined the input was actually a drag attempt
             var range = (args.Coordinates.ToMapPos(EntityManager) - _dragger.Transform.MapPosition.Position).Length + 0.01f;
             // tell the server we are dropping if we are over a valid drop target in range.
@@ -301,22 +316,10 @@ namespace Content.Client.GameObjects.EntitySystems
 
                 // check if it's able to be dropped on by current dragged entity
                 var dropArgs = new DragDropEventArgs(_dragger, args.Coordinates, _dragDropHelper.Dragged, entity);
-                var valid = true;
-                var anyDragDrop = false;
-                var dragDropOn = new List<IDragDropOn>();
 
-                foreach (var comp in entity.GetAllComponents<IDragDropOn>())
-                {
-                    anyDragDrop = true;
+                // TODO: Cache valid CanDragDrops
+                if (ValidDragDrop(dropArgs) != true) continue;
 
-                    if (!comp.CanDragDropOn(dropArgs))
-                    {
-                        valid = false;
-                        dragDropOn.Add(comp);
-                    }
-                }
-
-                if (!valid || !anyDragDrop) continue;
                 if (!dropArgs.InRangeUnobstructed(ignoreInsideBlocker: true))
                 {
                     outOfRange = true;
@@ -328,16 +331,10 @@ namespace Content.Client.GameObjects.EntitySystems
                     if (!draggable.CanDrop(dropArgs)) continue;
 
                     // tell the server about the drop attempt
-                    RaiseNetworkEvent(new DragDropMessage(args.Coordinates, _dragDropHelper.Dragged.Uid,
+                    RaiseNetworkEvent(new DragDropMessage(args.Coordinates, _dragDropHelper.Dragged!.Uid,
                         entity.Uid));
 
                     draggable.Drop(dropArgs);
-
-                    // Don't fail if it isn't handled as server may do something with it
-                    foreach (var comp in dragDropOn)
-                    {
-                        if (!comp.DragDropOn(dropArgs)) continue;
-                    }
 
                     _dragDropHelper.EndDrag();
                     return true;
@@ -382,21 +379,11 @@ namespace Content.Client.GameObjects.EntitySystems
                     !inRangeSprite.Visible ||
                     pvsEntity == _dragDropHelper.Dragged) continue;
 
-                var valid = (bool?) null;
                 // check if it's able to be dropped on by current dragged entity
-                var dropArgs = new DragDropEventArgs(_dragger, pvsEntity.Transform.Coordinates, _dragDropHelper.Dragged, pvsEntity);
+                var dropArgs = new DragDropEventArgs(_dragger!, pvsEntity.Transform.Coordinates, _dragDropHelper.Dragged, pvsEntity);
 
-                foreach (var comp in pvsEntity.GetAllComponents<IDragDropOn>())
-                {
-                    valid = comp.CanDragDropOn(dropArgs);
-
-                    if (valid.Value)
-                        break;
-                }
-
-                // Can't do anything so no highlight
-                if (!valid.HasValue)
-                    continue;
+                var valid = ValidDragDrop(dropArgs);
+                if (valid == null) continue;
 
                 // We'll do a final check given server-side does this before any dragdrop can take place.
                 if (valid.Value)
@@ -420,6 +407,43 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             _highlightedSprites.Clear();
+        }
+
+        /// <summary>
+        ///     Are these args valid for drag-drop?
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        /// <returns>null if the target doesn't support IDragDropOn</returns>
+        private bool? ValidDragDrop(DragDropEventArgs eventArgs)
+        {
+            bool? valid = null;
+
+            foreach (var comp in eventArgs.Target.GetAllComponents<IDragDropOn>())
+            {
+                if (!comp.CanDragDropOn(eventArgs))
+                {
+                    valid = false;
+                    // dragDropOn.Add(comp);
+                    continue;
+                }
+
+                valid = true;
+                break;
+            }
+
+            if (valid != true) return valid;
+
+            // Need at least one IDraggable to return true or else we can't do shit
+            valid = false;
+
+            foreach (var comp in eventArgs.User.GetAllComponents<IDraggable>())
+            {
+                if (!comp.CanDrop(eventArgs)) continue;
+                valid = true;
+                break;
+            }
+
+            return valid;
         }
 
         public override void Update(float frameTime)

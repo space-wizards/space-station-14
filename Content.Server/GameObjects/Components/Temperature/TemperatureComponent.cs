@@ -5,7 +5,8 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Physics;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Temperature
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Temperature
         [ViewVariables] public float HeatCapacity {
             get
             {
-                if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+                if (Owner.TryGetComponent<IPhysBody>(out var physics))
                 {
                     return SpecificHeat * physics.Mass;
                 }
@@ -40,22 +41,16 @@ namespace Content.Server.GameObjects.Components.Temperature
 
         [ViewVariables] public float SpecificHeat => _specificHeat;
 
-        private float _heatDamageThreshold;
-        private float _coldDamageThreshold;
-        private float _tempDamageCoefficient;
-        private float _currentTemperature;
-        private float _specificHeat;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _heatDamageThreshold, "heatDamageThreshold", 0);
-            serializer.DataField(ref _coldDamageThreshold, "coldDamageThreshold", 0);
-            serializer.DataField(ref _tempDamageCoefficient, "tempDamageCoefficient", 1);
-            serializer.DataField(ref _currentTemperature, "currentTemperature", Atmospherics.T20C);
-            serializer.DataField(ref _specificHeat, "specificHeat", Atmospherics.MinimumHeatCapacity);
-        }
+        [DataField("heatDamageThreshold")]
+        private float _heatDamageThreshold = default;
+        [DataField("coldDamageThreshold")]
+        private float _coldDamageThreshold = default;
+        [DataField("tempDamageCoefficient")]
+        private float _tempDamageCoefficient = 1;
+        [DataField("currentTemperature")]
+        private float _currentTemperature = Atmospherics.T20C;
+        [DataField("specificHeat")]
+        private float _specificHeat = Atmospherics.MinimumHeatCapacity;
 
         public void Update()
         {
@@ -72,9 +67,9 @@ namespace Content.Server.GameObjects.Components.Temperature
                 damageType = DamageType.Cold;
             }
 
-            if (Owner.TryGetComponent(out ServerAlertsComponent status))
+            if (Owner.TryGetComponent(out ServerAlertsComponent? status))
             {
-                switch(CurrentTemperature)
+                switch (CurrentTemperature)
                 {
                     // Cold strong.
                     case var t when t <= 260:
@@ -115,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Temperature
 
             if (!damageType.HasValue) return;
 
-            if (!Owner.TryGetComponent(out IDamageableComponent component)) return;
+            if (!Owner.TryGetComponent(out IDamageableComponent? component)) return;
             component.ChangeDamage(damageType.Value, tempDamage, false);
         }
 

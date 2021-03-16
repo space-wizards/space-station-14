@@ -8,6 +8,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Buckle
@@ -18,20 +19,14 @@ namespace Content.Shared.GameObjects.Components.Buckle
 
         public sealed override uint? NetID => ContentNetIDs.BUCKLE;
 
-        [ComponentDependency] protected readonly IPhysicsComponent? Physics;
+        [ComponentDependency] protected readonly IPhysBody? Physics;
 
         /// <summary>
         ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.
         /// </summary>
         [ViewVariables]
-        public float Range { get; protected set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.Range, "range", SharedInteractionSystem.InteractionRange / 1.4f);
-        }
+        [DataField("range")]
+        public float Range { get; protected set; } = SharedInteractionSystem.InteractionRange / 1.4f;
 
         /// <summary>
         ///     True if the entity is buckled, false otherwise.
@@ -44,7 +39,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
 
         public bool DontCollide { get; set; }
 
-        public abstract bool TryBuckle(IEntity user, IEntity to);
+        public abstract bool TryBuckle(IEntity? user, IEntity to);
 
         bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
         {

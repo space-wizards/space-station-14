@@ -1,9 +1,9 @@
-﻿using Content.Server.GameObjects.Components.Chemistry;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
-using System.Collections.Generic;
-using System.Linq;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 {
@@ -12,15 +12,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     {
         public override string Name => "ChemicalAmmo";
 
-        private float _fractionTransfered;
+        [DataField("fractionTransfered")]
+        private float _fractionTransfered = 1;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _fractionTransfered, "fractionTransfered", 1);
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)

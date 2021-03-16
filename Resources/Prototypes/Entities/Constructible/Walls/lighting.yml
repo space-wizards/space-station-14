@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: WallLight
   name: unpowered light
   description: "An unpowered light."
@@ -9,9 +9,11 @@
     graph: lightFixture
     node: tubeLight
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.45, -0.15, 0.45, 0.35"
+    canCollide: false
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.15, 0.45, 0.35"
       layer: [ Passable ]
   - type: LoopingSound
   - type: Sprite
@@ -37,7 +39,7 @@
       - !type:EmptyAllContainersBehaviour
       - !type:SpawnEntitiesBehavior
         spawn:
-          SteelSheet1:
+          SheetSteel1:
             min: 2
             max: 2
       - !type:DoActsBehavior
@@ -99,7 +101,7 @@
         - !type:EmptyAllContainersBehaviour
         - !type:SpawnEntitiesBehavior
           spawn:
-            SteelSheet1:
+            SheetSteel1:
               min: 1
               max: 1
         - !type:DoActsBehavior
@@ -122,10 +124,11 @@
     enabled: false
     offset: "0, -0.5"
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "0, 0.1, 0.25, 0.1"
-        layer: [ Passable ]
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "0, 0, 0.25, 0.1"
+      layer: [ Passable ]
   - type: PoweredLight
     bulb: Bulb
   - type: PowerReceiver

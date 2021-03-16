@@ -23,21 +23,22 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 
     public class ActivateEventArgs : EventArgs, ITargetedInteractEventArgs
     {
-        public IEntity User { get; set; }
-        public IEntity Target { get; set; }
+        public ActivateEventArgs(IEntity user, IEntity target)
+        {
+            User = user;
+            Target = target;
+        }
+
+        public IEntity User { get; }
+        public IEntity Target { get; }
     }
 
     /// <summary>
     ///     Raised when an entity is activated in the world.
     /// </summary>
     [PublicAPI]
-    public class ActivateInWorldMessage : EntitySystemMessage
+    public class ActivateInWorldMessage : HandledEntityEventArgs
     {
-        /// <summary>
-        ///     If this message has already been "handled" by a previous system.
-        /// </summary>
-        public bool Handled { get; set; }
-
         /// <summary>
         ///     Entity that activated the world entity.
         /// </summary>

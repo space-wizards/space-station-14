@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Movement;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -10,7 +11,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            foreach (var slipperyComp in ComponentManager.EntityQuery<SharedSlipperyComponent>(true))
+            foreach (var slipperyComp in ComponentManager.EntityQuery<SlipperyComponent>(false))
             {
                 slipperyComp.Update();
             }

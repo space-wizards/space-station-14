@@ -1,22 +1,21 @@
 #nullable enable
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Server.GameObjects.Components.Explosion;
-using Robust.Shared.GameObjects;
-using System.Threading.Tasks;
-using Robust.Shared.Serialization;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Trigger.TimerTrigger;
-using Content.Server.Throw;
-using Robust.Server.GameObjects;
+using Content.Server.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Explosion;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Explosives
+namespace Content.Server.GameObjects.Components.Explosion
 {
     [RegisterComponent]
     public sealed class ClusterFlashComponent : Component, IInteractUsing, IUse
@@ -28,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Explosives
         /// <summary>
         ///     What we fill our prototype with if we want to pre-spawn with grenades.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables] [DataField("fillPrototype")]
         private string? _fillPrototype;
 
         /// <summary>
@@ -39,20 +38,20 @@ namespace Content.Server.GameObjects.Components.Explosives
         /// <summary>
         ///     Maximum grenades in the container.
         /// </summary>
-        [ViewVariables]
-        private int _maxGrenades;
+        [ViewVariables] [DataField("maxGrenadesCount")]
+        private int _maxGrenades = 3;
 
         /// <summary>
         ///     How long until our grenades are shot out and armed.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        private float _delay;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("delay")]
+        private float _delay = 1;
 
         /// <summary>
         ///     Max distance grenades can be thrown.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        private float _throwDistance;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("distance")]
+        private float _throwDistance = 3;
 
         /// <summary>
         ///     This is the end.
@@ -69,21 +68,12 @@ namespace Content.Server.GameObjects.Components.Explosives
             return true;
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _fillPrototype, "fillPrototype", null);
-            serializer.DataField(ref _maxGrenades, "maxGrenadesCount", 3);
-            serializer.DataField(ref _delay, "delay", 1.0f);
-            serializer.DataField(ref _throwDistance, "distance", 3.0f);
-        }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _grenadesContainer = ContainerManagerComponent.Ensure<Container>("cluster-flash", Owner);
+            _grenadesContainer = ContainerHelpers.EnsureContainer<Container>(Owner, "cluster-flash");
 
         }
 
@@ -117,10 +107,13 @@ namespace Content.Server.GameObjects.Components.Explosives
                     var angleMin = segmentAngle * thrownCount;
                     var angleMax = segmentAngle * (thrownCount + 1);
                     var angle = Angle.FromDegrees(random.Next(angleMin, angleMax));
-                    var distance = (float)random.NextFloat() * _throwDistance;
-                    var target = new EntityCoordinates(Owner.Uid, angle.ToVec().Normalized * distance);
+                    // var distance = random.NextFloat() * _throwDistance;
 
-                    grenade.Throw(0.5f, target, grenade.Transform.Coordinates);
+                    delay += random.Next(550, 900);
+                    thrownCount++;
+
+                    // TODO: Suss out throw strength
+                    grenade.TryThrow(angle.ToVec().Normalized * 50);
 
                     grenade.SpawnTimer(delay, () =>
                     {
@@ -132,9 +125,6 @@ namespace Content.Server.GameObjects.Components.Explosives
                             useTimer.Trigger(eventArgs.User);
                         }
                     });
-
-                    delay += random.Next(550, 900);
-                    thrownCount++;
                 }
 
                 Owner.Delete();
@@ -149,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Explosives
             if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.MapPosition);
                 return true;
             }
 

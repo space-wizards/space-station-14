@@ -4,7 +4,6 @@ using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Body.Behavior
@@ -18,8 +17,6 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         public IMechanism Parent { get; private set; } = default!;
 
         public IEntity Owner => Parent.Owner;
-
-        public virtual void ExposeData(ObjectSerializer serializer) { }
 
         public virtual void Initialize(IMechanism parent)
         {

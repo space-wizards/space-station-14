@@ -4,11 +4,10 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -18,8 +17,6 @@ namespace Content.Shared.GameObjects.EntitySystems
     [UsedImplicitly]
     public class SharedInteractionSystem : EntitySystem
     {
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
-
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
@@ -41,7 +38,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             MapCoordinates origin,
             MapCoordinates other,
             int collisionMask = (int) CollisionGroup.Impassable,
-            Ignored predicate = null)
+            Ignored? predicate = null)
         {
             var dir = other.Position - origin.Position;
 
@@ -49,7 +46,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             predicate ??= _ => false;
             var ray = new CollisionRay(origin.Position, dir.Normalized, collisionMask);
-            var rayResults = _physicsManager.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var rayResults = Get<SharedBroadPhaseSystem>().IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0) return dir.Length;
             return (rayResults[0].HitPos - origin.Position).Length;
@@ -70,7 +67,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             MapCoordinates origin,
             MapCoordinates other,
             int collisionMask = (int) CollisionGroup.Impassable,
-            IEntity ignoredEnt = null)
+            IEntity? ignoredEnt = null)
         {
             var predicate = ignoredEnt == null
                 ? null
@@ -112,7 +109,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             MapCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
             if (!origin.InRange(other, range)) return false;
@@ -125,7 +122,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             predicate ??= _ => false;
 
             var ray = new CollisionRay(origin.Position, dir.Normalized, (int) collisionMask);
-            var rayResults = _physicsManager.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var rayResults = Get<SharedBroadPhaseSystem>().IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0) return true;
 
@@ -133,12 +130,12 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             foreach (var result in rayResults)
             {
-                if (!result.HitEntity.TryGetComponent(out IPhysicsComponent p))
+                if (!result.HitEntity.TryGetComponent(out IPhysBody? p))
                 {
                     continue;
                 }
 
-                var bBox = p.WorldAABB;
+                var bBox = p.GetWorldAABB();
 
                 if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
                 {
@@ -187,7 +184,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             IEntity other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -243,7 +240,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             IComponent other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -299,7 +296,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             EntityCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -355,7 +352,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             MapCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -409,7 +406,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             ITargetedInteractEventArgs args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -454,7 +451,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             DragDropEventArgs args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -522,7 +519,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             AfterInteractEventArgs args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {

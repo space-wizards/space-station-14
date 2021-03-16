@@ -26,7 +26,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -52,6 +52,7 @@ namespace Content.Server.GameObjects.Components.Botany
         [ViewVariables(VVAccess.ReadWrite)] private bool _updateSpriteAfterUpdate;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("drawWarnings")]
         public bool DrawWarnings { get; private set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -122,12 +123,6 @@ namespace Content.Server.GameObjects.Components.Botany
             base.Initialize();
 
             Owner.EnsureComponentWarn<SolutionContainerComponent>();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.DrawWarnings, "drawWarnings", false);
         }
 
         public void WeedInvasion()
@@ -724,7 +719,12 @@ namespace Content.Server.GameObjects.Components.Botany
                 {
                     sprayed = true;
                     amount = ReagentUnit.New(1);
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity(spray.SpraySound, usingItem, AudioHelpers.WithVariation(0.125f));
+
+                    if (!string.IsNullOrEmpty(spray.SpraySound))
+                    {
+                        EntitySystem.Get<AudioSystem>().PlayFromEntity(spray.SpraySound, usingItem,
+                            AudioHelpers.WithVariation(0.125f));
+                    }
                 }
 
                 var split = solution.Drain(amount);

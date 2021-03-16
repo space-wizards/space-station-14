@@ -5,7 +5,8 @@ using Content.Server.Players;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Observer.GhostRoles
@@ -18,30 +19,22 @@ namespace Content.Server.GameObjects.Components.Observer.GhostRoles
     {
         public override string Name => "GhostRoleMobSpawner";
 
-
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("deleteOnSpawn")]
         private bool _deleteOnSpawn = true;
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("makeSentient")]
         private bool _makeSentient = true;
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("availableTakeovers")]
         private int _availableTakeovers = 1;
 
         [ViewVariables]
         private int _currentTakeovers = 0;
 
-        [CanBeNull, ViewVariables(VVAccess.ReadWrite)] public string Prototype { get; private set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.Prototype, "prototype", null);
-            serializer.DataField(ref _deleteOnSpawn, "deleteOnSpawn", true);
-            serializer.DataField(ref _makeSentient, "makeSentient", true);
-            serializer.DataField(ref _availableTakeovers, "availableTakeovers", 1);
-        }
+        [CanBeNull]
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("prototype")]
+        public string? Prototype { get; private set; }
 
         public override bool Take(IPlayerSession session)
         {
@@ -58,7 +51,11 @@ namespace Content.Server.GameObjects.Components.Observer.GhostRoles
 
             mob.EnsureComponent<MindComponent>();
 
-            session.ContentData().Mind.TransferTo(mob);
+            var mind = session.ContentData()?.Mind;
+
+            DebugTools.AssertNotNull(mind);
+
+            mind!.TransferTo(mob);
 
             if (++_currentTakeovers < _availableTakeovers) return true;
 

@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Body.Circulatory;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
@@ -7,6 +8,8 @@ using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
@@ -16,20 +19,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         public override string Name => "MeleeChemicalInjector";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit TransferAmount { get; set; }
+        [DataField("transferAmount")]
+        public ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(1);
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float TransferEfficiency { get => _transferEfficiency; set => _transferEfficiency = Math.Clamp(value, 0, 1); }
-        private float _transferEfficiency;
+        [DataField("transferEfficiency")]
+        private float _transferEfficiency = 1f;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.TransferAmount, "transferAmount", ReagentUnit.New(1));
-            serializer.DataField(ref _transferEfficiency, "transferEfficiency", 1f);
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)
@@ -48,6 +46,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             var hitBloodstreams = new List<BloodstreamComponent>();
             foreach (var entity in hitEntities)
             {
+                if (entity.Deleted)
+                    continue;
+
                 if (entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))
                     hitBloodstreams.Add(bloodstream);
             }

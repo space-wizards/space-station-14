@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using Content.Shared.Damage;
 using JetBrains.Annotations;

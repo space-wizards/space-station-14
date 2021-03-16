@@ -1,6 +1,9 @@
-﻿using Robust.Shared.Containers;
+#nullable enable
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Movement
@@ -36,9 +39,12 @@ namespace Content.Shared.GameObjects.Components.Movement
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseWalkSpeed { get; set; }
+        [DataField("baseWalkSpeed")]
+        public float BaseWalkSpeed { get; set; } = 4;
+
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseSprintSpeed { get; set; }
+        [DataField("baseSprintSpeed")]
+        public float BaseSprintSpeed { get; set; } = 7;
 
         [ViewVariables]
         public float CurrentWalkSpeed => WalkSpeedModifier * BaseWalkSpeed;
@@ -58,18 +64,10 @@ namespace Content.Shared.GameObjects.Components.Movement
         public static void RefreshItemModifiers(IEntity item)
         {
             if (item.TryGetContainer(out var container) &&
-                container.Owner.TryGetComponent(out MovementSpeedModifierComponent mod))
+                container.Owner.TryGetComponent(out MovementSpeedModifierComponent? mod))
             {
                 mod.RefreshMovementSpeedModifiers();
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, p => p.BaseWalkSpeed, "baseWalkSpeed", 4);
-            serializer.DataField(this, p => p.BaseSprintSpeed, "baseSprintSpeed", 7);
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Construction;
 using Content.Shared.Construction;
@@ -104,7 +104,7 @@ namespace Content.Client.GameObjects.EntitySystems
             if (!entity.TryGetComponent<ConstructionGhostComponent>(out var ghostComp))
                 return false;
 
-            TryStartConstruction(ghostComp.GhostID);
+            TryStartConstruction(ghostComp.GhostId);
             return true;
         }
 
@@ -127,9 +127,9 @@ namespace Content.Client.GameObjects.EntitySystems
             var ghost = EntityManager.SpawnEntity("constructionghost", loc);
             var comp = ghost.GetComponent<ConstructionGhostComponent>();
             comp.Prototype = prototype;
-            comp.GhostID = _nextId++;
+            comp.GhostId = _nextId++;
             ghost.Transform.LocalRotation = dir.ToAngle();
-            _ghosts.Add(comp.GhostID, comp);
+            _ghosts.Add(comp.GhostId, comp);
             var sprite = ghost.GetComponent<SpriteComponent>();
             sprite.Color = new Color(48, 255, 48, 128);
             sprite.AddBlankLayer(0); // There is no way to actually check if this already exists, so we blindly insert a new one
@@ -154,6 +154,12 @@ namespace Content.Client.GameObjects.EntitySystems
         private void TryStartConstruction(int ghostId)
         {
             var ghost = _ghosts[ghostId];
+
+            if (ghost.Prototype == null)
+            {
+                throw new ArgumentException($"Can't start construction for a ghost with no prototype. Ghost id: {ghostId}");
+            }
+
             var transform = ghost.Owner.Transform;
             var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
             RaiseNetworkEvent(msg);

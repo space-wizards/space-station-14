@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Pulling
 {
@@ -31,15 +32,15 @@ namespace Content.Server.GameObjects.Components.Pulling
                 }
 
                 if (!user.HasComponent<ISharedHandsComponent>() ||
-                    !user.TryGetComponent(out IPhysicsComponent? userPhysics) ||
-                    !component.Owner.TryGetComponent(out IPhysicsComponent? targetPhysics) ||
-                    targetPhysics.Anchored)
+                    !user.TryGetComponent(out IPhysBody? userPhysics) ||
+                    !component.Owner.TryGetComponent(out IPhysBody? targetPhysics) ||
+                    targetPhysics.BodyType == BodyType.Static)
                 {
                     return;
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = component.Puller == userPhysics
+                data.Text = component.Puller == userPhysics.Entity
                     ? Loc.GetString("Stop pulling")
                     : Loc.GetString("Pull");
             }

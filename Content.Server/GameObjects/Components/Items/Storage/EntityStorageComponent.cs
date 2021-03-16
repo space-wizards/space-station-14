@@ -12,11 +12,15 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -37,18 +41,41 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
         private TimeSpan _lastInternalOpenAttempt;
 
+        private const int OpenMask = (int) (
+            CollisionGroup.MobImpassable |
+            CollisionGroup.VaultImpassable |
+            CollisionGroup.SmallImpassable);
+
         [ViewVariables]
-        private int _storageCapacityMax;
+        [DataField("Capacity")]
+        private int _storageCapacityMax = 30;
+
         [ViewVariables]
+        [DataField("IsCollidableWhenOpen")]
         private bool _isCollidableWhenOpen;
+
         [ViewVariables]
         protected IEntityQuery? EntityQuery;
+
+        [DataField("showContents")]
         private bool _showContents;
-        private bool _occludesLight;
+
+        [DataField("occludesLight")]
+        private bool _occludesLight = true;
+
+        [DataField("open")]
         private bool _open;
-        private bool _canWeldShut;
+
+        [DataField("CanWeldShut")]
+        private bool _canWeldShut = true;
+
+        [DataField("IsWeldedShut")]
         private bool _isWeldedShut;
+
+        [DataField("closeSound")]
         private string _closeSound = "/Audio/Machines/closetclose.ogg";
+
+        [DataField("openSound")]
         private string _openSound = "/Audio/Machines/closetopen.ogg";
 
         [ViewVariables]
@@ -123,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override void Initialize()
         {
             base.Initialize();
-            Contents = ContainerManagerComponent.Ensure<Container>(nameof(EntityStorageComponent), Owner);
+            Contents = ContainerHelpers.EnsureContainer<Container>(Owner, nameof(EntityStorageComponent));
             EntityQuery = new IntersectingEntityQuery(Owner);
 
             Contents.ShowContents = _showContents;
@@ -133,22 +160,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             {
                 placeableSurfaceComponent.IsPlaceable = Open;
             }
-        }
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _storageCapacityMax, "Capacity", 30);
-            serializer.DataField(ref _isCollidableWhenOpen, "IsCollidableWhenOpen", false);
-            serializer.DataField(ref _showContents, "showContents", false);
-            serializer.DataField(ref _occludesLight, "occludesLight", true);
-            serializer.DataField(ref _open, "open", false);
-            serializer.DataField(this, a => a.IsWeldedShut, "IsWeldedShut", false);
-            serializer.DataField(this, a => a.CanWeldShut, "CanWeldShut", true);
-            serializer.DataField(this, x => x._closeSound, "closeSound", "/Audio/Machines/closetclose.ogg");
-            serializer.DataField(this, x => x._openSound, "openSound", "/Audio/Machines/closetopen.ogg");
         }
 
         public virtual void Activate(ActivateEventArgs eventArgs)
@@ -226,15 +237,21 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private void ModifyComponents()
         {
-            if (!_isCollidableWhenOpen && Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+            if (!_isCollidableWhenOpen && Owner.TryGetComponent<IPhysBody>(out var physics))
             {
                 if (Open)
                 {
-                    physics.Hard = false;
+                    foreach (var fixture in physics.Fixtures)
+                    {
+                        fixture.CollisionLayer &= ~OpenMask;
+                    }
                 }
                 else
                 {
-                    physics.Hard = true;
+                    foreach (var fixture in physics.Fixtures)
+                    {
+                        fixture.CollisionLayer |= OpenMask;
+                    }
                 }
             }
 
@@ -252,10 +269,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         protected virtual bool AddToContents(IEntity entity)
         {
             if (entity == Owner) return false;
-            if (entity.TryGetComponent(out IPhysicsComponent? entityPhysicsComponent))
+            if (entity.TryGetComponent(out IPhysBody? entityPhysicsComponent))
             {
-                if(MaxSize < entityPhysicsComponent.WorldAABB.Size.X
-                    || MaxSize < entityPhysicsComponent.WorldAABB.Size.Y)
+                if(MaxSize < entityPhysicsComponent.GetWorldAABB().Size.X
+                    || MaxSize < entityPhysicsComponent.GetWorldAABB().Size.Y)
                 {
                     return false;
                 }
@@ -282,10 +299,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             foreach (var contained in Contents.ContainedEntities.ToArray())
             {
-                if(Contents.Remove(contained))
+                if (Contents.Remove(contained))
                 {
                     contained.Transform.WorldPosition = ContentsDumpPosition();
-                    if (contained.TryGetComponent<IPhysicsComponent>(out var physics))
+                    if (contained.TryGetComponent<IPhysBody>(out var physics))
                     {
                         physics.CanCollide = true;
                     }
@@ -455,6 +472,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             data.Text = Loc.GetString(component.Open ? "Close" : "Open");
+            data.IconTexture = component.Open ? "/Textures/Interface/VerbIcons/close.svg.96dpi.png" : "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
         }
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)

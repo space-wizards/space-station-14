@@ -1,11 +1,10 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
 {
-    public interface IThresholdTrigger : IExposeData
+    public interface IThresholdTrigger
     {
         /// <summary>
         ///     Checks if this trigger has been reached.

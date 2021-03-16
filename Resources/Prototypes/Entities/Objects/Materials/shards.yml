@@ -34,7 +34,7 @@
       color: "#bbeeff"
     - type: WelderRefinable
       refineResult:
-      - GlassStack
+      - SheetGlass
 
 - type: entity
   id: ShardGlassReinforced
@@ -48,7 +48,7 @@
       color: "#96cdef"
     - type: WelderRefinable
       refineResult:
-      - GlassStack
+      - SheetGlass
       - SheetSteel
     - type: DamageOtherOnHit
       amount: 10
@@ -65,7 +65,7 @@
       color: "#f3b489"
     - type: WelderRefinable
       refineResult:
-      - GlassStack
-      - PlasmaStack
+      - SheetGlass
+      - SheetPlasma
     - type: DamageOtherOnHit
       amount: 15

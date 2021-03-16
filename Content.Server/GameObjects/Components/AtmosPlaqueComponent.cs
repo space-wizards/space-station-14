@@ -2,7 +2,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
@@ -10,7 +10,8 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     public sealed class AtmosPlaqueComponent : Component, IMapInit
     {
-        private PlaqueType _type;
+        [DataField("plaqueType")]
+        private PlaqueType _type = PlaqueType.Unset;
         public override string Name => "AtmosPlaque";
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -81,19 +82,12 @@ namespace Content.Server.GameObjects.Components
                 _ => "Uhm",
             };
 
-            if (Owner.TryGetComponent(out SpriteComponent sprite))
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 var state = _type == PlaqueType.Zumos ? "zumosplaque" : "atmosplaque";
 
                 sprite.LayerSetState(0, state);
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _type, "plaqueType", PlaqueType.Unset);
         }
 
         public enum PlaqueType

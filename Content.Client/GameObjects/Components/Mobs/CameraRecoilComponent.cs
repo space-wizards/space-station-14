@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -29,7 +28,8 @@ namespace Content.Client.GameObjects.Components.Mobs
         private Vector2 _currentKick;
         private float _lastKickTime;
 
-        [ComponentDependency] private readonly EyeComponent? _eye = null;
+        [ComponentDependency]
+        private readonly EyeComponent? _eye = default;
 
         // Basically I needed a way to chain this effect for the attack lunge animation.
         // Sorry!

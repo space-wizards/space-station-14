@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Lidgren.Network;
@@ -89,6 +91,7 @@ namespace Content.Shared.GameTicking
             #endregion
 
             public bool IsRoundStarted { get; set; }
+            public string? LobbySong { get; set; }
             public bool YouAreReady { get; set; }
             // UTC.
             public TimeSpan StartTime { get; set; }
@@ -97,6 +100,7 @@ namespace Content.Shared.GameTicking
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
                 IsRoundStarted = buffer.ReadBoolean();
+                LobbySong = buffer.ReadString();
 
                 if (IsRoundStarted)
                 {
@@ -106,11 +110,13 @@ namespace Content.Shared.GameTicking
                 YouAreReady = buffer.ReadBoolean();
                 StartTime = new TimeSpan(buffer.ReadInt64());
                 Paused = buffer.ReadBoolean();
+
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
                 buffer.Write(IsRoundStarted);
+                buffer.Write(LobbySong);
 
                 if (IsRoundStarted)
                 {
@@ -120,6 +126,7 @@ namespace Content.Shared.GameTicking
                 buffer.Write(YouAreReady);
                 buffer.Write(StartTime.Ticks);
                 buffer.Write(Paused);
+
             }
         }
 
@@ -133,7 +140,7 @@ namespace Content.Shared.GameTicking
 
             #endregion
 
-            public string TextBlob { get; set; }
+            public string TextBlob { get; set; } = string.Empty;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
@@ -192,7 +199,7 @@ namespace Content.Shared.GameTicking
             /// <summary>
             /// The Status of the Player in the lobby (ready, observer, ...)
             /// </summary>
-            public Dictionary<NetUserId, PlayerStatus> PlayerStatus { get; set; }
+            public Dictionary<NetUserId, PlayerStatus> PlayerStatus { get; set; } = new();
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
@@ -270,7 +277,7 @@ namespace Content.Shared.GameTicking
         public struct RoundEndPlayerInfo
         {
             public string PlayerOOCName;
-            public string PlayerICName;
+            public string? PlayerICName;
             public string Role;
             public bool Antag;
             public bool Observer;
@@ -287,14 +294,14 @@ namespace Content.Shared.GameTicking
 
             #endregion
 
-            public string GamemodeTitle;
-            public string RoundEndText;
+            public string GamemodeTitle = string.Empty;
+            public string RoundEndText = string.Empty;
             public TimeSpan RoundDuration;
 
 
             public int PlayerCount;
 
-            public List<RoundEndPlayerInfo> AllPlayersEndInfo;
+            public List<RoundEndPlayerInfo> AllPlayersEndInfo = new();
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {

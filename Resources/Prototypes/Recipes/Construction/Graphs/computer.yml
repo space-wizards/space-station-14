@@ -35,7 +35,7 @@
               anchored: false
           completed:
             - !type:SpawnPrototype
-              prototype: SteelSheet1
+              prototype: SheetSteel1
               amount: 5
             - !type:DeleteEntity {}
           steps:
@@ -125,7 +125,7 @@
             - !type:EntityAnchored { }
           completed:
             - !type:SpawnPrototype
-              prototype: GlassSheet1
+              prototype: SheetGlass1
               amount: 2
           steps:
             - tool: Prying
@@ -144,8 +144,8 @@
             - !type:EntityAnchored {}
           completed:
             - !type:SpawnPrototype
-              prototype: GlassSheet1 # TODO: Replace with glass shard.
-              amount: 1
+              prototype: ShardBase
+              amount: 2
           steps:
             - tool: Prying
               doAfter: 2

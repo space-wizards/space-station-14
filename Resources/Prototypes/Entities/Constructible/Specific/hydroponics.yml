@@ -8,11 +8,12 @@
   - type: InteractionOutline
   - type: Physics
     mass: 25
-    anchored: true
-    hard: false
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.1, 0.5"
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.1, 0.5"
+      hard: false
       mask:
       - Impassable
       - MobImpassable
@@ -55,7 +56,12 @@
   components:
   - type: Physics
     mass: 25
-    hard: true
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      hard: true
+      mask:
+      - Impassable
   - type: Anchorable
     snap: true
   - type: Pullable

@@ -2,29 +2,21 @@ using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Atmos
+namespace Content.Client.GameObjects.Components.Atmos.Piping
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class PumpVisualizer : AppearanceVisualizer
     {
-        private string _pumpEnabledState;
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            var serializer = YamlObjectSerializer.NewReader(node);
-            serializer.DataField(ref _pumpEnabledState, "pumpEnabledState", "pumpPressureOn");
-        }
+        [DataField("pumpEnabledState")] private string _pumpEnabledState = "pumpPressureOn";
 
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent(out ISpriteComponent sprite)) return;
+            if (!entity.TryGetComponent(out ISpriteComponent? sprite)) return;
 
             sprite.LayerMapReserveBlank(Layer.PumpEnabled);
             var pumpEnabledLayer = sprite.LayerMapGet(Layer.PumpEnabled);
@@ -35,7 +27,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite)) return;
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
             if (!component.TryGetData(PumpVisuals.VisualState, out PumpVisualState pumpVisualState)) return;
 
             var pumpEnabledLayer = sprite.LayerMapGet(Layer.PumpEnabled);

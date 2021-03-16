@@ -41,17 +41,17 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void UpdateLooks()
         {
-            if (Appearance is null ||
-                !Owner.TryGetComponent(out SpriteComponent sprite))
+            if (Appearance is null! ||
+                !Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (Owner.TryGetComponent(out IBody body))
+            if (Owner.TryGetComponent(out IBody? body))
             {
                 foreach (var part in body.Parts.Values)
                 {
-                    if (!part.Owner.TryGetComponent(out SpriteComponent partSprite))
+                    if (!part.Owner.TryGetComponent(out SpriteComponent? partSprite))
                     {
                         continue;
                     }
@@ -62,6 +62,8 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             sprite.LayerSetColor(HumanoidVisualLayers.Hair, Appearance.HairColor);
             sprite.LayerSetColor(HumanoidVisualLayers.FacialHair, Appearance.FacialHairColor);
+
+            sprite.LayerSetColor(HumanoidVisualLayers.Eyes, Appearance.EyeColor);
 
             sprite.LayerSetState(HumanoidVisualLayers.Chest, Sex == Sex.Male ? "torso_m" : "torso_f");
             sprite.LayerSetState(HumanoidVisualLayers.Head, Sex == Sex.Male ? "head_m" : "head_f");
@@ -92,12 +94,12 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         public void BodyPartAdded(BodyPartAddedEventArgs args)
         {
-            if (!Owner.TryGetComponent(out SpriteComponent sprite))
+            if (!Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (!args.Part.Owner.TryGetComponent(out SpriteComponent partSprite))
+            if (!args.Part.Owner.TryGetComponent(out SpriteComponent? partSprite))
             {
                 return;
             }
@@ -115,12 +117,12 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         public void BodyPartRemoved(BodyPartRemovedEventArgs args)
         {
-            if (!Owner.TryGetComponent(out SpriteComponent sprite))
+            if (!Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (!args.Part.Owner.TryGetComponent(out SpriteComponent partSprite))
+            if (!args.Part.Owner.TryGetComponent(out SpriteComponent? partSprite))
             {
                 return;
             }

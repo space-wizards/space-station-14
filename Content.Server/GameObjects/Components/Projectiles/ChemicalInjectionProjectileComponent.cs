@@ -1,34 +1,31 @@
-﻿using Content.Server.GameObjects.Components.Body.Circulatory;
+﻿using System;
+using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using System;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
     [RegisterComponent]
-    public class ChemicalInjectionProjectileComponent : Component, ICollideBehavior
+    public class ChemicalInjectionProjectileComponent : Component, IStartCollide
     {
         public override string Name => "ChemicalInjectionProjectile";
 
         [ViewVariables]
-        private SolutionContainerComponent _solutionContainer;
+        private SolutionContainerComponent _solutionContainer = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit TransferAmount { get; set; }
+        [DataField("transferAmount")]
+        public ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(1);
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float TransferEfficiency { get => _transferEfficiency; set => _transferEfficiency = Math.Clamp(value, 0, 1); }
-        private float _transferEfficiency;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.TransferAmount, "transferAmount", ReagentUnit.New(1));
-            serializer.DataField(ref _transferEfficiency, "transferEfficiency", 1f);
-        }
+        [DataField("transferEfficiency")]
+        private float _transferEfficiency = 1f;
 
         public override void Initialize()
         {
@@ -36,9 +33,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
             _solutionContainer = Owner.EnsureComponent<SolutionContainerComponent>();
         }
 
-        void ICollideBehavior.CollideWith(IEntity entity)
+        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            if (!entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))
+            if (!otherBody.Entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))
                 return;
 
             var solution = _solutionContainer.Solution;

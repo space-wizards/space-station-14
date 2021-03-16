@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
@@ -59,14 +59,9 @@ namespace Content.Server.GameObjects.Components
                     if (!map.ContainsKey(msg.HairName))
                         return;
 
-                    if (msg.IsFacialHair)
-                    {
-                        looks.Appearance = looks.Appearance.WithFacialHairStyleName(msg.HairName);
-                    }
-                    else
-                    {
-                        looks.Appearance = looks.Appearance.WithHairStyleName(msg.HairName);
-                    }
+                    looks.Appearance = msg.IsFacialHair
+                        ? looks.Appearance.WithFacialHairStyleName(msg.HairName)
+                        : looks.Appearance.WithHairStyleName(msg.HairName);
 
                     break;
 
@@ -74,14 +69,17 @@ namespace Content.Server.GameObjects.Components
                     var (r, g, b) = msg.HairColor;
                     var color = new Color(r, g, b);
 
-                    if (msg.IsFacialHair)
-                    {
-                        looks.Appearance = looks.Appearance.WithFacialHairColor(color);
-                    }
-                    else
-                    {
-                        looks.Appearance = looks.Appearance.WithHairColor(color);
-                    }
+                    looks.Appearance = msg.IsFacialHair
+                        ? looks.Appearance.WithFacialHairColor(color)
+                        : looks.Appearance.WithHairColor(color);
+
+                    break;
+
+                case EyeColorSelectedMessage msg:
+                    var (eyeR, eyeG, eyeB) = msg.EyeColor;
+                    var eyeColor = new Color(eyeR, eyeG, eyeB);
+
+                    looks.Appearance = looks.Appearance.WithEyeColor(eyeColor);
 
                     break;
             }
@@ -102,8 +100,14 @@ namespace Content.Server.GameObjects.Components
 
             UserInterface?.Toggle(actor.playerSession);
 
-            var msg = new MagicMirrorInitialDataMessage(looks.Appearance.HairColor, looks.Appearance.FacialHairColor, looks.Appearance.HairStyleName,
-                looks.Appearance.FacialHairStyleName);
+            var appearance = looks.Appearance;
+
+            var msg = new MagicMirrorInitialDataMessage(
+                appearance.HairColor,
+                appearance.FacialHairColor,
+                appearance.HairStyleName,
+                appearance.FacialHairStyleName,
+                appearance.EyeColor);
 
             UserInterface?.SendMessage(msg, actor.playerSession);
         }

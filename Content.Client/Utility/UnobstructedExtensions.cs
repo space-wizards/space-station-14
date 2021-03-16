@@ -1,6 +1,7 @@
 ﻿using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Robust.Client.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -17,7 +18,7 @@ namespace Content.Client.Utility
             IEntity other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -32,7 +33,7 @@ namespace Content.Client.Utility
             IComponent other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -44,7 +45,7 @@ namespace Content.Client.Utility
             IContainer other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -56,7 +57,7 @@ namespace Content.Client.Utility
             EntityCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -72,7 +73,7 @@ namespace Content.Client.Utility
             MapCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {

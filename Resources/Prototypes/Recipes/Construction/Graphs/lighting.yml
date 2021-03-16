@@ -26,7 +26,7 @@
               doAfter: 2.0
           completed:
             - !type:SpawnPrototype
-              prototype: SteelSheet1
+              prototype: SheetSteel1
               amount: 2
             - !type:DeleteEntity {}
     - node: bulbLight
@@ -41,6 +41,6 @@
               doAfter: 2.0
           completed:
             - !type:SpawnPrototype
-              prototype: SteelSheet1
+              prototype: SheetSteel1
               amount: 1
             - !type:DeleteEntity {}

@@ -18,7 +18,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -33,15 +33,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
         private TimeSpan _lastFireTime;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool ClumsyCheck { get; set; }
+        [DataField("clumsyCheck")]
+        public bool ClumsyCheck { get; set; } = true;
+
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ClumsyExplodeChance { get; set; }
+        [DataField("clumsyExplodeChance")]
+        public float ClumsyExplodeChance { get; set; } = 0.5f;
 
-        public Func<bool> WeaponCanFireHandler;
-        public Func<IEntity, bool> UserCanFireHandler;
-        public Action<IEntity, Vector2> FireHandler;
+        public Func<bool>? WeaponCanFireHandler;
+        public Func<IEntity, bool>? UserCanFireHandler;
+        public Action<IEntity, Vector2>? FireHandler;
 
-        public ServerRangedBarrelComponent Barrel
+        public ServerRangedBarrelComponent? Barrel
         {
             get => _barrel;
             set
@@ -56,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                 Dirty();
             }
         }
-        private ServerRangedBarrelComponent _barrel;
+        private ServerRangedBarrelComponent? _barrel;
 
         private FireRateSelector FireRateSelector => _barrel?.FireRateSelector ?? FireRateSelector.Safety;
 
@@ -70,16 +73,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             return (UserCanFireHandler == null || UserCanFireHandler(user)) && ActionBlockerSystem.CanAttack(user);
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, p => p.ClumsyCheck, "clumsyCheck", true);
-            serializer.DataField(this, p => p.ClumsyExplodeChance, "clumsyExplodeChance", 0.5f);
-        }
-
         /// <inheritdoc />
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 
@@ -131,12 +126,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
         /// <param name="targetPos">Target position on the map to shoot at.</param>
         private void TryFire(IEntity user, Vector2 targetPos)
         {
-            if (!user.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand?.Owner != Owner)
+            if (!user.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand?.Owner != Owner)
             {
                 return;
             }
 
-            if(!user.TryGetComponent(out CombatModeComponent combat) || !combat.IsInCombatMode) {
+            if(!user.TryGetComponent(out CombatModeComponent? combat) || !combat.IsInCombatMode) {
                 return;
             }
 
@@ -147,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
             var curTime = _gameTiming.CurTime;
             var span = curTime - _lastFireTime;
-            if (span.TotalSeconds < 1 / _barrel.FireRate)
+            if (span.TotalSeconds < 1 / _barrel?.FireRate)
             {
                 return;
             }
@@ -163,13 +158,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                 soundSystem.PlayAtCoords("/Audio/Weapons/Guns/Gunshots/bang.ogg",
                     Owner.Transform.Coordinates, AudioParams.Default, 5);
 
-                if (user.TryGetComponent(out IDamageableComponent health))
+                if (user.TryGetComponent(out IDamageableComponent? health))
                 {
                     health.ChangeDamage(DamageType.Blunt, 10, false, user);
                     health.ChangeDamage(DamageType.Heat, 5, false, user);
                 }
 
-                if (user.TryGetComponent(out StunnableComponent stun))
+                if (user.TryGetComponent(out StunnableComponent? stun))
                 {
                     stun.Paralyze(3f);
                 }

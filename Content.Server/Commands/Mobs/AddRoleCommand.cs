@@ -30,16 +30,21 @@ namespace Content.Server.Commands.Mobs
             }
 
             var mgr = IoCManager.Resolve<IPlayerManager>();
-            if (mgr.TryGetPlayerDataByUsername(args[0], out var data))
-            {
-                var mind = data.ContentData().Mind;
-                var role = new Job(mind, _prototypeManager.Index<JobPrototype>(args[1]));
-                mind.AddRole(role);
-            }
-            else
+            if (!mgr.TryGetPlayerDataByUsername(args[0], out var data))
             {
                 shell.WriteLine("Can't find that mind");
+                return;
             }
+
+            var mind = data.ContentData()?.Mind;
+            if (mind == null)
+            {
+                shell.WriteLine("Can't find that mind");
+                return;
+            }
+
+            var role = new Job(mind, _prototypeManager.Index<JobPrototype>(args[1]));
+            mind.AddRole(role);
         }
     }
 }

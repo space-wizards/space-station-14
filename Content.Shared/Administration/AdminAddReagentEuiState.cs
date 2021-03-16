@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.Chemistry;
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
@@ -25,7 +26,7 @@ namespace Content.Shared.Administration
         {
             public bool CloseAfter;
             public ReagentUnit Amount;
-            public string ReagentId;
+            public string ReagentId = string.Empty;
         }
     }
 }

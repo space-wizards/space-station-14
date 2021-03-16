@@ -15,7 +15,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -42,17 +42,20 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
         public override int Capacity => _capacity;
-        private int _capacity;
+        [DataField("capacity")]
+        private int _capacity = 6;
 
-        private ContainerSlot _chamberContainer;
-        private Stack<IEntity> _spawnedAmmo;
-        private Container _ammoContainer;
-
-        [ViewVariables]
-        private BallisticCaliber _caliber;
+        private ContainerSlot _chamberContainer = default!;
+        private Stack<IEntity> _spawnedAmmo = default!;
+        private Container _ammoContainer = default!;
 
         [ViewVariables]
-        private string _fillPrototype;
+        [DataField("caliber")]
+        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
+
+        [ViewVariables]
+        [DataField("fillPrototype")]
+        private string? _fillPrototype;
         [ViewVariables]
         private int _unspawnedCount;
 
@@ -91,28 +94,20 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
         private bool _boltOpen;
+        [DataField("autoCycle")]
         private bool _autoCycle;
 
-        private AppearanceComponent _appearanceComponent;
+        private AppearanceComponent? _appearanceComponent;
+
         // Sounds
-        private string _soundCycle;
-        private string _soundBoltOpen;
-        private string _soundBoltClosed;
-        private string _soundInsert;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-            serializer.DataField(ref _capacity, "capacity", 6);
-            serializer.DataField(ref _fillPrototype, "fillPrototype", null);
-            serializer.DataField(ref _autoCycle, "autoCycle", false);
-
-            serializer.DataField(ref _soundCycle, "soundCycle", "/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg");
-            serializer.DataField(ref _soundBoltOpen, "soundBoltOpen", "/Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg");
-            serializer.DataField(ref _soundBoltClosed, "soundBoltClosed", "/Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg");
-            serializer.DataField(ref _soundInsert, "soundInsert", "/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
-        }
+        [DataField("soundCycle")]
+        private string _soundCycle = "/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg";
+        [DataField("soundBoltOpen")]
+        private string _soundBoltOpen = "/Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg";
+        [DataField("soundBoltClosed")]
+        private string _soundBoltClosed = "/Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg";
+        [DataField("soundInsert")]
+        private string _soundInsert = "/Audio/Weapons/Guns/MagIn/bullet_insert.ogg";
 
         void IMapInit.MapInit()
         {
@@ -135,7 +130,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var chamberedExists = _chamberContainer.ContainedEntity != null;
             // (Is one chambered?, is the bullet spend)
             var chamber = (chamberedExists, false);
-            if (chamberedExists && _chamberContainer.ContainedEntity.TryGetComponent<AmmoComponent>(out var ammo))
+
+            if (chamberedExists && _chamberContainer.ContainedEntity!.TryGetComponent<AmmoComponent>(out var ammo))
             {
                 chamber.Item2 = ammo.Spent;
             }
@@ -152,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             // TODO: Add existing ammo support on revolvers
             base.Initialize();
             _spawnedAmmo = new Stack<IEntity>(_capacity - 1);
-            _ammoContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-ammo-container", Owner, out var existing);
+            _ammoContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-ammo-container", out var existing);
 
             if (existing)
             {
@@ -163,9 +159,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
             }
 
-            _chamberContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-chamber-container", Owner);
+            _chamberContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-chamber-container");
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -182,12 +178,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public override IEntity PeekAmmo()
+        public override IEntity? PeekAmmo()
         {
             return _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile(EntityCoordinates spawnAt)
+        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
         {
             var chamberEntity = _chamberContainer.ContainedEntity;
             if (_autoCycle)
@@ -199,7 +195,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 Dirty();
             }
 
-            return chamberEntity?.GetComponent<AmmoComponent>().TakeBullet(spawnAt);
+            return chamberEntity?.GetComponentOrNull<AmmoComponent>()?.TakeBullet(spawnAt);
         }
 
         protected override bool WeaponCanFire()
@@ -228,7 +224,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
             else
             {
-                if (_soundCycle != null)
+                if (!string.IsNullOrEmpty(_soundCycle))
                 {
                     EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundCycle, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 }
@@ -240,7 +236,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         public bool TryInsertBullet(IEntity user, IEntity ammo)
         {
-            if (!ammo.TryGetComponent(out AmmoComponent ammoComponent))
+            if (!ammo.TryGetComponent(out AmmoComponent? ammoComponent))
             {
                 return false;
             }

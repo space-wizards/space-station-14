@@ -9,12 +9,12 @@ using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Robust.Shared;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Tests.Server.Preferences
 {
@@ -97,6 +97,7 @@ namespace Content.Tests.Server.Preferences
         {
             var db = GetDb();
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
+            IoCManager.Resolve<ISerializationManager>().Initialize();
             IoCManager.Resolve<IPrototypeManager>().LoadFromStream(new StringReader(Prototypes));
             await db.InitPrefsAsync(username, HumanoidCharacterProfile.Default());
             await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), 1);

@@ -8,15 +8,8 @@
   },
   "states": [
     {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "icon"
+      "name": "disk",
+      "delays": [[0.1, 0.1, 0.1]]
     }
   ]
 }

@@ -9,6 +9,7 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Mobs.State
@@ -29,12 +30,12 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         ///     States that this <see cref="SharedMobStateComponent"/> mapped to
         ///     the amount of damage at which they are triggered.
         ///     A threshold is reached when the total damage of an entity is equal
-        ///     A threshold is reached when the total damage of an entity is equal
         ///     to or higher than the int key, but lower than the next threshold.
         ///     Ordered from lowest to highest.
         /// </summary>
         [ViewVariables]
-        private SortedDictionary<int, IMobState> _lowestToHighestStates = default!;
+        [DataField("thresholds")]
+        private readonly SortedDictionary<int, IMobState> _lowestToHighestStates = default!;
 
         // TODO Remove Nullability?
         [ViewVariables]
@@ -44,20 +45,6 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         public int? CurrentThreshold { get; private set; }
 
         public IEnumerable<KeyValuePair<int, IMobState>> _highestToLowestStates => _lowestToHighestStates.Reverse();
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "thresholds",
-                new Dictionary<int, IMobState>(),
-                thresholds =>
-                {
-                    _lowestToHighestStates = new SortedDictionary<int, IMobState>(thresholds);
-                },
-                () => new Dictionary<int, IMobState>(_lowestToHighestStates));
-        }
 
         protected override void Startup()
         {

@@ -27,12 +27,14 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: brain
   - type: Mechanism
-    durability: 10
     size: 1
     compatibility: Biological
     behaviors:
     - !type:BrainBehavior {}
   - type: Input
+    context: "ghost"
+  - type: DummyInputMover
+  - type: GhostOnMove
 
 - type: entity
   id: EyesHuman
@@ -45,7 +47,6 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: eyeballs
   - type: Mechanism
-    durability: 10
     size: 1
     compatibility: Biological
 
@@ -60,7 +61,6 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: heart-on
   - type: Mechanism
-    durability: 10
     size: 1
     compatibility: Biological
     behaviors:
@@ -77,7 +77,6 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: lungs
   - type: Mechanism
-    durability: 13
     size: 1
     compatibility: Biological
     behaviors:
@@ -94,7 +93,6 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: stomach
   - type: Mechanism
-    durability: 13
     size: 1
     compatibility: Biological
     behaviors:
@@ -108,16 +106,21 @@
   id: LiverHuman
   parent: BaseHumanOrgan
   name: "human liver"
-  description: "Filters impurities out of a bloodstream and provides other important functionality to a human."
+  description: "Filters impurities out of a bloodstream and provides other important functionality to a human, such as reagent metabolization."
   components:
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/organs.rsi
     state: liver
   - type: Mechanism
-    durability: 15
     size: 1
     compatibility: Biological
+    behaviors:
+    - !type:LiverBehavior
+      alcoholLethality: 0.005
+      alcoholExponent: 1.6
+      toxinTolerance: 3
+      toxinLethality: 0.01
 
 - type: entity
   id: KidneysHuman
@@ -130,6 +133,5 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: kidneys
   - type: Mechanism
-    durability: 20
     size: 1
     compatibility: Biological

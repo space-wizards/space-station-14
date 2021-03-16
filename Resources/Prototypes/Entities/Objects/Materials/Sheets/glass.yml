@@ -36,6 +36,12 @@
             - glass
             - glass_2
             - glass_3
+    - type: FloorTile
+      outputs:
+        - floor_glass
+    - type: Construction
+      graph: glass
+      node: SheetGlass
 
 - type: entity
   id: SheetGlass1
@@ -69,6 +75,12 @@
             - rglass
             - rglass_2
             - rglass_3
+    - type: FloorTile
+      outputs:
+        - floor_rglass
+    - type: Construction
+      graph: glass
+      node: SheetRGlass
 
 - type: entity
   id: SheetRGlass1
@@ -102,6 +114,9 @@
             - pglass
             - pglass_2
             - pglass_3
+    - type: Construction
+      graph: glass
+      node: SheetPGlass
 
 - type: entity
   id: SheetPGlass1
@@ -135,6 +150,9 @@
             - rpglass
             - rpglass_2
             - rpglass_3
+    - type: Construction
+      graph: glass
+      node: SheetRPGlass
 
 - type: entity
   id: SheetRPGlass1

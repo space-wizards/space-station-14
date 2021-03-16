@@ -3,8 +3,7 @@ using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualizers
 {
@@ -12,17 +11,12 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
     public sealed class MagVisualizer : AppearanceVisualizer
     {
         private bool _magLoaded;
-        private string _magState;
+        [DataField("magState")]
+        private string? _magState;
+        [DataField("steps")]
         private int _magSteps;
+        [DataField("zeroVisible")]
         private bool _zeroVisible;
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-            _magState = node.GetNode("magState").AsString();
-            _magSteps = node.GetNode("steps").AsInt();
-            _zeroVisible = node.GetNode("zeroVisible").AsBool();
-        }
 
         public override void InitializeEntity(IEntity entity)
         {

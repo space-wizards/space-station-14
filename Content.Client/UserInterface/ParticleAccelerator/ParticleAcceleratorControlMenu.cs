@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
@@ -16,7 +15,7 @@ using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.ParticleAccelerator
+namespace Content.Client.UserInterface.ParticleAccelerator
 {
     public sealed class ParticleAcceleratorControlMenu : BaseWindow
     {
@@ -53,7 +52,7 @@ namespace Content.Client.ParticleAccelerator
 
         public ParticleAcceleratorControlMenu(ParticleAcceleratorBoundUserInterface owner)
         {
-            SetSize = (400, 300);
+            SetSize = (400, 320);
             _greyScaleShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("Greyscale").Instance();
 
             Owner = owner;
@@ -101,11 +100,7 @@ namespace Content.Client.ParticleAccelerator
                 MouseFilter = MouseFilterMode.Pass
             });
 
-            _stateSpinBox = new SpinBox
-            {
-                Value = 0,
-            };
-            _stateSpinBox.IsValid = StrengthSpinBoxValid;
+            _stateSpinBox = new SpinBox {Value = 0, IsValid = StrengthSpinBoxValid,};
             _stateSpinBox.InitDefaultButtons();
             _stateSpinBox.ValueChanged += PowerStateChanged;
             _stateSpinBox.LineEditDisabled = true;
@@ -259,17 +254,17 @@ namespace Content.Client.ParticleAccelerator
                                                 Children =
                                                 {
                                                     new Control {MinSize = imgSize},
-                                                    (_endCapTexture = Segment("end_cap")),
+                                                    (_endCapTexture = Segment("end_cap", "capc")),
                                                     new Control {MinSize = imgSize},
-                                                    (_controlBoxTexture = Segment("control_box")),
-                                                    (_fuelChamberTexture = Segment("fuel_chamber")),
+                                                    (_controlBoxTexture = Segment("control_box", "boxc")),
+                                                    (_fuelChamberTexture = Segment("fuel_chamber", "chamberc")),
                                                     new Control {MinSize = imgSize},
                                                     new Control {MinSize = imgSize},
-                                                    (_powerBoxTexture = Segment("power_box")),
+                                                    (_powerBoxTexture = Segment("power_box", "boxc")),
                                                     new Control {MinSize = imgSize},
-                                                    (_emitterLeftTexture = Segment("emitter_left")),
-                                                    (_emitterCenterTexture = Segment("emitter_center")),
-                                                    (_emitterRightTexture = Segment("emitter_right")),
+                                                    (_emitterLeftTexture = Segment("emitter_left", "leftc")),
+                                                    (_emitterCenterTexture = Segment("emitter_center", "centerc")),
+                                                    (_emitterRightTexture = Segment("emitter_right", "rightc")),
                                                 }
                                             }
                                         }
@@ -325,9 +320,9 @@ namespace Content.Client.ParticleAccelerator
                 }
             };
 
-            PASegmentControl Segment(string name)
+            PASegmentControl Segment(string name, string state)
             {
-                return new(this, resourceCache, name);
+                return new(this, resourceCache, name, state);
             }
         }
 
@@ -336,7 +331,7 @@ namespace Content.Client.ParticleAccelerator
             return (n >= 0 && n <= 4 && !_blockSpinBox);
         }
 
-        private void PowerStateChanged(object sender, ValueChangedEventArgs e)
+        private void PowerStateChanged(object? sender, ValueChangedEventArgs e)
         {
             ParticleAcceleratorPowerState newState;
             switch (e.Value)
@@ -461,13 +456,13 @@ namespace Content.Client.ParticleAccelerator
             private readonly TextureRect _unlit;
             private readonly RSI _rsi;
 
-            public PASegmentControl(ParticleAcceleratorControlMenu menu, IResourceCache cache, string name)
+            public PASegmentControl(ParticleAcceleratorControlMenu menu, IResourceCache cache, string name, string state)
             {
                 _menu = menu;
                 _baseState = name;
-                _rsi = cache.GetResource<RSIResource>($"/Textures/Constructible/Power/PA/{name}.rsi").RSI;
+                _rsi = cache.GetResource<RSIResource>($"/Textures/Constructible/Specific/Engines/PA/{name}.rsi").RSI;
 
-                AddChild(_base = new TextureRect {Texture = _rsi[$"{name}c"].Frame0});
+                AddChild(_base = new TextureRect {Texture = _rsi[$"{state}"].Frame0});
                 AddChild(_unlit = new TextureRect());
                 MinSize = _rsi.Size;
             }

@@ -8,6 +8,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 
@@ -163,9 +164,14 @@ namespace Content.Shared.GameObjects.EntitySystems
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static FormattedMessage GetExamineText(IEntity entity, IEntity examiner)
+        public static FormattedMessage GetExamineText(IEntity entity, IEntity? examiner)
         {
             var message = new FormattedMessage();
+
+            if (examiner == null)
+            {
+                return message;
+            }
 
             var doNewline = false;
 

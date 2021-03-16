@@ -18,8 +18,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-#nullable enable
-
 namespace Content.Client.Chat
 {
     internal sealed class ChatManager : IChatManager, IPostInjectInit
@@ -222,7 +220,7 @@ namespace Content.Client.Chat
                 };
             }
 
-            _currentChatBox?.AddLine(messageText, message.Channel, color);
+            _currentChatBox?.AddLine(FormattedMessage.FromMarkup(messageText), color);
         }
 
         private void OnChatBoxTextSubmitted(ChatBox chatBox, string text)
@@ -237,7 +235,8 @@ namespace Content.Client.Chat
             {
                 if (_currentChatBox != null)
                 {
-                    string locWarning = Loc.GetString("Your message exceeds {0} character limit", _maxMessageLength);
+                    string locWarning = Loc.GetString("chat-manager-max-message-length",
+                                            ("maxMessageLength", _maxMessageLength));
                     _currentChatBox.AddLine(locWarning, ChatChannel.Server, Color.Orange);
                     _currentChatBox.ClearOnEnter = false; // The text shouldn't be cleared if it hasn't been sent
                 }
@@ -422,7 +421,7 @@ namespace Content.Client.Chat
                 return;
             }
 
-            var messages = SplitMessage(msg.Message);
+            var messages = SplitMessage(FormattedMessage.RemoveMarkup(msg.Message));
 
             foreach (var message in messages)
             {

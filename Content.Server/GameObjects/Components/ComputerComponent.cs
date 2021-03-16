@@ -2,9 +2,10 @@ using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
@@ -13,24 +14,17 @@ namespace Content.Server.GameObjects.Components
     public sealed class ComputerComponent : SharedComputerComponent, IMapInit
     {
         [ViewVariables]
-        private string _boardPrototype;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _boardPrototype, "board", string.Empty);
-        }
+        [DataField("board")]
+        private string? _boardPrototype;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent powerReceiver))
+            if (Owner.TryGetComponent(out PowerReceiverComponent? powerReceiver) &&
+                Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                if (Owner.TryGetComponent(out AppearanceComponent appearance))
-                {
-                    appearance.SetData(ComputerVisuals.Powered, powerReceiver.Powered);
-                }
+                appearance.SetData(ComputerVisuals.Powered, powerReceiver.Powered);
             }
         }
 
@@ -41,7 +35,7 @@ namespace Content.Server.GameObjects.Components
             CreateComputerBoard();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)
@@ -54,7 +48,7 @@ namespace Content.Server.GameObjects.Components
 
         private void PowerReceiverOnOnPowerStateChanged(PowerChangedMessage e)
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(ComputerVisuals.Powered, e.Powered);
             }
@@ -67,11 +61,15 @@ namespace Content.Server.GameObjects.Components
         /// </summary>
         private void CreateComputerBoard()
         {
+            // Ensure that the construction component is aware of the board container.
+            if (Owner.TryGetComponent(out ConstructionComponent? construction))
+                construction.AddContainer("board");
+
             // We don't do anything if this is null or empty.
             if (string.IsNullOrEmpty(_boardPrototype))
                 return;
 
-            var container = ContainerManagerComponent.Ensure<Container>("board", Owner, out var existed);
+            var container = ContainerHelpers.EnsureContainer<Container>(Owner, "board", out var existed);
 
             if (existed)
             {
@@ -84,9 +82,6 @@ namespace Content.Server.GameObjects.Components
 
             if(!container.Insert(board))
                 Logger.Warning($"Couldn't insert board {board} to computer {Owner}!");
-
-            if (Owner.TryGetComponent(out ConstructionComponent construction))
-                construction.AddContainer("board");
         }
 
         public void MapInit()

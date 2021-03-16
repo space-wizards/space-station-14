@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -31,13 +32,8 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when an entity is dropped
     /// </summary>
     [PublicAPI]
-    public class DroppedMessage : EntitySystemMessage
+    public class DroppedMessage : HandledEntityEventArgs
     {
-        /// <summary>
-        ///     If this message has already been "handled" by a previous system.
-        /// </summary>
-        public bool Handled { get; set; }
-
         /// <summary>
         ///     Entity that dropped the item.
         /// </summary>

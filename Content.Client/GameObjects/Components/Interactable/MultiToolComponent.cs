@@ -5,7 +5,7 @@ using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -15,22 +15,17 @@ namespace Content.Client.GameObjects.Components.Interactable
     public class MultiToolComponent : Component, IItemStatus
     {
         private ToolQuality _behavior;
-        private bool _statusShowBehavior;
+        [DataField("statusShowBehavior")]
+        private bool _statusShowBehavior = true;
 
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
         [ViewVariables] public bool StatusShowBehavior => _statusShowBehavior;
-        [ViewVariables] public ToolQuality Behavior => _behavior;
+        [ViewVariables] public ToolQuality? Behavior => _behavior;
 
         public override string Name => "MultiTool";
         public override uint? NetID => ContentNetIDs.MULTITOOLS;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _statusShowBehavior, "statusShowBehavior", true);
-        }
-
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
@@ -68,11 +63,7 @@ namespace Content.Client.GameObjects.Components.Interactable
 
                 _parent._uiUpdateNeeded = false;
 
-                if(!_parent.StatusShowBehavior)
-                    _label.SetMarkup(string.Empty);
-                else
-                    _label.SetMarkup(_parent.Behavior.ToString());
-
+                _label.SetMarkup(_parent.StatusShowBehavior ? _parent.Behavior.ToString() ?? string.Empty : string.Empty);
             }
         }
     }
