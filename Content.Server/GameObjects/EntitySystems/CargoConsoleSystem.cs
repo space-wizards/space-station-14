@@ -1,8 +1,9 @@
 using System.Collections.Generic;
-using Content.Shared.Prototypes.Cargo;
-using Content.Shared.GameTicking;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Cargo;
 using Content.Server.GameObjects.Components.Cargo;
+using Content.Shared.GameTicking;
+using Content.Shared.Prototypes.Cargo;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -104,12 +105,12 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// Returns whether the account exists, eventually passing the account in the out parameter.
         /// </summary>
-        public bool TryGetBankAccount(int id, out CargoBankAccount account)
+        public bool TryGetBankAccount(int id, [NotNullWhen(true)] out CargoBankAccount? account)
         {
             return _accountsDict.TryGetValue(id, out account);
         }
 
-        public bool TryGetOrderDatabase(int id, out CargoOrderDatabase database)
+        public bool TryGetOrderDatabase(int id, [NotNullWhen(true)] out CargoOrderDatabase? database)
         {
             return _databasesDict.TryGetValue(id, out database);
         }
@@ -182,7 +183,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             foreach (var comp in ComponentManager.EntityQuery<CargoOrderDatabaseComponent>(true))
             {
-                if (!comp.ConnectedToDatabase || comp.Database.Id != id)
+                if (comp.Database == null || comp.Database.Id != id)
                     continue;
                 comp.Dirty();
             }

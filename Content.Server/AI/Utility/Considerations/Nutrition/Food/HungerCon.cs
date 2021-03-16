@@ -12,7 +12,7 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Food
         {
             var owner = context.GetState<SelfState>().GetValue();
 
-            if (!owner.TryGetComponent(out HungerComponent hunger))
+            if (owner == null || !owner.TryGetComponent(out HungerComponent? hunger))
             {
                 return 0.0f;
             }

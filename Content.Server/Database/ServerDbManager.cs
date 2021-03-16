@@ -130,7 +130,7 @@ namespace Content.Server.Database
                     _db = new ServerDbPostgres(options);
                     break;
                 default:
-                    throw new InvalidDataException("Unknown database engine {engine}.");
+                    throw new InvalidDataException($"Unknown database engine {engine}.");
             }
         }
 

@@ -16,11 +16,11 @@ namespace Content.Server.GameObjects.Components.Mobs
             {
                 base.Appearance = value;
 
-                if (Owner.TryGetComponent(out IBody body))
+                if (Owner.TryGetComponent(out IBody? body))
                 {
                     foreach (var part in body.Parts.Values)
                     {
-                        if (!part.Owner.TryGetComponent(out SpriteComponent sprite))
+                        if (!part.Owner.TryGetComponent(out SpriteComponent? sprite))
                         {
                             continue;
                         }
@@ -35,11 +35,11 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             base.Startup();
 
-            if (Appearance != null && Owner.TryGetComponent(out IBody body))
+            if (Appearance != null! && Owner.TryGetComponent(out IBody? body))
             {
                 foreach (var part in body.Parts.Values)
                 {
-                    if (!part.Owner.TryGetComponent(out SpriteComponent sprite))
+                    if (!part.Owner.TryGetComponent(out SpriteComponent? sprite))
                     {
                         continue;
                     }

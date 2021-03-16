@@ -7,13 +7,13 @@ namespace Content.Server.Utility
 {
     public static class SnapgridHelper
     {
-        public static void SnapToGrid(this IEntity entity, SnapGridOffset offset = SnapGridOffset.Center, IEntityManager entityManager = null, IMapManager mapManager = null)
+        public static void SnapToGrid(this IEntity entity, SnapGridOffset offset = SnapGridOffset.Center, IEntityManager? entityManager = null, IMapManager? mapManager = null)
         {
             entity.Transform.Coordinates = entity.Transform.Coordinates.SnapToGrid(offset, entityManager, mapManager);
         }
 
         public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates,
-            SnapGridOffset offset = SnapGridOffset.Center, IEntityManager entityManager = null, IMapManager mapManager = null)
+            SnapGridOffset offset = SnapGridOffset.Center, IEntityManager? entityManager = null, IMapManager? mapManager = null)
         {
             entityManager ??= IoCManager.Resolve<IEntityManager>();
             mapManager ??= IoCManager.Resolve<IMapManager>();

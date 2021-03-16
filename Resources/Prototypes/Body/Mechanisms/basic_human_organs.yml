@@ -32,6 +32,9 @@
     behaviors:
     - !type:BrainBehavior {}
   - type: Input
+    context: "ghost"
+  - type: DummyInputMover
+  - type: GhostOnMove
 
 - type: entity
   id: EyesHuman

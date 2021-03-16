@@ -10,6 +10,7 @@ namespace Content.Client.Interfaces
         bool IsGameStarted { get; }
         string? ServerInfoBlob { get; }
         bool AreWeReady { get; }
+        string? LobbySong { get; }
         bool DisallowedLateJoin { get; }
         TimeSpan StartTime { get; }
         bool Paused { get; }

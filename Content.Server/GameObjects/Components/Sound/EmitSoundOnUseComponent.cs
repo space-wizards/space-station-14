@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Sound
         ///
         public override string Name => "EmitSoundOnUse";
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("sound")] public string _soundName;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("sound")] public string? _soundName;
         [ViewVariables(VVAccess.ReadWrite)] [DataField("variation")] public float _pitchVariation;
         [ViewVariables(VVAccess.ReadWrite)] [DataField("semitoneVariation")] public int _semitoneVariation;
 

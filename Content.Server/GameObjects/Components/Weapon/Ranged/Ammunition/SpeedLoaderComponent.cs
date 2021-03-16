@@ -10,8 +10,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
@@ -29,14 +27,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         public int Capacity => _capacity;
         [DataField("capacity")]
         private int _capacity = 6;
-        private Container _ammoContainer;
+        private Container _ammoContainer = default!;
         private Stack<IEntity> _spawnedAmmo = new();
         private int _unspawnedCount;
 
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
 
         [DataField("fillPrototype")]
-        private string _fillPrototype = default;
+        private string? _fillPrototype = default;
 
         public override void Initialize()
         {
@@ -61,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
                 appearanceComponent?.SetData(AmmoVisuals.AmmoCount, AmmoLeft);
@@ -71,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         public bool TryInsertAmmo(IEntity user, IEntity entity)
         {
-            if (!entity.TryGetComponent(out AmmoComponent ammoComponent))
+            if (!entity.TryGetComponent(out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -97,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         private bool UseEntity(IEntity user)
         {
-            if (!user.TryGetComponent(out HandsComponent handsComponent))
+            if (!user.TryGetComponent(out HandsComponent? handsComponent))
             {
                 return false;
             }
@@ -122,7 +120,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             return true;
         }
 
-        private IEntity TakeAmmo()
+        private IEntity? TakeAmmo()
         {
             if (_spawnedAmmo.TryPop(out var entity))
             {
@@ -147,9 +145,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
 
             // This area is dirty but not sure of an easier way to do it besides add an interface or somethin
-            bool changed = false;
+            var changed = false;
 
-            if (eventArgs.Target.TryGetComponent(out RevolverBarrelComponent revolverBarrel))
+            if (eventArgs.Target.TryGetComponent(out RevolverBarrelComponent? revolverBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
                 {
@@ -169,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                     TryInsertAmmo(eventArgs.User, ammo);
                     break;
                 }
-            } else if (eventArgs.Target.TryGetComponent(out BoltActionBarrelComponent boltActionBarrel))
+            } else if (eventArgs.Target.TryGetComponent(out BoltActionBarrelComponent? boltActionBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
                 {

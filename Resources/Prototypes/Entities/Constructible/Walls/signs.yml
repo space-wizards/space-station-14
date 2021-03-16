@@ -6,6 +6,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    canCollide: false
     fixtures:
     - shape:
         !type:PhysShapeAabb {}

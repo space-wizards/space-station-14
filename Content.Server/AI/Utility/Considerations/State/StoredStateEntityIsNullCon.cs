@@ -17,10 +17,16 @@ namespace Content.Server.AI.Utility.Considerations.State
             context.GetState<StoredStateIsNullState>().SetValue(type);
             return this;
         }
-        
+
         protected override float GetScore(Blackboard context)
         {
             var stateData = context.GetState<StoredStateIsNullState>().GetValue();
+
+            if (stateData == null)
+            {
+                return 0;
+            }
+
             context.GetStoredState(stateData, out StoredStateData<IEntity> state);
             return state.GetValue() == null ? 1.0f : 0.0f;
         }

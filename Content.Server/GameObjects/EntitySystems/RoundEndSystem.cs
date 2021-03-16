@@ -3,7 +3,6 @@ using System.Threading;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameTicking;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -33,16 +32,16 @@ namespace Content.Server.GameObjects.EntitySystems
         public TimeSpan CallCooldown { get; } = TimeSpan.FromSeconds(30);
 
         public delegate void RoundEndCountdownStarted();
-        public event RoundEndCountdownStarted OnRoundEndCountdownStarted;
+        public event RoundEndCountdownStarted? OnRoundEndCountdownStarted;
 
         public delegate void RoundEndCountdownCancelled();
-        public event RoundEndCountdownCancelled OnRoundEndCountdownCancelled;
+        public event RoundEndCountdownCancelled? OnRoundEndCountdownCancelled;
 
         public delegate void RoundEndCountdownFinished();
-        public event RoundEndCountdownFinished OnRoundEndCountdownFinished;
+        public event RoundEndCountdownFinished? OnRoundEndCountdownFinished;
 
         public delegate void CallCooldownEnded();
-        public event CallCooldownEnded OnCallCooldownEnded;
+        public event CallCooldownEnded? OnCallCooldownEnded;
 
         void IResettingEntitySystem.Reset()
         {

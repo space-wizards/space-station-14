@@ -42,10 +42,10 @@ namespace Content.Server.GameObjects.Components.Interactable
         public float SpeedModifier { get; set; } = 1;
 
         [DataField("useSound")]
-        public string UseSound { get; set; }
+        public string? UseSound { get; set; }
 
         [DataField("useSoundCollection")]
-        public string UseSoundCollection { get; set; }
+        public string? UseSoundCollection { get; set; }
 
         public void AddQuality(ToolQuality quality)
         {
@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return _qualities.HasFlag(quality);
         }
 
-        public virtual async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool> doAfterCheck = null)
+        public virtual async Task<bool> UseTool(IEntity user, IEntity? target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
         {
             if (!HasQuality(toolQualityNeeded) || !ActionBlockerSystem.CanInteract(user))
                 return false;
@@ -94,8 +94,13 @@ namespace Content.Server.GameObjects.Components.Interactable
             return true;
         }
 
-        protected void PlaySoundCollection(string name, float volume=-5f)
+        protected void PlaySoundCollection(string? name, float volume = -5f)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                return;
+            }
+
             var file = AudioHelpers.GetRandomFileFromSoundCollection(name);
             EntitySystem.Get<AudioSystem>()
                 .PlayFromEntity(file, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));

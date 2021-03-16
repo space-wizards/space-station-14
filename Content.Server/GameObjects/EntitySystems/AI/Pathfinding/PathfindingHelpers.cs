@@ -36,10 +36,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             // Given there's different collision layers stored for each node in the graph it's probably not worth it to cache this
             // Also this will help with corner-cutting
 
-            PathfindingNode northNeighbor = null;
-            PathfindingNode southNeighbor = null;
-            PathfindingNode eastNeighbor = null;
-            PathfindingNode westNeighbor = null;
+            PathfindingNode? northNeighbor = null;
+            PathfindingNode? southNeighbor = null;
+            PathfindingNode? eastNeighbor = null;
+            PathfindingNode? westNeighbor = null;
             foreach (var neighbor in currentNode.GetNeighbors())
             {
                 if (neighbor.TileRef.X == currentNode.TileRef.X &&

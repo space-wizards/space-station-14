@@ -28,7 +28,7 @@ namespace Content.Client.GameObjects.Components.Disposal
 
         public DisposalMailingUnitWindow()
         {
-            MinSize = SetSize = (460, 220);
+            MinSize = SetSize = (460, 230);
             TargetList = new List<string>();
             Contents.AddChild(new HBoxContainer
             {

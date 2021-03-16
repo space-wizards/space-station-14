@@ -6,8 +6,6 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -29,7 +27,9 @@ namespace Content.Server.GameObjects.Components.Items.RCD
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (eventArgs.Target == null || !eventArgs.Target.TryGetComponent(out RCDComponent rcdComponent) || !eventArgs.User.TryGetComponent(out IHandsComponent hands))
+            if (eventArgs.Target == null ||
+                !eventArgs.Target.TryGetComponent(out RCDComponent? rcdComponent) ||
+                !eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
                 return false;
             }

@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
@@ -73,6 +74,10 @@ namespace Content.Server.GameObjects.Components
 
             var physics = Owner.GetComponent<IPhysBody>();
             physics.BodyType = BodyType.Static;
+
+            // Snap rotation to cardinal (multiple of 90)
+            var rot = Owner.Transform.LocalRotation;
+            Owner.Transform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
 
             if (Owner.TryGetComponent(out PullableComponent? pullableComponent))
             {

@@ -2,9 +2,7 @@
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components
@@ -16,7 +14,7 @@ namespace Content.Server.GameObjects.Components
         public override string Name => "RandomSpriteState";
 
         [DataField("spriteStates")]
-        private List<string> _spriteStates;
+        private List<string>? _spriteStates;
 
         [DataField("spriteLayer")]
         private int _spriteLayer;
@@ -25,7 +23,7 @@ namespace Content.Server.GameObjects.Components
         {
             base.Initialize();
             if (_spriteStates == null) return;
-            if (!Owner.TryGetComponent(out SpriteComponent spriteComponent)) return;
+            if (!Owner.TryGetComponent(out SpriteComponent? spriteComponent)) return;
             spriteComponent.LayerSetState(_spriteLayer, _random.Pick(_spriteStates));
         }
     }

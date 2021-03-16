@@ -76,7 +76,7 @@ namespace Content.Shared.GameObjects.Components
             return new StackComponentState(Count, MaxCount);
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState is not StackComponentState cast)
             {
