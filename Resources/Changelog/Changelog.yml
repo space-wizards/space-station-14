@@ -563,3 +563,15 @@ Entries:
     type: Tweak}
   id: 102
   time: '2021-03-16T10:45:48.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Passing by someone who is on fire will now set you on fire as well.,
+    type: Add}
+  id: 103
+  time: '2021-03-16T11:56:42.242795+00:00'
+- author: Zumorica
+  changes:
+  - {message: You can now spray people with flammable chemicals and ignite them with
+      a welding tool or anything similar., type: Add}
+  id: 104
+  time: '2021-03-16T11:56:42.243615+00:00'
