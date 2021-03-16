@@ -1,7 +1,7 @@
-- type: entity
-  id: WardrobePrisonFilled
-  suffix: Filled
-  parent: WardrobePrison
+# - type: entity
+#   id: WardrobePrisonFilled
+#   suffix: Filled
+#   parent: WardrobePrison
 
 #- type: entity
 #  id: WardrobePajamaFilled
@@ -29,25 +29,25 @@
 #   suffix: Filled
 #   parent: WardrobeVirology
 
-- type: entity
-  id: WardrobeScienceFilled
-  suffix: Filled
-  parent: WardrobeScience
+# - type: entity
+#   id: WardrobeScienceFilled
+#   suffix: Filled
+#   parent: WardrobeScience
 
 # - type: entity
 #   id: WardrobeBotanistFilled
 #   suffix: Filled
 #   parent: WardrobeBotanist
 
-- type: entity
-  id: WardrobeMedicalDoctorFilled
-  suffix: Filled
-  parent: WardrobeMedicalDoctor
-  components:
-  - type: StorageFill
-    contents:
-      - name: ClothingHandsGlovesLatex
-        prob: 0.4
+# - type: entity
+#   id: WardrobeMedicalDoctorFilled
+#   suffix: Filled
+#   parent: WardrobeMedicalDoctor
+#   components:
+#   - type: StorageFill
+#     contents:
+#       - name: ClothingHandsGlovesLatex
+#         prob: 0.4
 
 # - type: entity
 #   id: WardrobeChapelFilled
@@ -59,17 +59,17 @@
 #   suffix: Filled
 #   parent: WardrobeSecurity
 
-- type: entity
-  id: WardrobeCargoFilled
-  suffix: Filled
-  parent: WardrobeCargo
+# - type: entity
+#   id: WardrobeCargoFilled
+#   suffix: Filled
+#   parent: WardrobeCargo
 
-- type: entity
-  id: WardrobeAtmosphericsFilled
-  suffix: Filled
-  parent: WardrobeAtmospherics
+# - type: entity
+#   id: WardrobeAtmosphericsFilled
+#   suffix: Filled
+#   parent: WardrobeAtmospherics
 
-- type: entity
-  id: WardrobeEngineeringFilled
-  suffix: Filled
-  parent: WardrobeEngineering
+# - type: entity
+#   id: WardrobeEngineeringFilled
+#   suffix: Filled
+#   parent: WardrobeEngineering

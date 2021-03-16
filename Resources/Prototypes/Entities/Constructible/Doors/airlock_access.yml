@@ -97,6 +97,14 @@
     access: [["Service"]]
 
 - type: entity
+  parent: AirlockGlass
+  id: AirlockBarGlassLocked
+  suffix: Bar, Locked
+  components:
+  - type: AccessReader
+    access: [["Bar"]]
+
+- type: entity
   parent: AirlockEngineeringGlass
   id: AirlockEngineeringGlassLocked
   suffix: Glass, Locked
@@ -184,6 +192,14 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintBarLocked
+  suffix: Bar, Locked
+  components:
+  - type: AccessReader
+    access: [["Bar"]]
 
 - type: entity
   parent: AirlockMaint
