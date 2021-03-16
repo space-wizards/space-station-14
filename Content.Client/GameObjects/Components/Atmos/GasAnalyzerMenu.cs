@@ -165,7 +165,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                     TemperatureHelpers.KelvinToCelsius(state.Temperature))
             });
             // Return here cause all that stuff down there is gas stuff (so we don't get the seperators)
-            if (state.Gases.Length == 0)
+            if (state.Gases == null || state.Gases.Length == 0)
             {
                 return;
             }

@@ -7,6 +7,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    canCollide: false
     fixtures:
     - shape:
         !type:PhysShapeAabb {}

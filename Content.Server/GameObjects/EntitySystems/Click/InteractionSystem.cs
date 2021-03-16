@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -26,7 +25,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems.Click
@@ -143,7 +141,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // all activates should only fire when in range / unbostructed
-            var activateEventArgs = new ActivateEventArgs { User = user, Target = used };
+            var activateEventArgs = new ActivateEventArgs(user, used);
             if (activateEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
                 activateComp.Activate(activateEventArgs);
@@ -432,10 +430,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
 
             var attackBys = attacked.GetAllComponents<IInteractUsing>().OrderByDescending(x => x.Priority);
-            var attackByEventArgs = new InteractUsingEventArgs
-            {
-                User = user, ClickLocation = clickLocation, Using = weapon, Target = attacked
-            };
+            var attackByEventArgs = new InteractUsingEventArgs(user, clickLocation, weapon, attacked);
 
             // all AttackBys should only happen when in range / unobstructed, so no range check is needed
             if (attackByEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
@@ -474,7 +469,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (message.Handled)
                 return;
 
-            var attackHandEventArgs = new InteractHandEventArgs { User = user, Target = attacked };
+            var attackHandEventArgs = new InteractHandEventArgs(user, attacked);
 
             // all attackHands should only fire when in range / unobstructed
             if (attackHandEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
@@ -534,7 +529,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Try to use item on any components which have the interface
             foreach (var use in uses)
             {
-                if (use.UseEntity(new UseEntityEventArgs { User = user }))
+                if (use.UseEntity(new UseEntityEventArgs(user)))
                 {
                     // If a Use returns a status completion we finish our attack
                     return;
@@ -753,10 +748,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
 
             var rangedAttackBys = attacked.GetAllComponents<IRangedInteract>().ToList();
-            var rangedAttackByEventArgs = new RangedInteractEventArgs
-            {
-                User = user, Using = weapon, ClickLocation = clickLocation
-            };
+            var rangedAttackByEventArgs = new RangedInteractEventArgs(user, weapon, clickLocation);
 
             // See if we have a ranged attack interaction
             foreach (var t in rangedAttackBys)

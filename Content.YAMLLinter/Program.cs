@@ -90,15 +90,15 @@ namespace Content.YAMLLinter
 
             foreach (var (key, val) in serverErrors)
             {
+                var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
                 if (clientErrors.TryGetValue(key, out var clientVal))
                 {
-                    var newErrors = val.Intersect(clientVal).ToHashSet();
-                    newErrors.UnionWith(val.Where(n => n.AlwaysRelevant));
+                    newErrors.UnionWith(val.Intersect(clientVal));
                     newErrors.UnionWith(clientVal.Where(n => n.AlwaysRelevant));
-                    if (newErrors.Count == 0) continue;
-
-                    allErrors[key] = newErrors;
                 }
+
+                if (newErrors.Count == 0) continue;
+                allErrors[key] = newErrors;
             }
 
             return allErrors;

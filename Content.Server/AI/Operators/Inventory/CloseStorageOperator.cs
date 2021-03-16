@@ -66,7 +66,7 @@ namespace Content.Server.AI.Operators.Inventory
 
             if (storageComponent.Open)
             {
-                var activateArgs = new ActivateEventArgs {User = _owner, Target = _target};
+                var activateArgs = new ActivateEventArgs(_owner, _target);
                 storageComponent.Activate(activateArgs);
             }
 
