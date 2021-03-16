@@ -21,7 +21,12 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 
     public class UseEntityEventArgs : EventArgs
     {
-        public IEntity User { get; set; }
+        public UseEntityEventArgs(IEntity user)
+        {
+            User = user;
+        }
+
+        public IEntity User { get; }
     }
 
     /// <summary>

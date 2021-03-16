@@ -23,6 +23,6 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
       - name: Build
-        run: dotnet build --configuration Release --no-restore /m
+        run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors= /m
       - name: Run Linter
         run: dotnet run --project Content.YAMLLinter/Content.YAMLLinter.csproj --no-build

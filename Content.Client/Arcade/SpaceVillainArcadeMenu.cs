@@ -20,7 +20,7 @@ namespace Content.Client.Arcade
         private readonly Button[] _gameButtons = new Button[3]; //used to disable/enable all game buttons
         public SpaceVillainArcadeMenu(SpaceVillainArcadeBoundUserInterface owner)
         {
-            MinSize = SetSize = (400, 200);
+            MinSize = SetSize = (300, 225);
             Title = Loc.GetString("Space Villain");
             Owner = owner;
 
@@ -68,9 +68,7 @@ namespace Content.Client.Arcade
                 {Text = Loc.GetString("New Game")};
             grid.AddChild(newGame);
 
-            centerContainer = new CenterContainer();
-            centerContainer.AddChild(grid);
-            Contents.AddChild(centerContainer);
+            Contents.AddChild(grid);
         }
 
         private void UpdateMetadata(SharedSpaceVillainArcadeComponent.SpaceVillainArcadeMetaDataUpdateMessage message)

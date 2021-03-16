@@ -1,0 +1,124 @@
+- type: constructionGraph
+  id: seat
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DeleteEntity {}
+      edges:
+        - to: chair
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+        - to: stool
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+        - to: stoolBar
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+        - to: chairOffice
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+        - to: chairOfficeDark
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+        - to: chairComfy
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 1
+        - to: chairWood
+          steps:
+            - material: WoodPlank
+              amount: 3
+              doAfter: 1
+
+    - node: chair
+      entity: Chair
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: stool
+      entity: Stool
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: stoolBar
+      entity: StoolBar
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: chairOffice
+      entity: ChairOfficeLight
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: chairOfficeDark
+      entity: ChairOfficeDark
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: chairComfy
+      entity: ComfyChair
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 5
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: chairWood
+      entity: ChairWood
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 3
+          steps:
+            - tool: Screwing
+              doAfter: 1

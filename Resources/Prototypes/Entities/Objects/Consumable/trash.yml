@@ -183,9 +183,14 @@
   - type: Slippery
     intersectPercentage: 0.2
   - type: Physics
+    bodyType: KinematicController
+    mass: 5
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.2,-0.2,0.2,0.2"
-      layer:
-      - MobImpassable
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.4,0.3,0.4"
+        layer:
+          - SmallImpassable
+        mask:
+          - Impassable
+          - MobImpassable
