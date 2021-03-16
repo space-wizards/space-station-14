@@ -530,3 +530,11 @@ Entries:
   - {message: Fixes soap and banana peels going through walls when thrown., type: Fix}
   id: 97
   time: '2021-03-15T20:30:41.728992+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Added magboot to chief engineer/engineer lockers, type: Add}
+  - {message: Armory has gotten a much better stock of weaponry from Nanotransen,
+    type: Tweak}
+  - {message: Empty lockers on station are removed, type: Remove}
+  id: 98
+  time: '2021-03-16T05:46:31.0000000+00:00'
