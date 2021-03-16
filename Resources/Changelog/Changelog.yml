@@ -556,3 +556,10 @@ Entries:
   - {message: Fix DoAfter flickering for a frame, type: Fix}
   id: 101
   time: '2021-03-16T08:16:55.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes soap and banana peels not slipping most of the time., type: Fix}
+  - {message: Banana peel hitbox has been nerfed. A sad day for clowns everywhere.,
+    type: Tweak}
+  id: 102
+  time: '2021-03-16T10:45:48.0000000+00:00'
