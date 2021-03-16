@@ -22,8 +22,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     [RegisterComponent]
     public class MindComponent : Component, IExamine
     {
-        [DataField("show_examine_info")]
-        private bool _showExamineInfo;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         /// <inheritdoc />
         public override string Name => "Mind";
@@ -61,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// </summary>
         public void InternalEjectMind()
         {
-            SendMessage(new MindRemovedMessage());
+            _entityManager.EventBus.RaiseLocalEvent(Owner.Uid, new MindRemovedMessage());
             Mind = null;
         }
 
@@ -73,7 +72,6 @@ namespace Content.Server.GameObjects.Components.Mobs
         public void InternalAssignMind(Mind value)
         {
             Mind = value;
-            SendMessage(new MindAddedMessage());
         }
 
         protected override void Shutdown()
@@ -96,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                     Mind!.TransferTo(visiting);
                 }
-                else if(GhostOnShutdown)
+                else if (GhostOnShutdown)
                 {
                     var spawnPosition = Owner.Transform.Coordinates;
                     // Use a regular timer here because the entity has probably been deleted.
@@ -156,11 +154,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         }
     }
 
-    public class MindRemovedMessage : ComponentMessage
-    {
-    }
-
-    public class MindAddedMessage : ComponentMessage
+    public class MindRemovedMessage : EntityEventArgs
     {
     }
 }

@@ -83,10 +83,6 @@ namespace Content.Server.GameObjects.Components.Observer
                 case PlayerDetachedMsg msg:
                     msg.OldPlayer.VisibilityMask &= ~(int) VisibilityFlags.Ghost;
                     break;
-                case MindRemovedMessage _:
-                case MindUnvisitedMessage _:
-                    Owner.Delete();
-                    break;
             }
         }
 
@@ -113,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Observer
                 }
                 case ReturnToCloneComponentMessage _:
 
-                    if (Owner.TryGetComponent(out VisitingMindComponent? mind))
+                    if (Owner.TryGetComponent(out VisitingMindComponent? mind) && mind.Mind != null)
                     {
                         Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
                     }

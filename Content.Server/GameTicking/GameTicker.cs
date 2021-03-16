@@ -417,10 +417,7 @@ namespace Content.Server.GameTicking
 
         public void Respawn(IPlayerSession targetPlayer)
         {
-            targetPlayer.AttachedEntity.TryGetComponent<GhostComponent>(out var ghost);
             targetPlayer.ContentData()?.WipeMind();
-            if (ghost?.Deleted == false)
-                ghost.Owner.Delete();
 
             if (LobbyEnabled)
                 _playerJoinLobby(targetPlayer);

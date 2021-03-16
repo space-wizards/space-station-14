@@ -57,14 +57,8 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var oldEntity = mind.CurrentEntity;
-
             mindComponent.Mind?.TransferTo(null);
             mind.TransferTo(target);
-
-            if(oldEntity.HasComponent<GhostComponent>())
-                oldEntity.Delete();
-
         }
     }
 }
