@@ -129,7 +129,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (player.AttachedEntity == null
                     || player.AttachedEntity.Transform.GridID != gridId
-                    || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent recoil))
+                    || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent? recoil))
                 {
                     continue;
                 }

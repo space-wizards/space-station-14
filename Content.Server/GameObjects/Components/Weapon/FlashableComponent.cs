@@ -30,11 +30,11 @@ namespace Content.Server.GameObjects.Components.Weapon
             return new FlashComponentState(_duration, _lastFlash);
         }
 
-        public static void FlashAreaHelper(IEntity source, float range, float duration, string sound = null)
+        public static void FlashAreaHelper(IEntity source, float range, float duration, string? sound = null)
         {
             foreach (var entity in source.EntityManager.GetEntitiesInRange(source.Transform.Coordinates, range))
             {
-                if (!entity.TryGetComponent(out FlashableComponent flashable) ||
+                if (!entity.TryGetComponent(out FlashableComponent? flashable) ||
                     !source.InRangeUnobstructed(entity, range, CollisionGroup.Opaque)) continue;
 
                 flashable.Flash(duration);

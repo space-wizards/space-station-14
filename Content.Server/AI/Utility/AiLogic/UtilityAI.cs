@@ -28,9 +28,9 @@ namespace Content.Server.AI.Utility.AiLogic
 
         // TODO: Look at having ParallelOperators (probably no more than that as then you'd have a full-blown BT)
         // Also RepeatOperators (e.g. if we're following an entity keep repeating MoveToEntity)
-        private AiActionSystem _planner;
+        private AiActionSystem _planner = default!;
         public Blackboard Blackboard => _blackboard;
-        private Blackboard _blackboard;
+        private Blackboard _blackboard = default!;
 
         /// <summary>
         ///     The sum of all BehaviorSets gives us what actions the AI can take
@@ -43,7 +43,7 @@ namespace Content.Server.AI.Utility.AiLogic
         /// <summary>
         /// The currently running action; most importantly are the operators.
         /// </summary>
-        public UtilityAction CurrentAction { get; private set; }
+        public UtilityAction? CurrentAction { get; private set; }
 
         /// <summary>
         /// How frequently we can re-plan. If an AI's in combat you could decrease the cooldown,
@@ -55,9 +55,9 @@ namespace Content.Server.AI.Utility.AiLogic
         /// <summary>
         /// If we've requested a plan then wait patiently for the action
         /// </summary>
-        private AiActionRequestJob _actionRequest;
+        private AiActionRequestJob? _actionRequest;
 
-        private CancellationTokenSource _actionCancellation;
+        private CancellationTokenSource? _actionCancellation;
 
         /// <summary>
         ///     If we can't do anything then stop thinking; should probably use ActionBlocker instead
@@ -126,6 +126,11 @@ namespace Content.Server.AI.Utility.AiLogic
 
         private void ReceivedAction()
         {
+            if (_actionRequest == null)
+            {
+                return;
+            }
+
             switch (_actionRequest.Exception)
             {
                 case null:

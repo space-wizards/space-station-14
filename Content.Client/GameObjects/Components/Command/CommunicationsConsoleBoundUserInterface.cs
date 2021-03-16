@@ -15,6 +15,7 @@ namespace Content.Client.GameObjects.Components.Command
 
         [ViewVariables] private CommunicationsConsoleMenu? _menu;
 
+        public bool CanAnnounce { get; private set; }
         public bool CanCall { get; private set; }
 
         public bool CountdownStarted { get; private set; }
@@ -44,6 +45,12 @@ namespace Content.Client.GameObjects.Components.Command
                 CallShuttle();
         }
 
+        public void AnnounceButtonPressed(string message)
+        {
+            var msg = message.Length <= 256 ? message.Trim() : $"{message.Trim().Substring(0, 256)}...";
+            SendMessage(new CommunicationsConsoleAnnounceMessage(msg));
+        }
+
         public void CallShuttle()
         {
             SendMessage(new CommunicationsConsoleCallEmergencyShuttleMessage());
@@ -61,6 +68,7 @@ namespace Content.Client.GameObjects.Components.Command
             if (state is not CommunicationsConsoleInterfaceState commsState)
                 return;
 
+            CanAnnounce = commsState.CanAnnounce;
             CanCall = commsState.CanCall;
             _expectedCountdownTime = commsState.ExpectedCountdownEnd;
             CountdownStarted = commsState.CountdownStarted;
@@ -69,6 +77,7 @@ namespace Content.Client.GameObjects.Components.Command
             {
                 _menu.UpdateCountdown();
                 _menu.EmergencyShuttleButton.Disabled = !CanCall;
+                _menu.AnnounceButton.Disabled = !CanAnnounce;
             }
         }
 

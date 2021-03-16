@@ -155,7 +155,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
             }
             else // If surgery cannot be performed, show message saying so.
             {
-                eventArgs.Target.PopupMessage(eventArgs.User,
+                eventArgs.Target?.PopupMessage(eventArgs.User,
                     Loc.GetString("You see no way to install {0:theName}.", Owner));
             }
         }

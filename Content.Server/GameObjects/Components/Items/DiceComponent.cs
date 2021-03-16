@@ -8,7 +8,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -50,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Items
         public void Roll()
         {
             _currentSide = _random.Next(1, (_sides/_step)+1) * _step;
-            if (!Owner.TryGetComponent(out SpriteComponent sprite)) return;
+            if (!Owner.TryGetComponent(out SpriteComponent? sprite)) return;
             sprite.LayerSetState(0, $"d{_sides}{_currentSide}");
             PlayDiceEffect();
         }

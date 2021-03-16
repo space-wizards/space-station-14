@@ -8,8 +8,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
     public class AiActionRequest
     {
         public EntityUid EntityUid { get; }
-        public Blackboard Context { get; }
-        public IEnumerable<IAiUtility> Actions { get; }
+        public Blackboard? Context { get; }
+        public IEnumerable<IAiUtility>? Actions { get; }
 
         public AiActionRequest(EntityUid uid, Blackboard context, IEnumerable<IAiUtility> actions)
         {

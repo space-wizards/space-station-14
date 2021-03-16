@@ -13,7 +13,7 @@ namespace Content.Server.AI.WorldState.States.Hands
         {
             var result = new List<string>();
 
-            if (!Owner.TryGetComponent(out HandsComponent handsComponent))
+            if (!Owner.TryGetComponent(out HandsComponent? handsComponent))
             {
                 return result;
             }
