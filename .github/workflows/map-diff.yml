@@ -15,6 +15,8 @@ jobs:
         uses: trilom/file-changes-action@v1.2.4
         with:
           fileOutput: 'yml'
+          persist-credentials: false
+          fetch-depth: 0
       - name: Set environment variables
         run: |
             echo "MAPS_ADDED=${{ steps.file_changes.outputs.files_added }}" >> $GITHUB_ENV
@@ -39,8 +41,13 @@ jobs:
         run: dotnet build --configuration Release --no-restore /m
       - name: Create map images
         run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-build
-      - name: Commit & Push
-        uses: actions-js/push@v1.2
+      - name: Commit files
+        run: |
+          git config --local user.email "github-actions@users.noreply.github.com"
+          git config --local user.name "github-actions"
+          git commit -am "Update map images"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
         with:
-          message: Update map images
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
