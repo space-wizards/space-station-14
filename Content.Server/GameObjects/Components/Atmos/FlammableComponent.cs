@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Temperature;
 using Content.Shared.Alert;
@@ -24,7 +26,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class FlammableComponent : SharedFlammableComponent, IStartCollide, IFireAct, IReagentReaction
+    public class FlammableComponent : SharedFlammableComponent, IStartCollide, IFireAct, IReagentReaction, IInteractUsing
     {
         private bool _resisting = false;
         private readonly List<EntityUid> _collided = new();
@@ -67,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void AdjustFireStacks(float relativeFireStacks)
         {
-            FireStacks = MathF.Max(MathF.Min(-10f, FireStacks + relativeFireStacks), 20f);
+            FireStacks = MathF.Min(MathF.Max(-10f, FireStacks + relativeFireStacks), 20f);
             if (OnFire && FireStacks <= 0)
                 Extinguish();
 
@@ -199,7 +201,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             Owner.SpawnTimer(2000, () =>
             {
                 _resisting = false;
-                FireStacks -= 2f;
+                FireStacks -= 3f;
                 UpdateAppearance();
             });
         }
@@ -223,6 +225,20 @@ namespace Content.Server.GameObjects.Components.Atmos
                 default:
                     return ReagentUnit.Zero;
             }
+        }
+
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            foreach (var hotItem in eventArgs.Using.GetAllComponents<IHotItem>())
+            {
+                if (hotItem.IsCurrentlyHot())
+                {
+                    Ignite();
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -118,10 +118,10 @@
   - type: Physics
     bodyType: KinematicController
     mass: 70
-    fixtures:
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
     - shape:
         !type:PhysShapeCircle
-          radius: 0.35
+        radius: 0.35
       restitution: 0.0
       mask:
       - Impassable

@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Add
+    message: Passing by someone who is on fire will now set you on fire as well.
