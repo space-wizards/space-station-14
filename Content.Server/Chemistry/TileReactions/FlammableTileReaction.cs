@@ -18,7 +18,7 @@ namespace Content.Server.Chemistry.TileReactions
         {
             if (reactVolume <= ReagentUnit.Zero || tile.Tile.IsEmpty) return ReagentUnit.Zero;
             var tileAtmos = tile.GridIndices.GetTileAtmosphere(tile.GridIndex);
-            if (tileAtmos == null || !tileAtmos.Hotspot.Valid) return ReagentUnit.Zero;
+            if (tileAtmos?.Air == null || !tileAtmos.Hotspot.Valid) return ReagentUnit.Zero;
             tileAtmos.Air.Temperature *= MathF.Max(_temperatureMultiplier * reactVolume.Float(), 1f);
             tileAtmos.Air.React(tileAtmos);
             return reactVolume;

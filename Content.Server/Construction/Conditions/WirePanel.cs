@@ -17,14 +17,14 @@ namespace Content.Server.Construction.Conditions
 
         public async Task<bool> Condition(IEntity entity)
         {
-            if (!entity.TryGetComponent(out WiresComponent wires)) return false;
+            if (!entity.TryGetComponent(out WiresComponent? wires)) return false;
 
             return wires.IsPanelOpen == Open;
         }
 
         public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
         {
-            if (!entity.TryGetComponent(out WiresComponent wires)) return false;
+            if (!entity.TryGetComponent(out WiresComponent? wires)) return false;
 
             switch (Open)
             {

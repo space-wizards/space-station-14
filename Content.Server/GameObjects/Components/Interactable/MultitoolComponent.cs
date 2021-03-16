@@ -44,9 +44,9 @@ namespace Content.Server.GameObjects.Components.Interactable
         [DataField("tools")] private List<ToolEntry> _tools = new();
         private int _currentTool = 0;
 
-        private AudioSystem _audioSystem;
-        private ToolComponent _tool;
-        private SpriteComponent _sprite;
+        private AudioSystem _audioSystem = default!;
+        private ToolComponent? _tool;
+        private SpriteComponent? _sprite;
 
         public override void Initialize()
         {
@@ -99,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new MultiToolComponentState(_tool.Qualities);
+            return new MultiToolComponentState(_tool?.Qualities ?? ToolQuality.None);
         }
     }
 }

@@ -11,18 +11,14 @@ using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Recycling;
 using Content.Shared.Interfaces;
-using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -156,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Recycling
             if (mind != null)
             {
                 IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, false);
-                mind.OwnedEntity.PopupMessage(Loc.GetString("You recycle yourself!"));
+                mind.OwnedEntity?.PopupMessage(Loc.GetString("You recycle yourself!"));
             }
 
             victim.PopupMessageOtherClients(Loc.GetString("{0:theName} tries to recycle {0:themself}!", victim));

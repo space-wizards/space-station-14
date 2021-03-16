@@ -21,6 +21,7 @@ namespace Content.Client.UserInterface
             private readonly Label MasterVolumeLabel;
             private readonly Slider MasterVolumeSlider;
             private readonly CheckBox AmbienceCheckBox;
+            private readonly CheckBox LobbyMusicCheckBox;
             private readonly Button ResetButton;
 
             public AudioControl(IConfigurationManager cfg, IClydeAudio clydeAudio)
@@ -70,6 +71,10 @@ namespace Content.Client.UserInterface
                 contents.AddChild(AmbienceCheckBox);
                 AmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.AmbienceBasicEnabled);
 
+                LobbyMusicCheckBox = new CheckBox {Text = Loc.GetString("ui-options-lobby-music")};
+                contents.AddChild(LobbyMusicCheckBox);
+                LobbyMusicCheckBox.Pressed = _cfg.GetCVar(CCVars.LobbyMusicEnabled);
+
                 ApplyButton = new Button
                 {
                     Text = Loc.GetString("ui-options-apply"), TextAlign = Label.AlignMode.Center,
@@ -118,6 +123,7 @@ namespace Content.Client.UserInterface
                 ResetButton.OnPressed += OnResetButtonPressed;
                 MasterVolumeSlider.OnValueChanged += OnMasterVolumeSliderChanged;
                 AmbienceCheckBox.OnToggled += OnAmbienceCheckToggled;
+                LobbyMusicCheckBox.OnToggled += OnLobbyMusicCheckToggled;
 
                 AddChild(vBox);
 
@@ -146,10 +152,16 @@ namespace Content.Client.UserInterface
                 UpdateChanges();
             }
 
+            private void OnLobbyMusicCheckToggled(BaseButton.ButtonEventArgs args)
+            {
+                UpdateChanges();
+            }
+
             private void OnApplyButtonPressed(BaseButton.ButtonEventArgs args)
             {
                 _cfg.SetCVar(CVars.AudioMasterVolume, MasterVolumeSlider.Value / 100);
                 _cfg.SetCVar(CCVars.AmbienceBasicEnabled, AmbienceCheckBox.Pressed);
+                _cfg.SetCVar(CCVars.LobbyMusicEnabled, LobbyMusicCheckBox.Pressed);
                 _cfg.SaveToFile();
                 UpdateChanges();
             }
@@ -165,6 +177,7 @@ namespace Content.Client.UserInterface
                 MasterVolumeLabel.Text =
                     Loc.GetString("ui-options-volume-percent", ("volume", MasterVolumeSlider.Value / 100));
                 AmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.AmbienceBasicEnabled);
+                LobbyMusicCheckBox.Pressed = _cfg.GetCVar(CCVars.LobbyMusicEnabled);
                 UpdateChanges();
             }
 
@@ -173,7 +186,8 @@ namespace Content.Client.UserInterface
                 var isMasterVolumeSame =
                     System.Math.Abs(MasterVolumeSlider.Value - _cfg.GetCVar(CVars.AudioMasterVolume) * 100) < 0.01f;
                 var isAmbienceSame = AmbienceCheckBox.Pressed == _cfg.GetCVar(CCVars.AmbienceBasicEnabled);
-                var isEverythingSame = isMasterVolumeSame && isAmbienceSame;
+                var isLobbySame = LobbyMusicCheckBox.Pressed == _cfg.GetCVar(CCVars.LobbyMusicEnabled);
+                var isEverythingSame = isMasterVolumeSame && isAmbienceSame && isLobbySame;
                 ApplyButton.Disabled = isEverythingSame;
                 ResetButton.Disabled = isEverythingSame;
             }

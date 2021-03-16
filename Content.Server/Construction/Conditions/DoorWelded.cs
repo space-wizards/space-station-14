@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using static Content.Shared.GameObjects.Components.Doors.SharedDoorComponent;
 
 namespace Content.Server.Construction.Conditions
 {
@@ -17,15 +18,15 @@ namespace Content.Server.Construction.Conditions
 
         public async Task<bool> Condition(IEntity entity)
         {
-            if (!entity.TryGetComponent(out ServerDoorComponent doorComponent)) return false;
+            if (!entity.TryGetComponent(out ServerDoorComponent? doorComponent)) return false;
             return doorComponent.IsWeldedShut == Welded;
         }
 
         public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
         {
-            if (!entity.TryGetComponent(out ServerDoorComponent doorComponent)) return false;
+            if (!entity.TryGetComponent(out ServerDoorComponent? doorComponent)) return false;
 
-            if (doorComponent.State == ServerDoorComponent.DoorState.Closed && Welded)
+            if (doorComponent.State == DoorState.Closed && Welded)
             {
                 message.AddMarkup(Loc.GetString("First, weld the door.\n"));
                 return true;

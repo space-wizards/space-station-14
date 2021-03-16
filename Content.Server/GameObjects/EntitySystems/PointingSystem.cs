@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.EntitySystems
                         ? viewerPointedAtMessage
                         : viewerMessage;
 
-                source.PopupMessage(viewer.AttachedEntity, message);
+                source.PopupMessage(viewerEntity, message);
             }
         }
 

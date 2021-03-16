@@ -10,9 +10,6 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Physics;
-using Content.Shared.Utility;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -21,8 +18,8 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Player;
 using Robust.Shared.Physics.Broadphase;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -59,8 +56,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         // _lastFire is when we actually fired (so if we hold the button then recoil doesn't build up if we're not firing)
         private TimeSpan _lastFire;
 
-        public abstract IEntity PeekAmmo();
-        public abstract IEntity TakeProjectile(EntityCoordinates spawnAt);
+        public abstract IEntity? PeekAmmo();
+        public abstract IEntity? TakeProjectile(EntityCoordinates spawnAt);
 
         // Recoil / spray control
         [DataField("minAngle")]
@@ -100,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         // Sounds
         [field: DataField("soundGunshot")]
-        public string SoundGunshot { get; set; }
+        public string? SoundGunshot { get; set; }
 
         [field: DataField("soundEmpty")]
         public string SoundEmpty { get; } = "/Audio/Weapons/Guns/Empty/empty.ogg";
@@ -149,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void OnRemove()
         {
             base.OnRemove();
-            if (Owner.TryGetComponent(out ServerRangedWeaponComponent rangedWeaponComponent))
+            if (Owner.TryGetComponent(out ServerRangedWeaponComponent? rangedWeaponComponent))
             {
                 rangedWeaponComponent.Barrel = null;
                 rangedWeaponComponent.FireHandler -= Fire;
@@ -218,21 +215,21 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var direction = (targetPos - shooter.Transform.WorldPosition).ToAngle();
             var angle = GetRecoilAngle(direction);
             // This should really be client-side but for now we'll just leave it here
-            if (shooter.TryGetComponent(out CameraRecoilComponent recoilComponent))
+            if (shooter.TryGetComponent(out CameraRecoilComponent? recoilComponent))
             {
                 recoilComponent.Kick(-angle.ToVec() * 0.15f);
             }
 
 
             // This section probably needs tweaking so there can be caseless hitscan etc.
-            if (projectile.TryGetComponent(out HitscanComponent hitscan))
+            if (projectile.TryGetComponent(out HitscanComponent? hitscan))
             {
                 FireHitscan(shooter, hitscan, angle);
             }
-            else if (projectile.HasComponent<ProjectileComponent>())
+            else if (projectile.HasComponent<ProjectileComponent>() &&
+                     ammo != null &&
+                     ammo.TryGetComponent(out AmmoComponent? ammoComponent))
             {
-                var ammoComponent = ammo.GetComponent<AmmoComponent>();
-
                 FireProjectiles(shooter, projectile, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity, ammo);
 
                 if (CanMuzzleFlash)
@@ -251,10 +248,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 throw new InvalidOperationException();
             }
 
-            SoundSystem.Play(Filter.Broadcast(), SoundGunshot, Owner.Transform.Coordinates);
-            _lastFire = _gameTiming.CurTime;
+            if (!string.IsNullOrEmpty(SoundGunshot))
+            {
+                SoundSystem.Play(Filter.Broadcast(), SoundGunshot, Owner.Transform.Coordinates);
+            }
 
-            return;
+            _lastFire = _gameTiming.CurTime;
         }
 
         /// <summary>
@@ -269,19 +268,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public static void EjectCasing(
             IEntity entity,
             bool playSound = true,
-            IRobustRandom robustRandom = null,
-            IPrototypeManager prototypeManager = null,
-            Direction[] ejectDirections = null)
+            IRobustRandom? robustRandom = null,
+            IPrototypeManager? prototypeManager = null,
+            Direction[]? ejectDirections = null)
         {
-            if (robustRandom == null)
-            {
-                robustRandom = IoCManager.Resolve<IRobustRandom>();
-            }
-
-            if (ejectDirections == null)
-            {
-                ejectDirections = new[] {Direction.East, Direction.North, Direction.NorthWest, Direction.South, Direction.SouthEast, Direction.West};
-            }
+            robustRandom ??= IoCManager.Resolve<IRobustRandom>();
+            ejectDirections ??= new[]
+                {Direction.East, Direction.North, Direction.NorthWest, Direction.South, Direction.SouthEast, Direction.West};
 
             const float ejectOffset = 1.8f;
             var ammo = entity.GetComponent<AmmoComponent>();
@@ -294,10 +287,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 return;
             }
 
-            if (prototypeManager == null)
-            {
-                prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            }
+            prototypeManager ??= IoCManager.Resolve<IPrototypeManager>();
 
             var soundCollection = prototypeManager.Index<SoundCollectionPrototype>(ammo.SoundCollectionEject);
             var randomFile = robustRandom.Pick(soundCollection.PickFiles);
@@ -334,7 +324,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// </summary>
         private void FireProjectiles(IEntity shooter, IEntity baseProjectile, int count, float evenSpreadAngle, Angle angle, float velocity, IEntity ammo)
         {
-            List<Angle> sprayAngleChange = null;
+            List<Angle>? sprayAngleChange = null;
             if (count > 1)
             {
                 evenSpreadAngle *= SpreadRatio;
@@ -353,7 +343,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 else
                 {
                     projectile =
-                        Owner.EntityManager.SpawnEntity(baseProjectile.Prototype.ID, baseProjectile.Transform.Coordinates);
+                        Owner.EntityManager.SpawnEntity(baseProjectile.Prototype?.ID, baseProjectile.Transform.Coordinates);
                 }
                 firedProjectiles.Add(projectile);
 
@@ -414,7 +404,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var distance = result.Distance;
                 hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
 
-                if (!result.HitEntity.TryGetComponent(out IDamageableComponent damageable))
+                if (!result.HitEntity.TryGetComponent(out IDamageableComponent? damageable))
                     return;
 
                 damageable.ChangeDamage(hitscan.DamageType, (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero), false, Owner);

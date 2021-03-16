@@ -13,11 +13,11 @@ namespace Content.Shared.GameObjects.Components.Medical
         [Serializable, NetSerializable]
         public class CloningPodBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly Dictionary<int, string> MindIdName;
+            public readonly Dictionary<int, string?> MindIdName;
             public readonly float Progress;
             public readonly bool MindPresent;
 
-            public CloningPodBoundUserInterfaceState(Dictionary<int, string> mindIdName, float progress, bool mindPresent)
+            public CloningPodBoundUserInterfaceState(Dictionary<int, string?> mindIdName, float progress, bool mindPresent)
             {
                 MindIdName = mindIdName;
                 Progress = progress;

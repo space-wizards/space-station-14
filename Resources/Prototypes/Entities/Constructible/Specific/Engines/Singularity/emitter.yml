@@ -1,6 +1,4 @@
 ﻿- type: entity
-  name: emitter
-  description: "A machine that fires bolts of energy, used for powering containment fields at a safe distance."
   id: Emitter
   placement:
     mode: SnapgridCenter
@@ -8,12 +6,12 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 25
-    bodyType: Dynamic
+    mass: 100
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+          bounds: "-0.25, -0.25, 0.25, 0.25"
       layer:
       - Impassable
       - MobImpassable
@@ -43,6 +41,23 @@
     nodes:
     - !type:AdjacentNode
       nodeGroupID: MVPower
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel1:
+              min: 5
+              max: 5
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Anchorable
     snap: true
   - type: Pullable
@@ -53,23 +68,3 @@
   - type: AccessReader
     access: [[ "Engineering" ]]
 
-- type: entity
-  name: Emitter Bolt
-  description: "A bolt of energy."
-  id: EmitterBolt
-  parent: BulletBase
-  components:
-  - type: Sprite
-    sprite: Constructible/Power/Singularity/emitter.rsi
-    state: ''
-    layers:
-    - state: projectile
-      shader: unshaded
-  - type: Icon
-    sprite: Constructible/Power/Singularity/emitter.rsi
-    state: projectile
-  - type: EmitterBoltComponent
-  - type: Projectile
-    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
-    damages:
-      Heat: 20

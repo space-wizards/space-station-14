@@ -49,17 +49,17 @@ namespace Content.Server.GameObjects.Components.Culinary
             {
                 return false;
             }
-            if (!Owner.TryGetComponent(out SolutionContainerComponent solution))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 return false;
             }
-            if (!eventArgs.Using.TryGetComponent(out UtensilComponent utensil) || !utensil.HasType(UtensilType.Knife))
+            if (!eventArgs.Using.TryGetComponent(out UtensilComponent? utensil) || !utensil.HasType(UtensilType.Knife))
             {
                 return false;
             }
 
             var itemToSpawn = Owner.EntityManager.SpawnEntity(_slice, Owner.Transform.Coordinates);
-            if (eventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+            if (eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
             {
                 if (ContainerHelpers.IsInContainer(Owner))
                 {

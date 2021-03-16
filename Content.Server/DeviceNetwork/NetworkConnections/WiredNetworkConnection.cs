@@ -1,7 +1,8 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
@@ -62,21 +63,23 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             return payload;
         }
 
-        private bool TryGetWireNet(PowerReceiverComponent powerReceiver, out INodeGroup net)
+        private bool TryGetWireNet(PowerReceiverComponent powerReceiver, [NotNullWhen(true)] out INodeGroup? net)
         {
-            if (powerReceiver.Provider is PowerProviderComponent && powerReceiver.Provider.ProviderOwner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
+            if (powerReceiver.Provider is PowerProviderComponent provider &&
+                provider.ProviderOwner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
             {
                 var nodes = nodeContainer.Nodes;
-                for (var index = 0; index < nodes.Count; index++)
+
+                foreach (var node in nodes)
                 {
-                    if (nodes[index].NodeGroupID == NodeGroupID.WireNet)
+                    if (node.NodeGroupID == NodeGroupID.WireNet)
                     {
-                        net = nodes[index].NodeGroup;
+                        net = node.NodeGroup;
                         return true;
                     }
                 }
-
             }
+
             net = default;
             return false;
         }

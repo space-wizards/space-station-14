@@ -5,8 +5,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.StationEvents
 {
@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
             }
         }
 
-        [DataField("sound")] public string Sound { get; set; } = "/Audio/Weapons/Guns/Gunshots/laser3.ogg";
+        [DataField("sound")] public string? Sound { get; set; } = "/Audio/Weapons/Guns/Gunshots/laser3.ogg";
 
         [DataField("range")]
         public override float Range

@@ -19,8 +19,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -46,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Medical
         private CloningPodStatus _status;
         private float _cloningProgress = 0;
         [DataField("cloningTime")]
-        private float _cloningTime = 10f;
+        private float _cloningTime = 120f;
 
         public override void Initialize()
         {
@@ -79,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
             if (_cloningProgress >= _cloningTime &&
                 _bodyContainer.ContainedEntity != null &&
-                _capturedMind?.Session.AttachedEntity == _bodyContainer.ContainedEntity &&
+                _capturedMind?.Session?.AttachedEntity == _bodyContainer.ContainedEntity &&
                 Powered)
             {
                 _bodyContainer.Remove(_bodyContainer.ContainedEntity);
@@ -157,6 +155,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     }
 
                     var dead =
+                        mind.OwnedEntity != null &&
                         mind.OwnedEntity.TryGetComponent<IMobStateComponent>(out var state) &&
                         state.IsDead();
                     if (!dead) return;

@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Research
         /// </summary>
         public void Sync()
         {
-            if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)) return;
+            if (!Owner.TryGetComponent(out TechnologyDatabaseComponent? database)) return;
 
             foreach (var technology in database.Technologies)
             {

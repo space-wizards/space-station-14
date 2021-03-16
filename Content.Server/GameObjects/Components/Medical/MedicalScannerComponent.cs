@@ -272,7 +272,7 @@ namespace Content.Server.GameObjects.Components.Medical
                         //TODO: Show a 'ERROR: Body is completely devoid of soul' if no Mind owns the entity.
                         var cloningSystem = EntitySystem.Get<CloningSystem>();
 
-                        if (!_bodyContainer.ContainedEntity.TryGetComponent(out MindComponent? mind) || !mind.HasMind)
+                        if (!_bodyContainer.ContainedEntity.TryGetComponent(out MindComponent? mind) || mind.Mind == null)
                             break;
 
                         cloningSystem.AddToDnaScans(mind.Mind);

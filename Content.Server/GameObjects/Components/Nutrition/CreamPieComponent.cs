@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             PlaySound();
 
-            if (Owner.TryGetComponent(out SolutionContainerComponent solution))
+            if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 solution.Solution.SpillAt(Owner, "PuddleSmear", false);
             }

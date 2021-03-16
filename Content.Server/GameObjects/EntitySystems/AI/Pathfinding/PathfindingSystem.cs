@@ -237,7 +237,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             }
         }
 
-        private void QueueGridChange(object sender, GridChangedEventArgs eventArgs)
+        private void QueueGridChange(object? sender, GridChangedEventArgs eventArgs)
         {
             foreach (var (position, _) in eventArgs.Modified)
             {
@@ -245,7 +245,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             }
         }
 
-        private void QueueTileChange(object sender, TileChangedEventArgs eventArgs)
+        private void QueueTileChange(object? sender, TileChangedEventArgs eventArgs)
         {
             _tileUpdateQueue.Enqueue(eventArgs.NewTile);
         }
@@ -264,7 +264,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             if (entity.Deleted ||
                 _lastKnownPositions.ContainsKey(entity) ||
-                !entity.TryGetComponent(out IPhysBody physics) ||
+                !entity.TryGetComponent(out IPhysBody? physics) ||
                 !PathfindingNode.IsRelevant(entity, physics))
             {
                 return;
@@ -303,7 +303,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             // If we've moved to space or the likes then remove us.
             if (moveEvent.Sender.Deleted ||
-                !moveEvent.Sender.TryGetComponent(out IPhysBody physics) ||
+                !moveEvent.Sender.TryGetComponent(out IPhysBody? physics) ||
                 !PathfindingNode.IsRelevant(moveEvent.Sender, physics) ||
                 moveEvent.NewPosition.GetGridId(EntityManager) == GridId.Invalid)
             {
@@ -368,7 +368,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
         public bool CanTraverse(IEntity entity, PathfindingNode node)
         {
-            if (entity.TryGetComponent(out IPhysBody physics) &&
+            if (entity.TryGetComponent(out IPhysBody? physics) &&
                 (physics.CollisionMask & node.BlockedCollisionMask) != 0)
             {
                 return false;
