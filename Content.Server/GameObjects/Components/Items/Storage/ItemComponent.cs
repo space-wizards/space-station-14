@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (!CanPickup(eventArgs.User)) return false;
 
             var hands = eventArgs.User.GetComponent<IHandsComponent>();
-            hands.TryPutItemInHand(this, hands.ActiveHandName, false);
+            hands.TryPutItemInHand(this, hands.ActiveHand, false);
             return true;
         }
 

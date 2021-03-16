@@ -24,7 +24,7 @@ namespace Content.Server.AI.Operators.Inventory
             {
                 if (handsComponent.GetItem(hand)?.Owner == _entity)
                 {
-                    handsComponent.ActiveHandName = hand;
+                    handsComponent.ActiveHand = hand;
                     return Outcome.Success;
                 }
             }

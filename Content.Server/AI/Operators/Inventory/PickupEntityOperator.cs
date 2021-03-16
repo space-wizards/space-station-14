@@ -42,9 +42,9 @@ namespace Content.Server.AI.Operators.Inventory
             {
                 if (handsComponent.GetItem(hand) == null)
                 {
-                    if (handsComponent.ActiveHandName != hand)
+                    if (handsComponent.ActiveHand != hand)
                     {
-                        handsComponent.ActiveHandName = hand;
+                        handsComponent.ActiveHand = hand;
                     }
 
                     emptyHands = true;

@@ -152,12 +152,12 @@ namespace Content.Server.GameObjects.Components.Access
                 return;
             }
 
-            if (hands.ActiveHandName == null)
+            if (hands.ActiveHand == null)
             {
                 return;
             }
 
-            if (!hands.Drop(hands.ActiveHandName, container))
+            if (!hands.Drop(hands.ActiveHand, container))
             {
                 Owner.PopupMessage(user, Loc.GetString("You can't let go of the ID card!"));
                 return;

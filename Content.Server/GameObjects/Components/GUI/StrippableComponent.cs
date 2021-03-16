@@ -163,7 +163,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     return false;
                 }
 
-                if (!userHands.CanDrop(userHands.ActiveHandName!))
+                if (!userHands.CanDrop(userHands.ActiveHand!))
                 {
                     user.PopupMessageCursor(Loc.GetString("You can't drop that!"));
                     return false;
@@ -228,7 +228,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     return false;
                 }
 
-                if (!userHands.CanDrop(userHands.ActiveHandName!))
+                if (!userHands.CanDrop(userHands.ActiveHand!))
                 {
                     user.PopupMessageCursor(Loc.GetString("You can't drop that!"));
                     return false;

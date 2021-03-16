@@ -27,7 +27,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         ///     The hand name of the currently active hand.
         /// </summary>
-        string? ActiveHandName { get; set; }
+        string? ActiveHand { get; set; }
 
         /// <summary>
         ///     Enumerates over every held item.

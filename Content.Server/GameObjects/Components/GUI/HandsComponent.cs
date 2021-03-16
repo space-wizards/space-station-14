@@ -275,12 +275,12 @@ namespace Content.Server.GameObjects.Components.GUI
         /// </summary>
         public IEnumerable<string> ActivePriorityEnumerable()
         {
-            if (ActiveHandName != null)
-                yield return ActiveHandName;
+            if (ActiveHand != null)
+                yield return ActiveHand;
 
             foreach (var hand in _hands)
             {
-                if (hand.Name == ActiveHandName || !hand.Enabled)
+                if (hand.Name == ActiveHand || !hand.Enabled)
                     continue;
 
                 yield return hand.Name;
@@ -442,7 +442,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public void SwapHands()
         {
-            if (ActiveHandName == null)
+            if (ActiveHand == null)
             {
                 return;
             }
@@ -457,7 +457,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 index = 0;
             }
 
-            ActiveHandName = _hands[index].Name;
+            ActiveHand = _hands[index].Name;
         }
 
         public void ActivateItem()
@@ -473,7 +473,7 @@ namespace Content.Server.GameObjects.Components.GUI
         private void TrySetActiveHand(string handName)
         {
             if (HasHand(handName))
-                ActiveHandName = handName;
+                ActiveHand = handName;
         }
 
         private async void ClientAttackByInHand(string handName, IEntity? used)
@@ -542,14 +542,16 @@ namespace Content.Server.GameObjects.Components.GUI
             return (item = GetItem(handName)) != null;
         }
 
+        public string? ActiveHand { get => ActiveHandName; set => ActiveHandName = value; }
+
         public ItemComponent? GetActiveHand
         {
             get
             {
-                if (ActiveHandName == null)
+                if (ActiveHand == null)
                     return null;
 
-                return GetItem(ActiveHandName);
+                return GetItem(ActiveHand);
             }
         }
 
@@ -696,7 +698,7 @@ namespace Content.Server.GameObjects.Components.GUI
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/thudswoosh.ogg", source,
                 AudioHelpers.WithVariation(0.025f));
 
-            if (ActiveHandName != null && Drop(ActiveHandName, false))
+            if (ActiveHand != null && Drop(ActiveHand, false))
             {
                 source.PopupMessageOtherClients(Loc.GetString("{0} disarms {1}!", source.Name, eventArgs.Target.Name));
                 source.PopupMessageCursor(Loc.GetString("You disarm {0}!", eventArgs.Target.Name));

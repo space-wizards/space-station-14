@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             // (or if there is no item there we need to keep it free).
             if (eventArgs.NeedHand && eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
             {
-                _activeHand = handsComponent.ActiveHandName;
+                _activeHand = handsComponent.ActiveHand;
                 _activeItem = handsComponent.GetActiveHand;
             }
 
@@ -153,7 +153,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
                 }
                 else
                 {
-                    var currentActiveHand = handsComponent.ActiveHandName;
+                    var currentActiveHand = handsComponent.ActiveHand;
                     if (_activeHand != currentActiveHand)
                     {
                         return true;

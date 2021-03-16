@@ -42,7 +42,7 @@ namespace Content.Server.AI.Operators.Nutrition
             foreach (var slot in handsComponent.ActivePriorityEnumerable())
             {
                 if (handsComponent.GetItem(slot) != itemComponent) continue;
-                handsComponent.ActiveHandName = slot;
+                handsComponent.ActiveHand = slot;
                 if (!_target.TryGetComponent(out drinkComponent))
                 {
                     return Outcome.Failed;
