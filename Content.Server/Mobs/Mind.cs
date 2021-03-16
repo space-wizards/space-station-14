@@ -304,6 +304,8 @@ namespace Content.Server.Mobs
             {
                 oldVisitingEnt.RemoveComponent<VisitingMindComponent>();
             }
+
+            oldVisitingEnt.SendMessage(null, new MindUnvisitedMessage());
         }
     }
 }

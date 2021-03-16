@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Markers;
@@ -48,6 +48,26 @@ namespace Content.Server.GameObjects.Components.Observer
             _timeOfDeath = _gameTimer.RealTime;
         }
 
+        public override void OnAdd()
+        {
+            base.OnAdd();
+
+            if (Owner.TryGetComponent<MindComponent>(out var mind))
+            {
+                mind.GhostOnShutdown = false;
+            }
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            if (Owner.TryGetComponent<MindComponent>(out var mind))
+            {
+                mind.GhostOnShutdown = true;
+            }
+        }
+
         public override ComponentState GetComponentState(ICommonSession player) => new GhostComponentState(CanReturnToBody);
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -62,6 +82,10 @@ namespace Content.Server.GameObjects.Components.Observer
                     break;
                 case PlayerDetachedMsg msg:
                     msg.OldPlayer.VisibilityMask &= ~(int) VisibilityFlags.Ghost;
+                    break;
+                case MindRemovedMessage _:
+                case MindUnvisitedMessage _:
+                    Owner.Delete();
                     break;
             }
         }
@@ -84,7 +108,6 @@ namespace Content.Server.GameObjects.Components.Observer
                     {
                         var o = actor.playerSession.ContentData()!.Mind;
                         o?.UnVisit();
-                        Owner.Delete();
                     }
                     break;
                 }

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
@@ -61,6 +61,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// </summary>
         public void InternalEjectMind()
         {
+            SendMessage(new MindRemovedMessage());
             Mind = null;
         }
 
@@ -72,6 +73,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         public void InternalAssignMind(Mind value)
         {
             Mind = value;
+            SendMessage(new MindAddedMessage());
         }
 
         protected override void Shutdown()
@@ -152,5 +154,13 @@ namespace Content.Server.GameObjects.Components.Mobs
                 message.AddMarkup(text);
             }
         }
+    }
+
+    public class MindRemovedMessage : ComponentMessage
+    {
+    }
+
+    public class MindAddedMessage : ComponentMessage
+    {
     }
 }
