@@ -8,8 +8,7 @@ on:
 #    - 'Resources/Maps/**.yml'
 
 jobs:
-  build:
-    if: |
+  build: |
       github.event.issue.pull_request &&
       (github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER') &&
       github.event.comment.body == '!mapdiff'
@@ -27,8 +26,6 @@ jobs:
         run: |
             echo "MAPS_ADDED=${{ steps.file_changes.outputs.files_added }}" >> $GITHUB_ENV
             echo "MAPS_MODIFIED=${{ steps.file_changes.outputs.files_modified }}" >> $GITHUB_ENV
-            echo "REPOSITORY_OWNER=space-wizards" >> $GITHUB_ENV
-            echo "REPOSITORY_NAME=space-station-14" >> $GITHUB_ENV
             echo "PR_NUMBER=${{ github.event.issue.number }}" >> $GITHUB_ENV
       - name: Setup submodule
         run: |

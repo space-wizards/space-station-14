@@ -16,19 +16,17 @@ namespace Content.MapRenderer.GitHub
         private const string GitHubTokenEnvKey = "GITHUB_TOKEN";
 
         private readonly WebsiteViewer _viewer = new();
-        private readonly string _owner;
         private readonly string _repo;
         private readonly Lazy<HttpClient> _clientLazy = new(CreateClient);
 
-        public GitHubClient(string owner, string repo)
+        public GitHubClient(string repo)
         {
-            _owner = owner;
             _repo = repo;
         }
 
         private HttpClient Client => _clientLazy.Value;
 
-        private string RepoUrl => $"{ApiEndpoint}/{_owner}/{_repo}";
+        private string RepoUrl => $"{ApiEndpoint}/{_repo}";
 
         private static HttpClient CreateClient()
         {
