@@ -54,6 +54,8 @@ namespace Content.MapRenderer.GitHub
 
         public void Send(int issueNumber, string message)
         {
+            Console.WriteLine($"Sending message in PR #{issueNumber}");
+
             message = HttpUtility.JavaScriptStringEncode(message);
             var endpoint = $"{RepoUrl}/issues/{issueNumber}/comments";
 
