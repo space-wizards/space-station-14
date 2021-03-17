@@ -28,14 +28,13 @@ namespace Content.Server.Construction.Conditions
         {
             if (!entity.TryGetComponent(out AirlockComponent? airlock)) return false;
 
-            switch (Value)
+            if (airlock.BoltsDown != Value)
             {
-                case true when !airlock.BoltsDown:
+                if (Value == true)
                     message.AddMarkup(Loc.GetString("construction-condition-airlock-bolt", ("entityName", entity.Name)));
-                    return true;
-                case false when airlock.BoltsDown:
+                else
                     message.AddMarkup(Loc.GetString("construction-condition-airlock-unbolt", ("entityName", entity.Name)));
-                    return true;
+                return true;
             }
 
             return false;

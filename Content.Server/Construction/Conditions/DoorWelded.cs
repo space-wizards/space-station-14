@@ -28,14 +28,13 @@ namespace Content.Server.Construction.Conditions
         {
             if (!entity.TryGetComponent(out ServerDoorComponent? door)) return false;
 
-            switch (Welded)
+            if (door.IsWeldedShut != Welded)
             {
-                case true when !door.IsWeldedShut:
+                if (Welded == true)
                     message.AddMarkup(Loc.GetString("construction-condition-door-weld", ("entityName", entity.Name)));
-                    return true;
-                case false when door.IsWeldedShut:
+                else
                     message.AddMarkup(Loc.GetString("construction-condition-door-unweld", ("entityName", entity.Name)));
-                    return true;
+                return true;
             }
 
             return false;
