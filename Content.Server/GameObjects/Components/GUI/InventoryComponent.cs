@@ -514,19 +514,21 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 case ClientInventoryUpdate.Equip:
                 {
-                    var hands = Owner.GetComponent<HandsComponent>();
-                    var activeHand = hands.ActiveHand;
-                    var activeItem = hands.GetActiveHand;
-                    if (activeHand != null && activeItem != null && activeItem.Owner.TryGetComponent(out ItemComponent? clothing))
-                    {
-                        hands.Drop(activeHand, doDropInteraction: false);
-                        if (!Equip(msg.Inventoryslot, clothing, true, out var reason))
-                        {
-                            hands.PutInHand(clothing);
-                            Owner.PopupMessageCursor(reason);
-                        }
-                    }
+                    if (!Owner.TryGetComponent(out HandsComponent? hands))
+                        return;
 
+                    if (!hands.TryGetActiveHeldEntity(out var heldEntity))
+                        return;
+
+                    if (!heldEntity.TryGetComponent(out ItemComponent? item))
+                        return;
+
+                    if (!hands.TryDropActiveHeldItemForEquip())
+                        return;
+
+                    if (!Equip(msg.Inventoryslot, item, true, out _))
+                        hands.PutInHand(item);
+                        
                     break;
                 }
                 case ClientInventoryUpdate.Use:

@@ -119,20 +119,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (handsComp.ActiveHand == null || handsComp.GetActiveHand == null)
                 return false;
 
-            var entMap = ent.Transform.MapPosition;
-            var targetPos = coords.ToMapPos(EntityManager);
-            var dropVector = targetPos - entMap.Position;
-            var targetVector = Vector2.Zero;
-
-            if (dropVector != Vector2.Zero)
-            {
-                var targetLength = MathF.Min(dropVector.Length, SharedInteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
-                var newCoords = coords.WithPosition(dropVector.Normalized * targetLength + entMap.Position).ToMap(EntityManager);
-                var rayLength = Get<SharedInteractionSystem>().UnobstructedDistance(entMap, newCoords, ignoredEnt: ent);
-                targetVector = dropVector.Normalized * rayLength;
-            }
-
-            handsComp.DropFromHand(handsComp.ActiveHand, coords.WithPosition(entMap.Position + targetVector));
+            handsComp.Drop(handsComp.ActiveHand, coords);
 
             return true;
         }
@@ -239,6 +226,9 @@ namespace Content.Server.GameObjects.EntitySystems
                     SlotNames[equipmentSlot].ToLower()));
                 return;
             }
+
+            if (handsComp.ActiveHand == null)
+                return;
 
             var heldItem = handsComp.GetItem(handsComp.ActiveHand)?.Owner;
 

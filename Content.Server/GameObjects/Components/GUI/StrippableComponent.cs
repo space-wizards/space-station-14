@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.GameObjects.Components.ActionBlocking;
@@ -262,7 +262,7 @@ namespace Content.Server.GameObjects.Components.GUI
             var result = await doAfterSystem.DoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
-            userHands.Drop(hand, false);
+            userHands.Drop(hand);
             hands.TryPutItemInHand(item!, hand, false, false);
             UpdateSubscribed();
         }

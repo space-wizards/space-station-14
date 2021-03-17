@@ -157,7 +157,7 @@ namespace Content.Server.GameObjects.Components.Access
                 return;
             }
 
-            if (!hands.Drop(hands.ActiveHand, container))
+            if (!hands.TryPutHeldEntityIntoContainer(hands.ActiveHand, container))
             {
                 Owner.PopupMessage(user, Loc.GetString("You can't let go of the ID card!"));
                 return;

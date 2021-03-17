@@ -20,8 +20,7 @@ namespace Content.Server.AI.Operators.Inventory
         /// <returns></returns>
         public override Outcome Execute(float frameTime)
         {
-            if (!_owner.TryGetComponent(out HandsComponent? handsComponent) ||
-                !handsComponent.TryHand(_entity, out _))
+            if (!_owner.TryGetComponent(out HandsComponent? handsComponent))
             {
                 return Outcome.Failed;
             }
