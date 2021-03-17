@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Web;
 using Content.MapRenderer.Extensions;
 using Content.MapRenderer.Viewer;
 
@@ -34,6 +35,7 @@ namespace Content.MapRenderer.GitHub
             var client = new HttpClient();
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", EnvironmentExtensions.GetVariableOrThrow(GitHubTokenEnvKey));
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("Space Station 14 Map Diff");
 
             return client;
         }
@@ -52,21 +54,16 @@ namespace Content.MapRenderer.GitHub
             return message.ToString();
         }
 
-        public async void Send(int issueNumber, string message)
+        public void Send(int issueNumber, string message)
         {
+            message = HttpUtility.JavaScriptStringEncode(message);
             var endpoint = $"{RepoUrl}/issues/{issueNumber}/comments";
 
-            var values = new Dictionary<string, string>
-            {
-                ["accept"] = "application/vnd.github.v3+json",
-                ["owner"] = _owner,
-                ["repo"] = _repo,
-                ["issue_number"] = issueNumber.ToString(),
-                ["body"] = message
-            };
+            var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
+            request.Headers.Add("accept", "application/vnd.github.v3+json");
+            request.Content = new StringContent(@$"{{""body"":""{message}""}}");
 
-            var content = new FormUrlEncodedContent(values);
-            var response = await Client.PostAsync(endpoint, content);
+            var response = Client.SendAsync(request).Result;
 
             response.EnsureSuccessStatusCode();
         }
