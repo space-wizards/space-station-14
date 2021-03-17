@@ -52,6 +52,8 @@ namespace Content.MapRenderer.Imgur.Client
 
         public async Task<ImgurUploadResponse> Upload(Image image)
         {
+            Console.WriteLine($"Uploading image with height {image.Height} and width {image.Width} to imgur");
+
             byte[] data;
 
             await using (var stream = new MemoryStream())
