@@ -106,19 +106,32 @@ namespace Content.Client.GameObjects.Components.PDA
                             msg.PDAOwnerInfo.ActualOwnerName));
                     }
 
-                    if (msg.PDAOwnerInfo.JobTitle == null || msg.PDAOwnerInfo.IdOwner == null)
-                    {
-                        _menu.IDInfoLabel.SetMarkup(Loc.GetString("ID:"));
-                    }
-                    else
+                    if (msg.PDAOwnerInfo.JobTitle != null && msg.PDAOwnerInfo.IdOwner != null)
                     {
                         _menu.IDInfoLabel.SetMarkup(Loc.GetString(
                             "ID: [color=white]{0}[/color], [color=yellow]{1}[/color]",
                             msg.PDAOwnerInfo.IdOwner,
+                            msg.PDAOwnerInfo.JobTitle?? ""));
+                        
+                    }
+                    else if(msg.PDAOwnerInfo.IdOwner != null)
+                    {
+                        _menu.IDInfoLabel.SetMarkup(Loc.GetString(
+                            "ID: [color=white]{0}[/color]",
+                            msg.PDAOwnerInfo.IdOwner));
+                    }
+                    else if(msg.PDAOwnerInfo.JobTitle != null)
+                    {
+                        _menu.IDInfoLabel.SetMarkup(Loc.GetString(
+                            "ID: [color=yellow]{0}[/color]",
                             msg.PDAOwnerInfo.JobTitle));
                     }
+                    else
+                    {
+                        _menu.IDInfoLabel.SetMarkup(Loc.GetString("ID:"));
+                    }
 
-                    _menu.EjectIDButton.Visible = msg.PDAOwnerInfo.IdOwner != null;
+                    _menu.EjectIDButton.Visible = msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null;
                     _menu.EjectPenButton.Visible = msg.HasPen;
 
                     if (msg.Account != null)
