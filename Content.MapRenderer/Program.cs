@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Content.MapRenderer.Extensions;
+using Content.MapRenderer.GitHub;
 using Content.MapRenderer.Imgur.Client;
 using Content.MapRenderer.Imgur.Response;
 using Content.MapRenderer.Painters;
@@ -68,24 +69,25 @@ namespace Content.MapRenderer
             }
 
             var images = new List<ImgurUploadResponse>();
-            Console.WriteLine(Environment.GetEnvironmentVariable("PR_NUMBER"));
 
-            // foreach (var map in maps)
-            // {
-            //     await foreach (var grid in MapPainter.Paint(map))
-            //     {
-            //         // var image = await ImgurClient.Upload(grid);
-            //         // images.Add(image);
-            //
-            //         grid.Dispose();
-            //     }
-            // }
+            foreach (var map in maps)
+            {
+                await foreach (var grid in MapPainter.Paint(map))
+                {
+                    var image = await ImgurClient.Upload(grid);
+                    images.Add(image);
 
-            // var owner = EnvironmentExtensions.GetVariableOrThrow("REPOSITORY_OWNER");
-            // var repo = EnvironmentExtensions.GetVariableOrThrow("REPOSITORY_NAME");
-            // var writer = new GitHubClient(owner, repo);
-            // var message = writer.Write(new [] {"https://i.imgur.com/ZYBplkB.png"});
-            // writer.Send(1, message);
+                    grid.Dispose();
+                }
+            }
+
+            var owner = EnvironmentExtensions.GetVariableOrThrow("REPOSITORY_OWNER");
+            var repo = EnvironmentExtensions.GetVariableOrThrow("REPOSITORY_NAME");
+            var prNumber = int.Parse(EnvironmentExtensions.GetVariableOrThrow("PR_NUMBER"));
+            var writer = new GitHubClient(owner, repo);
+            var message = writer.Write(new [] {"https://i.imgur.com/ZYBplkB.png"});
+
+            writer.Send(prNumber, message);
         }
 
         private async void Save(Image image, string to)
