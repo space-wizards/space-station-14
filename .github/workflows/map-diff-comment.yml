@@ -1,7 +1,8 @@
 name: Map Diff Comment
 
 on:
-  push
+  issue_comment:
+    types: created
 #  push:
 #    paths:
 #    - 'Resources/Maps/**.yml'
