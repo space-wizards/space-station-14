@@ -9,11 +9,9 @@ on:
 
 jobs:
   build:
-    if: true # ${{ github.event.issue.pull_request && (github.event.issue.comment.author_association == 'OWNER' || github.event.issue.comment.author_association == 'MEMBER') && github.event.issue.comment == '!mapdiff' }}
+    if: ${{ github.event.issue.pull_request && (github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER') && github.event.issue.comment == '!mapdiff' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Dump context
-        uses: crazy-max/ghaction-dump-context@v1
       - uses: actions/checkout@v2
       - id: file_changes
         name: Check changed files
