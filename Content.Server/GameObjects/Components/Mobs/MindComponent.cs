@@ -60,7 +60,8 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// </summary>
         public void InternalEjectMind()
         {
-            _entityManager.EventBus.RaiseLocalEvent(Owner.Uid, new MindRemovedMessage());
+            if (!Deleted)
+                _entityManager.EventBus.RaiseLocalEvent(Owner.Uid, new MindRemovedMessage());
             Mind = null;
         }
 
