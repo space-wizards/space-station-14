@@ -575,3 +575,8 @@ Entries:
       a welding tool or anything similar., type: Add}
   id: 104
   time: '2021-03-16T11:56:42.243615+00:00'
+- author: Swept
+  changes:
+  - {message: Fixed wrong tables in cargo, type: Fix}
+  id: 105
+  time: '2021-03-17T03:42:28.0000000+00:00'
