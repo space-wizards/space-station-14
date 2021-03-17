@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Content.MapRenderer.Extensions;
 using Content.MapRenderer.GitHub;
 using Content.MapRenderer.Imgur.Client;
@@ -21,10 +22,10 @@ namespace Content.MapRenderer
 
         internal static void Main()
         {
-            new Program().Run();
+            new Program().Run().ConfigureAwait(false);
         }
 
-        private async void Run()
+        private async Task Run()
         {
             var created = Environment.GetEnvironmentVariable("MAPS_ADDED");
             var modified = Environment.GetEnvironmentVariable("MAPS_MODIFIED");
