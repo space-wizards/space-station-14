@@ -32,9 +32,9 @@ namespace Content.Server.Construction.Conditions
             if (door.IsWeldedShut != Welded)
             {
                 if (Welded == true)
-                    message.AddMarkup(Loc.GetString("construction-condition-door-weld", ("entityName", entity.Name)));
+                    message.AddMarkup(Loc.GetString("construction-condition-door-weld", ("entityName", entity.Name)) + "\n");
                 else
-                    message.AddMarkup(Loc.GetString("construction-condition-door-unweld", ("entityName", entity.Name)));
+                    message.AddMarkup(Loc.GetString("construction-condition-door-unweld", ("entityName", entity.Name)) + "\n");
                 return true;
             }
 
