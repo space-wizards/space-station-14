@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
-using Content.MapRenderer.Painters;
 using Content.Shared;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -15,9 +14,9 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
-namespace Content.MapRenderer
+namespace Content.MapRenderer.Painters
 {
-    public class Painter : ContentIntegrationTest
+    public class MapPainter : ContentIntegrationTest
     {
         public async IAsyncEnumerable<Image> Paint(string map)
         {
@@ -118,7 +117,9 @@ namespace Content.MapRenderer
             // We don't care if it fails as we have already saved the images.
             try
             {
-                await TearDown();
+#pragma warning disable 4014
+                TearDown();
+#pragma warning restore 4014
             }
             catch (InvalidOperationException)
             {

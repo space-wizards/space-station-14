@@ -2,9 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Reflection;
+using Content.MapRenderer.Extensions;
+using Content.MapRenderer.Imgur.Client;
+using Content.MapRenderer.Imgur.Response;
+using Content.MapRenderer.Painters;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
@@ -14,8 +15,8 @@ namespace Content.MapRenderer
 {
     internal class Program
     {
-        private static readonly HttpClient HttpClient = new();
-        private static readonly Painter Painter = new();
+        private static readonly MapPainter MapPainter = new();
+        private static readonly ImgurClient ImgurClient = new();
 
         internal static void Main()
         {
@@ -66,17 +67,25 @@ namespace Content.MapRenderer
                 maps.Add(fileName);
             }
 
-            var program = new Program();
+            var images = new List<ImgurUploadResponse>();
+            Console.WriteLine(Environment.GetEnvironmentVariable("github.event.number"));
 
-            foreach (var map in maps)
-            {
-                await foreach (var grid in Painter.Paint(map))
-                {
-                    program.Save(grid, map);
-                }
-            }
+            // foreach (var map in maps)
+            // {
+            //     await foreach (var grid in MapPainter.Paint(map))
+            //     {
+            //         // var image = await ImgurClient.Upload(grid);
+            //         // images.Add(image);
+            //
+            //         grid.Dispose();
+            //     }
+            // }
 
-            WriteComment();
+            // var owner = EnvironmentExtensions.GetVariableOrThrow("REPOSITORY_OWNER");
+            // var repo = EnvironmentExtensions.GetVariableOrThrow("REPOSITORY_NAME");
+            // var writer = new GitHubClient(owner, repo);
+            // var message = writer.Write(new [] {"https://i.imgur.com/ZYBplkB.png"});
+            // writer.Send(1, message);
         }
 
         private async void Save(Image image, string to)
@@ -85,61 +94,14 @@ namespace Content.MapRenderer
             stopwatch.Restart();
 
             var file = new ResourcePath($"MapImages/{to.Substring(5, to.Length - 9)}.png");
-            var directoryPath = $"{GetRepositoryRoot()}/Resources/{file.Directory}";
-            var directory = Directory.CreateDirectory(directoryPath);
-            var path = $"{directory}/{file.Filename}";
+            var mapImages = DirectoryExtensions.MapImages();
+            var path = $"{mapImages.FullName}/{file.Filename}";
 
             Console.WriteLine($"Saving {file.Filename} to {path}");
 
             await image.SaveAsync(path);
 
             Console.WriteLine($"Saved map image for {to} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
-        }
-
-        private void Upload(Image image)
-        {
-            var request = WebRequest.Create("https://api.imgur.com/3/upload");
-            request.Method = "POST";
-
-            byte[] data;
-
-            using (var stream = new MemoryStream())
-            {
-                image.SaveAsPng(stream);
-
-                data = stream.ToArray();
-            }
-
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-
-            var dataStream = request.GetRequestStream();
-            dataStream.Write(data, 0, data.Length);
-            dataStream.Close();
-
-            var response = request.GetResponse();
-
-            using (dataStream = response.GetResponseStream())
-            {
-                var reader = new StreamReader(dataStream);
-                string responseFromServer = reader.ReadToEnd();
-            }
-
-            response.Close();
-        }
-
-        private void WriteComment()
-        {
-
-        }
-
-        private DirectoryInfo GetRepositoryRoot()
-        {
-            // space-station-14/bin/Content.MapRenderer/Content.MapRenderer.dll
-            var currentLocation = Assembly.GetExecutingAssembly().Location;
-
-            // space-station-14/
-            return Directory.GetParent(currentLocation)!.Parent!.Parent!;
         }
     }
 }
