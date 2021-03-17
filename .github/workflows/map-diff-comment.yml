@@ -1,0 +1,48 @@
+name: Map Diff Comment
+
+on:
+  issue_comment:
+    types: [created]
+#  push:
+#    paths:
+#    - 'Resources/Maps/**.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: file_changes
+        name: Check changed files
+        uses: trilom/file-changes-action@v1.2.4
+        with:
+          fileOutput: 'yml'
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set environment variables
+        run: |
+            echo "MAPS_ADDED=${{ steps.file_changes.outputs.files_added }}" >> $GITHUB_ENV
+            echo "MAPS_MODIFIED=${{ steps.file_changes.outputs.files_modified }}" >> $GITHUB_ENV
+            echo "REPOSITORY_OWNER=space-wizards" >> $GITHUB_ENV
+            echo "REPOSITORY_NAME=space-station-14" >> $GITHUB_ENV
+            echo "PR_NUMBER=${{ github.event.number}}" >> $GITHUB_ENV
+      - name: Setup submodule
+        run: |
+          git submodule update --init --recursive
+          touch BuildChecker/DISABLE_SUBMODULE_AUTOUPDATE
+      - name: Pull engine updates
+        uses: space-wizards/submodule-dependency@v0.1.5
+      - name: Update Engine Submodules
+        run: |
+          cd RobustToolbox/
+          git submodule update --init --recursive
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.100
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors= /m
+      - name: Create map images
+        run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-build

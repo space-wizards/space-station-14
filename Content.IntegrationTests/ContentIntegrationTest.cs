@@ -92,7 +92,7 @@ namespace Content.IntegrationTests
             options.CVarOverrides[CCVars.HolidaysEnabled.Name] = "false";
 
             // Avoid loading a large map by default for integration tests.
-            options.CVarOverrides[CCVars.GameMap.Name] = "Maps/Test/empty.yml";
+            options.CVarOverrides.TryAdd(CCVars.GameMap.Name, "Maps/Test/empty.yml");
 
             return base.StartServer(options);
         }
