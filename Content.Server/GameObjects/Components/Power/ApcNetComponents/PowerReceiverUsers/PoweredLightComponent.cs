@@ -61,8 +61,9 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         [ViewVariables] [DataField("ignoreGhostsBoo")]
         private bool _ignoreGhostsBoo;
 
-        [DataField("bulb")]
-        private LightBulbType BulbType = LightBulbType.Tube;
+        [DataField("bulb")] private LightBulbType _bulbType = LightBulbType.Tube;
+        public LightBulbType BulbType => _bulbType;
+
         [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
 
         [ViewVariables]
@@ -143,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             if (LightBulb != null) return false;
             if (!bulb.TryGetComponent(out LightBulbComponent? lightBulb)) return false;
-            if (lightBulb.Type != BulbType) return false;
+            if (lightBulb.Type != _bulbType) return false;
 
             var inserted = _lightBulbContainer.Insert(bulb);
 
@@ -276,7 +277,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             if (_hasLampOnSpawn)
             {
-                var prototype = BulbType switch
+                var prototype = _bulbType switch
                 {
                     LightBulbType.Bulb => "LightBulb",
                     LightBulbType.Tube => "LightTube",

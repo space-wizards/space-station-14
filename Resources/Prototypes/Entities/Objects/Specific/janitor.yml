@@ -279,3 +279,9 @@
   - type: Item
     sprite: Objects/Specific/Janitorial/light_replacer.rsi
   - type: LightReplacer
+    contents:
+    - name: LightTube
+      amount: 2
+    - name: LightBulb
+      amount: 2
+  
