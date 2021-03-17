@@ -1,0 +1,15 @@
+- type: entity
+  name: machete
+  parent: BaseItem
+  id: Machete
+  description: A large blade that looks like it might be more useful in combat than in hydroponics.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/machete.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage: 25
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/machete.rsi
+    prefix: inhand
