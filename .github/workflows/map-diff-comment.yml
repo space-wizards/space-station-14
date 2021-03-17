@@ -8,11 +8,10 @@ on:
 #    - 'Resources/Maps/**.yml'
 
 jobs:
-  build:
-    if: ${{ github.event.issue.pull_request }} &&
-          (${{ github.event.issue.comment.author_association }} == 'OWNER' ||
-           ${{ github.event.issue.comment.author_association }} == 'MEMBER') &&
-        ${{ github.event.issue.comment }} == '!mapdiff'
+  build: |
+      github.event.issue.pull_request &&
+      (github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER') &&
+      github.event.comment.body == '!mapdiff'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
