@@ -68,7 +68,7 @@ namespace Content.MapRenderer
             }
 
             var images = new List<ImgurUploadResponse>();
-            Console.WriteLine(Environment.GetEnvironmentVariable("github.event.number"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("PR_NUMBER"));
 
             // foreach (var map in maps)
             // {
