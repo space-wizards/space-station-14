@@ -214,7 +214,28 @@ namespace Content.Server.GameObjects.Components.GUI
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
         }
 
-        private void DropHeldEntity(ServerHand hand, EntityCoordinates targetCoords, bool intentionalDrop)
+        private bool CanRemoveHeldEntityFromHand(ServerHand hand)
+        {
+            var heldEntity = hand.HeldEntity;
+
+            if (heldEntity == null)
+                return false;
+
+            if (!hand.Container.CanRemove(heldEntity))
+                return false;
+
+            return true;
+        }
+
+        private bool PlayerCanDrop()
+        {
+            if (!ActionBlockerSystem.CanDrop(Owner))
+                return false;
+
+            return true;
+        }
+
+        private void RemoveHeldEntityFromHand(ServerHand hand)
         {
             var heldEntity = hand.HeldEntity;
 
@@ -229,20 +250,34 @@ namespace Content.Server.GameObjects.Components.GUI
             if (heldEntity.TryGetComponent(out ItemComponent? item))
             {
                 item.RemovedFromSlot();
-                _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, item.Owner, hand.ToHandState());
+                _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, heldEntity, hand.ToHandState());
             }
             if (heldEntity.TryGetComponent(out SpriteComponent? sprite))
             {
                 sprite.RenderOrder = heldEntity.EntityManager.CurrentTick.Value;
             }
+        }
 
-            heldEntity.Transform.Coordinates = GetFinalDropCoordinates(targetCoords);
+        private void DropHeldEntity(ServerHand hand, EntityCoordinates targetDropLocation, bool intentionalDrop)
+        {
+            var heldEntity = hand.HeldEntity;
+
+            if (heldEntity == null)
+                return;
+
+            RemoveHeldEntityFromHand(hand);
+
             _entitySystemManager.GetEntitySystem<InteractionSystem>().DroppedInteraction(Owner, heldEntity, intentionalDrop);
+
+            heldEntity.Transform.Coordinates = GetFinalDropCoordinates(targetDropLocation);
 
             OnItemChanged?.Invoke();
             Dirty();
         }
 
+        /// <summary>
+        ///     Calculates the final location a dropped item will end up at, accounting for max drop range and collision along the targeted drop path.
+        /// </summary>
         private EntityCoordinates GetFinalDropCoordinates(EntityCoordinates targetCoords) //TODO: Clean up this method
         {
             var mapPos = Owner.Transform.MapPosition;
@@ -261,32 +296,60 @@ namespace Content.Server.GameObjects.Components.GUI
             return dropCoords;
         }
 
+        private bool TryDropHeldEntity(ServerHand hand, EntityCoordinates location, bool checkActionBlocker, bool intentionalDrop)
+        {
+            if (!CanRemoveHeldEntityFromHand(hand))
+                return false;
+
+            if (checkActionBlocker && !PlayerCanDrop())
+                return false;
+
+            DropHeldEntity(hand, location, intentionalDrop);
+            return true;
+        }
+
+        /// <summary>
+        ///     Drops the contents of a hand directly under the player.
+        /// </summary>
         private void DropHeldEntityToFloor(ServerHand hand, bool intentionalDrop)
         {
             DropHeldEntity(hand, Owner.Transform.Coordinates, intentionalDrop);
         }
 
-        private bool CanDropHeldEntity(ServerHand hand, bool checkActionBlocker)
+        private bool CanPutHeldEntityIntoContainer(ServerHand hand, IContainer targetContainer, bool checkActionBlocker)
         {
-            if (checkActionBlocker && !ActionBlockerSystem.CanDrop(Owner))
-                return false;
-
             var heldEntity = hand.HeldEntity;
 
-            if (heldEntity == null || !hand.Container.CanRemove(heldEntity))
+            if (heldEntity == null)
+                return false;
+
+            if (checkActionBlocker && !PlayerCanDrop())
+                return false;
+
+            if (!targetContainer.CanInsert(heldEntity))
                 return false;
 
             return true;
         }
 
-        private bool TryDropHeldEntity(ServerHand hand, EntityCoordinates location, bool checkActionBlocker, bool intentionalDrop)
+        private void PutHeldEntityIntoContainer(ServerHand hand, IContainer targetContainer)
         {
-            if (CanDropHeldEntity(hand, checkActionBlocker))
+            var heldEntity = hand.HeldEntity;
+
+            if (heldEntity == null)
+                return;
+
+            if (!hand.Container.Remove(heldEntity))
             {
-                DropHeldEntity(hand, location, intentionalDrop);
-                return true;
+                Logger.Error($"{nameof(HandsComponent)} on {Owner} could not remove {heldEntity} from {hand.Container}.");
+                return;
             }
-            return false;
+            if (!targetContainer.Insert(heldEntity))
+            {
+                Logger.Error($"{nameof(HandsComponent)} on {Owner} could not insert {heldEntity} into {targetContainer}.");
+                return;
+            }
+            Dirty();
         }
 
         #region Hiding Old Hand Methods
