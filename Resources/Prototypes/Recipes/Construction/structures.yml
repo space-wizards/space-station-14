@@ -213,3 +213,20 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked {}
+
+- type: construction
+  name: Airlock
+  id: airlock
+  graph: airlock
+  startNode: start
+  targetNode: airlock
+  category: Structures
+  description: It opens, it closes, and maybe crushes you.
+  icon:
+    sprite: Constructible/Structures/Doors/Standard/basic.rsi
+    state: assembly
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
