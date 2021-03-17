@@ -23,6 +23,7 @@ jobs:
             echo "MAPS_MODIFIED=${{ steps.file_changes.outputs.files_modified }}" >> $GITHUB_ENV
             echo "REPOSITORY_OWNER=space-wizards" >> $GITHUB_ENV
             echo "REPOSITORY_NAME=space-station-14" >> $GITHUB_ENV
+            echo "PR_NUMBER=${{ github.event.number}}" >> $GITHUB_ENV
       - name: Setup submodule
         run: |
           git submodule update --init --recursive
