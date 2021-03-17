@@ -29,3 +29,4 @@
   - type: Sprite
     drawdepth: Items
   - type: Pullable
+  - type: ExplosionLaunched
