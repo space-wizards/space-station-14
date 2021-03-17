@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Content.MapRenderer.Extensions;
+using Content.MapRenderer.GitHub;
 using Content.MapRenderer.Imgur.Client;
 using Content.MapRenderer.Imgur.Response;
 using Content.MapRenderer.Painters;
@@ -15,18 +17,23 @@ namespace Content.MapRenderer
 {
     internal class Program
     {
+        private const string MapsAddedEnvKey = "FILES_ADDED";
+        private const string MapsModifiedEnvKey = "FILES_MODIFIED";
+        private const string GitHubRepositoryEnvKey = "GITHUB_REPOSITORY";
+        private const string PrNumberEnvKey = "PR_NUMBER";
+
         private static readonly MapPainter MapPainter = new();
         private static readonly ImgurClient ImgurClient = new();
 
         internal static void Main()
         {
-            new Program().Run();
+            new Program().Run().ConfigureAwait(false);
         }
 
-        private async void Run()
+        private async Task Run()
         {
-            var created = Environment.GetEnvironmentVariable("MAPS_ADDED");
-            var modified = Environment.GetEnvironmentVariable("MAPS_MODIFIED");
+            var created = Environment.GetEnvironmentVariable(MapsAddedEnvKey);
+            var modified = Environment.GetEnvironmentVariable(MapsModifiedEnvKey);
 
             var yamlStream = new YamlStream();
 
@@ -68,24 +75,24 @@ namespace Content.MapRenderer
             }
 
             var images = new List<ImgurUploadResponse>();
-            Console.WriteLine(Environment.GetEnvironmentVariable("PR_NUMBER"));
 
-            // foreach (var map in maps)
-            // {
-            //     await foreach (var grid in MapPainter.Paint(map))
-            //     {
-            //         // var image = await ImgurClient.Upload(grid);
-            //         // images.Add(image);
-            //
-            //         grid.Dispose();
-            //     }
-            // }
+            foreach (var map in maps)
+            {
+                await foreach (var grid in MapPainter.Paint(map))
+                {
+                    var image = await ImgurClient.Upload(grid);
+                    images.Add(image);
 
-            // var owner = EnvironmentExtensions.GetVariableOrThrow("REPOSITORY_OWNER");
-            // var repo = EnvironmentExtensions.GetVariableOrThrow("REPOSITORY_NAME");
-            // var writer = new GitHubClient(owner, repo);
-            // var message = writer.Write(new [] {"https://i.imgur.com/ZYBplkB.png"});
-            // writer.Send(1, message);
+                    grid.Dispose();
+                }
+            }
+
+            var repo = EnvironmentExtensions.GetVariableOrThrow(GitHubRepositoryEnvKey);
+            var prNumber = int.Parse(EnvironmentExtensions.GetVariableOrThrow(PrNumberEnvKey));
+            var writer = new GitHubClient(repo);
+            var message = writer.Write(new [] {"https://i.imgur.com/ZYBplkB.png"});
+
+            writer.Send(prNumber, message);
         }
 
         private async void Save(Image image, string to)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Web;
 using Content.MapRenderer.Extensions;
 using Content.MapRenderer.Viewer;
 
@@ -15,25 +16,24 @@ namespace Content.MapRenderer.GitHub
         private const string GitHubTokenEnvKey = "GITHUB_TOKEN";
 
         private readonly WebsiteViewer _viewer = new();
-        private readonly string _owner;
         private readonly string _repo;
         private readonly Lazy<HttpClient> _clientLazy = new(CreateClient);
 
-        public GitHubClient(string owner, string repo)
+        public GitHubClient(string repo)
         {
-            _owner = owner;
             _repo = repo;
         }
 
         private HttpClient Client => _clientLazy.Value;
 
-        private string RepoUrl => $"{ApiEndpoint}/{_owner}/{_repo}";
+        private string RepoUrl => $"{ApiEndpoint}/{_repo}";
 
         private static HttpClient CreateClient()
         {
             var client = new HttpClient();
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", EnvironmentExtensions.GetVariableOrThrow(GitHubTokenEnvKey));
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("Space Station 14 Map Diff");
 
             return client;
         }
@@ -52,23 +52,26 @@ namespace Content.MapRenderer.GitHub
             return message.ToString();
         }
 
-        public async void Send(int issueNumber, string message)
+        public void Send(int issueNumber, string message)
         {
+            message = HttpUtility.JavaScriptStringEncode(message);
             var endpoint = $"{RepoUrl}/issues/{issueNumber}/comments";
 
-            var values = new Dictionary<string, string>
+            var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
+            request.Headers.Add("accept", "application/vnd.github.v3+json");
+            request.Content = new StringContent(@$"{{""body"":""{message}""}}");
+
+            HttpResponseMessage response = null;
+
+            try
             {
-                ["accept"] = "application/vnd.github.v3+json",
-                ["owner"] = _owner,
-                ["repo"] = _repo,
-                ["issue_number"] = issueNumber.ToString(),
-                ["body"] = message
-            };
-
-            var content = new FormUrlEncodedContent(values);
-            var response = await Client.PostAsync(endpoint, content);
-
-            response.EnsureSuccessStatusCode();
+                response = Client.SendAsync(request).Result;
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Error sending GitHub message, error code {response?.StatusCode.ToString() ?? "None"}");
+            }
         }
     }
 }

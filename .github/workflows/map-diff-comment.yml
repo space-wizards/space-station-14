@@ -1,15 +1,16 @@
 name: Map Diff Comment
 
 on:
-  issue_comment:
-    types: [created]
-#  push:
-#    paths:
-#    - 'Resources/Maps/**.yml'
+  pull_request:
+    types:
+    - opened
+    - synchronize
+  push:
+    paths:
+    - 'Resources/Maps/**.yml'
 
 jobs:
   build:
-    if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,11 +23,9 @@ jobs:
           fetch-depth: 0
       - name: Set environment variables
         run: |
-            echo "MAPS_ADDED=${{ steps.file_changes.outputs.files_added }}" >> $GITHUB_ENV
-            echo "MAPS_MODIFIED=${{ steps.file_changes.outputs.files_modified }}" >> $GITHUB_ENV
-            echo "REPOSITORY_OWNER=space-wizards" >> $GITHUB_ENV
-            echo "REPOSITORY_NAME=space-station-14" >> $GITHUB_ENV
-            echo "PR_NUMBER=${{ github.event.number }}" >> $GITHUB_ENV
+            echo "FILES_ADDED=${{ steps.file_changes.outputs.files_added }}" >> $GITHUB_ENV
+            echo "FILES_MODIFIED=${{ steps.file_changes.outputs.files_modified }}" >> $GITHUB_ENV
+            echo "PR_NUMBER=${{ github.event.issue.number }}" >> $GITHUB_ENV
       - name: Setup submodule
         run: |
           git submodule update --init --recursive
@@ -41,7 +40,14 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.100
+      - uses: actions/cache@v2
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
       - name: Install dependencies
+        if: steps.cache-primes.outputs.cache-hit != 'true'
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors= /m
