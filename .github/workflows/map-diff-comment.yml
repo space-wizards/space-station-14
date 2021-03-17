@@ -43,8 +43,3 @@ jobs:
         run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors= /m
       - name: Create map images
         run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-build
-      - uses: harupy/comment-on-pr@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          filename: map-diff-comment.md

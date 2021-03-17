@@ -46313,5 +46313,4 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-
 ...
