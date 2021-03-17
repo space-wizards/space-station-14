@@ -17,6 +17,11 @@ namespace Content.MapRenderer
 {
     internal class Program
     {
+        private const string MapsAddedEnvKey = "MAPS_ADDED";
+        private const string MapsModifiedEnvKey = "MAPS_MODIFIED";
+        private const string GitHubRepositoryEnvKey = "GITHUB_REPOSITORY";
+        private const string PrNumberEnvKey = "PR_NUMBER";
+
         private static readonly MapPainter MapPainter = new();
         private static readonly ImgurClient ImgurClient = new();
 
@@ -27,8 +32,8 @@ namespace Content.MapRenderer
 
         private async Task Run()
         {
-            var created = Environment.GetEnvironmentVariable("MAPS_ADDED");
-            var modified = Environment.GetEnvironmentVariable("MAPS_MODIFIED");
+            var created = Environment.GetEnvironmentVariable(MapsAddedEnvKey);
+            var modified = Environment.GetEnvironmentVariable(MapsModifiedEnvKey);
 
             var yamlStream = new YamlStream();
 
@@ -82,10 +87,9 @@ namespace Content.MapRenderer
                 }
             }
 
-            var owner = EnvironmentExtensions.GetVariableOrThrow("REPOSITORY_OWNER");
-            var repo = EnvironmentExtensions.GetVariableOrThrow("REPOSITORY_NAME");
-            var prNumber = int.Parse(EnvironmentExtensions.GetVariableOrThrow("PR_NUMBER"));
-            var writer = new GitHubClient(owner, repo);
+            var repo = EnvironmentExtensions.GetVariableOrThrow(GitHubRepositoryEnvKey);
+            var prNumber = int.Parse(EnvironmentExtensions.GetVariableOrThrow(PrNumberEnvKey));
+            var writer = new GitHubClient(repo);
             var message = writer.Write(new [] {"https://i.imgur.com/ZYBplkB.png"});
 
             writer.Send(prNumber, message);
