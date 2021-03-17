@@ -146,7 +146,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 Air.Clear();
             }
 
-            Owner.Delete();
+            if (!Deleted)
+                Owner.Delete();
         }
 
         public void Update(float frameTime)
