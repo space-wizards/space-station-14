@@ -22,8 +22,6 @@ namespace Content.Server.GameObjects.Components.Mobs
     [RegisterComponent]
     public class MindComponent : Component, IExamine
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         /// <inheritdoc />
         public override string Name => "Mind";
 
@@ -61,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         public void InternalEjectMind()
         {
             if (!Deleted)
-                _entityManager.EventBus.RaiseLocalEvent(Owner.Uid, new MindRemovedMessage());
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new MindRemovedMessage());
             Mind = null;
         }
 

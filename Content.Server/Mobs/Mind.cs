@@ -314,8 +314,7 @@ namespace Content.Server.Mobs
                 oldVisitingEnt.RemoveComponent<VisitingMindComponent>();
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            entityManager.EventBus.RaiseLocalEvent(oldVisitingEnt.Uid, new MindUnvisitedMessage());
+            oldVisitingEnt.EntityManager.EventBus.RaiseLocalEvent(oldVisitingEnt.Uid, new MindUnvisitedMessage());
         }
 
         public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)
