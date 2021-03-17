@@ -1,7 +1,5 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -14,12 +12,12 @@ namespace Content.Server.GameObjects.Components.Access
 
         /// See <see cref="UpdateEntityName"/>.
         [DataField("originalOwnerName")]
-        private string _ownerOriginalName;
+        private string _originalOwnerName = default!;
 
         [DataField("fullName")]
-        private string _fullName;
+        private string? _fullName;
         [ViewVariables(VVAccess.ReadWrite)]
-        public string FullName
+        public string? FullName
         {
             get => _fullName;
             set
@@ -30,9 +28,9 @@ namespace Content.Server.GameObjects.Components.Access
         }
 
         [DataField("jobTitle")]
-        private string _jobTitle;
+        private string? _jobTitle;
         [ViewVariables(VVAccess.ReadWrite)]
-        public string JobTitle
+        public string? JobTitle
         {
             get => _jobTitle;
             set
@@ -53,26 +51,22 @@ namespace Content.Server.GameObjects.Components.Access
         {
             if (string.IsNullOrWhiteSpace(FullName) && string.IsNullOrWhiteSpace(JobTitle))
             {
-                Owner.Name = _ownerOriginalName;
+                Owner.Name = _originalOwnerName;
                 return;
             }
 
             var jobSuffix = string.IsNullOrWhiteSpace(JobTitle) ? "" : $" ({JobTitle})";
 
-            if (string.IsNullOrWhiteSpace(FullName))
-            {
-                Owner.Name = Loc.GetString("{0}{1}", _ownerOriginalName, jobSuffix);
-            }
-            else
-            {
-                Owner.Name = Loc.GetString("{0}'s ID card{1}", FullName, jobSuffix);
-            }
+            Owner.Name = string.IsNullOrWhiteSpace(FullName)
+                ? Loc.GetString("{0}{1}", _originalOwnerName, jobSuffix)
+                : Loc.GetString("{0}'s ID card{1}", FullName, jobSuffix);
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            _ownerOriginalName ??= Owner.Name;
+            // ReSharper disable once ConstantNullCoalescingCondition
+            _originalOwnerName ??= Owner.Name;
             UpdateEntityName();
         }
     }

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 32 32"
+   xml:space="preserve"
+   sodipodi:docname="open.svg"
+   width="32"
+   height="32"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   inkscape:export-filename="C:\Users\Pieter-Jan Briers\Projects\space-station-14\Resources\Textures\Interface\VerbIcons\open.svg.96dpi.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"><metadata
+   id="metadata19"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs17"><inkscape:path-effect
+     effect="fillet_chamfer"
+     id="path-effect991"
+     is_visible="true"
+     lpeversion="1"
+     satellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1"
+     unit="px"
+     method="auto"
+     mode="F"
+     radius="1"
+     chamfer_steps="1"
+     flexible="false"
+     use_knot_distance="true"
+     apply_no_radius="true"
+     apply_with_radius="true"
+     only_selected="false"
+     hide_knots="false" /></defs><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1051"
+   id="namedview15"
+   showgrid="true"
+   inkscape:pagecheckerboard="true"
+   inkscape:zoom="22.627417"
+   inkscape:cx="14.004212"
+   inkscape:cy="17.557422"
+   inkscape:window-x="-9"
+   inkscape:window-y="-9"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="g851"
+   inkscape:document-rotation="0"><inkscape:grid
+     empspacing="4"
+     type="xygrid"
+     id="grid844" /></sodipodi:namedview>
+<style
+   type="text/css"
+   id="style2">
+	.st0{fill:#010101;}
+</style>
+
+
+
+
+<g
+   id="g851"
+   transform="matrix(0.19104308,0,0,0.19104308,4.5447848,4.0447847)"
+   inkscape:label="left"><path
+     id="path4"
+     style="fill:#ffffff;fill-opacity:1;stroke-width:1"
+     d="M 80.899108,104.45401 122.77448,62.578638 80.899108,20.703264 69.203447,32.398926 88.863196,52.109795 H 44.25816 V 73.047481 H 88.863196 L 69.203447,92.748125 Z"
+     sodipodi:nodetypes="cccccccccc" /><path
+     id="rect10"
+     style="fill:#ffffff;fill-opacity:1;stroke-width:1"
+     d="M -2.8516339,-0.23442263 V 125.39169 H 49.492582 V 104.45401 H 18.086053 V 20.703264 H 49.492582 V -0.23442263 Z"
+     sodipodi:nodetypes="ccccccccc"
+     inkscape:path-effect="#path-effect991"
+     inkscape:original-d="M -2.8516339,-0.23442263 V 125.39169 H 49.492582 V 104.45401 H 18.086053 V 20.703264 H 49.492582 V -0.23442263 Z" /></g>
+<style
+   type="text/css"
+   id="style962">
+	.st0{fill:#010101;}
+</style></svg>

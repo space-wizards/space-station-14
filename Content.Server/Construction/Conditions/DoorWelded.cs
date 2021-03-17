@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using static Content.Shared.GameObjects.Components.Doors.SharedDoorComponent;
 
 namespace Content.Server.Construction.Conditions
 {

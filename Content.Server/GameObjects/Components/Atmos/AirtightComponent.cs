@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
@@ -18,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public override string Name => "Airtight";
 
-        [DataFieldWithFlag("airBlockedDirection", typeof(AtmosDirectionFlags))]
+        [DataField("airBlockedDirection", customTypeSerializer: typeof(FlagSerializer<AtmosDirectionFlags>))]
         [ViewVariables]
         private int _initialAirBlockedDirection = (int) AtmosDirection.All;
 

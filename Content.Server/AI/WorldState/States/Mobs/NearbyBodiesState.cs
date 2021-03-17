@@ -16,7 +16,7 @@ namespace Content.Server.AI.WorldState.States.Mobs
         {
             var result = new List<IEntity>();
 
-            if (!Owner.TryGetComponent(out AiControllerComponent controller))
+            if (!Owner.TryGetComponent(out AiControllerComponent? controller))
             {
                 return result;
             }

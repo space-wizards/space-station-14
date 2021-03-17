@@ -27,8 +27,13 @@ namespace Content.Client.GameObjects.Components.Construction
 
             if (!_prototypeManager.TryIndex(Prototype.Graph, out ConstructionGraphPrototype? graph)) return;
             var startNode = graph.Nodes[Prototype.StartNode];
-            var path = graph.Path(Prototype.StartNode, Prototype.TargetNode);
-            var edge = startNode.GetEdge(path[0].Name);
+
+            if (!graph.TryPath(Prototype.StartNode, Prototype.TargetNode, out var path) ||
+                !startNode.TryGetEdge(path[0].Name, out var edge))
+            {
+                return;
+            }
+
             edge.Steps[0].DoExamine(message, inDetailsRange);
         }
     }

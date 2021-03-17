@@ -73,11 +73,29 @@
   - type: StunnableProjectile
     paralyzeAmount: 2
 
+# Energy projectiles
 - type: entity
-  name : taser
+  name : taser bolt
   id: BulletTaser
+  parent: BulletBase
   abstract: true
   components:
+  - type: Sprite
+    directional: false
+    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
+    color: "#ffff33"
+    layers:
+    - state: spark
+      shader: unshaded
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+      hard: false
+      mask:
+          - Impassable
+          - MobImpassable
   - type: Ammo
     isProjectile: true
     ammoVelocity: 20
@@ -89,22 +107,35 @@
   - type: StunnableProjectile
     stunAmount: 5
     knockdownAmount: 5
+
+- type: entity
+  name: emitter bolt
+  id: EmitterBolt
+  parent: BulletBase
+  abstract: true
+  components:
   - type: Sprite
-    noRot: false
-    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
     color: "#ffff33"
-    layers:
-    - state: spark
-      shader: unshaded
+    sprite: Constructible/Power/Singularity/emitter.rsi
+    state: 'projectile'
   - type: Physics
-    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
-      layer: 32
-      mask: 30
+      layer:
+        - Impassable
+        - MobImpassable
+      mask:
+        - Opaque
+  - type: Projectile
+    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    damages:
+      Heat: 20
+  - type: Tag
+    tags:
+    - EmitterBolt
 
 # Launcher projectiles (grenade / rocket)
 - type: entity

@@ -36,13 +36,13 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
             else
             {
-                Logger.WarningS("alert", "weightlesssystem not found");
+                Logger.WarningS("alert", $"{nameof(WeightlessSystem)} not found");
             }
 
             base.OnRemove();
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
 

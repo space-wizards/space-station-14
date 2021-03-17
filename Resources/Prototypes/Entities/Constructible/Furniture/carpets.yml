@@ -16,6 +16,7 @@
     key: full
     base: carpet_
   - type: Physics
+    canCollide: false
     fixtures:
       - shape:
           !type:PhysShapeAabb

@@ -9,6 +9,7 @@
   access:
   - Service
   - Maintenance
+  - Bar
 
 - type: startingGear
   id: BartenderGear

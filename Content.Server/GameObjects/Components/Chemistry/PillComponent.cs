@@ -27,18 +27,18 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         [ViewVariables]
         [DataField("useSound")]
-        protected override string UseSound { get; set; } = default;
+        protected override string? UseSound { get; set; } = default;
 
         [ViewVariables]
         [DataField("trash")]
-        protected override string TrashPrototype { get; set; } = default;
+        protected override string? TrashPrototype { get; set; } = default;
 
         [ViewVariables]
         [DataField("transferAmount")]
         protected override ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(1000);
 
         [ViewVariables]
-        private SolutionContainerComponent _contents;
+        private SolutionContainerComponent _contents = default!;
 
         public override void Initialize()
         {
@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
-        public override bool TryUseFood(IEntity user, IEntity target, UtensilComponent utensilUsed = null)
+        public override bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
         {
             if (user == null)
             {
@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             var trueTarget = target ?? user;
 
-            if (!trueTarget.TryGetComponent(out IBody body) ||
+            if (!trueTarget.TryGetComponent(out IBody? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
                 return false;

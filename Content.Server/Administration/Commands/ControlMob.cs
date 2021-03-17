@@ -7,6 +7,7 @@ using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Commands
 {
@@ -33,7 +34,6 @@ namespace Content.Server.Administration.Commands
             }
 
 
-            var mind = player.ContentData().Mind;
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
             if (!int.TryParse(args[0], out var targetId))
@@ -51,20 +51,25 @@ namespace Content.Server.Administration.Commands
             }
 
             var target = entityManager.GetEntity(eUid);
-            if (!target.TryGetComponent(out MindComponent mindComponent))
+            if (!target.TryGetComponent(out MindComponent? mindComponent))
             {
                 shell.WriteLine(Loc.GetString("Target entity is not a mob!"));
                 return;
             }
 
-            var oldEntity = mind.CurrentEntity;
+            var mind = player.ContentData()?.Mind;
+
+            DebugTools.AssertNotNull(mind);
+
+            var oldEntity = mind!.CurrentEntity;
 
             mindComponent.Mind?.TransferTo(null);
             mind.TransferTo(target);
 
-            if(oldEntity.HasComponent<GhostComponent>())
-                oldEntity.Delete();
+            DebugTools.AssertNotNull(oldEntity);
 
+            if (oldEntity!.HasComponent<GhostComponent>())
+                oldEntity.Delete();
         }
     }
 }
