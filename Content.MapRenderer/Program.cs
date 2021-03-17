@@ -17,8 +17,8 @@ namespace Content.MapRenderer
 {
     internal class Program
     {
-        private const string MapsAddedEnvKey = "MAPS_ADDED";
-        private const string MapsModifiedEnvKey = "MAPS_MODIFIED";
+        private const string MapsAddedEnvKey = "FILES_ADDED";
+        private const string MapsModifiedEnvKey = "FILES_MODIFIED";
         private const string GitHubRepositoryEnvKey = "GITHUB_REPOSITORY";
         private const string PrNumberEnvKey = "PR_NUMBER";
 

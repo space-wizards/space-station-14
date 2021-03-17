@@ -61,9 +61,17 @@ namespace Content.MapRenderer.GitHub
             request.Headers.Add("accept", "application/vnd.github.v3+json");
             request.Content = new StringContent(@$"{{""body"":""{message}""}}");
 
-            var response = Client.SendAsync(request).Result;
+            HttpResponseMessage response = null;
 
-            response.EnsureSuccessStatusCode();
+            try
+            {
+                response = Client.SendAsync(request).Result;
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Error sending GitHub message, error code {response?.StatusCode.ToString() ?? "None"}");
+            }
         }
     }
 }
