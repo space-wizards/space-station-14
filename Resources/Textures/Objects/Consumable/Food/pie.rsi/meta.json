@@ -8,9 +8,6 @@
   },
   "states": [
     {
-      "name": "alpha"
-    },
-    {
       "name": "alpha-slice-filling"
     },
     {
@@ -29,26 +26,35 @@
       "name": "berryclafoutis"
     },
     {
-      "name": "blumpkin"
-    },
-    {
-      "name": "blumpkin-slice"
-    },
-    {
       "name": "cherry"
+    },
+    {
+      "name": "cocolava"
     },
     {
       "name": "frosty"
     },
     {
+      "name": "gapple"
+    },
+    {
+      "name": "grape"
+    },
+    {
+      "name": "loated"
+    },
+    {
       "name": "meat"
     },
     {
-      "name": "pie-inhand-right",
+      "name": "mime"
+    },
+    {
+      "name": "inhand-right",
       "directions": 4
     },
     {
-      "name": "pie-inhand-left",
+      "name": "inhand-left",
       "directions": 4
     },
     {
@@ -58,10 +64,13 @@
       "name": "plump"
     },
     {
-      "name": "pumpkin"
+      "name": "tin"
     },
     {
-      "name": "xenomeat"
+      "name": "whippedcream"
+    },
+    {
+      "name": "xeno"
     }
   ]
 }

@@ -8,19 +8,19 @@
   },
   "states": [
     {
-      "name": "berry"
+      "name": "plate"
     },
     {
-      "name": "cocolava"
+      "name": "plate-plastic"
     },
     {
-      "name": "gapple"
+      "name": "plate-slice-shading"
     },
     {
-      "name": "grape"
+      "name": "plate-small"
     },
     {
-      "name": "mime"
+      "name": "plate-small-plastic"
     }
   ]
 }

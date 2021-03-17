@@ -1,0 +1,87 @@
+# Base
+
+- type: entity
+  parent: BaseItem
+  id: FoodPieBase
+  abstract: true
+  components:
+  - type: Food
+    trash: Plate
+  - type: Sprite
+    sprite: Objects/Consumable/Food/pie.rsi
+    netsync: false
+  - type: LoopingSound
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 20
+
+- type: entity
+  parent: FoodPieBase
+  id: FoodPieSliceBase
+  abstract: true
+  description:
+  components:
+  - type: Food
+    trash: PlateSmall
+  - type: SolutionContainer
+    maxVol: 7
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 7
+
+# Pie
+
+- type: entity
+  name: apple pie
+  parent: FoodPieBase
+  id: FoodPieApple
+  description:
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: apple
+  - type: SliceableFood
+    slice: FoodPieAppleSlice
+
+- type: entity
+  name: slice of apple pie
+  parent: FoodPieSliceBase
+  id: FoodPieAppleSlice
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: red
+# Tastes like sweetness, apple.
+
+- type: entity
+  name: baklava
+  parent: FoodPieBase
+  id: FoodPieBaklava
+  description:
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: baklava
+  - type: SliceableFood
+    slice: FoodPieBaklavaSlice
+
+- type: entity
+  name: slice of baklava
+  parent: FoodPieSliceBase
+  id: FoodPieBaklavaSlice
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: baklava-slice
+# Tastes like sweetness, apple.
