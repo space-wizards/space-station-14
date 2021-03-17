@@ -9,10 +9,6 @@ on:
 
 jobs:
   build:
-    if: |
-      github.event.issue.pull_request &&
-      (github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER') &&
-      github.event.comment.body == '!mapdiff'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
