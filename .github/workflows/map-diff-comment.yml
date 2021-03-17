@@ -1,9 +1,10 @@
 name: Map Diff Comment
 
 on:
-  push:
-    paths:
-    - 'Resources/Maps/**.yml'
+  push
+#  push:
+#    paths:
+#    - 'Resources/Maps/**.yml'
 
 jobs:
   build:
