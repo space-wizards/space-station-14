@@ -74,6 +74,9 @@ namespace Content.MapRenderer
                 maps.Add(fileName);
             }
 
+
+            Console.WriteLine($"Creating images for {maps.Count} maps");
+
             var images = new List<ImgurUploadResponse>();
 
             foreach (var map in maps)
