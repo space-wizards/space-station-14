@@ -278,3 +278,4 @@
     state: icon
   - type: Item
     sprite: Objects/Specific/Janitorial/light_replacer.rsi
+  - type: LightReplacer

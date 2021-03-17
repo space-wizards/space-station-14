@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
 
         [ViewVariables]
-        private LightBulbComponent? LightBulb
+        public LightBulbComponent? LightBulb
         {
             get
             {
@@ -127,6 +127,15 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         }
 
         /// <summary>
+        /// Try to replace current bulb with a new one
+        /// </summary>
+        public bool ReplacBulb(IEntity bulb)
+        {
+            EjectBulb();
+            return InsertBulb(bulb);
+        }
+
+        /// <summary>
         ///     Inserts the bulb if possible.
         /// </summary>
         /// <returns>True if it could insert it, false if it couldn't.</returns>
@@ -149,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         /// <summary>
         ///     Ejects the bulb to a mob's hand if possible.
         /// </summary>
-        private void EjectBulb(IEntity user)
+        private void EjectBulb(IEntity? user = null)
         {
             if (LightBulb == null) return;
 
@@ -160,9 +169,17 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             if (!_lightBulbContainer.Remove(bulb.Owner)) return;
 
-            if (!user.TryGetComponent(out HandsComponent? hands)
-                || !hands.PutInHand(bulb.Owner.GetComponent<ItemComponent>()))
-                bulb.Owner.Transform.Coordinates = user.Transform.Coordinates;
+            if (user != null)
+            {
+                if (!user.TryGetComponent(out HandsComponent? hands)
+                    || !hands.PutInHand(bulb.Owner.GetComponent<ItemComponent>()))
+                    bulb.Owner.Transform.Coordinates = user.Transform.Coordinates;
+            }
+            else
+            {
+                bulb.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
+            }
+
         }
 
         /// <summary>
