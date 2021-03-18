@@ -585,3 +585,9 @@ Entries:
   - {message: Added airlock construction and deconstruction, type: Add}
   id: 106
   time: '2021-03-17T12:07:49.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed chairs so that when destroyed they don't delete whatever is sitting
+      in them, type: Fix}
+  id: 107
+  time: '2021-03-18T09:48:17.0000000+00:00'
