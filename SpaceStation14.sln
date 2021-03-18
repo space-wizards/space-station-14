@@ -95,6 +95,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Analyzers", "RobustT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.YAMLLinter", "Content.YAMLLinter\Content.YAMLLinter.csproj", "{A59E2FCC-93CF-4886-8EA7-94F021A7475D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pow3r", "Pow3r\Pow3r.csproj", "{1C048C9F-00A9-4796-BE4D-BB36B7769720}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -211,6 +213,10 @@ Global
 		{A59E2FCC-93CF-4886-8EA7-94F021A7475D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A59E2FCC-93CF-4886-8EA7-94F021A7475D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A59E2FCC-93CF-4886-8EA7-94F021A7475D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C048C9F-00A9-4796-BE4D-BB36B7769720}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C048C9F-00A9-4796-BE4D-BB36B7769720}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C048C9F-00A9-4796-BE4D-BB36B7769720}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C048C9F-00A9-4796-BE4D-BB36B7769720}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
