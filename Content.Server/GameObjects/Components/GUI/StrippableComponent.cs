@@ -263,7 +263,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(hand);
-            hands.TryPutItemInHand(item!, hand, false, false);
+            hands.TryPickupEntity(hand, item!.Owner, checkActionBlocker:false);
             UpdateSubscribed();
         }
 

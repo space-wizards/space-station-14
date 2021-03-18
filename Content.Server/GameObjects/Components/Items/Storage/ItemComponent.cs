@@ -90,10 +90,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             if (!CanPickup(eventArgs.User) ||
-                !eventArgs.User.TryGetComponent(out IHandsComponent? hands) ||
+                !eventArgs.User.TryGetComponent(out HandsComponent? hands) ||
                 hands.ActiveHand == null) return false;
 
-            hands.TryPutItemInHand(this, hands.ActiveHand, false);
+            hands.TryPickupEntityToActiveHand(Owner);
 
             return true;
         }

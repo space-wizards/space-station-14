@@ -170,6 +170,36 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
+        private ServerHand? GetServerHand(string handName)
+        {
+            foreach (var hand in _hands)
+            {
+                if (hand.Name == handName)
+                    return hand;
+            }
+            return null;
+        }
+
+        private ServerHand? GetActiveServerHand()
+        {
+            if (ActiveHand == null)
+                return null;
+
+            return GetServerHand(ActiveHand);
+        }
+
+        private bool TryGetServerHand(string handName, [NotNullWhen(true)] out ServerHand? foundHand)
+        {
+            foundHand = GetServerHand(handName);
+            return foundHand != null;
+        }
+
+        private bool TryGetActiveHand([NotNullWhen(true)] out ServerHand? activeHand)
+        {
+            activeHand = GetActiveServerHand();
+            return activeHand != null;
+        }
+
         #region Held Entities
 
         public bool TryGetHeldEntity(string handName, [NotNullWhen(true)] out IEntity? heldEntity)
@@ -631,43 +661,49 @@ namespace Content.Server.GameObjects.Components.GUI
 
         #endregion
 
-        #region Hand Getter Helpers
-
-        private ServerHand? GetServerHand(string handName)
-        {
-            foreach (var hand in _hands)
-            {
-                if (hand.Name == handName)
-                    return hand;
-            }
-            return null;
-        }
-
-        private ServerHand? GetActiveServerHand()
-        {
-            if (ActiveHand == null)
-                return null;
-
-            return GetServerHand(ActiveHand);
-        }
-
-        private bool TryGetServerHand(string handName, [NotNullWhen(true)] out ServerHand? foundHand)
-        {
-            foundHand = GetServerHand(handName);
-            return foundHand != null;
-        }
-
-        private bool TryGetActiveHand([NotNullWhen(true)] out ServerHand? activeHand)
-        {
-            activeHand = GetActiveServerHand();
-            return activeHand != null;
-        }
-
-        #endregion
-
         private void HandCountChanged()
         {
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
+        }
+
+        /// <summary>
+        ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into every other hand.
+        /// </summary>
+        public bool TryPutInActiveHandOrAny(IEntity entity, bool checkActionBlocker = true)
+        {
+            return TryPutInAnyHand(entity, GetActiveServerHand(), checkActionBlocker);
+        }
+
+        /// <summary>
+        ///     Tries to pick up an entity into the priority hand, if provided. If it cannot, tries to pick up the entity into every other hand.
+        /// </summary>
+        public bool TryPutInAnyHand(IEntity entity, string? priorityHandName = null, bool checkActionBlocker = true)
+        {
+            ServerHand? priorityHand = null;
+
+            if (priorityHandName != null)
+                priorityHand = GetServerHand(priorityHandName);
+
+            return TryPutInAnyHand(entity, priorityHand, checkActionBlocker);
+        }
+
+        /// <summary>
+        ///     Tries to pick up an entity into the priority hand, if provided. Then, tries to pick up the entity into every other hand.
+        /// </summary>
+        private bool TryPutInAnyHand(IEntity entity, ServerHand? priorityHand = null, bool checkActionBlocker = true)
+        {
+            if (priorityHand != null)
+            {
+                if (TryPickupEntity(priorityHand, entity, checkActionBlocker))
+                    return true;
+            }
+
+            foreach (var hand in _hands)
+            {
+                if (TryPickupEntity(hand, entity, checkActionBlocker))
+                    return true;
+            }
+            return false;
         }
 
         #region Old public methods
@@ -782,56 +818,6 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        #endregion
-
-        #region Old API that needs cleanup
-
-        /// <summary>
-        ///     Attempts to put item into a hand, prefering the active hand.
-        /// </summary>
-        public bool PutInHand(ItemComponent item, bool mobCheck = true)
-        {
-            var entity = item.Owner;
-
-            if (TryGetActiveHand(out var activeHand))
-            {
-                if (TryPickupEntityToActiveHand(entity))
-                    return true;
-            }
-
-            foreach (var hand in _hands)
-            {
-                if (hand != activeHand)
-                {
-                    if (TryPickupEntity(hand, entity, mobCheck))
-                        return true;
-                }
-            }
-            return false;
-        }
-
-        public bool TryPutItemInHand(ItemComponent item, string handName, bool fallback = true, bool mobCheck = true)
-        {
-            var entity = item.Owner;
-
-            if (TryPickupEntityToActiveHand(entity, mobCheck))
-                return true;
-
-            if (fallback && PutInHand(item, mobCheck))
-                return true;
-
-            return false;
-        }
-
-        /// <summary>
-        ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
-        /// </summary>
-        public void PutInHandOrDrop(ItemComponent item, bool mobCheck = true)
-        {
-            if (!PutInHand(item, mobCheck))
-                item.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
-        }
-
         /// <summary>
         ///     Checks if any hand can pick up an item.
         /// </summary>
@@ -847,8 +833,26 @@ namespace Content.Server.GameObjects.Components.GUI
                 if (CanInsertEntityIntoHand(hand, entity))
                     return true;
             }
-
             return false;
+        }
+
+        /// <summary>
+        ///     Attempts to put an item into the active hand, or any other hand if it cannot.
+        /// </summary>
+        public bool PutInHand(ItemComponent item, bool checkActionBlocker = true)
+        {
+            return TryPutInActiveHandOrAny(item.Owner, checkActionBlocker);
+        }
+
+        /// <summary>
+        ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
+        /// </summary>
+        public void PutInHandOrDrop(ItemComponent item, bool checkActionBlocker = true)
+        {
+            var entity = item.Owner;
+
+            if (!TryPutInActiveHandOrAny(entity, checkActionBlocker))
+                entity.Transform.Coordinates = Owner.Transform.Coordinates;
         }
 
         #endregion

@@ -63,18 +63,6 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         bool PutInHand(ItemComponent item, bool mobCheck = true);
 
         /// <summary>
-        ///     Puts an item into a specific hand.
-        /// </summary>
-        /// <param name="item">The item to put in the hand.</param>
-        /// <param name="index">The name of the hand to put the item into.</param>
-        /// <param name="fallback">
-        ///     If true and the provided hand is full, the method will fall back to <see cref="PutInHand(ItemComponent)" />
-        /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
-        /// </param>
-        /// <returns>True if the item was inserted into a hand, false otherwise.</returns>
-        bool TryPutItemInHand(ItemComponent item, string index, bool fallback=true, bool mobCheck = true);
-
-        /// <summary>
         ///     Checks to see if an item can be put in any hand.
         /// </summary>
         /// <param name="item">The item to check for.</param>
