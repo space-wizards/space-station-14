@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Markers;
@@ -54,14 +54,17 @@ namespace Content.Server.GameObjects.Components.Observer
         {
             base.HandleMessage(message, component);
 
+            EyeComponent eyeComp;
             switch (message)
             {
                 case PlayerAttachedMsg msg:
-                    msg.NewPlayer.VisibilityMask |= (int) VisibilityFlags.Ghost;
+                    eyeComp = msg.NewPlayer.AttachedEntity!.GetComponent<EyeComponent>();
+                    eyeComp.VisibilityMask |= (uint) VisibilityFlags.Ghost;
                     Dirty();
                     break;
                 case PlayerDetachedMsg msg:
-                    msg.OldPlayer.VisibilityMask &= ~(int) VisibilityFlags.Ghost;
+                    eyeComp = msg.OldPlayer.AttachedEntity!.GetComponent<EyeComponent>();
+                    eyeComp.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
                     break;
             }
         }
