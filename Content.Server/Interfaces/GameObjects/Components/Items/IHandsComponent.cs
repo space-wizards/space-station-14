@@ -156,7 +156,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         ///     but practical remove or insert returned false anyways.
         ///     This is an edge-case that is currently unhandled.
         /// </exception>
-        bool TryPutHeldEntityIntoContainer(string slot, BaseContainer targetContainer, bool doMobChecks = true, bool intentional = true);
+        bool TryPutHandIntoContainer(string slot, BaseContainer targetContainer, bool doMobChecks = true, bool intentional = true);
 
         /// <summary>
         ///     Drops an item in one of the hands into a container.

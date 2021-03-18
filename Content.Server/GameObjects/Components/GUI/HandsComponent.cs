@@ -108,23 +108,32 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             base.HandleNetworkMessage(message, channel, session);
 
-            var used = GetActiveHand?.Owner;
-
             switch (message)
             {
                 case ClientChangedHandMsg msg:
-                    TrySetActiveHand(msg.HandName);
+                    ActiveHand = msg.HandName;
                     break;
                 case ClientAttackByInHandMsg msg:
-                    ClientAttackByInHand(msg.HandName, used);
+                    InteractHandWithActiveHand(msg.HandName);
                     break;
                 case UseInHandMsg:
-                    UseHeldEntity(used);
+                    UseActiveHeldEntity();
                     break;
                 case ActivateInHandMsg msg:
                     ActivateHeldEntity(msg.HandName);
                     break;
             }
+        }
+
+        public bool TryGetHeldEntity(string handName, [NotNullWhen(true)] out IEntity? heldEntity)
+        {
+            heldEntity = null;
+
+            if (!TryGetServerHand(handName, out var hand))
+                return false;
+
+            heldEntity = hand.HeldEntity;
+            return heldEntity != null;
         }
 
         public bool TryGetActiveHeldEntity([NotNullWhen(true)] out IEntity? heldEntity)
@@ -206,7 +215,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return TryDropHeldEntity(hand, coords, doMobChecks, intentional);
         }
 
-        public bool TryPutHeldEntityIntoContainer(string handName, BaseContainer targetContainer, bool doMobChecks = true, bool intentional = true)
+        public bool TryPutHandIntoContainer(string handName, BaseContainer targetContainer, bool doMobChecks = true, bool intentional = true)
         {
             if (!TryGetServerHand(handName, out var hand))
                 return false;
@@ -218,25 +227,19 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        /// <summary>
-        ///     Tries to unequip contents of a hand directly into a container.
-        /// </summary>
-        public bool Drop(IEntity entity, BaseContainer targetContainer, bool doMobChecks = true) //TODO: Give better name
+        public bool TryPutEntityIntoContainer(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
                 return false;
 
-            if (!CanPutHeldEntityIntoContainer(hand, targetContainer, doMobChecks))
+            if (!CanPutHeldEntityIntoContainer(hand, targetContainer, checkActionBlocker))
                 return false;
 
             PutHeldEntityIntoContainer(hand, targetContainer);
             return true;
         }
 
-        /// <summary>
-        ///     Tries to drop the contents of a hand directly under the player.
-        /// </summary>
-        public bool Drop(string handName, bool checkActionBlocker = true, bool intentionalDrop = true) //TODO: Give better name
+        public bool TryDropHandToFloor(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
         {
             if (!TryGetServerHand(handName, out var hand))
                 return false;
@@ -244,15 +247,12 @@ namespace Content.Server.GameObjects.Components.GUI
             return TryDropHeldEntity(hand, Owner.Transform.Coordinates, checkActionBlocker, intentionalDrop);
         }
 
-        /// <summary>
-        ///     Tries to drop an entity in a hand directly under the player.
-        /// </summary>
-        public bool Drop(IEntity entity, bool mobChecks = true, bool intentional = true) //TODO: Give better name
+        public bool TryDropEntityToFloor(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, Owner.Transform.Coordinates, mobChecks, intentional);
+            return TryDropHeldEntity(hand, Owner.Transform.Coordinates, checkActionBlocker, intentionalDrop);
         }
 
         /// <summary>
@@ -270,17 +270,13 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        #region to clean up next
-
         /// <summary>
         ///     Moves the active hand to the next hand.
         /// </summary>
-        public void SwapHands()
+        public void SwapHands() //TODO: Clean up
         {
             if (ActiveHand == null)
-            {
                 return;
-            }
 
             if (!TryGetActiveHand(out var hand))
                 return;
@@ -295,6 +291,45 @@ namespace Content.Server.GameObjects.Components.GUI
             ActiveHand = _hands[index].Name;
         }
 
+        /// <summary>
+        ///     Attempts to interact with the item in a hand using the active held item.
+        /// </summary>
+        public async void InteractHandWithActiveHand(string handName)
+        {
+            if (!TryGetActiveHeldEntity(out var activeHeldEntity))
+                return;
+
+            if (!TryGetHeldEntity(handName, out var heldEntity))
+                return;
+
+            if (activeHeldEntity == heldEntity)
+                return;
+
+            await _entitySystemManager.GetEntitySystem<InteractionSystem>()
+                .Interaction(Owner, activeHeldEntity, heldEntity, EntityCoordinates.Invalid);
+        }
+
+        public void UseActiveHeldEntity()
+        {
+            if (!TryGetActiveHeldEntity(out var heldItem))
+                return;
+
+            _entitySystemManager.GetEntitySystem<InteractionSystem>()
+                .TryUseInteraction(Owner, heldItem);
+        }
+
+        public void ActivateHeldEntity(string handName)
+        {
+            if (!TryGetHeldEntity(handName, out var heldEntity))
+                return;
+
+            _entitySystemManager.GetEntitySystem<InteractionSystem>()
+                .TryInteractionActivate(Owner, heldEntity);
+        }
+
+        /// <summary>
+        ///     Attempts to use the active held item.
+        /// </summary>
         public void ActivateItem()
         {
             var used = GetActiveHand?.Owner;
@@ -304,62 +339,6 @@ namespace Content.Server.GameObjects.Components.GUI
                 interactionSystem.TryUseInteraction(Owner, used);
             }
         }
-
-        private void TrySetActiveHand(string handName)
-        {
-            if (HasHand(handName))
-                ActiveHand = handName;
-        }
-
-        private async void ClientAttackByInHand(string handName, IEntity? used)
-        {
-            if (!TryGetServerHand(handName, out var hand))
-            {
-                Logger.Warning($"{nameof(HandsComponent)} on {Owner} got a {nameof(ClientAttackByInHandMsg)} with invalid hand name {handName}");
-                return;
-            }
-            var heldEntity = hand.HeldEntity;
-            if (heldEntity != null)
-            {
-                var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                if (used != null)
-                {
-                    await interactionSystem.Interaction(Owner, used, heldEntity, EntityCoordinates.Invalid);
-                }
-                else
-                {
-                    if (!Drop(heldEntity))
-                        return;
-
-                    interactionSystem.Interaction(Owner, heldEntity);
-                }
-            }
-        }
-
-        private void UseHeldEntity(IEntity? entity)
-        {
-            if (entity != null)
-            {
-                var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                interactionSystem.TryUseInteraction(Owner, entity);
-            }
-        }
-
-        private void ActivateHeldEntity(string handName)
-        {
-            if (!TryGetServerHand(handName, out var hand))
-                return;
-
-            var heldEntity = hand.HeldEntity;
-
-            if (heldEntity == null)
-                return;
-
-            _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .TryInteractionActivate(Owner, heldEntity);
-        }
-
-        #endregion
 
         #region Internal Methods
 
@@ -518,7 +497,7 @@ namespace Content.Server.GameObjects.Components.GUI
         }
 
         /// <summary>
-        ///     Drops the contents of a hand directly under the player.
+        ///     Forcibly drops the contents of a hand directly under the player.
         /// </summary>
         private void DropHeldEntityToFloor(ServerHand hand, bool intentionalDrop)
         {
@@ -581,6 +560,30 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 yield return hand.Name;
             }
+        }
+
+        /// <summary>
+        ///     Tries to drop the contents of a hand directly under the player.
+        /// </summary>
+        public bool Drop(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
+        {
+            return TryDropHandToFloor(handName, checkActionBlocker, intentionalDrop);
+        }
+
+        /// <summary>
+        ///     Tries to drop an entity in a hand directly under the player.
+        /// </summary>
+        public bool Drop(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
+        {
+            return TryDropEntityToFloor(entity, checkActionBlocker, intentionalDrop);
+        }
+
+        /// <summary>
+        ///     Tries to unequip contents of a hand directly into a container.
+        /// </summary>
+        public bool Drop(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
+        {
+            return TryPutEntityIntoContainer(entity, targetContainer, checkActionBlocker);
         }
 
         #endregion
@@ -815,8 +818,6 @@ namespace Content.Server.GameObjects.Components.GUI
     public class ServerHand : SharedHand
     {
         public override IEntity? HeldEntity => Container.ContainedEntity;
-
-        public IEntity? Entity => Container.ContainedEntity; //TODO: remove this duplicate API
 
         public ContainerSlot Container { get; }
 

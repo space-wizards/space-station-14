@@ -102,10 +102,10 @@ namespace Content.Shared.GameObjects.Components.Items
     {
         public string HandName { get; }
 
-        public ActivateInHandMsg(string index)
+        public ActivateInHandMsg(string handName)
         {
             Directed = true;
-            HandName = index;
+            HandName = handName;
         }
     }
 
@@ -114,10 +114,10 @@ namespace Content.Shared.GameObjects.Components.Items
     {
         public string HandName { get; }
 
-        public ClientAttackByInHandMsg(string index)
+        public ClientAttackByInHandMsg(string handName)
         {
             Directed = true;
-            HandName = index;
+            HandName = handName;
         }
     }
 
@@ -126,10 +126,10 @@ namespace Content.Shared.GameObjects.Components.Items
     {
         public string HandName { get; }
 
-        public ClientChangedHandMsg(string index)
+        public ClientChangedHandMsg(string handName)
         {
             Directed = true;
-            HandName = index;
+            HandName = handName;
         }
     }
 
