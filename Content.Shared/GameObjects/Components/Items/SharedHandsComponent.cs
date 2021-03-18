@@ -122,6 +122,18 @@ namespace Content.Shared.GameObjects.Components.Items
     }
 
     [Serializable, NetSerializable]
+    public class MoveItemFromHandMsg : ComponentMessage
+    {
+        public string HandName { get; }
+
+        public MoveItemFromHandMsg(string handName)
+        {
+            Directed = true;
+            HandName = handName;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public class ClientChangedHandMsg : ComponentMessage
     {
         public string HandName { get; }

@@ -23,7 +23,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using System;
@@ -121,6 +120,9 @@ namespace Content.Server.GameObjects.Components.GUI
                     break;
                 case ActivateInHandMsg msg:
                     ActivateHeldEntity(msg.HandName);
+                    break;
+                case MoveItemFromHandMsg msg:
+                    TryMoveHeldEntityToActiveHand(msg.HandName);
                     break;
             }
         }
@@ -327,17 +329,31 @@ namespace Content.Server.GameObjects.Components.GUI
                 .TryInteractionActivate(Owner, heldEntity);
         }
 
-        /// <summary>
-        ///     Attempts to use the active held item.
-        /// </summary>
-        public void ActivateItem()
+        public bool TryMoveHeldEntityToActiveHand(string handName, bool checkActionBlocker = true)
         {
-            var used = GetActiveHand?.Owner;
-            if (used != null)
-            {
-                var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                interactionSystem.TryUseInteraction(Owner, used);
-            }
+            if (!TryGetServerHand(handName, out var hand))
+                return false;
+
+            if (!TryGetHeldEntity(handName, out var heldEntity))
+                return false;
+
+            if (!TryGetActiveHand(out var activeHand) || activeHand.HeldEntity != null)
+                return false;
+
+            if (checkActionBlocker && (!PlayerCanDrop() || !PlayerCanPickup()))
+                return false;
+
+            RemoveHeldEntityFromHand(hand);
+            PutEntityIntoHand(activeHand, heldEntity);
+            return true;
+        }
+
+        public bool TryPickupEntity(string handName, IEntity entity)
+        {
+            if (!TryGetServerHand(handName, out var hand))
+                return false;
+
+            return TryPickupEntity(hand, entity);
         }
 
         #region Internal Methods
@@ -537,6 +553,57 @@ namespace Content.Server.GameObjects.Components.GUI
             Dirty();
         }
 
+        private bool CanInsertEntityIntoHand(ServerHand hand, IEntity entity)
+        {
+            if (!hand.Container.CanInsert(entity))
+                return false;
+
+            return true;
+        }
+
+        private bool PlayerCanPickup()
+        {
+            if (!ActionBlockerSystem.CanPickup(Owner))
+                return false;
+
+            return true;
+        }
+
+        private void PutEntityIntoHand(ServerHand hand, IEntity entity)
+        {
+            if (!hand.Container.Insert(entity))
+            {
+                Logger.Error($"{nameof(HandsComponent)} on {Owner} could not insert {entity} into {hand.Container}.");
+                return;
+            }
+
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedHandInteraction(Owner, entity, hand.ToHandState());
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, entity);
+            entity.Transform.LocalPosition = Vector2.Zero;
+
+            OnItemChanged?.Invoke();
+            Dirty();
+
+            var entityPosition = entity.TryGetContainer(out var container) ? container.Owner.Transform.Coordinates : entity.Transform.Coordinates;
+
+            if (entityPosition != Owner.Transform.Coordinates)
+            {
+                SendNetworkMessage(new AnimatePickupEntityMessage(entity.Uid, entityPosition));
+            }
+        }
+
+        private bool TryPickupEntity(ServerHand hand, IEntity entity, bool checkActionBlocker = true)
+        {
+            if (!CanInsertEntityIntoHand(hand, entity))
+                return false;
+
+            if (checkActionBlocker && !PlayerCanPickup())
+                return false;
+
+            PutEntityIntoHand(hand, entity);
+            return true;
+        }
+
         #endregion
 
         #region Old hand methods that I don't want to rename and make a huge diff
@@ -559,6 +626,19 @@ namespace Content.Server.GameObjects.Components.GUI
                     continue;
 
                 yield return hand.Name;
+            }
+        }
+
+        /// <summary>
+        ///     Attempts to use the active held item.
+        /// </summary>
+        public void ActivateItem()
+        {
+            var used = GetActiveHand?.Owner;
+            if (used != null)
+            {
+                var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+                interactionSystem.TryUseInteraction(Owner, used);
             }
         }
 

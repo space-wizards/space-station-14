@@ -65,21 +65,27 @@ namespace Content.Client.GameObjects.Components.Items
             var pressedEntity = pressedHand.HeldEntity;
             var activeEntity = activeHand.HeldEntity;
 
-            if (pressedEntity == null && pressedHand != activeHand)
-            {
-                SendNetworkMessage(new ClientChangedHandMsg(pressedHand.Name)); //swap hand
-                return;
-            }
-
-            if (handClicked == ActiveHandName && activeEntity != null)
+            if (pressedHand == activeHand && activeEntity != null)
             {
                 SendNetworkMessage(new UseInHandMsg()); //use item in hand
                 return;
             }
 
-            if (handClicked != ActiveHandName && pressedEntity != null)
+            if (pressedHand != activeHand && pressedEntity == null)
+            {
+                SendNetworkMessage(new ClientChangedHandMsg(pressedHand.Name)); //swap hand
+                return;
+            }
+
+            if (pressedHand != activeHand && pressedEntity != null && activeEntity != null)
             {
                 SendNetworkMessage(new ClientAttackByInHandMsg(pressedHand.Name)); //use active item on held item
+                return;
+            }
+
+            if (pressedHand != activeHand && pressedEntity != null && activeEntity == null)
+            {
+                SendNetworkMessage(new MoveItemFromHandMsg(pressedHand.Name)); //move item in hand to active hand
                 return;
             }
         }
