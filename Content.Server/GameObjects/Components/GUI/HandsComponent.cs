@@ -154,6 +154,15 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
+        public List<IEntity> GetAllHeldEntities()
+        {
+            foreach (var hand in ReadOnlyHands)
+            {
+                if (hand.HeldEntity != null)
+                    yield return hand.HeldEntity;
+            }
+        }
+
         public bool HasHand(string handName)
         {
             foreach (var hand in _hands)
@@ -329,6 +338,9 @@ namespace Content.Server.GameObjects.Components.GUI
                 .TryInteractionActivate(Owner, heldEntity);
         }
 
+        /// <summary>
+        ///     Moves an entity from one hand to the active hand.
+        /// </summary>
         public bool TryMoveHeldEntityToActiveHand(string handName, bool checkActionBlocker = true)
         {
             if (!TryGetServerHand(handName, out var hand))
@@ -348,12 +360,48 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        public bool TryPickupEntity(string handName, IEntity entity)
+        public bool CanPickupEntity(string handName, IEntity entity, bool checkActionBlocker = true)
         {
             if (!TryGetServerHand(handName, out var hand))
                 return false;
 
-            return TryPickupEntity(hand, entity);
+            if (checkActionBlocker && !PlayerCanPickup())
+                return false;
+
+            if (!CanInsertEntityIntoHand(hand, entity))
+                return false;
+
+            return true;
+        }
+
+        public bool CanPickupEntityToActiveHand(IEntity entity, bool checkActionBlocker = true)
+        {
+            if (!TryGetActiveHand(out var hand))
+                return false;
+
+            if (checkActionBlocker && !PlayerCanPickup())
+                return false;
+
+            if (!CanInsertEntityIntoHand(hand, entity))
+                return false;
+
+            return true;
+        }
+
+        public bool TryPickupEntity(string handName, IEntity entity, bool checkActionBlocker = true)
+        {
+            if (!TryGetServerHand(handName, out var hand))
+                return false;
+
+            return TryPickupEntity(hand, entity, checkActionBlocker);
+        }
+
+        public bool TryPickupEntityToActiveHand(IEntity entity, bool checkActionBlocker = true)
+        {
+            if (!TryGetActiveHand(out var hand))
+                return false;
+
+            return TryPickupEntity(hand, entity, checkActionBlocker);
         }
 
         #region Internal Methods
@@ -634,12 +682,7 @@ namespace Content.Server.GameObjects.Components.GUI
         /// </summary>
         public void ActivateItem()
         {
-            var used = GetActiveHand?.Owner;
-            if (used != null)
-            {
-                var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                interactionSystem.TryUseInteraction(Owner, used);
-            }
+            UseActiveHeldEntity();
         }
 
         /// <summary>
@@ -666,104 +709,106 @@ namespace Content.Server.GameObjects.Components.GUI
             return TryPutEntityIntoContainer(entity, targetContainer, checkActionBlocker);
         }
 
-        #endregion
+        /// <summary>
+        ///     Checks if an item can be put into a specific hand.
+        /// </summary>
+        public bool CanPutInHand(ItemComponent item, string handName, bool mobCheck = true)
+        {
+            return CanPickupEntity(handName, item.Owner, mobCheck);
+        }
 
-        #region Old API w/ ItemComponent
-
+        /// <summary>
+        ///     Tries to get the ItemComponent on the entity held by a hand.
+        /// </summary>
         public ItemComponent? GetItem(string handName)
         {
-            if (!TryGetServerHand(handName, out var hand))
-                return null;
-
-            var heldEntity = hand.HeldEntity;
-            if (heldEntity == null)
+            if (!TryGetHeldEntity(handName, out var heldEntity))
                 return null;
 
             heldEntity.TryGetComponent(out ItemComponent? item);
-
             return item;
         }
 
+        /// <summary>
+        ///     Tries to get the ItemComponent on the entity held by a hand.
+        /// </summary>
         public bool TryGetItem(string handName, [NotNullWhen(true)] out ItemComponent? item)
         {
-            return (item = GetItem(handName)) != null;
+            item = null;
+
+            if (!TryGetHeldEntity(handName, out var heldEntity))
+                return false;
+
+            return heldEntity.TryGetComponent(out item);
         }
 
+        /// <summary>
+        ///     Tries to get the ItemComponent off the entity in the active hand.
+        /// </summary>
         public ItemComponent? GetActiveHand
         {
             get
             {
-                if (ActiveHand == null)
+                if (!TryGetActiveHeldEntity(out var heldEntity))
                     return null;
 
-                return GetItem(ActiveHand);
+                heldEntity.TryGetComponent(out ItemComponent? item);
+                return item;
             }
         }
 
         public IEnumerable<ItemComponent> GetAllHeldItems()
         {
-            foreach (var hand in _hands)
+            foreach (var entity in GetAllHeldEntities())
             {
-                var heldEntity = hand.HeldEntity;
-                if (heldEntity == null)
-                    continue;
-
-                if (heldEntity.TryGetComponent(out ItemComponent? item))
+                if (entity.TryGetComponent(out ItemComponent? item))
                     yield return item;
             }
         }
+
+        #endregion
+
+        #region Old API w/ ItemComponent
 
         /// <summary>
         ///     Attempts to put item into a hand, prefering the active hand.
         /// </summary>
         public bool PutInHand(ItemComponent item, bool mobCheck = true)
         {
-            foreach (var hand in ActivePriorityEnumerable())
-            {
-                if (!TryPutItemInHand(item, hand, false, mobCheck))
-                    continue;
+            var entity = item.Owner;
 
-                OnItemChanged?.Invoke();
-                return true;
+            if (TryGetActiveHand(out var activeHand))
+            {
+                if (TryPickupEntityToActiveHand(entity))
+                    return true;
+            }
+
+            foreach (var hand in _hands)
+            {
+                if (hand != activeHand)
+                {
+                    if (TryPickupEntity(hand, entity, mobCheck))
+                        return true;
+                }
             }
             return false;
         }
 
-        public bool TryPutItemInHand(ItemComponent item, string handName, bool fallback = true, bool mobChecks = true)
+        public bool TryPutItemInHand(ItemComponent item, string handName, bool fallback = true, bool mobCheck = true)
         {
-            if (!TryGetServerHand(handName, out var hand))
-                return false;
+            var entity = item.Owner;
 
-            if (!CanPutInHand(item, handName, mobChecks))
-            {
-                return fallback && PutInHand(item);
-            }
+            if (TryPickupEntityToActiveHand(entity, mobCheck))
+                return true;
 
-            Dirty();
+            if (fallback && PutInHand(item, mobCheck))
+                return true;
 
-            var position = item.Owner.Transform.Coordinates;
-            var contained = item.Owner.IsInContainer();
-            var success = hand.Container.Insert(item.Owner);
-            if (success)
-            {
-                //If the entity isn't in a container, and it isn't located exactly at our position (i.e. in our own storage), then we can safely play the animation
-                if (position != Owner.Transform.Coordinates && !contained)
-                {
-                    SendNetworkMessage(new AnimatePickupEntityMessage(item.Owner.Uid, position));
-                }
-                item.Owner.Transform.LocalPosition = Vector2.Zero;
-                OnItemChanged?.Invoke();
-            }
-
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedHandInteraction(Owner, item.Owner, hand.ToHandState());
-
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, item.Owner);
-
-            return success;
+            return false;
         }
 
         /// <summary>
-        ///     Puts an item in a hand, preferring the active hand, or puts it on the floor under the player.
+        ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
         /// </summary>
         public void PutInHandOrDrop(ItemComponent item, bool mobCheck = true)
         {
@@ -771,33 +816,23 @@ namespace Content.Server.GameObjects.Components.GUI
                 item.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
         }
 
+        /// <summary>
+        ///     Checks if any hand can pick up an item.
+        /// </summary>
         public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
         {
-            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
+            var entity = item.Owner;
+
+            if (mobCheck && !PlayerCanPickup())
                 return false;
 
-            foreach (var handName in ActivePriorityEnumerable())
+            foreach (var hand in _hands)
             {
-                // We already did a mobCheck, so let's not waste cycles.
-                if (CanPutInHand(item, handName, false))
-                {
+                if (CanInsertEntityIntoHand(hand, entity))
                     return true;
-                }
             }
 
             return false;
-        }
-
-        public bool CanPutInHand(ItemComponent item, string handName, bool mobCheck = true)
-        {
-            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
-                return false;
-
-            if (!TryGetServerHand(handName, out var hand))
-                return false;
-
-            return hand.Enabled &&
-                   hand.Container.CanInsert(item.Owner);
         }
 
         #endregion
