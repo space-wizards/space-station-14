@@ -1,9 +1,10 @@
-﻿using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Fluids;
 using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameObjects.Components.Nutrition
 {
@@ -14,8 +15,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public void PlaySound()
         {
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(AudioHelpers.GetRandomFileFromSoundCollection("desecration"), Owner,
+            SoundSystem.Play(Filter.Pvs(Owner), AudioHelpers.GetRandomFileFromSoundCollection("desecration"), Owner,
                 AudioHelpers.WithVariation(0.125f));
         }
 

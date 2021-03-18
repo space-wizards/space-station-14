@@ -28,6 +28,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
@@ -257,7 +258,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 if (user.TryGetComponent(out HandsComponent? hands) && hands.Count == 0)
                 {
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/bang.ogg", Owner,
+                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/bang.ogg", Owner,
                                                                    AudioParams.Default.WithVolume(-2));
                 }
             }

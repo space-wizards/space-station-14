@@ -20,10 +20,12 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -722,8 +724,7 @@ namespace Content.Server.GameObjects.Components.Botany
 
                     if (!string.IsNullOrEmpty(spray.SpraySound))
                     {
-                        EntitySystem.Get<AudioSystem>().PlayFromEntity(spray.SpraySound, usingItem,
-                            AudioHelpers.WithVariation(0.125f));
+                        SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound, usingItem, AudioHelpers.WithVariation(0.125f));
                     }
                 }
 
