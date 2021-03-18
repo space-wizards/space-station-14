@@ -706,158 +706,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        #region Old public methods
-
-        public IEnumerable<string> Hands => _hands.Select(h => h.Name);
-
-        public int Count => _hands.Count;
-
-        /// <summary>
-        ///     Returns a list of all hand names, with the active hand being first.
-        /// </summary>
-        public IEnumerable<string> ActivePriorityEnumerable()
-        {
-            if (ActiveHand != null)
-                yield return ActiveHand;
-
-            foreach (var hand in _hands)
-            {
-                if (hand.Name == ActiveHand || !hand.Enabled)
-                    continue;
-
-                yield return hand.Name;
-            }
-        }
-
-        /// <summary>
-        ///     Attempts to use the active held item.
-        /// </summary>
-        public void ActivateItem()
-        {
-            UseActiveHeldEntity();
-        }
-
-        /// <summary>
-        ///     Tries to drop the contents of a hand directly under the player.
-        /// </summary>
-        public bool Drop(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
-        {
-            return TryDropHandToFloor(handName, checkActionBlocker, intentionalDrop);
-        }
-
-        /// <summary>
-        ///     Tries to drop an entity in a hand directly under the player.
-        /// </summary>
-        public bool Drop(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
-        {
-            return TryDropEntityToFloor(entity, checkActionBlocker, intentionalDrop);
-        }
-
-        /// <summary>
-        ///     Tries to unequip contents of a hand directly into a container.
-        /// </summary>
-        public bool Drop(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
-        {
-            return TryPutEntityIntoContainer(entity, targetContainer, checkActionBlocker);
-        }
-
-        /// <summary>
-        ///     Checks if an item can be put into a specific hand.
-        /// </summary>
-        public bool CanPutInHand(ItemComponent item, string handName, bool mobCheck = true)
-        {
-            return CanPickupEntity(handName, item.Owner, mobCheck);
-        }
-
-        /// <summary>
-        ///     Tries to get the ItemComponent on the entity held by a hand.
-        /// </summary>
-        public ItemComponent? GetItem(string handName)
-        {
-            if (!TryGetHeldEntity(handName, out var heldEntity))
-                return null;
-
-            heldEntity.TryGetComponent(out ItemComponent? item);
-            return item;
-        }
-
-        /// <summary>
-        ///     Tries to get the ItemComponent on the entity held by a hand.
-        /// </summary>
-        public bool TryGetItem(string handName, [NotNullWhen(true)] out ItemComponent? item)
-        {
-            item = null;
-
-            if (!TryGetHeldEntity(handName, out var heldEntity))
-                return false;
-
-            return heldEntity.TryGetComponent(out item);
-        }
-
-        /// <summary>
-        ///     Tries to get the ItemComponent off the entity in the active hand.
-        /// </summary>
-        public ItemComponent? GetActiveHand
-        {
-            get
-            {
-                if (!TryGetActiveHeldEntity(out var heldEntity))
-                    return null;
-
-                heldEntity.TryGetComponent(out ItemComponent? item);
-                return item;
-            }
-        }
-
-        public IEnumerable<ItemComponent> GetAllHeldItems()
-        {
-            foreach (var entity in GetAllHeldEntities())
-            {
-                if (entity.TryGetComponent(out ItemComponent? item))
-                    yield return item;
-            }
-        }
-
-        /// <summary>
-        ///     Checks if any hand can pick up an item.
-        /// </summary>
-        public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
-        {
-            var entity = item.Owner;
-
-            if (mobCheck && !PlayerCanPickup())
-                return false;
-
-            foreach (var hand in _hands)
-            {
-                if (CanInsertEntityIntoHand(hand, entity))
-                    return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        ///     Attempts to put an item into the active hand, or any other hand if it cannot.
-        /// </summary>
-        public bool PutInHand(ItemComponent item, bool checkActionBlocker = true)
-        {
-            return TryPutInActiveHandOrAny(item.Owner, checkActionBlocker);
-        }
-
-        /// <summary>
-        ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
-        /// </summary>
-        public void PutInHandOrDrop(ItemComponent item, bool checkActionBlocker = true)
-        {
-            var entity = item.Owner;
-
-            if (!TryPutInActiveHandOrAny(entity, checkActionBlocker))
-                entity.Transform.Coordinates = Owner.Transform.Coordinates;
-        }
-
-        #endregion
-
-        #region Hiding misc pull/disarm
+        #region Pull/Disarm
 
         void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs args)
         {
@@ -945,6 +794,149 @@ namespace Content.Server.GameObjects.Components.GUI
                 return;
 
             firstOccupiedHand.Enabled = true;
+        }
+
+        #endregion
+
+        #region Old public methods
+
+        public IEnumerable<string> Hands => _hands.Select(h => h.Name);
+
+        public int Count => _hands.Count;
+
+        /// <summary>
+        ///     Returns a list of all hand names, with the active hand being first.
+        /// </summary>
+        public IEnumerable<string> ActivePriorityEnumerable()
+        {
+            if (ActiveHand != null)
+                yield return ActiveHand;
+
+            foreach (var hand in _hands)
+            {
+                if (hand.Name == ActiveHand || !hand.Enabled)
+                    continue;
+
+                yield return hand.Name;
+            }
+        }
+
+        /// <summary>
+        ///     Attempts to use the active held item.
+        /// </summary>
+        public void ActivateItem()
+        {
+            UseActiveHeldEntity();
+        }
+
+        /// <summary>
+        ///     Tries to drop the contents of a hand directly under the player.
+        /// </summary>
+        public bool Drop(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
+        {
+            return TryDropHandToFloor(handName, checkActionBlocker, intentionalDrop);
+        }
+
+        /// <summary>
+        ///     Tries to drop an entity in a hand directly under the player.
+        /// </summary>
+        public bool Drop(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
+        {
+            return TryDropEntityToFloor(entity, checkActionBlocker, intentionalDrop);
+        }
+
+        /// <summary>
+        ///     Tries to unequip contents of a hand directly into a container.
+        /// </summary>
+        public bool Drop(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
+        {
+            return TryPutEntityIntoContainer(entity, targetContainer, checkActionBlocker);
+        }
+
+        /// <summary>
+        ///     Tries to get the ItemComponent on the entity held by a hand.
+        /// </summary>
+        public ItemComponent? GetItem(string handName)
+        {
+            if (!TryGetHeldEntity(handName, out var heldEntity))
+                return null;
+
+            heldEntity.TryGetComponent(out ItemComponent? item);
+            return item;
+        }
+
+        /// <summary>
+        ///     Tries to get the ItemComponent on the entity held by a hand.
+        /// </summary>
+        public bool TryGetItem(string handName, [NotNullWhen(true)] out ItemComponent? item)
+        {
+            item = null;
+
+            if (!TryGetHeldEntity(handName, out var heldEntity))
+                return false;
+
+            return heldEntity.TryGetComponent(out item);
+        }
+
+        /// <summary>
+        ///     Tries to get the ItemComponent off the entity in the active hand.
+        /// </summary>
+        public ItemComponent? GetActiveHand
+        {
+            get
+            {
+                if (!TryGetActiveHeldEntity(out var heldEntity))
+                    return null;
+
+                heldEntity.TryGetComponent(out ItemComponent? item);
+                return item;
+            }
+        }
+
+        public IEnumerable<ItemComponent> GetAllHeldItems()
+        {
+            foreach (var entity in GetAllHeldEntities())
+            {
+                if (entity.TryGetComponent(out ItemComponent? item))
+                    yield return item;
+            }
+        }
+
+        /// <summary>
+        ///     Checks if any hand can pick up an item.
+        /// </summary>
+        public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
+        {
+            var entity = item.Owner;
+
+            if (mobCheck && !PlayerCanPickup())
+                return false;
+
+            foreach (var hand in _hands)
+            {
+                if (CanInsertEntityIntoHand(hand, entity))
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        ///     Attempts to put an item into the active hand, or any other hand if it cannot.
+        /// </summary>
+        public bool PutInHand(ItemComponent item, bool checkActionBlocker = true)
+        {
+            return TryPutInActiveHandOrAny(item.Owner, checkActionBlocker);
+        }
+
+        /// <summary>
+        ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
+        /// </summary>
+        public void PutInHandOrDrop(ItemComponent item, bool checkActionBlocker = true)
+        {
+            var entity = item.Owner;
+
+            if (!TryPutInActiveHandOrAny(entity, checkActionBlocker))
+                entity.Transform.Coordinates = Owner.Transform.Coordinates;
         }
 
         #endregion

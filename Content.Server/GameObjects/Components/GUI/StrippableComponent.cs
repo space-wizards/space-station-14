@@ -238,7 +238,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     return false;
                 }
 
-                if (!hands.CanPutInHand(item, hand, false))
+                if (!hands.CanPickupEntity(hand, item.Owner, checkActionBlocker: false))
                 {
                     user.PopupMessageCursor(Loc.GetString("{0:They} cannot put that there!", Owner));
                     return false;
@@ -263,7 +263,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(hand);
-            hands.TryPickupEntity(hand, item!.Owner, checkActionBlocker:false);
+            hands.TryPickupEntity(hand, item!.Owner, checkActionBlocker: false);
             UpdateSubscribed();
         }
 

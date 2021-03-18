@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -69,15 +68,6 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
         /// <returns>True if the item can be inserted, false otherwise.</returns>
         bool CanPutInHand(ItemComponent item, bool mobCheck = true);
-
-        /// <summary>
-        ///     Checks to see if an item can be put in the specified hand.
-        /// </summary>
-        /// <param name="item">The item to check for.</param>
-        /// <param name="index">The name for the hand to check for.</param>
-        /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
-        /// <returns>True if the item can be inserted, false otherwise.</returns>
-        bool CanPutInHand(ItemComponent item, string index, bool mobCheck = true);
 
         /// <summary>
         ///     Drops the item contained in the slot to the same position as our entity.
