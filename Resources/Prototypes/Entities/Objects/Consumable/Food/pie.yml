@@ -12,11 +12,13 @@
     netsync: false
   - type: LoopingSound
   - type: SolutionContainer
-    maxVol: 20
+    maxVol: 15
     contents:
       reagents:
       - ReagentId: chem.Nutriment
-        Quantity: 20
+        Quantity: 15
+  - type: SliceableFood
+    count: 4
 
 - type: entity
   parent: FoodPieBase
@@ -27,11 +29,11 @@
   - type: Food
     trash: PlateSmall
   - type: SolutionContainer
-    maxVol: 7
+    maxVol: 5
     contents:
       reagents:
       - ReagentId: chem.Nutriment
-        Quantity: 7
+        Quantity: 5
 
 # Pie
 
