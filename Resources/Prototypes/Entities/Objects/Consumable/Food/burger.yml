@@ -43,7 +43,7 @@
   description: Tastes like appendicitis.
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -57,7 +57,7 @@
   description: Almost like a carp is yelling somewhere...
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -71,7 +71,7 @@
   description: What.. is that meat?
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -95,7 +95,7 @@
   description: Smells caustic. Tastes like heresy.
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -109,7 +109,7 @@
   description: Best served rawr.
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -122,7 +122,7 @@
   description: This tastes funny...
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -135,7 +135,7 @@
   description: Its taste defies language.
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -149,7 +149,7 @@
   description: A strange looking burger. It looks almost sentient.
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -176,7 +176,7 @@
   description: This is absolutely Ei Nath.
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -196,7 +196,7 @@
       - ReagentId: chem.Nutriment
         Quantity: 25
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -226,7 +226,7 @@
   description: HOT! HOT! HOT!
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -240,7 +240,7 @@
   description: Pretty much what you'd expect...
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -254,7 +254,7 @@
   description: It's still warm. The steam coming off of it looks like baseball
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -268,7 +268,7 @@
   description: The perfect combination of all things American.
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -282,7 +282,7 @@
   description: It's shockingly good, if you live off of electricity that is.
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -296,7 +296,7 @@
   description: A delicious patty of the crabby kind, slapped in between a bun.
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -310,7 +310,7 @@
   description: After eating this you have the overwhelming urge to purchase overpriced figurines of superheroes.
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -324,7 +324,7 @@
   description: An elusive rib shaped burger with limited availablity across the galaxy. Not as good as you remember it.
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -338,7 +338,7 @@
   description: A cheap and greasy imitation of an eggs benedict.
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -352,7 +352,7 @@
   description: A delicious chicken sandwich, it is said the proceeds from this treat helps criminalize disarming people on the space frontier.
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate
@@ -366,7 +366,7 @@
   description: This noble burger stands proudly clad in golden cheese.
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate

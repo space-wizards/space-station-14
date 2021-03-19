@@ -14,6 +14,12 @@
       "name": "blue"
     },
     {
+      "name": "box"
+    },
+    {
+      "name": "box-open"
+    },
+    {
       "name": "box1"
     },
     {
@@ -36,9 +42,6 @@
     },
     {
       "name": "choc"
-    },
-    {
-      "name": "choc-sprinkles"
     },
     {
       "name": "green"
@@ -66,14 +69,6 @@
     },
     {
       "name": "yellow"
-    },
-    {
-      "name": "pink-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "pink-inhand-right",
-      "directions": 4
     },
     {
       "name": "pink-box1"
@@ -110,6 +105,22 @@
       "directions": 4
     },
     {
+      "name": "box-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "box-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pink-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pink-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "jelly-beige"
     },
     {
@@ -117,9 +128,6 @@
     },
     {
       "name": "jelly-choc"
-    },
-    {
-      "name": "jelly-choc-sprinkles"
     },
     {
       "name": "jelly-green"
@@ -144,6 +152,15 @@
     },
     {
       "name": "jelly-yellow"
+    },
+    {
+      "name": "jelly-slug"
+    },
+    {
+      "name": "sprinkles-overlay"
+    },
+    {
+      "name": "jelly-sprinkles-overlay"
     }
   ]
 }

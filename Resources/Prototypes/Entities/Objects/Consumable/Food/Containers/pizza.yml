@@ -9,7 +9,7 @@
 - type: entity
   parent: BaseItem
   name: pizza box
-  id: FoodPizzaBox
+  id: FoodBoxPizza
   components:
   # - type: Tag
   #   tags:
@@ -49,8 +49,8 @@
 
 - type: entity
   name: pizza box
-  parent: FoodPizzaBox
-  id: FoodPizzaBoxFilled
+  parent: FoodBoxPizza
+  id: FoodBoxPizzaFilled
   suffix: Filled
   components:
   - type: Sprite

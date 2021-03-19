@@ -1,5 +1,5 @@
 - type: entity
-  id: EggBox
+  id: FoodContainerEgg
   parent: BaseItem
   name: eggbox
   description: Don't drop em'!

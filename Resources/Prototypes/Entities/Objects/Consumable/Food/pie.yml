@@ -6,7 +6,7 @@
   abstract: true
   components:
   - type: Food
-    trash: PlateTin
+    trash: FoodPlateTin
   - type: Sprite
     sprite: Objects/Consumable/Food/pie.rsi
     netsync: false
@@ -27,7 +27,7 @@
   description:
   components:
   - type: Food
-    trash: PlateSmall
+    trash: FoodPlateSmall
   - type: SolutionContainer
     maxVol: 5
     contents:
@@ -260,7 +260,7 @@
   description: A tasty dessert that reminds you of the wine you didn't make.
   components:
   - type: Food
-    trash: PlateTart
+    trash: FoodPlateSmall2
   - type: Sprite
     layers:
     - state: plate-tart
@@ -274,7 +274,7 @@
   description: "      "
   components:
   - type: Food
-    trash: PlateTart
+    trash: FoodPlateSmall2
   - type: Sprite
     layers:
     - state: plate-tart
@@ -288,7 +288,7 @@
   description: A tasty dessert that won't make it through a metal detector.
   components:
   - type: Food
-    trash: PlateTart
+    trash: FoodPlateSmall2
   - type: Sprite
     layers:
     - state: plate-tart
@@ -302,7 +302,7 @@
   description: A tasty dessert made of chocolate, with a liquid core.
   components:
   - type: Food
-    trash: PlateTart
+    trash: FoodPlateSmall2
   - type: Sprite
     layers:
     - state: plate-tart

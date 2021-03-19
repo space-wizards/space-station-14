@@ -1,5 +1,10 @@
+# There is a newer, better version of the donutbox from tgstation included in the
+# donut.rsi. The reason it isn't implemented is it requires a StackVisualizer offsetting
+# the layer sprite by a couple pixels everytime a new donut is added. It also requires
+# an alpha color which -Y- said he would implement.
+
 - type: entity
-  id: EggBox
+  id: FoodBoxDonut
   parent: BaseItem
   name: donutbox
   description: Don't drop em'!
@@ -7,17 +12,18 @@
   - type: Sprite
     netsync: false
     sprite: Objects/Consumable/Food/donut.rsi
-    state: box-closed
+    state: box
   - type: Storage
     capacity: 6
   - type: Item
     sprite: Objects/Consumable/Food/donut.rsi
     size: 6
+    HeldPrefix: box
   - type: StorageFill
     contents:
       - name: FoodDonutPink
         amount: 3
-      - name: FoodDonutPinkJelly
+      - name: FoodDonutPlain
         amount: 3
   - type: StorageCounter
     countTag: Donut
@@ -29,8 +35,8 @@
         composite: true
         stackLayers:
           - box1
-          - box2
+          - pink-box2
           - box3
-          - box4
+          - pink-box4
           - box5
-          - box6
+          - pink-box6

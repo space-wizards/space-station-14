@@ -9,7 +9,7 @@
 - type: entity
   name: plate
   parent: BaseItem
-  id: Plate
+  id: FoodPlate
   description: A large plate, excellent for bread.
   components:
   - type: Sprite
@@ -31,7 +31,7 @@
         soundCollection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          PlateTrash:
+          FoodPlateTrash:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -40,7 +40,7 @@
 - type: entity
   name: broken plate
   parent: BaseItem
-  id: PlateTrash
+  id: FoodPlateTrash
   description: A large plate, broken and useless.
   components:
   - type: Sprite
@@ -53,7 +53,7 @@
 - type: entity
   name: plate
   parent: Plate
-  id: PlateSmall
+  id: FoodPlateSmall
   description: A small plate. Delicate.
   components:
   - type: Sprite
@@ -79,7 +79,7 @@
 - type: entity
   name: broken plate
   parent: BaseItem
-  id: PlateSmallTrash
+  id: FoodPlateSmallTrash
   description: A broken plate. Useless.
   components:
   - type: Sprite
@@ -87,12 +87,12 @@
     state: plate-small-trash
     netsync: false
 
-# Tart Plate
+# A second small plate for different purposes.
 
 - type: entity
   name: plate
   parent: Plate
-  id: PlateTart
+  id: FoodPlateSmall2
   description: A small plate, excellent for a tart.
   components:
   - type: Sprite
@@ -109,7 +109,7 @@
         soundCollection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          PlateSmallTrash:
+          PlateSmall2Trash:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -118,7 +118,7 @@
 - type: entity
   name: broken plate
   parent: BaseItem
-  id: PlateSmallTrash
+  id: FoodPlateSmall2Trash
   description: A broken plate. Useless.
   components:
   - type: Sprite
@@ -131,7 +131,7 @@
 - type: entity
   name: plastic plate
   parent: BaseItem
-  id: PlatePlastic
+  id: FoodPlatePlastic
   description: A large blue plastic plate, excellent for a birthday cake.
   components:
   - type: Sprite
@@ -142,7 +142,7 @@
 - type: entity
   name: plastic plate
   parent: BaseItem
-  id: PlateSmallPlastic
+  id: FoodPlateSmallPlastic
   description: A blue plastic plate, excellent for slices of birthday cake.
   components:
   - type: Sprite
@@ -155,7 +155,7 @@
 - type: entity
   name: pie tin
   parent: BaseItem
-  id: PlateTin
+  id: FoodPlateTin
   description: A cheap, foil tin for pies.
   components:
   - type: Sprite
