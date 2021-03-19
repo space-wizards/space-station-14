@@ -14,6 +14,27 @@
       "name": "blue"
     },
     {
+      "name": "box1"
+    },
+    {
+      "name": "box2"
+    },
+    {
+      "name": "box3"
+    },
+    {
+      "name": "box4"
+    },
+    {
+      "name": "box5"
+    },
+    {
+      "name": "box6"
+    },
+    {
+      "name": "chaos"
+    },
+    {
       "name": "choc"
     },
     {
@@ -27,6 +48,9 @@
     },
     {
       "name": "laugh"
+    },
+    {
+      "name": "meat"
     },
     {
       "name": "olive"
@@ -52,6 +76,24 @@
       "directions": 4
     },
     {
+      "name": "pink-box1"
+    },
+    {
+      "name": "pink-box2"
+    },
+    {
+      "name": "pink-box3"
+    },
+    {
+      "name": "pink-box4"
+    },
+    {
+      "name": "pink-box5"
+    },
+    {
+      "name": "pink-box6"
+    },
+    {
       "name": "alpha-inhand-left",
       "directions": 4
     },
@@ -66,6 +108,42 @@
     {
       "name": "inhand-right",
       "directions": 4
+    },
+    {
+      "name": "jelly-beige"
+    },
+    {
+      "name": "jelly-blue"
+    },
+    {
+      "name": "jelly-choc"
+    },
+    {
+      "name": "jelly-choc-sprinkles"
+    },
+    {
+      "name": "jelly-green"
+    },
+    {
+      "name": "jelly-homer"
+    },
+    {
+      "name": "jelly-laugh"
+    },
+    {
+      "name": "jelly-olive"
+    },
+    {
+      "name": "jelly-pink"
+    },
+    {
+      "name": "jelly-plain"
+    },
+    {
+      "name": "jelly-purple"
+    },
+    {
+      "name": "jelly-yellow"
     }
   ]
 }

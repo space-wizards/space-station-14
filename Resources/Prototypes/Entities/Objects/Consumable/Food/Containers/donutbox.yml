@@ -1,0 +1,36 @@
+- type: entity
+  id: EggBox
+  parent: BaseItem
+  name: donutbox
+  description: Don't drop em'!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/donut.rsi
+    state: box-closed
+  - type: Storage
+    capacity: 6
+  - type: Item
+    sprite: Objects/Consumable/Food/donut.rsi
+    size: 6
+  - type: StorageFill
+    contents:
+      - name: FoodDonutPink
+        amount: 3
+      - name: FoodDonutPinkJelly
+        amount: 3
+  - type: StorageCounter
+    countTag: Donut
+  - type: Appearance
+    visuals:
+      - type: BagOpenCloseVisualizer
+        openIcon: box-open
+      - type: StackVisualizer
+        composite: true
+        stackLayers:
+          - box1
+          - box2
+          - box3
+          - box4
+          - box5
+          - box6
