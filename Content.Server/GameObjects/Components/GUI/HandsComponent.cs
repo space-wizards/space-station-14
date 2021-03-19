@@ -61,7 +61,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         [ViewVariables]
         public IReadOnlyList<IReadOnlyHand> ReadOnlyHands => _hands;
-        private readonly List<ServerHand> _hands = new();
+        private readonly List<SharedHand> _hands = new();
 
         protected override void Startup()
         {
@@ -136,7 +136,7 @@ namespace Content.Server.GameObjects.Components.GUI
             container.OccludesLight = false;
             var handLocation = HandLocation.Left; //TODO: Set this appropriately
 
-            _hands.Add(new ServerHand(handName, container, true, handLocation));
+            _hands.Add(new SharedHand(handName, true, handLocation, container));
 
             HandCountChanged();
             Dirty();
@@ -150,7 +150,7 @@ namespace Content.Server.GameObjects.Components.GUI
             RemoveHand(hand);
         }
 
-        private void RemoveHand(ServerHand hand)
+        private void RemoveHand(SharedHand hand)
         {
             DropHeldEntityToFloor(hand, intentionalDrop: false);
             hand.Container.Shutdown();
@@ -170,7 +170,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        private ServerHand? GetServerHand(string handName)
+        private SharedHand? GetServerHand(string handName)
         {
             foreach (var hand in _hands)
             {
@@ -180,7 +180,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return null;
         }
 
-        private ServerHand? GetActiveServerHand()
+        private SharedHand? GetActiveServerHand()
         {
             if (ActiveHand == null)
                 return null;
@@ -188,13 +188,13 @@ namespace Content.Server.GameObjects.Components.GUI
             return GetServerHand(ActiveHand);
         }
 
-        private bool TryGetServerHand(string handName, [NotNullWhen(true)] out ServerHand? foundHand)
+        private bool TryGetServerHand(string handName, [NotNullWhen(true)] out SharedHand? foundHand)
         {
             foundHand = GetServerHand(handName);
             return foundHand != null;
         }
 
-        private bool TryGetActiveHand([NotNullWhen(true)] out ServerHand? activeHand)
+        private bool TryGetActiveHand([NotNullWhen(true)] out SharedHand? activeHand)
         {
             activeHand = GetActiveServerHand();
             return activeHand != null;
@@ -238,7 +238,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        private bool TryGetHandHoldingEntity(IEntity entity, [NotNullWhen(true)] out ServerHand? handFound)
+        private bool TryGetHandHoldingEntity(IEntity entity, [NotNullWhen(true)] out SharedHand? handFound)
         {
             handFound = null;
 
@@ -342,7 +342,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        private bool CanRemoveHeldEntityFromHand(ServerHand hand)
+        private bool CanRemoveHeldEntityFromHand(SharedHand hand)
         {
             var heldEntity = hand.HeldEntity;
 
@@ -363,7 +363,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        private void RemoveHeldEntityFromHand(ServerHand hand)
+        private void RemoveHeldEntityFromHand(SharedHand hand)
         {
             var heldEntity = hand.HeldEntity;
 
@@ -386,7 +386,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        private void DropHeldEntity(ServerHand hand, EntityCoordinates targetDropLocation, bool intentionalDrop)
+        private void DropHeldEntity(SharedHand hand, EntityCoordinates targetDropLocation, bool intentionalDrop)
         {
             var heldEntity = hand.HeldEntity;
 
@@ -424,7 +424,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return dropCoords;
         }
 
-        private bool TryDropHeldEntity(ServerHand hand, EntityCoordinates location, bool checkActionBlocker, bool intentionalDrop)
+        private bool TryDropHeldEntity(SharedHand hand, EntityCoordinates location, bool checkActionBlocker, bool intentionalDrop)
         {
             if (!CanRemoveHeldEntityFromHand(hand))
                 return false;
@@ -439,12 +439,12 @@ namespace Content.Server.GameObjects.Components.GUI
         /// <summary>
         ///     Forcibly drops the contents of a hand directly under the player.
         /// </summary>
-        private void DropHeldEntityToFloor(ServerHand hand, bool intentionalDrop)
+        private void DropHeldEntityToFloor(SharedHand hand, bool intentionalDrop)
         {
             DropHeldEntity(hand, Owner.Transform.Coordinates, intentionalDrop);
         }
 
-        private bool CanPutHeldEntityIntoContainer(ServerHand hand, IContainer targetContainer, bool checkActionBlocker)
+        private bool CanPutHeldEntityIntoContainer(SharedHand hand, IContainer targetContainer, bool checkActionBlocker)
         {
             var heldEntity = hand.HeldEntity;
 
@@ -460,7 +460,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        private void PutHeldEntityIntoContainer(ServerHand hand, IContainer targetContainer)
+        private void PutHeldEntityIntoContainer(SharedHand hand, IContainer targetContainer)
         {
             var heldEntity = hand.HeldEntity;
 
@@ -525,7 +525,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return TryPickupEntity(hand, entity, checkActionBlocker);
         }
 
-        private bool CanInsertEntityIntoHand(ServerHand hand, IEntity entity)
+        private bool CanInsertEntityIntoHand(SharedHand hand, IEntity entity)
         {
             if (!hand.Container.CanInsert(entity))
                 return false;
@@ -541,7 +541,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        private void PutEntityIntoHand(ServerHand hand, IEntity entity)
+        private void PutEntityIntoHand(SharedHand hand, IEntity entity)
         {
             if (!hand.Container.Insert(entity))
             {
@@ -564,7 +564,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        private bool TryPickupEntity(ServerHand hand, IEntity entity, bool checkActionBlocker = true)
+        private bool TryPickupEntity(SharedHand hand, IEntity entity, bool checkActionBlocker = true)
         {
             if (!CanInsertEntityIntoHand(hand, entity))
                 return false;
@@ -679,7 +679,7 @@ namespace Content.Server.GameObjects.Components.GUI
         /// </summary>
         public bool TryPutInAnyHand(IEntity entity, string? priorityHandName = null, bool checkActionBlocker = true)
         {
-            ServerHand? priorityHand = null;
+            SharedHand? priorityHand = null;
 
             if (priorityHandName != null)
                 priorityHand = GetServerHand(priorityHandName);
@@ -690,7 +690,7 @@ namespace Content.Server.GameObjects.Components.GUI
         /// <summary>
         ///     Tries to pick up an entity into the priority hand, if provided. Then, tries to pick up the entity into every other hand.
         /// </summary>
-        private bool TryPutInAnyHand(IEntity entity, ServerHand? priorityHand = null, bool checkActionBlocker = true)
+        private bool TryPutInAnyHand(IEntity entity, SharedHand? priorityHand = null, bool checkActionBlocker = true)
         {
             if (priorityHand != null)
             {
@@ -940,18 +940,6 @@ namespace Content.Server.GameObjects.Components.GUI
         }
 
         #endregion
-    }
-
-    public class ServerHand : SharedHand
-    {
-        public override IEntity? HeldEntity => Container.ContainedEntity;
-
-        public ContainerSlot Container { get; }
-
-        public ServerHand(string name, ContainerSlot container, bool enabled, HandLocation location) : base(name, enabled, location)
-        {
-            Container = container;
-        }
     }
 
     public class HandCountChangedEvent : EntityEventArgs

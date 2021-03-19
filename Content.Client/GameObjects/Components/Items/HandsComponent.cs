@@ -3,8 +3,10 @@ using Content.Client.Animations;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
@@ -138,23 +140,22 @@ namespace Content.Client.GameObjects.Components.Items
             _hands.Clear();
 
             ActiveHandName = state.ActiveHand;
+
+            var containerMan = Owner.GetComponent<ContainerManagerComponent>(); //TODO
             foreach (var handState in state.Hands)
             {
-                var newHand = new ClientHand(handState.Name, handState.Location, GetHeldEntity(handState.HeldEntityUid), handState.Enabled);
+                if (!containerMan.TryGetContainer(handState.Name, out var container))
+                {
+                    Logger.Error("TODO: hand error");
+                    continue;
+                }
+
+                var newHand = new SharedHand(handState.Name, handState.Enabled, handState.Location, container);
                 _hands.Add(newHand);
             }
 
             MakeHandLayers();
             SetGuiState();
-
-            IEntity? GetHeldEntity(EntityUid? uid)
-            {
-                IEntity? heldEntity = null;
-                if (uid != null)
-                    Owner.EntityManager.TryGetEntity(uid.Value, out heldEntity);
-
-                return heldEntity;
-            }
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -288,16 +289,6 @@ namespace Content.Client.GameObjects.Components.Items
                 handStates.Add(handState);
             }
             return new HandsGuiState(handStates, ActiveHandName);
-        }
-    }
-
-    public class ClientHand : SharedHand
-    {
-        public override IEntity? HeldEntity { get; }
-
-        public ClientHand(string name, HandLocation location, IEntity? heldEntity, bool enabled) : base(name, enabled, location)
-        {
-            HeldEntity = heldEntity;
         }
     }
 }

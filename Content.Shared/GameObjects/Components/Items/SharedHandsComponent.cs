@@ -1,6 +1,8 @@
 #nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -28,7 +30,7 @@ namespace Content.Shared.GameObjects.Components.Items
         public abstract IEntity? HeldEntity { get; }
     }
 
-    public abstract class SharedHand : IReadOnlyHand
+    public class SharedHand : IReadOnlyHand
     {
         public string Name { get; set; }
 
@@ -36,18 +38,21 @@ namespace Content.Shared.GameObjects.Components.Items
 
         public HandLocation Location { get; set; }
 
-        public abstract IEntity? HeldEntity { get; }
+        public IContainer Container { get; }
 
-        public SharedHand(string name, bool enabled, HandLocation location)
+        public IEntity? HeldEntity => Container.ContainedEntities.FirstOrDefault();
+
+        public SharedHand(string name, bool enabled, HandLocation location, IContainer container)
         {
             Name = name;
             Enabled = enabled;
             Location = location;
+            Container = container;
         }
 
         public HandState ToHandState()
         {
-            return new(Name, HeldEntity?.Uid, Location, Enabled);
+            return new(Name, Location, Enabled);
         }
     }
 
@@ -55,20 +60,17 @@ namespace Content.Shared.GameObjects.Components.Items
     public sealed class HandState
     {
         public string Name { get; }
-        public EntityUid? HeldEntityUid { get; }
         public HandLocation Location { get; }
         public bool Enabled { get; }
 
-        public HandState(string name, EntityUid? heldEntityUid, HandLocation location, bool enabled)
+        public HandState(string name, HandLocation location, bool enabled)
         {
             Name = name;
-            HeldEntityUid = heldEntityUid;
             Location = location;
             Enabled = enabled;
         }
     }
 
-    // The IDs of the items get synced over the network.
     [Serializable, NetSerializable]
     public class HandsComponentState : ComponentState
     {
