@@ -62,9 +62,6 @@ namespace Content.Server.GameObjects.Components.Janitorial
                 // add new bulb to light replacer container?
                 else if (eventArgs.Target.TryGetComponent(out LightBulbComponent? bulb))
                     return TryInsertBulb(bulb, eventArgs.User, true);
-                // add bulbs from storage?
-                else if (eventArgs.Target.TryGetComponent(out ServerStorageComponent? storage))
-                    return TryInsertBulb(storage, eventArgs.User);
             }
 
             return false;
@@ -80,6 +77,9 @@ namespace Content.Server.GameObjects.Components.Janitorial
                 // want to insert a new light bulb?
                 if (eventArgs.Using.TryGetComponent(out LightBulbComponent? bulb))
                     return TryInsertBulb(bulb, eventArgs.User, true);
+                // add bulbs from storage?
+                else if (eventArgs.Using.TryGetComponent(out ServerStorageComponent? storage))
+                    return TryInsertBulb(storage, eventArgs.User);
             }
 
             return false;
@@ -124,7 +124,17 @@ namespace Content.Server.GameObjects.Components.Janitorial
                 return false;
             }
 
-            return _bulbsStorage.Insert(bulb.Owner);
+            // try insert light and show message
+            var hasInsert = _bulbsStorage.Insert(bulb.Owner);
+            if (hasInsert && showTooltip && user != null)
+            {
+                var msg = Loc.GetString("comp-light-replacer-insert-light",
+                    ("light-replacer", Owner), ("bulb", bulb.Owner));
+                user.PopupMessage(msg);
+            }
+
+
+            return hasInsert;
         }
 
         private bool TryInsertBulb(ServerStorageComponent storage, IEntity? user = null)
