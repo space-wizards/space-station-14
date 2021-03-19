@@ -39,11 +39,11 @@
   name: apple pie
   parent: FoodPieBase
   id: FoodPieApple
-  description:
+  description: A pie containing sweet sweet love...or apple.
   components:
   - type: Sprite
     layers:
-    - state: plate
+    - state: tin
     - state: apple
   - type: SliceableFood
     slice: FoodPieAppleSlice
@@ -59,18 +59,18 @@
     - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
-      color: red
-# Tastes like sweetness, apple.
+      color: orange
+# Tastes like pie, apple.
 
 - type: entity
   name: baklava
   parent: FoodPieBase
   id: FoodPieBaklava
-  description:
+  description: A delightful healthy snack made of nut layers with thin bread.
   components:
   - type: Sprite
     layers:
-    - state: plate
+    - state: tin
     - state: baklava
   - type: SliceableFood
     slice: FoodPieBaklavaSlice
@@ -79,9 +79,230 @@
   name: slice of baklava
   parent: FoodPieSliceBase
   id: FoodPieBaklavaSlice
+  description: A portion of a delightful healthy snack made of nut layers with thin bread.
   components:
   - type: Sprite
     layers:
     - state: plate-small
     - state: baklava-slice
-# Tastes like sweetness, apple.
+# Tastes like pie, nuts.
+
+- type: entity
+  name: berry clafoutis
+  parent: FoodPieBase
+  id: FoodPieClafoutis
+  description: No black birds, this is a good sign.
+  components:
+  - type: Sprite
+    layers:
+    - state: tin
+      color: pink
+    - state: berryclafoutis
+  - type: SliceableFood
+    slice: FoodPieClafoutisSlice
+
+- type: entity
+  name: slice of berry clafoutis
+  parent: FoodPieSliceBase
+  id: FoodPieClafoutisSlice
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: pink
+# Tastes like pie, blackberries.
+
+- type: entity
+  name: cherry pie
+  parent: FoodPieBase
+  id: FoodPieCherry
+  description: Taste so good, make a grown man cry.
+  components:
+  - type: Sprite
+    layers:
+    - state: tin
+    - state: cherry
+  - type: SliceableFood
+    slice: FoodPieCherrySlice
+
+- type: entity
+  name: slice of cherry pie
+  parent: FoodPieSliceBase
+  id: FoodPieCherrySlice
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: red
+# Tastes like pie, cherries.
+
+- type: entity
+  name: meat pie
+  parent: FoodPieBase
+  id: FoodPieMeat
+  description: An old barber recipe, very delicious!
+  components:
+  - type: Sprite
+    layers:
+    - state: tin
+    - state: meat
+  - type: SliceableFood
+    slice: FoodPieMeatSlice
+
+- type: entity
+  name: slice of meat pie
+  parent: FoodPieSliceBase
+  id: FoodPieMeatSlice
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: brown
+# Tastes like pie, meat.
+
+- type: entity
+  name: xeno pie
+  parent: FoodPieBase
+  id: FoodPieXeno
+  description:
+  components:
+  - type: Sprite
+    layers:
+    - state: tin
+    - state: xeno
+  - type: SliceableFood
+    slice: FoodPieXenoSlice
+
+- type: entity
+  name: slice of xeno pie
+  parent: FoodPieSliceBase
+  id: FoodPieXenoSlice
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: green
+# Tastes like pie, meat, acid.
+
+- type: entity
+  name: frosty pie
+  parent: FoodPieBase
+  id: FoodPieFrosty
+  description: Tastes like blue and cold.
+  components:
+  - type: Sprite
+    layers:
+    - state: tin
+    - state: frosty
+  - type: SliceableFood
+    slice: FoodPieFrostySlice
+
+- type: entity
+  name: slice of frosty pie
+  parent: FoodPieSliceBase
+  id: FoodPieFrostySlice
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: blue
+# Tastes like pie, mint.
+
+# No Slice
+
+- type: entity
+  name: amanita pie
+  parent: FoodPieBase
+  id: FoodPieAmanita
+  description: Sweet and tasty poison pie.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: amanita
+# Tastes like pie, mushrooms.
+
+- type: entity
+  name: amanita pie
+  parent: FoodPieBase
+  id: FoodPiePlump
+  description: I bet you love stuff made out of plump helmets!
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: plump
+# Tastes like pie, mushrooms.
+
+# Tart
+
+- type: entity
+  name: grape tart
+  parent: FoodPieBase
+  id: FoodTartGrape
+  description: A tasty dessert that reminds you of the wine you didn't make.
+  components:
+  - type: Food
+    trash: PlateTart
+  - type: Sprite
+    layers:
+    - state: plate-tart
+    - state: grape
+# Tastes like tart, grape.
+
+- type: entity
+  name: mime tart
+  parent: FoodPieBase
+  id: FoodTartMime
+  description: "      "
+  components:
+  - type: Food
+    trash: PlateTart
+  - type: Sprite
+    layers:
+    - state: plate-tart
+    - state: mime
+# Tastes like nothing.
+
+- type: entity
+  name: golden apple streusal tart
+  parent: FoodPieBase
+  id: FoodTartGapple
+  description: A tasty dessert that won't make it through a metal detector.
+  components:
+  - type: Food
+    trash: PlateTart
+  - type: Sprite
+    layers:
+    - state: plate-tart
+    - state: gapple
+# Tastes like tart, apple, expensive metal.
+
+- type: entity
+  name: chocolate lava tart
+  parent: FoodPieBase
+  id: FoodTartCoco
+  description: A tasty dessert made of chocolate, with a liquid core.
+  components:
+  - type: Food
+    trash: PlateTart
+  - type: Sprite
+    layers:
+    - state: plate-tart
+    - state: cocolava
+# Tastes like tart, dark chocolate.

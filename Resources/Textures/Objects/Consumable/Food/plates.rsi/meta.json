@@ -11,6 +11,9 @@
       "name": "plate"
     },
     {
+      "name": "plate-trash"
+    },
+    {
       "name": "plate-plastic"
     },
     {
@@ -18,6 +21,12 @@
     },
     {
       "name": "plate-small"
+    },
+    {
+      "name": "plate-small-trash"
+    },
+    {
+      "name": "plate-tart"
     },
     {
       "name": "plate-small-plastic"

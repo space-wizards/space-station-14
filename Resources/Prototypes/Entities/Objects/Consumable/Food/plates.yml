@@ -13,7 +13,7 @@
   description: A large plate, excellent for bread.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/bread.rsi
+    sprite: Objects/Consumable/Food/plates.rsi
     state: plate
     netsync: false
   - type: DamageOnLand
@@ -44,21 +44,21 @@
   description: A large plate, broken and useless.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/bread.rsi
+    sprite: Objects/Consumable/Food/plates.rsi
     state: plate-trash
     netsync: false
 
-# Burger Plate
+# Small Plate
 
 - type: entity
   name: plate
   parent: Plate
   id: PlateSmall
-  description: A small plate, excellent for borgar.
+  description: A small plate. Delicate.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/burger.rsi
-    state: plate
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-small
 # Needs the full thing because inherting is dumb sometimes.
   - type: Destructible
     thresholds:
@@ -83,11 +83,50 @@
   description: A broken plate. Useless.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/burger.rsi
-    state: plate-trash
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-small-trash
     netsync: false
 
-# Cake Plate
+# Tart Plate
+
+- type: entity
+  name: plate
+  parent: Plate
+  id: PlateTart
+  description: A small plate, excellent for a tart.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-tart
+# Needs the full thing because inherting is dumb sometimes.
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PlateSmallTrash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  name: broken plate
+  parent: BaseItem
+  id: PlateSmallTrash
+  description: A broken plate. Useless.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-small-trash
+    netsync: false
+
+# Plastic Plate
 
 - type: entity
   name: plastic plate
@@ -96,10 +135,10 @@
   description: A large blue plastic plate, excellent for a birthday cake.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/cake.rsi
+    sprite: Objects/Consumable/Food/plates.rsi
     state: plate-plastic
     netsync: false
-    
+
 - type: entity
   name: plastic plate
   parent: BaseItem
@@ -107,6 +146,6 @@
   description: A blue plastic plate, excellent for slices of birthday cake.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/cake.rsi
+    sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small-plastic
     netsync: false
