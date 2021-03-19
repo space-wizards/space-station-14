@@ -1,4 +1,0 @@
-author: Zumorica
-changes:
-  - type: Fix
-    message: Fixes taser bolts not moving after being fired.

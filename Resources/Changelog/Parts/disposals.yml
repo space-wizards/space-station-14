@@ -1,4 +1,0 @@
-author: Zumorica
-changes:
-  - type: Fix
-    message: Fixes not being able to flush humans down disposal units.

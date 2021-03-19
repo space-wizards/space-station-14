@@ -591,3 +591,13 @@ Entries:
       in them, type: Fix}
   id: 107
   time: '2021-03-18T09:48:17.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes not being able to flush humans down disposal units., type: Fix}
+  id: 108
+  time: '2021-03-19T18:41:57.894658+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes taser bolts not moving after being fired., type: Fix}
+  id: 109
+  time: '2021-03-19T18:41:57.895376+00:00'
