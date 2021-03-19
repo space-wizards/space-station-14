@@ -204,7 +204,7 @@ namespace Content.Server.GameObjects.Components.Strap
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.IconTexture = buckle.BuckledTo == null ? "/Textures/Interface/VerbIcons/buckle.svg.96dpi.png" : "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png";
+                data.IconTexture = buckle.BuckledTo == null ? "/Textures/Interface/VerbIcons/buckle.svg.192dpi.png" : "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png";
                 data.Text = Loc.GetString(buckle.BuckledTo == null ? "Buckle" : "Unbuckle");
             }
 
