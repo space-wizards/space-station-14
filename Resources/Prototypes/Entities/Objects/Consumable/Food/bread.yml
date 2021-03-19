@@ -7,7 +7,7 @@
   components:
   - type: Food
   - type: Sprite
-    sprite: Objects/Consumable/Food/bread.rsi
+    sprite: Objects/Consumable/Food/Baked/bread.rsi
     netsync: false
   - type: LoopingSound
   - type: SolutionContainer

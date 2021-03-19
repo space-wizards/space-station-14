@@ -8,7 +8,7 @@
   - type: Food
     trash: FoodPlate
   - type: Sprite
-    sprite: Objects/Consumable/Food/cake.rsi
+    sprite: Objects/Consumable/Food/Baked/cake.rsi
     netsync: false
   - type: LoopingSound
   - type: SolutionContainer

@@ -7,16 +7,16 @@
   id: FoodBoxDonut
   parent: BaseItem
   name: donutbox
-  description: Don't drop em'!
+  description: Mmm. Donuts.
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Consumable/Food/donut.rsi
+    sprite: Objects/Consumable/Food/Baked/donut.rsi
     state: box
   - type: Storage
     capacity: 6
   - type: Item
-    sprite: Objects/Consumable/Food/donut.rsi
+    sprite: Objects/Consumable/Food/Baked/donut.rsi
     size: 6
     HeldPrefix: box
   - type: StorageFill

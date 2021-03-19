@@ -15,7 +15,7 @@
   #   tags:
   #     - PizzaBox
   - type: Sprite
-    sprite: Objects/Consumable/Food/pizza.rsi
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
     drawdepth: FloorObjects
     layers:
     - state: box
@@ -28,7 +28,7 @@
   - type: PlaceableSurface
     placeCentered: true
   - type: Item
-    sprite: Objects/Consumable/Food/pizza.rsi
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
     HeldPrefix: box
   # - type: Stack
   #   count: 1

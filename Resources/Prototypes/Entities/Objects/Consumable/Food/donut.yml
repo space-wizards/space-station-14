@@ -14,7 +14,7 @@
     tags:
       - Donut
   - type: Sprite
-    sprite: Objects/Consumable/Food/donut.rsi
+    sprite: Objects/Consumable/Food/Baked/donut.rsi
     netsync: false
   - type: LoopingSound
   - type: SolutionContainer
@@ -24,7 +24,7 @@
       - ReagentId: chem.Nutriment
         Quantity: 3
   - type: Item
-    sprite: Objects/Consumable/Food/donut.rsi
+    sprite: Objects/Consumable/Food/Baked/donut.rsi
     size: 1
 # Tastes like donut.
 
@@ -62,6 +62,8 @@
   components:
   - type: Sprite
     state: homer
+  - type: Item
+    HeldPrefix: pink
 
 - type: entity
   name: chaos donut
@@ -91,6 +93,8 @@
   components:
   - type: Sprite
     state: pink
+  - type: Item
+    HeldPrefix: pink
 
 - type: entity
   name: spaceman's donut
@@ -182,7 +186,8 @@
   components:
   - type: Sprite
     state: jelly-homer
-# Tastes like jelly-donut, chaos.
+  - type: Item
+    HeldPrefix: pink
 
 - type: entity
   name: pink jelly-donut
@@ -192,6 +197,8 @@
   components:
   - type: Sprite
     state: jelly-pink
+  - type: Item
+    HeldPrefix: pink
 
 - type: entity
   name: spaceman's jelly-donut

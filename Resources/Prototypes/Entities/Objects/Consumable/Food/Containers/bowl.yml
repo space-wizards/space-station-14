@@ -48,7 +48,7 @@
 
 - type: entity
   name: bowl
-  parent: BowlBig
+  parent: FoodBowlBig
   id: FoodBowlFancy
   description: A fancy bowl, used for SPECIAL soups and salads.
   components:

@@ -33,6 +33,15 @@
     },
     {
       "name": "plate-small-plastic"
+    },
+    {
+      "name": "tin"
+    },
+    {
+      "name": "tray"
+    },
+    {
+      "name": "tray-trash"
     }
   ]
 }

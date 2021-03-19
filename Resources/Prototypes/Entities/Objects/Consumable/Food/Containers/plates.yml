@@ -159,6 +159,6 @@
   description: A cheap, foil tin for pies.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/pie.rsi
+    sprite: Objects/Consumable/Food/plates.rsi
     state: tin
     netsync: false
