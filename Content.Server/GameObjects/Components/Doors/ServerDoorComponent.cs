@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using System.Threading;
@@ -31,6 +31,8 @@ using Robust.Shared.Physics.Collision;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
+using Content.Server.GameObjects.Components.Construction;
+using Robust.Shared.Containers;
 
 namespace Content.Server.GameObjects.Components.Doors
 {
@@ -41,6 +43,10 @@ namespace Content.Server.GameObjects.Components.Doors
     {
         [ComponentDependency]
         private readonly IDoorCheck? _doorCheck = null;
+
+        [ViewVariables]
+        [DataField("board")]
+        private string? _boardPrototype;
 
         public override DoorState State
         {
@@ -164,6 +170,8 @@ namespace Content.Server.GameObjects.Components.Doors
                 }
                 SetAppearance(DoorVisualState.Welded);
             }
+
+            CreateDoorElectronicsBoard();
         }
 
         public override void OnRemove()
@@ -185,6 +193,8 @@ namespace Content.Server.GameObjects.Components.Doors
                 }
                 QuickOpen();
             }
+
+            CreateDoorElectronicsBoard();
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -636,6 +646,39 @@ namespace Content.Server.GameObjects.Components.Doors
                 _beingWelded = false;
             }
             return false;
+        }
+
+        /// <summary>
+        ///     Creates the corresponding door electronics board on the door.
+        ///     This exists so when you deconstruct doors that were serialized with the map,
+        ///     you can retrieve the door electronics board.
+        /// </summary>
+        private void CreateDoorElectronicsBoard()
+        {
+            // Ensure that the construction component is aware of the board container.
+            if (Owner.TryGetComponent(out ConstructionComponent? construction))
+                construction.AddContainer("board");
+
+            // We don't do anything if this is null or empty.
+            if (string.IsNullOrEmpty(_boardPrototype))
+                return;
+
+            var container = Owner.EnsureContainer<Container>("board", out var existed);
+
+            return;
+            /* // TODO ShadowCommander: Re-enable when access is added to boards. Requires map update.
+            if (existed)
+            {
+                // We already contain a board. Note: We don't check if it's the right one!
+                if (container.ContainedEntities.Count != 0)
+                    return;
+            }
+
+            var board = Owner.EntityManager.SpawnEntity(_boardPrototype, Owner.Transform.Coordinates);
+
+            if(!container.Insert(board))
+                Logger.Warning($"Couldn't insert board {board} into door {Owner}!");
+            */
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

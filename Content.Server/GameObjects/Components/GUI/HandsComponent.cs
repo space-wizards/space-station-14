@@ -25,11 +25,9 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Map;
-using Robust.Shared.Network;
-using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.GUI
 {
@@ -101,12 +99,12 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        private Hand? GetHand(string name)
+        private Hand? GetHand(string? name)
         {
             return _hands.FirstOrDefault(hand => hand.Name == name);
         }
 
-        public ItemComponent? GetItem(string handName)
+        public ItemComponent? GetItem(string? handName)
         {
             return GetHand(handName)?.Entity?.GetComponent<ItemComponent>();
         }
@@ -758,19 +756,26 @@ namespace Content.Server.GameObjects.Components.GUI
                 return false;
 
             var source = eventArgs.Source;
+            var target = eventArgs.Target;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/thudswoosh.ogg", source,
-                AudioHelpers.WithVariation(0.025f));
+            if (source != null)
+            {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/thudswoosh.ogg", source,
+                    AudioHelpers.WithVariation(0.025f));
 
-            if (ActiveHand != null && Drop(ActiveHand, false))
-            {
-                source.PopupMessageOtherClients(Loc.GetString("{0} disarms {1}!", source.Name, eventArgs.Target.Name));
-                source.PopupMessageCursor(Loc.GetString("You disarm {0}!", eventArgs.Target.Name));
-            }
-            else
-            {
-                source.PopupMessageOtherClients(Loc.GetString("{0} shoves {1}!", source.Name, eventArgs.Target.Name));
-                source.PopupMessageCursor(Loc.GetString("You shove {0}!", eventArgs.Target.Name));
+                if (target != null)
+                {
+                    if (ActiveHand != null && Drop(ActiveHand, false))
+                    {
+                        source.PopupMessageOtherClients(Loc.GetString("{0} disarms {1}!", source.Name, target.Name));
+                        source.PopupMessageCursor(Loc.GetString("You disarm {0}!", target.Name));
+                    }
+                    else
+                    {
+                        source.PopupMessageOtherClients(Loc.GetString("{0} shoves {1}!", source.Name, target.Name));
+                        source.PopupMessageCursor(Loc.GetString("You shove {0}!", target.Name));
+                    }
+                }
             }
 
             return true;

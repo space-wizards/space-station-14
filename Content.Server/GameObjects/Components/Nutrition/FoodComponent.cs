@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public override string Name => "Food";
 
-        [ViewVariables] [DataField("useSound")] protected virtual string UseSound { get; set; } = "/Audio/Items/eatfood.ogg";
+        [ViewVariables] [DataField("useSound")] protected virtual string? UseSound { get; set; } = "/Audio/Items/eatfood.ogg";
 
         [ViewVariables] [DataField("trash")] protected virtual string? TrashPrototype { get; set; }
 
@@ -161,8 +161,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             firstStomach.TryTransferSolution(split);
 
-            _entitySystem.GetEntitySystem<AudioSystem>()
-                .PlayFromEntity(UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
+            if (UseSound != null)
+            {
+                _entitySystem.GetEntitySystem<AudioSystem>()
+                    .PlayFromEntity(UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
+            }
+
             trueTarget.PopupMessage(user, Loc.GetString("Nom"));
 
             // If utensils were used

@@ -19,8 +19,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -157,6 +155,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     }
 
                     var dead =
+                        mind.OwnedEntity != null &&
                         mind.OwnedEntity.TryGetComponent<IMobStateComponent>(out var state) &&
                         state.IsDead();
                     if (!dead) return;

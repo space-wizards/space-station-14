@@ -24,6 +24,7 @@
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Physics
+    mass: 100
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -37,6 +38,7 @@
       - VaultImpassable
       - SmallImpassable
   - type: Door
+    board: DoorElectronics
   - type: Airlock
   - type: Appearance
     visuals:
@@ -68,8 +70,58 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: Construction
+    graph: airlock
+    node: airlock
   - type: IconSmooth
     key: walls
     mode: NoSprite
   placement:
     mode: SnapgridCenter
+
+- type: entity
+  id: AirlockAssembly
+  name: airlock assembly
+  description: It opens, it closes, and maybe crushes you.
+  components:
+  - type: Clickable
+  - type: RCDDeconstructWhitelist
+  - type: InteractionOutline
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    sprite: Constructible/Structures/Doors/Standard/basic.rsi
+    state: "assembly"
+  - type: Physics
+    mass: 100
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+      mask:
+      - MobImpassable
+      layer:
+      - MobImpassable
+      - VaultImpassable
+  - type: Anchorable
+    snap: true
+  - type: Pullable
+  - type: SnapGrid
+    offset: Center
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Construction
+    graph: airlock
+    node: assembly
+  placement:
+    mode: SnapgridCenter
+
+

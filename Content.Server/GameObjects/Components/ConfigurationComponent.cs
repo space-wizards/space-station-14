@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(SharedConfigurationComponent))]
     public class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing, ISerializationHooks
     {
-        [ViewVariables] private BoundUserInterface UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
 
         [DataField("keys")] private List<string> _keys = new();
 
@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
-        public string GetConfig(string name)
+        public string? GetConfig(string name)
         {
             return _config.GetValueOrDefault(name);
         }
@@ -78,7 +78,7 @@ namespace Content.Server.GameObjects.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (UserInterface == null || !eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (UserInterface == null || !eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return false;
 
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.Components
 
                 SendMessage(new ConfigUpdatedComponentMessage(config));
             }
-         }
+        }
 
         private void UpdateUserInterface()
         {
@@ -120,8 +120,8 @@ namespace Content.Server.GameObjects.Components
         private void OpenUserInterface(IActorComponent actor)
         {
             UpdateUserInterface();
-            UserInterface.Open(actor.playerSession);
-            UserInterface.SendMessage(new ValidationUpdateMessage(_validation.ToString()), actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
+            UserInterface?.SendMessage(new ValidationUpdateMessage(_validation.ToString()), actor.playerSession);
         }
 
         private static void FillConfiguration<T>(List<string> list, Dictionary<string, T> configuration, T value){
@@ -150,7 +150,7 @@ namespace Content.Server.GameObjects.Components
 
             protected override void Activate(IEntity user, ConfigurationComponent component)
             {
-                if (user.TryGetComponent(out IActorComponent actor))
+                if (user.TryGetComponent(out IActorComponent? actor))
                 {
                     component.OpenUserInterface(actor);
                 }

@@ -116,10 +116,11 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             // Don't collide with other mobs
             // unless they have combat mode on
-            return collidedWith.Entity.HasComponent<IBody>();  /* &&
-                (!Owner.TryGetComponent(out SharedCombatModeComponent? ownerCombat) || !ownerCombat.IsInCombatMode) &&
-                (!collidedWith.Entity.TryGetComponent(out SharedCombatModeComponent? otherCombat) || !otherCombat.IsInCombatMode);
-                */
+            return false; //collidedWith.Entity.HasComponent<IBody>();
+            /* &&
+   (!Owner.TryGetComponent(out SharedCombatModeComponent? ownerCombat) || !ownerCombat.IsInCombatMode) &&
+   (!collidedWith.Entity.TryGetComponent(out SharedCombatModeComponent? otherCombat) || !otherCombat.IsInCombatMode);
+   */
         }
 
         [Serializable, NetSerializable]

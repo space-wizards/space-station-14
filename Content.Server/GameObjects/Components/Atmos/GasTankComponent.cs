@@ -1,4 +1,5 @@
 #nullable enable
+#nullable disable warnings
 using System;
 using Content.Server.Atmos;
 using Content.Server.Explosions;

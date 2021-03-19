@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
 
         public void Execute(IEntity owner, DestructibleSystem system)
         {
-            if (owner.TryGetComponent(out IBody body))
+            if (owner.TryGetComponent(out IBody? body))
             {
                 body.Gib(_recursive);
             }

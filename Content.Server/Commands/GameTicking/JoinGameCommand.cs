@@ -49,11 +49,11 @@ namespace Content.Server.Commands.GameTicking
                     shell.WriteLine($"{jobPrototype.Name} has no available slots.");
                     return;
                 }
-                ticker.MakeJoinGame(player, args[0].ToString());
+                ticker.MakeJoinGame(player, args[0]);
                 return;
             }
 
-            ticker.MakeJoinGame(player, null);
+            ticker.MakeJoinGame(player);
         }
     }
 }
