@@ -281,7 +281,7 @@
   - type: LightReplacer
     contents:
     - name: LightTube
-      amount: 2
+      amount: 8
     - name: LightBulb
-      amount: 2
+      amount: 5
   
