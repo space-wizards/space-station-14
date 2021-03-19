@@ -1,0 +1,15 @@
+﻿- type: entity
+  id: LungsHuman
+  parent: BaseHumanOrgan
+  name: "vox lungs"
+  description: "Filters nitrogen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: lungs
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+    behaviors:
+    - !type:LungBehavior {}
