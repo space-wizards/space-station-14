@@ -4,9 +4,12 @@ using Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiver
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -28,6 +31,7 @@ namespace Content.Server.GameObjects.Components.Janitorial
         public override string Name => "LightReplacer";
 
         [DataField("contents")] private List<LightReplacerEntity> _contents = new();
+        [DataField("sound")] private string _sound = "/Audio/Weapons/click.ogg";
 
         [ViewVariables] private IContainer _bulbsStorage = default!;
 
@@ -105,9 +109,16 @@ namespace Content.Server.GameObjects.Components.Janitorial
                 return false;
             }
 
-
             // insert it into fixture
-            return fixture.ReplacBulb(bulb);
+            var wasReplaced = fixture.ReplacBulb(bulb);
+            if (wasReplaced)
+            {
+                EntitySystem.Get<AudioSystem>().Play(Filter.Broadcast(), _sound,
+                    Owner, AudioParams.Default.WithVolume(-4f));
+            }
+
+
+            return wasReplaced;
         }
 
         private bool TryInsertBulb(LightBulbComponent bulb, IEntity? user = null, bool showTooltip = false)
