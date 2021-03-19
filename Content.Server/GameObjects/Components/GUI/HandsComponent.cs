@@ -408,20 +408,17 @@ namespace Content.Server.GameObjects.Components.GUI
         /// </summary>
         private EntityCoordinates GetFinalDropCoordinates(EntityCoordinates targetCoords) //TODO: Clean up this method
         {
-            var mapPos = Owner.Transform.MapPosition;
-            var targetPos = targetCoords.ToMapPos(Owner.EntityManager);
-            var dropDir = targetPos - mapPos.Position;
-            var targetVector = Vector2.Zero;
+            var origin = Owner.Transform.MapPosition;
+            var other = targetCoords.ToMap(Owner.EntityManager);
 
-            if (dropDir != Vector2.Zero)
-            {
-                var targetLength = MathF.Min(dropDir.Length, SharedInteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
-                var newCoords = targetCoords.WithPosition(dropDir.Normalized * targetLength + mapPos.Position).ToMap(Owner.EntityManager);
-                var rayLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(mapPos, newCoords, ignoredEnt: Owner);
-                targetVector = dropDir.Normalized * rayLength;
-            }
-            var dropCoords = targetCoords.WithPosition(mapPos.Position + targetVector);
-            return dropCoords;
+            var dropLength =  EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, other, ignoredEnt: Owner);
+            dropLength = MathF.Min(dropLength, SharedInteractionSystem.InteractionRange);
+
+            var dropVector = origin.Position;
+            if (dropLength != 0)
+                dropVector += (other.Position - origin.Position).Normalized * dropLength;
+
+            return targetCoords.WithPosition(dropVector);
         }
 
         private bool TryDropHeldEntity(SharedHand hand, EntityCoordinates location, bool checkActionBlocker, bool intentionalDrop)
