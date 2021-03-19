@@ -6,7 +6,7 @@
   abstract: true
   components:
   - type: Food
-    trash: Plate
+    trash: PlateTin
   - type: Sprite
     sprite: Objects/Consumable/Food/pie.rsi
     netsync: false

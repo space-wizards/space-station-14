@@ -1,4 +1,14 @@
-﻿- type: stack
+# Food Containers
+
+- type: stack
+  id: PizzaBox
+  name: pizza box
+  icon: Objects/Consumable/Food/pizza.rsi/box.png
+  spawn: FoodPizzaBox
+
+# Smokeables
+
+- type: stack
   id: PaperRolling
   name: paper rolling
 

@@ -11,7 +11,7 @@
       "name": "alpha-filling"
     },
     {
-      "name": "alpha--slice-filling"
+      "name": "alpha-slice-filling"
     },
     {
       "name": "arnold"
@@ -42,9 +42,6 @@
     },
     {
       "name": "base-8"
-    },
-    {
-      "name": "plate"
     },
     {
       "name": "dank"
@@ -95,19 +92,25 @@
       "name": "box4"
     },
     {
-      "name": "box-messy"
+      "name": "box-messy-overlay"
     },
     {
       "name": "box-open"
     },
     {
-      "name": "box-open-bomb"
+      "name": "box-bomb-overlay"
     },
     {
-      "name": "box-open-bomb-active"
+      "name": "box-bomb-overlay-active"
     },
     {
-      "name": "box-tag"
+      "name": "box-tag-overlay"
+    },
+    {
+      "name": "plate-pizza"
+    },
+    {
+      "name": "plate-slice"
     },
     {
       "name": "margherita"

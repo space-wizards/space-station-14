@@ -149,3 +149,16 @@
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small-plastic
     netsync: false
+
+# Pie Tin
+
+- type: entity
+  name: pie tin
+  parent: BaseItem
+  id: PlateTin
+  description: A cheap, foil tin for pies.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/pie.rsi
+    state: tin
+    netsync: false
