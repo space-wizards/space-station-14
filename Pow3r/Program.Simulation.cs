@@ -48,6 +48,13 @@ namespace Pow3r
             // Update supplies to move their ramp position towards target, if necessary.
             foreach (var supply in _supplies)
             {
+                if (!supply.Enabled)
+                {
+                    // If disabled, set ramp to 0.
+                    supply.SupplyRampPosition = 0;
+                    continue;
+                }
+
                 var rampDev = supply.SupplyRampTarget - supply.SupplyRampPosition;
                 if (Math.Abs(rampDev) > 0.001f)
                 {
@@ -63,13 +70,16 @@ namespace Pow3r
 
         private void UpdateNetwork(Network network, float dt)
         {
-            var totalLoad = network.Loads.Sum(c => c.DesiredPower);
+            var totalLoad = network.Loads.Where(c => c.Enabled).Sum(c => c.DesiredPower);
 
             var totalAvailSupply = 0f;
             var totalMaxSupply = 0f;
 
             foreach (var supply in network.Supplies)
             {
+                if (!supply.Enabled)
+                    continue;
+
                 var supplySupplyRampTolerance = supply.SupplyRampPosition + supply.SupplyRampTolerance;
                 supply.EffectiveMaxSupply = Math.Min(supply.MaxSupply, supplySupplyRampTolerance);
 
@@ -81,26 +91,29 @@ namespace Pow3r
 
             foreach (var supply in network.Supplies)
             {
-                if (supply.EffectiveMaxSupply != 0)
+                if (supply.Enabled)
                 {
-                    var ratio = supply.EffectiveMaxSupply / totalAvailSupply;
+                    if (supply.EffectiveMaxSupply != 0)
+                    {
+                        var ratio = supply.EffectiveMaxSupply / totalAvailSupply;
 
-                    supply.CurrentSupply = ratio * power;
-                }
-                else
-                {
-                    supply.CurrentSupply = 0;
-                }
+                        supply.CurrentSupply = ratio * power;
+                    }
+                    else
+                    {
+                        supply.CurrentSupply = 0;
+                    }
 
-                if (supply.MaxSupply != 0)
-                {
-                    var ratio = supply.MaxSupply / totalMaxSupply;
+                    if (supply.MaxSupply != 0)
+                    {
+                        var ratio = supply.MaxSupply / totalMaxSupply;
 
-                    supply.SupplyRampTarget = ratio * totalLoad;
-                }
-                else
-                {
-                    supply.SupplyRampTarget = 0;
+                        supply.SupplyRampTarget = ratio * totalLoad;
+                    }
+                    else
+                    {
+                        supply.SupplyRampTarget = 0;
+                    }
                 }
 
                 supply.SuppliedPowerData[_tickDataIdx] = supply.CurrentSupply;
@@ -108,15 +121,18 @@ namespace Pow3r
 
             foreach (var load in network.Loads)
             {
-                if (load.DesiredPower != 0)
+                if (load.Enabled)
                 {
-                    var ratio = load.DesiredPower / totalLoad;
+                    if (load.DesiredPower != 0)
+                    {
+                        var ratio = load.DesiredPower / totalLoad;
 
-                    load.ReceivingPower = ratio * power;
-                }
-                else
-                {
-                    load.ReceivingPower = 0;
+                        load.ReceivingPower = ratio * power;
+                    }
+                    else
+                    {
+                        load.ReceivingPower = 0;
+                    }
                 }
 
                 load.ReceivedPowerData[_tickDataIdx] = load.ReceivingPower;
@@ -181,11 +197,13 @@ namespace Pow3r
             {
                 Begin($"Load##Load{load.Id}");
 
+                Checkbox("Enabled", ref load.Enabled);
                 SliderFloat("Desired", ref load.DesiredPower, 0, 1000, "%.0f W");
 
                 load.CurrentWindowPos = CalcWindowCenter();
 
-                PlotLines("", ref load.ReceivedPowerData[0], MaxTickData, _tickDataIdx + 1, $"{load.ReceivingPower:N1} W",
+                PlotLines("", ref load.ReceivedPowerData[0], MaxTickData, _tickDataIdx + 1,
+                    $"{load.ReceivingPower:N1} W",
                     0,
                     1000, new Vector2(250, 150));
 
@@ -211,6 +229,7 @@ namespace Pow3r
             {
                 Begin($"Generator##Gen{supply.Id}");
 
+                Checkbox("Enabled", ref supply.Enabled);
                 SliderFloat("Available", ref supply.MaxSupply, 0, 1000, "%.0f W");
                 SliderFloat("Ramp", ref supply.SupplyRampRate, 0, 100, "%.0f W");
                 SliderFloat("Tolerance", ref supply.SupplyRampTolerance, 0, 100, "%.0f W");
@@ -288,6 +307,7 @@ namespace Pow3r
         {
             public readonly int Id;
 
+            public bool Enabled = true;
             public float MaxSupply;
 
             // Actual power supplied last network update.
@@ -313,6 +333,7 @@ namespace Pow3r
         private sealed class Load
         {
             public readonly int Id;
+            public bool Enabled = true;
             public float DesiredPower;
             public float ReceivingPower;
             public Vector2 CurrentWindowPos;
@@ -364,7 +385,8 @@ namespace Pow3r
             var tempLoads = dat.Loads
                 .ToDictionary(x => x.Id, x => new Load(x.Id)
                 {
-                    DesiredPower = x.Desired
+                    DesiredPower = x.Desired,
+                    Enabled = x.Enabled
                 });
 
             var tempSupplies = dat.Supplies
@@ -372,6 +394,7 @@ namespace Pow3r
                     x => new Supply(x.Id)
                     {
                         MaxSupply = x.MaxSupply,
+                        Enabled = x.Enabled,
                         SupplyRampRate = x.RampRate,
                         SupplyRampTolerance = x.RampTolerance
                     });
@@ -399,6 +422,7 @@ namespace Pow3r
                 {
                     Id = l.Id,
                     Desired = l.DesiredPower,
+                    Enabled = l.Enabled
                 }).ToList(),
 
                 Networks = _networks.Select(n => new DiskNetwork
@@ -411,6 +435,7 @@ namespace Pow3r
                 Supplies = _supplies.Select(s => new DiskSupply
                 {
                     Id = s.Id,
+                    Enabled = s.Enabled,
                     MaxSupply = s.MaxSupply,
                     RampRate = s.SupplyRampRate,
                     RampTolerance = s.SupplyRampTolerance
@@ -433,6 +458,7 @@ namespace Pow3r
         {
             public int Id;
 
+            public bool Enabled;
             public float Desired;
         }
 
@@ -440,6 +466,7 @@ namespace Pow3r
         {
             public int Id;
 
+            public bool Enabled;
             public float MaxSupply;
             public float RampTolerance;
             public float RampRate;
