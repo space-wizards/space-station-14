@@ -1,7 +1,7 @@
 # Empty mags
 - type: entity
   id: MagazinePistolBase
-  name: Pistol Magazine (.35 auto)
+  name: Pistol magazine (.35 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -26,7 +26,7 @@
 
 - type: entity
   id: MagazinePistolHCBase
-  name: Machine Pistol Magazine (.35 auto)
+  name: Machine Pistol magazine (.35 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -51,7 +51,7 @@
 
 - type: entity
   id: MagazinePistolSmgBase  # Yeah it's weird but it's pistol caliber
-  name: SMG Magazine (.35 auto)
+  name: SMG magazine (.35 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -77,7 +77,7 @@
 # Magazines
 - type: entity
   id: MagazinePistolSmgTopMounted
-  name: WT550 Magazine (.35 auto top-mounted)
+  name: WT550 magazine (.35 auto top-mounted)
   parent: MagazinePistolSmgBase
   components:
   - type: RangedMagazine
@@ -102,7 +102,7 @@
 
 - type: entity
   id: MagazinePistolCalicoTopMounted
-  name: Calico Magazine (.35 auto top-mounted)
+  name: Calico magazine (.35 auto top-mounted)
   parent: MagazinePistolSmgBase
   components:
   - type: RangedMagazine
@@ -127,7 +127,7 @@
 
 - type: entity
   id: MagazinePistol
-  name: Pistol Magazine (.35 auto)
+  name: Pistol magazine (.35 auto)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -138,7 +138,7 @@
 
 - type: entity
   id: MagazinePistolFlash
-  name: Pistol Magazine (.35 auto flash)
+  name: Pistol magazine (.35 auto flash)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -149,7 +149,7 @@
 
 - type: entity
   id: MagazinePistolHV
-  name: Pistol Magazine (.35 auto high-velocity)
+  name: Pistol magazine (.35 auto high-velocity)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -160,7 +160,7 @@
 
 - type: entity
   id: MagazinePistolPractice
-  name: Pistol Magazine (.35 auto practice)
+  name: Pistol magazine (.35 auto practice)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -171,7 +171,7 @@
 
 - type: entity
   id: MagazinePistolRubber
-  name: Pistol Magazine (.35 auto rubber)
+  name: Pistol magazine (.35 auto rubber)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -182,7 +182,7 @@
 
 - type: entity
   id: MagazineHCPistol
-  name: Machine Pistol Magazine (.35 auto)
+  name: Machine Pistol magazine (.35 auto)
   parent: MagazinePistolHCBase
   components:
   - type: RangedMagazine
@@ -193,7 +193,7 @@
 
 - type: entity
   id: MagazineHCPistolHV
-  name: Machine Pistol Magazine (.35 auto high-velocity)
+  name: Machine Pistol magazine (.35 auto high-velocity)
   parent: MagazinePistolHCBase
   components:
   - type: RangedMagazine
@@ -204,7 +204,7 @@
 
 - type: entity
   id: MagazineHCPistolPractice
-  name: Machine Pistol Magazine (.35 auto practice)
+  name: Machine Pistol magazine (.35 auto practice)
   parent: MagazinePistolHCBase
   components:
   - type: RangedMagazine
@@ -215,7 +215,7 @@
 
 - type: entity
   id: MagazineHCPistolRubber
-  name: Machine Pistol Magazine (.35 auto rubber)
+  name: Machine Pistol magazine (.35 auto rubber)
   parent: MagazinePistolHCBase
   components:
   - type: RangedMagazine
@@ -226,7 +226,7 @@
 
 - type: entity
   id: MagazinePistolSmg
-  name: SMG Magazine (.35 auto)
+  name: SMG magazine (.35 auto)
   parent: MagazinePistolSmgBase
   components:
   - type: RangedMagazine
@@ -237,7 +237,7 @@
 
 - type: entity
   id: MagazinePistolSmgFlash
-  name: SMG Magazine (.35 auto flash)
+  name: SMG magazine (.35 auto flash)
   parent: MagazinePistolSmgBase
   components:
   - type: RangedMagazine
@@ -248,7 +248,7 @@
 
 - type: entity
   id: MagazinePistolSmgHV
-  name: SMG Magazine (.35 auto high-velocity)
+  name: SMG magazine (.35 auto high-velocity)
   parent: MagazinePistolSmgBase
   components:
   - type: RangedMagazine
@@ -259,7 +259,7 @@
 
 - type: entity
   id: MagazinePistolSmgPractice
-  name: SMG Magazine (.35 auto practice)
+  name: SMG magazine (.35 auto practice)
   parent: MagazinePistolSmgBase
   components:
   - type: RangedMagazine
@@ -270,7 +270,7 @@
 
 - type: entity
   id: MagazinePistolSmgRubber
-  name: SMG Magazine (.35 auto rubber)
+  name: SMG magazine (.35 auto rubber)
   parent: MagazinePistolSmgBase
   components:
   - type: RangedMagazine
