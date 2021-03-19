@@ -136,26 +136,21 @@ namespace Content.Client.GameObjects.Components.Items
             if (curState is not HandsComponentState state)
                 return;
 
-            RemoveHandLayers();
             _hands.Clear();
 
             ActiveHandName = state.ActiveHand;
 
-            var containerMan = Owner.GetComponent<ContainerManagerComponent>(); //TODO
+            var containerMan = Owner.EnsureComponentWarn<ContainerManagerComponent>();
             foreach (var handState in state.Hands)
             {
-                if (!containerMan.TryGetContainer(handState.Name, out var container))
-                {
-                    Logger.Error("TODO: hand error");
+                if (!containerMan.TryGetContainer(handState.Name, out var container)) //ContainerManagerComponent may not have been updated by the server yet.
                     continue;
-                }
 
                 var newHand = new SharedHand(handState.Name, handState.Enabled, handState.Location, container);
                 _hands.Add(newHand);
             }
 
-            MakeHandLayers();
-            SetGuiState();
+            RefreshHands();
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -186,10 +181,12 @@ namespace Content.Client.GameObjects.Components.Items
         }
 
         /// <summary>
-        ///     Temporary hack for items to notify when they have changed their texture.
+        ///     Updates the hands gui and visualizer.
         /// </summary>
-        public void RefreshInHands()
+        public void RefreshHands()
         {
+            RemoveHandLayers();
+            MakeHandLayers();
             SetGuiState();
         }
 
@@ -221,19 +218,20 @@ namespace Content.Client.GameObjects.Components.Items
             Gui.Visible = false;
         }
 
+        private List<string> _handLayers = new(); //TODO: Replace with visualizer
+
         private void RemoveHandLayers() //TODO: Replace with visualizer
         {
             if (_sprite == null)
                 return;
 
-            foreach (var hand in Hands)
+            foreach (var layerKey in _handLayers)
             {
-                var layerKey = GetHandLayerKey(hand.Name);
                 var layer = _sprite.LayerMapGet(layerKey);
                 _sprite.RemoveLayer(layer);
                 _sprite.LayerMapRemove(layerKey);
             }
-
+            _handLayers.Clear();
         }
 
         private void MakeHandLayers() //TODO: Replace with visualizer
@@ -243,7 +241,7 @@ namespace Content.Client.GameObjects.Components.Items
 
             foreach (var hand in Hands)
             {
-                var key = GetHandLayerKey(hand.Name);
+                var key = $"hand-{hand.Name}";
                 _sprite.LayerMapReserveBlank(key);
 
                 var heldEntity = hand.HeldEntity;
@@ -266,12 +264,8 @@ namespace Content.Client.GameObjects.Components.Items
                     _sprite.LayerSetVisible(key, true);
                     _sprite.LayerSetState(key, state, rsi);
                 }
+                _handLayers.Add(key);
             }
-        }
-
-        private object GetHandLayerKey(string handName)
-        {
-            return $"hand-{handName}";
         }
 
         private void SetGuiState()

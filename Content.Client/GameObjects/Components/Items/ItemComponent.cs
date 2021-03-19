@@ -46,7 +46,7 @@ namespace Content.Client.GameObjects.Components.Items
                     return;
 
                 if (container.Owner.TryGetComponent(out HandsComponent? hands))
-                    hands.RefreshInHands();
+                    hands.RefreshHands();
             }
         }
 

@@ -26,7 +26,7 @@ using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefine
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class HandsSystem : EntitySystem
+    internal sealed class HandsSystem : SharedHandsSystem
     {
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
