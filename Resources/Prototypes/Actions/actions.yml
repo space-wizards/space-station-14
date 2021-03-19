@@ -23,6 +23,22 @@
     wilhelm: /Audio/Voice/Human/wilhelm_scream.ogg
 
 - type: action
+  actionType: VoxScream
+  icon: Interface/Actions/scream.png
+  name: "Scream"
+  filters:
+    - vox
+  behaviorType: Instant
+  behavior: !type:ScreamAction
+    cooldown: 10
+    male:
+      - /Audio/Voice/Vox/shriek1.ogg
+    female:
+      - /Audio/Voice/Vox/shriek1.ogg
+    wilhelm: /Audio/Voice/Human/wilhelm_scream.ogg
+
+
+- type: action
   actionType: Disarm
   icon: Interface/Actions/disarm.png
   name: "[color=red]Disarm[/color]"

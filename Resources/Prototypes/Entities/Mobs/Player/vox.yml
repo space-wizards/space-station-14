@@ -11,7 +11,7 @@
     - type: Alerts
     - type: Actions
       innateActions:
-        - HumanScream
+        - VoxScream
         - Disarm
     - type: Eye
       zoom: 0.5, 0.5
