@@ -130,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         /// <summary>
         /// Try to replace current bulb with a new one
         /// </summary>
-        public bool ReplacBulb(IEntity bulb)
+        public bool ReplaceBulb(IEntity bulb)
         {
             EjectBulb();
             return InsertBulb(bulb);

@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Janitorial
             }
 
             // insert it into fixture
-            var wasReplaced = fixture.ReplacBulb(bulb);
+            var wasReplaced = fixture.ReplaceBulb(bulb);
             if (wasReplaced)
             {
                 EntitySystem.Get<AudioSystem>().Play(Filter.Broadcast(), _sound,
