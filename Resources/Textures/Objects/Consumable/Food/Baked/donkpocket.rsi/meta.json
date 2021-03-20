@@ -11,7 +11,13 @@
       "name": "banana"
     },
     {
+      "name": "banana-box"
+    },
+    {
       "name": "berry"
+    },
+    {
+      "name": "berry-box"
     },
     {
       "name": "dank"
@@ -20,16 +26,39 @@
       "name": "gondola"
     },
     {
+      "name": "gondola-box"
+    },
+    {
       "name": "pizza"
+    },
+    {
+      "name": "pizza-box"
     },
     {
       "name": "plain"
     },
     {
+      "name": "box"
+    },
+    {
       "name": "spicy"
     },
     {
+      "name": "spicy-box"
+    },
+    {
       "name": "teriyaki"
+    },
+    {
+      "name": "teriyaki-box"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
     }
   ]
 }

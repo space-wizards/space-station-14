@@ -6,8 +6,8 @@
 # an alpha color which -Y- said he would implement.
 
 - type: entity
-  id: FoodBoxDonut
   parent: BaseItem
+  id: FoodBoxDonut
   name: donutbox
   description: Mmm. Donuts.
   components:
@@ -46,8 +46,8 @@
 # Egg
 
 - type: entity
-  id: FoodContainerEgg
   parent: BaseItem
+  id: FoodContainerEgg
   name: eggbox
   description: Don't drop em'!
   components:
@@ -112,8 +112,8 @@
   #       acts: [ "Destruction" ]
 
 - type: entity
+  parent: FoodContainerEgg
   id: EggBoxBroken
-  parent: EggBox
   components:
   - type: StorageFill
     contents:
@@ -133,8 +133,8 @@
 
 - type: entity
   parent: BaseItem
-  name: pizza box
   id: FoodBoxPizza
+  name: pizza box
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
@@ -213,8 +213,8 @@
 # Nugget
 
 - type: entity
-  id: FoodBoxNugget
   parent: BaseItem
+  id: FoodBoxNugget
   name: chicken nuggets
   description: You suddenly have an urge to trade on the intergalactic stock market.
   components:
@@ -247,3 +247,113 @@
           - box4
           - box5
           - box6
+
+# Donkpocket
+
+- type: entity
+  parent: BaseItem
+  id: FoodBoxDonkpocket
+  name: box of donk-pockets
+  description: 'Instructions: Heat in microwave. Product will cool if not eaten within seven minutes.'
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    state: box
+  - type: Storage
+    capacity: 6
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    size: 6
+    color: red
+  - type: StorageFill
+    contents:
+      - name: FoodDonkpocket
+        amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketSpicy
+  name: box of spicy-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: spicy-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+      - name: FoodDonkpocketSpicy
+        amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketTeriyaki
+  name: box of teriyaki-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: teriyaki-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+      - name: FoodDonkpocketTeriyaki
+        amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketPizza
+  name: box of pizza-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: pizza-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    color: white
+  - type: StorageFill
+    contents:
+      - name: FoodDonkpocketPizza
+        amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketGondola
+  name: box of gondola-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: gondola-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    color: brown
+  - type: StorageFill
+    contents:
+      - name: FoodDonkpocketGondola
+        amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketBerry
+  name: box of berry-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: berry-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+      - name: FoodDonkpocketBerry
+        amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketHonk
+  name: box of banana-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: banana-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    color: yellow
+  - type: StorageFill
+    contents:
+      - name: FoodDonkpocketHonk
+        amount: 6

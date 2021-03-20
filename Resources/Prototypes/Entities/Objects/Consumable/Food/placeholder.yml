@@ -23,6 +23,12 @@
 
 - type: entity
   parent: FoodBananaCreamPie
+  id: BoxDonkpocket
+  components:
+  - type: LoopingSound
+
+- type: entity
+  parent: FoodBananaCreamPie
   id: FoodDonkPocket
   components:
   - type: LoopingSound
