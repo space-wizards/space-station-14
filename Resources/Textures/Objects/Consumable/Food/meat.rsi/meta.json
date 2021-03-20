@@ -62,17 +62,20 @@
       "name": "cutlet-alpha"
     },
     {
-      "name": "faggot"
+      "name": "cutlet-cooked"
     },
     {
-      "name": "faggot-cooked"
+      "name": "meatball"
     },
     {
-      "name": "faggot-inhand-right",
+      "name": "meatball-cooked"
+    },
+    {
+      "name": "meatball-inhand-right",
       "directions": 4
     },
     {
-      "name": "faggot-inhand-left",
+      "name": "meatball-inhand-left",
       "directions": 4
     },
     {
@@ -94,7 +97,10 @@
       "name": "lizard"
     },
     {
-      "name": "meatplate"
+      "name": "lizard-cooked"
+    },
+    {
+      "name": "plate-meat"
     },
     {
       "name": "plain"
@@ -151,10 +157,16 @@
       "name": "salami"
     },
     {
+      "name": "salami-slice"
+    },
+    {
       "name": "sashimi"
     },
     {
       "name": "sausage"
+    },
+    {
+      "name": "spider"
     },
     {
       "name": "spiderleg"
@@ -167,6 +179,9 @@
     },
     {
       "name": "xeno"
+    },
+    {
+      "name": "skewer"
     }
   ]
 }
