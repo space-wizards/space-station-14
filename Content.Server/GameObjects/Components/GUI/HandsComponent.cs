@@ -53,6 +53,12 @@ namespace Content.Server.GameObjects.Components.GUI
                     Logger.Warning($"{nameof(HandsComponent)} on {Owner} tried to set its active hand to {value}, which was not a hand.");
                     return;
                 }
+                if (value == null && _hands.Count != 0)
+                {
+                    Logger.Error($"{nameof(HandsComponent)} on {Owner} tried to set its active hand to null, when it still had another hand.");
+                    _activeHand = _hands[0].Name;
+                    return;
+                }
                 _activeHand = value;
                 Dirty();
             }
@@ -66,7 +72,6 @@ namespace Content.Server.GameObjects.Components.GUI
         protected override void Startup()
         {
             base.Startup();
-            ActiveHand = _hands.FirstOrDefault()?.Name;
             Dirty();
         }
 
@@ -138,6 +143,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
             _hands.Add(new SharedHand(handName, true, handLocation, container));
 
+            if (ActiveHand == null)
+                ActiveHand = handName;
+
             HandCountChanged();
             Dirty();
         }
@@ -155,6 +163,9 @@ namespace Content.Server.GameObjects.Components.GUI
             DropHeldEntityToFloor(hand, intentionalDrop: false);
             hand.Container.Shutdown();
             _hands.Remove(hand);
+
+            if (ActiveHand == hand.Name)
+                ActiveHand = ReadOnlyHands.FirstOrDefault()?.Name;
 
             HandCountChanged();
             Dirty();
@@ -406,7 +417,7 @@ namespace Content.Server.GameObjects.Components.GUI
         /// <summary>
         ///     Calculates the final location a dropped item will end up at, accounting for max drop range and collision along the targeted drop path.
         /// </summary>
-        private EntityCoordinates GetFinalDropCoordinates(EntityCoordinates targetCoords) //TODO: Clean up this method
+        private EntityCoordinates GetFinalDropCoordinates(EntityCoordinates targetCoords)
         {
             var origin = Owner.Transform.MapPosition;
             var other = targetCoords.ToMap(Owner.EntityManager);
@@ -580,22 +591,18 @@ namespace Content.Server.GameObjects.Components.GUI
         /// <summary>
         ///     Moves the active hand to the next hand.
         /// </summary>
-        public void SwapHands() //TODO: Clean up
+        public void SwapHands()
         {
-            if (ActiveHand == null)
+            if (!TryGetActiveHand(out var activeHand))
                 return;
 
-            if (!TryGetActiveHand(out var hand))
-                return;
+            var newActiveIndex = _hands.IndexOf(activeHand) + 1;
+            var finalHandIndex = _hands.Count - 1;
+            if (newActiveIndex > finalHandIndex)
+                newActiveIndex = 0;
 
-            var index = _hands.IndexOf(hand);
-            index++;
-            if (index == _hands.Count)
-            {
-                index = 0;
-            }
+            ActiveHand = ReadOnlyHands[newActiveIndex].Name;
 
-            ActiveHand = _hands[index].Name;
         }
 
         /// <summary>
