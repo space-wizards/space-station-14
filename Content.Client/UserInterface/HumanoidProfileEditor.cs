@@ -794,10 +794,10 @@ namespace Content.Client.UserInterface
 
             _hairPicker.SetData(
                 Profile.Appearance.HairColor,
-                Profile.Appearance.HairStyleName);
+                Profile.Appearance.HairStyleId);
             _facialHairPicker.SetData(
                 Profile.Appearance.FacialHairColor,
-                Profile.Appearance.FacialHairStyleName);
+                Profile.Appearance.FacialHairStyleId);
         }
 
         private void UpdateEyePickers()

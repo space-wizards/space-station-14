@@ -8,7 +8,9 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.SharedMagicMirrorComponent;
@@ -97,7 +99,7 @@ namespace Content.Client.GameObjects.Components
         {
             _slider = new Slider
             {
-                StyleClasses = { styleClass },
+                StyleClasses = {styleClass},
                 HorizontalExpand = true,
                 VerticalAlignment = VAlignment.Center,
                 MaxValue = byte.MaxValue
@@ -110,10 +112,10 @@ namespace Content.Client.GameObjects.Components
             AddChild(new HBoxContainer
             {
                 Children =
-                    {
-                        _slider,
-                        _textBox
-                    }
+                {
+                    _slider,
+                    _textBox
+                }
             });
 
             _slider.OnValueChanged += _ =>
@@ -155,21 +157,23 @@ namespace Content.Client.GameObjects.Components
     {
         public override void Populate()
         {
-            var humanFacialHairRSIPath = SharedSpriteComponent.TextureRoot / "Mobs/Customization/human_facial_hair.rsi";
-            var humanFacialHairRSI = ResC.GetResource<RSIResource>(humanFacialHairRSIPath).RSI;
-
-            var styles = HairStyles.FacialHairStylesMap.ToList();
+            var styles = SpriteAccessoryManager
+                .AccessoriesForCategory(SpriteAccessoryCategory.HumanFacialHair)
+                .ToList();
             styles.Sort(HairStyles.FacialHairStyleComparer);
 
-            foreach (var (styleName, styleState) in HairStyles.FacialHairStylesMap)
+            foreach (var style in styles)
             {
-                Items.AddItem(styleName, humanFacialHairRSI[styleState].Frame0);
+                var item = Items.AddItem(style.Name, style.Sprite.Frame0());
+                item.Metadata = style;
             }
         }
     }
 
     public class HairStylePicker : Control
     {
+        [Dependency] protected readonly SpriteAccessoryManager SpriteAccessoryManager = default!;
+
         public event Action<Color>? OnHairColorPicked;
         public event Action<string>? OnHairStylePicked;
 
@@ -181,7 +185,7 @@ namespace Content.Client.GameObjects.Components
 
         private Color _lastColor;
 
-        public void SetData(Color color, string styleName)
+        public void SetData(Color color, string styleId)
         {
             _lastColor = color;
 
@@ -191,7 +195,8 @@ namespace Content.Client.GameObjects.Components
 
             foreach (var item in Items)
             {
-                item.Selected = item.Text == styleName;
+                var prototype = (SpriteAccessoryPrototype) item.Metadata!;
+                item.Selected = prototype.ID == styleId;
             }
 
             UpdateStylePickerColor();
@@ -207,6 +212,8 @@ namespace Content.Client.GameObjects.Components
 
         public HairStylePicker()
         {
+            IoCManager.InjectDependencies(this);
+
             var vBox = new VBoxContainer();
             AddChild(vBox);
 
@@ -243,25 +250,26 @@ namespace Content.Client.GameObjects.Components
 
         public virtual void Populate()
         {
-            var humanHairRSIPath = SharedSpriteComponent.TextureRoot / "Mobs/Customization/human_hair.rsi";
-            var humanHairRSI = ResC.GetResource<RSIResource>(humanHairRSIPath).RSI;
-
-            var styles = HairStyles.HairStylesMap.ToList();
+            var styles = SpriteAccessoryManager
+                .AccessoriesForCategory(SpriteAccessoryCategory.HumanHair)
+                .ToList();
             styles.Sort(HairStyles.HairStyleComparer);
 
-            foreach (var (styleName, styleState) in styles)
+            foreach (var style in styles)
             {
-                Items.AddItem(styleName, humanHairRSI[styleState].Frame0);
+                var item = Items.AddItem(style.Name, style.Sprite.Frame0());
+                item.Metadata = style;
             }
         }
 
         private void ItemSelected(ItemList.ItemListSelectedEventArgs args)
         {
-            var hairColor = Items[args.ItemIndex].Text;
+            var prototype = (SpriteAccessoryPrototype?) Items[args.ItemIndex].Metadata;
+            var style = prototype?.ID;
 
-            if (hairColor != null)
+            if (style != null)
             {
-                OnHairStylePicked?.Invoke(hairColor);
+                OnHairStylePicked?.Invoke(style);
             }
         }
 

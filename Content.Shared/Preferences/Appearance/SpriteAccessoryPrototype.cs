@@ -1,0 +1,31 @@
+﻿using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
+
+namespace Content.Shared.Preferences.Appearance
+{
+    /// <summary>
+    ///     Contains data for a single hair style
+    /// </summary>
+    [Prototype("spriteAccessory")]
+    public sealed class SpriteAccessoryPrototype : IPrototype, ISerializationHooks
+    {
+        [field: DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [field: DataField("category", required: true)]
+        public SpriteAccessoryCategory Category { get; } = default!;
+
+        public string Name { get; private set; } = default!;
+
+        [field: DataField("sprite", required: true)]
+        public SpriteSpecifier Sprite { get; } = default!;
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            Name = Loc.GetString($"accessory-{ID}");
+        }
+    }
+}

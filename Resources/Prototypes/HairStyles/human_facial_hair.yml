@@ -1,0 +1,216 @@
+- category: HumanFacialHair
+  id: HumanFacialHairAbe
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: abe
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairBrokenman
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: brokenman
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairChin
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: chin
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairDwarf
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: dwarf
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairFullbeard
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: fullbeard
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairCroppedfullbeard
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: croppedfullbeard
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairGt
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: gt
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairHip
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: hip
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairJensen
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: jensen
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairNeckbeard
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: neckbeard
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairWise
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: wise
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairMuttonmus
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: muttonmus
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairMartialartist
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: martialartist
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairChinlessbeard
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: chinlessbeard
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairMoonshiner
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: moonshiner
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairLongbeard
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: longbeard
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairVolaju
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: volaju
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHair3oclock
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: 3oclock
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairFiveoclock
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: fiveoclock
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHair5oclockmoustache
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: 5oclockmoustache
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHair7oclock
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: 7oclock
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHair7oclockmoustache
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: 7oclockmoustache
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairMoustache
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: moustache
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairPencilstache
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: pencilstache
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairSmallstache
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: smallstache
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairWalrus
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: walrus
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairFumanchu
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: fumanchu
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairHogan
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: hogan
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairSelleck
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: selleck
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairChaplin
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: chaplin
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairVandyke
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: vandyke
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairWatson
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: watson
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairElvis
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: elvis
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairMutton
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: mutton
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairSideburn
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: sideburn
+  type: spriteAccessory
+- category: HumanFacialHair
+  id: HumanFacialHairShaved
+  sprite:
+    sprite: Mobs/Customization/human_facial_hair.rsi
+    state: shaved
+  type: spriteAccessory

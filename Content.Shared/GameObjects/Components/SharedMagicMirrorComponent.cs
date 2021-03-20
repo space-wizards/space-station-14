@@ -19,12 +19,12 @@ namespace Content.Shared.GameObjects.Components
         [Serializable, NetSerializable]
         public class HairSelectedMessage : BoundUserInterfaceMessage
         {
-            public readonly string HairName;
+            public readonly string HairId;
             public readonly bool IsFacialHair;
 
-            public HairSelectedMessage(string name, bool isFacialHair)
+            public HairSelectedMessage(string id, bool isFacialHair)
             {
-                HairName = name;
+                HairId = id;
                 IsFacialHair = isFacialHair;
             }
         }
