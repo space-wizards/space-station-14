@@ -75,6 +75,15 @@
   - type: Sprite
     state: bun-hotcross
 
+- type: entity
+  name: meat bun
+  parent: FoodBakedBase
+  id: FoodBakedBunMeat
+  description: Has the potential to not be dog.
+  components:
+  - type: Sprite
+    state: bun-meat
+
 # Cookies
 
 - type: entity
@@ -239,3 +248,79 @@
           - pancakescc1
           - pancakescc2
           - pancakescc3
+
+- type: entity
+  name: waffles
+  parent: FoodBakedBase
+  id: FoodBakedWaffle
+  description: Mmm, waffles.
+  components:
+  - type: Sprite
+    layers:
+      - state: tray
+      - state: waffles
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 15
+
+- type: entity
+  name: soy waffles
+  parent: FoodBakedWaffle
+  id: FoodBakedWaffleSoy
+  description: You feel healthier and - more feminine?
+  components:
+  - type: Sprite
+    layers:
+      - state: tray
+      - state: waffles-soy
+
+- type: entity
+  name: soylent waffles
+  parent: FoodBakedWaffle
+  id: FoodBakedWaffleSoylent
+  description: Not made of people. Honest. # Definitely people
+  components:
+  - type: Sprite
+    layers:
+      - state: tray
+      - state: waffles-soylent
+
+- type: entity
+  name: roffle waffles
+  parent: FoodBakedWaffle
+  id: FoodBakedWaffleRoffle
+  description: Waffles from Roffle. Co.
+  components:
+  - type: Sprite
+    layers:
+      - state: tray
+      - state: waffles-roffle
+
+# Misc
+
+- type: entity
+  name: poppy pretzel
+  parent: FoodBakedBase
+  id: FoodBakedPretzel
+  description: It's all twisted up!
+  components:
+  - type: Sprite
+    state: pretzel
+
+- type: entity
+  name: cannoli
+  parent: FoodBakedBase
+  id: FoodBakedCannoli
+  description: A sicilian treat that makes you into a wise guy.
+  components:
+  - type: Sprite
+    state: cannoli
+  - type: SolutionContainer
+    maxVol: 15
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 15

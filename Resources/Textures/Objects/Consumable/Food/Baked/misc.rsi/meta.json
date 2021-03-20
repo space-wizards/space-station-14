@@ -8,6 +8,9 @@
   },
   "states": [
     {
+      "name": "cannoli"
+    },
+    {
       "name": "honeybar"
     },
     {
@@ -27,6 +30,9 @@
     },
     {
       "name": "bun-hotcross"
+    },
+    {
+      "name": "bun-meat"
     },
     {
       "name": "muffin"
@@ -98,10 +104,16 @@
       "name": "plate-small"
     },
     {
-      "name": "rofflewaffles"
+      "name": "waffles"
     },
     {
-      "name": "waffles"
+      "name": "waffles-roffle"
+    },
+    {
+      "name": "waffles-soy"
+    },
+    {
+      "name": "waffles-soylent"
     },
     {
       "name": "tray"
