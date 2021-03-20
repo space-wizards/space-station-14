@@ -17,21 +17,21 @@
       "name": "bubblegum"
     },
     {
-      "name": "candy"
+      "name": "chocolatebar"
     },
     {
-      "name": "candy-inhand-right",
+      "name": "chocolatebar-inhand-right",
       "directions": 4
     },
     {
-      "name": "candy-inhand-left",
+      "name": "chocolatebar-inhand-left",
       "directions": 4
     },
     {
-      "name": "candy-open"
+      "name": "chocolatebar-open"
     },
     {
-      "name": "candy-trash"
+      "name": "chocolatebar-trash"
     },
     {
       "name": "cocoa"

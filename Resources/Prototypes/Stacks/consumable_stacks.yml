@@ -1,3 +1,9 @@
+# Food
+
+- type: stack
+  id: Pancake
+  name: pancake
+
 # Food Containers
 
 - type: stack

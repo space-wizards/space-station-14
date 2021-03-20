@@ -8,9 +8,6 @@
   },
   "states": [
     {
-      "name": "-packet"
-    },
-    {
       "name": "astrotame-packet"
     },
     {
@@ -29,10 +26,10 @@
       "name": "empty2-packet"
     },
     {
-      "name": "empty-condiment"
+      "name": "empty-packet"
     },
     {
-      "name": "empty-packet"
+      "name": "empty"
     },
     {
       "name": "enzyme"

@@ -17,16 +17,16 @@
       "name": "pretzel"
     },
     {
-      "name": "bluecherrycupcake"
+      "name": "muffin-bluecherry"
     },
     {
-      "name": "cherrycupcake"
+      "name": "muffin-cherry"
     },
     {
-      "name": "honeybun"
+      "name": "bun-honey"
     },
     {
-      "name": "hotcrossbun"
+      "name": "bun-hotcross"
     },
     {
       "name": "muffin"
@@ -35,19 +35,19 @@
       "name": "muffin-berry"
     },
     {
-      "name": "cookie"
+      "name": "COOKIE!!!"
     },
     {
-      "name": "fortune"
+      "name": "cookie-fortune"
     },
     {
-      "name": "oatmeal"
+      "name": "cookie-oatmeal"
     },
     {
-      "name": "raisin"
+      "name": "cookie-raisin"
     },
     {
-      "name": "sugar"
+      "name": "cookie-sugar"
     },
     {
       "name": "pancakes1"
@@ -57,6 +57,24 @@
     },
     {
       "name": "pancakes3"
+    },
+    {
+      "name": "pancakes4"
+    },
+    {
+      "name": "pancakes5"
+    },
+    {
+      "name": "pancakes6"
+    },
+    {
+      "name": "pancakes7"
+    },
+    {
+      "name": "pancakes8"
+    },
+    {
+      "name": "pancakes9"
     },
     {
       "name": "pancakesbb1"
@@ -75,6 +93,9 @@
     },
     {
       "name": "pancakescc3"
+    },
+    {
+      "name": "plate-small"
     },
     {
       "name": "rofflewaffles"
