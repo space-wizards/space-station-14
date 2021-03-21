@@ -3,8 +3,10 @@ using Content.Shared.GameObjects.Components.Weapons;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
@@ -42,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Weapon
 
             if (!string.IsNullOrEmpty(sound))
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(sound, source.Transform.Coordinates);
+                SoundSystem.Play(Filter.Pvs(source), sound, source.Transform.Coordinates);
             }
         }
     }

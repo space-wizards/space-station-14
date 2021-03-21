@@ -1,15 +1,17 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.GameObjects.Components.Portal;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -124,8 +126,7 @@ namespace Content.Server.GameObjects.Components.Portal
             Owner.SpawnTimer(TimeSpan.FromSeconds(_chargeTime + _cooldown), () => SetState(ItemTeleporterState.Off));
             if (_cooldownSound != null)
             {
-                var soundPlayer = EntitySystem.Get<AudioSystem>();
-                soundPlayer.PlayFromEntity(_cooldownSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _cooldownSound, Owner);
             }
         }
 
@@ -209,7 +210,6 @@ namespace Content.Server.GameObjects.Components.Portal
         {
             // Messy maybe?
             var targetGrid = user.Transform.Coordinates.WithPosition(vector);
-            var soundPlayer = EntitySystem.Get<AudioSystem>();
 
             // If portals use those, otherwise just move em over
             if (_portalAliveTime > 0.0f)
@@ -229,12 +229,12 @@ namespace Content.Server.GameObjects.Components.Portal
             else
             {
                 // Departure
-                soundPlayer.PlayAtCoords(_departureSound, user.Transform.Coordinates);
+                SoundSystem.Play(Filter.Pvs(user), _departureSound, user.Transform.Coordinates);
 
                 // Arrival
                 user.Transform.AttachToGridOrMap();
                 user.Transform.WorldPosition = vector;
-                soundPlayer.PlayAtCoords(_arrivalSound, user.Transform.Coordinates);
+                SoundSystem.Play(Filter.Pvs(user), _arrivalSound, user.Transform.Coordinates);
             }
         }
     }
