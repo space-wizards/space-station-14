@@ -9,7 +9,7 @@ using Robust.Shared.Player;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public class CreamPieComponent : Component, ILand
+    public class CreamPieComponent : Component, ILand, IThrowCollide
     {
         public override string Name => "CreamPie";
 
@@ -19,7 +19,17 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 AudioHelpers.WithVariation(0.125f));
         }
 
+        void IThrowCollide.DoHit(ThrowCollideEventArgs eventArgs)
+        {
+            Splat();
+        }
+
         void ILand.Land(LandEventArgs eventArgs)
+        {
+            Splat();
+        }
+
+        public void Splat()
         {
             PlaySound();
 
