@@ -14,7 +14,7 @@
     - type: Item
       sprite: Objects/Misc/inflatable_wall.rsi
       size: 5
-    - type: SpawnOnInteract
+    - type: SpawnAfterInteract
       prototype: InflatableWall
       doAfter: 1
       removeOnInteract: true

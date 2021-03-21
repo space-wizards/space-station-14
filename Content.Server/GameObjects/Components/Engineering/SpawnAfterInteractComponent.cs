@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.Components.Engineering
     [RegisterComponent]
     public class SpawnAfterInteractComponent : Component
     {
-        public override string Name => "SpawnOnInteract";
+        public override string Name => "SpawnAfterInteract";
         public override uint? NetID => ContentNetIDs.SPAWN_AFTER_INTERACT;
 
         [ViewVariables]
