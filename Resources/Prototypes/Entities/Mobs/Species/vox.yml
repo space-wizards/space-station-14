@@ -1,4 +1,5 @@
-﻿- type: entity
+﻿# SKREEEEEEEEEEE
+- type: entity
   parent: HumanMob_Content
   abstract: True
   id: BaseVox
@@ -20,7 +21,7 @@
       - map: [ "enum.HumanoidVisualLayers.Eyes" ]
         color: "#008800"
         sprite: Mobs/Customization/eyes.rsi
-        state: eyes
+        state: vox_eyes_s
       - map: [ "enum.HumanoidVisualLayers.RArm" ]
         sprite: Mobs/Species/Vox/parts.rsi
         state: r_arm
@@ -99,3 +100,10 @@
 #        fireStackAlternateState: 3
 #      - type: CreamPiedVisualizer
 #        state: creampie_human
+  - type: HumanoidAppearance
+    canColorHair: false
+    canColorFacialHair: false
+    categoriesHair: VoxHair
+    categoriesFacialHair: VoxFacialHair
+  - type: Inventory
+    speciesId: vox

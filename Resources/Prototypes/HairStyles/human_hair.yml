@@ -1,1399 +1,1217 @@
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairAfro
   name: Afro
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: afro
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairAfro2
   name: Afro 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: afro2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBigafro
   name: Afro (Large)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bigafro
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairAntenna
   name: Ahoge
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: antenna
   type: spriteAccessory
-- category: HumanHair
-  id: HumanHairBald
-  name: Bald
-  species: Human
-  sprite:
-    sprite: Mobs/Customization/human_hair.rsi
-    state: bald
-  type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBalding
   name: Balding Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: e
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBedhead
   name: Bedhead
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bedhead
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBedheadv2
   name: Bedhead 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bedheadv2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBedheadv3
   name: Bedhead 3
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bedheadv3
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairLongBedhead
   name: Long Bedhead
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: long_bedhead
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairFloorlengthBedhead
   name: Floorlength Bedhead
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: floorlength_bedhead
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBeehive
   name: Beehive
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: beehive
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBeehivev2
   name: Beehive 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: beehivev2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBob
   name: Bob Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bob
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBob2
   name: Bob Hair 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bob2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBobcut
   name: Bob Hair 3
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bobcut
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBob4
   name: Bob Hair 4
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bob4
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBobcurl
   name: Bobcurl
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bobcurl
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBoddicker
   name: Boddicker
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: boddicker
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBowlcut
   name: Bowlcut
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bowlcut
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBowlcut2
   name: Bowlcut 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bowlcut2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBraid
   name: Braid (Floorlength)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: braid
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBraided
   name: Braided
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: braided
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBraidfront
   name: Braided Front
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: braidfront
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBraid2
   name: Braid (High)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: braid2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairHbraid
   name: Braid (Low)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: hbraid
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairShortbraid
   name: Braid (Short)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: shortbraid
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBraidtail
   name: Braided Tail
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: braidtail
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBun
   name: Bun Head
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bun
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBunhead2
   name: Bun Head 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bunhead2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBun3
   name: Bun Head 3
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bun3
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairLargebun
   name: Bun (Large)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: largebun
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairManbun
   name: Bun (Manbun)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: manbun
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairTightbun
   name: Bun (Tight)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: tightbun
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBusiness
   name: Business Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: business
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBusiness2
   name: Business Hair 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: business2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBusiness3
   name: Business Hair 3
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: business3
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBusiness4
   name: Business Hair 4
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: business4
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBuzzcut
   name: Buzzcut
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: buzzcut
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairCia
   name: CIA
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: cia
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairCoffeehouse
   name: Coffee House
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: coffeehouse
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairCombover
   name: Combover
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: combover
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairCornrows
   name: Cornrows
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: cornrows
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairCornrows2
   name: Cornrows 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: cornrows2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairCornrowbun
   name: Cornrow Bun
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: cornrowbun
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairCornrowbraid
   name: Cornrow Braid
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: cornrowbraid
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairCornrowtail
   name: Cornrow Tail
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: cornrowtail
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairCrewcut
   name: Crewcut
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: crewcut
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairCurls
   name: Curls
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: curls
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairC
   name: Cut Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: c
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairDandypompadour
   name: Dandy Pompadour
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: dandypompadour
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairDevilock
   name: Devil Lock
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: devilock
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairDoublebun
   name: Double Bun
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: doublebun
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairDreads
   name: Dreadlocks
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: dreads
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairDrillruru
   name: Drillruru
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: drillruru
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairDrillhairextended
   name: Drill Hair (Extended)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: drillhairextended
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairEmo
   name: Emo
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: emo
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairEmofringe
   name: Emo Fringe
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: emofringe
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairNofade
   name: Fade (None)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: nofade
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairHighfade
   name: Fade (High)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: highfade
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairMedfade
   name: Fade (Medium)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: medfade
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairLowfade
   name: Fade (Low)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: lowfade
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBaldfade
   name: Fade (Bald)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: baldfade
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairFeather
   name: Feather
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: feather
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairFather
   name: Father
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: father
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairSargeant
   name: Flat Top
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: sargeant
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairFlair
   name: Flair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: flair
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBigflattop
   name: Flat Top (Big)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bigflattop
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairFlow
   name: Flow Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: f
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairGelled
   name: Gelled Back
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: gelled
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairGentle
   name: Gentle
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: gentle
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairHalfbang
   name: Half-banged Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: halfbang
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairHalfbang2
   name: Half-banged Hair 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: halfbang2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairHalfshaved
   name: Half-shaved
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: halfshaved
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairHedgehog
   name: Hedgehog Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: hedgehog
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairHimecut
   name: Hime Cut
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: himecut
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairHimecut2
   name: Hime Cut 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: himecut2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairShorthime
   name: Hime Cut (Short)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: shorthime
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairHimeup
   name: Hime Updo
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: himeup
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairHitop
   name: Hitop
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: hitop
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairJade
   name: Jade
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: jade
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairJensen
   name: Jensen Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: jensen
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairJoestar
   name: Joestar
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: joestar
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairKeanu
   name: Keanu Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: keanu
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairKusanagi
   name: Kusanagi Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: kusanagi
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairLong
   name: Long Hair 1
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: long
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairLong2
   name: Long Hair 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: long2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairLong3
   name: Long Hair 3
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: long3
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairLongovereye
   name: Long Over Eye
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: longovereye
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairLbangs
   name: Long Bangs
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: lbangs
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairLongemo
   name: Long Emo
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: longemo
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairLongfringe
   name: Long Fringe
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: longfringe
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairLongsidepart
   name: Long Side Part
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: longsidepart
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairMegaeyebrows
   name: Mega Eyebrows
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: megaeyebrows
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairMessy
   name: Messy
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: messy
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairModern
   name: Modern
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: modern
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairMohawk
   name: Mohawk
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: d
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairNitori
   name: Nitori
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: nitori
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairReversemohawk
   name: Mohawk (Reverse)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: reversemohawk
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairUnshavenMohawk
   name: Mohawk (Unshaven)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: unshaven_mohawk
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairMulder
   name: Mulder
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: mulder
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairOdango
   name: Odango
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: odango
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairOmbre
   name: Ombre
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: ombre
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairOneshoulder
   name: One Shoulder
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: oneshoulder
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairShortovereye
   name: Over Eye
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: shortovereye
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairOxton
   name: Oxton
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: oxton
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairParted
   name: Parted
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: parted
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairPart
   name: Parted (Side)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: part
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairKagami
   name: Pigtails
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: kagami
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairPigtails
   name: Pigtails 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: pigtails
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairPigtails2
   name: Pigtails 3
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: pigtails2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairPixie
   name: Pixie Cut
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: pixie
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairPompadour
   name: Pompadour
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: pompadour
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairBigpompadour
   name: Pompadour (Big)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: bigpompadour
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairPonytail
   name: Ponytail
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: ponytail
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairPonytail2
   name: Ponytail 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: ponytail2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairPonytail3
   name: Ponytail 3
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: ponytail3
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairPonytail4
   name: Ponytail 4
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: ponytail4
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairPonytail5
   name: Ponytail 5
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: ponytail5
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairPonytail6
   name: Ponytail 6
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: ponytail6
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairPonytail7
   name: Ponytail 7
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: ponytail7
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairHighponytail
   name: Ponytail (High)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: highponytail
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairStail
   name: Ponytail (Short)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: stail
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairLongstraightponytail
   name: Ponytail (Long)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: longstraightponytail
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairCountry
   name: Ponytail (Country)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: country
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairFringetail
   name: Ponytail (Fringe)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: fringetail
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairSidetail
   name: Ponytail (Side)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: sidetail
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairSidetail2
   name: Ponytail (Side) 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: sidetail2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairSidetail3
   name: Ponytail (Side) 3
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: sidetail3
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairSidetail4
   name: Ponytail (Side) 4
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: sidetail4
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairSpikyponytail
   name: Ponytail (Spiky)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: spikyponytail
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairPoofy
   name: Poofy
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: poofy
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairQuiff
   name: Quiff
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: quiff
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairRonin
   name: Ronin
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: ronin
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairShaved
   name: Shaved
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: shaved
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairShavedpart
   name: Shaved Part
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: shavedpart
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairShortbangs
   name: Short Bangs
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: shortbangs
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairA
   name: Short Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: a
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairShorthair2
   name: Short Hair 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: shorthair2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairShorthair3
   name: Short Hair 3
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: shorthair3
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairD
   name: Short Hair 4
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: d
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairE
   name: Short Hair 5
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: e
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairF
   name: Short Hair 6
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: f
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairShorthairg
   name: Short Hair 7
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: shorthairg
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHair80s
   name: Short Hair 80s
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: 80s
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairRosa
   name: Short Hair Rosa
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: rosa
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairB
   name: Shoulder-length Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: b
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairSidecut
   name: Sidecut
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: sidecut
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairSkinhead
   name: Skinhead
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: skinhead
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairProtagonist
   name: Slightly Long Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: protagonist
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairSpikey
   name: Spiky
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: spikey
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairSpiky
   name: Spiky 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: spiky
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairSpiky2
   name: Spiky 3
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: spiky2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairSwept
   name: Swept Back Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: swept
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairSwept2
   name: Swept Back Hair 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: swept2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairThinning
   name: Thinning
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: thinning
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairThinningfront
   name: Thinning (Front)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: thinningfront
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairThinningrear
   name: Thinning (Rear)
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: thinningrear
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairTopknot
   name: Topknot
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: topknot
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairTressshoulder
   name: Tress Shoulder
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: tressshoulder
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairTrimmed
   name: Trimmed
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: trimmed
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairTrimflat
   name: Trim Flat
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: trimflat
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairTwintail
   name: Twintails
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: twintail
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairUndercut
   name: Undercut
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: undercut
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairUndercutleft
   name: Undercut Left
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: undercutleft
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairUndercutright
   name: Undercut Right
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: undercutright
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairUnkept
   name: Unkept
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: unkept
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairUpdo
   name: Updo
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: updo
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairVlong
   name: Very Long Hair
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: vlong
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairLongest
   name: Very Long Hair 2
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: longest
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairLongest2
   name: Very Long Over Eye
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: longest2
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairVeryshortovereyealternate
   name: Very Short Over Eye
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: veryshortovereyealternate
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairVlongfringe
   name: Very Long with Fringe
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: vlongfringe
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairVolaju
   name: Volaju
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: volaju
   type: spriteAccessory
-- category: HumanHair
+- categories: HumanHair
   id: HumanHairWisp
   name: Wisp
-  species: Human
   sprite:
     sprite: Mobs/Customization/human_hair.rsi
     state: wisp

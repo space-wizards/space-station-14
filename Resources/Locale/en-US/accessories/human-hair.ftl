@@ -2,7 +2,6 @@ accessory-HumanHairAfro = Afro
 accessory-HumanHairAfro2 = Afro 2
 accessory-HumanHairBigafro = Afro (Large)
 accessory-HumanHairAntenna = Ahoge
-accessory-HumanHairBald = Bald
 accessory-HumanHairBalding = Balding Hair
 accessory-HumanHairBedhead = Bedhead
 accessory-HumanHairBedheadv2 = Bedhead 2

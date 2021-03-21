@@ -15,13 +15,15 @@ namespace Content.Shared.Preferences.Appearance
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [field: DataField("category", required: true)]
-        public SpriteAccessoryCategory Category { get; } = default!;
+        [field: DataField("categories", required: true)]
+        public SpriteAccessoryCategories Categories { get; } = default!;
 
         public string Name { get; private set; } = default!;
 
         [field: DataField("sprite", required: true)]
         public SpriteSpecifier Sprite { get; } = default!;
+
+        [field: DataField("priority")] public int Priority { get; } = 0;
 
         void ISerializationHooks.AfterDeserialization()
         {

@@ -79,8 +79,8 @@ namespace Content.Shared.Preferences
         {
             var random = IoCManager.Resolve<IRobustRandom>();
             var prototypes = IoCManager.Resolve<SpriteAccessoryManager>();
-            var hairStyles = prototypes.AccessoriesForCategory(SpriteAccessoryCategory.HumanHair);
-            var facialHairStyles = prototypes.AccessoriesForCategory(SpriteAccessoryCategory.HumanHair);
+            var hairStyles = prototypes.AccessoriesForCategory(SpriteAccessoryCategories.HumanHair);
+            var facialHairStyles = prototypes.AccessoriesForCategory(SpriteAccessoryCategories.HumanHair);
 
             var newHairStyle = random.Pick(hairStyles).ID;
 
@@ -112,13 +112,13 @@ namespace Content.Shared.Preferences
         {
             var mgr = IoCManager.Resolve<SpriteAccessoryManager>();
             var hairStyleId = appearance.HairStyleId;
-            if (!mgr.IsValidAccessoryInCategory(hairStyleId, SpriteAccessoryCategory.HumanHair))
+            if (!mgr.IsValidAccessoryInCategory(hairStyleId, SpriteAccessoryCategories.HumanHair))
             {
                 hairStyleId = HairStyles.DefaultHairStyle;
             }
 
             var facialHairStyleId = appearance.HairStyleId;
-            if (!mgr.IsValidAccessoryInCategory(hairStyleId, SpriteAccessoryCategory.HumanFacialHair))
+            if (!mgr.IsValidAccessoryInCategory(hairStyleId, SpriteAccessoryCategories.HumanFacialHair))
             {
                 facialHairStyleId = HairStyles.DefaultFacialHairStyle;
             }

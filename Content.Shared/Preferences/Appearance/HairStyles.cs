@@ -7,8 +7,8 @@ namespace Content.Shared.Preferences.Appearance
 {
     public static class HairStyles
     {
-        public const string DefaultHairStyle = "HumanHairBald";
-        public const string DefaultFacialHairStyle = "HumanFacialHairShaved";
+        public const string DefaultHairStyle = "HairBald";
+        public const string DefaultFacialHairStyle = "FacialHairShaved";
 
         public static readonly IReadOnlyList<Color> RealisticHairColors = new List<Color>
         {
@@ -23,41 +23,14 @@ namespace Content.Shared.Preferences.Appearance
         // These comparers put the default hair style (shaved/bald) at the very top.
         // For in the hair style pickers.
 
-        public static readonly IComparer<SpriteAccessoryPrototype> HairStyleComparer =
+        public static readonly IComparer<SpriteAccessoryPrototype> SpriteAccessoryComparer =
             Comparer<SpriteAccessoryPrototype>.Create((a, b) =>
             {
-                var styleA = a.ID;
-                var styleB = b.ID;
-                if (styleA == DefaultHairStyle)
-                {
-                    return -1;
-                }
+                var cmp = -a.Priority.CompareTo(b.Priority);
+                if (cmp != 0)
+                    return cmp;
 
-                if (styleB == DefaultHairStyle)
-                {
-                    return 1;
-                }
-
-                return string.Compare(styleA, styleB, StringComparison.CurrentCulture);
-            });
-
-        public static readonly IComparer<SpriteAccessoryPrototype> FacialHairStyleComparer =
-            Comparer<SpriteAccessoryPrototype>.Create((a, b) =>
-            {
-                var styleA = a.ID;
-                var styleB = b.ID;
-
-                if (styleA == DefaultFacialHairStyle)
-                {
-                    return -1;
-                }
-
-                if (styleB == DefaultFacialHairStyle)
-                {
-                    return 1;
-                }
-
-                return string.Compare(styleA, styleB, StringComparison.CurrentCulture);
+                return string.Compare(a.ID, b.ID, StringComparison.CurrentCulture);
             });
     }
 }

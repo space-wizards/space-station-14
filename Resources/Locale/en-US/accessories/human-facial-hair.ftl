@@ -33,4 +33,3 @@ accessory-HumanFacialHairWatson = Moustache (Watson)
 accessory-HumanFacialHairElvis = Sideburns (Elvis)
 accessory-HumanFacialHairMutton = Sideburns (Mutton Chops)
 accessory-HumanFacialHairSideburn = Sideburns
-accessory-HumanFacialHairShaved = Shaved

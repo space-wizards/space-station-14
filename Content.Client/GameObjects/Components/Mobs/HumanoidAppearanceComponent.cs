@@ -7,6 +7,7 @@ using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.GameObjects.Components.Mobs
@@ -65,15 +66,18 @@ namespace Content.Client.GameObjects.Components.Mobs
                 }
             }
 
-            sprite.LayerSetColor(HumanoidVisualLayers.Hair, Appearance.HairColor);
-            sprite.LayerSetColor(HumanoidVisualLayers.FacialHair, Appearance.FacialHairColor);
+            sprite.LayerSetColor(HumanoidVisualLayers.Hair,
+                CanColorHair ? Appearance.HairColor : Color.White);
+            sprite.LayerSetColor(HumanoidVisualLayers.FacialHair,
+                CanColorFacialHair ? Appearance.FacialHairColor : Color.White);
 
             sprite.LayerSetColor(HumanoidVisualLayers.Eyes, Appearance.EyeColor);
 
             sprite.LayerSetState(HumanoidVisualLayers.Chest, Sex == Sex.Male ? "torso_m" : "torso_f");
             sprite.LayerSetState(HumanoidVisualLayers.Head, Sex == Sex.Male ? "head_m" : "head_f");
 
-            sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, Sex == Sex.Female);
+            if (sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
+                sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, Sex == Sex.Female);
 
             if (Owner.TryGetComponent<CuffableComponent>(out var cuffed))
             {
@@ -86,14 +90,14 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             var hairStyle = Appearance.HairStyleId;
             if (string.IsNullOrWhiteSpace(hairStyle) ||
-                !_accessoryManager.IsValidAccessoryInCategory(hairStyle, SpriteAccessoryCategory.HumanHair))
+                !_accessoryManager.IsValidAccessoryInCategory(hairStyle, CategoriesHair))
             {
                 hairStyle = HairStyles.DefaultHairStyle;
             }
 
             var facialHairStyle = Appearance.FacialHairStyleId;
             if (string.IsNullOrWhiteSpace(facialHairStyle) ||
-                !_accessoryManager.IsValidAccessoryInCategory(facialHairStyle, SpriteAccessoryCategory.HumanFacialHair))
+                !_accessoryManager.IsValidAccessoryInCategory(facialHairStyle, CategoriesFacialHair))
             {
                 facialHairStyle = HairStyles.DefaultFacialHairStyle;
             }

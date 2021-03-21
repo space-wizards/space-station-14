@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
@@ -10,32 +9,32 @@ namespace Content.Shared.Preferences.Appearance
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        private readonly Dictionary<SpriteAccessoryCategory, List<SpriteAccessoryPrototype>> _index = new();
+        private readonly Dictionary<SpriteAccessoryCategories, List<SpriteAccessoryPrototype>> _index = new();
 
         public void Initialize()
         {
             _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
 
-            foreach (var category in Enum.GetValues<SpriteAccessoryCategory>())
+            foreach (var category in Enum.GetValues<SpriteAccessoryCategories>())
             {
                 _index.Add(category, new List<SpriteAccessoryPrototype>());
             }
 
             foreach (var prototype in _prototypeManager.EnumeratePrototypes<SpriteAccessoryPrototype>())
             {
-                _index[prototype.Category].Add(prototype);
+                AddToIndexes(prototype);
             }
         }
 
-        public IReadOnlyList<SpriteAccessoryPrototype> AccessoriesForCategory(SpriteAccessoryCategory category)
+        public IReadOnlyList<SpriteAccessoryPrototype> AccessoriesForCategory(SpriteAccessoryCategories categories)
         {
-            return _index[category];
+            return _index[categories];
         }
 
-        public bool IsValidAccessoryInCategory(string accessory, SpriteAccessoryCategory category)
+        public bool IsValidAccessoryInCategory(string accessory, SpriteAccessoryCategories categories)
         {
             return _prototypeManager.TryIndex(accessory, out SpriteAccessoryPrototype? accessoryPrototype)
-                   && accessoryPrototype.Category == category;
+                   && (accessoryPrototype.Categories & categories) != 0;
         }
 
         private void OnPrototypesReloaded(PrototypesReloadedEventArgs eventArgs)
@@ -51,7 +50,17 @@ namespace Content.Shared.Preferences.Appearance
             foreach (var prototype in set.Modified.Values)
             {
                 var accessoryPrototype = (SpriteAccessoryPrototype) prototype;
-                _index[accessoryPrototype.Category].Add(accessoryPrototype);
+                AddToIndexes(accessoryPrototype);
+            }
+        }
+
+        private void AddToIndexes(SpriteAccessoryPrototype accessoryPrototype)
+        {
+            for (var i = 0; i < sizeof(SpriteAccessoryCategories) * 8; i++)
+            {
+                var flag = (SpriteAccessoryCategories) (1 << i);
+                if ((accessoryPrototype.Categories & flag) != 0)
+                    _index[flag].Add(accessoryPrototype);
             }
         }
     }

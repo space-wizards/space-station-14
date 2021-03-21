@@ -58,8 +58,8 @@ namespace Content.Server.GameObjects.Components
             {
                 case HairSelectedMessage msg:
                     var cat = msg.IsFacialHair
-                        ? SpriteAccessoryCategory.HumanFacialHair
-                        : SpriteAccessoryCategory.HumanHair;
+                        ? looks.CategoriesFacialHair
+                        : looks.CategoriesHair;
 
                     if (!_spriteAccessoryManager.IsValidAccessoryInCategory(msg.HairId, cat))
                         return;
@@ -71,6 +71,9 @@ namespace Content.Server.GameObjects.Components
                     break;
 
                 case HairColorSelectedMessage msg:
+                    if (msg.IsFacialHair ? !looks.CanColorFacialHair : !looks.CanColorHair)
+                        return;
+
                     var (r, g, b) = msg.HairColor;
                     var color = new Color(r, g, b);
 
@@ -112,7 +115,11 @@ namespace Content.Server.GameObjects.Components
                 appearance.FacialHairColor,
                 appearance.HairStyleId,
                 appearance.FacialHairStyleId,
-                appearance.EyeColor);
+                appearance.EyeColor,
+                looks.CategoriesHair,
+                looks.CategoriesFacialHair,
+                looks.CanColorHair,
+                looks.CanColorFacialHair);
 
             UserInterface?.SendMessage(msg, actor.playerSession);
         }
