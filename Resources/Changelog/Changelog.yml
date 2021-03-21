@@ -601,3 +601,8 @@ Entries:
   - {message: Fixes taser bolts not moving after being fired., type: Fix}
   id: 109
   time: '2021-03-19T18:41:57.895376+00:00'
+- author: PJB
+  changes:
+  - {message: Lighting is significantly more performant now., type: Tweak}
+  id: 110
+  time: '2021-03-21T16:33:44.131473+00:00'
