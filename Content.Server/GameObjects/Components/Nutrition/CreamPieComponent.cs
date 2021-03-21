@@ -5,6 +5,8 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Nutrition
 {
@@ -12,6 +14,10 @@ namespace Content.Server.GameObjects.Components.Nutrition
     public class CreamPieComponent : Component, ILand, IThrowCollide
     {
         public override string Name => "CreamPie";
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [field: DataField("paralyzeTime")]
+        public float ParalyzeTime { get; set; } = 1f;
 
         public void PlaySound()
         {
