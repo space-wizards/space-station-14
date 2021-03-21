@@ -33,6 +33,7 @@
   - type: DisassembleOnActivate
     prototype: InflatableWallStack1
     doAfter: 3
+  - type: Airtight
   - type: SnapGrid
     offset: Center
   placement:
