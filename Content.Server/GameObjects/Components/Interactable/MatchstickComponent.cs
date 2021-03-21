@@ -1,10 +1,12 @@
-﻿#nullable enable
+#nullable enable
 using System.Threading.Tasks;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -68,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             // Play Sound
             if (!string.IsNullOrEmpty(_igniteSound))
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_igniteSound, Owner,
+                SoundSystem.Play(Filter.Pvs(Owner), _igniteSound, Owner,
                     AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
             }
 

@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Items
         /// <param name="pushbackRatio">The ratio of impulse applied to the thrower</param>
         internal static void TryThrow(this IEntity entity, Vector2 direction, IEntity? user = null, float pushbackRatio = 1.0f)
         {
-            if (direction == Vector2.Zero || !entity.TryGetComponent(out PhysicsComponent? physicsComponent))
+            if (entity.Deleted || direction == Vector2.Zero || !entity.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
                 return;
             }
