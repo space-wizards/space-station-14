@@ -19,6 +19,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -115,8 +116,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You burn your hand!"));
                 damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
-                var audioSystem = EntitySystem.Get<AudioSystem>();
-                audioSystem.PlayFromEntity("/Audio/Effects/lightburn.ogg", Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/lightburn.ogg", Owner);
             }
 
             void Eject()
@@ -201,7 +201,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;
-                            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
+                            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else

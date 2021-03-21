@@ -1,8 +1,10 @@
 using System;
 using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -92,7 +94,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
             }
 
             if(!string.IsNullOrEmpty(Sound))
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(Sound, Owner.Transform.Coordinates);
+                SoundSystem.Play(Filter.Pvs(Owner), Sound, Owner.Transform.Coordinates);
 
             Dirty();
         }

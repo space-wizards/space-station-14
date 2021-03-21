@@ -26,6 +26,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -297,7 +298,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
 
             SetAppearance(MicrowaveVisualState.Cooking);
-            _audioSystem.PlayFromEntity(_startCookingSound, Owner, AudioParams.Default);
+            SoundSystem.Play(Filter.Pvs(Owner), _startCookingSound, Owner, AudioParams.Default);
             Owner.SpawnTimer((int)(_currentCookTimerTime * _cookTimeMultiplier), (Action)(() =>
             {
                 if (_lostPower)
@@ -324,7 +325,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                         Owner.EntityManager.SpawnEntity(_badRecipeName, Owner.Transform.Coordinates);
                     }
                 }
-                _audioSystem.PlayFromEntity(_cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
+                SoundSystem.Play(Filter.Pvs(Owner), _cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
 
                 SetAppearance(MicrowaveVisualState.Idle);
                 _busy = false;
@@ -457,7 +458,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void ClickSound()
         {
-            _audioSystem.PlayFromEntity("/Audio/Machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)

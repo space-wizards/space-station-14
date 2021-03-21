@@ -4,9 +4,11 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Projectiles;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -63,13 +65,15 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 return;
             }
 
+            var coordinates = otherBody.Entity.Transform.Coordinates;
+            var playerFilter = Filter.Pvs(coordinates);
             if (otherBody.Entity.TryGetComponent(out IDamageableComponent? damage) && _soundHitSpecies != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, otherBody.Entity.Transform.Coordinates);
+                SoundSystem.Play(playerFilter, _soundHitSpecies, coordinates);
             }
             else if (_soundHit != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, otherBody.Entity.Transform.Coordinates);
+                SoundSystem.Play(playerFilter, _soundHit, coordinates);
             }
 
             if (damage != null)

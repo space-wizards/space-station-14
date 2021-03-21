@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Portal;
 using Content.Shared.GameObjects.Components.Tag;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -139,13 +141,12 @@ namespace Content.Server.GameObjects.Components.Portal
             }
 
             var position = _connectingTeleporter.Transform.Coordinates;
-            var soundPlayer = EntitySystem.Get<AudioSystem>();
 
             // Departure
             // Do we need to rate-limit sounds to stop ear BLAST?
-            soundPlayer.PlayAtCoords(_departureSound, entity.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(entity), _departureSound, entity.Transform.Coordinates);
             entity.Transform.Coordinates = position;
-            soundPlayer.PlayAtCoords(_arrivalSound, entity.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(entity), _arrivalSound, entity.Transform.Coordinates);
             TryChangeState(PortalState.RecentlyTeleported);
 
             // To stop spam teleporting. Could potentially look at adding a timer to flush this from the portal
