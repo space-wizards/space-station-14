@@ -1,9 +1,9 @@
 ﻿- type: constructionGraph
-  id: Tables
+  id: table
   start: start
   graph:
     - node: start
-      action:
+      actions:
         - !type:DeleteEntity {}
       edges:
         - to: TableFrame
@@ -27,37 +27,37 @@
             - tool: Anchoring
               doAfter: 1
 
-        - to: MetalTable
+        - to: Table
           steps:
             - material: Steel
               amount: 1
               doAfter: 1
 
-        - to: ReinforcedTable
+        - to: TableReinforced
           steps:
             - material: Plasteel
               amount: 1
               doAfter: 1
 
-        - to: GlassTable
+        - to: TableGlass
           steps:
             - material: Glass
               amount: 1
               doAfter: 1
 
-        - to: RGlassTable
+        - to: TableReinforcedGlass
           steps:
             - material: ReinforcedGlass
               amount: 1
               doAfter: 1
 
-        - to: WoodTable
+        - to: TableWood
           steps:
             - material: WoodPlank
               amount: 1
               doAfter: 1
 
-    - node: MetalTable
+    - node: Table
       entity: Table
       edges:
         - to: TableFrame
@@ -69,16 +69,16 @@
             - tool: Anchoring
               doAfter: 1
 
-        - to: BarTable
+        - to: TableBar
           steps:
             - material: Cloth
               amount: 1
               doAfter: 1
 
-    - node: BarTable
-      entity: BarTable
+    - node: TableBar
+      entity: TableBar
       edges:
-        - to: TableFrame
+        - to: Table
           completed:
             - !type:SpawnPrototype
               prototype: MaterialCloth1
@@ -87,8 +87,8 @@
             - tool: Prying
               doAfter: 1
 
-    - node: ReinforcedTable
-      entity: TableR
+    - node: TableReinforced
+      entity: TableReinforced
       edges:
         - to: TableFrame
           completed:
@@ -99,7 +99,7 @@
             - tool: Anchoring
               doAfter: 1
 
-    - node: GlassTable
+    - node: TableGlass
       entity: TableGlass
       edges:
         - to: TableFrame
@@ -111,8 +111,8 @@
             - tool: Anchoring
               doAfter: 1
 
-    - node: RGlassTable
-      entity: TableGlassR
+    - node: TableReinforcedGlass
+      entity: TableReinforcedGlass
       edges:
         - to: TableFrame
           completed:
@@ -123,7 +123,7 @@
             - tool: Anchoring
               doAfter: 1
 
-    - node: WoodTable
+    - node: TableWood
       entity: TableWood
       edges:
         - to: TableFrame
@@ -135,16 +135,16 @@
             - tool: Prying
               doAfter: 1
 
-        - to: PokerTable
+        - to: TableCarpet
           steps:
             - material: Cloth
               amount: 1
               doAfter: 1
 
-    - node: PokerTable
+    - node: TableCarpet
       entity: TableCarpet
       edges:
-        - to: WoodTable
+        - to: TableWood
           completed:
             - !type:SpawnPrototype
               prototype: MaterialCloth1

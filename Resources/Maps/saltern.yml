@@ -969,7 +969,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 117
-  type: TableR
+  type: TableReinforced
   components:
   - pos: -13.5,16.5
     parent: 853
@@ -5291,14 +5291,14 @@ entities:
   - bodyType: Dynamic
     type: Physics
 - uid: 578
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -8.5,6.5
     parent: 853
     type: Transform
 - uid: 579
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -9.5,6.5
@@ -5978,7 +5978,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 662
-  type: TableR
+  type: TableReinforced
   components:
   - pos: -11.5,16.5
     parent: 853
@@ -13097,14 +13097,14 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 1032
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,-14.5
     parent: 853
     type: Transform
 - uid: 1033
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,-15.5
@@ -13159,21 +13159,21 @@ entities:
     parent: 853
     type: Transform
 - uid: 1040
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,28.5
     parent: 853
     type: Transform
 - uid: 1041
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,28.5
     parent: 853
     type: Transform
 - uid: 1042
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,28.5
@@ -13275,35 +13275,35 @@ entities:
     parent: 853
     type: Transform
 - uid: 1052
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -7.5,7.5
     parent: 853
     type: Transform
 - uid: 1053
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -7.5,8.5
     parent: 853
     type: Transform
 - uid: 1054
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 9.5,28.5
     parent: 853
     type: Transform
 - uid: 1055
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 8.5,28.5
     parent: 853
     type: Transform
 - uid: 1056
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 7.5,28.5
@@ -14303,7 +14303,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1170
-  type: TableGlassR
+  type: TableReinforcedGlass
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 18.5,1.5
@@ -14316,7 +14316,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1172
-  type: TableGlassR
+  type: TableReinforcedGlass
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 18.5,0.5
@@ -14662,7 +14662,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1212
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,28.5
@@ -14791,7 +14791,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1224
-  type: TableR
+  type: TableReinforced
   components:
   - pos: -13.5,15.5
     parent: 853
@@ -24336,21 +24336,21 @@ entities:
     parent: 853
     type: Transform
 - uid: 2467
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,28.5
     parent: 853
     type: Transform
 - uid: 2468
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,28.5
     parent: 853
     type: Transform
 - uid: 2469
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,28.5
@@ -41120,7 +41120,7 @@ entities:
   - sleepTime: 57.249184
     type: Physics
 - uid: 4138
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 15.5,8.5
@@ -41383,14 +41383,14 @@ entities:
     parent: 853
     type: Transform
 - uid: 4167
-  type: TableMetal
+  type: Table
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 14.5,-13.5
     parent: 853
     type: Transform
 - uid: 4168
-  type: TableMetal
+  type: Table
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 15.5,-13.5
@@ -42110,14 +42110,14 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4259
-  type: TableMetal
+  type: Table
   components:
   - rot: 1.5707963705062866 rad
     pos: -14.5,18.5
     parent: 853
     type: Transform
 - uid: 4260
-  type: TableMetal
+  type: Table
   components:
   - rot: 1.5707963705062866 rad
     pos: -14.5,19.5
