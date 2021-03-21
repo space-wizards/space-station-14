@@ -26,9 +26,6 @@
       "name": "bear"
     },
     {
-      "name": "bearsteak"
-    },
-    {
       "name": "bird"
     },
     {
@@ -51,9 +48,6 @@
     },
     {
       "name": "crab-cooked"
-    },
-    {
-      "name": "crabrangoon"
     },
     {
       "name": "cutlet"
@@ -91,13 +85,13 @@
       "name": "goliath-cooked"
     },
     {
-      "name": "kebab"
-    },
-    {
       "name": "lizard"
     },
     {
       "name": "lizard-cooked"
+    },
+    {
+      "name": "lizard-tail"
     },
     {
       "name": "plate-meat"
@@ -116,15 +110,6 @@
     },
     {
       "name": "product-cooked"
-    },
-    {
-      "name": "ratkebab"
-    },
-    {
-      "name": "ratkebabdouble"
-    },
-    {
-      "name": "ribs"
     },
     {
       "name": "rotten",
@@ -160,9 +145,6 @@
       "name": "salami-slice"
     },
     {
-      "name": "sashimi"
-    },
-    {
       "name": "sausage"
     },
     {
@@ -182,6 +164,42 @@
     },
     {
       "name": "skewer"
+    },
+    {
+      "name": "skewer-kebab1"
+    },
+    {
+      "name": "skewer-kebab2"
+    },
+    {
+      "name": "skewer-kebab3"
+    },
+    {
+      "name": "skewer-kebab4"
+    },
+    {
+      "name": "skewer-kebab-alpha1"
+    },
+    {
+      "name": "skewer-kebab-alpha2"
+    },
+    {
+      "name": "skewer-kebab-alpha3"
+    },
+    {
+      "name": "skewer-kebab-alpha4"
+    },
+    {
+      "name": "skewer-tail1"
+    },
+    {
+      "name": "skewer-tail2"
+    },
+    {
+      "name": "skewer-rat1"
+    },
+    {
+      "name": "skewer-rat2"
     }
   ]
 }

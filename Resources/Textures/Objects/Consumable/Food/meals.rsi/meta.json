@@ -8,6 +8,17 @@
   },
   "states": [
     {
+      "name": "bearsteak",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
       "name": "benedict"
     },
     {
@@ -20,6 +31,9 @@
       "name": "butteronastick"
     },
     {
+      "name": "crabrangoon"
+    },
+    {
       "name": "cornedbeef"
     },
     {
@@ -30,9 +44,6 @@
     },
     {
       "name": "enchiladas"
-    },
-    {
-      "name": "fiestaskewer"
     },
     {
       "name": "fishandchips"
@@ -56,10 +67,16 @@
       "name": "fries-parsnip"
     },
     {
+      "name": "hotdog"
+    },
+    {
       "name": "lasagna"
     },
     {
       "name": "loadedbakedpotato"
+    },
+    {
+      "name": "ribs"
     },
     {
       "name": "memoryLeek",
@@ -96,6 +113,9 @@
     },
     {
       "name": "poutine"
+    },
+    {
+      "name": "sashimi"
     },
     {
       "name": "saltysweet"

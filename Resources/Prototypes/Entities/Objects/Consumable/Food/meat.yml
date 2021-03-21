@@ -5,6 +5,7 @@
   id: FoodMeatBase
   abstract: true
   components:
+  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
     netsync: false
@@ -20,6 +21,15 @@
   - type: Item
     size: 5
 
+- type: Tag
+  id: Raw
+
+- type: Tag
+  id: Cooked
+
+- type: Tag
+  id: Cutlet
+
 # Raw
 
 - type: entity
@@ -28,6 +38,9 @@
   id: FoodMeat
   description: A slab of raw meat.
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: plain
   - type: SolutionContainer
@@ -45,6 +58,9 @@
   id: FoodMeatBacon
   description: A raw piece of bacon.
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     netsync: true
     state: bacon
@@ -64,6 +80,9 @@
   id: FoodMeatBear
   description: A very manly slab of raw bear meat.
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: bear
   - type: SolutionContainer
@@ -81,6 +100,9 @@
   id: FoodMeatPenguin
   description: A slab of raw penguin meat. Can be used as a substitute for fish in recipes.
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: bird
   - type: SolutionContainer
@@ -98,6 +120,9 @@
   id: FoodMeatChicken
   description: A slab of raw chicken. Remember to wash your hands!
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: bird
   - type: SolutionContainer
@@ -115,6 +140,9 @@
   id: FoodMeatCrab
   description: A pile of raw crab meat.
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: crab
   - type: SolutionContainer
@@ -129,6 +157,9 @@
   id: FoodMeatGoliath
   description: A slab of goliath meat. It's not very edible now, but it cooks great in lava.
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: goliath
   - type: SolutionContainer
@@ -143,6 +174,9 @@
   id: FoodMeatLizard
   description: Delicious dino damage.
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: lizard
   - type: SolutionContainer
@@ -169,6 +203,9 @@
   id: FoodMeatRotten
   description: Halfway to becoming fertilizer for your garden.
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: rotten
   - type: SolutionContainer
@@ -183,6 +220,9 @@
   id: FoodMeatSpider
   description: A slab of spider meat. That is so Kafkaesque.
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: spider
   - type: SolutionContainer
@@ -200,6 +240,9 @@
   id: FoodMeatSpiderLeg
   description: A still twitching leg of a giant spider... you don't really want to eat this, do you?
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: spiderleg
   - type: SolutionContainer
@@ -214,6 +257,9 @@
   id: FoodMeatWheat
   description: This doesn't look like meat, but your standards aren't that< high to begin with.
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: clump
   - type: SolutionContainer
@@ -228,6 +274,9 @@
   id: FoodMeatXeno
   description: A slab of xeno meat, dripping with acid.
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: xeno
   - type: SolutionContainer
@@ -257,6 +306,9 @@
   id: FoodMeatSalami
   description: A large tube of salami. Best not to ask what went into it.
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: salami
   - type: SliceableFood
@@ -268,6 +320,9 @@
   id: FoodMeatClown
   description: A delicious, round piece of meat clown. How horrifying.
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: clown
   - type: SliceableFood
@@ -279,6 +334,9 @@
   id: FoodMeatMeatball
   description: A raw ball of meat. Not a homosexual.
   components:
+  - type: Tag
+    tags:
+      - Raw
   - type: Sprite
     state: meatball
 
@@ -290,6 +348,9 @@
   id: FoodMeatCooked
   description: A cooked slab of meat. Smells primal.
   components:
+  - type: Tag
+    tags:
+      - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
@@ -311,6 +372,9 @@
   id: FoodMeatBaconCooked
   description: A delicious piece of cooked bacon.
   components:
+  - type: Tag
+    tags:
+      - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
@@ -335,6 +399,9 @@
   id: FoodMeatBearCooked
   description: A well-cooked slab of bear meat. Tough, but tasty with the right sides.
   components:
+  - type: Tag
+    tags:
+      - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
@@ -356,6 +423,9 @@
   id: FoodMeatPenguinCooked
   description: A cooked filet of penguin. Can be used as a substitute for fish in recipes.
   components:
+  - type: Tag
+    tags:
+      - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
@@ -377,6 +447,9 @@
   id: FoodMeatChickenCooked
   description: A cooked piece of chicken. Best used in other recipes.
   components:
+  - type: Tag
+    tags:
+      - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
@@ -398,6 +471,9 @@
   id: FoodMeatChickenFried
   description: A juicy hunk of chicken meat, fried to perfection.
   components:
+  - type: Tag
+    tags:
+      - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
@@ -419,6 +495,9 @@
   id: FoodMeatCrabCooked
   description: Some deliciously cooked crab meat.
   components:
+  - type: Tag
+    tags:
+      - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
@@ -437,6 +516,9 @@
   id: FoodMeatGoliathCooked
   description: A delicious, lava cooked steak.
   components:
+  - type: Tag
+    tags:
+      - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
@@ -455,6 +537,9 @@
   id: FoodMeatLizardCooked
   description: Cooked, tough lizard meat.
   components:
+  - type: Tag
+    tags:
+      - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
@@ -476,6 +561,9 @@
   id: FoodMeatSpiderlegCooked
   description: A giant spider's leg that's still twitching after being cooked. Gross!.
   components:
+  - type: Tag
+    tags:
+      - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
@@ -494,6 +582,9 @@
   id: FoodMeatMeatballCooked
   description: A cooked meatball. Perfect to add to other dishes... except fruity ones.
   components:
+  - type: Tag
+    tags:
+      - Cooked
   - type: Sprite
     state: meatball-cooked
   - type: SolutionContainer
@@ -512,6 +603,10 @@
   id: FoodMeatCutlet
   description: A raw meat cutlet.
   components:
+  - type: Tag
+    tags:
+      - Raw
+      - Cutlet
   - type: Sprite
     state: cutlet
   - type: SolutionContainer
@@ -526,6 +621,10 @@
   id: FoodMeatBearCutlet
   description: A very manly cutlet of raw bear meat.
   components:
+  - type: Tag
+    tags:
+      - Raw
+      - Cutlet
   - type: Sprite
     layers:
       - state: cutlet
@@ -543,6 +642,10 @@
   id: FoodMeatPenguinCutlet
   description: A cutlet of raw penguin meat. Can be used as a substitute for fish in recipes.
   components:
+  - type: Tag
+    tags:
+      - Raw
+      - Cutlet
   - type: Sprite
     state: cutlet
     color: white
@@ -558,6 +661,10 @@
   id: FoodMeatChickenCutlet
   description: A cutlet of raw chicken. Remember to wash your hands!
   components:
+  - type: Tag
+    tags:
+      - Raw
+      - Cutlet
   - type: Sprite
     state: cutlet
     color: white
@@ -573,6 +680,10 @@
   id: FoodMeatLizardCutlet
   description: Delicious dino cutlet.
   components:
+  - type: Tag
+    tags:
+      - Raw
+      - Cutlet
   - type: Sprite
     layers:
       - state: cutlet
@@ -591,6 +702,10 @@
   id: FoodMeatSpiderCutlet
   description: A cutletof raw spider meat. So Kafkaesque.
   components:
+  - type: Tag
+    tags:
+      - Raw
+      - Cutlet
   - type: Sprite
     layers:
       - state: cutlet
@@ -609,6 +724,10 @@
   id: FoodMeatXenoCutlet
   description: A slab of raw xeno meat, dripping with acid.
   components:
+  - type: Tag
+    tags:
+      - Raw
+      - Cutlet
   - type: Sprite
     layers:
       - state: cutlet
@@ -627,6 +746,9 @@
   id: FoodMeatTomatoCutlet
   description: A cutlet from a slab of tomato.
   components:
+  - type: Tag
+    tags:
+      - Cutlet
   - type: Sprite
     state: salami-slice
     color: red
@@ -637,6 +759,10 @@
   id: FoodMeatSalamiSlice
   description: A slice of cured salami.
   components:
+  - type: Tag
+    tags:
+      - Raw
+      - Cutlet
   - type: Sprite
     state: salami-slice
   - type: SolutionContainer
@@ -653,6 +779,10 @@
   id: FoodMeatCutletCooked
   description:
   components:
+  - type: Tag
+    tags:
+      - Cooked
+      - Cutlet
   - type: Sprite
     state: cutlet-cooked
   - type: SolutionContainer
@@ -667,6 +797,10 @@
   id: FoodMeatBearCutletCooked
   description: A very manly cutlet of cooked bear meat.
   components:
+  - type: Tag
+    tags:
+      - Cooked
+      - Cutlet
   - type: Sprite
     layers:
       - state: cutlet-cooked
@@ -684,6 +818,10 @@
   id: FoodMeatPenguinCutletCooked
   description: A cutlet of cooked penguin meat.
   components:
+  - type: Tag
+    tags:
+      - Cooked
+      - Cutlet
   - type: Sprite
     state: cutlet-cooked
     color: white
@@ -699,6 +837,10 @@
   id: FoodMeatChickenCutletCooked
   description: A cutlet of cooked chicken. Remember to wash your hands!
   components:
+  - type: Tag
+    tags:
+      - Cooked
+      - Cutlet
   - type: Sprite
     state: cutlet-cooked
     color: white
@@ -714,6 +856,10 @@
   id: FoodMeatLizardCutletCooked
   description: Delicious cooked dino cutlet.
   components:
+  - type: Tag
+    tags:
+      - Cooked
+      - Cutlet
   - type: Sprite
     layers:
       - state: cutlet-cooked
@@ -730,6 +876,10 @@
   id: FoodMeatSpiderCutletCooked
   description: A cutlet of cooked spider meat. Finally edible.
   components:
+  - type: Tag
+    tags:
+      - Cooked
+      - Cutlet
   - type: Sprite
     layers:
       - state: cutlet-cooked
@@ -748,6 +898,10 @@
   id: FoodMeatXenoCutletCooked
   description: A cutlet of cooked xeno, dripping with - tastiness?
   components:
+  - type: Tag
+    tags:
+      - Cooked
+      - Cutlet
   - type: Sprite
     layers:
       - state: cutlet-cooked
@@ -759,35 +913,3 @@
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 5
-
-# Kebab
-
-# - type: entity
-#   name:
-#   parent: FoodMeatBase
-#   id: FoodMeat
-#   description:
-#   components:
-#   - type: Sprite
-#     state:
-#   - type: SolutionContainer
-#     contents:
-#       reagents:
-#       - ReagentId: chem.Toxin
-#         Quantity: 1
-
-# - type: entity
-#   name:
-#   parent: FoodMeatBase
-#   id: FoodMeatCooked
-#   description:
-#   components:
-#   - type: Sprite
-#     layers:
-#       - state: plate-meat
-#       - state: -cooked
-#   - type: SolutionContainer
-#     contents:
-#       reagents:
-#       - ReagentId: chem.Nutriment
-#         Quantity: 15
