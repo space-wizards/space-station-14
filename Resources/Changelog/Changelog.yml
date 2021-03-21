@@ -606,3 +606,13 @@ Entries:
   - {message: Lighting is significantly more performant now., type: Tweak}
   id: 110
   time: '2021-03-21T16:33:44.131473+00:00'
+- author: Your_Name_Here
+  changes:
+  - {message: Fixed cream pies not splashing when hitting people or things., type: Fix}
+  id: 111
+  time: '2021-03-21T17:11:51.493978+00:00'
+- author: Your_Name_Here
+  changes:
+  - {message: Adds cream pie launcher. Honk!, type: Add}
+  id: 112
+  time: '2021-03-21T17:11:51.494714+00:00'
