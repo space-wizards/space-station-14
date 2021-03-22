@@ -2,7 +2,6 @@
 using Content.Client.Interfaces;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Content.Shared;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -13,6 +12,7 @@ using Robust.Shared.Random;
 using Robust.Client;
 using Robust.Client.State;
 using Content.Client.State;
+using Robust.Shared.Player;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -25,9 +25,7 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IBaseClient _client = default!;
         [Dependency] private readonly IClientGameTicker _clientGameTicker = default!;
-
-        private AudioSystem _audioSystem = default!;
-
+        
         private SoundCollectionPrototype _ambientCollection = default!;
 
         private AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, AudioMixTarget.Stereo, true, 0f);
@@ -39,8 +37,6 @@ namespace Content.Client.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-
-            _audioSystem = Get<AudioSystem>();
 
             _ambientCollection = _prototypeManager.Index<SoundCollectionPrototype>("AmbienceBase");
 
@@ -130,7 +126,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             EndAmbience();
             var file = _robustRandom.Pick(_ambientCollection.PickFiles);
-            _ambientStream = _audioSystem.Play(file, _ambientParams);
+            _ambientStream = SoundSystem.Play(Filter.Local(), file, _ambientParams);
         }
 
         private void EndAmbience()
@@ -174,7 +170,7 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 return;
             }
-            _lobbyStream = _audioSystem.Play(file, _lobbyParams);
+            _lobbyStream = SoundSystem.Play(Filter.Local(), file, _lobbyParams);
         }
 
         private void EndLobbyMusic()

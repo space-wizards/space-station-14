@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
@@ -6,8 +7,10 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Physics;
@@ -23,6 +26,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     {
         public override string Name => "DisposalHolder";
 
+        private bool _deletionRequested = false;
         private Container _contents = null!;
 
         /// <summary>
@@ -77,12 +81,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (!entity.TryGetComponent(out IPhysBody? physics) ||
-                !physics.CanCollide)
-            {
-                return false;
-            }
-
             return entity.HasComponent<ItemComponent>() ||
                    entity.HasComponent<IBody>();
         }
@@ -118,6 +116,9 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public void ExitDisposals()
         {
+            if (_deletionRequested || Deleted)
+                return;
+
             PreviousTube = null;
             CurrentTube = null;
             NextTube = null;
@@ -146,8 +147,9 @@ namespace Content.Server.GameObjects.Components.Disposal
                 Air.Clear();
             }
 
-            if (!Deleted)
-                Owner.Delete();
+            // FIXME: This is a workaround for https://github.com/space-wizards/RobustToolbox/issues/1646
+            Owner.SpawnTimer(TimeSpan.Zero, () => Owner.Delete());
+            _deletionRequested = true;
         }
 
         public void Update(float frameTime)

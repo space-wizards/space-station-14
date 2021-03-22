@@ -18,6 +18,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -163,8 +164,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (UseSound != null)
             {
-                _entitySystem.GetEntitySystem<AudioSystem>()
-                    .PlayFromEntity(UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
+                SoundSystem.Play(Filter.Pvs(trueTarget), UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
             }
 
             trueTarget.PopupMessage(user, Loc.GetString("Nom"));

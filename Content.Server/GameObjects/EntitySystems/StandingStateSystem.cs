@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs.State;
@@ -6,7 +6,9 @@ using Content.Shared.GameObjects.Components.Rotation;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -30,7 +32,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (playSound)
                 {
                     var file = AudioHelpers.GetRandomFileFromSoundCollection("bodyfall");
-                    Get<AudioSystem>().PlayFromEntity(file, entity, AudioHelpers.WithVariation(0.25f));
+                    SoundSystem.Play(Filter.Pvs(entity), file, entity, AudioHelpers.WithVariation(0.25f));
                 }
             }
 

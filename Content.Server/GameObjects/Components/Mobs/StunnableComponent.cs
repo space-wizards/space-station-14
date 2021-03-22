@@ -7,9 +7,12 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -56,8 +59,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         protected override void OnInteractHand()
         {
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity("/Audio/Effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.05f));
         }
 
         bool IDisarmedAct.Disarmed(DisarmedActEventArgs eventArgs)
@@ -72,9 +74,8 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             if (source != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/thudswoosh.ogg", source,
+                SoundSystem.Play(Filter.Pvs(source), "/Audio/Effects/thudswoosh.ogg", source,
                     AudioHelpers.WithVariation(0.025f));
-
                 if (target != null)
                 {
                     source.PopupMessageOtherClients(Loc.GetString("{0} pushes {1}!", source.Name, target.Name));

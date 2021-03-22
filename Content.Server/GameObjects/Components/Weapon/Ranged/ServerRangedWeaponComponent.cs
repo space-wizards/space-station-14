@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
@@ -8,7 +8,6 @@ using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -17,6 +16,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -151,12 +151,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
             if (ClumsyCheck && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
-                var soundSystem = EntitySystem.Get<AudioSystem>();
-                soundSystem.PlayAtCoords("/Audio/Items/bikehorn.ogg",
-                    Owner.Transform.Coordinates, AudioParams.Default, 5);
+                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/bikehorn.ogg",
+                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
-                soundSystem.PlayAtCoords("/Audio/Weapons/Guns/Gunshots/bang.ogg",
-                    Owner.Transform.Coordinates, AudioParams.Default, 5);
+                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/Guns/Gunshots/bang.ogg",
+                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
                 if (user.TryGetComponent(out IDamageableComponent? health))
                 {
