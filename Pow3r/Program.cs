@@ -95,6 +95,8 @@ void main()
                 APIVersion = new Version(4, 5),
                 Flags = ContextFlags.Debug | ContextFlags.ForwardCompatible,
                 Size = (1280, 720),
+                WindowState = WindowState.Maximized,
+                StartVisible = false,
 
                 Title = "Pow3r",
             });
@@ -165,6 +167,8 @@ void main()
             var lastFrame = TimeSpan.Zero;
 
             LoadFromDisk();
+
+            _window.IsVisible = true;
 
             while (!GLFW.WindowShouldClose(_window.WindowPtr))
             {
