@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Nutrition;
@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -74,8 +75,7 @@ namespace Content.Server.GameObjects.Components.Culinary
         {
             if (_breakSound != null && IoCManager.Resolve<IRobustRandom>().Prob(_breakChance))
             {
-                EntitySystem.Get<AudioSystem>()
-                    .PlayFromEntity(_breakSound, user, AudioParams.Default.WithVolume(-2f));
+                SoundSystem.Play(Filter.Pvs(user), _breakSound, user, AudioParams.Default.WithVolume(-2f));
                 Owner.Delete();
             }
         }

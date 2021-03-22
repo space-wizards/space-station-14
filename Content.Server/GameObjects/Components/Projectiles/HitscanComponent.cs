@@ -2,11 +2,13 @@ using System;
 using Content.Shared.Damage;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Projectiles
@@ -82,7 +84,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
             {
                 // TODO: No wall component so ?
                 var offset = angle.ToVec().Normalized / 2;
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitWall, user.Transform.Coordinates.Offset(offset));
+                var coordinates = user.Transform.Coordinates.Offset(offset);
+                SoundSystem.Play(Filter.Pvs(coordinates), _soundHitWall, coordinates);
             }
 
             Owner.SpawnTimer((int) _deathTime.TotalMilliseconds, () =>

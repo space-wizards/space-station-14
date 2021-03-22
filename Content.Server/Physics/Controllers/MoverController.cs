@@ -22,6 +22,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -185,7 +186,7 @@ namespace Content.Server.Physics.Controllers
             {
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
                 var file = _robustRandom.Pick(soundCollection.PickFiles);
-                _audioSystem.PlayAtCoords(file, coordinates, sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
+                SoundSystem.Play(Filter.Pvs(coordinates), file, coordinates, sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
             }
             catch (UnknownPrototypeException)
             {

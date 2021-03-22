@@ -13,12 +13,14 @@ using Content.Shared.Audio;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
 
@@ -189,8 +191,11 @@ namespace Content.Server.Atmos
             if(PressureDifference > 15)
             {
                 if(_soundCooldown == 0)
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/space_wind.ogg",
-                        GridIndices.ToEntityCoordinates(GridIndex, _mapManager), AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(PressureDifference / 10, 10, 100)));
+                {
+                    var coordinates = GridIndices.ToEntityCoordinates(GridIndex, _mapManager);
+                    SoundSystem.Play(Filter.Pvs(coordinates), "/Audio/Effects/space_wind.ogg",
+                        coordinates, AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(PressureDifference / 10, 10, 100)));
+                }
             }
 
             foreach (var entity in _gridTileLookupSystem.GetEntitiesIntersecting(GridIndex, GridIndices))

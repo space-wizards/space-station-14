@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -98,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (!CheckAccess(user)) return;
 
             Locked = false;
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/door_lock_off.ogg", Owner, AudioParams.Default.WithVolume(-5));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/door_lock_off.ogg", Owner, AudioParams.Default.WithVolume(-5));
         }
 
         private void DoLock(IEntity user)
@@ -106,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (!CheckAccess(user)) return;
 
             Locked = true;
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/door_lock_on.ogg", Owner, AudioParams.Default.WithVolume(-5));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/door_lock_on.ogg", Owner, AudioParams.Default.WithVolume(-5));
         }
 
         private bool CheckAccess(IEntity user)

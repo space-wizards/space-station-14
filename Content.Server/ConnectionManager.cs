@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.Preferences;
@@ -61,7 +62,14 @@ The ban reason is: ""{ban.Reason}""
             // Check if banned.
             var addr = e.IP.Address;
             var userId = e.UserId;
-            var ban = await _db.GetServerBanAsync(addr, userId);
+            ImmutableArray<byte>? hwId = e.UserData.HWId;
+            if (hwId.Value.Length == 0)
+            {
+                // HWId not available for user's platform, don't look it up.
+                hwId = null;
+            }
+
+            var ban = await _db.GetServerBanAsync(addr, userId, hwId);
             if (ban != null)
             {
                 var expires = "This is a permanent ban.";
@@ -83,8 +91,8 @@ The ban reason is: ""{ban.Reason}""
                 return;
             }
 
-            await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr);
-            await _db.AddConnectionLogAsync(userId, e.UserName, addr);
+            await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr, e.UserData.HWId);
+            await _db.AddConnectionLogAsync(userId, e.UserName, addr, e.UserData.HWId);
         }
 
         private async Task<NetUserId?> AssignUserIdCallback(string name)
