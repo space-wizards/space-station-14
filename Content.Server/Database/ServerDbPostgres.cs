@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -48,7 +49,10 @@ namespace Content.Server.Database
             return ConvertBan(ban);
         }
 
-        public override async Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId)
+        public override async Task<ServerBanDef?> GetServerBanAsync(
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId)
         {
             if (address == null && userId == null)
             {
@@ -57,73 +61,31 @@ namespace Content.Server.Database
 
             await using var db = await GetDbImpl();
 
-            var query = db.PgDbContext.Ban
-                .Include(p => p.Unban)
-                .Where(p => p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.Now));
-
-            if (userId is { } uid)
-            {
-                if (address == null)
-                {
-                    // Only have a user ID.
-                    query = query.Where(p => p.UserId == uid.UserId);
-                }
-                else
-                {
-                    // Have both user ID and IP address.
-                    query = query.Where(p =>
-                        (p.Address != null && EF.Functions.ContainsOrEqual(p.Address.Value, address))
-                        || p.UserId == uid.UserId);
-                }
-            }
-            else
-            {
-                // Only have a connecting address.
-                query = query.Where(
-                    p => p.Address != null && EF.Functions.ContainsOrEqual(p.Address.Value, address));
-            }
+            var query = MakeBanLookupQuery(address, userId, hwId, db)
+                .Where(p => p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.Now))
+                .OrderByDescending(b => b.BanTime);
 
             var ban = await query.FirstOrDefaultAsync();
 
             return ConvertBan(ban);
         }
 
-        public override async Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId)
+        public override async Task<List<ServerBanDef>> GetServerBansAsync(
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId)
         {
-            if (address == null && userId == null)
+            if (address == null && userId == null && hwId == null)
             {
                 throw new ArgumentException("Address and userId cannot both be null");
             }
 
             await using var db = await GetDbImpl();
 
-            var query = db.PgDbContext.Ban
-                .Include(p => p.Unban).AsQueryable();
-
-            if (userId is { } uid)
-            {
-                if (address == null)
-                {
-                    // Only have a user ID.
-                    query = query.Where(p => p.UserId == uid.UserId);
-                }
-                else
-                {
-                    // Have both user ID and IP address.
-                    query = query.Where(p =>
-                        (p.Address != null && EF.Functions.ContainsOrEqual(p.Address.Value, address))
-                        || p.UserId == uid.UserId);
-                }
-            }
-            else
-            {
-                // Only have a connecting address.
-                query = query.Where(
-                    p => p.Address != null && EF.Functions.ContainsOrEqual(p.Address.Value, address));
-            }
+            var query = MakeBanLookupQuery(address, userId, hwId, db);
 
             var queryBans = await query.ToArrayAsync();
-            var bans = new List<ServerBanDef>();
+            var bans = new List<ServerBanDef>(queryBans.Length);
 
             foreach (var ban in queryBans)
             {
@@ -136,6 +98,45 @@ namespace Content.Server.Database
             }
 
             return bans;
+        }
+
+        private static IQueryable<PostgresServerBan> MakeBanLookupQuery(
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId,
+            DbGuardImpl db)
+        {
+            IQueryable<PostgresServerBan>? query = null;
+
+            if (userId is { } uid)
+            {
+                var newQ = db.PgDbContext.Ban
+                    .Include(p => p.Unban)
+                    .Where(b => b.UserId == uid.UserId);
+
+                query = query == null ? newQ : query.Union(newQ);
+            }
+
+            if (address != null)
+            {
+                var newQ = db.PgDbContext.Ban
+                    .Include(p => p.Unban)
+                    .Where(b => b.Address != null && EF.Functions.ContainsOrEqual(b.Address.Value, address));
+
+                query = query == null ? newQ : query.Union(newQ);
+            }
+
+            if (hwId != null)
+            {
+                var newQ = db.PgDbContext.Ban
+                    .Include(p => p.Unban)
+                    .Where(b => b.HWId!.SequenceEqual(hwId));
+
+                query = query == null ? newQ : query.Union(newQ);
+            }
+
+            query = query!.Distinct();
+            return query;
         }
 
         private static ServerBanDef? ConvertBan(PostgresServerBan? ban)
@@ -163,6 +164,7 @@ namespace Content.Server.Database
                 ban.Id,
                 uid,
                 ban.Address,
+                ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
                 ban.BanTime,
                 ban.ExpirationTime,
                 ban.Reason,
@@ -196,6 +198,7 @@ namespace Content.Server.Database
             db.PgDbContext.Ban.Add(new PostgresServerBan
             {
                 Address = serverBan.Address,
+                HWId = serverBan.HWId?.ToArray(),
                 Reason = serverBan.Reason,
                 BanningAdmin = serverBan.BanningAdmin?.UserId,
                 BanTime = serverBan.BanTime.UtcDateTime,
@@ -220,7 +223,11 @@ namespace Content.Server.Database
             await db.PgDbContext.SaveChangesAsync();
         }
 
-        public override async Task UpdatePlayerRecord(NetUserId userId, string userName, IPAddress address)
+        public override async Task UpdatePlayerRecord(
+            NetUserId userId,
+            string userName,
+            IPAddress address,
+            ImmutableArray<byte> hwId)
         {
             await using var db = await GetDbImpl();
 
@@ -237,6 +244,7 @@ namespace Content.Server.Database
             record.LastSeenTime = DateTime.UtcNow;
             record.LastSeenAddress = address;
             record.LastSeenUserName = userName;
+            record.LastSeenHWId = hwId.ToArray();
 
             await db.PgDbContext.SaveChangesAsync();
         }
@@ -277,10 +285,15 @@ namespace Content.Server.Database
                 new DateTimeOffset(record.FirstSeenTime),
                 record.LastSeenUserName,
                 new DateTimeOffset(record.LastSeenTime),
-                record.LastSeenAddress);
+                record.LastSeenAddress,
+                record.LastSeenHWId?.ToImmutableArray());
         }
 
-        public override async Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address)
+        public override async Task AddConnectionLogAsync(
+            NetUserId userId,
+            string userName,
+            IPAddress address,
+            ImmutableArray<byte> hwId)
         {
             await using var db = await GetDbImpl();
 
@@ -289,7 +302,8 @@ namespace Content.Server.Database
                 Address = address,
                 Time = DateTime.UtcNow,
                 UserId = userId.UserId,
-                UserName = userName
+                UserName = userName,
+                HWId = hwId.ToArray()
             });
 
             await db.PgDbContext.SaveChangesAsync();
