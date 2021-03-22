@@ -234,13 +234,20 @@ namespace Pow3r
                     _remQueue.Enqueue(load);
                 }
 
+                SameLine();
                 if (_linking != null)
                 {
-                    SameLine();
                     if (Button("Link"))
                     {
                         _linking.Loads.Add(load);
                         _linking = null;
+                    }
+                }
+                else
+                {
+                    if (Button("Unlink"))
+                    {
+                        _networks.ForEach(n => n.Loads.Remove(load));
                     }
                 }
 
@@ -269,13 +276,20 @@ namespace Pow3r
                     _remQueue.Enqueue(supply);
                 }
 
+                SameLine();
                 if (_linking != null)
                 {
-                    SameLine();
                     if (Button("Link"))
                     {
                         _linking.Supplies.Add(supply);
                         _linking = null;
+                    }
+                }
+                else
+                {
+                    if (Button("Unlink"))
+                    {
+                        _networks.ForEach(n => n.Supplies.Remove(supply));
                     }
                 }
 
