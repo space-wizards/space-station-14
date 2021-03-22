@@ -2,7 +2,6 @@
 
 - categories: [HumanHair, VoxHair]
   id: HairBald
-  name: Bald
   # Bald is always on top
   priority: 1
   sprite:
