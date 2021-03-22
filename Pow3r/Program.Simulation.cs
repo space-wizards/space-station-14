@@ -40,9 +40,87 @@ namespace Pow3r
             _loads.ForEach(l => l.ReceivingPower = 0);
             _supplies.ForEach(g => g.CurrentSupply = 0);
 
+            // Add up all loads and supplies in each network.
             foreach (var network in _networks)
             {
-                UpdateNetwork(network, frameTime);
+                network.DemandTotal = network.Loads
+                    .Where(c => c.Enabled)
+                    .Sum(c => c.DesiredPower);
+
+                var availableSupplySum = 0f;
+                var maxSupplySum = 0f;
+                foreach (var supply in network.Supplies)
+                {
+                    if (!supply.Enabled)
+                        continue;
+
+                    var rampMax = supply.SupplyRampPosition + supply.SupplyRampTolerance;
+                    var effectiveSupply = Math.Min(rampMax, supply.MaxSupply);
+                    supply.EffectiveMaxSupply = effectiveSupply;
+                    availableSupplySum += effectiveSupply;
+                    maxSupplySum += supply.MaxSupply;
+                }
+
+                network.AvailableSupplyTotal = availableSupplySum;
+                network.TheoreticalSupplyTotal = maxSupplySum;
+            }
+
+            // Go over every network with supply to send power.
+            foreach (var network in _networks)
+            {
+                // Calculate power delivered.
+                var power = Math.Min(network.DemandTotal, network.AvailableSupplyTotal);
+
+                // Distribute load across supplies.
+                foreach (var supply in network.Supplies)
+                {
+                    if (supply.Enabled)
+                    {
+                        if (supply.EffectiveMaxSupply != 0)
+                        {
+                            var ratio = supply.EffectiveMaxSupply / network.AvailableSupplyTotal;
+
+                            supply.CurrentSupply = ratio * power;
+                        }
+                        else
+                        {
+                            supply.CurrentSupply = 0;
+                        }
+
+                        if (supply.MaxSupply != 0)
+                        {
+                            var ratio = supply.MaxSupply / network.TheoreticalSupplyTotal;
+
+                            supply.SupplyRampTarget = ratio * network.DemandTotal;
+                        }
+                        else
+                        {
+                            supply.SupplyRampTarget = 0;
+                        }
+                    }
+
+                    supply.SuppliedPowerData[_tickDataIdx] = supply.CurrentSupply;
+                }
+
+                // Distribute supply across loads.
+                foreach (var load in network.Loads)
+                {
+                    if (load.Enabled)
+                    {
+                        if (load.DesiredPower != 0)
+                        {
+                            var ratio = load.DesiredPower / network.DemandTotal;
+
+                            load.ReceivingPower = ratio * power;
+                        }
+                        else
+                        {
+                            load.ReceivingPower = 0;
+                        }
+                    }
+
+                    load.ReceivedPowerData[_tickDataIdx] = load.ReceivingPower;
+                }
             }
 
             // Update supplies to move their ramp position towards target, if necessary.
@@ -58,84 +136,28 @@ namespace Pow3r
                 var rampDev = supply.SupplyRampTarget - supply.SupplyRampPosition;
                 if (Math.Abs(rampDev) > 0.001f)
                 {
-                    var newRampPos = Math.Sign(rampDev) * supply.SupplyRampRate * frameTime + supply.SupplyRampPosition;
-                    supply.SupplyRampPosition = Math.Clamp(newRampPos, 0, supply.MaxSupply);
+                    float newPos;
+                    if (rampDev > 0)
+                    {
+                        // Position below target, go up.
+                        newPos = Math.Min(
+                            supply.SupplyRampTarget,
+                            supply.SupplyRampPosition + supply.SupplyRampRate * frameTime);
+                    }
+                    else
+                    {
+                        // Other way around, go down
+                        newPos = Math.Max(
+                            supply.SupplyRampTarget,
+                            supply.SupplyRampPosition - supply.SupplyRampRate * frameTime);
+                    }
+
+                    supply.SupplyRampPosition = Math.Clamp(newPos, 0, supply.MaxSupply);
                 }
                 else
                 {
                     supply.SupplyRampPosition = supply.SupplyRampTarget;
                 }
-            }
-        }
-
-        private void UpdateNetwork(Network network, float dt)
-        {
-            var totalLoad = network.Loads.Where(c => c.Enabled).Sum(c => c.DesiredPower);
-
-            var totalAvailSupply = 0f;
-            var totalMaxSupply = 0f;
-
-            foreach (var supply in network.Supplies)
-            {
-                if (!supply.Enabled)
-                    continue;
-
-                var supplySupplyRampTolerance = supply.SupplyRampPosition + supply.SupplyRampTolerance;
-                supply.EffectiveMaxSupply = Math.Min(supply.MaxSupply, supplySupplyRampTolerance);
-
-                totalAvailSupply += supply.EffectiveMaxSupply;
-                totalMaxSupply += supply.MaxSupply;
-            }
-
-            var power = Math.Min(totalLoad, totalAvailSupply);
-
-            foreach (var supply in network.Supplies)
-            {
-                if (supply.Enabled)
-                {
-                    if (supply.EffectiveMaxSupply != 0)
-                    {
-                        var ratio = supply.EffectiveMaxSupply / totalAvailSupply;
-
-                        supply.CurrentSupply = ratio * power;
-                    }
-                    else
-                    {
-                        supply.CurrentSupply = 0;
-                    }
-
-                    if (supply.MaxSupply != 0)
-                    {
-                        var ratio = supply.MaxSupply / totalMaxSupply;
-
-                        supply.SupplyRampTarget = ratio * totalLoad;
-                    }
-                    else
-                    {
-                        supply.SupplyRampTarget = 0;
-                    }
-                }
-
-                supply.SuppliedPowerData[_tickDataIdx] = supply.CurrentSupply;
-            }
-
-            foreach (var load in network.Loads)
-            {
-                if (load.Enabled)
-                {
-                    if (load.DesiredPower != 0)
-                    {
-                        var ratio = load.DesiredPower / totalLoad;
-
-                        load.ReceivingPower = ratio * power;
-                    }
-                    else
-                    {
-                        load.ReceivingPower = 0;
-                    }
-                }
-
-                load.ReceivedPowerData[_tickDataIdx] = load.ReceivingPower;
             }
         }
 
@@ -352,6 +374,10 @@ namespace Pow3r
             public readonly List<Supply> Supplies = new();
             public readonly List<Load> Loads = new();
             public Vector2 CurrentWindowPos;
+
+            public float DemandTotal;
+            public float AvailableSupplyTotal;
+            public float TheoreticalSupplyTotal;
 
             public Network(int id)
             {
