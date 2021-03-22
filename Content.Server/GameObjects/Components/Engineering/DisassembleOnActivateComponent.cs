@@ -1,10 +1,13 @@
-    #nullable enable
-    using Content.Shared.GameObjects;
-    using Robust.Shared.GameObjects;
-    using Robust.Shared.Serialization.Manager.Attributes;
-    using Robust.Shared.ViewVariables;
+#nullable enable
+using Content.Shared.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.ViewVariables;
+using System.Threading;
 
-    namespace Content.Server.GameObjects.Components.Engineering
+namespace Content.Server.GameObjects.Components.Engineering
     {
         [RegisterComponent]
         public class DisassembleOnActivateComponent : Component
@@ -13,11 +16,13 @@
         public override uint? NetID => ContentNetIDs.DISASSEMBLE_ON_ACTIVATE;
 
         [ViewVariables]
-        [DataField("prototype")]
-        public string? Prototype { get; private set; }
+        [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? Prototype;
 
         [ViewVariables]
         [DataField("doAfter")]
         public float DoAfterTime = 0;
+
+        public CancellationTokenSource TokenSource = new();
     }
 }

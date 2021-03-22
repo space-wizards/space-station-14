@@ -2,6 +2,7 @@ using Content.Server.GameObjects.Components.Engineering;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Maps;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -22,19 +23,24 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<SpawnAfterInteractComponent, AfterInteractMessage>(HandleAfterInteract);
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<SpawnAfterInteractComponent, AfterInteractMessage>(HandleAfterInteract);
+        }
+
         private async void HandleAfterInteract(EntityUid uid, SpawnAfterInteractComponent component, AfterInteractMessage args)
         {
-            if (component.Prototype == null)
+            if (string.IsNullOrEmpty(component.Prototype))
                 return;
-            if(!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(component.Owner.EntityManager), out var grid))
+            var coords = TurfHelpers.IsTileClearAndInRange(_mapManager, args.User, args.ClickLocation);
+            if (!coords.HasValue)
                 return;
-            if (!args.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
-                return;
-            var snapPos = grid.SnapGridCellFor(args.ClickLocation, SnapGridOffset.Center);
 
-            bool CheckTileClear()
+            bool IsTileClear()
             {
-                return !grid.GetTileRef(snapPos).Tile.IsEmpty && args.User.InRangeUnobstructed(args.ClickLocation);
+                return TurfHelpers.IsTileClearAndInRange(_mapManager, args.User, args.ClickLocation) != null;
             }
 
             if (component.DoAfterTime > 0 && TryGet<DoAfterSystem>(out var doAfterSystem))
@@ -43,7 +49,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     BreakOnUserMove = true,
                     BreakOnStun = true,
-                    ExtraCheck = CheckTileClear,
+                    PostCheck = IsTileClear,
                 };
                 var result = await doAfterSystem.DoAfter(doAfterArgs);
 
@@ -51,11 +57,14 @@ namespace Content.Server.GameObjects.EntitySystems
                     return;
             }
 
+            if (component.Deleted || component.Owner.Deleted)
+                return;
+
             StackComponent? stack = null;
             if (component.RemoveOnInteract && component.Owner.TryGetComponent(out stack) && !stack.Use(1))
                 return;
 
-            EntityManager.SpawnEntity(component.Prototype, grid.GridTileToLocal(snapPos));
+            EntityManager.SpawnEntity(component.Prototype, coords.Value);
 
             if (component.RemoveOnInteract && stack == null && !component.Owner.Deleted)
                 component.Owner.Delete();

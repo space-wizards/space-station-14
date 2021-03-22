@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -224,6 +224,25 @@ namespace Content.Shared.Maps
             }
 
             return tileBox;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tileRef"></param>
+        /// <param name="entity"></param>
+        /// <param name="coords"></param>
+        /// <returns></returns>
+        public static EntityCoordinates? IsTileClearAndInRange(IMapManager mapManager, IEntity entity, EntityCoordinates coords)
+        {
+            if(!mapManager.TryGetGrid(coords.GetGridId(entity.EntityManager), out var grid))
+                return null;
+            var snapPos = grid.SnapGridCellFor(coords, SnapGridOffset.Center);
+            var tileRef = grid.GetTileRef(coords);
+
+            if (tileRef.Tile.IsEmpty || !entity.InRangeUnobstructed(coords, popup: true))
+                return null;
+            return grid.GridTileToLocal(snapPos);
         }
     }
 }

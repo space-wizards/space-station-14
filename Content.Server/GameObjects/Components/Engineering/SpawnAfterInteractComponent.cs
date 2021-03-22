@@ -1,7 +1,9 @@
 #nullable enable
 using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Engineering
@@ -13,8 +15,8 @@ namespace Content.Server.GameObjects.Components.Engineering
         public override uint? NetID => ContentNetIDs.SPAWN_AFTER_INTERACT;
 
         [ViewVariables]
-        [DataField("prototype")]
-        public string? Prototype { get; private set; }
+        [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? Prototype;
 
         [ViewVariables]
         [DataField("doAfter")]
