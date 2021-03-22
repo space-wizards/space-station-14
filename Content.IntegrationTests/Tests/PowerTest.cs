@@ -89,6 +89,12 @@ namespace Content.IntegrationTests.Tests
       nodeGroupID: Apc
   - type: SnapGrid
     offset: Center
+  - type: UserInterface
+    interfaces:
+    - key: enum.ApcUiKey.Key
+      type: ApcBoundUserInterface
+  - type: AccessReader
+    access: [['Engineering']]
 
 - type: entity
   name: ApcExtensionCableDummy
