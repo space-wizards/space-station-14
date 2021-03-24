@@ -58,9 +58,9 @@ namespace Content.Shared.Maps
             return tile;
         }
 
-        public static bool TryGetTileRef(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf)
+        public static bool TryGetTileRef(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf, IEntityManager? entityManager = null, IMapManager? mapManager = null)
         {
-            return (turf = coordinates.GetTileRef()) != null;
+            return (turf = coordinates.GetTileRef(entityManager, mapManager)) != null;
         }
 
         /// <summary>
@@ -224,25 +224,6 @@ namespace Content.Shared.Maps
             }
 
             return tileBox;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="tileRef"></param>
-        /// <param name="entity"></param>
-        /// <param name="coords"></param>
-        /// <returns></returns>
-        public static EntityCoordinates? IsTileClearAndInRange(IMapManager mapManager, IEntity entity, EntityCoordinates coords)
-        {
-            if(!mapManager.TryGetGrid(coords.GetGridId(entity.EntityManager), out var grid))
-                return null;
-            var snapPos = grid.SnapGridCellFor(coords, SnapGridOffset.Center);
-            var tileRef = grid.GetTileRef(coords);
-
-            if (tileRef.Tile.IsEmpty || !entity.InRangeUnobstructed(coords, popup: true))
-                return null;
-            return grid.GridTileToLocal(snapPos);
         }
     }
 }

@@ -1,6 +1,8 @@
+#nullable enable
 using Content.Server.GameObjects.Components.Engineering;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Server.Utility;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
 using Content.Shared.Utility;
@@ -34,14 +36,16 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             if (string.IsNullOrEmpty(component.Prototype))
                 return;
-            var coords = TurfHelpers.IsTileClearAndInRange(_mapManager, args.User, args.ClickLocation);
-            if (!coords.HasValue)
+            if (!args.ClickLocation.TryGetTileRef(out var tileRef, EntityManager, _mapManager))
                 return;
 
             bool IsTileClear()
             {
-                return TurfHelpers.IsTileClearAndInRange(_mapManager, args.User, args.ClickLocation) != null;
+                return tileRef.Value.Tile.IsEmpty == false && args.User.InRangeUnobstructed(args.ClickLocation, popup: true);
             }
+
+            if (!IsTileClear())
+                return;
 
             if (component.DoAfterTime > 0 && TryGet<DoAfterSystem>(out var doAfterSystem))
             {
@@ -64,7 +68,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (component.RemoveOnInteract && component.Owner.TryGetComponent(out stack) && !stack.Use(1))
                 return;
 
-            EntityManager.SpawnEntity(component.Prototype, coords.Value);
+            EntityManager.SpawnEntity(component.Prototype, tileRef.Value.GridPosition(_mapManager));
 
             if (component.RemoveOnInteract && stack == null && !component.Owner.Deleted)
                 component.Owner.Delete();
