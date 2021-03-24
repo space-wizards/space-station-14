@@ -95,7 +95,7 @@ namespace Content.Shared.Physics.Controllers
 
         private void ReduceAngularVelocity(bool prediction, PhysicsComponent body, float frameTime)
         {
-            var speed = body.AngularVelocity;
+            var speed = MathF.Abs(body.AngularVelocity);
 
             if (speed <= 0.0f) return;
 
