@@ -616,3 +616,10 @@ Entries:
   - {message: Adds cream pie launcher. Honk!, type: Add}
   id: 112
   time: '2021-03-21T17:11:51.494714+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Added more table construction and destruction, type: Add}
+  - {message: Tweaked items that tables drop when destroyed to match their construction
+      steps, type: Tweak}
+  id: 113
+  time: '2021-03-24T22:34:07.0000000+00:00'
