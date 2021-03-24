@@ -53,12 +53,16 @@ namespace Content.Shared.Physics.Controllers
                     body.BodyStatus == BodyStatus.InAir ||
                     SharedMoverController.UseMobMovement(_broadPhaseSystem, body, _physicsManager)) continue;
 
-                ReduceLinearVelocity(prediction, body, frameTime);
-                ReduceAngularVelocity(prediction, body, frameTime);
+                var surfaceFriction = GetTileFriction(body);
+                var bodyModifier = body.Owner.GetComponentOrNull<SharedTileFrictionModifier>()?.Modifier ?? 1.0f;
+                var friction = _frictionModifier * surfaceFriction * bodyModifier;
+
+                ReduceLinearVelocity(prediction, body, friction, frameTime);
+                ReduceAngularVelocity(prediction, body, friction, frameTime);
             }
         }
 
-        private void ReduceLinearVelocity(bool prediction, PhysicsComponent body, float frameTime)
+        private void ReduceLinearVelocity(bool prediction, PhysicsComponent body, float friction, float frameTime)
         {
             var speed = body.LinearVelocity.Length;
 
@@ -67,10 +71,6 @@ namespace Content.Shared.Physics.Controllers
             // This is the *actual* amount that speed will drop by, we just do some multiplication around it to be easier.
             var drop = 0.0f;
             float control;
-
-            var surfaceFriction = GetTileFriction(body);
-            var bodyModifier = body.Owner.GetComponentOrNull<SharedTileFrictionModifier>()?.Modifier ?? 1.0f;
-            var friction = _frictionModifier * surfaceFriction * bodyModifier;
 
             if (friction > 0.0f)
             {
@@ -93,7 +93,7 @@ namespace Content.Shared.Physics.Controllers
             body.LinearVelocity *= newSpeed;
         }
 
-        private void ReduceAngularVelocity(bool prediction, PhysicsComponent body, float frameTime)
+        private void ReduceAngularVelocity(bool prediction, PhysicsComponent body, float friction, float frameTime)
         {
             var speed = MathF.Abs(body.AngularVelocity);
 
@@ -102,10 +102,6 @@ namespace Content.Shared.Physics.Controllers
             // This is the *actual* amount that speed will drop by, we just do some multiplication around it to be easier.
             var drop = 0.0f;
             float control;
-
-            var surfaceFriction = GetTileFriction(body);
-            var bodyModifier = body.Owner.GetComponentOrNull<SharedTileFrictionModifier>()?.Modifier ?? 1.0f;
-            var friction = _frictionModifier * surfaceFriction * bodyModifier;
 
             if (friction > 0.0f)
             {
