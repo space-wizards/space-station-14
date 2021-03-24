@@ -6,13 +6,11 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Client.GameObjects.Components.Items
 {
@@ -25,19 +23,6 @@ namespace Content.Client.GameObjects.Components.Items
 
         [ViewVariables]
         public HandsGui Gui { get; private set; } = default!;
-
-        /// <summary>
-        ///     The name of the currently active hand.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        private string? ActiveHandName { get; set; }
-
-        [ViewVariables]
-        public IReadOnlyList<IReadOnlyHand> Hands => _hands;
-        private readonly List<SharedHand> _hands = new();
-
-        [ViewVariables]
-        public IEntity? ActiveHeldEntity => TryGetActiveHand(out var hand) ? hand.HeldEntity : null;
 
         [ComponentDependency]
         private ISpriteComponent? _sprite = default!;
@@ -100,31 +85,6 @@ namespace Content.Client.GameObjects.Components.Items
             SendNetworkMessage(new ActivateInHandMsg(activatedHand.Name));
         }
 
-        private bool TryGetHand(string handName, [NotNullWhen(true)] out SharedHand? foundHand)
-        {
-            foundHand = null;
-
-            if (handName == null)
-                return false;
-
-            foreach (var hand in _hands)
-            {
-                if (hand.Name == handName)
-                    foundHand = hand;
-            }
-            return foundHand != null;
-        }
-
-        private bool TryGetActiveHand([NotNullWhen(true)] out SharedHand? activeHand)
-        {
-            activeHand = null;
-
-            if (ActiveHandName == null)
-                return false;
-
-            return TryGetHand(ActiveHandName, out activeHand);
-        }
-
         public override void OnRemove()
         {
             Gui.Dispose();
@@ -138,7 +98,7 @@ namespace Content.Client.GameObjects.Components.Items
 
             _hands.Clear();
 
-            ActiveHandName = state.ActiveHand;
+            ActiveHand = state.ActiveHand;
 
             var containerMan = Owner.EnsureComponentWarn<ContainerManagerComponent>();
             foreach (var handState in state.Hands)
@@ -146,7 +106,7 @@ namespace Content.Client.GameObjects.Components.Items
                 if (!containerMan.TryGetContainer(handState.Name, out var container)) //ContainerManagerComponent may not have been updated by the server yet.
                     continue;
 
-                var newHand = new SharedHand(handState.Name, handState.Enabled, handState.Location, container);
+                var newHand = new Hand(handState.Name, handState.Enabled, handState.Location, container);
                 _hands.Add(newHand);
             }
 
@@ -190,16 +150,6 @@ namespace Content.Client.GameObjects.Components.Items
             SetGuiState();
         }
 
-        public override bool IsHolding(IEntity entity)
-        {
-            foreach (var hand in Hands)
-            {
-                if (hand.HeldEntity == entity)
-                    return true;
-            }
-            return false;
-        }
-
         private void HandleAnimatePickupEntityMessage(AnimatePickupEntityMessage msg)
         {
             if (!Owner.EntityManager.TryGetEntity(msg.EntityId, out var entity))
@@ -239,7 +189,7 @@ namespace Content.Client.GameObjects.Components.Items
             if (_sprite == null)
                 return;
 
-            foreach (var hand in Hands)
+            foreach (var hand in _hands)
             {
                 var key = $"hand-{hand.Name}";
                 _sprite.LayerMapReserveBlank(key);
@@ -282,7 +232,7 @@ namespace Content.Client.GameObjects.Components.Items
                 var handState = new GuiHand(hand.Name, hand.Location, hand.HeldEntity, hand.Enabled);
                 handStates.Add(handState);
             }
-            return new HandsGuiState(handStates, ActiveHandName);
+            return new HandsGuiState(handStates, ActiveHand);
         }
     }
 }

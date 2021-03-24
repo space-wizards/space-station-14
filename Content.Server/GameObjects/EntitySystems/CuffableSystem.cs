@@ -1,6 +1,7 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.ActionBlocking;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Shared.GameObjects.Components.Items;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
