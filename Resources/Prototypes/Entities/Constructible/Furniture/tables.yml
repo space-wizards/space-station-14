@@ -29,6 +29,37 @@
   - type: Climbable
 
 - type: entity
+  id: TableFrame
+  parent: TableBase
+  name: "table frame"
+  description: Pieces of metal that make the frame of a table.
+  components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/frame.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Tables/frame.rsi
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PartRodMetal1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: table
+    node: TableFrame
+
+- type: entity
   id: Table
   parent: TableBase
   name: "table"
@@ -55,37 +86,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-
-- type: entity
-  id: TableFrame
-  parent: TableBase
-  name: "table frame"
-  description: Pieces of metal that make the frame of a table.
-  components:
-  - type: Sprite
-    sprite: Constructible/Structures/Tables/frame.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Tables/frame.rsi
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Construction
-    graph: Tables
-    node: TableFrame
+    graph: table
+    node: Table
 
 - type: entity
   id: TableBar
@@ -112,8 +115,14 @@
           SheetSteel1:
             min: 1
             max: 1
+          MaterialCloth1:
+            min: 1
+            max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Construction
+    graph: table
+    node: TableBar
 
 - type: entity
   id: TableMetal
@@ -142,12 +151,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Construction
-    graph: Tables
-    node: MetalTable
 
 - type: entity
-  id: TableR
+  id: TableReinforced
   parent: TableBase
   name: "reinforced table"
   description: "A square piece of metal standing on four metal legs. Extra robust."
@@ -169,13 +175,13 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
-            min: 1
-            max: 1
+            min: 2
+            max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: Tables
-    node: ReinforcedTable
+    graph: table
+    node: TableReinforced
 
 - type: entity
   id: TableGlass
@@ -205,11 +211,11 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: Tables
-    node: GlassTable
+    graph: table
+    node: TableGlass
 
 - type: entity
-  id: TableGlassR
+  id: TableReinforcedGlass
   parent: TableBase
   name: "reinforced glass table"
   description: "A square piece of glass, standing on four metal legs. Extra robust."
@@ -233,11 +239,14 @@
           ShardGlass:
             min: 1
             max: 1
+          PartRodMetal1:
+            min: 1
+            max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: Tables
-    node: RGlassTable
+    graph: table
+    node: TableReinforcedGlass
 
 - type: entity
   id: TableWood
@@ -267,8 +276,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: Tables
-    node: WoodTable
+    graph: table
+    node: TableWood
 
 - type: entity
   id: TableCarpet
@@ -295,11 +304,14 @@
           MaterialWoodPlank:
             min: 1
             max: 1
+          MaterialCloth1:
+            min: 1
+            max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: Tables
-    node: PokerTable
+    graph: table
+    node: TableCarpet
 
 - type: entity
   id: TableStone
