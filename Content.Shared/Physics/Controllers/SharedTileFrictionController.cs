@@ -48,43 +48,84 @@ namespace Content.Shared.Physics.Controllers
 
             foreach (var body in map.AwakeBodies)
             {
-                if (prediction && !body.Predict) continue;
+                // Only apply friction when it's not a mob (or the mob doesn't have control)
+                if (prediction && !body.Predict ||
+                    body.BodyStatus == BodyStatus.InAir ||
+                    SharedMoverController.UseMobMovement(_broadPhaseSystem, body, _physicsManager)) continue;
 
-                var speed = body.LinearVelocity.Length;
+                ReduceLinearVelocity(prediction, body, frameTime);
+                ReduceAngularVelocity(prediction, body, frameTime);
+            }
+        }
 
-                if (speed <= 0.0f || body.BodyStatus == BodyStatus.InAir) continue;
+        private void ReduceLinearVelocity(bool prediction, PhysicsComponent body, float frameTime)
+        {
+            var speed = body.LinearVelocity.Length;
 
-                // This is the *actual* amount that speed will drop by, we just do some multiplication around it to be easier.
-                var drop = 0.0f;
-                float control;
+            if (speed <= 0.0f) return;
 
-                // Only apply friction when it's not a mob (or the mob doesn't have control).
-                if (SharedMoverController.UseMobMovement(_broadPhaseSystem, body, _physicsManager)) continue;
+            // This is the *actual* amount that speed will drop by, we just do some multiplication around it to be easier.
+            var drop = 0.0f;
+            float control;
 
-                var surfaceFriction = GetTileFriction(body);
-                var bodyModifier = body.Owner.GetComponentOrNull<SharedTileFrictionModifier>()?.Modifier ?? 1.0f;
-                var friction = _frictionModifier * surfaceFriction * bodyModifier;
+            var surfaceFriction = GetTileFriction(body);
+            var bodyModifier = body.Owner.GetComponentOrNull<SharedTileFrictionModifier>()?.Modifier ?? 1.0f;
+            var friction = _frictionModifier * surfaceFriction * bodyModifier;
 
-                if (friction > 0.0f)
+            if (friction > 0.0f)
+            {
+                // TBH I can't really tell if this makes a difference.
+                if (!prediction)
                 {
-                    // TBH I can't really tell if this makes a difference.
-                    if (!prediction)
-                    {
-                        control = speed < _stopSpeed ? _stopSpeed : speed;
-                    }
-                    else
-                    {
-                        control = speed;
-                    }
-
-                    drop += control * friction * frameTime;
+                    control = speed < _stopSpeed ? _stopSpeed : speed;
+                }
+                else
+                {
+                    control = speed;
                 }
 
-                var newSpeed = MathF.Max(0.0f, speed - drop);
-
-                newSpeed /= speed;
-                body.LinearVelocity *= newSpeed;
+                drop += control * friction * frameTime;
             }
+
+            var newSpeed = MathF.Max(0.0f, speed - drop);
+
+            newSpeed /= speed;
+            body.LinearVelocity *= newSpeed;
+        }
+
+        private void ReduceAngularVelocity(bool prediction, PhysicsComponent body, float frameTime)
+        {
+            var speed = body.AngularVelocity;
+
+            if (speed <= 0.0f) return;
+
+            // This is the *actual* amount that speed will drop by, we just do some multiplication around it to be easier.
+            var drop = 0.0f;
+            float control;
+
+            var surfaceFriction = GetTileFriction(body);
+            var bodyModifier = body.Owner.GetComponentOrNull<SharedTileFrictionModifier>()?.Modifier ?? 1.0f;
+            var friction = _frictionModifier * surfaceFriction * bodyModifier;
+
+            if (friction > 0.0f)
+            {
+                // TBH I can't really tell if this makes a difference.
+                if (!prediction)
+                {
+                    control = speed < _stopSpeed ? _stopSpeed : speed;
+                }
+                else
+                {
+                    control = speed;
+                }
+
+                drop += control * friction * frameTime;
+            }
+
+            var newSpeed = MathF.Max(0.0f, speed - drop);
+
+            newSpeed /= speed;
+            body.AngularVelocity *= newSpeed;
         }
 
         [Pure]

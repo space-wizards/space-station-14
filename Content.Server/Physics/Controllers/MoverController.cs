@@ -21,6 +21,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -90,7 +91,6 @@ namespace Content.Server.Physics.Controllers
             {
                 physics = gridEntity.AddComponent<PhysicsComponent>();
                 physics.BodyStatus = BodyStatus.InAir;
-                physics.Mass = 1;
                 physics.CanCollide = true;
                 physics.AddFixture(new Fixture(physics, new PhysShapeGrid(grid)));
             }
