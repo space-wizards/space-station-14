@@ -16,13 +16,13 @@ namespace Content.Server.GameObjects.Components.Engineering
         public override uint? NetID => ContentNetIDs.DISASSEMBLE_ON_ACTIVATE;
 
         [ViewVariables]
-        [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? Prototype;
+        [field: DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? Prototype { get; }
 
         [ViewVariables]
         [DataField("doAfter")]
         public float DoAfterTime = 0;
 
-        public CancellationTokenSource TokenSource = new();
+        public CancellationTokenSource TokenSource { get; } = new();
     }
 }
