@@ -41,8 +41,13 @@ namespace Content.Shared.GameObjects.Components.Items
                     _activeHand = _hands[0].Name;
                     return;
                 }
-                _activeHand = value;
-                Dirty();
+                if (value != ActiveHand)
+                {
+                    DeselectActiveHeldEntity();
+                    _activeHand = value;
+                    SelectActiveHeldEntity();
+                    Dirty();
+                }
             }
         }
         private string? _activeHand;
@@ -317,12 +322,15 @@ namespace Content.Shared.GameObjects.Components.Items
             if (heldEntity == null)
                 return;
 
+            if (hand.Name == ActiveHand)
+                DeselectActiveHeldEntity();
+
             if (!hand.Container.Remove(heldEntity))
             {
                 Logger.Error($"{nameof(SharedHandsComponent)} on {Owner} could not remove {heldEntity} from {hand.Container}.");
                 return;
             }
-            OnHeldEntityRemovedFromHand(heldEntity, hand);
+            OnHeldEntityRemovedFromHand(heldEntity, hand.ToHandState());
 
         }
 
@@ -486,8 +494,11 @@ namespace Content.Shared.GameObjects.Components.Items
                 return;
             }
 
-            DoEquippedHandInteraction(entity, hand);
-            DoHandSelectedInteraction(entity, hand);
+            DoEquippedHandInteraction(entity, hand.ToHandState());
+
+            if (hand.Name == ActiveHand)
+                SelectActiveHeldEntity();
+
             entity.Transform.LocalPosition = Vector2.Zero;
 
             OnItemChanged?.Invoke();
@@ -591,6 +602,18 @@ namespace Content.Shared.GameObjects.Components.Items
 
         #endregion
 
+        private void DeselectActiveHeldEntity()
+        {
+            if (TryGetActiveHeldEntity(out var entity))
+                DoHandDeselectedInteraction(entity);
+        }
+
+        private void SelectActiveHeldEntity()
+        {
+            if (TryGetActiveHeldEntity(out var entity))
+                DoHandSelectedInteraction(entity);
+        }
+
         private void HandCountChanged()
         {
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
@@ -636,13 +659,15 @@ namespace Content.Shared.GameObjects.Components.Items
             return false;
         }
 
-        protected virtual void OnHeldEntityRemovedFromHand(IEntity heldEntity, Hand hand) { }
+        protected virtual void OnHeldEntityRemovedFromHand(IEntity heldEntity, HandState handState) { }
 
         protected virtual void DoDroppedInteraction(IEntity heldEntity, bool intentionalDrop) { }
 
-        protected virtual void DoEquippedHandInteraction(IEntity entity, Hand hand) { }
+        protected virtual void DoEquippedHandInteraction(IEntity entity, HandState handState) { }
 
-        protected virtual void DoHandSelectedInteraction(IEntity entity, Hand hand) { } //TODO: is this being called in the correct locations?
+        protected virtual void DoHandSelectedInteraction(IEntity entity) { }
+
+        protected virtual void DoHandDeselectedInteraction(IEntity entity) { }
 
         protected virtual void DoInteraction(IEntity activeHeldEntity, IEntity heldEntity) { }
 

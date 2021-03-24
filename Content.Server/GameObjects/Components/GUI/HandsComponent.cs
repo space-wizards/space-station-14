@@ -78,12 +78,12 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        protected override void OnHeldEntityRemovedFromHand(IEntity heldEntity, Hand hand)
+        protected override void OnHeldEntityRemovedFromHand(IEntity heldEntity, HandState handState)
         {
             if (heldEntity.TryGetComponent(out ItemComponent? item))
             {
                 item.RemovedFromSlot();
-                _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, heldEntity, hand.ToHandState());
+                _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, heldEntity, handState);
             }
             if (heldEntity.TryGetComponent(out SpriteComponent? sprite))
             {
@@ -91,9 +91,9 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        protected override void DoEquippedHandInteraction(IEntity entity, Hand hand)
+        protected override void DoEquippedHandInteraction(IEntity entity, HandState handState)
         {
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedHandInteraction(Owner, entity, hand.ToHandState());
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedHandInteraction(Owner, entity, handState);
         }
 
         protected override void DoDroppedInteraction(IEntity heldEntity, bool intentionalDrop)
@@ -101,9 +101,14 @@ namespace Content.Server.GameObjects.Components.GUI
             _entitySystemManager.GetEntitySystem<InteractionSystem>().DroppedInteraction(Owner, heldEntity, intentionalDrop);
         }
 
-        protected override void DoHandSelectedInteraction(IEntity entity, Hand hand)
+        protected override void DoHandSelectedInteraction(IEntity entity)
         {
             _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, entity);
+        }
+
+        protected override void DoHandDeselectedInteraction(IEntity entity)
+        {
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().HandDeselectedInteraction(Owner, entity);
         }
 
         protected override async void DoInteraction(IEntity activeHeldEntity, IEntity heldEntity)

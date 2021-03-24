@@ -98,8 +98,6 @@ namespace Content.Client.GameObjects.Components.Items
 
             _hands.Clear();
 
-            ActiveHand = state.ActiveHand;
-
             var containerMan = Owner.EnsureComponentWarn<ContainerManagerComponent>();
             foreach (var handState in state.Hands)
             {
@@ -109,6 +107,7 @@ namespace Content.Client.GameObjects.Components.Items
                 var newHand = new Hand(handState.Name, handState.Enabled, handState.Location, container);
                 _hands.Add(newHand);
             }
+            ActiveHand = state.ActiveHand;
 
             RefreshHands();
         }
