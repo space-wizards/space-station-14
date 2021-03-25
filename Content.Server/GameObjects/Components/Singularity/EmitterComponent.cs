@@ -17,6 +17,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -104,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            if (Owner.TryGetComponent(out PhysicsComponent? phys) && phys.Anchored)
+            if (Owner.TryGetComponent(out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
             {
                 if (!_isOn)
                 {
