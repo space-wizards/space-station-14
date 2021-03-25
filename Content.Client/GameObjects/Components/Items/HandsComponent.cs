@@ -187,7 +187,7 @@ namespace Content.Client.GameObjects.Components.Items
             if (_sprite == null)
                 return;
 
-            foreach (var hand in Hands)
+            foreach (var hand in ReadOnlyHands)
             {
                 var key = $"hand-{hand.Name}";
                 _sprite.LayerMapReserveBlank(key);
@@ -225,7 +225,7 @@ namespace Content.Client.GameObjects.Components.Items
         {
             var handStates = new List<GuiHand>();
 
-            foreach (var hand in Hands)
+            foreach (var hand in ReadOnlyHands)
             {
                 var handState = new GuiHand(hand.Name, hand.Location, hand.HeldEntity, hand.Enabled);
                 handStates.Add(handState);

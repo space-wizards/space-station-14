@@ -195,7 +195,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         private void AttemptPull(PullAttemptMessage msg)
         {
-            if (!Hands.Any(hand => hand.Enabled))
+            if (!ReadOnlyHands.Any(hand => hand.Enabled))
             {
                 msg.Cancelled = true;
             }
@@ -225,9 +225,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
         #region Old public methods
 
-        public IEnumerable<string> HandNames => Hands.Select(h => h.Name);
+        public IEnumerable<string> HandNames => ReadOnlyHands.Select(h => h.Name);
 
-        public int Count => Hands.Count;
+        public int Count => ReadOnlyHands.Count;
 
         /// <summary>
         ///     Returns a list of all hand names, with the active hand being first.
@@ -237,7 +237,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (ActiveHand != null)
                 yield return ActiveHand;
 
-            foreach (var hand in Hands)
+            foreach (var hand in ReadOnlyHands)
             {
                 if (hand.Name == ActiveHand || !hand.Enabled)
                     continue;

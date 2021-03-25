@@ -108,7 +108,7 @@ namespace Content.Shared.GameObjects.Components.Items
             RemoveHand(hand);
         }
 
-        protected void RemoveHand(Hand hand)
+        private void RemoveHand(Hand hand)
         {
             DropHeldEntityToFloor(hand, intentionalDrop: false);
             hand.Container.Shutdown();
@@ -131,7 +131,7 @@ namespace Content.Shared.GameObjects.Components.Items
             return false;
         }
 
-        protected Hand? GetServerHand(string handName)
+        private Hand? GetServerHand(string handName)
         {
             foreach (var hand in Hands)
             {
@@ -141,7 +141,7 @@ namespace Content.Shared.GameObjects.Components.Items
             return null;
         }
 
-        protected Hand? GetActiveHand()
+        private Hand? GetActiveHand()
         {
             if (ActiveHand == null)
                 return null;
@@ -207,7 +207,7 @@ namespace Content.Shared.GameObjects.Components.Items
             }
         }
 
-        protected bool TryGetHandHoldingEntity(IEntity entity, [NotNullWhen(true)] out Hand? handFound)
+        private bool TryGetHandHoldingEntity(IEntity entity, [NotNullWhen(true)] out Hand? handFound)
         {
             handFound = null;
 
@@ -319,7 +319,7 @@ namespace Content.Shared.GameObjects.Components.Items
             return true;
         }
 
-        protected bool CanRemoveHeldEntityFromHand(Hand hand)
+        private bool CanRemoveHeldEntityFromHand(Hand hand)
         {
             var heldEntity = hand.HeldEntity;
 
@@ -332,7 +332,7 @@ namespace Content.Shared.GameObjects.Components.Items
             return true;
         }
 
-        protected bool PlayerCanDrop()
+        private bool PlayerCanDrop()
         {
             if (!ActionBlockerSystem.CanDrop(Owner))
                 return false;
@@ -340,7 +340,7 @@ namespace Content.Shared.GameObjects.Components.Items
             return true;
         }
 
-        protected void RemoveHeldEntityFromHand(Hand hand)
+        private void RemoveHeldEntityFromHand(Hand hand)
         {
             var heldEntity = hand.HeldEntity;
 
@@ -359,7 +359,7 @@ namespace Content.Shared.GameObjects.Components.Items
 
         }
 
-        protected void DropHeldEntity(Hand hand, EntityCoordinates targetDropLocation, bool intentionalDrop)
+        private void DropHeldEntity(Hand hand, EntityCoordinates targetDropLocation, bool intentionalDrop)
         {
             var heldEntity = hand.HeldEntity;
 
@@ -379,7 +379,7 @@ namespace Content.Shared.GameObjects.Components.Items
         /// <summary>
         ///     Calculates the final location a dropped item will end up at, accounting for max drop range and collision along the targeted drop path.
         /// </summary>
-        protected EntityCoordinates GetFinalDropCoordinates(EntityCoordinates targetCoords)
+        private EntityCoordinates GetFinalDropCoordinates(EntityCoordinates targetCoords)
         {
             var origin = Owner.Transform.MapPosition;
             var other = targetCoords.ToMap(Owner.EntityManager);
@@ -394,7 +394,7 @@ namespace Content.Shared.GameObjects.Components.Items
             return targetCoords.WithPosition(dropVector);
         }
 
-        protected bool TryDropHeldEntity(Hand hand, EntityCoordinates location, bool checkActionBlocker, bool intentionalDrop)
+        private bool TryDropHeldEntity(Hand hand, EntityCoordinates location, bool checkActionBlocker, bool intentionalDrop)
         {
             if (!CanRemoveHeldEntityFromHand(hand))
                 return false;
@@ -409,12 +409,12 @@ namespace Content.Shared.GameObjects.Components.Items
         /// <summary>
         ///     Forcibly drops the contents of a hand directly under the player.
         /// </summary>
-        protected void DropHeldEntityToFloor(Hand hand, bool intentionalDrop)
+        private void DropHeldEntityToFloor(Hand hand, bool intentionalDrop)
         {
             DropHeldEntity(hand, Owner.Transform.Coordinates, intentionalDrop);
         }
 
-        protected bool CanPutHeldEntityIntoContainer(Hand hand, IContainer targetContainer, bool checkActionBlocker)
+        private bool CanPutHeldEntityIntoContainer(Hand hand, IContainer targetContainer, bool checkActionBlocker)
         {
             var heldEntity = hand.HeldEntity;
 
@@ -430,7 +430,7 @@ namespace Content.Shared.GameObjects.Components.Items
             return true;
         }
 
-        protected void PutHeldEntityIntoContainer(Hand hand, IContainer targetContainer)
+        private void PutHeldEntityIntoContainer(Hand hand, IContainer targetContainer)
         {
             var heldEntity = hand.HeldEntity;
 
@@ -511,7 +511,7 @@ namespace Content.Shared.GameObjects.Components.Items
             return true;
         }
 
-        protected void PutEntityIntoHand(Hand hand, IEntity entity)
+        private void PutEntityIntoHand(Hand hand, IEntity entity)
         {
             if (!hand.Container.Insert(entity))
             {
@@ -537,7 +537,7 @@ namespace Content.Shared.GameObjects.Components.Items
             }
         }
 
-        protected bool TryPickupEntity(Hand hand, IEntity entity, bool checkActionBlocker = true)
+        private bool TryPickupEntity(Hand hand, IEntity entity, bool checkActionBlocker = true)
         {
             if (!CanInsertEntityIntoHand(hand, entity))
                 return false;
@@ -668,7 +668,7 @@ namespace Content.Shared.GameObjects.Components.Items
         /// <summary>
         ///     Tries to pick up an entity into the priority hand, if provided. Then, tries to pick up the entity into every other hand.
         /// </summary>
-        protected bool TryPutInAnyHand(IEntity entity, Hand? priorityHand = null, bool checkActionBlocker = true)
+        private bool TryPutInAnyHand(IEntity entity, Hand? priorityHand = null, bool checkActionBlocker = true)
         {
             if (priorityHand != null)
             {
