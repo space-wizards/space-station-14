@@ -50,7 +50,7 @@ namespace Content.Server.Commands.GameTicking
                     return;
                 }
 
-                data.ContentData().WipeMind();
+                data.ContentData()?.WipeMind();
                 shell.WriteLine("Player is not currently online, but they will respawn if they come back online");
                 return;
             }

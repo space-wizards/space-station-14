@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Shared.GameObjects;
@@ -14,6 +14,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -45,9 +46,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [DataField("capacity")]
         private int _capacity = 6;
 
-        private ContainerSlot _chamberContainer;
-        private Stack<IEntity> _spawnedAmmo;
-        private Container _ammoContainer;
+        private ContainerSlot _chamberContainer = default!;
+        private Stack<IEntity> _spawnedAmmo = default!;
+        private Container _ammoContainer = default!;
 
         [ViewVariables]
         [DataField("caliber")]
@@ -55,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         [ViewVariables]
         [DataField("fillPrototype")]
-        private string _fillPrototype;
+        private string? _fillPrototype;
         [ViewVariables]
         private int _unspawnedCount;
 
@@ -68,15 +69,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 {
                     return;
                 }
-
-                var soundSystem = EntitySystem.Get<AudioSystem>();
-
+                
                 if (value)
                 {
                     TryEjectChamber();
                     if (_soundBoltOpen != null)
                     {
-                        soundSystem.PlayAtCoords(_soundBoltOpen, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                        SoundSystem.Play(Filter.Pvs(Owner), _soundBoltOpen, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                     }
                 }
                 else
@@ -84,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     TryFeedChamber();
                     if (_soundBoltClosed != null)
                     {
-                        soundSystem.PlayAtCoords(_soundBoltClosed, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                        SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                     }
                 }
 
@@ -97,7 +96,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [DataField("autoCycle")]
         private bool _autoCycle;
 
-        private AppearanceComponent _appearanceComponent;
+        private AppearanceComponent? _appearanceComponent;
+
         // Sounds
         [DataField("soundCycle")]
         private string _soundCycle = "/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg";
@@ -129,7 +129,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var chamberedExists = _chamberContainer.ContainedEntity != null;
             // (Is one chambered?, is the bullet spend)
             var chamber = (chamberedExists, false);
-            if (chamberedExists && _chamberContainer.ContainedEntity.TryGetComponent<AmmoComponent>(out var ammo))
+
+            if (chamberedExists && _chamberContainer.ContainedEntity!.TryGetComponent<AmmoComponent>(out var ammo))
             {
                 chamber.Item2 = ammo.Spent;
             }
@@ -159,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             _chamberContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-chamber-container");
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -176,12 +177,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public override IEntity PeekAmmo()
+        public override IEntity? PeekAmmo()
         {
             return _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile(EntityCoordinates spawnAt)
+        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
         {
             var chamberEntity = _chamberContainer.ContainedEntity;
             if (_autoCycle)
@@ -193,7 +194,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 Dirty();
             }
 
-            return chamberEntity?.GetComponent<AmmoComponent>().TakeBullet(spawnAt);
+            return chamberEntity?.GetComponentOrNull<AmmoComponent>()?.TakeBullet(spawnAt);
         }
 
         protected override bool WeaponCanFire()
@@ -222,9 +223,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
             else
             {
-                if (_soundCycle != null)
+                if (!string.IsNullOrEmpty(_soundCycle))
                 {
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundCycle, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundCycle, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 }
             }
 
@@ -234,7 +235,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         public bool TryInsertBullet(IEntity user, IEntity ammo)
         {
-            if (!ammo.TryGetComponent(out AmmoComponent ammoComponent))
+            if (!ammo.TryGetComponent(out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -256,7 +257,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 _chamberContainer.Insert(ammo);
                 if (_soundInsert != null)
                 {
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 }
                 Dirty();
                 UpdateAppearance();
@@ -269,7 +270,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 _spawnedAmmo.Push(ammo);
                 if (_soundInsert != null)
                 {
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 }
                 Dirty();
                 UpdateAppearance();

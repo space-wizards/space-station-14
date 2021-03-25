@@ -11,7 +11,14 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
     {
         private const string RadiationPrototype = "RadiationPulse";
 
-        public IEntity RadiationPulse(EntityCoordinates coordinates, float range, int dps, bool decay = true, float minPulseLifespan = 0.8f, float maxPulseLifespan = 2.5f, string sound = null)
+        public IEntity RadiationPulse(
+            EntityCoordinates coordinates,
+            float range,
+            int dps,
+            bool decay = true,
+            float minPulseLifespan = 0.8f,
+            float maxPulseLifespan = 2.5f,
+            string? sound = null)
         {
             var radiationEntity = EntityManager.SpawnEntity(RadiationPrototype, coordinates);
             var radiation = radiationEntity.GetComponent<RadiationPulseComponent>();

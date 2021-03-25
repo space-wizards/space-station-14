@@ -17,6 +17,7 @@ using Robust.Shared.Physics.Dynamics.Shapes;
 using Robust.Shared.Random;
 using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Singularity;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
@@ -98,7 +99,6 @@ namespace Content.Server.GameObjects.Components.Singularity
         private PhysicsComponent? _collidableComponent;
         private SpriteComponent? _spriteComponent;
         private RadiationPulseComponent? _radiationPulseComponent;
-        private AudioSystem _audioSystem = null!;
         private IPlayingAudioStream? _playingSound;
 
         public override ComponentState GetComponentState(ICommonSession player)
@@ -110,13 +110,12 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             base.Initialize();
 
-            _audioSystem = EntitySystem.Get<AudioSystem>();
             var audioParams = AudioParams.Default;
             audioParams.Loop = true;
             audioParams.MaxDistance = 20f;
             audioParams.Volume = 5;
-            _audioSystem.PlayFromEntity("/Audio/Effects/singularity_form.ogg", Owner);
-            Timer.Spawn(5200,() => _playingSound = _audioSystem.PlayFromEntity("/Audio/Effects/singularity.ogg", Owner, audioParams));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity_form.ogg", Owner);
+            Timer.Spawn(5200,() => _playingSound = SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity.ogg", Owner, audioParams));
 
             if (!Owner.TryGetComponent(out _spriteComponent))
                 Logger.Error("SingularityComponent was spawned without SpriteComponent");
@@ -163,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         public override void OnRemove()
         {
             _playingSound?.Stop();
-            _audioSystem.PlayAtCoords("/Audio/Effects/singularity_collapse.ogg", Owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity_collapse.ogg", Owner.Transform.Coordinates);
             base.OnRemove();
         }
     }

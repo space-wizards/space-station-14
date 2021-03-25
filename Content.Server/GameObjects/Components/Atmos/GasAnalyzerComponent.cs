@@ -239,7 +239,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                     if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent? gasAnalyzer))
                     {
-                        serverMsg.Session.AttachedEntity.PopupMessage(Loc.GetString("You need a Gas Analyzer in your hand!"));
+                        serverMsg.Session.AttachedEntity?.PopupMessage(Loc.GetString("You need a Gas Analyzer in your hand!"));
                         return;
                     }
 

@@ -23,7 +23,7 @@ namespace Content.Server.AI.Utility.Considerations.Clothing
 
             foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
             {
-                if (!entity.TryGetComponent(out ClothingComponent clothingComponent))
+                if (!entity.TryGetComponent(out ClothingComponent? clothingComponent))
                 {
                     continue;
                 }

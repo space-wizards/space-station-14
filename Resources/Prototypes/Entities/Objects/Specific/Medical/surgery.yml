@@ -1,102 +1,249 @@
+# Base
+
 - type: entity
   parent: BaseItem
-  id: BaseSurgeryTool
+  id: BaseToolSurgery
   abstract: true
   components:
-  - type: SurgeryTool
-    surgeryType: Incision
-    baseOperateTime: 5
+  - type: Sprite
+    netsync: false
   - type: UserInterface
     interfaces:
     - key: enum.SurgeryUIKey.Key
       type: SurgeryBoundUserInterface
 
-- type: entity
-  name: scalpel
-  parent: BaseSurgeryTool
-  id: Scalpel
-  description: A surgical tool used to make incisions into flesh.
-  components:
-  - type: SurgeryTool
-    surgeryType: Incision
-    baseOperateTime: 3
-  - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: scalpel
-  - type: ItemCooldown
-  - type: MeleeWeapon
-
-- type: entity
-  name: retractor
-  parent: BaseSurgeryTool
-  id: Retractor
-  description: A surgical tool used to hold open incisions.
-  components:
-  - type: SurgeryTool
-    surgeryType: Retraction
-    baseOperateTime: 3
-  - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: retractor
-  - type: ItemCooldown
-  - type: MeleeWeapon
+# Cautery
 
 - type: entity
   name: cautery
-  parent: BaseSurgeryTool
   id: Cautery
+  parent: BaseToolSurgery
   description: A surgical tool used to cauterize open wounds.
   components:
   - type: SurgeryTool
     surgeryType: Cauterization
     baseOperateTime: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/Surgery/cautery.rsi
     state: cautery
+  - type: Item
+    sprite: Objects/Specific/Medical/Surgery/cautery.rsi
   - type: ItemCooldown
-  - type: MeleeWeapon
+
+# Drill
 
 - type: entity
   name: drill
-  parent: BaseSurgeryTool
   id: Drill
+  parent: BaseToolSurgery
   description: A surgical drill for making holes into hard material.
   components:
+#  - type: PowerCellSlot
   - type: SurgeryTool
     surgeryType: Drilling
     baseOperateTime: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/Surgery/drill.rsi
     state: drill
+  - type: Item
+    sprite: Objects/Specific/Medical/Surgery/drill.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    hitSound: /Audio/Items/drill_hit.ogg
+
+# Scalpel
 
 - type: entity
-  name: bone saw
-  parent: BaseSurgeryTool
-  id: BoneSaw
-  description: A surgical tool used for amputations.
+  name: scalpel
+  id: Scalpel
+  parent: BaseToolSurgery
+  description: A surgical tool used to make incisions into flesh.
   components:
+  - type: Utensil
+    types:
+      - Knife
   - type: SurgeryTool
-    surgeryType: Amputation
-    baseOperateTime: 3
+    surgeryType: Incision
+    baseOperateTime: 5
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: bone_saw
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  - type: Item
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    hitSound: /Audio/Weapons/bladeslice.ogg
+    damage: 12
+
+- type: entity
+  name: shiv
+  id: ScalpelShiv
+  parent: Scalpel
+  description: A pointy piece of glass, abraded to an edge and wrapped in tape for a handle. # Could become a decent tool or weapon with right tool mods.
+  components:
+  - type: SurgeryTool
+    surgeryType: Incision
+    baseOperateTime: 8
+  - type: Sprite
+    state: shiv
+  - type: Item
+    HeldPrefix: shiv
+
+- type: entity
+  name: advanced scalpel
+  id: ScalpelAdvanced
+  parent: Scalpel
+  description: Made of more expensive materials, sharper and generally more reliable.
+  components:
+  - type: SurgeryTool
+    surgeryType: Incision
+    baseOperateTime: 4
+  - type: Sprite
+    state: advanced
+  - type: Item
+    HeldPrefix: advanced
+
+- type: entity
+  name: laser scalpel
+  id: ScalpelLaser
+  parent: Scalpel
+  description: A scalpel which uses a directed laser to slice instead of a blade, for more precise surgery while also cauterizing as it cuts.
+  components:
+#  - type: PowerCellSlot
+  - type: SurgeryTool
+    surgeryType: Incision
+    baseOperateTime: 2
+  - type: Sprite
+    state: laser
+  - type: Item
+    HeldPrefix: laser
+
+# Scissors
+
+- type: entity
+  name: retractor
+  id: Retractor
+  parent: BaseToolSurgery
+  description: A surgical tool used to hold open incisions.
+  components:
+  - type: SurgeryTool
+    surgeryType: Retraction
+    baseOperateTime: 3
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+    state: retractor
+  - type: Item
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+  - type: ItemCooldown
+# Would do this, but inhands don't change. Also doesn't work for SurgeryTool yet.
+#  - type: MultiTool
+#    tools:
+#    - behavior: VesselCompression
+#      state: hemostat
+#      useSound: /Audio/Items/jaws_pry.ogg
+#      changeSound: /Audio/Items/change_jaws.ogg
+#    - behavior: Setting
+#      state: setter
+#      useSound:
+#      changeSound: /Audio/Items/change_jaws.ogg
 
 - type: entity
   name: hemostat
-  parent: BaseSurgeryTool
   id: Hemostat
+  parent: Retractor
   description: A surgical tool used to compress blood vessels to prevent bleeding.
   components:
   - type: SurgeryTool
     surgeryType: VesselCompression
-    baseOperateTime: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: hemostat
+  - type: Item
+    HeldPrefix: hemostat
+
+  # - type: entity
+  #   name: bone setter
+  #   id: BoneSetter
+  #   parent: Retractor
+  #   description: A surgical tool used for setting bones.
+  #   components:
+  #   - type: SurgeryTool
+  #     surgeryType: Setting
+  #   - type: Sprite
+  #     state: setter
+  #   - type: Item
+  #     HeldPrefix: setter
+
+# Saws
+
+- type: entity
+  name: metal saw
+  id: Saw
+  parent: BaseToolSurgery
+  description: For cutting wood and other objects to pieces. Or sawing bones, in case of emergency.
+  components:
+  - type: Utensil
+    types:
+      - Knife
+  - type: SurgeryTool
+    surgeryType: Amputation
+    baseOperateTime: 6
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/saw.rsi
+    state: saw
+  - type: Item
+    sprite: Objects/Specific/Medical/Surgery/saw.rsi
   - type: ItemCooldown
+# No melee for regular saw because have you ever seen someone use a band saw as a weapon? It's dumb.
+
+- type: entity
+  name: choppa
+  id: SawImprov
+  parent: Saw
+  description: A wicked serrated blade made of whatever nasty sharp things you could find. # It would make a pretty decent weapon, given there are more space for some tool mods too.
+  components:
+  - type: SurgeryTool
+    surgeryType: Amputation
+    baseOperateTime: 8
+  - type: Sprite
+    state: improv
+  - type: Item
+    HeldPrefix: improv
   - type: MeleeWeapon
+    hitSound: /Audio/Weapons/bladeslice.ogg
+    damage: 10
+
+- type: entity
+  name: circular saw
+  id: SawElectric
+  parent: Saw
+  description: For heavy duty cutting.
+  components:
+#  - type: PowerCellSlot
+  - type: SurgeryTool
+    surgeryType: Amputation
+    baseOperateTime: 4
+  - type: Sprite
+    state: electric
+  - type: Item
+    HeldPrefix: electric
+  - type: MeleeWeapon
+    hitSound: /Audio/Items/drill_hit.ogg
+    damage: 15
+
+- type: entity
+  name: advanced circular saw
+  id: SawAdvanced
+  parent: Saw
+  description: You think you can cut anything with it.
+  components:
+#  - type: PowerCellSlot
+  - type: SurgeryTool
+    surgeryType: Amputation
+    baseOperateTime: 2
+  - type: Sprite
+    state: advanced
+  - type: Item
+    HeldPrefix: advanced
+  - type: MeleeWeapon
+    hitSound: /Audio/Items/drill_hit.ogg
+    damage: 20

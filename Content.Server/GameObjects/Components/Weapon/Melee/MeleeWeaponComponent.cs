@@ -8,15 +8,15 @@ using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Physics.Broadphase;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
@@ -87,15 +87,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
             var entities = ArcRayCast(eventArgs.User.Transform.WorldPosition, angle, eventArgs.User);
-
-            var audioSystem = EntitySystem.Get<AudioSystem>();
+            
             if (entities.Count != 0)
             {
-                audioSystem.PlayFromEntity(_hitSound, entities.First());
+                SoundSystem.Play(Filter.Pvs(Owner), _hitSound, entities.First());
             }
             else
             {
-                audioSystem.PlayFromEntity(_missSound, eventArgs.User);
+                SoundSystem.Play(Filter.Pvs(Owner), _missSound, eventArgs.User);
             }
 
             var hitEntities = new List<IEntity>();
@@ -104,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 if (!entity.Transform.IsMapTransform || entity == eventArgs.User)
                     continue;
 
-                if (entity.TryGetComponent(out IDamageableComponent damageComponent))
+                if (entity.TryGetComponent(out IDamageableComponent? damageComponent))
                 {
                     damageComponent.ChangeDamage(DamageType, Damage, false, Owner);
                     hitEntities.Add(entity);
@@ -143,18 +142,17 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             var diff = eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager);
             var angle = Angle.FromWorldVec(diff);
 
-            var audioSystem = EntitySystem.Get<AudioSystem>();
             if (target != null)
             {
-                audioSystem.PlayFromEntity(_hitSound, target);
+                SoundSystem.Play(Filter.Pvs(Owner), _hitSound, target);
             }
             else
             {
-                audioSystem.PlayFromEntity(_missSound, eventArgs.User);
+                SoundSystem.Play(Filter.Pvs(Owner), _missSound, eventArgs.User);
                 return false;
             }
 
-            if (target.TryGetComponent(out IDamageableComponent damageComponent))
+            if (target.TryGetComponent(out IDamageableComponent? damageComponent))
             {
                 damageComponent.ChangeDamage(DamageType, Damage, false, Owner);
             }
@@ -231,7 +229,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         private void RefreshItemCooldown()
         {
-            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
+            if (Owner.TryGetComponent(out ItemCooldownComponent? cooldown))
             {
                 cooldown.CooldownStart = _lastAttackTime;
                 cooldown.CooldownEnd = _cooldownEnd;

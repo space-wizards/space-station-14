@@ -277,7 +277,7 @@ namespace Content.Shared.GameTicking
         public struct RoundEndPlayerInfo
         {
             public string PlayerOOCName;
-            public string PlayerICName;
+            public string? PlayerICName;
             public string Role;
             public bool Antag;
             public bool Observer;

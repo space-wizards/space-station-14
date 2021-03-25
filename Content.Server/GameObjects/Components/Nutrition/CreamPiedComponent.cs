@@ -22,8 +22,10 @@ namespace Content.Server.GameObjects.Components.Nutrition
             get => _creamPied;
             private set
             {
+                if (value == _creamPied) return;
+
                 _creamPied = value;
-                if (Owner.TryGetComponent(out AppearanceComponent appearance))
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
                     appearance.SetData(CreamPiedVisuals.Creamed, CreamPied);
                 }
@@ -51,15 +53,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         void IThrowCollide.HitBy(ThrowCollideEventArgs eventArgs)
         {
-            if (!eventArgs.Thrown.HasComponent<CreamPieComponent>() || CreamPied) return;
+            if (eventArgs.Thrown.Deleted || !eventArgs.Thrown.TryGetComponent(out CreamPieComponent? creamPie)) return;
 
             CreamPied = true;
             Owner.PopupMessage(Loc.GetString("You have been creamed by {0:theName}!", eventArgs.Thrown));
             Owner.PopupMessageOtherClients(Loc.GetString("{0:theName} has been creamed by {1:theName}!", Owner, eventArgs.Thrown));
 
-            if (Owner.TryGetComponent(out StunnableComponent stun))
+            if (Owner.TryGetComponent(out StunnableComponent? stun))
             {
-                stun.Paralyze(1f);
+                stun.Paralyze(creamPie.ParalyzeTime);
             }
         }
     }

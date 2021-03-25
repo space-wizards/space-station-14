@@ -12,7 +12,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Players;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -40,7 +39,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private PathfindingSystem _pathfindingSystem;
+        private PathfindingSystem _pathfindingSystem = default!;
 
         /// <summary>
         /// Queued region updates
@@ -180,7 +179,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 
             var collisionMask = 0;
-            if (entity.TryGetComponent(out IPhysBody physics))
+            if (entity.TryGetComponent(out IPhysBody? physics))
             {
                 collisionMask = physics.CollisionMask;
             }
@@ -229,7 +228,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             var reachableArgs = ReachableArgs.GetArgs(entity);
             var reachableRegions = GetReachableRegions(reachableArgs, targetRegion);
 
-            return reachableRegions.Contains(entityRegion);
+            return entityRegion != null && reachableRegions.Contains(entityRegion);
         }
 
         /// <summary>
@@ -238,7 +237,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <param name="reachableArgs"></param>
         /// <param name="region"></param>
         /// <returns></returns>
-        public HashSet<PathfindingRegion> GetReachableRegions(ReachableArgs reachableArgs, PathfindingRegion region)
+        public HashSet<PathfindingRegion> GetReachableRegions(ReachableArgs reachableArgs, PathfindingRegion? region)
         {
             // if we're on a node that's not tracked at all atm then region will be null
             if (region == null)
@@ -276,7 +275,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <returns></returns>
         private ReachableArgs GetCachedArgs(ReachableArgs accessibleArgs)
         {
-            ReachableArgs foundArgs = null;
+            ReachableArgs? foundArgs = null;
 
             foreach (var (cachedAccessible, _) in _cachedAccessible)
             {
@@ -422,7 +421,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public PathfindingRegion GetRegion(IEntity entity)
+        public PathfindingRegion? GetRegion(IEntity entity)
         {
             var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
@@ -434,7 +433,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public PathfindingRegion GetRegion(PathfindingNode node)
+        public PathfindingRegion? GetRegion(PathfindingNode node)
         {
             // Not sure on the best way to optimise this
             // On the one hand, just storing each node's region is faster buuutttt muh memory
@@ -469,7 +468,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <param name="x">This is already calculated in advance so may as well re-use it</param>
         /// <param name="y">This is already calculated in advance so may as well re-use it</param>
         /// <returns></returns>
-        private PathfindingRegion CalculateNode(
+        private PathfindingRegion? CalculateNode(
             PathfindingNode node,
             Dictionary<PathfindingNode, PathfindingRegion> existingRegions,
             HashSet<PathfindingRegion> chunkRegions,
@@ -499,8 +498,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             // Otherwise, make our own region.
             var leftNeighbor = x > 0 ? parentChunk.Nodes[x - 1, y] : null;
             var bottomNeighbor = y > 0 ? parentChunk.Nodes[x, y - 1] : null;
-            PathfindingRegion leftRegion;
-            PathfindingRegion bottomRegion;
+            PathfindingRegion? leftRegion;
+            PathfindingRegion? bottomRegion;
 
             // We'll check if our left or down neighbors are already in a region and join them
 
@@ -562,7 +561,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
-        private void MergeInto(PathfindingRegion source, PathfindingRegion target, Dictionary<PathfindingNode, PathfindingRegion> existingRegions = null)
+        private void MergeInto(PathfindingRegion source, PathfindingRegion target, Dictionary<PathfindingNode, PathfindingRegion>? existingRegions = null)
         {
             DebugTools.AssertNotNull(source);
             DebugTools.AssertNotNull(target);

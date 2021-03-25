@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Shared.Localization;
@@ -38,15 +39,9 @@ namespace Content.Server.Cargo
             return _orders.Values.ToList();
         }
 
-        public bool TryGetOrder(int id, out CargoOrderData order)
+        public bool TryGetOrder(int id, [NotNullWhen(true)] out CargoOrderData? order)
         {
-            if (_orders.TryGetValue(id, out var _order))
-            {
-                order = _order;
-                return true;
-            }
-            order = null;
-            return false;
+            return _orders.TryGetValue(id, out order);
         }
 
         public List<CargoOrderData> SpliceApproved()

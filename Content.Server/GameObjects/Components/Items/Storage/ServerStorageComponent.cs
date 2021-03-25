@@ -22,9 +22,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -481,7 +480,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            ((IUse) this).UseEntity(new UseEntityEventArgs { User = eventArgs.User });
+            ((IUse) this).UseEntity(new UseEntityEventArgs(eventArgs.User));
         }
 
         /// <summary>
@@ -622,8 +621,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             var file = AudioHelpers.GetRandomFileFromSoundCollection(name);
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(file, Owner, AudioParams.Default);
+            SoundSystem.Play(Filter.Pvs(Owner), file, Owner, AudioParams.Default);
         }
     }
 }

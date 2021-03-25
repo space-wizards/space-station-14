@@ -7,6 +7,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    canCollide: false
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
@@ -710,7 +711,6 @@
   - type: Sprite
     state: atmos_air
 
-
 - type: entity
   parent: BaseSign
   id: WarningCO2
@@ -728,7 +728,6 @@
       - VaultImpassable
   - type: Sprite
     state: atmos_co2
-
 
 - type: entity
   parent: BaseSign
@@ -748,7 +747,6 @@
   - type: Sprite
     state: atmos_n2
 
-
 - type: entity
   parent: BaseSign
   id: WarningN2O
@@ -766,7 +764,6 @@
       - VaultImpassable
   - type: Sprite
     state: atmos_n2o
-
 
 - type: entity
   parent: BaseSign
@@ -786,7 +783,6 @@
   - type: Sprite
     state: atmos_o2
 
-
 - type: entity
   parent: BaseSign
   id: WarningPlasma
@@ -804,7 +800,6 @@
       - VaultImpassable
   - type: Sprite
     state: atmos_plasma
-
 
 - type: entity
   parent: BaseSign
@@ -824,7 +819,6 @@
   - type: Sprite
     state: atmos_waste
 
-
 - type: entity
   parent: BaseSign
   id: SignSmoking
@@ -843,7 +837,6 @@
   - type: Sprite
     state: nosmoking2
 
-
 - type: entity
   parent: BaseSign
   id: SignSomethingOld
@@ -861,7 +854,6 @@
       - VaultImpassable
   - type: Sprite
     state: something-old1
-
 
 - type: entity
   parent: BaseSign

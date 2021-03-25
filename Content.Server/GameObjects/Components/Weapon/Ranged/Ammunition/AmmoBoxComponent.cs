@@ -42,11 +42,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
         private Stack<IEntity> _spawnedAmmo = new();
-        private Container _ammoContainer;
+        private Container _ammoContainer = default!;
         private int _unspawnedCount;
 
         [DataField("fillPrototype")]
-        private string _fillPrototype;
+        private string? _fillPrototype;
 
         public override void Initialize()
         {
@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(MagazineBarrelVisuals.MagLoaded, true);
                 appearanceComponent.SetData(AmmoVisuals.AmmoCount, AmmoLeft);
@@ -81,9 +81,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
         }
 
-        public IEntity TakeAmmo()
+        public IEntity? TakeAmmo()
         {
-            if (_spawnedAmmo.TryPop(out IEntity ammo))
+            if (_spawnedAmmo.TryPop(out var ammo))
             {
                 _ammoContainer.Remove(ammo);
                 return ammo;
@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         public bool TryInsertAmmo(IEntity user, IEntity entity)
         {
-            if (!entity.TryGetComponent(out AmmoComponent ammoComponent))
+            if (!entity.TryGetComponent(out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -130,11 +130,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 return TryInsertAmmo(eventArgs.User, eventArgs.Using);
             }
 
-            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent rangedMagazine))
+            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent? rangedMagazine))
             {
                 for (var i = 0; i < Math.Max(10, rangedMagazine.ShotsLeft); i++)
                 {
                     var ammo = rangedMagazine.TakeAmmo();
+
+                    if (ammo == null)
+                    {
+                        continue;
+                    }
 
                     if (!TryInsertAmmo(eventArgs.User, ammo))
                     {
@@ -151,21 +156,29 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         private bool TryUse(IEntity user)
         {
-            if (!user.TryGetComponent(out HandsComponent handsComponent))
+            if (!user.TryGetComponent(out HandsComponent? handsComponent))
             {
                 return false;
             }
 
             var ammo = TakeAmmo();
-            var itemComponent = ammo.GetComponent<ItemComponent>();
 
-            if (!handsComponent.CanPutInHand(itemComponent))
+            if (ammo == null)
             {
-                TryInsertAmmo(user, ammo);
                 return false;
             }
 
-            handsComponent.PutInHand(itemComponent);
+            if (ammo.TryGetComponent(out ItemComponent? item))
+            {
+                if (!handsComponent.CanPutInHand(item))
+                {
+                    TryInsertAmmo(user, ammo);
+                    return false;
+                }
+
+                handsComponent.PutInHand(item);
+            }
+
             UpdateAppearance();
             return true;
         }

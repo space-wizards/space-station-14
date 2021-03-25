@@ -11,17 +11,13 @@ namespace Content.Server.GameObjects.Components.Morgue
         public override string Name => "MorgueTray";
 
         [ViewVariables]
-        public IEntity Morgue { get; set; }
+        public IEntity? Morgue { get; set; }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(Morgue != null && !Morgue.Deleted && Morgue.TryGetComponent<MorgueEntityStorageComponent>(out var comp))
+            if (Morgue != null && !Morgue.Deleted && Morgue.TryGetComponent<MorgueEntityStorageComponent>(out var comp))
             {
-                comp.Activate(new ActivateEventArgs()
-                {
-                    User = eventArgs.User,
-                    Target = Morgue
-                });
+                comp.Activate(new ActivateEventArgs(eventArgs.User, Morgue));
             }
         }
     }

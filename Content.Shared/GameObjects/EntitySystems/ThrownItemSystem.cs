@@ -74,19 +74,6 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             var eventArgs = new ThrowCollideEventArgs(user, thrown.Entity, target.Entity);
 
-            foreach (var comp in thrown.Entity.GetAllComponents<IThrowCollide>())
-            {
-                _throwCollide.Add(comp);
-            }
-
-            foreach (var collide in _throwCollide)
-            {
-                if (thrown.Entity.Deleted) break;
-                collide.DoHit(eventArgs);
-            }
-
-            _throwCollide.Clear();
-
             foreach (var comp in target.Entity.GetAllComponents<IThrowCollide>())
             {
                 _throwCollide.Add(comp);
@@ -96,6 +83,19 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 if (target.Entity.Deleted) break;
                 collide.HitBy(eventArgs);
+            }
+
+            _throwCollide.Clear();
+
+            foreach (var comp in thrown.Entity.GetAllComponents<IThrowCollide>())
+            {
+                _throwCollide.Add(comp);
+            }
+
+            foreach (var collide in _throwCollide)
+            {
+                if (thrown.Entity.Deleted) break;
+                collide.DoHit(eventArgs);
             }
 
             _throwCollide.Clear();

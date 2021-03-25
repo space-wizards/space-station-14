@@ -24,7 +24,7 @@ namespace Content.Server.AI.Utils
                 return false;
             }
 
-            if (owner.TryGetComponent(out AiControllerComponent controller))
+            if (owner.TryGetComponent(out AiControllerComponent? controller))
             {
                 var targetRange = (target.Transform.Coordinates.Position - owner.Transform.Coordinates.Position).Length;
                 if (targetRange > controller.VisionRadius)

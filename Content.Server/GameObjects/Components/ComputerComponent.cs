@@ -5,8 +5,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -17,18 +15,16 @@ namespace Content.Server.GameObjects.Components
     {
         [ViewVariables]
         [DataField("board")]
-        private string _boardPrototype;
+        private string? _boardPrototype;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent powerReceiver))
+            if (Owner.TryGetComponent(out PowerReceiverComponent? powerReceiver) &&
+                Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                if (Owner.TryGetComponent(out AppearanceComponent appearance))
-                {
-                    appearance.SetData(ComputerVisuals.Powered, powerReceiver.Powered);
-                }
+                appearance.SetData(ComputerVisuals.Powered, powerReceiver.Powered);
             }
         }
 
@@ -39,7 +35,7 @@ namespace Content.Server.GameObjects.Components
             CreateComputerBoard();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)
@@ -52,7 +48,7 @@ namespace Content.Server.GameObjects.Components
 
         private void PowerReceiverOnOnPowerStateChanged(PowerChangedMessage e)
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(ComputerVisuals.Powered, e.Powered);
             }
@@ -66,7 +62,7 @@ namespace Content.Server.GameObjects.Components
         private void CreateComputerBoard()
         {
             // Ensure that the construction component is aware of the board container.
-            if (Owner.TryGetComponent(out ConstructionComponent construction))
+            if (Owner.TryGetComponent(out ConstructionComponent? construction))
                 construction.AddContainer("board");
 
             // We don't do anything if this is null or empty.

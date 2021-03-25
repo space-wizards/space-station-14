@@ -42,7 +42,7 @@ namespace Content.Server.GlobalVerbs
 
         public override void Activate(IEntity user, IEntity target)
         {
-            if (!user.TryGetComponent(out IActorComponent actor))
+            if (!user.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }

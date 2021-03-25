@@ -52,15 +52,15 @@ namespace Content.Server.GlobalVerbs
                 return;
             }
 
-            var userMind = player.ContentData().Mind;
+            var userMind = player.ContentData()?.Mind;
 
             var targetMind = target.GetComponent<MindComponent>();
-            var oldEntity = userMind.CurrentEntity;
+            var oldEntity = userMind?.CurrentEntity;
 
             targetMind.Mind?.TransferTo(null);
-            userMind.TransferTo(target);
+            userMind?.TransferTo(target);
 
-            if (oldEntity.HasComponent<GhostComponent>())
+            if (oldEntity != null && oldEntity.HasComponent<GhostComponent>())
                 oldEntity.Delete();
         }
     }

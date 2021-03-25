@@ -23,9 +23,16 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     [PublicAPI]
     public class RangedInteractEventArgs : EventArgs
     {
-        public IEntity User { get; set; }
-        public IEntity Using { get; set; }
-        public EntityCoordinates ClickLocation { get; set; }
+        public RangedInteractEventArgs(IEntity user, IEntity @using, EntityCoordinates clickLocation)
+        {
+            User = user;
+            Using = @using;
+            ClickLocation = clickLocation;
+        }
+
+        public IEntity User { get; }
+        public IEntity Using { get; }
+        public EntityCoordinates ClickLocation { get; }
     }
 
     /// <summary>
