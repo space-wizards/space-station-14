@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Fix
+    message: Fixes ID Computer in Captain's Headquarters containing a Glass Firelock inside it, somehow... Oh, this directly fixes the bug where a breach in bar would close all firelocks except one, by the way.
