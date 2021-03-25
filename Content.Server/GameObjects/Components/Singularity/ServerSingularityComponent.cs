@@ -27,9 +27,6 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class ServerSingularityComponent : SharedSingularityComponent, IStartCollide
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-
-
         public int Energy
         {
             get => _energy;
@@ -71,8 +68,9 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
 
-                _spriteComponent?.LayerSetRSI(0, "Constructible/Power/Singularity/singularity_" + _level + ".rsi");
-                _spriteComponent?.LayerSetState(0, "singularity_" + _level);
+                // Replace with Visulizer
+                //_spriteComponent?.LayerSetRSI(0, "Constructible/Power/Singularity/singularity_" + _level + ".rsi");
+                //_spriteComponent?.LayerSetState(0, "singularity_" + _level);
 
                 if (_collidableComponent != null && _collidableComponent.Fixtures.Any() && _collidableComponent.Fixtures[0].Shape is PhysShapeCircle circle)
                 {
@@ -117,14 +115,11 @@ namespace Content.Server.GameObjects.Components.Singularity
             SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity_form.ogg", Owner);
             Timer.Spawn(5200,() => _playingSound = SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity.ogg", Owner, audioParams));
 
-            if (!Owner.TryGetComponent(out _spriteComponent))
-                Logger.Error("SingularityComponent was spawned without SpriteComponent");
-            if (!Owner.TryGetComponent(out _radiationPulseComponent))
-                Logger.Error("SingularityComponent was spawned without RadiationPulseComponent");
-            if (!Owner.TryGetComponent(out _collidableComponent))
-                Logger.Error("SingularityComponent was spawned without CollidableComponent!");
-            else
-                _collidableComponent.Hard = false;
+            Owner.EnsureComponent(out _spriteComponent);
+            Owner.EnsureComponent(out _radiationPulseComponent);
+            Owner.EnsureComponent(out _collidableComponent);
+
+            _collidableComponent!.Hard = false;
             Level = 1;
         }
 

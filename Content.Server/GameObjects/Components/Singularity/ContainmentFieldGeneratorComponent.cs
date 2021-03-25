@@ -19,8 +19,6 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class ContainmentFieldGeneratorComponent : Component, IStartCollide
     {
-        [Dependency] private readonly IPhysicsManager _physicsManager = null!;
-
         public override string Name => "ContainmentFieldGenerator";
 
         private int _powerBuffer;
