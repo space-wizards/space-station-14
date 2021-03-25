@@ -16,7 +16,7 @@
       layer:
       - SmallImpassable
       mask:
-      - VaultImpassable
+      - Impassable
   - type: Pullable
 
 - type: entity

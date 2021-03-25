@@ -14,7 +14,7 @@
       layer:
       - SmallImpassable
       mask:
-      - VaultImpassable
+      - Impassable
   - type: Sprite
     sprite: Constructible/Misc/potted_plants.rsi
   - type: PottedPlantHide
@@ -61,7 +61,7 @@
       layer:
       - SmallImpassable
       mask:
-      - VaultImpassable
+      - Impassable
 
 - type: entity
   id: PottedPlantBioluminscent

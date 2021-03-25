@@ -24,7 +24,7 @@
       mask:
       - Impassable
       - VaultImpassable
-      restitution: 0.05 # RIP Bouncy 2021-2021
+      restitution: 0 # RIP Bouncy 2021-2021
       friction: 0.2
   - type: Sprite
     drawdepth: Items
