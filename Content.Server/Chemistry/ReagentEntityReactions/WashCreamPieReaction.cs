@@ -4,6 +4,7 @@ using Content.Shared.Chemistry;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Chemistry.ReagentEntityReactions
 {
@@ -11,7 +12,7 @@ namespace Content.Server.Chemistry.ReagentEntityReactions
     [DataDefinition]
     public class WashCreamPieReaction : ReagentEntityReaction
     {
-        [DataField("reagents", true)]
+        [DataField("reagents", true, customTypeSerializer:typeof(PrototypeIdHashSetSerializer<ReagentPrototype>))]
         // ReSharper disable once CollectionNeverUpdated.Local
         private readonly HashSet<string> _reagents = new ();
 
