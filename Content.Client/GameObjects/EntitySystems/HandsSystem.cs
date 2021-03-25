@@ -11,7 +11,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             foreach (var hands in ComponentManager.EntityQuery<HandsComponent>(false))
             {
-                hands.RefreshHands();
+                hands.RefreshHands(); //temp hack to fix updating container when containers change
             }
         }
     }

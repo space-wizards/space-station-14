@@ -12,6 +12,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Items
@@ -55,6 +56,20 @@ namespace Content.Shared.GameObjects.Components.Items
         [ViewVariables]
         public IReadOnlyList<IReadOnlyHand> ReadOnlyHands => Hands;
         protected readonly List<Hand> Hands = new();
+
+        /// <summary>
+        ///     The amount of throw impulse per distance the player is from the throw target.
+        /// </summary>
+        [DataField("throwForceMultiplier")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ThrowForceMultiplier { get; set; } = 14f; //tuned so that a thrown item lands about under the player's cursor
+
+        /// <summary>
+        ///     Distance after which longer throw targets stop increasing throw impulse.
+        /// </summary>
+        [DataField("throwRange")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ThrowRange { get; set; } = 8f;
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
@@ -148,6 +163,14 @@ namespace Content.Shared.GameObjects.Components.Items
 
         #region Held Entities
 
+        public bool HasActiveHeldEntity()
+        {
+            if (!TryGetActiveHand(out var hand))
+                return false;
+
+            return hand.HeldEntity != null;
+        }
+
         public bool TryGetHeldEntity(string handName, [NotNullWhen(true)] out IEntity? heldEntity)
         {
             heldEntity = null;
@@ -215,6 +238,14 @@ namespace Content.Shared.GameObjects.Components.Items
                 return false;
 
             return true;
+        }
+
+        public bool TryDropActiveHand(EntityCoordinates targetDropLocation, bool doMobChecks = true, bool intentional = true)
+        {
+            if (!TryGetActiveHand(out var hand))
+                return false;
+
+            return TryDropHeldEntity(hand, targetDropLocation, doMobChecks, intentional);
         }
 
         public bool Drop(string handName, EntityCoordinates targetDropLocation, bool doMobChecks = true, bool intentional = true)
