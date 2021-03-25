@@ -35,10 +35,10 @@ namespace Content.Shared.GameObjects.Components.Items
                     Logger.Warning($"{nameof(SharedHandsComponent)} on {Owner} tried to set its active hand to {value}, which was not a hand.");
                     return;
                 }
-                if (value == null && _hands.Count != 0)
+                if (value == null && Hands.Count != 0)
                 {
                     Logger.Error($"{nameof(SharedHandsComponent)} on {Owner} tried to set its active hand to null, when it still had another hand.");
-                    _activeHand = _hands[0].Name;
+                    _activeHand = Hands[0].Name;
                     return;
                 }
                 if (value != ActiveHand)
@@ -53,22 +53,16 @@ namespace Content.Shared.GameObjects.Components.Items
         private string? _activeHand;
 
         [ViewVariables]
-        public IReadOnlyList<IReadOnlyHand> ReadOnlyHands => _hands;
-        protected readonly List<Hand> _hands = new();
-
-        protected override void Startup()
-        {
-            base.Startup();
-            Dirty();
-        }
+        public IReadOnlyList<IReadOnlyHand> ReadOnlyHands => Hands;
+        protected readonly List<Hand> Hands = new();
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            var hands = new HandState[_hands.Count];
+            var hands = new HandState[Hands.Count];
 
-            for (var i = 0; i < _hands.Count; i++)
+            for (var i = 0; i < Hands.Count; i++)
             {
-                var hand = _hands[i].ToHandState();
+                var hand = Hands[i].ToHandState();
                 hands[i] = hand;
             }
             return new HandsComponentState(hands, ActiveHand);
@@ -82,7 +76,7 @@ namespace Content.Shared.GameObjects.Components.Items
             var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, handName);
             container.OccludesLight = false;
 
-            _hands.Add(new Hand(handName, true, handLocation, container));
+            Hands.Add(new Hand(handName, true, handLocation, container));
 
             if (ActiveHand == null)
                 ActiveHand = handName;
@@ -103,7 +97,7 @@ namespace Content.Shared.GameObjects.Components.Items
         {
             DropHeldEntityToFloor(hand, intentionalDrop: false);
             hand.Container.Shutdown();
-            _hands.Remove(hand);
+            Hands.Remove(hand);
 
             if (ActiveHand == hand.Name)
                 ActiveHand = ReadOnlyHands.FirstOrDefault()?.Name;
@@ -114,7 +108,7 @@ namespace Content.Shared.GameObjects.Components.Items
 
         public bool HasHand(string handName)
         {
-            foreach (var hand in _hands)
+            foreach (var hand in Hands)
             {
                 if (hand.Name == handName)
                     return true;
@@ -124,7 +118,7 @@ namespace Content.Shared.GameObjects.Components.Items
 
         protected Hand? GetServerHand(string handName)
         {
-            foreach (var hand in _hands)
+            foreach (var hand in Hands)
             {
                 if (hand.Name == handName)
                     return hand;
@@ -173,7 +167,7 @@ namespace Content.Shared.GameObjects.Components.Items
 
         public bool IsHolding(IEntity entity)
         {
-            foreach (var hand in _hands)
+            foreach (var hand in Hands)
             {
                 if (hand.HeldEntity == entity)
                     return true;
@@ -194,7 +188,7 @@ namespace Content.Shared.GameObjects.Components.Items
         {
             handFound = null;
 
-            foreach (var hand in _hands)
+            foreach (var hand in Hands)
             {
                 if (hand.HeldEntity == entity)
                 {
@@ -536,8 +530,8 @@ namespace Content.Shared.GameObjects.Components.Items
             if (!TryGetActiveHand(out var activeHand))
                 return;
 
-            var newActiveIndex = _hands.IndexOf(activeHand) + 1;
-            var finalHandIndex = _hands.Count - 1;
+            var newActiveIndex = Hands.IndexOf(activeHand) + 1;
+            var finalHandIndex = Hands.Count - 1;
             if (newActiveIndex > finalHandIndex)
                 newActiveIndex = 0;
 
@@ -651,7 +645,7 @@ namespace Content.Shared.GameObjects.Components.Items
                     return true;
             }
 
-            foreach (var hand in _hands)
+            foreach (var hand in Hands)
             {
                 if (TryPickupEntity(hand, entity, checkActionBlocker))
                     return true;
@@ -689,14 +683,19 @@ namespace Content.Shared.GameObjects.Components.Items
 
     public class Hand : IReadOnlyHand
     {
+        [ViewVariables]
         public string Name { get; set; }
 
+        [ViewVariables]
         public bool Enabled { get; set; }
 
+        [ViewVariables]
         public HandLocation Location { get; set; }
 
+        [ViewVariables]
         public IContainer Container { get; }
 
+        [ViewVariables]
         public IEntity? HeldEntity => Container.ContainedEntities.FirstOrDefault();
 
         public Hand(string name, bool enabled, HandLocation location, IContainer container)

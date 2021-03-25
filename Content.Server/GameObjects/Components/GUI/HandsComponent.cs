@@ -195,7 +195,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         private void AttemptPull(PullAttemptMessage msg)
         {
-            if (!_hands.Any(hand => hand.Enabled))
+            if (!Hands.Any(hand => hand.Enabled))
             {
                 msg.Cancelled = true;
             }
@@ -203,7 +203,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         private void StartPulling()
         {
-            var firstFreeHand = _hands.FirstOrDefault(hand => hand.Enabled);
+            var firstFreeHand = Hands.FirstOrDefault(hand => hand.Enabled);
 
             if (firstFreeHand == null)
                 return;
@@ -213,7 +213,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         private void StopPulling()
         {
-            var firstOccupiedHand = _hands.FirstOrDefault(hand => !hand.Enabled);
+            var firstOccupiedHand = Hands.FirstOrDefault(hand => !hand.Enabled);
 
             if (firstOccupiedHand == null)
                 return;
@@ -225,9 +225,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
         #region Old public methods
 
-        public IEnumerable<string> Hands => _hands.Select(h => h.Name);
+        public IEnumerable<string> HandNames => Hands.Select(h => h.Name);
 
-        public int Count => _hands.Count;
+        public int Count => Hands.Count;
 
         /// <summary>
         ///     Returns a list of all hand names, with the active hand being first.
@@ -237,7 +237,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (ActiveHand != null)
                 yield return ActiveHand;
 
-            foreach (var hand in _hands)
+            foreach (var hand in Hands)
             {
                 if (hand.Name == ActiveHand || !hand.Enabled)
                     continue;
@@ -337,7 +337,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (mobCheck && !PlayerCanPickup())
                 return false;
 
-            foreach (var hand in _hands)
+            foreach (var hand in Hands)
             {
                 if (CanInsertEntityIntoHand(hand, entity))
                     return true;

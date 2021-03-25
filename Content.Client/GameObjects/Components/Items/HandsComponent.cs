@@ -10,7 +10,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Client.GameObjects.Components.Items
 {
@@ -96,7 +95,7 @@ namespace Content.Client.GameObjects.Components.Items
             if (curState is not HandsComponentState state)
                 return;
 
-            _hands.Clear();
+            Hands.Clear();
 
             var containerMan = Owner.EnsureComponentWarn<ContainerManagerComponent>();
             foreach (var handState in state.Hands)
@@ -105,7 +104,7 @@ namespace Content.Client.GameObjects.Components.Items
                     continue;
 
                 var newHand = new Hand(handState.Name, handState.Enabled, handState.Location, container);
-                _hands.Add(newHand);
+                Hands.Add(newHand);
             }
             ActiveHand = state.ActiveHand;
 
@@ -188,7 +187,7 @@ namespace Content.Client.GameObjects.Components.Items
             if (_sprite == null)
                 return;
 
-            foreach (var hand in _hands)
+            foreach (var hand in Hands)
             {
                 var key = $"hand-{hand.Name}";
                 _sprite.LayerMapReserveBlank(key);
@@ -226,7 +225,7 @@ namespace Content.Client.GameObjects.Components.Items
         {
             var handStates = new List<GuiHand>();
 
-            foreach (var hand in _hands)
+            foreach (var hand in Hands)
             {
                 var handState = new GuiHand(hand.Name, hand.Location, hand.HeldEntity, hand.Enabled);
                 handStates.Add(handState);
