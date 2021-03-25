@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -23,18 +24,22 @@ namespace Pow3r
         private readonly List<Supply> _supplies = new();
         private readonly List<Network> _networks = new();
         private readonly List<Load> _loads = new();
+        private readonly List<Battery> _batteries = new();
         private bool _showDemo;
         private Network _linking;
         private int _tickDataIdx;
         private bool _paused;
 
+        private readonly float[] _simTickTimes = new float[MaxTickData];
         private readonly Queue<object> _remQueue = new();
+        private readonly Stopwatch _simStopwatch = new Stopwatch();
 
         private void Tick(float frameTime)
         {
             if (_paused)
                 return;
 
+            _simStopwatch.Restart();
             _tickDataIdx = (_tickDataIdx + 1) % MaxTickData;
 
             _loads.ForEach(l => l.ReceivingPower = 0);
@@ -159,6 +164,8 @@ namespace Pow3r
                     supply.SupplyRampPosition = supply.SupplyRampTarget;
                 }
             }
+
+            _simTickTimes[_tickDataIdx] = (float) _simStopwatch.Elapsed.TotalMilliseconds;
         }
 
         private void DoDraw(float frameTime)
@@ -172,8 +179,7 @@ namespace Pow3r
             SetNextWindowSize(new Vector2(100, 120));
 
             Begin("CreateButtons",
-                ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoMove |
-                ImGuiWindowFlags.NoResize);
+                ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoResize);
 
             if (Button("Generator"))
             {
@@ -191,6 +197,15 @@ namespace Pow3r
             }
 
             Checkbox("Paused", ref _paused);
+
+            End();
+
+            Begin("Timing");
+
+            PlotLines("Tick time (ms)", ref _simTickTimes[0], MaxTickData, _tickDataIdx + 1,
+                $"",
+                0,
+                0.1f, new Vector2(250, 150));
 
             End();
 
@@ -381,12 +396,34 @@ namespace Pow3r
             }
         }
 
+        public sealed class Battery
+        {
+            public readonly int Id;
+
+            public bool Enabled;
+            public float Capacity;
+            public float MaxPassthrough;
+            public float MaxChargeRate;
+            public float MaxSupply;
+            public float RampTolerance;
+            public float RampRate;
+
+            public Battery(int id)
+            {
+                Id = id;
+            }
+        }
+
         private sealed class Network
         {
             public readonly int Id;
 
             public readonly List<Supply> Supplies = new();
             public readonly List<Load> Loads = new();
+            // "Loading" means the network is connected to the INPUT port of the battery.
+            public readonly List<Battery> BatteriesLoading = new();
+            // "Supplying" means the network is connected to the OUTPUT port of the battery.
+            public readonly List<Battery> BatteriesSupplying = new();
             public Vector2 CurrentWindowPos;
 
             public float DemandTotal;
@@ -439,14 +476,29 @@ namespace Pow3r
                         SupplyRampTolerance = x.RampTolerance
                     });
 
+            var tempBatteries = dat.Batteries.ToDictionary(x => x.Id,
+                x => new Battery(x.Id)
+                {
+                    MaxPassthrough = x.MaxPassthrough,
+                    Capacity = x.Capacity,
+                    Enabled = x.Enabled,
+                    MaxSupply = x.MaxSupply,
+                    RampRate = x.RampRate,
+                    RampTolerance = x.RampTolerance,
+                    MaxChargeRate = x.MaxChargeRate
+                });
+
             _loads.AddRange(tempLoads.Values);
             _supplies.AddRange(tempSupplies.Values);
+            _batteries.AddRange(tempBatteries.Values);
 
             _networks.AddRange(dat.Networks.Select(n =>
             {
                 var network = new Network(n.Id);
                 network.Loads.AddRange(n.Loads.Select(l => tempLoads[l]));
                 network.Supplies.AddRange(n.Supplies.Select(s => tempSupplies[s]));
+                network.BatteriesLoading.AddRange(n.BatteriesLoading.Select(l => tempBatteries[l]));
+                network.BatteriesSupplying.AddRange(n.BatteriesSupplying.Select(s => tempBatteries[s]));
                 return network;
             }));
         }
@@ -469,7 +521,9 @@ namespace Pow3r
                 {
                     Id = n.Id,
                     Loads = n.Loads.Select(c => c.Id).ToList(),
-                    Supplies = n.Supplies.Select(c => c.Id).ToList()
+                    Supplies = n.Supplies.Select(c => c.Id).ToList(),
+                    BatteriesLoading = n.BatteriesLoading.Select(c => c.Id).ToList(),
+                    BatteriesSupplying = n.BatteriesSupplying.Select(c => c.Id).ToList(),
                 }).ToList(),
 
                 Supplies = _supplies.Select(s => new DiskSupply
@@ -479,6 +533,18 @@ namespace Pow3r
                     MaxSupply = s.MaxSupply,
                     RampRate = s.SupplyRampRate,
                     RampTolerance = s.SupplyRampTolerance
+                }).ToList(),
+
+                Batteries = _batteries.Select(b => new DiskBattery
+                {
+                    Id = b.Id,
+                    Enabled = b.Enabled,
+                    Capacity = b.Capacity,
+                    MaxPassthrough = b.MaxPassthrough,
+                    MaxSupply = b.MaxSupply,
+                    RampRate = b.RampRate,
+                    RampTolerance = b.RampTolerance,
+                    MaxChargeRate = b.MaxChargeRate
                 }).ToList()
             };
 
@@ -492,6 +558,7 @@ namespace Pow3r
             public List<DiskLoad> Loads;
             public List<DiskNetwork> Networks;
             public List<DiskSupply> Supplies;
+            public List<DiskBattery> Batteries;
         }
 
         private sealed class DiskLoad
@@ -512,12 +579,27 @@ namespace Pow3r
             public float RampRate;
         }
 
+        private sealed class DiskBattery
+        {
+            public int Id;
+
+            public bool Enabled;
+            public float Capacity;
+            public float MaxPassthrough;
+            public float MaxChargeRate;
+            public float MaxSupply;
+            public float RampTolerance;
+            public float RampRate;
+        }
+
         private sealed class DiskNetwork
         {
             public int Id;
 
             public List<int> Loads;
             public List<int> Supplies;
+            public List<int> BatteriesLoading;
+            public List<int> BatteriesSupplying;
         }
     }
 }
