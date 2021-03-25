@@ -69,6 +69,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _cfg.OnValueChanged(CCVars.SpaceWind, OnSpaceWindChanged, true);
             _cfg.OnValueChanged(CCVars.MonstermosEqualization, OnMonstermosEqualizationChanged, true);
+            _cfg.OnValueChanged(CCVars.Superconduction, OnSuperconductionChanged, true);
             _cfg.OnValueChanged(CCVars.AtmosMaxProcessTime, OnAtmosMaxProcessTimeChanged, true);
             _cfg.OnValueChanged(CCVars.AtmosTickRate, OnAtmosTickRateChanged, true);
             _cfg.OnValueChanged(CCVars.ExcitedGroupsSpaceIsAllConsuming, OnExcitedGroupsSpaceIsAllConsumingChanged, true);
@@ -76,6 +77,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public bool SpaceWind { get; private set; }
         public bool MonstermosEqualization { get; private set; }
+        public bool Superconduction { get; private set; }
         public bool ExcitedGroupsSpaceIsAllConsuming { get; private set; }
         public float AtmosMaxProcessTime { get; private set; }
         public float AtmosTickRate { get; private set; }
@@ -98,6 +100,11 @@ namespace Content.Server.GameObjects.EntitySystems
         private void OnMonstermosEqualizationChanged(bool obj)
         {
             MonstermosEqualization = obj;
+        }
+
+        private void OnSuperconductionChanged(bool obj)
+        {
+            Superconduction = obj;
         }
 
         private void OnSpaceWindChanged(bool obj)

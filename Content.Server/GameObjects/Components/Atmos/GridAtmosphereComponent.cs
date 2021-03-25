@@ -407,7 +407,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public virtual void AddSuperconductivityTile(TileAtmosphere tile)
         {
-            if (tile?.GridIndex != _gridId) return;
+            if (tile?.GridIndex != _gridId || !AtmosphereSystem.Superconduction) return;
             _superconductivityTiles.Add(tile);
         }
 
@@ -606,7 +606,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                     }
 
                     _paused = false;
-                    _state = ProcessState.Superconductivity;
+                    // Next state depends on whether superconduction is enabled or not.
+                    // Note: We do this here instead of on the tile equalization step to prevent ending it early.
+                    //       Therefore, a change to this CVar might only be applied after that step is over.
+                    _state = AtmosphereSystem.Superconduction ? ProcessState.Superconductivity : ProcessState.PipeNet;
                     break;
                 case ProcessState.Superconductivity:
                     if (!ProcessSuperconductivity(_paused, maxProcessTime))
