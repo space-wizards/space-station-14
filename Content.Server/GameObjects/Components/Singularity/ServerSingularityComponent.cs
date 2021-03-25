@@ -4,12 +4,10 @@ using Content.Server.GameObjects.Components.StationEvents;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
-using Robust.Shared.Random;
 using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Singularity;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -23,9 +21,6 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class ServerSingularityComponent : SharedSingularityComponent, IStartCollide
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-
-
         public int Energy
         {
             get => _energy;
