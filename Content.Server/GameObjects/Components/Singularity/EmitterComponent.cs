@@ -71,11 +71,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             base.Initialize();
 
-            if (!Owner.TryGetComponent(out _powerConsumer!))
-            {
-                Logger.Error($"EmitterComponent {Owner} created with no PowerConsumerComponent");
-                return;
-            }
+            Owner.EnsureComponent<PowerConsumerComponent>(out _powerConsumer);
 
             _powerConsumer.OnReceivedPowerChanged += OnReceivedPowerChanged;
         }

@@ -94,9 +94,8 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _ => 0
             };
 
-        private PhysicsComponent? _collidableComponent;
-        private SpriteComponent? _spriteComponent;
-        private RadiationPulseComponent? _radiationPulseComponent;
+        private PhysicsComponent _collidableComponent = default!;
+        private RadiationPulseComponent _radiationPulseComponent = default!;
         private IPlayingAudioStream? _playingSound;
 
         public override ComponentState GetComponentState(ICommonSession player)
@@ -108,16 +107,15 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             base.Initialize();
 
+            Owner.EnsureComponent(out _radiationPulseComponent);
+            Owner.EnsureComponent(out _collidableComponent);
+
             var audioParams = AudioParams.Default;
             audioParams.Loop = true;
             audioParams.MaxDistance = 20f;
             audioParams.Volume = 5;
             SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity_form.ogg", Owner);
             Timer.Spawn(5200,() => _playingSound = SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity.ogg", Owner, audioParams));
-
-            Owner.EnsureComponent(out _spriteComponent);
-            Owner.EnsureComponent(out _radiationPulseComponent);
-            Owner.EnsureComponent(out _collidableComponent);
 
             _collidableComponent!.Hard = false;
             Level = 1;
