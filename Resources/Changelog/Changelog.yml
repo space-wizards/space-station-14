@@ -623,3 +623,16 @@ Entries:
       steps, type: Tweak}
   id: 113
   time: '2021-03-24T22:34:07.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added a few different gas canisters to atmospherics and engineering.,
+    type: Add}
+  id: 114
+  time: '2021-03-25T01:03:49.352135+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'Fixes ID Computer in Captain''s Headquarters containing a Glass Firelock
+      inside it, somehow... Oh, this directly fixes the bug where a breach in bar
+      would close all firelocks except one, by the way.', type: Fix}
+  id: 115
+  time: '2021-03-25T01:03:49.353117+00:00'
