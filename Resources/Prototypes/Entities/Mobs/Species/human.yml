@@ -10,6 +10,24 @@
     tags:
     - Teleportable
     - FootstepSound
+  - type: Reactive
+    reactions:
+    - !type:ExtinguishReaction
+      touch: true
+      reagents:
+      - chem.Water
+    - !type:FlammableReaction
+      touch: true
+      reagents:
+      - chem.WeldingFuel
+      - chem.Thermite
+      - chem.Plasma
+      - chem.Ethanol
+    - !type:WashCreamPieReaction
+      touch: true
+      reagents:
+      - chem.Water
+      - chem.SpaceCleaner
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
