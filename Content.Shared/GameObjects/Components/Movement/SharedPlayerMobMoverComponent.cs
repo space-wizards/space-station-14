@@ -112,16 +112,16 @@ namespace Content.Shared.GameObjects.Components.Movement
             PushStrength = playerMoverState.PushStrength;
         }
 
-        bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
-        {
+  //      bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
+  //      {
             // Don't collide with other mobs
             // unless they have combat mode on
-            return false; //collidedWith.Entity.HasComponent<IBody>();
+  //           return false; //collidedWith.Entity.HasComponent<IBody>();
             /* &&
    (!Owner.TryGetComponent(out SharedCombatModeComponent? ownerCombat) || !ownerCombat.IsInCombatMode) &&
    (!collidedWith.Entity.TryGetComponent(out SharedCombatModeComponent? otherCombat) || !otherCombat.IsInCombatMode);
    */
-        }
+  //      }
 
         [Serializable, NetSerializable]
         private sealed class PlayerMobMoverComponentState : ComponentState
