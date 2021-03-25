@@ -373,7 +373,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void AddActiveTile(TileAtmosphere tile)
         {
-            if (tile?.GridIndex != _gridId) return;
+            if (tile?.GridIndex != _gridId || tile.Air == null) return;
             tile.Excited = true;
             _activeTiles.Add(tile);
         }
