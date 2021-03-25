@@ -50,8 +50,8 @@ namespace Content.Server.GameObjects.Components.Explosion
         /// <summary>
         ///     Max distance grenades can be thrown.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("distance")]
-        private float _throwDistance = 3;
+        //[ViewVariables(VVAccess.ReadWrite)] [DataField("distance")]
+        //private float _throwDistance = 3;
 
         /// <summary>
         ///     This is the end.

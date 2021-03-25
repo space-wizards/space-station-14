@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
@@ -22,8 +22,8 @@ namespace Content.Server.GameObjects.Components.Mobs
     [RegisterComponent]
     public class MindComponent : Component, IExamine
     {
-        [DataField("show_examine_info")]
-        private bool _showExamineInfo;
+        //[DataField("show_examine_info")]
+        //private bool _showExamineInfo;
 
         /// <inheritdoc />
         public override string Name => "Mind";

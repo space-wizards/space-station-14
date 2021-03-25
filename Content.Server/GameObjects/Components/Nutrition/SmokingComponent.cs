@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Shared.GameObjects.Components;
@@ -47,8 +47,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
         /// For a regular cigar, the temp approaches around 400°C or 580°C
         /// dependant on where you measure.
         /// </summary>
-        [ViewVariables] [DataField("temperature")]
-        private float _temperature = 673.15f;
+        //[ViewVariables] [DataField("temperature")]
+        //private float _temperature = 673.15f;
 
         [ViewVariables]
         private SharedBurningStates CurrentState
