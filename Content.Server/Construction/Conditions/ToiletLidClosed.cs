@@ -12,7 +12,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class ToiletLidClosed : IEdgeCondition
+    public class ToiletLidClosed : IGraphCondition
     {
         public async Task<bool> Condition(IEntity entity)
         {

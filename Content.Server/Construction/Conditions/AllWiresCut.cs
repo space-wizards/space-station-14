@@ -13,7 +13,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class AllWiresCut : IEdgeCondition
+    public class AllWiresCut : IGraphCondition
     {
         [DataField("value")] public bool Value { get; private set; } = true;
 
