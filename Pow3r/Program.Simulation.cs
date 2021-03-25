@@ -176,7 +176,7 @@ namespace Pow3r
                 EndMainMenuBar();
             }
 
-            SetNextWindowSize(new Vector2(100, 120));
+            SetNextWindowSize(new Vector2(100, 150));
 
             Begin("CreateButtons",
                 ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoResize);
@@ -194,6 +194,11 @@ namespace Pow3r
             if (Button("Network"))
             {
                 _networks.Add(new Network(_nextId++));
+            }
+
+            if (Button("Battery"))
+            {
+                _batteries.Add(new Battery(_nextId++));
             }
 
             Checkbox("Paused", ref _paused);
@@ -218,13 +223,28 @@ namespace Pow3r
                 if (Button("Delete"))
                 {
                     _remQueue.Enqueue(network);
+
+                    if (_linking == network)
+                    {
+                        _linking = null;
+                    }
                 }
 
                 SameLine();
 
-                if (Button("Link..."))
+                if (_linking != null)
                 {
-                    _linking = network;
+                    if (_linking == network && Button("Cancel"))
+                    {
+                        _linking = null;
+                    }
+                }
+                else
+                {
+                    if (Button("Link..."))
+                    {
+                        _linking = network;
+                    }
                 }
 
                 End();
@@ -256,13 +276,15 @@ namespace Pow3r
                     {
                         _linking.Loads.Add(load);
                         _linking = null;
+                        RefreshLinks();
                     }
                 }
                 else
                 {
-                    if (Button("Unlink"))
+                    if (load.LinkedNetwork != null && Button("Unlink"))
                     {
-                        _networks.ForEach(n => n.Loads.Remove(load));
+                        load.LinkedNetwork.Loads.Remove(load);
+                        load.LinkedNetwork = null;
                     }
                 }
 
@@ -298,13 +320,78 @@ namespace Pow3r
                     {
                         _linking.Supplies.Add(supply);
                         _linking = null;
+                        RefreshLinks();
                     }
                 }
                 else
                 {
-                    if (Button("Unlink"))
+                    if (supply.LinkedNetwork != null && Button("Unlink"))
                     {
-                        _networks.ForEach(n => n.Supplies.Remove(supply));
+                        supply.LinkedNetwork.Supplies.Remove(supply);
+                        supply.LinkedNetwork = null;
+                    }
+                }
+
+                End();
+            }
+
+            foreach (var battery in _batteries)
+            {
+                Begin($"Battery##Bat{battery.Id}");
+
+                Checkbox("Enabled", ref battery.Enabled);
+                SliderFloat("Available", ref battery.MaxSupply, 0, 1000, "%.0f W");
+                SliderFloat("Ramp", ref battery.SupplyRampRate, 0, 100, "%.0f W");
+                SliderFloat("Tolerance", ref battery.SupplyRampTolerance, 0, 100, "%.0f W");
+
+                battery.CurrentWindowPos = CalcWindowCenter();
+
+                Text($"Ramp Position: {battery.SupplyRampPosition:N1}");
+
+                PlotLines("", ref battery.SuppliedPowerData[0], MaxTickData, _tickDataIdx + 1,
+                    $"{battery.CurrentSupply:N1} W",
+                    0, 1000, new Vector2(250, 150));
+
+                if (Button("Delete"))
+                {
+                    _remQueue.Enqueue(battery);
+                }
+
+                SameLine();
+                if (_linking != null)
+                {
+                    if (battery.LinkedNetworkLoading == null && Button("Link as load"))
+                    {
+                        _linking.BatteriesLoading.Add(battery);
+                        _linking = null;
+                        RefreshLinks();
+                    }
+                    else
+                    {
+                        SameLine();
+                        if (battery.LinkedNetworkSupplying == null && Button("Link as supply"))
+                        {
+                            _linking.BatteriesSupplying.Add(battery);
+                            _linking = null;
+                            RefreshLinks();
+                        }
+                    }
+                }
+                else
+                {
+                    if (battery.LinkedNetworkLoading != null && Button("Unlink loading"))
+                    {
+                        battery.LinkedNetworkLoading.BatteriesLoading.Remove(battery);
+                        battery.LinkedNetworkLoading = null;
+                    }
+                    else
+                    {
+                        SameLine();
+                        if (battery.LinkedNetworkSupplying != null && Button("Unlink supplying"))
+                        {
+                            battery.LinkedNetworkSupplying.BatteriesSupplying.Remove(battery);
+                            battery.LinkedNetworkSupplying = null;
+                        }
                     }
                 }
 
@@ -324,6 +411,16 @@ namespace Pow3r
                 foreach (var load in network.Loads)
                 {
                     bgDrawList.AddLine(network.CurrentWindowPos, load.CurrentWindowPos, CvtColor(Color.Red), 3);
+                }
+
+                foreach (var battery in network.BatteriesLoading)
+                {
+                    bgDrawList.AddLine(network.CurrentWindowPos, battery.CurrentWindowPos, CvtColor(Color.Purple), 3);
+                }
+
+                foreach (var battery in network.BatteriesSupplying)
+                {
+                    bgDrawList.AddLine(network.CurrentWindowPos, battery.CurrentWindowPos, CvtColor(Color.Cyan), 3);
                 }
             }
 
@@ -350,6 +447,12 @@ namespace Pow3r
                         _loads.Remove(l);
                         _networks.ForEach(n => n.Loads.Remove(l));
                         break;
+
+                    case Battery b:
+                        _batteries.Remove(b);
+                        _networks.ForEach(n => n.BatteriesLoading.Remove(b));
+                        _networks.ForEach(n => n.BatteriesSupplying.Remove(b));
+                        break;
                 }
             }
         }
@@ -358,13 +461,18 @@ namespace Pow3r
         {
             public readonly int Id;
 
+            // == Static parameters ==
             public bool Enabled = true;
             public float MaxSupply;
 
             // Actual power supplied last network update.
-            public float CurrentSupply;
             public float SupplyRampRate;
             public float SupplyRampTolerance;
+
+            // == Runtime parameters ==
+            public Network LinkedNetwork;
+
+            public float CurrentSupply;
 
             // In-tick max supply thanks to ramp. Used during calculations.
             public float EffectiveMaxSupply;
@@ -384,9 +492,16 @@ namespace Pow3r
         private sealed class Load
         {
             public readonly int Id;
+
+            // == Static parameters ==
             public bool Enabled = true;
             public float DesiredPower;
+
+            // == Runtime parameters ==
+            public Network LinkedNetwork;
             public float ReceivingPower;
+
+            // == Display ==
             public Vector2 CurrentWindowPos;
             public readonly float[] ReceivedPowerData = new float[MaxTickData];
 
@@ -396,17 +511,28 @@ namespace Pow3r
             }
         }
 
-        public sealed class Battery
+        private sealed class Battery
         {
             public readonly int Id;
 
+            // == Static parameters ==
             public bool Enabled;
             public float Capacity;
             public float MaxPassthrough;
             public float MaxChargeRate;
             public float MaxSupply;
-            public float RampTolerance;
-            public float RampRate;
+            public float SupplyRampTolerance;
+            public float SupplyRampRate;
+
+            // == Runtime parameters ==
+            public Network LinkedNetworkLoading;
+            public Network LinkedNetworkSupplying;
+            public float SupplyRampPosition;
+            public float CurrentSupply;
+
+            // == Display ==
+            public Vector2 CurrentWindowPos;
+            public readonly float[] SuppliedPowerData = new float[MaxTickData];
 
             public Battery(int id)
             {
@@ -419,9 +545,12 @@ namespace Pow3r
             public readonly int Id;
 
             public readonly List<Supply> Supplies = new();
+
             public readonly List<Load> Loads = new();
+
             // "Loading" means the network is connected to the INPUT port of the battery.
             public readonly List<Battery> BatteriesLoading = new();
+
             // "Supplying" means the network is connected to the OUTPUT port of the battery.
             public readonly List<Battery> BatteriesSupplying = new();
             public Vector2 CurrentWindowPos;
@@ -472,8 +601,8 @@ namespace Pow3r
                     {
                         MaxSupply = x.MaxSupply,
                         Enabled = x.Enabled,
-                        SupplyRampRate = x.RampRate,
-                        SupplyRampTolerance = x.RampTolerance
+                        SupplyRampRate = x.SupplyRampRate,
+                        SupplyRampTolerance = x.SupplyRampTolerance
                     });
 
             var tempBatteries = dat.Batteries.ToDictionary(x => x.Id,
@@ -483,8 +612,8 @@ namespace Pow3r
                     Capacity = x.Capacity,
                     Enabled = x.Enabled,
                     MaxSupply = x.MaxSupply,
-                    RampRate = x.RampRate,
-                    RampTolerance = x.RampTolerance,
+                    SupplyRampRate = x.RampRate,
+                    SupplyRampTolerance = x.RampTolerance,
                     MaxChargeRate = x.MaxChargeRate
                 });
 
@@ -501,6 +630,8 @@ namespace Pow3r
                 network.BatteriesSupplying.AddRange(n.BatteriesSupplying.Select(s => tempBatteries[s]));
                 return network;
             }));
+
+            RefreshLinks();
         }
 
         private void SaveToDisk()
@@ -531,8 +662,8 @@ namespace Pow3r
                     Id = s.Id,
                     Enabled = s.Enabled,
                     MaxSupply = s.MaxSupply,
-                    RampRate = s.SupplyRampRate,
-                    RampTolerance = s.SupplyRampTolerance
+                    SupplyRampRate = s.SupplyRampRate,
+                    SupplyRampTolerance = s.SupplyRampTolerance
                 }).ToList(),
 
                 Batteries = _batteries.Select(b => new DiskBattery
@@ -542,13 +673,42 @@ namespace Pow3r
                     Capacity = b.Capacity,
                     MaxPassthrough = b.MaxPassthrough,
                     MaxSupply = b.MaxSupply,
-                    RampRate = b.RampRate,
-                    RampTolerance = b.RampTolerance,
+                    RampRate = b.SupplyRampRate,
+                    RampTolerance = b.SupplyRampTolerance,
                     MaxChargeRate = b.MaxChargeRate
                 }).ToList()
             };
 
             File.WriteAllBytes("data.json", JsonSerializer.SerializeToUtf8Bytes(data, SerializerOptions));
+        }
+
+        // Link data is stored authoritatively on networks,
+        // but for easy access it is replicated into the linked components.
+        // This is updated here.
+        private void RefreshLinks()
+        {
+            foreach (var network in _networks)
+            {
+                foreach (var load in network.Loads)
+                {
+                    load.LinkedNetwork = network;
+                }
+
+                foreach (var supply in network.Supplies)
+                {
+                    supply.LinkedNetwork = network;
+                }
+
+                foreach (var battery in network.BatteriesLoading)
+                {
+                    battery.LinkedNetworkLoading = network;
+                }
+
+                foreach (var battery in network.BatteriesSupplying)
+                {
+                    battery.LinkedNetworkSupplying = network;
+                }
+            }
         }
 
         private sealed class DiskDat
@@ -575,8 +735,8 @@ namespace Pow3r
 
             public bool Enabled;
             public float MaxSupply;
-            public float RampTolerance;
-            public float RampRate;
+            public float SupplyRampTolerance;
+            public float SupplyRampRate;
         }
 
         private sealed class DiskBattery
@@ -598,8 +758,8 @@ namespace Pow3r
 
             public List<int> Loads;
             public List<int> Supplies;
-            public List<int> BatteriesLoading;
-            public List<int> BatteriesSupplying;
+            public List<int> BatteriesLoading = new();
+            public List<int> BatteriesSupplying = new();
         }
     }
 }
