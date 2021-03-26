@@ -1,0 +1,10 @@
+﻿- type: entityList
+  id: SurgeryCommandTools
+  entities:
+  - Cautery
+  - Drill
+  - Scalpel
+  - Retractor
+  - Hemostat
+  - Saw
+# - Drapes
