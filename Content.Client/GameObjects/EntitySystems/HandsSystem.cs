@@ -1,17 +1,18 @@
 using Content.Client.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
+using Robust.Shared.Containers;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
     internal sealed class HandsSystem : SharedHandsSystem
     {
-        public override void Update(float frameTime)
+        protected override void HandleContainerModified(ContainerModifiedMessage args)
         {
-            base.Update(frameTime);
-
-            foreach (var hands in ComponentManager.EntityQuery<HandsComponent>(false))
+            if (args.Container.Owner.TryGetComponent(out HandsComponent? hands))
             {
-                hands.RefreshHands(); //temp hack to fix updating container when containers change
+                hands.UpdateHandsSet();
+                hands.UpdateHandVisualizer();
+                hands.UpdateHandsGuiState();
             }
         }
     }

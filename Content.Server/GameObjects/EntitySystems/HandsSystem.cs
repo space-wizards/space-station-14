@@ -32,9 +32,6 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
-            SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
-
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(HandleSwapHands))
                 .Bind(ContentKeyFunctions.Drop, new PointerInputCmdHandler(HandleDrop))
@@ -51,7 +48,7 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        private void HandleContainerModified(ContainerModifiedMessage args)
+        protected override void HandleContainerModified(ContainerModifiedMessage args)
         {
             if (args.Container.Owner.TryGetComponent(out SharedHandsComponent? hands))
                 hands.Dirty();

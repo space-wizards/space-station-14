@@ -62,7 +62,7 @@ namespace Content.Shared.GameObjects.Components.Items
         /// </summary>
         [DataField("throwForceMultiplier")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ThrowForceMultiplier { get; set; } = 14f; //tuned so that a thrown item lands about under the player's cursor
+        public float ThrowForceMultiplier { get; set; } = 14f; //should be tuned so that a thrown item lands about under the player's cursor
 
         /// <summary>
         ///     Distance after which longer throw targets stop increasing throw impulse.
@@ -111,7 +111,7 @@ namespace Content.Shared.GameObjects.Components.Items
         private void RemoveHand(Hand hand)
         {
             DropHeldEntityToFloor(hand, intentionalDrop: false);
-            hand.Container.Shutdown();
+            hand.Container?.Shutdown();
             Hands.Remove(hand);
 
             if (ActiveHand == hand.Name)
@@ -326,7 +326,11 @@ namespace Content.Shared.GameObjects.Components.Items
             if (heldEntity == null)
                 return false;
 
-            if (!hand.Container.CanRemove(heldEntity))
+            var handContainer = hand.Container;
+            if (handContainer == null)
+                return false;
+
+            if (!handContainer.CanRemove(heldEntity))
                 return false;
 
             return true;
@@ -347,12 +351,16 @@ namespace Content.Shared.GameObjects.Components.Items
             if (heldEntity == null)
                 return;
 
+            var handContainer = hand.Container;
+            if (handContainer == null)
+                return;
+
             if (hand.Name == ActiveHand)
                 DeselectActiveHeldEntity();
 
-            if (!hand.Container.Remove(heldEntity))
+            if (!handContainer.Remove(heldEntity))
             {
-                Logger.Error($"{nameof(SharedHandsComponent)} on {Owner} could not remove {heldEntity} from {hand.Container}.");
+                Logger.Error($"{nameof(SharedHandsComponent)} on {Owner} could not remove {heldEntity} from {handContainer}.");
                 return;
             }
             OnHeldEntityRemovedFromHand(heldEntity, hand.ToHandState());
@@ -497,7 +505,11 @@ namespace Content.Shared.GameObjects.Components.Items
 
         protected bool CanInsertEntityIntoHand(Hand hand, IEntity entity)
         {
-            if (!hand.Container.CanInsert(entity))
+            var handContainer = hand.Container;
+            if (handContainer == null)
+                return false;
+
+            if (!handContainer.CanInsert(entity))
                 return false;
 
             return true;
@@ -513,9 +525,13 @@ namespace Content.Shared.GameObjects.Components.Items
 
         private void PutEntityIntoHand(Hand hand, IEntity entity)
         {
-            if (!hand.Container.Insert(entity))
+            var handContainer = hand.Container;
+            if (handContainer == null)
+                return;
+
+            if (!handContainer.Insert(entity))
             {
-                Logger.Error($"{nameof(SharedHandsComponent)} on {Owner} could not insert {entity} into {hand.Container}.");
+                Logger.Error($"{nameof(SharedHandsComponent)} on {Owner} could not insert {entity} into {handContainer}.");
                 return;
             }
 
@@ -724,12 +740,12 @@ namespace Content.Shared.GameObjects.Components.Items
         public HandLocation Location { get; set; }
 
         [ViewVariables]
-        public IContainer Container { get; }
+        public IContainer? Container { get; set; }
 
         [ViewVariables]
-        public IEntity? HeldEntity => Container.ContainedEntities.FirstOrDefault();
+        public IEntity? HeldEntity => Container?.ContainedEntities?.FirstOrDefault();
 
-        public Hand(string name, bool enabled, HandLocation location, IContainer container)
+        public Hand(string name, bool enabled, HandLocation location, IContainer? container)
         {
             Name = name;
             Enabled = enabled;

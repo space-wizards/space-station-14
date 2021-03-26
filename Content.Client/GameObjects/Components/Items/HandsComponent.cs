@@ -40,6 +40,58 @@ namespace Content.Client.GameObjects.Components.Items
             Gui.HandActivate += args => OnActivateInHand(args.HandUsed);
         }
 
+        public override void OnRemove()
+        {
+            Gui.Dispose();
+            base.OnRemove();
+        }
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        {
+            if (curState is not HandsComponentState state)
+                return;
+
+            Hands.Clear();
+
+            foreach (var handState in state.Hands)
+            {
+                var newHand = new Hand(handState.Name, handState.Enabled, handState.Location);
+                Hands.Add(newHand);
+            }
+            ActiveHand = state.ActiveHand;
+
+            UpdateHandsSet();
+            UpdateHandVisualizer();
+            UpdateHandsGuiState();
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+
+            switch (message)
+            {
+                case PlayerAttachedMsg:
+                    HandlePlayerAttachedMsg();
+                    break;
+                case PlayerDetachedMsg:
+                    HandlePlayerDetachedMsg();
+                    break;
+            }
+        }
+
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
+        {
+            base.HandleNetworkMessage(message, netChannel, session);
+
+            switch (message)
+            {
+                case AnimatePickupEntityMessage msg:
+                    HandleAnimatePickupEntityMessage(msg);
+                    break;
+            }
+        }
+
         private void OnHandClick(string handClicked)
         {
             if (!TryGetHand(handClicked, out var pressedHand))
@@ -84,68 +136,31 @@ namespace Content.Client.GameObjects.Components.Items
             SendNetworkMessage(new ActivateInHandMsg(activatedHand.Name));
         }
 
-        public override void OnRemove()
-        {
-            Gui.Dispose();
-            base.OnRemove();
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            if (curState is not HandsComponentState state)
-                return;
-
-            Hands.Clear();
-
-            var containerMan = Owner.EnsureComponentWarn<ContainerManagerComponent>();
-            foreach (var handState in state.Hands)
-            {
-                if (!containerMan.TryGetContainer(handState.Name, out var container)) //ContainerManagerComponent may not have been updated by the server yet.
-                    continue;
-
-                var newHand = new Hand(handState.Name, handState.Enabled, handState.Location, container);
-                Hands.Add(newHand);
-            }
-            ActiveHand = state.ActiveHand;
-
-            RefreshHands();
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case PlayerAttachedMsg:
-                    HandlePlayerAttachedMsg();
-                    break;
-                case PlayerDetachedMsg:
-                    HandlePlayerDetachedMsg();
-                    break;
-            }
-        }
-
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
-        {
-            base.HandleNetworkMessage(message, netChannel, session);
-
-            switch (message)
-            {
-                case AnimatePickupEntityMessage msg:
-                    HandleAnimatePickupEntityMessage(msg);
-                    break;
-            }
-        }
-
         /// <summary>
-        ///     Updates the hands gui and visualizer.
+        ///     
         /// </summary>
-        public void RefreshHands()
+        public void UpdateHandsSet()
+        {
+            var containerMan = Owner.EnsureComponentWarn<ContainerManagerComponent>();
+            foreach (var hand in Hands)
+            {
+                if (hand.Container == null)
+                {
+                    containerMan.TryGetContainer(hand.Name, out var container);
+                    hand.Container = container;
+                }
+            }
+        }
+
+        public void UpdateHandVisualizer()
         {
             RemoveHandLayers();
             MakeHandLayers();
-            SetGuiState();
+        }
+
+        public void UpdateHandsGuiState()
+        {
+            Gui.SetState(GetHandsGuiState());
         }
 
         private void HandleAnimatePickupEntityMessage(AnimatePickupEntityMessage msg)
@@ -214,11 +229,6 @@ namespace Content.Client.GameObjects.Components.Items
                 }
                 _handLayers.Add(key);
             }
-        }
-
-        private void SetGuiState()
-        {
-            Gui.SetState(GetHandsGuiState());
         }
 
         private HandsGuiState GetHandsGuiState()
