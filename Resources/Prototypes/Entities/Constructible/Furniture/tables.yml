@@ -1,12 +1,12 @@
 ﻿- type: entity
   id: TableBase
-  name: "table"
+  parent: BaseConstructible
+  name: table
   description: A square piece of metal standing on four metal legs.
   abstract: true
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Clickable
+  - type: Damageable
+    resistances: metallicResistances
   - type: PlaceableSurface
   - type: Sprite
     netsync: false
@@ -16,16 +16,6 @@
   - type: IconSmooth
     key: state
     base: state_
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      layer:
-      - VaultImpassable
-      mask:
-      - Impassable
-  - type: SnapGrid
-    offset: Center
   - type: Climbable
 
 - type: entity
@@ -100,8 +90,6 @@
     sprite: Constructible/Structures/Tables/bar.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/bar.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -134,8 +122,6 @@
     sprite: Constructible/Structures/Tables/metal.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/metal.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -162,8 +148,6 @@
     sprite: Constructible/Structures/Tables/reinforced.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/reinforced.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -193,8 +177,6 @@
     sprite: Constructible/Structures/Tables/glass.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/glass.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -224,8 +206,6 @@
     sprite: Constructible/Structures/Tables/r_glass.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/r_glass.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -258,8 +238,6 @@
     sprite: Constructible/Structures/Tables/wood.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/wood.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -289,8 +267,6 @@
     sprite: Constructible/Structures/Tables/carpet.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/carpet.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -323,8 +299,6 @@
     sprite: Constructible/Structures/Tables/stone.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/stone.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -346,8 +320,6 @@
     sprite: Constructible/Structures/Tables/debug.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/debug.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:

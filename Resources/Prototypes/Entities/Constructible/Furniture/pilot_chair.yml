@@ -1,15 +1,22 @@
 - type: entity
-  name: pilot chair
-  description: The driver seat of a prestigious battle cruiser.
   id: PilotSeatChair
-  placement:
-    mode: SnapgridCenter
+  parent: BaseConstructible
+  name: pilot seat
+  description: The pilot seat of a prestigious battle cruiser.
   components:
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: shuttle_chair
   - type: Physics
-  - type: Clickable
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
   - type: InteractionOutline
   - type: Damageable
     resistances: metallicResistances

@@ -1,10 +1,13 @@
 - type: entity
   name: bed
   id: Bed
+  parent: BaseConstructible
   description: This is used to lie in, sleep in or strap on.
   components:
-  - type: Clickable
-  - type: InteractionOutline
+  # So that you can put bedsheets on beds again. Would be cool to have a tag
+  # for this so that only bedsheets can be placed.
+  - type: PlaceableSurface
+    placeCentered: true
   - type: Physics
     mass: 25
     bodyType: Static
@@ -13,8 +16,6 @@
         !type:PhysShapeAabb
           bounds: "-0.45, -0.45, 0.05, 0.45"
       mask:
-      - Impassable
-      - VaultImpassable
       - SmallImpassable
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
@@ -32,5 +33,11 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  placement:
-    mode: SnapgridCenter
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+          MaterialCloth1:
+            min: 1
+            max: 1

@@ -887,7 +887,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 106
-  type: WeldingFuelTank
+  type: WeldingFuelTankFull
   components:
   - rot: 1.5707963705062866 rad
     pos: -1.5,-11.5
@@ -18076,7 +18076,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1543
-  type: WeldingFuelTank
+  type: WeldingFuelTankFull
   components:
   - pos: 33.5,12.5
     parent: 853
@@ -24482,21 +24482,21 @@ entities:
     parent: 853
     type: Transform
 - uid: 2439
-  type: WeldingFuelTank
+  type: WeldingFuelTankFull
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,11.5
     parent: 853
     type: Transform
 - uid: 2440
-  type: WeldingFuelTank
+  type: WeldingFuelTankFull
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 35.5,-4.5
     parent: 853
     type: Transform
 - uid: 2441
-  type: WeldingFuelTank
+  type: WeldingFuelTankFull
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,-9.5

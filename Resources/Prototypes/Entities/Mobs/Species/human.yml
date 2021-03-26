@@ -127,9 +127,9 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
+      - SmallImpassable
       layer:
       - Opaque
-      - MobImpassable
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true

@@ -6,10 +6,12 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Anchorable
+    snap: true
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    bodyType: Static
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -22,7 +24,6 @@
     sprite: Constructible/Misc/furniture.rsi
   - type: Strap
     position: Stand
-  - type: Anchorable
   - type: Pullable
   - type: Damageable
     resistances: metallicResistances
@@ -86,7 +87,6 @@
   components:
   - type: Sprite
     state: bar_stool
-    color: "white"
   - type: Physics
     fixtures:
     - shape:

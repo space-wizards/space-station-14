@@ -1,7 +1,8 @@
 - type: entity
   id: Barricade
+  parent: BaseConstructible
+  name: barricade
   components:
-  - type: Clickable
   - type: InteractionOutline
   - type: Construction
     graph: barricade
@@ -10,12 +11,9 @@
     sprite: Constructible/Structures/barricades.rsi
     state: barricadewooden
   - type: Physics
-    mass: 75
-    bodyType: Static
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+        !type:PhysShapeAabb {}
       layer:
       - Opaque
       - Impassable
@@ -50,8 +48,3 @@
       normalState: 1
       Sprite:
         drawdepth: Overlays
-  - type: SnapGrid
-    offset: Edge
-  placement:
-    snap:
-    - Wall
