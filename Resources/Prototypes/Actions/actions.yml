@@ -1,4 +1,25 @@
 ﻿- type: action
+  actionType: CombatMode
+  icon: Interface/Actions/harm.png
+  name: "[color=red]Combat Mode[/color]"
+  description: "Enter combat mode."
+  filters:
+    - human
+  behaviorType: Toggle
+  behavior: !type:CombatMode
+
+- type: action
+  actionType: Disarm
+  icon: Interface/Actions/disarm.png
+  name: "[color=red]Disarm[/color]"
+  description: "Attempt to [color=red]disarm[/color] someone."
+  filters:
+    - human
+  behaviorType: TargetEntity
+  repeat: true
+  behavior: !type:DisarmAction { }
+
+- type: action
   actionType: HumanScream
   icon: Interface/Actions/scream.png
   name: "Scream"
@@ -21,17 +42,6 @@
       - /Audio/Voice/Human/femalescream_4.ogg
       - /Audio/Voice/Human/femalescream_5.ogg
     wilhelm: /Audio/Voice/Human/wilhelm_scream.ogg
-
-- type: action
-  actionType: Disarm
-  icon: Interface/Actions/disarm.png
-  name: "[color=red]Disarm[/color]"
-  description: "Attempt to [color=red]disarm[/color] someone."
-  filters:
-    - human
-  behaviorType: TargetEntity
-  repeat: true
-  behavior: !type:DisarmAction { }
 
 - type: action
   actionType: GhostBoo
