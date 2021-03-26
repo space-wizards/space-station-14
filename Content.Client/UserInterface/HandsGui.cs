@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.GameObjects.Components.Items;
@@ -52,9 +52,9 @@ namespace Content.Client.UserInterface
                     }),
                 }
             });
-            _leftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
-            _middleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
-            _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
+            _leftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l_no_letter.png");
+            _middleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l_no_letter.png");
+            _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r_no_letter.png");
         }
 
         private Texture HandTexture(HandLocation location)
