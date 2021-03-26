@@ -23,7 +23,7 @@ namespace Content.Shared.GameObjects.Components.Items
 
         public sealed override uint? NetID => ContentNetIDs.HANDS;
 
-        public event Action? OnItemChanged;
+        public event Action? OnItemChanged; //TODO: Remove
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? ActiveHand
@@ -745,7 +745,7 @@ namespace Content.Shared.GameObjects.Components.Items
         [ViewVariables]
         public IEntity? HeldEntity => Container?.ContainedEntities?.FirstOrDefault();
 
-        public Hand(string name, bool enabled, HandLocation location, IContainer? container)
+        public Hand(string name, bool enabled, HandLocation location, IContainer? container = null)
         {
             Name = name;
             Enabled = enabled;

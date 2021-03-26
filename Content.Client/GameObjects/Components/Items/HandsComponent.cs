@@ -137,7 +137,7 @@ namespace Content.Client.GameObjects.Components.Items
         }
 
         /// <summary>
-        ///     
+        ///     Updates the containers of each hand, in case the hand of a container was not synced when the component state was received.
         /// </summary>
         public void UpdateHandsSet()
         {
@@ -154,8 +154,8 @@ namespace Content.Client.GameObjects.Components.Items
 
         public void UpdateHandVisualizer()
         {
-            RemoveHandLayers();
-            MakeHandLayers();
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                appearance.SetData(HeldItemsVisuals.VisualState, GetHeldItemVisualState());
         }
 
         public void UpdateHandsGuiState()
@@ -181,56 +181,6 @@ namespace Content.Client.GameObjects.Components.Items
             Gui.Visible = false;
         }
 
-        private List<string> _handLayers = new(); //TODO: Replace with visualizer
-
-        private void RemoveHandLayers() //TODO: Replace with visualizer
-        {
-            if (_sprite == null)
-                return;
-
-            foreach (var layerKey in _handLayers)
-            {
-                var layer = _sprite.LayerMapGet(layerKey);
-                _sprite.RemoveLayer(layer);
-                _sprite.LayerMapRemove(layerKey);
-            }
-            _handLayers.Clear();
-        }
-
-        private void MakeHandLayers() //TODO: Replace with visualizer
-        {
-            if (_sprite == null)
-                return;
-
-            foreach (var hand in ReadOnlyHands)
-            {
-                var key = $"hand-{hand.Name}";
-                _sprite.LayerMapReserveBlank(key);
-
-                var heldEntity = hand.HeldEntity;
-                if (heldEntity == null || !heldEntity.TryGetComponent(out ItemComponent? item))
-                    continue;
-
-                var maybeInHands = item.GetInHandStateInfo(hand.Location);
-                if (maybeInHands == null)
-                    continue;
-
-                var (rsi, state, color) = maybeInHands.Value;
-
-                if (rsi == null)
-                {
-                    _sprite.LayerSetVisible(key, false);
-                }
-                else
-                {
-                    _sprite.LayerSetColor(key, color);
-                    _sprite.LayerSetVisible(key, true);
-                    _sprite.LayerSetState(key, state, rsi);
-                }
-                _handLayers.Add(key);
-            }
-        }
-
         private HandsGuiState GetHandsGuiState()
         {
             var handStates = new List<GuiHand>();
@@ -241,6 +191,29 @@ namespace Content.Client.GameObjects.Components.Items
                 handStates.Add(handState);
             }
             return new HandsGuiState(handStates, ActiveHand);
+        }
+
+        private HeldItemsVisualState GetHeldItemVisualState() //TODO: update this to use new methods with updated ItemComponent
+        {
+            var itemStates = new List<ItemVisualState>();
+            foreach (var hand in ReadOnlyHands)
+            {
+                var heldEntity = hand.HeldEntity;
+                if (heldEntity == null)
+                    continue;
+
+                if (!heldEntity.TryGetComponent(out ItemComponent? item))
+                    continue;
+
+                var itemData = item.GetInHandStateInfo(hand.Location);
+                if (itemData == null)
+                    continue;
+
+                var (rsi, state, color) = itemData.Value;
+
+                itemStates.Add(new ItemVisualState(rsi, state.Name, color));
+            }
+            return new HeldItemsVisualState(itemStates);
         }
     }
 }
