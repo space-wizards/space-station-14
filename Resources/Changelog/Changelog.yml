@@ -636,3 +636,9 @@ Entries:
       would close all firelocks except one, by the way.', type: Fix}
   id: 115
   time: '2021-03-25T01:03:49.353117+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: You can anchor and rotate a lot more things, type: Add}
+  - {message: Some unused furniture sprites, type: Remove}
+  id: 116
+  time: '2021-03-26T01:51:26.0000000+00:00'
