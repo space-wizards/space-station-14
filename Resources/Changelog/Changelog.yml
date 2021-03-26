@@ -648,3 +648,8 @@ Entries:
     type: Fix}
   id: 117
   time: '2021-03-26T01:52:27.0000000+00:00'
+- author: drongood12
+  changes:
+  - {message: add linearDamping and angularDamping for projectiles, type: Add}
+  id: 118
+  time: '2021-03-26T01:54:07.0000000+00:00'
