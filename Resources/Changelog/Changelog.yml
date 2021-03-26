@@ -653,3 +653,14 @@ Entries:
   - {message: add linearDamping and angularDamping for projectiles, type: Add}
   id: 118
   time: '2021-03-26T01:54:07.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Completely redid the HUD inventory., type: Tweak}
+  - {message: 'Added an on-HUD inventory, using the same hotkey.', type: Add}
+  - {message: Nuked the inventory popup., type: Remove}
+  - {message: Replaced the inventory slot icons and the disarm icon., type: Tweak}
+  - {message: 'Combat mode is now an action, rather than its own button.', type: Tweak}
+  - {message: 'The default actions (in order) are now: Combat Mode, Disarm, Scream.',
+    type: Tweak}
+  id: 119
+  time: '2021-03-26T15:23:12.0000000+00:00'

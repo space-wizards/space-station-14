@@ -7,8 +7,9 @@ namespace Content.Shared.Actions
     public enum ActionType : byte
     {
         Error,
-        HumanScream,
+        CombatMode,
         Disarm,
+        HumanScream,
         GhostBoo,
         DebugInstant,
         DebugToggle,
