@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Prototypes.EntitySet
+namespace Content.Shared.Prototypes.EntityList
 {
     [Prototype("entityList")]
     public class EntityListPrototype : IPrototype
@@ -19,16 +19,13 @@ namespace Content.Shared.Prototypes.EntitySet
         [field: DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
         public ImmutableList<string> EntityIds { get; } = ImmutableList<string>.Empty;
 
-        public IEnumerable<EntityPrototype> Entities
+        public IEnumerable<EntityPrototype> Entities(IPrototypeManager? prototypeManager = null)
         {
-            get
-            {
-                var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            prototypeManager ??= IoCManager.Resolve<IPrototypeManager>();
 
-                foreach (var entityId in EntityIds)
-                {
-                    yield return prototypeManager.Index<EntityPrototype>(entityId);
-                }
+            foreach (var entityId in EntityIds)
+            {
+                yield return prototypeManager.Index<EntityPrototype>(entityId);
             }
         }
     }
