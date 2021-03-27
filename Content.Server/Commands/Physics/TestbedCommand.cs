@@ -119,7 +119,7 @@ namespace Content.Server.Commands.Physics
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            var ground = entityManager.SpawnEntity("BlankEntity", new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
+            var ground = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
 
             var horizontal = new EdgeShape(new Vector2(-20, 0), new Vector2(20, 0));
             var horizontalFixture = new Fixture(ground, horizontal)
@@ -154,7 +154,7 @@ namespace Content.Server.Commands.Physics
                 {
                     var x = 0.0f;
 
-                    var box = entityManager.SpawnEntity("BlankEntity",
+                    var box = entityManager.SpawnEntity(null,
                         new MapCoordinates(new Vector2(xs[j] + x, 0.55f + 2.1f * i), mapId)).AddComponent<PhysicsComponent>();
 
                     box.BodyType = BodyType.Dynamic;
@@ -178,7 +178,8 @@ namespace Content.Server.Commands.Physics
         private void CreateCircleStack(MapId mapId)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var ground = entityManager.SpawnEntity("BlankEntity", new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
+
+            var ground = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
 
             var horizontal = new EdgeShape(new Vector2(-20, 0), new Vector2(20, 0));
             var horizontalFixture = new Fixture(ground, horizontal)
@@ -213,7 +214,7 @@ namespace Content.Server.Commands.Physics
                 {
                     var x = 0.0f;
 
-                    var box = entityManager.SpawnEntity("BlankEntity",
+                    var box = entityManager.SpawnEntity(null,
                         new MapCoordinates(new Vector2(xs[j] + x, 0.55f + 2.1f * i), mapId)).AddComponent<PhysicsComponent>();
 
                     box.BodyType = BodyType.Dynamic;
@@ -239,7 +240,7 @@ namespace Content.Server.Commands.Physics
 
             // Setup ground
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var ground = entityManager.SpawnEntity("BlankEntity", new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
+            var ground = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
 
             var horizontal = new EdgeShape(new Vector2(-40, 0), new Vector2(40, 0));
             var horizontalFixture = new Fixture(ground, horizontal)
@@ -267,7 +268,7 @@ namespace Content.Server.Commands.Physics
 
                 for (var j = i; j < count; ++j)
                 {
-                    var box = entityManager.SpawnEntity("BlankEntity", new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
+                    var box = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
                     box.BodyType = BodyType.Dynamic;
                     box.Owner.Transform.WorldPosition = y;
                     box.AddFixture(
