@@ -46,6 +46,7 @@
     state: chair
     color: "#8e9799"
   - type: Physics
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -68,6 +69,7 @@
     state: stool_base
     color: "#8e9799"
   - type: Physics
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -88,6 +90,7 @@
   - type: Sprite
     state: bar_stool
   - type: Physics
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -142,6 +145,7 @@
   - type: Sprite
     state: comfychair_preview
   - type: Physics
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
