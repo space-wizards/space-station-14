@@ -24,6 +24,20 @@
     - type: Sprite
       sprite: "Constructible/Misc/stock_parts.rsi"
       state: "0"
+    - type: Damageable
+      resistances: metallicResistances
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:PlaySoundCollectionBehavior
+          soundCollection: GlassBreak
+        - !type:ChangeConstructionNodeBehavior
+          node: monitorBroken
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
 
 - type: entity
   id: ComputerBroken
@@ -37,6 +51,21 @@
   - type: Sprite
     sprite: "Constructible/Power/computers.rsi"
     state: "broken"
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   id: ComputerBase
@@ -51,18 +80,6 @@
     node: computer
   - type: Computer
   - type: PowerReceiver
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:ChangeConstructionNodeBehavior
-        node: monitorBroken
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Sprite
     sprite: Constructible/Power/computers.rsi
     layers:
