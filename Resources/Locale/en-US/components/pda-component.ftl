@@ -2,10 +2,10 @@
 ### UI
 
 # For the PDA screen
-pda-component-ui-id = ID: [color=white]{$Owner}[/color], [color=yellow]{$JobTitle}[/color]
+comp-pda-ui = ID: [color=white]{$Owner}[/color], [color=yellow]{$JobTitle}[/color]
 
-pda-component-ui-id-blank = ID:
+comp-pda-ui-blank = ID:
 
-pda-component-ui-owner = Owner: [color=white]{$ActualOwnerName}[/color]
+comp-pda-ui-owner = Owner: [color=white]{$ActualOwnerName}[/color]
 
 

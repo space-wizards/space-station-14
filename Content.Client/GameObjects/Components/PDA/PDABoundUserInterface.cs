@@ -102,20 +102,20 @@ namespace Content.Client.GameObjects.Components.PDA
 
                     if (msg.PDAOwnerInfo.ActualOwnerName != null)
                     {
-                        _menu.PDAOwnerLabel.SetMarkup(Loc.GetString("pda-component-ui-owner",
+                        _menu.PDAOwnerLabel.SetMarkup(Loc.GetString("comp-pda-ui-owner",
                             ("ActualOwnerName", msg.PDAOwnerInfo.ActualOwnerName)));
                     }
 
                     
                     if (msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null)
                     {
-                        _menu.IDInfoLabel.SetMarkup(Loc.GetString("pda-component-ui-id", 
+                        _menu.IDInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui", 
                             ("Owner",msg.PDAOwnerInfo.IdOwner ?? "Unknown"),
                             ("JobTitle",msg.PDAOwnerInfo.JobTitle ?? "Unassigned")));
                     }
                     else
                     {
-                        _menu.IDInfoLabel.SetMarkup(Loc.GetString("pda-component-ui-id-blank"));
+                        _menu.IDInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui-blank"));
                     }
 
                     _menu.EjectIDButton.Visible = msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null;
