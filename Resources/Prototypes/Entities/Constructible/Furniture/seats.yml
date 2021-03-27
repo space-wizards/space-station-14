@@ -6,8 +6,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Anchorable
-    snap: true
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -48,6 +46,8 @@
   id: Chair
   parent: SeatBase
   components:
+  - type: Anchorable
+    snap: true
   - type: Rotatable
   - type: Sprite
     state: chair
@@ -72,6 +72,8 @@
   parent: SeatBase
   description: Apply butt.
   components:
+  - type: Anchorable
+    snap: true
   - type: Sprite
     state: stool_base
     color: "#8e9799"
@@ -94,6 +96,8 @@
   id: StoolBar
   parent: SeatBase
   components:
+  - type: Anchorable
+    snap: true
   - type: Sprite
     state: bar_stool
   - type: Physics
@@ -149,6 +153,8 @@
   parent: SeatBase
   description: It looks comfy.
   components:
+  - type: Anchorable
+    snap: true
   - type: Sprite
     state: comfychair_preview
   - type: Physics
