@@ -34,45 +34,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void HandleOpenInventoryMenu()
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity == null
-                || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out ClientInventoryComponent? clientInventory))
-            {
-                return;
-            }
-
-            var menu = clientInventory.InterfaceController.Window;
-
-            if (menu == null) return;
-
-            if (menu.IsOpen)
-            {
-                if (menu.IsAtFront())
-                {
-                    _setOpenValue(menu, false);
-                }
-                else
-                {
-                    menu.MoveToFront();
-                }
-            }
-            else
-            {
-                _setOpenValue(menu, true);
-            }
-        }
-
-        private void _setOpenValue(SS14Window menu, bool value)
-        {
-            if (value)
-            {
-                _gameHud.InventoryButtonDown = true;
-                menu.OpenCentered();
-            }
-            else
-            {
-                _gameHud.InventoryButtonDown = false;
-                menu.Close();
-            }
+            _gameHud.InventoryButtonDown = !_gameHud.InventoryButtonDown;
         }
     }
 }
