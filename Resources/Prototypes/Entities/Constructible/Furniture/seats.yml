@@ -35,11 +35,6 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound: /Audio/Effects/metalbreak.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 1
-            max: 1
 
 - type: entity
   name: chair
