@@ -12,10 +12,12 @@
           !type:PhysShapeAabb
             bounds: "-0.5,-0.25,0.5,0.25"
         mask:
-          - SmallImpassable
+          - MobImpassable
         layer:
           - Opaque
           - MobImpassable
+          - SmallImpassable
+          - VaultImpassable
     - type: InteractionOutline
     - type: Rotatable
     - type: Construction
