@@ -1,7 +1,7 @@
 # Empty mags
 - type: entity
   id: MagazinePistolBase
-  name: Pistol magazine (.35 auto)
+  name: pistol magazine (.35 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -26,7 +26,7 @@
 
 - type: entity
   id: MagazinePistolHCBase
-  name: Machine Pistol magazine (.35 auto)
+  name: machine pistol magazine (.35 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -127,7 +127,7 @@
 
 - type: entity
   id: MagazinePistol
-  name: Pistol magazine (.35 auto)
+  name: pistol magazine (.35 auto)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -138,7 +138,7 @@
 
 - type: entity
   id: MagazinePistolFlash
-  name: Pistol magazine (.35 auto flash)
+  name: pistol magazine (.35 auto flash)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -149,7 +149,7 @@
 
 - type: entity
   id: MagazinePistolHV
-  name: Pistol magazine (.35 auto high-velocity)
+  name: pistol magazine (.35 auto high-velocity)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -160,7 +160,7 @@
 
 - type: entity
   id: MagazinePistolPractice
-  name: Pistol magazine (.35 auto practice)
+  name: pistol magazine (.35 auto practice)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -171,7 +171,7 @@
 
 - type: entity
   id: MagazinePistolRubber
-  name: Pistol magazine (.35 auto rubber)
+  name: pistol magazine (.35 auto rubber)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -182,7 +182,7 @@
 
 - type: entity
   id: MagazineHCPistol
-  name: Machine Pistol magazine (.35 auto)
+  name: machine pistol magazine (.35 auto)
   parent: MagazinePistolHCBase
   components:
   - type: RangedMagazine
@@ -193,7 +193,7 @@
 
 - type: entity
   id: MagazineHCPistolHV
-  name: Machine Pistol magazine (.35 auto high-velocity)
+  name: machine pistol magazine (.35 auto high-velocity)
   parent: MagazinePistolHCBase
   components:
   - type: RangedMagazine
@@ -204,7 +204,7 @@
 
 - type: entity
   id: MagazineHCPistolPractice
-  name: Machine Pistol magazine (.35 auto practice)
+  name: machine pistol magazine (.35 auto practice)
   parent: MagazinePistolHCBase
   components:
   - type: RangedMagazine
@@ -215,7 +215,7 @@
 
 - type: entity
   id: MagazineHCPistolRubber
-  name: Machine Pistol magazine (.35 auto rubber)
+  name: machine pistol magazine (.35 auto rubber)
   parent: MagazinePistolHCBase
   components:
   - type: RangedMagazine
