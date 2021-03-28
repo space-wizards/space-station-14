@@ -38,7 +38,7 @@ namespace Content.Client.GameObjects.EntitySystems
             _combatModeSystem = Get<CombatModeSystem>();
         }
 
-        public override void Update(float frameTime)
+        public override void FrameUpdate(float frameTime)
         {
             base.Update(frameTime);
 
