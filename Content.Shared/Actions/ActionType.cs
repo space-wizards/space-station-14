@@ -11,7 +11,6 @@ namespace Content.Shared.Actions
         VoxScream,
         CombatMode,
         Disarm,
-        HumanScream,
         GhostBoo,
         DebugInstant,
         DebugToggle,
