@@ -679,3 +679,10 @@ Entries:
   - {message: Character UI open in center instead of top left, type: Tweak}
   id: 122
   time: '2021-03-28T02:40:23.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: 'More things break, anchor, move and collide properly', type: Add}
+  - {message: 'gas canisters shouldn''t yeet you anymore, and girders should be fixed',
+    type: Tweak}
+  id: 123
+  time: '2021-03-28T06:00:37.0000000+00:00'
