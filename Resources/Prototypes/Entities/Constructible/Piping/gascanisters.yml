@@ -1,16 +1,27 @@
 - type: entity
   abstract: true
   id: GasCanisterBase
-  placement:
-    mode: SnapgridCenter
+  parent: BaseConstructibleDynamic
   components:
-  - type: Clickable
   - type: InteractionOutline
-  - type: Physics
   - type: SnapGrid
     offset: Center
   - type: Sprite
   - type: Damageable
+  - type: Physics
+    mass: 25
+    bodyType: Dynamic
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.25,0.5,0.25"
+        mask:
+          - MobImpassable
+        layer:
+          - Opaque
+          - MobImpassable
+          - SmallImpassable
+          - VaultImpassable
   - type: Destructible
     thresholds:
     - trigger:
@@ -20,8 +31,6 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: GasCanister
-  - type: Anchorable
-  - type: Pullable
   - type: UserInterface
   - type: Appearance
 
@@ -48,23 +57,6 @@
     interfaces:
       - key: enum.GasCanisterUiKey.Key
         type: GasCanisterBoundUserInterface
-  - type: Physics
-    mass: 25
-    bodyType: Dynamic
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.25,0.5,0.25"
-        mask:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - SmallImpassable
-        layer:
-          - Opaque
-          - MobImpassable
-          - VaultImpassable
-          - SmallImpassable
 
 - type: entity
   parent: GasCanister

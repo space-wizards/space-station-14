@@ -1,47 +1,34 @@
 ﻿- type: entity
   id: ResearchAndDevelopmentServer
+  parent: BaseConstructibleDynamic
   name: "R&D server"
   description: 'Thats a R&D server.'
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Sprite
     sprite: Constructible/Power/server.rsi
     state: server
-  - type: Clickable
   - type: InteractionOutline
   - type: Physics
     mass: 25
     bodyType: Static
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4, -0.45, 0.45, 0.45"
+        !type:PhysShapeAabb {}
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+        - SmallImpassable
       layer:
-      - Opaque
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-  - type: SnapGrid
-    offset: Center
+        - Opaque
+        - MobImpassable
   - type: ResearchServer
   - type: TechnologyDatabase
   - type: PowerReceiver
     powerLoad: 200
     priority: Low
-  - type: Pullable
-  - type: Anchorable
 
 - type: entity
   id: BaseResearchAndDevelopmentPointSource
+  parent: BaseConstructibleDynamic
   name: "base R&D point source"
-  placement:
-    mode: SnapgridCenter
   # We should make this abstract once there are actual point sources.
   components:
   - type: Sprite
@@ -51,7 +38,6 @@
     - state: rndpointsource
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
-  - type: Clickable
   - type: InteractionOutline
   - type: Physics
     mass: 25
@@ -60,17 +46,10 @@
     - shape:
         !type:PhysShapeAabb {}
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+        - SmallImpassable
       layer:
-      - Opaque
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-  - type: SnapGrid
-    offset: Center
+        - Opaque
+        - MobImpassable
   - type: ResearchPointSource
     pointspersecond: 1000
     active: true
@@ -82,5 +61,3 @@
     visuals:
     - type: PowerDeviceVisualizer
   - type: PowerReceiver
-  - type: Pullable
-  - type: Anchorable
