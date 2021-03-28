@@ -29,6 +29,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
   id: TableDummy
   components:
   - type: Climbable
+  - type: Physics
 ";
 
         [Test]

@@ -31,7 +31,6 @@
       - SmallImpassable
       layer:
       - Opaque
-      - MobImpassable
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}

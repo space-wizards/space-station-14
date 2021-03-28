@@ -1,9 +1,9 @@
 - type: entity
   id: Firelock
+  parent: BaseConstructible
   name: firelock
   description: Apply crowbar.
   components:
-    - type: Clickable
     - type: InteractionOutline
     - type: Damageable
       resistances: metallicResistances
@@ -74,13 +74,9 @@
       fixVacuum: true
     - type: Occluder
       enabled: false
-    - type: SnapGrid
-      offset: Center
     - type: Construction
       graph: Firelock
       node: Firelock
-  placement:
-    mode: SnapgridCenter
 
 - type: entity
   id: FirelockGlass

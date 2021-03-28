@@ -13,8 +13,31 @@
     caps: Refillable
   - type: Sprite
     sprite: Objects/Consumable/Food/monkeycube.rsi
+  - type: Reactive
+    reactions:
+      - !type:AddToSolutionReaction
+        touch: true
+        ingestion: true
+        injection: true
+        reagents:
+          - chem.Water
   - type: Rehydratable
     target: MonkeyMob_Content
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: KinematicController
+    mass: 2.5
+    fixtures: # TODO: Make a second fixture.
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.4,0.3,0.4"
+        hard: false
+        layer:
+          - SmallImpassable
+        mask:
+          - Impassable
+          - MobImpassable
 
 - type: entity
   parent: PlushieCarp
@@ -29,5 +52,28 @@
         Quantity: 10
     maxVol: 11 # needs room for water
     caps: Refillable
+  - type: Reactive
+    reactions:
+    - !type:AddToSolutionReaction
+      touch: true
+      ingestion: true
+      injection: true
+      reagents:
+        - chem.Water
   - type: Rehydratable
     target: CarpMob_Content
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: KinematicController
+    mass: 2.5
+    fixtures: # TODO: Make a second fixture.
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        hard: false
+        layer:
+          - SmallImpassable
+        mask:
+          - Impassable
+          - MobImpassable

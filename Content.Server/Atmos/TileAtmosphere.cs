@@ -640,7 +640,7 @@ namespace Content.Server.Atmos
             // Can't process a tile without air
             if (Air == null)
             {
-                Excited = false;
+                _gridAtmosphereComponent.RemoveActiveTile(this);
                 return;
             }
 

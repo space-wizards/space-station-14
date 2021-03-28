@@ -1,9 +1,8 @@
 ﻿- type: entity
   id: LockerGeneric
+  parent: BaseConstructibleDynamic
   name: closet
   description: A standard-issue Nanotrasen storage unit.
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Sprite
     netsync: false
@@ -15,14 +14,12 @@
     - state: welded
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
-  - type: Clickable
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
     soundHit: /Audio/Effects/bang.ogg
   - type: InteractionOutline
   - type: Physics
-    mass: 50
-    bodyType: Dynamic
+    mass: 25
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -54,5 +51,3 @@
       state_open: generic_open
       state_closed: generic_door
   - type: LoopingSound
-  - type: Anchorable
-  - type: Pullable

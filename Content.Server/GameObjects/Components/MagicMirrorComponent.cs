@@ -7,6 +7,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Preferences.Appearance;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
@@ -17,6 +18,8 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(IActivate))]
     public class MagicMirrorComponent : SharedMagicMirrorComponent, IActivate
     {
+        [Dependency] private readonly SpriteAccessoryManager _spriteAccessoryManager = default!;
+
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MagicMirrorUiKey.Key);
 
         public override void Initialize()
@@ -39,7 +42,7 @@ namespace Content.Server.GameObjects.Components
             base.OnRemove();
         }
 
-        private static void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
             if (obj.Session.AttachedEntity == null)
             {
@@ -54,18 +57,23 @@ namespace Content.Server.GameObjects.Components
             switch (obj.Message)
             {
                 case HairSelectedMessage msg:
-                    var map =
-                        msg.IsFacialHair ? HairStyles.FacialHairStylesMap : HairStyles.HairStylesMap;
-                    if (!map.ContainsKey(msg.HairName))
+                    var cat = msg.IsFacialHair
+                        ? looks.CategoriesFacialHair
+                        : looks.CategoriesHair;
+
+                    if (!_spriteAccessoryManager.IsValidAccessoryInCategory(msg.HairId, cat))
                         return;
 
                     looks.Appearance = msg.IsFacialHair
-                        ? looks.Appearance.WithFacialHairStyleName(msg.HairName)
-                        : looks.Appearance.WithHairStyleName(msg.HairName);
+                        ? looks.Appearance.WithFacialHairStyleName(msg.HairId)
+                        : looks.Appearance.WithHairStyleName(msg.HairId);
 
                     break;
 
                 case HairColorSelectedMessage msg:
+                    if (msg.IsFacialHair ? !looks.CanColorFacialHair : !looks.CanColorHair)
+                        return;
+
                     var (r, g, b) = msg.HairColor;
                     var color = new Color(r, g, b);
 
@@ -105,9 +113,13 @@ namespace Content.Server.GameObjects.Components
             var msg = new MagicMirrorInitialDataMessage(
                 appearance.HairColor,
                 appearance.FacialHairColor,
-                appearance.HairStyleName,
-                appearance.FacialHairStyleName,
-                appearance.EyeColor);
+                appearance.HairStyleId,
+                appearance.FacialHairStyleId,
+                appearance.EyeColor,
+                looks.CategoriesHair,
+                looks.CategoriesFacialHair,
+                looks.CanColorHair,
+                looks.CanColorFacialHair);
 
             UserInterface?.SendMessage(msg, actor.playerSession);
         }

@@ -94,6 +94,10 @@ namespace Content.Server.Commands.Physics
                     SetupPlayer(mapId, shell, player, mapManager);
                     CreateCircleStack(mapId);
                     break;
+                case "pyramid":
+                    SetupPlayer(mapId, shell, player, mapManager);
+                    CreatePyramid(mapId);
+                    break;
                 default:
                     shell.WriteLine($"testbed {args[0]} not found!");
                     return;
@@ -115,7 +119,7 @@ namespace Content.Server.Commands.Physics
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            var ground = entityManager.SpawnEntity("BlankEntity", new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
+            var ground = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
 
             var horizontal = new EdgeShape(new Vector2(-20, 0), new Vector2(20, 0));
             var horizontalFixture = new Fixture(ground, horizontal)
@@ -150,7 +154,7 @@ namespace Content.Server.Commands.Physics
                 {
                     var x = 0.0f;
 
-                    var box = entityManager.SpawnEntity("BlankEntity",
+                    var box = entityManager.SpawnEntity(null,
                         new MapCoordinates(new Vector2(xs[j] + x, 0.55f + 2.1f * i), mapId)).AddComponent<PhysicsComponent>();
 
                     box.BodyType = BodyType.Dynamic;
@@ -175,8 +179,7 @@ namespace Content.Server.Commands.Physics
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            // TODO: Need a blank entity we can spawn for testbed.
-            var ground = entityManager.SpawnEntity("BlankEntity", new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
+            var ground = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
 
             var horizontal = new EdgeShape(new Vector2(-20, 0), new Vector2(20, 0));
             var horizontalFixture = new Fixture(ground, horizontal)
@@ -211,7 +214,7 @@ namespace Content.Server.Commands.Physics
                 {
                     var x = 0.0f;
 
-                    var box = entityManager.SpawnEntity("BlankEntity",
+                    var box = entityManager.SpawnEntity(null,
                         new MapCoordinates(new Vector2(xs[j] + x, 0.55f + 2.1f * i), mapId)).AddComponent<PhysicsComponent>();
 
                     box.BodyType = BodyType.Dynamic;
@@ -228,6 +231,56 @@ namespace Content.Server.Commands.Physics
                     };
                     box.AddFixture(fixture);
                 }
+            }
+        }
+
+        private void CreatePyramid(MapId mapId)
+        {
+            const byte count = 20;
+
+            // Setup ground
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var ground = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
+
+            var horizontal = new EdgeShape(new Vector2(-40, 0), new Vector2(40, 0));
+            var horizontalFixture = new Fixture(ground, horizontal)
+            {
+                CollisionLayer = (int) CollisionGroup.Impassable,
+                CollisionMask = (int) CollisionGroup.Impassable,
+                Hard = true
+            };
+
+            ground.AddFixture(horizontalFixture);
+
+            // Setup boxes
+            float a = 0.5f;
+            PolygonShape shape = new();
+            shape.SetAsBox(a, a);
+
+            var x = new Vector2(-7.0f, 0.75f);
+            Vector2 y;
+            Vector2 deltaX = new Vector2(0.5625f, 1.25f);
+            Vector2 deltaY = new Vector2(1.125f, 0.0f);
+
+            for (var i = 0; i < count; ++i)
+            {
+                y = x;
+
+                for (var j = i; j < count; ++j)
+                {
+                    var box = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
+                    box.BodyType = BodyType.Dynamic;
+                    box.Owner.Transform.WorldPosition = y;
+                    box.AddFixture(
+                        new Fixture(box, shape) {
+                            CollisionLayer = (int) CollisionGroup.Impassable,
+                            CollisionMask = (int) CollisionGroup.Impassable,
+                            Hard = true});
+                    box.Mass = 5.0f;
+                    y += deltaY;
+                }
+
+                x += deltaX;
             }
         }
     }
