@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction
 {
-    public interface IEdgeCondition
+    public interface IGraphCondition
     {
         Task<bool> Condition(IEntity entity);
         bool DoExamine(IEntity entity, FormattedMessage message, bool inExamineRange) { return false; }

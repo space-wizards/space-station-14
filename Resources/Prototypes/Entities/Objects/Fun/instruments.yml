@@ -228,3 +228,15 @@
     - type: Item
       size: 24
       sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+
+- type: entity
+  name: xylophone
+  parent: BaseHandheldInstrument
+  id: XylophoneInstrument
+  description: Rainbow colored glockenspiel.
+  components:
+  - type: Instrument
+    program: 13
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/otherinstruments.rsi
+    state: xylophone

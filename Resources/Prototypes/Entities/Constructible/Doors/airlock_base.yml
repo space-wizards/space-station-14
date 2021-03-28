@@ -1,9 +1,9 @@
 ﻿- type: entity
   id: Airlock
+  parent: BaseConstructible
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
-  - type: Clickable
   - type: RCDDeconstructWhitelist
   - type: InteractionOutline
   - type: Sprite
@@ -58,8 +58,6 @@
   - type: Airtight
     fixVacuum: true
   - type: Occluder
-  - type: SnapGrid
-    offset: Center
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -123,5 +121,3 @@
     node: assembly
   placement:
     mode: SnapgridCenter
-
-

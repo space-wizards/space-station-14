@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -82,23 +81,23 @@ namespace Content.Server.GameObjects.Components.Culinary
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            TryUseUtensil(eventArgs.User, eventArgs.Target);
-            return true;
+            return TryUseUtensil(eventArgs.User, eventArgs.Target);
         }
 
-        private void TryUseUtensil(IEntity user, IEntity? target)
+        private bool TryUseUtensil(IEntity user, IEntity? target)
         {
             if (target == null || !target.TryGetComponent(out FoodComponent? food))
             {
-                return;
+                return false;
             }
 
             if (!user.InRangeUnobstructed(target, popup: true))
             {
-                return;
+                return false;
             }
 
             food.TryUseFood(user, null, this);
+            return true;
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿- type: entity
-  parent: StorageTank
   id: WaterTank
+  parent: StorageTank
   name: water tank
   suffix: Empty
   description: "A water tank. It is used to store high amounts of water."
@@ -8,8 +8,6 @@
   - type: Sprite
     sprite: Constructible/Misc/tanks.rsi
     state: watertank
-  - type: Anchorable
-  - type: Pullable
 
 - type: entity
   parent: WaterTank

@@ -130,9 +130,6 @@ binds:
   type: State
   key: MouseRight
   canFocus: true
-- function: ToggleCombatMode
-  type: State
-  key: R
 - function: OpenCraftingMenu
   type: State
   key: G

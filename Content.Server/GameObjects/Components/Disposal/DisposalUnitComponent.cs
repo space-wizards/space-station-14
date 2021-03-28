@@ -131,13 +131,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalUnitUiKey.Key);
 
-        private DisposalUnitBoundUserInterfaceState? _lastUiState;
-
-        /// <summary>
-        ///     Store the translated state.
-        /// </summary>
-        private (PressureState State, string Localized) _locState;
-
         [DataField("air")]
         public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
 
@@ -328,33 +321,12 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateInterface();
         }
 
-        private DisposalUnitBoundUserInterfaceState GetInterfaceState()
+        private void UpdateInterface()
         {
             string stateString;
 
-            if (_locState.State != State)
-            {
-                stateString = Loc.GetString($"{State}");
-                _locState = (State, stateString);
-            }
-            else
-            {
-                stateString = _locState.Localized;
-            }
-
-            return new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
-        }
-
-        private void UpdateInterface()
-        {
-            var state = GetInterfaceState();
-
-            if (_lastUiState != null && _lastUiState.Equals(state))
-            {
-                return;
-            }
-
-            _lastUiState = state;
+            stateString = Loc.GetString($"{State}");
+            var state = new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
             UserInterface?.SetState(state);
         }
 
@@ -488,7 +460,11 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
             }
 
-            UpdateInterface();
+            // TODO: Ideally we'd just send the start and end and client could lerp as the bandwidth would be way lower
+            if (_pressure < 1.0f || oldPressure < 1.0f && _pressure >= 1.0f)
+            {
+                UpdateInterface();
+            }
         }
 
         private void PowerStateChanged(PowerChangedMessage args)
@@ -531,6 +507,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             UpdateVisualState();
+            UpdateInterface();
         }
 
         public override void OnRemove()

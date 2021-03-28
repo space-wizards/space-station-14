@@ -1,0 +1,46 @@
+- type: entity
+  id: BaseConstructible
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: SnapGrid
+    offset: Center
+  - type: Clickable
+  - type: Physics
+    bodyType: Static
+    mass: 50
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      layer:
+      - SmallImpassable
+      mask:
+      - Impassable
+  - type: Pullable
+
+- type: entity
+  # This means that it's not anchored on spawn.
+  id: BaseConstructibleDynamic
+  parent: BaseConstructible
+  abstract: true
+  components:
+# These might/might not be a good idea
+#  - type: MovedByPressure
+#  - type: DamageOnHighSpeedImpact
+#  - type: TileFrictionModifier
+#    modifier: 0.5
+  - type: Clickable
+  - type: Physics
+    bodyType: Dynamic
+    mass: 50
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      layer:
+      - SmallImpassable
+      mask:
+      - VaultImpassable
+  - type: Anchorable
+    snap: true
+  - type: Pullable

@@ -1,12 +1,10 @@
 ﻿# Vending machine descriptions are stored in vendingMachineInventory YAML files.
 - type: entity
   id: VendingMachine
+  parent: BaseConstructible
   name: vending machine
   abstract: true
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Clickable
   - type: InteractionOutline
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/empty.rsi
@@ -24,8 +22,6 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: SnapGrid
-    offset: Center
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -47,7 +43,7 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
-  - type: Pullable
+    snap: true
 
 - type: entity
   parent: VendingMachine
