@@ -1,6 +1,6 @@
 - type: entity
   id: Heater
-  name: Heater
+  name: heater
   description: Heats gas.
   placement:
     mode: SnapgridCenter

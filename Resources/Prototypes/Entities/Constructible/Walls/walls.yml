@@ -148,8 +148,9 @@
 
 - type: entity
   id: debug_wall
-  name: debug wall
+  name: wall
   parent: base_wall
+  suffix: DEBUG
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/debug.rsi

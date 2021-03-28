@@ -2,7 +2,7 @@
   id: SalternGenerator
   description: A high efficiency thermoelectric generator.
   parent: BaseGenerator
-  name: Generator
+  name: generator
   components:
   - type: PowerSupplier
     supplyRate: 30000
@@ -11,7 +11,7 @@
   id: SalternSmes
   description: A high-capacity superconducting magnetic energy storage (SMES) unit.
   parent: BaseSmes
-  name: Smes
+  name: smes
   components:
   - type: Battery
     maxCharge: 10000000
@@ -25,7 +25,7 @@
   id: SalternSubstation
   description: Reduces the voltage of electricity put into it.
   parent: BaseSubstation
-  name: Substation
+  name: substation
   components:
   - type: Battery
     maxCharge: 4000000
@@ -39,7 +39,7 @@
   id: SalternApc
   description: A control terminal for the area's electrical systems.
   parent: BaseApc
-  name: Apc
+  name: apc
   components:
   - type: Battery
     maxCharge: 12000

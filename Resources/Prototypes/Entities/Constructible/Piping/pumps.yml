@@ -31,11 +31,12 @@
     - type: PipeConnectorVisualizer
     - type: PumpVisualizer
   - type: PipeNetDevice
-  
+
 - type: entity
   parent: PumpBase
   id: DebugPressurePump
-  name: Debug Pressure Pump
+  name: pressure pump
+  suffix: DEBUG
   components:
   - type: NodeContainer
     nodes:

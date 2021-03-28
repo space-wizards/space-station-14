@@ -1,6 +1,6 @@
 - type: entity
   id: AMEJar
-  name: Antimatter Fuel Jar
+  name: AME fuel jar
   parent: BaseItem
   description: A hermetically sealed jar containing antimatter for use in an antimatter reactor.
   components:

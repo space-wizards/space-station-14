@@ -1,6 +1,6 @@
 - type: entity
   id: AMEPart
-  name: Antimatter Engine Part
+  name: AME engine part
   parent: BaseItem
   description: "A flatpack used for constructing an antimatter engine reactor.\nUse a multitool to unpack it."
   components:

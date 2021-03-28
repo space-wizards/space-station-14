@@ -1,7 +1,7 @@
 ﻿- type: entity
   abstract: true
   id: PipeBase
-  name: Pipe
+  name: pipe
   description: Holds gas.
   placement:
     mode: SnapgridCenter
@@ -56,7 +56,7 @@
       pipeDirection: Longitudinal
   - type: Icon
     state: pipeStraight
-    
+
 - type: entity
   parent: PipeBase
   id: PipeBend
@@ -69,7 +69,7 @@
       pipeDirection: SWBend
   - type: Icon
     state: pipeBend
-    
+
 - type: entity
   parent: PipeBase
   id: PipeTJunction
@@ -82,7 +82,7 @@
       pipeDirection: TSouth
   - type: Icon
     state: pipeTJunction
-    
+
 - type: entity
   parent: PipeBase
   id: PipeFourway

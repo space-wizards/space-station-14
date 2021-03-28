@@ -28,7 +28,7 @@
 - type: entity
   parent: GasCanisterBase
   id: GasCanister
-  name: Gas Canister
+  name: gas canister
   description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
   components:
   - type: Sprite
@@ -69,7 +69,7 @@
 - type: entity
   parent: GasCanister
   id: StorageCanister
-  name: Storage Canister
+  name: storage canister
   components:
     - type: Sprite
       sprite: Constructible/Atmos/canister.rsi
@@ -91,7 +91,7 @@
 - type: entity
   parent: GasCanister
   id: AirCanister
-  name: Air Canister
+  name: air canister
   components:
   - type: Sprite
     sprite: Constructible/Atmos/canister.rsi
@@ -107,7 +107,7 @@
 - type: entity
   parent: GasCanister
   id: OxygenCanister
-  name: Oxygen Canister
+  name: oxygen canister
   components:
   - type: Sprite
     sprite: Constructible/Atmos/canister.rsi
@@ -122,7 +122,7 @@
 - type: entity
   parent: GasCanister
   id: NitrogenCanister
-  name: Nitrogen Canister
+  name: nitrogen canister
   components:
     - type: Sprite
       sprite: Constructible/Atmos/canister.rsi
@@ -138,7 +138,7 @@
 - type: entity
   parent: GasCanister
   id: CarbonDioxideCanister
-  name: Carbon Dioxide Canister
+  name: carbon dioxide canister
   components:
     - type: Sprite
       sprite: Constructible/Atmos/canister.rsi
@@ -155,7 +155,7 @@
 - type: entity
   parent: GasCanister
   id: PlasmaCanister
-  name: Plasma Canister
+  name: plasma canister
   components:
     - type: Sprite
       sprite: Constructible/Atmos/canister.rsi
@@ -173,7 +173,7 @@
 - type: entity
   parent: GasCanister
   id: TritiumCanister
-  name: Tritium Canister
+  name: tritium canister
   components:
     - type: Sprite
       sprite: Constructible/Atmos/canister.rsi
@@ -192,7 +192,7 @@
 - type: entity
   parent: GasCanister
   id: WaterVaporCanister
-  name: Water Vapor Canister
+  name: water vapor canister
   components:
     - type: Sprite
       sprite: Constructible/Atmos/canister.rsi

@@ -34,7 +34,7 @@
 - type: entity
   parent: WireBase
   id: HVWire
-  name: HV Wire
+  name: HV wire
   description: "An orange high voltage power cable."
   components:
   - type: Sprite
@@ -72,7 +72,7 @@
 - type: entity
   parent: WireBase
   id: MVWire
-  name: MV Wire
+  name: MV wire
   description: "A medium voltage power cable."
   components:
   - type: Sprite
@@ -112,7 +112,7 @@
 - type: entity
   parent: WireBase
   id: ApcExtensionCable
-  name: Apc Extension Cable
+  name: LV wire
   description: "A cable used to connect machines to an APC." #ACPs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
   components:
   - type: Sprite

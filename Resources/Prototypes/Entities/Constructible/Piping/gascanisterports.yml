@@ -34,7 +34,7 @@
 - type: entity
   parent: GasCanisterPortBase
   id: GasCanisterPort
-  name: Gas Canister Port
+  name: gas canister port
   description: "Connect a gas canister here to release gasses into a system."
   components:
   - type: NodeContainer

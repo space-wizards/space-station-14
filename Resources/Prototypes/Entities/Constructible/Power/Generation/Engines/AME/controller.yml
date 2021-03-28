@@ -1,6 +1,6 @@
 - type: entity
   id: AMEController
-  name: AME Controller
+  name: AME controller
   description: "It's a controller for the antimatter engine."
   placement:
     mode: SnapgridCenter

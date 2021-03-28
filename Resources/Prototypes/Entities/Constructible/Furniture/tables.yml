@@ -313,8 +313,9 @@
 - type: entity
   id: TableDebug
   parent: TableBase
-  name: "debug table"
+  name: "table"
   description: PUT ON THEM CODERSOCKS!!
+  suffix: DEBUG
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/debug.rsi

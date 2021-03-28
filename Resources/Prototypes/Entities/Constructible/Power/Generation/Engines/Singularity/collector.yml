@@ -1,6 +1,6 @@
 - type: entity
   id: RadiationCollector
-  name: Radiation Collector
+  name: radiation collector
   description: A machine that collects Radiation and turns it into power.
   placement:
     mode: SnapgridCenter

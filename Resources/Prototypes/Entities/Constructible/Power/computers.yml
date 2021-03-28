@@ -252,7 +252,7 @@
 - type: entity
   id: ComputerSolarControl
   parent: ComputerBase
-  name: Solar Control Computer
+  name: solar control computer
   description: "A controller for solar panel arrays."
   components:
   - type: Appearance
