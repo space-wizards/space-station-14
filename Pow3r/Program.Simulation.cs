@@ -45,13 +45,17 @@ namespace Pow3r
             _loads.ForEach(l => l.ReceivingPower = 0);
             _supplies.ForEach(g => g.CurrentSupply = 0);
 
-            // Add up all loads and supplies in each network.
             foreach (var network in _networks)
             {
+                // Clear some stuff.
+                network.MetDemand = 0;
+
+                // Add up demands in network.
                 network.DemandTotal = network.Loads
                     .Where(c => c.Enabled)
                     .Sum(c => c.DesiredPower);
 
+                // Add up supplies in network.
                 var availableSupplySum = 0f;
                 var maxSupplySum = 0f;
                 foreach (var supply in network.Supplies)
@@ -70,61 +74,77 @@ namespace Pow3r
                 network.TheoreticalSupplyTotal = maxSupplySum;
             }
 
-            // Go over every network with supply to send power.
-            foreach (var network in _networks)
-            {
-                // Calculate power delivered.
-                var power = Math.Min(network.DemandTotal, network.AvailableSupplyTotal);
+            // Sort networks by tree height so that suppliers that have less possible loads go FIRST.
+            // Idea being that a backup generator on a small subnet should do more work
+            // so that a larger generator that covers more networks can put its power elsewhere.
+            var sortedByHeight = _networks.OrderBy(TotalSubLoadCount).ToList();
 
-                // Distribute load across supplies.
+            // Go over every network with supply to send power.
+            foreach (var network in sortedByHeight)
+            {
+                // Find all loads recursively, and sum them up.
+                var subNets = new List<Network>();
+                var totalDemand = 0f;
+                GetLoadingNetworksRecursively(network, subNets, ref totalDemand);
+
+                if (totalDemand == 0)
+                    continue;
+
+                // Calculate power delivered.
+                var power = Math.Min(totalDemand, network.AvailableSupplyTotal);
+
+                // Distribute load across supplies in network.
                 foreach (var supply in network.Supplies)
                 {
-                    if (supply.Enabled)
+                    if (!supply.Enabled)
+                        continue;
+
+                    if (supply.EffectiveMaxSupply != 0)
                     {
-                        if (supply.EffectiveMaxSupply != 0)
-                        {
-                            var ratio = supply.EffectiveMaxSupply / network.AvailableSupplyTotal;
+                        var ratio = supply.EffectiveMaxSupply / network.AvailableSupplyTotal;
 
-                            supply.CurrentSupply = ratio * power;
-                        }
-                        else
-                        {
-                            supply.CurrentSupply = 0;
-                        }
-
-                        if (supply.MaxSupply != 0)
-                        {
-                            var ratio = supply.MaxSupply / network.TheoreticalSupplyTotal;
-
-                            supply.SupplyRampTarget = ratio * network.DemandTotal;
-                        }
-                        else
-                        {
-                            supply.SupplyRampTarget = 0;
-                        }
+                        supply.CurrentSupply = ratio * power;
+                    }
+                    else
+                    {
+                        supply.CurrentSupply = 0;
                     }
 
-                    supply.SuppliedPowerData[_tickDataIdx] = supply.CurrentSupply;
+                    if (supply.MaxSupply != 0)
+                    {
+                        var ratio = supply.MaxSupply / network.TheoreticalSupplyTotal;
+
+                        supply.SupplyRampTarget = ratio * totalDemand;
+                    }
+                    else
+                    {
+                        supply.SupplyRampTarget = 0;
+                    }
                 }
 
-                // Distribute supply across loads.
+                // Distribute supply across subnet loads.
+                foreach (var subNet in subNets)
+                {
+                    var rem = subNet.RemainingDemand;
+                    var ratio = rem / totalDemand;
+
+                    subNet.MetDemand += ratio * power;
+                }
+            }
+
+            // Distribute power across loads in networks.
+            foreach (var network in _networks)
+            {
+                if (network.MetDemand == 0)
+                    continue;
+
                 foreach (var load in network.Loads)
                 {
-                    if (load.Enabled)
-                    {
-                        if (load.DesiredPower != 0)
-                        {
-                            var ratio = load.DesiredPower / network.DemandTotal;
+                    if (!load.Enabled)
+                        continue;
 
-                            load.ReceivingPower = ratio * power;
-                        }
-                        else
-                        {
-                            load.ReceivingPower = 0;
-                        }
-                    }
-
-                    load.ReceivedPowerData[_tickDataIdx] = load.ReceivingPower;
+                    var ratio = load.DesiredPower / network.DemandTotal;
+                    load.ReceivingPower = ratio * network.MetDemand;
                 }
             }
 
@@ -165,7 +185,49 @@ namespace Pow3r
                 }
             }
 
+            // Update tick history.
+            foreach (var load in _loads)
+            {
+                load.ReceivedPowerData[_tickDataIdx] = load.ReceivingPower;
+            }
+
+            foreach (var supply in _supplies)
+            {
+                supply.SuppliedPowerData[_tickDataIdx] = supply.CurrentSupply;
+            }
+
             _simTickTimes[_tickDataIdx] = (float) _simStopwatch.Elapsed.TotalMilliseconds;
+        }
+
+        private static int TotalSubLoadCount(Network network)
+        {
+            // TODO: Cycle detection.
+            var height = network.Loads.Count;
+
+            foreach (var battery in network.BatteriesLoading)
+            {
+                if (battery.LinkedNetworkSupplying != null)
+                {
+                    height += TotalSubLoadCount(battery.LinkedNetworkSupplying);
+                }
+            }
+
+            return height;
+        }
+
+        private static void GetLoadingNetworksRecursively(Network network, List<Network> networks,
+            ref float totalDemand)
+        {
+            networks.Add(network);
+            totalDemand += network.DemandTotal - network.MetDemand;
+
+            foreach (var battery in network.BatteriesLoading)
+            {
+                if (battery.LinkedNetworkSupplying != null)
+                {
+                    GetLoadingNetworksRecursively(battery.LinkedNetworkSupplying, networks, ref totalDemand);
+                }
+            }
         }
 
         private void DoDraw(float frameTime)
@@ -553,11 +615,17 @@ namespace Pow3r
 
             // "Supplying" means the network is connected to the OUTPUT port of the battery.
             public readonly List<Battery> BatteriesSupplying = new();
-            public Vector2 CurrentWindowPos;
 
+            // Calculation parameters
             public float DemandTotal;
+            public float MetDemand;
             public float AvailableSupplyTotal;
             public float TheoreticalSupplyTotal;
+            public float RemainingDemand => DemandTotal - MetDemand;
+
+            public int TreeHeight;
+
+            public Vector2 CurrentWindowPos;
 
             public Network(int id)
             {
