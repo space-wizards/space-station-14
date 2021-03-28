@@ -702,3 +702,9 @@ Entries:
   - {message: Remaps gas cans on saltern and removes signs on top of windows, type: Tweak}
   id: 126
   time: '2021-03-28T08:36:40.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes bug where plasma fires wouldn't spread properly under certain
+      conditions., type: Fix}
+  id: 127
+  time: '2021-03-28T12:29:17.658735+00:00'

@@ -1,4 +1,0 @@
-author: Zumorica
-changes:
-  - type: Fix
-    message: Fixes bug where plasma fires wouldn't spread properly under certain conditions.
