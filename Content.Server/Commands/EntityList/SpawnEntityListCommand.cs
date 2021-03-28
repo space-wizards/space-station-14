@@ -37,8 +37,14 @@ namespace Content.Server.Commands.EntityList
             }
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            if (!prototypeManager.TryIndex(args[0], out EntityListPrototype? prototype))
+            {
+                shell.WriteError($"No {nameof(EntityListPrototype)} found with id {args[0]}");
+                return;
+            }
+
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var prototype = prototypeManager.Index<EntityListPrototype>(args[0]);
             var i = 0;
 
             foreach (var entity in prototype.Entities(prototypeManager))

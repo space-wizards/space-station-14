@@ -1,5 +1,5 @@
 ﻿- type: entityList
-  id: SurgeryCommandTools
+  id: SurgeryToolsBasic
   entities:
   - Cautery
   - Drill
