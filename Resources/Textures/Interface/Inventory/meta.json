@@ -20,7 +20,7 @@
         "name": "ears"
       },
       {
-        "name": "ears_alt"
+        "name": "ears_headset"
       },
       {
         "name": "glasses"
@@ -78,6 +78,9 @@
       },
       {
         "name": "inventory"
+      },
+      {
+        "name": "pda"
       }
    ]
 }
