@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Markers;
@@ -40,39 +40,31 @@ namespace Content.Server.GameObjects.Components.Observer
             }
         }
 
-        /// <inheritdoc />
-        protected override void Startup()
+        public override void Initialize()
         {
-            base.Startup();
+            base.Initialize();
 
-            // Allow this entity to be seen by other ghosts.
             Owner.EnsureComponent<VisibilityComponent>().Layer = (int) VisibilityFlags.Ghost;
-
-            // Allows this entity to see other ghosts.
-            Owner.EnsureComponent<EyeComponent>().VisibilityMask |= (uint) VisibilityFlags.Ghost;
-
             _timeOfDeath = _gameTimer.RealTime;
         }
 
-        /// <inheritdoc />
-        protected override void Shutdown()
-        {
-            //Perf: If the entity is deleting itself, no reason to change these back.
-            if(Owner.LifeStage < EntityLifeStage.Terminating)
-            {
-                // Entity can't be seen by ghosts anymore.
-                if (Owner.TryGetComponent<VisibilityComponent>(out var visComp))
-                    visComp.Layer &= ~(int) VisibilityFlags.Ghost;
-
-                // Entity can't see ghosts anymore.
-                if (Owner.TryGetComponent<EyeComponent>(out var eyeComp))
-                    eyeComp.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
-            }
-
-            base.Shutdown();
-        }
-
         public override ComponentState GetComponentState(ICommonSession player) => new GhostComponentState(CanReturnToBody);
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+
+            switch (message)
+            {
+                case PlayerAttachedMsg msg:
+                    msg.NewPlayer.VisibilityMask |= (int) VisibilityFlags.Ghost;
+                    Dirty();
+                    break;
+                case PlayerDetachedMsg msg:
+                    msg.OldPlayer.VisibilityMask &= ~(int) VisibilityFlags.Ghost;
+                    break;
+            }
+        }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null!)
         {
