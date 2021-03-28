@@ -1,23 +1,24 @@
 ﻿using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.Prototypes.EntityList;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Commands.Surgery
+namespace Content.Server.Commands.EntityList
 {
     [AdminCommand(AdminFlags.Spawn)]
-    public class SurgeryToolsCommand : IConsoleCommand
+    public class SpawnEntityListCommand : IConsoleCommand
     {
-        public string Command => "surgerytools";
-        public string Description => "Spawns surgery tools around you";
-        public string Help => $"Usage: {Command}";
+        public string Command => "spawnentitylist";
+        public string Description => "Spawns a list of entities around you";
+        public string Help => $"Usage: {Command} <entityListPrototypeId>";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length != 0)
+            if (args.Length != 1)
             {
                 shell.WriteError($"Invalid arguments.\n{Help}");
                 return;
@@ -35,17 +36,18 @@ namespace Content.Server.Commands.Surgery
                 return;
             }
 
-            var entities = IoCManager.Resolve<IPrototypeManager>().Index<EntityListPrototype>("SurgeryCommandTools").Entities;
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var entityManager = IoCManager.Resolve<IEntityManager>();
+            var prototype = prototypeManager.Index<EntityListPrototype>(args[0]);
             var i = 0;
 
-            foreach (var prototype in entities)
+            foreach (var entity in prototype.Entities(prototypeManager))
             {
-                entityManager.SpawnEntity(prototype.ID, player.AttachedEntity.Transform.Coordinates);
+                entityManager.SpawnEntity(entity.ID, player.AttachedEntity.Transform.Coordinates);
                 i++;
             }
 
-            shell.WriteLine($"Spawned {i} tools.");
+            shell.WriteLine($"Spawned {i} entities.");
         }
     }
 }
