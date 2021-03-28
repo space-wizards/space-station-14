@@ -11,17 +11,17 @@
   - type: Physics
     bodyType: Dynamic
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.25,0.5,0.25"
-        mass: 25
-        mask:
-          - MobImpassable
-        layer:
-          - Opaque
-          - MobImpassable
-          - SmallImpassable
-          - VaultImpassable
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
+      mass: 25
+      mask:
+        - MobImpassable
+      layer:
+        - Opaque
+        - MobImpassable
+        - SmallImpassable
+        - VaultImpassable
   - type: Destructible
     thresholds:
     - trigger:
