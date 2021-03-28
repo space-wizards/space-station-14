@@ -3,7 +3,7 @@
 - type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Autolathe (Machine Board)
+  name: autolathe board
   components:
     - type: MachineBoard
       prototype: Autolathe
@@ -16,7 +16,7 @@
 - type: entity
   id: ProtolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: Protolathe (Machine Board)
+  name: protolathe board
   components:
     - type: MachineBoard
       prototype: Protolathe

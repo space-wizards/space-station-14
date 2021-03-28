@@ -4,6 +4,7 @@
   parent: BaseItem
   name: circuit board
   abstract: true
+  suffix: Circuit
   components:
     - type: ComputerBoard
     - type: Sprite
@@ -13,7 +14,7 @@
 - type: entity
   id: SupplyComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: supply computer circuit board
+  name: supply computer board
   components:
     - type: ComputerBoard
       prototype: ComputerSupplyOrdering
@@ -21,7 +22,7 @@
 - type: entity
   id: SupplyRequestComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: supply request computer circuit board
+  name: supply request board
   components:
     - type: ComputerBoard
       prototype: ComputerSupplyRequest
@@ -29,7 +30,7 @@
 - type: entity
   id: ResearchComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: R&D computer circuit board
+  name: R&D computer board
   components:
     - type: ComputerBoard
       prototype: ComputerResearchAndDevelopment
@@ -37,7 +38,7 @@
 - type: entity
   id: IDComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: ID card terminal circuit board
+  name: ID card terminal board
   components:
     - type: ComputerBoard
       prototype: ComputerId
@@ -45,7 +46,7 @@
 - type: entity
   id: BodyScannerComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: body scanner computer circuit board
+  name: body scanner computer board
   components:
     - type: ComputerBoard
       prototype: computerBodyScanner
@@ -53,7 +54,7 @@
 - type: entity
   id: CommsComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: communications computer circuit board
+  name: communications computer board
   components:
     - type: ComputerBoard
       prototype: ComputerComms
@@ -61,7 +62,7 @@
 - type: entity
   id: SolarControlComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: solar control computer circuit board
+  name: solar control board
   components:
     - type: ComputerBoard
       prototype: ComputerSolarControl
@@ -69,7 +70,7 @@
 - type: entity
   id: SpaceVillainArcadeComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: space villain arcade computer circuit board
+  name: space villain arcade board
   components:
     - type: ComputerBoard
       prototype: SpaceVillainArcade
@@ -77,7 +78,7 @@
 - type: entity
   id: BlockGameArcadeComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: block game arcade computer circuit board
+  name: block game arcade board
   components:
     - type: ComputerBoard
       prototype: BlockGameArcade
@@ -85,7 +86,7 @@
 - type: entity
   id: ParticleAcceleratorComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: PA control box
+  name: PA control box board
   suffix: Circuit Board
   components:
     - type: ComputerBoard
