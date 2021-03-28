@@ -3,10 +3,17 @@
   parent: BaseConstructibleDynamic
   name: girder
   description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
-  placement:
-    snap:
-    - Wall
   components:
+  - type: Physics
+    bodyType: Static
+    mass: 50
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      layer:
+      - SmallImpassable
+      mask:
+      - VaultImpassable
   - type: InteractionOutline
   - type: Construction
     graph: girder

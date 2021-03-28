@@ -11,10 +11,13 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.5, -0.2, 0.5, 0.2"
-      layer:
-      - SmallImpassable
       mask:
-      - Impassable
+        - MobImpassable
+      layer:
+        - Opaque
+        - MobImpassable
+        - SmallImpassable
+        - VaultImpassable
   - type: Sprite
     sprite: Constructible/Misc/potted_plants.rsi
   - type: PottedPlantHide

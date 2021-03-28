@@ -6,8 +6,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Anchorable
-    snap: true
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -35,17 +33,22 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
 
 - type: entity
   name: chair
   id: Chair
   parent: SeatBase
   components:
+  - type: Anchorable
+    snap: true
   - type: Rotatable
   - type: Sprite
     state: chair
     color: "#8e9799"
   - type: Physics
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -64,10 +67,13 @@
   parent: SeatBase
   description: Apply butt.
   components:
+  - type: Anchorable
+    snap: true
   - type: Sprite
     state: stool_base
     color: "#8e9799"
   - type: Physics
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -85,9 +91,12 @@
   id: StoolBar
   parent: SeatBase
   components:
+  - type: Anchorable
+    snap: true
   - type: Sprite
     state: bar_stool
   - type: Physics
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -139,9 +148,12 @@
   parent: SeatBase
   description: It looks comfy.
   components:
+  - type: Anchorable
+    snap: true
   - type: Sprite
     state: comfychair_preview
   - type: Physics
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -174,3 +186,18 @@
   - type: Construction
     graph: seat
     node: chairWood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1
