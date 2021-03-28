@@ -690,3 +690,10 @@ Entries:
   changes: []
   id: 124
   time: '2021-03-28T06:06:20.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Reworked how hair styles are stored. You will have to select your hair
+      styles again or live as a baldie., type: Tweak}
+  - {message: SKREEEEEEEEEEEEEEEE, type: Add}
+  id: 125
+  time: '2021-03-28T06:26:32.0000000+00:00'
