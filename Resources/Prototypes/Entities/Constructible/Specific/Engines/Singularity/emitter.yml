@@ -1,4 +1,7 @@
-﻿- type: entity
+# TODO: Add description.
+
+- type: entity
+  name: emitter
   id: Emitter
   placement:
     mode: SnapgridCenter
@@ -67,4 +70,3 @@
     - type: EmitterVisualizer
   - type: AccessReader
     access: [[ "Engineering" ]]
-

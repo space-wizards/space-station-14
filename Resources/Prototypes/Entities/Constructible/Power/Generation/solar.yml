@@ -1,4 +1,5 @@
 - type: entity
+  name: solar panel
   id: SolarPanel
   placement:
     mode: SnapgridCenter
@@ -54,8 +55,8 @@
     node: solarpanel
 
 - type: entity
-  id: SolarAssembly
   name: solar assembly
+  id: SolarAssembly
   description: "A solar assembly. Anchor to a wire to start building a solar panel."
   placement:
     mode: SnapgridCenter
@@ -94,6 +95,7 @@
     node: solarassembly
 
 - type: entity
+  name: solar tracker
   id: SolarTracker
   placement:
     mode: SnapgridCenter
