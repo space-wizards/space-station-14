@@ -7,6 +7,7 @@ using Content.Client.Interfaces;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Appearance;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -46,7 +47,7 @@ namespace Content.Client.UserInterface
         private readonly OptionButton _clothingButton;
         private readonly OptionButton _backpackButton;
         private readonly HairStylePicker _hairPicker;
-        private readonly FacialHairStylePicker _facialHairPicker;
+        private readonly HairStylePicker _facialHairPicker;
         private readonly EyeColorPicker _eyesPicker;
 
         private readonly List<JobPrioritySelector> _jobPriorities;
@@ -281,7 +282,7 @@ namespace Content.Client.UserInterface
                 IsDirty = true;
             };
 
-            _facialHairPicker = new FacialHairStylePicker();
+            _facialHairPicker = new HairStylePicker();
             _facialHairPicker.Populate();
 
             _facialHairPicker.OnHairStylePicked += newStyle =>
@@ -794,10 +795,14 @@ namespace Content.Client.UserInterface
 
             _hairPicker.SetData(
                 Profile.Appearance.HairColor,
-                Profile.Appearance.HairStyleName);
+                Profile.Appearance.HairStyleId,
+                SpriteAccessoryCategories.HumanHair,
+                true);
             _facialHairPicker.SetData(
                 Profile.Appearance.FacialHairColor,
-                Profile.Appearance.FacialHairStyleName);
+                Profile.Appearance.FacialHairStyleId,
+                SpriteAccessoryCategories.HumanFacialHair,
+                false);
         }
 
         private void UpdateEyePickers()
