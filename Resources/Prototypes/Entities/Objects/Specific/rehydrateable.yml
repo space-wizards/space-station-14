@@ -27,11 +27,11 @@
     enabled: false
   - type: Physics
     bodyType: KinematicController
-    mass: 2.5
     fixtures: # TODO: Make a second fixture.
       - shape:
           !type:PhysShapeAabb
           bounds: "-0.3,-0.4,0.3,0.4"
+        mass: 2.5
         hard: false
         layer:
           - SmallImpassable
@@ -66,11 +66,11 @@
     enabled: false
   - type: Physics
     bodyType: KinematicController
-    mass: 2.5
     fixtures: # TODO: Make a second fixture.
       - shape:
           !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
+        mass: 2.5
         hard: false
         layer:
           - SmallImpassable

@@ -10,7 +10,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Singularity;
-using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Dynamics.Shapes;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;

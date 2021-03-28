@@ -19,11 +19,11 @@
       sprite: Mobs/Aliens/Carps/space.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 50
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
+      mass: 50
       mask:
       - Impassable
       - MobImpassable
