@@ -697,3 +697,8 @@ Entries:
   - {message: SKREEEEEEEEEEEEEEEE, type: Add}
   id: 125
   time: '2021-03-28T06:26:32.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Remaps gas cans on saltern and removes signs on top of windows, type: Tweak}
+  id: 126
+  time: '2021-03-28T08:36:40.0000000+00:00'
