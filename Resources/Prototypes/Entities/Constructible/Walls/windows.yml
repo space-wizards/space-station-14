@@ -1,5 +1,6 @@
 ﻿- type: entity
   id: Window
+  parent: BaseConstructible
   name: window
   description: Don't smudge up the glass down there.
   placement:
@@ -7,7 +8,6 @@
     snap:
     - Window
   components:
-  - type: Clickable
   - type: RCDDeconstructWhitelist
   - type: InteractionOutline
   - type: Sprite
@@ -28,6 +28,8 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      mask:
+      - VaultImpassable
   - type: Damageable
     resistances: metallicResistances
   - type: Repairable
@@ -46,8 +48,6 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: SnapGrid
-    offset: Center
   - type: Airtight
   - type: Window
     base: window

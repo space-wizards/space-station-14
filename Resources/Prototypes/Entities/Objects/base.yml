@@ -23,8 +23,8 @@
       - Clickable
       mask:
       - Impassable
-      - SmallImpassable
-      restitution: 0.3  # We want them items B O U N C Y # No we don't
+      - VaultImpassable
+      restitution: 0.3  # fite me
       friction: 0.2
   - type: Sprite
     drawdepth: Items

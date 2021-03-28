@@ -1,28 +1,30 @@
 - type: entity
   id: Rack
   name: rack
-  description: "A rack for storing things on."
+  description: A rack for storing things on.
   placement:
     mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: PlaceableSurface
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: rack
   - type: Physics
-    mass: 25
+    mass: 50
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
+          bounds: "-0.3,-0.3,0.3,0.3"
       layer:
-        - VaultImpassable
+      - MobImpassable
       mask:
-      - Impassable
+      - VaultImpassable
   - type: Pullable
   - type: Anchorable
+    snap: true
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -43,49 +45,9 @@
 
 - type: entity
   id: Shelf
+  parent: Rack
   name: shelf
-  description: "A shelf for storing things on."
-  placement:
-    mode: SnapgridCenter
+  description: A shelf for storing things on.
   components:
-  - type: Clickable
-  - type: InteractionOutline
   - type: Sprite
-    sprite: Constructible/Misc/furniture.rsi
     state: shelf
-  - type: Physics
-    mass: 25
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-  - type: Pullable
-  - type: Anchorable
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 30
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]

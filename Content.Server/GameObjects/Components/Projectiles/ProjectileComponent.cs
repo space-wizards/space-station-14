@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             set => _damages = value;
         }
 
-        [field: DataField("delete_on_collide")]
+        [field: DataField("deleteOnCollide")]
         public bool DeleteOnCollide { get; } = true;
 
         // Get that juicy FPS hit sound
@@ -95,7 +95,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 recoilComponent.Kick(direction);
             }
 
-            Owner.Delete();
+            if(DeleteOnCollide)
+                Owner.Delete();
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

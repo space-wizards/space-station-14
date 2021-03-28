@@ -44,7 +44,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var bans = await dbMan.GetServerBansAsync(null, targetUid);
+            var bans = await dbMan.GetServerBansAsync(null, targetUid, null);
 
             if (bans.Count == 0)
             {

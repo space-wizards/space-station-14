@@ -7,6 +7,19 @@
   - type: Tag
     tags:
     - Teleportable
+  - type: Reactive
+    reactions:
+      - !type:ExtinguishReaction
+        touch: true
+        reagents:
+          - chem.Water
+      - !type:FlammableReaction
+        touch: true
+        reagents:
+          - chem.WeldingFuel
+          - chem.Thermite
+          - chem.Plasma
+          - chem.Ethanol
   - type: UtilityAI
     behaviorSets:
     - Clothing
@@ -25,7 +38,6 @@
   - type: Barotrauma
   - type: DamageOnHighSpeedImpact
     soundHit: /Audio/Effects/hit_kick.ogg
-  - type: InteractionOutline
   - type: Sprite
     noRot: true
     drawdepth: Mobs

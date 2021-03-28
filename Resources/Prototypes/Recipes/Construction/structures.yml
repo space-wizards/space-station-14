@@ -142,40 +142,6 @@
     - !type:TileNotBlocked {}
 
 - type: construction
-  name: Table Frame
-  id: TableFrame
-  graph: Tables
-  startNode: start
-  targetNode: TableFrame
-  category: Structures
-  description: A sturdy frame used in the construction of tables
-  icon:
-    sprite: Constructible/Structures/Tables/frame.rsi
-    state: full
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked {}
-
-- type: construction
-  name: Poker Table
-  id: PokerTable
-  graph: Tables
-  startNode: start
-  targetNode: PokerTable
-  category: Structures
-  description: A square piece of wood standing on four legs. (What did you expect?)
-  icon:
-    sprite: Constructible/Structures/Tables/carpet.rsi
-    state: full
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked {}
-
-- type: construction
   name: Catwalk
   id: Catwalk
   graph: Catwalk

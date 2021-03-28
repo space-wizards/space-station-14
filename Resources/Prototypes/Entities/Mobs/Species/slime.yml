@@ -126,7 +126,6 @@
             - VaultImpassable
           layer:
             - Opaque
-            - MobImpassable
     - type: PlayerInputMover
     - type: AtmosExposed
     - type: Flammable

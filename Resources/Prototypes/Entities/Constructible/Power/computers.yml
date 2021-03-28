@@ -1,9 +1,8 @@
 ﻿- type: entity
   id: ComputerFrame
+  parent: BaseConstructibleDynamic
   name: computer frame
   description: "A computer under construction. It needs a circuit board."
-  placement:
-    mode: SnapgridCenter
   components:
     - type: Physics
       mass: 25
@@ -12,103 +11,77 @@
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.5,-0.25,0.5,0.25"
-        layer:
-        - Impassable
-        - MobImpassable
-        - VaultImpassable
-        - Opaque
         mask:
-        - Impassable
-        - MobImpassable
-        - VaultImpassable
-    - type: Clickable
+          - MobImpassable
+        layer:
+          - Opaque
+          - MobImpassable
+          - SmallImpassable
+          - VaultImpassable
     - type: InteractionOutline
-    - type: Anchorable
     - type: Rotatable
-    - type: Pullable
     - type: Construction
       graph: computer
       node: frameUnsecured
     - type: Sprite
       sprite: "Constructible/Misc/stock_parts.rsi"
       state: "0"
+    - type: Damageable
+      resistances: metallicResistances
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:PlaySoundCollectionBehavior
+          soundCollection: GlassBreak
+        - !type:ChangeConstructionNodeBehavior
+          node: monitorBroken
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
 
 - type: entity
   id: ComputerBroken
+  parent: ComputerFrame
   name: broken computer
   description: "This computer has seen better days."
   components:
-  - type: Physics
-    mass: 25
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
-      layer:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - Opaque
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Anchorable
   - type: Construction
     graph: computer
     node: monitorBroken
   - type: Sprite
     sprite: "Constructible/Power/computers.rsi"
     state: "broken"
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   id: ComputerBase
+  parent: ComputerFrame
   name: computer
   abstract: true
   placement:
     mode: SnapgridCenter
   components:
-  - type: Clickable
-  - type: InteractionOutline
   - type: Construction
     graph: computer
     node: computer
-  - type: Rotatable
-  - type: Physics
-    mass: 25
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
-      layer:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - Opaque
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
   - type: Computer
   - type: PowerReceiver
-  - type: Anchorable
-  - type: Pullable
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:ChangeConstructionNodeBehavior
-        node: monitorBroken
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Sprite
     sprite: Constructible/Power/computers.rsi
     layers:

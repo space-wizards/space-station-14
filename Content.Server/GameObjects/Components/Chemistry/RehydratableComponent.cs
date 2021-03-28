@@ -17,9 +17,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
     /// But specifically, this component deletes the entity and spawns in a new entity when the entity is exposed to a given reagent.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IReagentReaction))]
     [ComponentReference(typeof(ISolutionChange))]
-    public class RehydratableComponent : Component, IReagentReaction, ISolutionChange
+    public class RehydratableComponent : Component, ISolutionChange
     {
         public override string Name => "Rehydratable";
 
@@ -28,21 +27,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private string _catalystPrototype = "chem.Water";
         [ViewVariables]
         [DataField("target")]
-        private string? _targetPrototype;
+        private string? _targetPrototype = default!;
 
         private bool _expanding;
-
-        ReagentUnit IReagentReaction.ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume) => Reaction(reagent, volume);
-        ReagentUnit IReagentReaction.ReagentReactInjection(ReagentPrototype reagent, ReagentUnit volume) => Reaction(reagent, volume);
-
-        private ReagentUnit Reaction(ReagentPrototype reagent, ReagentUnit volume)
-        {
-            if ((volume > ReagentUnit.Zero) && (reagent.ID == _catalystPrototype))
-            {
-                Expand();
-            }
-            return ReagentUnit.Zero;
-        }
 
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
         {

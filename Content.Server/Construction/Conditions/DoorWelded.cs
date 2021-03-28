@@ -13,7 +13,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class DoorWelded : IEdgeCondition
+    public class DoorWelded : IGraphCondition
     {
         [DataField("welded")]
         public bool Welded { get; private set; } = true;
