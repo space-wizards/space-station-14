@@ -739,7 +739,7 @@ namespace Content.Server.Atmos
             }
             else
             {
-                Hotspot.State = Hotspot.Volume > Atmospherics.CellVolume * 0.4f ? 2 : 1;
+                Hotspot.State = (byte) (Hotspot.Volume > Atmospherics.CellVolume * 0.4f ? 2 : 1);
             }
 
             if (Hotspot.Temperature > MaxFireTemperatureSustained)
