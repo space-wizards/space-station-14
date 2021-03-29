@@ -139,6 +139,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     return;
 
                 _canWeldShut = value;
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                {
+                    appearance.SetData(StorageVisuals.CanWeld, value);
+                }
             }
         }
 
@@ -157,10 +161,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 placeableSurfaceComponent.IsPlaceable = Open;
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-            {
-                appearance.SetData(StorageVisuals.CanWeld, _canWeldShut);
-            }
+            UpdateAppearance();
         }
 
         public virtual void Activate(ActivateEventArgs eventArgs)
@@ -234,6 +235,14 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             EmptyContents();
             ModifyComponents();
             EntitySystem.Get<AudioSystem>().PlayFromEntity(_openSound, Owner);
+        }
+
+        private void UpdateAppearance()
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(StorageVisuals.CanWeld, _canWeldShut);
+            }
         }
 
         private void ModifyComponents()
