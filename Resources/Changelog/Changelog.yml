@@ -708,3 +708,9 @@ Entries:
       conditions., type: Fix}
   id: 127
   time: '2021-03-28T12:29:17.658735+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Hopefully fixed all physics for canister and plants, type: Fix}
+  - {message: Replaced tool storage doors with unlocked glass ones, type: Tweak}
+  id: 128
+  time: '2021-03-29T21:50:33.0000000+00:00'
