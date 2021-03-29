@@ -1,5 +1,6 @@
 - type: entity
   id: CrateGeneric
+  parent: BaseConstructibleDynamic
   abstract: true
   name: crate
   description: A large container for items.
@@ -14,11 +15,9 @@
     - state: welded
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
-  - type: Clickable
   - type: InteractionOutline
   - type: Physics
     mass: 25
-    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -51,5 +50,3 @@
       state_open: crate_open
       state_closed: crate_door
   - type: LoopingSound
-  - type: Anchorable
-  - type: Pullable

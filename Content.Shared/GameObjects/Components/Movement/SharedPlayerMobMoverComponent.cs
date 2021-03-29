@@ -18,7 +18,7 @@ namespace Content.Shared.GameObjects.Components.Movement
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IMobMoverComponent))]
-    public class SharedPlayerMobMoverComponent : Component, IMobMoverComponent, ICollideSpecial
+    public class SharedPlayerMobMoverComponent : Component, IMobMoverComponent
     {
         public override string Name => "PlayerMobMover";
         public override uint? NetID => ContentNetIDs.PLAYER_MOB_MOVER;
@@ -110,17 +110,6 @@ namespace Content.Shared.GameObjects.Components.Movement
             if (curState is not PlayerMobMoverComponentState playerMoverState) return;
             GrabRange = playerMoverState.GrabRange;
             PushStrength = playerMoverState.PushStrength;
-        }
-
-        bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
-        {
-            // Don't collide with other mobs
-            // unless they have combat mode on
-            return false; //collidedWith.Entity.HasComponent<IBody>();
-            /* &&
-   (!Owner.TryGetComponent(out SharedCombatModeComponent? ownerCombat) || !ownerCombat.IsInCombatMode) &&
-   (!collidedWith.Entity.TryGetComponent(out SharedCombatModeComponent? otherCombat) || !otherCombat.IsInCombatMode);
-   */
         }
 
         [Serializable, NetSerializable]

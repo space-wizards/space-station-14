@@ -189,7 +189,7 @@
         - state: chempuff
           map: [ "enum.VaporVisualLayers.Base" ]
     - type: Physics
-      bodyType: Dynamic
+      bodyType: KinematicController
       fixtures:
       - shape:
           !type:PhysShapeAabb

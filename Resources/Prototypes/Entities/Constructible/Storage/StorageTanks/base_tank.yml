@@ -1,18 +1,17 @@
 ﻿- type: entity
   id: StorageTank
+  parent: BaseConstructibleDynamic
   name: storage tank
   description: "A liquids storage tank."
   abstract: true
   components:
-  - type: Clickable
   - type: InteractionOutline
   - type: Physics
     mass: 100
-    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+          bounds: "-0.4,-0.4,0.4,0.4"
       mask:
       - Impassable
       - MobImpassable
@@ -38,7 +37,3 @@
     maxVol: 1500
     caps: Drainable
   - type: ReagentTank
-
-  placement:
-    snap:
-    - Wall

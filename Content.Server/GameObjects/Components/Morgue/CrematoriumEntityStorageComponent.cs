@@ -19,6 +19,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameObjects.Components.Morgue
 {
@@ -113,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Morgue
 
                 TryOpenStorage(Owner);
 
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/ding.ogg", Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/ding.ogg", Owner);
             }, _cremateCancelToken.Token);
         }
 

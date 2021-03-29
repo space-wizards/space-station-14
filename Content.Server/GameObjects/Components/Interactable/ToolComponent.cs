@@ -5,7 +5,9 @@ using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -102,8 +104,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
 
             var file = AudioHelpers.GetRandomFileFromSoundCollection(name);
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(file, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
+            SoundSystem.Play(Filter.Pvs(Owner), file, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
         }
 
         public void PlayUseSound(float volume=-5f)
@@ -112,8 +113,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 if (!string.IsNullOrEmpty(UseSound))
                 {
-                    EntitySystem.Get<AudioSystem>()
-                        .PlayFromEntity(UseSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
+                    SoundSystem.Play(Filter.Pvs(Owner), UseSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
                 }
             }
             else

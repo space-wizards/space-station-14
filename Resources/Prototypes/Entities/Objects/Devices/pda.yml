@@ -85,13 +85,21 @@
     state: pda-clown
   - type: Slippery
     paralyzeTime: 4
+  - type: CollisionWake
+    enabled: false
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-      layer:
-      - MobImpassable
+    bodyType: KinematicController
+    mass: 2.5
+    fixtures: # TODO: Make a second fixture.
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.4,0.3,0.4"
+        hard: false
+        layer:
+          - SmallImpassable
+        mask:
+          - Impassable
+          - MobImpassable
 
 - type: entity
   name: Mime PDA

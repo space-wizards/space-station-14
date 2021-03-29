@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation at dc9cef40447ee86c2b9fff9f690385cd63b655fa",
+    "states": [
+        {
+            "name": "piecannon"
+        },
+    ]
+}

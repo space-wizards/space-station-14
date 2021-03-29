@@ -108,7 +108,7 @@
       fixtures:
       - shape:
           !type:PhysShapeAabb {}
-        mask:
+        layer:
           - Opaque
           - Impassable
           - MobImpassable

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -59,8 +60,12 @@ namespace Content.Server.Database
         /// </summary>
         /// <param name="address">The ip address of the user.</param>
         /// <param name="userId">The id of the user.</param>
+        /// <param name="hwId">The hardware ID of the user.</param>
         /// <returns>The user's latest received un-pardoned ban, or null if none exist.</returns>
-        Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
+        Task<ServerBanDef?> GetServerBanAsync(
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId);
 
         /// <summary>
         ///     Looks up an user's ban history.
@@ -69,19 +74,31 @@ namespace Content.Server.Database
         /// </summary>
         /// <param name="address">The ip address of the user.</param>
         /// <param name="userId">The id of the user.</param>
+        /// <param name="hwId">The HWId of the user.</param>
         /// <returns>The user's ban history.</returns>
-        Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId);
+        Task<List<ServerBanDef>> GetServerBansAsync(
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId);
 
         Task AddServerBanAsync(ServerBanDef serverBan);
         Task AddServerUnbanAsync(ServerUnbanDef serverBan);
 
         // Player records
-        Task UpdatePlayerRecordAsync(NetUserId userId, string userName, IPAddress address);
+        Task UpdatePlayerRecordAsync(
+            NetUserId userId,
+            string userName,
+            IPAddress address,
+            ImmutableArray<byte> hwId);
         Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel = default);
         Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel = default);
 
         // Connection log
-        Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address);
+        Task AddConnectionLogAsync(
+            NetUserId userId,
+            string userName,
+            IPAddress address,
+            ImmutableArray<byte> hwId);
 
         // Admins
         Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel = default);
@@ -179,14 +196,20 @@ namespace Content.Server.Database
             return _db.GetServerBanAsync(id);
         }
 
-        public Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId)
+        public Task<ServerBanDef?> GetServerBanAsync(
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId)
         {
-            return _db.GetServerBanAsync(address, userId);
+            return _db.GetServerBanAsync(address, userId, hwId);
         }
 
-        public Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId)
+        public Task<List<ServerBanDef>> GetServerBansAsync(
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId)
         {
-            return _db.GetServerBansAsync(address, userId);
+            return _db.GetServerBansAsync(address, userId, hwId);
         }
 
         public Task AddServerBanAsync(ServerBanDef serverBan)
@@ -199,9 +222,13 @@ namespace Content.Server.Database
             return _db.AddServerUnbanAsync(serverUnban);
         }
 
-        public Task UpdatePlayerRecordAsync(NetUserId userId, string userName, IPAddress address)
+        public Task UpdatePlayerRecordAsync(
+            NetUserId userId,
+            string userName,
+            IPAddress address,
+            ImmutableArray<byte> hwId)
         {
-            return _db.UpdatePlayerRecord(userId, userName, address);
+            return _db.UpdatePlayerRecord(userId, userName, address, hwId);
         }
 
         public Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel = default)
@@ -214,9 +241,13 @@ namespace Content.Server.Database
             return _db.GetPlayerRecordByUserId(userId, cancel);
         }
 
-        public Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address)
+        public Task AddConnectionLogAsync(
+            NetUserId userId,
+            string userName,
+            IPAddress address,
+            ImmutableArray<byte> hwId)
         {
-            return _db.AddConnectionLogAsync(userId, userName, address);
+            return _db.AddConnectionLogAsync(userId, userName, address, hwId);
         }
 
         public Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel = default)
