@@ -5424,12 +5424,11 @@ entities:
     parent: 853
     type: Transform
 - uid: 589
-  type: AirlockEngineering
+  type: AirlockGlass
   components:
   - name: Tool Storage
     type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,8.5
+  - pos: -25.5,8.5
     parent: 853
     type: Transform
   - containers:
@@ -5437,12 +5436,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 590
-  type: AirlockEngineering
+  type: AirlockGlass
   components:
   - name: Tool Storage
     type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,10.5
+  - pos: -25.5,10.5
     parent: 853
     type: Transform
   - containers:
@@ -6888,12 +6886,10 @@ entities:
 - uid: 744
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 21.5,-12.5
+  - pos: 1.5,-21.485424
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 745
@@ -6969,12 +6965,10 @@ entities:
 - uid: 754
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 5.5,21.5
+  - pos: 6.5,23.514576
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 755
@@ -7010,12 +7004,10 @@ entities:
 - uid: 759
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 1.5,-21.5
+  - pos: 13.5,1.485029
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 760
@@ -7034,12 +7026,10 @@ entities:
 - uid: 761
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -24.5,11.5
+  - pos: -25.5,-8.485172
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 762
@@ -7071,23 +7061,21 @@ entities:
 - uid: 764
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 10.5,16.5
+  - pos: 0.5,26.48566
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 765
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 7.5,23.5
+  - pos: -39.5,10.496723
     parent: 853
     type: Transform
+  - sleepTime: 221.60655
+    type: Physics
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 766
@@ -7151,23 +7139,19 @@ entities:
 - uid: 771
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,-8.5
+  - pos: -24.5,11.48527
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 772
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -39.5,10.5
+  - pos: 21.5,-12.51473
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 773
@@ -7458,15 +7442,16 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 796
-  type: PottedPlantRandom
+  type: CrateMaterialGlass
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,26.5
+  - pos: 39.5,13.5
     parent: 853
     type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
-      stash: !type:ContainerSlot {}
+      EntityStorageComponent: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 797
   type: Table
@@ -7477,7 +7462,7 @@ entities:
 - uid: 798
   type: PottedPlantRandom
   components:
-  - pos: 16.5,7.5
+  - pos: 16.5,7.485173
     parent: 853
     type: Transform
   - containers:
@@ -15193,17 +15178,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 1236
-  type: CrateMaterialPlasteel
+  type: PottedPlantRandom
   components:
-  - rot: 3.141592653589793 rad
-    pos: 40.5,13.5
+  - pos: 10.5,16.514576
     parent: 853
     type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1237
   type: NitrogenCanister
@@ -18041,12 +18022,17 @@ entities:
       MedicalScanner-bodyContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1545
-  type: PlasmaCanister
+  type: CrateMaterialSteel
   components:
-  - rot: 3.141592653589793 rad
-    pos: 41.5,13.48527
+  - pos: 38.5,13.5
     parent: 853
     type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1546
   type: HVWire
   components:
@@ -22321,14 +22307,16 @@ entities:
     parent: 853
     type: Transform
 - uid: 2146
-  type: PottedPlantRandom
+  type: CrateMaterialPlastic
   components:
-  - rot: 3.141592653589793 rad
-    pos: 13.5,1.5
+  - pos: 40.5,13.5
     parent: 853
     type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
   - containers:
-      stash: !type:ContainerSlot {}
+      EntityStorageComponent: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 2147
   type: SpawnPointMedicalDoctor
@@ -24758,10 +24746,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 2485
-  type: CrateInternals
+  type: CrateMaterialSteel
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 42.5,13.5
+  - pos: 21.5,13.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -24771,18 +24758,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2486
-  type: CrateRadiation
+  type: Emitter
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 43.5,13.5
+  - pos: 43.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2487
   type: solid_wall
   components:
@@ -25035,10 +25015,9 @@ entities:
   - drawRate: 2000
     type: PowerConsumer
 - uid: 2516
-  type: CrateEmergencyFire
+  type: CrateServiceReplacementLights
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 22.5,13.5
+  - pos: 20.5,13.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -40261,12 +40240,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3992
-  type: Emitter
+  type: CrateEngineeringAMEControl
   components:
-  - rot: 3.141592653589793 rad
-    pos: 43.5,11.5
+  - pos: 38.5,11.5
     parent: 853
     type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3993
   type: FirelockGlass
   components:
@@ -46352,31 +46336,20 @@ entities:
     parent: 853
     type: Transform
 - uid: 4714
-  type: CrateMaterialSteel
+  type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 21.5,13.5
+  - pos: 5.5,21.485424
     parent: 853
     type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4715
-  type: CrateServiceReplacementLights
+  type: PlasmaCanister
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 20.5,13.5
+  - pos: 41.5,13.48527
     parent: 853
     type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4716
   type: SalternSubstation
   components:
@@ -46751,10 +46724,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 4762
-  type: CrateMaterialGlass
+  type: CrateEngineeringAMEShielding
   components:
-  - rot: 3.141592653589793 rad
-    pos: 39.5,13.5
+  - pos: 39.5,11.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -46769,11 +46741,10 @@ entities:
   - pos: 15.48162,-18.57235
     parent: 853
     type: Transform
-- uid: 4765
-  type: CrateMaterialSteel
+- uid: 4764
+  type: CrateEmergencyFire
   components:
-  - rot: 3.141592653589793 rad
-    pos: 38.5,13.5
+  - pos: 22.5,13.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -46800,32 +46771,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 4768
-  type: CrateEngineeringAMEControl
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 38.5,11.5
-    parent: 853
-    type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 4769
-  type: CrateEngineeringAMEShielding
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 39.5,11.5
-    parent: 853
-    type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4770
   type: SpaceVillainArcadeComputerCircuitboard
   components:
