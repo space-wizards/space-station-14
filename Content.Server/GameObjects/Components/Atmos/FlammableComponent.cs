@@ -205,7 +205,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             });
         }
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             foreach (var hotItem in eventArgs.Using.GetAllComponents<IHotItem>())
             {
