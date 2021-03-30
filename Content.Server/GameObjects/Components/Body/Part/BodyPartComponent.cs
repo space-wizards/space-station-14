@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
         {
             base.Initialize();
 
-            _mechanismContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-{nameof(BodyPartComponent)}");
+            _mechanismContainer = Owner.EnsureContainer<Container>($"{Name}-{nameof(BodyPartComponent)}");
 
             // This is ran in Startup as entities spawned in Initialize
             // are not synced to the client since they are assumed to be
