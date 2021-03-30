@@ -4,7 +4,7 @@
   name: "base mechanism"
   abstract: true
   components:
-    - type: Mechanism
+  - type: Mechanism
 
 - type: entity
   id: BaseHumanOrgan
@@ -12,9 +12,9 @@
   name: "base human organ"
   abstract: true
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Species/Human/organs.rsi
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
 
 - type: entity
   id: BrainHuman
