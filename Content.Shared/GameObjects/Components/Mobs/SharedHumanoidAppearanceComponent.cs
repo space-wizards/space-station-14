@@ -1,22 +1,40 @@
 ﻿#nullable enable
 using System;
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Appearance;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Mobs
 {
     public abstract class SharedHumanoidAppearanceComponent : Component
     {
-        private HumanoidCharacterAppearance _appearance = default!;
+        private HumanoidCharacterAppearance _appearance = HumanoidCharacterAppearance.Default();
         private Sex _sex;
         private Gender _gender;
 
         public sealed override string Name => "HumanoidAppearance";
         public sealed override uint? NetID => ContentNetIDs.HUMANOID_APPEARANCE;
+
+        [DataField("categoriesHair")]
+        [ViewVariables]
+        public SpriteAccessoryCategories CategoriesHair { get; set; } = SpriteAccessoryCategories.HumanHair;
+
+        [DataField("categoriesFacialHair")]
+        [ViewVariables]
+        public SpriteAccessoryCategories CategoriesFacialHair { get; set; } = SpriteAccessoryCategories.HumanFacialHair;
+
+        [ViewVariables]
+        [DataField("canColorHair")]
+        public bool CanColorHair { get; set; } = true;
+
+        [ViewVariables]
+        [DataField("canColorFacialHair")]
+        public bool CanColorFacialHair { get; set; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public virtual HumanoidCharacterAppearance Appearance
@@ -80,7 +98,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
         [NetSerializable]
         private sealed class HumanoidAppearanceComponentState : ComponentState
         {
-            public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance, Sex sex, Gender gender) : base(ContentNetIDs.HUMANOID_APPEARANCE)
+            public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance, Sex sex, Gender gender) :
+                base(ContentNetIDs.HUMANOID_APPEARANCE)
             {
                 Appearance = appearance;
                 Sex = sex;

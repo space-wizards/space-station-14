@@ -9,10 +9,10 @@
   - type: Clickable
   - type: Physics
     bodyType: Static
-    mass: 50
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mass: 50
       layer:
       - SmallImpassable
       mask:
@@ -33,10 +33,10 @@
   - type: Clickable
   - type: Physics
     bodyType: Dynamic
-    mass: 50
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mass: 50
       layer:
       - SmallImpassable
       mask:

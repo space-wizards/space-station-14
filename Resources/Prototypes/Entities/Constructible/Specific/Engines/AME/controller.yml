@@ -11,11 +11,11 @@
     sprite: Constructible/Power/ame_controller.rsi
     state: control
   - type: Physics
-    mass: 25
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.45, -0.45, 0.45, 0.45"
+      mass: 25
       layer:
       - Opaque
       - Impassable
