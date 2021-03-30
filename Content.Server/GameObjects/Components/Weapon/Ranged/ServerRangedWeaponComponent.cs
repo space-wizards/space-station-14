@@ -21,6 +21,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using Content.Server.Atmos;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged
 {
@@ -174,6 +175,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                 return;
             }
 
+            if (AtmosHelpers.TryGetTileAtmosphere(user.Transform.Coordinates, out var tile))
+            {
+                tile.HotspotExpose(700, 50);
+            }
             FireHandler?.Invoke(user, targetPos);
         }
 
