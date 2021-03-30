@@ -49,7 +49,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             if (Owner.TryGetComponent(out IBody? body))
             {
-                foreach (var part in body.Parts.Values)
+                foreach (var (part, _) in body.Parts)
                 {
                     if (!part.Owner.TryGetComponent(out SpriteComponent? partSprite))
                     {

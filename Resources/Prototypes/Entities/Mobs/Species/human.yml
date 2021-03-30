@@ -162,7 +162,6 @@
   - type: Body
     template: HumanoidTemplate
     preset: HumanPreset
-    centerSlot: torso
   - type: Damageable
     damageContainer: biologicalDamageContainer
   - type: Metabolism
@@ -334,7 +333,6 @@
     - type: Body
       template: HumanoidTemplate
       preset: HumanPreset
-      centerSlot: torso
     - type: Damageable
       damageContainer: biologicalDamageContainer
     - type: MobState
