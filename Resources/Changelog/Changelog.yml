@@ -714,3 +714,8 @@ Entries:
   - {message: Replaced tool storage doors with unlocked glass ones, type: Tweak}
   id: 128
   time: '2021-03-29T21:50:33.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Removes InteractionOutlines for puddles, type: Tweak}
+  id: 129
+  time: '2021-03-30T03:54:36.0000000+00:00'
