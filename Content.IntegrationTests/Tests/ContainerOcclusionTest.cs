@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -44,13 +43,17 @@ namespace Content.IntegrationTests.Tests
 
             s.Post(() =>
             {
-                IoCManager.Resolve<IPlayerManager>()
-                    .GetAllPlayers().Single()
-                    .JoinGame();
+                var playerManager = IoCManager.Resolve<IPlayerManager>();
+                var player = playerManager.GetAllPlayers().Single();
 
-                var mapMan = IoCManager.Resolve<IMapManager>();
+                player.JoinGame();
 
-                mapMan.CreateMap(new MapId(1));
+                var mapManager = IoCManager.Resolve<IMapManager>();
+                mapManager.CreateMap(new MapId(1));
+
+                var entityManager = IoCManager.Resolve<IEntityManager>();
+                var entity = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, new MapId(1)));
+                player.AttachToEntity(entity);
             });
 
             return (c, s);
