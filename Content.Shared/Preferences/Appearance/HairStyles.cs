@@ -30,7 +30,7 @@ namespace Content.Shared.Preferences.Appearance
                 if (cmp != 0)
                     return cmp;
 
-                return string.Compare(a.ID, b.ID, StringComparison.CurrentCulture);
+                return string.Compare(a.Name, b.Name, StringComparison.CurrentCulture);
             });
     }
 }
