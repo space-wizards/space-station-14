@@ -2,7 +2,7 @@
   name: bang, ded
   parent: PistolBase
   id: PistolDebug
-  description: A small, easily concealable, but somewhat underpowered gun.
+  description: ded
   suffix: DEBUG
   components:
   - type: Sprite
