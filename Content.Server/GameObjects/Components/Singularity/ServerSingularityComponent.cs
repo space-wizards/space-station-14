@@ -1,22 +1,16 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Observer;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.StationEvents;
-using Content.Shared.Physics;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics.Shapes;
-using Robust.Shared.Random;
 using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Singularity;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
@@ -27,9 +21,6 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class ServerSingularityComponent : SharedSingularityComponent, IStartCollide
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-
-
         public int Energy
         {
             get => _energy;

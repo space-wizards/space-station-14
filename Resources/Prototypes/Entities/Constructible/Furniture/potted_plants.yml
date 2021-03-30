@@ -5,12 +5,12 @@
   components:
   - type: InteractionOutline
   - type: Physics
-    mass: 25
     bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.5, -0.2, 0.5, 0.2"
+      mass: 25
       mask:
         - MobImpassable
       layer:
@@ -55,12 +55,12 @@
   - type: Sprite
     state: plant-25
   - type: Physics
-    mass: 25
     bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.47,-0.25,0.05,0.25"
+      mass: 25
       layer:
       - SmallImpassable
       mask:
