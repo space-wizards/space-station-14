@@ -49,7 +49,7 @@
   name: nar'sie plushie
   parent: BaseItem
   id: PlushieNar
-  description: A small stuffed doll of the elder goddess Nar'Sie. 
+  description: A small stuffed doll of the elder goddess Nar'Sie.
   components:
   - type: Toys
   - type: LoopingSound
@@ -233,7 +233,7 @@
   name: AI toy
   parent: BaseItem
   id: ToyAi
-  description: A scaled-down toy AI core. 
+  description: A scaled-down toy AI core.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -537,15 +537,6 @@
     HeldPrefix: foamblade
   - type: ItemCooldown
 
-- type: entity
-  name: foamblade
-  parent: FoamBlade
-  id: FoamBladeAdminbus
-  suffix: adminbused
-  components:
-    - type: MeleeWeapon
-      damage: 1000
-
 # MISC
 
 - type: entity
@@ -614,7 +605,7 @@
   parent: BaseItem
   id: SingularityToy
   description: Mass-produced by a sadistic corporate conglomerate!
-  components:  
+  components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: singularitytoy
@@ -622,7 +613,7 @@
     sprite: Objects/Fun/toys.rsi
     state: singularitytoy
   - type: ToySingularity
-  
+
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi
