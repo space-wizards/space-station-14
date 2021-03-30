@@ -4,9 +4,11 @@ using Content.Shared.Audio;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -131,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("GlassBreak");
             var file = _random.Pick(soundCollection.PickFiles);
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), file, Owner);
         }
     }
 }

@@ -8,11 +8,13 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -23,7 +25,6 @@ namespace Content.Server.GameObjects.Components.Items.RCD
     public class RCDComponent : Component, IAfterInteract, IUse, IExamine
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
@@ -67,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
 
         public void SwapMode(UseEntityEventArgs eventArgs)
         {
-            _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/Items/genhit.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/genhit.ogg", Owner);
             int mode = (int) _mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             _mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
@@ -148,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                     return true; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
             }
 
-            _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/Items/deconstruct.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/deconstruct.ogg", Owner);
             _ammo--;
             return true;
         }

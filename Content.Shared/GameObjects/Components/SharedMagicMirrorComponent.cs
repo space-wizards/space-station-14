@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using Content.Shared.Preferences.Appearance;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -19,12 +20,12 @@ namespace Content.Shared.GameObjects.Components
         [Serializable, NetSerializable]
         public class HairSelectedMessage : BoundUserInterfaceMessage
         {
-            public readonly string HairName;
+            public readonly string HairId;
             public readonly bool IsFacialHair;
 
-            public HairSelectedMessage(string name, bool isFacialHair)
+            public HairSelectedMessage(string id, bool isFacialHair)
             {
-                HairName = name;
+                HairId = id;
                 IsFacialHair = isFacialHair;
             }
         }
@@ -58,17 +59,25 @@ namespace Content.Shared.GameObjects.Components
         {
             public readonly Color HairColor;
             public readonly Color FacialHairColor;
-            public readonly string HairName;
-            public readonly string FacialHairName;
+            public readonly string HairId;
+            public readonly string FacialHairId;
             public readonly Color EyeColor;
+            public readonly SpriteAccessoryCategories CategoriesHair;
+            public readonly SpriteAccessoryCategories CategoriesFacialHair;
+            public readonly bool CanColorHair;
+            public readonly bool CanColorFacialHair;
 
-            public MagicMirrorInitialDataMessage(Color hairColor, Color facialHairColor, string hairName, string facialHairName, Color eyeColor)
+            public MagicMirrorInitialDataMessage(Color hairColor, Color facialHairColor, string hairId, string facialHairId, Color eyeColor, SpriteAccessoryCategories categoriesHair, SpriteAccessoryCategories categoriesFacialHair, bool canColorHair, bool canColorFacialHair)
             {
                 HairColor = hairColor;
                 FacialHairColor = facialHairColor;
-                HairName = hairName;
-                FacialHairName = facialHairName;
+                HairId = hairId;
+                FacialHairId = facialHairId;
                 EyeColor = eyeColor;
+                CategoriesHair = categoriesHair;
+                CategoriesFacialHair = categoriesFacialHair;
+                CanColorHair = canColorHair;
+                CanColorFacialHair = canColorFacialHair;
             }
         }
     }

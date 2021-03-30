@@ -14,6 +14,7 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -21,6 +22,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -223,7 +225,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_closeSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _closeSound, Owner);
             _lastInternalOpenAttempt = default;
         }
 
@@ -232,7 +234,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             Open = true;
             EmptyContents();
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_openSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _openSound, Owner);
         }
 
         private void ModifyComponents()

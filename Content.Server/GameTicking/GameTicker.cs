@@ -286,7 +286,7 @@ namespace Content.Server.GameTicking
             {
                 if (!profiles.ContainsKey(readyPlayer.UserId))
                 {
-                    profiles.Add(readyPlayer.UserId, HumanoidCharacterProfile.Default());
+                    profiles.Add(readyPlayer.UserId, HumanoidCharacterProfile.Random());
                 }
             }
 
@@ -945,7 +945,7 @@ namespace Content.Server.GameTicking
                     "latejoin-arrival-announcement",
                     ("character", character.Name),
                     ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
-                    ));
+                    ), Loc.GetString("latejoin-arrival-sender"));
             }
 
             var mob = _spawnPlayerMob(job, character, lateJoin);

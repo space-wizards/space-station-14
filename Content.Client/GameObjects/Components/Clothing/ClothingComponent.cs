@@ -65,7 +65,7 @@ namespace Content.Client.GameObjects.Components.Clothing
             set => _femaleMask = value;
         }
 
-        public (RSI rsi, RSI.StateId stateId)? GetEquippedStateInfo(EquipmentSlotDefines.SlotFlags slot)
+        public (RSI rsi, RSI.StateId stateId)? GetEquippedStateInfo(EquipmentSlotDefines.SlotFlags slot, string? speciesId=null)
         {
             if (RsiPath == null)
                 return null;
@@ -73,6 +73,15 @@ namespace Content.Client.GameObjects.Components.Clothing
             var rsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / RsiPath).RSI;
             var prefix = ClothingEquippedPrefix ?? EquippedPrefix;
             var stateId = prefix != null ? $"{prefix}-equipped-{slot}" : $"equipped-{slot}";
+            if (speciesId != null)
+            {
+                var speciesState = $"{stateId}-{speciesId}";
+                if (rsi.TryGetState(speciesState, out _))
+                {
+                    return (rsi, speciesState);
+                }
+            }
+
             if (rsi.TryGetState(stateId, out _))
             {
                 return (rsi, stateId);

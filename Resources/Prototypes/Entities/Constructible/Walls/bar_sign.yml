@@ -1,21 +1,29 @@
 ﻿- type: entity
   id: BarSign
+  parent: BaseConstructible
   name: bar sign
   components:
-  - type: Clickable
-  - type: InteractionOutline
   - type: Physics
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.45, -0.95, 0.45, 1"
-      layer: [ Passable ]
+      layer:
+      - Passable
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/barsign.rsi
     state: empty
   - type: PowerReceiver
   - type: BarSign
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   id: LargeBarSign

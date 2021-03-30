@@ -1,27 +1,23 @@
 - type: entity
   id: CarpetBase
+  parent: BaseConstructible
   description: "Fancy walking surface."
   abstract: true
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Clickable
   - type: Sprite
     drawdepth: BelowFloor
   - type: Icon
     state: full
-  - type: SnapGrid
-    offset: Center
   - type: IconSmooth
     key: full
     base: carpet_
   - type: Physics
     canCollide: false
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5, -0.5, 0.5, 0.5"
-        layer: [ Passable ]
+    - shape:
+        !type:PhysShapeAabb {}
+      layer:
+      - Passable
   - type: Damageable
   - type: Destructible
     thresholds:

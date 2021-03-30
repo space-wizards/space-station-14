@@ -30,23 +30,11 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         public virtual void PlayerAttached()
         {
             GameHud.InventoryButtonVisible = true;
-            GameHud.InventoryButtonToggled = b =>
-            {
-                if (b)
-                {
-                    Window?.Open();
-                }
-                else
-                {
-                    Window?.Close();
-                }
-            };
         }
 
         public virtual void PlayerDetached()
         {
             GameHud.InventoryButtonVisible = false;
-            Window?.Close();
         }
 
         public virtual void Dispose()
