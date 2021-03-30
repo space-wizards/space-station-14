@@ -18,11 +18,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 25
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mass: 25
       layer:
       - Impassable
       - VaultImpassable

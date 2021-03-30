@@ -186,13 +186,13 @@
     enabled: false
   - type: Physics
     bodyType: KinematicController
-    mass: 5
     fixtures: # TODO: Make a second fixture. One should be for slipping, and the other for collisions.
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.2,-0.2,0.2,0.2"
-        layer:
-          - SmallImpassable
-        mask:
-          - Impassable
-          - MobImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      mass: 5
+      layer:
+        - SmallImpassable
+      mask:
+        - Impassable
+        - MobImpassable

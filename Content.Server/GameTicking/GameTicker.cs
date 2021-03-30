@@ -286,7 +286,7 @@ namespace Content.Server.GameTicking
             {
                 if (!profiles.ContainsKey(readyPlayer.UserId))
                 {
-                    profiles.Add(readyPlayer.UserId, HumanoidCharacterProfile.Default());
+                    profiles.Add(readyPlayer.UserId, HumanoidCharacterProfile.Random());
                 }
             }
 

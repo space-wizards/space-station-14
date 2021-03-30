@@ -27,11 +27,22 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         private ItemSlotButton _hudButtonPocket1 = default!;
         private ItemSlotButton _hudButtonPocket2 = default!;
+        private ItemSlotButton _hudButtonShoes = default!;
+        private ItemSlotButton _hudButtonJumpsuit = default!;
+        private ItemSlotButton _hudButtonGloves = default!;
+        private ItemSlotButton _hudButtonNeck = default!;
+        private ItemSlotButton _hudButtonHead = default!;
         private ItemSlotButton _hudButtonBelt = default!;
         private ItemSlotButton _hudButtonBack = default!;
+        private ItemSlotButton _hudButtonOClothing = default!;
         private ItemSlotButton _hudButtonId = default!;
-        private Control _rightQuickButtonsContainer = default!;
-        private Control _leftQuickButtonsContainer = default!;
+        private ItemSlotButton _hudButtonMask = default!;
+        private ItemSlotButton _hudButtonEyes = default!;
+        private ItemSlotButton _hudButtonEars = default!;
+
+        private Control _topQuickButtonsContainer = default!;
+        private Control _bottomLeftQuickButtonsContainer = default!;
+        private Control _bottomRightQuickButtonsContainer = default!;
 
         public HumanInventoryInterfaceController(ClientInventoryComponent owner) : base(owner)
         {
@@ -66,28 +77,55 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
             AddButton(out _hudButtonPocket1, Slots.POCKET1, "pocket");
             AddButton(out _hudButtonPocket2, Slots.POCKET2, "pocket");
-            AddButton(out _hudButtonBack, Slots.BACKPACK, "back");
-            AddButton(out _hudButtonBelt, Slots.BELT, "belt");
             AddButton(out _hudButtonId, Slots.IDCARD, "id");
 
-            _leftQuickButtonsContainer = new HBoxContainer
+            AddButton(out _hudButtonBack, Slots.BACKPACK, "back");
+
+            AddButton(out _hudButtonBelt, Slots.BELT, "belt");
+
+            AddButton(out _hudButtonShoes, Slots.SHOES, "shoes");
+            AddButton(out _hudButtonJumpsuit, Slots.INNERCLOTHING, "uniform");
+            AddButton(out _hudButtonOClothing, Slots.OUTERCLOTHING, "suit");
+            AddButton(out _hudButtonGloves, Slots.GLOVES, "gloves");
+            AddButton(out _hudButtonNeck, Slots.NECK, "neck");
+            AddButton(out _hudButtonMask, Slots.MASK, "mask");
+            AddButton(out _hudButtonEyes, Slots.EYES, "glasses");
+            AddButton(out _hudButtonEars, Slots.EARS, "ears");
+            AddButton(out _hudButtonHead, Slots.HEAD, "head");
+
+            _topQuickButtonsContainer = new HBoxContainer
             {
                 Children =
                 {
-                    _hudButtonId,
-                    _hudButtonBack,
-                    _hudButtonBelt,
+                    _hudButtonShoes,
+                    _hudButtonJumpsuit,
+                    _hudButtonOClothing,
+                    _hudButtonGloves,
+                    _hudButtonNeck,
+                    _hudButtonMask,
+                    _hudButtonEyes,
+                    _hudButtonEars,
+                    _hudButtonHead
                 },
                 SeparationOverride = 5
             };
-            _rightQuickButtonsContainer = new HBoxContainer
+
+            _bottomRightQuickButtonsContainer = new HBoxContainer
             {
                 Children =
                 {
                     _hudButtonPocket1,
                     _hudButtonPocket2,
-                    // keeps this "balanced" with the left, so the hands will appear perfectly in the center
-                    new Control{MinSize = (64, 64)}
+                    _hudButtonId,
+                },
+                SeparationOverride = 5
+            };
+            _bottomLeftQuickButtonsContainer = new HBoxContainer
+            {
+                Children =
+                {
+                    _hudButtonBelt,
+                    _hudButtonBack
                 },
                 SeparationOverride = 5
             };
@@ -172,8 +210,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.PlayerAttached();
 
-            GameHud.RightInventoryQuickButtonContainer.AddChild(_rightQuickButtonsContainer);
-            GameHud.LeftInventoryQuickButtonContainer.AddChild(_leftQuickButtonsContainer);
+            GameHud.BottomLeftInventoryQuickButtonContainer.AddChild(_bottomLeftQuickButtonsContainer);
+            GameHud.BottomRightInventoryQuickButtonContainer.AddChild(_bottomRightQuickButtonsContainer);
+            GameHud.TopInventoryQuickButtonContainer.AddChild(_topQuickButtonsContainer);
 
             // Update all the buttons to make sure they check out.
 
@@ -195,8 +234,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.PlayerDetached();
 
-            GameHud.RightInventoryQuickButtonContainer.RemoveChild(_rightQuickButtonsContainer);
-            GameHud.LeftInventoryQuickButtonContainer.RemoveChild(_leftQuickButtonsContainer);
+            GameHud.BottomRightInventoryQuickButtonContainer.RemoveChild(_bottomRightQuickButtonsContainer);
+            GameHud.BottomLeftInventoryQuickButtonContainer.RemoveChild(_bottomLeftQuickButtonsContainer);
+            GameHud.TopInventoryQuickButtonContainer.RemoveChild(_topQuickButtonsContainer);
 
             foreach (var (slot, list) in _inventoryButtons)
             {

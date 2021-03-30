@@ -1,5 +1,6 @@
 - type: entity
   id: base_wall
+  parent: BaseConstructible
   name: basewall
   description: Keeps the air in and the greytide out.
   abstract: true
@@ -12,13 +13,14 @@
   - type: Tag
     tags:
     - Wall
-  - type: Clickable
   - type: InteractionOutline
   - type: Sprite
     netsync: false
     drawdepth: Walls
   - type: Icon
     state: full
+  - type: Damageable
+    resistances: metallicResistances
   - type: Physics
     bodyType: Static
     fixtures:
@@ -34,8 +36,6 @@
   - type: Occluder
     sizeX: 32
     sizeY: 32
-  - type: SnapGrid
-    offset: Center
   - type: Airtight
   - type: IconSmooth
     key: walls
@@ -50,8 +50,6 @@
     sprite: Constructible/Structures/Walls/brick.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/brick.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -78,8 +76,6 @@
     sprite: Constructible/Structures/Walls/clock.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/clock.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -106,8 +102,6 @@
     sprite: Constructible/Structures/Walls/clown.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/clown.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -135,8 +129,6 @@
     sprite: Constructible/Structures/Walls/cult.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/cult.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -163,8 +155,6 @@
     sprite: Constructible/Structures/Walls/debug.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/debug.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -191,8 +181,6 @@
     sprite: Constructible/Structures/Walls/diamond.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/diamond.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -220,8 +208,6 @@
     sprite: Constructible/Structures/Walls/gold.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/gold.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -248,8 +234,6 @@
     sprite: Constructible/Structures/Walls/ice.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/ice.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -276,8 +260,6 @@
     sprite: Constructible/Structures/Walls/metal.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/metal.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -304,8 +286,6 @@
     sprite: Constructible/Structures/Walls/plasma.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/plasma.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -332,8 +312,6 @@
     sprite: Constructible/Structures/Walls/plastic.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/plastic.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -365,8 +343,6 @@
   - type: Construction
     graph: girder
     node: reinforcedWall
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -395,8 +371,6 @@
     sprite: Constructible/Structures/Walls/riveted.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/riveted.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -423,8 +397,6 @@
     sprite: Constructible/Structures/Walls/sandstone.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/sandstone.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -451,8 +423,6 @@
     sprite: Constructible/Structures/Walls/silver.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/silver.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -483,8 +453,6 @@
     node: wall
   - type: Icon
     sprite: Constructible/Structures/Walls/solid.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -511,8 +479,6 @@
     sprite: Constructible/Structures/Walls/uranium.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/uranium.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -539,8 +505,6 @@
     sprite: Constructible/Structures/Walls/wood.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/wood.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:

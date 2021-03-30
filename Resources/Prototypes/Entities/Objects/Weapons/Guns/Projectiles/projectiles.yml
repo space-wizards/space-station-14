@@ -22,6 +22,8 @@
       mask:
       - Impassable
       - MobImpassable
+    linearDamping: 0
+    angularDamping: 0
   - type: Projectile
     soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:

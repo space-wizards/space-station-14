@@ -26,15 +26,11 @@ namespace Content.Client.UserInterface
         private readonly Texture _middleHandTexture;
         private readonly Texture _rightHandTexture;
 
-        private readonly ItemStatusPanel _leftPanel;
         private readonly ItemStatusPanel _topPanel;
-        private readonly ItemStatusPanel _rightPanel;
 
         private readonly HBoxContainer _guiContainer;
         private readonly VBoxContainer _handsColumn;
         private readonly HBoxContainer _handsContainer;
-
-        private int _lastHands;
 
         public HandsGui()
         {
@@ -43,34 +39,22 @@ namespace Content.Client.UserInterface
             AddChild(_guiContainer = new HBoxContainer
             {
                 SeparationOverride = 0,
+                HorizontalAlignment = HAlignment.Center,
                 Children =
                 {
-                    (_rightPanel = ItemStatusPanel.FromSide(HandLocation.Right)),
                     (_handsColumn = new VBoxContainer
                     {
                         Children =
                         {
                             (_topPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
-                            (_handsContainer = new HBoxContainer())
+                            (_handsContainer = new HBoxContainer{HorizontalAlignment = HAlignment.Center})
                         }
                     }),
-                    (_leftPanel = ItemStatusPanel.FromSide(HandLocation.Left))
                 }
             });
             _leftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
             _middleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
             _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
-        }
-
-        private ItemStatusPanel GetItemPanel(Hand hand)
-        {
-            return hand.Location switch
-            {
-                HandLocation.Left => _rightPanel,
-                HandLocation.Middle => _topPanel,
-                HandLocation.Right => _leftPanel,
-                _ => throw new IndexOutOfRangeException()
-            };
         }
 
         private Texture HandTexture(HandLocation location)
@@ -167,8 +151,6 @@ namespace Content.Client.UserInterface
                 hand.Button!.SetActiveHand(component.ActiveIndex == hand.Name);
             }
 
-            _leftPanel.SetPositionFirst();
-            _rightPanel.SetPositionLast();
         }
 
         private void HandKeyBindDown(GUIBoundKeyEventArgs args, string slotName)
@@ -240,90 +222,7 @@ namespace Content.Client.UserInterface
                 _itemSlotManager.UpdateCooldown(hand.Button, hand.Entity);
             }
 
-            switch (component.Hands.Count)
-            {
-                case var n when n == 0 && _lastHands != 0:
-                    _guiContainer.Visible = false;
-
-                    _topPanel.Update(null);
-                    _leftPanel.Update(null);
-                    _rightPanel.Update(null);
-
-                    break;
-                case 1:
-                    if (_lastHands != 1)
-                    {
-                        _guiContainer.Visible = true;
-
-                        _topPanel.Update(null);
-                        _topPanel.Visible = false;
-
-                        _leftPanel.Update(null);
-                        _leftPanel.Visible = false;
-
-                        _rightPanel.Visible = true;
-
-                        if (!_guiContainer.Children.Contains(_rightPanel))
-                        {
-                            _rightPanel.AddChild(_rightPanel);
-                            _rightPanel.SetPositionFirst();
-                        }
-                    }
-
-                    _rightPanel.Update(component.Hands[0].Entity);
-
-                    break;
-                case 2:
-                    if (_lastHands != 2)
-                    {
-                        _guiContainer.Visible = true;
-                        _topPanel.Update(null);
-                        _topPanel.Visible = false;
-
-                        _leftPanel.Visible = true;
-                        _rightPanel.Visible = true;
-
-                        if (_handsColumn.Children.Contains(_topPanel))
-                        {
-                            _handsColumn.RemoveChild(_topPanel);
-                        }
-                    }
-
-                    _leftPanel.Update(component.Hands[0].Entity);
-                    _rightPanel.Update(component.Hands[1].Entity);
-
-                    // Order is left, right
-                    foreach (var hand in component.Hands)
-                    {
-                        var tooltip = GetItemPanel(hand);
-                        tooltip.Update(hand.Entity);
-                    }
-
-                    break;
-                case var n when n > 2:
-                    if (_lastHands <= 2)
-                    {
-                        _guiContainer.Visible = true;
-
-                        _topPanel.Visible = true;
-                        _leftPanel.Visible = false;
-                        _rightPanel.Visible = false;
-
-                        if (!_handsColumn.Children.Contains(_topPanel))
-                        {
-                            _handsColumn.AddChild(_topPanel);
-                            _topPanel.SetPositionFirst();
-                        }
-                    }
-
-                    _topPanel.Update(component.ActiveHand);
-                    _leftPanel.Update(null);
-                    _rightPanel.Update(null);
-
-                    break;
-            }
-
-            _lastHands = component.Hands.Count;
+            _topPanel.Update(component.GetEntity(component.ActiveIndex));
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
