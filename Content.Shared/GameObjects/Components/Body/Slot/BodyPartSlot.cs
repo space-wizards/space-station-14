@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Body.Slot
 {
-    public class BodyPartSlot : IDisposable
+    public class BodyPartSlot
     {
         public BodyPartSlot(string id, BodyPartType partType, IEnumerable<BodyPartSlot> connections)
         {
@@ -96,7 +96,7 @@ namespace Content.Shared.GameObjects.Components.Body.Slot
             return true;
         }
 
-        public void Dispose()
+        public void Shutdown()
         {
             Part = null;
             Connections.Clear();

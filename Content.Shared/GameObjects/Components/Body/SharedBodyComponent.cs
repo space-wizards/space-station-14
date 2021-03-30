@@ -104,7 +104,7 @@ namespace Content.Shared.GameObjects.Components.Body
         {
             foreach (var slot in SlotIds.Values)
             {
-                slot.Dispose();
+                slot.Shutdown();
             }
 
             base.OnRemove();
