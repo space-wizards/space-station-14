@@ -1,6 +1,7 @@
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -86,7 +87,16 @@ namespace Content.Server.GameObjects.Components
             {
                 var state = _type == PlaqueType.Zumos ? "zumosplaque" : "atmosplaque";
 
-                sprite.LayerSetState(0, state);
+                if (sprite.LayerCount == 0)
+                {
+                    Logger.Info(
+                        $"{nameof(AtmosPlaqueComponent)}: Adding missing sprite layer 0 for entity with prototype id {Owner.Prototype?.ID}.");
+                    sprite.AddLayerWithState(state);
+                }
+                else
+                {
+                    sprite.LayerSetState(0, state);
+                }
             }
         }
 
