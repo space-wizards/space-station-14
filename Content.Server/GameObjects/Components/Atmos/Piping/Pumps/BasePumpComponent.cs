@@ -8,8 +8,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -41,14 +39,14 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="PipeNode"/> on this entity.
         /// </summary>
         [ViewVariables]
-        [DataField("initialInletDirection")]
+        [DataField("initialInletDirection", required: true)]
         private PipeDirection _initialInletDirection = PipeDirection.None;
 
         /// <summary>
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="PipeNode"/> on this entity.
         /// </summary>
         [ViewVariables]
-        [DataField("initialOutletDirection")]
+        [DataField("initialOutletDirection", required: true)]
         private PipeDirection _initialOutletDirection = PipeDirection.None;
 
         [ViewVariables]
