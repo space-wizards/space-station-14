@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            foreach (var near in EntityManager.GetEntitiesInRange(user!, 2f, true))
+            foreach (var near in EntitySystem.Get<SharedEntityLookupSystem>().GetEntitiesInRange(user!, 2f, true))
             {
                 yield return near;
             }

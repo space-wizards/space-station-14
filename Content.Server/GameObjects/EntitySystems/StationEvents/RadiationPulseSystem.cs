@@ -40,6 +40,8 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         {
             base.Update(frameTime);
 
+            var lookupSystem = EntitySystem.Get<SharedEntityLookupSystem>();
+
             foreach (var comp in ComponentManager.EntityQuery<RadiationPulseComponent>(true))
             {
                 comp.Update(frameTime);
@@ -47,7 +49,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
                 if (ent.Deleted) continue;
 
-                foreach (var entity in EntityManager.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range, true))
+                foreach (var entity in lookupSystem.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range, true))
                 {
                     if (entity.Deleted) continue;
 

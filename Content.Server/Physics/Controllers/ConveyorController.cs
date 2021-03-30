@@ -39,7 +39,7 @@ namespace Content.Server.Physics.Controllers
                 return;
             }
 
-            var intersecting = EntityManager.GetEntitiesIntersecting(comp.Owner, true);
+            var intersecting = EntitySystem.Get<SharedEntityLookupSystem>().GetEntitiesIntersecting(comp.Owner, true);
             var direction = comp.GetAngle().ToVec();
             Vector2? ownerPos = null;
 
@@ -99,11 +99,12 @@ namespace Content.Server.Physics.Controllers
             var direction = Vector2.UnitX;
             Vector2? ownerPos = null;
 
+            // TODO: I know it sucks but conveyors need a refactor
             for (var i = comp.Intersecting.Count - 1; i >= 0; i--)
             {
                 var entity = comp.Intersecting[i];
 
-                if (entity.Deleted || !comp.CanMove(entity) || !EntityManager.IsIntersecting(comp.Owner, entity))
+                if (entity.Deleted || !comp.CanMove(entity) || !EntitySystem.Get<SharedEntityLookupSystem>().IsIntersecting(comp.Owner, entity))
                 {
                     comp.Intersecting.RemoveAt(i);
                     continue;

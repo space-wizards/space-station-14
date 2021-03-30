@@ -102,11 +102,12 @@ namespace Content.Shared.GameObjects.Components.Disposal
         {
             if(_intersecting.Count == 0) return;
 
+            // TODO: Yeah look this sucks but we'll fix it someday.
             for (var i = _intersecting.Count - 1; i >= 0; i--)
             {
                 var entity = _intersecting[i];
 
-                if (!Owner.EntityManager.IsIntersecting(entity, Owner))
+                if (EntitySystem.Get<SharedEntityLookupSystem>().IsIntersecting(entity, Owner))
                     _intersecting.RemoveAt(i);
             }
         }
