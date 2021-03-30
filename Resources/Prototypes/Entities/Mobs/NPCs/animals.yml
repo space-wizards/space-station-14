@@ -15,11 +15,11 @@
       sprite: Mobs/Animals/monkey.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 50
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.30,-0.25,0.40,0.25"
+      mass: 50
       mask:
       - Impassable
       - VaultImpassable
@@ -49,11 +49,11 @@
       sprite: Mobs/Animals/gorilla.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 90
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.90,-0.50,0.05,0.50"
+      mass: 90
       mask:
       - Impassable
       - VaultImpassable
@@ -80,11 +80,11 @@
       sprite: Mobs/Animals/chicken.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 20
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.45,-0.20,0.10,0.20"
+      mass: 20
       mask:
       - Impassable
       - VaultImpassable
@@ -114,11 +114,11 @@
       sprite: Mobs/Animals/butterfly.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 5
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.20,-0.20,0.20,0.20"
+      mass: 5
       mask:
       - Impassable
       - VaultImpassable
@@ -158,11 +158,11 @@
       sprite: Mobs/Animals/bat.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 5
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.20,-0.20,0.20,0.20"
+      mass: 5
       mask:
       - Impassable
       - VaultImpassable
@@ -193,11 +193,11 @@
       sprite: Mobs/Animals/bee.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 5
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.10,-0.10,0.10,0.10"
+      mass: 5
       mask:
       - Impassable
       - VaultImpassable
@@ -224,11 +224,11 @@
       sprite: Mobs/Animals/goat.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 20
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.60,-0.50,0.05,0.50"
+      mass: 20
       mask:
       - Impassable
       - VaultImpassable
@@ -256,11 +256,11 @@
       sprite: Mobs/Animals/goose.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 20
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.45,-0.35,0.45,0.35"
+      mass: 20
       mask:
       - Impassable
       - VaultImpassable
@@ -291,11 +291,11 @@
       sprite: Mobs/Animals/parrot.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 20
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.30,-0.35,0.35,0.35"
+      mass: 20
       mask:
       - Impassable
       - VaultImpassable
@@ -322,11 +322,11 @@
       sprite: Mobs/Animals/snake.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 10
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.30,-0.30,0.25,0.30"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable
@@ -356,11 +356,11 @@
       sprite: Mobs/Animals/spider.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 10
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.30,-0.40,0.45,0.40"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable
@@ -387,11 +387,11 @@
       sprite: Mobs/Animals/crab.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 10
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.40,-0.35,0.20,0.35"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable
@@ -418,11 +418,11 @@
       sprite: Mobs/Animals/penguin.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 10
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.50,-0.30,0.35,0.30"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable
@@ -463,11 +463,11 @@
     - Helmet
   - type: Physics
     bodyType: KinematicController
-    mass: 10
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.50,-0.30,0.35,0.30"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable
