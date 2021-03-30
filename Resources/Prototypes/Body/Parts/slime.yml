@@ -22,11 +22,11 @@
       size: 14
       compatibility: Biological
       mechanisms:
-        - HeartHuman
-        - LungsHuman
-        - StomachHuman
-        - LiverHuman
-        - KidneysHuman
+        - OrganHumanHeart
+        - OrganHumanLungs
+        - OrganHumanStomach
+        - OrganHumanLiver
+        - OrganHumanKidneys
     - type: BiologicalSurgeryData
     - type: Damageable
       # TODO BODY DettachableDamageableComponent?
@@ -53,8 +53,8 @@
       compatibility: Biological
       vital: true
       mechanisms:
-        - BrainHuman
-        - EyesHuman
+        - OrganHumanBrain
+        - OrganHumanEyes
     - type: BiologicalSurgeryData
     - type: Damageable
       damageContainer: biologicalDamageContainer
