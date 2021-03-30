@@ -115,17 +115,17 @@
         - map: [ "enum.Slots.HEAD" ]
     - type: Physics
       bodyType: Dynamic
-      mass: 85
       fixtures:
-        - shape:
-            !type:PhysShapeAabb
-              bounds: "-0.35,-0.35,0.35,0.35"
-          mask:
-            - Impassable
-            - MobImpassable
-            - VaultImpassable
-          layer:
-            - Opaque
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.35,-0.35,0.35,0.35"
+        mass: 85
+        mask:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+        layer:
+          - Opaque
     - type: PlayerInputMover
     - type: AtmosExposed
     - type: Flammable

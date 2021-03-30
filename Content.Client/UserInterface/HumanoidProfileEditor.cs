@@ -802,7 +802,7 @@ namespace Content.Client.UserInterface
                 Profile.Appearance.FacialHairColor,
                 Profile.Appearance.FacialHairStyleId,
                 SpriteAccessoryCategories.HumanFacialHair,
-                false);
+                true);
         }
 
         private void UpdateEyePickers()
