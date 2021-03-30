@@ -719,3 +719,9 @@ Entries:
   - {message: Removes InteractionOutlines for puddles, type: Tweak}
   id: 129
   time: '2021-03-30T03:54:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add inertia back in to physics., type: Add}
+  - {message: Items can freely rotate., type: Add}
+  id: 130
+  time: '2021-03-30T10:43:03.0000000+00:00'
