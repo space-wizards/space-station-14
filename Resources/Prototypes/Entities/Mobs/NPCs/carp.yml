@@ -19,15 +19,14 @@
       sprite: Mobs/Aliens/Carps/space.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 50
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
+      mass: 50
       mask:
       - Impassable
       - MobImpassable
-      - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
@@ -55,8 +54,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: alive
       sprite: Mobs/Aliens/Carps/magic.rsi
-  - type: Physics
-    mass: 60
 
 - type: entity
   name: holocarp
@@ -71,4 +68,15 @@
       state: alive
       sprite: Mobs/Aliens/Carps/holo.rsi
   - type: Physics
-    mass: 5
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.35,-0.35,0.35,0.35"
+      mass: 5
+      mask:
+        - Impassable
+        - MobImpassable
+        - SmallImpassable
+      layer:
+        - Opaque

@@ -22,11 +22,11 @@
     snap: true
   - type: Physics
     bodyType: Static
-    mass: 25
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.4,-0.25,0.4,0.25"
+      mass: 25
       mask:
       - SmallImpassable
       layer:
@@ -69,12 +69,12 @@
     state: mixer_broken
   - type: InteractionOutline
   - type: Physics
-    mass: 25
     bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.4,-0.25,0.4,0.25"
+      mass: 25
       mask:
         - SmallImpassable
       layer:

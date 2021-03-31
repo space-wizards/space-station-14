@@ -31,8 +31,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Physics.Dynamics.Shapes;
 using Robust.Shared.Timing;
 
 #nullable enable
@@ -275,8 +275,9 @@ namespace Content.Server.Commands.Physics
                         new Fixture(box, shape) {
                             CollisionLayer = (int) CollisionGroup.Impassable,
                             CollisionMask = (int) CollisionGroup.Impassable,
-                            Hard = true});
-                    box.Mass = 5.0f;
+                            Hard = true,
+                            Mass = 5.0f,
+                        });
                     y += deltaY;
                 }
 

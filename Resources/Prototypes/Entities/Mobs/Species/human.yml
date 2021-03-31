@@ -135,11 +135,11 @@
     - map: [ "enum.Slots.HEAD" ]
   - type: Physics
     bodyType: KinematicController
-    mass: 70
     fixtures: # TODO: This needs a second fixture just for mob collisions.
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
+      mass: 70
       restitution: 0.0
       mask:
       - Impassable
@@ -319,11 +319,12 @@
       - map: ["hand-right"]
     - type: Physics
       bodyType: Dynamic
-      mass: 85
       fixtures:
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.35,-0.35,0.35,0.35"
+        mass: 70
+        restitution: 0.0
         mask:
         - Impassable
         - MobImpassable

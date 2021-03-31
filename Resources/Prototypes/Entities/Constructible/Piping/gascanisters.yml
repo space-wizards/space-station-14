@@ -10,19 +10,27 @@
   - type: Damageable
     resistances: metallicResistances
   - type: Physics
-    mass: 25
     bodyType: Dynamic
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.25,0.5,0.25"
-        mask:
-          - MobImpassable
-        layer:
-          - Opaque
-          - MobImpassable
-          - SmallImpassable
-          - VaultImpassable
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
+      mass: 25
+      mask:
+        - MobImpassable
+      layer:
+        - Opaque
+        - MobImpassable
+        - SmallImpassable
+        - VaultImpassable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: GasCanister
   - type: UserInterface
   - type: Appearance
