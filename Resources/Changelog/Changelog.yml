@@ -735,3 +735,8 @@ Entries:
   - {message: Uplink now has correct mags for clarissa, type: Fix}
   id: 132
   time: '2021-03-31T10:11:12.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: NEW RULE - NO USING ALT ACCOUNTS ON THE SAME SERVER, type: Add}
+  id: 133
+  time: '2021-03-31T12:10:16.0000000+00:00'
