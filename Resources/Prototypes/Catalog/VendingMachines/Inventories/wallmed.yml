@@ -1,5 +1,5 @@
-- type: vendingMachineInventory
-  id: NanoMed
+- type: VendingMachineInventory
+  id: NanoMedInventory
   name: NanoMed
   description: "It's a wall-mounted medical equipment dispenser. Natural chemicals only!"
   spriteName: wallmed

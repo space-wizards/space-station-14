@@ -1,5 +1,5 @@
-﻿- type: advertisementsPack
-  id: Vendomat ads
+﻿- type: AdvertisementsPack
+  id: VendomatAds
   advertisements:
   - "Only the finest!"
   - "Have some tools."

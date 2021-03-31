@@ -24,16 +24,16 @@ namespace Content.Server.GameObjects.Components
         private CancellationTokenSource _cancellationSource = new();
 
         /// <summary>
-        /// Minimum time to wait before saying a new ad, in ms.
+        /// Minimum time to wait before saying a new ad, in seconds.
         /// </summary>
         [field: DataField("minWait")]
-        private int MinWait { get; } = 40000;
+        private int MinWait { get; } = 40;
 
         /// <summary>
-        /// Maximum time to wait before saying a new ad, in ms.
+        /// Maximum time to wait before saying a new ad, in seconds.
         /// </summary>
         [field: DataField("maxWait")]
-        private int MaxWait { get; } = 80000;
+        private int MaxWait { get; } = 80;
 
         [field: DataField("pack")]
         private string PackPrototypeId { get; } = string.Empty;
@@ -50,12 +50,12 @@ namespace Content.Server.GameObjects.Components
             if (string.IsNullOrEmpty(PackPrototypeId) || packPrototype == null)
             {
                 // If there is no pack, log a warning and remove the component
-                Logger.Warning($"{Owner} has {Name} Component but no advertisments pack.");
+                Logger.Warning($"{Owner} has {Name}Component but no advertisments pack.");
                 Owner.RemoveComponent<AdvertiseComponent>();
                 return;
             }
 
-            _advertisements = packPrototype.Advertisements.ToList();
+            _advertisements = packPrototype.Advertisements;
 
             // Do not start timer if advertisement list is empty
             if (_advertisements.Count == 0)
@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.Components
             _cancellationSource = new CancellationTokenSource();
 
             // Generate random wait time, then create timer
-            var wait = _random.Next(MinWait, MaxWait);
+            var wait = _random.Next(MinWait * 1000, MaxWait * 1000);
             Owner.SpawnTimer(wait, SayAndRefresh, _cancellationSource.Token);
         }
 

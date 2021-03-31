@@ -1,5 +1,5 @@
-﻿- type: advertisementsPack
-  id: Robust Softdrinks ads
+﻿- type: AdvertisementsPack
+  id: RobustSoftdrinksAds
   advertisements:
   - "Refreshing!"
   - "Hope you're thirsty!"

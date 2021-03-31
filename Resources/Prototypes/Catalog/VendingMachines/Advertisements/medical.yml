@@ -1,5 +1,5 @@
-﻿- type: advertisementsPack
-  id: NanoMed Plus ads
+﻿- type: AdvertisementsPack
+  id: NanoMedPlusAds
   advertisements:
   - "Go save some lives!"
   - "The best stuff for your medbay."

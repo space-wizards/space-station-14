@@ -1,5 +1,5 @@
-﻿- type: advertisementsPack
-  id: Hot Drinks machine ads
+﻿- type: AdvertisementsPack
+  id: HotDrinksMachineAds
   advertisements:
     - "Have a drink!"
     - "Drink up!"

@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.VendingMachines
 {
-    [Serializable, NetSerializable, Prototype("vendingMachineInventory")]
+    [Serializable, NetSerializable, Prototype("VendingMachineInventory")]
     public class VendingMachineInventoryPrototype : IPrototype
     {
         [ViewVariables]

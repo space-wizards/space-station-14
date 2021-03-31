@@ -1,5 +1,5 @@
-﻿- type: advertisementsPack
-  id: AutoDrobe ads
+﻿- type: AdvertisementsPack
+  id: AutoDrobeAds
   advertisements:
   - "Dress for success!"
   - "Suited and booted!"

@@ -1,7 +1,7 @@
-﻿- type: advertisementsPack
-  id: SecTech ads
+﻿- type: AdvertisementsPack
+  id: SecTechAds
   advertisements:
-  - "Crack capitalist skulls!"
+  - "Crack communist skulls!"
   - "Beat some heads in!"
   - "Don't forget - harm is good!"
   - "Your weapons are right here."

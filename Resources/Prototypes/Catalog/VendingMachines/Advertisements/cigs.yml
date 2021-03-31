@@ -1,5 +1,5 @@
-﻿- type: advertisementsPack
-  id: Cigarette ads
+﻿- type: AdvertisementsPack
+  id: CigaretteMachineAds
   advertisements:
   - "Space cigs taste good like a cigarette should."
   - "I'd rather toolbox than switch."

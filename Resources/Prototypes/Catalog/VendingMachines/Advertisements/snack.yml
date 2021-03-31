@@ -1,5 +1,5 @@
-﻿- type: advertisementsPack
-  id: Getmore Chocolate Corp ads
+﻿- type: AdvertisementsPack
+  id: GetmoreChocolateCorpAds
   advertisements:
   - "Try our new nougat bar!"
   - "Twice the calories for half the price!"

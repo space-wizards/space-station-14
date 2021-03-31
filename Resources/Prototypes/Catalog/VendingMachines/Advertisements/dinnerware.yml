@@ -1,5 +1,5 @@
-﻿- type: advertisementsPack
-  id: Dinnerware ads
+﻿- type: AdvertisementsPack
+  id: DinnerwareAds
   advertisements:
   - "Mm, food stuffs!"
   - "Food and food accessories."

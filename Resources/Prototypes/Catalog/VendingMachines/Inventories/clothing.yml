@@ -1,5 +1,5 @@
-- type: vendingMachineInventory
-  id: ClothesMate
+- type: VendingMachineInventory
+  id: ClothesMateInventory
   name: ClothesMate
   startingInventory:
     HatBandBlack: 3

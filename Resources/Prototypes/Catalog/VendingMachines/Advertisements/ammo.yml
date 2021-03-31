@@ -1,5 +1,5 @@
-﻿- type: advertisementsPack
-  id: AmmoVend ads
+﻿- type: AdvertisementsPack
+  id: AmmoVendAds
   advertisements:
   - "Liberation Station: Your one-stop shop for all things second amendment!"
   - "Be a patriot today, pick up a gun!"

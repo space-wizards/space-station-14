@@ -1,5 +1,5 @@
-- type: vendingMachineInventory
-  id: NanoMed Plus
+- type: VendingMachineInventory
+  id: NanoMedPlusInventory
   name: NanoMed Plus
   description: "It's a medical drug dispenser. Natural chemicals only!"
   animationDuration: 1.8

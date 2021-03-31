@@ -1,5 +1,5 @@
-﻿- type: vendingMachineInventory
-  id: PietyVend
+﻿- type: VendingMachineInventory
+  id: PietyVendInventory
   name: PietyVend
   description: "A vending machine containing religious supplies and clothing. A label reads: \"A holy vendor for a pious man.\""
   spriteName: chapel

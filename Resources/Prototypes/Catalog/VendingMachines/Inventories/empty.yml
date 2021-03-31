@@ -1,5 +1,5 @@
-- type: vendingMachineInventory
-  id: empty vending machine
-  name: empty vending machine
+- type: VendingMachineInventory
+  id: EmptyVendingMachineInventory
+  name: Empty vending machine
   description: Just add capitalism!
   spriteName: empty

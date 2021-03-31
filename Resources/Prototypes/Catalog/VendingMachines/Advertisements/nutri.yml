@@ -1,5 +1,5 @@
-﻿- type: advertisementsPack
-  id: NutriMax ads
+﻿- type: AdvertisementsPack
+  id: NutriMaxAds
   advertisements:
   - "Aren't you glad you don't have to fertilize the natural way?"
   - "Now with 50% less stink!"

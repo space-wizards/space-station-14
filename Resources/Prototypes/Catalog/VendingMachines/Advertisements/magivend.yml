@@ -1,5 +1,5 @@
-﻿- type: advertisementsPack
-  id: MagiVend ads
+﻿- type: AdvertisementsPack
+  id: MagiVendAds
   advertisements:
   - "Sling spells the proper way with MagiVend!"
   - "Be your own Houdini! Use MagiVend!"

@@ -1,5 +1,5 @@
-﻿- type: advertisementsPack
-  id: ClothesMate ads
+﻿- type: AdvertisementsPack
+  id: ClothesMateAds
   advertisements:
   - "Dress for success!"
   - "Prepare to look swagalicious!"
