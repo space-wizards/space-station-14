@@ -750,3 +750,8 @@ Entries:
   - {message: Ownerless ID's now show in PDA (Captain's Spare), type: Add}
   id: 135
   time: '2021-03-31T13:29:57.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed the client crashing after restarting the round, type: Fix}
+  id: 136
+  time: '2021-03-31T20:06:31.469316+00:00'
