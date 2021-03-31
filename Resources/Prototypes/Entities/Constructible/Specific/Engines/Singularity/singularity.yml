@@ -10,10 +10,11 @@
     - shape:
         !type:PhysShapeCircle
           radius: 0.5
-      layer: [Impassable]
+      mass: 5
+      layer:
+      - Impassable
       mask:
       - AllMask
-    mass: 5
   - type: Singularity
   - type: RadiationPulse
     range: 15
