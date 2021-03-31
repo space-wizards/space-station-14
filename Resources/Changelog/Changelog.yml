@@ -725,3 +725,13 @@ Entries:
   - {message: Items can freely rotate., type: Add}
   id: 130
   time: '2021-03-30T10:43:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix item actions rotating on your bar, type: Fix}
+  id: 131
+  time: '2021-03-31T10:10:56.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Uplink now has correct mags for clarissa, type: Fix}
+  id: 132
+  time: '2021-03-31T10:11:12.0000000+00:00'
