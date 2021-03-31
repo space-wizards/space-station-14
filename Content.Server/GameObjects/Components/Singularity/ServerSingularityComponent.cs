@@ -1,20 +1,18 @@
 #nullable enable
 using System.Linq;
 using Content.Server.GameObjects.Components.StationEvents;
+using Content.Shared.GameObjects.Components.Singularity;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
-using Robust.Server.GameObjects;
-using Content.Shared.GameObjects.Components.Singularity;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
-
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -62,8 +60,10 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
 
-                _spriteComponent?.LayerSetRSI(0, "Constructible/Power/Singularity/singularity_" + _level + ".rsi");
-                _spriteComponent?.LayerSetState(0, "singularity_" + _level);
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                {
+                    appearance.SetData(SingularityVisuals.Level, _level);
+                }
 
                 if (_collidableComponent != null && _collidableComponent.Fixtures.Any() && _collidableComponent.Fixtures[0].Shape is PhysShapeCircle circle)
                 {
