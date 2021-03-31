@@ -9,11 +9,11 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
-    mass: 25
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.5, -0.5, 0.5, 0.5"
+      mass: 25
       layer:
       - Impassable
       - MobImpassable

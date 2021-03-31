@@ -18,7 +18,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -461,7 +460,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             if (string.IsNullOrEmpty(_graphIdentifier))
             {
-                Logger.Error($"Prototype {Owner.Prototype?.ID}'s construction component didn't have a graph identifier!");
+                Logger.Warning($"Prototype {Owner.Prototype?.ID}'s construction component didn't have a graph identifier!");
                 return;
             }
 

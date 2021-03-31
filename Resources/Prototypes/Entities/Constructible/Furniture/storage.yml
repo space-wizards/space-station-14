@@ -12,12 +12,12 @@
     sprite: Constructible/Misc/furniture.rsi
     state: rack
   - type: Physics
-    mass: 50
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
+      mass: 50
       layer:
       - MobImpassable
       mask:

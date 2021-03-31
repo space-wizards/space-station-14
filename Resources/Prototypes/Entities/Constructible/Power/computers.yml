@@ -5,12 +5,12 @@
   description: "A computer under construction. It needs a circuit board."
   components:
     - type: Physics
-      mass: 25
       bodyType: Static
       fixtures:
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.5,-0.25,0.5,0.25"
+        mass: 25
         mask:
           - MobImpassable
         layer:
