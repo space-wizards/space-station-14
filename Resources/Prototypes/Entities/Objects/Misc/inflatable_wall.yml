@@ -9,12 +9,12 @@
     sprite: Objects/Misc/inflatable_wall.rsi
     state: inflatable_wall
   - type: Physics
-    mass: 15
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.5, -0.5, 0.5, 0.5"
+      mass: 15
       layer:
       - Impassable
       - MobImpassable
