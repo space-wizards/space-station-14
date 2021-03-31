@@ -43,17 +43,14 @@ namespace Content.IntegrationTests.Tests
 
             s.Post(() =>
             {
-                var playerManager = IoCManager.Resolve<IPlayerManager>();
-                var player = playerManager.GetAllPlayers().Single();
+                IoCManager.Resolve<IPlayerManager>()
+                    .GetAllPlayers()
+                    .Single()
+                    .JoinGame();
 
-                player.JoinGame();
+                var mapMan = IoCManager.Resolve<IMapManager>();
 
-                var mapManager = IoCManager.Resolve<IMapManager>();
-                mapManager.CreateMap(new MapId(1));
-
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                var entity = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, new MapId(1)));
-                player.AttachToEntity(entity);
+                mapMan.CreateMap(new MapId(1));
             });
 
             return (c, s);
