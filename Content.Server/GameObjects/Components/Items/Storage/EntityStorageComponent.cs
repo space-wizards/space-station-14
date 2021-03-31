@@ -273,23 +273,14 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (entity == Owner) return false;
             if (entity.TryGetComponent(out IPhysBody? entityPhysicsComponent))
             {
-                if(MaxSize < entityPhysicsComponent.GetWorldAABB().Size.X
+                if (MaxSize < entityPhysicsComponent.GetWorldAABB().Size.X
                     || MaxSize < entityPhysicsComponent.GetWorldAABB().Size.Y)
                 {
                     return false;
                 }
             }
-            if (Contents.CanInsert(entity))
-            {
-                Contents.Insert(entity);
-                entity.Transform.LocalPosition = Vector2.Zero;
-                if (entityPhysicsComponent != null)
-                {
-                    entityPhysicsComponent.CanCollide = false;
-                }
-                return true;
-            }
-            return false;
+
+            return Contents.CanInsert(entity) && Insert(entity);
         }
 
         public virtual Vector2 ContentsDumpPosition()
@@ -365,7 +356,14 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return true;
             }
 
-            return Contents.Insert(entity);
+            if (!Contents.Insert(entity)) return false;
+
+            entity.Transform.LocalPosition = Vector2.Zero;
+            if (entity.TryGetComponent(out IPhysBody? body))
+            {
+                body.CanCollide = false;
+            }
+            return true;
         }
 
         /// <inheritdoc />
