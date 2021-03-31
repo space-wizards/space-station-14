@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components
             if (string.IsNullOrEmpty(PackPrototypeId) || packPrototype == null)
             {
                 // If there is no pack, log a warning and remove the component
-                Logger.Log(LogLevel.Warning, Owner.Name + " has " + Name + "Component but no advertisments pack.");
+                Logger.Warning($"{Owner} has {Name} Component but no advertisments pack.");
                 Owner.RemoveComponent<AdvertiseComponent>();
                 return;
             }
