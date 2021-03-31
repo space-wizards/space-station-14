@@ -1,0 +1,10 @@
+﻿- type: advertisementsPack
+  id: NanoMed Plus ads
+  advertisements:
+  - "Go save some lives!"
+  - "The best stuff for your medbay."
+  - "Only the finest tools."
+  - "Natural chemicals!"
+  - "This stuff saves lives."
+  - "Don't you want some?"
+  - "Ping!"

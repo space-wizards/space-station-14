@@ -1,0 +1,9 @@
+﻿- type: advertisementsPack
+  id: Dinnerware ads
+  advertisements:
+  - "Mm, food stuffs!"
+  - "Food and food accessories."
+  - "Get your plates!"
+  - "You like forks? I like forks."
+  - "Woo, utensils."
+  - "You don't really need these..."

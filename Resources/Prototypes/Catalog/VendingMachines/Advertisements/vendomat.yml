@@ -1,0 +1,7 @@
+﻿- type: advertisementsPack
+  id: Vendomat ads
+  advertisements:
+  - "Only the finest!"
+  - "Have some tools."
+  - "The most robust equipment."
+  - "The finest gear in space!"

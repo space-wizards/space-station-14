@@ -250,6 +250,7 @@ namespace Content.Client
             "ToySpawner",
             "FigureSpawner",
             "RandomSpawner",
+            "Advertise",
         };
     }
 }
