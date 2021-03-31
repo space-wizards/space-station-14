@@ -2,7 +2,7 @@
   name: bike horn
   parent: BaseItem
   id: BikeHorn
-  description: A horn off of a bicycle.
+  description: A horn off of a bicycle. Honk honk!
   components:
   - type: Sprite
     sprite: Objects/Fun/bikehorn.rsi
