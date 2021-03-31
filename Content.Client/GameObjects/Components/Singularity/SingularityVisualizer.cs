@@ -12,6 +12,13 @@ namespace Content.Client.GameObjects.Components.Singularity
         [field: DataField("layer")]
         private int Layer { get; } = 0;
 
+        public override void InitializeEntity(IEntity entity)
+        {
+            base.InitializeEntity(entity);
+
+            entity.GetComponentOrNull<SpriteComponent>()?.LayerMapReserveBlank(Layer);
+        }
+
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
@@ -28,13 +35,6 @@ namespace Content.Client.GameObjects.Components.Singularity
 
             sprite.LayerSetRSI(Layer, "Constructible/Power/Singularity/singularity_" + level + ".rsi");
             sprite.LayerSetState(Layer, "singularity_" + level);
-        }
-
-        public override void InitializeEntity(IEntity entity)
-        {
-            base.InitializeEntity(entity);
-
-            entity.GetComponentOrNull<SpriteComponent>()?.LayerMapReserveBlank(Layer);
         }
     }
 }
