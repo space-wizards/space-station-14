@@ -71,7 +71,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Ale
+      - ReagentId: Ale
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/aleglass.rsi
@@ -87,7 +87,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Antifreeze
+      - ReagentId: Antifreeze
         Quantity: 20
   - type: Drink
   - type: Sprite
@@ -104,7 +104,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.AtomicBomb
+      - ReagentId: AtomicBomb
         Quantity: 20
   - type: Drink
   - type: Sprite
@@ -121,7 +121,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.B52
+      - ReagentId: B52
         Quantity: 20
   - type: Drink
   - type: Sprite
@@ -160,7 +160,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Beer
+      - ReagentId: Beer
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi
@@ -176,7 +176,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Beer
+      - ReagentId: Beer
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beerglass.rsi
@@ -193,7 +193,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: chem.BerryJuice
+        - ReagentId: BerryJuice
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/berryjuice.rsi
@@ -281,7 +281,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: chem.CarrotJuice
+        - ReagentId: CarrotJuice
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/carrotjuice.rsi
@@ -320,7 +320,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Coffee
+      - ReagentId: Coffee
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coffee.rsi
@@ -336,7 +336,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Cognac
+      - ReagentId: Cognac
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacglass.rsi
@@ -352,7 +352,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Cola
+      - ReagentId: Cola
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/colabottle.rsi
@@ -368,7 +368,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Cream
+      - ReagentId: Cream
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cream.rsi
@@ -384,7 +384,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.CubaLibre
+      - ReagentId: CubaLibre
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cubalibreglass.rsi
@@ -599,7 +599,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: chem.LimeJuice
+        - ReagentId: LimeJuice
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_green.rsi
@@ -616,7 +616,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: chem.OrangeJuice
+        - ReagentId: OrangeJuice
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_orange.rsi
@@ -632,7 +632,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: chem.LemonJuice
+        - ReagentId: LemonJuice
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_yellow.rsi
@@ -649,7 +649,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: chem.TomatoJuice
+        - ReagentId: TomatoJuice
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_red.rsi
@@ -665,7 +665,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Milk
+      - ReagentId: Milk
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_white.rsi
@@ -692,7 +692,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: chem.GrapeJuice
+        - ReagentId: GrapeJuice
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grapejuice.rsi
@@ -808,7 +808,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Ice
+      - ReagentId: Ice
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/iceglass.rsi
@@ -824,7 +824,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.IrishCarBomb
+      - ReagentId: IrishCarBomb
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcarbomb.rsi
@@ -840,7 +840,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.IrishCoffee
+      - ReagentId: IrishCoffee
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcoffeeglass.rsi
@@ -856,7 +856,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.IrishCream
+      - ReagentId: IrishCream
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcreamglass.rsi
@@ -905,7 +905,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Kahlua
+      - ReagentId: Kahlua
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kahluaglass.rsi
@@ -966,7 +966,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: chem.LemonJuice
+        - ReagentId: LemonJuice
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonjuice.rsi
@@ -983,9 +983,9 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: chem.LemonJuice
+        - ReagentId: LemonJuice
           Quantity: 10
-        - ReagentId: chem.LimeJuice
+        - ReagentId: LimeJuice
           Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonlime.rsi
@@ -1002,7 +1002,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: chem.LimeJuice
+        - ReagentId: LimeJuice
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/limejuice.rsi
@@ -1051,7 +1051,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.ManlyDorf
+      - ReagentId: ManlyDorf
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/manlydorfglass.rsi
@@ -1100,7 +1100,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Milk
+      - ReagentId: Milk
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/milk.rsi
@@ -1183,7 +1183,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: chem.OrangeJuice
+        - ReagentId: OrangeJuice
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
@@ -1211,7 +1211,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: chem.PoisonBerryJuice
+        - ReagentId: PoisonBerryJuice
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/poisonberryjuice.rsi
@@ -1526,7 +1526,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.SyndicateBomb
+      - ReagentId: SyndicateBomb
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/syndicatebomb.rsi
@@ -1542,7 +1542,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Tea
+      - ReagentId: Tea
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teaglass.rsi
@@ -1558,7 +1558,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Tea
+      - ReagentId: Tea
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teapot.rsi
@@ -1619,7 +1619,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: chem.TomatoJuice
+        - ReagentId: TomatoJuice
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tomatojuice.rsi
@@ -1713,7 +1713,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: chem.WatermelonJuice
+        - ReagentId: WatermelonJuice
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/watermelon.rsi
@@ -1745,7 +1745,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.WhiskeyCola
+      - ReagentId: WhiskeyCola
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeycolaglass.rsi
@@ -1761,7 +1761,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Whiskey
+      - ReagentId: Whiskey
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
@@ -1810,7 +1810,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Wine
+      - ReagentId: Wine
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/wineglass.rsi

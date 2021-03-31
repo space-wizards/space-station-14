@@ -8,7 +8,7 @@
     maxVol: 50
     contents:
       reagents:
-      - ReagentId: chem.Flour
+      - ReagentId: Flour
         Quantity: 50
   - type: SolutionTransfer
     transferAmount: 5

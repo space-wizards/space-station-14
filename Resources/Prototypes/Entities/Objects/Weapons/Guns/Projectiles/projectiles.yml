@@ -283,5 +283,5 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.Nutriment
+          - ReagentId: Nutriment
             Quantity: 8

@@ -25,5 +25,5 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.WeldingFuel
+      - ReagentId: WeldingFuel
         Quantity: 1500
