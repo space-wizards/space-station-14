@@ -235,6 +235,13 @@ namespace Content.Shared
             CVarDef.Create("atmos.monstermos_equalization", true, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Whether atmos superconduction is enabled.
+        /// </summary>
+        /// <remarks> Disabled by default, superconduction is awful. </remarks>
+        public static readonly CVarDef<bool> Superconduction =
+            CVarDef.Create("atmos.superconduction", false, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Maximum time in milliseconds that atmos can take processing.
         /// </summary>
         public static readonly CVarDef<float> AtmosMaxProcessTime =

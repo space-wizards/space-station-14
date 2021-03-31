@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.Audio;
@@ -10,9 +9,7 @@ using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Maps;
-using Content.Shared.Physics;
 using Content.Shared.Physics.Controllers;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -20,7 +17,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -90,7 +87,6 @@ namespace Content.Server.Physics.Controllers
             {
                 physics = gridEntity.AddComponent<PhysicsComponent>();
                 physics.BodyStatus = BodyStatus.InAir;
-                physics.Mass = 1;
                 physics.CanCollide = true;
                 physics.AddFixture(new Fixture(physics, new PhysShapeGrid(grid)));
             }

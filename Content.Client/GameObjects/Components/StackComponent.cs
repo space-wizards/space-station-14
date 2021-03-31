@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
@@ -65,9 +65,9 @@ namespace Content.Client.GameObjects.Components
                 parent._uiUpdateNeeded = true;
             }
 
-            protected override void Update(FrameEventArgs args)
+            protected override void FrameUpdate(FrameEventArgs args)
             {
-                base.Update(args);
+                base.FrameUpdate(args);
 
                 if (!_parent._uiUpdateNeeded)
                 {

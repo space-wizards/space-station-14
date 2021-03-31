@@ -1,7 +1,7 @@
 # Empty mags
 - type: entity
   id: MagazineMagnumBase
-  name: "magazine (.40 magnum)"
+  name: "Lamia magazine (.40 magnum)"
   parent: BaseItem
   abstract: true
   components:
@@ -26,7 +26,7 @@
 
 - type: entity
   id: MagazineMagnumSmgBase
-  name: "SMG Magazine (.40 magnum)"
+  name: "Drozd magazine (.40 magnum)"
   parent: BaseItem
   abstract: true
   components:
@@ -52,7 +52,7 @@
 # Magazines
 - type: entity
   id: MagazineMagnum
-  name: "magazine (.40 magnum)"
+  name: "Lamia magazine (.40 magnum)"
   parent: MagazineMagnumBase
   components:
   - type: RangedMagazine
@@ -63,7 +63,7 @@
 
 - type: entity
   id: MagazineMagnumFlash
-  name: "magazine (.40 magnum flash)"
+  name: "Lamia magazine (.40 magnum flash)"
   parent: MagazineMagnumBase
   components:
   - type: RangedMagazine
@@ -74,7 +74,7 @@
 
 - type: entity
   id: MagazineMagnumHV
-  name: "magazine (.40 magnum high-velocity)"
+  name: "Lamia magazine (.40 magnum high-velocity)"
   parent: MagazineMagnumBase
   components:
   - type: RangedMagazine
@@ -85,7 +85,7 @@
 
 - type: entity
   id: MagazineMagnumPractice
-  name: "magazine (.40 magnum practice)"
+  name: "Lamia magazine (.40 magnum practice)"
   parent: MagazineMagnumBase
   components:
   - type: RangedMagazine
@@ -96,7 +96,7 @@
 
 - type: entity
   id: MagazineMagnumRubber
-  name: "magazine (.40 magnum rubber)"
+  name: "Lamia magazine (.40 magnum rubber)"
   parent: MagazineMagnumBase
   components:
   - type: RangedMagazine
@@ -107,7 +107,7 @@
 
 - type: entity
   id: MagazineMagnumSmg
-  name: "SMG Magazine (.40 magnum)"
+  name: "Drozd magazine (.40 magnum)"
   parent: MagazineMagnumSmgBase
   components:
   - type: RangedMagazine
@@ -118,7 +118,7 @@
 
 - type: entity
   id: MagazineMagnumSmgHV
-  name: "SMG Magazine (.40 magnum High-Velocity)"
+  name: "Drozd magazine (.40 magnum High-Velocity)"
   parent: MagazineMagnumSmgBase
   components:
   - type: RangedMagazine
@@ -129,7 +129,7 @@
 
 - type: entity
   id: MagazineMagnumSmgPractice
-  name: "SMG Magazine (.40 magnum practice)"
+  name: "Drozd magazine (.40 magnum practice)"
   parent: MagazineMagnumSmgBase
   components:
   - type: RangedMagazine
@@ -140,7 +140,7 @@
 
 - type: entity
   id: MagazineMagnumSmgRubber
-  name: "SMG Magazine (.40 magnum rubber)"
+  name: "Drozd magazine (.40 magnum rubber)"
   parent: MagazineMagnumSmgBase
   components:
   - type: RangedMagazine

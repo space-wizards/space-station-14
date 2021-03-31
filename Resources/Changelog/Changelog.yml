@@ -616,3 +616,142 @@ Entries:
   - {message: Adds cream pie launcher. Honk!, type: Add}
   id: 112
   time: '2021-03-21T17:11:51.494714+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Added more table construction and destruction, type: Add}
+  - {message: Tweaked items that tables drop when destroyed to match their construction
+      steps, type: Tweak}
+  id: 113
+  time: '2021-03-24T22:34:07.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added a few different gas canisters to atmospherics and engineering.,
+    type: Add}
+  id: 114
+  time: '2021-03-25T01:03:49.352135+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'Fixes ID Computer in Captain''s Headquarters containing a Glass Firelock
+      inside it, somehow... Oh, this directly fixes the bug where a breach in bar
+      would close all firelocks except one, by the way.', type: Fix}
+  id: 115
+  time: '2021-03-25T01:03:49.353117+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: You can anchor and rotate a lot more things, type: Add}
+  - {message: Some unused furniture sprites, type: Remove}
+  id: 116
+  time: '2021-03-26T01:51:26.0000000+00:00'
+- author: drongood12
+  changes:
+  - {message: 'Fixed a problem with foamed metal, now bullets do not go through it',
+    type: Fix}
+  id: 117
+  time: '2021-03-26T01:52:27.0000000+00:00'
+- author: drongood12
+  changes:
+  - {message: add linearDamping and angularDamping for projectiles, type: Add}
+  id: 118
+  time: '2021-03-26T01:54:07.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Completely redid the HUD inventory., type: Tweak}
+  - {message: 'Added an on-HUD inventory, using the same hotkey.', type: Add}
+  - {message: Nuked the inventory popup., type: Remove}
+  - {message: Replaced the inventory slot icons and the disarm icon., type: Tweak}
+  - {message: 'Combat mode is now an action, rather than its own button.', type: Tweak}
+  - {message: 'The default actions (in order) are now: Combat Mode, Disarm, Scream.',
+    type: Tweak}
+  id: 119
+  time: '2021-03-26T15:23:12.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Bullets now collide with people again, type: Fix}
+  id: 120
+  time: '2021-03-27T03:23:20.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Storage window now open in center of screen, type: Tweak}
+  id: 121
+  time: '2021-03-27T08:01:12.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Character UI open in center instead of top left, type: Tweak}
+  id: 122
+  time: '2021-03-28T02:40:23.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: 'More things break, anchor, move and collide properly', type: Add}
+  - {message: 'gas canisters shouldn''t yeet you anymore, and girders should be fixed',
+    type: Tweak}
+  id: 123
+  time: '2021-03-28T06:00:37.0000000+00:00'
+- author: BulletGrade
+  changes: []
+  id: 124
+  time: '2021-03-28T06:06:20.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Reworked how hair styles are stored. You will have to select your hair
+      styles again or live as a baldie., type: Tweak}
+  - {message: SKREEEEEEEEEEEEEEEE, type: Add}
+  id: 125
+  time: '2021-03-28T06:26:32.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Remaps gas cans on saltern and removes signs on top of windows, type: Tweak}
+  id: 126
+  time: '2021-03-28T08:36:40.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes bug where plasma fires wouldn't spread properly under certain
+      conditions., type: Fix}
+  id: 127
+  time: '2021-03-28T12:29:17.658735+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Hopefully fixed all physics for canister and plants, type: Fix}
+  - {message: Replaced tool storage doors with unlocked glass ones, type: Tweak}
+  id: 128
+  time: '2021-03-29T21:50:33.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Removes InteractionOutlines for puddles, type: Tweak}
+  id: 129
+  time: '2021-03-30T03:54:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add inertia back in to physics., type: Add}
+  - {message: Items can freely rotate., type: Add}
+  id: 130
+  time: '2021-03-30T10:43:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix item actions rotating on your bar, type: Fix}
+  id: 131
+  time: '2021-03-31T10:10:56.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Uplink now has correct mags for clarissa, type: Fix}
+  id: 132
+  time: '2021-03-31T10:11:12.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: NEW RULE - NO USING ALT ACCOUNTS ON THE SAME SERVER, type: Add}
+  id: 133
+  time: '2021-03-31T12:10:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Client no longer has access to some vision debug commands, type: Tweak}
+  id: 134
+  time: '2021-03-31T13:24:19.0000000+00:00'
+- author: NIXC
+  changes:
+  - {message: Ownerless ID's now show in PDA (Captain's Spare), type: Add}
+  id: 135
+  time: '2021-03-31T13:29:57.0000000+00:00'
+- author: Acruid
+  changes:
+  - {message: Fixed the client crashing after restarting the round, type: Fix}
+  id: 136
+  time: '2021-03-31T20:06:31.469316+00:00'
