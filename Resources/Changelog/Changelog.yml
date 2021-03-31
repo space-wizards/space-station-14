@@ -755,3 +755,8 @@ Entries:
   - {message: Fixed the client crashing after restarting the round, type: Fix}
   id: 136
   time: '2021-03-31T20:06:31.469316+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Ghosts are now deleted correctly, type: Fix}
+  id: 137
+  time: '2021-03-31T21:17:22.0000000+00:00'
