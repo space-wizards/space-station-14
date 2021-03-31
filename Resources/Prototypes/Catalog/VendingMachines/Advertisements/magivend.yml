@@ -1,13 +1,13 @@
 ﻿- type: AdvertisementsPack
   id: MagiVendAds
   advertisements:
-  - "Sling spells the proper way with MagiVend!"
-  - "Be your own Houdini! Use MagiVend!"
-  - "FJKLFJSD"
-  - "AJKFLBJAKL"
-  - ">MFW"
-  - "HONK!"
-  - "EI NATH"
-  - "Destroy the station!"
-  - "Space-time bending hardware!"
+  - advertisement-magivend-1
+  - advertisement-magivend-2
+  - advertisement-magivend-3
+  - advertisement-magivend-4
+  - advertisement-magivend-5
+  - advertisement-magivend-6
+  - advertisement-magivend-7
+  - advertisement-magivend-8
+  - advertisement-magivend-9
 

@@ -1,7 +1,7 @@
 ﻿- type: AdvertisementsPack
   id: ClothesMateAds
   advertisements:
-  - "Dress for success!"
-  - "Prepare to look swagalicious!"
-  - "Look at all this swag!"
-  - "Why leave style up to fate? Use the ClothesMate!"
+  - advertisement-clothes-1
+  - advertisement-clothes-2
+  - advertisement-clothes-3
+  - advertisement-clothes-4

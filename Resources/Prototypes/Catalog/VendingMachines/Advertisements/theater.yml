@@ -1,7 +1,7 @@
 ﻿- type: AdvertisementsPack
   id: AutoDrobeAds
   advertisements:
-  - "Dress for success!"
-  - "Suited and booted!"
-  - "It's show time!"
-  - "Why leave style up to fate? Use AutoDrobe!"
+  - advertisement-theater-1
+  - advertisement-theater-2
+  - advertisement-theater-3
+  - advertisement-theater-4

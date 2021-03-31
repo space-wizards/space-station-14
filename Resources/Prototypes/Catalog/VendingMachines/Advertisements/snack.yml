@@ -1,15 +1,15 @@
 ﻿- type: AdvertisementsPack
   id: GetmoreChocolateCorpAds
   advertisements:
-  - "Try our new nougat bar!"
-  - "Twice the calories for half the price!"
-  - "The healthiest!"
-  - "Award-winning chocolate bars!"
-  - "Mmm! So good!"
-  - "Oh my god it's so juicy!"
-  - "Have a snack."
-  - "Snacks are good for you!"
-  - "Have some more Getmore!"
-  - "Best quality snacks straight from mars."
-  - "We love chocolate!"
-  - "Try our new jerky!"
+  - advertisement-snack-1
+  - advertisement-snack-2
+  - advertisement-snack-3
+  - advertisement-snack-4
+  - advertisement-snack-5
+  - advertisement-snack-6
+  - advertisement-snack-7
+  - advertisement-snack-8
+  - advertisement-snack-9
+  - advertisement-snack-10
+  - advertisement-snack-11
+  - advertisement-snack-12

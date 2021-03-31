@@ -1,11 +1,11 @@
 ﻿- type: AdvertisementsPack
   id: NutriMaxAds
   advertisements:
-  - "Aren't you glad you don't have to fertilize the natural way?"
-  - "Now with 50% less stink!"
-  - "Plants are people too!"
-  - "We like plants!"
-  - "Don't you want some?"
-  - "The greenest thumbs ever."
-  - "We like big plants."
-  - "Soft soil..."
+  - advertisement-nutri-1
+  - advertisement-nutri-2
+  - advertisement-nutri-3
+  - advertisement-nutri-4
+  - advertisement-nutri-5
+  - advertisement-nutri-6
+  - advertisement-nutri-7
+  - advertisement-nutri-8

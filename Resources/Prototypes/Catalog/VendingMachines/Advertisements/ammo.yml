@@ -1,12 +1,11 @@
 ﻿- type: AdvertisementsPack
   id: AmmoVendAds
   advertisements:
-  - "Liberation Station: Your one-stop shop for all things second amendment!"
-  - "Be a patriot today, pick up a gun!"
-  - "Quality weapons for cheap prices!"
-  - "Better dead than red!"
-  - "Float like an astronaut, sting like a bullet!"
-  - "Express your second amendment today!"
-  - "Guns don't kill people, but you can!"
-  - "Who needs responsibilities when you have guns?"
-
+  - advertisement-ammo-1
+  - advertisement-ammo-2
+  - advertisement-ammo-3
+  - advertisement-ammo-4
+  - advertisement-ammo-5
+  - advertisement-ammo-6
+  - advertisement-ammo-7
+  - advertisement-ammo-8

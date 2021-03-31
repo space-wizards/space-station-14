@@ -1,12 +1,12 @@
 ﻿- type: AdvertisementsPack
   id: SecTechAds
   advertisements:
-  - "Crack communist skulls!"
-  - "Beat some heads in!"
-  - "Don't forget - harm is good!"
-  - "Your weapons are right here."
-  - "Handcuffs!"
-  - "Freeze, scumbag!"
-  - "Don't tase me bro!"
-  - "Tase them, bro."
-  - "Why not have a donut?"
+  - advertisement-sec-1
+  - advertisement-sec-2
+  - advertisement-sec-3
+  - advertisement-sec-4
+  - advertisement-sec-5
+  - advertisement-sec-6
+  - advertisement-sec-7
+  - advertisement-sec-8
+  - advertisement-sec-9

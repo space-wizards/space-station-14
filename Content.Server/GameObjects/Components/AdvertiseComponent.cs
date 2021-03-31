@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using Content.Server.Advertisements;
 using Content.Server.Interfaces.Chat;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -24,13 +24,14 @@ namespace Content.Server.GameObjects.Components
         private CancellationTokenSource _cancellationSource = new();
 
         /// <summary>
-        /// Minimum time to wait before saying a new ad, in seconds.
+        /// Minimum time to wait before saying a new ad, in seconds. Has to be larger than or equal to 1.
         /// </summary>
         [field: DataField("minWait")]
         private int MinWait { get; } = 40;
 
         /// <summary>
-        /// Maximum time to wait before saying a new ad, in seconds.
+        /// Maximum time to wait before saying a new ad, in seconds. Has to be larger than or equal
+        /// to <see cref="MinWait"/>
         /// </summary>
         [field: DataField("maxWait")]
         private int MaxWait { get; } = 80;
@@ -66,6 +67,18 @@ namespace Content.Server.GameObjects.Components
                 return;
             }
 
+            // Throw exception if MinWait is smaller than 1.
+            if (MinWait < 1)
+            {
+                throw new PrototypeLoadException($"{Owner} has illegal minWait for {Name}Component: {MinWait}.");
+            }
+
+            // Throw exception if MinWait larger than MaxWait.
+            if (MinWait > MaxWait)
+            {
+                throw new PrototypeLoadException($"{Owner} should have minWait greater than or equal to maxWait for {Name}Component.");
+            }
+
             // Start timer at initialization
             RefreshTimer();
         }
@@ -84,7 +97,7 @@ namespace Content.Server.GameObjects.Components
         private void SayAndRefresh()
         {
             // Say advertisement
-            _chatManager.EntitySay(Owner, _random.Pick(_advertisements));
+            _chatManager.EntitySay(Owner, Loc.GetString(_random.Pick(_advertisements)));
 
             // Refresh timer to repeat cycle
             RefreshTimer();
