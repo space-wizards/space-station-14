@@ -60,6 +60,9 @@ namespace Content.Server.GameObjects.Components.Construction
         public IReadOnlyCollection<string> Containers => _containers;
 
         [ViewVariables]
+        int IInteractUsing.Priority => 2;
+
+        [ViewVariables]
         public ConstructionGraphNode? Target
         {
             get => _target;
