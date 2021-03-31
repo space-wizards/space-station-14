@@ -10,7 +10,7 @@
   icon:
     sprite: Constructible/Power/server.rsi
     state: server-on
-  requiredPoints: 250
+  requiredPoints: 2500
 
 # Biological Technology Tree
 
@@ -21,9 +21,12 @@
   icon:
     sprite: Constructible/Misc/potted_plants.rsi
     state: applebush
-  requiredPoints: 1000
+  requiredPoints: 10000
   requiredTechnologies:
     - BasicResearch
+  unlockedRecipes:
+    - Scythe
+    - Hatchet
 
 - type: technology
   name: "advanced botany"
@@ -32,9 +35,11 @@
   icon:
     sprite: Objects/Specific/Hydroponics/potato.rsi
     state: seed
-  requiredPoints: 1500
+  requiredPoints: 15000
   requiredTechnologies:
     - BiologicalTechnology
+  unlockedRecipes:
+    - Shovel
 
 - type: technology
   name: "advanced surgery"
@@ -43,9 +48,16 @@
   icon:
     sprite: Objects/Specific/Medical/Surgery/saw.rsi
     state: saw
-  requiredPoints: 1500
+  requiredPoints: 15000
   requiredTechnologies:
     - BiologicalTechnology
+  unlockedRecipes:
+    - Scalpel
+    - Retractor
+    - Cautery
+    - Drill
+    - BoneSaw
+    - Hemostat
 
 # Chemistry Technology Tree
 
@@ -56,9 +68,14 @@
   icon:
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
     state: beakerlarge
-  requiredPoints: 1000
+  requiredPoints: 10000
   requiredTechnologies:
     - BasicResearch
+  unlockedRecipes:
+    - Beaker
+    - LargeBeaker
+    - Dropper
+    - Syringe
 
 # Security Technology Tree
 
@@ -69,66 +86,70 @@
   icon:
     sprite: Objects/Weapons/Melee/stunbaton.rsi
     state: stunbaton_off
-  requiredPoints: 1000
+  requiredPoints: 10000
   requiredTechnologies:
     - BasicResearch
+  unlockedRecipes:
+    - Flash
+    - Handcuffs
+    - Stunbaton
 
-- type: technology
-  name: "ballistic technology"
-  id: BallisticTechnology
-  description: Just a fancy term for guns.
-  icon:
-    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
-    state: icon
-  requiredPoints: 1500
-  requiredTechnologies:
-    - SecurityTechnology
-
-- type: technology
-  name: "direct energy technology"
-  id: DirectEnergyTechnology
-  description: Basically laser guns.
-  icon:
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
-    state: icon
-  requiredPoints: 1500
-  requiredTechnologies:
-    - SecurityTechnology
-
-- type: technology
-  name: "explosives technology"
-  id: ExplosivesTechnology
-  description: Let's just start with grenades for now.
-  icon:
-    sprite: Objects/Weapons/Grenades/flashbang.rsi
-    state: icon
-  requiredPoints: 1500
-  requiredTechnologies:
-    - SecurityTechnology
-
-- type: technology
-  name: "armor technology"
-  id: ArmorTechnology
-  description: Basic protective gear for security personnel.
-  icon:
-    sprite: Clothing/OuterClothing/Vests/kevlar.rsi
-    state: icon
-  requiredPoints: 1500
-  requiredTechnologies:
-    - SecurityTechnology
+# - type: technology
+#   name: "ballistic technology"
+#   id: BallisticTechnology
+#   description: Just a fancy term for guns.
+#   icon:
+#     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+#     state: icon
+#   requiredPoints: 15000
+#   requiredTechnologies:
+#     - SecurityTechnology
+#
+# - type: technology
+#   name: "direct energy technology"
+#   id: DirectEnergyTechnology
+#   description: Basically laser guns.
+#   icon:
+#     sprite: Objects/Weapons/Guns/Battery/taser.rsi
+#     state: icon
+#   requiredPoints: 15000
+#   requiredTechnologies:
+#     - SecurityTechnology
+#
+# - type: technology
+#   name: "explosives technology"
+#   id: ExplosivesTechnology
+#   description: Let's just start with grenades for now.
+#   icon:
+#     sprite: Objects/Weapons/Grenades/flashbang.rsi
+#     state: icon
+#   requiredPoints: 15000
+#   requiredTechnologies:
+#     - SecurityTechnology
+#
+# - type: technology
+#   name: "armor technology"
+#   id: ArmorTechnology
+#   description: Basic protective gear for security personnel.
+#   icon:
+#     sprite: Clothing/OuterClothing/Vests/kevlar.rsi
+#     state: icon
+#   requiredPoints: 15000
+#   requiredTechnologies:
+#     - SecurityTechnology
 
 # Data Theory Technology Tree
 
-- type: technology
-  name: "data theory"
-  id: DataTheory
-  description: Just like regular data, but in space!
-  icon:
-    sprite: Constructible/Power/computers.rsi
-    state: computer-datatheory
-  requiredPoints: 1000
-  requiredTechnologies:
-    - BasicResearch
+# - type: technology
+#   name: "data theory"
+#   id: DataTheory
+#   description: Just like regular data, but in space!
+#   icon:
+#     sprite: Constructible/Power/computers.rsi
+#     state: computer-datatheory
+#   requiredPoints: 10000
+#   requiredTechnologies:
+#     - BasicResearch
 
 # Industrial Engineering Technology Tree
 
@@ -139,18 +160,20 @@
   icon:
     sprite: Constructible/Power/protolathe.rsi
     state: icon
-  requiredPoints: 1000
+  requiredPoints: 10000
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
     - ConveyorAssembly
+    - RCD
+    - RCDAmmo
 
 - type: technology
   name: material sheet printing
   id: Sheets
   description: Print those sheets!
   icon: Objects/Materials/Sheets/researchicon.png
-  requiredPoints: 250
+  requiredPoints: 2500
   requiredTechnologies:
     - IndustrialEngineering
   unlockedRecipes:
@@ -166,19 +189,23 @@
   icon:
     sprite: Constructible/Power/apc.rsi
     state: apcewires
-  requiredPoints: 1000
+  requiredPoints: 10000
   requiredTechnologies:
     - BasicResearch
+  unlockedRecipes:
+    - CableStack
+    - LightTube
+    - LightBulb
 
 # Bluespace Theory Technology Tree
 
-- type: technology
-  name: "basic bluespace theory"
-  id: BluespaceTheory
-  description: An experimental course on the mysterious technology known as bluespace.
-  icon:
-    sprite: Objects/Misc/skub.rsi
-    state: icon
-  requiredPoints: 1000
-  requiredTechnologies:
-    - BasicResearch
+# - type: technology
+#   name: "basic bluespace theory"
+#   id: BluespaceTheory
+#   description: An experimental course on the mysterious technology known as bluespace.
+#   icon:
+#     sprite: Objects/Misc/skub.rsi
+#     state: icon
+#   requiredPoints: 999999
+#   requiredTechnologies:
+#     - BasicResearch
