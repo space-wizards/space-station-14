@@ -61,7 +61,7 @@ namespace Content.Server.GameObjects.Components
             if (_advertisements.Count == 0)
             {
                 // If no advertisements could be loaded, log a warning and remove component
-                Logger.Log(LogLevel.Warning, Owner.Name + " tried to load advertisements pack without ads.");
+                Logger.Warning($"{Owner} tried to load advertisements pack without ads.");
                 Owner.RemoveComponent<AdvertiseComponent>();
                 return;
             }
