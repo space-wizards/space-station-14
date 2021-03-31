@@ -16,6 +16,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalTaggerComponent;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -32,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         public bool Anchored =>
             !Owner.TryGetComponent(out PhysicsComponent? physics) ||
-            physics.Anchored;
+            physics.BodyType == BodyType.Static;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalTaggerUiKey.Key);
 

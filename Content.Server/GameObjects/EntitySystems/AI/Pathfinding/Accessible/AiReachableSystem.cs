@@ -423,6 +423,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <returns></returns>
         public PathfindingRegion? GetRegion(IEntity entity)
         {
+            if (!entity.Transform.GridID.IsValid())
+            {
+                return null;
+            }
+
             var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             return GetRegion(entityNode);
