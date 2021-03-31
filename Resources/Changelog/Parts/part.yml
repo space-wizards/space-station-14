@@ -1,0 +1,4 @@
+﻿author: DrSmugleaf
+changes:
+- type: Fix
+  message: Fixed the client crashing after restarting the round
