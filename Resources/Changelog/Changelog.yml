@@ -740,3 +740,8 @@ Entries:
   - {message: NEW RULE - NO USING ALT ACCOUNTS ON THE SAME SERVER, type: Add}
   id: 133
   time: '2021-03-31T12:10:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Client no longer has access to some vision debug commands, type: Tweak}
+  id: 134
+  time: '2021-03-31T13:24:19.0000000+00:00'
