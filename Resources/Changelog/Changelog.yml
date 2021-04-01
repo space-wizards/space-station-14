@@ -785,3 +785,8 @@ Entries:
   - {message: Fix cursed locker collision, type: Fix}
   id: 141
   time: '2021-04-01T07:46:23.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Changed the HUD sprites, type: Tweak}
+  id: 142
+  time: '2021-04-01T21:24:39.0000000+00:00'
