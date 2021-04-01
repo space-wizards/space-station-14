@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared;
@@ -14,7 +16,9 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.Input.Keyboard.Key;
 using Control = Robust.Client.UserInterface.Control;
@@ -99,6 +103,7 @@ namespace Content.Client.UserInterface
         private VBoxContainer _topNotificationContainer = default!;
 
         [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly INetConfigurationManager _configManager = default!;
 
@@ -128,8 +133,16 @@ namespace Content.Client.UserInterface
 
         public Texture GetHudTexture(string path)
         {
-            var theme = _configManager.GetCVar<string>("hud.theme");
-            return _resourceCache.GetTexture($"/Textures/Interface/Inventory/{theme}/{path}");
+            var id = _configManager.GetCVar<int>("hud.theme");
+            var dir = (from theme in _prototypeManager.EnumeratePrototypes<HudThemePrototype>() where id.ToString() == theme.ID select theme.Path).FirstOrDefault();
+
+            if (string.IsNullOrEmpty(dir))
+            {
+                Logger.ErrorS("hud", "invalid HUD theme id {0}, using different theme",
+                    id);
+                dir = (from theme in _prototypeManager.EnumeratePrototypes<HudThemePrototype>() select theme.Path).FirstOrDefault();
+            }
+            return _resourceCache.GetTexture($"/Textures/Interface/Inventory/{dir}/{path}");
         }
 
         public void Initialize()

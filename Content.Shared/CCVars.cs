@@ -194,8 +194,8 @@ namespace Content.Shared
          * HUD
          */
 
-        public static readonly CVarDef<string> HudTheme =
-            CVarDef.Create("hud.theme", "Default", CVar.ARCHIVE | CVar.CLIENTONLY);
+        public static readonly CVarDef<int> HudTheme =
+            CVarDef.Create("hud.theme", 0, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * AI

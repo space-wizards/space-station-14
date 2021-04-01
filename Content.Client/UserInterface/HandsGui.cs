@@ -63,7 +63,7 @@ namespace Content.Client.UserInterface
             _rightHandTexture = _gameHud.GetHudTexture("hand_r.png");
         }
 
-        private void UpdateHudTheme(string _)
+        private void UpdateHudTheme(int _)
         {
             _leftHandTexture = _gameHud.GetHudTexture("hand_l.png");
             _middleHandTexture = _gameHud.GetHudTexture("hand_l.png");

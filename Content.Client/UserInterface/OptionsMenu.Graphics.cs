@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Shared;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -9,6 +10,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface
 {
@@ -78,10 +80,9 @@ namespace Content.Client.UserInterface
                     HorizontalAlignment = HAlignment.Right
                 };
 
-                var resourceCache = IoCManager.Resolve<IResourceCache>();
-
                 _uiScaleOption = new OptionButton();
-                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-auto", ("scale", UserInterfaceManager.DefaultUIScale)));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-auto",
+                    ("scale", UserInterfaceManager.DefaultUIScale)));
                 _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-75"));
                 _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-100"));
                 _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-125"));
@@ -139,7 +140,7 @@ namespace Content.Client.UserInterface
                 FullscreenCheckBox.Pressed = ConfigIsFullscreen;
                 LightingPresetOption.SelectId(GetConfigLightingQuality());
                 _uiScaleOption.SelectId(GetConfigUIScalePreset(ConfigUIScale));
-                _hudThemeOption.SelectId(GetHudThemeId());
+                _hudThemeOption.SelectId(_cfg.GetCVar(CCVars.HudTheme));
 
                 AddChild(vBox);
             }
@@ -160,7 +161,11 @@ namespace Content.Client.UserInterface
             {
                 _cfg.SetCVar(CVars.DisplayVSync, VSyncCheckBox.Pressed);
                 SetConfigLightingQuality(LightingPresetOption.SelectedId);
-                SetConfigHudTheme(_hudThemeOption.SelectedId);
+                if (_hudThemeOption.SelectedId != _cfg.GetCVar(CCVars.HudTheme)) // Don't unnecessarily redraw the HUD
+                {
+                    _cfg.SetCVar(CCVars.HudTheme, _hudThemeOption.SelectedId);
+                }
+
                 _cfg.SetCVar(CVars.DisplayWindowMode,
                     (int) (FullscreenCheckBox.Pressed ? WindowMode.Fullscreen : WindowMode.Windowed));
                 _cfg.SetCVar(CVars.DisplayUIScale, UIScaleOptions[_uiScaleOption.SelectedId]);
@@ -184,9 +189,10 @@ namespace Content.Client.UserInterface
                 var isVSyncSame = VSyncCheckBox.Pressed == _cfg.GetCVar(CVars.DisplayVSync);
                 var isFullscreenSame = FullscreenCheckBox.Pressed == ConfigIsFullscreen;
                 var isLightingQualitySame = LightingPresetOption.SelectedId == GetConfigLightingQuality();
-                var isHudThemeSame = _hudThemeOption.SelectedId == GetHudThemeId();
+                var isHudThemeSame = _hudThemeOption.SelectedId == _cfg.GetCVar(CCVars.HudTheme);
                 var isUIScaleSame = MathHelper.CloseTo(UIScaleOptions[_uiScaleOption.SelectedId], ConfigUIScale);
-                ApplyButton.Disabled = isVSyncSame && isFullscreenSame && isLightingQualitySame && isHudThemeSame && isUIScaleSame;
+                ApplyButton.Disabled = isVSyncSame && isFullscreenSame && isLightingQualitySame && isHudThemeSame &&
+                                       isUIScaleSame;
             }
 
             private bool ConfigIsFullscreen =>
@@ -250,42 +256,6 @@ namespace Content.Client.UserInterface
                 }
 
                 return 0;
-            }
-
-            private int GetHudThemeId()
-            {
-                var val = _cfg.GetCVar(CCVars.HudTheme);
-                switch (val)
-                {
-                    case "Default":
-                        return 0;
-                    case "Modernized":
-                        return 1;
-                    case "Classic":
-                        return 2;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-
-            private void SetConfigHudTheme(int value)
-            {
-                switch (value)
-                {
-                    case 0:
-                        _cfg.SetCVar(CCVars.HudTheme, "Default");
-                        break;
-                    case 1:
-                        _cfg.SetCVar(CCVars.HudTheme, "Modernized");
-                        break;
-                    case 2:
-                        _cfg.SetCVar(CCVars.HudTheme, "Classic");
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-
-                }
             }
         }
     }

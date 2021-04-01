@@ -252,7 +252,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
         }
 
-        public void UpdateHudTheme(string _)
+        public void UpdateHudTheme(int _)
         {
             foreach (var (_, list) in _inventoryButtons)
             {
