@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "inflatable_wall taken from https://github.com/discordia-space/CEV-Eris/blob/c34c1b30abf18aa552e19294523924c39e5ea127/icons/obj/inflatable.dmi and modified. item_wall by ShadowCommander.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "inflatable_wall"
+    },
+    {
+      "name": "item_wall"
+    }
+  ]
+}
