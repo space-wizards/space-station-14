@@ -127,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private bool TryFindAvailableProvider(out IPowerProvider foundProvider)
         {
-            var nearbyEntities = EntitySystem.Get<SharedEntityLookupSystem>()
+            var nearbyEntities = IoCManager.Resolve<IEntityLookup>()
                 .GetEntitiesInRange(Owner, PowerReceptionRange);
 
             foreach (var entity in nearbyEntities)

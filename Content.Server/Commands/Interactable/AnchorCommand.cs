@@ -44,7 +44,7 @@ namespace Content.Server.Commands.Interactable
                 return;
             }
 
-            var entities = EntitySystem.Get<SharedEntityLookupSystem>().GetEntitiesInRange(player.AttachedEntity, radius).ToList();
+            var entities = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(player.AttachedEntity, radius).ToList();
 
             foreach (var entity in entities)
             {

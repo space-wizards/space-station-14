@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             PuddleComponent? puddle = null;
             var spilt = false;
 
-            var spillEntities = EntitySystem.Get<SharedEntityLookupSystem>().GetEntitiesIntersecting(mapGrid.ParentMapId, spillGridCoords.Position).ToArray();
+            var spillEntities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(mapGrid.ParentMapId, spillGridCoords.Position).ToArray();
             foreach (var spillEntity in spillEntities)
             {
                 if (spillEntity.TryGetComponent(out ISolutionInteractionsComponent? solutionContainerComponent) &&

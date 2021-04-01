@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return false;
             }
 
-            foreach (var entity in EntitySystem.Get<SharedEntityLookupSystem>().GetEntitiesInRange(Owner.Transform.Coordinates, _range))
+            foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(Owner.Transform.Coordinates, _range))
             {
                 Flash(entity, eventArgs.User, _aoeFlashDuration);
             }

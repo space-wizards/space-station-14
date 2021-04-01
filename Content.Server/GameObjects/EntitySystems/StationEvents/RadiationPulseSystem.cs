@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         {
             base.Update(frameTime);
 
-            var lookupSystem = EntitySystem.Get<SharedEntityLookupSystem>();
+            var lookupSystem = IoCManager.Resolve<IEntityLookup>();
 
             foreach (var comp in ComponentManager.EntityQuery<RadiationPulseComponent>(true))
             {

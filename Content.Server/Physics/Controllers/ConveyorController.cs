@@ -39,7 +39,7 @@ namespace Content.Server.Physics.Controllers
                 return;
             }
 
-            var intersecting = EntitySystem.Get<SharedEntityLookupSystem>().GetEntitiesIntersecting(comp.Owner, true);
+            var intersecting = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(comp.Owner, true);
             var direction = comp.GetAngle().ToVec();
             Vector2? ownerPos = null;
 
@@ -104,7 +104,7 @@ namespace Content.Server.Physics.Controllers
             {
                 var entity = comp.Intersecting[i];
 
-                if (entity.Deleted || !comp.CanMove(entity) || !EntitySystem.Get<SharedEntityLookupSystem>().IsIntersecting(comp.Owner, entity))
+                if (entity.Deleted || !comp.CanMove(entity) || !IoCManager.Resolve<IEntityLookup>().IsIntersecting(comp.Owner, entity))
                 {
                     comp.Intersecting.RemoveAt(i);
                     continue;

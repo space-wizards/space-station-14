@@ -107,7 +107,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
             {
                 var entity = _intersecting[i];
 
-                if (EntitySystem.Get<SharedEntityLookupSystem>().IsIntersecting(entity, Owner))
+                if (IoCManager.Resolve<IEntityLookup>().IsIntersecting(entity, Owner))
                     _intersecting.RemoveAt(i);
             }
         }

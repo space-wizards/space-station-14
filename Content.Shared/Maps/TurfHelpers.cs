@@ -151,7 +151,7 @@ namespace Content.Shared.Maps
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, bool approximate = false, SharedEntityLookupSystem? lookupSystem = null)
         {
-            lookupSystem ??= EntitySystem.Get<SharedEntityLookupSystem>();
+            lookupSystem ??= IoCManager.Resolve<IEntityLookup>();
 
             return lookupSystem.GetEntitiesIntersecting(turf.MapIndex, GetWorldTileBox(turf), approximate);
         }
