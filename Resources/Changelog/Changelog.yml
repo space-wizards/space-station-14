@@ -760,3 +760,8 @@ Entries:
   - {message: Ghosts are now deleted correctly, type: Fix}
   id: 137
   time: '2021-03-31T21:17:22.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pulling collision disabled again, type: Tweak}
+  id: 138
+  time: '2021-04-01T03:32:13.0000000+00:00'
