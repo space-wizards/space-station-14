@@ -191,6 +191,13 @@ namespace Content.Shared
             CVarDef.Create("ambience.lobbymusicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
+         * HUD
+         */
+
+        public static readonly CVarDef<string> HudTheme =
+            CVarDef.Create("hud.theme", "Default", CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /*
          * AI
          */
 

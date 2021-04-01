@@ -15,7 +15,7 @@ namespace Content.Client.UserInterface
         public TextureRect Button { get; }
         public SpriteView SpriteView { get; }
         public SpriteView HoverSpriteView { get; }
-        public BaseButton StorageButton { get; }
+        public TextureButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
 
         public Action<GUIBoundKeyEventArgs>? OnPressed { get; set; }
@@ -27,9 +27,13 @@ namespace Content.Client.UserInterface
 
         private readonly PanelContainer _highlightRect;
 
-        public ItemSlotButton(Texture texture, Texture storageTexture)
+        public string TextureName { get; set; }
+
+        public ItemSlotButton(Texture texture, Texture storageTexture, string textureName)
         {
             MinSize = (64, 64);
+
+            TextureName = textureName;
 
             AddChild(Button = new TextureRect
             {

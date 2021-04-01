@@ -1,13 +1,15 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
@@ -74,6 +76,8 @@ namespace Content.Client.UserInterface
 
         void AddTopNotification(TopNotification notification);
 
+        Texture GetHudTexture(string path);
+
         // Init logic.
         void Initialize();
     }
@@ -96,6 +100,7 @@ namespace Content.Client.UserInterface
 
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly INetConfigurationManager _configManager = default!;
 
         public Control HandsContainer { get; private set; } = default!;
         public Control SuspicionContainer { get; private set; } = default!;
@@ -119,6 +124,12 @@ namespace Content.Client.UserInterface
         public void AddTopNotification(TopNotification notification)
         {
             _topNotificationContainer.AddChild(notification);
+        }
+
+        public Texture GetHudTexture(string path)
+        {
+            var theme = _configManager.GetCVar<string>("hud.theme");
+            return _resourceCache.GetTexture($"/Textures/Interface/Inventory/{theme}/{path}");
         }
 
         public void Initialize()
