@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Movement;

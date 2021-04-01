@@ -34,13 +34,13 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                 return false;
             }
 
-            if (rcdComponent.maxAmmo - rcdComponent._ammo < refillAmmo)
+            if (rcdComponent.MaxAmmo - rcdComponent._ammo < refillAmmo)
             {
                 rcdComponent.Owner.PopupMessage(eventArgs.User, Loc.GetString("The RCD is full!"));
                 return true;
             }
 
-            rcdComponent._ammo = Math.Min(rcdComponent.maxAmmo, rcdComponent._ammo + refillAmmo);
+            rcdComponent._ammo = Math.Min(rcdComponent.MaxAmmo, rcdComponent._ammo + refillAmmo);
             rcdComponent.Owner.PopupMessage(eventArgs.User, Loc.GetString("You refill the RCD."));
 
             //Deleting a held item causes a lot of errors
