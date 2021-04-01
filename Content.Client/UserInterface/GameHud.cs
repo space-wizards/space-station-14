@@ -1,12 +1,12 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Input;
+using Content.Shared.Prototypes.HUD;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
