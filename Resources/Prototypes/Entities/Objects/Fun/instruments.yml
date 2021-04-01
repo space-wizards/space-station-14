@@ -1,8 +1,7 @@
 ﻿- type: entity
-  name: basehandheldinstrument
+  abstract: true
   parent: BaseItem
   id: BaseHandheldInstrument
-  abstract: true
   description: That's an instrument.
   components:
   - type: Instrument
@@ -15,40 +14,37 @@
     size: 24
 
 - type: entity
-  name: synthesizer
   parent: BaseHandheldInstrument
   id: SynthesizerInstrument
+  name: synthesizer
   components:
   - type: Instrument
     program: 62
   - type: Sprite
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: icon
-
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
 
-
 - type: entity
-  name: acoustic guitar
   parent: BaseHandheldInstrument
   id: AcousticGuitarInstrument
+  name: acoustic guitar
   components:
   - type: Instrument
     program: 25
   - type: Sprite
     sprite: Objects/Fun/Instruments/guitar.rsi
     state: icon
-
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/guitar.rsi
 
 - type: entity
-  name: violin
   parent: BaseHandheldInstrument
   id: ViolinInstrument
+  name: violin
   components:
   - type: Instrument
     program: 40
@@ -60,9 +56,9 @@
     sprite: Objects/Fun/Instruments/violin.rsi
 
 - type: entity
-  name: trumpet
   parent: BaseHandheldInstrument
   id: TrumpetInstrument
+  name: trumpet
   components:
   - type: Instrument
     program: 56
@@ -74,130 +70,122 @@
     sprite: Objects/Fun/Instruments/trumpet.rsi
 
 - type: entity
-  name: electric guitar
   parent: BaseHandheldInstrument
   id: ElectricGuitarInstrument
+  name: electric guitar
   components:
   - type: Instrument
     program: 27
   - type: Sprite
     sprite: Objects/Fun/Instruments/eguitar.rsi
     state: icon
-
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/eguitar.rsi
 
 - type: entity
-  name: accordion
   parent: BaseHandheldInstrument
   id: AccordionInstrument
+  name: accordion
   components:
   - type: Instrument
     program: 21
   - type: Sprite
     sprite: Objects/Fun/Instruments/accordion.rsi
     state: icon
-
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/accordion.rsi
 
 - type: entity
-  name: harmonica
   parent: BaseHandheldInstrument
   id: HarmonicaInstrument
+  name: harmonica
   components:
   - type: Instrument
     program: 22
   - type: Sprite
     sprite: Objects/Fun/Instruments/harmonica.rsi
     state: icon
-
   - type: Item
     size: 10
     sprite: Objects/Fun/Instruments/harmonica.rsi
 
 - type: entity
-  name: recorder
   parent: BaseHandheldInstrument
   id: RecorderInstrument
+  name: recorder
   components:
   - type: Instrument
     program: 74
   - type: Sprite
     sprite: Objects/Fun/Instruments/recorder.rsi
     state: icon
-
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/recorder.rsi
 
 - type: entity
-  name: trombone
   parent: BaseHandheldInstrument
   id: TromboneInstrument
+  name: trombone
   components:
   - type: Instrument
     program: 57
   - type: Sprite
     sprite: Objects/Fun/Instruments/trombone.rsi
     state: icon
-
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/trombone.rsi
 
 - type: entity
-  name: saxophone
   parent: BaseHandheldInstrument
   id: SaxophoneInstrument
+  name: saxophone
   components:
   - type: Instrument
     program: 67
   - type: Sprite
     sprite: Objects/Fun/Instruments/saxophone.rsi
     state: icon
-
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/saxophone.rsi
 
 - type: entity
-  name: glockenspiel
   parent: BaseHandheldInstrument
   id: GlockenspielInstrument
+  name: glockenspiel
   components:
   - type: Instrument
     program: 9
   - type: Sprite
     sprite: Objects/Fun/Instruments/glockenspiel.rsi
     state: icon
-
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/glockenspiel.rsi
 
 - type: entity
-  name: banjo
   parent: BaseHandheldInstrument
   id: BanjoInstrument
+  name: banjo
   components:
   - type: Instrument
     program: 105
   - type: Sprite
     sprite: Objects/Fun/Instruments/banjo.rsi
     state: icon
-
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/banjo.rsi
 
 - type: entity
-  name: gilded bike horn
-  description: An exquisitely decorated bike horn, capable of honking in a variety of notes.
   parent: BaseHandheldInstrument
   id: BikeHornInstrument
+  name: gilded bike horn
+  description: An exquisitely decorated bike horn, capable of honking in a variety of notes.
   components:
   - type: Instrument
     program: 1
@@ -208,31 +196,29 @@
   - type: Clothing
     size: 24
     sprite: Objects/Fun/Instruments/bike_horn.rsi
-    Slots:
-      - Belt
+    Slots: [Belt]
     QuickEquip: false
 
 - type: entity
-  name: super synthesizer
-  description: Blasting the ghetto with Touhou MIDIs since 2020.
   parent: BaseHandheldInstrument
   id: SuperSynthesizerInstrument
+  name: super synthesizer
+  description: Blasting the ghetto with Touhou MIDIs since 2020.
   components:
-    - type: Instrument
-      allowPercussion: true
-      allowProgramChange: true
-    - type: Sprite
-      sprite: Objects/Fun/Instruments/h_synthesizer.rsi
-      state: icon
-
-    - type: Item
-      size: 24
-      sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+  - type: Instrument
+    allowPercussion: true
+    allowProgramChange: true
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+    state: icon
+  - type: Item
+    size: 24
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
 
 - type: entity
-  name: xylophone
   parent: BaseHandheldInstrument
   id: XylophoneInstrument
+  name: xylophone
   description: Rainbow colored glockenspiel.
   components:
   - type: Instrument
