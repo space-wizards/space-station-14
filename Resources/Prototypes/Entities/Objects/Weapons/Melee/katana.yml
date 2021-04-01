@@ -2,7 +2,7 @@
   name: katana
   parent: BaseItem
   id: Katana
-  description: Ancient craftwork made of not so ancient plasteel.
+  description: Ancient craftwork made with not so ancient plasteel.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/katana.rsi
