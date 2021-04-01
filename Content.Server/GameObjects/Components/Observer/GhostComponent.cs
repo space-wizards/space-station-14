@@ -72,6 +72,26 @@ namespace Content.Server.GameObjects.Components.Observer
             base.Shutdown();
         }
 
+        public override void OnAdd()
+        {
+            base.OnAdd();
+
+            if (Owner.TryGetComponent<MindComponent>(out var mind))
+            {
+                mind.GhostOnShutdown = false;
+            }
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            if (Owner.TryGetComponent<MindComponent>(out var mind))
+            {
+                mind.GhostOnShutdown = true;
+            }
+        }
+
         public override ComponentState GetComponentState(ICommonSession player) => new GhostComponentState(CanReturnToBody);
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null!)
@@ -92,13 +112,12 @@ namespace Content.Server.GameObjects.Components.Observer
                     {
                         var o = actor.playerSession.ContentData()!.Mind;
                         o?.UnVisit();
-                        Owner.Delete();
                     }
                     break;
                 }
                 case ReturnToCloneComponentMessage _:
 
-                    if (Owner.TryGetComponent(out VisitingMindComponent? mind))
+                    if (Owner.TryGetComponent(out VisitingMindComponent? mind) && mind.Mind != null)
                     {
                         Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
                     }

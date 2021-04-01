@@ -31,7 +31,7 @@
     - type: PipeConnectorVisualizer
     - type: PumpVisualizer
   - type: PipeNetDevice
-  
+
 - type: entity
   parent: PumpBase
   id: DebugPressurePump
@@ -46,5 +46,5 @@
       nodeGroupID: Pipe
       pipeDirection: South
   - type: PressurePump
-    inletDirection: North
-    outletDirection: South
+    initialInletDirection: North
+    initialOutletDirection: South
