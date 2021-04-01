@@ -6,7 +6,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     [Prototype("hudTheme")]
     public class HudThemePrototype : IPrototype
     {
-        [DataField("name", required: true)]
+        [field: DataField("name", required: true)]
         public string Name { get; } = string.Empty;
 
         [field: DataField("id", required: true)]
