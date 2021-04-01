@@ -22,8 +22,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     public class PillComponent : FoodComponent, IUse, IAfterInteract
     {
-        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-
         public override string Name => "Pill";
 
         [ViewVariables]
