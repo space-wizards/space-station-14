@@ -36,12 +36,14 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             if (string.IsNullOrEmpty(component.Prototype))
                 return;
-            if (!args.ClickLocation.TryGetTileRef(out var tileRef, EntityManager, _mapManager))
+            if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(EntityManager), out var grid))
+                return;
+            if (!grid.TryGetTileRef(args.ClickLocation, out var tileRef))
                 return;
 
             bool IsTileClear()
             {
-                return tileRef.Value.Tile.IsEmpty == false && args.User.InRangeUnobstructed(args.ClickLocation, popup: true);
+                return tileRef.Tile.IsEmpty == false && args.User.InRangeUnobstructed(args.ClickLocation, popup: true);
             }
 
             if (!IsTileClear())
@@ -68,7 +70,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (component.RemoveOnInteract && component.Owner.TryGetComponent(out stack) && !stack.Use(1))
                 return;
 
-            EntityManager.SpawnEntity(component.Prototype, tileRef.Value.GridPosition(_mapManager));
+            EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid, SnapGridOffset.Center));
 
             if (component.RemoveOnInteract && stack == null && !component.Owner.Deleted)
                 component.Owner.Delete();
