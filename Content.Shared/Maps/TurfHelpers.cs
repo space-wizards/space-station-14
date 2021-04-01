@@ -58,9 +58,9 @@ namespace Content.Shared.Maps
             return tile;
         }
 
-        public static bool TryGetTileRef(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf)
+        public static bool TryGetTileRef(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf, IEntityManager? entityManager = null, IMapManager? mapManager = null)
         {
-            return (turf = coordinates.GetTileRef()) != null;
+            return (turf = coordinates.GetTileRef(entityManager, mapManager)) != null;
         }
 
         /// <summary>
