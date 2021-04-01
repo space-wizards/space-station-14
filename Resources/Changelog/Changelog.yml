@@ -765,3 +765,18 @@ Entries:
   - {message: Pulling collision disabled again, type: Tweak}
   id: 138
   time: '2021-04-01T03:32:13.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: The technology recipes actually unlock recipes for the protolathe!,
+    type: Add}
+  - {message: Some things can no longer be built in the autolathe, type: Tweak}
+  - {message: Nerfs point gen to 100 (REMEMBER TO PRESS SYNC TO GET YOUR POINTS ON
+      CONSOLE), type: Tweak}
+  id: 139
+  time: '2021-04-01T07:04:18.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Added inflatable walls. Engineers can use them as temporary barriers
+      when fixing atmos breaches., type: Add}
+  id: 140
+  time: '2021-04-01T07:04:56.0000000+00:00'
