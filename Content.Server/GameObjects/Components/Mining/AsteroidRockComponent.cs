@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mining;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -24,8 +25,10 @@ namespace Content.Server.GameObjects.Components.Mining
         {
             base.Initialize();
 
-            var spriteComponent = Owner.EnsureComponent<SpriteComponent>();
-            spriteComponent.LayerSetState(0, _random.Pick(SpriteStates));
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(AsteroidRockVisuals.State, _random.Pick(SpriteStates));
+            }
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

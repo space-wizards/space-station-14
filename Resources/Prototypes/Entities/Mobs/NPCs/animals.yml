@@ -209,6 +209,7 @@
     - type: DamageStateVisualizer
       normal: 0
       dead: dead
+    - type: AsteroidRockVisualizer
 
 - type: entity
   name: goat

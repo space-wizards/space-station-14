@@ -15,10 +15,7 @@ namespace Content.Server.GameObjects.Components.PA
             base.Initialize();
             // FIXME: this has to be an entity system, full stop.
 
-            if (!Owner.TryGetComponent(out SnapGrid))
-            {
-                Logger.Error("ParticleAcceleratorControlBox was created without SnapGridComponent");
-            }
+            Owner.EnsureComponent<SnapGridComponent>(out SnapGrid);
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)

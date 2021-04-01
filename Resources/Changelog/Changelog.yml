@@ -725,3 +725,38 @@ Entries:
   - {message: Items can freely rotate., type: Add}
   id: 130
   time: '2021-03-30T10:43:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix item actions rotating on your bar, type: Fix}
+  id: 131
+  time: '2021-03-31T10:10:56.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Uplink now has correct mags for clarissa, type: Fix}
+  id: 132
+  time: '2021-03-31T10:11:12.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: NEW RULE - NO USING ALT ACCOUNTS ON THE SAME SERVER, type: Add}
+  id: 133
+  time: '2021-03-31T12:10:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Client no longer has access to some vision debug commands, type: Tweak}
+  id: 134
+  time: '2021-03-31T13:24:19.0000000+00:00'
+- author: NIXC
+  changes:
+  - {message: Ownerless ID's now show in PDA (Captain's Spare), type: Add}
+  id: 135
+  time: '2021-03-31T13:29:57.0000000+00:00'
+- author: Acruid
+  changes:
+  - {message: Fixed the client crashing after restarting the round, type: Fix}
+  id: 136
+  time: '2021-03-31T20:06:31.469316+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Ghosts are now deleted correctly, type: Fix}
+  id: 137
+  time: '2021-03-31T21:17:22.0000000+00:00'

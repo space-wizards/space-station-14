@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.PA
@@ -16,13 +15,9 @@ namespace Content.Server.GameObjects.Components.PA
         public override void Initialize()
         {
             base.Initialize();
-            if (Owner.TryGetComponent(out PowerConsumerComponent))
-            {
-                PowerConsumerComponent.OnReceivedPowerChanged += PowerReceivedChanged;
-                return;
-            }
 
-            Logger.Error($"ParticleAcceleratorPowerBoxComponent Component initialized without PowerConsumerComponent.");
+            PowerConsumerComponent = Owner.EnsureComponentWarn<PowerConsumerComponent>();
+            PowerConsumerComponent.OnReceivedPowerChanged += PowerReceivedChanged;
         }
 
         private void PowerReceivedChanged(object? sender, ReceivedPowerChangedEventArgs e)
