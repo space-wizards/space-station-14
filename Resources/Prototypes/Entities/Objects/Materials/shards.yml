@@ -2,7 +2,6 @@
   abstract: true
   parent: BaseItem
   id: ShardBase
-  name: shard
   description: It's a shard of some unknown material.
   components:
   - type: Sprite

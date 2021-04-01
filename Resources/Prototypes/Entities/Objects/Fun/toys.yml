@@ -125,6 +125,10 @@
   - type: UseDelay
     delay: 1.0
 
+# This stuff might be copyright claimed by From Software. The sprites are unique
+# and made by Bright but the sounds are ripped straight from the game. Idk, it's
+# probably not a big deal.
+
 - type: entity
   parent: BaseItem
   id: CarvingHelpMe
@@ -144,8 +148,6 @@
     sound: /Audio/Items/Toys/helpme.ogg
   - type: UseDelay
     delay: 1.0
-
-# Swept <3s Bright
 
 - type: entity
   parent: BaseItem
