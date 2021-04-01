@@ -780,3 +780,8 @@ Entries:
       when fixing atmos breaches., type: Add}
   id: 140
   time: '2021-04-01T07:04:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix cursed locker collision, type: Fix}
+  id: 141
+  time: '2021-04-01T07:46:23.0000000+00:00'
