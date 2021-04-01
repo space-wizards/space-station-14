@@ -1,7 +1,7 @@
 - type: entity
+  abstract: true
   parent: Clothing
   id: ClothingOuterBase
-  abstract: true
   components:
   - type: Clothing
     Slots:
@@ -10,11 +10,11 @@
     state: icon
 
 - type: entity
+  abstract: true
   parent: ClothingOuterBase
   id: ClothingOuterHardsuitBase
   name: base hardsuit
-  abstract: true
   components:
-    - type: PressureProtection
-      highPressureMultiplier: 0.75
-      lowPressureMultiplier: 100
+  - type: PressureProtection
+    highPressureMultiplier: 0.75
+    lowPressureMultiplier: 100

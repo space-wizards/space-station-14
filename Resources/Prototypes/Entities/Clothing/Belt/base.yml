@@ -1,7 +1,7 @@
 - type: entity
+  abstract: true
   parent: Clothing
   id: ClothingBeltBase
-  abstract: true
   components:
   - type: Sprite
     state: icon
