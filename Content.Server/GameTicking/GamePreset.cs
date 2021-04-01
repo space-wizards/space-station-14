@@ -45,7 +45,6 @@ namespace Content.Server.GameTicking
             if (mind.VisitingEntity != null)
             {
                 mind.UnVisit();
-                mind.VisitingEntity.Delete();
             }
 
             var position = playerEntity?.Transform.Coordinates ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();

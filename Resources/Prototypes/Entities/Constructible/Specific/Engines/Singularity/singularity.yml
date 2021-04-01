@@ -26,3 +26,6 @@
     sprite: Constructible/Power/Singularity/singularity_1.rsi
     state: singularity_1
     drawdepth: Items
+  - type: Appearance
+    visuals:
+    - type: SingularityVisualizer

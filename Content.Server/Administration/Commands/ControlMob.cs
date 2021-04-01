@@ -61,15 +61,8 @@ namespace Content.Server.Administration.Commands
 
             DebugTools.AssertNotNull(mind);
 
-            var oldEntity = mind!.CurrentEntity;
-
             mindComponent.Mind?.TransferTo(null);
-            mind.TransferTo(target);
-
-            DebugTools.AssertNotNull(oldEntity);
-
-            if (oldEntity!.HasComponent<GhostComponent>())
-                oldEntity.Delete();
+            mind!.TransferTo(target);
         }
     }
 }
