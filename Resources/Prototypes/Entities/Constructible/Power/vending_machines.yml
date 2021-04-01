@@ -283,6 +283,8 @@
   components:
   - type: VendingMachine
     pack: DiscountDansInventory
+  - type: Advertise
+    pack: DiscountDansAds
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/discount.rsi
     layers:
@@ -478,6 +480,8 @@
   components:
   - type: VendingMachine
     pack: SmartFridgeInventory
+  - type: Advertise
+    pack: SmartFridgeAds
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/smartfridge.rsi
     layers:
@@ -648,6 +652,8 @@
   components:
   - type: VendingMachine
     pack: YouToolInventory
+  - type: Advertise
+    pack: YouToolAds
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/youtool.rsi
     layers:
