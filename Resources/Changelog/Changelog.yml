@@ -790,3 +790,8 @@ Entries:
   - {message: Changed the HUD sprites, type: Tweak}
   id: 142
   time: '2021-04-01T21:24:39.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed placement of inflatable walls., type: Fix}
+  id: 143
+  time: '2021-04-01T21:34:36.0000000+00:00'
