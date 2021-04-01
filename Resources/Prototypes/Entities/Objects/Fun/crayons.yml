@@ -2,16 +2,16 @@
   id: Crayon
 
 - type: entity
+  abstract: true
   parent: BaseItem
   id: Crayon
   name: crayon
-  abstract: true
   description: "A colourful crayon. Looks tasty. Mmmm..."
   components:
   - type: Tag
     tags:
-      - Write
-      - Crayon
+    - Write
+    - Crayon
   - type: Item
     size: 1
   - type: UserInterface
@@ -128,8 +128,8 @@
     capacity: 5
 
 - type: entity
-  id: CrayonBox
   parent: BaseItem
+  id: CrayonBox
   name: crayon box
   description: "It's a box of crayons."
   components:
@@ -145,22 +145,22 @@
     countTag: Crayon
   - type: StorageFill
     contents:
-      - name: CrayonRed
-      - name: CrayonOrange
-      - name: CrayonYellow
-      - name: CrayonGreen
-      - name: CrayonBlue
-      - name: CrayonPurple
-      - name: CrayonBlack
+    - name: CrayonRed
+    - name: CrayonOrange
+    - name: CrayonYellow
+    - name: CrayonGreen
+    - name: CrayonBlue
+    - name: CrayonPurple
+    - name: CrayonBlack
   - type: Appearance
     visuals:
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - red_box
-          - orange_box
-          - yellow_box
-          - green_box
-          - blue_box
-          - purple_box
-          - black_box
+    - type: StackVisualizer
+      composite: true
+      stackLayers:
+      - red_box
+      - orange_box
+      - yellow_box
+      - green_box
+      - blue_box
+      - purple_box
+      - black_box
