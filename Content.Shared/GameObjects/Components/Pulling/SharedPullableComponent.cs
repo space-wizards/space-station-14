@@ -152,7 +152,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     _physics.WakeBody();
                     _pullJoint = pullerPhysics.CreateDistanceJoint(_physics);
                     // _physics.BodyType = BodyType.Kinematic; // TODO: Need to consider their original bodytype
-                    _pullJoint.CollideConnected = true;
+                    _pullJoint.CollideConnected = false;
                     _pullJoint.Length = length * 0.75f;
                     _pullJoint.MaxLength = length;
                 }
