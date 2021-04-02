@@ -1,9 +1,9 @@
 ## Plushies
 
 - type: entity
-  name: bee plushie
   parent: BaseItem
   id: PlushieBee
+  name: bee plushie
   description: A cute toy that resembles an even cuter programmer.
   components:
   - type: Toys
@@ -16,9 +16,9 @@
     delay: 1.0
 
 - type: entity
-  name: nukie plushie
   parent: BaseItem
   id: PlushieNuke
+  name: nukie plushie
   description: A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious.
   components:
   - type: Toys
@@ -31,9 +31,9 @@
     delay: 1.0
 
 - type: entity
-  name: lizard plushie
   parent: BaseItem
   id: PlushieLizard
+  name: lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleges as you do this plush, with open arms!"
   components:
   - type: Toys
@@ -46,10 +46,10 @@
     delay: 1.0
 
 - type: entity
-  name: nar'sie plushie
   parent: BaseItem
   id: PlushieNar
-  description: A small stuffed doll of the elder goddess Nar'Sie. 
+  name: nar'sie plushie
+  description: A small stuffed doll of the elder goddess Nar'Sie.
   components:
   - type: Toys
   - type: LoopingSound
@@ -61,9 +61,9 @@
     delay: 1.0
 
 - type: entity
-  name: carp plushie
   parent: BaseItem
   id: PlushieCarp
+  name: carp plushie
   description: An adorable stuffed toy that resembles the monstrous space carp.
   components:
   - type: Toys
@@ -79,9 +79,9 @@
     delay: 1.0
 
 - type: entity
-  name: slime plushie
   parent: BaseItem
   id: PlushieSlime
+  name: slime plushie
   description: An adorable stuffed toy that resembles a slime. It's basically a hacky sack.
   components:
   - type: Toys
@@ -94,9 +94,9 @@
     delay: 1.0
 
 - type: entity
-  name: snake plushie
   parent: BaseItem
   id: PlushieSnake
+  name: snake plushie
   description: An adorable stuffed toy that resembles a snake.
   components:
   - type: Sprite
@@ -110,9 +110,9 @@
     delay: 1.0
 
 - type: entity
-  name: mouse toy
   parent: BaseItem
   id: ToyMouse
+  name: mouse toy
   description: A colorful toy mouse!
   components:
   - type: Sprite
@@ -125,10 +125,14 @@
   - type: UseDelay
     delay: 1.0
 
+# This stuff might be copyright claimed by From Software. The sprites are unique
+# and made by Bright but the sounds are ripped straight from the game. Idk, it's
+# probably not a big deal.
+
 - type: entity
-  name: help me carving
   parent: BaseItem
   id: CarvingHelpMe
+  name: help me carving
   description: Help me!
   components:
   - type: Sprite
@@ -145,12 +149,10 @@
   - type: UseDelay
     delay: 1.0
 
-# All using the same sprite until Bright gives me sprites the rest.
-
 - type: entity
-  name: hello carving
   parent: BaseItem
   id: CarvingHello
+  name: hello carving
   description: Hello!
   components:
   - type: Sprite
@@ -168,9 +170,9 @@
     delay: 1.0
 
 - type: entity
-  name: thank you carving
   parent: BaseItem
   id: CarvingThankYou
+  name: thank you carving
   description: Thank you!
   components:
   - type: Sprite
@@ -188,9 +190,9 @@
     delay: 1.0
 
 - type: entity
-  name: very good carving
   parent: BaseItem
   id: CarvingVeryGood
+  name: very good carving
   description: Very good!
   components:
   - type: Sprite
@@ -208,9 +210,9 @@
     delay: 1.0
 
 - type: entity
-  name: sorry carving
   parent: BaseItem
   id: CarvingImSorry
+  name: sorry carving
   description: I'm sorry.
   components:
   - type: Sprite
@@ -230,19 +232,19 @@
 ## Figurines
 
 - type: entity
-  name: AI toy
   parent: BaseItem
   id: ToyAi
-  description: A scaled-down toy AI core. 
+  name: AI toy
+  description: A scaled-down toy AI core.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: AI
 
 - type: entity
-  name: nuke toy
   parent: BaseItem
   id: ToyNuke
+  name: nuke toy
   description: A plastic model of a Nuclear Fission Explosive. No uranium included... probably.
   components:
   - type: Sprite
@@ -250,9 +252,9 @@
     state: nuketoy
 
 - type: entity
-  name: assistant toy
   parent: BaseItem
   id: ToyAssistant
+  name: assistant toy
   description: Grey tide world wide!
   components:
   - type: Sprite
@@ -263,9 +265,9 @@
     HeldPrefix: doll
 
 - type: entity
-  name: griffin toy
   parent: BaseItem
   id: ToyGriffin
+  name: griffin toy
   description: An action figure modeled after 'The Griffin', criminal mastermind.
   components:
   - type: Sprite
@@ -273,9 +275,9 @@
     state: griffinprize
 
 - type: entity
-  name: h.o.n.k. toy
   parent: BaseItem
   id: ToyHonk
+  name: h.o.n.k. toy
   description: Mini-Mecha action figure! 'Mecha No. 6/12' is written on the back.
   components:
   - type: Sprite
@@ -283,9 +285,9 @@
     state: honkprize
 
 - type: entity
-  name: ian toy
   parent: BaseItem
   id: ToyIan
+  name: ian toy
   description: Unable to eat, but just as fluffy as the real guy!
   components:
   - type: Sprite
@@ -299,9 +301,9 @@
     delay: 1.0
 
 - type: entity
-  name: marauder toy
   parent: BaseItem
   id: ToyMarauder
+  name: marauder toy
   description: Mini-Mecha action figure! 'Mecha No. 7/12' is written on the back.
   components:
   - type: Sprite
@@ -309,9 +311,9 @@
     state: marauderprize
 
 - type: entity
-  name: mauler toy
   parent: BaseItem
   id: ToyMauler
+  name: mauler toy
   description: Mini-Mecha action figure! 'Mecha No. 9/12' is written on the back.
   components:
   - type: Sprite
@@ -319,9 +321,9 @@
     state: maulerprize
 
 - type: entity
-  name: gygax toy
   parent: BaseItem
   id: ToyGygax
+  name: gygax toy
   description: Mini-Mecha action figure! 'Mecha No. 4/12' is written on the back.
   components:
   - type: Sprite
@@ -329,9 +331,9 @@
     state: gygaxtoy
 
 - type: entity
-  name: odysseus toy
   parent: BaseItem
   id: ToyOdysseus
+  name: odysseus toy
   description: Mini-Mecha action figure! 'Mecha No. 10/12' is written on the back.
   components:
   - type: Sprite
@@ -339,9 +341,9 @@
     state: odysseusprize
 
 - type: entity
-  name: owl toy
   parent: BaseItem
   id: ToyOwlman
+  name: owl toy
   description: An action figure modeled after 'The Owl', defender of justice.
   components:
   - type: Sprite
@@ -349,9 +351,9 @@
     state: owlprize
 
 - type: entity
-  name: deathripley toy
   parent: BaseItem
   id: ToyDeathRipley
+  name: deathripley toy
   description: Mini-Mecha action figure! 'Mecha No. 3/12' is written on the back.
   components:
   - type: Sprite
@@ -359,9 +361,9 @@
     state: deathripleytoy
 
 - type: entity
-  name: phazon toy
   parent: BaseItem
   id: ToyPhazon
+  name: phazon toy
   description: Mini-Mecha action figure! 'Mecha No. 11/12' is written on the back.
   components:
   - type: Sprite
@@ -369,9 +371,9 @@
     state: phazonprize
 
 - type: entity
-  name: fire ripley
   parent: BaseItem
   id: ToyFireRipley
+  name: fire ripley
   description: Mini-Mecha action figure! 'Mecha No. 2/12' is written on the back.
   components:
   - type: Sprite
@@ -379,9 +381,9 @@
     state: fireripleytoy
 
 - type: entity
-  name: reticence toy
   parent: BaseItem
   id: ToyReticence
+  name: reticence toy
   description: Mini-Mecha action figure! 'Mecha No. 12/12' is written on the back.
   components:
   - type: Sprite
@@ -389,9 +391,9 @@
     state: reticenceprize
 
 - type: entity
-  name: ripley toy
   parent: BaseItem
   id: ToyRipley
+  name: ripley toy
   description: Mini-Mecha action figure! 'Mecha No. 1/12' is written on the back.
   components:
   - type: Sprite
@@ -400,9 +402,9 @@
 
 
 - type: entity
-  name: seraph toy
   parent: BaseItem
   id: ToySeraph
+  name: seraph toy
   description: Mini-Mecha action figure! 'Mecha No. 8/12' is written on the back.
   components:
   - type: Sprite
@@ -411,9 +413,9 @@
 
 
 - type: entity
-  name: durand toy
   parent: BaseItem
   id: ToyDurand
+  name: durand toy
   description: Mini-Mecha action figure! 'Mecha No. 5/12' is written on the back.
   components:
   - type: Sprite
@@ -422,43 +424,40 @@
 
 
 ### Yeah I left these all mixed up for a future coder to puzzle over, it's lore.
+### Help i'm sorting these and my previous self let this message here to taunt me aaaaa
 
 - type: entity
-  name: skeleton toy
   parent: BaseItem
   id: ToySkeleton
+  name: skeleton toy
   description: Spooked ya!
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: skeletonprize
 
-
 ## Toyweapons
 
 - type: entity
-  name: foam weapon base
+  abstract: true
   parent: BaseItem
   id: FoamWeaponBase
-  abstract: true
   components:
   - type: Sprite
     netsync: false
-
   - type: Item
     size: 24
     state: icon
 
 - type: entity
-  name: foam crossbow
   parent: FoamWeaponBase
   id: FoamCrossbow
+  name: foam crossbow
   description: Aiming this at Security may get you filled with lead.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: foamcrossbow
-
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
@@ -476,9 +475,9 @@
     soundInsert: /Audio/Weapons/Guns/MagIn/drawbow2.ogg
 
 - type: entity
-  name: ToyGunBase
   parent: BaseItem
   id: ToyGunBase
+  name: ToyGunBase
   description: A rooty tooty point and shooty.
   abstract: true
   components:
@@ -486,9 +485,9 @@
     netsync: false
 
 - type: entity
-  name: cap gun
   parent: ToyGunBase
   id: RevolverCapGun
+  name: cap gun
   description: Looks almost like the real thing! Ages 8 and up.
   components:
   - type: Sprite
@@ -498,7 +497,6 @@
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: bolt-closed
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
-
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
@@ -519,9 +517,9 @@
     - type: BarrelBoltVisualizer
 
 - type: entity
-  name: foamblade
   parent: BaseItem
   id: FoamBlade
+  name: foamblade
   description: It says "Sternside Changs number 1 fan" on it.
   components:
   - type: Sprite
@@ -549,72 +547,67 @@
 # MISC
 
 - type: entity
-  name: basketball
   parent: BaseItem
   id: Basketball
+  name: basketball
   description: Where dah courts at?
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: basketball
-
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: bask
 
 - type: entity
-  name: football
   parent: BaseItem
   id: Football
+  name: football
   description: Otherwise known as a handegg.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: football
-
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: footb
 
-
 - type: entity
-  name: syndie balloon
   parent: BaseItem
   id: BalloonSyn
+  name: syndie balloon
   description: Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: synb
-
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: synb
 
 - type: entity
-  name: corgi balloon
   parent: BaseItem
   id: BalloonCorgi
+  name: corgi balloon
   description: Just like owning a real dog - but a lot floatier.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: corgib
-
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: corgib
 
 - type: entity
-  name: singuloth-brand toy
   parent: BaseItem
   id: SingularityToy
+  name: singuloth-brand toy
   description: Mass-produced by a sadistic corporate conglomerate!
-  components:  
+  components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: singularitytoy
@@ -622,7 +615,6 @@
     sprite: Objects/Fun/toys.rsi
     state: singularitytoy
   - type: ToySingularity
-  
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi

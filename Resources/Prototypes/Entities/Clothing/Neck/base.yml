@@ -1,8 +1,7 @@
 - type: entity
+  abstract: true
   parent: Clothing
   id: ClothingNeckBase
-  abstract: true
-  name: neck
   components:
   - type: Clothing
     size: 10
