@@ -810,3 +810,10 @@ Entries:
   - {message: You can eat organs, type: Add}
   id: 146
   time: '2021-04-02T13:44:02.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Saltern's space-facing walls are all reinforced and computers should
+      not be physics fucky anymore, type: Tweak}
+  - {message: Removed plasma canister from Saltern for now, type: Remove}
+  id: 147
+  time: '2021-04-02T19:37:33.0000000+00:00'
