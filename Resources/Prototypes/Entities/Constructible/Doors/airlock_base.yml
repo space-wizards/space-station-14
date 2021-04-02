@@ -102,7 +102,6 @@
       - MobImpassable
       - VaultImpassable
   - type: Anchorable
-    snap: true
   - type: Pullable
   - type: SnapGrid
     offset: Center
