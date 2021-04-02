@@ -535,15 +535,6 @@
     HeldPrefix: foamblade
   - type: ItemCooldown
 
-- type: entity
-  name: foamblade
-  parent: FoamBlade
-  id: FoamBladeAdminbus
-  suffix: adminbused
-  components:
-    - type: MeleeWeapon
-      damage: 1000
-
 # MISC
 
 - type: entity
