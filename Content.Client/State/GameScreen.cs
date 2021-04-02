@@ -5,6 +5,7 @@ using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
 using Content.Client.Voting;
 using Content.Shared;
+using Content.Shared.Chat;
 using Content.Shared.Input;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;

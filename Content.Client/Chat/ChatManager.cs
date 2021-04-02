@@ -369,7 +369,7 @@ namespace Content.Client.Chat
             }
 
             if (CurrentChatBox == null) return;
-            _currentChatBox.AddLine(FormattedMessage.FromMarkup(messageText), message.Channel, color);
+            CurrentChatBox.AddLine(messageText, message.Channel, color);
             // TODO: Can make this "smarter" later by only setting it false when the message has been scrolled to
             message.Read = true;
         }
@@ -388,8 +388,8 @@ namespace Content.Client.Chat
                 {
                     string locWarning = Loc.GetString("chat-manager-max-message-length",
                                             ("maxMessageLength", _maxMessageLength));
-                    _currentChatBox.AddLine(locWarning, ChatChannel.Server, Color.Orange);
-                    _currentChatBox.ClearOnEnter = false; // The text shouldn't be cleared if it hasn't been sent
+                    CurrentChatBox.AddLine(locWarning, ChatChannel.Server, Color.Orange);
+                    CurrentChatBox.ClearOnEnter = false; // The text shouldn't be cleared if it hasn't been sent
                 }
                 return;
             }

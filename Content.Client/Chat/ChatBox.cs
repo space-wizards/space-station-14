@@ -1,16 +1,12 @@
-﻿# nullable enable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Chat;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
