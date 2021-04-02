@@ -1,7 +1,7 @@
 - type: entity
-  id: BoxAntiMaterial
-  name: "ammunition box (.60 anti-material)"
   parent: BaseItem
+  id: BoxAntiMaterial
+  name: ammunition box (.60 anti-material)
   components:
   - type: AmmoBox
     caliber: AntiMaterial
@@ -9,7 +9,7 @@
     fillPrototype: CartridgeAntiMaterial
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/AntiMaterial/anti_material.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/anti_material.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]

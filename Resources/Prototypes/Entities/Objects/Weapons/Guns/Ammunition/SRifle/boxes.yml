@@ -1,20 +1,14 @@
 - type: entity
-  id: BoxSRifleBase
-  name: "ammunition box (.20 rifle)"
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
+  id: BoxSRifleBase
   components:
   - type: AmmoBox
     caliber: SRifle
-    capacity: 30
-
+    capacity: 60
   - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/s_rifle.rsi
     netsync: false
-    layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -24,85 +18,118 @@
 
 # Boxes
 - type: entity
+  parent: BoxSRifleBase
   id: BoxSRifleBigBox
-  name: "ammunition box (.20 rifle)"
-  parent: BoxSRifleBase
+  name: ammunition box (.20 rifle)
   components:
   - type: AmmoBox
     capacity: 200
     fillPrototype: CartridgeSRifle
-
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_big_box.rsi
+    layers:
+    - state: base-b
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: magb-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: magb
+      steps: 2
+      zeroVisible: false
 
 - type: entity
+  parent: BoxSRifleBase
   id: BoxSRifleBigBoxRubber
-  name: "ammunition box (.20 rifle rubber)"
-  parent: BoxSRifleBase
+  name: ammunition box (.20 rifle rubber)
   components:
   - type: AmmoBox
     capacity: 200
-    fillPrototype: CartridgeSRifleRubber
-
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_big_box_rubber.rsi
-
-- type: entity
-  id: BoxSRifleBox
-  name: "ammunition box (.20 rifle)"
-  parent: BoxSRifleBase
-  components:
-  - type: AmmoBox
-    capacity: 60
-    fillPrototype: CartridgeSRifle
-
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box.rsi
-
-- type: entity
-  id: BoxSRifleBoxFlash
-  name: "ammunition box (.20 rifle flash)"
-  parent: BoxSRifleBase
-  components:
-  - type: AmmoBox
-    capacity: 60
-    fillPrototype: CartridgeSRifleFlash
-
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box_flash.rsi
-
-- type: entity
-  id: BoxSRifleBoxHV
-  name: "ammunition box (.20 rifle high-velocity)"
-  parent: BoxSRifleBase
-  components:
-  - type: AmmoBox
-    capacity: 60
-    fillPrototype: CartridgeSRifleHV
-
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box_hv.rsi
-
-- type: entity
-  id: BoxSRifleBoxPractice
-  name: "ammunition box (.20 rifle practice)"
-  parent: BoxSRifleBase
-  components:
-  - type: AmmoBox
-    capacity: 60
     fillPrototype: CartridgeSRiflePractice
-
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box_practice.rsi
+    layers:
+    - state: base-b
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: magb-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: practice-b
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: magb
+      steps: 2
+      zeroVisible: false
 
 - type: entity
-  id: BoxSRifleBoxRubber
-  name: "ammunition box (.20 rifle rubber)"
   parent: BoxSRifleBase
+  id: BoxSRifleBox
+  name: ammunition box (.20 rifle)
   components:
   - type: AmmoBox
-    capacity: 60
-    fillPrototype: CartridgeSRifleRubber
-
+    fillPrototype: CartridgeSRifle
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box_rubber.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+
+- type: entity
+  parent: BoxSRifleBase
+  id: BoxSRifleBoxFlash
+  name: ammunition box (.20 rifle flash)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgeSRifleFlash
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: flash
+
+- type: entity
+  parent: BoxSRifleBase
+  id: BoxSRifleBoxHV
+  name: ammunition box (.20 rifle high-velocity)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgeSRifleHV
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: hv
+
+- type: entity
+  parent: BoxSRifleBase
+  id: BoxSRifleBoxPractice
+  name: ammunition box (.20 rifle practice)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgeSRiflePractice
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: practice
+
+- type: entity
+  parent: BoxSRifleBase
+  id: BoxSRifleBoxRubber
+  name: ammunition box (.20 rifle rubber)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgeSRifleRubber
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: rubber

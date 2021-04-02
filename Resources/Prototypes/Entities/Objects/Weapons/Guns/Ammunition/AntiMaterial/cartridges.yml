@@ -1,7 +1,7 @@
 - type: entity
+  parent: BaseItem
   id: CartridgeAntiMaterial
   name: cartridge (.60 anti-material)
-  parent: BaseItem
   components:
   - type: Ammo
     caliber: AntiMaterial

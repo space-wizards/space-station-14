@@ -1,19 +1,14 @@
 - type: entity
-  id: BoxMagnumBase
-  name: "ammunition box (.40 magnum)"
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
+  id: BoxMagnumBase
   components:
   - type: AmmoBox
     caliber: Magnum
-    capacity: 30
+    capacity: 60
   - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi
     netsync: false
-    layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -23,56 +18,75 @@
 
 # Boxes
 - type: entity
-  id: BoxMagnum
-  name: "ammunition box (.40 magnum)"
   parent: BoxMagnumBase
+  id: BoxMagnum
+  name: ammunition box (.40 magnum)
   components:
   - type: AmmoBox
-    capacity: 60
     fillPrototype: CartridgeMagnum
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
-  id: BoxMagnumFlash
-  name: "ammunition box (.40 magnum flash)"
   parent: BoxMagnumBase
+  id: BoxMagnumFlash
+  name: ammunition box (.40 magnum flash)
   components:
   - type: AmmoBox
-    capacity: 60
     fillPrototype: CartridgeMagnumFlash
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_flash.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: flash
 
 - type: entity
-  id: BoxMagnumHV
-  name: "ammunition box (.40 magnum high-velocity)"
   parent: BoxMagnumBase
+  id: BoxMagnumHV
+  name: ammunition box (.40 magnum high-velocity)
   components:
   - type: AmmoBox
-    capacity: 60
     fillPrototype: CartridgeMagnumHV
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_hv.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: hv
 
 - type: entity
-  id: BoxMagnumPractice
-  name: "ammunition box (.40 magnum practice)"
   parent: BoxMagnumBase
+  id: BoxMagnumPractice
+  name: ammunition box (.40 magnum practice)
   components:
   - type: AmmoBox
-    capacity: 60
     fillPrototype: CartridgeMagnumPractice
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_practice.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: practice
 
 - type: entity
-  id: BoxMagnumRubber
-  name: "ammunition box (.40 magnum rubber)"
   parent: BoxMagnumBase
+  id: BoxMagnumRubber
+  name: ammunition box (.40 magnum rubber)
   components:
   - type: AmmoBox
-    capacity: 60
     fillPrototype: CartridgeMagnumRubber
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_rubber.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: rubber

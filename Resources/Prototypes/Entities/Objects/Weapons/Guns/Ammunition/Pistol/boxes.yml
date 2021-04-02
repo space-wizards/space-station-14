@@ -1,20 +1,15 @@
 - type: entity
-  id: BoxPistolBase
-  name: "ammunition box (.35 auto)"
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
+  id: BoxPistolBase
+  name: ammunition box (.35 auto)
   components:
   - type: AmmoBox
     caliber: Pistol
-    capacity: 30
-
+    capacity: 60
   - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi
     netsync: false
-    layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -24,61 +19,75 @@
 
 # Boxes
 - type: entity
+  parent: BoxPistolBase
   id: BoxPistolBox
-  name: "ammunition box (.35 auto)"
-  parent: BoxPistolBase
+  name: ammunition box (.35 auto)
   components:
   - type: AmmoBox
-    capacity: 60
     fillPrototype: CartridgePistol
-
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
 
 - type: entity
+  parent: BoxPistolBase
   id: BoxPistolBoxFlash
-  name: "ammunition box (.35 auto flash)"
-  parent: BoxPistolBase
+  name: ammunition box (.35 auto flash)
   components:
   - type: AmmoBox
-    capacity: 60
     fillPrototype: CartridgePistolFlash
-
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_flash.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: flash
 
 - type: entity
+  parent: BoxPistolBase
   id: BoxPistolBoxHV
-  name: "ammunition box (.35 auto high-velocity)"
-  parent: BoxPistolBase
+  name: ammunition box (.35 auto high-velocity)
   components:
   - type: AmmoBox
-    capacity: 60
     fillPrototype: CartridgePistolHV
-
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_hv.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: hv
 
 - type: entity
+  parent: BoxPistolBase
   id: BoxPistolBoxPractice
-  name: "ammunition box (.35 auto practice)"
-  parent: BoxPistolBase
+  name: ammunition box (.35 auto practice)
   components:
   - type: AmmoBox
-    capacity: 60
     fillPrototype: CartridgePistolPractice
-
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_practice.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: practice
 
 - type: entity
-  id: BoxPistolBoxRubber
-  name: "ammunition box (.35 auto rubber)"
   parent: BoxPistolBase
+  id: BoxPistolBoxRubber
+  name: ammunition box (.35 auto rubber)
   components:
   - type: AmmoBox
-    capacity: 60
     fillPrototype: CartridgePistolRubber
-
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_rubber.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: rubber
