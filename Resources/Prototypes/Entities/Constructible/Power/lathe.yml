@@ -76,20 +76,13 @@
     recipes:
       - Brutepack
       - Ointment
-      - LightTube
-      - LightBulb
-      - SheetSteel
-      - GlassStack
       - Wirecutter
       - Screwdriver
       - Welder
       - Wrench
-      - CableStack
       - Crowbar
       - Multitool
       - MiniHoe
-      - Scythe
-      - Hatchet
       - Shovel
       - Spade
   - type: Appearance
@@ -139,20 +132,31 @@
   - type: TechnologyDatabase
   - type: ProtolatheDatabase
     protolatherecipes:
-      - Brutepack
-      - Ointment
       - LightTube
       - LightBulb
       - SheetSteel
       - GlassStack
-      - Wirecutter
-      - Screwdriver
-      - Welder
-      - Wrench
       - CableStack
-      - Crowbar
-      - Multitool
       - ConveyorAssembly
+      - RCD
+      - RCDAmmo
+      - Scythe
+      - Hatchet
+      - Shovel
+      - Scalpel
+      - Retractor
+      - Cautery
+      - Drill
+      - BoneSaw
+      - Hemostat
+      - Beaker
+      - LargeBeaker
+      - Dropper
+      - Syringe
+      - Flash
+      - Handcuffs
+      - Stunbaton
+
   - type: UserInterface
     interfaces:
     - key: enum.LatheUiKey.Key
