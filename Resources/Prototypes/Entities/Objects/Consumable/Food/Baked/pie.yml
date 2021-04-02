@@ -19,7 +19,11 @@
         Quantity: 15
   - type: SliceableFood
     count: 4
-
+  - type: Ammo
+    caliber: CreamPie
+    caseless: true
+    projectile: BulletCreampie
+    
 - type: entity
   parent: FoodPieBase
   id: FoodPieSliceBase

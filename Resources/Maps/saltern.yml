@@ -608,18 +608,11 @@ entities:
     parent: 853
     type: Transform
 - uid: 68
-  type: LockerCursed
+  type: VendingMachineCoffee
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -8.5,-25.5
+  - pos: -11.5,-17.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 69
   type: PowerCellRecharger
   components:
@@ -889,8 +882,12 @@ entities:
   - pos: -7.5,-3.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 106
-  type: WeldingFuelTank
+  type: WeldingFuelTankFull
   components:
   - rot: 1.5707963705062866 rad
     pos: -1.5,-11.5
@@ -969,40 +966,33 @@ entities:
     parent: 853
     type: Transform
 - uid: 117
-  type: TableR
+  type: TableReinforced
   components:
   - pos: -13.5,16.5
     parent: 853
     type: Transform
 - uid: 118
-  type: MagazinePistolSmgTopMounted
+  type: ComputerMedicalRecords
   components:
-  - parent: 119
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 119
-  type: SmgWt550
-  components:
-  - pos: -7.2994337,21.672077
+  - pos: 0.5,32.5
     parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+- uid: 119
+  type: ComputerSupplyRequest
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 8.5,31.5
+    parent: 853
+    type: Transform
   - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 118
+      board: !type:Container
+        ents:
+        - 897
     type: ContainerContainer
 - uid: 120
-  type: VendingMachineDinnerware
+  type: VendingMachineSnack
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -13.5,1.5
+  - pos: -8.5,1.5
     parent: 853
     type: Transform
 - uid: 121
@@ -1051,16 +1041,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 126
-  type: ClothingHeadHatHardhatRed
+  type: AirCanister
   components:
-  - pos: 31.80539,-3.835095
+  - pos: 35.5,14.48527
     parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 127
   type: BoxDonkpocket
   components:
@@ -1074,31 +1059,21 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 128
-  type: FlashlightLantern
+  type: OxygenCanister
   components:
-  - pos: 29.963966,-4.532811
+  - pos: 30.5,12.473577
     parent: 853
     type: Transform
-  - sleepTime: 72.017456
-    type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 129
-  type: FlashlightLantern
+  type: OxygenCanister
   components:
-  - pos: 30.539764,-3.8350735
+  - pos: 30.5,13.486164
     parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 130
-  type: VendingMachineCoffee
+  type: VendingMachineSnack
   components:
-  - pos: -11.5,-17.5
+  - pos: -22.5,0.5
     parent: 853
     type: Transform
 - uid: 131
@@ -1933,15 +1908,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 214
-  type: chem_master
+  type: RCD
   components:
-  - rot: 3.141592653589793 rad
-    pos: 15.5,1.5
+  - pos: 29.615702,-4.3631177
     parent: 853
     type: Transform
-  - containers:
-      ChemMaster-reagentContainerContainer: !type:ContainerSlot {}
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 215
   type: DisposalPipe
   components:
@@ -4851,6 +4824,10 @@ entities:
     pos: -16.5,2.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 523
   type: AirlockMaintCommonLocked
   components:
@@ -4858,6 +4835,10 @@ entities:
     pos: -16.5,-3.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 524
   type: AirlockMaintCommonLocked
   components:
@@ -4865,6 +4846,10 @@ entities:
     pos: -14.5,-4.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 525
   type: Table
   components:
@@ -5077,6 +5062,10 @@ entities:
     pos: 0.5,9.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 555
   type: AirlockSecurityGlassLocked
   components:
@@ -5086,6 +5075,10 @@ entities:
     pos: -2.5,9.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 556
   type: Catwalk
   components:
@@ -5151,6 +5144,10 @@ entities:
     pos: -8.5,18.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 562
   type: AirlockExternalLocked
   components:
@@ -5158,6 +5155,10 @@ entities:
     pos: 14.5,14.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 563
   type: SupplyComputerCircuitboard
   components:
@@ -5193,6 +5194,10 @@ entities:
     pos: 17.5,11.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 567
   type: AirlockCargoGlassLocked
   components:
@@ -5202,6 +5207,10 @@ entities:
     pos: 17.5,10.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 568
   type: AirlockCargoGlassLocked
   components:
@@ -5211,6 +5220,10 @@ entities:
     pos: 13.5,8.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 569
   type: AirlockMaintCommandLocked
   components:
@@ -5218,6 +5231,10 @@ entities:
     pos: 8.5,12.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 570
   type: AirlockCommandGlassLocked
   components:
@@ -5227,6 +5244,10 @@ entities:
     pos: 9.5,6.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 571
   type: AirlockCommandGlassLocked
   components:
@@ -5236,6 +5257,10 @@ entities:
     pos: 7.5,6.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 572
   type: AirlockCommandGlassLocked
   components:
@@ -5245,6 +5270,10 @@ entities:
     pos: 4.5,22.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 573
   type: AirlockCommandGlassLocked
   components:
@@ -5254,6 +5283,10 @@ entities:
     pos: 2.5,22.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 574
   type: AirlockVaultLocked
   components:
@@ -5263,6 +5296,10 @@ entities:
     pos: -10.5,20.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 575
   type: AirlockVaultLocked
   components:
@@ -5272,6 +5309,10 @@ entities:
     pos: -12.5,17.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 576
   type: ChairOfficeDark
   components:
@@ -5279,8 +5320,6 @@ entities:
     pos: -8.5,8.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 577
   type: ChairOfficeDark
   components:
@@ -5288,17 +5327,15 @@ entities:
     pos: -9.5,7.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 578
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -8.5,6.5
     parent: 853
     type: Transform
 - uid: 579
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -9.5,6.5
@@ -5325,6 +5362,10 @@ entities:
     pos: 27.5,7.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 583
   type: solid_wall
   components:
@@ -5339,6 +5380,10 @@ entities:
     pos: -16.5,-7.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 585
   type: LockerBoozeFilled
   components:
@@ -5367,6 +5412,10 @@ entities:
     pos: -20.5,-7.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 588
   type: TableGlass
   components:
@@ -5375,23 +5424,29 @@ entities:
     parent: 853
     type: Transform
 - uid: 589
-  type: AirlockEngineering
+  type: AirlockGlass
   components:
   - name: Tool Storage
     type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,8.5
+  - pos: -25.5,8.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 590
-  type: AirlockEngineering
+  type: AirlockGlass
   components:
   - name: Tool Storage
     type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,10.5
+  - pos: -25.5,10.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 591
   type: AirlockScienceLocked
   components:
@@ -5401,6 +5456,10 @@ entities:
     pos: -12.5,-20.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 592
   type: AirlockScienceLocked
   components:
@@ -5410,6 +5469,10 @@ entities:
     pos: -12.5,-19.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 593
   type: AirlockCommandGlassLocked
   components:
@@ -5419,6 +5482,10 @@ entities:
     pos: -3.5,-21.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 594
   type: AirlockCommandGlassLocked
   components:
@@ -5428,6 +5495,10 @@ entities:
     pos: -8.5,-21.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 595
   type: AirlockCommandGlassLocked
   components:
@@ -5437,6 +5508,10 @@ entities:
     pos: 20.5,-13.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 596
   type: AirlockMedicalGlassLocked
   components:
@@ -5446,6 +5521,10 @@ entities:
     pos: 17.5,-3.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 597
   type: AirlockMedicalGlassLocked
   components:
@@ -5455,6 +5534,10 @@ entities:
     pos: 7.5,-6.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 598
   type: AirlockEngineeringGlassLocked
   components:
@@ -5464,6 +5547,10 @@ entities:
     pos: 30.5,5.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 599
   type: AirlockEngineeringGlassLocked
   components:
@@ -5473,6 +5560,10 @@ entities:
     pos: 30.5,3.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 600
   type: AirlockMaintCommonLocked
   components:
@@ -5480,6 +5571,10 @@ entities:
     pos: -20.5,11.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 601
   type: AirlockMaintCommonLocked
   components:
@@ -5487,6 +5582,10 @@ entities:
     pos: -32.5,2.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 602
   type: AirlockMaintIntLocked
   components:
@@ -5494,6 +5593,10 @@ entities:
     pos: -13.5,-13.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 603
   type: AirlockMaintIntLocked
   components:
@@ -5501,6 +5604,10 @@ entities:
     pos: -12.5,-8.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 604
   type: AirlockMaintRnDLocked
   components:
@@ -5508,6 +5615,10 @@ entities:
     pos: -4.5,-11.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 605
   type: AirlockMaintCommonLocked
   components:
@@ -5515,6 +5626,10 @@ entities:
     pos: 5.5,14.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 606
   type: AirlockMaintCommonLocked
   components:
@@ -5522,6 +5637,10 @@ entities:
     pos: -16.5,6.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 607
   type: AirlockSecurityGlassLocked
   components:
@@ -5531,6 +5650,10 @@ entities:
     pos: -6.5,6.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 608
   type: ApcExtensionCable
   components:
@@ -5548,6 +5671,10 @@ entities:
     pos: 28.5,-6.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 610
   type: AirlockServiceGlassLocked
   components:
@@ -5557,6 +5684,10 @@ entities:
     pos: -10.5,-1.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 611
   type: solid_wall
   components:
@@ -5573,6 +5704,10 @@ entities:
     pos: 0.5,17.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 613
   type: AirlockMaintCommonLocked
   components:
@@ -5580,6 +5715,10 @@ entities:
     pos: 1.5,-7.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 614
   type: AirlockMaintCommonLocked
   components:
@@ -5587,6 +5726,10 @@ entities:
     pos: -23.5,-9.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 615
   type: AirlockMaintCommonLocked
   components:
@@ -5594,6 +5737,10 @@ entities:
     pos: -34.5,-6.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 616
   type: Airlock
   components:
@@ -5606,6 +5753,10 @@ entities:
   - access:
     - - Janitor
     type: AccessReader
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 617
   type: AirlockExternalLocked
   components:
@@ -5613,6 +5764,10 @@ entities:
     pos: 15.5,16.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 618
   type: AirlockMaintCommandLocked
   components:
@@ -5620,6 +5775,10 @@ entities:
     pos: 11.5,20.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 619
   type: Catwalk
   components:
@@ -5636,6 +5795,10 @@ entities:
     pos: 38.5,1.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 621
   type: AirlockMaintCommonLocked
   components:
@@ -5643,6 +5806,10 @@ entities:
     pos: -33.5,8.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 622
   type: AirlockScienceGlassLocked
   components:
@@ -5652,6 +5819,10 @@ entities:
     pos: -3.5,-18.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 623
   type: AirlockScienceLocked
   components:
@@ -5661,6 +5832,10 @@ entities:
     pos: 0.5,-20.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 624
   type: AirlockScienceLocked
   components:
@@ -5670,6 +5845,10 @@ entities:
     pos: 0.5,-19.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 625
   type: AirlockMaintRnDLocked
   components:
@@ -5677,6 +5856,10 @@ entities:
     pos: -11.5,-21.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 626
   type: AirlockMaintMedLocked
   components:
@@ -5684,6 +5867,10 @@ entities:
     pos: 20.5,-10.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 627
   type: AirlockMaintMedLocked
   components:
@@ -5691,6 +5878,10 @@ entities:
     pos: 14.5,-18.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 628
   type: AirlockMaintCommonLocked
   components:
@@ -5698,6 +5889,10 @@ entities:
     pos: 0.5,20.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 629
   type: AirlockSecurityGlassLocked
   components:
@@ -5707,6 +5902,10 @@ entities:
     pos: -9.5,9.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 630
   type: AirlockSecurityGlassLocked
   components:
@@ -5716,6 +5915,10 @@ entities:
     pos: -10.5,15.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 631
   type: AirlockMedicalGlassLocked
   components:
@@ -5725,6 +5928,10 @@ entities:
     pos: 8.5,-12.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 632
   type: AirlockMedicalGlassLocked
   components:
@@ -5734,6 +5941,10 @@ entities:
     pos: 19.5,-18.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 633
   type: AirlockMedicalGlassLocked
   components:
@@ -5743,6 +5954,10 @@ entities:
     pos: 20.5,-6.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 634
   type: AirlockMedicalGlassLocked
   components:
@@ -5752,6 +5967,10 @@ entities:
     pos: 11.5,-6.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 635
   type: AirlockMedicalGlassLocked
   components:
@@ -5761,6 +5980,10 @@ entities:
     pos: 10.5,-6.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 636
   type: AirlockMaintCommandLocked
   components:
@@ -5768,6 +5991,10 @@ entities:
     pos: -1.5,22.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 637
   type: AirlockMaintCommonLocked
   components:
@@ -5775,6 +6002,10 @@ entities:
     pos: 21.5,2.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 638
   type: AirlockMaintCommonLocked
   components:
@@ -5782,6 +6013,10 @@ entities:
     pos: 6.5,-19.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 639
   type: AirlockCommandLocked
   components:
@@ -5791,6 +6026,10 @@ entities:
     pos: 5.5,25.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 640
   type: AirlockCommandGlassLocked
   components:
@@ -5800,6 +6039,10 @@ entities:
     pos: 1.5,25.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 641
   type: AirlockCommandGlassLocked
   components:
@@ -5809,6 +6052,10 @@ entities:
     pos: 1.5,24.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 642
   type: AirlockMaintRnDLocked
   components:
@@ -5816,6 +6063,10 @@ entities:
     pos: -16.5,-16.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 643
   type: AirlockMaintCargoLocked
   components:
@@ -5823,6 +6074,10 @@ entities:
     pos: 25.5,9.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 644
   type: AirlockMaintEngiLocked
   components:
@@ -5830,6 +6085,10 @@ entities:
     pos: 43.5,0.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 645
   type: AirlockMaintEngiLocked
   components:
@@ -5837,6 +6096,10 @@ entities:
     pos: 29.5,10.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 646
   type: AirlockEngineeringLocked
   components:
@@ -5846,6 +6109,10 @@ entities:
     pos: 40.5,10.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 647
   type: AirlockEngineeringLocked
   components:
@@ -5855,6 +6122,10 @@ entities:
     pos: 41.5,10.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 648
   type: AirlockEngineeringGlassLocked
   components:
@@ -5864,6 +6135,10 @@ entities:
     pos: 33.5,7.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 649
   type: AirlockEngineeringGlassLocked
   components:
@@ -5873,6 +6148,10 @@ entities:
     pos: 33.5,1.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 650
   type: AirlockEngineeringLocked
   components:
@@ -5882,6 +6161,10 @@ entities:
     pos: 49.5,-1.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 651
   type: AirlockSecurityGlassLocked
   components:
@@ -5891,6 +6174,10 @@ entities:
     pos: -6.5,9.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 652
   type: AirlockSecurityGlassLocked
   components:
@@ -5900,6 +6187,10 @@ entities:
     pos: -5.5,9.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 653
   type: AirlockSecurityGlassLocked
   components:
@@ -5909,6 +6200,10 @@ entities:
     pos: -5.5,6.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 654
   type: AirlockExternalLocked
   components:
@@ -5918,6 +6213,10 @@ entities:
     pos: -39.5,-3.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 655
   type: AirlockExternalLocked
   components:
@@ -5927,6 +6226,10 @@ entities:
     pos: -37.5,-3.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 656
   type: AirlockExternalLocked
   components:
@@ -5936,6 +6239,10 @@ entities:
     pos: -41.5,8.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 657
   type: LowWall
   components:
@@ -5959,6 +6266,10 @@ entities:
     pos: -39.5,8.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 660
   type: AirlockExternalLocked
   components:
@@ -5968,6 +6279,10 @@ entities:
     pos: -39.5,4.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 661
   type: AirlockExternalLocked
   components:
@@ -5977,8 +6292,12 @@ entities:
     pos: -41.5,4.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 662
-  type: TableR
+  type: TableReinforced
   components:
   - pos: -11.5,16.5
     parent: 853
@@ -6031,6 +6350,10 @@ entities:
   - pos: -20.5,-5.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 669
   type: Window
   components:
@@ -6563,12 +6886,10 @@ entities:
 - uid: 744
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 21.5,-12.5
+  - pos: 1.5,-21.485424
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 745
@@ -6644,12 +6965,10 @@ entities:
 - uid: 754
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 5.5,21.5
+  - pos: 6.5,23.514576
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 755
@@ -6685,12 +7004,10 @@ entities:
 - uid: 759
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 1.5,-21.5
+  - pos: 13.5,1.485029
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 760
@@ -6709,12 +7026,10 @@ entities:
 - uid: 761
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -24.5,11.5
+  - pos: -25.5,-8.485172
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 762
@@ -6746,23 +7061,21 @@ entities:
 - uid: 764
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 10.5,16.5
+  - pos: 0.5,26.48566
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 765
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 7.5,23.5
+  - pos: -39.5,10.496723
     parent: 853
     type: Transform
+  - sleepTime: 221.60655
+    type: Physics
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 766
@@ -6826,23 +7139,19 @@ entities:
 - uid: 771
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,-8.5
+  - pos: -24.5,11.48527
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 772
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -39.5,10.5
+  - pos: 21.5,-12.51473
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 773
@@ -7133,15 +7442,16 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 796
-  type: PottedPlantRandom
+  type: CrateMaterialGlass
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,26.5
+  - pos: 39.5,13.5
     parent: 853
     type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
-      stash: !type:ContainerSlot {}
+      EntityStorageComponent: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 797
   type: Table
@@ -7152,7 +7462,7 @@ entities:
 - uid: 798
   type: PottedPlantRandom
   components:
-  - pos: 16.5,7.5
+  - pos: 16.5,7.485173
     parent: 853
     type: Transform
   - containers:
@@ -7412,6 +7722,10 @@ entities:
   - pos: -8.5,-6.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 822
   type: ToiletDirtyWater
   components:
@@ -11839,47 +12153,54 @@ entities:
     parent: 853
     type: Transform
 - uid: 871
-  type: AutolatheMachineCircuitboard
+  type: ResearchComputerCircuitboard
   components:
-  - parent: 1044
+  - parent: 872
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 872
-  type: MatterBinStockPart
+  type: ComputerResearchAndDevelopment
   components:
-  - parent: 1044
+  - rot: 1.5707963267948966 rad
+    pos: -5.5,-15.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      board: !type:Container
+        ents:
+        - 871
+    type: ContainerContainer
 - uid: 873
-  type: MatterBinStockPart
+  type: BlockGameArcade
   components:
-  - parent: 1044
+  - pos: -6.5,1.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      board: !type:Container
+        ents:
+        - 875
+    type: ContainerContainer
 - uid: 874
-  type: MatterBinStockPart
+  type: VendingMachineCigs
   components:
-  - parent: 1044
+  - pos: -7.5,1.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 875
-  type: MicroManipulatorStockPart
+  type: BlockGameArcadeComputerCircuitboard
   components:
-  - parent: 1044
+  - parent: 873
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 876
-  type: SheetGlass1
+  type: ComputerPowerMonitoring
   components:
-  - parent: 1044
+  - pos: 7.5,32.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 877
   type: reinforced_wall
   components:
@@ -12050,19 +12371,23 @@ entities:
     parent: 853
     type: Transform
 - uid: 897
-  type: VendingMachineSnack
+  type: SupplyRequestComputerCircuitboard
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -8.5,1.5
-    parent: 853
+  - parent: 119
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 898
-  type: VendingMachineCigs
+  type: ComputerComms
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -7.5,1.5
+  - pos: 3.5,32.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents:
+        - 959
+    type: ContainerContainer
 - uid: 899
   type: VendingMachineTheater
   components:
@@ -12452,8 +12777,6 @@ entities:
     pos: 10.5,17.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 955
   type: Chair
   components:
@@ -12485,17 +12808,12 @@ entities:
     parent: 853
     type: Transform
 - uid: 959
-  type: ComputerSupplyRequest
+  type: CommsComputerCircuitboard
   components:
-  - rot: 4.71238902409608 rad
-    pos: 8.5,31.5
-    parent: 853
+  - parent: 898
     type: Transform
-  - containers:
-      board: !type:Container
-        ents:
-        - 4024
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 960
   type: ChairOfficeDark
   components:
@@ -12503,13 +12821,11 @@ entities:
     pos: 0.5,31.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 961
-  type: ComputerMedicalRecords
+  type: ComputerPowerMonitoring
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,32.5
+  - rot: 1.5707963267948966 rad
+    pos: 29.5,-1.5
     parent: 853
     type: Transform
 - uid: 962
@@ -12519,8 +12835,6 @@ entities:
     pos: 7.5,31.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 963
   type: ChairOfficeDark
   components:
@@ -12528,8 +12842,6 @@ entities:
     pos: -2.5,25.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 964
   type: ChairOfficeDark
   components:
@@ -12537,8 +12849,6 @@ entities:
     pos: -2.5,24.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 965
   type: ChairOfficeDark
   components:
@@ -12546,8 +12856,6 @@ entities:
     pos: -0.5,25.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 966
   type: ChairOfficeDark
   components:
@@ -12555,8 +12863,6 @@ entities:
     pos: -0.5,24.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 967
   type: TableWood
   components:
@@ -12584,47 +12890,35 @@ entities:
     parent: 853
     type: Transform
 - uid: 971
-  type: ComputerPowerMonitoring
+  type: IDComputerCircuitboard
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 7.5,32.5
-    parent: 853
+  - parent: 1574
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 972
-  type: ComputerAlert
+  type: MatterBinStockPart
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 6.5,32.5
-    parent: 853
+  - parent: 4273
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 973
-  type: ComputerId
+  type: CommsComputerCircuitboard
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 7.5,21.5
-    parent: 853
+  - parent: 3178
     type: Transform
-  - containers:
-      IdCardConsole-privilegedId: !type:ContainerSlot {}
-      IdCardConsole-targetId: !type:ContainerSlot {}
-      board: !type:Container
-        ents:
-        - 3945
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 974
-  type: ComputerId
+  type: PlushieSlime
   components:
-  - rot: 3.141592697301183 rad
-    pos: 8.5,23.5
+  - rot: 3.141592653589793 rad
+    pos: -9.151907,-25.740355
     parent: 853
     type: Transform
-  - containers:
-      IdCardConsole-privilegedId: !type:ContainerSlot {}
-      IdCardConsole-targetId: !type:ContainerSlot {}
-      board: !type:Container
-        ents:
-        - 3946
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 975
   type: Table
   components:
@@ -12657,8 +12951,6 @@ entities:
     pos: 7.5,25.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 979
   type: ChairOfficeDark
   components:
@@ -12666,20 +12958,13 @@ entities:
     pos: 9.5,25.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 980
-  type: ComputerComms
+  type: VendingMachineSovietSoda
   components:
-  - rot: 3.141592697301183 rad
-    pos: 9.5,23.5
+  - rot: 3.141592653589793 rad
+    pos: -11.5,-9.5
     parent: 853
     type: Transform
-  - containers:
-      board: !type:Container
-        ents:
-        - 3992
-    type: ContainerContainer
 - uid: 981
   type: ChairOfficeDark
   components:
@@ -12687,8 +12972,6 @@ entities:
     pos: 3.5,31.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 982
   type: TableWood
   components:
@@ -12771,17 +13054,11 @@ entities:
   - location: bar
     type: WarpPoint
 - uid: 992
-  type: ComputerComms
+  type: VendingMachineDinnerware
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 3.5,32.5
+  - pos: -13.5,1.5
     parent: 853
     type: Transform
-  - containers:
-      board: !type:Container
-        ents:
-        - 4032
-    type: ContainerContainer
 - uid: 993
   type: Table
   components:
@@ -12977,6 +13254,10 @@ entities:
   - pos: 2.5,27.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1016
   type: FirelockGlass
   components:
@@ -13097,14 +13378,14 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 1032
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,-14.5
     parent: 853
     type: Transform
 - uid: 1033
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,-15.5
@@ -13159,64 +13440,43 @@ entities:
     parent: 853
     type: Transform
 - uid: 1040
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,28.5
     parent: 853
     type: Transform
 - uid: 1041
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,28.5
     parent: 853
     type: Transform
 - uid: 1042
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,28.5
     parent: 853
     type: Transform
 - uid: 1043
-  type: Protolathe
+  type: BodyScannerComputerCircuitboard
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -3.5,-12.5
-    parent: 853
+  - parent: 1044
     type: Transform
-  - containers:
-      machine_board: !type:Container
-        ents:
-        - 4272
-      machine_parts: !type:Container
-        ents:
-        - 4273
-        - 4274
-        - 4275
-        - 4276
-        - 4277
-        - 4278
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 1044
-  type: Autolathe
+  type: computerBodyScanner
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -5.5,-12.5
+  - pos: 10.5,-13.5
     parent: 853
     type: Transform
   - containers:
-      machine_board: !type:Container
+      board: !type:Container
         ents:
-        - 871
-      machine_parts: !type:Container
-        ents:
-        - 872
-        - 873
-        - 874
-        - 875
-        - 876
+        - 1043
     type: ContainerContainer
 - uid: 1045
   type: ChairOfficeLight
@@ -13225,8 +13485,6 @@ entities:
     pos: -8.5,-18.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 1046
   type: ChairOfficeLight
   components:
@@ -13234,8 +13492,6 @@ entities:
     pos: -9.5,-17.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 1047
   type: Table
   components:
@@ -13256,8 +13512,6 @@ entities:
     pos: -5.5,-23.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 1050
   type: ChairOfficeLight
   components:
@@ -13265,8 +13519,6 @@ entities:
     pos: -0.5,-14.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 1051
   type: BaseResearchAndDevelopmentPointSource
   components:
@@ -13275,35 +13527,35 @@ entities:
     parent: 853
     type: Transform
 - uid: 1052
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -7.5,7.5
     parent: 853
     type: Transform
 - uid: 1053
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -7.5,8.5
     parent: 853
     type: Transform
 - uid: 1054
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 9.5,28.5
     parent: 853
     type: Transform
 - uid: 1055
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 8.5,28.5
     parent: 853
     type: Transform
 - uid: 1056
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 7.5,28.5
@@ -13324,17 +13576,11 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1058
-  type: ComputerResearchAndDevelopment
+  type: VendingMachineSeeds
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -5.5,-15.5
+  - pos: -18.5,-2.5
     parent: 853
     type: Transform
-  - containers:
-      board: !type:Container
-        ents:
-        - 4009
-    type: ContainerContainer
 - uid: 1059
   type: LowWall
   components:
@@ -13702,8 +13948,6 @@ entities:
     pos: 24.5,-14.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 1098
   type: Table
   components:
@@ -13728,8 +13972,8 @@ entities:
 - uid: 1101
   type: ComputerMedicalRecords
   components:
-  - rot: 3.141592697301183 rad
-    pos: 24.5,-15.5
+  - rot: 3.141592653589793 rad
+    pos: 6.5,-5.5
     parent: 853
     type: Transform
 - uid: 1102
@@ -14014,12 +14258,14 @@ entities:
       CloningPod-bodyContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1136
-  type: VendingMachineSeeds
+  type: SheetPlasteel
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -18.5,-2.5
+  - rot: 3.141592653589793 rad
+    pos: 46.608032,4.3461604
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 1137
   type: reinforced_wall
   components:
@@ -14303,7 +14549,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1170
-  type: TableGlassR
+  type: TableReinforcedGlass
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 18.5,1.5
@@ -14316,7 +14562,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1172
-  type: TableGlassR
+  type: TableReinforcedGlass
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 18.5,0.5
@@ -14346,12 +14592,14 @@ entities:
     parent: 853
     type: Transform
 - uid: 1176
-  type: ComputerMedicalRecords
+  type: SheetPlasteel
   components:
-  - rot: 3.141592697301183 rad
-    pos: 6.5,-5.5
+  - rot: 3.141592653589793 rad
+    pos: 46.920532,4.6742854
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 1177
   type: ChairOfficeLight
   components:
@@ -14359,8 +14607,6 @@ entities:
     pos: 6.5,-4.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 1178
   type: Table
   components:
@@ -14629,8 +14875,6 @@ entities:
     pos: -11.5,8.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 1209
   type: Chair
   components:
@@ -14662,7 +14906,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1212
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,28.5
@@ -14771,12 +15015,18 @@ entities:
     parent: 853
     type: Transform
 - uid: 1222
-  type: ComputerPowerMonitoring
+  type: SmgWt550
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 29.5,-1.5
+  - pos: -7.338622,21.61197
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      MagazineBarrel-chamber: !type:ContainerSlot {}
+      MagazineBarrel-magazine: !type:ContainerSlot
+        ent: 3179
+    type: ContainerContainer
 - uid: 1223
   type: LockerToolFilled
   components:
@@ -14791,7 +15041,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1224
-  type: TableR
+  type: TableReinforced
   components:
   - pos: -13.5,15.5
     parent: 853
@@ -14928,20 +15178,20 @@ entities:
     parent: 853
     type: Transform
 - uid: 1236
-  type: VendingMachineSnack
+  type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -22.5,0.5
+  - pos: 10.5,16.514576
     parent: 853
     type: Transform
+  - containers:
+      stash: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 1237
-  type: RCD
+  type: NitrogenCanister
   components:
-  - pos: 29.43039,-4.0971894
+  - pos: 36.5,13.486164
     parent: 853
     type: Transform
-  - sleepTime: 57.749176
-    type: Physics
 - uid: 1238
   type: Table
   components:
@@ -15479,6 +15729,10 @@ entities:
     pos: 1.5,-23.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1288
   type: PoweredSmallLight
   components:
@@ -16088,8 +16342,6 @@ entities:
     pos: 10.5,-16.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 1339
   type: reinforced_wall
   components:
@@ -16713,6 +16965,10 @@ entities:
   - pos: 4.5,27.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1397
   type: LowWall
   components:
@@ -17398,12 +17654,16 @@ entities:
     parent: 853
     type: Transform
 - uid: 1494
-  type: Window
+  type: ClothingHeadHatHardhatBlue
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 10.5,-12.5
+  - pos: 31.506327,-4.3631177
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      cellslot_cell_container: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 1495
   type: Window
   components:
@@ -17440,12 +17700,16 @@ entities:
     parent: 853
     type: Transform
 - uid: 1500
-  type: LowWall
+  type: ClothingHeadHatHardhatRed
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 10.5,-12.5
+  - pos: 31.693827,-4.1131177
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      cellslot_cell_container: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 1501
   type: Window
   components:
@@ -17742,7 +18006,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1543
-  type: WeldingFuelTank
+  type: WeldingFuelTankFull
   components:
   - pos: 33.5,12.5
     parent: 853
@@ -17758,12 +18022,17 @@ entities:
       MedicalScanner-bodyContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1545
-  type: ComputerAlert
+  type: CrateMaterialSteel
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 29.5,-2.5
+  - pos: 38.5,13.5
     parent: 853
     type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1546
   type: HVWire
   components:
@@ -17956,8 +18225,6 @@ entities:
     pos: 30.5,-2.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 1572
   type: Catwalk
   components:
@@ -17966,30 +18233,24 @@ entities:
     parent: 853
     type: Transform
 - uid: 1573
-  type: CrateGeneric
+  type: ComputerAlert
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 39.5,13.5
+  - rot: 1.5707963267948966 rad
+    pos: 29.5,-2.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1574
-  type: CrateGeneric
+  type: ComputerId
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 38.5,13.5
+  - pos: 7.5,21.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
+      IdCardConsole-privilegedId: !type:ContainerSlot {}
+      IdCardConsole-targetId: !type:ContainerSlot {}
+      board: !type:Container
+        ents:
+        - 971
     type: ContainerContainer
 - uid: 1575
   type: Table
@@ -18110,6 +18371,10 @@ entities:
     pos: 33.5,-5.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1592
   type: Catwalk
   components:
@@ -18879,12 +19144,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 1699
-  type: SignCloning
+  type: RCD
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 7.326743,-12.5
+  - pos: 29.396952,-4.6131177
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 1700
   type: solid_wall
   components:
@@ -20098,6 +20364,10 @@ entities:
     pos: 6.5,17.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1870
   type: reinforced_wall
   components:
@@ -20902,6 +21172,10 @@ entities:
     pos: -14.5,11.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1985
   type: reinforced_wall
   components:
@@ -22033,14 +22307,16 @@ entities:
     parent: 853
     type: Transform
 - uid: 2146
-  type: PottedPlantRandom
+  type: CrateMaterialPlastic
   components:
-  - rot: 3.141592653589793 rad
-    pos: 13.5,1.5
+  - pos: 40.5,13.5
     parent: 853
     type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
   - containers:
-      stash: !type:ContainerSlot {}
+      EntityStorageComponent: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 2147
   type: SpawnPointMedicalDoctor
@@ -22050,19 +22326,19 @@ entities:
     parent: 853
     type: Transform
 - uid: 2148
-  type: TableMetal
+  type: Table
   components:
   - pos: -14.5,20.5
     parent: 853
     type: Transform
 - uid: 2149
-  type: TableMetal
+  type: Table
   components:
   - pos: -14.5,21.5
     parent: 853
     type: Transform
 - uid: 2150
-  type: TableMetal
+  type: Table
   components:
   - pos: -13.5,21.5
     parent: 853
@@ -23094,6 +23370,10 @@ entities:
     pos: -12.5,-2.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2294
   type: solid_wall
   components:
@@ -23932,17 +24212,12 @@ entities:
       PumpBarrel-chamber-container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2412
-  type: BlockGameArcade
+  type: MatterBinStockPart
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -6.5,1.5
-    parent: 853
+  - parent: 4273
     type: Transform
-  - containers:
-      board: !type:Container
-        ents:
-        - 2414
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 2413
   type: solid_wall
   components:
@@ -23951,12 +24226,17 @@ entities:
     parent: 853
     type: Transform
 - uid: 2414
-  type: BlockGameArcadeComputerCircuitboard
+  type: LockerGeneric
   components:
-  - parent: 2412
+  - pos: -8.5,-25.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2415
   type: ApcExtensionCable
   components:
@@ -24042,10 +24322,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2426
-  type: VendingMachineSovietSoda
+  type: ComputerAlert
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -11.5,-9.5
+  - pos: 6.5,32.5
     parent: 853
     type: Transform
 - uid: 2427
@@ -24055,8 +24334,6 @@ entities:
     pos: 40.5,-0.5
     parent: 853
     type: Transform
-  - bodyType: Dynamic
-    type: Physics
 - uid: 2428
   type: solid_wall
   components:
@@ -24139,21 +24416,21 @@ entities:
     parent: 853
     type: Transform
 - uid: 2439
-  type: WeldingFuelTank
+  type: WeldingFuelTankFull
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,11.5
     parent: 853
     type: Transform
 - uid: 2440
-  type: WeldingFuelTank
+  type: WeldingFuelTankFull
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 35.5,-4.5
     parent: 853
     type: Transform
 - uid: 2441
-  type: WeldingFuelTank
+  type: WeldingFuelTankFull
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,-9.5
@@ -24336,21 +24613,21 @@ entities:
     parent: 853
     type: Transform
 - uid: 2467
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,28.5
     parent: 853
     type: Transform
 - uid: 2468
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,28.5
     parent: 853
     type: Transform
 - uid: 2469
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,28.5
@@ -24469,10 +24746,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 2485
-  type: CrateInternals
+  type: CrateMaterialSteel
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 42.5,13.5
+  - pos: 21.5,13.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -24482,18 +24758,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2486
-  type: CrateRadiation
+  type: Emitter
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 43.5,13.5
+  - pos: 43.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2487
   type: solid_wall
   components:
@@ -24746,10 +25015,9 @@ entities:
   - drawRate: 2000
     type: PowerConsumer
 - uid: 2516
-  type: CrateEmergencyFire
+  type: CrateServiceReplacementLights
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 22.5,13.5
+  - pos: 20.5,13.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -31827,18 +32095,28 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3178
-  type: Emitter
+  type: ComputerComms
   components:
-  - pos: 43.5,11.5
+  - rot: 3.141592653589793 rad
+    pos: 9.5,23.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents:
+        - 973
+    type: ContainerContainer
 - uid: 3179
-  type: AMEJar
+  type: MagazinePistolSmgTopMounted
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 38.25703,11.473667
-    parent: 853
+  - parent: 1222
     type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3180
   type: ApcExtensionCable
   components:
@@ -38900,18 +39178,30 @@ entities:
   - pos: 23.5,-10.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3881
   type: AirlockMaintSecLocked
   components:
   - pos: -16.5,16.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3882
   type: AirlockMaintCommandLocked
   components:
   - pos: 12.5,22.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3883
   type: EmergencyLight
   components:
@@ -39514,18 +39804,19 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3945
-  type: ApcExtensionCable
+  type: SheetGlass1
   components:
-  - parent: 973
+  - parent: 4273
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3946
-  type: FirelockGlass
+  type: MicroManipulatorStockPart
   components:
-  - rot: 4.371139006309477E-08 rad
-    parent: 974
+  - parent: 4273
     type: Transform
-  - airBlocked: False
-    type: Airtight
+  - canCollide: False
+    type: Physics
 - uid: 3947
   type: ApcExtensionCable
   components:
@@ -39949,12 +40240,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3992
-  type: CommsComputerCircuitboard
+  type: CrateEngineeringAMEControl
   components:
-  - parent: 980
+  - pos: 38.5,11.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3993
   type: FirelockGlass
   components:
@@ -40096,12 +40392,25 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 4009
-  type: ResearchComputerCircuitboard
+  type: Protolathe
   components:
-  - parent: 1058
+  - rot: 1.5707963267948966 rad
+    pos: -3.5,-12.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents:
+        - 4024
+      machine_parts: !type:Container
+        ents:
+        - 4032
+        - 4082
+        - 4173
+        - 4174
+        - 4181
+        - 4272
+    type: ContainerContainer
 - uid: 4010
   type: Firelock
   components:
@@ -40224,9 +40533,9 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 4024
-  type: SupplyRequestComputerCircuitboard
+  type: ProtolatheMachineCircuitboard
   components:
-  - parent: 959
+  - parent: 4009
     type: Transform
   - canCollide: False
     type: Physics
@@ -40289,9 +40598,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 4032
-  type: CommsComputerCircuitboard
+  type: MatterBinStockPart
   components:
-  - parent: 992
+  - parent: 4009
     type: Transform
   - canCollide: False
     type: Physics
@@ -40698,10 +41007,9 @@ entities:
   - startingCharge: 12224.357
     type: Battery
 - uid: 4082
-  type: Skub
+  type: MatterBinStockPart
   components:
-  - pos: -40.49734,4.5469456
-    parent: 853
+  - parent: 4009
     type: Transform
   - canCollide: False
     type: Physics
@@ -40859,6 +41167,10 @@ entities:
     pos: -31.5,-7.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4105
   type: Catwalk
   components:
@@ -40889,6 +41201,10 @@ entities:
     pos: -26.5,0.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4109
   type: Airlock
   components:
@@ -40898,6 +41214,10 @@ entities:
     pos: -26.5,-2.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4110
   type: Airlock
   components:
@@ -40907,6 +41227,10 @@ entities:
     pos: -26.5,-5.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4111
   type: SalternApc
   components:
@@ -40956,6 +41280,10 @@ entities:
     pos: -24.5,-12.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4117
   type: TableWood
   components:
@@ -41112,15 +41440,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 4137
-  type: RCD
+  type: NitrogenCanister
   components:
-  - pos: 29.46164,-4.0027966
+  - pos: 36.5,12.473577
     parent: 853
     type: Transform
-  - sleepTime: 57.249184
-    type: Physics
 - uid: 4138
-  type: TableR
+  type: TableReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 15.5,8.5
@@ -41376,30 +41702,32 @@ entities:
       morgue_tray: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4166
-  type: SignMorgue
+  type: chem_master
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 17.313038,-12.573634
+  - pos: 15.5,1.5
     parent: 853
     type: Transform
+  - containers:
+      ChemMaster-reagentContainerContainer: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 4167
-  type: TableMetal
+  type: Table
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 14.5,-13.5
     parent: 853
     type: Transform
 - uid: 4168
-  type: TableMetal
+  type: Table
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 15.5,-13.5
     parent: 853
     type: Transform
 - uid: 4169
-  type: ClothingHeadHatHardhatBlue
+  type: FlashlightLantern
   components:
-  - pos: 31.258514,-3.8350995
+  - pos: 30.584452,-4.2068677
     parent: 853
     type: Transform
   - canCollide: False
@@ -41436,22 +41764,21 @@ entities:
     pos: 16.5,-15.5
     parent: 853
     type: Transform
-- uid: 4173
-  type: computerBodyScanner
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 10.5,-13.5
-    parent: 853
-    type: Transform
   - containers:
       board: !type:Container
-        ents:
-        - 4174
+        ents: []
     type: ContainerContainer
-- uid: 4174
-  type: BodyScannerComputerCircuitboard
+- uid: 4173
+  type: MicroManipulatorStockPart
   components:
-  - parent: 4173
+  - parent: 4009
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4174
+  type: MicroManipulatorStockPart
+  components:
+  - parent: 4009
     type: Transform
   - canCollide: False
     type: Physics
@@ -41508,12 +41835,12 @@ entities:
     parent: 853
     type: Transform
 - uid: 4181
-  type: AMEJar
+  type: Beaker
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 38.585155,11.629917
-    parent: 853
+  - parent: 4009
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 4182
   type: KitchenReagentGrinder
   components:
@@ -41958,9 +42285,9 @@ entities:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4240
-  type: ClothingHeadHatHardhatOrange
+  type: FlashlightLantern
   components:
-  - pos: 31.55539,-3.8350842
+  - pos: 30.350077,-4.5818677
     parent: 853
     type: Transform
   - canCollide: False
@@ -42110,14 +42437,14 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4259
-  type: TableMetal
+  type: Table
   components:
   - rot: 1.5707963705062866 rad
     pos: -14.5,18.5
     parent: 853
     type: Transform
 - uid: 4260
-  type: TableMetal
+  type: Table
   components:
   - rot: 1.5707963705062866 rad
     pos: -14.5,19.5
@@ -42205,54 +42532,73 @@ entities:
     parent: 853
     type: Transform
 - uid: 4272
-  type: ProtolatheMachineCircuitboard
+  type: Beaker
   components:
-  - parent: 1043
+  - parent: 4009
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4273
-  type: MatterBinStockPart
+  type: Autolathe
   components:
-  - parent: 1043
+  - rot: 1.5707963267948966 rad
+    pos: -5.5,-12.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents:
+        - 4274
+      machine_parts: !type:Container
+        ents:
+        - 4275
+        - 2412
+        - 972
+        - 3946
+        - 3945
+    type: ContainerContainer
 - uid: 4274
-  type: MatterBinStockPart
+  type: AutolatheMachineCircuitboard
   components:
-  - parent: 1043
+  - parent: 4273
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4275
-  type: MicroManipulatorStockPart
+  type: MatterBinStockPart
   components:
-  - parent: 1043
+  - parent: 4273
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4276
-  type: MicroManipulatorStockPart
+  type: ComputerId
   components:
-  - parent: 1043
+  - rot: 3.141592653589793 rad
+    pos: 8.5,23.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      IdCardConsole-privilegedId: !type:ContainerSlot {}
+      IdCardConsole-targetId: !type:ContainerSlot {}
+      board: !type:Container
+        ents:
+        - 4277
+    type: ContainerContainer
 - uid: 4277
-  type: Beaker
+  type: IDComputerCircuitboard
   components:
-  - parent: 1043
+  - parent: 4276
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 4278
-  type: Beaker
+  type: ComputerMedicalRecords
   components:
-  - parent: 1043
+  - rot: 3.141592653589793 rad
+    pos: 24.5,-15.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4279
   type: TraitorDMRedemptionMachineSpawner
   components:
@@ -42542,6 +42888,10 @@ entities:
     pos: 45.5,8.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4320
   type: AirlockEngineeringLocked
   components:
@@ -42551,6 +42901,10 @@ entities:
     pos: 45.5,7.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4321
   type: Poweredlight
   components:
@@ -43226,6 +43580,10 @@ entities:
     pos: 44.5,-14.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4400
   type: AirlockExternalLocked
   components:
@@ -43233,6 +43591,10 @@ entities:
     pos: 54.5,-14.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4401
   type: Emitter
   components:
@@ -43946,6 +44308,10 @@ entities:
     pos: 46.5,-9.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4477
   type: AirlockExternalLocked
   components:
@@ -43953,6 +44319,10 @@ entities:
     pos: 52.5,-9.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4478
   type: AirlockEngineeringLocked
   components:
@@ -43962,6 +44332,10 @@ entities:
     pos: 49.5,-7.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4479
   type: SalternSmes
   components:
@@ -45962,31 +46336,20 @@ entities:
     parent: 853
     type: Transform
 - uid: 4714
-  type: CrateMaterialSteel
+  type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 21.5,13.5
+  - pos: 5.5,21.485424
     parent: 853
     type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4715
-  type: CrateServiceReplacementLights
+  type: PlasmaCanister
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 20.5,13.5
+  - pos: 41.5,13.48527
     parent: 853
     type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4716
   type: SalternSubstation
   components:
@@ -46309,6 +46672,110 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -23.92674,-5.302955
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4755
+  type: AirCanister
+  components:
+  - pos: 31.5,14.48527
+    parent: 853
+    type: Transform
+- uid: 4756
+  type: AirCanister
+  components:
+  - pos: 32.5,14.48527
+    parent: 853
+    type: Transform
+- uid: 4757
+  type: AirCanister
+  components:
+  - pos: 33.5,14.48527
+    parent: 853
+    type: Transform
+- uid: 4758
+  type: AirCanister
+  components:
+  - pos: 34.5,14.48527
+    parent: 853
+    type: Transform
+- uid: 4759
+  type: ClothingHeadHatHardhatYellow
+  components:
+  - pos: 31.334452,-4.0662427
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      cellslot_cell_container: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 4760
+  type: solid_wall
+  components:
+  - pos: 10.5,-12.5
+    parent: 853
+    type: Transform
+- uid: 4761
+  type: SignCloning
+  components:
+  - pos: 10.479609,-12.566249
+    parent: 853
+    type: Transform
+- uid: 4762
+  type: CrateEngineeringAMEShielding
+  components:
+  - pos: 39.5,11.5
+    parent: 853
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 4763
+  type: SignMorgue
+  components:
+  - pos: 15.48162,-18.57235
+    parent: 853
+    type: Transform
+- uid: 4764
+  type: CrateEmergencyFire
+  components:
+  - pos: 22.5,13.5
+    parent: 853
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 4766
+  type: AMEJar
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 42.867836,11.333441
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4767
+  type: AMEJar
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 42.50846,11.364691
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4770
+  type: SpaceVillainArcadeComputerCircuitboard
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -9.558157,-25.271605
     parent: 853
     type: Transform
   - canCollide: False

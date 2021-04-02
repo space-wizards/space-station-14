@@ -9,6 +9,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable
@@ -107,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                         if (LitSound != string.Empty)
                         {
-                            EntitySystem.Get<AudioSystem>().PlayFromEntity(LitSound, Owner);
+                            SoundSystem.Play(Filter.Pvs(Owner), LitSound, Owner);
                         }
 
                         if (IconStateLit != string.Empty)
@@ -127,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                         if (DieSound != string.Empty)
                         {
-                            EntitySystem.Get<AudioSystem>().PlayFromEntity(DieSound, Owner);
+                            SoundSystem.Play(Filter.Pvs(Owner), DieSound, Owner);
                         }
 
                         if (LoopedSound != string.Empty && Owner.TryGetComponent<LoopingLoopingSoundComponent>(out var loopSound))

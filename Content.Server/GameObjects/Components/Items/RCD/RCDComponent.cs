@@ -8,11 +8,13 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -23,17 +25,16 @@ namespace Content.Server.GameObjects.Components.Items.RCD
     public class RCDComponent : Component, IAfterInteract, IUse, IExamine
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
         public override string Name => "RCD";
         private RcdMode _mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
         private readonly RcdMode[] _modes = (RcdMode[])  Enum.GetValues(typeof(RcdMode));
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("maxAmmo")] public int maxAmmo = 5;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("maxAmmo")] public int MaxAmmo = 5;
         public int _ammo; //How much "ammo" we have left. You can refill this with RCD ammo.
         [ViewVariables(VVAccess.ReadWrite)] [DataField("delay")] private float _delay = 2f;
-        private DoAfterSystem doAfterSystem = default!;
+        private DoAfterSystem _doAfterSystem = default!;
 
         ///Enum to store the different mode states for clarity.
         private enum RcdMode
@@ -47,8 +48,8 @@ namespace Content.Server.GameObjects.Components.Items.RCD
         public override void Initialize()
         {
             base.Initialize();
-            _ammo = maxAmmo;
-            doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            _ammo = MaxAmmo;
+            _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
         }
 
         ///<summary>
@@ -67,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
 
         public void SwapMode(UseEntityEventArgs eventArgs)
         {
-            _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/Items/genhit.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/genhit.ogg", Owner);
             int mode = (int) _mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             _mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
@@ -112,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                 ExtraCheck = () => IsRCDStillValid(eventArgs, mapGrid, tile, snapPos, startingMode) //All of the sanity checks are here
             };
 
-            var result = await doAfterSystem.DoAfter(doAfterEventArgs);
+            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
             if (result == DoAfterStatus.Cancelled)
             {
                 return true;
@@ -138,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                 //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile, thus we early return to avoid the tile set code.
                 case RcdMode.Walls:
                     var ent = _serverEntityManager.SpawnEntity("solid_wall", mapGrid.GridTileToLocal(snapPos));
-                    ent.Transform.LocalRotation = Angle.South; // Walls always need to point south.
+                    ent.Transform.LocalRotation = Angle.Zero; // Walls always need to point south.
                     break;
                 case RcdMode.Airlock:
                     var airlock = _serverEntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));
@@ -148,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                     return true; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
             }
 
-            _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/Items/deconstruct.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/deconstruct.ogg", Owner);
             _ammo--;
             return true;
         }

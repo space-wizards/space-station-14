@@ -14,7 +14,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class ComponentInTile : IEdgeCondition
+    public class ComponentInTile : IGraphCondition
     {
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;

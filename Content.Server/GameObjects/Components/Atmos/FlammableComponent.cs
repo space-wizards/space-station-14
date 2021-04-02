@@ -25,7 +25,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class FlammableComponent : SharedFlammableComponent, IStartCollide, IFireAct, IReagentReaction, IInteractUsing
+    public class FlammableComponent : SharedFlammableComponent, IStartCollide, IFireAct, IInteractUsing
     {
         private bool _resisting = false;
         private readonly List<EntityUid> _collided = new();
@@ -203,27 +203,6 @@ namespace Content.Server.GameObjects.Components.Atmos
                 FireStacks -= 3f;
                 UpdateAppearance();
             });
-        }
-
-        ReagentUnit IReagentReaction.ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
-        {
-            switch (reagent.ID)
-            {
-                case "chem.Water":
-                    Extinguish();
-                    AdjustFireStacks(-1.5f);
-                    return ReagentUnit.Zero;
-
-                case "chem.WeldingFuel":
-                case "chem.Thermite":
-                case "chem.Plasma":
-                case "chem.Ethanol":
-                    AdjustFireStacks(volume.Float() / 10f);
-                    return volume;
-
-                default:
-                    return ReagentUnit.Zero;
-            }
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)

@@ -23,7 +23,6 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: bolt-closed
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
-
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
@@ -56,7 +55,6 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
@@ -78,3 +76,29 @@
       magState: mag
       steps: 1
       zeroVisible: true
+
+- type: entity
+  name: pie cannon
+  parent: LauncherBase
+  id: LauncherCreamPie
+  description: Load cream pie for optimal results.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/pie_cannon.rsi
+      state: piecannon
+    - type: Item
+      size: 24
+      sprite: Objects/Weapons/Guns/Launchers/pie_cannon.rsi
+    - type: RangedWeapon
+      clumsyCheck: false
+    - type: RevolverBarrel
+      caliber: CreamPie
+      currentSelector: Single
+      allSelectors:
+        - Single
+      fillPrototype: FoodBananaCreamPie
+      fireRate: 5
+      capacity: 15
+      soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+      soundGunshot: /Audio/Effects/bang.ogg
+      soundInsert: /Audio/Items/bikehorn.ogg

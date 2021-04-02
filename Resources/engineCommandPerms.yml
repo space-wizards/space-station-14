@@ -11,6 +11,7 @@
 - Flags: DEBUG
   Commands:
   - delete
+  - inrangeunoccluded
   - lsgrid
   - lsmap
   - listplayers
@@ -18,8 +19,12 @@
   - mem
   - netaudit
   - querymappaused
+  - showbb
   - showtime
-  - inrangeunoccluded
+  - togglefov
+  - togglehardfov
+  - togglelight
+  - toggleshadows
 
 - Flags: MAPPING
   Commands:
