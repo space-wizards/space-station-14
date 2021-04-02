@@ -16,6 +16,8 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction FocusRadio = "FocusRadioWindow";
         public static readonly BoundKeyFunction FocusOOC = "FocusOOCWindow";
         public static readonly BoundKeyFunction FocusAdminChat = "FocusAdminChatWindow";
+        public static readonly BoundKeyFunction CycleChatChannelForward = "CycleChatChannelForward";
+        public static readonly BoundKeyFunction CycleChatChannelBackward = "CycleChatChannelBackward";
         public static readonly BoundKeyFunction OpenCharacterMenu = "OpenCharacterMenu";
         public static readonly BoundKeyFunction OpenContextMenu = "OpenContextMenu";
         public static readonly BoundKeyFunction OpenCraftingMenu = "OpenCraftingMenu";

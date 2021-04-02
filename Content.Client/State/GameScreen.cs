@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Administration;
 using Content.Client.Chat;
 using Content.Client.Construction;
@@ -14,6 +15,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.State
@@ -56,6 +58,12 @@ namespace Content.Client.State
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
                 InputCmdHandler.FromDelegate(_ => FocusChannel(_gameChat, ChatChannel.AdminChat)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelForward,
+                InputCmdHandler.FromDelegate(_ => CycleChatChannel(_gameChat, true)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelBackward,
+                InputCmdHandler.FromDelegate(_ => CycleChatChannel(_gameChat, false)));
 
             SetupPresenters();
         }
@@ -106,6 +114,30 @@ namespace Content.Client.State
 
             chat.Input.IgnoreNext = true;
             chat.SelectChannel(channel);
+        }
+
+        internal static void CycleChatChannel(ChatBox chat, bool forward)
+        {
+            if (chat.UserInterfaceManager.KeyboardFocused != null)
+            {
+                return;
+            }
+
+            chat.Input.IgnoreNext = true;
+            var channels = chat._selectableChannels;
+            var idx = channels.IndexOf(chat._selectedChannel);
+            if (forward)
+            {
+                idx++;
+                idx = MathHelper.Mod(idx, channels.Count());
+            }
+            else
+            {
+                idx--;
+                idx = MathHelper.Mod(idx, channels.Count());
+            }
+
+            chat.SelectChannel(channels[idx]);
         }
     }
 }

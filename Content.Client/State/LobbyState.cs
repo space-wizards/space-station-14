@@ -82,6 +82,12 @@ namespace Content.Client.State
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
                 InputCmdHandler.FromDelegate(_ => GameScreen.FocusChannel(_lobby.Chat, ChatChannel.AdminChat)));
 
+            _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelForward,
+                InputCmdHandler.FromDelegate(_ => GameScreen.CycleChatChannel(_lobby.Chat, true)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelBackward,
+                InputCmdHandler.FromDelegate(_ => GameScreen.CycleChatChannel(_lobby.Chat, false)));
+
             UpdateLobbyUi();
 
             _lobby.CharacterPreview.CharacterSetupButton.OnPressed += _ =>

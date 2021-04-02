@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using Content.Client.State;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
@@ -38,7 +39,7 @@ namespace Content.Client.Chat
         public event Action<ChatResizedEventArgs>? OnResized;
 
         // order in which the available channel filters show up when available
-        private static readonly IReadOnlyList<ChatChannel> ChannelFilterOrder = new List<ChatChannel>
+        public static readonly IReadOnlyList<ChatChannel> ChannelFilterOrder = new List<ChatChannel>
         {
             ChatChannel.Local, ChatChannel.Emotes, ChatChannel.Radio, ChatChannel.OOC, ChatChannel.Dead, ChatChannel.AdminChat,
             ChatChannel.Server
@@ -60,7 +61,7 @@ namespace Content.Client.Chat
         /// <summary>
         /// Will be Unspecified if set to Console
         /// </summary>
-        private ChatChannel _selectedChannel;
+        public ChatChannel _selectedChannel;
 
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
@@ -91,7 +92,7 @@ namespace Content.Client.Chat
         private byte _clampIn;
         // currently known selectable channels as provided by ChatManager,
         // never contains Unspecified (which corresponds to Console which is always available)
-        private IReadOnlySet<ChatChannel> _selectableChannels = ImmutableHashSet<ChatChannel>.Empty;
+        public List<ChatChannel> _selectableChannels = new();
 
         /// <summary>
         /// When lobbyMode is false, will position / add to correct location in StateRoot and
@@ -279,7 +280,7 @@ namespace Content.Client.Chat
         /// there is a corresponding entry in filterableChannels, but it may also have additional
         /// entries (which should not be presented to the user)</param>
         /// <param name="unreadMessages">unread message counts for each disabled channel, values 10 or higher will show as 9+</param>
-        public void SetChannelPermissions(IReadOnlySet<ChatChannel> selectableChannels, IReadOnlySet<ChatChannel> filterableChannels,
+        public void SetChannelPermissions(List<ChatChannel> selectableChannels, IReadOnlySet<ChatChannel> filterableChannels,
             IReadOnlyDictionary<ChatChannel, bool> channelFilters, IReadOnlyDictionary<ChatChannel, byte> unreadMessages)
         {
             _selectableChannels = selectableChannels;

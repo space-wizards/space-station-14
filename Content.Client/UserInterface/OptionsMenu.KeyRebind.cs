@@ -145,6 +145,8 @@ namespace Content.Client.UserInterface
                 AddButton(ContentKeyFunctions.FocusRadio);
                 AddButton(ContentKeyFunctions.FocusOOC);
                 AddButton(ContentKeyFunctions.FocusAdminChat);
+                AddButton(ContentKeyFunctions.CycleChatChannelForward);
+                AddButton(ContentKeyFunctions.CycleChatChannelBackward);
                 AddButton(ContentKeyFunctions.OpenCharacterMenu);
                 AddButton(ContentKeyFunctions.OpenContextMenu);
                 AddButton(ContentKeyFunctions.OpenCraftingMenu);

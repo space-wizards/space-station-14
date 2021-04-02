@@ -68,7 +68,7 @@ namespace Content.Client.Chat
         // Note that these are persisted here, at the manager,
         // rather than the chatbox so that these settings persist between instances of different
         // chatboxes.
-        private readonly Dictionary<ChatChannel, bool> _channelFilters = new();
+        public readonly Dictionary<ChatChannel, bool> _channelFilters = new();
 
         // Maintains which channels a client should be able to filter (for showing in the chatbox)
         // and select (for attempting to send on).
@@ -81,7 +81,7 @@ namespace Content.Client.Chat
         // Note that Command is an available selection in the chatbox channel selector,
         // which is not actually a chat channel but is always available.
         private readonly HashSet<ChatChannel> _filterableChannels = new();
-        private readonly HashSet<ChatChannel> _selectableChannels = new();
+        private readonly List<ChatChannel> _selectableChannels = new();
 
         // Flag Enums for holding filtered channels
         private ChatChannel _filteredChannels;
@@ -179,7 +179,10 @@ namespace Content.Client.Chat
         private void UpdateChannelPermissions()
         {
             // can always send/recieve OOC
-            _selectableChannels.Add(ChatChannel.OOC);
+            if (!_selectableChannels.Contains(ChatChannel.OOC))
+            {
+                _selectableChannels.Add(ChatChannel.OOC);
+            }
             AddFilterableChannel(ChatChannel.OOC);
 
             // can always hear server (nobody can actually send server messages).
@@ -211,7 +214,10 @@ namespace Content.Client.Chat
                 (_playerManager?.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false))
             {
                 AddFilterableChannel(ChatChannel.Dead);
-                _selectableChannels.Add(ChatChannel.Dead);
+                if (!_selectableChannels.Contains(ChatChannel.Dead))
+                {
+                    _selectableChannels.Add(ChatChannel.Dead);
+                }
             }
             else
             {
@@ -223,7 +229,10 @@ namespace Content.Client.Chat
             if (_adminMgr.HasFlag(AdminFlags.Admin))
             {
                 AddFilterableChannel(ChatChannel.AdminChat);
-                _selectableChannels.Add(ChatChannel.AdminChat);
+                if (!_selectableChannels.Contains(ChatChannel.AdminChat))
+                {
+                    _selectableChannels.Add(ChatChannel.AdminChat);
+                }
             }
             else
             {
