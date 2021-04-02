@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +18,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -59,6 +58,9 @@ namespace Content.Server.GameObjects.Components.Construction
         public ConstructionGraphEdge? Edge { get; private set; } = null;
 
         public IReadOnlyCollection<string> Containers => _containers;
+
+        [ViewVariables]
+        int IInteractUsing.Priority => 2;
 
         [ViewVariables]
         public ConstructionGraphNode? Target
@@ -357,6 +359,12 @@ namespace Content.Server.GameObjects.Components.Construction
             Edge = null;
             Node = GraphPrototype.Nodes[edge.Target];
 
+            foreach (var completed in edge.Completed)
+            {
+                await completed.PerformAction(Owner, user);
+                if (Owner.Deleted) return true;
+            }
+
             // Perform node actions!
             foreach (var action in Node.Actions)
             {
@@ -368,12 +376,6 @@ namespace Content.Server.GameObjects.Components.Construction
 
             if (Target == Node)
                 ClearTarget();
-
-            foreach (var completed in edge.Completed)
-            {
-                await completed.PerformAction(Owner, user);
-                if (Owner.Deleted) return true;
-            }
 
             await HandleEntityChange(Node, user);
 
@@ -461,7 +463,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             if (string.IsNullOrEmpty(_graphIdentifier))
             {
-                Logger.Error($"Prototype {Owner.Prototype?.ID}'s construction component didn't have a graph identifier!");
+                Logger.Warning($"Prototype {Owner.Prototype?.ID}'s construction component didn't have a graph identifier!");
                 return;
             }
 

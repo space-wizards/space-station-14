@@ -17,12 +17,12 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return new WelderComponentState(FuelCapacity, Fuel, WelderLit);
         }
 
-        public override async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
+        public override async Task<bool> UseTool(IEntity user, IEntity? target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
         {
             bool ExtraCheck()
             {
@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                 if (!CanWeld(DefaultFuelCost))
                 {
-                    target.PopupMessage(user, "Can't weld!");
+                    target?.PopupMessage(user, "Can't weld!");
 
                     return false;
                 }
@@ -139,20 +139,24 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             if (!WelderLit)
             {
-                if(!silent) Owner.PopupMessage(user, Loc.GetString("The welder is turned off!"));
+                if (!silent && user != null)
+                    Owner.PopupMessage(user, Loc.GetString("The welder is turned off!"));
+
                 return false;
             }
 
             if (!CanWeld(value))
             {
-                if(!silent) Owner.PopupMessage(user, Loc.GetString("The welder does not have enough fuel for that!"));
+                if (!silent && user != null)
+                    Owner.PopupMessage(user, Loc.GetString("The welder does not have enough fuel for that!"));
+
                 return false;
             }
 
             if (_solutionComponent == null)
                 return false;
 
-            bool succeeded = _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(value));
+            var succeeded = _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(value));
 
             if (succeeded && !silent)
             {
@@ -192,7 +196,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return true;
             }
 
-            if (!CanLitWelder())
+            if (!CanLitWelder() && user != null)
             {
                 Owner.PopupMessage(user, Loc.GetString("The welder has no fuel left!"));
                 return false;
@@ -319,7 +323,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                     var drained = targetSolution.Drain(trans);
                     _solutionComponent.TryAddSolution(drained);
 
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/refill.ogg", Owner);
+                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/refill.ogg", Owner);
                     eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("Welder refueled"));
                 }
             }

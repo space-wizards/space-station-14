@@ -27,7 +27,7 @@
 # Magazines
 - type: entity
   id: MagazineLRifleBox
-  name: "magazine box (.30 rifle)"
+  name: "L6 SAW magazine box (.30 rifle)"
   parent: MagazineLRifleBase
   components:
   - type: RangedMagazine

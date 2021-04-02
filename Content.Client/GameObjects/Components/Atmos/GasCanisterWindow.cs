@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.Components.Atmos
 
         public GasCanisterWindow()
         {
-            SetSize = MinSize = (300, 200);
+            SetSize = MinSize = (450, 200);
             HBoxContainer releasePressureButtons;
 
             Contents.AddChild(new VBoxContainer

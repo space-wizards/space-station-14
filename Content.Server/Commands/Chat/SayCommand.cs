@@ -53,7 +53,13 @@ namespace Content.Server.Commands.Chat
 
                 if (mindComponent == null)
                 {
-                    shell.WriteLine("You don't have a mind!");
+                    shell.WriteError("You don't have a mind!");
+                    return;
+                }
+
+                if (mindComponent.OwnedEntity == null)
+                {
+                    shell.WriteError("You don't have an entity!");
                     return;
                 }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
@@ -18,6 +18,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -32,9 +33,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override uint? NetID => ContentNetIDs.MAGAZINE_BARREL;
 
         [ViewVariables]
-        private ContainerSlot _chamberContainer;
+        private ContainerSlot _chamberContainer = default!;
         [ViewVariables] public bool HasMagazine => _magazineContainer.ContainedEntity != null;
-        private ContainerSlot _magazineContainer;
+        private ContainerSlot _magazineContainer = default!;
 
         [ViewVariables] public MagazineType MagazineTypes => _magazineTypes;
         [DataField("magazineTypes")]
@@ -80,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         }
 
         [DataField("magFillPrototype")]
-        private string _magFillPrototype;
+        private string? _magFillPrototype;
 
         public bool BoltOpen
         {
@@ -92,14 +93,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     return;
                 }
 
-                var soundSystem = EntitySystem.Get<AudioSystem>();
-
                 if (value)
                 {
                     TryEjectChamber();
                     if (_soundBoltOpen != null)
                     {
-                        soundSystem.PlayAtCoords(_soundBoltOpen, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                        SoundSystem.Play(Filter.Pvs(Owner), _soundBoltOpen, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                     }
                 }
                 else
@@ -107,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     TryFeedChamber();
                     if (_soundBoltClosed != null)
                     {
-                        soundSystem.PlayAtCoords(_soundBoltClosed, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                        SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                     }
                 }
 
@@ -125,19 +124,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [DataField("magNeedsOpenBolt")]
         private bool _magNeedsOpenBolt = default;
 
-        private AppearanceComponent _appearanceComponent;
+        private AppearanceComponent? _appearanceComponent;
 
         // Sounds
         [DataField("soundBoltOpen")]
-        private string _soundBoltOpen = default;
+        private string? _soundBoltOpen = default;
         [DataField("soundBoltClosed")]
-        private string _soundBoltClosed = default;
+        private string? _soundBoltClosed = default;
         [DataField("soundRack")]
-        private string _soundRack = default;
+        private string? _soundRack = default;
         [DataField("soundMagInsert")]
-        private string _soundMagInsert = default;
+        private string? _soundMagInsert = default;
         [DataField("soundMagEject")]
-        private string _soundMagEject = default;
+        private string? _soundMagEject = default;
         [DataField("soundAutoEject")]
         private string _soundAutoEject = "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg";
 
@@ -160,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             (int, int)? count = null;
             var magazine = _magazineContainer.ContainedEntity;
-            if (magazine != null && magazine.TryGetComponent(out RangedMagazineComponent rangedMagazineComponent))
+            if (magazine != null && magazine.TryGetComponent(out RangedMagazineComponent? rangedMagazineComponent))
             {
                 count = (rangedMagazineComponent.ShotsLeft, rangedMagazineComponent.Capacity);
             }
@@ -176,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -197,12 +196,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             UpdateAppearance();
         }
 
-        public override IEntity PeekAmmo()
+        public override IEntity? PeekAmmo()
         {
             return BoltOpen ? null : _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile(EntityCoordinates spawnAt)
+        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
         {
             if (BoltOpen)
             {
@@ -225,13 +224,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             TryFeedChamber();
 
-            var soundSystem = EntitySystem.Get<AudioSystem>();
-
             if (_chamberContainer.ContainedEntity == null && !BoltOpen)
             {
                 if (_soundBoltOpen != null)
                 {
-                    soundSystem.PlayAtCoords(_soundBoltOpen, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-5));
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltOpen, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-5));
                 }
 
                 if (Owner.TryGetContainer(out var container))
@@ -246,7 +243,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundRack != null)
                 {
-                    soundSystem.PlayAtCoords(_soundRack, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundRack, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 }
             }
 
@@ -274,7 +271,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundBoltClosed != null)
                 {
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundBoltClosed, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-5));
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-5));
                 }
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("Bolt closed"));
                 BoltOpen = false;
@@ -328,8 +325,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundAutoEject != null)
                 {
-                    var soundSystem = EntitySystem.Get<AudioSystem>();
-                    soundSystem.PlayAtCoords(_soundAutoEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundAutoEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 }
 
                 _magazineContainer.Remove(magazine);
@@ -356,10 +352,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             _magazineContainer.Remove(mag);
             if (_soundMagEject != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundMagEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                SoundSystem.Play(Filter.Pvs(Owner), _soundMagEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             }
 
-            if (user.TryGetComponent(out HandsComponent handsComponent))
+            if (user.TryGetComponent(out HandsComponent? handsComponent))
             {
                 handsComponent.PutInHandOrDrop(mag.GetComponent<ItemComponent>());
             }
@@ -371,7 +367,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // Insert magazine
-            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent magazineComponent))
+            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent? magazineComponent))
             {
                 if ((MagazineTypes & magazineComponent.MagazineType) == 0)
                 {
@@ -395,7 +391,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 {
                     if (_soundMagInsert != null)
                     {
-                        EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundMagInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                        SoundSystem.Play(Filter.Pvs(Owner), _soundMagInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                     }
                     Owner.PopupMessage(eventArgs.User, Loc.GetString("Magazine inserted"));
                     _magazineContainer.Insert(eventArgs.Using);
@@ -409,7 +405,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             // Insert 1 ammo
-            if (eventArgs.Using.TryGetComponent(out AmmoComponent ammoComponent))
+            if (eventArgs.Using.TryGetComponent(out AmmoComponent? ammoComponent))
             {
                 if (!BoltOpen)
                 {
@@ -463,6 +459,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
 
                 data.Text = Loc.GetString("Eject magazine");
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                 if (component.MagNeedsOpenBolt)
                 {
                     data.Visibility = component.HasMagazine && component.BoltOpen

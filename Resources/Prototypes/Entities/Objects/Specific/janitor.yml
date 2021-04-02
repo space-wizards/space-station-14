@@ -39,12 +39,12 @@
           Quantity: 500
 
   - type: Physics
-    mass: 5
     bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.40,-0.25,0.25,0.25"
+      mass: 5
       mask:
       - Impassable
       - Opaque
@@ -70,12 +70,12 @@
   - type: SolutionContainer
     maxVol: 500
   - type: Physics
-    mass: 5
     bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 5
       mask:
       - Impassable
   - type: Spillable
@@ -104,20 +104,22 @@
   - type: Item
     sprite: Objects/Specific/Janitorial/soap.rsi
   - type: Slippery
-    paralyzeTime: 2.5
+    paralyzeTime: 2
+    intersectPercentage: 0.2
+  - type: CollisionWake
+    enabled: false
   - type: Physics
-    bodyType: Dynamic
-    mass: 5
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-        layer:
-          - SmallImpassable
-        mask:
-          - SmallImpassable
-          - MobImpassable
-        hard: false
+    bodyType: KinematicController
+    fixtures: # TODO: Make a second fixture. One should be for slipping, and the other for collisions.
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.4,0.3,0.4"
+      mass: 2.5
+      layer:
+        - SmallImpassable
+      mask:
+        - Impassable
+        - MobImpassable
 
 - type: entity
   name: soap
@@ -187,7 +189,7 @@
         - state: chempuff
           map: [ "enum.VaporVisualLayers.Base" ]
     - type: Physics
-      bodyType: Dynamic
+      bodyType: KinematicController
       fixtures:
       - shape:
           !type:PhysShapeAabb

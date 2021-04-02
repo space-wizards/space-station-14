@@ -1,12 +1,14 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mining;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.Components.Mining
@@ -23,21 +25,23 @@ namespace Content.Server.GameObjects.Components.Mining
         {
             base.Initialize();
 
-            var spriteComponent = Owner.EnsureComponent<SpriteComponent>();
-            spriteComponent.LayerSetState(0, _random.Pick(SpriteStates));
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(AsteroidRockVisuals.State, _random.Pick(SpriteStates));
+            }
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var item = eventArgs.Using;
-            if (!item.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent)) return false;
+            if (!item.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent)) return false;
 
             Owner.GetComponent<IDamageableComponent>().ChangeDamage(DamageType.Blunt, meleeWeaponComponent.Damage, false, item);
 
-            if (!item.TryGetComponent(out PickaxeComponent pickaxeComponent)) return true;
+            if (!item.TryGetComponent(out PickaxeComponent? pickaxeComponent)) return true;
             if (!string.IsNullOrWhiteSpace(pickaxeComponent.MiningSound))
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(pickaxeComponent.MiningSound, Owner, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(Owner), pickaxeComponent.MiningSound, Owner, AudioParams.Default);
             }
             return true;
         }

@@ -1,9 +1,8 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
@@ -32,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            if (otherBody.Entity.TryGetComponent(out StunnableComponent stunnableComponent))
+            if (otherBody.Entity.TryGetComponent(out StunnableComponent? stunnableComponent))
             {
                 stunnableComponent.Stun(_stunAmount);
                 stunnableComponent.Knockdown(_knockdownAmount);

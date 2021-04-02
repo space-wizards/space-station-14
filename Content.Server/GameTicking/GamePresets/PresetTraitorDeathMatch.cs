@@ -1,30 +1,30 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.GameTicking.GameRules;
-using Content.Server.Interfaces.GameTicking;
-using Content.Server.Interfaces.Chat;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameObjects.Components.Markers;
+using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameObjects.Components.TraitorDeathMatch;
+using Content.Server.GameTicking.GameRules;
+using Content.Server.Interfaces.Chat;
+using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
 using Content.Server.Mobs.Roles.Traitor;
 using Content.Server.Players;
-using Content.Server.Atmos;
+using Content.Shared;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared;
+using Content.Shared.GameObjects.Components.PDA;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.GamePresets
@@ -43,7 +43,7 @@ namespace Content.Server.GameTicking.GamePresets
         public string BeltPrototypeName => "ClothingBeltJanitorFilled";
         public string BackpackPrototypeName => "ClothingBackpackFilled";
 
-        private RuleMaxTimeRestart _restarter;
+        private RuleMaxTimeRestart _restarter = default!;
         private bool _safeToEndRound = false;
 
         private Dictionary<UplinkAccount, string> _allOriginalNames = new();
@@ -60,53 +60,57 @@ namespace Content.Server.GameTicking.GamePresets
 
         public override void OnSpawnPlayerCompleted(IPlayerSession session, IEntity mob, bool lateJoin)
         {
-            int startingBalance = _cfg.GetCVar(CCVars.TraitorDeathMatchStartingBalance);
+            var startingBalance = _cfg.GetCVar(CCVars.TraitorDeathMatchStartingBalance);
 
             // Yup, they're a traitor
             var mind = session.Data.ContentData()?.Mind;
-            var traitorRole = new TraitorRole(mind);
             if (mind == null)
             {
                 Logger.ErrorS("preset", "Failed getting mind for TDM player.");
                 return;
             }
 
+            var traitorRole = new TraitorRole(mind);
             mind.AddRole(traitorRole);
 
             // Delete anything that may contain "dangerous" role-specific items.
             // (This includes the PDA, as everybody gets the captain PDA in this mode for true-all-access reasons.)
-            var inventory = mind.OwnedEntity.GetComponent<InventoryComponent>();
-            var victimSlots = new[] {EquipmentSlotDefines.Slots.IDCARD, EquipmentSlotDefines.Slots.BELT, EquipmentSlotDefines.Slots.BACKPACK};
-            foreach (var slot in victimSlots)
-                if (inventory.TryGetSlotItem(slot, out ItemComponent vItem))
-                    vItem.Owner.Delete();
+            if (mind.OwnedEntity != null && mind.OwnedEntity.TryGetComponent(out InventoryComponent? inventory))
+            {
+                var victimSlots = new[] {EquipmentSlotDefines.Slots.IDCARD, EquipmentSlotDefines.Slots.BELT, EquipmentSlotDefines.Slots.BACKPACK};
+                foreach (var slot in victimSlots)
+                {
+                    if (inventory.TryGetSlotItem(slot, out ItemComponent? vItem))
+                        vItem.Owner.Delete();
+                }
 
-            // Replace their items:
+                // Replace their items:
 
-            //  pda
-            var newPDA = _entityManager.SpawnEntity(PDAPrototypeName, mind.OwnedEntity.Transform.Coordinates);
-            inventory.Equip(EquipmentSlotDefines.Slots.IDCARD, newPDA.GetComponent<ItemComponent>());
+                //  pda
+                var newPDA = _entityManager.SpawnEntity(PDAPrototypeName, mind.OwnedEntity.Transform.Coordinates);
+                inventory.Equip(EquipmentSlotDefines.Slots.IDCARD, newPDA.GetComponent<ItemComponent>());
 
-            //  belt
-            var newTmp = _entityManager.SpawnEntity(BeltPrototypeName, mind.OwnedEntity.Transform.Coordinates);
-            inventory.Equip(EquipmentSlotDefines.Slots.BELT, newTmp.GetComponent<ItemComponent>());
+                //  belt
+                var newTmp = _entityManager.SpawnEntity(BeltPrototypeName, mind.OwnedEntity.Transform.Coordinates);
+                inventory.Equip(EquipmentSlotDefines.Slots.BELT, newTmp.GetComponent<ItemComponent>());
 
-            //  backpack
-            newTmp = _entityManager.SpawnEntity(BackpackPrototypeName, mind.OwnedEntity.Transform.Coordinates);
-            inventory.Equip(EquipmentSlotDefines.Slots.BACKPACK, newTmp.GetComponent<ItemComponent>());
+                //  backpack
+                newTmp = _entityManager.SpawnEntity(BackpackPrototypeName, mind.OwnedEntity.Transform.Coordinates);
+                inventory.Equip(EquipmentSlotDefines.Slots.BACKPACK, newTmp.GetComponent<ItemComponent>());
 
-            // Like normal traitors, they need access to a traitor account.
-            var uplinkAccount = new UplinkAccount(mind.OwnedEntity.Uid, startingBalance);
-            var pdaComponent = newPDA.GetComponent<PDAComponent>();
-            pdaComponent.InitUplinkAccount(uplinkAccount);
-            _allOriginalNames[uplinkAccount] = mind.OwnedEntity.Name;
+                // Like normal traitors, they need access to a traitor account.
+                var uplinkAccount = new UplinkAccount(mind.OwnedEntity.Uid, startingBalance);
+                var pdaComponent = newPDA.GetComponent<PDAComponent>();
+                pdaComponent.InitUplinkAccount(uplinkAccount);
+                _allOriginalNames[uplinkAccount] = mind.OwnedEntity.Name;
 
-            // The PDA needs to be marked with the correct owner.
-            pdaComponent.SetPDAOwner(mind.OwnedEntity.Name);
-            newPDA.AddComponent<TraitorDeathMatchReliableOwnerTagComponent>().UserId = mind.UserId;
+                // The PDA needs to be marked with the correct owner.
+                pdaComponent.SetPDAOwner(mind.OwnedEntity.Name);
+                newPDA.AddComponent<TraitorDeathMatchReliableOwnerTagComponent>().UserId = mind.UserId;
+            }
 
             // Finally, it would be preferrable if they spawned as far away from other players as reasonably possible.
-            if (FindAnyIsolatedSpawnLocation(mind, out var bestTarget))
+            if (mind.OwnedEntity != null && FindAnyIsolatedSpawnLocation(mind, out var bestTarget))
             {
                 mind.OwnedEntity.Transform.Coordinates = bestTarget;
             }
@@ -136,7 +140,7 @@ namespace Content.Server.GameTicking.GamePresets
                 var avoidMeEntity = avoidMeMind.OwnedEntity;
                 if (avoidMeEntity == null)
                     continue;
-                if (avoidMeEntity.TryGetComponent(out IMobStateComponent mobState))
+                if (avoidMeEntity.TryGetComponent(out IMobStateComponent? mobState))
                 {
                     // Does have mob state component; if critical or dead, they don't really matter for spawn checks
                     if (mobState.IsCritical() || mobState.IsDead())
@@ -181,12 +185,12 @@ namespace Content.Server.GameTicking.GamePresets
         public override bool OnGhostAttempt(Mind mind, bool canReturnGlobal)
         {
             var entity = mind.OwnedEntity;
-            if ((entity != null) && (entity.TryGetComponent(out IMobStateComponent mobState)))
+            if ((entity != null) && (entity.TryGetComponent(out IMobStateComponent? mobState)))
             {
                 if (mobState.IsCritical())
                 {
                     // TODO: This is copy/pasted from ghost code. Really, IDamagableComponent needs a method to reliably kill the target.
-                    if (entity.TryGetComponent(out IDamageableComponent damageable))
+                    if (entity.TryGetComponent(out IDamageableComponent? damageable))
                     {
                         //todo: what if they dont breathe lol
                         damageable.ChangeDamage(DamageType.Asphyxiation, 100, true);

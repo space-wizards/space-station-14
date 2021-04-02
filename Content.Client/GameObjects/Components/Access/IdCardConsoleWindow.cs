@@ -36,7 +36,7 @@ namespace Content.Client.GameObjects.Components.Access
 
         public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager)
         {
-            MinSize = SetSize = (650, 270);
+            MinSize = SetSize = (650, 290);
             _owner = owner;
             var vBox = new VBoxContainer();
 

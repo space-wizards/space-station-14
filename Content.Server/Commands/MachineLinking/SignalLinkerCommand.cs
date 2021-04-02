@@ -19,7 +19,14 @@ namespace Content.Server.Commands.MachineLinking
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = (IPlayerSession?) shell.Player;
+
+            if (player == null)
+            {
+                shell.WriteError("This command cannot be run locally.");
+                return;
+            }
+
             bool? enable = null;
             if (args.Length > 0)
             {

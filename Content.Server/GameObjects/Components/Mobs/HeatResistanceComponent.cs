@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public int GetHeatResistance()
         {
-            if (Owner.GetComponent<InventoryComponent>().TryGetSlotItem(EquipmentSlotDefines.Slots.GLOVES, itemComponent: out ClothingComponent gloves))
+            if (Owner.GetComponent<InventoryComponent>().TryGetSlotItem(EquipmentSlotDefines.Slots.GLOVES, out ClothingComponent? gloves))
             {
                 return gloves?.HeatResistance ?? int.MinValue;
             }

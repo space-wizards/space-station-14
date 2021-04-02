@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Shared.GameObjects.Components;
 using Content.Server.GameObjects.Components;
 using Content.Shared.Administration;
@@ -83,9 +83,9 @@ namespace Content.Server.Commands.GameTicking
                     continue;
                 }
 
-                if (childEntity.Transform.LocalRotation != Angle.South)
+                if (childEntity.Transform.LocalRotation != Angle.Zero)
                 {
-                    childEntity.Transform.LocalRotation = Angle.South;
+                    childEntity.Transform.LocalRotation = Angle.Zero;
                     changed++;
                 }
             }

@@ -21,14 +21,14 @@ namespace Content.Server.Actions
             args.Performer.PopupMessageEveryone(Message);
             if (Cooldown > 0)
             {
-                args.ItemActions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
+                args.ItemActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
             }
         }
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
             args.Performer.PopupMessageEveryone(Message);
-            args.PerformerActions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
+            args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
         }
     }
 }

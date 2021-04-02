@@ -322,11 +322,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 5
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 5
       mask: [Impassable]
       layer: [Clickable]
 
@@ -351,11 +351,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 5
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 5
       mask: [Impassable]
       layer: [Clickable]
 
@@ -379,10 +379,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 5
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 5
       mask: [Impassable]
       layer: [Clickable]

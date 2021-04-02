@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -510,7 +510,7 @@ namespace Content.Client.UserInterface
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
-            base.Update(args);
+            base.FrameUpdate(args);
             _dragDropHelper.Update(args.DeltaSeconds);
         }
     }

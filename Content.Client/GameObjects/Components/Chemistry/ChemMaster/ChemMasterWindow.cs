@@ -54,7 +54,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
         /// </summary>
         public ChemMasterWindow()
         {
-            MinSize = SetSize = (400, 200);
+            MinSize = SetSize = (400, 525);
             IoCManager.InjectDependencies(this);
 
             Contents.AddChild(new VBoxContainer

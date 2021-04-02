@@ -1,9 +1,10 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Strap;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Strap
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrapComponent))]
-    public class StrapComponent : SharedStrapComponent, IInteractHand, ISerializationHooks
+    public class StrapComponent : SharedStrapComponent, IInteractHand, ISerializationHooks, IDestroyAct
     {
         [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;
 
@@ -134,6 +135,16 @@ namespace Content.Server.GameObjects.Components.Strap
         {
             base.OnRemove();
 
+            RemoveAll();
+        }
+
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
+        {
+            RemoveAll();
+        }
+
+        private void RemoveAll()
+        {
             foreach (var entity in _buckledEntities.ToArray())
             {
                 if (entity.TryGetComponent<BuckleComponent>(out var buckle))
@@ -193,7 +204,7 @@ namespace Content.Server.GameObjects.Components.Strap
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.IconTexture = buckle.BuckledTo == null ? "/Textures/Interface/VerbIcons/buckle.svg.96dpi.png" : "/Textures/Interface/VerbIcons/unbuckle.svg.96dpi.png";
+                data.IconTexture = buckle.BuckledTo == null ? "/Textures/Interface/VerbIcons/buckle.svg.192dpi.png" : "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png";
                 data.Text = Loc.GetString(buckle.BuckledTo == null ? "Buckle" : "Unbuckle");
             }
 

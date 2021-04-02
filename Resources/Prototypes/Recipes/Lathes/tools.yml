@@ -96,7 +96,7 @@
   id: RCD
   icon:
     sprite: Objects/Tools/rcd.rsi
-    state: rcd
+    state: icon
   result: RCD
   completetime: 1000
   materials:

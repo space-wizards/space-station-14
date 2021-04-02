@@ -125,7 +125,7 @@ namespace Content.Client.UserInterface
             };
             _createNewCharacterButton.OnPressed += args =>
             {
-                preferencesManager.CreateCharacter(HumanoidCharacterProfile.Default());
+                preferencesManager.CreateCharacter(HumanoidCharacterProfile.Random());
                 UpdateUI();
                 args.Event.Handle();
             };

@@ -7,16 +7,19 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -41,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private bool Anchored =>
             !Owner.TryGetComponent(out PhysicsComponent? physics) ||
-            physics.Anchored;
+            physics.BodyType == BodyType.Static;
 
         /// <summary>
         ///     The directions that this tube can connect to others from
@@ -194,7 +197,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (physics.Anchored)
+            if (physics.BodyType == BodyType.Static)
             {
                 OnAnchor();
             }
@@ -228,7 +231,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Startup();
 
-            if (!Owner.EnsureComponent<PhysicsComponent>().Anchored)
+            Owner.EnsureComponent<PhysicsComponent>(out var physicsComponent);
+            if (physicsComponent.BodyType != BodyType.Static)
             {
                 return;
             }
@@ -257,7 +261,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     }
 
                     _lastClang = _gameTiming.CurTime;
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_clangSound, Owner.Transform.Coordinates);
+                    SoundSystem.Play(Filter.Pvs(Owner), _clangSound, Owner.Transform.Coordinates);
                     break;
 
                 case AnchoredChangedMessage:
