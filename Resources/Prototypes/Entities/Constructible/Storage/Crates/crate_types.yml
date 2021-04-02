@@ -547,12 +547,12 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Physics
-    mass: 75
     bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.4, -0.4, 0.29, 0.4"
+      mass: 75
       mask:
       - Impassable
       - VaultImpassable

@@ -159,11 +159,11 @@
       sprite: Mobs/Animals/cow.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 20
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.60,-0.50,0.05,0.50"
+      mass: 20
       mask:
       - Impassable
       - VaultImpassable
@@ -549,11 +549,11 @@
       sprite: Mobs/Animals/spider.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 10
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.30,-0.40,0.45,0.40"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable
