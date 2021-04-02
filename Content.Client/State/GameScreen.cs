@@ -38,7 +38,7 @@ namespace Content.Client.State
         {
             base.Startup();
 
-            _gameChat = new ChatBox(false);
+            _gameChat = new ChatBox();
 
             _userInterfaceManager.StateRoot.AddChild(_gameHud.RootControl);
             _chatManager.SetChatBox(_gameChat);

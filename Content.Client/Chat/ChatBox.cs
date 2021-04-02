@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using Content.Client.State;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Chat;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -96,9 +98,11 @@ namespace Content.Client.Chat
         /// be resizable.
         /// wWen true, will leave layout up to parent and not be resizable.
         /// </summary>
-        public ChatBox(bool lobbyMode)
+        public ChatBox()
         {
-            _lobbyMode = lobbyMode;
+            var stateManager = IoCManager.Resolve<IStateManager>();
+            _lobbyMode = stateManager.CurrentState is LobbyState;
+
             // TODO: Revisit the resizing stuff after https://github.com/space-wizards/RobustToolbox/issues/1392 is done,
             // Probably not "supposed" to inject IClyde, but I give up.
             // I can't find any other way to allow this control to properly resize when the
@@ -203,7 +207,7 @@ namespace Content.Client.Chat
                 }
             };
 
-            if (!lobbyMode)
+            if (!_lobbyMode)
             {
                 UserInterfaceManager.StateRoot.AddChild(this);
                 LayoutContainer.SetAnchorAndMarginPreset(this, LayoutContainer.LayoutPreset.TopRight, margin: 10);
