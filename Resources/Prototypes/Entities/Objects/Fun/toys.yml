@@ -234,10 +234,7 @@
 - type: entity
   parent: BaseItem
   id: ToyAi
-<<<<<<< HEAD
-=======
   name: AI toy
->>>>>>> master
   description: A scaled-down toy AI core.
   components:
   - type: Sprite
@@ -609,10 +606,6 @@
     sprite: Objects/Fun/toys.rsi
     state: singularitytoy
   - type: ToySingularity
-<<<<<<< HEAD
-
-=======
->>>>>>> master
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi
