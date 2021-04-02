@@ -55,9 +55,9 @@
     projectile: BulletDebug
 
 - type: entity
-  name: bang stick
+  name: bang stick gibber
   parent: BaseItem
-  id: MeleeDebug
+  id: MeleeDebugGib
   description: hit hard ye
   suffix: DEBUG
   components:
@@ -70,3 +70,19 @@
     size: 1
     sprite: Objects/Weapons/Melee/debug.rsi
     prefix: inhand
+
+- type: entity
+  name: bang stick 100dmg
+  parent: MeleeDebug
+  id: MeleeDebug100
+  components:
+  - type: MeleeWeapon
+    damage: 100
+
+- type: entity
+  name: bang stick 200dmg
+  parent: MeleeDebug
+  id: MeleeDebug200
+  components:
+  - type: MeleeWeapon
+    damage: 200
