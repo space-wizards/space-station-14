@@ -78,13 +78,13 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
         {
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
-                Logger.Error($"{nameof(BaseSiphonComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
+                Logger.Warning($"{nameof(BaseSiphonComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
                 return;
             }
             _scrubberOutlet = container.Nodes.OfType<PipeNode>().FirstOrDefault();
             if (_scrubberOutlet == null)
             {
-                Logger.Error($"{nameof(BaseSiphonComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                Logger.Warning($"{nameof(BaseSiphonComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
         }

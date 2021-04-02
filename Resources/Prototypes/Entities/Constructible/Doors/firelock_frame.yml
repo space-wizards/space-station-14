@@ -23,11 +23,11 @@
         acts: ["Destruction"]
   - type: Physics
     bodyType: Dynamic
-    mass: 50
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49"
+      mass: 50
       layer:
       - SmallImpassable
       mask:

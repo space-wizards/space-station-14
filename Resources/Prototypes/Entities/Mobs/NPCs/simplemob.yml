@@ -45,10 +45,10 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Dynamic
-    mass: 50
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mass: 50
       mask:
       - Impassable
 #      - MobImpassable Turns these off for now since humans don't have collisions either.

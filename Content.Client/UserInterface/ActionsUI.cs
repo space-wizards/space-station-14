@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Mobs.Actions;
 using Content.Client.UserInterface.Controls;
@@ -576,7 +576,7 @@ namespace Content.Client.UserInterface
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
-            base.Update(args);
+            base.FrameUpdate(args);
             DragDropHelper.Update(args.DeltaSeconds);
         }
     }

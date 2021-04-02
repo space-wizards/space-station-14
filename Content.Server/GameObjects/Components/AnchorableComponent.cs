@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
@@ -20,6 +20,8 @@ namespace Content.Server.GameObjects.Components
     {
         public override string Name => "Anchorable";
 
+        [ComponentDependency] private PhysicsComponent? _physicsComponent = default!;
+
         [ViewVariables]
         [DataField("tool")]
         public ToolQuality Tool { get; private set; } = ToolQuality.Anchoring;
@@ -31,6 +33,12 @@ namespace Content.Server.GameObjects.Components
         [DataField("snap")]
         public bool Snap { get; private set; }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            Owner.EnsureComponent<PhysicsComponent>(out _physicsComponent);
+        }
+
         /// <summary>
         ///     Checks if a tool can change the anchored status.
         /// </summary>
@@ -38,14 +46,14 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, can be null if forcing it</param>
         /// <param name="force">Whether or not to check if the tool is valid</param>
         /// <returns>true if it is valid, false otherwise</returns>
-        private async Task<bool> Valid(IEntity user, IEntity? utilizing, [NotNullWhen(true)] bool force = false)
+        private async Task<bool> Valid(IEntity? user, IEntity? utilizing, [NotNullWhen(true)] bool force = false)
         {
             if (!Owner.HasComponent<IPhysBody>())
             {
                 return false;
             }
 
-            if (!force)
+            if (user != null && !force)
             {
                 if (utilizing == null ||
                     !utilizing.TryGetComponent(out ToolComponent? tool) ||
@@ -65,15 +73,17 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, if any</param>
         /// <param name="force">Whether or not to ignore valid tool checks</param>
         /// <returns>true if anchored, false otherwise</returns>
-        public async Task<bool> TryAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        public async Task<bool> TryAnchor(IEntity? user, IEntity? utilizing = null, bool force = false)
         {
             if (!(await Valid(user, utilizing, force)))
             {
                 return false;
             }
 
-            var physics = Owner.GetComponent<IPhysBody>();
-            physics.BodyType = BodyType.Static;
+            if (_physicsComponent == null)
+                return false;
+
+            _physicsComponent.BodyType = BodyType.Static;
 
             // Snap rotation to cardinal (multiple of 90)
             var rot = Owner.Transform.LocalRotation;
@@ -100,15 +110,17 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, if any</param>
         /// <param name="force">Whether or not to ignore valid tool checks</param>
         /// <returns>true if unanchored, false otherwise</returns>
-        public async Task<bool> TryUnAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        public async Task<bool> TryUnAnchor(IEntity? user, IEntity? utilizing = null, bool force = false)
         {
             if (!(await Valid(user, utilizing, force)))
             {
                 return false;
             }
 
-            var physics = Owner.GetComponent<IPhysBody>();
-            physics.BodyType = BodyType.Dynamic;
+            if (_physicsComponent == null)
+                return false;
+
+            _physicsComponent.BodyType = BodyType.Dynamic;
 
             return true;
         }
@@ -120,22 +132,14 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, if any</param>
         /// <param name="force">Whether or not to ignore valid tool checks</param>
         /// <returns>true if toggled, false otherwise</returns>
-        private async Task<bool> TryToggleAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        public async Task<bool> TryToggleAnchor(IEntity? user, IEntity? utilizing = null, bool force = false)
         {
-            if (!Owner.TryGetComponent(out IPhysBody? physics))
-            {
+            if (_physicsComponent == null)
                 return false;
-            }
 
-            return physics.BodyType == BodyType.Static ?
+            return _physicsComponent.BodyType == BodyType.Static ?
                 await TryUnAnchor(user, utilizing, force) :
                 await TryAnchor(user, utilizing, force);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            Owner.EnsureComponent<PhysicsComponent>();
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

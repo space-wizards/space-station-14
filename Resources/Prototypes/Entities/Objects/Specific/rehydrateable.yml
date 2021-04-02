@@ -27,17 +27,17 @@
     enabled: false
   - type: Physics
     bodyType: KinematicController
-    mass: 2.5
     fixtures: # TODO: Make a second fixture.
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-        hard: false
-        layer:
-          - SmallImpassable
-        mask:
-          - Impassable
-          - MobImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.4,0.3,0.4"
+      mass: 2.5
+      hard: false
+      layer:
+        - SmallImpassable
+      mask:
+        - Impassable
+        - MobImpassable
 
 - type: entity
   parent: PlushieCarp
@@ -66,14 +66,14 @@
     enabled: false
   - type: Physics
     bodyType: KinematicController
-    mass: 2.5
     fixtures: # TODO: Make a second fixture.
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
-        hard: false
-        layer:
-          - SmallImpassable
-        mask:
-          - Impassable
-          - MobImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      mass: 2.5
+      hard: false
+      layer:
+        - SmallImpassable
+      mask:
+        - Impassable
+        - MobImpassable
