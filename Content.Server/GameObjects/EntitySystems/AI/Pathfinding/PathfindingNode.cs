@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         /// <returns></returns>
         public IEnumerable<PathfindingNode> GetNeighbors()
         {
-            List<PathfindingChunk> neighborChunks = null;
+            List<PathfindingChunk>? neighborChunks = null;
             if (ParentChunk.OnEdge(this))
             {
                 neighborChunks = ParentChunk.RelevantChunks(this).ToList();
@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                     {
                         DebugTools.AssertNotNull(neighborChunks);
                         // Get the relevant chunk and then get the node on it
-                        foreach (var neighbor in neighborChunks)
+                        foreach (var neighbor in neighborChunks!)
                         {
                             // A lot of edge transitions are going to have a single neighboring chunk
                             // (given > 1 only affects corners)
@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             }
         }
 
-        public PathfindingNode GetNeighbor(Direction direction)
+        public PathfindingNode? GetNeighbor(Direction direction)
         {
             var chunkXOffset = TileRef.X - ParentChunk.Indices.X;
             var chunkYOffset = TileRef.Y - ParentChunk.Indices.Y;
@@ -266,7 +266,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 // TODO: Check for powered I think (also need an event for when it's depowered
                 // AccessReader calls this whenever opening / closing but it can seem to get called multiple times
                 // Which may or may not be intended?
-                if (entity.TryGetComponent(out AccessReader accessReader) && !_accessReaders.ContainsKey(entity))
+                if (entity.TryGetComponent(out AccessReader? accessReader) && !_accessReaders.ContainsKey(entity))
                 {
                     _accessReaders.Add(entity, accessReader);
                     ParentChunk.Dirty();

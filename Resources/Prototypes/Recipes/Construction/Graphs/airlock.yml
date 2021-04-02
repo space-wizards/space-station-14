@@ -1,0 +1,107 @@
+- type: constructionGraph
+  id: airlock
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: assembly
+          completed:
+          - !type:SetAnchor
+            value: false
+          steps:
+            - material: Steel
+              amount: 4
+              doAfter: 2
+
+    - node: assembly
+      entity: AirlockAssembly
+      actions:
+        - !type:SpriteStateChange
+          state: assembly
+        - !type:SnapToGrid {}
+        - !type:SetAnchor {}
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              amount: 5
+              doAfter: 1
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+    - node: wired
+      entity: AirlockAssembly
+      edges:
+        - to: electronics
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tag: DoorElectronics
+              store: board
+              name: "door electronics circuit board"
+              icon:
+                sprite: "Constructible/Misc/module.rsi"
+                state: "door_electronics"
+              doAfter: 1
+        - to: assembly
+          completed:
+            - !type:SpawnPrototype
+              prototype: ApcExtensionCableStack1
+              amount: 5
+          steps:
+            - tool: Cutting
+              doAfter: 1
+
+    - node: electronics
+      edges:
+        - to: airlock
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+    - node: airlock
+      entity: Airlock
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+            - !type:AirlockBolted
+              value: false
+            - !type:WirePanel {}
+            - !type:ContainerNotEmpty # TODO ShadowCommander: Remove when map gets updated
+              container: board
+          completed:
+            - !type:EmptyAllContainers {}
+          steps:
+            - tool: Prying
+              doAfter: 1
+        - to: wired # TODO ShadowCommander: Remove when board spawning is implemented in ServerDoorComponent.cs. Needs a map update.
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+            - !type:AirlockBolted
+              value: false
+            - !type:WirePanel {}
+            - !type:ContainerEmpty
+              container: board
+          completed:
+            - !type:SpawnPrototype
+              prototype: DoorElectronics
+          steps:
+            - tool: Prying
+              doAfter: 1

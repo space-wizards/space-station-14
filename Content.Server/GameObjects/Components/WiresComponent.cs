@@ -17,9 +17,11 @@ using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -448,7 +450,7 @@ namespace Content.Server.GameObjects.Components
                                 return;
                             }
 
-                            _audioSystem.PlayFromEntity("/Audio/Effects/multitool_pulse.ogg", Owner);
+                            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/multitool_pulse.ogg", Owner);
                             break;
                     }
 
@@ -498,8 +500,7 @@ namespace Content.Server.GameObjects.Components
             else if (await tool.UseTool(eventArgs.User, Owner, 0.5f, ToolQuality.Screwing))
             {
                 IsPanelOpen = !IsPanelOpen;
-                EntitySystem.Get<AudioSystem>()
-                    .PlayFromEntity(IsPanelOpen ? "/Audio/Machines/screwdriveropen.ogg" : "/Audio/Machines/screwdriverclose.ogg",
+                SoundSystem.Play(Filter.Pvs(Owner), IsPanelOpen ? "/Audio/Machines/screwdriveropen.ogg" : "/Audio/Machines/screwdriverclose.ogg",
                         Owner);
                 return true;
             }

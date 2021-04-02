@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry;
 using Content.Shared.Kitchen;
@@ -90,7 +90,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex);
                 currentlySelectedTimeButton.Pressed = true;
                 var label = cState.ActiveButtonIndex <= 0 ? Loc.GetString("INSTANT") : cState.CurrentCookTime.ToString();
-                _menu._cookTimeInfoLabel.Text = $"{Loc.GetString("COOK TIME")}: {label}";
+                _menu.CookTimeInfoLabel.Text = $"{Loc.GetString("COOK TIME")}: {label}";
             }
         }
 
@@ -173,7 +173,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
             public ItemList IngredientsList { get; }
 
             public ItemList IngredientsListReagents { get; }
-            public Label _cookTimeInfoLabel { get; }
+            public Label CookTimeInfoLabel { get; }
 
             public MicrowaveMenu(MicrowaveBoundUserInterface owner)
             {
@@ -283,7 +283,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 var cookTimeOneSecondButton = (Button) CookTimeButtonVbox.GetChild(0);
                 cookTimeOneSecondButton.Pressed = true;
 
-                _cookTimeInfoLabel = new Label
+                CookTimeInfoLabel = new Label
                 {
                     Text = Loc.GetString("COOK TIME: 1"),
                     Align = Label.AlignMode.Center,
@@ -310,7 +310,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
                                     Children =
                                     {
-                                        _cookTimeInfoLabel
+                                        CookTimeInfoLabel
                                     }
                                 },
 

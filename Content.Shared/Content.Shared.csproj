@@ -10,6 +10,7 @@
     <Configurations>Release;Debug</Configurations>
     <Platforms>AnyCPU</Platforms>
     <WarningsAsErrors>nullable</WarningsAsErrors>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>

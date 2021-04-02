@@ -1,13 +1,13 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -74,31 +74,30 @@ namespace Content.Server.GameObjects.Components.Culinary
         {
             if (_breakSound != null && IoCManager.Resolve<IRobustRandom>().Prob(_breakChance))
             {
-                EntitySystem.Get<AudioSystem>()
-                    .PlayFromEntity(_breakSound, user, AudioParams.Default.WithVolume(-2f));
+                SoundSystem.Play(Filter.Pvs(user), _breakSound, user, AudioParams.Default.WithVolume(-2f));
                 Owner.Delete();
             }
         }
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            TryUseUtensil(eventArgs.User, eventArgs.Target);
-            return true;
+            return TryUseUtensil(eventArgs.User, eventArgs.Target);
         }
 
-        private void TryUseUtensil(IEntity user, IEntity? target)
+        private bool TryUseUtensil(IEntity user, IEntity? target)
         {
             if (target == null || !target.TryGetComponent(out FoodComponent? food))
             {
-                return;
+                return false;
             }
 
             if (!user.InRangeUnobstructed(target, popup: true))
             {
-                return;
+                return false;
             }
 
             food.TryUseFood(user, null, this);
+            return true;
         }
     }
 

@@ -1,0 +1,14 @@
+- type: entity
+  id: MarkerBase
+  abstract: true
+  components:
+  - type: Marker
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Markers/cross.rsi
+# If serialization was cool this would work.
+#    layers:
+#      - state: blue
+  placement:
+    mode: AlignTileAny

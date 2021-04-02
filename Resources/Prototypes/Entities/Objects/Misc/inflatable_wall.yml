@@ -1,0 +1,40 @@
+- type: entity
+  id: InflatableWall
+  name: inflatable barricade
+  description: An inflated membrane. Activate to deflate. Do not puncture.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Objects/Misc/inflatable_wall.rsi
+    state: inflatable_wall
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
+      mass: 15
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+    resistances: inflatableResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DisassembleOnActivate
+    prototype: InflatableWallStack1
+    doAfter: 3
+  - type: Airtight
+  - type: SnapGrid
+    offset: Center
+  placement:
+    mode: SnapgridCenter

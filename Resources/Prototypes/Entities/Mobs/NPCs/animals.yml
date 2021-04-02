@@ -18,11 +18,11 @@
       sprite: Mobs/Animals/bat.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 5
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.20,-0.20,0.20,0.20"
+          bounds: "-0.30,-0.25,0.40,0.25"
+      mass: 50
       mask:
       - Impassable
       - VaultImpassable
@@ -53,11 +53,11 @@
       sprite: Mobs/Animals/bee.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 5
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.10,-0.10,0.10,0.10"
+          bounds: "-0.90,-0.50,0.05,0.50"
+      mass: 90
       mask:
       - Impassable
       - VaultImpassable
@@ -69,6 +69,37 @@
     - type: DamageStateVisualizer
       normal: 0
       dead: dead
+
+- type: entity
+  name: chicken
+  parent: SimpleMobBase
+  id: ChickenMob_Content
+  description: Comes before an egg, and IS a dinosaur!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: chicken-0
+      sprite: Mobs/Animals/chicken.rsi
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45,-0.20,0.10,0.20"
+      mass: 20
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: chicken-0
+      dead: dead-0
 
 - type: entity
   name: butterfly
@@ -87,11 +118,11 @@
       sprite: Mobs/Animals/butterfly.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 5
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.20,-0.20,0.20,0.20"
+      mass: 5
       mask:
       - Impassable
       - VaultImpassable
@@ -128,11 +159,11 @@
       sprite: Mobs/Animals/chicken.rsi #needs randomiser similar to RandomPottedPlantComponent.cs
   - type: Physics
     bodyType: Dynamic
-    mass: 20
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.20,0.10,0.20"
+          bounds: "-0.20,-0.20,0.20,0.20"
+      mass: 5
       mask:
       - Impassable
       - VaultImpassable
@@ -190,11 +221,11 @@
       sprite: Mobs/Animals/crab.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 10
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.40,-0.35,0.20,0.35"
+          bounds: "-0.10,-0.10,0.10,0.10"
+      mass: 5
       mask:
       - Impassable
       - VaultImpassable
@@ -206,6 +237,7 @@
     - type: DamageStateVisualizer
       normal: crab
       dead: dead
+    - type: AsteroidRockVisualizer
 
 - type: entity
   name: goat
@@ -221,11 +253,11 @@
       sprite: Mobs/Animals/goat.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 20
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.60,-0.50,0.05,0.50"
+      mass: 20
       mask:
       - Impassable
       - VaultImpassable
@@ -253,11 +285,11 @@
       sprite: Mobs/Animals/goose.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 20
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.45,-0.35,0.45,0.35"
+      mass: 20
       mask:
       - Impassable
       - VaultImpassable
@@ -284,11 +316,11 @@
       sprite: Mobs/Animals/gorilla.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 90
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.90,-0.50,0.05,0.50"
+          bounds: "-0.30,-0.35,0.35,0.35"
+      mass: 20
       mask:
       - Impassable
       - VaultImpassable
@@ -315,11 +347,11 @@
       sprite: Mobs/Animals/monkey.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 50
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.30,-0.25,0.40,0.25"
+          bounds: "-0.30,-0.30,0.25,0.30"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable
@@ -362,12 +394,12 @@
     Slots:
     - Helmet
   - type: Physics
-    bodyType: KinematicController
-    mass: 10
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.50,-0.30,0.35,0.30"
+          bounds: "-0.30,-0.40,0.45,0.40"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable
@@ -452,11 +484,11 @@
       sprite: Mobs/Animals/parrot.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 20
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.30,-0.35,0.35,0.35"
+          bounds: "-0.40,-0.35,0.20,0.35"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable
@@ -483,11 +515,11 @@
       sprite: Mobs/Animals/penguin.rsi
   - type: Physics
     bodyType: Dynamic
-    mass: 10
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.50,-0.30,0.35,0.30"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable
@@ -513,12 +545,12 @@
       state: snake
       sprite: Mobs/Animals/snake.rsi
   - type: Physics
-    bodyType: Dynamic
-    mass: 10
+    bodyType: KinematicController
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.30,-0.30,0.25,0.30"
+          bounds: "-0.50,-0.30,0.35,0.30"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable

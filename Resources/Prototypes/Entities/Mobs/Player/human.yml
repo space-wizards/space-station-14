@@ -14,8 +14,9 @@
   - type: Alerts
   - type: Actions
     innateActions:
-      - HumanScream
+      - CombatMode
       - Disarm
+      - HumanScream
   - type: Eye
     zoom: 0.5, 0.5
   - type: CameraRecoil
@@ -31,8 +32,8 @@
   id: HumanMob_CentcomOfficial
   components:
   - type: Icon
-    sprite: Interface/Misc/markers.rsi
-    state: Centcom
+    sprite: Markers/jobs.rsi
+    state: centcom
   - type: GhostRoleMobSpawner
     prototype: HumanMob_CentcomOfficial
     deleteOnSpawn: true

@@ -13,6 +13,6 @@ namespace Content.Server.Objectives.Interfaces
         /// <summary>
         /// Returns a randomly picked objective the provided mind is valid for.
         /// </summary>
-        ObjectivePrototype GetRandomObjective(Mind mind);
+        ObjectivePrototype? GetRandomObjective(Mind mind);
     }
 }

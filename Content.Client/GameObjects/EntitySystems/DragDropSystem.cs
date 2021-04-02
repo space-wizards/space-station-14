@@ -20,6 +20,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using DrawDepth = Content.Shared.GameObjects.DrawDepth;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -217,8 +218,11 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 return false;
             }
+
+            DebugTools.AssertNotNull(_dragger);
+
             // still in range of the thing we are dragging?
-            if (!_interactionSystem.InRangeUnobstructed(_dragger, _dragDropHelper.Dragged))
+            if (!_interactionSystem.InRangeUnobstructed(_dragger!, _dragDropHelper.Dragged))
             {
                 return false;
             }

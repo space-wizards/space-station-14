@@ -14,7 +14,7 @@ namespace Content.Server.AI.WorldState.States.Inventory
         // Fine for now I guess
         public override string Name => "LastOpenedStorage";
 
-        public override void SetValue(IEntity value)
+        public override void SetValue(IEntity? value)
         {
             base.SetValue(value);
             if (value != null && !value.HasComponent<EntityStorageComponent>())

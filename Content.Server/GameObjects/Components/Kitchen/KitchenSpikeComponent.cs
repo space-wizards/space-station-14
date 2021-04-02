@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
@@ -10,8 +10,10 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Kitchen;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -148,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             victim.Delete();
 
             if (SpikeSound != null)
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(SpikeSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), SpikeSound, Owner);
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)

@@ -23,8 +23,14 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 
     public class ActivateEventArgs : EventArgs, ITargetedInteractEventArgs
     {
-        public IEntity User { get; set; }
-        public IEntity Target { get; set; }
+        public ActivateEventArgs(IEntity user, IEntity target)
+        {
+            User = user;
+            Target = target;
+        }
+
+        public IEntity User { get; }
+        public IEntity Target { get; }
     }
 
     /// <summary>

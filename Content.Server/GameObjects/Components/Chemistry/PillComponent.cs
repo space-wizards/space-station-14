@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Culinary;
@@ -13,6 +13,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -21,24 +22,22 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     public class PillComponent : FoodComponent, IUse, IAfterInteract
     {
-        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-
         public override string Name => "Pill";
 
         [ViewVariables]
         [DataField("useSound")]
-        protected override string UseSound { get; set; } = default;
+        protected override string? UseSound { get; set; } = default;
 
         [ViewVariables]
         [DataField("trash")]
-        protected override string TrashPrototype { get; set; } = default;
+        protected override string? TrashPrototype { get; set; } = default;
 
         [ViewVariables]
         [DataField("transferAmount")]
         protected override ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(1000);
 
         [ViewVariables]
-        private SolutionContainerComponent _contents;
+        private SolutionContainerComponent _contents = default!;
 
         public override void Initialize()
         {
@@ -64,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
-        public override bool TryUseFood(IEntity user, IEntity target, UtensilComponent utensilUsed = null)
+        public override bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
         {
             if (user == null)
             {
@@ -73,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             var trueTarget = target ?? user;
 
-            if (!trueTarget.TryGetComponent(out IBody body) ||
+            if (!trueTarget.TryGetComponent(out IBody? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
                 return false;
@@ -104,8 +103,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             if (UseSound != null)
             {
-                _entitySystem.GetEntitySystem<AudioSystem>()
-                    .PlayFromEntity(UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
+                SoundSystem.Play(Filter.Pvs(trueTarget), UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
             }
 
             trueTarget.PopupMessage(user, Loc.GetString("You swallow the pill."));

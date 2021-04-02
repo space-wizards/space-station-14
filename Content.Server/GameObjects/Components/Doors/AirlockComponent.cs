@@ -8,9 +8,11 @@ using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent.WiresAction;
@@ -453,8 +455,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             BoltsDown = newBolts;
 
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(newBolts ? "/Audio/Machines/boltsdown.ogg" : "/Audio/Machines/boltsup.ogg", Owner);
+            SoundSystem.Play(Filter.Broadcast(), newBolts ? "/Audio/Machines/boltsdown.ogg" : "/Audio/Machines/boltsup.ogg", Owner);
         }
     }
 }

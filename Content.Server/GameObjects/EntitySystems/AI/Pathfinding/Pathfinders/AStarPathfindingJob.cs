@@ -12,11 +12,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
     public class AStarPathfindingJob : Job<Queue<TileRef>>
     {
 #if DEBUG
-        public static event Action<SharedAiDebug.AStarRouteDebug> DebugRoute;
+        public static event Action<SharedAiDebug.AStarRouteDebug>? DebugRoute;
 #endif
 
-        private readonly PathfindingNode _startNode;
-        private PathfindingNode _endNode;
+        private readonly PathfindingNode? _startNode;
+        private PathfindingNode? _endNode;
         private readonly PathfindingArgs _pathfindingArgs;
 
         public AStarPathfindingJob(
@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             _pathfindingArgs = pathfindingArgs;
         }
 
-        protected override async Task<Queue<TileRef>> Process()
+        protected override async Task<Queue<TileRef>?> Process()
         {
             if (_startNode == null ||
                 _endNode == null ||
@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             var costSoFar = new Dictionary<PathfindingNode, float>();
             var cameFrom = new Dictionary<PathfindingNode, PathfindingNode>();
 
-            PathfindingNode currentNode = null;
+            PathfindingNode? currentNode = null;
             frontier.Add((0.0f, _startNode));
             costSoFar[_startNode] = 0.0f;
             var routeFound = false;
@@ -121,7 +121,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                 return null;
             }
 
-            var route = PathfindingHelpers.ReconstructPath(cameFrom, currentNode);
+            DebugTools.AssertNotNull(currentNode);
+
+            var route = PathfindingHelpers.ReconstructPath(cameFrom, currentNode!);
 
             if (route.Count == 1)
             {
