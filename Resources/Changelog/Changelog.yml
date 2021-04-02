@@ -795,3 +795,8 @@ Entries:
   - {message: Fixed placement of inflatable walls., type: Fix}
   id: 143
   time: '2021-04-01T21:34:36.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Debug weapons, type: Add}
+  id: 144
+  time: '2021-04-02T08:54:08.0000000+00:00'
