@@ -1,8 +1,8 @@
 - type: entity
-  id: BoxDonkSoftBase
-  name: "foamdart box"
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
+  id: BoxDonkSoftBase
+  name: foamdart box
   components:
   - type: AmmoBox
     caliber: Rocket
@@ -12,9 +12,9 @@
 
 # Boxes
 - type: entity
-  id: BoxDonkSoftBox
-  name: "foam dart box"
   parent: BoxDonkSoftBase
+  id: BoxDonkSoftBox
+  name: foam dart box
   components:
   - type: AmmoBox
     capacity: 40
@@ -24,9 +24,9 @@
     state: foambox
 
 - type: entity
-  id: BoxCartridgeCap
-  name: "cap gun cartridge box"
   parent: BoxDonkSoftBase
+  id: BoxCartridgeCap
+  name: cap gun cartridge box
   components:
   - type: AmmoBox
     capacity: 20
