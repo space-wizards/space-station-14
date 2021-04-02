@@ -155,6 +155,7 @@ namespace Content.Client.Chat
                                             }),
                                             (Input = new HistoryLineEdit
                                             {
+                                                PlaceHolder = Loc.GetString("hud-chatbox-info"),
                                                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                                                 StyleClasses = { StyleNano.StyleClassChatLineEdit }
                                             }),

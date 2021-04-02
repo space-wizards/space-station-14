@@ -141,6 +141,8 @@ namespace Content.Client.UserInterface
 
                 AddHeader("ui-options-header-ui");
                 AddButton(ContentKeyFunctions.FocusChat);
+                AddButton(ContentKeyFunctions.FocusLocalChat);
+                AddButton(ContentKeyFunctions.FocusRadio);
                 AddButton(ContentKeyFunctions.FocusOOC);
                 AddButton(ContentKeyFunctions.FocusAdminChat);
                 AddButton(ContentKeyFunctions.OpenCharacterMenu);

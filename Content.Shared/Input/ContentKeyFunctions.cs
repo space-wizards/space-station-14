@@ -11,7 +11,9 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction ActivateItemInWorld = "ActivateItemInWorld"; // default action on world entity
         public static readonly BoundKeyFunction Drop = "Drop";
         public static readonly BoundKeyFunction ExamineEntity = "ExamineEntity";
-        public static readonly BoundKeyFunction FocusChat = "FocusChatWindow";
+        public static readonly BoundKeyFunction FocusChat = "FocusChatInputWindow";
+        public static readonly BoundKeyFunction FocusLocalChat = "FocusLocalChatWindow";
+        public static readonly BoundKeyFunction FocusRadio = "FocusRadioWindow";
         public static readonly BoundKeyFunction FocusOOC = "FocusOOCWindow";
         public static readonly BoundKeyFunction FocusAdminChat = "FocusAdminChatWindow";
         public static readonly BoundKeyFunction OpenCharacterMenu = "OpenCharacterMenu";

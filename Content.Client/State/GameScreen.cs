@@ -31,9 +31,6 @@ namespace Content.Client.State
         [ViewVariables] private ChatBox? _gameChat;
         private ConstructionMenuPresenter? _constructionMenu;
 
-        private bool _oocEnabled;
-        private bool _adminOocEnabled;
-
         public override void Startup()
         {
             base.Startup();
@@ -44,20 +41,21 @@ namespace Content.Client.State
             _chatManager.SetChatBox(_gameChat);
             _voteManager.SetPopupContainer(_gameHud.VoteContainer);
             _gameChat.DefaultChatFormat = "say \"{0}\"";
-            _gameChat.Input.PlaceHolder = Loc.GetString("Say something! [ for OOC");
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
                 InputCmdHandler.FromDelegate(_ => FocusChat(_gameChat)));
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
-                InputCmdHandler.FromDelegate(_ => FocusOOC(_gameChat)));
+                InputCmdHandler.FromDelegate(_ => FocusChannel(_gameChat, ChatChannel.OOC)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusLocalChat,
+                InputCmdHandler.FromDelegate(_ => FocusChannel(_gameChat, ChatChannel.Local)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusRadio,
+                InputCmdHandler.FromDelegate(_ => FocusChannel(_gameChat, ChatChannel.Radio)));
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
-                InputCmdHandler.FromDelegate(_ => FocusAdminChat(_gameChat)));
-
-            _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
-            _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
-            _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
+                InputCmdHandler.FromDelegate(_ => FocusChannel(_gameChat, ChatChannel.AdminChat)));
 
             SetupPresenters();
         }
@@ -89,50 +87,9 @@ namespace Content.Client.State
             _constructionMenu?.Dispose();
         }
 
-
-        private void OnOocEnabledChanged(bool val)
-        {
-            _oocEnabled = val;
-
-            if (_adminManager.IsActive())
-            {
-                return;
-            }
-
-            if(_gameChat is null)
-                return;
-
-            _gameChat.Input.PlaceHolder = Loc.GetString(_oocEnabled ? "Say something! [ for OOC" : "Say something!");
-        }
-
-        private void OnAdminOocEnabledChanged(bool val)
-        {
-            _adminOocEnabled = val;
-
-            if (!_adminManager.IsActive())
-            {
-                return;
-            }
-
-            if (_gameChat is null)
-                return;
-
-            _gameChat.Input.PlaceHolder = Loc.GetString(_adminOocEnabled ? "Say something! [ for OOC" : "Say something!");
-        }
-
-        private void OnAdminStatusUpdated()
-        {
-            if (_gameChat is null)
-                return;
-
-            _gameChat.Input.PlaceHolder = _adminManager.IsActive()
-                ? Loc.GetString(_adminOocEnabled ? "Say something! [ for OOC" : "Say something!")
-                : Loc.GetString(_oocEnabled ? "Say something! [ for OOC" : "Say something!");
-        }
-
         internal static void FocusChat(ChatBox chat)
         {
-            if (chat == null || chat.UserInterfaceManager.KeyboardFocused != null)
+            if (chat.UserInterfaceManager.KeyboardFocused != null)
             {
                 return;
             }
@@ -140,28 +97,15 @@ namespace Content.Client.State
             chat.Input.IgnoreNext = true;
             chat.Input.GrabKeyboardFocus();
         }
-        internal static void FocusOOC(ChatBox chat)
+        internal static void FocusChannel(ChatBox chat, ChatChannel channel)
         {
-            if (chat == null || chat.UserInterfaceManager.KeyboardFocused != null)
+            if (chat.UserInterfaceManager.KeyboardFocused != null)
             {
                 return;
             }
 
             chat.Input.IgnoreNext = true;
-            chat.Input.GrabKeyboardFocus();
-            chat.SelectChannel(ChatChannel.OOC);
-        }
-
-        internal static void FocusAdminChat(ChatBox chat)
-        {
-            if (chat == null || chat.UserInterfaceManager.KeyboardFocused != null)
-            {
-                return;
-            }
-
-            chat.Input.IgnoreNext = true;
-            chat.Input.GrabKeyboardFocus();
-            chat.SelectChannel(ChatChannel.AdminChat);
+            chat.SelectChannel(channel);
         }
     }
 }
