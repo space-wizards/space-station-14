@@ -146,37 +146,6 @@
       dead: dead
 
 - type: entity
-  name: chicken
-  parent: SimpleMobBase
-  id: ChickenMob_Content
-  description: Comes before an egg, and IS a dinosaur!
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: chicken-0
-      sprite: Mobs/Animals/chicken.rsi #needs randomiser similar to RandomPottedPlantComponent.cs
-  - type: Physics
-    bodyType: Dynamic
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.20,-0.20,0.20,0.20"
-      mass: 5
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: chicken-0
-      dead: dead-0
-
-- type: entity
   name: cow
   parent: SimpleMobBase
   id: CowMob_Content
