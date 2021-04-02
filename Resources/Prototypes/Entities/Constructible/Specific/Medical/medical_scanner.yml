@@ -29,7 +29,6 @@
   - type: SnapGrid
     offset: Center
   - type: Anchorable
-    snap: true
   - type: Pullable
   - type: MedicalScanner
   - type: Damageable

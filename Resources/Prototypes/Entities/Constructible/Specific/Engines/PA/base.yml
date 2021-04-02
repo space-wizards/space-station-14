@@ -6,7 +6,6 @@
   components:
     - type: InteractionOutline
     - type: Anchorable
-      snap: true
     - type: Physics
       bodyType: Static
       fixtures:
