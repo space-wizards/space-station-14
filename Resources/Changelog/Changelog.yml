@@ -805,3 +805,8 @@ Entries:
   - {message: Adds Animal / critter mob crates to cargo, type: Add}
   id: 145
   time: '2021-04-02T10:41:00.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: You can eat organs, type: Add}
+  id: 146
+  time: '2021-04-02T13:44:02.0000000+00:00'
