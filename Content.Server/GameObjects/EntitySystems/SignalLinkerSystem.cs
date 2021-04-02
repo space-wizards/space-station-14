@@ -2,7 +2,6 @@
 using Content.Server.GameObjects.Components.MachineLinking;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -13,23 +12,13 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     public class SignalLinkerSystem : EntitySystem
     {
-        private Dictionary<NetUserId, SignalTransmitterComponent> _transmitters;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _transmitters = new Dictionary<NetUserId, SignalTransmitterComponent>();
-        }
+        private readonly Dictionary<NetUserId, SignalTransmitterComponent?> _transmitters = new();
 
         public bool SignalLinkerKeybind(NetUserId id, bool? enable)
         {
-            if (enable == null)
-            {
-                enable = !_transmitters.ContainsKey(id);
-            }
+            enable ??= !_transmitters.ContainsKey(id);
 
-            if (enable == true)
+            if (enable.Value)
             {
                 if (_transmitters.ContainsKey(id))
                 {
@@ -39,14 +28,16 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (_transmitters.Count == 0)
                 {
                     CommandBinds.Builder
-                        .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(HandleUse), typeof(InteractionSystem))
+                        .BindBefore(EngineKeyFunctions.Use,
+                            new PointerInputCmdHandler(HandleUse),
+                            typeof(InteractionSystem))
                         .Register<SignalLinkerSystem>();
                 }
 
                 _transmitters.Add(id, null);
 
             }
-            else if (enable == false)
+            else
             {
                 if (!_transmitters.ContainsKey(id))
                 {
@@ -59,11 +50,17 @@ namespace Content.Server.GameObjects.EntitySystems
                     CommandBinds.Unregister<SignalLinkerSystem>();
                 }
             }
-            return enable == true;
+
+            return enable.Value;
         }
 
-        private bool HandleUse(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleUse(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
+            if (session?.AttachedEntity == null)
+            {
+                return false;
+            }
+
             if (!_transmitters.TryGetValue(session.UserId, out var signalTransmitter))
             {
                 return false;
@@ -91,6 +88,5 @@ namespace Content.Server.GameObjects.EntitySystems
 
             return false;
         }
-
     }
 }

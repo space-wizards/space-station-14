@@ -3,10 +3,6 @@ using System.Linq;
 using Content.Client.GameObjects.Components.IconSmoothing;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -57,7 +53,7 @@ namespace Content.Client.GameObjects.EntitySystems
             // This is simpler to implement. If you want to optimize it be my guest.
             var senderEnt = ev.Sender;
             if (senderEnt.IsValid() &&
-                senderEnt.TryGetComponent(out IconSmoothComponent iconSmooth)
+                senderEnt.TryGetComponent(out IconSmoothComponent? iconSmooth)
                 && iconSmooth.Running)
             {
                 var snapGrid = senderEnt.GetComponent<SnapGridComponent>();
@@ -118,7 +114,7 @@ namespace Content.Client.GameObjects.EntitySystems
             // As it stands now, it's totally possible for something to get queued twice.
             // Generation on the component is set after an update so we can cull updates that happened this generation.
             if (!entity.IsValid()
-                || !entity.TryGetComponent(out IconSmoothComponent smoothing)
+                || !entity.TryGetComponent(out IconSmoothComponent? smoothing)
                 || smoothing.UpdateGeneration == _generation)
             {
                 return;
@@ -133,7 +129,7 @@ namespace Content.Client.GameObjects.EntitySystems
     /// <summary>
     ///     Event raised by a <see cref="IconSmoothComponent"/> when it needs to be recalculated.
     /// </summary>
-    public sealed class IconSmoothDirtyEvent : EntitySystemMessage
+    public sealed class IconSmoothDirtyEvent : EntityEventArgs
     {
         public IconSmoothDirtyEvent(IEntity sender, (GridId grid, Vector2i pos)? lastPosition, SnapGridOffset offset, IconSmoothingMode mode)
         {

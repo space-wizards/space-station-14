@@ -1,17 +1,17 @@
 using Content.Client.GameObjects.Components.Instruments;
 using Content.Shared;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.Configuration;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
     public class InstrumentSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         public override void Initialize()

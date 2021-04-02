@@ -1,24 +1,22 @@
-﻿using System;
+using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
     [Serializable]
+    [DataDefinition]
     public class PlaySoundCollectionBehavior : IThresholdBehavior
     {
         /// <summary>
         ///     Sound collection from which to pick a random sound to play.
         /// </summary>
-        private string SoundCollection { get; set; }
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.SoundCollection, "soundCollection", string.Empty);
-        }
+        [DataField("soundCollection")]
+        private string SoundCollection { get; set; } = string.Empty;
 
         public void Execute(IEntity owner, DestructibleSystem system)
         {
@@ -30,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
             var sound = AudioHelpers.GetRandomFileFromSoundCollection(SoundCollection);
             var pos = owner.Transform.Coordinates;
 
-            system.AudioSystem.PlayAtCoords(sound, pos, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(pos), sound, pos, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

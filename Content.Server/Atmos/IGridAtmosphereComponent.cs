@@ -4,7 +4,7 @@ using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -154,6 +154,8 @@ namespace Content.Server.Atmos
         /// <param name="cellCount"></param>
         /// <returns></returns>
         float GetVolumeForCells(int cellCount);
+
+        void RepopulateTiles();
 
         /// <summary>
         ///     Returns a dictionary of adjacent TileAtmospheres.

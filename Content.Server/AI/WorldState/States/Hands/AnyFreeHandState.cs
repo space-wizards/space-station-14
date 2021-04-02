@@ -9,7 +9,7 @@ namespace Content.Server.AI.WorldState.States.Hands
         public override string Name => "AnyFreeHand";
         public override bool GetValue()
         {
-            if (!Owner.TryGetComponent(out HandsComponent handsComponent))
+            if (!Owner.TryGetComponent(out HandsComponent? handsComponent))
             {
                 return false;
             }

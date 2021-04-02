@@ -1,20 +1,16 @@
 #nullable enable annotations
 using System.Collections.Generic;
-using Content.Shared.Preferences;
-using Content.Server.Administration;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
-using Content.Server.Players;
 using Content.Server.Mobs;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Robust.Shared.Network;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Content.Shared.Preferences;
+using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.Server.GameTicking
 {
@@ -49,7 +45,6 @@ namespace Content.Server.GameTicking
             if (mind.VisitingEntity != null)
             {
                 mind.UnVisit();
-                mind.VisitingEntity.Delete();
             }
 
             var position = playerEntity?.Transform.Coordinates ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
@@ -79,7 +74,7 @@ namespace Content.Server.GameTicking
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var ghost = entityManager.SpawnEntity("MobObserver", position);
-            ghost.Name = mind.CharacterName;
+            ghost.Name = mind.CharacterName ?? string.Empty;
 
             var ghostComponent = ghost.GetComponent<GhostComponent>();
             ghostComponent.CanReturnToBody = canReturn;

@@ -1,19 +1,19 @@
 #nullable enable
+using System;
+using System.Collections.Generic;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Appearance;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
 
 namespace Content.Shared.GameObjects.Components.Chemistry
 {
@@ -28,12 +28,14 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public sealed override uint? NetID => ContentNetIDs.SOLUTION;
 
         [ViewVariables]
+        [DataField("contents")]
         public Solution Solution { get; private set; } = new();
 
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit MaxVolume { get; set; }
+        [DataField("maxVol")]
+        public ReagentUnit MaxVolume { get; set; } = ReagentUnit.Zero;
 
         [ViewVariables]
         public ReagentUnit CurrentVolume => Solution.TotalVolume;
@@ -51,9 +53,11 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ///     If reactions will be checked for when adding reagents to the container.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanReact { get; set; }
+        [DataField("canReact")]
+        public bool CanReact { get; set; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("caps")]
         public SolutionContainerCaps Capabilities { get; set; }
 
         public bool CanExamineContents => Capabilities.HasCap(SolutionContainerCaps.CanExamine);
@@ -65,16 +69,6 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         public bool CanRefill => Capabilities.HasCap(SolutionContainerCaps.Refillable);
         public bool CanDrain => Capabilities.HasCap(SolutionContainerCaps.Drainable);
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.CanReact, "canReact", true);
-            serializer.DataField(this, x => x.MaxVolume, "maxVol", ReagentUnit.New(0));
-            serializer.DataField(this, x => x.Solution, "contents", new Solution());
-            serializer.DataField(this, x => x.Capabilities, "caps", SolutionContainerCaps.None);
-        }
 
         public void RemoveAllSolution()
         {
@@ -199,7 +193,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             }
 
             var primaryReagent = Solution.GetPrimaryReagentId();
-            if (!prototypeManager.TryIndex(primaryReagent, out ReagentPrototype proto))
+            if (!prototypeManager.TryIndex(primaryReagent, out ReagentPrototype? proto))
             {
                 Logger.Error($"{nameof(SharedSolutionContainerComponent)} could not find the prototype associated with {primaryReagent}.");
                 return;
@@ -215,6 +209,9 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ReagentUnit ISolutionInteractionsComponent.InjectSpaceAvailable => EmptyVolume;
         ReagentUnit ISolutionInteractionsComponent.DrawAvailable => CurrentVolume;
         ReagentUnit ISolutionInteractionsComponent.DrainAvailable => CurrentVolume;
+
+        [DataField("maxSpillRefill")]
+        public ReagentUnit MaxSpillRefill { get; set; }
 
         void ISolutionInteractionsComponent.Refill(Solution solution)
         {
@@ -263,7 +260,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             return new SolutionContainerVisualState(Color, filledVolumeFraction);
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new SolutionContainerComponentState(Solution);
         }
@@ -293,12 +290,21 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         /// </summary>
         public readonly byte FilledVolumeFraction;
 
+        // do we really need this just to save three bytes?
+        public float FilledVolumePercent => (float) FilledVolumeFraction / byte.MaxValue;
+
         /// <param name="filledVolumeFraction">The fraction of the container's volume that is filled.</param>
         public SolutionContainerVisualState(Color color, float filledVolumeFraction)
         {
             Color = color;
             FilledVolumeFraction = (byte) (byte.MaxValue * filledVolumeFraction);
         }
+    }
+
+    public enum SolutionContainerLayers : byte
+    {
+        Fill,
+        Base
     }
 
     [Serializable, NetSerializable]

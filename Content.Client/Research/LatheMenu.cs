@@ -7,7 +7,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Research
@@ -23,36 +22,30 @@ namespace Content.Client.Research
         public Button QueueButton;
         public Button ServerConnectButton;
         public Button ServerSyncButton;
-        protected override Vector2? CustomSize => (300, 450);
 
-        public LatheBoundUserInterface Owner { get; set; }
+        public LatheBoundUserInterface Owner { get; }
 
         private readonly List<LatheRecipePrototype> _shownRecipes = new();
 
-        public LatheMenu(LatheBoundUserInterface owner = null)
+        public LatheMenu(LatheBoundUserInterface owner)
         {
+            SetSize = MinSize = (300, 450);
             IoCManager.InjectDependencies(this);
 
             Owner = owner;
 
             Title = "Lathe Menu";
 
-            var margin = new MarginContainer()
-            {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-            };
-
             var vBox = new VBoxContainer()
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SeparationOverride = 5,
             };
 
             var hBoxButtons = new HBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
             };
 
@@ -60,7 +53,6 @@ namespace Content.Client.Research
             {
                 Text = "Queue",
                 TextAlign = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
             };
 
@@ -68,7 +60,6 @@ namespace Content.Client.Research
             {
                 Text = "Server list",
                 TextAlign = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
             };
 
@@ -76,27 +67,26 @@ namespace Content.Client.Research
             {
                 Text = "Sync",
                 TextAlign = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
             };
 
             var spacer = new Control()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SizeFlagsStretchRatio = 3,
             };
 
             var hBoxFilter = new HBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 1
             };
 
             _searchBar = new LineEdit()
             {
                 PlaceHolder = "Search Designs",
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SizeFlagsStretchRatio = 3
             };
 
@@ -106,7 +96,6 @@ namespace Content.Client.Research
             {
                 Text = "Filter",
                 TextAlign = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
                 Disabled = true,
             };
@@ -114,7 +103,7 @@ namespace Content.Client.Research
             _items = new ItemList()
             {
                 SizeFlagsStretchRatio = 8,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SelectMode = ItemList.ItemListSelectMode.Button,
             };
 
@@ -124,19 +113,19 @@ namespace Content.Client.Research
             {
                 PlaceHolder = "Amount",
                 Text = "1",
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
             };
 
             _amountLineEdit.OnTextChanged += PopulateDisabled;
 
             _materials = new ItemList()
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 3
             };
 
             hBoxButtons.AddChild(spacer);
-            if (Owner?.Database is ProtolatheDatabaseComponent database)
+            if (Owner.Database is ProtolatheDatabaseComponent database)
             {
                 hBoxButtons.AddChild(ServerConnectButton);
                 hBoxButtons.AddChild(ServerSyncButton);
@@ -153,9 +142,7 @@ namespace Content.Client.Research
             vBox.AddChild(_amountLineEdit);
             vBox.AddChild(_materials);
 
-            margin.AddChild(vBox);
-
-            Contents.AddChild(margin);
+            Contents.AddChild(vBox);
         }
 
         public void ItemSelected(ItemList.ItemListSelectedEventArgs args)
@@ -169,10 +156,12 @@ namespace Content.Client.Research
         {
             _materials.Clear();
 
+            if (Owner.Storage == null) return;
+
             foreach (var (id, amount) in Owner.Storage)
             {
-                if (!_prototypeManager.TryIndex(id, out MaterialPrototype materialPrototype)) continue;
-                var material = materialPrototype.Material;
+                if (!_prototypeManager.TryIndex(id, out MaterialPrototype? materialPrototype)) continue;
+                var material = materialPrototype;
                 _materials.AddItem($"{material.Name} {amount} cm³", material.Icon.Frame0(), false);
             }
         }
@@ -187,7 +176,7 @@ namespace Content.Client.Research
             for (var i = 0; i < _shownRecipes.Count; i++)
             {
                 var prototype = _shownRecipes[i];
-                _items[i].Disabled = !Owner.Lathe.CanProduce(prototype, quantity);
+                _items[i].Disabled = !Owner.Lathe?.CanProduce(prototype, quantity) ?? true;
             }
         }
 
@@ -217,6 +206,8 @@ namespace Content.Client.Research
         public void Populate()
         {
             _shownRecipes.Clear();
+
+            if (Owner.Database == null) return;
 
             foreach (var prototype in Owner.Database)
             {

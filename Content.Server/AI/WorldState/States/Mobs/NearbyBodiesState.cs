@@ -3,7 +3,7 @@ using Content.Server.AI.Utils;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Body;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.WorldState.States.Mobs
 {
@@ -16,7 +16,7 @@ namespace Content.Server.AI.WorldState.States.Mobs
         {
             var result = new List<IEntity>();
 
-            if (!Owner.TryGetComponent(out AiControllerComponent controller))
+            if (!Owner.TryGetComponent(out AiControllerComponent? controller))
             {
                 return result;
             }

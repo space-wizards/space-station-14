@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -37,10 +36,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             // Given there's different collision layers stored for each node in the graph it's probably not worth it to cache this
             // Also this will help with corner-cutting
 
-            PathfindingNode northNeighbor = null;
-            PathfindingNode southNeighbor = null;
-            PathfindingNode eastNeighbor = null;
-            PathfindingNode westNeighbor = null;
+            PathfindingNode? northNeighbor = null;
+            PathfindingNode? southNeighbor = null;
+            PathfindingNode? eastNeighbor = null;
+            PathfindingNode? westNeighbor = null;
             foreach (var neighbor in currentNode.GetNeighbors())
             {
                 if (neighbor.TileRef.X == currentNode.TileRef.X &&

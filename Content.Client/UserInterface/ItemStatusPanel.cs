@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components;
@@ -6,10 +5,9 @@ using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -65,7 +63,10 @@ namespace Content.Client.UserInterface
                     }
                 }
             });
-            SizeFlagsVertical = SizeFlags.ShrinkEnd;
+            VerticalAlignment = VAlignment.Bottom;
+
+            // TODO: Depending on if its a two-hand panel or not
+            MinSize = (150, 0);
         }
 
         /// <summary>
@@ -156,12 +157,6 @@ namespace Content.Client.UserInterface
 
                 _activeStatusComponents.Add((statusComponent, control));
             }
-        }
-
-        // TODO: Depending on if its a two-hand panel or not
-        protected override Vector2 CalculateMinimumSize()
-        {
-            return Vector2.ComponentMax(base.CalculateMinimumSize(), (150, 0));
         }
     }
 }

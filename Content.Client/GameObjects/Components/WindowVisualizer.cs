@@ -1,11 +1,9 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components
 {

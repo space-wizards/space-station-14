@@ -1,13 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.Administration;
 using Content.Shared.Network.NetMessages;
 using Robust.Client.Console;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-
-#nullable enable
+using Robust.Shared.Network;
 
 namespace Content.Client.Administration
 {
@@ -20,6 +18,11 @@ namespace Content.Client.Administration
         private readonly HashSet<string> _availableCommands = new();
 
         public event Action? AdminStatusUpdated;
+
+        public bool IsActive()
+        {
+            return _adminData?.Active ?? false;
+        }
 
         public bool HasFlag(AdminFlags flag)
         {

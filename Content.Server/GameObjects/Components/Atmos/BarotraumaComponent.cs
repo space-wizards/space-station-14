@@ -6,7 +6,6 @@ using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Atmos
@@ -22,9 +21,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Update(float airPressure)
         {
-            if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
-            Owner.TryGetComponent(out ServerAlertsComponent status);
+            if (!Owner.TryGetComponent(out IDamageableComponent? damageable)) return;
 
+            var status = Owner.GetComponentOrNull<ServerAlertsComponent>();
             var highPressureMultiplier = 1f;
             var lowPressureMultiplier = 1f;
 

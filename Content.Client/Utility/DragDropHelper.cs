@@ -1,4 +1,4 @@
-﻿using Robust.Client.Interfaces.Input;
+﻿using Robust.Client.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
@@ -45,7 +45,7 @@ namespace Content.Client.Utility
         /// <summary>
         /// Current thing being dragged or which mouse button is being held down on.
         /// </summary>
-        public T Dragged { get; private set; }
+        public T? Dragged { get; private set; }
 
         // screen pos where the mouse down began for the drag
         private Vector2 _mouseDownScreenPos;

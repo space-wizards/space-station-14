@@ -2,8 +2,6 @@
 using Content.Client.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -48,7 +46,7 @@ namespace Content.Client.GameObjects.EntitySystems
     /// <summary>
     ///     Event raised by a <see cref="WindowComponent"/> when it needs to be recalculated.
     /// </summary>
-    public sealed class WindowSmoothDirtyEvent : EntitySystemMessage
+    public sealed class WindowSmoothDirtyEvent : EntityEventArgs
     {
         public IEntity Sender { get; }
 

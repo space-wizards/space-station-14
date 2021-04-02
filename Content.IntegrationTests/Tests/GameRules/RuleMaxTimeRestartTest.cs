@@ -4,7 +4,7 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.GameRules;
 using Content.Server.Interfaces.GameTicking;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.GameRules
 {

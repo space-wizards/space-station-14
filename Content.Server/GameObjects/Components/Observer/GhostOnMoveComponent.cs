@@ -2,14 +2,13 @@
 using System;
 using Content.Server.Commands.Observer;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.Console;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Observer
 {
@@ -19,14 +18,7 @@ namespace Content.Server.GameObjects.Components.Observer
     {
         public override string Name => "GhostOnMove";
 
-        public bool CanReturn { get; set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.CanReturn, "canReturn", true);
-        }
+        [DataField("canReturn")] public bool CanReturn { get; set; } = true;
 
         void IRelayMoveInput.MoveInputPressed(ICommonSession session)
         {

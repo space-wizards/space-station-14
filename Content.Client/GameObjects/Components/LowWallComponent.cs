@@ -2,9 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using Content.Client.GameObjects.Components.IconSmoothing;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 using static Robust.Client.GameObjects.SpriteComponent;
@@ -29,9 +28,10 @@ namespace Content.Client.GameObjects.Components
         public CornerFill LastCornerSW { get; private set; }
         public CornerFill LastCornerNW { get; private set; }
 
+        [ViewVariables] private IEntity? _overlayEntity;
+
         [ViewVariables]
-        private IEntity _overlayEntity;
-        private ISpriteComponent _overlaySprite;
+        private ISpriteComponent? _overlaySprite;
 
         protected override void Startup()
         {
@@ -58,12 +58,17 @@ namespace Content.Client.GameObjects.Components
         {
             base.Shutdown();
 
-            _overlayEntity.Delete();
+            _overlayEntity?.Delete();
         }
 
         internal override void CalculateNewSprite()
         {
             base.CalculateNewSprite();
+
+            if (Sprite == null || SnapGrid == null || _overlaySprite == null)
+            {
+                return;
+            }
 
             var (n, nl) = MatchingWall(SnapGrid.GetInDir(Direction.North));
             var (ne, nel) = MatchingWall(SnapGrid.GetInDir(Direction.NorthEast));
@@ -191,7 +196,7 @@ namespace Content.Client.GameObjects.Components
 
             foreach (var entity in SnapGrid.GetLocal())
             {
-                if (entity.TryGetComponent(out WindowComponent window))
+                if (entity.TryGetComponent(out WindowComponent? window))
                 {
                     window.UpdateSprite();
                 }
@@ -203,7 +208,7 @@ namespace Content.Client.GameObjects.Components
         {
             foreach (var entity in candidates)
             {
-                if (!entity.TryGetComponent(out IconSmoothComponent other))
+                if (!entity.TryGetComponent(out IconSmoothComponent? other))
                 {
                     continue;
                 }

@@ -8,17 +8,16 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
 {
-
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     public class ExtinguisherCabinetComponent : Component, IInteractUsing, IInteractHand, IActivate
@@ -26,9 +25,10 @@ namespace Content.Server.GameObjects.Components
         public override string Name => "ExtinguisherCabinet";
 
         private bool _opened = false;
-        private string _doorSound;
+        [DataField("doorSound")]
+        private string _doorSound = "/Audio/Machines/machine_switch.ogg";
 
-        [ViewVariables] protected ContainerSlot ItemContainer;
+        [ViewVariables] protected ContainerSlot ItemContainer = default!;
         [ViewVariables] public string DoorSound => _doorSound;
 
         public override void Initialize()
@@ -36,14 +36,7 @@ namespace Content.Server.GameObjects.Components
             base.Initialize();
 
             ItemContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>("extinguisher_cabinet", Owner, out _);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _doorSound, "doorSound", "/Audio/Machines/machine_switch.ogg");
+                ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "extinguisher_cabinet", out _);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -81,7 +74,7 @@ namespace Content.Server.GameObjects.Components
                     _opened = false;
                     ClickLatchSound();
                 }
-                else if (eventArgs.User.TryGetComponent(out HandsComponent hands))
+                else if (eventArgs.User.TryGetComponent(out HandsComponent? hands))
                 {
                     Owner.PopupMessage(eventArgs.User,
                         Loc.GetString("You take {0:extinguisherName} from the {1:cabinetName}", ItemContainer.ContainedEntity.Name, Owner.Name));
@@ -112,7 +105,7 @@ namespace Content.Server.GameObjects.Components
 
         private void UpdateVisuals()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(ExtinguisherCabinetVisuals.IsOpen, _opened);
                 appearance.SetData(ExtinguisherCabinetVisuals.ContainsExtinguisher, ItemContainer.ContainedEntity != null);
@@ -121,8 +114,8 @@ namespace Content.Server.GameObjects.Components
 
         private void ClickLatchSound()
         {
-            EntitySystem.Get<AudioSystem>() // Don't have original click, this sounds close
-                .PlayFromEntity(DoorSound, Owner, AudioHelpers.WithVariation(0.15f));
+            // Don't have original click, this sounds close
+            SoundSystem.Play(Filter.Pvs(Owner), DoorSound, Owner, AudioHelpers.WithVariation(0.15f));
         }
     }
 }

@@ -4,7 +4,7 @@ using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 
@@ -34,8 +34,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void HandleOpenCharacterMenu()
         {
-            if (_playerManager.LocalPlayer.ControlledEntity == null
-                || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out CharacterInterface characterInterface))
+            if (_playerManager.LocalPlayer?.ControlledEntity == null
+                || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out CharacterInterface? characterInterface))
             {
                 return;
             }

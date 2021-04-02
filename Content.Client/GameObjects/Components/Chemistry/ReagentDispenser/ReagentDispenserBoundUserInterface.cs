@@ -2,9 +2,9 @@
 using System.Linq;
 using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser.SharedReagentDispenserComponent;
 
@@ -16,12 +16,11 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
     [UsedImplicitly]
     public class ReagentDispenserBoundUserInterface : BoundUserInterface
     {
-        private ReagentDispenserWindow _window;
-        private ReagentDispenserBoundUserInterfaceState _lastState;
+        private ReagentDispenserWindow? _window;
+        private ReagentDispenserBoundUserInterfaceState? _lastState;
 
         public ReagentDispenserBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-
         }
 
         /// <summary>
@@ -80,8 +79,14 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
         /// <param name="inventory">A list of the reagents which can be dispensed.</param>
         private void UpdateReagentsList(List<ReagentDispenserInventoryEntry> inventory)
         {
+            if (_window == null)
+            {
+                return;
+            }
+
             _window.UpdateReagentsList(inventory);
-            for (int i = 0; i < _window.ChemicalList.Children.Count(); i++)
+
+            for (var i = 0; i < _window.ChemicalList.Children.Count(); i++)
             {
                 var button = (Button)_window.ChemicalList.Children.ElementAt(i);
                 var i1 = i;

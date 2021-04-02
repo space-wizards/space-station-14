@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Behavior;
@@ -11,19 +11,17 @@ using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -37,13 +35,17 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public override string Name => "Drink";
 
+        int IAfterInteract.Priority => 10;
+
         [ViewVariables]
         private bool _opened;
 
         [ViewVariables]
-        private string _useSound = string.Empty;
+        [DataField("useSound")]
+        private string _useSound = "/Audio/Items/drink.ogg";
 
         [ViewVariables]
+        [DataField("isOpen")]
         private bool _defaultToOpened;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -68,19 +70,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables]
         public bool Empty => Owner.GetComponentOrNull<ISolutionInteractionsComponent>()?.DrainAvailable <= 0;
 
-        private string _soundCollection = string.Empty;
-        private bool _pressurized;
-        private string _burstSound = string.Empty;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _useSound, "useSound", "/Audio/Items/drink.ogg");
-            serializer.DataField(ref _defaultToOpened, "isOpen", false); // For things like cups of coffee.
-            serializer.DataField(ref _soundCollection, "openSounds", "canOpenSounds");
-            serializer.DataField(ref _pressurized, "pressurized", false);
-            serializer.DataField(ref _burstSound, "burstSound", "/Audio/Effects/flash_bang.ogg");
-        }
+        [DataField("openSounds")]
+        private string _soundCollection = "canOpenSounds";
+        [DataField("pressurized")]
+        private bool _pressurized = default;
+        [DataField("burstSound")]
+        private string _burstSound = "/Audio/Effects/flash_bang.ogg";
 
         public override void Initialize()
         {
@@ -131,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollection);
                 var file = _random.Pick(soundCollection.PickFiles);
 
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(file, args.User, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(args.User), file, args.User, AudioParams.Default);
                 Opened = true;
                 return false;
             }
@@ -143,7 +138,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return true;
             }
 
-            return TryUseDrink(args.User);
+            return TryUseDrink(args.User, args.User);
         }
 
         //Force feeding a drink to someone.
@@ -154,9 +149,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return false;
             }
 
-            TryUseDrink(eventArgs.Target, true);
-
-            return true;
+            return TryUseDrink(eventArgs.User, eventArgs.Target, true);
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
@@ -170,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             message.AddMarkup(Loc.GetString("[color={0}]{1}[/color]", color, openedText));
         }
 
-        private bool TryUseDrink(IEntity target, bool forced = false)
+        private bool TryUseDrink(IEntity user, IEntity target, bool forced = false)
         {
             if (!Opened)
             {
@@ -197,6 +190,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return false;
             }
 
+
+            if (user != target &&
+                !user.InRangeUnobstructed(target, popup: true))
+            {
+                return false;
+            }
+
             var transferAmount = ReagentUnit.Min(TransferAmount, interactions.DrainAvailable);
             var drain = interactions.Drain(transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(drain));
@@ -218,7 +218,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (!string.IsNullOrEmpty(_useSound))
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_useSound, target, AudioParams.Default.WithVolume(-2f));
+                SoundSystem.Play(Filter.Pvs(target), _useSound, target, AudioParams.Default.WithVolume(-2f));
             }
 
             target.PopupMessage(Loc.GetString("Slurp"));
@@ -250,7 +250,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 var solution = interactions.Drain(interactions.DrainAvailable);
                 solution.SpillAt(Owner, "PuddleSmear");
 
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_burstSound, Owner,
+                SoundSystem.Play(Filter.Pvs(Owner), _burstSound, Owner,
                     AudioParams.Default.WithVolume(-4));
             }
         }

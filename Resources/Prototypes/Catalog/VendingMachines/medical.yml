@@ -1,7 +1,7 @@
 - type: vendingMachineInventory
   id: NanoMed Plus
   name: NanoMed Plus
-  description: A vending machine containing medical supplies.
+  description: "It's a medical drug dispenser. Natural chemicals only!"
   animationDuration: 1.8
   spriteName: medical
   startingInventory:

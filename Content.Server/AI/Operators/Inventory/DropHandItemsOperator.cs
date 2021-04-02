@@ -1,5 +1,5 @@
 using Content.Server.GameObjects.Components.GUI;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Operators.Inventory
 {
@@ -14,11 +14,11 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
-            if (!_owner.TryGetComponent(out HandsComponent handsComponent))
+            if (!_owner.TryGetComponent(out HandsComponent? handsComponent))
             {
                 return Outcome.Failed;
             }
-                
+
             foreach (var item in handsComponent.GetAllHeldItems())
             {
                 handsComponent.Drop(item.Owner);

@@ -5,7 +5,9 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -19,7 +21,8 @@ namespace Content.Server.GameObjects.Components.Power
         public override string Name => "Wire";
 
         [ViewVariables]
-        private string? _wireDroppedOnCutPrototype;
+        [DataField("wireDroppedOnCutPrototype")]
+        private string? _wireDroppedOnCutPrototype = "HVWireStack1";
 
         /// <summary>
         ///     Checked by <see cref="WirePlacerComponent"/> to determine if there is
@@ -27,14 +30,8 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         [ViewVariables]
         public WireType WireType => _wireType;
-        private WireType _wireType;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _wireDroppedOnCutPrototype, "wireDroppedOnCutPrototype", "HVWireStack1");
-            serializer.DataField(ref _wireType, "wireType", WireType.HighVoltage);
-        }
+        [DataField("wireType")]
+        private WireType _wireType = WireType.HighVoltage;
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {

@@ -12,9 +12,8 @@ using Content.Shared.GameObjects.Components.Suspicion;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Players;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -142,12 +141,26 @@ namespace Content.Server.GameObjects.Components.Suspicion
             message.AddMarkup(tooltip);
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
-            return Role == null
-                ? new SuspicionRoleComponentState(null, null, Array.Empty<(string, EntityUid)>())
-                : new SuspicionRoleComponentState(Role?.Name, Role?.Antagonist,
-                    _allies.Select(a => (a.Role!.Mind.CharacterName, a.Owner.Uid)).ToArray());
+            if (Role == null)
+            {
+                return new SuspicionRoleComponentState(null, null, Array.Empty<(string, EntityUid)>());
+            }
+
+            var allies = new List<(string name, EntityUid)>();
+
+            foreach (var role in _allies)
+            {
+                if (role.Role?.Mind.CharacterName == null)
+                {
+                    continue;
+                }
+
+                allies.Add((role.Role!.Mind.CharacterName, role.Owner.Uid));
+            }
+
+            return new SuspicionRoleComponentState(Role?.Name, Role?.Antagonist, allies.ToArray());
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)

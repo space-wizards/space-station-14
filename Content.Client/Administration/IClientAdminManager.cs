@@ -1,8 +1,6 @@
 ﻿using System;
 using Content.Shared.Administration;
 
-#nullable enable
-
 namespace Content.Client.Administration
 {
     /// <summary>
@@ -14,6 +12,12 @@ namespace Content.Client.Administration
         ///     Fired when the admin status of the local player changes, such as losing admin privileges.
         /// </summary>
         event Action AdminStatusUpdated;
+
+        /// <summary>
+        ///     Checks whether the local player is an admin.
+        /// </summary>
+        /// <returns>true if the local player is an admin, false otherwise even if they are deadminned.</returns>
+        bool IsActive();
 
         /// <summary>
         ///     Checks whether the local player has an admin flag.

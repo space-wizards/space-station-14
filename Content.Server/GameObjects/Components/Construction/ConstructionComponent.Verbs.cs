@@ -1,12 +1,8 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+﻿using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.Components.Construction
 {
@@ -32,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
                 data.CategoryData = VerbCategories.Construction;
                 data.Text = Loc.GetString("Begin deconstructing");
-                data.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.96dpi.png";
+                data.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, ConstructionComponent component)

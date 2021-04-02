@@ -5,13 +5,8 @@ using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.MachineLinking
 {
@@ -20,21 +15,10 @@ namespace Content.Server.GameObjects.Components.MachineLinking
     {
         public override string Name => "SignalReceiver";
 
-        private List<SignalTransmitterComponent> _transmitters;
+        private readonly List<SignalTransmitterComponent> _transmitters = new();
 
+        [DataField("maxTransmitters")]
         private int? _maxTransmitters = default;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _transmitters = new List<SignalTransmitterComponent>();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x=> x._maxTransmitters, "maxTransmitters", null);
-        }
 
         public void DistributeSignal<T>(T state)
         {
@@ -84,7 +68,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         /// <param name="user"></param>
         /// <param name="transmitter"></param>
         /// <returns></returns>
-        public bool Interact(IEntity user, SignalTransmitterComponent transmitter)
+        public bool Interact(IEntity user, SignalTransmitterComponent? transmitter)
         {
             if (transmitter == null)
             {

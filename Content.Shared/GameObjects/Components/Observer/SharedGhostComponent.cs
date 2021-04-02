@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -37,19 +36,6 @@ namespace Content.Shared.GameObjects.Components.Observer
     {
         public ReturnToBodyComponentMessage()
         {
-            Directed = true;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class GhostWarpRequestMessage : ComponentMessage
-    {
-        public EntityUid PlayerTarget;
-        public string WarpName;
-        public GhostWarpRequestMessage(EntityUid playerTarget = default, string warpTarget = default)
-        {
-            WarpName = warpTarget;
-            PlayerTarget = playerTarget;
             Directed = true;
         }
     }

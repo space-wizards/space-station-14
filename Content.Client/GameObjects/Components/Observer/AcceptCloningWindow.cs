@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Robust.Client.UserInterface;
+﻿using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
@@ -40,7 +39,7 @@ namespace Content.Client.GameObjects.Components.Observer
 
                                     (new Control()
                                     {
-                                        CustomMinimumSize = (20, 0)
+                                        MinSize = (20, 0)
                                     }),
 
                                     (DenyButton = new Button

@@ -5,20 +5,18 @@ using Content.Server.GameObjects.Components.Observer;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Utility;
 using Robust.Server.Console;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Console;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Body
@@ -56,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Body
         {
             base.Initialize();
 
-            _partContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-{nameof(BodyComponent)}", Owner);
+            _partContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-{nameof(BodyComponent)}");
 
             foreach (var (slot, partId) in PartIds)
             {
@@ -102,8 +100,7 @@ namespace Content.Server.GameObjects.Components.Body
         {
             base.Gib(gibParts);
 
-            EntitySystem.Get<AudioSystem>()
-                .PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("gib"), Owner.Transform.Coordinates,
+            SoundSystem.Play(Filter.Pvs(Owner), AudioHelpers.GetRandomFileFromSoundCollection("gib"), Owner.Transform.Coordinates,
                     AudioHelpers.WithVariation(0.025f));
 
             if (Owner.TryGetComponent(out ContainerManagerComponent? container))

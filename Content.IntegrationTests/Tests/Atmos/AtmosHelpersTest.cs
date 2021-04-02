@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.Atmos;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 

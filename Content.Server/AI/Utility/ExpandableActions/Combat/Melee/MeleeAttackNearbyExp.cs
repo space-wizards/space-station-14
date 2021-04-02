@@ -8,7 +8,7 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.AI;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
@@ -31,7 +31,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {
             var owner = context.GetState<SelfState>().GetValue();
-            if (!owner.TryGetComponent(out AiControllerComponent controller))
+            if (!owner.TryGetComponent(out AiControllerComponent? controller))
             {
                 throw new InvalidOperationException();
             }
@@ -39,7 +39,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
             foreach (var target in EntitySystem.Get<AiFactionTagSystem>()
                 .GetNearbyHostiles(owner, controller.VisionRadius))
             {
-                yield return new MeleeWeaponAttackEntity(owner, target, Bonus);
+                yield return new MeleeWeaponAttackEntity {Owner = owner, Target = target, Bonus = Bonus};
             }
         }
     }

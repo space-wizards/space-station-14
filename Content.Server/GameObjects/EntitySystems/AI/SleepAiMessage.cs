@@ -1,4 +1,4 @@
-using Robust.Server.AI;
+using Content.Server.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems.AI
@@ -7,17 +7,17 @@ namespace Content.Server.GameObjects.EntitySystems.AI
     ///     Indicates whether an AI should be updated by the AiSystem or not.
     ///     Useful to sleep AI when they die or otherwise should be inactive.
     /// </summary>
-    internal sealed class SleepAiMessage : EntitySystemMessage
+    internal sealed class SleepAiMessage : EntityEventArgs
     {
         /// <summary>
         ///     Sleep or awake.
         /// </summary>
         public bool Sleep { get; }
-        public AiLogicProcessor Processor { get; }
-        
-        public SleepAiMessage(AiLogicProcessor processor, bool sleep)
+        public AiControllerComponent Component { get; }
+
+        public SleepAiMessage(AiControllerComponent component, bool sleep)
         {
-            Processor = processor;
+            Component = component;
             Sleep = sleep;
         }
     }

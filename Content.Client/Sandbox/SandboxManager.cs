@@ -1,18 +1,23 @@
 ﻿using System;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.Placement;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.Debugging;
+using Robust.Client.Graphics;
+using Robust.Client.Input;
+using Robust.Client.Placement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Sandbox
@@ -60,25 +65,25 @@ namespace Content.Client.Sandbox
             GiveAghostButton = new Button { Text = Loc.GetString("Ghost") };
             vBox.AddChild(GiveAghostButton);
 
-            ToggleLightButton = new Button { Text = Loc.GetString("Toggle Lights"), ToggleMode = true };
+            ToggleLightButton = new Button { Text = Loc.GetString("Toggle Lights"), ToggleMode = true, Pressed = !IoCManager.Resolve<ILightManager>().Enabled };
             vBox.AddChild(ToggleLightButton);
 
-            ToggleFovButton = new Button { Text = Loc.GetString("Toggle FOV"), ToggleMode = true };
+            ToggleFovButton = new Button { Text = Loc.GetString("Toggle FOV"), ToggleMode = true, Pressed = !IoCManager.Resolve<IEyeManager>().CurrentEye.DrawFov };
             vBox.AddChild(ToggleFovButton);
 
-            ToggleShadowsButton = new Button { Text = Loc.GetString("Toggle Shadows"), ToggleMode = true };
+            ToggleShadowsButton = new Button { Text = Loc.GetString("Toggle Shadows"), ToggleMode = true, Pressed = !IoCManager.Resolve<ILightManager>().DrawShadows };
             vBox.AddChild(ToggleShadowsButton);
 
-            ToggleSubfloorButton = new Button { Text = Loc.GetString("Toggle Subfloor"), ToggleMode = true };
+            ToggleSubfloorButton = new Button { Text = Loc.GetString("Toggle Subfloor"), ToggleMode = true, Pressed = EntitySystem.Get<SubFloorHideSystem>().ShowAll };
             vBox.AddChild(ToggleSubfloorButton);
 
             SuicideButton = new Button { Text = Loc.GetString("Suicide") };
             vBox.AddChild(SuicideButton);
 
-            ShowMarkersButton = new Button { Text = Loc.GetString("Show Spawns"), ToggleMode = true };
+            ShowMarkersButton = new Button { Text = Loc.GetString("Show Spawns"), ToggleMode = true, Pressed = EntitySystem.Get<MarkerSystem>().MarkersVisible };
             vBox.AddChild(ShowMarkersButton);
 
-            ShowBbButton = new Button { Text = Loc.GetString("Show BB"), ToggleMode = true };
+            ShowBbButton = new Button { Text = Loc.GetString("Show BB"), ToggleMode = true, Pressed = IoCManager.Resolve<IDebugDrawing>().DebugColliders };
             vBox.AddChild(ShowBbButton);
 
             MachineLinkingButton = new Button { Text = Loc.GetString("Link machines"), ToggleMode = true };
@@ -113,11 +118,11 @@ namespace Content.Client.Sandbox
 
         public bool SandboxAllowed { get; private set; }
 
-        public event Action<bool> AllowedChanged;
+        public event Action<bool>? AllowedChanged;
 
-        private SandboxWindow _window;
-        private EntitySpawnWindow _spawnWindow;
-        private TileSpawnWindow _tilesSpawnWindow;
+        private SandboxWindow? _window;
+        private EntitySpawnWindow? _spawnWindow;
+        private TileSpawnWindow? _tilesSpawnWindow;
         private bool _sandboxWindowToggled;
 
         public void Initialize()
@@ -283,7 +288,11 @@ namespace Content.Client.Sandbox
         private void ToggleEntitySpawnWindow()
         {
             if (_spawnWindow == null)
+            {
                 _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
+                _spawnWindow.OpenToLeft();
+                return;
+            }
 
             if (_spawnWindow.IsOpen)
             {
@@ -291,15 +300,18 @@ namespace Content.Client.Sandbox
             }
             else
             {
-                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
-                _spawnWindow.OpenToLeft();
+                _spawnWindow.Open();
             }
         }
 
         private void ToggleTilesWindow()
         {
             if (_tilesSpawnWindow == null)
+            {
                 _tilesSpawnWindow = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
+                _tilesSpawnWindow.OpenToLeft();
+                return;
+            }
 
             if (_tilesSpawnWindow.IsOpen)
             {
@@ -307,8 +319,7 @@ namespace Content.Client.Sandbox
             }
             else
             {
-                _tilesSpawnWindow = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
-                _tilesSpawnWindow.OpenToLeft();
+                _tilesSpawnWindow.Open();
             }
         }
 

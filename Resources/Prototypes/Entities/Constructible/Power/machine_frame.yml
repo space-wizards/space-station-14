@@ -1,25 +1,27 @@
 ﻿- type: entity
   id: UnfinishedMachineFrame
   name: machine frame
+  description: "A machine under construction. Needs more parts."
   suffix: Unfinished
   placement:
     mode: SnapgridCenter
   components:
     - type: Physics
-      mass: 25
-      anchored: true
-      shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
-          layer:
-            - Impassable
-            - MobImpassable
-            - VaultImpassable
-            - Opaque
-          mask:
-            - Impassable
-            - MobImpassable
-            - VaultImpassable
+      bodyType: Static
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.25,0.5,0.25"
+        mass: 25
+        layer:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - Opaque
+        mask:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable
@@ -52,20 +54,21 @@
     mode: SnapgridCenter
   components:
     - type: Physics
-      mass: 25
-      anchored: true
-      shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
-          layer:
-            - Impassable
-            - MobImpassable
-            - VaultImpassable
-            - Opaque
-          mask:
-            - Impassable
-            - MobImpassable
-            - VaultImpassable
+      bodyType: Static
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.25,0.5,0.25"
+        mass: 25
+        layer:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - Opaque
+        mask:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable

@@ -1,15 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.GameObjects.Components.Disposal;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.UserInterface;
+using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Content.Client.GameObjects.Components.Atmos;
-using Content.Shared.GameObjects.Components.Atmos;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
@@ -36,10 +31,9 @@ namespace Content.Client.GameObjects.Components.Atmos
 
         public List<ReleasePressureButton> ReleasePressureButtons { get; private set; }
 
-        protected override Vector2? CustomSize => (300, 200);
-
         public GasCanisterWindow()
         {
+            SetSize = MinSize = (450, 200);
             HBoxContainer releasePressureButtons;
 
             Contents.AddChild(new VBoxContainer
@@ -55,8 +49,8 @@ namespace Content.Client.GameObjects.Components.Atmos
                                         Children =
                                         {
                                             new Label(){ Text = Loc.GetString("Label: ") },
-                                            (LabelInput = new LineEdit() { Text = Name, Editable = false,
-                                                CustomMinimumSize = new Vector2(200, 30)}),
+                                            (LabelInput = new LineEdit() { Text = Name ?? "", Editable = false,
+                                                MinSize = new Vector2(200, 30)}),
                                             (EditLabelBtn = new Button()),
                                         }
                                     },

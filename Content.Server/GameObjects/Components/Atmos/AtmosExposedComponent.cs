@@ -2,7 +2,6 @@
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Temperature;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos

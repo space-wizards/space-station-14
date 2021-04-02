@@ -1,19 +1,20 @@
-﻿using Robust.Shared.Serialization;
+﻿#nullable enable
+using Robust.Shared.Localization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction
 {
     public abstract class ArbitraryInsertConstructionGraphStep : EntityInsertConstructionGraphStep
     {
-        public string Name { get; private set; }
-        public SpriteSpecifier Icon { get; private set; }
+        [DataField("name")] public string Name { get; private set; } = string.Empty;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        [DataField("icon")] public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
+
+        public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.Icon, "icon", SpriteSpecifier.Invalid);
-            serializer.DataField(this, x => x.Name, "name", string.Empty);
+            if (string.IsNullOrEmpty(Name)) return;
+            message.AddMarkup(Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name)));
         }
     }
 }

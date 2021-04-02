@@ -1,14 +1,15 @@
-﻿#nullable enable
+#nullable enable
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -19,20 +20,23 @@ namespace Content.Server.GameObjects.Components
     {
         public override string Name => "Anchorable";
 
+        [ComponentDependency] private PhysicsComponent? _physicsComponent = default!;
+
         [ViewVariables]
+        [DataField("tool")]
         public ToolQuality Tool { get; private set; } = ToolQuality.Anchoring;
 
         [ViewVariables]
         int IInteractUsing.Priority => 1;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("snap")]
         public bool Snap { get; private set; }
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public override void Initialize()
         {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.Tool, "tool", ToolQuality.Anchoring);
-            serializer.DataField(this, x => x.Snap, "snap", false);
+            base.Initialize();
+            Owner.EnsureComponent<PhysicsComponent>(out _physicsComponent);
         }
 
         /// <summary>
@@ -42,14 +46,14 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, can be null if forcing it</param>
         /// <param name="force">Whether or not to check if the tool is valid</param>
         /// <returns>true if it is valid, false otherwise</returns>
-        private async Task<bool> Valid(IEntity user, IEntity? utilizing, [NotNullWhen(true)] bool force = false)
+        private async Task<bool> Valid(IEntity? user, IEntity? utilizing, [NotNullWhen(true)] bool force = false)
         {
-            if (!Owner.HasComponent<IPhysicsComponent>())
+            if (!Owner.HasComponent<IPhysBody>())
             {
                 return false;
             }
 
-            if (!force)
+            if (user != null && !force)
             {
                 if (utilizing == null ||
                     !utilizing.TryGetComponent(out ToolComponent? tool) ||
@@ -69,15 +73,29 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, if any</param>
         /// <param name="force">Whether or not to ignore valid tool checks</param>
         /// <returns>true if anchored, false otherwise</returns>
-        public async Task<bool> TryAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        public async Task<bool> TryAnchor(IEntity? user, IEntity? utilizing = null, bool force = false)
         {
             if (!(await Valid(user, utilizing, force)))
             {
                 return false;
             }
 
-            var physics = Owner.GetComponent<IPhysicsComponent>();
-            physics.Anchored = true;
+            if (_physicsComponent == null)
+                return false;
+
+            _physicsComponent.BodyType = BodyType.Static;
+
+            // Snap rotation to cardinal (multiple of 90)
+            var rot = Owner.Transform.LocalRotation;
+            Owner.Transform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
+
+            if (Owner.TryGetComponent(out PullableComponent? pullableComponent))
+            {
+                if (pullableComponent.Puller != null)
+                {
+                    pullableComponent.TryStopPull();
+                }
+            }
 
             if (Snap)
                 Owner.SnapToGrid(SnapGridOffset.Center, Owner.EntityManager);
@@ -92,15 +110,17 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, if any</param>
         /// <param name="force">Whether or not to ignore valid tool checks</param>
         /// <returns>true if unanchored, false otherwise</returns>
-        public async Task<bool> TryUnAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        public async Task<bool> TryUnAnchor(IEntity? user, IEntity? utilizing = null, bool force = false)
         {
             if (!(await Valid(user, utilizing, force)))
             {
                 return false;
             }
 
-            var physics = Owner.GetComponent<IPhysicsComponent>();
-            physics.Anchored = false;
+            if (_physicsComponent == null)
+                return false;
+
+            _physicsComponent.BodyType = BodyType.Dynamic;
 
             return true;
         }
@@ -112,22 +132,14 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, if any</param>
         /// <param name="force">Whether or not to ignore valid tool checks</param>
         /// <returns>true if toggled, false otherwise</returns>
-        private async Task<bool> TryToggleAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        public async Task<bool> TryToggleAnchor(IEntity? user, IEntity? utilizing = null, bool force = false)
         {
-            if (!Owner.TryGetComponent(out IPhysicsComponent? physics))
-            {
+            if (_physicsComponent == null)
                 return false;
-            }
 
-            return physics.Anchored ?
+            return _physicsComponent.BodyType == BodyType.Static ?
                 await TryUnAnchor(user, utilizing, force) :
                 await TryAnchor(user, utilizing, force);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            Owner.EnsureComponent<PhysicsComponent>();
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

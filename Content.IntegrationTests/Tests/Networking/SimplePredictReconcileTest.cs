@@ -1,23 +1,21 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.GameObjects;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameStates;
-using Robust.Server.Interfaces.Player;
+using Robust.Client.GameStates;
+using Robust.Server.Player;
+using Robust.Shared;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Reflection;
-using Robust.Shared.Timing;
-using System;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Networking
 {
@@ -46,19 +44,27 @@ namespace Content.IntegrationTests.Tests.Networking
                     // This test is designed around specific timing values and when I wrote it interpolation was off.
                     // As such, I would have to update half this test to make sure it works with interpolation.
                     // I'm kinda lazy.
-                    CVarOverrides = {{"net.interp", "false"}},
+                    CVarOverrides =
+                    {
+                        {CVars.NetInterp.Name, "false"},
+                        {CVars.NetPVS.Name, "false"}
+                    },
                     ContentBeforeIoC = () =>
                     {
                         IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
-                        IoCManager.Resolve<IComponentFactory>().Register<PredictionTestComponent>();
+                        IoCManager.Resolve<IComponentFactory>().RegisterClass<PredictionTestComponent>();
                     }
                 },
                 new ServerContentIntegrationOption
                 {
+                    CVarOverrides =
+                    {
+                        {CVars.NetPVS.Name, "false"}
+                    },
                     ContentBeforeIoC = () =>
                     {
                         IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
-                        IoCManager.Resolve<IComponentFactory>().Register<PredictionTestComponent>();
+                        IoCManager.Resolve<IComponentFactory>().RegisterClass<PredictionTestComponent>();
                     }
                 });
 
@@ -412,7 +418,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 Foo = pred.Foo;
             }
 
-            public override ComponentState GetComponentState()
+            public override ComponentState GetComponentState(ICommonSession player)
             {
                 return new PredictionComponentState(Foo);
             }
@@ -463,7 +469,7 @@ namespace Content.IntegrationTests.Tests.Networking
             }
         }
 
-        private sealed class SetFooMessage : EntitySystemMessage
+        private sealed class SetFooMessage : EntityEventArgs
         {
             public SetFooMessage(EntityUid uid, bool newFoo)
             {

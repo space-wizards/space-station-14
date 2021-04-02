@@ -1,14 +1,12 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Suspicion;
 using Content.Shared.GameObjects.Components.Suspicion;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.Graphics.Overlays;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
@@ -70,7 +68,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
 
         private void AddTraitorOverlay()
         {
-            if (_overlayManager.HasOverlay(nameof(TraitorOverlay)))
+            if (_overlayManager.HasOverlay<TraitorOverlay>())
             {
                 return;
             }
@@ -87,7 +85,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 return;
             }
 
-            _overlayManager.RemoveOverlay(nameof(TraitorOverlay));
+            _overlayManager.RemoveOverlay<TraitorOverlay>();
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)

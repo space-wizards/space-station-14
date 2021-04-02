@@ -1,29 +1,23 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.Console;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalRouterComponent;
 
@@ -41,8 +35,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out IPhysicsComponent? physics) ||
-            physics.Anchored;
+            !Owner.TryGetComponent(out IPhysBody? physics) ||
+            physics.BodyType == BodyType.Static;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalRouterUiKey.Key);
 
@@ -153,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void ClickSound()
         {
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         /// <summary>
@@ -206,7 +200,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
 
                 data.Text = Loc.GetString("Open Configuration");
-                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.96dpi.png";
+                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, DisposalRouterComponent component)

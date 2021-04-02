@@ -1,7 +1,7 @@
 using Content.Client.GameObjects.EntitySystems.AI;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Commands
 {

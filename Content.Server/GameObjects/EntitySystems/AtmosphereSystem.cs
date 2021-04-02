@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +10,14 @@ using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
-using Robust.Server.Interfaces.Timing;
+using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Map;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -74,6 +69,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _cfg.OnValueChanged(CCVars.SpaceWind, OnSpaceWindChanged, true);
             _cfg.OnValueChanged(CCVars.MonstermosEqualization, OnMonstermosEqualizationChanged, true);
+            _cfg.OnValueChanged(CCVars.Superconduction, OnSuperconductionChanged, true);
             _cfg.OnValueChanged(CCVars.AtmosMaxProcessTime, OnAtmosMaxProcessTimeChanged, true);
             _cfg.OnValueChanged(CCVars.AtmosTickRate, OnAtmosTickRateChanged, true);
             _cfg.OnValueChanged(CCVars.ExcitedGroupsSpaceIsAllConsuming, OnExcitedGroupsSpaceIsAllConsumingChanged, true);
@@ -81,6 +77,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public bool SpaceWind { get; private set; }
         public bool MonstermosEqualization { get; private set; }
+        public bool Superconduction { get; private set; }
         public bool ExcitedGroupsSpaceIsAllConsuming { get; private set; }
         public float AtmosMaxProcessTime { get; private set; }
         public float AtmosTickRate { get; private set; }
@@ -103,6 +100,11 @@ namespace Content.Server.GameObjects.EntitySystems
         private void OnMonstermosEqualizationChanged(bool obj)
         {
             MonstermosEqualization = obj;
+        }
+
+        private void OnSuperconductionChanged(bool obj)
+        {
+            Superconduction = obj;
         }
 
         private void OnSpaceWindChanged(bool obj)

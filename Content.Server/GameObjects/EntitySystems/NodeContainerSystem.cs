@@ -2,8 +2,7 @@
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -26,7 +25,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void RotateEvent(RotateEvent ev)
         {
-            if (!ev.Sender.TryGetComponent(out NodeContainerComponent container))
+            if (!ev.Sender.TryGetComponent(out NodeContainerComponent? container))
             {
                 return;
             }

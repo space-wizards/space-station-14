@@ -1,15 +1,13 @@
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
@@ -48,8 +46,7 @@ namespace Content.Server.GameObjects.Components
 
         private void Rustle()
         {
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity("/Audio/Effects/plant_rustle.ogg", Owner, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/plant_rustle.ogg", Owner, AudioHelpers.WithVariation(0.25f));
         }
     }
 }

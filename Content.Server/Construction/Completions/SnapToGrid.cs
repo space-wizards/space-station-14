@@ -1,27 +1,22 @@
-﻿#nullable enable
+#nullable enable
 using System.Threading.Tasks;
 using Content.Server.Utility;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization.Manager.Attributes;
+using YamlDotNet.Serialization;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class SnapToGrid : IGraphAction
     {
-        public SnapGridOffset Offset { get; private set; } = SnapGridOffset.Center;
-        public bool SouthRotation { get; private set; } = false;
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.Offset, "offset", SnapGridOffset.Center);
-            serializer.DataField(this, x => x.SouthRotation, "southRotation", false);
-        }
+        [DataField("offset")] public SnapGridOffset Offset { get; private set; } = SnapGridOffset.Center;
+        [DataField("southRotation")] public bool SouthRotation { get; private set; } = false;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
@@ -30,7 +25,7 @@ namespace Content.Server.Construction.Completions
             entity.SnapToGrid(Offset);
             if (SouthRotation)
             {
-                entity.Transform.LocalRotation = Angle.South;
+                entity.Transform.LocalRotation = Angle.Zero;
             }
         }
     }

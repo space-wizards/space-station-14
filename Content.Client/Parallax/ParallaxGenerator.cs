@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using Nett;
 using Robust.Client.Utility;
-using Robust.Shared.Interfaces.Log;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Noise;
 using Robust.Shared.Random;
@@ -18,7 +18,7 @@ namespace Content.Client.Parallax
     {
         private readonly List<Layer> Layers = new();
 
-        public static Image<Rgba32> GenerateParallax(TomlTable config, Size size, ISawmill sawmill, List<Image<Rgba32>> debugLayerDump)
+        public static Image<Rgba32> GenerateParallax(TomlTable config, Size size, ISawmill sawmill, List<Image<Rgba32>>? debugLayerDump)
         {
             sawmill.Debug("Generating parallax!");
             var generator = new ParallaxGenerator();

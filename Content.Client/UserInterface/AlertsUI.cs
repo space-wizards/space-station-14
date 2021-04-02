@@ -32,19 +32,19 @@ namespace Content.Client.UserInterface
             var panelContainer = new PanelContainer
             {
                 StyleClasses = {StyleNano.StyleClassTransparentBorderedWindowPanel},
-                SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
-                SizeFlagsVertical = SizeFlags.None
+                HorizontalAlignment = HAlignment.Right,
+                VerticalAlignment = VAlignment.Top
             };
             AddChild(panelContainer);
 
             Grid = new GridContainer
             {
-                MaxHeight = 64,
+                MaxGridHeight = 64,
                 ExpandBackwards = true
             };
             panelContainer.AddChild(Grid);
 
-
+            MinSize = (64, 64);
         }
 
         protected override void EnteredTree()
@@ -75,24 +75,20 @@ namespace Content.Client.UserInterface
 
         }
 
+        // This makes no sense but I'm leaving it in place in case I break anything by removing it.
+
         protected override void Resized()
         {
             // TODO: Can rework this once https://github.com/space-wizards/RobustToolbox/issues/1392 is done,
             // this is here because there isn't currently a good way to allow the grid to adjust its height based
             // on constraints, otherwise we would use anchors to lay it out
             base.Resized();
-            Grid.MaxHeight = Height;
-        }
-
-        protected override Vector2 CalculateMinimumSize()
-        {
-            // allows us to shrink down to a single row
-            return (64, 64);
+            Grid.MaxGridHeight = Height;
         }
 
         protected override void UIScaleChanged()
         {
-            Grid.MaxHeight = Height;
+            Grid.MaxGridHeight = Height;
             base.UIScaleChanged();
         }
     }

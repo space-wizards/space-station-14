@@ -3,7 +3,6 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Client.GameObjects.Components.Mobs
@@ -35,7 +34,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
@@ -54,12 +53,11 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void UpdateHud()
         {
-            if (Owner != _playerManager.LocalPlayer.ControlledEntity)
+            if (Owner != _playerManager.LocalPlayer?.ControlledEntity)
             {
                 return;
             }
 
-            _gameHud.CombatModeActive = IsInCombatMode;
             _gameHud.TargetingZone = ActiveZone;
         }
     }

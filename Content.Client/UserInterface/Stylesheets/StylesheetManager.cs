@@ -1,5 +1,4 @@
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
 
@@ -10,8 +9,8 @@ namespace Content.Client.UserInterface.Stylesheets
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-        public Stylesheet SheetNano { get; private set; }
-        public Stylesheet SheetSpace { get; private set; }
+        public Stylesheet SheetNano { get; private set; } = default!;
+        public Stylesheet SheetSpace { get; private set; } = default!;
 
         public void Initialize()
         {

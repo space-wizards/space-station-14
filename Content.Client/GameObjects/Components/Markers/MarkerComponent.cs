@@ -1,7 +1,6 @@
 using Content.Client.GameObjects.EntitySystems;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Client.GameObjects.Components.Markers
 {
@@ -21,7 +20,7 @@ namespace Content.Client.GameObjects.Components.Markers
         {
             var system = EntitySystem.Get<MarkerSystem>();
 
-            if (Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 sprite.Visible = system.MarkersVisible;
             }

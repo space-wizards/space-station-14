@@ -12,10 +12,10 @@ using Content.Server.Utility;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
@@ -69,7 +69,7 @@ namespace Content.Server.Commands.Chat
                 return;
 
             var chat = IoCManager.Resolve<IChatManager>();
-            var owner = player.ContentData()?.Mind?.OwnedMob.Owner;
+            var owner = player.ContentData()?.Mind?.OwnedComponent?.Owner;
 
             if (owner == null)
             {

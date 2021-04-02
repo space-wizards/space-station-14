@@ -14,7 +14,7 @@ namespace Content.Server.Database.Migrations.Sqlite
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.3");
 
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
@@ -196,6 +196,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("preference_id");
 
+                    b.Property<string>("AdminOOCColor")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("admin_ooc_color");
+
                     b.Property<int>("SelectedCharacterSlot")
                         .HasColumnType("INTEGER")
                         .HasColumnName("selected_character_slot");
@@ -312,6 +317,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("address");
 
+                    b.Property<byte[]>("HWId")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("hwid");
+
                     b.Property<DateTime>("Time")
                         .HasColumnType("TEXT")
                         .HasColumnName("time");
@@ -345,6 +354,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("last_seen_address");
+
+                    b.Property<byte[]>("LastSeenHWId")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("last_seen_hwid");
 
                     b.Property<DateTime>("LastSeenTime")
                         .HasColumnType("TEXT")
@@ -388,6 +401,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<DateTime?>("ExpirationTime")
                         .HasColumnType("TEXT")
                         .HasColumnName("expiration_time");
+
+                    b.Property<byte[]>("HWId")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("hwid");
 
                     b.Property<string>("Reason")
                         .IsRequired()

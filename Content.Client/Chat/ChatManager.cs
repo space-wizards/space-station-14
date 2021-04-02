@@ -6,14 +6,11 @@ using Content.Client.Interfaces.Chat;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Robust.Client.Console;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -21,8 +18,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-
-#nullable enable
 
 namespace Content.Client.Chat
 {
@@ -356,27 +351,25 @@ namespace Content.Client.Chat
                 messageText = string.Format(message.MessageWrap, messageText);
             }
 
-            switch (message.Channel)
+            if (message.MessageColorOverride != Color.Transparent)
             {
-                case ChatChannel.Server:
-                    color = Color.Orange;
-                    break;
-                case ChatChannel.Radio:
-                    color = Color.Green;
-                    break;
-                case ChatChannel.OOC:
-                    color = Color.LightSkyBlue;
-                    break;
-                case ChatChannel.Dead:
-                    color = Color.MediumPurple;
-                    break;
-                case ChatChannel.AdminChat:
-                    color = Color.Red;
-                    break;
+                color = message.MessageColorOverride;
+            }
+            else
+            {
+                color = message.Channel switch
+                {
+                    ChatChannel.Server => Color.Orange,
+                    ChatChannel.Radio => Color.Green,
+                    ChatChannel.OOC => Color.LightSkyBlue,
+                    ChatChannel.Dead => Color.MediumPurple,
+                    ChatChannel.AdminChat => Color.Red,
+                    _ => color
+                };
             }
 
             if (CurrentChatBox == null) return;
-            CurrentChatBox.AddLine(messageText, message.Channel, color);
+            _currentChatBox.AddLine(FormattedMessage.FromMarkup(messageText), message.Channel, color);
             // TODO: Can make this "smarter" later by only setting it false when the message has been scrolled to
             message.Read = true;
         }
@@ -393,9 +386,10 @@ namespace Content.Client.Chat
             {
                 if (CurrentChatBox != null)
                 {
-                    string locWarning = Loc.GetString("Your message exceeds {0} character limit", _maxMessageLength);
-                    CurrentChatBox.AddLine(locWarning, ChatChannel.Server, Color.Orange);
-                    CurrentChatBox.ClearOnEnter = false; // The text shouldn't be cleared if it hasn't been sent
+                    string locWarning = Loc.GetString("chat-manager-max-message-length",
+                                            ("maxMessageLength", _maxMessageLength));
+                    _currentChatBox.AddLine(locWarning, ChatChannel.Server, Color.Orange);
+                    _currentChatBox.ClearOnEnter = false; // The text shouldn't be cleared if it hasn't been sent
                 }
                 return;
             }
@@ -534,7 +528,7 @@ namespace Content.Client.Chat
                 return;
             }
 
-            var messages = SplitMessage(msg.Message);
+            var messages = SplitMessage(FormattedMessage.RemoveMarkup(msg.Message));
 
             foreach (var message in messages)
             {

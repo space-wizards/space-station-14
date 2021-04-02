@@ -3,8 +3,8 @@ using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Console;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
@@ -52,16 +52,12 @@ namespace Content.Server.GlobalVerbs
                 return;
             }
 
-            var userMind = player.ContentData().Mind;
+            var userMind = player.ContentData()?.Mind;
 
             var targetMind = target.GetComponent<MindComponent>();
-            var oldEntity = userMind.CurrentEntity;
 
             targetMind.Mind?.TransferTo(null);
-            userMind.TransferTo(target);
-
-            if (oldEntity.HasComponent<GhostComponent>())
-                oldEntity.Delete();
+            userMind?.TransferTo(target);
         }
     }
 }

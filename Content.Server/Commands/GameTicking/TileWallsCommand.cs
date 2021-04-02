@@ -1,13 +1,12 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Commands.GameTicking
 {
@@ -64,6 +63,7 @@ namespace Content.Server.Commands.GameTicking
             }
 
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var underplating = tileDefinitionManager["underplating"];
             var underplatingTile = new Tile(underplating.TileId);
             var changed = 0;
@@ -82,7 +82,7 @@ namespace Content.Server.Commands.GameTicking
                         break;
                     }
 
-                    prototype = prototype.Parent;
+                    prototype = prototypeManager.Index<EntityPrototype>(prototype.Parent);
                 }
 
                 if (prototype?.ID != "base_wall")
@@ -90,7 +90,7 @@ namespace Content.Server.Commands.GameTicking
                     continue;
                 }
 
-                if (!childEntity.TryGetComponent(out SnapGridComponent snapGrid))
+                if (!childEntity.TryGetComponent(out SnapGridComponent? snapGrid))
                 {
                     continue;
                 }

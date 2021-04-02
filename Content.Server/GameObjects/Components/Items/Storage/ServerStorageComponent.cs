@@ -14,21 +14,17 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.EntitySystemMessages;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -46,14 +42,19 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private Container? _storage;
         private readonly Dictionary<IEntity, int> _sizeCache = new();
 
-        private bool _occludesLight;
+        [DataField("occludesLight")]
+        private bool _occludesLight = true;
+        [DataField("quickInsert")]
         private bool _quickInsert; //Can insert storables by "attacking" them with the storage entity
+        [DataField("areaInsert")]
         private bool _areaInsert;  //"Attacking" with the storage entity causes it to insert all nearby storables after a delay
         private bool _storageInitialCalculated;
         private int _storageUsed;
-        private int _storageCapacityMax;
+        [DataField("capacity")]
+        private int _storageCapacityMax = 10000;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
+        [DataField("storageSoundCollection")]
         public string? StorageSoundCollection { get; set; }
 
         [ViewVariables]
@@ -356,20 +357,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             base.Initialize();
 
             // ReSharper disable once StringLiteralTypo
-            _storage = ContainerManagerComponent.Ensure<Container>("storagebase", Owner);
+            _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "storagebase");
             _storage.OccludesLight = _occludesLight;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _storageCapacityMax, "capacity", 10000);
-            serializer.DataField(ref _occludesLight, "occludesLight", true);
-            serializer.DataField(ref _quickInsert, "quickInsert", false);
-            serializer.DataField(ref _areaInsert, "areaInsert", false);
-            serializer.DataField(this, x => x.StorageSoundCollection, "storageSoundCollection", string.Empty);
-            //serializer.DataField(ref StorageUsed, "used", 0);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
@@ -491,7 +480,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            ((IUse) this).UseEntity(new UseEntityEventArgs { User = eventArgs.User });
+            ((IUse) this).UseEntity(new UseEntityEventArgs(eventArgs.User));
         }
 
         /// <summary>
@@ -632,8 +621,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             var file = AudioHelpers.GetRandomFileFromSoundCollection(name);
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(file, Owner, AudioParams.Default);
+            SoundSystem.Play(Filter.Pvs(Owner), file, Owner, AudioParams.Default);
         }
     }
 }

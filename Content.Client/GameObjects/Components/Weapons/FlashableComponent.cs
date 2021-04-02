@@ -1,19 +1,13 @@
-﻿using System;
-using System.Threading;
+#nullable enable
+using System;
 using Content.Client.Graphics.Overlays;
 using Content.Shared.GameObjects.Components.Weapons;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Graphics.Overlays;
-using Robust.Client.Interfaces.Graphics;
-using Robust.Client.Interfaces.Graphics.Overlays;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Utility;
-using Timer = Robust.Shared.Timers.Timer;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.Components.Weapons
 {
@@ -23,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Weapons
         private TimeSpan _startTime;
         private double _duration;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState == null)
             {
@@ -31,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Weapons
             }
 
             var playerManager = IoCManager.Resolve<IPlayerManager>();
-            if (playerManager?.LocalPlayer != null && playerManager.LocalPlayer.ControlledEntity != Owner)
+            if (playerManager.LocalPlayer != null && playerManager.LocalPlayer.ControlledEntity != Owner)
             {
                 return;
             }
@@ -63,7 +57,7 @@ namespace Content.Client.GameObjects.Components.Weapons
             _duration = newState.Duration;
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            var overlay = overlayManager.GetOverlay<FlashOverlay>(nameof(FlashOverlay));
+            var overlay = overlayManager.GetOverlay<FlashOverlay>();
             overlay.ReceiveFlash(_duration);
         }
     }

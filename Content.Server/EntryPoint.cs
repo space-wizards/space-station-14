@@ -1,22 +1,24 @@
 ﻿using Content.Server.Administration;
+using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
 using Content.Server.Database;
 using Content.Server.Eui;
 using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.Holiday.Interfaces;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;
 using Content.Server.Sandbox;
+using Content.Server.Voting;
 using Content.Shared.Actions;
-using Content.Shared.Kitchen;
 using Content.Shared.Alert;
-using Robust.Server.Interfaces.Player;
+using Content.Shared.Kitchen;
+using Robust.Server.Player;
 using Robust.Shared.ContentPack;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Log;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
@@ -25,9 +27,10 @@ namespace Content.Server
 {
     public class EntryPoint : GameServer
     {
-        private IGameTicker _gameTicker;
-        private EuiManager _euiManager;
-        private StatusShell _statusShell;
+        private IGameTicker _gameTicker = default!;
+        private EuiManager _euiManager = default!;
+        private StatusShell _statusShell = default!;
+        private IVoteManager _voteManager = default!;
 
         /// <inheritdoc />
         public override void Init()
@@ -55,6 +58,7 @@ namespace Content.Server
 
             _gameTicker = IoCManager.Resolve<IGameTicker>();
             _euiManager = IoCManager.Resolve<EuiManager>();
+            _voteManager = IoCManager.Resolve<IVoteManager>();
 
             IoCManager.Resolve<IServerNotifyManager>().Initialize();
             IoCManager.Resolve<IChatManager>().Initialize();
@@ -73,12 +77,14 @@ namespace Content.Server
             IoCManager.Resolve<INodeGroupFactory>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IAccentManager>().Initialize();
+            _voteManager.Initialize();
         }
 
         public override void PostInit()
         {
             base.PostInit();
 
+            IoCManager.Resolve<IHolidayManager>().Initialize();
             _gameTicker.Initialize();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<AlertManager>().Initialize();
@@ -87,6 +93,7 @@ namespace Content.Server
             IoCManager.Resolve<ConsiderationsManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();
             IoCManager.Resolve<IAdminManager>().Initialize();
+            IoCManager.Resolve<INpcBehaviorManager>().Initialize();
             _euiManager.Initialize();
         }
 
@@ -104,6 +111,7 @@ namespace Content.Server
                 case ModUpdateLevel.PostEngine:
                 {
                     _euiManager.SendUpdates();
+                    _voteManager.Update();
                     break;
                 }
             }

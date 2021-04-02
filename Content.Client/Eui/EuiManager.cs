@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Network.NetMessages;
-using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
-
-#nullable enable
+using Robust.Shared.Network;
+using Robust.Shared.Reflection;
 
 namespace Content.Client.Eui
 {

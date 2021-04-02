@@ -5,15 +5,13 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Shared;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Timer = Robust.Shared.Timers.Timer;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking.GameRules
 {
@@ -31,7 +29,7 @@ namespace Content.Server.GameTicking.GameRules
         [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        private CancellationTokenSource _checkTimerCancel;
+        private CancellationTokenSource? _checkTimerCancel;
 
         public override void Added()
         {
@@ -61,12 +59,12 @@ namespace Content.Server.GameTicking.GameRules
             if (!_cfg.GetCVar(CCVars.GameLobbyEnableWin))
                 return;
 
-            IPlayerSession winner = null;
+            IPlayerSession? winner = null;
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 var playerEntity = playerSession.AttachedEntity;
                 if (playerEntity == null
-                    || !playerEntity.TryGetComponent(out IMobStateComponent state))
+                    || !playerEntity.TryGetComponent(out IMobStateComponent? state))
                 {
                     continue;
                 }
@@ -96,7 +94,7 @@ namespace Content.Server.GameTicking.GameRules
             Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => _gameTicker.RestartRound());
         }
 
-        private void PlayerManagerOnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
+        private void PlayerManagerOnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             if (e.NewStatus == SessionStatus.Disconnected)
             {

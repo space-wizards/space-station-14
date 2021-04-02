@@ -1,6 +1,6 @@
 ﻿using Content.Server.Interfaces.Chat;
 using Robust.Shared.Analyzers;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Interfaces.GameObjects
 {

@@ -5,7 +5,7 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Nutrition;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.WorldState.States.Nutrition
 {
@@ -18,7 +18,7 @@ namespace Content.Server.AI.WorldState.States.Nutrition
         {
             var result = new List<IEntity>();
 
-            if (!Owner.TryGetComponent(out AiControllerComponent controller))
+            if (!Owner.TryGetComponent(out AiControllerComponent? controller))
             {
                 return result;
             }

@@ -85,12 +85,21 @@
     state: pda-clown
   - type: Slippery
     paralyzeTime: 4
+  - type: CollisionWake
+    enabled: false
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
+    bodyType: KinematicController
+    fixtures: # TODO: Make a second fixture.
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.4,0.3,0.4"
+      mass: 2.5
+      hard: false
       layer:
-      - MobImpassable
+        - SmallImpassable
+      mask:
+        - Impassable
+        - MobImpassable
 
 - type: entity
   name: Mime PDA
@@ -122,20 +131,20 @@
 #    - type: Icon
 #      state: pda-chaplain
 
-- type: entity
-  name: Quartermaster PDA
-  parent: BasePDA
-  id: QuartermasterPDA
-  description: PDA for the guy that orders the guns.
-  components:
-    - type: PDA
-      idCard: QuartermasterIDCard
-    - type: Appearance
-      visuals:
-        - type: PDAVisualizer
-          state: pda-qm
-    - type: Icon
-      state: pda-qm
+#- type: entity
+#  name: Quartermaster PDA
+#  parent: BasePDA
+#  id: QuartermasterPDA
+#  description: PDA for the guy that orders the guns.
+#  components:
+#    - type: PDA
+#      idCard: QuartermasterIDCard
+#    - type: Appearance
+#      visuals:
+#        - type: PDAVisualizer
+#          state: pda-qm
+#    - type: Icon
+#      state: pda-qm
 
 - type: entity
   name: Cargo PDA
@@ -297,7 +306,7 @@
   name: Science PDA
   parent: BasePDA
   id: SciencePDA
-  description:
+  description: It's covered with an unknown gooey substance.
   components:
   - type: PDA
     idCard: ResearchIDCard

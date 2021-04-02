@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
@@ -6,11 +6,9 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Buckle
@@ -20,29 +18,28 @@ namespace Content.Shared.GameObjects.Components.Buckle
         public sealed override string Name => "Buckle";
 
         public sealed override uint? NetID => ContentNetIDs.BUCKLE;
+
+        [ComponentDependency] protected readonly IPhysBody? Physics;
+
         /// <summary>
-        ///     The range from which this entity can buckle to a <see cref="StrapComponent"/>.
+        ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.
         /// </summary>
         [ViewVariables]
-        public float Range { get; protected set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataReadWriteFunction("range", SharedInteractionSystem.InteractionRange / 1.4f, value => Range = value, () => Range);
-        }
+        [DataField("range")]
+        public float Range { get; protected set; } = SharedInteractionSystem.InteractionRange / 1.4f;
 
         /// <summary>
         ///     True if the entity is buckled, false otherwise.
         /// </summary>
         public abstract bool Buckled { get; }
+
         public EntityUid? LastEntityBuckledTo { get; set; }
 
         public bool IsOnStrapEntityThisFrame { get; set; }
-        public bool DontCollide { get; set; }
-        public abstract bool TryBuckle(IEntity user, IEntity to);
 
-        [ComponentDependency] protected IPhysicsComponent? Body;
+        public bool DontCollide { get; set; }
+
+        public abstract bool TryBuckle(IEntity? user, IEntity to);
 
         bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
         {
@@ -58,11 +55,6 @@ namespace Content.Shared.GameObjects.Components.Buckle
         bool IActionBlocker.CanMove()
         {
             return !Buckled;
-        }
-        public override void Initialize()
-        {
-            base.Initialize();
-            Owner.TryGetComponent(out Body);
         }
 
         bool IActionBlocker.CanChangeDirection()

@@ -1,8 +1,6 @@
-﻿#nullable enable
-using Content.Shared.GameObjects.Components.Chemistry;
+﻿using Content.Shared.GameObjects.Components.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Chemistry

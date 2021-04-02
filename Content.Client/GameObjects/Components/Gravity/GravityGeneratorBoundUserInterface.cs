@@ -1,17 +1,19 @@
 using Content.Shared.GameObjects.Components.Gravity;
-using Robust.Client.GameObjects.Components.UserInterface;
+using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Gravity
 {
-    public class GravityGeneratorBoundUserInterface: BoundUserInterface
+    [UsedImplicitly]
+    public class GravityGeneratorBoundUserInterface : BoundUserInterface
     {
-        private GravityGeneratorWindow _window;
+        private GravityGeneratorWindow? _window;
 
         public bool IsOn;
 
@@ -28,7 +30,7 @@ namespace Content.Client.GameObjects.Components.Gravity
 
             _window = new GravityGeneratorWindow(this);
 
-            _window.Switch.OnPressed += (args) =>
+            _window.Switch.OnPressed += (_) =>
             {
                 SendMessage(new SharedGravityGeneratorComponent.SwitchGeneratorMessage(!IsOn));
                 SendMessage(new SharedGravityGeneratorComponent.GeneratorStatusRequestMessage());
@@ -43,7 +45,7 @@ namespace Content.Client.GameObjects.Components.Gravity
 
             var castState = (SharedGravityGeneratorComponent.GeneratorState) state;
             IsOn = castState.On;
-            _window.UpdateButton();
+            _window?.UpdateButton();
         }
 
         protected override void Dispose(bool disposing)
@@ -63,17 +65,17 @@ namespace Content.Client.GameObjects.Components.Gravity
 
         public GravityGeneratorBoundUserInterface Owner;
 
-        public GravityGeneratorWindow(GravityGeneratorBoundUserInterface gravityGeneratorInterface = null)
+        public GravityGeneratorWindow(GravityGeneratorBoundUserInterface ui)
         {
             IoCManager.InjectDependencies(this);
 
-            Owner = gravityGeneratorInterface;
+            Owner = ui;
 
             Title = Loc.GetString("Gravity Generator Control");
 
             var vBox = new VBoxContainer
             {
-                CustomMinimumSize = new Vector2(250, 100)
+                MinSize = new Vector2(250, 100)
             };
             Status = new Label
             {
@@ -84,7 +86,7 @@ namespace Content.Client.GameObjects.Components.Gravity
             {
                 Text = Loc.GetString(Owner.IsOn ? "Turn Off" : "Turn On"),
                 TextAlign = Label.AlignMode.Center,
-                CustomMinimumSize = new Vector2(150, 60)
+                MinSize = new Vector2(150, 60)
             };
 
             vBox.AddChild(Status);

@@ -1,17 +1,16 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Physics;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Shared.Maps
 {
@@ -20,7 +19,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
         /// </summary>
-        public static TileRef GetTileRef(this Vector2i Vector2i, GridId gridId, IMapManager? mapManager = null)
+        public static TileRef GetTileRef(this Vector2i vector2i, GridId gridId, IMapManager? mapManager = null)
         {
             if (!gridId.IsValid())
                 return default;
@@ -30,7 +29,7 @@ namespace Content.Shared.Maps
             if (!mapManager.TryGetGrid(gridId, out var grid))
                 return default;
 
-            if (!grid.TryGetTileRef(Vector2i, out var tile))
+            if (!grid.TryGetTileRef(vector2i, out var tile))
                 return default;
 
             return tile;
@@ -59,9 +58,9 @@ namespace Content.Shared.Maps
             return tile;
         }
 
-        public static bool TryGetTileRef(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf)
+        public static bool TryGetTileRef(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf, IEntityManager? entityManager = null, IMapManager? mapManager = null)
         {
-            return (turf = coordinates.GetTileRef()) != null;
+            return (turf = coordinates.GetTileRef(entityManager, mapManager)) != null;
         }
 
         /// <summary>
@@ -183,7 +182,7 @@ namespace Content.Shared.Maps
         /// </summary>
         public static bool IsBlockedTurf(this TileRef turf, bool filterMobs)
         {
-            var physics = IoCManager.Resolve<IPhysicsManager>();
+            var physics = EntitySystem.Get<SharedBroadPhaseSystem>();
 
             var worldBox = GetWorldTileBox(turf);
 

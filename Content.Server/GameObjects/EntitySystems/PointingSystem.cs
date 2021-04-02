@@ -4,27 +4,22 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.Pointing;
 using Content.Server.Players;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.Components;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -74,7 +69,7 @@ namespace Content.Server.GameObjects.EntitySystems
                         ? viewerPointedAtMessage
                         : viewerMessage;
 
-                source.PopupMessage(viewer.AttachedEntity, message);
+                source.PopupMessage(viewerEntity, message);
             }
         }
 
@@ -136,13 +131,12 @@ namespace Content.Server.GameObjects.EntitySystems
             // Get players that are in range and whose visibility layer matches the arrow's.
             var viewers = _playerManager.GetPlayersBy((playerSession) =>
             {
-                if ((playerSession.VisibilityMask & layer) == 0)
-                    return false;
-
                 var ent = playerSession.ContentData()?.Mind?.CurrentEntity;
 
-                return ent != null
-                       && ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
+                if (ent is null || (!ent.TryGetComponent<EyeComponent>(out var eyeComp) || (eyeComp.VisibilityMask & layer) != 0))
+                    return false;
+                
+                return ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
             });
 
             string selfMessage;

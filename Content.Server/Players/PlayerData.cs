@@ -1,6 +1,6 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Mobs;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;
 
@@ -33,7 +33,8 @@ namespace Content.Server.Players
 
         public void WipeMind()
         {
-            Mind?.ChangeOwningPlayer(null);
+            Mind?.TransferTo(null);
+            Mind?.RemoveOwningPlayer();
             Mind = null;
         }
 

@@ -60,7 +60,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterSuitSpaceninja
-  name: S ninja
+  name: space ninja suit
   description: This black technologically advanced, cybernetically-enhanced suit provides good protection and many abilities like invisibility or teleportation.
   components:
   - type: Sprite
@@ -78,6 +78,17 @@
     sprite: Clothing/OuterClothing/Suits/chicken.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/chicken.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitShrineMaiden
+  name: shrine maiden outfit
+  description: Makes you want to go deal with some troublesome youkai.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/shrine-maiden.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/shrine-maiden.rsi
 
 - type: entity
   parent: ClothingOuterBase

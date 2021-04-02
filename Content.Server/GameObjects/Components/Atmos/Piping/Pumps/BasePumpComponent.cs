@@ -7,9 +7,8 @@ using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
@@ -32,19 +31,23 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
                 UpdateAppearance();
             }
         }
+
+        [DataField("pumpEnabled")]
         private bool _pumpEnabled;
 
         /// <summary>
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="PipeNode"/> on this entity.
         /// </summary>
         [ViewVariables]
-        private PipeDirection _initialInletDirection;
+        [DataField("initialInletDirection", required: true)]
+        private PipeDirection _initialInletDirection = PipeDirection.None;
 
         /// <summary>
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="PipeNode"/> on this entity.
         /// </summary>
         [ViewVariables]
-        private PipeDirection _initialOutletDirection;
+        [DataField("initialOutletDirection", required: true)]
+        private PipeDirection _initialOutletDirection = PipeDirection.None;
 
         [ViewVariables]
         private PipeNode? _inletPipe;
@@ -53,14 +56,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
         private PipeNode? _outletPipe;
 
         private AppearanceComponent? _appearance;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _initialInletDirection, "inletDirection", PipeDirection.None);
-            serializer.DataField(ref _initialOutletDirection, "outletDirection", PipeDirection.None);
-            serializer.DataField(ref _pumpEnabled, "pumpEnabled", false);
-        }
 
         public override void Initialize()
         {
@@ -113,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
 
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
-                Logger.Error($"{nameof(BasePumpComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
+                Logger.Warning($"{nameof(BasePumpComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
                 return;
             }
             var pipeNodes = container.Nodes.OfType<PipeNode>();
@@ -121,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             _outletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _initialOutletDirection).FirstOrDefault();
             if (_inletPipe == null || _outletPipe == null)
             {
-                Logger.Error($"{nameof(BasePumpComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                Logger.Warning($"{nameof(BasePumpComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
         }

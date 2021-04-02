@@ -1,25 +1,16 @@
-﻿#nullable enable
-using Content.Server.Commands.Observer;
-using Content.Server.GameObjects.Components.Medical;
+#nullable enable
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
-using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -31,7 +22,6 @@ namespace Content.Server.GameObjects.Components.Mobs
     [RegisterComponent]
     public class MindComponent : Component, IExamine
     {
-
         /// <inheritdoc />
         public override string Name => "Mind";
 
@@ -51,13 +41,15 @@ namespace Content.Server.GameObjects.Components.Mobs
         ///     Whether examining should show information about the mind or not.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("showExamineInfo")]
         public bool ShowExamineInfo { get; set; }
 
         /// <summary>
         ///     Whether the mind will be put on a ghost after this component is shutdown.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool GhostOnShutdown { get; set; }
+        [DataField("ghostOnShutdown")]
+        public bool GhostOnShutdown { get; set; } = true;
 
         /// <summary>
         ///     Don't call this unless you know what the hell you're doing.
@@ -66,6 +58,8 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// </summary>
         public void InternalEjectMind()
         {
+            if (!Deleted)
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new MindRemovedMessage());
             Mind = null;
         }
 
@@ -99,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                     Mind!.TransferTo(visiting);
                 }
-                else if(GhostOnShutdown)
+                else if (GhostOnShutdown)
                 {
                     var spawnPosition = Owner.Transform.Coordinates;
                     // Use a regular timer here because the entity has probably been deleted.
@@ -120,19 +114,12 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                         if (Mind != null)
                         {
-                            ghost.Name = Mind.CharacterName;
+                            ghost.Name = Mind.CharacterName ?? string.Empty;
                             Mind.TransferTo(ghost);
                         }
                     });
                 }
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.ShowExamineInfo, "showExamineInfo", false);
-            serializer.DataField(this, x => x.GhostOnShutdown, "ghostOnShutdown", true);
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
@@ -164,5 +151,9 @@ namespace Content.Server.GameObjects.Components.Mobs
                 message.AddMarkup(text);
             }
         }
+    }
+
+    public class MindRemovedMessage : EntityEventArgs
+    {
     }
 }

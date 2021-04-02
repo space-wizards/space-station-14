@@ -1,5 +1,6 @@
 ﻿- type: entity
   id: Window
+  parent: BaseConstructible
   name: window
   description: Don't smudge up the glass down there.
   placement:
@@ -7,7 +8,6 @@
     snap:
     - Window
   components:
-  - type: Clickable
   - type: RCDDeconstructWhitelist
   - type: InteractionOutline
   - type: Sprite
@@ -19,15 +19,20 @@
     sprite: Constructible/Structures/Windows/window.rsi
     state: full
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       layer:
       - Impassable
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      mask:
+      - VaultImpassable
   - type: Damageable
     resistances: metallicResistances
+  - type: Repairable
   - type: Destructible
     thresholds:
     - trigger:
@@ -43,8 +48,6 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: SnapGrid
-    offset: Center
   - type: Airtight
   - type: Window
     base: window
@@ -65,8 +68,9 @@
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
   - type: Icon
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
-  - type: Damageable
-    resistances: metallicResistances
+  - type: Repairable
+    fuelCost: 10
+    doAfterDelay: 2
   - type: Destructible
     thresholds:
     - trigger:

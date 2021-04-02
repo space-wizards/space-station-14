@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,22 +13,21 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Interfaces.PDA;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.PDA;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.PDA
@@ -46,8 +45,8 @@ namespace Content.Server.GameObjects.Components.PDA
 
         [ViewVariables] private bool _lightOn;
 
-        [ViewVariables] private string? _startingIdCard = default!;
-        [ViewVariables] private string? _startingPen = default!;
+        [ViewVariables] [DataField("idCard")] private string? _startingIdCard = "AssistantIDCard";
+        [ViewVariables] [DataField("pen")] private string? _startingPen = "Pen";
 
         [ViewVariables] public string? OwnerName { get; private set; }
 
@@ -68,18 +67,11 @@ namespace Content.Server.GameObjects.Components.PDA
             _accessSet = new PdaAccessSet(this);
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _startingIdCard, "idCard", "AssistantIDCard");
-            serializer.DataField(ref _startingPen, "pen", "Pen");
-        }
-
         public override void Initialize()
         {
             base.Initialize();
-            _idSlot = ContainerManagerComponent.Ensure<ContainerSlot>("pda_entity_container", Owner);
-            _penSlot = ContainerManagerComponent.Ensure<ContainerSlot>("pda_pen_slot", Owner);
+            _idSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "pda_entity_container");
+            _penSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "pda_pen_slot");
 
             if (UserInterface != null)
             {
@@ -269,7 +261,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 return TryInsertIdCard(eventArgs, idCardComponent);
             }
 
-            if (item.HasComponent<WriteComponent>())
+            if (item.HasTag("Write"))
             {
                 return TryInsertPen(eventArgs);
             }
@@ -310,7 +302,7 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             _idSlot.Insert(card.Owner);
             ContainedID = card;
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Weapons/Guns/MagIn/batrifle_magin.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/Guns/MagIn/batrifle_magin.ogg", Owner);
         }
 
         /// <summary>
@@ -339,7 +331,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
             _lightOn = !_lightOn;
             light.Enabled = _lightOn;
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/flashlight_toggle.ogg", Owner);
             UpdatePDAUserInterface();
         }
 
@@ -358,7 +350,7 @@ namespace Content.Server.GameObjects.Components.PDA
             hands.PutInHandOrDrop(cardItemComponent);
             ContainedID = null;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/id_swipe.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/id_swipe.ogg", Owner);
             UpdatePDAUserInterface();
         }
 
@@ -390,6 +382,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 data.Text = Loc.GetString("Eject ID");
                 data.Visibility = component.IdSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, PDAComponent component)
@@ -411,6 +404,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 data.Text = Loc.GetString("Eject Pen");
                 data.Visibility = component.PenSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, PDAComponent component)
@@ -431,6 +425,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 }
 
                 data.Text = Loc.GetString("Toggle flashlight");
+                data.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, PDAComponent component)

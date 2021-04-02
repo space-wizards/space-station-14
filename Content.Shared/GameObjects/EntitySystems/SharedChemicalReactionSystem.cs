@@ -1,16 +1,16 @@
+#nullable enable
 using Content.Shared.Chemistry;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using System.Collections.Generic;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
     public abstract class SharedChemicalReactionSystem : EntitySystem
     {
-        private IEnumerable<ReactionPrototype> _reactions;
+        private IEnumerable<ReactionPrototype> _reactions = default!;
 
         private const int MaxReactionIterations = 20;
 
@@ -140,7 +140,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                     return;
 
                 var totalVolume = solution.TotalVolume + products.TotalVolume;
-                var excessVolume = totalVolume - maxVolume; 
+                var excessVolume = totalVolume - maxVolume;
 
                 if (excessVolume > 0)
                 {

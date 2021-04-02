@@ -3,9 +3,8 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Log;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Mobs
@@ -37,13 +36,13 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
             else
             {
-                Logger.WarningS("alert", "weightlesssystem not found");
+                Logger.WarningS("alert", $"{nameof(WeightlessSystem)} not found");
             }
 
             base.OnRemove();
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
 
@@ -71,15 +70,13 @@ namespace Content.Server.GameObjects.Components.Mobs
                         break;
                     }
 
-                    if (AlertManager.TryGet(msg.AlertType, out var alert) && alert.OnClick != null)
-                    {
-                        alert.OnClick.AlertClicked(new ClickAlertEventArgs(player, alert));
-                    }
-                    else
+                    if (!AlertManager.TryGet(msg.AlertType, out var alert))
                     {
                         Logger.WarningS("alert", "unrecognized encoded alert {0}", msg.AlertType);
+                        break;
                     }
 
+                    alert.OnClick?.AlertClicked(new ClickAlertEventArgs(player, alert));
                     break;
                 }
             }

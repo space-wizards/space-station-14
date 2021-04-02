@@ -1,3 +1,4 @@
+# TODO: Add description (1)
 - type: entity
   parent: BaseItem
   name: mop
@@ -13,12 +14,12 @@
   - type: Mop
   - type: SolutionContainer
     maxVol: 10
-  - type: LoopingSound
 
 - type: entity
   name: mop bucket
   id: MopBucket
   description: Holds water and the tears of the janitor.
+  suffix: Full
   components:
   - type: Clickable
   - type: Sprite
@@ -32,18 +33,23 @@
   - type: LoopingSound
   - type: SolutionContainer
     maxVol: 500
+    contents:
+      reagents:
+        - ReagentId: chem.Water
+          Quantity: 500
+
   - type: Physics
-    mass: 5
-    anchored: false
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.40,-0.25,0.25,0.25"
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.40,-0.25,0.25,0.25"
+      mass: 5
       mask:
       - Impassable
       - Opaque
       layer:
       - Opaque
-  - type: Spillable
   - type: Pullable
 
 - type: entity
@@ -64,11 +70,12 @@
   - type: SolutionContainer
     maxVol: 500
   - type: Physics
-    mass: 5
-    anchored: false
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 5
       mask:
       - Impassable
   - type: Spillable
@@ -97,13 +104,22 @@
   - type: Item
     sprite: Objects/Specific/Janitorial/soap.rsi
   - type: Slippery
-    paralyzeTime: 2.5
+    paralyzeTime: 2
+    intersectPercentage: 0.2
+  - type: CollisionWake
+    enabled: false
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.3,-0.4,0.3,0.4"
+    bodyType: KinematicController
+    fixtures: # TODO: Make a second fixture. One should be for slipping, and the other for collisions.
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.4,0.3,0.4"
+      mass: 2.5
       layer:
-      - MobImpassable
+        - SmallImpassable
+      mask:
+        - Impassable
+        - MobImpassable
 
 - type: entity
   name: soap
@@ -173,15 +189,16 @@
         - state: chempuff
           map: [ "enum.VaporVisualLayers.Base" ]
     - type: Physics
-      anchored: false
-      hard: false
-      shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-          mask:
-            - Impassable
-            - MobImpassable
-            - SmallImpassable
+      bodyType: KinematicController
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+        hard: false
+        mask:
+          - Impassable
+          - MobImpassable
+          - SmallImpassable
     - type: Appearance
       visuals:
         - type: VaporVisualizer

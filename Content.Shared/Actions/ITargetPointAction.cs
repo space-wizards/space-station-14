@@ -1,5 +1,5 @@
-﻿using System;
-using Robust.Shared.Interfaces.GameObjects;
+﻿#nullable enable
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Actions

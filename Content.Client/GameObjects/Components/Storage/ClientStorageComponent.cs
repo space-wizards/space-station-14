@@ -3,24 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Animations;
 using Content.Client.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.Storage
@@ -34,25 +29,33 @@ namespace Content.Client.GameObjects.Components.Storage
         private List<IEntity> _storedEntities = new();
         private int StorageSizeUsed;
         private int StorageCapacityMax;
-        private StorageWindow Window;
+        private StorageWindow? _window;
+        private SharedBagState _bagState;
 
         public override IReadOnlyList<IEntity> StoredEntities => _storedEntities;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            // Hide stackVisualizer on start
+            ChangeStorageVisualization(SharedBagState.Close);
+        }
 
         public override void OnAdd()
         {
             base.OnAdd();
 
-            Window = new StorageWindow()
-            { StorageEntity = this, Title = Owner.Name };
+            _window = new StorageWindow(this) {Title = Owner.Name};
         }
 
         public override void OnRemove()
         {
-            Window.Dispose();
+            _window?.Dispose();
             base.OnRemove();
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
@@ -66,7 +69,7 @@ namespace Content.Client.GameObjects.Components.Storage
                 .ToList();
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 
@@ -75,12 +78,15 @@ namespace Content.Client.GameObjects.Components.Storage
                 //Updates what we are storing for the UI
                 case StorageHeldItemsMessage msg:
                     HandleStorageMessage(msg);
+                    ChangeStorageVisualization(_bagState);
                     break;
                 //Opens the UI
                 case OpenStorageUIMessage _:
+                    ChangeStorageVisualization(SharedBagState.Open);
                     ToggleUI();
                     break;
                 case CloseStorageUIMessage _:
+                    ChangeStorageVisualization(SharedBagState.Close);
                     CloseUI();
                     break;
                 case AnimateInsertingEntitiesMessage msg:
@@ -98,7 +104,7 @@ namespace Content.Client.GameObjects.Components.Storage
             _storedEntities = storageState.StoredEntities.Select(id => Owner.EntityManager.GetEntity(id)).ToList();
             StorageSizeUsed = storageState.StorageSizeUsed;
             StorageCapacityMax = storageState.StorageSizeMax;
-            Window.BuildEntityList();
+            _window?.BuildEntityList();
         }
 
         /// <summary>
@@ -124,15 +130,26 @@ namespace Content.Client.GameObjects.Components.Storage
         /// </summary>
         private void ToggleUI()
         {
-            if (Window.IsOpen)
-                Window.Close();
+            if (_window == null) return;
+
+            if (_window.IsOpen)
+                _window.Close();
             else
-                Window.Open();
+                _window.OpenCentered();
         }
 
         private void CloseUI()
         {
-            Window.Close();
+            _window?.Close();
+        }
+
+        private void ChangeStorageVisualization(SharedBagState state)
+        {
+            _bagState = state;
+            if (Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
+            {
+                appearanceComponent.SetData(SharedBagOpenVisuals.BagState, state);
+            }
         }
 
         /// <summary>
@@ -168,34 +185,30 @@ namespace Content.Client.GameObjects.Components.Storage
             private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
             private readonly StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
 
-            protected override Vector2? CustomSize => (180, 320);
-
-            public StorageWindow()
+            public StorageWindow(ClientStorageComponent storageEntity)
             {
+                StorageEntity = storageEntity;
+                SetSize = (200, 320);
                 Title = "Storage Item";
                 RectClipContent = true;
 
                 var containerButton = new ContainerButton
                 {
-                    SizeFlagsHorizontal = SizeFlags.Fill,
-                    SizeFlagsVertical = SizeFlags.Fill,
                     MouseFilter = MouseFilterMode.Pass,
                 };
 
                 var innerContainerButton = new PanelContainer
                 {
                     PanelOverride = _unHoveredBox,
-                    SizeFlagsHorizontal = SizeFlags.Fill,
-                    SizeFlagsVertical = SizeFlags.Fill,
                 };
 
 
                 containerButton.AddChild(innerContainerButton);
                 containerButton.OnPressed += args =>
                 {
-                    var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
+                    var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
 
-                    if (controlledEntity.TryGetComponent(out HandsComponent hands))
+                    if (controlledEntity?.TryGetComponent(out HandsComponent? hands) ?? false)
                     {
                         StorageEntity.SendNetworkMessage(new InsertEntityMessage());
                     }
@@ -209,20 +222,20 @@ namespace Content.Client.GameObjects.Components.Storage
                 _information = new Label
                 {
                     Text = "Items: 0 Volume: 0/0 Stuff",
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter
+                    VerticalAlignment = VAlignment.Center
                 };
                 VSplitContainer.AddChild(_information);
 
                 var listScrollContainer = new ScrollContainer
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    HScrollEnabled = true,
+                    VerticalExpand = true,
+                    HorizontalExpand = true,
+                    HScrollEnabled = false,
                     VScrollEnabled = true,
                 };
                 _entityList = new VBoxContainer
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
+                    HorizontalExpand = true
                 };
                 listScrollContainer.AddChild(_entityList);
                 VSplitContainer.AddChild(listScrollContainer);
@@ -276,7 +289,7 @@ namespace Content.Client.GameObjects.Components.Storage
                     button.EntitySize.Text = group.Amount.ToString();
 
                     //Gets entity sprite and assigns it to button texture
-                    if (entity.TryGetComponent(out ISpriteComponent sprite))
+                    if (entity.TryGetComponent(out ISpriteComponent? sprite))
                     {
                         button.EntitySpriteView.Sprite = sprite;
                     }
@@ -302,9 +315,13 @@ namespace Content.Client.GameObjects.Components.Storage
             /// <param name="args"></param>
             private void OnItemButtonToggled(BaseButton.ButtonToggledEventArgs args)
             {
-                var control = (EntityButton) args.Button.Parent;
+                if (args.Button.Parent is not EntityButton button)
+                {
+                    return;
+                }
+
                 args.Button.Pressed = false;
-                StorageEntity.Interact(control.EntityUid);
+                StorageEntity.Interact(button.EntityUid);
             }
         }
 
@@ -316,7 +333,6 @@ namespace Content.Client.GameObjects.Components.Storage
             public EntityUid EntityUid { get; set; }
             public Button ActualButton { get; }
             public SpriteView EntitySpriteView { get; }
-            public Control EntityControl { get; }
             public Label EntityName { get; }
             public Label EntitySize { get; }
 
@@ -324,8 +340,8 @@ namespace Content.Client.GameObjects.Components.Storage
             {
                 ActualButton = new Button
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    HorizontalExpand = true,
+                    VerticalExpand = true,
                     ToggleMode = true,
                     MouseFilter = MouseFilterMode.Stop
                 };
@@ -334,37 +350,29 @@ namespace Content.Client.GameObjects.Components.Storage
                 var hBoxContainer = new HBoxContainer();
                 EntitySpriteView = new SpriteView
                 {
-                    CustomMinimumSize = new Vector2(32.0f, 32.0f)
+                    MinSize = new Vector2(32.0f, 32.0f),
+                    OverrideDirection = Direction.South
                 };
                 EntityName = new Label
                 {
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                    VerticalAlignment = VAlignment.Center,
+                    HorizontalExpand = true,
+                    Margin = new Thickness(0, 0, 6, 0),
                     Text = "Backpack",
+                    ClipText = true
                 };
+
                 hBoxContainer.AddChild(EntitySpriteView);
                 hBoxContainer.AddChild(EntityName);
 
-                EntityControl = new Control
-                {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
-                };
                 EntitySize = new Label
                 {
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                    VerticalAlignment = VAlignment.Bottom,
                     Text = "Size 6",
                     Align = Label.AlignMode.Right,
-                    /*AnchorLeft = 1.0f,
-                    AnchorRight = 1.0f,
-                    AnchorBottom = 0.5f,
-                    AnchorTop = 0.5f,
-                    MarginLeft = -38.0f,
-                    MarginTop = -7.0f,
-                    MarginRight = -5.0f,
-                    MarginBottom = 7.0f*/
                 };
 
-                EntityControl.AddChild(EntitySize);
-                hBoxContainer.AddChild(EntityControl);
+                hBoxContainer.AddChild(EntitySize);
                 AddChild(hBoxContainer);
             }
         }

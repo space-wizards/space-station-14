@@ -1,8 +1,6 @@
-﻿#nullable enable
-using Content.Shared.GameObjects.Components.Morgue;
+﻿using Content.Shared.GameObjects.Components.Morgue;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 
 namespace Content.Client.GameObjects.Components.Morgue
 {

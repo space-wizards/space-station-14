@@ -2,15 +2,14 @@ using Content.Server.Cargo;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Cargo;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.IoC;
+using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
     [RegisterComponent]
     public class CargoOrderDatabaseComponent : SharedCargoOrderDatabaseComponent
     {
-        public CargoOrderDatabase Database { get; set; }
+        public CargoOrderDatabase? Database { get; set; }
         public bool ConnectedToDatabase => Database != null;
 
         public override void Initialize()
@@ -20,11 +19,11 @@ namespace Content.Server.GameObjects.Components.Cargo
             Database = EntitySystem.Get<CargoConsoleSystem>().StationOrderDatabase;
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             if (!ConnectedToDatabase)
                 return new CargoOrderDatabaseState(null);
-            return new CargoOrderDatabaseState(Database.GetOrders());
+            return new CargoOrderDatabaseState(Database?.GetOrders());
         }
     }
 }

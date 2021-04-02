@@ -4,13 +4,13 @@ using System;
 using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces;
-using Content.Shared.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.EntitySystems;
+using Robust.Client.GameObjects;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+using DrawDepth = Content.Shared.GameObjects.DrawDepth;
 
 namespace Content.Client.Commands
 {
@@ -38,7 +38,7 @@ namespace Content.Client.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             EntitySystem.Get<SubFloorHideSystem>()
-                .EnableAll ^= true;
+                .ShowAll ^= true;
         }
     }
 
@@ -52,14 +52,14 @@ namespace Content.Client.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             EntitySystem.Get<SubFloorHideSystem>()
-                .EnableAll = true;
+                .ShowAll = true;
 
             var components = IoCManager.Resolve<IEntityManager>().ComponentManager
                 .EntityQuery<SubFloorHideComponent>(true);
 
             foreach (var component in components)
             {
-                if (component.Owner.TryGetComponent(out ISpriteComponent sprite))
+                if (component.Owner.TryGetComponent(out ISpriteComponent? sprite))
                 {
                     sprite.DrawDepth = (int) DrawDepth.Overlays;
                 }

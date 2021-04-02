@@ -10,6 +10,7 @@ using Content.Shared.Chat;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -21,7 +22,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Chat
 {
-    public class ChatBox : MarginContainer
+    public class ChatBox : Control
     {
         public const float InitialChatBottom = 235;
 
@@ -66,7 +67,7 @@ namespace Content.Client.Chat
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
         /// </summary>
-        public string? DefaultChatFormat { get; set; }
+        public string DefaultChatFormat { get; set; } = string.Empty;
 
         public bool ReleaseFocusOnEnter { get; set; } = true;
 

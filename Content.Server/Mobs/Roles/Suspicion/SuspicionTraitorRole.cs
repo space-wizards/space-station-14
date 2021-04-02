@@ -23,23 +23,21 @@ namespace Content.Server.Mobs.Roles.Suspicion
 
         public void GreetSuspicion(List<SuspicionTraitorRole> traitors, IChatManager chatMgr)
         {
-            chatMgr.DispatchServerMessage(Mind.Session, Loc.GetString("You're a {0}!", Name));
-            chatMgr.DispatchServerMessage(Mind.Session, Loc.GetString("Objective: {0}", Objective));
-
-            if (traitors.Count == 1)
+            if (Mind.TryGetSession(out var session))
             {
-                // Only traitor.
-                chatMgr.DispatchServerMessage(Mind.Session, Loc.GetString("You're on your own. Good luck!"));
-                return;
+                chatMgr.DispatchServerMessage(session, Loc.GetString("suspicion-role-greeting", ("roleName", Name)));
+                chatMgr.DispatchServerMessage(session, Loc.GetString("suspicion-objective", ("objectiveText", Objective)));
+
+                var allPartners = string.Join(", ", traitors.Where(p => p != this).Select(p => p.Mind.CharacterName));
+
+                var partnerText = Loc.GetString(
+                    "suspicion-partners-in-crime",
+                    ("partnerCount", traitors.Count-1),
+                    ("partnerNames", allPartners)
+                );
+
+                chatMgr.DispatchServerMessage(session, partnerText);
             }
-
-            var text = string.Join(", ", traitors.Where(p => p != this).Select(p => p.Mind.CharacterName));
-
-            var pluralText = Loc.GetPluralString("Your partner in crime is: {0}",
-                "Your partners in crime are: {0}",
-                traitors.Count-1, text);
-
-            chatMgr.DispatchServerMessage(Mind.Session, pluralText);
         }
     }
 }

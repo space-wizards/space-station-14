@@ -1,16 +1,9 @@
 #nullable enable
 using Content.Server.Administration;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
-using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Observer

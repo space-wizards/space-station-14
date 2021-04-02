@@ -7,9 +7,9 @@ using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Shared;
 using Newtonsoft.Json;
-using Robust.Server.Interfaces.ServerStatus;
+using Robust.Server.ServerStatus;
 using Robust.Shared.Asynchronous;
-using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 
@@ -87,7 +87,7 @@ namespace Content.Server
                 return true;
             }
 
-            OOCPostMessage message = null;
+            OOCPostMessage? message = null;
             try
             {
                 message = context.RequestBodyJson<OOCPostMessage>();
@@ -113,36 +113,36 @@ namespace Content.Server
 
             context.Respond("Success", HttpStatusCode.OK);
 
-            return false;
+            return true;
         }
 
         [JsonObject(MemberSerialization.Fields)]
         private class MoMMIMessageBase
         {
-            [JsonProperty("password")] public string Password;
+            [JsonProperty("password")] public string Password = null!;
 
-            [JsonProperty("type")] public string Type;
+            [JsonProperty("type")] public string Type = null!;
 
-            [JsonProperty("contents")] public object Contents;
+            [JsonProperty("contents")] public object Contents = null!;
         }
 
         [JsonObject(MemberSerialization.Fields)]
         private class MoMMIMessageOOC
         {
-            [JsonProperty("sender")] public string Sender;
+            [JsonProperty("sender")] public string Sender = null!;
 
-            [JsonProperty("contents")] public string Contents;
+            [JsonProperty("contents")] public string Contents = null!;
         }
 
         [JsonObject(MemberSerialization.Fields, ItemRequired = Required.Always)]
         private class OOCPostMessage
         {
             #pragma warning disable CS0649
-            [JsonProperty("password")] public string Password;
+            [JsonProperty("password")] public string Password = null!;
 
-            [JsonProperty("sender")] public string Sender;
+            [JsonProperty("sender")] public string Sender = null!;
 
-            [JsonProperty("contents")] public string Contents;
+            [JsonProperty("contents")] public string Contents = null!;
             #pragma warning restore CS0649
         }
     }

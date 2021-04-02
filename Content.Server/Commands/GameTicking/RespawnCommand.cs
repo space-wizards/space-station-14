@@ -1,6 +1,6 @@
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -50,7 +50,7 @@ namespace Content.Server.Commands.GameTicking
                     return;
                 }
 
-                data.ContentData().WipeMind();
+                data.ContentData()?.WipeMind();
                 shell.WriteLine("Player is not currently online, but they will respawn if they come back online");
                 return;
             }

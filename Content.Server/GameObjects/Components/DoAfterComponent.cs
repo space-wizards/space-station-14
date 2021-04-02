@@ -4,7 +4,7 @@ using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components
         // we'll just send them the index. Doesn't matter if it wraps around.
         private byte _runningIndex;
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             var toAdd = new List<ClientDoAfter>();
 

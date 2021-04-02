@@ -3,20 +3,16 @@ using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.EntitySystems;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface
 {
@@ -31,7 +27,7 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        public bool SetItemSlot(ItemSlotButton button, IEntity entity)
+        public bool SetItemSlot(ItemSlotButton button, IEntity? entity)
         {
             if (entity == null)
             {
@@ -40,7 +36,7 @@ namespace Content.Client.UserInterface
             }
             else
             {
-                if (!entity.TryGetComponent(out ISpriteComponent sprite))
+                if (!entity.TryGetComponent(out ISpriteComponent? sprite))
                     return false;
 
                 button.ClearHover();
@@ -50,7 +46,7 @@ namespace Content.Client.UserInterface
             return true;
         }
 
-        public bool OnButtonPressed(GUIBoundKeyEventArgs args, IEntity item)
+        public bool OnButtonPressed(GUIBoundKeyEventArgs args, IEntity? item)
         {
             if (item == null)
                 return false;
@@ -96,40 +92,36 @@ namespace Content.Client.UserInterface
             return true;
         }
 
-        public void UpdateCooldown(ItemSlotButton button, IEntity entity)
+        public void UpdateCooldown(ItemSlotButton? button, IEntity? entity)
         {
-            var cooldownDisplay = button.CooldownDisplay;
+            var cooldownDisplay = button?.CooldownDisplay;
 
-            if (entity != null
-                && entity.TryGetComponent(out ItemCooldownComponent cooldown)
-                && cooldown.CooldownStart.HasValue
-                && cooldown.CooldownEnd.HasValue)
+            if (cooldownDisplay == null)
             {
-                var start = cooldown.CooldownStart.Value;
-                var end = cooldown.CooldownEnd.Value;
-
-                var length = (end - start).TotalSeconds;
-                var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
-                var ratio = (progress <= 1 ? (1 - progress) : (_gameTiming.CurTime - end).TotalSeconds * -5);
-
-                cooldownDisplay.Progress = MathHelper.Clamp((float)ratio, -1, 1);
-
-                if (ratio > -1f)
-                {
-                    cooldownDisplay.Visible = true;
-                }
-                else
-                {
-                    cooldownDisplay.Visible = false;
-                }
+                return;
             }
-            else
+
+            if (entity == null ||
+                !entity.TryGetComponent(out ItemCooldownComponent? cooldown) ||
+                !cooldown.CooldownStart.HasValue ||
+                !cooldown.CooldownEnd.HasValue)
             {
                 cooldownDisplay.Visible = false;
+                return;
             }
+
+            var start = cooldown.CooldownStart.Value;
+            var end = cooldown.CooldownEnd.Value;
+
+            var length = (end - start).TotalSeconds;
+            var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
+            var ratio = (progress <= 1 ? (1 - progress) : (_gameTiming.CurTime - end).TotalSeconds * -5);
+
+            cooldownDisplay.Progress = MathHelper.Clamp((float) ratio, -1, 1);
+            cooldownDisplay.Visible = ratio > -1f;
         }
 
-        public void HoverInSlot(ItemSlotButton button, IEntity entity, bool fits)
+        public void HoverInSlot(ItemSlotButton button, IEntity? entity, bool fits)
         {
             if (entity == null || !button.MouseIsHovering)
             {

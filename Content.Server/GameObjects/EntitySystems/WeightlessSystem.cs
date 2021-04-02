@@ -1,14 +1,10 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystemMessages.Gravity;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Components.Map;
-using Robust.Shared.GameObjects.EntitySystemMessages;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -101,13 +97,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void EntParentChanged(EntParentChangedMessage ev)
         {
-            if (!ev.Entity.TryGetComponent(out ServerAlertsComponent status))
+            if (!ev.Entity.TryGetComponent(out ServerAlertsComponent? status))
             {
                 return;
             }
 
             if (ev.OldParent != null &&
-                ev.OldParent.TryGetComponent(out IMapGridComponent mapGrid))
+                ev.OldParent.TryGetComponent(out IMapGridComponent? mapGrid))
             {
                 var oldGrid = mapGrid.GridIndex;
 

@@ -1,4 +1,6 @@
 #nullable enable
+using System;
+using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
@@ -6,15 +8,11 @@ using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Linq;
 
-namespace Content.Server.GameObjects.Components.Atmos.Piping.Filters
+namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
     [RegisterComponent]
     public class GasFilterComponent : Component
@@ -46,7 +44,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Filters
                 UpdateAppearance();
             }
         }
-        private Gas _gasToFilter;
+
+        [DataField("gasToFilter")] private Gas _gasToFilter = Gas.Plasma;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int VolumeFilterRate
@@ -54,6 +53,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Filters
             get => _volumeFilterRate;
             set => _volumeFilterRate = Math.Clamp(value, 0, MaxVolumeFilterRate);
         }
+
+        [DataField("startingVolumePumpRate")]
         private int _volumeFilterRate;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -62,22 +63,23 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Filters
             get => _maxVolumeFilterRate;
             set => Math.Max(value, 0);
         }
-        private int _maxVolumeFilterRate;
 
-        [ViewVariables]
-        private PipeDirection _initialInletDirection;
+        [DataField("maxVolumePumpRate")] private int _maxVolumeFilterRate = 100;
+
+        [DataField("inletDirection")] [ViewVariables]
+        private PipeDirection _initialInletDirection = PipeDirection.None;
 
         /// <summary>
         ///     The direction the filtered-out gas goes.
         /// </summary>
-        [ViewVariables]
-        private PipeDirection _initialFilterOutletDirection;
+        [DataField("filterOutletDirection")] [ViewVariables]
+        private PipeDirection _initialFilterOutletDirection = PipeDirection.None;
 
         /// <summary>
         ///     The direction the rest of the gas goes.
         /// </summary>
-        [ViewVariables]
-        private PipeDirection _initialOutletDirection;
+        [DataField("outletDirection")] [ViewVariables]
+        private PipeDirection _initialOutletDirection = PipeDirection.None;
 
         [ViewVariables]
         private PipeNode? _inletPipe;
@@ -90,17 +92,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Filters
 
         [ComponentDependency]
         private readonly AppearanceComponent? _appearance = default;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _volumeFilterRate, "startingVolumePumpRate", 0);
-            serializer.DataField(ref _maxVolumeFilterRate, "maxVolumePumpRate", 100);
-            serializer.DataField(ref _gasToFilter, "gasToFilter", Gas.Plasma);
-            serializer.DataField(ref _initialInletDirection, "inletDirection", PipeDirection.None);
-            serializer.DataField(ref _initialFilterOutletDirection, "filterOutletDirection", PipeDirection.None);
-            serializer.DataField(ref _initialOutletDirection, "outletDirection", PipeDirection.None);
-        }
 
         public override void Initialize()
         {
@@ -159,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Filters
 
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
-                Logger.Error($"{typeof(GasFilterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
+                Logger.Warning($"{typeof(GasFilterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
                 return;
             }
 
@@ -171,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Filters
 
             if (_inletPipe == null || _filterOutletPipe == null || _outletPipe == null)
             {
-                Logger.Error($"{nameof(GasFilterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                Logger.Warning($"{nameof(GasFilterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
         }

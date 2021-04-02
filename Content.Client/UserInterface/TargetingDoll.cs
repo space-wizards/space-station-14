@@ -1,7 +1,7 @@
 using System;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface
@@ -36,7 +36,7 @@ namespace Content.Client.UserInterface
             }
         }
 
-        public event Action<TargetingZone> OnZoneChanged;
+        public event Action<TargetingZone>? OnZoneChanged;
 
         public TargetingDoll(IResourceCache resourceCache)
         {
@@ -44,21 +44,21 @@ namespace Content.Client.UserInterface
             {
                 TextureNormal = resourceCache.GetTexture(TextureHigh),
                 StyleClasses = {StyleClassTargetDollZone},
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                HorizontalAlignment = HAlignment.Center
             };
 
             _buttonMiddle = new TextureButton
             {
                 TextureNormal = resourceCache.GetTexture(TextureMiddle),
                 StyleClasses = {StyleClassTargetDollZone},
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                HorizontalAlignment = HAlignment.Center
             };
 
             _buttonLow = new TextureButton
             {
                 TextureNormal = resourceCache.GetTexture(TextureLow),
                 StyleClasses = {StyleClassTargetDollZone},
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                HorizontalAlignment = HAlignment.Center
             };
 
             _buttonHigh.OnPressed += _ => ActiveZone = TargetingZone.High;

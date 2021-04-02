@@ -1,13 +1,33 @@
-# Both humans and NPCs inherit from this.
 # Anything human specific (e.g. UI, input) goes under HumanMob_Content
 - type: entity
   save: false
   name: Urist McHands
   id: BaseHumanMob_Content
   description: A miserable pile of secrets.
-  drawdepth: Mobs
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - Teleportable
+    - FootstepSound
+  - type: Reactive
+    reactions:
+    - !type:ExtinguishReaction
+      touch: true
+      reagents:
+      - chem.Water
+    - !type:FlammableReaction
+      touch: true
+      reagents:
+      - chem.WeldingFuel
+      - chem.Thermite
+      - chem.Plasma
+      - chem.Ethanol
+    - !type:WashCreamPieReaction
+      touch: true
+      reagents:
+      - chem.Water
+      - chem.SpaceCleaner
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
@@ -34,6 +54,7 @@
     state: full
   - type: Sprite
     netsync: false
+    noRot: true
     drawdepth: Mobs
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
@@ -113,19 +134,21 @@
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
   - type: Physics
-    anchored: false
-    mass: 85
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.35,-0.35,0.35,0.35"
+    bodyType: KinematicController
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 70
+      restitution: 0.0
       mask:
       - Impassable
       - MobImpassable
       - VaultImpassable
+      - SmallImpassable
       layer:
       - Opaque
       - MobImpassable
-  - type: PlayerInputMover
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
@@ -185,17 +208,13 @@
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
-  - type: Teleportable
   - type: CharacterInfo
-  - type: FootstepSound
   - type: AnimationPlayer
   - type: Buckle
   - type: UnarmedCombat
     range: 0.8
     arcwidth: 30
     arc: fist
-  - type: Grammar
-    proper: true
   - type: Pullable
   - type: DoAfter
   - type: CreamPied
@@ -299,11 +318,13 @@
       - map: ["hand-left"]
       - map: ["hand-right"]
     - type: Physics
-      anchored: false
-      mass: 85
-      shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.35,-0.35,0.35,0.35"
+      bodyType: Dynamic
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.35,-0.35,0.35,0.35"
+        mass: 70
+        restitution: 0.0
         mask:
         - Impassable
         - MobImpassable
@@ -326,5 +347,3 @@
     - type: Appearance
       visuals:
       - type: RotationVisualizer
-    - type: Grammar
-      proper: true

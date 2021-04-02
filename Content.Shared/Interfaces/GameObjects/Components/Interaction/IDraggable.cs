@@ -1,6 +1,7 @@
-﻿using System;
+#nullable enable
+using System;
 using Robust.Shared.Analyzers;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
@@ -57,7 +58,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         }
     }
 
-    public class StartDragDropEventArgs : EventArgs
+    public class StartDragDropEventArgs : EntityEventArgs
     {
         /// <summary>
         ///     Creates a new instance of <see cref="StartDragDropEventArgs"/>.

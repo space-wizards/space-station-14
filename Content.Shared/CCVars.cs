@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared;
 using Robust.Shared.Configuration;
 
@@ -165,6 +166,29 @@ namespace Content.Shared
         public static readonly CVarDef<bool> ParallaxDebug =
             CVarDef.Create("parallax.debug", false, CVar.CLIENTONLY);
 
+        /*
+         * Physics
+         */
+
+        public static readonly CVarDef<float> TileFrictionModifier =
+            CVarDef.Create("physics.tilefriction", 15.0f);
+
+        public static readonly CVarDef<float> StopSpeed =
+            CVarDef.Create("physics.stopspeed", 0.1f);
+
+        /*
+         * Ambience
+         */
+
+        public static readonly CVarDef<bool> AmbienceBasicEnabled =
+            CVarDef.Create("ambience.basicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /*
+         * Lobby music
+         */
+
+        public static readonly CVarDef<bool> LobbyMusicEnabled =
+            CVarDef.Create("ambience.lobbymusicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * AI
@@ -211,6 +235,13 @@ namespace Content.Shared
             CVarDef.Create("atmos.monstermos_equalization", true, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Whether atmos superconduction is enabled.
+        /// </summary>
+        /// <remarks> Disabled by default, superconduction is awful. </remarks>
+        public static readonly CVarDef<bool> Superconduction =
+            CVarDef.Create("atmos.superconduction", false, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Maximum time in milliseconds that atmos can take processing.
         /// </summary>
         public static readonly CVarDef<float> AtmosMaxProcessTime =
@@ -242,9 +273,37 @@ namespace Content.Shared
             CVarDef.Create("midi.max_lagged_batches", 8, CVar.SERVERONLY);
 
         /*
+         * Holidays
+         */
+
+        public static readonly CVarDef<bool> HolidaysEnabled = CVarDef.Create("holidays.enabled", true, CVar.SERVERONLY);
+
+        /*
          * Branding stuff
          */
 
         public static readonly CVarDef<bool> BrandingSteam = CVarDef.Create("branding.steam", false, CVar.CLIENTONLY);
+
+        /*
+         * OOC
+         */
+
+        public static readonly CVarDef<bool> OocEnabled = CVarDef.Create("ooc.enabled", true, CVar.NOTIFY);
+
+        public static readonly CVarDef<bool> AdminOocEnabled =
+            CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
+
+        /*
+         * Context Menu Grouping Types
+         */
+        public static readonly CVarDef<int> ContextMenuGroupingType = CVarDef.Create("context_menu", 0, CVar.CLIENTONLY);
+
+        /*
+         * VOTE
+         */
+
+        public static readonly CVarDef<float> VoteRestartRequiredRatio =
+            CVarDef.Create("vote.restart_required_ratio", 0.8f, CVar.SERVERONLY);
+
     }
 }

@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using Content.Client.GameObjects.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using static Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.Client.GameObjects.Components.IconSmoothing
@@ -27,25 +25,28 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
     [RegisterComponent]
     public class IconSmoothComponent : Component
     {
-        private string _smoothKey;
-        private string _stateBase;
-        private IconSmoothingMode _mode;
+        [DataField("mode")]
+        private IconSmoothingMode _mode = IconSmoothingMode.Corners;
 
         public override string Name => "IconSmooth";
 
-        internal ISpriteComponent Sprite { get; private set; }
-        internal SnapGridComponent SnapGrid { get; private set; }
+        internal ISpriteComponent? Sprite { get; private set; }
+
+        internal SnapGridComponent? SnapGrid { get; private set; }
+
         private (GridId, Vector2i) _lastPosition;
 
         /// <summary>
         ///     We will smooth with other objects with the same key.
         /// </summary>
-        public string SmoothKey => _smoothKey;
+        [field: DataField("key")]
+        public string? SmoothKey { get; }
 
         /// <summary>
         ///     Prepended to the RSI state.
         /// </summary>
-        public string StateBase => _stateBase;
+        [field: DataField("base")]
+        public string StateBase { get; } = string.Empty;
 
         /// <summary>
         ///     Mode that controls how the icon should be selected.
@@ -65,26 +66,23 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             Sprite = Owner.GetComponent<ISpriteComponent>();
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataFieldCached(ref _stateBase, "base", "");
-            serializer.DataFieldCached(ref _smoothKey, "key", null);
-            serializer.DataFieldCached(ref _mode, "mode", IconSmoothingMode.Corners);
-        }
-
         /// <inheritdoc />
         protected override void Startup()
         {
             base.Startup();
 
-            SnapGrid.OnPositionChanged += SnapGridOnPositionChanged;
-            // ensures lastposition initial value is populated on spawn. Just calling
-            // the hook here would cause a dirty event to fire needlessly
-            _lastPosition = (Owner.Transform.GridID, SnapGrid.Position);
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner,null, SnapGrid.Offset, Mode));
-            if (Mode == IconSmoothingMode.Corners)
+            if (SnapGrid != null)
+            {
+                SnapGrid.OnPositionChanged += SnapGridOnPositionChanged;
+
+                // ensures lastposition initial value is populated on spawn. Just calling
+                // the hook here would cause a dirty event to fire needlessly
+                _lastPosition = (Owner.Transform.GridID, SnapGrid.Position);
+
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner,null, SnapGrid.Offset, Mode));
+            }
+
+            if (Sprite != null && Mode == IconSmoothingMode.Corners)
             {
                 var state0 = $"{StateBase}0";
                 Sprite.LayerMapSet(CornerLayers.SE, Sprite.AddLayerState(state0));
@@ -117,6 +115,11 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
         private void CalculateNewSpriteCardinal()
         {
+            if (SnapGrid == null || Sprite == null)
+            {
+                return;
+            }
+
             var dirs = CardinalConnectDirs.None;
 
             if (MatchingEntity(SnapGrid.GetInDir(Direction.North)))
@@ -133,6 +136,11 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
         private void CalculateNewSpriteCorners()
         {
+            if (Sprite == null)
+            {
+                return;
+            }
+
             var (cornerNE, cornerNW, cornerSW, cornerSE) = CalculateCornerFill();
 
             Sprite.LayerSetState(CornerLayers.NE, $"{StateBase}{(int) cornerNE}");
@@ -143,6 +151,11 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
         protected (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill()
         {
+            if (SnapGrid == null)
+            {
+                return (CornerFill.None, CornerFill.None, CornerFill.None, CornerFill.None);
+            }
+
             var n = MatchingEntity(SnapGrid.GetInDir(Direction.North));
             var ne = MatchingEntity(SnapGrid.GetInDir(Direction.NorthEast));
             var e = MatchingEntity(SnapGrid.GetInDir(Direction.East));
@@ -221,14 +234,20 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
         {
             base.Shutdown();
 
-            SnapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, SnapGrid.Offset, Mode));
+            if (SnapGrid != null)
+            {
+                SnapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, SnapGrid.Offset, Mode));
+            }
         }
 
         private void SnapGridOnPositionChanged()
         {
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, SnapGrid.Offset, Mode));
-            _lastPosition = (Owner.Transform.GridID, SnapGrid.Position);
+            if (SnapGrid != null)
+            {
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, SnapGrid.Offset, Mode));
+                _lastPosition = (Owner.Transform.GridID, SnapGrid.Position);
+            }
         }
 
         [System.Diagnostics.Contracts.Pure]
@@ -236,7 +255,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
         {
             foreach (var entity in candidates)
             {
-                if (!entity.TryGetComponent(out IconSmoothComponent other))
+                if (!entity.TryGetComponent(out IconSmoothComponent? other))
                 {
                     continue;
                 }

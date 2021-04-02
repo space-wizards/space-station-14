@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Arcade;
 using Content.Shared.Arcade;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -43,6 +41,9 @@ namespace Content.Server.GameObjects.EntitySystems
             if (highScoreEntries.Min(e => e.Score) >= entry.Score) return null;
 
             var lowestHighscore = highScoreEntries.Min();
+
+            if (lowestHighscore == null) return null;
+
             highScoreEntries.Remove(lowestHighscore);
             highScoreEntries.Add(entry);
             return GetPlacement(highScoreEntries, entry);

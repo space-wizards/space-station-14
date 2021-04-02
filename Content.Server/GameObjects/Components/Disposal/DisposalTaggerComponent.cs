@@ -1,28 +1,22 @@
-﻿#nullable enable
-using Content.Server.GameObjects.Components.Mobs;
+#nullable enable
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.Console;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
-using System;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.Player;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalTaggerComponent;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -39,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         public bool Anchored =>
             !Owner.TryGetComponent(out PhysicsComponent? physics) ||
-            physics.Anchored;
+            physics.BodyType == BodyType.Static;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalTaggerUiKey.Key);
 
@@ -119,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void ClickSound()
         {
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         /// <summary>
@@ -166,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
 
                 data.Text = Loc.GetString("Open Configuration");
-                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.96dpi.png";
+                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, DisposalTaggerComponent component)

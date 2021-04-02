@@ -13,12 +13,11 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
         public delegate void OptionSelectedCallback(int selectedOptionData);
 
         private readonly VBoxContainer _optionsBox;
-        private OptionSelectedCallback _optionSelectedCallback;
-
-        protected override Vector2? CustomSize => (300, 400);
+        private OptionSelectedCallback? _optionSelectedCallback;
 
         public SurgeryWindow()
         {
+            MinSize = SetSize = (300, 400);
             Title = Loc.GetString("Surgery");
             RectClipContent = true;
 
@@ -28,15 +27,15 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
                 {
                     new ScrollContainer
                     {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        VerticalExpand = true,
+                        HorizontalExpand = true,
                         HScrollEnabled = true,
                         VScrollEnabled = true,
                         Children =
                         {
                             (_optionsBox = new VBoxContainer
                             {
-                                SizeFlagsHorizontal = SizeFlags.FillExpand
+                                HorizontalExpand = true
                             })
                         }
                     }
@@ -66,7 +65,7 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
         {
             if (args.Button.Parent is SurgeryButton surgery)
             {
-                _optionSelectedCallback(surgery.CallbackData);
+                _optionSelectedCallback?.Invoke(surgery.CallbackData);
             }
         }
     }
@@ -87,8 +86,8 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
 
             Button = new Button
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 ToggleMode = true,
                 MouseFilter = MouseFilterMode.Stop
             };
@@ -101,16 +100,16 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
                 {
                     (SpriteView = new SpriteView
                     {
-                        CustomMinimumSize = new Vector2(32.0f, 32.0f)
+                        MinSize = new Vector2(32.0f, 32.0f)
                     }),
                     (DisplayText = new Label
                     {
-                        SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                        VerticalAlignment = VAlignment.Center,
                         Text = "N/A",
                     }),
                     (new Control
                     {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand
+                        HorizontalExpand = true
                     })
                 }
             });

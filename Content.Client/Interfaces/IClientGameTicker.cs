@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Robust.Shared.Network;
-using Robust.Shared.Timing;
 using static Content.Shared.GameTicking.SharedGameTicker;
 
 namespace Content.Client.Interfaces
@@ -9,8 +8,9 @@ namespace Content.Client.Interfaces
     public interface IClientGameTicker
     {
         bool IsGameStarted { get; }
-        string ServerInfoBlob { get; }
+        string? ServerInfoBlob { get; }
         bool AreWeReady { get; }
+        string? LobbySong { get; }
         bool DisallowedLateJoin { get; }
         TimeSpan StartTime { get; }
         bool Paused { get; }

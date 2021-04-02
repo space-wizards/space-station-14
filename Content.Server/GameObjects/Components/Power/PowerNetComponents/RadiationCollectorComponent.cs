@@ -7,12 +7,10 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Physics;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {
@@ -40,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         private void OnAnchoredChanged()
         {
-            if(_collidableComponent != null && _collidableComponent.Anchored)
+            if(_collidableComponent != null && _collidableComponent.BodyType == BodyType.Static)
                 Owner.SnapToGrid();
         }
 

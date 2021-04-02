@@ -4,16 +4,12 @@ using Content.Client.GameObjects.Components.Weapons.Melee;
 using Content.Shared.GameObjects.Components.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.EntitySystemMessages;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using static Content.Shared.GameObjects.EntitySystemMessages.MeleeWeaponSystemMessages;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -42,7 +38,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void PlayWeaponArc(PlayMeleeWeaponAnimationMessage msg)
         {
-            if (!_prototypeManager.TryIndex(msg.ArcPrototype, out MeleeWeaponAnimationPrototype weaponArc))
+            if (!_prototypeManager.TryIndex(msg.ArcPrototype, out MeleeWeaponAnimationPrototype? weaponArc))
             {
                 Logger.Error("Tried to play unknown weapon arc prototype '{0}'", msg.ArcPrototype);
                 return;
@@ -50,7 +46,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             if (!EntityManager.TryGetEntity(msg.Attacker, out var attacker))
             {
-                //FIXME: This should never happen.
+                // FIXME: This should never happen.
                 Logger.Error($"Tried to play a weapon arc {msg.ArcPrototype}, but the attacker does not exist. attacker={msg.Attacker}, source={msg.Source}");
                 return;
             }
@@ -67,8 +63,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 weaponArcAnimation.SetData(weaponArc, msg.Angle, attacker, msg.ArcFollowAttacker);
 
                 // Due to ISpriteComponent limitations, weapons that don't use an RSI won't have this effect.
-                if (EntityManager.TryGetEntity(msg.Source, out var source) && msg.TextureEffect && source.TryGetComponent(out ISpriteComponent sourceSprite)
-                    && sourceSprite.BaseRSI?.Path != null)
+                if (EntityManager.TryGetEntity(msg.Source, out var source) &&
+                    msg.TextureEffect &&
+                    source.TryGetComponent(out ISpriteComponent? sourceSprite) &&
+                    sourceSprite.BaseRSI?.Path != null)
                 {
                     var sys = Get<EffectSystem>();
                     var curTime = _gameTiming.CurTime;
@@ -95,7 +93,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     continue;
                 }
 
-                if (!hitEntity.TryGetComponent(out ISpriteComponent sprite))
+                if (!hitEntity.TryGetComponent(out ISpriteComponent? sprite))
                 {
                     continue;
                 }
@@ -117,10 +115,15 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void PlayLunge(PlayLungeAnimationMessage msg)
         {
-            EntityManager
-                .GetEntity(msg.Source)
-                .EnsureComponent<MeleeLungeComponent>()
-                .SetData(msg.Angle);
+            if (EntityManager.TryGetEntity(msg.Source, out var entity))
+            {
+                entity.EnsureComponent<MeleeLungeComponent>().SetData(msg.Angle);
+            }
+            else
+            {
+                // FIXME: This should never happen.
+                Logger.Error($"Tried to play a lunge animation, but the entity \"{msg.Source}\" does not exist.");
+            }
         }
     }
 }

@@ -7,14 +7,11 @@ using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.JobQueues.Queues;
 using Content.Shared.GameTicking;
 using Content.Shared.Physics;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
@@ -33,7 +30,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        
+
         public IReadOnlyDictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> Graph => _graph;
         private readonly Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> _graph = new();
 
@@ -85,7 +82,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             foreach (var update in _collidableUpdateQueue)
             {
-                var entity = EntityManager.GetEntity(update.Owner);
+                if (!EntityManager.TryGetEntity(update.Owner, out var entity)) continue;
+
                 if (update.CanCollide)
                 {
                     HandleEntityAdd(entity);
@@ -239,7 +237,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             }
         }
 
-        private void QueueGridChange(object sender, GridChangedEventArgs eventArgs)
+        private void QueueGridChange(object? sender, GridChangedEventArgs eventArgs)
         {
             foreach (var (position, _) in eventArgs.Modified)
             {
@@ -247,7 +245,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             }
         }
 
-        private void QueueTileChange(object sender, TileChangedEventArgs eventArgs)
+        private void QueueTileChange(object? sender, TileChangedEventArgs eventArgs)
         {
             _tileUpdateQueue.Enqueue(eventArgs.NewTile);
         }
@@ -266,7 +264,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             if (entity.Deleted ||
                 _lastKnownPositions.ContainsKey(entity) ||
-                !entity.TryGetComponent(out IPhysicsComponent physics) ||
+                !entity.TryGetComponent(out IPhysBody? physics) ||
                 !PathfindingNode.IsRelevant(entity, physics))
             {
                 return;
@@ -305,7 +303,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             // If we've moved to space or the likes then remove us.
             if (moveEvent.Sender.Deleted ||
-                !moveEvent.Sender.TryGetComponent(out IPhysicsComponent physics) ||
+                !moveEvent.Sender.TryGetComponent(out IPhysBody? physics) ||
                 !PathfindingNode.IsRelevant(moveEvent.Sender, physics) ||
                 moveEvent.NewPosition.GetGridId(EntityManager) == GridId.Invalid)
             {
@@ -370,7 +368,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
         public bool CanTraverse(IEntity entity, PathfindingNode node)
         {
-            if (entity.TryGetComponent(out IPhysicsComponent physics) &&
+            if (entity.TryGetComponent(out IPhysBody? physics) &&
                 (physics.CollisionMask & node.BlockedCollisionMask) != 0)
             {
                 return false;

@@ -1,15 +1,14 @@
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using static Content.Client.StaticIoC;
 
 namespace Content.Client.State
@@ -22,24 +21,16 @@ namespace Content.Client.State
         [Dependency] private readonly IGameController _gameController = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
 
-        private Control _control;
-        private Label _connectStatus;
+        private Control? _control;
+        private Label? _connectStatus;
 
-        private Control _connectingStatus;
-        private Control _connectFail;
-        private Label _connectFailReason;
-        private Control _disconnected;
+        private Control? _connectingStatus;
+        private Control? _connectFail;
+        private Label? _connectFailReason;
+        private Control? _disconnected;
 
         public override void Startup()
         {
-            var panelTex = ResC.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
-            var back = new StyleBoxTexture
-            {
-                Texture = panelTex,
-                Modulate = new Color(32, 32, 48),
-            };
-            back.SetPatchMargin(StyleBox.Margin.All, 10);
-
             Button exitButton;
             Button reconnectButton;
             Button retryButton;
@@ -51,38 +42,30 @@ namespace Content.Client.State
                 Stylesheet = _stylesheetManager.SheetSpace,
                 Children =
                 {
-                    new PanelContainer
-                    {
-                        PanelOverride = back
-                    },
+                    new PanelContainer {StyleClasses = {StyleBase.ClassAngleRect}},
                     new VBoxContainer
                     {
                         SeparationOverride = 0,
-                        CustomMinimumSize = (300, 200),
+                        MinSize = (300, 200),
                         Children =
                         {
                             new HBoxContainer
                             {
                                 Children =
                                 {
-                                    new MarginContainer
+                                    new Label
                                     {
-                                        MarginLeftOverride = 8,
-                                        Children =
-                                        {
-                                            new Label
-                                            {
-                                                Text = Loc.GetString("Space Station 14"),
-                                                StyleClasses = {StyleBase.StyleClassLabelHeading},
-                                                VAlign = Label.VAlignMode.Center
-                                            },
-                                        }
+                                        Margin = new Thickness(8, 0, 0, 0),
+                                        Text = Loc.GetString("Space Station 14"),
+                                        StyleClasses = {StyleBase.StyleClassLabelHeading},
+                                        VAlign = Label.VAlignMode.Center
                                     },
 
                                     (exitButton = new Button
                                     {
                                         Text = Loc.GetString("Exit"),
-                                        SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd | Control.SizeFlags.Expand
+                                        HorizontalAlignment = Control.HAlignment.Right,
+                                        HorizontalExpand = true,
                                     }),
                                 }
                             },
@@ -90,103 +73,93 @@ namespace Content.Client.State
                             // Line
                             new HighDivider(),
 
-                            new MarginContainer
+                            new VBoxContainer
                             {
-                                SizeFlagsVertical = Control.SizeFlags.FillExpand,
-                                MarginLeftOverride = 4,
-                                MarginRightOverride = 4,
-                                MarginTopOverride = 4,
+                                VerticalExpand = true,
+                                Margin = new Thickness(4, 4, 4, 0),
+                                SeparationOverride = 0,
                                 Children =
                                 {
-                                    new VBoxContainer
+                                    new Control
                                     {
-                                        SeparationOverride = 0,
+                                        VerticalExpand = true,
                                         Children =
                                         {
-                                            new Control
+                                            (_connectingStatus = new VBoxContainer
                                             {
-                                                SizeFlagsVertical = Control.SizeFlags.FillExpand,
+                                                SeparationOverride = 0,
                                                 Children =
                                                 {
-                                                    (_connectingStatus = new VBoxContainer
+                                                    new Label
                                                     {
-                                                        SeparationOverride = 0,
-                                                        Children =
-                                                        {
-                                                            new Label
-                                                            {
-                                                                Text = Loc.GetString("Connecting to server..."),
-                                                                Align = Label.AlignMode.Center,
-                                                            },
+                                                        Text = Loc.GetString("Connecting to server..."),
+                                                        Align = Label.AlignMode.Center,
+                                                    },
 
-                                                            (_connectStatus = new Label
-                                                            {
-                                                                StyleClasses = {StyleBase.StyleClassLabelSubText},
-                                                                Align = Label.AlignMode.Center,
-                                                            }),
-                                                        }
+                                                    (_connectStatus = new Label
+                                                    {
+                                                        StyleClasses = {StyleBase.StyleClassLabelSubText},
+                                                        Align = Label.AlignMode.Center,
                                                     }),
-                                                    (_connectFail = new VBoxContainer
+                                                }
+                                            }),
+                                            (_connectFail = new VBoxContainer
+                                            {
+                                                Visible = false,
+                                                SeparationOverride = 0,
+                                                Children =
+                                                {
+                                                    (_connectFailReason = new Label
                                                     {
-                                                        Visible = false,
-                                                        SeparationOverride = 0,
-                                                        Children =
-                                                        {
-                                                            (_connectFailReason = new Label
-                                                            {
-                                                                Align = Label.AlignMode.Center
-                                                            }),
-
-                                                            (retryButton = new Button
-                                                            {
-                                                                Text = "Retry",
-                                                                SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter,
-                                                                SizeFlagsVertical =
-                                                                    Control.SizeFlags.Expand |
-                                                                    Control.SizeFlags.ShrinkEnd
-                                                            })
-                                                        }
+                                                        Align = Label.AlignMode.Center
                                                     }),
 
-                                                    (_disconnected = new VBoxContainer
+                                                    (retryButton = new Button
                                                     {
-                                                        SeparationOverride = 0,
-                                                        Children =
-                                                        {
-                                                            new Label
-                                                            {
-                                                                Text = "Disconnected from server:",
-                                                                Align = Label.AlignMode.Center
-                                                            },
-                                                            new Label
-                                                            {
-                                                                Text = _baseClient.LastDisconnectReason,
-                                                                Align = Label.AlignMode.Center
-                                                            },
-                                                            (reconnectButton = new Button
-                                                            {
-                                                                Text = "Reconnect",
-                                                                SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter,
-                                                                SizeFlagsVertical =
-                                                                    Control.SizeFlags.Expand |
-                                                                    Control.SizeFlags.ShrinkEnd
-                                                            })
-                                                        }
+                                                        Text = "Retry",
+                                                        HorizontalAlignment = Control.HAlignment.Center,
+                                                        VerticalExpand = true,
+                                                        VerticalAlignment = Control.VAlignment.Bottom,
                                                     })
                                                 }
-                                            },
+                                            }),
 
-                                            // Padding.
-                                            new Control {CustomMinimumSize = (0, 8)},
-
-                                            new Label
+                                            (_disconnected = new VBoxContainer
                                             {
-                                                Text = address,
-                                                StyleClasses = {StyleBase.StyleClassLabelSubText},
-                                                SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter,
-                                            }
+                                                SeparationOverride = 0,
+                                                Children =
+                                                {
+                                                    new Label
+                                                    {
+                                                        Text = "Disconnected from server:",
+                                                        Align = Label.AlignMode.Center
+                                                    },
+                                                    new Label
+                                                    {
+                                                        Text = _baseClient.LastDisconnectReason,
+                                                        Align = Label.AlignMode.Center
+                                                    },
+                                                    (reconnectButton = new Button
+                                                    {
+                                                        Text = "Reconnect",
+                                                        HorizontalAlignment = Control.HAlignment.Center,
+                                                        VerticalExpand = true,
+                                                        VerticalAlignment = Control.VAlignment.Bottom,
+                                                    })
+                                                }
+                                            })
                                         }
                                     },
+
+                                    // Padding.
+                                    new Control {MinSize = (0, 8)},
+
+                                    new Label
+                                    {
+                                        Text = address,
+                                        StyleClasses = {StyleBase.StyleClassLabelSubText},
+                                        HorizontalAlignment = Control.HAlignment.Center
+                                    }
                                 }
                             },
 
@@ -199,31 +172,23 @@ namespace Content.Client.State
                                     ContentMarginTopOverride = 2
                                 },
                             },
-
-                            new MarginContainer
+                            new HBoxContainer
                             {
-                                MarginLeftOverride = 12,
-                                MarginRightOverride = 4,
+                                Margin = new Thickness(12, 0, 4, 0),
+                                VerticalAlignment = Control.VAlignment.Bottom,
                                 Children =
                                 {
-                                    new HBoxContainer
+                                    new Label
                                     {
-                                        SizeFlagsVertical = Control.SizeFlags.ShrinkEnd,
-                                        Children =
-                                        {
-                                            new Label
-                                            {
-                                                Text = Loc.GetString("Don't die!"),
-                                                StyleClasses = {StyleBase.StyleClassLabelSubText}
-                                            },
-                                            new Label
-                                            {
-                                                Text = "ver 0.1",
-                                                SizeFlagsHorizontal =
-                                                    Control.SizeFlags.Expand | Control.SizeFlags.ShrinkEnd,
-                                                StyleClasses = {StyleBase.StyleClassLabelSubText}
-                                            }
-                                        }
+                                        Text = Loc.GetString("Don't die!"),
+                                        StyleClasses = {StyleBase.StyleClassLabelSubText}
+                                    },
+                                    new Label
+                                    {
+                                        Text = "ver 0.1",
+                                        HorizontalExpand = true,
+                                        HorizontalAlignment = Control.HAlignment.Right,
+                                        StyleClasses = {StyleBase.StyleClassLabelSubText}
                                     }
                                 }
                             },
@@ -238,21 +203,24 @@ namespace Content.Client.State
             LayoutContainer.SetGrowHorizontal(_control, LayoutContainer.GrowDirection.Both);
             LayoutContainer.SetGrowVertical(_control, LayoutContainer.GrowDirection.Both);
 
-            exitButton.OnPressed += args =>
+            exitButton.OnPressed += _ =>
             {
                 _gameController.Shutdown("Exit button pressed");
             };
 
             void Retry(BaseButton.ButtonEventArgs args)
             {
-                _baseClient.ConnectToServer(_gameController.LaunchState.ConnectEndpoint);
-                SetActivePage(Page.Connecting);
+                if (_gameController.LaunchState.ConnectEndpoint != null)
+                {
+                    _baseClient.ConnectToServer(_gameController.LaunchState.ConnectEndpoint);
+                    SetActivePage(Page.Connecting);
+                }
             }
 
             reconnectButton.OnPressed += Retry;
             retryButton.OnPressed += Retry;
 
-            _clientNetManager.ConnectFailed += (sender, args) =>
+            _clientNetManager.ConnectFailed += (_, args) =>
             {
                 _connectFailReason.Text = Loc.GetString("Failed to connect to server:\n{0}", args.Reason);
                 SetActivePage(Page.ConnectFailed);
@@ -267,6 +235,8 @@ namespace Content.Client.State
 
         private void ConnectStateChanged(ClientConnectionState state)
         {
+            if (_connectStatus == null) return;
+
             _connectStatus.Text = Loc.GetString(state switch
             {
                 ClientConnectionState.NotConnecting => "You should not be seeing this",
@@ -280,7 +250,7 @@ namespace Content.Client.State
 
         public override void Shutdown()
         {
-            _control.Dispose();
+            _control?.Dispose();
         }
 
         public void SetDisconnected()
@@ -290,9 +260,9 @@ namespace Content.Client.State
 
         private void SetActivePage(Page page)
         {
-            _connectingStatus.Visible = page == Page.Connecting;
-            _connectFail.Visible = page == Page.ConnectFailed;
-            _disconnected.Visible = page == Page.Disconnected;
+            if (_connectingStatus != null) _connectingStatus.Visible = page == Page.Connecting;
+            if (_connectFail != null) _connectFail.Visible = page == Page.ConnectFailed;
+            if (_disconnected != null) _disconnected.Visible = page == Page.Disconnected;
         }
 
         private enum Page : byte

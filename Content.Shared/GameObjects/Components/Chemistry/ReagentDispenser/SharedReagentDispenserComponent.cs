@@ -1,8 +1,8 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
@@ -37,12 +37,12 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
             /// <summary>
             /// A list of the reagents and their amounts within the beaker/reagent container, if applicable.
             /// </summary>
-            public readonly List<Solution.ReagentQuantity> ContainerReagents;
+            public readonly List<Solution.ReagentQuantity>? ContainerReagents;
             public readonly string DispenserName;
             public readonly ReagentUnit SelectedDispenseAmount;
 
             public ReagentDispenserBoundUserInterfaceState(bool hasPower, bool hasBeaker, ReagentUnit beakerCurrentVolume, ReagentUnit beakerMaxVolume, string containerName,
-                List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Solution.ReagentQuantity> containerReagents, ReagentUnit selectedDispenseAmount)
+                List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Solution.ReagentQuantity>? containerReagents, ReagentUnit selectedDispenseAmount)
             {
                 HasPower = hasPower;
                 HasBeaker = hasBeaker;

@@ -1,5 +1,6 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+#nullable enable
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Body.Part.Property
 {
@@ -14,13 +15,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part.Property
         /// <summary>
         ///     Speed in tiles per second.
         /// </summary>
-        public float Speed { get; set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, l => l.Speed, "speed", 2.6f);
-        }
+        [DataField("speed")]
+        public float Speed { get; set; } = 2.6f;
     }
 }

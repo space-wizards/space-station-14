@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable enable
+using System;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Content.Shared.Atmos;
 using Robust.Shared.Maths;
 
@@ -40,7 +38,7 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         ///     No point re-sending every tile if only a subset might have been updated.
         /// </summary>
         [Serializable, NetSerializable]
-        public sealed class AtmosDebugOverlayMessage : EntitySystemMessage
+        public sealed class AtmosDebugOverlayMessage : EntityEventArgs
         {
             public GridId GridId { get; }
 
@@ -57,7 +55,7 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         }
 
         [Serializable, NetSerializable]
-        public sealed class AtmosDebugOverlayDisableMessage : EntitySystemMessage
+        public sealed class AtmosDebugOverlayDisableMessage : EntityEventArgs
         {
         }
     }

@@ -6,14 +6,13 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameObjects.Components.Power.AME
 {
@@ -35,24 +34,25 @@ namespace Content.Server.GameObjects.Components.Power.AME
                 return true;
             }
 
-            if (args.Using.TryGetComponent<ToolComponent>(out var multitool) && multitool.Qualities == ToolQuality.Multitool)
+            if (!args.Using.TryGetComponent<ToolComponent>(out var multitool) || multitool.Qualities != ToolQuality.Multitool)
+                return true;
+
+            if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(_serverEntityManager), out var mapGrid))
+                return false; // No AME in space.
+
+            var snapPos = mapGrid.SnapGridCellFor(args.ClickLocation, SnapGridOffset.Center);
+            if (mapGrid.GetSnapGridCell(snapPos, SnapGridOffset.Center).Any(sc => sc.Owner.HasComponent<AMEShieldComponent>()))
             {
-
-                var mapGrid = _mapManager.GetGrid(args.ClickLocation.GetGridId(_serverEntityManager));
-                var snapPos = mapGrid.SnapGridCellFor(args.ClickLocation, SnapGridOffset.Center);
-                if (mapGrid.GetSnapGridCell(snapPos, SnapGridOffset.Center).Any(sc => sc.Owner.HasComponent<AMEShieldComponent>()))
-                {
-                    Owner.PopupMessage(args.User, Loc.GetString("Shielding is already there!"));
-                    return true;
-                }
-
-                var ent = _serverEntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
-                ent.Transform.LocalRotation = Owner.Transform.LocalRotation;
-
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_unwrap, Owner);
-
-                Owner.Delete();
+                Owner.PopupMessage(args.User, Loc.GetString("Shielding is already there!"));
+                return true;
             }
+
+            var ent = _serverEntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
+            ent.Transform.LocalRotation = Owner.Transform.LocalRotation;
+
+            SoundSystem.Play(Filter.Pvs(Owner), _unwrap, Owner);
+
+            Owner.Delete();
 
             return true;
         }

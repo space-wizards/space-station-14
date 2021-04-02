@@ -6,17 +6,13 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.GUI;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -287,7 +283,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 if (!inventory.HasSlot(slot))
                     return false;
 
-                if (!inventory.TryGetSlotItem(slot, out ItemComponent itemToTake))
+                if (!inventory.TryGetSlotItem(slot, out ItemComponent? itemToTake))
                 {
                     user.PopupMessageCursor(Loc.GetString("{0:They} {0:have} nothing there!", Owner));
                     return false;
@@ -318,7 +314,12 @@ namespace Content.Server.GameObjects.Components.GUI
 
             var item = inventory.GetSlotItem(slot);
             inventory.Unequip(slot, false);
-            userHands.PutInHandOrDrop(item);
+
+            if (item != null)
+            {
+                userHands.PutInHandOrDrop(item);
+            }
+
             UpdateSubscribed();
         }
 

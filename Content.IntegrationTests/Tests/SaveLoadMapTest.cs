@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using NUnit.Framework;
-using Robust.Server.Interfaces.Maps;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Resources;
+using Robust.Server.Maps;
+using Robust.Shared.ContentPack;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -19,7 +19,10 @@ namespace Content.IntegrationTests.Tests
         {
             const string mapPath = @"/Maps/Test/TestMap.yml";
 
-            var server = StartServer();
+            var server = StartServer(new ServerContentIntegrationOption
+            {
+                FailureLogLevel = LogLevel.Error
+            });
             await server.WaitIdleAsync();
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();

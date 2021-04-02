@@ -1,19 +1,15 @@
 using System;
 using Content.Shared.Damage;
 using Content.Shared.Physics;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.EntitySystemMessages;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
@@ -27,40 +23,36 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         public override string Name => "Hitscan";
         public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
-        private int _collisionMask;
+
+        [DataField("layers")] //todo  WithFormat.Flags<CollisionLayer>()
+        private int _collisionMask = (int) CollisionGroup.Opaque;
 
         public float Damage
         {
             get => _damage;
             set => _damage = value;
         }
-        private float _damage;
+        [DataField("damage")]
+        private float _damage = 10f;
         public DamageType DamageType => _damageType;
-        private DamageType _damageType;
+        [DataField("damageType")]
+        private DamageType _damageType = DamageType.Heat;
         public float MaxLength => 20.0f;
 
         private TimeSpan _startTime;
         private TimeSpan _deathTime;
 
         public float ColorModifier { get; set; } = 1.0f;
-        private string _spriteName;
-        private string _muzzleFlash;
-        private string _impactFlash;
-        private string _soundHitWall;
+        [DataField("spriteName")]
+        private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
+        [DataField("muzzleFlash")]
+        private string? _muzzleFlash;
+        [DataField("impactFlash")]
+        private string? _impactFlash;
+        [DataField("soundHitWall")]
+        private string _soundHitWall = "/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg";
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _collisionMask, "layers", (int) CollisionGroup.Opaque, WithFormat.Flags<CollisionLayer>());
-            serializer.DataField(ref _damage, "damage", 10.0f);
-            serializer.DataField(ref _damageType, "damageType", DamageType.Heat);
-            serializer.DataField(ref _spriteName, "spriteName", "Objects/Weapons/Guns/Projectiles/laser.png");
-            serializer.DataField(ref _muzzleFlash, "muzzleFlash", null);
-            serializer.DataField(ref _impactFlash, "impactFlash", null);
-            serializer.DataField(ref _soundHitWall, "soundHitWall", "/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
-        }
-
-        public void FireEffects(IEntity user, float distance, Angle angle, IEntity hitEntity = null)
+        public void FireEffects(IEntity user, float distance, Angle angle, IEntity? hitEntity = null)
         {
             var effectSystem = EntitySystem.Get<EffectSystem>();
             _startTime = _gameTiming.CurTime;
@@ -92,7 +84,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
             {
                 // TODO: No wall component so ?
                 var offset = angle.ToVec().Normalized / 2;
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitWall, user.Transform.Coordinates.Offset(offset));
+                var coordinates = user.Transform.Coordinates.Offset(offset);
+                SoundSystem.Play(Filter.Pvs(coordinates), _soundHitWall, coordinates);
             }
 
             Owner.SpawnTimer((int) _deathTime.TotalMilliseconds, () =>
@@ -104,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             });
         }
 
-        private EffectSystemMessage MuzzleFlash(EntityCoordinates grid, Angle angle)
+        private EffectSystemMessage? MuzzleFlash(EntityCoordinates grid, Angle angle)
         {
             if (_muzzleFlash == null)
             {
@@ -150,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             return message;
         }
 
-        private EffectSystemMessage ImpactFlash(float distance, Angle angle)
+        private EffectSystemMessage? ImpactFlash(float distance, Angle angle)
         {
             if (_impactFlash == null)
             {

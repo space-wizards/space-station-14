@@ -9,21 +9,17 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.EntitySystemMessages;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Explosions
 {
@@ -83,6 +79,7 @@ namespace Content.Server.Explosions
 
             var impassableEntities = new List<Tuple<IEntity, float>>();
             var nonImpassableEntities = new List<Tuple<IEntity, float>>();
+            // TODO: Given this seems to rely on physics it should just query directly like everything else.
 
             // The entities are paired with their distance to the epicenter
             // and splitted into two lists based on if they are Impassable or not
@@ -98,7 +95,7 @@ namespace Content.Server.Explosions
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out IPhysicsComponent? body) || body.PhysicsShapes.Count < 1)
+                if (!entity.TryGetComponent(out PhysicsComponent? body) || body.Fixtures.Count < 1)
                 {
                     continue;
                 }
@@ -316,7 +313,7 @@ namespace Content.Server.Explosions
             var boundingBox = new Box2(epicenterMapPos - new Vector2(maxRange, maxRange),
                 epicenterMapPos + new Vector2(maxRange, maxRange));
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/explosion.ogg", epicenter);
+            SoundSystem.Play(Filter.Broadcast(), "/Audio/Effects/explosion.ogg", epicenter);
             DamageEntitiesInRange(epicenter, boundingBox, devastationRange, heavyImpactRange, maxRange, mapId);
 
             var mapGridsNear = mapManager.FindGridsIntersecting(mapId, boundingBox);

@@ -3,10 +3,11 @@ using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Chemistry
@@ -16,37 +17,19 @@ namespace Content.Server.GameObjects.Components.Chemistry
     /// But specifically, this component deletes the entity and spawns in a new entity when the entity is exposed to a given reagent.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IReagentReaction))]
     [ComponentReference(typeof(ISolutionChange))]
-    public class RehydratableComponent : Component, IReagentReaction, ISolutionChange
+    public class RehydratableComponent : Component, ISolutionChange
     {
         public override string Name => "Rehydratable";
 
         [ViewVariables]
-        private string _catalystPrototype = "";
+        [DataField("catalyst")]
+        private string _catalystPrototype = "chem.Water";
         [ViewVariables]
-        private string? _targetPrototype;
+        [DataField("target")]
+        private string? _targetPrototype = default!;
 
         private bool _expanding;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _catalystPrototype, "catalyst", "chem.Water");
-            serializer.DataField(ref _targetPrototype, "target", null);
-        }
-
-        ReagentUnit IReagentReaction.ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume) => Reaction(reagent, volume);
-        ReagentUnit IReagentReaction.ReagentReactInjection(ReagentPrototype reagent, ReagentUnit volume) => Reaction(reagent, volume);
-
-        private ReagentUnit Reaction(ReagentPrototype reagent, ReagentUnit volume)
-        {
-            if ((volume > ReagentUnit.Zero) && (reagent.ID == _catalystPrototype))
-            {
-                Expand();
-            }
-            return ReagentUnit.Zero;
-        }
 
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
         {

@@ -3,7 +3,7 @@ using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Players;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
@@ -53,7 +53,13 @@ namespace Content.Server.Commands.Chat
 
                 if (mindComponent == null)
                 {
-                    shell.WriteLine("You don't have a mind!");
+                    shell.WriteError("You don't have a mind!");
+                    return;
+                }
+
+                if (mindComponent.OwnedEntity == null)
+                {
+                    shell.WriteError("You don't have an entity!");
                     return;
                 }
 

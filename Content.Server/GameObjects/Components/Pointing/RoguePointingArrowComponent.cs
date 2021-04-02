@@ -1,18 +1,18 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using Content.Server.Explosions;
 using Content.Shared.GameObjects.Components.Pointing;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using DrawDepth = Content.Shared.GameObjects.DrawDepth;
 
@@ -28,16 +28,20 @@ namespace Content.Server.GameObjects.Components.Pointing
         private IEntity? _chasing;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _turningDelay;
+        [DataField("turningDelay")]
+        private float _turningDelay = 2;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _chasingDelay;
+        [DataField("chasingDelay")]
+        private float _chasingDelay = 1;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _chasingSpeed;
+        [DataField("chasingSpeed")]
+        private float _chasingSpeed = 5;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _chasingTime;
+        [DataField("chasingTime")]
+        private float _chasingTime = 1;
 
         private IEntity? RandomNearbyPlayer()
         {
@@ -73,16 +77,6 @@ namespace Content.Server.GameObjects.Components.Pointing
             {
                 sprite.DrawDepth = (int) DrawDepth.Overlays;
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _turningDelay, "turningDelay", 2);
-            serializer.DataField(ref _chasingDelay, "chasingDelay", 1);
-            serializer.DataField(ref _chasingSpeed, "chasingSpeed", 5);
-            serializer.DataField(ref _chasingTime, "chasingTime", 1f);
         }
 
         public void Update(float frameTime)
@@ -128,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Pointing
             }
 
             Owner.SpawnExplosion(0, 2, 1, 1);
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/explosion.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/explosion.ogg", Owner);
 
             Owner.Delete();
         }

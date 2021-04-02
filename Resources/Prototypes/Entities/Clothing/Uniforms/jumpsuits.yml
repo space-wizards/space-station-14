@@ -65,16 +65,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/ce.rsi
 
 - type: entity
-  parent: ClothingUniformJumpsuitChiefEngineer
-  id: S
-  name: s
-  components:
-  - type: Sprite
-    state: s
-  - type: Clothing
-    HeldPrefix: s
-
-- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitChaplain
   name: chaplain's jumpsuit

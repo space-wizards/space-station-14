@@ -5,23 +5,19 @@ using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Arcade;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Arcade
@@ -43,33 +39,23 @@ namespace Content.Server.GameObjects.Components.Arcade
         [ViewVariables] private bool _enemyInvincibilityFlag;
         [ViewVariables] private SpaceVillainGame _game = null!;
 
-        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleFightVerbs = null!;
-        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleFirstEnemyNames = null!;
-        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleLastEnemyNames = null!;
-        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleRewards = null!;
-
-        public override void ExposeData(ObjectSerializer serializer)
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleFightVerbs")] private List<string> _possibleFightVerbs = new List<string>()
+            {"Defeat", "Annihilate", "Save", "Strike", "Stop", "Destroy", "Robust", "Romance", "Pwn", "Own"};
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleFirstEnemyNames")] private List<string> _possibleFirstEnemyNames = new List<string>(){
+            "the Automatic", "Farmer", "Lord", "Professor", "the Cuban", "the Evil", "the Dread King",
+            "the Space", "Lord", "the Great", "Duke", "General"
+        };
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleLastEnemyNames")] private List<string> _possibleLastEnemyNames = new List<string>()
         {
-            serializer.DataField(ref _possibleFightVerbs, "possibleFightVerbs", new List<string>()
-                {"Defeat", "Annihilate", "Save", "Strike", "Stop", "Destroy", "Robust", "Romance", "Pwn", "Own"});
-            serializer.DataField(ref _possibleFirstEnemyNames, "possibleFirstEnemyNames", new List<string>(){
-                "the Automatic", "Farmer", "Lord", "Professor", "the Cuban", "the Evil", "the Dread King",
-                "the Space", "Lord", "the Great", "Duke", "General"
-            });
-            serializer.DataField(ref _possibleLastEnemyNames, "possibleLastEnemyNames", new List<string>()
-            {
-                "Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid",
-                "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn"
-            });
-            serializer.DataField(ref _possibleRewards, "possibleRewards", new List<string>()
-            {
-                "ToyMouse", "ToyAi", "ToyNuke", "ToyAssistant", "ToyGriffin", "ToyHonk", "ToyIan",
-                "ToyMarauder", "ToyMauler", "ToyGygax", "ToyOdysseus", "ToyOwlman", "ToyDeathRipley",
-                "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton"
-            });
-
-            _game = new SpaceVillainGame(this);
-        }
+            "Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid",
+            "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn"
+        };
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleRewards")] private List<string> _possibleRewards = new List<string>()
+        {
+            "ToyMouse", "ToyAi", "ToyNuke", "ToyAssistant", "ToyGriffin", "ToyHonk", "ToyIan",
+            "ToyMarauder", "ToyMauler", "ToyGygax", "ToyOdysseus", "ToyOwlman", "ToyDeathRipley",
+            "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton"
+        };
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
@@ -82,6 +68,8 @@ namespace Content.Server.GameObjects.Components.Arcade
                 return;
             }
             if(!ActionBlockerSystem.CanInteract(actor.playerSession.AttachedEntity)) return;
+
+            _game ??= new SpaceVillainGame(this);
 
             if (_wiresComponent?.IsPanelOpen == true)
             {
@@ -140,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     _game?.ExecutePlayerAction(msg.PlayerAction);
                     break;
                 case PlayerAction.NewGame:
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/newgame.ogg", Owner, AudioParams.Default.WithVolume(-4f));
+                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/Arcade/newgame.ogg", Owner, AudioParams.Default.WithVolume(-4f));
                     _game = new SpaceVillainGame(this);
                     UserInterface?.SendMessage(_game.GenerateMetaDataMessage());
                     break;
@@ -306,7 +294,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     case PlayerAction.Attack:
                         var attackAmount = _random.Next(2, 6);
                         _latestPlayerActionMessage = Loc.GetString("You attack {0} for {1}!", _enemyName, attackAmount);
-                        EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_attack.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                        SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/player_attack.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                         if(!_owner._enemyInvincibilityFlag) _enemyHp -= attackAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                         break;
@@ -314,7 +302,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         var pointAmount = _random.Next(1, 3);
                         var healAmount = _random.Next(6, 8);
                         _latestPlayerActionMessage = Loc.GetString("You use {0} magic to heal for {1} damage!", pointAmount, healAmount);
-                        EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_heal.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                        SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/player_heal.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                         if(!_owner._playerInvincibilityFlag) _playerMp -= pointAmount;
                         _playerHp += healAmount;
                         _turtleTracker++;
@@ -322,7 +310,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     case PlayerAction.Recharge:
                         var chargeAmount = _random.Next(4, 7);
                         _latestPlayerActionMessage = Loc.GetString("You regain {0} points", chargeAmount);
-                        EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_charge.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                        SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/player_charge.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                         _playerMp += chargeAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                         break;
@@ -354,7 +342,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 {
                     _running = false;
                     UpdateUi(Loc.GetString("You won!"), Loc.GetString("{0} dies.", _enemyName), true);
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/win.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                    SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/win.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                     _owner.ProcessWin();
                     return false;
                 }
@@ -365,14 +353,14 @@ namespace Content.Server.GameObjects.Components.Arcade
                 {
                     _running = false;
                     UpdateUi(Loc.GetString("You lost!"), Loc.GetString("{0} cheers.", _enemyName), true);
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/gameover.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                    SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/gameover.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
                 if (_enemyHp <= 0 || _enemyMp <= 0)
                 {
                     _running = false;
                     UpdateUi(Loc.GetString("You lost!"), Loc.GetString("{0} dies, but takes you with him.", _enemyName), true);
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/gameover.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                    SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/gameover.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
 

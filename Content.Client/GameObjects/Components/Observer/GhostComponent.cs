@@ -5,13 +5,11 @@ using Content.Shared.GameObjects.Components.Observer;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
-#nullable enable
 namespace Content.Client.GameObjects.Components.Observer
 {
     [RegisterComponent]
@@ -21,6 +19,7 @@ namespace Content.Client.GameObjects.Components.Observer
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IComponentManager _componentManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+
         public List<string> WarpNames = new();
         public Dictionary<EntityUid,string> PlayerNames = new();
 
@@ -42,7 +41,6 @@ namespace Content.Client.GameObjects.Components.Observer
                 SetGhostVisibility(false);
             }
         }
-
 
         private void SetGhostVisibility(bool visibility)
         {
@@ -98,7 +96,9 @@ namespace Content.Client.GameObjects.Components.Observer
 
         public void SendReturnToBodyMessage() => SendNetworkMessage(new ReturnToBodyComponentMessage());
 
-        public void SendGhostWarpRequestMessage(EntityUid target = default, string warpName = default!) => SendNetworkMessage(new GhostWarpRequestMessage(target, warpName));
+        public void SendGhostWarpRequestMessage(string warpName) => SendNetworkMessage(new GhostWarpToLocationRequestMessage(warpName));
+
+        public void SendGhostWarpRequestMessage(EntityUid target) => SendNetworkMessage(new GhostWarpToTargetRequestMessage(target));
 
         public void GhostRequestWarpPoint() => SendNetworkMessage(new GhostRequestWarpPointData());
 

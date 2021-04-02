@@ -2,7 +2,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Combat.Melee
@@ -29,7 +29,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return true;
             }
 
-            if (!_owner.TryGetComponent(out CombatModeComponent combatModeComponent))
+            if (!_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
             {
                 return false;
             }
@@ -47,7 +47,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
             if (!base.Shutdown(outcome))
                 return false;
 
-            if (_owner.TryGetComponent(out CombatModeComponent combatModeComponent))
+            if (_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
             {
                 combatModeComponent.IsInCombatMode = false;
             }
@@ -62,16 +62,16 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return Outcome.Success;
             }
 
-            if (!_owner.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand == null)
+            if (!_owner.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand == null)
             {
                 return Outcome.Failed;
             }
 
             var meleeWeapon = hands.GetActiveHand.Owner;
-            meleeWeapon.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent);
+            meleeWeapon.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent);
 
             if ((_target.Transform.Coordinates.Position - _owner.Transform.Coordinates.Position).Length >
-                meleeWeaponComponent.Range)
+                meleeWeaponComponent?.Range)
             {
                 return Outcome.Failed;
             }

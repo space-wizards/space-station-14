@@ -1,11 +1,8 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Nutrition;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Console;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GlobalVerbs
@@ -20,6 +17,7 @@ namespace Content.Server.GlobalVerbs
         {
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Invisible;
+            data.IconTexture = "/Textures/Interface/VerbIcons/anchor.svg.192dpi.png";
 
             var groupController = IoCManager.Resolve<IConGroupController>();
 

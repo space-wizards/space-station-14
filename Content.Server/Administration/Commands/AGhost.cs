@@ -1,11 +1,10 @@
-﻿using Content.Server.Commands.Observer;
-using Content.Server.GameObjects.Components.Observer;
+﻿using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Shared.Administration;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
@@ -34,32 +33,29 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (mind.VisitingEntity != null && mind.VisitingEntity.Prototype?.ID == "AdminObserver")
+            if (mind.VisitingEntity != null && mind.VisitingEntity.HasComponent<GhostComponent>())
             {
-                var visiting = mind.VisitingEntity;
-                mind.UnVisit();
-                visiting.Delete();
+                shell.WriteLine("Aren't you a ghost already?");
+                return;
+            }
+
+            var canReturn = mind.CurrentEntity != null;
+            var ghost = IoCManager.Resolve<IEntityManager>()
+                .SpawnEntity("AdminObserver", player.AttachedEntity?.Transform.Coordinates
+                                              ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint());
+
+            if (canReturn)
+            {
+                ghost.Name = mind.CharacterName ?? string.Empty;
+                mind.Visit(ghost);
             }
             else
             {
-                var canReturn = mind.CurrentEntity != null;
-                var ghost = IoCManager.Resolve<IEntityManager>()
-                    .SpawnEntity("AdminObserver", player.AttachedEntity?.Transform.Coordinates
-                                                  ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint());
-
-                if (canReturn)
-                {
-                    ghost.Name = mind.CharacterName;
-                    mind.Visit(ghost);
-                }
-                else
-                {
-                    ghost.Name = player.Name;
-                    mind.TransferTo(ghost);
-                }
-
-                ghost.GetComponent<GhostComponent>().CanReturnToBody = canReturn;
+                ghost.Name = player.Name;
+                mind.TransferTo(ghost);
             }
+
+            ghost.GetComponent<GhostComponent>().CanReturnToBody = canReturn;
         }
     }
 }

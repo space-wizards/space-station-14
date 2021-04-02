@@ -9,17 +9,13 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Localization;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Instruments
@@ -44,6 +40,7 @@ namespace Content.Server.GameObjects.Components.Instruments
         [ViewVariables]
         private IPlayerSession? _instrumentPlayer;
 
+        [DataField("handheld")]
         private bool _handheld;
 
         [ViewVariables]
@@ -64,11 +61,16 @@ namespace Content.Server.GameObjects.Components.Instruments
         [ViewVariables]
         private int _midiEventCount = 0;
 
-        private byte _instrumentProgram;
+        [DataField("program")]
+        private byte _instrumentProgram = 1;
+        [DataField("bank")]
         private byte _instrumentBank;
+        [DataField("allowPercussion")]
         private bool _allowPercussion;
+        [DataField("allowProgramChange")]
         private bool _allowProgramChange;
-        private bool _respectMidiLimits;
+        [DataField("respectMidiLimits")]
+        private bool _respectMidiLimits = true;
 
         public override byte InstrumentProgram { get => _instrumentProgram;
             set
@@ -168,18 +170,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             _instrumentSystem = EntitySystem.Get<InstrumentSystem>();
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _handheld, "handheld", false);
-            serializer.DataField(ref _instrumentProgram, "program", (byte) 1);
-            serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
-            serializer.DataField(ref _allowPercussion, "allowPercussion", false);
-            serializer.DataField(ref _allowProgramChange, "allowProgramChange", false);
-            serializer.DataField(ref _respectMidiLimits, "respectMidiLimits", true);
-        }
-
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new InstrumentState(Playing, InstrumentProgram, InstrumentBank, AllowPercussion, AllowProgramChange, RespectMidiLimits, _lastSequencerTick);
         }
@@ -208,11 +199,11 @@ namespace Content.Server.GameObjects.Components.Instruments
                         {
                             if (_laggedBatches == (int) (maxMidiLaggedBatches * (1 / 3d) + 1))
                             {
-                                Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
+                                InstrumentPlayer.AttachedEntity?.PopupMessage(
                                     Loc.GetString("Your fingers are beginning to a cramp a little!"));
                             } else if (_laggedBatches == (int) (maxMidiLaggedBatches * (2 / 3d) + 1))
                             {
-                                Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
+                                InstrumentPlayer.AttachedEntity?.PopupMessage(
                                     Loc.GetString("Your fingers are seriously cramping up!"));
                             }
                         }
@@ -357,18 +348,21 @@ namespace Content.Server.GameObjects.Components.Instruments
 
                 UserInterface?.CloseAll();
 
-                if(Handheld)
-                    EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
-
-                if (mob != null && mob.TryGetComponent(out StunnableComponent? stun))
+                if (mob != null)
                 {
-                    stun.Stun(1);
-                    Clean();
+                    if (Handheld)
+                        EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
+
+                    if (mob.TryGetComponent(out StunnableComponent? stun))
+                    {
+                        stun.Stun(1);
+                        Clean();
+                    }
+
+                    Owner.PopupMessage(mob, "Your fingers cramp up from playing!");
                 }
 
                 InstrumentPlayer = null;
-
-                Owner.PopupMessage(mob, "Your fingers cramp up from playing!");
             }
 
             _timer += delta;

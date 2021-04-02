@@ -1,6 +1,5 @@
-﻿using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Throw;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Storage;
@@ -9,13 +8,13 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Physics;
+using Robust.Shared.Players;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
@@ -28,14 +27,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
 
-        private string _equippedPrefix;
+        [DataField("HeldPrefix")]
+        private string? _equippedPrefix;
 
-        public string EquippedPrefix
+        public string? EquippedPrefix
         {
-            get
-            {
-                return _equippedPrefix;
-            }
+            get => _equippedPrefix;
             set
             {
                 _equippedPrefix = value;
@@ -69,13 +66,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             RemovedFromSlot();
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _equippedPrefix, "HeldPrefix", null);
-        }
-
         public bool CanPickup(IEntity user)
         {
             if (!ActionBlockerSystem.CanPickup(user))
@@ -88,8 +78,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return false;
             }
 
-            if (Owner.TryGetComponent(out IPhysicsComponent physics) &&
-                physics.Anchored)
+            if (Owner.TryGetComponent(out IPhysBody? physics) &&
+                physics.BodyType == BodyType.Static)
             {
                 return false;
             }
@@ -99,9 +89,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!CanPickup(eventArgs.User)) return false;
+            if (!CanPickup(eventArgs.User) ||
+                !eventArgs.User.TryGetComponent(out IHandsComponent? hands) ||
+                hands.ActiveHand == null) return false;
 
-            var hands = eventArgs.User.GetComponent<IHandsComponent>();
             hands.PutInHand(this, hands.ActiveHand, false);
             return true;
         }
@@ -119,19 +110,19 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     return;
                 }
 
-                data.Text = Loc.GetString("Pick Up");
+                data.Text = Loc.GetString("Pick up");
             }
 
             protected override void Activate(IEntity user, ItemComponent component)
             {
-                if (user.TryGetComponent(out HandsComponent hands) && !hands.IsHolding(component.Owner))
+                if (user.TryGetComponent(out HandsComponent? hands) && !hands.IsHolding(component.Owner))
                 {
                     hands.PutInHand(component);
                 }
             }
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession session)
         {
             return new ItemComponentState(EquippedPrefix);
         }
@@ -142,22 +133,22 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             var targetLocation = eventArgs.Target.Transform.Coordinates;
             var dirVec = (targetLocation.ToMapPos(Owner.EntityManager) - sourceLocation.ToMapPos(Owner.EntityManager)).Normalized;
 
-            var throwForce = 1.0f;
+            float throwForce;
 
             switch (eventArgs.Severity)
             {
                 case ExplosionSeverity.Destruction:
-                    throwForce = 3.0f;
+                    throwForce = 30.0f;
                     break;
                 case ExplosionSeverity.Heavy:
-                    throwForce = 2.0f;
+                    throwForce = 20.0f;
                     break;
-                case ExplosionSeverity.Light:
-                    throwForce = 1.0f;
+                default:
+                    throwForce = 10.0f;
                     break;
             }
 
-            Owner.Throw(throwForce, targetLocation, sourceLocation, true);
+            Owner.TryThrow(dirVec * throwForce);
         }
     }
 }

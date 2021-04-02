@@ -1,7 +1,6 @@
 using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
 namespace Content.Client.GlobalVerbs
@@ -17,6 +16,7 @@ namespace Content.Client.GlobalVerbs
         {
             data.Visibility = VerbVisibility.Visible;
             data.Text = Loc.GetString("Examine");
+            data.IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png";
         }
 
         public override void Activate(IEntity user, IEntity target)

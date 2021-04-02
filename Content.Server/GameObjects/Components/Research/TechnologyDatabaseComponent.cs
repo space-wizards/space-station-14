@@ -1,13 +1,14 @@
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Research
 {
     [RegisterComponent]
     public class  TechnologyDatabaseComponent : SharedTechnologyDatabaseComponent
     {
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new TechnologyDatabaseState(_technologies);
         }
@@ -26,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Research
                 if (!IsTechnologyUnlocked(tech)) AddTechnology(tech);
             }
 
-            if(twoway)
+            if (twoway)
                 otherDatabase.Sync(this, false);
 
             Dirty();
@@ -40,8 +41,8 @@ namespace Content.Server.GameObjects.Components.Research
         /// <returns>Whether it could sync or not</returns>
         public bool SyncWithServer()
         {
-            if (!Owner.TryGetComponent(out ResearchClientComponent client)) return false;
-            if (!client.ConnectedToServer) return false;
+            if (!Owner.TryGetComponent(out ResearchClientComponent? client)) return false;
+            if (client.Server?.Database == null) return false;
 
             Sync(client.Server.Database);
 

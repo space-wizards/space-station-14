@@ -1,15 +1,11 @@
 #nullable enable
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using System.Collections.Generic;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
@@ -48,14 +44,14 @@ namespace Content.Server.GameObjects.Components.Cargo
             if (args.Powered && _currentState == CargoTelepadState.Unpowered) {
                 _currentState = CargoTelepadState.Idle;
                 if(Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
-                    spriteComponent.LayerSetState(0, "pad-idle");
+                    spriteComponent.LayerSetState(0, "idle");
                 TeleportLoop();
             }
             else if (!args.Powered)
             {
                 _currentState = CargoTelepadState.Unpowered;
                 if (Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
-                    spriteComponent.LayerSetState(0, "pad-offline");
+                    spriteComponent.LayerSetState(0, "offline");
             }
         }
         private void TeleportLoop()
@@ -64,23 +60,23 @@ namespace Content.Server.GameObjects.Components.Cargo
             {
                 _currentState = CargoTelepadState.Charging;
                 if (Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
-                    spriteComponent.LayerSetState(0, "pad-idle");
+                    spriteComponent.LayerSetState(0, "idle");
                 Owner.SpawnTimer((int) (TeleportDelay * 1000), () =>
                 {
                     if (!Deleted && !Owner.Deleted && _currentState == CargoTelepadState.Charging && _teleportQueue.Count > 0)
                     {
                         _currentState = CargoTelepadState.Teleporting;
                         if (Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
-                            spriteComponent.LayerSetState(0, "pad-beam");
+                            spriteComponent.LayerSetState(0, "beam");
                         Owner.SpawnTimer((int) (TeleportDuration * 1000), () =>
                         {
                             if (!Deleted && !Owner.Deleted && _currentState == CargoTelepadState.Teleporting && _teleportQueue.Count > 0)
                             {
-                                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/phasein.ogg", Owner, AudioParams.Default.WithVolume(-8f));
+                                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/phasein.ogg", Owner, AudioParams.Default.WithVolume(-8f));
                                 Owner.EntityManager.SpawnEntity(_teleportQueue[0].Product, Owner.Transform.Coordinates);
                                 _teleportQueue.RemoveAt(0);
                                 if (Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
-                                    spriteComponent.LayerSetState(0, "pad-idle");
+                                    spriteComponent.LayerSetState(0, "idle");
                                 _currentState = CargoTelepadState.Idle;
                                 TeleportLoop();
                             }

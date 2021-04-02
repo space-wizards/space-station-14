@@ -1,10 +1,9 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
 {
-    public interface IThresholdBehavior : IExposeData
+    public interface IThresholdBehavior
     {
         /// <summary>
         ///     Executes this behavior.

@@ -6,10 +6,9 @@ using Content.Client.Interfaces.Parallax;
 using Content.Shared;
 using Nett;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Log;
-using Robust.Shared.Interfaces.Resources;
+using Robust.Client.ResourceManagement;
+using Robust.Shared.Configuration;
+using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
@@ -30,8 +29,8 @@ namespace Content.Client.Parallax
         private static readonly ResourcePath ParallaxPath = new("/parallax_cache.png");
         private static readonly ResourcePath ParallaxConfigOld = new("/parallax_config_old");
 
-        public event Action<Texture> OnTextureLoaded;
-        public Texture ParallaxTexture { get; private set; }
+        public event Action<Texture>? OnTextureLoaded;
+        public Texture? ParallaxTexture { get; private set; }
 
         public async void LoadParallax()
         {
@@ -76,7 +75,7 @@ namespace Content.Client.Parallax
                 table = Toml.ReadString(contents);
             }
 
-            List<Image<Rgba32>> debugImages = null;
+            List<Image<Rgba32>>? debugImages = null;
             if (debugParallax)
             {
                 debugImages = new List<Image<Rgba32>>();
@@ -95,7 +94,7 @@ namespace Content.Client.Parallax
                 image.SaveAsPng(stream);
             }
 
-            if (debugParallax)
+            if (debugParallax && debugImages != null)
             {
                 var i = 0;
                 foreach (var debugImage in debugImages)

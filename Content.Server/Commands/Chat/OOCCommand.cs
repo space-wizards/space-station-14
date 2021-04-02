@@ -1,7 +1,7 @@
 #nullable enable
 using Content.Server.Administration;
 using Content.Server.Interfaces.Chat;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
@@ -16,7 +16,14 @@ namespace Content.Server.Commands.Chat
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = (IPlayerSession?) shell.Player;
+
+            if (player == null)
+            {
+                shell.WriteError("You can't run this command locally.");
+                return;
+            }
+
             if (args.Length < 1)
                 return;
 

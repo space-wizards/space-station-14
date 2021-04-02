@@ -1,13 +1,12 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Shared.GameObjects.Components.MachineLinking;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.MachineLinking
 {
@@ -16,6 +15,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
     {
         public override string Name => "SignalSwitch";
 
+        [DataField("on")]
         private bool _on;
 
         public override void Initialize()
@@ -23,13 +23,6 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             base.Initialize();
 
             UpdateSprite();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _on, "on", true);
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -62,9 +55,9 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
         private void UpdateSprite()
         {
-            if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                sprite.LayerSetState(0, _on ? "on" : "off");
+                appearance.SetData(SignalSwitchVisuals.On, _on);
             }
         }
 

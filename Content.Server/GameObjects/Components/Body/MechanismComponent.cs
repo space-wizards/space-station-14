@@ -9,9 +9,7 @@ using Content.Shared.GameObjects.Components.Body.Surgery;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
@@ -90,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Body
             }
             else // If surgery cannot be performed, show message saying so.
             {
-                eventArgs.Target.PopupMessage(eventArgs.User,
+                eventArgs.Target?.PopupMessage(eventArgs.User,
                     Loc.GetString("You see no way to install the {0}.", Owner.Name));
             }
         }

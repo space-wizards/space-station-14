@@ -1,7 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Client.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Mobs.State
 {
@@ -11,7 +11,7 @@ namespace Content.Client.GameObjects.Components.Mobs.State
         {
             base.EnterState(entity);
 
-            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Alive);
             }

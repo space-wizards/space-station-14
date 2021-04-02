@@ -3,7 +3,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Medical;
 using Content.Server.Mobs;
 using Content.Shared.GameTicking;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.EntitySystems
             return Minds.ContainsValue(mind);
         }
 
-        public Dictionary<int, string> GetIdToUser()
+        public Dictionary<int, string?> GetIdToUser()
         {
             return Minds.ToDictionary(m => m.Key, m => m.Value.CharacterName);
         }

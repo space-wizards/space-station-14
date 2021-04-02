@@ -3,7 +3,6 @@ using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 
@@ -54,9 +53,8 @@ namespace Content.Client.GameObjects.Components
             }
         };
 
-        private Action<string> _radiatingCallback;
-        private Action<string> _blinkingCallback;
-
+        private Action<string>? _radiatingCallback;
+        private Action<string>? _blinkingCallback;
 
         public override void OnChangeData(AppearanceComponent component)
         {

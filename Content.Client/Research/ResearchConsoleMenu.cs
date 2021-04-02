@@ -7,16 +7,13 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Research
 {
     public class ResearchConsoleMenu : SS14Window
     {
-        public ResearchConsoleBoundUserInterface Owner { get; set; }
-
-        protected override Vector2? CustomSize => (800, 400);
+        public ResearchConsoleBoundUserInterface Owner { get; }
 
         private readonly List<TechnologyPrototype> _unlockedTechnologyPrototypes = new();
         private readonly List<TechnologyPrototype> _unlockableTechnologyPrototypes = new();
@@ -36,10 +33,12 @@ namespace Content.Client.Research
         public Button ServerSelectionButton { get; private set; }
         public Button ServerSyncButton { get; private set; }
 
-        public TechnologyPrototype TechnologySelected;
+        public TechnologyPrototype? TechnologySelected;
 
-        public ResearchConsoleMenu(ResearchConsoleBoundUserInterface owner = null)
+        public ResearchConsoleMenu(ResearchConsoleBoundUserInterface owner)
         {
+            SetSize = MinSize = (800, 400);
+
             IoCManager.InjectDependencies(this);
 
             Title = Loc.GetString("R&D Console");
@@ -49,8 +48,8 @@ namespace Content.Client.Research
             _unlockedTechnologies = new ItemList()
             {
                 SelectMode = ItemList.ItemListSelectMode.Button,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
             };
 
             _unlockedTechnologies.OnItemSelected += UnlockedTechnologySelected;
@@ -58,8 +57,8 @@ namespace Content.Client.Research
             _unlockableTechnologies = new ItemList()
             {
                 SelectMode = ItemList.ItemListSelectMode.Button,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
             };
 
             _unlockableTechnologies.OnItemSelected += UnlockableTechnologySelected;
@@ -67,44 +66,44 @@ namespace Content.Client.Research
             _futureTechnologies = new ItemList()
             {
                 SelectMode = ItemList.ItemListSelectMode.Button,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
             };
 
             _futureTechnologies.OnItemSelected += FutureTechnologySelected;
 
             var vbox = new VBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
             };
 
             var hboxTechnologies = new HBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 2,
                 SeparationOverride = 10,
             };
 
             var hboxSelected = new HBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 1
             };
 
             var vboxPoints =  new VBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
             };
 
             var vboxTechInfo = new VBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 3,
             };
 
@@ -114,8 +113,8 @@ namespace Content.Client.Research
             var vboxPointsButtons = new VBoxContainer()
             {
                 Align = BoxContainer.AlignMode.End,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
             };
 
             ServerSelectionButton = new Button() { Text = Loc.GetString("Server list") };
@@ -133,8 +132,8 @@ namespace Content.Client.Research
 
             _technologyIcon = new TextureRect()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
                 Stretch = TextureRect.StretchMode.KeepAspectCentered,
             };
@@ -274,7 +273,7 @@ namespace Content.Client.Research
             for (var i = 0; i < TechnologySelected.RequiredTechnologies.Count; i++)
             {
                 var requiredId = TechnologySelected.RequiredTechnologies[i];
-                if (!prototypeMan.TryIndex(requiredId, out TechnologyPrototype prototype)) continue;
+                if (!prototypeMan.TryIndex(requiredId, out TechnologyPrototype? prototype)) continue;
                 if (i == 0)
                     _technologyRequirements.Text = Loc.GetString("Requires") + $": {prototype.Name}";
                 else

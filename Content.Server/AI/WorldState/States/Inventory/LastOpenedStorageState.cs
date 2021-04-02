@@ -1,5 +1,5 @@
 using Content.Server.GameObjects.Components.Items.Storage;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 
 namespace Content.Server.AI.WorldState.States.Inventory
@@ -14,7 +14,7 @@ namespace Content.Server.AI.WorldState.States.Inventory
         // Fine for now I guess
         public override string Name => "LastOpenedStorage";
 
-        public override void SetValue(IEntity value)
+        public override void SetValue(IEntity? value)
         {
             base.SetValue(value);
             if (value != null && !value.HasComponent<EntityStorageComponent>())

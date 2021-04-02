@@ -1,3 +1,4 @@
+# TODO: Add descriptions (3)
 # Power cells
 
 - type: entity
@@ -6,10 +7,11 @@
   parent: BaseItem
   components:
   - type: Physics
-    anchored: false
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.15,-0.3,0.2,0.3" # TODO: these are placeholder values
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.2,0.3" # TODO: these are placeholder values
       layer:
       - Clickable
   - type: PowerCell
@@ -320,10 +322,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 5
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 5
       mask: [Impassable]
       layer: [Clickable]
 
@@ -348,10 +351,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 5
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 5
       mask: [Impassable]
       layer: [Clickable]
 
@@ -375,9 +379,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 5
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 5
       mask: [Impassable]
       layer: [Clickable]

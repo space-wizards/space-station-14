@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Research;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -32,7 +30,7 @@ namespace Content.Server.GameObjects.EntitySystems
             _servers.Remove(server);
         }
 
-        public ResearchServerComponent GetServerById(int id)
+        public ResearchServerComponent? GetServerById(int id)
         {
             foreach (var server in Servers)
             {

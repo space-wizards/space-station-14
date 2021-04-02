@@ -1,12 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using System.Threading.Tasks;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -76,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Paper
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.HasComponent<WriteComponent>())
+            if (!eventArgs.Using.HasTag("Write"))
                 return false;
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return false;

@@ -5,25 +5,18 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class SpawnPrototype : IGraphAction
     {
-        public string Prototype { get; private set; } = string.Empty;
-        public int Amount { get; private set; } = 1;
-
-        void IExposeData.ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.Prototype, "prototype", string.Empty);
-            serializer.DataField(this, x => x.Amount, "amount", 1);
-        }
-
+        [DataField("prototype")] public string Prototype { get; private set; } = string.Empty;
+        [DataField("amount")] public int Amount { get; private set; } = 1;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {

@@ -4,19 +4,15 @@ using System.Linq;
 using Content.Client.GameObjects.Components;
 using Content.Client.Utility;
 using Content.Shared;
-using Robust.Client.GameObjects.EntitySystems;
-using Robust.Client.Interfaces.GameObjects;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.State;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Client.Player;
+using Robust.Client.State;
+using Robust.Client.UserInterface;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -42,7 +38,7 @@ namespace Content.Client.State
 
         private IEventBus _eventBus => _entityManager.EventBus;
 
-        private IEntity _lastHoveredEntity;
+        private IEntity? _lastHoveredEntity;
 
         private bool _outlineEnabled = true;
 
@@ -83,7 +79,7 @@ namespace Content.Client.State
                 inRange = localPlayer.InRangeUnobstructed(entityToClick, ignoreInsideBlocker: true);
             }
 
-            InteractionOutlineComponent outline;
+            InteractionOutlineComponent? outline;
             if(!_outlineEnabled || !ConfigurationManager.GetCVar(CCVars.OutlineEnabled))
             {
                 if(entityToClick != null && entityToClick.TryGetComponent(out outline))
@@ -117,7 +113,7 @@ namespace Content.Client.State
             }
         }
 
-        public IEntity GetEntityUnderPosition(MapCoordinates coordinates)
+        public IEntity? GetEntityUnderPosition(MapCoordinates coordinates)
         {
             var entitiesUnderPosition = GetEntitiesUnderPosition(coordinates);
             return entitiesUnderPosition.Count > 0 ? entitiesUnderPosition[0] : null;
@@ -230,7 +226,7 @@ namespace Content.Client.State
                 entityToClick?.Uid ?? EntityUid.Invalid);
 
             // client side command handlers will always be sent the local player session.
-            var session = PlayerManager.LocalPlayer.Session;
+            var session = PlayerManager.LocalPlayer?.Session;
             if (inputSys.HandleInputCommand(session, func, message))
             {
                 args.Handle();

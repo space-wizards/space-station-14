@@ -3,7 +3,7 @@ using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
@@ -21,7 +21,7 @@ namespace Content.Client.Commands
 
             foreach (var mechanism in mechanisms)
             {
-                if (!mechanism.Owner.TryGetComponent(out SpriteComponent sprite))
+                if (!mechanism.Owner.TryGetComponent(out SpriteComponent? sprite))
                 {
                     continue;
                 }
