@@ -800,3 +800,8 @@ Entries:
   - {message: Debug weapons, type: Add}
   id: 144
   time: '2021-04-02T08:54:08.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Adds Animal / critter mob crates to cargo, type: Add}
+  id: 145
+  time: '2021-04-02T10:41:00.0000000+00:00'
