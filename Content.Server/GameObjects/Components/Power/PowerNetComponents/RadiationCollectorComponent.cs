@@ -9,6 +9,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Physics;
 using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
@@ -37,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         private void OnAnchoredChanged()
         {
-            if(_collidableComponent != null && _collidableComponent.Anchored)
+            if(_collidableComponent != null && _collidableComponent.BodyType == BodyType.Static)
                 Owner.SnapToGrid();
         }
 

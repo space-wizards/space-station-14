@@ -51,7 +51,7 @@
         - Opaque
         - MobImpassable
   - type: ResearchPointSource
-    pointspersecond: 1000
+    pointspersecond: 100
     active: true
   - type: UserInterface
     interfaces:

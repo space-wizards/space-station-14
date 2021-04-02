@@ -153,7 +153,8 @@ namespace Content.Client.UserInterface.Controls
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 Scale = (2,2),
-                Visible = false
+                Visible = false,
+                OverrideDirection = Direction.South,
             };
             _smallActionIcon = new TextureRect
             {
