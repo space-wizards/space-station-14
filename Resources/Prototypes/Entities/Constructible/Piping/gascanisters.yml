@@ -368,12 +368,12 @@
       sprite: Constructible/Atmos/canister.rsi
       state: grey-1
     - type: Physics
-      mass: 25
       bodyType: Dynamic
       fixtures:
         - shape:
             !type:PhysShapeAabb
               bounds: "-0.3,-0.4,0.3,0.4"
+          mass: 25
           mask:
             - MobImpassable
           layer:
