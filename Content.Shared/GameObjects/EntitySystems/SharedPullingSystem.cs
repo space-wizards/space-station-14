@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Pulling;
@@ -7,10 +7,12 @@ using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Players;
 
 namespace Content.Shared.GameObjects.EntitySystems
@@ -36,6 +38,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             SubscribeLocalEvent<PullStartedMessage>(OnPullStarted);
             SubscribeLocalEvent<PullStoppedMessage>(OnPullStopped);
             SubscribeLocalEvent<MoveEvent>(PullerMoved);
+            SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerInsert);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
@@ -101,6 +104,27 @@ namespace Content.Shared.GameObjects.EntitySystems
             if (pulled.TryGetComponent(out SharedPullableComponent? pullable))
             {
                 pullable.MovingTo = null;
+            }
+        }
+
+        // TODO: When Joint networking is less shitcodey fix this to use a dedicated joints message.
+        private void HandleContainerInsert(EntInsertedIntoContainerMessage message)
+        {
+            if (message.Entity.TryGetComponent(out SharedPullableComponent? pullable))
+            {
+                pullable.TryStopPull();
+            }
+
+            if (message.Entity.TryGetComponent(out SharedPullerComponent? puller))
+            {
+                if (puller.Pulling == null) return;
+
+                if (!puller.Pulling.TryGetComponent(out SharedPullableComponent? pulling))
+                {
+                    return;
+                }
+
+                pulling.TryStopPull();
             }
         }
 

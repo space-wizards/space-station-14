@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Damage
                 {
                     if (tool.HasQuality(ToolQuality.Welding) && toolQuality == ToolQuality.Welding)
                     {
-                        if (eventArgs.Using.TryGetComponent(out WelderComponent welder))
+                        if (eventArgs.Using.TryGetComponent(out WelderComponent? welder))
                         {
                             if (welder.WelderLit) return CallDamage(eventArgs, tool);
                         }

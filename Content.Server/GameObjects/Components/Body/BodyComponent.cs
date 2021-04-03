@@ -10,11 +10,13 @@ using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Utility;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Body
@@ -98,8 +100,7 @@ namespace Content.Server.GameObjects.Components.Body
         {
             base.Gib(gibParts);
 
-            EntitySystem.Get<AudioSystem>()
-                .PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("gib"), Owner.Transform.Coordinates,
+            SoundSystem.Play(Filter.Pvs(Owner), AudioHelpers.GetRandomFileFromSoundCollection("gib"), Owner.Transform.Coordinates,
                     AudioHelpers.WithVariation(0.025f));
 
             if (Owner.TryGetComponent(out ContainerManagerComponent? container))

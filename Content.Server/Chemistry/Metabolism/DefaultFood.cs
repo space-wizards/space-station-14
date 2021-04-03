@@ -27,7 +27,7 @@ namespace Content.Server.Chemistry.Metabolism
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
             var metabolismAmount = MetabolismRate * tickTime;
-            if (solutionEntity.TryGetComponent(out HungerComponent hunger))
+            if (solutionEntity.TryGetComponent(out HungerComponent? hunger))
                 hunger.UpdateFood(metabolismAmount.Float() * NutritionFactor);
 
             //Return amount of reagent to be removed, remove reagent regardless of HungerComponent presence

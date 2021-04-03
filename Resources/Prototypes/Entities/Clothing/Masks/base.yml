@@ -1,7 +1,7 @@
 - type: entity
+  abstract: true
   parent: Clothing
   id: ClothingMaskBase
-  abstract: true
   components:
   - type: Sprite
     state: icon

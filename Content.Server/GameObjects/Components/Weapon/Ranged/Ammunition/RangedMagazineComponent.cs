@@ -12,8 +12,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
@@ -25,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         public override string Name => "RangedMagazine";
 
         private readonly Stack<IEntity> _spawnedAmmo = new();
-        private Container _ammoContainer;
+        private Container _ammoContainer = default!;
 
         public int ShotsLeft => _spawnedAmmo.Count + _unspawnedCount;
         public int Capacity => _capacity;
@@ -39,11 +37,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         [DataField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
 
-        private AppearanceComponent _appearanceComponent;
+        private AppearanceComponent? _appearanceComponent;
 
         // If there's anything already in the magazine
         [DataField("fillPrototype")]
-        private string _fillPrototype;
+        private string? _fillPrototype;
+
         // By default the magazine won't spawn the entity until needed so we need to keep track of how many left we can spawn
         // Generally you probablt don't want to use this
         private int _unspawnedCount;
@@ -76,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 }
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -92,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         public bool TryInsertAmmo(IEntity user, IEntity ammo)
         {
-            if (!ammo.TryGetComponent(out AmmoComponent ammoComponent))
+            if (!ammo.TryGetComponent(out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -115,9 +114,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             return true;
         }
 
-        public IEntity TakeAmmo()
+        public IEntity? TakeAmmo()
         {
-            IEntity ammo = null;
+            IEntity? ammo = null;
             // If anything's spawned use that first, otherwise use the fill prototype as a fallback (if we have spawn count left)
             if (_spawnedAmmo.TryPop(out var entity))
             {
@@ -141,7 +140,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+            if (!eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
             {
                 return false;
             }

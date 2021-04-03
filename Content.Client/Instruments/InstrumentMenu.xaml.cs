@@ -128,13 +128,15 @@ namespace Content.Client.Instruments
 
         private bool PlayCheck()
         {
+            var instrumentEnt = _owner.Instrument?.Owner;
             var instrument = _owner.Instrument;
 
-            if (instrument == null ||
-                !instrument.Owner.TryGetContainerMan(out var conMan))
-            {
+            // If either the entity or component are null, return.
+            if (instrumentEnt == null || instrument == null)
                 return false;
-            }
+
+            // If we're a handheld instrument, we might be in a container. Get it just in case.
+            instrumentEnt.TryGetContainerMan(out var conMan);
 
             var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalPlayer;
 
@@ -142,9 +144,8 @@ namespace Content.Client.Instruments
             if (localPlayer?.ControlledEntity == null) return false;
 
             // If the instrument is handheld and we're not holding it, we return.
-            if (instrument.Handheld && (conMan.Owner != localPlayer.ControlledEntity)) return false;
-
-            var instrumentEnt = instrument.Owner;
+            if ((instrument.Handheld && (conMan == null
+                                         || conMan.Owner != localPlayer.ControlledEntity))) return false;
 
             // We check that we're in range unobstructed just in case.
             return localPlayer.InRangeUnobstructed(instrumentEnt,
@@ -178,9 +179,9 @@ namespace Content.Client.Instruments
             _owner.Instrument.PlayerTick = (int)Math.Ceiling(PlaybackSlider.Value);
         }
 
-        protected override void Update(FrameEventArgs args)
+        protected override void FrameUpdate(FrameEventArgs args)
         {
-            base.Update(args);
+            base.FrameUpdate(args);
 
             if (_owner.Instrument == null) return;
 

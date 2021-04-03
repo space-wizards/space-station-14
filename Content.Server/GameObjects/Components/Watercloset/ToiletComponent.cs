@@ -21,6 +21,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Threading.Tasks;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameObjects.Components.Watercloset
 {
@@ -124,8 +126,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
         public void ToggleToiletSeat()
         {
             IsSeatUp = !IsSeatUp;
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity("/Audio/Effects/toilet_seat_down.ogg", Owner, AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/toilet_seat_down.ogg", Owner, AudioHelpers.WithVariation(0.05f));
 
             UpdateSprite();
         }

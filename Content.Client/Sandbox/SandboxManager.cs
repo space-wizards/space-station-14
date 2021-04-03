@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
@@ -73,7 +74,7 @@ namespace Content.Client.Sandbox
             ToggleShadowsButton = new Button { Text = Loc.GetString("Toggle Shadows"), ToggleMode = true, Pressed = !IoCManager.Resolve<ILightManager>().DrawShadows };
             vBox.AddChild(ToggleShadowsButton);
 
-            ToggleSubfloorButton = new Button { Text = Loc.GetString("Toggle Subfloor"), ToggleMode = true, Pressed = EntitySystem.Get<SubFloorHideSystem>().EnableAll };
+            ToggleSubfloorButton = new Button { Text = Loc.GetString("Toggle Subfloor"), ToggleMode = true, Pressed = EntitySystem.Get<SubFloorHideSystem>().ShowAll };
             vBox.AddChild(ToggleSubfloorButton);
 
             SuicideButton = new Button { Text = Loc.GetString("Suicide") };

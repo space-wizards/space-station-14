@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Animations;
@@ -135,7 +135,7 @@ namespace Content.Client.GameObjects.Components.Storage
             if (_window.IsOpen)
                 _window.Close();
             else
-                _window.Open();
+                _window.OpenCentered();
         }
 
         private void CloseUI()
@@ -188,7 +188,7 @@ namespace Content.Client.GameObjects.Components.Storage
             public StorageWindow(ClientStorageComponent storageEntity)
             {
                 StorageEntity = storageEntity;
-                MinSize = SetSize = (180, 320);
+                SetSize = (200, 320);
                 Title = "Storage Item";
                 RectClipContent = true;
 

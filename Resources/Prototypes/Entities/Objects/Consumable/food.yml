@@ -228,6 +228,10 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/pie.rsi
+  - type: Ammo
+    caliber: CreamPie
+    caseless: true
+    projectile: BulletCreampie
 
 
 #- type: entity

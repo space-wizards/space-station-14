@@ -4,11 +4,12 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Projectiles;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -30,15 +31,14 @@ namespace Content.Server.GameObjects.Components.Projectiles
             set => _damages = value;
         }
 
-        public bool DeleteOnCollide => _deleteOnCollide;
-        [DataField("delete_on_collide")]
-        private bool _deleteOnCollide = true;
+        [field: DataField("deleteOnCollide")]
+        public bool DeleteOnCollide { get; } = true;
 
         // Get that juicy FPS hit sound
         [DataField("soundHit")]
-        private string _soundHit = default;
+        private string? _soundHit = default;
         [DataField("soundHitSpecies")]
-        private string _soundHitSpecies = default;
+        private string? _soundHitSpecies = default;
 
         private bool _damagedEntity;
 
@@ -65,13 +65,15 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 return;
             }
 
-            if (otherBody.Entity.TryGetComponent(out IDamageableComponent damage) && _soundHitSpecies != null)
+            var coordinates = otherBody.Entity.Transform.Coordinates;
+            var playerFilter = Filter.Pvs(coordinates);
+            if (otherBody.Entity.TryGetComponent(out IDamageableComponent? damage) && _soundHitSpecies != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, otherBody.Entity.Transform.Coordinates);
+                SoundSystem.Play(playerFilter, _soundHitSpecies, coordinates);
             }
             else if (_soundHit != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, otherBody.Entity.Transform.Coordinates);
+                SoundSystem.Play(playerFilter, _soundHit, coordinates);
             }
 
             if (damage != null)
@@ -87,13 +89,14 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
 
             // Damaging it can delete it
-            if (!otherBody.Entity.Deleted && otherBody.Entity.TryGetComponent(out CameraRecoilComponent recoilComponent))
+            if (!otherBody.Entity.Deleted && otherBody.Entity.TryGetComponent(out CameraRecoilComponent? recoilComponent))
             {
                 var direction = ourBody.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);
             }
 
-            Owner.Delete();
+            if(DeleteOnCollide)
+                Owner.Delete();
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

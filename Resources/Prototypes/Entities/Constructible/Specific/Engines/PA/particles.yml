@@ -10,7 +10,7 @@
         state: particle0
         shader: unshaded
     - type: Projectile
-      delete_on_collide: false
+      deleteOnCollide: false
       soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
       damages:
         Radiation: 10

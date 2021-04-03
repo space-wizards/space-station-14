@@ -7,7 +7,6 @@ using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -40,7 +39,6 @@ namespace Content.Client.UserInterface
         // Inventory top button.
         bool InventoryButtonDown { get; set; }
         bool InventoryButtonVisible { get; set; }
-        Action<bool>? InventoryButtonToggled { get; set; }
 
         // Crafting top button.
         bool CraftingButtonDown { get; set; }
@@ -64,13 +62,12 @@ namespace Content.Client.UserInterface
 
         Control HandsContainer { get; }
         Control SuspicionContainer { get; }
-        Control RightInventoryQuickButtonContainer { get; }
-        Control LeftInventoryQuickButtonContainer { get; }
+        Control BottomLeftInventoryQuickButtonContainer { get; }
+        Control BottomRightInventoryQuickButtonContainer { get; }
+        Control TopInventoryQuickButtonContainer { get; }
 
         bool CombatPanelVisible { get; set; }
-        bool CombatModeActive { get; set; }
         TargetingZone TargetingZone { get; set; }
-        Action<bool>? OnCombatModeChanged { get; set; }
         Action<TargetingZone>? OnTargetingZoneChanged { get; set; }
 
         Control VoteContainer { get; }
@@ -94,7 +91,6 @@ namespace Content.Client.UserInterface
         private TopButton _buttonSandboxMenu = default!;
         private InfoWindow _infoWindow = default!;
         private TargetingDoll _targetingDoll = default!;
-        private Button _combatModeButton = default!;
         private VBoxContainer _combatPanelContainer = default!;
         private VBoxContainer _topNotificationContainer = default!;
 
@@ -103,8 +99,9 @@ namespace Content.Client.UserInterface
 
         public Control HandsContainer { get; private set; } = default!;
         public Control SuspicionContainer { get; private set; } = default!;
-        public Control RightInventoryQuickButtonContainer { get; private set; } = default!;
-        public Control LeftInventoryQuickButtonContainer { get; private set; } = default!;
+        public Control TopInventoryQuickButtonContainer { get; private set; } = default!;
+        public Control BottomLeftInventoryQuickButtonContainer { get; private set; } = default!;
+        public Control BottomRightInventoryQuickButtonContainer { get; private set; } = default!;
 
         public bool CombatPanelVisible
         {
@@ -112,19 +109,11 @@ namespace Content.Client.UserInterface
             set => _combatPanelContainer.Visible = value;
         }
 
-        public bool CombatModeActive
-        {
-            get => _combatModeButton.Pressed;
-            set => _combatModeButton.Pressed = value;
-        }
-
         public TargetingZone TargetingZone
         {
             get => _targetingDoll.ActiveZone;
             set => _targetingDoll.ActiveZone = value;
         }
-
-        public Action<bool>? OnCombatModeChanged { get; set; }
         public Action<TargetingZone>? OnTargetingZoneChanged { get; set; }
 
         public void AddTopNotification(TopNotification notification)
@@ -196,7 +185,7 @@ namespace Content.Client.UserInterface
 
             _topButtonsContainer.AddChild(_buttonInventoryMenu);
 
-            _buttonInventoryMenu.OnToggled += args => InventoryButtonToggled?.Invoke(args.Pressed);
+            _buttonInventoryMenu.OnToggled += args => InventoryButtonDown = args.Pressed;
 
             // Crafting
             _buttonCraftingMenu = new TopButton(craftingTexture, ContentKeyFunctions.OpenCraftingMenu, _inputManager)
@@ -272,13 +261,10 @@ namespace Content.Client.UserInterface
 
             _combatPanelContainer = new VBoxContainer
             {
+                HorizontalAlignment = Control.HAlignment.Left,
+                VerticalAlignment = Control.VAlignment.Bottom,
                 Children =
                 {
-                    (_combatModeButton = new Button
-                    {
-                        Text = Loc.GetString("Combat Mode"),
-                        ToggleMode = true
-                    }),
                     (_targetingDoll = new TargetingDoll(_resourceCache))
                 }
             };
@@ -287,14 +273,13 @@ namespace Content.Client.UserInterface
             LC.SetGrowVertical(_combatPanelContainer, LC.GrowDirection.Begin);
             LC.SetAnchorAndMarginPreset(_combatPanelContainer, LC.LayoutPreset.BottomRight);
             LC.SetMarginBottom(_combatPanelContainer, -10f);
-            RootControl.AddChild(_combatPanelContainer);
 
-            _combatModeButton.OnToggled += args => OnCombatModeChanged?.Invoke(args.Pressed);
             _targetingDoll.OnZoneChanged += args => OnTargetingZoneChanged?.Invoke(args);
 
-            var centerBottomContainer = new HBoxContainer
+            var centerBottomContainer = new VBoxContainer
             {
-                SeparationOverride = 5
+                SeparationOverride = 5,
+                HorizontalAlignment = Control.HAlignment.Center
             };
             LC.SetAnchorAndMarginPreset(centerBottomContainer, LC.LayoutPreset.CenterBottom);
             LC.SetGrowHorizontal(centerBottomContainer, LC.GrowDirection.Both);
@@ -305,23 +290,56 @@ namespace Content.Client.UserInterface
             HandsContainer = new Control
             {
                 VerticalAlignment = Control.VAlignment.Bottom,
+                HorizontalAlignment = Control.HAlignment.Center
             };
-            RightInventoryQuickButtonContainer = new Control
+            BottomRightInventoryQuickButtonContainer = new HBoxContainer()
             {
                 VerticalAlignment = Control.VAlignment.Bottom,
+                HorizontalAlignment = Control.HAlignment.Right
             };
-            LeftInventoryQuickButtonContainer = new Control
+            BottomLeftInventoryQuickButtonContainer = new HBoxContainer()
             {
                 VerticalAlignment = Control.VAlignment.Bottom,
+                HorizontalAlignment = Control.HAlignment.Left
             };
-            centerBottomContainer.AddChild(LeftInventoryQuickButtonContainer);
-            centerBottomContainer.AddChild(HandsContainer);
-            centerBottomContainer.AddChild(RightInventoryQuickButtonContainer);
+            TopInventoryQuickButtonContainer = new HBoxContainer()
+            {
+                Visible = false,
+                VerticalAlignment = Control.VAlignment.Bottom,
+                HorizontalAlignment = Control.HAlignment.Center
+            };
+            var bottomRow = new HBoxContainer()
+            {
+                HorizontalAlignment = Control.HAlignment.Center
+
+            };
+            bottomRow.AddChild(new Control {MinSize = (69, 0)}); //Padding (nice)
+            bottomRow.AddChild(BottomLeftInventoryQuickButtonContainer);
+            bottomRow.AddChild(HandsContainer);
+            bottomRow.AddChild(BottomRightInventoryQuickButtonContainer);
+            bottomRow.AddChild(new Control {MinSize = (1, 0)}); //Padding
+
+
+            centerBottomContainer.AddChild(TopInventoryQuickButtonContainer);
+            centerBottomContainer.AddChild(bottomRow);
 
             SuspicionContainer = new Control
             {
                 HorizontalAlignment = Control.HAlignment.Center
             };
+
+            var rightBottomContainer = new HBoxContainer
+            {
+                SeparationOverride = 5
+            };
+            LC.SetAnchorAndMarginPreset(rightBottomContainer, LC.LayoutPreset.BottomRight);
+            LC.SetGrowHorizontal(rightBottomContainer, LC.GrowDirection.Begin);
+            LC.SetGrowVertical(rightBottomContainer, LC.GrowDirection.Begin);
+            LC.SetMarginBottom(rightBottomContainer, -10f);
+            LC.SetMarginRight(rightBottomContainer, -10f);
+            RootControl.AddChild(rightBottomContainer);
+
+            rightBottomContainer.AddChild(_combatPanelContainer);
 
             RootControl.AddChild(SuspicionContainer);
 
@@ -398,7 +416,11 @@ namespace Content.Client.UserInterface
         public bool InventoryButtonDown
         {
             get => _buttonInventoryMenu.Pressed;
-            set => _buttonInventoryMenu.Pressed = value;
+            set
+            {
+                TopInventoryQuickButtonContainer.Visible = value;
+                _buttonInventoryMenu.Pressed = value;
+            }
         }
 
         public bool InventoryButtonVisible
@@ -406,8 +428,6 @@ namespace Content.Client.UserInterface
             get => _buttonInventoryMenu.Visible;
             set => _buttonInventoryMenu.Visible = value;
         }
-
-        public Action<bool>? InventoryButtonToggled { get; set; }
 
         public bool CraftingButtonDown
         {

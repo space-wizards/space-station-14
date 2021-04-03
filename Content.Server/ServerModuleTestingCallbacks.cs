@@ -5,6 +5,6 @@ namespace Content.Server
 {
     public sealed class ServerModuleTestingCallbacks : SharedModuleTestingCallbacks
     {
-        public Action ServerBeforeIoC { get; set; }
+        public Action? ServerBeforeIoC { get; set; }
     }
 }

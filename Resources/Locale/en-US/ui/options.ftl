@@ -12,6 +12,7 @@ ui-options-reset-all = Reset All
 ## Audio menu
 ui-options-master-volume = Master Volume:
 ui-options-ambient-hum = Ambient Hum
+ui-options-lobby-music = Lobby Music
 ui-options-volume-sliders = Volume Sliders
 ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
@@ -62,7 +63,6 @@ ui-options-function-activate-item-in-world = Activate item in world
 ui-options-function-drop = Drop item
 ui-options-function-examine-entity = Examine
 ui-options-function-swap-hands = Swap hands
-ui-options-function-toggle-combat-mode = Toggle combat mode
 
 ui-options-function-smart-equip-backpack = Smart-equip to backpack
 ui-options-function-smart-equip-belt = Smart-equip to belt

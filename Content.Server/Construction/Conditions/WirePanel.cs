@@ -11,20 +11,20 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class WirePanel : IEdgeCondition
+    public class WirePanel : IGraphCondition
     {
         [DataField("open")] public bool Open { get; private set; } = true;
 
         public async Task<bool> Condition(IEntity entity)
         {
-            if (!entity.TryGetComponent(out WiresComponent wires)) return false;
+            if (!entity.TryGetComponent(out WiresComponent? wires)) return false;
 
             return wires.IsPanelOpen == Open;
         }
 
         public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
         {
-            if (!entity.TryGetComponent(out WiresComponent wires)) return false;
+            if (!entity.TryGetComponent(out WiresComponent? wires)) return false;
 
             switch (Open)
             {
