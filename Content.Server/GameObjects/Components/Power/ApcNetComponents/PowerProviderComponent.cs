@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private List<PowerReceiverComponent> FindAvailableReceivers()
         {
-            var nearbyEntities = IoCManager.Resolve<IEntityLookup>()
+            var nearbyEntities = Owner.EntityManager.EntityLookup
                 .GetEntitiesInRange(Owner, PowerTransferRange);
 
             var receivers = new List<PowerReceiverComponent>();

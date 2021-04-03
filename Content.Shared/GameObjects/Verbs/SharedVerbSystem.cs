@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -25,7 +26,7 @@ namespace Content.Shared.GameObjects.Verbs
             contextEntities = null;
             var length = buffer ? 1.0f: 0.5f;
 
-            var entities = Get<SharedEntityLookupSystem>().GetEntitiesIntersecting(targetPos.MapId,
+            var entities = IoCManager.Resolve<SharedEntityLookup>().GetEntitiesIntersecting(targetPos.MapId,
                 Box2.CenteredAround(targetPos.Position, (length, length))).ToList();
 
             if (entities.Count == 0)

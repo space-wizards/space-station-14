@@ -2,6 +2,7 @@ using Content.Server.GameObjects.Components.StationEvents;
 using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.EntitySystems.StationEvents

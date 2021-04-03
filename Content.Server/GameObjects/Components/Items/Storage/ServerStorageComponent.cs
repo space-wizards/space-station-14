@@ -498,7 +498,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if(_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<StorableComponent>()))
             {
                 var validStorables = new List<IEntity>();
-                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, 1))
+                foreach (var entity in Owner.EntityManager.EntityLookup.GetEntitiesInRange(eventArgs.ClickLocation, 1))
                 {
                     if (!entity.Transform.IsMapTransform
                         || entity == eventArgs.User

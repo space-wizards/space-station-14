@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Recycling;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;

@@ -149,7 +149,7 @@ namespace Content.Shared.Maps
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, bool approximate = false, SharedEntityLookupSystem? lookupSystem = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, bool approximate = false, IEntityLookup? lookupSystem = null)
         {
             lookupSystem ??= IoCManager.Resolve<IEntityLookup>();
 
@@ -159,7 +159,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this EntityCoordinates coordinates, bool approximate = false, SharedEntityLookupSystem? lookupSystem = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this EntityCoordinates coordinates, bool approximate = false, IEntityLookup? lookupSystem = null)
         {
             var turf = coordinates.GetTileRef();
 
@@ -172,7 +172,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this Vector2i indices, GridId gridId, bool approximate = false, SharedEntityLookupSystem? lookupSystem = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this Vector2i indices, GridId gridId, bool approximate = false, IEntityLookup? lookupSystem = null)
         {
             return GetEntitiesInTile(indices.GetTileRef(gridId), approximate, lookupSystem);
         }
