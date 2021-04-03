@@ -23,15 +23,16 @@ namespace Content.IntegrationTests
     {
         protected sealed override ClientIntegrationInstance StartClient(ClientIntegrationOptions options = null)
         {
-            options ??= new ClientIntegrationOptions
+            options ??= new ClientContentIntegrationOption()
             {
-                ContentAssemblies = new[]
-                {
-                    typeof(Shared.EntryPoint).Assembly,
-                    typeof(Client.EntryPoint).Assembly,
-                    typeof(ContentIntegrationTest).Assembly
-                },
                 FailureLogLevel = LogLevel.Warning
+            };
+
+            options.ContentAssemblies = new[]
+            {
+                typeof(Shared.EntryPoint).Assembly,
+                typeof(Client.EntryPoint).Assembly,
+                typeof(ContentIntegrationTest).Assembly
             };
 
             options.BeforeStart += () =>
@@ -63,15 +64,16 @@ namespace Content.IntegrationTests
 
         protected override ServerIntegrationInstance StartServer(ServerIntegrationOptions options = null)
         {
-            options ??= new ServerIntegrationOptions
+            options ??= new ServerContentIntegrationOption()
             {
-                ContentAssemblies = new[]
-                {
-                    typeof(Shared.EntryPoint).Assembly,
-                    typeof(Server.EntryPoint).Assembly,
-                    typeof(ContentIntegrationTest).Assembly
-                },
                 FailureLogLevel = LogLevel.Warning
+            };
+
+            options.ContentAssemblies = new[]
+            {
+                typeof(Shared.EntryPoint).Assembly,
+                typeof(Server.EntryPoint).Assembly,
+                typeof(ContentIntegrationTest).Assembly
             };
 
             options.BeforeStart += () =>
@@ -222,11 +224,21 @@ namespace Content.IntegrationTests
 
         protected sealed class ClientContentIntegrationOption : ClientIntegrationOptions
         {
+            public ClientContentIntegrationOption()
+            {
+                FailureLogLevel = LogLevel.Warning;
+            }
+
             public Action ContentBeforeIoC { get; set; }
         }
 
         protected sealed class ServerContentIntegrationOption : ServerIntegrationOptions
         {
+            public ServerContentIntegrationOption()
+            {
+                FailureLogLevel = LogLevel.Warning;
+            }
+
             public Action ContentBeforeIoC { get; set; }
         }
     }

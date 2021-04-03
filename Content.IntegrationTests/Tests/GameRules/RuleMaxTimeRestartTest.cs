@@ -4,7 +4,6 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.GameRules;
 using Content.Server.Interfaces.GameTicking;
 using NUnit.Framework;
-using Robust.Shared.Log;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.GameRules
@@ -21,8 +20,7 @@ namespace Content.IntegrationTests.Tests.GameRules
                 CVarOverrides =
                 {
                     ["game.lobbyenabled"] = "true"
-                },
-                FailureLogLevel = LogLevel.Warning
+                }
             };
             var server = StartServer(options);
 

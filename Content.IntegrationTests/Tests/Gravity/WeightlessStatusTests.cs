@@ -7,7 +7,6 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Gravity
@@ -27,10 +26,9 @@ namespace Content.IntegrationTests.Tests.Gravity
         [Test]
         public async Task WeightlessStatusTest()
         {
-            var options = new ServerIntegrationOptions
+            var options = new ServerContentIntegrationOption
             {
-                ExtraPrototypes = Prototypes,
-                FailureLogLevel = LogLevel.Warning
+                ExtraPrototypes = Prototypes
             };
             var server = StartServer(options);
 

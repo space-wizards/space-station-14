@@ -5,7 +5,6 @@ using Content.Shared.GameTicking;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Reflection;
 
 namespace Content.IntegrationTests.Tests
@@ -33,8 +32,7 @@ namespace Content.IntegrationTests.Tests
                 ContentBeforeIoC = () =>
                 {
                     IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestResettingEntitySystem>();
-                },
-                FailureLogLevel = LogLevel.Warning
+                }
             });
 
             await server.WaitIdleAsync();

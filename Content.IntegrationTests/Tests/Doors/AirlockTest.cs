@@ -4,7 +4,6 @@ using Content.Server.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Doors;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
@@ -107,10 +106,9 @@ namespace Content.IntegrationTests.Tests.Doors
         [Test]
         public async Task AirlockBlockTest()
         {
-            var options = new ServerIntegrationOptions
+            var options = new ServerContentIntegrationOption
             {
-                ExtraPrototypes = Prototypes,
-                FailureLogLevel = LogLevel.Warning
+                ExtraPrototypes = Prototypes
             };
             var server = StartServer(options);
 
