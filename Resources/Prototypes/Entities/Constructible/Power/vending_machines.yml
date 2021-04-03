@@ -43,7 +43,6 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
-    snap: true
 
 - type: entity
   parent: VendingMachine

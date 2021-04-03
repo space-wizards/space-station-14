@@ -1,65 +1,72 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation and cev-eris at https://github.com/tgstation/tgstation/commit/c4b7f3c41b6742aca260fe60cc358a778ba9b8c8 and https://github.com/discordia-space/CEV-Eris/commit/476e374cea95ff5e8b1603c48342bf700e2cd7af",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "appendix"
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/7489d8e74693f9ca811e4f8a921de10ed96c619e/icons/obj/surgery.dmi",
-    "states": [
-        {
-            "name": "appendix",
-
-        },
-        {
-            "name": "appendixinflamed",
-
-        },
-        {
-            "name": "brain",
-
-        },
-        {
-            "name": "ears",
-
-        },
-        {
-            "name": "eyeballs",
-
-        },
-        {
-            "name": "heart-off",
-
-        },
-        {
-            "name": "heart-on",
-            "delays": [
-                [
-                    0.6,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "kidneys",
-
-        },
-        {
-            "name": "liver",
-
-        },
-        {
-            "name": "lungs",
-
-        },
-        {
-            "name": "stomach",
-
-        },
-        {
-            "name": "tonguenormal",
-
-        }
-    ]
+    {
+      "name": "appendix-inflamed"
+    },
+    {
+      "name": "brain"
+    },
+    {
+      "name": "ears"
+    },
+    {
+      "name": "eyeball-l"
+    },
+    {
+      "name": "eyeball-r"
+    },
+    {
+      "name": "heart-off"
+    },
+    {
+      "name": "heart-on",
+      "delays": [
+        [
+          0.6,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "kidney-l"
+    },
+    {
+      "name": "kidney-r"
+    },
+    {
+      "name": "liver"
+    },
+    {
+      "name": "lung-l"
+    },
+    {
+      "name": "lung-r"
+    },
+    {
+      "name": "stomach"
+    },
+    {
+      "name": "tongue"
+    },
+    {
+      "name": "muscle"
+    },
+    {
+      "name": "nerve"
+    },
+    {
+      "name": "vessel"
+    }
+  ]
 }

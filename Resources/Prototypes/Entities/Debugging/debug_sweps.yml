@@ -1,0 +1,88 @@
+- type: entity
+  name: bang, ded
+  parent: PistolBase
+  id: PistolDebug
+  description: ded
+  suffix: DEBUG
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/debug.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Pistols/debug.rsi
+  - type: Item
+    size: 1
+    sprite: Objects/Weapons/Guns/Pistols/debug.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    caliber: Pistol
+    magazineTypes:
+    - Pistol
+    fireRate: 100
+    magFillPrototype: MagazinePistolDebug
+    minAngle: 10
+    maxAngle: 10
+
+- type: entity
+  id: MagazinePistolDebug
+  name: bang, ded mag
+  parent: MagazinePistolBase
+  suffix: DEBUG
+  components:
+  - type: RangedMagazine
+    fillPrototype: CartridgeDebug
+    capacity: 1000
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi
+
+- type: entity
+  id: BulletDebug
+  name: bang, ded bullet
+  parent: BulletBase
+  abstract: true
+  suffix: DEBUG
+  components:
+  - type: Projectile
+    damages:
+      Blunt: 20000
+
+- type: entity
+  id: CartridgeDebug
+  name: bang, ded cartridge
+  parent: CartridgePistolBase
+  suffix: DEBUG
+  components:
+  - type: Ammo
+    projectile: BulletDebug
+
+- type: entity
+  name: bang stick gibber
+  parent: BaseItem
+  id: MeleeDebugGib
+  description: hit hard ye
+  suffix: DEBUG
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/debug.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage: 20000
+  - type: Item
+    size: 1
+    sprite: Objects/Weapons/Melee/debug.rsi
+    prefix: inhand
+
+- type: entity
+  name: bang stick 100dmg
+  parent: MeleeDebug
+  id: MeleeDebug100
+  components:
+  - type: MeleeWeapon
+    damage: 100
+
+- type: entity
+  name: bang stick 200dmg
+  parent: MeleeDebug
+  id: MeleeDebug200
+  components:
+  - type: MeleeWeapon
+    damage: 200
