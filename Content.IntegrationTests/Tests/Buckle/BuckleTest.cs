@@ -56,7 +56,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         {
             var cOptions = new ClientIntegrationOptions {ExtraPrototypes = Prototypes};
             var sOptions = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
-            var (client, server) = await StartConnectedServerClientPair(cOptions, sOptions);
+            var (_, server) = await StartConnectedServerClientPair(cOptions, sOptions);
 
             IEntity human = null;
             IEntity chair = null;
@@ -208,10 +208,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task BuckledDyingDropItemsTest()
         {
-            var options = new ServerContentIntegrationOption
-            {
-                ExtraPrototypes = Prototypes
-            };
+            var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
             IEntity human = null;

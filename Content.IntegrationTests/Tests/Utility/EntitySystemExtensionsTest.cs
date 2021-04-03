@@ -32,10 +32,7 @@ namespace Content.IntegrationTests.Tests.Utility
         [Test]
         public async Task Test()
         {
-            var serverOptions = new ServerContentIntegrationOption
-            {
-                ExtraPrototypes = Prototypes
-            };
+            var serverOptions = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
             var server = StartServer(serverOptions);
 
             await server.WaitIdleAsync();
