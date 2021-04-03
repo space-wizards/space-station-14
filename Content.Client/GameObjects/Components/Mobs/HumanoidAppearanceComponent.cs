@@ -6,12 +6,18 @@ using Content.Shared.Preferences;
 using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
     [RegisterComponent]
     public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent, IBodyPartAdded, IBodyPartRemoved
     {
+        [Dependency] private readonly SpriteAccessoryManager _accessoryManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override HumanoidCharacterAppearance Appearance
         {
             get => base.Appearance;
@@ -60,15 +66,18 @@ namespace Content.Client.GameObjects.Components.Mobs
                 }
             }
 
-            sprite.LayerSetColor(HumanoidVisualLayers.Hair, Appearance.HairColor);
-            sprite.LayerSetColor(HumanoidVisualLayers.FacialHair, Appearance.FacialHairColor);
+            sprite.LayerSetColor(HumanoidVisualLayers.Hair,
+                CanColorHair ? Appearance.HairColor : Color.White);
+            sprite.LayerSetColor(HumanoidVisualLayers.FacialHair,
+                CanColorFacialHair ? Appearance.FacialHairColor : Color.White);
 
             sprite.LayerSetColor(HumanoidVisualLayers.Eyes, Appearance.EyeColor);
 
             sprite.LayerSetState(HumanoidVisualLayers.Chest, Sex == Sex.Male ? "torso_m" : "torso_f");
             sprite.LayerSetState(HumanoidVisualLayers.Head, Sex == Sex.Male ? "head_m" : "head_f");
 
-            sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, Sex == Sex.Female);
+            if (sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
+                sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, Sex == Sex.Female);
 
             if (Owner.TryGetComponent<CuffableComponent>(out var cuffed))
             {
@@ -79,17 +88,25 @@ namespace Content.Client.GameObjects.Components.Mobs
                 sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, false);
             }
 
-            var hairStyle = Appearance.HairStyleName;
-            if (string.IsNullOrWhiteSpace(hairStyle) || !HairStyles.HairStylesMap.ContainsKey(hairStyle))
+            var hairStyle = Appearance.HairStyleId;
+            if (string.IsNullOrWhiteSpace(hairStyle) ||
+                !_accessoryManager.IsValidAccessoryInCategory(hairStyle, CategoriesHair))
+            {
                 hairStyle = HairStyles.DefaultHairStyle;
-            sprite.LayerSetState(HumanoidVisualLayers.Hair,
-                HairStyles.HairStylesMap[hairStyle]);
+            }
 
-            var facialHairStyle = Appearance.FacialHairStyleName;
-            if (string.IsNullOrWhiteSpace(facialHairStyle) || !HairStyles.FacialHairStylesMap.ContainsKey(facialHairStyle))
+            var facialHairStyle = Appearance.FacialHairStyleId;
+            if (string.IsNullOrWhiteSpace(facialHairStyle) ||
+                !_accessoryManager.IsValidAccessoryInCategory(facialHairStyle, CategoriesFacialHair))
+            {
                 facialHairStyle = HairStyles.DefaultFacialHairStyle;
-            sprite.LayerSetState(HumanoidVisualLayers.FacialHair,
-                HairStyles.FacialHairStylesMap[facialHairStyle]);
+            }
+
+            var hairPrototype = _prototypeManager.Index<SpriteAccessoryPrototype>(hairStyle);
+            var facialHairPrototype = _prototypeManager.Index<SpriteAccessoryPrototype>(facialHairStyle);
+
+            sprite.LayerSetSprite(HumanoidVisualLayers.Hair, hairPrototype.Sprite);
+            sprite.LayerSetSprite(HumanoidVisualLayers.FacialHair, facialHairPrototype.Sprite);
         }
 
         public void BodyPartAdded(BodyPartAddedEventArgs args)

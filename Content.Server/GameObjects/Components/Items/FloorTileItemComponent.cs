@@ -10,6 +10,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Items
@@ -45,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Items
         private void PlaceAt(IMapGrid mapGrid, EntityCoordinates location, ushort tileId, float offset = 0)
         {
             mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId));
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Items/genhit.ogg", location, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(location), "/Audio/Items/genhit.ogg", location, AudioHelpers.WithVariation(0.125f));
         }
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)

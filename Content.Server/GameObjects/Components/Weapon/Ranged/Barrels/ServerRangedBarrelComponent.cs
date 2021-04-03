@@ -10,6 +10,7 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -364,9 +365,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
 
-                projectile
-                    .GetComponent<IPhysBody>()
-                    .LinearVelocity = projectileAngle.ToVec() * velocity;
+                // FIXME: Work around issue where inserting and removing an entity from a container,
+                // then setting its linear velocity in the same tick resets velocity back to zero.
+                // See SharedBroadPhaseSystem.HandleContainerInsert()... It sets Awake to false, which causes this.
+                projectile.SpawnTimer(TimeSpan.FromMilliseconds(25), () =>
+                {
+                    projectile
+                        .GetComponent<IPhysBody>()
+                        .LinearVelocity = projectileAngle.ToVec() * velocity;
+                });
+
 
                 projectile.Transform.LocalRotation = projectileAngle + MathHelper.PiOver2;
             }

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;

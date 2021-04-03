@@ -26,9 +26,8 @@
         !type:PhysShapeAabb
           bounds: "-0.35,-0.08,0.25,0.15"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
+      - SmallImpassable
+      mask:
       - VaultImpassable
   - type: Sprite
     netsync: false

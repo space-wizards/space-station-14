@@ -14,8 +14,9 @@
   - type: Alerts
   - type: Actions
     innateActions:
-      - HumanScream
+      - CombatMode
       - Disarm
+      - HumanScream
   - type: Eye
     zoom: 0.5, 0.5
   - type: CameraRecoil

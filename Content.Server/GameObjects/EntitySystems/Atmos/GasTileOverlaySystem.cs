@@ -107,7 +107,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             return chunk;
         }
 
-        private void OnGridRemoved(GridId gridId)
+        private void OnGridRemoved(MapId mapId, GridId gridId)
         {
             if (_overlay.ContainsKey(gridId))
             {

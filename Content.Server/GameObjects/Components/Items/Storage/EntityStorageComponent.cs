@@ -14,6 +14,7 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -21,6 +22,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -207,7 +209,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     continue;
 
                 // only items that can be stored in an inventory, or a mob, can be eaten by a locker
-                if (!entity.HasComponent<StorableComponent>() &&
+                if (!entity.HasComponent<SharedItemComponent>() &&
                     !entity.HasComponent<IBody>())
                     continue;
 
@@ -223,7 +225,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_closeSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _closeSound, Owner);
             _lastInternalOpenAttempt = default;
         }
 
@@ -232,7 +234,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             Open = true;
             EmptyContents();
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_openSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _openSound, Owner);
         }
 
         private void ModifyComponents()
@@ -271,23 +273,14 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (entity == Owner) return false;
             if (entity.TryGetComponent(out IPhysBody? entityPhysicsComponent))
             {
-                if(MaxSize < entityPhysicsComponent.GetWorldAABB().Size.X
+                if (MaxSize < entityPhysicsComponent.GetWorldAABB().Size.X
                     || MaxSize < entityPhysicsComponent.GetWorldAABB().Size.Y)
                 {
                     return false;
                 }
             }
-            if (Contents.CanInsert(entity))
-            {
-                Contents.Insert(entity);
-                entity.Transform.LocalPosition = Vector2.Zero;
-                if (entityPhysicsComponent != null)
-                {
-                    entityPhysicsComponent.CanCollide = false;
-                }
-                return true;
-            }
-            return false;
+
+            return Contents.CanInsert(entity) && Insert(entity);
         }
 
         public virtual Vector2 ContentsDumpPosition()
@@ -363,7 +356,14 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return true;
             }
 
-            return Contents.Insert(entity);
+            if (!Contents.Insert(entity)) return false;
+
+            entity.Transform.LocalPosition = Vector2.Zero;
+            if (entity.TryGetComponent(out IPhysBody? body))
+            {
+                body.CanCollide = false;
+            }
+            return true;
         }
 
         /// <inheritdoc />
@@ -472,7 +472,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             data.Text = Loc.GetString(component.Open ? "Close" : "Open");
-            data.IconTexture = component.Open ? "/Textures/Interface/VerbIcons/close.svg.96dpi.png" : "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
+            data.IconTexture = component.Open ? "/Textures/Interface/VerbIcons/close.svg.192dpi.png" : "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
         }
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)

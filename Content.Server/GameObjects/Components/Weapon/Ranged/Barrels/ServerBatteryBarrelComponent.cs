@@ -17,6 +17,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -221,7 +222,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             if (_soundPowerCellInsert != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             }
 
             _powerCellContainer.Insert(entity);
@@ -274,7 +275,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             if (_soundPowerCellEject != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             }
             return true;
         }

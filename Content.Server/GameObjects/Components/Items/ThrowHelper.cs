@@ -12,6 +12,8 @@ namespace Content.Server.GameObjects.Components.Items
 {
     internal static class ThrowHelper
     {
+        private const float ThrowAngularImpulse = 3.0f;
+
         /// <summary>
         ///     Tries to throw the entity if it has a physics component, otherwise does nothing.
         /// </summary>
@@ -21,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Items
         /// <param name="pushbackRatio">The ratio of impulse applied to the thrower</param>
         internal static void TryThrow(this IEntity entity, Vector2 direction, IEntity? user = null, float pushbackRatio = 1.0f)
         {
-            if (direction == Vector2.Zero || !entity.TryGetComponent(out PhysicsComponent? physicsComponent))
+            if (entity.Deleted || direction == Vector2.Zero || !entity.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
                 return;
             }
@@ -41,6 +43,8 @@ namespace Content.Server.GameObjects.Components.Items
             if (entity.HasComponent<ItemComponent>())
             {
                 entity.EnsureComponent<ThrownItemComponent>().Thrower = user;
+                // Give it a l'il spin.
+                physicsComponent.ApplyAngularImpulse(ThrowAngularImpulse);
 
                 if (user != null)
                     EntitySystem.Get<InteractionSystem>().ThrownInteraction(user, entity);

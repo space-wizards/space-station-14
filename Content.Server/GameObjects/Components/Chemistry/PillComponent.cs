@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Culinary;
@@ -13,6 +13,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -21,8 +22,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     public class PillComponent : FoodComponent, IUse, IAfterInteract
     {
-        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-
         public override string Name => "Pill";
 
         [ViewVariables]
@@ -104,8 +103,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             if (UseSound != null)
             {
-                _entitySystem.GetEntitySystem<AudioSystem>()
-                    .PlayFromEntity(UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
+                SoundSystem.Play(Filter.Pvs(trueTarget), UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
             }
 
             trueTarget.PopupMessage(user, Loc.GetString("You swallow the pill."));

@@ -17,6 +17,7 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Physics.Pull;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -28,6 +29,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameObjects.Components.GUI
 {
@@ -760,7 +762,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             if (source != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/thudswoosh.ogg", source,
+                SoundSystem.Play(Filter.Pvs(source), "/Audio/Effects/thudswoosh.ogg", source,
                     AudioHelpers.WithVariation(0.025f));
 
                 if (target != null)
