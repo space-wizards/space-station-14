@@ -4,6 +4,7 @@ using Content.Shared.Physics;
 using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Broadphase;
 
@@ -32,7 +33,11 @@ namespace Content.IntegrationTests.Tests.Utility
         [Test]
         public async Task Test()
         {
-            var serverOptions = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
+            var serverOptions = new ServerContentIntegrationOption
+            {
+                ExtraPrototypes = Prototypes,
+                FailureLogLevel = LogLevel.Warning
+            };
             var server = StartServer(serverOptions);
 
             await server.WaitIdleAsync();

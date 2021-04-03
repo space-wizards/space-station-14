@@ -14,6 +14,7 @@ using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Buckle
@@ -208,7 +209,11 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task BuckledDyingDropItemsTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
+            var options = new ServerIntegrationOptions
+            {
+                ExtraPrototypes = Prototypes,
+                FailureLogLevel = LogLevel.Warning
+            };
             var server = StartServer(options);
 
             IEntity human = null;
@@ -294,7 +299,11 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task ForceUnbuckleBuckleTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
+            var options = new ServerIntegrationOptions
+            {
+                ExtraPrototypes = Prototypes,
+                FailureLogLevel = LogLevel.Warning
+            };
             var server = StartServer(options);
 
             IEntity human = null;
