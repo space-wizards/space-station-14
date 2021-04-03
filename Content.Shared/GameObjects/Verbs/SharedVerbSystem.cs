@@ -26,9 +26,7 @@ namespace Content.Shared.GameObjects.Verbs
             contextEntities = null;
             var length = buffer ? 1.0f: 0.5f;
 
-            var entities = player.
-                EntityManager.
-                EntityLookup.
+            var entities = IoCManager.Resolve<IEntityLookup>().
                 GetEntitiesIntersecting(targetPos.MapId, Box2.CenteredAround(targetPos.Position, (length, length))).ToList();
 
             if (entities.Count == 0)
