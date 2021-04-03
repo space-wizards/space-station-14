@@ -182,11 +182,14 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                 _movingTo = value;
 
-                EntityEventArgs message = value == null
-                    ? new PullableStopMovingMessage()
-                    : new PullableMoveMessage();
-
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, message);
+                if (value == null)
+                {
+                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PullableStopMovingMessage());
+                }
+                else
+                {
+                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PullableMoveMessage());
+                }
             }
         }
 
