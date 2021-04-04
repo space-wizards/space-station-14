@@ -1,0 +1,31 @@
+- type: entity
+  parent: BaseItem
+  name: bucket
+  id: Bucket
+  description: It's a boring old bucket.
+  components:
+  - type: Drink
+    isOpen: true
+  - type: Clickable
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    layers:
+    - state: bucket
+    - state: bucket_water
+    drawdepth: Objects
+  - type: Bucket
+  - type: LoopingSound
+  - type: SolutionContainer
+    maxVol: 500
+  - type: SolutionTransfer
+    transferAmount: 50
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 5
+      mask:
+      - Impassable
+  - type: Spillable
