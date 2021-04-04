@@ -6,9 +6,6 @@
   },
   "states": [
     {
-      "name": "beef"
-    },
-    {
       "name": "butter"
     },
     {
@@ -31,22 +28,25 @@
       ]
     },
     {
-      "name": "spaghetti-meatball"
+      "name": "meatball"
     },
     {
-      "name": "pastatomato"
+      "name": "tomato"
     },
     {
-      "name": "spaghetti"
+      "name": "packet"
     },
     {
-      "name": "spaghetti-boiled"
+      "name": "boiled"
     },
     {
-      "name": "alpha-boiled-filling"
+      "name": "alpha-filling"
     },
     {
       "name": "spesslaw"
+    },
+    {
+      "name": "plate"
     }
   ]
 }
