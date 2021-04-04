@@ -1,0 +1,7 @@
+﻿- type: entityList
+  id: ToolsBasic
+  entities:
+  - WelderExperimental
+  - JawsOfLife
+  - PowerDrill
+  - Multitool
