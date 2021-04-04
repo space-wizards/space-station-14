@@ -37,6 +37,7 @@
   - type: Sprite
     sprite: Constructible/Hydroponics/misc.rsi
     state: soil
+    drawdepth: FloorObjects
   - type: PlantHolder
     drawWarnings: false
   - type: SolutionContainer
@@ -70,5 +71,6 @@
   - type: Sprite
     sprite: Constructible/Hydroponics/containers.rsi
     state: hydrotray3
+    drawdepth: FloorObjects
   - type: PlantHolder
     drawWarnings: true
