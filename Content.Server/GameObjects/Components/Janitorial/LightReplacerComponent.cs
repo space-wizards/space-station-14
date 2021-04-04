@@ -1,6 +1,7 @@
 #nullable enable
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -26,9 +27,10 @@ namespace Content.Server.GameObjects.Components.Janitorial
     ///     Can be reloaded by new light tubes or light bulbs
     /// </summary>
     [RegisterComponent]
-    public class LightReplacerComponent : Component, IAfterInteract, IInteractUsing
+    public class LightReplacerComponent : Component
     {
         public override string Name => "LightReplacer";
+        public override uint? NetID => ContentNetIDs.LIGHT_REPLACER;
 
         [DataField("sound")] private string _sound = "/Audio/Weapons/click.ogg";
 
@@ -37,52 +39,13 @@ namespace Content.Server.GameObjects.Components.Janitorial
         // bulbs that were inserted inside light replacer
         [ViewVariables] private IContainer _insertedBulbs = default!;
 
-
         public override void Initialize()
         {
             base.Initialize();
             _insertedBulbs = ContainerHelpers.EnsureContainer<Container>(Owner, "light_replacer_storage");
         }
 
-        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
-        {
-            // standard interaction checks
-            if (!ActionBlockerSystem.CanUse(eventArgs.User)) return false;
-            if (!eventArgs.CanReach) return false;
-
-            // behaviour will depends on target type
-            if (eventArgs.Target != null)
-            {
-                // replace broken light in fixture?
-                if (eventArgs.Target.TryGetComponent(out PoweredLightComponent? fixture))
-                    return TryReplaceBulb(fixture, eventArgs.User);
-                // add new bulb to light replacer container?
-                else if (eventArgs.Target.TryGetComponent(out LightBulbComponent? bulb))
-                    return TryInsertBulb(bulb, eventArgs.User, true);
-            }
-
-            return false;
-        }
-
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            // standard interaction checks
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User)) return false;
-
-            if (eventArgs.Using != null)
-            {
-                // want to insert a new light bulb?
-                if (eventArgs.Using.TryGetComponent(out LightBulbComponent? bulb))
-                    return TryInsertBulb(bulb, eventArgs.User, true);
-                // add bulbs from storage?
-                else if (eventArgs.Using.TryGetComponent(out ServerStorageComponent? storage))
-                    return TryInsertBulb(storage, eventArgs.User);
-            }
-
-            return false;
-        }
-
-        private bool TryReplaceBulb(PoweredLightComponent fixture, IEntity? user = null)
+        public bool TryReplaceBulb(PoweredLightComponent fixture, IEntity? user = null)
         {
             // check if light bulb is broken or missing
             if (fixture.LightBulb != null && fixture.LightBulb.State == LightBulbState.Normal) return false;
@@ -134,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Janitorial
             return wasReplaced;
         }
 
-        private bool TryInsertBulb(LightBulbComponent bulb, IEntity? user = null, bool showTooltip = false)
+        public bool TryInsertBulb(LightBulbComponent bulb, IEntity? user = null, bool showTooltip = false)
         {
             // only normal lights can be inserted inside light replacer
             if (bulb.State != LightBulbState.Normal)
@@ -161,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Janitorial
             return hasInsert;
         }
 
-        private bool TryInsertBulb(ServerStorageComponent storage, IEntity? user = null)
+        public bool TryInsertBulb(ServerStorageComponent storage, IEntity? user = null)
         {
             if (storage.StoredEntities == null)
                 return false;
