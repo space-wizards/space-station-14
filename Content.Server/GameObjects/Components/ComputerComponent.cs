@@ -28,13 +28,6 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
-        protected override void Startup()
-        {
-            base.Startup();
-
-            CreateComputerBoard();
-        }
-
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
