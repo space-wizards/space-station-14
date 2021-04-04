@@ -30,25 +30,18 @@ namespace Content.Server.GameObjects.Components.Janitorial
     {
         public override string Name => "LightReplacer";
 
-        [DataField("contents")] private List<LightReplacerEntity> _contents = new();
         [DataField("sound")] private string _sound = "/Audio/Weapons/click.ogg";
 
-        [ViewVariables] private IContainer _bulbsStorage = default!;
+        // bulbs that were inside light replacer when it spawned
+        [DataField("contents")] private List<LightReplacerEntity> _contents = new();
+        // bulbs that were inserted inside light replacer
+        [ViewVariables] private IContainer _insertedBulbs = default!;
+
 
         public override void Initialize()
         {
             base.Initialize();
-
-            // fill light replacer container with bulbs
-            _bulbsStorage = ContainerHelpers.EnsureContainer<Container>(Owner, "light_replacer_storage");
-            foreach (var ent in _contents)
-            {
-                for (var i = 0; i < ent.Amount; i++)
-                {
-                    var bulb = Owner.EntityManager.SpawnEntity(ent.PrototypeName, Owner.Transform.Coordinates);
-                    _bulbsStorage.Insert(bulb);
-                }
-            }
+            _insertedBulbs = ContainerHelpers.EnsureContainer<Container>(Owner, "light_replacer_storage");
         }
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
@@ -94,19 +87,39 @@ namespace Content.Server.GameObjects.Components.Janitorial
             // check if light bulb is broken or missing
             if (fixture.LightBulb != null && fixture.LightBulb.State == LightBulbState.Normal) return false;
 
-            // try get first bulb of the same type as targeted light fixtutre
-            var bulb = _bulbsStorage.ContainedEntities.FirstOrDefault(
+            // try get first inserted bulb of the same type as targeted light fixtutre
+            var bulb = _insertedBulbs.ContainedEntities.FirstOrDefault(
                 (e) => e.GetComponentOrNull<LightBulbComponent>()?.Type == fixture.BulbType);
 
-            // try to remove it from storage
-            if (bulb == null || !_bulbsStorage.Remove(bulb))
+            // found bulb in inserted storage
+            if (bulb != null)
             {
-                if (user != null)
+                // try to remove it
+                var hasRemoved = _insertedBulbs.Remove(bulb);
+                if (!hasRemoved)
+                    return false;
+            }
+            // try to create new instance of bulb from LightReplacerEntity
+            else
+            {
+                var bulbEnt = _contents.FirstOrDefault((e) => e.Type == fixture.BulbType && e.Amount > 0);
+
+                // found right bulb, let's spawn it
+                if (bulbEnt != null)
                 {
-                    var msg = Loc.GetString("comp-light-replacer-missing-light", ("light-replacer", Owner));
-                    user.PopupMessage(msg);
+                    bulb = Owner.EntityManager.SpawnEntity(bulbEnt.PrototypeName, Owner.Transform.Coordinates);
+                    bulbEnt.Amount--;
                 }
-                return false;
+                // not found any light bulbs
+                else
+                {
+                    if (user != null)
+                    {
+                        var msg = Loc.GetString("comp-light-replacer-missing-light", ("light-replacer", Owner));
+                        user.PopupMessage(msg);
+                    }
+                    return false;
+                }
             }
 
             // insert it into fixture
@@ -136,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Janitorial
             }
 
             // try insert light and show message
-            var hasInsert = _bulbsStorage.Insert(bulb.Owner);
+            var hasInsert = _insertedBulbs.Insert(bulb.Owner);
             if (hasInsert && showTooltip && user != null)
             {
                 var msg = Loc.GetString("comp-light-replacer-insert-light",
@@ -176,13 +189,16 @@ namespace Content.Server.GameObjects.Components.Janitorial
 
         [Serializable]
         [DataDefinition]
-        public struct LightReplacerEntity
+        public class LightReplacerEntity
         {
             [DataField("name", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
             public string? PrototypeName;
 
             [DataField("amount")]
             public int Amount;
+
+            [DataField("type")]
+            public LightBulbType Type;
         }
     }
 }
