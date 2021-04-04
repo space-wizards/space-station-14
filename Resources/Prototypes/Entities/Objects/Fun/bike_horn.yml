@@ -18,3 +18,5 @@
     semitoneVariation: 6
   - type: UseDelay
     delay: 0.5
+  - type: FootstepModifier
+    footstepSoundCollection: BikeHorn
