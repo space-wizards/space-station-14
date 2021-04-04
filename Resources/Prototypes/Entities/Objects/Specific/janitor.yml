@@ -58,6 +58,8 @@
   id: Bucket
   description: It's a boring old bucket.
   components:
+  - type: Drink
+    isOpen: true
   - type: Clickable
   - type: Sprite
     sprite: Objects/Specific/Janitorial/janitorial.rsi
@@ -69,6 +71,8 @@
   - type: LoopingSound
   - type: SolutionContainer
     maxVol: 500
+  - type: SolutionTransfer
+    transferAmount: 50
   - type: Physics
     bodyType: Dynamic
     fixtures:
