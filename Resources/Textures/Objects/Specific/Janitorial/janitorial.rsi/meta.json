@@ -6,12 +6,6 @@
   },
   "states": [
     {
-      "name": "bucket"
-    },
-    {
-      "name": "bucket_water"
-    },
-    {
       "name": "cleaner"
     },
     {
