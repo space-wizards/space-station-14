@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/831c7c2743530e8a31910d781bae9dc34f3f1ec8/icons/obj/ammo_mags.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "mag-1"
+    },
+    {
+      "name": "mag-2"
+    },
+    {
+      "name": "mag-3"
+    },
+    {
+      "name": "mag-4"
+    },
+    {
+      "name": "mag-5"
+    },
+    {
+      "name": "hv"
+    },
+    {
+      "name": "practice"
+    },
+    {
+      "name": "rubber"
+    }
+  ]
+}
