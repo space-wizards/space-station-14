@@ -1,35 +1,77 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "soap"
     },
-    "license": "CC-BY-SA 3.0",
-    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at a407fc1f5c25cbce8b653c553f53be294d15b071 and https://github.com/tgstation/tgstation at 259acc8c81054d89f7b6bcd9ff702fdf587a19ed. soapomega.png modified by Zumorica",
-    "states": [
-        {
-            "name": "soap",
-
-        },
-        {
-            "name": "soapdeluxe",
-
-        },
-        {
-            "name": "soapgibs",
-
-        },
-        {
-            "name": "soapnt",
-
-        },
-        {
-            "name": "soapomega",
-
-        },
-        {
-            "name": "soapsyndie",
-
-        }
-    ]
+    {
+      "name": "deluxe"
+    },
+    {
+      "name": "gibs"
+    },
+    {
+      "name": "nt"
+    },
+    {
+      "name": "omega"
+    },
+    {
+      "name": "syndie"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "deluxe-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "deluxe-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "gibs-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "gibs-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "nt-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "nt-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "omega-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "omega-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "syndie-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "syndie-inhand-right",
+      "directions": 4
+    }
+  ]
 }
