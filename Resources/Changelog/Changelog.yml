@@ -817,3 +817,8 @@ Entries:
   - {message: Removed plasma canister from Saltern for now, type: Remove}
   id: 147
   time: '2021-04-02T19:37:33.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Pie cannon inhands fixed and can only hold 5 pies instead of 15, type: Fix}
+  id: 148
+  time: '2021-04-04T11:13:20.0000000+00:00'
