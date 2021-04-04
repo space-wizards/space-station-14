@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Medical;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems.Medical;
 using Content.Server.Mobs;
 using Content.Shared.GameTicking;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -17,15 +16,14 @@ namespace Content.Server.GameObjects.EntitySystems
     internal sealed class CloningSystem : EntitySystem, IResettingEntitySystem
     {
         public readonly Dictionary<int, Mind> Minds = new();
-        public readonly Dictionary<Mind, EntityUid> Clones = new();
+        public readonly Dictionary<Mind, EntityUid> ClonesWaitingForMind = new();
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<CloningPodComponent, ActivateInWorldMessage>(HandleActivate);
-            SubscribeLocalEvent<CloningPodComponent, CloneMindAddedMessage>(HandleMindAdded);
-            SubscribeLocalEvent<CloningPodComponent, CloneMindRemovedMessage>(HandleMindRemoved);
+            SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
         }
 
         public override void Shutdown()
@@ -33,13 +31,12 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Shutdown();
 
             UnsubscribeLocalEvent<CloningPodComponent, ActivateInWorldMessage>(HandleActivate);
-            UnsubscribeLocalEvent<CloningPodComponent, CloneMindAddedMessage>(HandleMindAdded);
-            SubscribeLocalEvent<CloningPodComponent, CloneMindRemovedMessage>(HandleMindRemoved);
+            UnsubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
         }
 
         internal void TransferMindToClone(Mind mind)
         {
-            if (!Clones.TryGetValue(mind, out var entityUid) ||
+            if (!ClonesWaitingForMind.TryGetValue(mind, out var entityUid) ||
                 !EntityManager.TryGetEntity(entityUid, out var entity) ||
                 !entity.TryGetComponent(out MindComponent? mindComp) ||
                 mindComp.Mind != null)
@@ -60,20 +57,18 @@ namespace Content.Server.GameObjects.EntitySystems
             component.UserInterface?.Open(actor.playerSession);
         }
 
-        private void HandleMindAdded(EntityUid uid, CloningPodComponent component, CloneMindAddedMessage message)
+        private void HandleMindAdded(EntityUid uid, BeingClonedComponent component, MindAddedMessage message)
         {
-            if (message.Uid != component.BodyContainer?.ContainedEntity?.Uid)
+            if (component.Parent == EntityUid.Invalid ||
+                !EntityManager.TryGetEntity(component.Parent, out var parent) ||
+                !parent.TryGetComponent<CloningPodComponent>(out var cloningPodComponent) ||
+                component.Owner != cloningPodComponent.BodyContainer?.ContainedEntity)
+            {
+                component.Owner.RemoveComponent<BeingClonedComponent>();
                 return;
+            }
 
-            component.UpdateStatus(CloningPodStatus.Cloning);
-        }
-
-        private void HandleMindRemoved(EntityUid uid, CloningPodComponent component, CloneMindRemovedMessage message)
-        {
-            if (message.Uid != component.BodyContainer?.ContainedEntity?.Uid)
-                return;
-
-            component.UpdateStatus(CloningPodStatus.NoMind);
+            cloningPodComponent.UpdateStatus(CloningPodStatus.Cloning);
         }
 
         public override void Update(float frameTime)
@@ -129,7 +124,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void Reset()
         {
             Minds.Clear();
-            Clones.Clear();
+            ClonesWaitingForMind.Clear();
         }
     }
 }

@@ -5,9 +5,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Medical
 {
     [RegisterComponent]
-    public class CloneMindReturnComponent : Component
+    public class BeingClonedComponent : Component
     {
-        public override string Name => "CloneMindReturn";
+        public override string Name => "BeingCloned";
 
         [ViewVariables]
         public Mind? Mind = default;

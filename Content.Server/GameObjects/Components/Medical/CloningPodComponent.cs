@@ -58,9 +58,6 @@ namespace Content.Server.GameObjects.Components.Medical
             //TODO: write this so that it checks for a change in power events for GORE POD cases
             if (UserInterface != null)
                 EntitySystem.Get<CloningSystem>().UpdateUserInterface(this);
-
-            Owner.EntityManager.EventBus.SubscribeEvent<GhostComponent.GhostReturnMessage>(EventSource.Local, this,
-                HandleGhostReturn);
         }
 
         public override void OnRemove()
@@ -69,8 +66,6 @@ namespace Content.Server.GameObjects.Components.Medical
             {
                 UserInterface.OnReceiveMessage -= OnUiReceiveMessage;
             }
-
-            Owner.EntityManager.EventBus.UnsubscribeEvent<GhostComponent.GhostReturnMessage>(EventSource.Local, this);
 
             base.OnRemove();
         }
@@ -100,14 +95,16 @@ namespace Content.Server.GameObjects.Components.Medical
                         return; // ScanId is not in database
                     }
 
-                    if (cloningSystem.Clones.TryGetValue(mind, out var cloneUid))
+                    if (cloningSystem.ClonesWaitingForMind.TryGetValue(mind, out var cloneUid))
                     {
-                        if (Owner.EntityManager.TryGetEntity(cloneUid, out var entity) &&
-                            entity.TryGetComponent(out MindComponent? mindComp) &&
-                            (mindComp.Mind == null || mindComp.Mind == mind))
+                        if (Owner.EntityManager.TryGetEntity(cloneUid, out var clone) &&
+                            clone.TryGetComponent<IMobStateComponent>(out var cloneState) &&
+                            !cloneState.IsDead() &&
+                            clone.TryGetComponent(out MindComponent? cloneMindComp) &&
+                            (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
                             return; // Mind already has clone
 
-                        cloningSystem.Clones.Remove(mind);
+                        cloningSystem.ClonesWaitingForMind.Remove(mind);
                     }
 
                     if (mind.OwnedEntity != null &&
@@ -125,13 +122,13 @@ namespace Content.Server.GameObjects.Components.Medical
                     mob.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
                     mob.Name = profile.Name;
 
-                    var cloneMindReturn = mob.AddComponent<CloneMindReturnComponent>();
+                    var cloneMindReturn = mob.AddComponent<BeingClonedComponent>();
                     cloneMindReturn.Mind = mind;
                     cloneMindReturn.Parent = Owner.Uid;
 
                     BodyContainer.Insert(mob);
                     CapturedMind = mind;
-                    cloningSystem.Clones.Add(mind, mob.Uid);
+                    cloningSystem.ClonesWaitingForMind.Add(mind, mob.Uid);
 
                     UpdateStatus(CloningPodStatus.NoMind);
 
@@ -151,11 +148,12 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public void Eject()
         {
-            if (BodyContainer.ContainedEntity == null || CloningProgress < CloningTime)
+            var entity = BodyContainer.ContainedEntity;
+            if (entity == null || CloningProgress < CloningTime)
                 return;
 
-            BodyContainer.ContainedEntity.RemoveComponent<CloneMindReturnComponent>();
-            BodyContainer.Remove(BodyContainer.ContainedEntity!);
+            entity.RemoveComponent<BeingClonedComponent>();
+            BodyContainer.Remove(entity!);
             CapturedMind = null;
             CloningProgress = 0f;
             UpdateStatus(CloningPodStatus.Idle);
@@ -168,21 +166,9 @@ namespace Content.Server.GameObjects.Components.Medical
             EntitySystem.Get<CloningSystem>().UpdateUserInterface(this);
         }
 
-
         private HumanoidCharacterProfile GetPlayerProfileAsync(NetUserId userId)
         {
             return (HumanoidCharacterProfile) _prefsManager.GetPreferences(userId).SelectedCharacter;
-        }
-
-        private void HandleGhostReturn(GhostComponent.GhostReturnMessage message)
-        {
-            if (message.Sender == CapturedMind)
-            {
-                //Transfer the mind to the new mob
-                CapturedMind.TransferTo(BodyContainer.ContainedEntity);
-
-                Status = CloningPodStatus.Cloning;
-            }
         }
     }
 }
