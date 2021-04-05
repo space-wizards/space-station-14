@@ -1,0 +1,24 @@
+- type: entity
+  name: banana peel
+  parent: TrashBase
+  id: TrashBananaPeel
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: peel
+  - type: Slippery
+    intersectPercentage: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: KinematicController
+    fixtures: # TODO: Make a second fixture. One should be for slipping, and the other for collisions.
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      mass: 5
+      layer:
+        - SmallImpassable
+      mask:
+        - Impassable
+        - MobImpassable

@@ -1,0 +1,105 @@
+# Trash
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: FoodPacketTrash
+  description: This is rubbish.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/packaged.rsi
+    netsync: false
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketBoritosTrash
+  name: boritos bag
+  components:
+  - type: Sprite
+    state: boritos-trash
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketCheesieTrash
+  name: cheesie honkers
+  components:
+  - type: Sprite
+    state: cheesiehonkers-trash
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketChipsTrash
+  name: chips
+  components:
+  - type: Sprite
+    state: chips-trash
+  - type: Item
+    sprite: Objects/Consumable/Food/packaged.rsi
+    HeldPrefix: packet
+    color: green
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketEnergyTrash
+  name: energybar wrapper
+  components:
+  - type: Sprite
+    state: energybar-trash
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketPistachioTrash
+  name: pistachios packet
+  components:
+  - type: Sprite
+    state: pistachio-trash
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketPopcornTrash
+  name: popcorn box
+  components:
+  - type: Sprite
+    state: popcorn-trash
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketRaisansTrash
+  name: 4no raisans
+  components:
+  - type: Sprite
+    state: raisans-trash
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketSemkiTrash
+  name: semki packet
+  components:
+  - type: Sprite
+    state: semki-trash
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketSusTrash
+  name: sus jerky
+  components:
+  - type: Sprite
+    state: susjerky-trash
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketSyndiTrash
+  name: syndi-cakes box
+  components:
+  - type: Sprite
+    state: syndicakes-trash

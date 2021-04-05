@@ -20,6 +20,9 @@
       "name": "boritos"
     },
     {
+      "name": "boritos-trash"
+    },
+    {
       "name": "cheesiehonkers"
     },
     {
@@ -32,15 +35,35 @@
       "name": "chips-trash"
     },
     {
-      "name": "chips-inhand-right",
+      "name": "chocolatebar"
+    },
+    {
+      "name": "chocolatebar-open"
+    },
+    {
+      "name": "chocolatebar-trash"
+    },
+    {
+      "name": "chocolatebar-inhand-right",
       "directions": 4
     },
     {
-      "name": "chips-inhand-left",
+      "name": "chocolatebar-inhand-left",
       "directions": 4
     },
     {
       "name": "energybar"
+    },
+    {
+      "name": "energybar-trash"
+    },
+    {
+      "name": "packet-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "packet-inhand-left",
+      "directions": 4
     },
     {
       "name": "peachcan"
@@ -61,6 +84,9 @@
       "name": "peachcanmaint-open"
     },
     {
+      "name": "pistachio-trash"
+    },
+    {
       "name": "popcorn"
     },
     {
@@ -71,6 +97,9 @@
     },
     {
       "name": "raisans-trash"
+    },
+    {
+      "name": "semki-trash"
     },
     {
       "name": "susjerky"
