@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponentWarn<PipeNetDeviceComponent>();
+            Owner.EnsureComponentWarn<AtmosDeviceComponent>();
             SetGasPort();
             if (Owner.TryGetComponent<SnapGridComponent>(out var snapGrid))
             {

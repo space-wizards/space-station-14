@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponentWarn<PipeNetDeviceComponent>();
+            Owner.EnsureComponentWarn<AtmosDeviceComponent>();
             _atmosSystem = EntitySystem.Get<AtmosphereSystem>();
             SetInlet();
             Owner.TryGetComponent(out _appearance);

@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponentWarn<PipeNetDeviceComponent>();
+            Owner.EnsureComponentWarn<AtmosDeviceComponent>();
             SetPipes();
             Owner.TryGetComponent(out _appearance);
             UpdateAppearance();

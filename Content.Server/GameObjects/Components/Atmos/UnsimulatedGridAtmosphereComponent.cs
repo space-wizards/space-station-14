@@ -63,9 +63,9 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public override void RemovePipeNet(IPipeNet pipeNet) { }
 
-        public override void AddPipeNetDevice(PipeNetDeviceComponent pipeNetDevice) { }
+        public override void AddPipeNetDevice(AtmosDeviceComponent atmosDevice) { }
 
-        public override void RemovePipeNetDevice(PipeNetDeviceComponent pipeNetDevice) { }
+        public override void RemovePipeNetDevice(AtmosDeviceComponent atmosDevice) { }
 
         public override void Update(float frameTime) { }
 
@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return false;
         }
 
-        protected override bool ProcessPipeNetDevices(bool resumed = false, float lagCheck = 5f)
+        protected override bool ProcessAtmosDevices(bool resumed = false, float lagCheck = 5f)
         {
             return false;
         }

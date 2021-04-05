@@ -10,8 +10,10 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     ///     TODO: Make compatible with unanchoring/anchoring. Currently assumes that the Owner does not move.
     /// </summary>
     [RegisterComponent]
-    public class PipeNetDeviceComponent : Component
+    public class AtmosDeviceComponent : Component
     {
+        private static readonly AtmosDeviceUpdateEvent Event = new ();
+
         public override string Name => "PipeNetDevice";
 
         private IGridAtmosphereComponent? JoinedGridAtmos { get; set; }
@@ -33,6 +35,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public void Update()
         {
             SendMessage(_cachedUpdateMessage);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, Event);
         }
 
         private void JoinGridAtmos()
@@ -51,6 +54,11 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     }
 
     public class PipeNetUpdateMessage : ComponentMessage
+    {
+
+    }
+
+    public class AtmosDeviceUpdateEvent : EntityEventArgs
     {
 
     }

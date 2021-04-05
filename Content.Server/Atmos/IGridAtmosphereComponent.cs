@@ -168,8 +168,8 @@ namespace Content.Server.Atmos
 
         void RemovePipeNet(IPipeNet pipeNet);
 
-        void AddPipeNetDevice(PipeNetDeviceComponent pipeNetDevice);
+        void AddPipeNetDevice(AtmosDeviceComponent atmosDevice);
 
-        void RemovePipeNetDevice(PipeNetDeviceComponent pipeNetDevice);
+        void RemovePipeNetDevice(AtmosDeviceComponent atmosDevice);
     }
 }

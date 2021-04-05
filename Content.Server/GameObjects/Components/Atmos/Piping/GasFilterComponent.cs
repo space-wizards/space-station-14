@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<PipeNetDeviceComponent>();
+            Owner.EnsureComponent<AtmosDeviceComponent>();
             SetPipes();
             UpdateAppearance();
         }
