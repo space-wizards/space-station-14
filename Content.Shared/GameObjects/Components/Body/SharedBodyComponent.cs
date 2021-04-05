@@ -84,16 +84,13 @@ namespace Content.Shared.GameObjects.Components.Body
 
                 foreach (var (id, partType) in template.Slots)
                 {
-                    SlotIds[id] = new BodyPartSlot(id, partType);
+                    SetSlot(id, partType);
                 }
 
-                var slots = SlotIds.Values;
-
-                foreach (var slot in slots)
+                foreach (var (slotId, connectionIds) in template.Connections)
                 {
-                    slot.PartAdded += part => OnAddPart(slot, part);
-                    slot.PartRemoved += part => OnRemovePart(slot, part);
-                    slot.SetConnectionsInternal(slots);
+                    var connections = connectionIds.Select(id => SlotIds[id]);
+                    SlotIds[slotId].SetConnectionsInternal(connections);
                 }
             }
 
@@ -108,6 +105,17 @@ namespace Content.Shared.GameObjects.Components.Body
             }
 
             base.OnRemove();
+        }
+
+        private BodyPartSlot SetSlot(string id, BodyPartType type)
+        {
+            var slot = new BodyPartSlot(id, type);
+
+            SlotIds[id] = slot;
+            slot.PartAdded += part => OnAddPart(slot, part);
+            slot.PartRemoved += part => OnRemovePart(slot, part);
+
+            return slot;
         }
 
         private Dictionary<BodyPartSlot, IBodyPart> GetHangingParts(BodyPartSlot from)
@@ -212,7 +220,7 @@ namespace Content.Shared.GameObjects.Components.Body
         {
             if (!SlotIds.TryGetValue(slotId, out var slot))
             {
-                slot = new BodyPartSlot(slotId, part.PartType);
+                slot = SetSlot(slotId, part.PartType);
                 SlotIds[slotId] = slot;
             }
 
