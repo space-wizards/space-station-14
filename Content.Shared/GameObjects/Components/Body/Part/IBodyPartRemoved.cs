@@ -19,20 +19,20 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
     public class BodyPartRemovedEventArgs : EventArgs
     {
-        public BodyPartRemovedEventArgs(IBodyPart part, string slot)
+        public BodyPartRemovedEventArgs(string slot, IBodyPart part)
         {
-            Part = part;
             Slot = slot;
+            Part = part;
         }
-
-        /// <summary>
-        ///     The part that was removed.
-        /// </summary>
-        public IBodyPart Part { get; }
 
         /// <summary>
         ///     The slot that <see cref="Part"/> was removed from.
         /// </summary>
         public string Slot { get; }
+
+        /// <summary>
+        ///     The part that was removed.
+        /// </summary>
+        public IBodyPart Part { get; }
     }
 }
