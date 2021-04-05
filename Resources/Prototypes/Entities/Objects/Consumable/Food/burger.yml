@@ -42,12 +42,8 @@
   id: FoodBurgerAppendix
   description: Tastes like appendicitis.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: appendix
+    state: appendix
 # Tastes like bun, grass.
 
 - type: entity
@@ -56,12 +52,8 @@
   id: FoodBurgerCarp
   description: Almost like a carp is yelling somewhere...
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: fish
+    state: fish
 # Tastes like bun, fish.
 
 - type: entity
@@ -70,12 +62,8 @@
   id: FoodBurgerTofu
   description: What.. is that meat?
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: tofu
+    state: tofu
 # Tastes like bun, tofu.
 
 - type: entity
@@ -94,12 +82,8 @@
   id: FoodBurgerXeno
   description: Smells caustic. Tastes like heresy.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: x
+    state: x
 # Tastes like bun, acid.
 
 - type: entity
@@ -108,12 +92,8 @@
   id: FoodBurgerBear
   description: Best served rawr.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: bearger
+    state: bearger
 
 - type: entity
   name: clown burger
@@ -121,12 +101,8 @@
   id: FoodBurgerClown
   description: This tastes funny...
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: clown
+    state: clown
 
 - type: entity
   name: mime burger
@@ -134,12 +110,8 @@
   id: FoodBurgerMime
   description: Its taste defies language.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: mime
+    state: mime
 # Tastes like  .
 
 - type: entity
@@ -148,12 +120,8 @@
   id: FoodBurgerBrain
   description: A strange looking burger. It looks almost sentient.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: brain
+    state: brain
 # Tastes like bun, brains.
 
 - type: entity
@@ -175,12 +143,8 @@
   id: FoodBurgerSpell
   description: This is absolutely Ei Nath.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: spell
+    state: spell
 # Tastes like bun, silver.
 
 - type: entity
@@ -195,12 +159,8 @@
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 25
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: bigbite
+    state: bigbite
 # Tastes like bun, silver, magic.
 
 - type: entity
@@ -225,12 +185,8 @@
   id: FoodBurgerFive
   description: HOT! HOT! HOT!
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: fivealarm
+    state: fivealarm
 # Tastes like bun, HEAT.
 
 - type: entity
@@ -239,12 +195,8 @@
   id: FoodBurgerRat
   description: Pretty much what you'd expect...
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: rat
+    state: rat
 # Tastes like bun, HEAT.
 
 - type: entity
@@ -253,12 +205,8 @@
   id: FoodBurgerBaseball
   description: It's still warm. The steam coming off of it looks like baseball
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: baseball
+    state: baseball
 # Tastes like bun, victory.
 
 - type: entity
@@ -267,12 +215,8 @@
   id: FoodBurgerBacon
   description: The perfect combination of all things American.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: bacon
+    state: bacon
 # Tastes like bun, bacon.
 
 - type: entity
@@ -281,12 +225,8 @@
   id: FoodBurgerEmpowered
   description: It's shockingly good, if you live off of electricity that is.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: empowered
+    state: empowered
 # Tastes like bun, pure electricity.
 
 - type: entity
@@ -295,12 +235,8 @@
   id: FoodBurgerCrab
   description: A delicious patty of the crabby kind, slapped in between a bun.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: crab
+    state: crab
 # Tastes like bun, crab meat.
 
 - type: entity
@@ -309,12 +245,8 @@
   id: FoodBurgerSoy
   description: After eating this you have the overwhelming urge to purchase overpriced figurines of superheroes.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: soylent
+    state: soylent
 # Tastes like bun, redditors.
 
 - type: entity
@@ -323,12 +255,8 @@
   id: FoodBurgerMcrib
   description: An elusive rib shaped burger with limited availablity across the galaxy. Not as good as you remember it.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: mcrib
+    state: mcrib
 # Tastes like bun, pork patty.
 
 - type: entity
@@ -337,12 +265,8 @@
   id: FoodBurgerMcguffin
   description: A cheap and greasy imitation of an eggs benedict.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: mcguffin
+    state: mcguffin
 # Tastes like muffin, bacon.
 
 - type: entity
@@ -351,12 +275,8 @@
   id: FoodBurgerChicken
   description: A delicious chicken sandwich, it is said the proceeds from this treat helps criminalize disarming people on the space frontier.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: chicken
+    state: chicken
 # Tastes like bun, chicken.
 
 - type: entity
@@ -365,12 +285,8 @@
   id: FoodBurgerCheese
   description: This noble burger stands proudly clad in golden cheese.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate
-    - state: cheese
+    state: cheese
 # TODO: Make this work.
   # - type: Sprite
   #   state: plate
