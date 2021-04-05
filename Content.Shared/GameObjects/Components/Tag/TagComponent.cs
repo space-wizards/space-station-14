@@ -19,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Tag
         public override string Name => "Tag";
 
         [ViewVariables]
-        [DataField("tags", customTypeSerializer: typeof(PrototypeIdSerializer<>))]
+        [DataField("tags", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
         private readonly HashSet<string> _tags = new();
 
         public IReadOnlySet<string> Tags => _tags;
