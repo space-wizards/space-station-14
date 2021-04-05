@@ -26,10 +26,10 @@
       "name": "box-trash"
     },
     {
-      "name": "can-closed"
+      "name": "tin-closed"
     },
     {
-      "name": "can-hot",
+      "name": "tin-hot",
       "delays": [
         [
           0.5,
@@ -40,7 +40,10 @@
       ]
     },
     {
-      "name": "can-open"
+      "name": "tin-open"
+    },
+    {
+      "name": "tin-trash"
     },
     {
       "name": "candy"
