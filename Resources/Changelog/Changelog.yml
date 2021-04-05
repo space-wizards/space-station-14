@@ -822,3 +822,8 @@ Entries:
   - {message: Pie cannon inhands fixed and can only hold 5 pies instead of 15, type: Fix}
   id: 148
   time: '2021-04-04T11:13:20.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Increased material cost of all lathe recipes, type: Tweak}
+  id: 149
+  time: '2021-04-05T00:00:45.0000000+00:00'
