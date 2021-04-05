@@ -827,3 +827,8 @@ Entries:
   - {message: Increased material cost of all lathe recipes, type: Tweak}
   id: 149
   time: '2021-04-05T00:00:45.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to move pulled entities, type: Fix}
+  id: 150
+  time: '2021-04-05T12:08:46.0000000+00:00'
