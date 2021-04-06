@@ -6,6 +6,7 @@ using Content.Shared.Administration;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Commands.Interactable
@@ -43,8 +44,7 @@ namespace Content.Server.Commands.Interactable
                 return;
             }
 
-            var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
-            var entities = serverEntityManager.GetEntitiesInRange(player.AttachedEntity, radius).ToList();
+            var entities = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(player.AttachedEntity, radius).ToList();
 
             foreach (var entity in entities)
             {
