@@ -252,6 +252,7 @@ namespace Content.Client
             "RandomSpawner",
             "SpawnAfterInteract",
             "DisassembleOnActivate",
+            "ExplosionLaunched",
         };
     }
 }

@@ -48,7 +48,7 @@ namespace Content.Server.Commands.Body
 
             var mechanismName = string.Join(" ", args).ToLowerInvariant();
 
-            foreach (var part in body.Parts.Values)
+            foreach (var (part, _) in body.Parts)
             foreach (var mechanism in part.Mechanisms)
             {
                 if (mechanism.Name.ToLowerInvariant() == mechanismName)

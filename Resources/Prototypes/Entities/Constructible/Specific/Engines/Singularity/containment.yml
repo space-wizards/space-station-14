@@ -33,7 +33,6 @@
     state: icon
   - type: ContainmentFieldGenerator
   - type: Anchorable
-    snap: true
   - type: Pullable
   - type: PointLight
     enabled: false

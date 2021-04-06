@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                 if (Owner.TryGetComponent(out IBody? body))
                 {
-                    foreach (var part in body.Parts.Values)
+                    foreach (var (part, _) in body.Parts)
                     {
                         if (!part.Owner.TryGetComponent(out SpriteComponent? sprite))
                         {
@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             if (Appearance != null! && Owner.TryGetComponent(out IBody? body))
             {
-                foreach (var part in body.Parts.Values)
+                foreach (var (part, _) in body.Parts)
                 {
                     if (!part.Owner.TryGetComponent(out SpriteComponent? sprite))
                     {
