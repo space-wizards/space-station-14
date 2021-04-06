@@ -1,7 +1,7 @@
 - type: latheRecipe
   id: FirelockElectronics
   icon:
-    sprite: Constructible/Misc/module.rsi
+    sprite: Constructible/Misc/module.rsi/mainboard.png
     state: icon
   result: FirelockElectronics
   completetime: 500
@@ -12,7 +12,7 @@
 - type: latheRecipe
   id: DoorElectronics
   icon:
-    sprite: Constructible/Misc/module.rsi
+    sprite: Constructible/Misc/module.rsi/door_electronics.png
     state: icon
   result: DoorElectronics
   completetime: 500
@@ -23,7 +23,7 @@
 - type: latheRecipe
   id: APCElectronics
   icon:
-    sprite: Constructible/Misc/module.rsi
+    sprite: Constructible/Misc/module.rsi/charger_APC.png
     state: icon
   result: APCElectronics
   completetime: 500
