@@ -12,6 +12,9 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
+
+            //SubscribeNetworkEvent<CombatModeSystemMessages.SetCombatModeActiveMessage>(CombatModeActiveHandler);
+            //SubscribeLocalEvent<CombatModeSystemMessages.SetCombatModeActiveMessage>(CombatModeActiveHandler);
         }
 
         public override void Shutdown()

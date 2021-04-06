@@ -10,7 +10,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             if (args.Container.Owner.TryGetComponent(out HandsComponent? hands))
             {
-                hands.UpdateHandsSet();
+                hands.UpdateHandContainers();
                 hands.UpdateHandVisualizer();
                 hands.UpdateHandsGuiState();
             }

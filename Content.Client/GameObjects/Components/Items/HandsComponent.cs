@@ -61,7 +61,7 @@ namespace Content.Client.GameObjects.Components.Items
             }
             ActiveHand = state.ActiveHand;
 
-            UpdateHandsSet();
+            UpdateHandContainers();
             UpdateHandVisualizer();
             UpdateHandsGuiState();
         }
@@ -138,9 +138,9 @@ namespace Content.Client.GameObjects.Components.Items
         }
 
         /// <summary>
-        ///     Updates the containers of each hand, in case the hand of a container was not synced when the component state was received.
+        ///     Updates the containers of each hand. May not be "correct" if the state of <see cref="ContainerManagerComponent"/> has not updated yet.
         /// </summary>
-        public void UpdateHandsSet()
+        public void UpdateHandContainers()
         {
             var containerMan = Owner.EnsureComponentWarn<ContainerManagerComponent>();
             foreach (var hand in Hands)
