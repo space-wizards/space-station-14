@@ -832,3 +832,8 @@ Entries:
   - {message: Fixed not being able to move pulled entities, type: Fix}
   id: 150
   time: '2021-04-05T12:08:46.0000000+00:00'
+- author: MehimoNemo
+  changes:
+  - {message: Added 3 circuit board recipes to the lathe, type: Add}
+  id: 151
+  time: '2021-04-06T12:08:46.0000000+00:00'
