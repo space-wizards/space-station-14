@@ -28,11 +28,8 @@ namespace Content.Client.UserInterface
         private Texture StorageTexture { get; }
         private Texture BlockedTexture { get; }
 
-        private ItemStatusPanel LeftPanel { get; }
-        private ItemStatusPanel TopPanel { get; }
-        private ItemStatusPanel RightPanel { get; }
+        private ItemStatusPanel StatusPanel { get; }
 
-        private VBoxContainer HandBox { get; }
         private HBoxContainer HandsContainer { get; }
 
         [ViewVariables]
@@ -54,16 +51,14 @@ namespace Content.Client.UserInterface
                 HorizontalAlignment = HAlignment.Center,
                 Children =
                 {
-                    (LeftPanel = ItemStatusPanel.FromSide(HandLocation.Left)),
-                    (HandBox = new VBoxContainer
+                    new VBoxContainer
                     {
                         Children =
                         {
-                            (TopPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
-                            (HandsContainer = new HBoxContainer()),
+                            (StatusPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
+                            (HandsContainer = new HBoxContainer() { HorizontalAlignment = HAlignment.Center } ),
                         }
-                    }),
-                    (RightPanel = ItemStatusPanel.FromSide(HandLocation.Right))
+                    },
                 }
             });
             LeftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
@@ -98,14 +93,14 @@ namespace Content.Client.UserInterface
                 newButton.OnStoragePressed += args => OnStoragePressed(handName);
 
                 newButton.Blocked.Visible = !hand.Enabled;
-                GetStatusPanel(location).Update(heldItem);
+
                 _itemSlotManager.SetItemSlot(newButton, heldItem);
             }
-            if (TryGetHandButton(ActiveHand, out var handButton))
+            if (TryGetActiveHand(out var activeHand))
             {
-                handButton.SetActiveHand(true);
+                activeHand.HandButton.SetActiveHand(true);
+                StatusPanel.Update(activeHand.HeldItem);
             }
-            HandleTopPanel();
         }
 
         private void OnHandPressed(GUIBoundKeyEventArgs args, string handName)
@@ -125,6 +120,12 @@ namespace Content.Client.UserInterface
             HandActivate?.Invoke(new HandActivateEventArgs(handName));
         }
 
+        private bool TryGetActiveHand([NotNullWhen(true)] out GuiHand? activeHand)
+        {
+            TryGetHand(ActiveHand, out activeHand);
+            return activeHand != null;
+        }
+
         private bool TryGetHand(string? handName, [NotNullWhen(true)] out GuiHand? foundHand)
         {
             foundHand = null;
@@ -140,30 +141,12 @@ namespace Content.Client.UserInterface
             return foundHand != null;
         }
 
-        private bool TryGetHandButton(string? handName, [NotNullWhen(true)] out HandButton? handButton)
-        {
-            var foundHand = TryGetHand(handName, out var hand);
-            handButton = hand?.HandButton;
-            return foundHand;
-        }
-
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
 
             foreach (var hand in _hands)
                 _itemSlotManager.UpdateCooldown(hand.HandButton, hand.HeldItem);
-        }
-
-        private ItemStatusPanel GetStatusPanel(HandLocation handLocation)
-        {
-            return handLocation switch
-            {
-                HandLocation.Left => RightPanel, //The player's left hand is the rightmost panel
-                HandLocation.Middle => TopPanel,
-                HandLocation.Right => LeftPanel, //The player's right hand is the leftmost panel
-                _ => throw new ArgumentOutOfRangeException()
-            };
         }
 
         private HandButton MakeHandButton(HandLocation buttonLocation)
@@ -178,44 +161,24 @@ namespace Content.Client.UserInterface
             return new HandButton(buttonTexture, StorageTexture, BlockedTexture, buttonLocation);
         }
 
-        /// <summary>
-        ///     Hack to keep invisible top panel from pushing out other panels when there is no middle hand (only 2 hands),
-        ///     by making it not attached unless needed.
-        /// </summary>
-        private void HandleTopPanel()
+        public class HandClickEventArgs
         {
-            if (HandBox.Children.Contains(TopPanel))
+            public string HandClicked { get; }
+
+            public HandClickEventArgs(string handClicked)
             {
-                HandBox.RemoveChild(TopPanel);
-            }
-            foreach (var hand in Hands)
-            {
-                if (hand.HandLocation == HandLocation.Middle)
-                {
-                    HandBox.AddChild(TopPanel);
-                    break;
-                }
+                HandClicked = handClicked;
             }
         }
-    }
 
-    public class HandClickEventArgs
-    {
-        public string HandClicked { get; }
-
-        public HandClickEventArgs(string handClicked)
+        public class HandActivateEventArgs
         {
-            HandClicked = handClicked;
-        }
-    }
+            public string HandUsed { get; }
 
-    public class HandActivateEventArgs
-    {
-        public string HandUsed { get; }
-
-        public HandActivateEventArgs(string handUsed)
-        {
-            HandUsed = handUsed;
+            public HandActivateEventArgs(string handUsed)
+            {
+                HandUsed = handUsed;
+            }
         }
     }
 
@@ -235,8 +198,6 @@ namespace Content.Client.UserInterface
         /// </summary>
         [ViewVariables]
         public string? ActiveHand { get; }
-
-        public HandsGuiState() { }
 
         public HandsGuiState(List<GuiHand> guiHands, string? activeHand = null)
         {
@@ -269,7 +230,7 @@ namespace Content.Client.UserInterface
         public IEntity? HeldItem { get; }
 
         /// <summary>
-        ///     The button in the gui associayted with this hand.
+        ///     The button in the gui associated with this hand. Assumed to be set by gui shortly after being received from the client HandsComponent.
         /// </summary>
         [ViewVariables]
         public HandButton HandButton { get; set; } = default!;
