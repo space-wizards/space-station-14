@@ -23,15 +23,8 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             base.Initialize();
 
-            _boardContainer = ContainerHelpers.EnsureContainer<Container>(Owner, MachineFrameComponent.BoardContainer);
-            _partContainer = ContainerHelpers.EnsureContainer<Container>(Owner, MachineFrameComponent.PartContainer);
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            CreateBoardAndStockParts();
+            _boardContainer = Owner.EnsureContainer<Container>(MachineFrameComponent.BoardContainer);
+            _partContainer = Owner.EnsureContainer<Container>(MachineFrameComponent.PartContainer);
         }
 
         public IEnumerable<MachinePartComponent> GetAllParts()
@@ -54,8 +47,8 @@ namespace Content.Server.GameObjects.Components.Construction
         public void CreateBoardAndStockParts()
         {
             // Entity might not be initialized yet.
-            var boardContainer = ContainerHelpers.EnsureContainer<Container>(Owner, MachineFrameComponent.BoardContainer, out var existedBoard);
-            var partContainer = ContainerHelpers.EnsureContainer<Container>(Owner, MachineFrameComponent.PartContainer, out var existedParts);
+            var boardContainer = Owner.EnsureContainer<Container>(MachineFrameComponent.BoardContainer, out var existedBoard);
+            var partContainer = Owner.EnsureContainer<Container>(MachineFrameComponent.PartContainer, out var existedParts);
 
             if (string.IsNullOrEmpty(BoardPrototype))
                 return;

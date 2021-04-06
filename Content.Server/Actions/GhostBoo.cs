@@ -5,6 +5,8 @@ using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -26,8 +28,7 @@ namespace Content.Server.Actions
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
 
             // find all IGhostBooAffected nearby and do boo on them
-            var entityMan = args.Performer.EntityManager;
-            var ents = entityMan.GetEntitiesInRange(args.Performer, _radius, false);
+            var ents = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(args.Performer, _radius, false);
 
             var booCounter = 0;
             foreach (var ent in ents)

@@ -69,13 +69,13 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 // Create dictionary to send to client (text to be shown : data sent back if selected)
                 var toSend = new Dictionary<string, int>();
 
-                foreach (var (key, value) in body.Parts)
+                foreach (var (part, slot) in body.Parts)
                 {
                     // For each limb in the target, add it to our cache if it is a valid option.
-                    if (value.SurgeryCheck(_surgeryType))
+                    if (part.SurgeryCheck(_surgeryType))
                     {
-                        _optionsCache.Add(_idHash, value);
-                        toSend.Add(key + ": " + value.Name, _idHash++);
+                        _optionsCache.Add(_idHash, part);
+                        toSend.Add(slot.Id + ": " + part.Name, _idHash++);
                     }
                 }
 
