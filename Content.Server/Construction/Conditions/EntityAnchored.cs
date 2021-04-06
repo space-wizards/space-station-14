@@ -10,7 +10,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class EntityAnchored : IEdgeCondition
+    public class EntityAnchored : IGraphCondition
     {
         [DataField("anchored")] public bool Anchored { get; private set; } = true;
 

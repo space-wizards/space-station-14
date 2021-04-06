@@ -2,6 +2,7 @@
 using Content.Client.Animations;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Storage;
 using Robust.Client.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -202,16 +203,10 @@ namespace Content.Client.GameObjects.Components.Items
                 if (heldEntity == null)
                     continue;
 
-                if (!heldEntity.TryGetComponent(out ItemComponent? item))
+                if (!heldEntity.TryGetComponent(out SharedItemComponent? item))
                     continue;
 
-                var itemData = item.GetInHandStateInfo(hand.Location);
-                if (itemData == null)
-                    continue;
-
-                var (rsi, state, color) = itemData.Value;
-
-                itemStates.Add(new ItemVisualState(rsi, state.Name, color));
+                itemStates.Add(new ItemVisualState(item.RsiPath, item.Name, item.Color));
             }
             return new HeldItemsVisualState(itemStates);
         }

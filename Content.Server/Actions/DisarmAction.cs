@@ -13,10 +13,12 @@ using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -65,7 +67,7 @@ namespace Content.Server.Actions
 
             if (random.Prob(_failProb))
             {
-                audio.PlayFromEntity("/Audio/Weapons/punchmiss.ogg", args.Performer,
+                SoundSystem.Play(Filter.Pvs(args.Performer), "/Audio/Weapons/punchmiss.ogg", args.Performer,
                     AudioHelpers.WithVariation(0.025f));
                 args.Performer.PopupMessageOtherClients(Loc.GetString("{0} fails to disarm {1}!", args.Performer.Name, args.Target.Name));
                 args.Performer.PopupMessageCursor(Loc.GetString("You fail to disarm {0}!", args.Target.Name));
@@ -86,7 +88,7 @@ namespace Content.Server.Actions
                     return;
             }
 
-            audio.PlayFromEntity("/Audio/Effects/thudswoosh.ogg", args.Performer,
+            SoundSystem.Play(Filter.Pvs(args.Performer), "/Audio/Effects/thudswoosh.ogg", args.Performer,
                 AudioHelpers.WithVariation(0.025f));
         }
     }

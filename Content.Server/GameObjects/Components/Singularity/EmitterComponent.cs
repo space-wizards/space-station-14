@@ -12,10 +12,13 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -68,11 +71,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             base.Initialize();
 
-            if (!Owner.TryGetComponent(out _powerConsumer!))
-            {
-                Logger.Error($"EmitterComponent {Owner} created with no PowerConsumerComponent");
-                return;
-            }
+            Owner.EnsureComponent<PowerConsumerComponent>(out _powerConsumer);
 
             _powerConsumer.OnReceivedPowerChanged += OnReceivedPowerChanged;
         }
@@ -102,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            if (Owner.TryGetComponent(out PhysicsComponent? phys) && phys.Anchored)
+            if (Owner.TryGetComponent(out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
             {
                 if (!_isOn)
                 {
@@ -257,7 +256,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             // TODO: Move to projectile's code.
             Timer.Spawn(3000, () => projectile.Delete());
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_fireSound, Owner,
+            SoundSystem.Play(Filter.Pvs(Owner), _fireSound, Owner,
                 AudioHelpers.WithVariation(Variation).WithVolume(Volume).WithMaxDistance(Distance));
         }
 

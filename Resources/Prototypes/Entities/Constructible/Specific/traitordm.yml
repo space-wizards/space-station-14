@@ -14,11 +14,11 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
-    mass: 1
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 1
       layer:
       - Clickable
   - type: TraitorDeathMatchRedemption

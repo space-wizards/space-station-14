@@ -15,11 +15,13 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -241,7 +243,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 return false;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(strap.BuckleSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), strap.BuckleSound, Owner);
 
             if (!strap.TryAdd(this))
             {
@@ -348,7 +350,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             UpdateBuckleStatus();
 
             oldBuckledTo.Remove(this);
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(oldBuckledTo.UnbuckleSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), oldBuckledTo.UnbuckleSound, Owner);
 
             SendMessage(new UnbuckleMessage(Owner, oldBuckledTo.Owner));
 

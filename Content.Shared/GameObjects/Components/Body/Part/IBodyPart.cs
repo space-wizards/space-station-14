@@ -16,6 +16,11 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         IBody? Body { get; set; }
 
         /// <summary>
+        ///     The string to show when displaying this part's name to players.
+        /// </summary>
+        string DisplayName { get; }
+
+        /// <summary>
         ///     <see cref="BodyPartType"/> that this <see cref="IBodyPart"/> is considered
         ///     to be.
         ///     For example, <see cref="BodyPartType.Arm"/>.

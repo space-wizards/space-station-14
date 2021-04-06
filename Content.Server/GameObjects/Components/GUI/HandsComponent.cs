@@ -12,12 +12,14 @@ using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.Interfaces;
 using Content.Shared.Physics.Pull;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -159,7 +161,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             if (source != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/thudswoosh.ogg", source,
+                SoundSystem.Play(Filter.Pvs(source), "/Audio/Effects/thudswoosh.ogg", source,
                     AudioHelpers.WithVariation(0.025f));
 
                 if (target != null)

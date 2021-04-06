@@ -35,7 +35,6 @@ namespace Content.Client.UserInterface
         private VBoxContainer HandBox { get; }
         private HBoxContainer HandsContainer { get; }
 
-
         [ViewVariables]
         public IReadOnlyList<GuiHand> Hands => _hands;
         private List<GuiHand> _hands = new();
@@ -52,6 +51,7 @@ namespace Content.Client.UserInterface
             AddChild(new HBoxContainer
             {
                 SeparationOverride = 0,
+                HorizontalAlignment = HAlignment.Center,
                 Children =
                 {
                     (LeftPanel = ItemStatusPanel.FromSide(HandLocation.Left)),
@@ -198,6 +198,7 @@ namespace Content.Client.UserInterface
             }
         }
     }
+
     public class HandClickEventArgs
     {
         public string HandClicked { get; }

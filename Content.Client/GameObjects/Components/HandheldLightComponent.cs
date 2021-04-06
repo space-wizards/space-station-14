@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -70,9 +70,9 @@ namespace Content.Client.GameObjects.Components
                 }
             }
 
-            protected override void Update(FrameEventArgs args)
+            protected override void FrameUpdate(FrameEventArgs args)
             {
-                base.Update(args);
+                base.FrameUpdate(args);
 
                 if (!_parent.HasCell)
                     return;

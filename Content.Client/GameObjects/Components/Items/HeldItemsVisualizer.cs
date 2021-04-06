@@ -42,7 +42,7 @@ namespace Content.Client.GameObjects.Components.Items
     public class ItemVisualState
     {
         [ViewVariables]
-        public RSI? RSI { get; }
+        public string? RsiPath { get; }
 
         [ViewVariables]
         public string? State { get; }
@@ -50,9 +50,9 @@ namespace Content.Client.GameObjects.Components.Items
         [ViewVariables]
         public Color Color { get; }
 
-        public ItemVisualState(RSI? rsi, string? state, Color color)
+        public ItemVisualState(string? rsiPath, string? state, Color color)
         {
-            RSI = rsi;
+            RsiPath = rsiPath;
             State = state;
             Color = color;
         }

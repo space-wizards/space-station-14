@@ -3,9 +3,10 @@ using System;
 namespace Content.Server.GameObjects
 {
     [Flags]
-    public enum VisibilityFlags
+    public enum VisibilityFlags : uint
     {
-        Normal = 1,
-        Ghost = 2,
+        None   = 0,
+        Normal = 1 << 0,
+        Ghost  = 1 << 1,
     }
 }

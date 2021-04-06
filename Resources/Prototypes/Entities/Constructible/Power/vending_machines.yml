@@ -1,12 +1,10 @@
 ﻿# Vending machine descriptions are stored in vendingMachineInventory YAML files.
 - type: entity
   id: VendingMachine
+  parent: BaseConstructible
   name: vending machine
   abstract: true
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Clickable
   - type: InteractionOutline
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/empty.rsi
@@ -24,8 +22,6 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: SnapGrid
-    offset: Center
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -47,7 +43,6 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
-  - type: Pullable
 
 - type: entity
   parent: VendingMachine
@@ -371,31 +366,6 @@
     - type: WiresVisualizer
   - type: AccessReader
     access: [["Service"]]
-
-- type: entity
-  parent: VendingMachine
-  id: VendingMachineSales
-  name: Sales
-  components:
-  - type: VendingMachine
-    pack: Sales
-  - type: Sprite
-    sprite: Constructible/Power/VendingMachines/sale.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-      brokenUnshaded: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine

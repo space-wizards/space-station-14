@@ -1,17 +1,21 @@
-﻿#nullable enable
+#nullable enable
 using System;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Items
 {
     [Serializable, NetSerializable]
-    public class ClothingComponentState : ItemComponentState
+    public class ClothingComponentState : ComponentState
     {
-        public string? ClothingEquippedPrefix { get; set; }
+        public string? ClothingEquippedPrefix { get; }
 
-        public ClothingComponentState(string? clothingEquippedPrefix, string? equippedPrefix) : base(equippedPrefix, ContentNetIDs.CLOTHING)
+        public string? EquippedPrefix { get; }
+
+        public ClothingComponentState(string? clothingEquippedPrefix, string? equippedPrefix) : base(ContentNetIDs.CLOTHING)
         {
             ClothingEquippedPrefix = clothingEquippedPrefix;
+            EquippedPrefix = equippedPrefix;
         }
     }
 }

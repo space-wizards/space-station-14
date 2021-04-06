@@ -10,11 +10,13 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -162,7 +164,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             //Play sound
             if (!string.IsNullOrEmpty(_spraySound))
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_spraySound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), _spraySound, Owner, AudioHelpers.WithVariation(0.125f));
             }
 
             _lastUseTime = curTime;

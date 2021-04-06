@@ -63,7 +63,6 @@ ui-options-function-activate-item-in-world = Activate item in world
 ui-options-function-drop = Drop item
 ui-options-function-examine-entity = Examine
 ui-options-function-swap-hands = Swap hands
-ui-options-function-toggle-combat-mode = Toggle combat mode
 
 ui-options-function-smart-equip-backpack = Smart-equip to backpack
 ui-options-function-smart-equip-belt = Smart-equip to belt

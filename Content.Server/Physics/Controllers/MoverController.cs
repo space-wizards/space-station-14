@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.Audio;
@@ -10,9 +9,7 @@ using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Maps;
-using Content.Shared.Physics;
 using Content.Shared.Physics.Controllers;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -20,8 +17,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -89,7 +87,6 @@ namespace Content.Server.Physics.Controllers
             {
                 physics = gridEntity.AddComponent<PhysicsComponent>();
                 physics.BodyStatus = BodyStatus.InAir;
-                physics.Mass = 1;
                 physics.CanCollide = true;
                 physics.AddFixture(new Fixture(physics, new PhysShapeGrid(grid)));
             }
@@ -171,7 +168,7 @@ namespace Content.Server.Physics.Controllers
             {
                 // Walking on a tile.
                 var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-                if (def.FootstepSounds == null)
+                if (string.IsNullOrEmpty(def.FootstepSounds))
                 {
                     // Nothing to play, oh well.
                     return;
@@ -185,7 +182,7 @@ namespace Content.Server.Physics.Controllers
             {
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
                 var file = _robustRandom.Pick(soundCollection.PickFiles);
-                _audioSystem.PlayAtCoords(file, coordinates, sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
+                SoundSystem.Play(Filter.Pvs(coordinates), file, coordinates, sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
             }
             catch (UnknownPrototypeException)
             {
