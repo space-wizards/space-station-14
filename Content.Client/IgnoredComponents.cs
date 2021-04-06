@@ -151,7 +151,7 @@ namespace Content.Client
             "VolumePump",
             "PressureSiphon",
             "PipeHeater",
-            "PipeNetDevice",
+            "AtmosDevice",
             "SignalReceiver",
             "SignalSwitch",
             "SignalTransmitter",

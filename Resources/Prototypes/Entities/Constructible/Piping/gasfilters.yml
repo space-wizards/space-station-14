@@ -30,7 +30,7 @@
     visuals:
     - type: PipeConnectorVisualizer
     - type: GasFilterVisualizer
-  - type: PipeNetDevice
+  - type: AtmosDevice
 
 - type: entity
   parent: GasFilterBase

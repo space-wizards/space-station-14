@@ -1,7 +1,9 @@
 #nullable enable
 using System.Linq;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -14,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     ///     Generates gas in the attached pipe.
     /// </summary>
     [RegisterComponent]
-    public class GasGeneratorComponent : Component
+    public class GasGeneratorComponent : Component, IAtmosProcess
     {
         public override string Name => "GasGenerator";
 
@@ -59,28 +61,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             SetPipes();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case PipeNetUpdateMessage:
-                    Update();
-                    break;
-            }
-        }
-
-        private void Update()
-        {
-            if (!GeneratorEnabled)
-                return;
-
-            if (Pipe == null || Pipe.Air.Pressure > GeneratorPressureCap)
-                return;
-
-            Pipe.Air.AdjustMoles(GeneratedGas, GasGenerationRate);
-        }
-
         private void SetPipes()
         {
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
@@ -94,6 +74,17 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
                 Logger.Warning($"{nameof(GasGeneratorComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
+        }
+
+        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
+        {
+            if (!GeneratorEnabled)
+                return;
+
+            if (Pipe == null || Pipe.Air.Pressure > GeneratorPressureCap)
+                return;
+
+            Pipe.Air.AdjustMoles(GeneratedGas, GasGenerationRate);
         }
     }
 }

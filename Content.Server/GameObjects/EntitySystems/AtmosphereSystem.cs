@@ -1,7 +1,9 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Xml.Schema;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
@@ -139,6 +141,24 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) return _spaceAtmos;
 
             return gridEnt.TryGetComponent(out IGridAtmosphereComponent? atmos) ? atmos : _spaceAtmos;
+        }
+
+        /// <summary>
+        ///     Unlike <see cref="GetGridAtmosphere"/>, this doesn't return space grid when not found.
+        /// </summary>
+        public bool TryGetSimulatedGridAtmosphere(GridId gridId, [NotNullWhen(true)] out IGridAtmosphereComponent? atmosphere)
+        {
+            if (gridId.IsValid()
+                && _mapManager.TryGetGrid(gridId, out var mapGrid)
+                && ComponentManager.TryGetComponent(mapGrid.GridEntityId, out IGridAtmosphereComponent? atmosGrid)
+                && atmosGrid.Simulated)
+            {
+                atmosphere = atmosGrid;
+                return true;
+            }
+
+            atmosphere = null;
+            return false;
         }
 
         public override void Update(float frameTime)

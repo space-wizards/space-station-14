@@ -1,7 +1,9 @@
 #nullable enable
+using System;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
@@ -14,52 +16,54 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     {
         private static readonly AtmosDeviceUpdateEvent Event = new ();
 
-        public override string Name => "PipeNetDevice";
+        public override string Name => "AtmosDevice";
 
-        private IGridAtmosphereComponent? JoinedGridAtmos { get; set; }
-
-        private PipeNetUpdateMessage _cachedUpdateMessage = new();
+        public IGridAtmosphereComponent? Atmosphere { get; private set; }
 
         public override void Initialize()
         {
             base.Initialize();
-            JoinGridAtmos();
+
+            JoinAtmosphere();
+        }
+
+        private bool CanJoinAtmosphere()
+        {
+            return !Owner.TryGetComponent(out PhysicsComponent? physics) || physics.BodyType == BodyType.Static;
         }
 
         public override void OnRemove()
         {
             base.OnRemove();
-            LeaveGridAtmos();
+            LeaveAtmosphere();
         }
 
         public void Update()
         {
-            SendMessage(_cachedUpdateMessage);
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, Event);
         }
 
-        private void JoinGridAtmos()
+        public void JoinAtmosphere()
         {
-            var gridAtmos = EntitySystem.Get<AtmosphereSystem>()
-                .GetGridAtmosphere(Owner.Transform.GridID);
-            JoinedGridAtmos = gridAtmos;
-            JoinedGridAtmos.AddPipeNetDevice(this);
+            if (!CanJoinAtmosphere())
+                return;
+
+            // We try to get a valid, non-space atmosphere.
+            if (!EntitySystem.Get<AtmosphereSystem>().TryGetSimulatedGridAtmosphere(Owner.Transform.GridID, out var atmosphere))
+                return;
+
+            Atmosphere = atmosphere;
+            Atmosphere.AddAtmosDevice(this);
         }
 
-        private void LeaveGridAtmos()
+        public void LeaveAtmosphere()
         {
-            JoinedGridAtmos?.RemovePipeNetDevice(this);
-            JoinedGridAtmos = null;
+            Atmosphere?.RemoveAtmosDevice(this);
+            Atmosphere = null;
         }
-    }
-
-    public class PipeNetUpdateMessage : ComponentMessage
-    {
-
     }
 
     public class AtmosDeviceUpdateEvent : EntityEventArgs
     {
-
     }
 }

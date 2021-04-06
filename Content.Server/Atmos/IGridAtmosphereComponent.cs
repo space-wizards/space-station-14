@@ -13,6 +13,11 @@ namespace Content.Server.Atmos
     public interface IGridAtmosphereComponent : IComponent, IEnumerable<TileAtmosphere>
     {
         /// <summary>
+        ///     Whether this atmosphere is simulated or not.
+        /// </summary>
+        bool Simulated { get; }
+
+        /// <summary>
         ///     Number of times <see cref="Update"/> has been called.
         /// </summary>
         int UpdateCounter { get; }
@@ -168,8 +173,8 @@ namespace Content.Server.Atmos
 
         void RemovePipeNet(IPipeNet pipeNet);
 
-        void AddPipeNetDevice(AtmosDeviceComponent atmosDevice);
+        void AddAtmosDevice(AtmosDeviceComponent atmosDevice);
 
-        void RemovePipeNetDevice(AtmosDeviceComponent atmosDevice);
+        void RemoveAtmosDevice(AtmosDeviceComponent atmosDevice);
     }
 }

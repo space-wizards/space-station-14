@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
@@ -15,7 +16,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
     [RegisterComponent]
-    public class GasFilterComponent : Component
+    public class GasFilterComponent : Component, IAtmosProcess
     {
         public override string Name => "GasFilter";
 
@@ -101,30 +102,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             UpdateAppearance();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case PipeNetUpdateMessage:
-                    Update();
-                    break;
-            }
-        }
-
-        public void Update()
-        {
-            if (!FilterEnabled)
-                return;
-
-            if (_inletPipe == null || _inletPipe.Air == null ||
-                _filterOutletPipe == null || _filterOutletPipe.Air == null ||
-                _outletPipe == null || _outletPipe.Air == null)
-                return;
-
-            FilterGas(_inletPipe.Air, _filterOutletPipe.Air, _outletPipe.Air);
-        }
-
         private void FilterGas(GasMixture inletGas, GasMixture filterOutletGas, GasMixture outletGas)
         {
             var volumeRatio = Math.Clamp(VolumeFilterRate / inletGas.Volume, 0, 1);
@@ -165,6 +142,19 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
                 Logger.Warning($"{nameof(GasFilterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
+        }
+
+        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
+        {
+            if (!FilterEnabled)
+                return;
+
+            if (_inletPipe == null || _inletPipe.Air == null ||
+                _filterOutletPipe == null || _filterOutletPipe.Air == null ||
+                _outletPipe == null || _outletPipe.Air == null)
+                return;
+
+            FilterGas(_inletPipe.Air, _filterOutletPipe.Air, _outletPipe.Air);
         }
     }
 }

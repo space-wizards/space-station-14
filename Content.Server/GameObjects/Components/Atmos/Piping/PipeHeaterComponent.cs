@@ -1,7 +1,9 @@
 #nullable enable
 using System.Linq;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
@@ -12,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     ///     Placeholder component for adjusting the temperature of gas in pipes.
     /// </summary>
     [RegisterComponent]
-    public class PipeHeaterComponent : Component
+    public class PipeHeaterComponent : Component, IAtmosProcess
     {
         public override string Name => "PipeHeater";
 
@@ -29,25 +31,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             SetPipe();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case PipeNetUpdateMessage:
-                    Update();
-                    break;
-            }
-        }
-
-        public void Update()
-        {
-            if (_heaterPipe == null)
-                return;
-
-            _heaterPipe.Air.Temperature = TargetTemperature;
-        }
-
         private void SetPipe()
         {
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
@@ -61,6 +44,14 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
                 Logger.Warning($"{nameof(PipeHeaterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
+        }
+
+        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
+        {
+            if (_heaterPipe == null)
+                return;
+
+            _heaterPipe.Air.Temperature = TargetTemperature;
         }
     }
 }

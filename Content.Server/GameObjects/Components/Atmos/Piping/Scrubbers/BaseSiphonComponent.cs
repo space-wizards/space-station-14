@@ -4,6 +4,7 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -15,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
     /// <summary>
     ///     Transfers gas from the tile it is on to a <see cref="PipeNode"/>.
     /// </summary>
-    public abstract class BaseSiphonComponent : Component
+    public abstract class BaseSiphonComponent : Component, IAtmosProcess
     {
 
         [ViewVariables]
@@ -47,31 +48,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
             UpdateAppearance();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case PipeNetUpdateMessage:
-                    Update();
-                    break;
-            }
-        }
-
-        public void Update()
-        {
-            if (!SiphonEnabled)
-                return;
-
-            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere(Owner.EntityManager);
-
-            if (_scrubberOutlet == null || tileAtmos == null || tileAtmos.Air ==  null)
-                return;
-
-            ScrubGas(tileAtmos.Air, _scrubberOutlet.Air);
-            tileAtmos.Invalidate();
-        }
-
         protected abstract void ScrubGas(GasMixture inletGas, GasMixture outletGas);
 
         private void SetOutlet()
@@ -92,6 +68,20 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
         private void UpdateAppearance()
         {
             _appearance?.SetData(SiphonVisuals.VisualState, new SiphonVisualState(SiphonEnabled));
+        }
+
+        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
+        {
+            if (!SiphonEnabled)
+                return;
+
+            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere(Owner.EntityManager);
+
+            if (_scrubberOutlet == null || tileAtmos == null || tileAtmos.Air ==  null)
+                return;
+
+            ScrubGas(tileAtmos.Air, _scrubberOutlet.Air);
+            tileAtmos.Invalidate();
         }
     }
 }

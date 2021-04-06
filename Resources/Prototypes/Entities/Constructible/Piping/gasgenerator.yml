@@ -24,7 +24,7 @@
   - type: SnapGrid
     offset: Center
   - type: GasGenerator
-  - type: PipeNetDevice
+  - type: AtmosDevice
 
 - type: entity
   parent: GasGeneratorBase

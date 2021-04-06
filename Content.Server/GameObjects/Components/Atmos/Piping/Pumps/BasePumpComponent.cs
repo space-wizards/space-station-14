@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -16,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
     /// <summary>
     ///     Transfer gas from one <see cref="PipeNode"/> to another.
     /// </summary>
-    public abstract class BasePumpComponent : Component, IActivate
+    public abstract class BasePumpComponent : Component, IActivate, IAtmosProcess
     {
         /// <summary>
         ///     If the pump is currently pumping.
@@ -66,28 +67,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             UpdateAppearance();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case PipeNetUpdateMessage:
-                    Update();
-                    break;
-            }
-        }
-
-        public void Update()
-        {
-            if (!PumpEnabled)
-                return;
-
-            if (_inletPipe == null || _outletPipe == null)
-                return;
-
-            PumpGas(_inletPipe.Air, _outletPipe.Air);
-        }
-
         protected abstract void PumpGas(GasMixture inletGas, GasMixture outletGas);
 
         private void UpdateAppearance()
@@ -119,6 +98,17 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
                 Logger.Warning($"{nameof(BasePumpComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
+        }
+
+        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
+        {
+            if (!PumpEnabled)
+                return;
+
+            if (_inletPipe == null || _outletPipe == null)
+                return;
+
+            PumpGas(_inletPipe.Air, _outletPipe.Air);
         }
     }
 }

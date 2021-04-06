@@ -4,6 +4,7 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -15,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
     /// <summary>
     ///     Transfers gas from a <see cref="PipeNode"/> to the tile it is on.
     /// </summary>
-    public abstract class BaseVentComponent : Component
+    public abstract class BaseVentComponent : Component, IAtmosProcess
     {
 
         [ViewVariables]
@@ -47,31 +48,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
             UpdateAppearance();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case PipeNetUpdateMessage:
-                    Update();
-                    break;
-            }
-        }
-
-        public void Update()
-        {
-            if (!VentEnabled)
-                return;
-
-            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere(Owner.EntityManager);
-
-            if (_ventInlet == null || tileAtmos == null || tileAtmos.Air == null)
-                return;
-
-            VentGas(_ventInlet.Air, tileAtmos.Air);
-            tileAtmos.Invalidate();
-        }
-
         protected abstract void VentGas(GasMixture inletGas, GasMixture outletGas);
 
         private void SetInlet()
@@ -92,6 +68,20 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
         private void UpdateAppearance()
         {
             _appearance?.SetData(VentVisuals.VisualState, new VentVisualState(VentEnabled));
+        }
+
+        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
+        {
+            if (!VentEnabled)
+                return;
+
+            var tileAtmos = atmosphere.GetTile(Owner.Transform.Coordinates);
+
+            if (_ventInlet == null || tileAtmos == null || tileAtmos.Air == null)
+                return;
+
+            VentGas(_ventInlet.Air, tileAtmos.Air);
+            tileAtmos.Invalidate();
         }
     }
 }

@@ -1,7 +1,9 @@
 #nullable enable
 using System.Linq;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
@@ -9,7 +11,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
     [RegisterComponent]
-    public class GasCanisterPortComponent : Component
+    public class GasCanisterPortComponent : Component, IAtmosProcess
     {
         public override string Name => "GasCanisterPort";
 
@@ -47,26 +49,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             ConnectedCanister?.DisconnectFromPort();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case PipeNetUpdateMessage:
-                    Update();
-                    break;
-            }
-        }
-
-        public void Update()
-        {
-            if (_gasPort == null || ConnectedCanister == null)
-                return;
-
-            ConnectedCanister.Air.Share(_gasPort.Air, 1);
-            ConnectedCanister.AirWasUpdated();
-        }
-
         public void ConnectGasCanister(GasCanisterComponent gasCanister)
         {
             ConnectedCanister = gasCanister;
@@ -90,6 +72,15 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
                 Logger.Warning($"{nameof(GasCanisterPortComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
+        }
+
+        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
+        {
+            if (_gasPort == null || ConnectedCanister == null)
+                return;
+
+            ConnectedCanister.Air.Share(_gasPort.Air, 1);
+            ConnectedCanister.AirWasUpdated();
         }
     }
 }

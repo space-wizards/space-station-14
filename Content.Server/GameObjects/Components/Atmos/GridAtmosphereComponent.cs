@@ -55,6 +55,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         [ComponentDependency] private IMapGridComponent? _mapGridComponent;
 
+        public virtual bool Simulated => true;
+
         [ViewVariables]
         public int UpdateCounter { get; private set; } = 0;
 
@@ -128,10 +130,10 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _pipeNetLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<AtmosDeviceComponent> _pipeNetDevices = new();
+        private readonly HashSet<AtmosDeviceComponent> _atmosDevices = new();
 
         [ViewVariables]
-        private double _pipeNetDevicesLastProcess;
+        private double _atmosDevicesLastProcess;
 
         [ViewVariables]
         private Queue<TileAtmosphere> _currentRunTiles = new();
@@ -143,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private Queue<IPipeNet> _currentRunPipeNet = new();
 
         [ViewVariables]
-        private Queue<AtmosDeviceComponent> _currentRunPipeNetDevice = new();
+        private Queue<AtmosDeviceComponent> _currentRunAtmosDevices = new();
 
         [ViewVariables]
         private ProcessState _state = ProcessState.TileEqualize;
@@ -455,14 +457,14 @@ namespace Content.Server.GameObjects.Components.Atmos
             _pipeNets.Remove(pipeNet);
         }
 
-        public virtual void AddPipeNetDevice(AtmosDeviceComponent atmosDevice)
+        public virtual void AddAtmosDevice(AtmosDeviceComponent atmosDevice)
         {
-            _pipeNetDevices.Add(atmosDevice);
+            _atmosDevices.Add(atmosDevice);
         }
 
-        public virtual void RemovePipeNetDevice(AtmosDeviceComponent atmosDevice)
+        public virtual void RemoveAtmosDevice(AtmosDeviceComponent atmosDevice)
         {
-            _pipeNetDevices.Remove(atmosDevice);
+            _atmosDevices.Remove(atmosDevice);
         }
 
         /// <inheritdoc />
@@ -857,12 +859,12 @@ namespace Content.Server.GameObjects.Components.Atmos
             _stopwatch.Restart();
 
             if(!resumed)
-                _currentRunPipeNetDevice = new Queue<AtmosDeviceComponent>(_pipeNetDevices);
+                _currentRunAtmosDevices = new Queue<AtmosDeviceComponent>(_atmosDevices);
 
             var number = 0;
-            while (_currentRunPipeNetDevice.Count > 0)
+            while (_currentRunAtmosDevices.Count > 0)
             {
-                var device = _currentRunPipeNetDevice.Dequeue();
+                var device = _currentRunAtmosDevices.Dequeue();
                 device.Update();
 
                 if (number++ < LagCheckIterations) continue;
@@ -870,12 +872,12 @@ namespace Content.Server.GameObjects.Components.Atmos
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
-                    _pipeNetDevicesLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+                    _atmosDevicesLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
                 }
             }
 
-            _pipeNetDevicesLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+            _atmosDevicesLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
             return true;
         }
 
