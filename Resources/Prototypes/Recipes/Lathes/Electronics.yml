@@ -1,0 +1,32 @@
+- type: latheRecipe
+  id: FirelockElectronics
+  icon:
+    sprite: Constructible/Misc/module.rsi
+    state: icon
+  result: FirelockElectronics
+  completetime: 500
+  materials:
+     steel: 200
+     plastic: 200
+
+- type: latheRecipe
+  id: DoorElectronics
+  icon:
+    sprite: Constructible/Misc/module.rsi
+    state: icon
+  result: DoorElectronics
+  completetime: 500
+  materials:
+     steel: 200
+     plastic: 200
+
+- type: latheRecipe
+  id: APCElectronics
+  icon:
+    sprite: Constructible/Misc/module.rsi
+    state: icon
+  result: APCElectronics
+  completetime: 500
+  materials:
+     steel: 200
+     plastic: 200
