@@ -68,13 +68,13 @@ namespace Content.Server.GameObjects.Components.Body
             // Create dictionary to send to client (text to be shown : data sent back if selected)
             var toSend = new Dictionary<string, int>();
 
-            foreach (var (key, value) in body.Parts)
+            foreach (var (part, slot) in body.Parts)
             {
                 // For each limb in the target, add it to our cache if it is a valid option.
-                if (value.CanAddMechanism(this))
+                if (part.CanAddMechanism(this))
                 {
-                    OptionsCache.Add(IdHash, value);
-                    toSend.Add(key + ": " + value.Name, IdHash++);
+                    OptionsCache.Add(IdHash, slot);
+                    toSend.Add(part + ": " + part.Name, IdHash++);
                 }
             }
 

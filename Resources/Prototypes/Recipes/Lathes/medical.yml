@@ -5,7 +5,7 @@
   completetime: 500
   materials:
     steel: 400
-    glass: 125
+    glass: 100
 
 - type: latheRecipe
   id: Ointment
@@ -14,7 +14,7 @@
   completetime: 500
   materials:
     steel: 400
-    glass: 125
+    glass: 100
 
 - type: latheRecipe
   id: Gauze
@@ -22,7 +22,7 @@
   result: Gauze
   completetime: 500
   materials:
-    plastic: 40
+    plastic: 100
 
 - type: latheRecipe
   id: Scalpel
@@ -30,7 +30,7 @@
   result: Scalpel
   completetime: 500
   materials:
-    steel: 70
+    steel: 200
 
 - type: latheRecipe
   id: Retractor
@@ -38,7 +38,7 @@
   result: Scalpel
   completetime: 500
   materials:
-    steel: 50
+    steel: 200
 
 - type: latheRecipe
   id: Cautery
@@ -46,7 +46,7 @@
   result: Cautery
   completetime: 500
   materials:
-    steel: 80
+    steel: 200
 
 - type: latheRecipe
   id: Drill
@@ -54,7 +54,7 @@
   result: Drill
   completetime: 500
   materials:
-    steel: 90
+    steel: 200
 
 - type: latheRecipe
   id: BoneSaw
@@ -62,7 +62,7 @@
   result: Saw
   completetime: 500
   materials:
-    steel: 90
+    steel: 200
 
 - type: latheRecipe
   id: Hemostat
@@ -70,7 +70,7 @@
   result: Hemostat
   completetime: 500
   materials:
-    steel: 50
+    steel: 200
 
 - type: latheRecipe
   id: BodyBag_Item
@@ -78,4 +78,4 @@
   result: BodyBag_Item
   completetime: 300
   materials:
-    plastic: 20
+    plastic: 200

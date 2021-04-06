@@ -82,7 +82,6 @@
   - type: Body
     template: HumanoidTemplate
     preset: VoxPreset
-    centerSlot: torso
   - type: Metabolism
     needsGases:
       Nitrogen: 0.00060763888

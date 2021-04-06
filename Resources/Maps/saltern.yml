@@ -1234,22 +1234,25 @@ entities:
     parent: 853
     type: Transform
 - uid: 150
-  type: BodyScannerComputerCircuitboard
+  type: ComputerId
   components:
-  - parent: 151
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 151
-  type: computerBodyScanner
-  components:
-  - pos: 10.5,-13.5
+  - pos: 7.5,21.5
     parent: 853
     type: Transform
   - containers:
+      IdCardConsole-privilegedId: !type:ContainerSlot {}
+      IdCardConsole-targetId: !type:ContainerSlot {}
       board: !type:Container
-        ents:
-        - 150
+        ents: []
+    type: ContainerContainer
+- uid: 151
+  type: CloningPod
+  components:
+  - pos: 9.5,-13.5
+    parent: 853
+    type: Transform
+  - containers:
+      CloningPod-bodyContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 152
   type: HVWire
@@ -6538,23 +6541,24 @@ entities:
     parent: 853
     type: Transform
 - uid: 699
-  type: CommsComputerCircuitboard
+  type: ComputerSupplyOrdering
   components:
-  - parent: 700
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 700
-  type: ComputerComms
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 9.5,23.5
+  - pos: 21.5,10.5
     parent: 853
     type: Transform
   - containers:
       board: !type:Container
-        ents:
-        - 699
+        ents: []
+    type: ContainerContainer
+- uid: 700
+  type: computerBodyScanner
+  components:
+  - pos: 10.5,-13.5
+    parent: 853
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 701
   type: reinforced_wall
@@ -12098,12 +12102,18 @@ entities:
     parent: 853
     type: Transform
 - uid: 868
-  type: SupplyComputerCircuitboard
+  type: ComputerId
   components:
-  - parent: 1034
+  - rot: 3.141592653589793 rad
+    pos: 8.5,23.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      IdCardConsole-privilegedId: !type:ContainerSlot {}
+      IdCardConsole-targetId: !type:ContainerSlot {}
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 869
   type: reinforced_wall
   components:
@@ -12119,12 +12129,17 @@ entities:
     parent: 853
     type: Transform
 - uid: 871
-  type: CommsComputerCircuitboard
+  type: ComputerId
   components:
-  - parent: 2048
+  - pos: 7.5,32.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      IdCardConsole-privilegedId: !type:ContainerSlot {}
+      IdCardConsole-targetId: !type:ContainerSlot {}
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 872
   type: reinforced_wall
   components:
@@ -12132,15 +12147,16 @@ entities:
     parent: 853
     type: Transform
 - uid: 873
-  type: BlockGameArcade
+  type: Autolathe
   components:
-  - pos: -6.5,1.5
+  - pos: 29.5,-2.5
     parent: 853
     type: Transform
   - containers:
-      board: !type:Container
-        ents:
-        - 875
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 874
   type: VendingMachineCigs
@@ -12149,12 +12165,17 @@ entities:
     parent: 853
     type: Transform
 - uid: 875
-  type: BlockGameArcadeComputerCircuitboard
+  type: Protolathe
   components:
-  - parent: 873
+  - pos: 29.5,-1.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 876
   type: reinforced_wall
   components:
@@ -12345,8 +12366,7 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
-        ents:
-        - 2051
+        ents: []
     type: ContainerContainer
 - uid: 899
   type: VendingMachineTheater
@@ -12641,12 +12661,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 941
-  type: IDComputerCircuitboard
+  type: ComputerComms
   components:
-  - parent: 1074
+  - pos: 3.5,32.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 942
   type: reinforced_wall
   components:
@@ -12843,12 +12866,11 @@ entities:
     parent: 853
     type: Transform
 - uid: 972
-  type: MatterBinStockPart
+  type: RandomArcade
   components:
-  - parent: 4273
+  - pos: -6.5,1.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 973
   type: reinforced_wall
   components:
@@ -13337,15 +13359,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 1034
-  type: ComputerSupplyOrdering
+  type: ComputerComms
   components:
-  - pos: 21.5,10.5
+  - rot: 3.141592653589793 rad
+    pos: 9.5,23.5
     parent: 853
     type: Transform
   - containers:
       board: !type:Container
-        ents:
-        - 868
+        ents: []
     type: ContainerContainer
 - uid: 1035
   type: Poweredlight
@@ -13411,24 +13433,28 @@ entities:
     parent: 853
     type: Transform
 - uid: 1043
-  type: IDComputerCircuitboard
+  type: Autolathe
   components:
-  - parent: 1044
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 1044
-  type: ComputerId
-  components:
-  - pos: 7.5,21.5
+  - pos: -5.5,-12.5
     parent: 853
     type: Transform
   - containers:
-      IdCardConsole-privilegedId: !type:ContainerSlot {}
-      IdCardConsole-targetId: !type:ContainerSlot {}
-      board: !type:Container
-        ents:
-        - 1043
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 1044
+  type: Protolathe
+  components:
+  - pos: -3.5,-12.5
+    parent: 853
+    type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 1045
   type: ChairOfficeLight
@@ -13725,19 +13751,13 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1074
-  type: ComputerId
+  type: Paper
   components:
-  - rot: 3.141592653589793 rad
-    pos: 8.5,23.5
+  - pos: -24.037928,-5.9436545
     parent: 853
     type: Transform
-  - containers:
-      IdCardConsole-privilegedId: !type:ContainerSlot {}
-      IdCardConsole-targetId: !type:ContainerSlot {}
-      board: !type:Container
-        ents:
-        - 941
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 1075
   type: reinforced_wall
   components:
@@ -14200,15 +14220,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 1135
-  type: CloningPod
+  type: Paper
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 9.5,-13.5
+  - pos: -24.147303,-5.8967795
     parent: 853
     type: Transform
-  - containers:
-      CloningPod-bodyContainer: !type:ContainerSlot {}
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 1136
   type: SheetPlasteel
   components:
@@ -21456,40 +21474,34 @@ entities:
     parent: 853
     type: Transform
 - uid: 2048
-  type: ComputerComms
+  type: ToyFireRipley
   components:
-  - pos: 3.5,32.5
+  - pos: -23.412928,-6.0686545
     parent: 853
     type: Transform
-  - containers:
-      board: !type:Container
-        ents:
-        - 871
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 2049
-  type: IDComputerCircuitboard
+  type: ToyDeathRipley
   components:
-  - parent: 2050
+  - pos: -24.569178,-5.0530295
+    parent: 853
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 2050
-  type: ComputerId
+  type: Pen
   components:
-  - pos: 7.5,32.5
+  - pos: -24.647303,-6.4436545
     parent: 853
     type: Transform
-  - containers:
-      IdCardConsole-privilegedId: !type:ContainerSlot {}
-      IdCardConsole-targetId: !type:ContainerSlot {}
-      board: !type:Container
-        ents:
-        - 2049
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 2051
-  type: ResearchComputerCircuitboard
+  type: Pen
   components:
-  - parent: 898
+  - pos: -23.350428,-5.2092795
+    parent: 853
     type: Transform
   - canCollide: False
     type: Physics
@@ -23760,6 +23772,38 @@ entities:
   - pos: 14.5,21.5
     parent: 853
     type: Transform
+- uid: 2376
+  type: Pen
+  components:
+  - pos: -23.709803,-6.4905295
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 2377
+  type: Paper
+  components:
+  - pos: -24.256678,-5.7405295
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 2378
+  type: d20
+  components:
+  - pos: -23.834803,-5.3811545
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 2379
+  type: d8
+  components:
+  - pos: -24.287928,-6.3967795
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2381
   type: ChairWood
   components:
@@ -23988,13 +24032,6 @@ entities:
         ents: []
       PumpBarrel-chamber-container: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 2412
-  type: MatterBinStockPart
-  components:
-  - parent: 4273
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 2413
   type: solid_wall
   components:
@@ -39555,20 +39592,6 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
-- uid: 3945
-  type: SheetGlass1
-  components:
-  - parent: 4273
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 3946
-  type: MicroManipulatorStockPart
-  components:
-  - parent: 4273
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3947
   type: ApcExtensionCable
   components:
@@ -40143,26 +40166,6 @@ entities:
     type: Transform
   - airBlocked: False
     type: Airtight
-- uid: 4009
-  type: Protolathe
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -3.5,-12.5
-    parent: 853
-    type: Transform
-  - containers:
-      machine_board: !type:Container
-        ents:
-        - 4024
-      machine_parts: !type:Container
-        ents:
-        - 4032
-        - 4082
-        - 4173
-        - 4174
-        - 4181
-        - 4272
-    type: ContainerContainer
 - uid: 4010
   type: Firelock
   components:
@@ -40284,13 +40287,6 @@ entities:
     type: Transform
   - airBlocked: False
     type: Airtight
-- uid: 4024
-  type: ProtolatheMachineCircuitboard
-  components:
-  - parent: 4009
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4025
   type: FirelockGlass
   components:
@@ -40349,13 +40345,6 @@ entities:
     pos: -8.5,-29.5
     parent: 853
     type: Transform
-- uid: 4032
-  type: MatterBinStockPart
-  components:
-  - parent: 4009
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4033
   type: Fork
   components:
@@ -40758,13 +40747,6 @@ entities:
     type: Transform
   - startingCharge: 12224.357
     type: Battery
-- uid: 4082
-  type: MatterBinStockPart
-  components:
-  - parent: 4009
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4083
   type: Table
   components:
@@ -41520,20 +41502,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 4173
-  type: MicroManipulatorStockPart
-  components:
-  - parent: 4009
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4174
-  type: MicroManipulatorStockPart
-  components:
-  - parent: 4009
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4175
   type: Rack
   components:
@@ -41586,13 +41554,6 @@ entities:
     pos: -21.5,10.5
     parent: 853
     type: Transform
-- uid: 4181
-  type: Beaker
-  components:
-  - parent: 4009
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4182
   type: KitchenReagentGrinder
   components:
@@ -42283,46 +42244,6 @@ entities:
     pos: -10.5,0.5
     parent: 853
     type: Transform
-- uid: 4272
-  type: Beaker
-  components:
-  - parent: 4009
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4273
-  type: Autolathe
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -5.5,-12.5
-    parent: 853
-    type: Transform
-  - containers:
-      machine_board: !type:Container
-        ents:
-        - 4274
-      machine_parts: !type:Container
-        ents:
-        - 4275
-        - 2412
-        - 972
-        - 3946
-        - 3945
-    type: ContainerContainer
-- uid: 4274
-  type: AutolatheMachineCircuitboard
-  components:
-  - parent: 4273
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4275
-  type: MatterBinStockPart
-  components:
-  - parent: 4273
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4279
   type: TraitorDMRedemptionMachineSpawner
   components:
@@ -46304,96 +46225,6 @@ entities:
     pos: -29.5,-8.5
     parent: 853
     type: Transform
-- uid: 4745
-  type: Paper
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.629866,-5.34983
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4746
-  type: Paper
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -24.67674,-6.28733
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4747
-  type: Paper
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.973616,-6.25608
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4748
-  type: Pen
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -24.39549,-5.146705
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4749
-  type: Pen
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.348616,-6.28733
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4750
-  type: Pen
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.973616,-5.709205
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4751
-  type: ToyFireRipley
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -24.567366,-5.66233
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4752
-  type: ToyMarauder
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.39549,-5.740455
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4753
-  type: d10
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -24.33299,-6.459205
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4754
-  type: d20
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.92674,-5.302955
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4755
   type: AirCanister
   components:
