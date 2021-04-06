@@ -832,3 +832,9 @@ Entries:
   - {message: Fixed not being able to move pulled entities, type: Fix}
   id: 150
   time: '2021-04-05T12:08:46.0000000+00:00'
+- author: MehimoNemo
+  changes:
+  - {message: 'Lathes can now print Firelock electronics, APC electronics, and Door
+      electronics ;)', type: Add}
+  id: 151
+  time: '2021-04-06T19:06:25.0000000+00:00'
