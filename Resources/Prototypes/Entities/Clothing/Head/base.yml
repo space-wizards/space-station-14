@@ -58,4 +58,4 @@
     # so hardsuit helmet just have small battery inside
   - type: HandheldLight
   - type: PowerCellSlot
-    startingCellType: PowerCellSmallHigh
+    startingCellType: PowerCellHardsuitHelmet
