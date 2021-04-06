@@ -326,7 +326,11 @@ namespace Content.Client.UserInterface.Cargo
                     if (Owner.RequestOnly)
                         row.Approve.Visible = false;
                     else
-                        row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(args); };
+                        row.Approve.OnPressed += (args) => {
+                            row.Approve.Disabled = true;
+                            OnOrderApproved?.Invoke(args);
+                            row.Approve.Disabled = false;
+                        };
                     _requests.AddChild(row);
                 }
             }
