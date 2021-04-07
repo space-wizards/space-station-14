@@ -9,7 +9,6 @@
   behavior: !type:ProjectileSpell
    castmessage: ONI SOMA! 
    spellprojectile: FireBallbullet
-   range: 2
    speed: 15
    cooldown: 1
    ignorecaster: true
@@ -25,7 +24,6 @@
   behavior: !type:ProjectileSpell
    castmessage: CAVERE INSIDIAS!
    spellprojectile: TrapsEntitiy
-   range: 4
    speed: 0
    cooldown: 1
    ignorecaster: false
@@ -60,3 +58,15 @@
    cooldown: 1
    NeedComponent: Mind
    AddedComponent: RadiationPulse
+  
+- type: action
+  actionType: SpellPie
+  icon: Objects/Consumable/Food/pie.rsi/icon.png
+  name: "Pie"
+  filters:
+    - human
+  description: "Give me a pie, I dare you!"
+  behaviorType: Instant
+  behavior: !type:InstantSpell
+    castmessage: I NEED A PIE!
+    cooldown: 1

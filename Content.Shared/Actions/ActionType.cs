@@ -19,6 +19,7 @@ namespace Content.Shared.Actions
         SpellFireball,
         SpellTraps,
         SpellCarp,
+        SpellPie,
         DebugTarget
     }
 

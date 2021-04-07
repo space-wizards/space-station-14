@@ -8,21 +8,23 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 using System;
 
 namespace Content.Server.Actions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class TargetSpell : ITargetEntityAction
     {
-        //[Dependency] private readonly IEntityManager _entityManager = default!;
 
-        public string CastMessage { get; private set; }
-        public float CastRange { get; private set; }
-        public float CoolDown { get; private set; }
-        public bool IgnoreCaster { get; private set; }
-        public string TargetType { get; private set; }
-        public string InduceComponent { get; private set; }
+        [ViewVariables] [DataField("castmessage")] public string CastMessage { get; set; } = "Instant action used.";
+        [ViewVariables] [DataField("castrange")] public float CastRange { get; set; } = 5f;
+        [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
+        [ViewVariables] [DataField("NeedComponent")] public string TargetType { get; set; } = "Mind";
+        [ViewVariables] [DataField("AddedComponent")] public string InduceComponent { get; set; } = "RadiatonPulse";
+        [ViewVariables] [DataField("castsound")] public string castSound { get; set; } = "/Audio/Effects/Fluids/slosh.ogg";
 
         public Type RegisteredTargetType;
 
@@ -30,21 +32,9 @@ namespace Content.Server.Actions
 
         public IComponent CheckedComponent;
 
-        private string castSound = "";
-
         public TargetSpell()
         {
-           
-        }
 
-        public void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.CastMessage, "castmessage", "Instant action used."); //What player says upon casting the spell
-            serializer.DataField(this, x => x.CastRange, "castrange", 5f); //The rage at which the spell is cast (leave at 0 for unlimited range)
-            serializer.DataField(this, x => x.CoolDown, "cooldown", 0f); //Cooldown of the spell
-            serializer.DataField(this, x => x.TargetType, "NeedComponent", "SharedActionsComponent"); //Needed component the target must posess
-            serializer.DataField(this, x => x.InduceComponent, "AddedComponent", "SharedActionsComponent"); //The component the spell adds onto the target
-            serializer.DataFieldCached(ref castSound, "pickup_sound", "/Audio/Effects/Fluids/slosh.ogg");
         }
 
         public void DoTargetEntityAction(TargetEntityActionEventArgs args)
@@ -68,8 +58,6 @@ namespace Content.Server.Actions
                 return;
             }
 
-
-            //caster.PopupMessageEveryone(CastMessage); //Speak the cast message out loud
             //Now the fun part, actually applying the spell component to the caster
             if (!target.TryGetComponent(RegisteredTargetType, out var component))
             {

@@ -9,46 +9,29 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 using System;
 
 namespace Content.Server.Actions
 {
     [UsedImplicitly]
+    [DataDefinition]
     public class ProjectileSpell : ITargetPointAction
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        public string CastMessage { get; private set; }
-        public string Projectile { get; private set; }
-        public float VelocityMult { get; private set; }
-        public float CoolDown { get; private set; }
-        public bool IgnoreCaster { get; private set; }
+        [ViewVariables] [DataField("castmessage")] public string CastMessage { get; set; } = "Instant action used.";
+        [ViewVariables] [DataField("spellprojectile")] public string Projectile { get; set; } = "FireBallbullet";
+        [ViewVariables] [DataField("speed")] public float VelocityMult { get; set; } = 0f;
+        [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
+        [ViewVariables] [DataField("ignorecaster")] public bool IgnoreCaster { get; set; } = false;
 
-        public string TargetType { get; private set; }
-        public string InduceComponent { get; private set; }
+        [ViewVariables] [DataField("castSound")] public string CastSound { get; set; } = "/Audio/Effects/Fluids/slosh.ogg";
 
-        public Type RegisteredTargetType;
-
-        public Type RegisteredInduceType;
-
-        public IComponent CheckedComponent;
-
-        private string castSound = "";
         public ProjectileSpell()
         {
             IoCManager.InjectDependencies(this);
-        }
-
-        public void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => x.CastMessage, "castmessage", "Instant action used."); //What player says upon casting the spell
-            serializer.DataField(this, x => x.Projectile, "spellprojectile", "FireBallbullet"); //What projectile/Entity does the spell create
-            serializer.DataField(this, x => x.VelocityMult, "speed", 0f); //Speed that is applied to the projectile
-            serializer.DataField(this, x => x.CoolDown, "cooldown", 0f);
-            serializer.DataField(this, x => x.IgnoreCaster, "ignorecaster", false); //ignore caster or not
-            serializer.DataField(this, x => x.TargetType, "NeedComponent", "SharedActionsComponent"); //Needed component the target must posess
-            serializer.DataField(this, x => x.InduceComponent, "AddedComponent", "SharedActionsComponent"); //The component the spell adds onto the target
-            serializer.DataFieldCached(ref castSound, "pickup_sound", "/Audio/Effects/Fluids/slosh.ogg");
         }
 
         public void DoTargetPointAction(TargetPointActionEventArgs args)
@@ -61,7 +44,7 @@ namespace Content.Server.Actions
 
             args.Performer.PopupMessageEveryone(CastMessage); //Speak the cast message out loud
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(castSound, args.Performer); //play the sound
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(CastSound, args.Performer); //play the sound
 
             var spawnedSpell = _entityManager.SpawnEntity(Projectile, coords);
 

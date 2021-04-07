@@ -416,7 +416,7 @@
   name: cheeseburger
   parent: FoodBase
   id: FoodCheeseburger
-  description: The cheese adds a good flavor.
+  description: the bare fundamentals of american cuisine
   components:
   - type: SolutionContainer
     contents:
