@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.EntitySystems;
 using JetBrains.Annotations;
@@ -79,7 +79,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
                 // the hook here would cause a dirty event to fire needlessly
                 _lastPosition = (Owner.Transform.GridID, SnapGrid.Position);
 
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner,null, SnapGrid.Offset, Mode));
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner,null, Mode));
             }
 
             if (Sprite != null && Mode == IconSmoothingMode.Corners)
@@ -237,7 +237,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             if (SnapGrid != null)
             {
                 SnapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, SnapGrid.Offset, Mode));
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
             }
         }
 
@@ -245,7 +245,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
         {
             if (SnapGrid != null)
             {
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, SnapGrid.Offset, Mode));
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
                 _lastPosition = (Owner.Transform.GridID, SnapGrid.Position);
             }
         }

@@ -38,8 +38,8 @@ namespace Content.Server.GameObjects.Components.Power
                 return true;
             if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GetGridId(Owner.EntityManager), out var grid))
                 return true;
-            var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
-            var snapCell = grid.GetSnapGridCell(snapPos, SnapGridOffset.Center);
+            var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation);
+            var snapCell = grid.GetSnapGridCell(snapPos);
             if(grid.GetTileRef(snapPos).Tile.IsEmpty)
                 return true;
             foreach (var snapComp in snapCell)

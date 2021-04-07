@@ -119,7 +119,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             var tile = grid.GetTileRef(position);
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-            foreach (var snapGridComponent in grid.GetSnapGridCell(position, SnapGridOffset.Center))
+            foreach (var snapGridComponent in grid.GetSnapGridCell(position))
             {
                 var entity = snapGridComponent.Owner;
                 if (!entity.TryGetComponent(out SubFloorHideComponent? subFloorComponent))

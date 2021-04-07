@@ -156,7 +156,7 @@ namespace Content.Server.Physics.Controllers
             // If the coordinates have a FootstepModifier component
             // i.e. component that emit sound on footsteps emit that sound
             string? soundCollectionName = null;
-            foreach (var maybeFootstep in grid.GetSnapGridCell(tile.GridIndices, SnapGridOffset.Center))
+            foreach (var maybeFootstep in grid.GetSnapGridCell(tile.GridIndices))
             {
                 if (maybeFootstep.Owner.TryGetComponent(out FootstepModifierComponent? footstep))
                 {
