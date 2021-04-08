@@ -119,12 +119,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             get => _isWeldedShut;
             set
             {
-                _isWeldedShut = value;
+                if (_isWeldedShut == value) return;
 
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-                {
-                    appearance.SetData(StorageVisuals.Welded, value);
-                }
+                _isWeldedShut = value;
+                UpdateAppearance();
             }
         }
 
@@ -135,14 +133,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             get => _canWeldShut;
             set
             {
-                if (_canWeldShut == value)
-                    return;
+                if (_canWeldShut == value) return;
 
                 _canWeldShut = value;
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-                {
-                    appearance.SetData(StorageVisuals.CanWeld, value);
-                }
+                UpdateAppearance();
             }
         }
 
@@ -150,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override void Initialize()
         {
             base.Initialize();
-            Contents = ContainerHelpers.EnsureContainer<Container>(Owner, nameof(EntityStorageComponent));
+            Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
             EntityQuery = new IntersectingEntityQuery(Owner);
 
             Contents.ShowContents = _showContents;
@@ -242,6 +236,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(StorageVisuals.CanWeld, _canWeldShut);
+                appearance.SetData(StorageVisuals.Welded, _isWeldedShut);
             }
         }
 
