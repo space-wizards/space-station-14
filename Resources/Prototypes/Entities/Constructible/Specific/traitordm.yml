@@ -18,10 +18,12 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
-      mass: 1
+      mass: 25
+      mask:
+      - SmallImpassable
       layer:
-      - Clickable
+      - Opaque
+      - MobImpassable
   - type: TraitorDeathMatchRedemption
   placement:
     mode: AlignTileAny
-
