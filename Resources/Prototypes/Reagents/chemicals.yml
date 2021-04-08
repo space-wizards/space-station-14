@@ -1,5 +1,5 @@
 - type: reagent
-  id: chem.Ammonia
+  id: Ammonia
   name: ammonia
   desc: An effective fertilizer which is better than what is available to the botanist initially, though it isn't as powerful as Diethylamine
   physicalDesc: pungent
@@ -13,7 +13,7 @@
       amount: 0.5
 
 - type: reagent
-  id: chem.Diethylamine
+  id: Diethylamine
   name: diethylamine
   desc: A very potent fertilizer.
   physicalDesc: strong-smelling
@@ -35,7 +35,7 @@
     - !type:Diethylamine {}
 
 - type: reagent
-  id: chem.Ethanol
+  id: Ethanol
   name: ethanol
   desc: A simple alcohol, makes you drunk if consumed, flammable.
   physicalDesc: strong-smelling
@@ -47,7 +47,7 @@
       temperatureMultiplier: 1.35
 
 - type: reagent
-  id: chem.FoamingAgent
+  id: FoamingAgent
   name: foaming agent
   desc: Makes foam such as that's required in metal foam grenades.
   physicalDesc: foamy
@@ -56,7 +56,7 @@
   meltingPoint: 7.4 # I made this up
 
 - type: reagent
-  id: chem.Glucose
+  id: Glucose
   name: glucose
   desc: A simple sugar found in many foods.
   physicalDesc: syrupy
@@ -72,7 +72,7 @@
       amount: 2
 
 - type: reagent
-  id: chem.Ice
+  id: Ice
   name: ice
   desc: Frozen water.
   physicalDesc: frosty
@@ -84,7 +84,7 @@
       amount: 1
 
 - type: reagent
-  id: chem.Nutriment
+  id: Nutriment
   name: nutriment
   desc: All the vitamins, minerals, and carbohydrates the body needs in pure form.
   physicalDesc: opaque
@@ -99,7 +99,7 @@
       amount: 0.5
 
 - type: reagent
-  id: chem.Plasma
+  id: Plasma
   name: plasma
   desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
   physicalDesc: gaseous
@@ -111,7 +111,7 @@
       temperatureMultiplier: 1.5
 
 - type: reagent
-  id: chem.PolytrinicAcid
+  id: PolytrinicAcid
   name: polytrinic acid
   desc: An extremely corrosive chemical substance. The slightest touch of it will melt off most masks and headgear, and it deals extreme damage to anyone who comes directly into contact with it.
   physicalDesc: strong-smelling
@@ -127,7 +127,7 @@
       amount: -8
 
 - type: reagent
-  id: chem.FluorosulfuricAcid
+  id: FluorosulfuricAcid
   name: fluorosulfuric acid
   desc: An extremely corrosive chemical substance.
   physicalDesc: strong-smelling
@@ -136,7 +136,7 @@
   meltingPoint: -87
 
 - type: reagent
-  id: chem.TableSalt
+  id: TableSalt
   name: table salt
   desc: Commonly known as salt, Sodium Chloride is often used to season food or kill borers instantly.
   physicalDesc: grainy
@@ -158,7 +158,7 @@
       amount: -2
 
 - type: reagent
-  id: chem.Thermite
+  id: Thermite
   name: thermite
   desc: A mixture that becomes extremely hot when ignited, and which can burn straight through walls when applied and ignited. It'll slowly inflict burn damage to anybody dumb enough to ingest it, but can't be ignited inside inside said dumb person.
   physicalDesc: grainy
@@ -170,7 +170,7 @@
       temperatureMultiplier: 1.35
 
 - type: reagent
-  id: chem.Toxin
+  id: Toxin
   name: toxin
   desc: A Toxic chemical.
   color: "#cf3600"
@@ -180,7 +180,7 @@
       amount: 10
 
 - type: reagent
-  id: chem.Sugar
+  id: Sugar
   name: sugar
   desc: Sweet.
   color: "#ffffff"
@@ -194,7 +194,7 @@
       amount: 2
 
 - type: reagent
-  id: chem.SulfuricAcid
+  id: SulfuricAcid
   name: sulfuric acid
   desc: A highly corrosive, oily, colorless liquid.
   physicalDesc: oily
@@ -210,7 +210,7 @@
       amount: -4
 
 - type: reagent
-  id: chem.UnstableMutagen
+  id: UnstableMutagen
   name: unstable mutagen
   desc: Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.
   physicalDesc: glowing
@@ -223,7 +223,7 @@
       amount: 1
 
 - type: reagent
-  id: chem.Water
+  id: Water
   name: water
   desc: A colorless liquid that humans need in order to survive.
   physicalDesc: translucent
@@ -241,7 +241,7 @@
       amount: 1
 
 - type: reagent
-  id: chem.WeldingFuel
+  id: WeldingFuel
   name: welding fuel
   desc: Used by welders to weld.
   physicalDesc: oily
@@ -252,7 +252,7 @@
     - !type:FlammableTileReaction {}
 
 - type: reagent
-  id: chem.Fluorosurfactant
+  id: Fluorosurfactant
   name: fluorosurfactant
   desc: A perfluoronated sulfonic acid that forms a foam when mixed with water.
   physicalDesc: opaque
