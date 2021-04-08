@@ -83,9 +83,9 @@ grids:
   - ind: "-1,-2"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAhAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAYAAAAGAAAABgAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAhAAAAGAAAABgAAAAYAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAARAAAAEQAAABEAAAAhAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAEQAAABEAAAARAAAAIQAAACAAAAAhAAAAGAAAABgAAAAYAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIAAAABEAAAARAAAAEQAAACEAAAAgAAAAIQAAACEAAAAhAAAAIQAAACEAAAAbAAAAGwAAABsAAAAbAAAAIQAAACAAAAAbAAAAGwAAACEAAAAhAAAAIAAAACEAAAAYAAAAGAAAABgAAAAhAAAAGwAAABsAAAAbAAAAGwAAACEAAAAgAAAAGwAAABsAAAAbAAAAIQAAACAAAAAhAAAAGAAAABgAAAAYAAAAIQAAABsAAAAbAAAAGwAAABsAAAAhAAAAIAAAABsAAAAbAAAAGwAAACEAAAAYAAAAIQAAACEAAAAbAAAAIQAAACEAAAAhAAAAIQAAABsAAAAhAAAAIQAAACEAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAACEAAAAbAAAAGwAAABsAAAAbAAAAGwAAACEAAAAhAAAAIQAAABsAAAAhAAAAIQAAACEAAAAbAAAAGwAAABsAAAAhAAAAGwAAABsAAAAbAAAAGwAAABsAAAAhAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAAA==
   - ind: "-2,-2"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABEAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAARAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAEQAAABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAbAAAAGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAGwAAABsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABsAAAAbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAbAAAAGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAGwAAABsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABsAAAAbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAhAAAAGAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABEAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAARAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAEQAAABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAbAAAAGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAGwAAABsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABsAAAAbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAbAAAAGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAGwAAABsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABsAAAAbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAGAAAAA==
   - ind: "-2,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAYAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACAAAAAYAAAAIQAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAGAAAACEAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAACAAAAAYAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAYAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAYAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAeAAAAHgAAAB4AAAAeAAAAHgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAhAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAHgAAABYAAAAWAAAAFgAAABYAAAAhAAAADgAAAA4AAAAOAAAADgAAABYAAAAhAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAAA4AAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAOAAAADgAAAA4AAAAWAAAAFgAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAYAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACAAAAAYAAAAIQAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAGAAAACEAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAACAAAAAYAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAYAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAYAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAeAAAAHgAAAB4AAAAeAAAAHgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAhAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAHgAAABYAAAAWAAAAFgAAABYAAAAhAAAADgAAAA4AAAAOAAAADgAAABYAAAAhAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAAA4AAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAOAAAADgAAAA4AAAAWAAAAFgAAAA==
   - ind: "-3,0"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABYAAAAWAAAAFgAAACEAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAhAAAAIQAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAWAAAAFgAAABYAAAAWAAAAFgAAABgAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAAA==
   - ind: "-4,0"
@@ -801,59 +801,51 @@ entities:
     parent: 853
     type: Transform
 - uid: 94
-  type: solid_wall
+  type: LowWall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -22.5,-16.5
+  - pos: 3.5,-24.5
     parent: 853
     type: Transform
 - uid: 95
-  type: solid_wall
+  type: ReinforcedWindow
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -23.5,-16.5
+  - pos: -6.5,-29.5
     parent: 853
     type: Transform
 - uid: 96
-  type: solid_wall
+  type: ReinforcedWindow
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -24.5,-16.5
+  - pos: -6.5,-30.5
     parent: 853
     type: Transform
 - uid: 97
-  type: solid_wall
+  type: ReinforcedWindow
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,-16.5
+  - pos: -7.5,-30.5
     parent: 853
     type: Transform
 - uid: 98
-  type: solid_wall
+  type: ReinforcedWindow
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,-15.5
+  - pos: -10.5,-29.5
     parent: 853
     type: Transform
 - uid: 99
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,-14.5
+  - pos: -10.5,-28.5
     parent: 853
     type: Transform
 - uid: 100
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,-13.5
+  - pos: -11.5,-28.5
     parent: 853
     type: Transform
 - uid: 101
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,-12.5
+  - pos: -12.5,-28.5
     parent: 853
     type: Transform
 - uid: 102
@@ -972,23 +964,17 @@ entities:
     parent: 853
     type: Transform
 - uid: 118
-  type: ComputerMedicalRecords
+  type: reinforced_wall
   components:
-  - pos: 0.5,32.5
+  - pos: -14.5,26.5
     parent: 853
     type: Transform
 - uid: 119
-  type: ComputerSupplyRequest
+  type: reinforced_wall
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 8.5,31.5
+  - pos: -13.5,26.5
     parent: 853
     type: Transform
-  - containers:
-      board: !type:Container
-        ents:
-        - 897
-    type: ContainerContainer
 - uid: 120
   type: VendingMachineSnack
   components:
@@ -1248,19 +1234,26 @@ entities:
     parent: 853
     type: Transform
 - uid: 150
-  type: solid_wall
+  type: ComputerId
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 24.5,14.5
+  - pos: 7.5,21.5
     parent: 853
     type: Transform
+  - containers:
+      IdCardConsole-privilegedId: !type:ContainerSlot {}
+      IdCardConsole-targetId: !type:ContainerSlot {}
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 151
-  type: solid_wall
+  type: CloningPod
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 18.5,14.5
+  - pos: 9.5,-13.5
     parent: 853
     type: Transform
+  - containers:
+      CloningPod-bodyContainer: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 152
   type: HVWire
   components:
@@ -5160,24 +5153,17 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 563
-  type: SupplyComputerCircuitboard
+  type: reinforced_wall
   components:
-  - parent: 564
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 564
-  type: ComputerSupplyOrdering
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 21.5,10.5
+  - pos: -38.5,1.5
     parent: 853
     type: Transform
-  - containers:
-      board: !type:Container
-        ents:
-        - 563
-    type: ContainerContainer
+- uid: 564
+  type: reinforced_wall
+  components:
+  - pos: 31.5,-8.5
+    parent: 853
+    type: Transform
 - uid: 565
   type: cargoTelepad
   components:
@@ -5424,12 +5410,11 @@ entities:
     parent: 853
     type: Transform
 - uid: 589
-  type: AirlockEngineering
+  type: AirlockGlass
   components:
   - name: Tool Storage
     type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,8.5
+  - pos: -25.5,8.5
     parent: 853
     type: Transform
   - containers:
@@ -5437,12 +5422,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 590
-  type: AirlockEngineering
+  type: AirlockGlass
   components:
   - name: Tool Storage
     type: MetaData
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,10.5
+  - pos: -25.5,10.5
     parent: 853
     type: Transform
   - containers:
@@ -6312,10 +6296,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 664
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -40.5,11.5
+  - pos: 32.5,-8.5
     parent: 853
     type: Transform
 - uid: 665
@@ -6476,10 +6459,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 686
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 13.5,-25.5
+  - pos: 33.5,-8.5
     parent: 853
     type: Transform
 - uid: 687
@@ -6490,38 +6472,33 @@ entities:
     parent: 853
     type: Transform
 - uid: 688
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 13.5,-24.5
+  - pos: 34.5,-8.5
     parent: 853
     type: Transform
 - uid: 689
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 13.5,-23.5
+  - pos: 30.5,-8.5
     parent: 853
     type: Transform
 - uid: 690
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 13.5,-22.5
+  - pos: 29.5,-8.5
     parent: 853
     type: Transform
 - uid: 691
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 13.5,-26.5
+  - pos: 37.5,-8.5
     parent: 853
     type: Transform
 - uid: 692
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 14.5,-26.5
+  - pos: 38.5,-8.5
     parent: 853
     type: Transform
 - uid: 693
@@ -6539,17 +6516,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 695
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 15.5,-26.5
+  - pos: 39.5,-8.5
     parent: 853
     type: Transform
 - uid: 696
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 16.5,-26.5
+  - pos: 39.5,-7.5
     parent: 853
     type: Transform
 - uid: 697
@@ -6560,31 +6535,35 @@ entities:
     parent: 853
     type: Transform
 - uid: 698
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 17.5,-26.5
+  - pos: 39.5,-6.5
     parent: 853
     type: Transform
 - uid: 699
-  type: solid_wall
+  type: ComputerSupplyOrdering
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 18.5,-26.5
+  - pos: 21.5,10.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 700
-  type: solid_wall
+  type: computerBodyScanner
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 19.5,-26.5
+  - pos: 10.5,-13.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 701
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 20.5,-26.5
+  - pos: 6.5,-22.5
     parent: 853
     type: Transform
 - uid: 702
@@ -6595,24 +6574,21 @@ entities:
     parent: 853
     type: Transform
 - uid: 703
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 21.5,-26.5
+  - pos: 10.5,-21.5
     parent: 853
     type: Transform
 - uid: 704
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 22.5,-26.5
+  - pos: 6.5,-21.5
     parent: 853
     type: Transform
 - uid: 705
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 23.5,-26.5
+  - pos: 7.5,-21.5
     parent: 853
     type: Transform
 - uid: 706
@@ -6623,31 +6599,27 @@ entities:
     parent: 853
     type: Transform
 - uid: 707
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 23.5,-25.5
+  - pos: 11.5,-21.5
     parent: 853
     type: Transform
 - uid: 708
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 23.5,-24.5
+  - pos: 19.5,-26.5
     parent: 853
     type: Transform
 - uid: 709
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 23.5,-23.5
+  - pos: 18.5,-26.5
     parent: 853
     type: Transform
 - uid: 710
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 23.5,-22.5
+  - pos: 17.5,-26.5
     parent: 853
     type: Transform
 - uid: 711
@@ -6888,12 +6860,10 @@ entities:
 - uid: 744
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 21.5,-12.5
+  - pos: 1.5,-21.485424
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 745
@@ -6969,12 +6939,10 @@ entities:
 - uid: 754
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 5.5,21.5
+  - pos: 6.5,23.514576
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 755
@@ -7010,12 +6978,10 @@ entities:
 - uid: 759
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 1.5,-21.5
+  - pos: 13.5,1.485029
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 760
@@ -7034,12 +7000,10 @@ entities:
 - uid: 761
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -24.5,11.5
+  - pos: -25.5,-8.485172
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 762
@@ -7071,23 +7035,21 @@ entities:
 - uid: 764
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 10.5,16.5
+  - pos: 0.5,26.48566
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 765
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 7.5,23.5
+  - pos: -39.5,10.496723
     parent: 853
     type: Transform
+  - sleepTime: 221.60655
+    type: Physics
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 766
@@ -7151,23 +7113,19 @@ entities:
 - uid: 771
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,-8.5
+  - pos: -24.5,11.48527
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 772
   type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -39.5,10.5
+  - pos: 21.5,-12.51473
     parent: 853
     type: Transform
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 773
@@ -7458,15 +7416,16 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 796
-  type: PottedPlantRandom
+  type: CrateMaterialGlass
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,26.5
+  - pos: 39.5,13.5
     parent: 853
     type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
   - containers:
-      potted_plant_hide: !type:ContainerSlot {}
-      stash: !type:ContainerSlot {}
+      EntityStorageComponent: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 797
   type: Table
@@ -7477,7 +7436,7 @@ entities:
 - uid: 798
   type: PottedPlantRandom
   components:
-  - pos: 16.5,7.5
+  - pos: 16.5,7.485173
     parent: 853
     type: Transform
   - containers:
@@ -12105,10 +12064,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 862
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 51.5,5.5
+  - pos: 16.5,-26.5
     parent: 853
     type: Transform
 - uid: 863
@@ -12119,24 +12077,21 @@ entities:
     parent: 853
     type: Transform
 - uid: 864
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 47.5,0.5
+  - pos: -18.5,-19.5
     parent: 853
     type: Transform
 - uid: 865
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 47.5,-0.5
+  - pos: -18.5,-20.5
     parent: 853
     type: Transform
 - uid: 866
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 46.5,0.5
+  - pos: -18.5,-21.5
     parent: 853
     type: Transform
 - uid: 867
@@ -12147,12 +12102,18 @@ entities:
     parent: 853
     type: Transform
 - uid: 868
-  type: solid_wall
+  type: ComputerId
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 51.5,4.5
+  - rot: 3.141592653589793 rad
+    pos: 8.5,23.5
     parent: 853
     type: Transform
+  - containers:
+      IdCardConsole-privilegedId: !type:ContainerSlot {}
+      IdCardConsole-targetId: !type:ContainerSlot {}
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 869
   type: reinforced_wall
   components:
@@ -12168,34 +12129,34 @@ entities:
     parent: 853
     type: Transform
 - uid: 871
-  type: ResearchComputerCircuitboard
+  type: ComputerId
   components:
-  - parent: 872
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 872
-  type: ComputerResearchAndDevelopment
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -5.5,-15.5
+  - pos: 7.5,32.5
     parent: 853
     type: Transform
   - containers:
+      IdCardConsole-privilegedId: !type:ContainerSlot {}
+      IdCardConsole-targetId: !type:ContainerSlot {}
       board: !type:Container
-        ents:
-        - 871
+        ents: []
     type: ContainerContainer
-- uid: 873
-  type: BlockGameArcade
+- uid: 872
+  type: reinforced_wall
   components:
-  - pos: -6.5,1.5
+  - pos: 28.5,-18.5
+    parent: 853
+    type: Transform
+- uid: 873
+  type: Autolathe
+  components:
+  - pos: 29.5,-2.5
     parent: 853
     type: Transform
   - containers:
-      board: !type:Container
-        ents:
-        - 875
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 874
   type: VendingMachineCigs
@@ -12204,16 +12165,21 @@ entities:
     parent: 853
     type: Transform
 - uid: 875
-  type: BlockGameArcadeComputerCircuitboard
+  type: Protolathe
   components:
-  - parent: 873
+  - pos: 29.5,-1.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 876
-  type: ComputerPowerMonitoring
+  type: reinforced_wall
   components:
-  - pos: 7.5,32.5
+  - pos: 27.5,-19.5
     parent: 853
     type: Transform
 - uid: 877
@@ -12386,22 +12352,21 @@ entities:
     parent: 853
     type: Transform
 - uid: 897
-  type: SupplyRequestComputerCircuitboard
+  type: reinforced_wall
   components:
-  - parent: 119
+  - pos: 28.5,-19.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 898
-  type: ComputerComms
+  type: ComputerResearchAndDevelopment
   components:
-  - pos: 3.5,32.5
+  - rot: 1.5707963267948966 rad
+    pos: -5.5,-15.5
     parent: 853
     type: Transform
   - containers:
       board: !type:Container
-        ents:
-        - 959
+        ents: []
     type: ContainerContainer
 - uid: 899
   type: VendingMachineTheater
@@ -12696,87 +12661,79 @@ entities:
     parent: 853
     type: Transform
 - uid: 941
-  type: solid_wall
+  type: ComputerComms
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -26.5,-12.5
+  - pos: 3.5,32.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 942
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -27.5,-12.5
+  - pos: -0.5,-28.5
     parent: 853
     type: Transform
 - uid: 943
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -28.5,-12.5
+  - pos: -1.5,-28.5
     parent: 853
     type: Transform
 - uid: 944
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -29.5,-12.5
+  - pos: -2.5,-28.5
     parent: 853
     type: Transform
 - uid: 945
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -30.5,-12.5
+  - pos: -3.5,-28.5
     parent: 853
     type: Transform
 - uid: 946
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -31.5,-12.5
+  - pos: -4.5,-28.5
     parent: 853
     type: Transform
 - uid: 947
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -32.5,-12.5
+  - pos: -5.5,-28.5
     parent: 853
     type: Transform
 - uid: 948
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -33.5,-12.5
+  - pos: -6.5,-28.5
     parent: 853
     type: Transform
 - uid: 949
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -34.5,-12.5
+  - pos: -34.5,-8.5
     parent: 853
     type: Transform
 - uid: 950
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -34.5,-11.5
+  - pos: -34.5,-9.5
     parent: 853
     type: Transform
 - uid: 951
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -34.5,-10.5
+  - pos: 28.5,-14.5
     parent: 853
     type: Transform
 - uid: 952
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -34.5,-9.5
+  - pos: 28.5,-16.5
     parent: 853
     type: Transform
 - uid: 953
@@ -12823,12 +12780,11 @@ entities:
     parent: 853
     type: Transform
 - uid: 959
-  type: CommsComputerCircuitboard
+  type: reinforced_wall
   components:
-  - parent: 898
+  - pos: 28.5,-12.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 960
   type: ChairOfficeDark
   components:
@@ -12837,10 +12793,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 961
-  type: ComputerPowerMonitoring
+  type: reinforced_wall
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 29.5,-1.5
+  - pos: 28.5,-9.5
     parent: 853
     type: Transform
 - uid: 962
@@ -12905,26 +12860,23 @@ entities:
     parent: 853
     type: Transform
 - uid: 971
-  type: IDComputerCircuitboard
+  type: reinforced_wall
   components:
-  - parent: 1574
+  - pos: 28.5,-8.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 972
-  type: MatterBinStockPart
+  type: RandomArcade
   components:
-  - parent: 4273
+  - pos: -6.5,1.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 973
-  type: CommsComputerCircuitboard
+  type: reinforced_wall
   components:
-  - parent: 3178
+  - pos: -34.5,-10.5
+    parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 974
   type: PlushieSlime
   components:
@@ -13258,9 +13210,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1014
-  type: ReinforcedWindow
+  type: reinforced_wall
   components:
-  - pos: 9.5,-21.5
+  - pos: -34.5,-11.5
     parent: 853
     type: Transform
 - uid: 1015
@@ -13362,7 +13314,7 @@ entities:
 - uid: 1028
   type: ReinforcedWindow
   components:
-  - pos: 11.5,-21.5
+  - pos: -8.5,-30.5
     parent: 853
     type: Transform
 - uid: 1029
@@ -13407,11 +13359,16 @@ entities:
     parent: 853
     type: Transform
 - uid: 1034
-  type: ReinforcedWindow
+  type: ComputerComms
   components:
-  - pos: 10.5,-21.5
+  - rot: 3.141592653589793 rad
+    pos: 9.5,23.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1035
   type: Poweredlight
   components:
@@ -13476,22 +13433,28 @@ entities:
     parent: 853
     type: Transform
 - uid: 1043
-  type: BodyScannerComputerCircuitboard
+  type: Autolathe
   components:
-  - parent: 1044
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 1044
-  type: computerBodyScanner
-  components:
-  - pos: 10.5,-13.5
+  - pos: -5.5,-12.5
     parent: 853
     type: Transform
   - containers:
-      board: !type:Container
-        ents:
-        - 1043
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 1044
+  type: Protolathe
+  components:
+  - pos: -3.5,-12.5
+    parent: 853
+    type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 1045
   type: ChairOfficeLight
@@ -13788,52 +13751,47 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1074
-  type: ReinforcedWindow
+  type: Paper
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -6.5,-29.5
+  - pos: -24.037928,-5.9436545
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 1075
-  type: ReinforcedWindow
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -6.5,-30.5
+  - pos: 51.5,4.5
     parent: 853
     type: Transform
 - uid: 1076
-  type: ReinforcedWindow
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -7.5,-30.5
+  - pos: 51.5,5.5
     parent: 853
     type: Transform
 - uid: 1077
-  type: ReinforcedWindow
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -8.5,-30.5
+  - pos: 51.5,-0.5
     parent: 853
     type: Transform
 - uid: 1078
-  type: ReinforcedWindow
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -9.5,-30.5
+  - pos: 47.5,-0.5
     parent: 853
     type: Transform
 - uid: 1079
-  type: ReinforcedWindow
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -10.5,-30.5
+  - pos: 47.5,0.5
     parent: 853
     type: Transform
 - uid: 1080
-  type: ReinforcedWindow
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -10.5,-29.5
+  - pos: 46.5,0.5
     parent: 853
     type: Transform
 - uid: 1081
@@ -13985,10 +13943,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1101
-  type: ComputerMedicalRecords
+  type: reinforced_wall
   components:
-  - rot: 3.141592653589793 rad
-    pos: 6.5,-5.5
+  - pos: 45.5,0.5
     parent: 853
     type: Transform
 - uid: 1102
@@ -14263,15 +14220,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 1135
-  type: CloningPod
+  type: Paper
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 9.5,-13.5
+  - pos: -24.147303,-5.8967795
     parent: 853
     type: Transform
-  - containers:
-      CloningPod-bodyContainer: !type:ContainerSlot {}
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 1136
   type: SheetPlasteel
   components:
@@ -14686,17 +14641,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 1187
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -34.5,11.5
+  - pos: 44.5,0.5
     parent: 853
     type: Transform
 - uid: 1188
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -38.5,11.5
+  - pos: 44.5,-0.5
     parent: 853
     type: Transform
 - uid: 1189
@@ -15193,17 +15146,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 1236
-  type: CrateMaterialPlasteel
+  type: PottedPlantRandom
   components:
-  - rot: 3.141592653589793 rad
-    pos: 40.5,13.5
+  - pos: 10.5,16.514576
     parent: 853
     type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1237
   type: NitrogenCanister
@@ -16341,10 +16290,9 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1336
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 51.5,-0.5
+  - pos: 44.5,-1.5
     parent: 853
     type: Transform
 - uid: 1337
@@ -17003,38 +16951,33 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 1399
-  type: ReinforcedWindow
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 5.5,-23.5
+  - pos: 44.5,-2.5
     parent: 853
     type: Transform
 - uid: 1400
-  type: ReinforcedWindow
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 5.5,-24.5
+  - pos: 44.5,-3.5
     parent: 853
     type: Transform
 - uid: 1401
-  type: ReinforcedWindow
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 4.5,-24.5
+  - pos: 44.5,-4.5
     parent: 853
     type: Transform
 - uid: 1402
-  type: ReinforcedWindow
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 3.5,-24.5
+  - pos: 44.5,-5.5
     parent: 853
     type: Transform
 - uid: 1403
-  type: ReinforcedWindow
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 2.5,-24.5
+  - pos: 43.5,-5.5
     parent: 853
     type: Transform
 - uid: 1404
@@ -17297,10 +17240,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1441
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -39.5,11.5
+  - pos: 42.5,-5.5
     parent: 853
     type: Transform
 - uid: 1442
@@ -17451,10 +17393,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1463
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -38.5,1.5
+  - pos: 41.5,-5.5
     parent: 853
     type: Transform
 - uid: 1464
@@ -18041,12 +17982,17 @@ entities:
       MedicalScanner-bodyContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1545
-  type: PlasmaCanister
+  type: CrateMaterialSteel
   components:
-  - rot: 3.141592653589793 rad
-    pos: 41.5,13.48527
+  - pos: 38.5,13.5
     parent: 853
     type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1546
   type: HVWire
   components:
@@ -18094,10 +18040,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1552
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -20.5,-16.5
+  - pos: 40.5,-5.5
     parent: 853
     type: Transform
 - uid: 1553
@@ -18247,25 +18192,17 @@ entities:
     parent: 853
     type: Transform
 - uid: 1573
-  type: ComputerAlert
+  type: reinforced_wall
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 29.5,-2.5
+  - pos: 39.5,-5.5
     parent: 853
     type: Transform
 - uid: 1574
-  type: ComputerId
+  type: reinforced_wall
   components:
-  - pos: 7.5,21.5
+  - pos: 20.5,-26.5
     parent: 853
     type: Transform
-  - containers:
-      IdCardConsole-privilegedId: !type:ContainerSlot {}
-      IdCardConsole-targetId: !type:ContainerSlot {}
-      board: !type:Container
-        ents:
-        - 971
-    type: ContainerContainer
 - uid: 1575
   type: Table
   components:
@@ -18829,17 +18766,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 1652
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 45.5,0.5
+  - pos: 21.5,-26.5
     parent: 853
     type: Transform
 - uid: 1653
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 44.5,0.5
+  - pos: 22.5,-26.5
     parent: 853
     type: Transform
 - uid: 1654
@@ -18850,178 +18785,153 @@ entities:
     parent: 853
     type: Transform
 - uid: 1655
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 44.5,-0.5
+  - pos: 35.5,-8.5
     parent: 853
     type: Transform
 - uid: 1656
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 44.5,-1.5
+  - pos: 36.5,-8.5
     parent: 853
     type: Transform
 - uid: 1657
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 44.5,-2.5
+  - pos: 23.5,-24.5
     parent: 853
     type: Transform
 - uid: 1658
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 44.5,-3.5
+  - pos: 23.5,-25.5
     parent: 853
     type: Transform
 - uid: 1659
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 44.5,-4.5
+  - pos: 23.5,-26.5
     parent: 853
     type: Transform
 - uid: 1660
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 44.5,-5.5
+  - pos: 23.5,-19.5
     parent: 853
     type: Transform
 - uid: 1661
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 43.5,-5.5
+  - pos: 23.5,-20.5
     parent: 853
     type: Transform
 - uid: 1662
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 42.5,-5.5
+  - pos: 23.5,-21.5
     parent: 853
     type: Transform
 - uid: 1663
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 41.5,-5.5
+  - pos: 23.5,-22.5
     parent: 853
     type: Transform
 - uid: 1664
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 40.5,-5.5
+  - pos: 23.5,-23.5
     parent: 853
     type: Transform
 - uid: 1665
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 39.5,-5.5
+  - pos: 28.5,-15.5
     parent: 853
     type: Transform
 - uid: 1666
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 39.5,-6.5
+  - pos: 28.5,-17.5
     parent: 853
     type: Transform
 - uid: 1667
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 39.5,-7.5
+  - pos: 28.5,-13.5
     parent: 853
     type: Transform
 - uid: 1668
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 39.5,-8.5
+  - pos: 28.5,-11.5
     parent: 853
     type: Transform
 - uid: 1669
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 38.5,-8.5
+  - pos: 28.5,-10.5
     parent: 853
     type: Transform
 - uid: 1670
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 37.5,-8.5
+  - pos: 24.5,-19.5
     parent: 853
     type: Transform
 - uid: 1671
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 36.5,-8.5
+  - pos: 26.5,-19.5
     parent: 853
     type: Transform
 - uid: 1672
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 35.5,-8.5
+  - pos: 25.5,-19.5
     parent: 853
     type: Transform
 - uid: 1673
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 34.5,-8.5
+  - pos: -16.5,26.5
     parent: 853
     type: Transform
 - uid: 1674
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 33.5,-8.5
+  - pos: -15.5,26.5
     parent: 853
     type: Transform
 - uid: 1675
-  type: solid_wall
+  type: ReinforcedWindow
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 32.5,-8.5
+  - pos: -9.5,-30.5
     parent: 853
     type: Transform
 - uid: 1676
-  type: solid_wall
+  type: ReinforcedWindow
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 31.5,-8.5
+  - pos: -10.5,-30.5
     parent: 853
     type: Transform
 - uid: 1677
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 30.5,-8.5
+  - pos: -12.5,26.5
     parent: 853
     type: Transform
 - uid: 1678
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 29.5,-8.5
+  - pos: -11.5,26.5
     parent: 853
     type: Transform
 - uid: 1679
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.5,-8.5
+  - pos: -9.5,26.5
     parent: 853
     type: Transform
 - uid: 1680
@@ -19032,129 +18942,111 @@ entities:
     parent: 853
     type: Transform
 - uid: 1681
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.5,-9.5
+  - pos: -10.5,26.5
     parent: 853
     type: Transform
 - uid: 1682
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.5,-10.5
+  - pos: -6.5,25.5
     parent: 853
     type: Transform
 - uid: 1683
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.5,-11.5
+  - pos: -5.5,25.5
     parent: 853
     type: Transform
 - uid: 1684
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.5,-12.5
+  - pos: -4.5,25.5
     parent: 853
     type: Transform
 - uid: 1685
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.5,-13.5
+  - pos: -18.5,-17.5
     parent: 853
     type: Transform
 - uid: 1686
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.5,-14.5
+  - pos: -19.5,15.5
     parent: 853
     type: Transform
 - uid: 1687
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.5,-15.5
+  - pos: -20.5,15.5
     parent: 853
     type: Transform
 - uid: 1688
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.5,-16.5
+  - pos: -21.5,15.5
     parent: 853
     type: Transform
 - uid: 1689
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.5,-17.5
+  - pos: -22.5,15.5
     parent: 853
     type: Transform
 - uid: 1690
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.5,-18.5
+  - pos: -23.5,15.5
     parent: 853
     type: Transform
 - uid: 1691
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.5,-19.5
+  - pos: -24.5,15.5
     parent: 853
     type: Transform
 - uid: 1692
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 27.5,-19.5
+  - pos: -25.5,15.5
     parent: 853
     type: Transform
 - uid: 1693
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 26.5,-19.5
+  - pos: -26.5,15.5
     parent: 853
     type: Transform
 - uid: 1694
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 25.5,-19.5
+  - pos: -27.5,15.5
     parent: 853
     type: Transform
 - uid: 1695
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 24.5,-19.5
+  - pos: -28.5,15.5
     parent: 853
     type: Transform
 - uid: 1696
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 23.5,-19.5
+  - pos: -29.5,15.5
     parent: 853
     type: Transform
 - uid: 1697
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 23.5,-20.5
+  - pos: -19.5,26.5
     parent: 853
     type: Transform
 - uid: 1698
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 23.5,-21.5
+  - pos: -19.5,25.5
     parent: 853
     type: Transform
 - uid: 1699
@@ -19166,24 +19058,21 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1700
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,-28.5
+  - pos: -19.5,24.5
     parent: 853
     type: Transform
 - uid: 1701
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,-27.5
+  - pos: -19.5,23.5
     parent: 853
     type: Transform
 - uid: 1702
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,-26.5
+  - pos: -19.5,22.5
     parent: 853
     type: Transform
 - uid: 1703
@@ -19215,129 +19104,111 @@ entities:
     parent: 853
     type: Transform
 - uid: 1707
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 13.5,-21.5
+  - pos: -19.5,21.5
     parent: 853
     type: Transform
 - uid: 1708
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 12.5,-21.5
+  - pos: -19.5,20.5
     parent: 853
     type: Transform
 - uid: 1709
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 1.5,-24.5
+  - pos: -19.5,19.5
     parent: 853
     type: Transform
 - uid: 1710
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,-24.5
+  - pos: -19.5,18.5
     parent: 853
     type: Transform
 - uid: 1711
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,-25.5
+  - pos: -19.5,17.5
     parent: 853
     type: Transform
 - uid: 1712
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 8.5,-21.5
+  - pos: -19.5,16.5
     parent: 853
     type: Transform
 - uid: 1713
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 7.5,-21.5
+  - pos: -30.5,15.5
     parent: 853
     type: Transform
 - uid: 1714
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 6.5,-21.5
+  - pos: -31.5,15.5
     parent: 853
     type: Transform
 - uid: 1715
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 6.5,-22.5
+  - pos: -6.5,26.5
     parent: 853
     type: Transform
 - uid: 1716
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 5.5,-22.5
+  - pos: -8.5,26.5
     parent: 853
     type: Transform
 - uid: 1717
-  type: LowWall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 5.5,-23.5
+  - pos: -7.5,26.5
     parent: 853
     type: Transform
 - uid: 1718
-  type: LowWall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 5.5,-24.5
+  - pos: -18.5,-16.5
     parent: 853
     type: Transform
 - uid: 1719
-  type: LowWall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 4.5,-24.5
+  - pos: -19.5,-16.5
     parent: 853
     type: Transform
 - uid: 1720
-  type: LowWall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 3.5,-24.5
+  - pos: -20.5,-16.5
     parent: 853
     type: Transform
 - uid: 1721
-  type: LowWall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 2.5,-24.5
+  - pos: -21.5,-16.5
     parent: 853
     type: Transform
 - uid: 1722
-  type: LowWall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 9.5,-21.5
+  - pos: -22.5,-16.5
     parent: 853
     type: Transform
 - uid: 1723
-  type: LowWall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 10.5,-21.5
+  - pos: -23.5,-16.5
     parent: 853
     type: Transform
 - uid: 1724
-  type: LowWall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 11.5,-21.5
+  - pos: -24.5,-16.5
     parent: 853
     type: Transform
 - uid: 1725
@@ -19530,10 +19401,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1752
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 29.5,14.5
+  - pos: -25.5,-16.5
     parent: 853
     type: Transform
 - uid: 1753
@@ -19560,10 +19430,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1756
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 25.5,14.5
+  - pos: -25.5,-15.5
     parent: 853
     type: Transform
 - uid: 1757
@@ -19778,17 +19647,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 1786
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.5,-16.5
+  - pos: -25.5,-14.5
     parent: 853
     type: Transform
 - uid: 1787
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -21.5,-16.5
+  - pos: -25.5,-13.5
     parent: 853
     type: Transform
 - uid: 1788
@@ -19806,31 +19673,27 @@ entities:
     parent: 853
     type: Transform
 - uid: 1790
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 17.5,14.5
+  - pos: -25.5,-12.5
     parent: 853
     type: Transform
 - uid: 1791
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 17.5,15.5
+  - pos: -26.5,-12.5
     parent: 853
     type: Transform
 - uid: 1792
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 16.5,16.5
+  - pos: -34.5,11.5
     parent: 853
     type: Transform
 - uid: 1793
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 17.5,16.5
+  - pos: -40.5,11.5
     parent: 853
     type: Transform
 - uid: 1794
@@ -20030,17 +19893,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 1822
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 14.5,16.5
+  - pos: -39.5,11.5
     parent: 853
     type: Transform
 - uid: 1823
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 14.5,17.5
+  - pos: -38.5,11.5
     parent: 853
     type: Transform
 - uid: 1824
@@ -20069,10 +19930,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1827
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 14.5,21.5
+  - pos: -18.5,-18.5
     parent: 853
     type: Transform
 - uid: 1828
@@ -21506,325 +21366,287 @@ entities:
     parent: 853
     type: Transform
 - uid: 2030
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.5,15.5
+  - pos: 5.5,-24.5
     parent: 853
     type: Transform
 - uid: 2031
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.5,16.5
+  - pos: 5.5,-23.5
     parent: 853
     type: Transform
 - uid: 2032
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.5,17.5
+  - pos: 5.5,-22.5
     parent: 853
     type: Transform
 - uid: 2033
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.5,18.5
+  - pos: 1.5,-24.5
     parent: 853
     type: Transform
 - uid: 2034
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.5,19.5
+  - pos: 2.5,-24.5
     parent: 853
     type: Transform
 - uid: 2035
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.5,20.5
+  - pos: 0.5,-24.5
     parent: 853
     type: Transform
 - uid: 2036
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.5,21.5
+  - pos: 0.5,-25.5
     parent: 853
     type: Transform
 - uid: 2037
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.5,22.5
+  - pos: 0.5,-26.5
     parent: 853
     type: Transform
 - uid: 2038
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.5,23.5
+  - pos: 0.5,-27.5
     parent: 853
     type: Transform
 - uid: 2039
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.5,24.5
+  - pos: 0.5,-28.5
     parent: 853
     type: Transform
 - uid: 2040
-  type: solid_wall
+  type: ReinforcedWindow
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.5,25.5
+  - pos: 4.5,-24.5
     parent: 853
     type: Transform
 - uid: 2041
-  type: solid_wall
+  type: ReinforcedWindow
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -19.5,26.5
+  - pos: 3.5,-24.5
     parent: 853
     type: Transform
 - uid: 2042
-  type: solid_wall
+  type: ReinforcedWindow
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -18.5,26.5
+  - pos: 9.5,-21.5
     parent: 853
     type: Transform
 - uid: 2043
-  type: solid_wall
+  type: ReinforcedWindow
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -17.5,26.5
+  - pos: 8.5,-21.5
     parent: 853
     type: Transform
 - uid: 2044
-  type: solid_wall
+  type: LowWall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -16.5,26.5
+  - pos: 9.5,-21.5
     parent: 853
     type: Transform
 - uid: 2045
-  type: solid_wall
+  type: LowWall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -15.5,26.5
+  - pos: 8.5,-21.5
     parent: 853
     type: Transform
 - uid: 2046
-  type: solid_wall
+  type: LowWall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -14.5,26.5
+  - pos: 4.5,-24.5
     parent: 853
     type: Transform
 - uid: 2047
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -13.5,26.5
+  - pos: -18.5,-22.5
     parent: 853
     type: Transform
 - uid: 2048
-  type: solid_wall
+  type: ToyFireRipley
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -12.5,26.5
+  - pos: -23.412928,-6.0686545
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2049
-  type: solid_wall
+  type: ToyDeathRipley
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -11.5,26.5
+  - pos: -24.569178,-5.0530295
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2050
-  type: solid_wall
+  type: Pen
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -10.5,26.5
+  - pos: -24.647303,-6.4436545
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2051
-  type: solid_wall
+  type: Pen
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -9.5,26.5
+  - pos: -23.350428,-5.2092795
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2052
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -8.5,26.5
+  - pos: 12.5,-21.5
     parent: 853
     type: Transform
 - uid: 2053
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -7.5,26.5
+  - pos: 13.5,-21.5
     parent: 853
     type: Transform
 - uid: 2054
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -6.5,26.5
+  - pos: 13.5,-22.5
     parent: 853
     type: Transform
 - uid: 2055
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -6.5,25.5
+  - pos: 13.5,-23.5
     parent: 853
     type: Transform
 - uid: 2056
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -4.5,25.5
+  - pos: 13.5,-24.5
     parent: 853
     type: Transform
 - uid: 2057
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -5.5,25.5
+  - pos: 13.5,-25.5
     parent: 853
     type: Transform
 - uid: 2058
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -20.5,15.5
+  - pos: 13.5,-26.5
     parent: 853
     type: Transform
 - uid: 2059
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -21.5,15.5
+  - pos: 14.5,-26.5
     parent: 853
     type: Transform
 - uid: 2060
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -22.5,15.5
+  - pos: 15.5,-26.5
     parent: 853
     type: Transform
 - uid: 2061
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -23.5,15.5
+  - pos: -34.5,-12.5
     parent: 853
     type: Transform
 - uid: 2062
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -24.5,15.5
+  - pos: -33.5,-12.5
     parent: 853
     type: Transform
 - uid: 2063
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -25.5,15.5
+  - pos: -32.5,-12.5
     parent: 853
     type: Transform
 - uid: 2064
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -26.5,15.5
+  - pos: -31.5,-12.5
     parent: 853
     type: Transform
 - uid: 2065
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -27.5,15.5
+  - pos: -30.5,-12.5
     parent: 853
     type: Transform
 - uid: 2066
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -28.5,15.5
+  - pos: -29.5,-12.5
     parent: 853
     type: Transform
 - uid: 2067
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -29.5,15.5
+  - pos: -28.5,-12.5
     parent: 853
     type: Transform
 - uid: 2068
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -30.5,15.5
+  - pos: -27.5,-12.5
     parent: 853
     type: Transform
 - uid: 2069
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -31.5,15.5
+  - pos: -33.5,11.5
     parent: 853
     type: Transform
 - uid: 2070
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -32.5,15.5
+  - pos: -33.5,12.5
     parent: 853
     type: Transform
 - uid: 2071
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -33.5,15.5
+  - pos: -33.5,13.5
     parent: 853
     type: Transform
 - uid: 2072
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -33.5,14.5
+  - pos: -33.5,14.5
     parent: 853
     type: Transform
 - uid: 2073
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -33.5,13.5
+  - pos: -33.5,15.5
     parent: 853
     type: Transform
 - uid: 2074
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -33.5,12.5
+  - pos: -32.5,15.5
     parent: 853
     type: Transform
 - uid: 2075
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -33.5,11.5
+  - pos: -18.5,26.5
     parent: 853
     type: Transform
 - uid: 2076
@@ -22321,14 +22143,16 @@ entities:
     parent: 853
     type: Transform
 - uid: 2146
-  type: PottedPlantRandom
+  type: CrateMaterialPlastic
   components:
-  - rot: 3.141592653589793 rad
-    pos: 13.5,1.5
+  - pos: 40.5,13.5
     parent: 853
     type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
   - containers:
-      stash: !type:ContainerSlot {}
+      EntityStorageComponent: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 2147
   type: SpawnPointMedicalDoctor
@@ -23744,73 +23568,63 @@ entities:
     parent: 853
     type: Transform
 - uid: 2345
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -12.5,-28.5
+  - pos: -17.5,26.5
     parent: 853
     type: Transform
 - uid: 2346
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -11.5,-28.5
+  - pos: 29.5,14.5
     parent: 853
     type: Transform
 - uid: 2347
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -10.5,-28.5
+  - pos: 25.5,14.5
     parent: 853
     type: Transform
 - uid: 2348
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -6.5,-28.5
+  - pos: 24.5,14.5
     parent: 853
     type: Transform
 - uid: 2349
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -5.5,-28.5
+  - pos: 18.5,14.5
     parent: 853
     type: Transform
 - uid: 2350
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -4.5,-28.5
+  - pos: 17.5,14.5
     parent: 853
     type: Transform
 - uid: 2351
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -3.5,-28.5
+  - pos: 17.5,15.5
     parent: 853
     type: Transform
 - uid: 2352
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -2.5,-28.5
+  - pos: 17.5,16.5
     parent: 853
     type: Transform
 - uid: 2353
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -1.5,-28.5
+  - pos: 16.5,16.5
     parent: 853
     type: Transform
 - uid: 2354
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -0.5,-28.5
+  - pos: 14.5,17.5
     parent: 853
     type: Transform
 - uid: 2355
@@ -23947,54 +23761,49 @@ entities:
     parent: 853
     type: Transform
 - uid: 2374
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -18.5,-16.5
+  - pos: 14.5,16.5
     parent: 853
     type: Transform
 - uid: 2375
-  type: solid_wall
+  type: reinforced_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -18.5,-17.5
+  - pos: 14.5,21.5
     parent: 853
     type: Transform
 - uid: 2376
-  type: solid_wall
+  type: Pen
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -18.5,-18.5
+  - pos: -23.709803,-6.4905295
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2377
-  type: solid_wall
+  type: Paper
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -18.5,-19.5
+  - pos: -24.256678,-5.7405295
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2378
-  type: solid_wall
+  type: d20
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -18.5,-20.5
+  - pos: -23.834803,-5.3811545
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2379
-  type: solid_wall
+  type: d8
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -18.5,-21.5
+  - pos: -24.287928,-6.3967795
     parent: 853
     type: Transform
-- uid: 2380
-  type: solid_wall
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -18.5,-22.5
-    parent: 853
-    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2381
   type: ChairWood
   components:
@@ -24223,13 +24032,6 @@ entities:
         ents: []
       PumpBarrel-chamber-container: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 2412
-  type: MatterBinStockPart
-  components:
-  - parent: 4273
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 2413
   type: solid_wall
   components:
@@ -24333,12 +24135,6 @@ entities:
       DisposalEntry: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 2426
-  type: ComputerAlert
-  components:
-  - pos: 6.5,32.5
-    parent: 853
-    type: Transform
 - uid: 2427
   type: ChairOfficeDark
   components:
@@ -24582,13 +24378,6 @@ entities:
     pos: -4.5,-0.5
     parent: 853
     type: Transform
-- uid: 2461
-  type: solid_wall
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -34.5,-8.5
-    parent: 853
-    type: Transform
 - uid: 2462
   type: solid_wall
   components:
@@ -24758,10 +24547,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 2485
-  type: CrateInternals
+  type: CrateMaterialSteel
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 42.5,13.5
+  - pos: 21.5,13.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -24771,18 +24559,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2486
-  type: CrateRadiation
+  type: Emitter
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 43.5,13.5
+  - pos: 43.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2487
   type: solid_wall
   components:
@@ -25035,10 +24816,9 @@ entities:
   - drawRate: 2000
     type: PowerConsumer
 - uid: 2516
-  type: CrateEmergencyFire
+  type: CrateServiceReplacementLights
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 22.5,13.5
+  - pos: 20.5,13.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -32115,18 +31895,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 3178
-  type: ComputerComms
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 9.5,23.5
-    parent: 853
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents:
-        - 973
-    type: ContainerContainer
 - uid: 3179
   type: MagazinePistolSmgTopMounted
   components:
@@ -39824,20 +39592,6 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
-- uid: 3945
-  type: SheetGlass1
-  components:
-  - parent: 4273
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 3946
-  type: MicroManipulatorStockPart
-  components:
-  - parent: 4273
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3947
   type: ApcExtensionCable
   components:
@@ -40261,12 +40015,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3992
-  type: Emitter
+  type: CrateEngineeringAMEControl
   components:
-  - rot: 3.141592653589793 rad
-    pos: 43.5,11.5
+  - pos: 38.5,11.5
     parent: 853
     type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3993
   type: FirelockGlass
   components:
@@ -40407,26 +40166,6 @@ entities:
     type: Transform
   - airBlocked: False
     type: Airtight
-- uid: 4009
-  type: Protolathe
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -3.5,-12.5
-    parent: 853
-    type: Transform
-  - containers:
-      machine_board: !type:Container
-        ents:
-        - 4024
-      machine_parts: !type:Container
-        ents:
-        - 4032
-        - 4082
-        - 4173
-        - 4174
-        - 4181
-        - 4272
-    type: ContainerContainer
 - uid: 4010
   type: Firelock
   components:
@@ -40548,13 +40287,6 @@ entities:
     type: Transform
   - airBlocked: False
     type: Airtight
-- uid: 4024
-  type: ProtolatheMachineCircuitboard
-  components:
-  - parent: 4009
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4025
   type: FirelockGlass
   components:
@@ -40613,13 +40345,6 @@ entities:
     pos: -8.5,-29.5
     parent: 853
     type: Transform
-- uid: 4032
-  type: MatterBinStockPart
-  components:
-  - parent: 4009
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4033
   type: Fork
   components:
@@ -41022,13 +40747,6 @@ entities:
     type: Transform
   - startingCharge: 12224.357
     type: Battery
-- uid: 4082
-  type: MatterBinStockPart
-  components:
-  - parent: 4009
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4083
   type: Table
   components:
@@ -41784,20 +41502,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 4173
-  type: MicroManipulatorStockPart
-  components:
-  - parent: 4009
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4174
-  type: MicroManipulatorStockPart
-  components:
-  - parent: 4009
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4175
   type: Rack
   components:
@@ -41850,13 +41554,6 @@ entities:
     pos: -21.5,10.5
     parent: 853
     type: Transform
-- uid: 4181
-  type: Beaker
-  components:
-  - parent: 4009
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4182
   type: KitchenReagentGrinder
   components:
@@ -42545,74 +42242,6 @@ entities:
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,0.5
-    parent: 853
-    type: Transform
-- uid: 4272
-  type: Beaker
-  components:
-  - parent: 4009
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4273
-  type: Autolathe
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -5.5,-12.5
-    parent: 853
-    type: Transform
-  - containers:
-      machine_board: !type:Container
-        ents:
-        - 4274
-      machine_parts: !type:Container
-        ents:
-        - 4275
-        - 2412
-        - 972
-        - 3946
-        - 3945
-    type: ContainerContainer
-- uid: 4274
-  type: AutolatheMachineCircuitboard
-  components:
-  - parent: 4273
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4275
-  type: MatterBinStockPart
-  components:
-  - parent: 4273
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4276
-  type: ComputerId
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 8.5,23.5
-    parent: 853
-    type: Transform
-  - containers:
-      IdCardConsole-privilegedId: !type:ContainerSlot {}
-      IdCardConsole-targetId: !type:ContainerSlot {}
-      board: !type:Container
-        ents:
-        - 4277
-    type: ContainerContainer
-- uid: 4277
-  type: IDComputerCircuitboard
-  components:
-  - parent: 4276
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4278
-  type: ComputerMedicalRecords
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 24.5,-15.5
     parent: 853
     type: Transform
 - uid: 4279
@@ -46352,30 +45981,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 4714
-  type: CrateMaterialSteel
+  type: PottedPlantRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 21.5,13.5
+  - pos: 5.5,21.485424
     parent: 853
     type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 4715
-  type: CrateServiceReplacementLights
-  components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 20.5,13.5
-    parent: 853
-    type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4716
   type: SalternSubstation
@@ -46613,96 +46225,6 @@ entities:
     pos: -29.5,-8.5
     parent: 853
     type: Transform
-- uid: 4745
-  type: Paper
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.629866,-5.34983
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4746
-  type: Paper
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -24.67674,-6.28733
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4747
-  type: Paper
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.973616,-6.25608
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4748
-  type: Pen
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -24.39549,-5.146705
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4749
-  type: Pen
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.348616,-6.28733
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4750
-  type: Pen
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.973616,-5.709205
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4751
-  type: ToyFireRipley
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -24.567366,-5.66233
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4752
-  type: ToyMarauder
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.39549,-5.740455
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4753
-  type: d10
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -24.33299,-6.459205
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4754
-  type: d20
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.92674,-5.302955
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4755
   type: AirCanister
   components:
@@ -46751,10 +46273,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 4762
-  type: CrateMaterialGlass
+  type: CrateEngineeringAMEShielding
   components:
-  - rot: 3.141592653589793 rad
-    pos: 39.5,13.5
+  - pos: 39.5,11.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -46769,11 +46290,10 @@ entities:
   - pos: 15.48162,-18.57235
     parent: 853
     type: Transform
-- uid: 4765
-  type: CrateMaterialSteel
+- uid: 4764
+  type: CrateEmergencyFire
   components:
-  - rot: 3.141592653589793 rad
-    pos: 38.5,13.5
+  - pos: 22.5,13.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -46800,32 +46320,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 4768
-  type: CrateEngineeringAMEControl
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 38.5,11.5
-    parent: 853
-    type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 4769
-  type: CrateEngineeringAMEShielding
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 39.5,11.5
-    parent: 853
-    type: Transform
-  - IsPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4770
   type: SpaceVillainArcadeComputerCircuitboard
   components:

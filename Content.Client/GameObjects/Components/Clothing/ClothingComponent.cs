@@ -1,19 +1,23 @@
-﻿using Content.Client.GameObjects.Components.HUD.Inventory;
+#nullable enable
+using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.GameObjects.Components.Items;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Storage;
 using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Clothing
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedItemComponent))]
     [ComponentReference(typeof(ItemComponent))]
-    [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent
     {
         [DataField("femaleMask")]
@@ -64,17 +68,9 @@ namespace Content.Client.GameObjects.Components.Clothing
         public (RSI rsi, RSI.StateId stateId)? GetEquippedStateInfo(EquipmentSlotDefines.SlotFlags slot, string? speciesId=null)
         {
             if (RsiPath == null)
-            {
                 return null;
-            }
 
-            var rsi = GetRSI();
-
-            if (rsi == null)
-            {
-                return null;
-            }
-
+            var rsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / RsiPath).RSI;
             var prefix = ClothingEquippedPrefix ?? EquippedPrefix;
             var stateId = prefix != null ? $"{prefix}-equipped-{slot}" : $"equipped-{slot}";
             if (speciesId != null)

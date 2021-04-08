@@ -7,12 +7,12 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 25
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.3,-0.4,0.3,0.4"
+      mass: 25
       mask:
       - Impassable
       - MobImpassable

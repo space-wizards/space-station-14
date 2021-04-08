@@ -24,7 +24,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     [RegisterComponent]
     public class MeleeWeaponComponent : Component, IAttack, IHandSelected
     {
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "MeleeWeapon";

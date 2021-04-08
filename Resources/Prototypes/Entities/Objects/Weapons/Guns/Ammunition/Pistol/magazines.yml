@@ -9,7 +9,6 @@
     caliber: Pistol
     magazineType: Pistol
     capacity: 10
-
   - type: Sprite
     netsync: false
     layers:

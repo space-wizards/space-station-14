@@ -1,7 +1,7 @@
 - type: entity
-  name: skub
   parent: BaseItem
   id: Skub
+  name: skub
   description: Skub is the fifth Chaos God.
   components:
   - type: Sprite
@@ -13,6 +13,5 @@
   - type: LoopingSound
   - type: EmitSoundOnUse
     sound: /Audio/Items/skub.ogg
-
   - type: UseDelay
     delay: 2.0

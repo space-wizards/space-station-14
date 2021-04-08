@@ -14,13 +14,12 @@
     modifier: 0.5
   - type: Physics
     bodyType: Dynamic
-    mass: 5
+    fixedRotation: false
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
-      layer:
-      - Clickable
+      mass: 5
       mask:
       - Impassable
       - VaultImpassable
@@ -28,4 +27,6 @@
       friction: 0.2
   - type: Sprite
     drawdepth: Items
+    noRot: false
   - type: Pullable
+  - type: ExplosionLaunched
