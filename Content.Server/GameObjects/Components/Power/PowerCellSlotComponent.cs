@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -7,9 +7,11 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -146,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             if (playSound && CellRemoveSound != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(CellRemoveSound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), CellRemoveSound, Owner, AudioHelpers.WithVariation(0.125f));
             }
             SendMessage(new PowerCellChangedMessage(true));
             return cell;
@@ -168,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Power
             //Dirty();
             if (playSound && CellInsertSound != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(CellInsertSound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), CellInsertSound, Owner, AudioHelpers.WithVariation(0.125f));
             }
             SendMessage(new PowerCellChangedMessage(false));
             return true;
@@ -187,11 +189,13 @@ namespace Content.Server.GameObjects.Components.Power
 
                 if (component.Cell == null)
                 {
-                    data.Text = Loc.GetString("Eject cell (cell missing)");
+                    data.Text = Loc.GetString("No cell");
+                    data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
                     data.Text = Loc.GetString("Eject cell");
+                    data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                 }
 
                 if (component.Cell == null || !component.CanRemoveCell)

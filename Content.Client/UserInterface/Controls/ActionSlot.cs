@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Actions;
@@ -154,7 +153,8 @@ namespace Content.Client.UserInterface.Controls
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 Scale = (2,2),
-                Visible = false
+                Visible = false,
+                OverrideDirection = Direction.South,
             };
             _smallActionIcon = new TextureRect
             {

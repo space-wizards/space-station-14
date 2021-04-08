@@ -7,7 +7,9 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -68,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return false;
             }
 
-            foreach (var entity in Owner.EntityManager.GetEntitiesInRange(Owner.Transform.Coordinates, _range))
+            foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(Owner.Transform.Coordinates, _range))
             {
                 Flash(entity, eventArgs.User, _aoeFlashDuration);
             }
@@ -98,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     });
                 }
 
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/flash.ogg", Owner.Transform.Coordinates,
+                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/flash.ogg", Owner.Transform.Coordinates,
                     AudioParams.Default);
 
                 return true;

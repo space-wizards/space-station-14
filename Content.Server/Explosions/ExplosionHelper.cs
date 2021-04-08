@@ -11,11 +11,13 @@ using Content.Shared.Physics;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -68,12 +70,10 @@ namespace Content.Server.Explosions
                                                                     MapId mapId)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
-            var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
 
-            var exAct = entitySystemManager.GetEntitySystem<ActSystem>();
+            var exAct = EntitySystem.Get<ActSystem>();
 
-            var entitiesInRange = serverEntityManager.GetEntitiesInRange(mapId, boundingBox, 0).ToList();
+            var entitiesInRange = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(mapId, boundingBox, 0).ToList();
 
             var impassableEntities = new List<Tuple<IEntity, float>>();
             var nonImpassableEntities = new List<Tuple<IEntity, float>>();
@@ -311,7 +311,7 @@ namespace Content.Server.Explosions
             var boundingBox = new Box2(epicenterMapPos - new Vector2(maxRange, maxRange),
                 epicenterMapPos + new Vector2(maxRange, maxRange));
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/explosion.ogg", epicenter);
+            SoundSystem.Play(Filter.Broadcast(), "/Audio/Effects/explosion.ogg", epicenter);
             DamageEntitiesInRange(epicenter, boundingBox, devastationRange, heavyImpactRange, maxRange, mapId);
 
             var mapGridsNear = mapManager.FindGridsIntersecting(mapId, boundingBox);

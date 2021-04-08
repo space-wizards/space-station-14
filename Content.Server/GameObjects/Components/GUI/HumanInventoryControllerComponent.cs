@@ -1,5 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Robust.Server.GameObjects;
+using Content.Shared.GameObjects.Components.Storage;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -14,7 +15,7 @@ namespace Content.Server.GameObjects.Components.GUI
     {
         public override string Name => "HumanInventoryController";
 
-        private InventoryComponent _inventory;
+        private InventoryComponent _inventory = default!;
 
         public override void Initialize()
         {
@@ -23,7 +24,7 @@ namespace Content.Server.GameObjects.Components.GUI
             _inventory = Owner.EnsureComponent<InventoryComponent>();
         }
 
-        bool IInventoryController.CanEquip(Slots slot, IEntity entity, bool flagsCheck, out string reason)
+        bool IInventoryController.CanEquip(Slots slot, IEntity entity, bool flagsCheck, [NotNullWhen(false)] out string? reason)
         {
             var slotMask = SlotMasks[slot];
             reason = null;
@@ -59,7 +60,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return flagsCheck;
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 

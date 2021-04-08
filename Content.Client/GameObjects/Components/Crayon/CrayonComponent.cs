@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.UserInterface;
@@ -24,7 +24,7 @@ namespace Content.Client.GameObjects.Components.Crayon
             return new StatusControl(this);
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState is not CrayonComponentState state)
                 return;
@@ -51,9 +51,9 @@ namespace Content.Client.GameObjects.Components.Crayon
                 parent._uiUpdateNeeded = true;
             }
 
-            protected override void Update(FrameEventArgs args)
+            protected override void FrameUpdate(FrameEventArgs args)
             {
-                base.Update(args);
+                base.FrameUpdate(args);
 
                 if (!_parent._uiUpdateNeeded)
                 {

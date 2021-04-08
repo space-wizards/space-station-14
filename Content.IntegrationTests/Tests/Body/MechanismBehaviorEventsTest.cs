@@ -131,7 +131,7 @@ namespace Content.IntegrationTests.Tests.Body
                 Assert.That(human.TryGetComponent(out IBody? body));
                 Assert.NotNull(body);
 
-                var centerPart = body!.CenterPart();
+                var centerPart = body!.CenterPart;
                 Assert.NotNull(centerPart);
 
                 Assert.That(body.TryGetSlot(centerPart!, out var centerSlot));
@@ -196,7 +196,7 @@ namespace Content.IntegrationTests.Tests.Body
 
                 behavior.ResetAll();
 
-                body.TryAddPart(centerSlot!, centerPart, true);
+                body.SetPart(centerSlot!.Id, centerPart);
 
                 Assert.That(behavior.WasAddedToBody);
                 Assert.False(behavior.WasAddedToPart);

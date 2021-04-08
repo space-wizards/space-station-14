@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
@@ -29,9 +29,9 @@ namespace Content.Client.GameObjects.Components.Actor
         /// <remarks>
         ///     Null if it would otherwise be empty.
         /// </remarks>
-        public SS14Window Window { get; private set; }
+        public CharacterWindow? Window { get; private set; }
 
-        private List<ICharacterUI> _uiComponents;
+        private List<ICharacterUI>? _uiComponents;
 
         /// <summary>
         /// Create the window with all character UIs and bind it to a keypress
@@ -58,10 +58,13 @@ namespace Content.Client.GameObjects.Components.Actor
         {
             base.OnRemove();
 
-            foreach (var component in _uiComponents)
+            if (_uiComponents != null)
             {
-                // Make sure these don't get deleted when the window is disposed.
-                component.Scene.Orphan();
+                foreach (var component in _uiComponents)
+                {
+                    // Make sure these don't get deleted when the window is disposed.
+                    component.Scene.Orphan();
+                }
             }
 
             _uiComponents = null;
@@ -73,7 +76,7 @@ namespace Content.Client.GameObjects.Components.Actor
             inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, null);
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
@@ -87,7 +90,7 @@ namespace Content.Client.GameObjects.Components.Actor
                         {
                             if (b)
                             {
-                                Window.Open();
+                                Window.OpenCentered();
                             }
                             else
                             {

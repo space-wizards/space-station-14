@@ -20,7 +20,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged
     {
         public FireRateSelector FireRateSelector { get; private set; } = FireRateSelector.Safety;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
             if (curState is not RangedWeaponComponentState rangedState)

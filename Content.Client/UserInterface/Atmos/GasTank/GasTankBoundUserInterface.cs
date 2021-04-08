@@ -14,7 +14,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
         {
         }
 
-        private GasTankWindow _window;
+        private GasTankWindow? _window;
 
         public void SetOutputPressure(in float value)
         {
@@ -37,14 +37,15 @@ namespace Content.Client.UserInterface.Atmos.GasTank
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            _window.UpdateState((GasTankBoundUserInterfaceState) state);
+
+            _window?.UpdateState((GasTankBoundUserInterfaceState) state);
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
 
-            _window.Close();
+            _window?.Close();
         }
     }
 }

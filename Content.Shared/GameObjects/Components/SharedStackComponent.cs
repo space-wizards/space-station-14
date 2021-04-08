@@ -65,7 +65,7 @@ namespace Content.Shared.GameObjects.Components
         {
             base.Startup();
 
-            if (!_prototypeManager.HasIndex<StackPrototype>(StackTypeId))
+            if (StackTypeId != string.Empty && !_prototypeManager.HasIndex<StackPrototype>(StackTypeId))
             {
                 Logger.Error($"No {nameof(StackPrototype)} found with id {StackTypeId} for {Owner.Prototype?.ID ?? Owner.Name}");
             }
@@ -76,7 +76,7 @@ namespace Content.Shared.GameObjects.Components
             return new StackComponentState(Count, MaxCount);
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState is not StackComponentState cast)
             {

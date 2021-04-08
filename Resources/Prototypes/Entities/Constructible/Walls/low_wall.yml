@@ -1,13 +1,9 @@
 - type: entity
   id: LowWall
+  parent: BaseConstructible
   name: low wall
   description: Goes up to about your waist.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wall
   components:
-  - type: Clickable
   - type: RCDDeconstructWhitelist
   - type: CanBuildWindowOnTop
   - type: InteractionOutline
@@ -19,13 +15,6 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/low_wall.rsi
     state: metal
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      layer:
-      - VaultImpassable
-      - SmallImpassable
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -38,8 +27,6 @@
         node: start
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: SnapGrid
-    offset: Center
   - type: Climbable
   - type: LowWall
     key: walls

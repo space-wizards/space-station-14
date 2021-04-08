@@ -12,9 +12,9 @@ namespace Content.Server.AI.WorldState.States.Inventory
     {
         public override string Name => "EquippedEntity";
 
-        public override IEntity GetValue()
+        public override IEntity? GetValue()
         {
-            if (!Owner.TryGetComponent(out HandsComponent handsComponent))
+            if (!Owner.TryGetComponent(out HandsComponent? handsComponent))
             {
                 return null;
             }

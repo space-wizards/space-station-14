@@ -18,7 +18,7 @@ namespace Content.Server.GlobalVerbs
         {
             data.Visibility = VerbVisibility.Invisible;
 
-            if (!user.TryGetComponent(out IActorComponent actor))
+            if (!user.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
@@ -36,7 +36,7 @@ namespace Content.Server.GlobalVerbs
 
         public override void Activate(IEntity user, IEntity target)
         {
-            if (!user.TryGetComponent(out IActorComponent actor))
+            if (!user.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }

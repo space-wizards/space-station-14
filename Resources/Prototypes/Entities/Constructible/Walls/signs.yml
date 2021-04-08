@@ -6,6 +6,8 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    bodyType: Static
+    canCollide: false
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
@@ -40,12 +42,9 @@
         !type:PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: monkey_painting
 
@@ -64,12 +63,9 @@
         !type:PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: direction_sec
 
@@ -86,12 +82,9 @@
         !type:PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: direction_evac
 
@@ -109,12 +102,9 @@
         !type:PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: direction_bridge
 
@@ -132,12 +122,9 @@
         !type:PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: direction_med
 
@@ -155,12 +142,9 @@
         !type:PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: direction_eng
 
@@ -177,12 +161,9 @@
         !type:PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: direction_sci
 
@@ -199,12 +180,9 @@
         !type:PhysShapeAabb
           bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: direction_supply
 
@@ -222,12 +200,9 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: armory
 
@@ -243,12 +218,9 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: ass
 
@@ -264,12 +236,9 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: anomaly
 
@@ -285,12 +254,9 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos
 
@@ -306,12 +272,9 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: bar
 
@@ -327,12 +290,9 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: biblio
 
@@ -348,12 +308,9 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: chapel
 
@@ -369,12 +326,9 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: commander
 
@@ -390,12 +344,9 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: conference_room
 
@@ -411,15 +362,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: drones
-
 
 - type: entity
   parent: BaseSign
@@ -432,15 +379,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: engine
-
 
 - type: entity
   parent: BaseSign
@@ -453,15 +396,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: cloning
-
 
 - type: entity
   parent: BaseSign
@@ -474,15 +413,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: interrogation
-
 
 - type: entity
   parent: BaseSign
@@ -495,15 +430,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: surgery
-
 
 - type: entity
   parent: BaseSign
@@ -516,15 +447,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: telecoms
-
 
 - type: entity
   parent: BaseSign
@@ -537,15 +464,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: cargo
-
 
 - type: entity
   parent: BaseSign
@@ -558,15 +481,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: cargo_dock
-
 
 - type: entity
   parent: BaseSign
@@ -579,15 +498,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: chem
-
 
 - type: entity
   parent: BaseSign
@@ -600,15 +515,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: dock
-
 
 - type: entity
   parent: BaseSign
@@ -621,15 +532,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: eng
-
 
 - type: entity
   parent: BaseSign
@@ -642,15 +549,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: eva
-
 
 - type: entity
   parent: BaseSign
@@ -663,15 +566,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: gravi
-
 
 - type: entity
   parent: BaseSign
@@ -684,15 +583,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: medbay
-
 
 - type: entity
   parent: BaseSign
@@ -705,15 +600,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: morgue
-
 
 - type: entity
   parent: BaseSign
@@ -726,15 +617,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: prison
-
 
 - type: entity
   parent: BaseSign
@@ -747,15 +634,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: rnd
-
 
 - type: entity
   parent: BaseSign
@@ -768,15 +651,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: sci
-
 
 - type: entity
   parent: BaseSign
@@ -789,15 +668,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: toxins
-
 
 - type: entity
   parent: BaseSign
@@ -810,15 +685,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: bridge
-
 
 # Atmos Warnings
 
@@ -834,15 +705,11 @@
         !type:PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos_air
-
 
 - type: entity
   parent: BaseSign
@@ -856,15 +723,11 @@
         !type:PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos_co2
-
 
 - type: entity
   parent: BaseSign
@@ -878,15 +741,11 @@
         !type:PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos_n2
-
 
 - type: entity
   parent: BaseSign
@@ -900,15 +759,11 @@
         !type:PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos_n2o
-
 
 - type: entity
   parent: BaseSign
@@ -922,15 +777,11 @@
         !type:PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos_o2
-
 
 - type: entity
   parent: BaseSign
@@ -944,15 +795,11 @@
         !type:PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos_plasma
-
 
 - type: entity
   parent: BaseSign
@@ -966,15 +813,11 @@
         !type:PhysShapeAabb
           bounds: "-0.2,-0.3,0.2,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos_waste
-
 
 - type: entity
   parent: BaseSign
@@ -988,15 +831,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: nosmoking2
-
 
 - type: entity
   parent: BaseSign
@@ -1010,15 +849,11 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: something-old1
-
 
 - type: entity
   parent: BaseSign
@@ -1032,12 +867,8 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: something-old2
-

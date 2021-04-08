@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
@@ -420,6 +420,20 @@ namespace Content.Shared.Utility
 
         public static bool InRangeUnobstructed(
             this AfterInteractEventArgs args,
+            float range = InteractionRange,
+            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            Ignored? predicate = null,
+            bool ignoreInsideBlocker = false,
+            bool popup = false)
+        {
+            return SharedInteractionSystem.InRangeUnobstructed(args, range, collisionMask, predicate,
+                ignoreInsideBlocker, popup);
+        }
+        #endregion
+
+        #region EntityEventArgs
+        public static bool InRangeUnobstructed(
+            this AfterInteractMessage args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,

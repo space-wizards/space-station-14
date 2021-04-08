@@ -2,8 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.GameObjects.Components.Projectiles;
-using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -20,8 +19,6 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class ContainmentFieldGeneratorComponent : Component, IStartCollide
     {
-        [Dependency] private readonly IPhysicsManager _physicsManager = null!;
-
         public override string Name => "ContainmentFieldGenerator";
 
         private int _powerBuffer;
@@ -85,11 +82,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         private void OnAnchoredChanged()
         {
-            if(_collidableComponent?.Anchored == true)
-            {
-                Owner.SnapToGrid();
-            }
-            else
+            if(_collidableComponent?.BodyType != BodyType.Static)
             {
                 _connection1?.Item2.Dispose();
                 _connection2?.Item2.Dispose();
@@ -111,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, ContainmentFieldConnection>? propertyFieldTuple)
         {
             if (propertyFieldTuple != null) return false;
-            if(_collidableComponent?.Anchored == false) return false;
+            if(_collidableComponent?.BodyType != BodyType.Static) return false;
 
             foreach (var direction in new[] {Direction.North, Direction.East, Direction.South, Direction.West})
             {
@@ -140,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                     !fieldGeneratorComponent.HasFreeConnections() ||
                     IsConnectedWith(fieldGeneratorComponent) ||
                     !ent.TryGetComponent<PhysicsComponent>(out var collidableComponent) ||
-                    !collidableComponent.Anchored)
+                    collidableComponent.BodyType != BodyType.Static)
                 {
                     continue;
                 }
@@ -186,8 +179,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
         {
-            if (otherBody.Entity.HasComponent<EmitterBoltComponent>())
-            {
+			if(otherBody.Entity.HasTag("EmitterBolt"))            {
                 ReceivePower(4);
             }
         }

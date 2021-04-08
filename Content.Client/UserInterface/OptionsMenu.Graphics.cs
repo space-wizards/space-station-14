@@ -97,7 +97,7 @@ namespace Content.Client.UserInterface
                     }
                 });
 
-                contents.AddChild(new Placeholder(resourceCache)
+                contents.AddChild(new Placeholder()
                 {
                     VerticalExpand = true,
                     PlaceholderText = Loc.GetString("ui-options-placeholder-viewport")

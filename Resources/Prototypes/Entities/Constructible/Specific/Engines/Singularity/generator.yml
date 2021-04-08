@@ -12,12 +12,12 @@
   - type: InteractionOutline
   - type: Clickable
   - type: Physics
-    bodyType: Dynamic
-    mass: 25
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.5, -0.5, 0.5, 0.5"
+      mass: 25
       layer:
       - Opaque
       mask:
@@ -25,5 +25,4 @@
   - type: SnapGrid
     offset: Center
   - type: Anchorable
-    snap: true
   - type: Pullable

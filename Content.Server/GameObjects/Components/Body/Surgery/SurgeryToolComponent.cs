@@ -16,8 +16,6 @@ using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -71,13 +69,13 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 // Create dictionary to send to client (text to be shown : data sent back if selected)
                 var toSend = new Dictionary<string, int>();
 
-                foreach (var (key, value) in body.Parts)
+                foreach (var (part, slot) in body.Parts)
                 {
                     // For each limb in the target, add it to our cache if it is a valid option.
-                    if (value.SurgeryCheck(_surgeryType))
+                    if (part.SurgeryCheck(_surgeryType))
                     {
-                        _optionsCache.Add(_idHash, value);
-                        toSend.Add(key + ": " + value.Name, _idHash++);
+                        _optionsCache.Add(_idHash, part);
+                        toSend.Add(slot.Id + ": " + part.Name, _idHash++);
                     }
                 }
 
@@ -246,7 +244,9 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
         private void HandleReceiveMechanism(int key)
         {
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
-            if (!_optionsCache.TryGetValue(key, out var targetObject) ||
+            if (BodyCache == null ||
+                !_optionsCache.TryGetValue(key, out var targetObject) ||
+                targetObject is not MechanismComponent target ||
                 PerformerCache == null ||
                 !PerformerCache.TryGetComponent(out IActorComponent? actor))
             {
@@ -254,20 +254,22 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 return;
             }
 
-            var target = targetObject as MechanismComponent;
-
             CloseSurgeryUI(actor.playerSession);
             _callbackCache?.Invoke(target, BodyCache, this, PerformerCache);
         }
 
         private void NotUsefulPopup()
         {
+            if (PerformerCache == null) return;
+
             BodyCache?.Owner.PopupMessage(PerformerCache,
                 Loc.GetString("You see no useful way to use {0:theName}.", Owner));
         }
 
         private void NotUsefulAnymorePopup()
         {
+            if (PerformerCache == null) return;
+
             BodyCache?.Owner.PopupMessage(PerformerCache,
                 Loc.GetString("You see no useful way to use {0:theName} anymore.", Owner));
         }

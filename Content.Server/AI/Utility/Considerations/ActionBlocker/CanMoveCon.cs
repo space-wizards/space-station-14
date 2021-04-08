@@ -9,7 +9,8 @@ namespace Content.Server.AI.Utility.Considerations.ActionBlocker
         protected override float GetScore(Blackboard context)
         {
             var self = context.GetState<SelfState>().GetValue();
-            if (!ActionBlockerSystem.CanMove(self))
+
+            if (self == null || !ActionBlockerSystem.CanMove(self))
             {
                 return 0.0f;
             }

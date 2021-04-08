@@ -14,8 +14,9 @@
   - type: Alerts
   - type: Actions
     innateActions:
-      - HumanScream
+      - CombatMode
       - Disarm
+      - HumanScream
   - type: Eye
     zoom: 0.5, 0.5
   - type: CameraRecoil
@@ -24,3 +25,20 @@
   - type: AiFactionTag
     factions:
     - NanoTrasen
+
+- type: entity
+  name: centcom official
+  parent: HumanMob_Content
+  id: HumanMob_CentcomOfficial
+  components:
+  - type: Icon
+    sprite: Markers/jobs.rsi
+    state: centcom
+  - type: GhostRoleMobSpawner
+    prototype: HumanMob_CentcomOfficial
+    deleteOnSpawn: true
+    makeSentient: false
+    name: centcom official
+    description: Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
+  - type: UtilityAI
+    startingGear: CentcomGear

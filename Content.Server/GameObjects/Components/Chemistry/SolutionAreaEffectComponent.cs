@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -130,6 +131,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (SolutionContainerComponent == null)
                 return;
 
+            var chemistry = EntitySystem.Get<ChemistrySystem>();
             var mapGrid = MapManager.GetGrid(Owner.Transform.GridID);
             var tile = mapGrid.GetTileRef(Owner.Transform.Coordinates.ToVector2i(Owner.EntityManager, MapManager));
 
@@ -146,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 // Touch every entity on the tile
                 foreach (var entity in tile.GetEntitiesInTileFast().ToArray())
                 {
-                    reagent.ReactionEntity(entity, ReactionMethod.Touch, reagentQuantity.Quantity * solutionFraction);
+                    chemistry.ReactionEntity(entity, ReactionMethod.Touch, reagent, reagentQuantity.Quantity * solutionFraction, SolutionContainerComponent.Solution);
                 }
             }
 

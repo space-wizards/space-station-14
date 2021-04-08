@@ -18,6 +18,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.AME
@@ -319,14 +320,12 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
         private void ClickSound()
         {
-
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
-
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private void InjectSound(bool overloading)
         {
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/bang.ogg", Owner, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/bang.ogg", Owner, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)

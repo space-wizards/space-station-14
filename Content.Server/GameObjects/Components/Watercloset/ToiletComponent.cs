@@ -1,4 +1,5 @@
 #nullable enable
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Strap;
@@ -14,13 +15,14 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.Watercloset
 {
@@ -124,8 +126,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
         public void ToggleToiletSeat()
         {
             IsSeatUp = !IsSeatUp;
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity("/Audio/Effects/toilet_seat_down.ogg", Owner, AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/toilet_seat_down.ogg", Owner, AudioHelpers.WithVariation(0.05f));
 
             UpdateSprite();
         }
@@ -143,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
         {
             // check that victim even have head
             if (victim.TryGetComponent<IBody>(out var body) &&
-                body.GetPartsOfType(BodyPartType.Head).Count != 0)
+                body.HasPartOfType(BodyPartType.Head))
             {
                 var othersMessage = Loc.GetString("{0:theName} sticks their head into {1:theName} and flushes it!", victim, Owner);
                 victim.PopupMessageOtherClients(othersMessage);

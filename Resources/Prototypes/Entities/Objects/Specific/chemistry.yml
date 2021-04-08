@@ -1,4 +1,3 @@
-# TODO: Add description (1)
 - type: entity
   name: beaker
   parent: BaseItem
@@ -9,11 +8,15 @@
     tags:
     - GlassBeaker
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/beakers.rsi
-    state: beaker
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+    netsync: false
+    layers:
+      - state: beaker
+      - state: beaker1  
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
   - type: Item
-    sprite: Objects/Specific/Chemistry/beakers.rsi
-    HeldPrefix: beaker
+    sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: SolutionContainer
     maxVol: 50
     caps: OpenContainer, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
@@ -22,6 +25,11 @@
   - type: Spillable
   - type: Drink
     isOpen: true
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 6
+      fillBaseName: beaker
 
 - type: entity
   name: large beaker
@@ -30,17 +38,46 @@
   id: LargeBeaker
   components:
   - type: Sprite
-    state: beakerlarge
-  - type: Item
-    HeldPrefix: beaker
+    sprite: Objects/Specific/Chemistry/beaker_large.rsi
+    layers:
+      - state: beakerlarge
+      - state: beakerlarge1  
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
   - type: SolutionContainer
     maxVol: 100
-    caps: OpenContainer, FitsInDispenser
-  - type: SolutionTransfer
-    transferAmount: 5.0
-  - type: Spillable
-  - type: Drink
-    isOpen: true
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 6
+      fillBaseName: beakerlarge
+
+- type: entity
+  name: cryostasis beaker
+  parent: Beaker
+  description: Used to contain chemicals or solutions without reactions.
+  id: CryostasisBeaker
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
+    layers:
+      - state: beakernoreact
+  - type: SolutionContainer
+    maxVol: 60
+    canReact: false
+
+- type: entity
+  name: bluespace beaker
+  parent: Beaker
+  description: Powered by experimental bluespace technology.
+  id: BluespaceBeaker
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
+    layers:
+      - state: beakerbluespace
+  - type: SolutionContainer
+    maxVol: 300
 
 - type: entity
   name: dropper
@@ -50,12 +87,25 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/dropper.rsi
-    state: dropper
+    netsync: false
+    layers:
+      - state: dropper
+      - state: dropper1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
   - type: SolutionContainer
+    caps: OpenContainer
     maxVol: 5
   - type: SolutionTransfer
     transferAmount: 5.0
   - type: Spillable
+  - type: Item
+    sprite: Objects/Specific/Chemistry/dropper.rsi
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 1
+      fillBaseName: dropper
 
 - type: entity
   name: syringe
@@ -65,27 +115,33 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/syringe.rsi
-    state: 0
+    netsync: false
+    layers:
+      - state: syringe1  
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+      - state: syringe_base0
+        map: ["enum.SolutionContainerLayers.Base"]
   - type: SolutionContainer
     maxVol: 15
   - type: Injector
     injectOnly: false
   - type: Spillable
-
-- type: entity
-  name: bottle
-  parent: BaseItem
-  id: bottle
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Chemistry/bottle.rsi
-    state: bottle
-  - type: Drink
-  - type: SolutionContainer
-    maxVol: 30
-  - type: SolutionTransfer
-    transferAmount: 5
-  - type: Spillable
+  - type: Item
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+  - type: Appearance
+    visuals:
+      # this visualizer used for reagent inside
+    - type: SolutionContainerVisualizer 
+      maxFillLevels: 4
+      fillBaseName: syringe
+      # this one for syrigine itself (plunger)
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 4
+      fillBaseName: syringe_base
+      emptySpriteName: syringe_base0
+      layer: Base
+      changeColor: false
 
 - type: entity
   name: pill

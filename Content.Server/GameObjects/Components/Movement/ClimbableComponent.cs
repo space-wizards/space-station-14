@@ -14,8 +14,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Physics;
-using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Movement
@@ -71,27 +69,27 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             if (!ActionBlockerSystem.CanInteract(user))
             {
-                reason = Loc.GetString("You can't do that!");
+                reason = Loc.GetString("comp-climbable-cant-interact");
                 return false;
             }
 
             if (!user.HasComponent<ClimbingComponent>() ||
-                !user.TryGetComponent(out IBody body))
+                !user.TryGetComponent(out IBody? body))
             {
-                reason = Loc.GetString("You are incapable of climbing!");
+                reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;
             }
 
-            if (body.GetPartsOfType(BodyPartType.Leg).Count == 0 ||
-                body.GetPartsOfType(BodyPartType.Foot).Count == 0)
+            if (!body.HasPartOfType(BodyPartType.Leg) ||
+                !body.HasPartOfType(BodyPartType.Foot))
             {
-                reason = Loc.GetString("You are unable to climb!");
+                reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;
             }
 
             if (!user.InRangeUnobstructed(target, Range))
             {
-                reason = Loc.GetString("You can't reach there!");
+                reason = Loc.GetString("comp-climbable-cant-reach");
                 return false;
             }
 
@@ -111,13 +109,13 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             if (!ActionBlockerSystem.CanInteract(user))
             {
-                reason = Loc.GetString("You can't do that!");
+                reason = Loc.GetString("comp-climbable-cant-interact");
                 return false;
             }
 
             if (target == null || !dragged.HasComponent<ClimbingComponent>())
             {
-                reason = Loc.GetString("You can't do that!");
+                reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;
             }
 
@@ -126,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Movement
             if (!user.InRangeUnobstructed(target, Range, predicate: Ignored) ||
                 !user.InRangeUnobstructed(dragged, Range, predicate: Ignored))
             {
-                reason = Loc.GetString("You can't reach there!");
+                reason = Loc.GetString("comp-climbable-cant-reach");
                 return false;
             }
 
@@ -160,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
             var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out PhysicsComponent body) && body.Fixtures.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out PhysicsComponent? body) && body.Fixtures.Count >= 1)
             {
                 var entityPos = entityToMove.Transform.WorldPosition;
 
@@ -183,18 +181,18 @@ namespace Content.Server.GameObjects.Components.Movement
                 // we may potentially need additional logic since we're forcing a player onto a climbable
                 // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
 
-                var othersMessage = Loc.GetString("{0:theName} forces {1:theName} onto {2:theName}!", user,
-                    entityToMove, Owner);
+                var othersMessage = Loc.GetString("comp-climbable-user-climbs-force-other",
+                    ("user", user), ("moved-user", entityToMove), ("climbable", Owner));
                 user.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("You force {0:theName} onto {1:theName}!", entityToMove, Owner);
+                var selfMessage = Loc.GetString("comp-climbable-user-climbs-force", ("moved-user", entityToMove), ("climbable", Owner));
                 user.PopupMessage(selfMessage);
             }
         }
 
         private async void TryClimb(IEntity user)
         {
-            if (!user.TryGetComponent(out ClimbingComponent climbingComponent) || climbingComponent.IsClimbing)
+            if (!user.TryGetComponent(out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
                 return;
 
             var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay, default, Owner)
@@ -207,7 +205,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
             var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out PhysicsComponent body) && body.Fixtures.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out PhysicsComponent? body) && body.Fixtures.Count >= 1)
             {
                 // TODO: Remove the copy-paste code
                 var userPos = user.Transform.WorldPosition;
@@ -229,10 +227,10 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 climbMode.TryMoveTo(userPos, endPoint);
 
-                var othersMessage = Loc.GetString("{0:theName} jumps onto {1:theName}!", user, Owner);
+                var othersMessage = Loc.GetString("comp-climbable-user-climbs-other", ("user", user), ("climbable", Owner));
                 user.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("You jump onto {0:theName}!", Owner);
+                var selfMessage = Loc.GetString("comp-climbable-user-climbs", ("climbable", Owner));
                 user.PopupMessage(selfMessage);
             }
         }
@@ -250,7 +248,7 @@ namespace Content.Server.GameObjects.Components.Movement
                     data.Visibility = VerbVisibility.Invisible;
                 }
 
-                data.Text = Loc.GetString("Vault");
+                data.Text = Loc.GetString("comp-climbable-verb-climb");
             }
 
             protected override void Activate(IEntity user, ClimbableComponent component)

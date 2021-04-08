@@ -40,13 +40,13 @@ namespace Content.Shared.GameObjects.Components.Materials
         [DataDefinition]
         public class MaterialDataEntry : ISerializationHooks
         {
-            public object Key;
+            public object Key = default!;
 
-            [DataField("key")]
-            public string StringKey;
+            [DataField("key", required: true)]
+            public string StringKey = default!;
 
-            [DataField("mat")]
-            public string Value;
+            [DataField("mat", required: true)]
+            public string Value = default!;
 
             void ISerializationHooks.AfterDeserialization()
             {

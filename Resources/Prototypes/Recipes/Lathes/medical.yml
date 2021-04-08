@@ -5,7 +5,7 @@
   completetime: 500
   materials:
     steel: 400
-    glass: 125
+    glass: 100
 
 - type: latheRecipe
   id: Ointment
@@ -14,68 +14,68 @@
   completetime: 500
   materials:
     steel: 400
-    glass: 125
+    glass: 100
 
 - type: latheRecipe
   id: Gauze
-  icon: Objects/Specific/Medical/medical.rsi
+  icon: Objects/Specific/Medical/medical.rsi/gauze.png
   result: Gauze
   completetime: 500
   materials:
-    plastic: 40
+    plastic: 100
 
 - type: latheRecipe
   id: Scalpel
-  icon: Objects/Specific/Medical/surgery_tools.rsi
+  icon: Objects/Specific/Medical/Surgery/scalpel.rsi/scalpel.png
   result: Scalpel
   completetime: 500
   materials:
-    steel: 70
+    steel: 200
 
 - type: latheRecipe
   id: Retractor
-  icon: Objects/Specific/Medical/surgery_tools.rsi
+  icon: Objects/Specific/Medical/Surgery/scissors.rsi/retractor.png
   result: Scalpel
   completetime: 500
   materials:
-    steel: 50
+    steel: 200
 
 - type: latheRecipe
   id: Cautery
-  icon: Objects/Specific/Medical/surgery_tools.rsi
+  icon: Objects/Specific/Medical/Surgery/cautery.rsi/cautery.png
   result: Cautery
   completetime: 500
   materials:
-    steel: 80
+    steel: 200
 
 - type: latheRecipe
   id: Drill
-  icon: Objects/Specific/Medical/surgery_tools.rsi
+  icon: Objects/Specific/Medical/Surgery/drill.rsi/drill.png
   result: Drill
   completetime: 500
   materials:
-    steel: 90
+    steel: 200
 
 - type: latheRecipe
   id: BoneSaw
-  icon: Objects/Specific/Medical/surgery_tools.rsi
-  result: BoneSaw
+  icon: Objects/Specific/Medical/Surgery/saw.rsi/saw.png
+  result: Saw
   completetime: 500
   materials:
-    steel: 90
+    steel: 200
 
 - type: latheRecipe
   id: Hemostat
-  icon: Objects/Specific/Medical/surgery_tools.rsi
+  icon: Objects/Specific/Medical/Surgery/scissors.rsi/hemostat.png
   result: Hemostat
   completetime: 500
   materials:
-    steel: 50
+    steel: 200
 
 - type: latheRecipe
   id: BodyBag_Item
-  icon: Objects/Specific/Morgue/bodybags.rsi
+  icon: Objects/Specific/Medical/Morgue/bodybags.rsi/item.png
   result: BodyBag_Item
   completetime: 300
   materials:
-    plastic: 20
+    plastic: 200

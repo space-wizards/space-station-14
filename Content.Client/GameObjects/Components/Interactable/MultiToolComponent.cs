@@ -1,12 +1,10 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -22,12 +20,12 @@ namespace Content.Client.GameObjects.Components.Interactable
 
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
         [ViewVariables] public bool StatusShowBehavior => _statusShowBehavior;
-        [ViewVariables] public ToolQuality Behavior => _behavior;
+        [ViewVariables] public ToolQuality? Behavior => _behavior;
 
         public override string Name => "MultiTool";
         public override uint? NetID => ContentNetIDs.MULTITOOLS;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
@@ -54,9 +52,9 @@ namespace Content.Client.GameObjects.Components.Interactable
                 parent._uiUpdateNeeded = true;
             }
 
-            protected override void Update(FrameEventArgs args)
+            protected override void FrameUpdate(FrameEventArgs args)
             {
-                base.Update(args);
+                base.FrameUpdate(args);
 
                 if (!_parent._uiUpdateNeeded)
                 {
@@ -65,11 +63,7 @@ namespace Content.Client.GameObjects.Components.Interactable
 
                 _parent._uiUpdateNeeded = false;
 
-                if(!_parent.StatusShowBehavior)
-                    _label.SetMarkup(string.Empty);
-                else
-                    _label.SetMarkup(_parent.Behavior.ToString());
-
+                _label.SetMarkup(_parent.StatusShowBehavior ? _parent.Behavior.ToString() ?? string.Empty : string.Empty);
             }
         }
     }
