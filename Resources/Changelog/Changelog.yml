@@ -843,3 +843,8 @@ Entries:
   - {message: Add light replacer to janitorial closet., type: Add}
   id: 152
   time: '2021-04-08T12:28:06.0000000+00:00'
+- author: bryce0110
+  changes:
+  - {message: Welded Lockers and Crates will now look welded., type: Fix}
+  id: 153
+  time: '2021-04-08T12:39:50.0000000+00:00'
