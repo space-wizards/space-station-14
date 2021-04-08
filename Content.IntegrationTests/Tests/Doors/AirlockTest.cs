@@ -6,7 +6,6 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
-using static Content.Server.GameObjects.Components.Doors.ServerDoorComponent;
 
 namespace Content.IntegrationTests.Tests.Doors
 {
@@ -107,7 +106,10 @@ namespace Content.IntegrationTests.Tests.Doors
         [Test]
         public async Task AirlockBlockTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
+            var options = new ServerContentIntegrationOption
+            {
+                ExtraPrototypes = Prototypes
+            };
             var server = StartServer(options);
 
             await server.WaitIdleAsync();

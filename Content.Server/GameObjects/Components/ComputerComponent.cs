@@ -21,18 +21,14 @@ namespace Content.Server.GameObjects.Components
         {
             base.Initialize();
 
+            // Let's ensure the container manager and container are here.
+            Owner.EnsureContainer<Container>("board", out var _);
+
             if (Owner.TryGetComponent(out PowerReceiverComponent? powerReceiver) &&
                 Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(ComputerVisuals.Powered, powerReceiver.Powered);
             }
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            CreateComputerBoard();
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -69,7 +65,7 @@ namespace Content.Server.GameObjects.Components
             if (string.IsNullOrEmpty(_boardPrototype))
                 return;
 
-            var container = ContainerHelpers.EnsureContainer<Container>(Owner, "board", out var existed);
+            var container = Owner.EnsureContainer<Container>("board", out var existed);
 
             if (existed)
             {

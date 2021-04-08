@@ -138,11 +138,9 @@ namespace Content.Server.Commands.Body
             }
 
             var slot = part.GetHashCode().ToString();
-            var response = body.TryAddPart(slot, part, true)
-                ? $"Added hand to entity {entity.Name}"
-                : $"Error occurred trying to add a hand to entity {entity.Name}";
+            body.SetPart(slot, part);
 
-            shell.WriteLine(response);
+            shell.WriteLine($"Added hand to entity {entity.Name}");
         }
     }
 }

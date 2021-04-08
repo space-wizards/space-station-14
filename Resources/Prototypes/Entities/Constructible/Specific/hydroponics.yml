@@ -66,7 +66,6 @@
       mask:
       - Impassable
   - type: Anchorable
-    snap: true
   - type: Pullable
   - type: Sprite
     sprite: Constructible/Hydroponics/containers.rsi
