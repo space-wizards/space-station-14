@@ -46,3 +46,12 @@
   completetime: 300
   materials:
     plastic: 100
+
+- type: latheRecipe
+  id: LightReplacer
+  icon: Objects/Specific/Janitorial/light_replacer.rsi
+  result: LightReplacer
+  completetime: 600
+  materials:
+    steel: 100
+    glass: 1000
