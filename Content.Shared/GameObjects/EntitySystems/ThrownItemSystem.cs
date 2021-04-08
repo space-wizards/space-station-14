@@ -65,36 +65,36 @@ namespace Content.Shared.GameObjects.EntitySystems
         public void ThrowCollideInteraction(IEntity? user, IPhysBody thrown, IPhysBody target)
         {
             // TODO: Just pass in the bodies directly
-            var collideMsg = new ThrowCollideMessage(user, thrown.Entity, target.Entity);
+            var collideMsg = new ThrowCollideMessage(user, thrown.Owner, target.Owner);
             RaiseLocalEvent(collideMsg);
             if (collideMsg.Handled)
             {
                 return;
             }
 
-            var eventArgs = new ThrowCollideEventArgs(user, thrown.Entity, target.Entity);
+            var eventArgs = new ThrowCollideEventArgs(user, thrown.Owner, target.Owner);
 
-            foreach (var comp in target.Entity.GetAllComponents<IThrowCollide>())
+            foreach (var comp in target.Owner.GetAllComponents<IThrowCollide>())
             {
                 _throwCollide.Add(comp);
             }
 
             foreach (var collide in _throwCollide)
             {
-                if (target.Entity.Deleted) break;
+                if (target.Owner.Deleted) break;
                 collide.HitBy(eventArgs);
             }
 
             _throwCollide.Clear();
 
-            foreach (var comp in thrown.Entity.GetAllComponents<IThrowCollide>())
+            foreach (var comp in thrown.Owner.GetAllComponents<IThrowCollide>())
             {
                 _throwCollide.Add(comp);
             }
 
             foreach (var collide in _throwCollide)
             {
-                if (thrown.Entity.Deleted) break;
+                if (thrown.Owner.Deleted) break;
                 collide.DoHit(eventArgs);
             }
 

@@ -13,6 +13,7 @@ using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.ViewVariables;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -177,9 +178,9 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-			if(otherBody.Entity.HasTag("EmitterBolt"))            {
+			if(otherFixture.Body.Owner.HasTag("EmitterBolt"))            {
                 ReceivePower(4);
             }
         }

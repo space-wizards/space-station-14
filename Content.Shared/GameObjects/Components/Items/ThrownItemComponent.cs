@@ -18,15 +18,15 @@ namespace Content.Shared.GameObjects.Components.Items
 
         private Fixture? _fixture;
 
-        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-            if (otherBody.Entity == Thrower) return;
-            EntitySystem.Get<ThrownItemSystem>().ThrowCollideInteraction(Thrower, ourBody, otherBody);
+            if (otherFixture.Body.Owner == Thrower) return;
+            EntitySystem.Get<ThrownItemSystem>().ThrowCollideInteraction(Thrower, ourFixture.Body, otherFixture.Body);
         }
 
         bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
         {
-            return collidedwith.Entity == Thrower;
+            return collidedwith.Owner == Thrower;
         }
 
         void IThrown.Thrown(ThrownEventArgs eventArgs)

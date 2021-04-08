@@ -5,6 +5,7 @@ using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -33,9 +34,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
             _solutionContainer = Owner.EnsureComponent<SolutionContainerComponent>();
         }
 
-        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-            if (!otherBody.Entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))
+            if (!otherFixture.Body.Owner.TryGetComponent<BloodstreamComponent>(out var bloodstream))
                 return;
 
             var solution = _solutionContainer.Solution;

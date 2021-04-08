@@ -185,14 +185,18 @@
   - type: CollisionWake
     enabled: false
   - type: Physics
-    bodyType: KinematicController
-    fixtures: # TODO: Make a second fixture. One should be for slipping, and the other for collisions.
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      name: "slips"
+      hard: false
+      layer:
+        - SmallImpassable
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.2,-0.2,0.2,0.2"
       mass: 5
-      layer:
-        - SmallImpassable
       mask:
-        - Impassable
-        - MobImpassable
+        - SmallImpassable
