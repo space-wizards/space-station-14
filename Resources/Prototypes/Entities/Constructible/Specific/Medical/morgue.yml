@@ -1,0 +1,128 @@
+- type: entity
+  id: Morgue
+  name: morgue
+  description: Used to keep bodies in until someone fetches them. Includes a high-tech alert system for false-positives!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Medical/Morgue/morgue.rsi
+    layers:
+    - state: morgue_closed
+      map: ["enum.MorgueVisualLayers.Base"]
+    - state: morgue_nomob_light
+      visible: false
+      map: ["enum.MorgueVisualLayers.Light"]
+      shader: unshaded
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
+      mass: 25
+      mask:
+       - Impassable
+       - MobImpassable
+       - VaultImpassable
+       - SmallImpassable
+      layer:
+       - Opaque
+       - MobImpassable
+       - VaultImpassable
+       - SmallImpassable
+  - type: MorgueEntityStorage
+    CanWeldShut: false
+    IsCollidableWhenOpen: true
+    Capacity: 1
+    closeSound: /Audio/Items/deconstruct.ogg
+    openSound: /Audio/Items/deconstruct.ogg
+    trayPrototype: MorgueTray
+  - type: Appearance
+    visuals:
+    - type: MorgueVisualizer
+      state_open: morgue_open
+      state_closed: morgue_closed
+      light_contents: morgue_nomob_light
+      light_mob: morgue_nosoul_light
+      light_soul: morgue_soul_light
+  - type: SnapGrid
+    offset: Center
+
+- type: entity
+  id: MorgueTray
+  name: morgue tray
+  description: If you lay down to have a rest on this, you'll soon have a problem.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Medical/Morgue/morgue.rsi
+    state: morgue_tray
+  - type: Clickable
+  - type: InteractionOutline
+  - type: MorgueTray
+
+
+- type: entity
+  id: Crematorium
+  name: crematorium
+  description: A human incinerator. Works well on barbecue nights.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Medical/Morgue/morgue.rsi
+    layers:
+    - state: crema_closed
+      map: ["enum.CrematoriumVisualLayers.Base"]
+    - state: crema_contents_light
+      visible: false
+      map: ["enum.CrematoriumVisualLayers.Light"]
+      shader: unshaded
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
+      mass: 25
+      mask:
+       - Impassable
+       - MobImpassable
+       - VaultImpassable
+       - SmallImpassable
+      layer:
+       - Opaque
+       - MobImpassable
+       - VaultImpassable
+       - SmallImpassable
+  - type: CrematoriumEntityStorage
+    CanWeldShut: false
+    IsCollidableWhenOpen: true
+    Capacity: 1
+    closeSound: /Audio/Items/deconstruct.ogg
+    openSound: /Audio/Items/deconstruct.ogg
+    trayPrototype: CrematoriumTray
+    doSoulBeep: false
+  - type: LoopingSound
+  - type: Appearance
+    visuals:
+    - type: CrematoriumVisualizer
+      state_open: crema_open
+      state_closed: crema_closed
+      light_contents: crema_contents_light
+      light_burning: crema_active_light
+  - type: SnapGrid
+    offset: Center
+
+- type: entity
+  id: CrematoriumTray
+  name: crematorium tray
+  parent: MorgueTray
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Medical/Morgue/morgue.rsi
+    state: crema_tray
