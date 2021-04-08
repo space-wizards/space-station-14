@@ -18,7 +18,6 @@
         !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.1"
       hard: false
-      layer: [Clickable]
       mask:
       - Impassable
       - MobImpassable

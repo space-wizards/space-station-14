@@ -1,0 +1,11 @@
+- type: construction
+  name: livestock crate
+  id: CrateLivestock
+  graph: CrateLivestock
+  startNode: start
+  targetNode: cratelivestock
+  category: Storage
+  description: "A wooden crate for holding livestock"
+  icon: Constructible/Storage/Crates/livestock.rsi/livestockcrate.png
+  objectType: Item
+  

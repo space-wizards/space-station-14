@@ -469,19 +469,26 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             if (victim.TryGetComponent<IBody>(out var body))
             {
-                var heads = body.GetPartsOfType(BodyPartType.Head);
-                foreach (var head in heads)
+                var headSlots = body.GetSlotsOfType(BodyPartType.Head);
+
+                foreach (var slot in headSlots)
                 {
-                    if (!body.TryDropPart(head, out var dropped))
+                    var part = slot.Part;
+
+                    if (part == null ||
+                        !body.TryDropPart(slot, out var dropped))
                     {
                         continue;
                     }
 
-                    var droppedHeads = dropped.Where(p => p.PartType == BodyPartType.Head);
-
-                    foreach (var droppedHead in droppedHeads)
+                    foreach (var droppedPart in dropped.Values)
                     {
-                        _storage.Insert(droppedHead.Owner);
+                        if (droppedPart.PartType != BodyPartType.Head)
+                        {
+                            continue;
+                        }
+
+                        _storage.Insert(droppedPart.Owner);
                         headCount++;
                     }
                 }
