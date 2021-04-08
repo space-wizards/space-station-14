@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("snap")]
-        public bool Snap { get; private set; }
+        public bool Snap { get; private set; } = true;
 
         public override void Initialize()
         {

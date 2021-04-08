@@ -2,17 +2,20 @@
 #1D2L3U4R
 
 - type: entity
-  name: monkey
-  id: MonkeyMob_Content
+  name: bat
   parent: SimpleMobBase
-  description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
+  id: BatMob_Content
+  description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 6
+    baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: monkey
-      sprite: Mobs/Animals/monkey.rsi
+      state: bat
+      sprite: Mobs/Animals/bat.rsi
   - type: Physics
     bodyType: Dynamic
     fixtures:
@@ -29,24 +32,25 @@
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
-      normal: monkey
+      normal: bat
       dead: dead
-    - type: FireVisualizer
-      sprite: Mobs/Effects/onfire.rsi
-      normalState: Monkey_burning
 
 - type: entity
-  name: gorilla
+  name: bee
   parent: SimpleMobBase
-  id: GorillaMob_Content
-  description: Smashes, roars, looks cool. Don't stand near one.
+  id: BeeMob_Content
+  description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 7
+    baseSprintSpeed : 7
+  - type: AsteroidRock
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: crawling
-      sprite: Mobs/Animals/gorilla.rsi
+      state: 0
+      sprite: Mobs/Animals/bee.rsi
   - type: Physics
     bodyType: Dynamic
     fixtures:
@@ -63,7 +67,7 @@
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
-      normal: crawling
+      normal: 0
       dead: dead
 
 - type: entity
@@ -142,27 +146,24 @@
       dead: dead
 
 - type: entity
-  name: bat
+  name: cow
   parent: SimpleMobBase
-  id: BatMob_Content
-  description: Some cultures find them terrifying, others crunchy on the teeth.
+  id: CowMob_Content
+  description: Moo.
   components:
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 6
-    baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: bat
-      sprite: Mobs/Animals/bat.rsi
+      state: cow
+      sprite: Mobs/Animals/cow.rsi
   - type: Physics
     bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.20,-0.20,0.20,0.20"
-      mass: 5
+          bounds: "-0.60,-0.50,0.05,0.50"
+      mass: 20
       mask:
       - Impassable
       - VaultImpassable
@@ -172,25 +173,21 @@
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
-      normal: bat
+      normal: cow
       dead: dead
 
 - type: entity
-  name: bee
+  name: crab
   parent: SimpleMobBase
-  id: BeeMob_Content
-  description: Nice to have, but you can't build a civilization on a foundation of honey alone.
+  id: CrabMob_Content
+  description: A folk legend goes around that his claw snaps spacemen out of existance over distasteful remarks. Be polite and tolerant for your own safety.
   components:
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 7
-    baseSprintSpeed : 7
-  - type: AsteroidRock
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: 0
-      sprite: Mobs/Animals/bee.rsi
+      state: crab
+      sprite: Mobs/Animals/crab.rsi
   - type: Physics
     bodyType: Dynamic
     fixtures:
@@ -207,7 +204,7 @@
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
-      normal: 0
+      normal: crab
       dead: dead
     - type: AsteroidRockVisualizer
 
@@ -242,7 +239,7 @@
       normal: goat
       dead: dead
 
-# Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin
+# Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
   name: goose
   parent: SimpleMobBase
@@ -274,22 +271,18 @@
       normal: goose
       dead: dead
 
-# Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
-  name: parrot
+  name: gorilla
   parent: SimpleMobBase
-  id: ParrotMob_Content
-  description: Infiltrates your domain, spies on you, and somehow still a cool pet.
+  id: GorillaMob_Content
+  description: Smashes, roars, looks cool. Don't stand near one.
   components:
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 6
-    baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: parrot
-      sprite: Mobs/Animals/parrot.rsi
+      state: crawling
+      sprite: Mobs/Animals/gorilla.rsi
   - type: Physics
     bodyType: Dynamic
     fixtures:
@@ -306,21 +299,21 @@
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
-      normal: parrot
+      normal: crawling
       dead: dead
 
 - type: entity
-  name: snake
+  name: monkey
+  id: MonkeyMob_Content
   parent: SimpleMobBase
-  id: SnakeMob_Content
-  description: Hissss! Bites aren't poisonous.
+  description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: snake
-      sprite: Mobs/Animals/snake.rsi
+      state: monkey
+      sprite: Mobs/Animals/monkey.rsi
   - type: Physics
     bodyType: Dynamic
     fixtures:
@@ -337,104 +330,11 @@
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
-      normal: snake
-# It's death animation is animated so hopefully this should push for separation between "dying" and "death" states.
+      normal: monkey
       dead: dead
-
-# Code unique spider prototypes or combine them all into one spider and get a
-# random sprite state when you spawn it.
-- type: entity
-  name: tarantula
-  parent: SimpleMobBase
-  id: GiantSpiderMob_Content
-  description: Widely recognized to be the literal worst thing in existence.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: tarantula
-      sprite: Mobs/Animals/spider.rsi
-  - type: Physics
-    bodyType: Dynamic
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.30,-0.40,0.45,0.40"
-      mass: 10
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: tarantula
-      dead: tarantula_dead
-
-- type: entity
-  name: crab
-  parent: SimpleMobBase
-  id: CrabMob_Content
-  description: A folk legend goes around that his claw snaps spacemen out of existance over distasteful remarks. Be polite and tolerant for your own safety.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: crab
-      sprite: Mobs/Animals/crab.rsi
-  - type: Physics
-    bodyType: Dynamic
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.40,-0.35,0.20,0.35"
-      mass: 10
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: crab
-      dead: dead
-
-- type: entity
-  name: penguin
-  parent: SimpleMobBase
-  id: PenguinMob_Content
-  description: Their lives are constant pain due to their inner-body knees.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: penguin
-      sprite: Mobs/Animals/penguin.rsi
-  - type: Physics
-    bodyType: Dynamic
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.50,-0.30,0.35,0.30"
-      mass: 10
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: penguin
-      dead: penguin_dead
+    - type: FireVisualizer
+      sprite: Mobs/Effects/onfire.rsi
+      normalState: Monkey_burning
 
 - type: entity
   name: mouse
@@ -463,11 +363,11 @@
     Slots:
     - Helmet
   - type: Physics
-    bodyType: KinematicController
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.50,-0.30,0.35,0.30"
+          bounds: "-0.30,-0.40,0.45,0.40"
       mass: 10
       mask:
       - Impassable
@@ -534,3 +434,134 @@
       normal: mouse-2
       crit: dead-2
       dead: splat-2
+
+# Would be cool to have some functionality for the parrot to be able to sit on stuff
+- type: entity
+  name: parrot
+  parent: SimpleMobBase
+  id: ParrotMob_Content
+  description: Infiltrates your domain, spies on you, and somehow still a cool pet.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 6
+    baseSprintSpeed : 6
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: parrot
+      sprite: Mobs/Animals/parrot.rsi
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.40,-0.35,0.20,0.35"
+      mass: 10
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: parrot
+      dead: dead
+
+- type: entity
+  name: penguin
+  parent: SimpleMobBase
+  id: PenguinMob_Content
+  description: Their lives are constant pain due to their inner-body knees.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: penguin
+      sprite: Mobs/Animals/penguin.rsi
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.50,-0.30,0.35,0.30"
+      mass: 10
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: penguin
+      dead: penguin_dead
+
+- type: entity
+  name: snake
+  parent: SimpleMobBase
+  id: SnakeMob_Content
+  description: Hissss! Bites aren't poisonous.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: snake
+      sprite: Mobs/Animals/snake.rsi
+  - type: Physics
+    bodyType: KinematicController
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.50,-0.30,0.35,0.30"
+      mass: 10
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: snake
+# It's death animation is animated so hopefully this should push for separation between "dying" and "death" states.
+      dead: dead
+
+# Code unique spider prototypes or combine them all into one spider and get a
+# random sprite state when you spawn it.
+- type: entity
+  name: tarantula
+  parent: SimpleMobBase
+  id: GiantSpiderMob_Content
+  description: Widely recognized to be the literal worst thing in existence.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: tarantula
+      sprite: Mobs/Animals/spider.rsi
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.30,-0.40,0.45,0.40"
+      mass: 10
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: tarantula
+      dead: tarantula_dead

@@ -250,6 +250,9 @@ namespace Content.Client
             "ToySpawner",
             "FigureSpawner",
             "RandomSpawner",
+            "SpawnAfterInteract",
+            "DisassembleOnActivate",
+            "ExplosionLaunched",
         };
     }
 }

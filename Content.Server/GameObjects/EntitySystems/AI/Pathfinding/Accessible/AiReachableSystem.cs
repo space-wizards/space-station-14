@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             _mapManager.OnGridRemoved += GridRemoved;
         }
 
-        private void GridRemoved(GridId gridId)
+        private void GridRemoved(MapId mapId, GridId gridId)
         {
             _regions.Remove(gridId);
         }

@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Weapon
 
         public static void FlashAreaHelper(IEntity source, float range, float duration, string? sound = null)
         {
-            foreach (var entity in source.EntityManager.GetEntitiesInRange(source.Transform.Coordinates, range))
+            foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(source.Transform.Coordinates, range))
             {
                 if (!entity.TryGetComponent(out FlashableComponent? flashable) ||
                     !source.InRangeUnobstructed(entity, range, CollisionGroup.Opaque)) continue;
