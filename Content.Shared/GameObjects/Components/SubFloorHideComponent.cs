@@ -7,7 +7,7 @@ namespace Content.Shared.GameObjects.Components
     /// <summary>
     /// Simple component that automatically hides the sibling
     /// <see cref="ISpriteComponent" /> when the tile it's on is not a sub floor
-    /// (plating). If you're wondering where all the logic went, check <see cref="SubFloorHideSystem"/>
+    /// (plating).
     /// </summary>
     /// <seealso cref="P:Content.Shared.Maps.ContentTileDefinition.IsSubFloor" />
     [RegisterComponent]
