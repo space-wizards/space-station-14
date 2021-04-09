@@ -109,6 +109,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             UnsubscribeLocalEvent<AtmosDeviceComponent, PhysicsBodyTypeChangedEvent>(OnDeviceBodyTypeChanged);
             UnsubscribeLocalEvent<AtmosDeviceComponent, AtmosDeviceUpdateEvent>(OnDeviceAtmosProcess);
+            UnsubscribeLocalEvent<AtmosDeviceComponent, EntParentChangedMessage>(OnDeviceParentChanged);
         }
 
         #region CVars
@@ -190,6 +191,10 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void OnDeviceBodyTypeChanged(EntityUid uid, AtmosDeviceComponent component, PhysicsBodyTypeChangedEvent args)
         {
+            // Do nothing if the component doesn't require being anchored to function.
+            if (!component.RequireAnchored)
+                return;
+
             if (args.Anchored)
                 component.JoinAtmosphere();
             else

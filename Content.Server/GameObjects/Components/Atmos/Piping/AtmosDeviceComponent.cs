@@ -4,6 +4,8 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
@@ -18,6 +20,13 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         public override string Name => "AtmosDevice";
 
+        /// <summary>
+        ///     Whether this device requires being anchored to join an atmosphere.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("requireAnchored")]
+        public bool RequireAnchored { get; private set; } = true;
+
         public IGridAtmosphereComponent? Atmosphere { get; private set; }
 
         public float DeltaTime { get; private set; }
@@ -31,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         private bool CanJoinAtmosphere()
         {
-            return !Owner.TryGetComponent(out PhysicsComponent? physics) || physics.BodyType == BodyType.Static;
+            return !RequireAnchored || !Owner.TryGetComponent(out PhysicsComponent? physics) || physics.BodyType == BodyType.Static;
         }
 
         public override void OnRemove()
