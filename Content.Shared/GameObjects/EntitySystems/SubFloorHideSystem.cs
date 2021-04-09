@@ -55,6 +55,16 @@ namespace Content.Shared.GameObjects.EntitySystems
             SubscribeLocalEvent<SubFloorHideDirtyEvent>(HandleDirtyEvent);
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            _mapManager.GridChanged -= MapManagerOnGridChanged;
+            _mapManager.TileChanged -= MapManagerOnTileChanged;
+
+            UnsubscribeLocalEvent<SubFloorHideDirtyEvent>();
+        }
+
         private void HandleDirtyEvent(SubFloorHideDirtyEvent ev)
         {
             if (!_mapManager.TryGetGrid(ev.Sender.Transform.GridID, out var grid))
