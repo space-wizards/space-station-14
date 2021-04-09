@@ -24,8 +24,9 @@
     state: wiredmachine
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
+      input:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
   - type: PowerConsumer
     drawRate: 50
   - type: Damageable
@@ -62,8 +63,9 @@
   - type: Battery
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
+      input:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
   - type: PowerConsumer
   - type: BatteryStorage
   - type: Anchorable
@@ -90,8 +92,9 @@
   - type: Battery
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
+      input:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
   - type: PowerSupplier
   - type: BatteryDischarger
   - type: Anchorable
