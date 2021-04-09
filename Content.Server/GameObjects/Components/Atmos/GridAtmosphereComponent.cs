@@ -634,7 +634,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.AtmosDevices;
                     break;
                 case ProcessState.AtmosDevices:
-                    if (!ProcessAtmosDevices(_paused, maxProcessTime))
+                    if (!ProcessAtmosDevices(_timer, _paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -854,7 +854,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        protected virtual bool ProcessAtmosDevices(bool resumed = false, float lagCheck = 5f)
+        protected virtual bool ProcessAtmosDevices(float timer, bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
 
@@ -865,7 +865,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             while (_currentRunAtmosDevices.Count > 0)
             {
                 var device = _currentRunAtmosDevices.Dequeue();
-                device.Update();
+                device.Update(timer);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;

@@ -94,6 +94,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return;
 
             _currentAirBlockedDirection = (int) Rotate((AtmosDirection)_initialAirBlockedDirection, ev.NewRotation);
+            UpdatePosition();
         }
 
         private AtmosDirection Rotate(AtmosDirection myDirection, Angle myAngle)
@@ -118,12 +119,6 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void MapInit()
         {
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
-            {
-                snapGrid.OnPositionChanged += OnTransformMove;
-                _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
-            }
-
             UpdatePosition();
         }
 
@@ -133,39 +128,35 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             _airBlocked = false;
 
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
-            {
-                snapGrid.OnPositionChanged -= OnTransformMove;
-            }
-
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
 
             if (_fixVacuum)
                 _atmosphereSystem.GetGridAtmosphere(_lastPosition.Item1).FixVacuum(_lastPosition.Item2);
         }
 
-        private void OnTransformMove()
+        public void OnSnapGridMove(SnapGridPositionChangedEvent ev)
         {
-            UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
-            UpdatePosition();
+            // Invalidate old position.
+            UpdatePosition(ev.OldGrid, ev.OldPosition);
 
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
-            {
-                _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
-            }
+            // Update and invalidate new position.
+            _lastPosition = (ev.NewGrid, ev.Position);
+            UpdatePosition(ev.NewGrid, ev.Position);
         }
 
         private void UpdatePosition()
         {
             if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+            {
+                _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
                 UpdatePosition(Owner.Transform.GridID, snapGrid.Position);
+            }
         }
 
         private void UpdatePosition(GridId gridId, Vector2i pos)
         {
             var gridAtmos = _atmosphereSystem.GetGridAtmosphere(gridId);
 
-            gridAtmos.UpdateAdjacentBits(pos);
             gridAtmos.Invalidate(pos);
         }
     }

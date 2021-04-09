@@ -20,6 +20,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         public IGridAtmosphereComponent? Atmosphere { get; private set; }
 
+        public float DeltaTime { get; private set; }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -38,8 +40,9 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             LeaveAtmosphere();
         }
 
-        public void Update()
+        public void Update(float timer)
         {
+            DeltaTime = timer;
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, Event);
         }
 
@@ -60,6 +63,12 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         {
             Atmosphere?.RemoveAtmosDevice(this);
             Atmosphere = null;
+        }
+
+        public void RejoinAtmosphere()
+        {
+            LeaveAtmosphere();
+            JoinAtmosphere();
         }
     }
 

@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return false;
         }
 
-        protected override bool ProcessAtmosDevices(bool resumed = false, float lagCheck = 5f)
+        protected override bool ProcessAtmosDevices(float timer, bool resumed = false, float lagCheck = 5f)
         {
             return false;
         }

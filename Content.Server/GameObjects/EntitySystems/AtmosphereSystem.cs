@@ -3,10 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Xml.Schema;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.GameObjects.Components.Atmos.Piping;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
@@ -36,6 +39,9 @@ namespace Content.Server.GameObjects.EntitySystems
         private SpaceGridAtmosphereComponent _spaceAtmos = default!;
         private GridTileLookupSystem? _gridTileLookup = null;
 
+        private const float ExposedUpdateDelay = 1f;
+        private float _exposedTimer = 0f;
+
         /// <summary>
         ///     List of gas reactions ordered by priority.
         /// </summary>
@@ -57,8 +63,6 @@ namespace Content.Server.GameObjects.EntitySystems
             _spaceAtmos.Initialize();
             IoCManager.InjectDependencies(_spaceAtmos);
 
-            _mapManager.TileChanged += OnTileChanged;
-
             Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
 
             for (var i = 0; i < GasPrototypes.Length; i++)
@@ -66,8 +70,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat;
             }
 
-            // Required for airtight components.
-            EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
+            #region CVars
 
             _cfg.OnValueChanged(CCVars.SpaceWind, OnSpaceWindChanged, true);
             _cfg.OnValueChanged(CCVars.MonstermosEqualization, OnMonstermosEqualizationChanged, true);
@@ -75,8 +78,40 @@ namespace Content.Server.GameObjects.EntitySystems
             _cfg.OnValueChanged(CCVars.AtmosMaxProcessTime, OnAtmosMaxProcessTimeChanged, true);
             _cfg.OnValueChanged(CCVars.AtmosTickRate, OnAtmosTickRateChanged, true);
             _cfg.OnValueChanged(CCVars.ExcitedGroupsSpaceIsAllConsuming, OnExcitedGroupsSpaceIsAllConsumingChanged, true);
+
+            #endregion
+
+            #region Events
+
+            // Map tile changes.
+            _mapManager.TileChanged += OnTileChanged;
+
+            // Airtight entities.
+            SubscribeLocalEvent<AirtightComponent, SnapGridPositionChangedEvent>(OnAirtightPositionChanged);
+            SubscribeLocalEvent<AirtightComponent, RotateEvent>(OnAirtightRotated);
+
+            // Atmos devices.
+            SubscribeLocalEvent<AtmosDeviceComponent, PhysicsBodyTypeChangedEvent>(OnDeviceBodyTypeChanged);
+            SubscribeLocalEvent<AtmosDeviceComponent, AtmosDeviceUpdateEvent>(OnDeviceAtmosProcess);
+            SubscribeLocalEvent<AtmosDeviceComponent, EntParentChangedMessage>(OnDeviceParentChanged);
+
+            #endregion
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            _mapManager.TileChanged -= OnTileChanged;
+
+            UnsubscribeLocalEvent<AirtightComponent, SnapGridPositionChangedEvent>(OnAirtightPositionChanged);
+            UnsubscribeLocalEvent<AirtightComponent, RotateEvent>(OnAirtightRotated);
+
+            UnsubscribeLocalEvent<AtmosDeviceComponent, PhysicsBodyTypeChangedEvent>(OnDeviceBodyTypeChanged);
+            UnsubscribeLocalEvent<AtmosDeviceComponent, AtmosDeviceUpdateEvent>(OnDeviceAtmosProcess);
+        }
+
+        #region CVars
         public bool SpaceWind { get; private set; }
         public bool MonstermosEqualization { get; private set; }
         public bool Superconduction { get; private set; }
@@ -113,22 +148,61 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             SpaceWind = obj;
         }
+        #endregion
 
-        public override void Shutdown()
+        private void OnTileChanged(object? sender, TileChangedEventArgs eventArgs)
         {
-            base.Shutdown();
+            // When a tile changes, we want to update it only if it's gone from
+            // space -> not space or vice versa. So if the old tile is the
+            // same as the new tile in terms of space-ness, ignore the change
 
-            EntityManager.EventBus.UnsubscribeEvent<RotateEvent>(EventSource.Local, this);
+            if (eventArgs.NewTile.IsSpace() == eventArgs.OldTile.IsSpace())
+            {
+                return;
+            }
+
+            GetGridAtmosphere(eventArgs.NewTile.GridIndex)?.Invalidate(eventArgs.NewTile.GridIndices);
         }
 
-        private void RotateEvent(RotateEvent ev)
+        #region Airtight Handlers
+        private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent component, SnapGridPositionChangedEvent args)
         {
-            if (ev.Sender.TryGetComponent(out AirtightComponent? airtight))
+            component.OnSnapGridMove(args);
+        }
+
+        private void OnAirtightRotated(EntityUid uid, AirtightComponent airtight, RotateEvent ev)
+        {
+            airtight.RotateEvent(ev);
+        }
+        #endregion
+
+        #region Atmos Device Handlers
+        private void OnDeviceAtmosProcess(EntityUid uid, AtmosDeviceComponent component, AtmosDeviceUpdateEvent _)
+        {
+            if (component.Atmosphere == null)
+                return; // Shouldn't really happen, but just in case...
+
+            foreach (var process in ComponentManager.GetComponents<IAtmosProcess>(uid))
             {
-                airtight.RotateEvent(ev);
+                process.ProcessAtmos(component.Atmosphere);
             }
         }
 
+        private void OnDeviceBodyTypeChanged(EntityUid uid, AtmosDeviceComponent component, PhysicsBodyTypeChangedEvent args)
+        {
+            if (args.Anchored)
+                component.JoinAtmosphere();
+            else
+                component.LeaveAtmosphere();
+        }
+
+        private void OnDeviceParentChanged(EntityUid uid, AtmosDeviceComponent component, EntParentChangedMessage args)
+        {
+            component.RejoinAtmosphere();
+        }
+        #endregion
+
+        #region Helper Methods
         public IGridAtmosphereComponent GetGridAtmosphere(GridId gridId)
         {
             if (!gridId.IsValid())
@@ -160,10 +234,13 @@ namespace Content.Server.GameObjects.EntitySystems
             atmosphere = null;
             return false;
         }
+        #endregion
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
+            _exposedTimer += frameTime;
 
             foreach (var (mapGridComponent, gridAtmosphereComponent) in EntityManager.ComponentManager.EntityQuery<IMapGridComponent, IGridAtmosphereComponent>(true))
             {
@@ -171,20 +248,18 @@ namespace Content.Server.GameObjects.EntitySystems
 
                 gridAtmosphereComponent.Update(frameTime);
             }
-        }
 
-        private void OnTileChanged(object? sender, TileChangedEventArgs eventArgs)
-        {
-            // When a tile changes, we want to update it only if it's gone from
-            // space -> not space or vice versa. So if the old tile is the
-            // same as the new tile in terms of space-ness, ignore the change
-
-            if (eventArgs.NewTile.IsSpace() == eventArgs.OldTile.IsSpace())
+            if (_exposedTimer >= ExposedUpdateDelay)
             {
-                return;
-            }
+                foreach (var exposed in EntityManager.ComponentManager.EntityQuery<AtmosExposedComponent>(true))
+                {
+                    var tile = exposed.Owner.Transform.Coordinates.GetTileAtmosphere(EntityManager);
+                    if (tile == null) continue;
+                    exposed.Update(tile, _exposedTimer);
+                }
 
-            GetGridAtmosphere(eventArgs.NewTile.GridIndex)?.Invalidate(eventArgs.NewTile.GridIndices);
+                _exposedTimer = 0;
+            }
         }
     }
 }
