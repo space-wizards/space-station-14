@@ -22,6 +22,14 @@ namespace Content.Server.GameObjects.EntitySystems.Body.Surgery
             SubscribeLocalEvent<SurgeryWindowCloseMessage>(OnSurgeryWindowClose);
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<SurgeryWindowOpenMessage>();
+            UnsubscribeLocalEvent<SurgeryWindowCloseMessage>();
+        }
+
         public void Reset()
         {
             _openSurgeryUIs.Clear();
