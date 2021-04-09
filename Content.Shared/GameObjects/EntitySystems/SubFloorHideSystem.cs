@@ -1,6 +1,7 @@
 #nullable enable
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Maps;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -12,6 +13,7 @@ namespace Content.Shared.GameObjects.EntitySystems
     /// <summary>
     ///     Entity system backing <see cref="SubFloorHideComponent"/>.
     /// </summary>
+    [UsedImplicitly]
     public class SubFloorHideSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -52,7 +54,11 @@ namespace Content.Shared.GameObjects.EntitySystems
             _mapManager.GridChanged += MapManagerOnGridChanged;
             _mapManager.TileChanged += MapManagerOnTileChanged;
 
-            SubscribeLocalEvent<SubFloorHideDirtyEvent>(HandleDirtyEvent);
+            // TODO: Make this sane when EntityStarted becomes a directed event.
+            EntityManager.EntityStarted += OnEntityStarted;
+
+            SubscribeLocalEvent<SubFloorHideComponent, EntityTerminatingEvent>(OnSubFloorTerminating);
+            SubscribeLocalEvent<SubFloorHideComponent, SnapGridPositionChangedEvent>(OnSnapGridPositionChanged);
         }
 
         public override void Shutdown()
@@ -62,18 +68,30 @@ namespace Content.Shared.GameObjects.EntitySystems
             _mapManager.GridChanged -= MapManagerOnGridChanged;
             _mapManager.TileChanged -= MapManagerOnTileChanged;
 
-            UnsubscribeLocalEvent<SubFloorHideDirtyEvent>();
+            EntityManager.EntityStarted -= OnEntityStarted;
+
+            UnsubscribeLocalEvent<SubFloorHideComponent, EntityTerminatingEvent>(OnSubFloorTerminating);
+            UnsubscribeLocalEvent<SubFloorHideComponent, SnapGridPositionChangedEvent>(OnSnapGridPositionChanged);
         }
 
-        private void HandleDirtyEvent(SubFloorHideDirtyEvent ev)
+        private void OnEntityStarted(object? sender, EntityUid uid)
         {
-            if (!_mapManager.TryGetGrid(ev.Sender.Transform.GridID, out var grid))
+            if (ComponentManager.HasComponent<SubFloorHideComponent>(uid))
             {
-                return;
+                UpdateEntity(uid);
             }
+        }
 
-            var indices = grid.WorldToTile(ev.Sender.Transform.WorldPosition);
-            UpdateTile(grid, indices);
+        private void OnSubFloorTerminating(EntityUid uid, SubFloorHideComponent component, EntityTerminatingEvent args)
+        {
+            UpdateEntity(uid);
+        }
+
+        private void OnSnapGridPositionChanged(EntityUid uid, SubFloorHideComponent component, SnapGridPositionChangedEvent ev)
+        {
+            // We do this directly instead of calling UpdateEntity.
+            if(_mapManager.TryGetGrid(ev.NewGrid, out var grid))
+                UpdateTile(grid, ev.Position);
         }
 
         private void MapManagerOnTileChanged(object? sender, TileChangedEventArgs e)
@@ -87,6 +105,14 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 UpdateTile(e.Grid, modified.position);
             }
+        }
+
+        private void UpdateEntity(EntityUid uid)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out ITransformComponent? transform) ||
+                !_mapManager.TryGetGrid(transform.GridID, out var grid)) return;
+
+            UpdateTile(grid, grid.WorldToTile(transform.WorldPosition));
         }
 
         private void UpdateTile(IMapGrid grid, Vector2i position)
