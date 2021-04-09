@@ -46,8 +46,10 @@ namespace Content.Shared.GameObjects.Components.Items
                 {
                     DeselectActiveHeldEntity();
                     _activeHand = value;
+
                     SelectActiveHeldEntity();
-                    Dirty();
+
+                    HandsModified();
                 }
             }
         }
@@ -83,6 +85,11 @@ namespace Content.Shared.GameObjects.Components.Items
             return new HandsComponentState(hands, ActiveHand);
         }
 
+        public virtual void HandsModified()
+        {
+            Dirty();
+        }
+
         public void AddHand(string handName, HandLocation handLocation)
         {
             if (HasHand(handName))
@@ -97,7 +104,9 @@ namespace Content.Shared.GameObjects.Components.Items
                 ActiveHand = handName;
 
             HandCountChanged();
+
             Dirty();
+            HandsModified();
         }
 
         public void RemoveHand(string handName)
@@ -118,7 +127,9 @@ namespace Content.Shared.GameObjects.Components.Items
                 ActiveHand = ReadOnlyHands.FirstOrDefault()?.Name;
 
             HandCountChanged();
+
             Dirty();
+            HandsModified();
         }
 
         public bool HasHand(string handName)
@@ -365,6 +376,9 @@ namespace Content.Shared.GameObjects.Components.Items
             }
             OnHeldEntityRemovedFromHand(heldEntity, hand.ToHandState());
 
+            Dirty();
+            HandsModified();
+
         }
 
         private void DropHeldEntity(Hand hand, EntityCoordinates targetDropLocation, bool intentionalDrop)
@@ -381,7 +395,6 @@ namespace Content.Shared.GameObjects.Components.Items
             heldEntity.Transform.Coordinates = GetFinalDropCoordinates(targetDropLocation);
 
             OnItemChanged?.Invoke();
-            Dirty();
         }
 
         /// <summary>
@@ -452,7 +465,6 @@ namespace Content.Shared.GameObjects.Components.Items
                 Logger.Error($"{nameof(SharedHandsComponent)} on {Owner} could not insert {heldEntity} into {targetContainer}.");
                 return;
             }
-            Dirty();
         }
 
         #endregion
@@ -543,7 +555,6 @@ namespace Content.Shared.GameObjects.Components.Items
             entity.Transform.LocalPosition = Vector2.Zero;
 
             OnItemChanged?.Invoke();
-            Dirty();
 
             var entityPosition = entity.TryGetContainer(out var container) ? container.Owner.Transform.Coordinates : entity.Transform.Coordinates;
 
@@ -551,6 +562,9 @@ namespace Content.Shared.GameObjects.Components.Items
             {
                 SendNetworkMessage(new AnimatePickupEntityMessage(entity.Uid, entityPosition));
             }
+
+            Dirty();
+            HandsModified();
         }
 
         private bool TryPickupEntity(Hand hand, IEntity entity, bool checkActionBlocker = true)
@@ -583,7 +597,6 @@ namespace Content.Shared.GameObjects.Components.Items
                 newActiveIndex = 0;
 
             ActiveHand = ReadOnlyHands[newActiveIndex].Name;
-
         }
 
         /// <summary>

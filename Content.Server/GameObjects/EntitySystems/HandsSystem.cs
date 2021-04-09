@@ -33,7 +33,6 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Initialize();
 
             CommandBinds.Builder
-                .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(HandleSwapHands))
                 .Bind(ContentKeyFunctions.Drop, new PointerInputCmdHandler(HandleDrop))
                 .Bind(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem))
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
@@ -68,14 +67,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
             playerEnt.TryGetComponent(out hands);
             return hands != null;
-        }
-
-        private void HandleSwapHands(ICommonSession? session)
-        {
-            if (!TryGetHandsComp(session, out var hands))
-                return;
-
-            hands.SwapHands();
         }
 
         private bool HandleDrop(ICommonSession? session, EntityCoordinates coords, EntityUid uid)

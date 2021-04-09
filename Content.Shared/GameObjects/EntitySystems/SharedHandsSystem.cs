@@ -1,11 +1,17 @@
+using Content.Shared.GameObjects.Components.Items;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input.Binding;
+using Robust.Shared.IoC;
+using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
+using System;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
     public abstract class SharedHandsSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -13,16 +19,25 @@ namespace Content.Shared.GameObjects.EntitySystems
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
 
-            //SubscribeNetworkEvent<CombatModeSystemMessages.SetCombatModeActiveMessage>(CombatModeActiveHandler);
-            //SubscribeLocalEvent<CombatModeSystemMessages.SetCombatModeActiveMessage>(CombatModeActiveHandler);
+            SubscribeLocalEvent<SwapHandsMessage>(HandleSwapHands);
+            SubscribeNetworkEvent<SwapHandsMessage>(HandleSwapHands);
         }
 
-        public override void Shutdown()
+        private void HandleSwapHands(SwapHandsMessage msg, EntitySessionEventArgs eventArgs)
         {
-            CommandBinds.Unregister<SharedHandsSystem>();
-            base.Shutdown();
+            var entity = eventArgs.SenderSession?.AttachedEntity;
+
+            if (entity == null || !entity.TryGetComponent(out SharedHandsComponent? hands))
+                return;
+
+            hands.SwapHands();
         }
 
         protected abstract void HandleContainerModified(ContainerModifiedMessage args);
+    }
+
+    [Serializable, NetSerializable]
+    public class SwapHandsMessage : EntityEventArgs
+    {
     }
 }

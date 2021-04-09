@@ -24,9 +24,6 @@ namespace Content.Client.GameObjects.Components.Items
         [ViewVariables]
         public HandsGui Gui { get; private set; } = default!;
 
-        [ComponentDependency]
-        private ISpriteComponent? _sprite = default!;
-
         public override void OnAdd()
         {
             base.OnAdd();
@@ -91,6 +88,15 @@ namespace Content.Client.GameObjects.Components.Items
                     HandleAnimatePickupEntityMessage(msg);
                     break;
             }
+        }
+
+        public override void HandsModified()
+        {
+            base.HandsModified();
+
+            UpdateHandContainers();
+            UpdateHandVisualizer();
+            UpdateHandsGuiState();
         }
 
         private void OnHandClick(string handClicked)
