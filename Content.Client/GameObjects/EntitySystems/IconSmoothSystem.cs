@@ -24,9 +24,16 @@ namespace Content.Client.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Initialize()
         {
-            SubscribeLocalEvent<IconSmoothDirtyEvent>(HandleDirtyEvent);
+            base.Initialize();
 
-            IoCManager.InjectDependencies(this);
+            SubscribeLocalEvent<IconSmoothDirtyEvent>(HandleDirtyEvent);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<IconSmoothDirtyEvent>();
         }
 
         public override void FrameUpdate(float frameTime)
