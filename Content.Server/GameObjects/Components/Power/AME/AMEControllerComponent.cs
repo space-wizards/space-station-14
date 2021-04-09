@@ -286,7 +286,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
         {
             Owner.TryGetComponent(out NodeContainerComponent? nodeContainer);
 
-            var engineNodeGroup = nodeContainer?.Nodes
+            var engineNodeGroup = nodeContainer?.Nodes.Values
             .Select(node => node.NodeGroup)
             .OfType<AMENodeGroup>()
             .FirstOrDefault();

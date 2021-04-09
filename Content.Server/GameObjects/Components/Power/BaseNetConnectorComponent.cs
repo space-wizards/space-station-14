@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
-                var compatibleNet = container.Nodes
+                var compatibleNet = container.Nodes.Values
                     .Where(node => node.NodeGroupID == (NodeGroupID) Voltage)
                     .Select(node => node.NodeGroup)
                     .OfType<TNetType>()
