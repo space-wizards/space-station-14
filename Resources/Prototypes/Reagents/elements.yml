@@ -1,5 +1,5 @@
 - type: reagent
-  id: chem.Aluminium # We use real words here.
+  id: Aluminium # We use real words here.
   name: aluminium
   desc: A silver, soft, non-magnetic, and ductile metal.
   physicalDesc: metallic
@@ -8,7 +8,7 @@
   meltingPoint: 660.0
 
 - type: reagent
-  id: chem.Carbon
+  id: Carbon
   name: carbon
   desc: A black, crystalline solid.
   physicalDesc: crystalline
@@ -17,7 +17,7 @@
   meltingPoint: 3550.0
 
 - type: reagent
-  id: chem.Chlorine
+  id: Chlorine
   name: chlorine
   desc: A yellow-green gas which is toxic to humans.
   physicalDesc: gaseous
@@ -35,7 +35,7 @@
       amount: -1
 
 - type: reagent
-  id: chem.Copper
+  id: Copper
   name: copper
   desc: A soft, malleable, and ductile metal with very high thermal and electrical conductivity.
   physicalDesc: metallic
@@ -44,7 +44,7 @@
   meltingPoint: 1083.0
 
 - type: reagent
-  id: chem.Fluorine
+  id: Fluorine
   name: fluorine
   desc: A highly toxic pale yellow gas. Extremely reactive.
   physicalDesc: gaseous
@@ -62,7 +62,7 @@
       amount: -2
 
 - type: reagent
-  id: chem.Hydrogen
+  id: Hydrogen
   name: hydrogen
   desc: A light, flammable gas.
   physicalDesc: gaseous
@@ -71,7 +71,7 @@
   meltingPoint: -259.2
 
 - type: reagent
-  id: chem.Iron
+  id: Iron
   name: iron
   desc: A silvery-grey metal which forms iron oxides (rust) with contact with air. Commonly alloyed with other elements to create alloys such as steel.
   physicalDesc: metallic
@@ -80,7 +80,7 @@
   meltingPoint: 1538.0
 
 - type: reagent
-  id: chem.Lithium
+  id: Lithium
   name: lithium
   desc: A soft, silvery-white alkali metal. It is highly reactive, and ignites if it makes contact with water.
   physicalDesc: shiny
@@ -89,7 +89,7 @@
   boilingPoint: 1330.0
 
 - type: reagent
-  id: chem.Mercury
+  id: Mercury
   name: mercury
   desc: A silver metal which is liquid at room temperature. It is highly toxic to humans.
   physicalDesc: shiny
@@ -98,7 +98,7 @@
   boilingPoint: 356.73
 
 - type: reagent
-  id: chem.Nitrogen
+  id: Nitrogen
   name: nitrogen
   desc: A colorless, odorless unreactive gas. Highly stable.
   physicalDesc: gaseous
@@ -107,7 +107,7 @@
   meltingPoint: -210.0
 
 - type: reagent
-  id: chem.Oxygen
+  id: Oxygen
   name: oxygen
   desc: An oxidizing, colorless gas.
   physicalDesc: gaseous
@@ -116,7 +116,7 @@
   meltingPoint: -218.4
 
 - type: reagent
-  id: chem.Potassium
+  id: Potassium
   name: potassium
   desc: A soft, shiny grey metal. Even more reactive than lithium.
   physicalDesc: shiny
@@ -125,7 +125,7 @@
   boilingPoint: 759.0
 
 - type: reagent
-  id: chem.Phosphorus
+  id: Phosphorus
   name: phosphorus
   desc: A reactive metal used in pyrotechnics and weapons.
   physicalDesc: powdery
@@ -141,7 +141,7 @@
       amount: -2
 
 - type: reagent
-  id: chem.Radium
+  id: Radium
   name: radium
   desc: A radioactive metal, silvery-white in it's pure form. It glows due to it's radioactivity and is highly toxic.
   physicalDesc: glowing
@@ -161,7 +161,7 @@
       amount: 0.1
 
 - type: reagent
-  id: chem.Silicon
+  id: Silicon
   name: silicon
   desc: A hard and brittle crystalline solid with a blue-grey color.
   physicalDesc: crystalline
@@ -170,7 +170,7 @@
   meltingPoint: 1414.0
 
 - type: reagent
-  id: chem.Sulfur
+  id: Sulfur
   name: sulfur
   desc: A yellow, crystalline solid.
   physicalDesc: powdery
@@ -179,7 +179,7 @@
   meltingPoint: 120.0
 
 - type: reagent
-  id: chem.Sodium
+  id: Sodium
   name: sodium
   desc: A silvery-white alkali metal. Highly reactive in it's pure form.
   physicalDesc: metallic
@@ -188,7 +188,7 @@
   boilingPoint: 883.0
 
 - type: reagent
-  id: chem.Uranium
+  id: Uranium
   name: uranium
   desc: A grey metallic chemical element in the actinide series, weakly radioactive.
   physicalDesc: metallic

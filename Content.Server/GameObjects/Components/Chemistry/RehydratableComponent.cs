@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         [ViewVariables]
         [DataField("catalyst")]
-        private string _catalystPrototype = "chem.Water";
+        private string _catalystPrototype = "Water";
         [ViewVariables]
         [DataField("target")]
         private string? _targetPrototype = default!;
