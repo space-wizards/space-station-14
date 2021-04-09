@@ -41,7 +41,8 @@
     - state: gasGenerator
   - type: NodeContainer
     nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: Fourway
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
 

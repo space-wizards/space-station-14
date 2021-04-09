@@ -13,26 +13,22 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     {
         protected override IEnumerable<Node> GetReachableNodes()
         {
-            if (!Owner.TryGetComponent(out SnapGridComponent? grid))
+            if (!Owner.TryGetComponent(out SnapGridComponent? snap))
                 yield break;
 
-            var cells = grid.GetCardinalNeighborCells();
-
-            foreach (var cell in cells)
+            foreach (var cell in snap.GetCardinalNeighborCells())
+            foreach (var entity in cell.GetLocal())
             {
-                foreach (var entity in cell.GetLocal())
+                if (!entity.TryGetComponent<NodeContainerComponent>(out var container)) continue;
+
+                foreach (var node in container.Nodes.Values)
                 {
-                    if (entity.TryGetComponent<NodeContainerComponent>(out var container))
+                    if (node != null && node != this)
                     {
-                        foreach (var node in container.Nodes)
-                        {
-                            if (node != null && node != this)
-                            {
-                                yield return node;
-                            }
-                        }
+                        yield return node;
                     }
                 }
+
             }
         }
     }

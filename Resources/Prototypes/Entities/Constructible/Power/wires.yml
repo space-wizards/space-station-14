@@ -48,10 +48,12 @@
     key: hv_cables
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
-    - !type:AdjacentNode
-      nodeGroupID: WireNet
+      power:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
+      wire:
+        !type:AdjacentNode
+        nodeGroupID: WireNet
   - type: Wire
     wireDroppedOnCutPrototype: HVWireStack1
     wireType: HighVoltage
@@ -88,10 +90,12 @@
     key: mv_cables
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: MVPower
-    - !type:AdjacentNode
-      nodeGroupID: WireNet
+      power:
+        !type:AdjacentNode
+        nodeGroupID: MVPower
+      wire:
+        !type:AdjacentNode
+        nodeGroupID: WireNet
   - type: Wire
     wireDroppedOnCutPrototype: MVWireStack1
     wireType: MediumVoltage
@@ -128,10 +132,12 @@
     key: lv_cables
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: Apc
-    - !type:AdjacentNode
-      nodeGroupID: WireNet
+      power:
+        !type:AdjacentNode
+        nodeGroupID: Apc
+      wire:
+        !type:AdjacentNode
+        nodeGroupID: WireNet
   - type: PowerProvider
     voltage: Apc
   - type: Wire
