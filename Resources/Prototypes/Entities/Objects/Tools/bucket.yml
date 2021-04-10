@@ -8,6 +8,7 @@
     isOpen: true
   - type: Clickable
   - type: Sprite
+    netsync: false
     sprite: Objects/Tools/bucket.rsi
     state: icon
   - type: Clothing
@@ -15,7 +16,6 @@
     Slots:
     - Helmet
   - type: Bucket
-  - type: LoopingSound
   - type: SolutionContainer
     maxVol: 500
   - type: SolutionTransfer

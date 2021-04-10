@@ -14,6 +14,7 @@
   - type: Mop
   - type: SolutionContainer
     maxVol: 10
+
 - type: entity
   name: mop bucket
   id: MopBucket
@@ -29,7 +30,6 @@
     drawdepth: Objects
   - type: InteractionOutline
   - type: Bucket
-  - type: LoopingSound
   - type: SolutionContainer
     maxVol: 500
     contents:
@@ -42,10 +42,9 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.40,-0.25,0.25,0.25"
-      mass: 5
+      mass: 20
       mask:
       - Impassable
-      - Opaque
       layer:
       - Opaque
   - type: Pullable
