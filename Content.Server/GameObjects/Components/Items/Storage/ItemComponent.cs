@@ -34,23 +34,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
         }
 
-        public override bool TryPutInHand(IEntity user)
-        {
-            if (!CanPickup(user))
-                return false;
-
-            if (!user.TryGetComponent(out SharedHandsComponent? hands))
-                return false;
-
-            var activeHand = hands.ActiveHand;
-
-            if (activeHand == null)
-                return false;
-
-            hands.TryPickupEntityToActiveHand(Owner);
-            return true;
-        }
-
         [Verb]
         public sealed class PickUpVerb : Verb<ItemComponent>
         {

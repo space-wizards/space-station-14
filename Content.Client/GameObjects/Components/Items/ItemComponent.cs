@@ -9,11 +9,6 @@ namespace Content.Client.GameObjects.Components.Items
     [ComponentReference(typeof(SharedItemComponent))]
     public class ItemComponent : SharedItemComponent
     {
-        public override bool TryPutInHand(IEntity user)
-        {
-            return false;
-        }
-
         protected override void OnEquippedPrefixChange()
         {
             if (!Owner.TryGetContainer(out var container))
