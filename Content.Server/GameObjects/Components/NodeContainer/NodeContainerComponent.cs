@@ -1,5 +1,6 @@
 #nullable enable
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared.GameObjects.EntitySystems;
@@ -62,6 +63,23 @@ namespace Content.Server.GameObjects.Components.NodeContainer
             {
                 node.AnchorUpdate();
             }
+        }
+
+        public T GetNode<T>(string identifier) where T : Node
+        {
+            return (T)_nodes[identifier];
+        }
+
+        public bool TryGetNode<T>(string identifier, [NotNullWhen(true)] out T? node) where T : Node
+        {
+            if (_nodes.TryGetValue(identifier, out var n) && n is T t)
+            {
+                node = t;
+                return true;
+            }
+
+            node = null;
+            return false;
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
