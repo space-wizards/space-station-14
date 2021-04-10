@@ -848,3 +848,10 @@ Entries:
   - {message: Welded Lockers and Crates will now look welded., type: Fix}
   id: 153
   time: '2021-04-08T12:39:50.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: 'baseball bat, machete, captain''s sabre and katana.', type: Add}
+  - {message: 'smaller combat knife icon, inhands for fireaxe, Olivaw pistol and WT-550
+      smg.', type: Fix}
+  id: 154
+  time: '2021-04-10T16:34:45.0000000+00:00'
