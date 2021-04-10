@@ -8,6 +8,7 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -24,16 +25,16 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         ///     If the filter is currently filtering.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool FilterEnabled
+        public bool Enabled
         {
-            get => _filterEnabled;
+            get => _enabled;
             set
             {
-                _filterEnabled = value;
+                _enabled = value;
                 UpdateAppearance();
             }
         }
-        private bool _filterEnabled;
+        private bool _enabled;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public Gas GasToFilter
@@ -67,20 +68,20 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         [DataField("maxVolumePumpRate")] private int _maxVolumeFilterRate = 100;
 
-        [DataField("inletDirection")] [ViewVariables]
-        private PipeDirection _initialInletDirection = PipeDirection.None;
+        [DataField("inlet")] [ViewVariables]
+        private string _inletName = "inlet";
 
         /// <summary>
         ///     The direction the filtered-out gas goes.
         /// </summary>
-        [DataField("filterOutletDirection")] [ViewVariables]
-        private PipeDirection _initialFilterOutletDirection = PipeDirection.None;
+        [DataField("filter")] [ViewVariables]
+        private string _filter = "filter";
 
         /// <summary>
         ///     The direction the rest of the gas goes.
         /// </summary>
-        [DataField("outletDirection")] [ViewVariables]
-        private PipeDirection _initialOutletDirection = PipeDirection.None;
+        [DataField("outlet")] [ViewVariables]
+        private string _outlet = "outlet";
 
         [ViewVariables]
         private PipeNode? _inletPipe;
@@ -97,64 +98,23 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<AtmosDeviceComponent>();
-            SetPipes();
             UpdateAppearance();
-        }
-
-        private void FilterGas(GasMixture inletGas, GasMixture filterOutletGas, GasMixture outletGas)
-        {
-            var volumeRatio = Math.Clamp(VolumeFilterRate / inletGas.Volume, 0, 1);
-            var gas = inletGas.RemoveRatio(volumeRatio);
-
-            var molesToSeperate = gas.GetMoles(GasToFilter);
-            gas.SetMoles(GasToFilter, 0);
-            filterOutletGas.AdjustMoles(GasToFilter, molesToSeperate);
-
-            outletGas.Merge(gas);
         }
 
         private void UpdateAppearance()
         {
-            _appearance?.SetData(FilterVisuals.VisualState, new FilterVisualState(FilterEnabled));
-        }
-
-        private void SetPipes()
-        {
-            _inletPipe = null;
-            _filterOutletPipe = null;
-            _outletPipe = null;
-
-            if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
-            {
-                Logger.Warning($"{typeof(GasFilterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
-                return;
-            }
-
-            var pipeNodes = container.Nodes.OfType<PipeNode>();
-
-            _inletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _initialInletDirection).FirstOrDefault();
-            _filterOutletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _initialFilterOutletDirection).FirstOrDefault();
-            _outletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _initialOutletDirection).FirstOrDefault();
-
-            if (_inletPipe == null || _filterOutletPipe == null || _outletPipe == null)
-            {
-                Logger.Warning($"{nameof(GasFilterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
-                return;
-            }
+            _appearance?.SetData(FilterVisuals.VisualState, new FilterVisualState(Enabled));
         }
 
         public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
         {
-            if (!FilterEnabled)
+            if (!Enabled)
                 return;
 
-            if (_inletPipe == null || _inletPipe.Air == null ||
-                _filterOutletPipe == null || _filterOutletPipe.Air == null ||
-                _outletPipe == null || _outletPipe.Air == null)
+            if (!Owner.TryGetComponent(out NodeContainerComponent? nodeContainer))
                 return;
 
-            FilterGas(_inletPipe.Air, _filterOutletPipe.Air, _outletPipe.Air);
+            if(!nodeContainer.Nodes.TryGetValue(_inletName, out var inlet))
         }
     }
 }
