@@ -11,7 +11,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Atmos.Piping
+namespace Content.Server.GameObjects.Components.Atmos.Piping.Trinary
 {
     [RegisterComponent]
     public class GasFilterComponent : Component, IAtmosProcess
@@ -34,20 +34,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         private float _transferRate = Atmospherics.MaxTransferRate;
 
-        /// <summary>
-        ///     If the filter is currently filtering.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Enabled
-        {
-            get => _enabled;
-            set
-            {
-                _enabled = value;
-                UpdateAppearance();
-            }
-        }
-
         [ViewVariables(VVAccess.ReadWrite)]
         public Gas? FilteredGas { get; set; }
 
@@ -57,29 +43,18 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             get => _transferRate;
             set => _transferRate = Math.Min(value, Atmospherics.MaxTransferRate);
         }
-        public override void Initialize()
-        {
-            base.Initialize();
-            UpdateAppearance();
-        }
-
-        private void UpdateAppearance()
-        {
-            if(Owner.TryGetComponent(out AppearanceComponent? appearance))
-                appearance.SetData(FilterVisuals.VisualState, new FilterVisualState(Enabled));
-        }
 
         public void ProcessAtmos(float time, IGridAtmosphereComponent atmosphere)
         {
-            if (!Enabled)
+            if (!_enabled)
                 return;
 
             if (!Owner.TryGetComponent(out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (!nodeContainer.TryGetNode<PipeNode>(_inlet, out var inletNode)
-                || !nodeContainer.TryGetNode<PipeNode>(_filter, out var filterNode)
-                || !nodeContainer.TryGetNode<PipeNode>(_outlet, out var outletNode))
+            if (!nodeContainer.TryGetNode(_inlet, out PipeNode? inletNode)
+                || !nodeContainer.TryGetNode(_filter, out PipeNode? filterNode)
+                || !nodeContainer.TryGetNode(_outlet, out PipeNode? outletNode))
                 return;
 
             if (outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure)
