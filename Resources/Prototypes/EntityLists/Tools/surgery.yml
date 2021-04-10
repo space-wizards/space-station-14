@@ -1,10 +1,10 @@
 ﻿- type: entityList
-  id: SurgeryToolsBasic
+  id: surgerytools
   entities:
   - Cautery
   - Drill
-  - Scalpel
+  - ScalpelLaser
   - Retractor
   - Hemostat
-  - Saw
+  - SawAdvanced
 # - Drapes

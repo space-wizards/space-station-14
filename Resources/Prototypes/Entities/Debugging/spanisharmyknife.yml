@@ -1,0 +1,39 @@
+- type: entity
+  name: spanish army knife
+  parent: BaseItem
+  id: ToolDebug
+  description: The pain of using this is almost too great to bear.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/debug.rsi
+    state: icon
+  - type: Clothing
+    sprite: Objects/Tools/debug.rsi
+    QuickEquip: false
+    Slots:
+      - Belt
+  - type: MeleeWeapon
+    damage: 10
+  - type: TilePrying
+  - type: Tool
+    qualities:
+      - Prying
+    statusShowBehavior: true
+  - type: MultiTool
+    tools:
+      - behavior: Prying
+        state: icon
+        useSound: /Audio/Items/jaws_pry.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+      - behavior: Cutting
+        state: icon
+        useSound: /Audio/Items/jaws_cut.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+      - behavior: Screwing
+        state: icon
+        useSound: /Audio/Items/drill_use.ogg
+        changeSound: /Audio/Items/change_drill.ogg
+      - behavior: Anchoring
+        state: icon
+        useSound: /Audio/Items/drill_use.ogg
+        changeSound: /Audio/Items/change_drill.ogg
