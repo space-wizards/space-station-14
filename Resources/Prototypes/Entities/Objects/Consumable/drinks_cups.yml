@@ -236,7 +236,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Coffee
+      - ReagentId: Coffee
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coffee.rsi
@@ -252,7 +252,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Tea
+      - ReagentId: Tea
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi
@@ -273,7 +273,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Lean
+      - ReagentId: Lean
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lean.rsi

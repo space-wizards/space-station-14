@@ -5,11 +5,11 @@ using Content.Server.GameObjects.Components.Observer;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.GameObjects.Components.Body.Slot;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Utility;
 using Robust.Server.Console;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
@@ -29,20 +29,20 @@ namespace Content.Server.GameObjects.Components.Body
     {
         private Container _partContainer = default!;
 
-        protected override bool CanAddPart(string slot, IBodyPart part)
+        protected override bool CanAddPart(string slotId, IBodyPart part)
         {
-            return base.CanAddPart(slot, part) &&
+            return base.CanAddPart(slotId, part) &&
                    _partContainer.CanInsert(part.Owner);
         }
 
-        protected override void OnAddPart(string slot, IBodyPart part)
+        protected override void OnAddPart(BodyPartSlot slot, IBodyPart part)
         {
             base.OnAddPart(slot, part);
 
             _partContainer.Insert(part.Owner);
         }
 
-        protected override void OnRemovePart(string slot, IBodyPart part)
+        protected override void OnRemovePart(BodyPartSlot slot, IBodyPart part)
         {
             base.OnRemovePart(slot, part);
 
@@ -54,21 +54,25 @@ namespace Content.Server.GameObjects.Components.Body
         {
             base.Initialize();
 
-            _partContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-{nameof(BodyComponent)}");
+            _partContainer = Owner.EnsureContainer<Container>($"{Name}-{nameof(BodyComponent)}");
+            var preset = Preset;
 
-            foreach (var (slot, partId) in PartIds)
+            if (preset != null)
             {
-                // Using MapPosition instead of Coordinates here prevents
-                // a crash within the character preview menu in the lobby
-                var entity = Owner.EntityManager.SpawnEntity(partId, Owner.Transform.MapPosition);
-
-                if (!entity.TryGetComponent(out IBodyPart? part))
+                foreach (var slot in Slots)
                 {
-                    Logger.Error($"Entity {partId} does not have a {nameof(IBodyPart)} component.");
-                    continue;
-                }
+                    // Using MapPosition instead of Coordinates here prevents
+                    // a crash within the character preview menu in the lobby
+                    var entity = Owner.EntityManager.SpawnEntity(preset.PartIDs[slot.Id], Owner.Transform.MapPosition);
 
-                TryAddPart(slot, part, true);
+                    if (!entity.TryGetComponent(out IBodyPart? part))
+                    {
+                        Logger.Error($"Entity {slot.Id} does not have a {nameof(IBodyPart)} component.");
+                        continue;
+                    }
+
+                    SetPart(slot.Id, part);
+                }
             }
         }
 
@@ -79,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Body
             // This is ran in Startup as entities spawned in Initialize
             // are not synced to the client since they are assumed to be
             // identical on it
-            foreach (var part in Parts.Values)
+            foreach (var (part, _) in Parts)
             {
                 part.Dirty();
             }

@@ -1,137 +1,137 @@
 - type: reaction
-  id: react.ManlyDorf
+  id: ManlyDorf
   reactants:
-    chem.Beer:
+    Beer:
       amount: 1
-    chem.Ale:
+    Ale:
       amount: 2
   products:
-    chem.ManlyDorf: 3
+    ManlyDorf: 3
 
 - type: reaction
-  id: react.CubaLibre
+  id: CubaLibre
   reactants:
-    chem.Cola:
+    Cola:
       amount: 1
-    chem.Rum:
+    Rum:
       amount: 2
   products:
-    chem.CubaLibre: 3
+    CubaLibre: 3
 
 - type: reaction
-  id: react.IrishCream
+  id: IrishCream
   reactants:
-    chem.Cream:
+    Cream:
       amount: 1
-    chem.Whiskey:
+    Whiskey:
       amount: 2
   products:
-    chem.IrishCream: 3
+    IrishCream: 3
 
 - type: reaction
-  id: react.IrishCoffee
+  id: IrishCoffee
   reactants:
-    chem.IrishCream:
+    IrishCream:
       amount: 2
-    chem.Coffee:
+    Coffee:
       amount: 2
   products:
-    chem.IrishCoffee: 4
+    IrishCoffee: 4
 
 - type: reaction
-  id: react.IrishCarBomb
+  id: IrishCarBomb
   reactants:
-    chem.IrishCream:
+    IrishCream:
       amount: 1
-    chem.Ale:
+    Ale:
       amount: 1
   products:
-    chem.IrishCarBomb: 2
+    IrishCarBomb: 2
 
 - type: reaction
-  id: react.B52
+  id: B52
   reactants:
-    chem.IrishCarBomb:
+    IrishCarBomb:
       amount: 1
-    chem.Kahlua:
+    Kahlua:
       amount: 1
-    chem.Cognac:
+    Cognac:
       amount: 1
   products:
-    chem.B52: 3
+    B52: 3
 
 - type: reaction
-  id: react.AtomicBomb
+  id: AtomicBomb
   reactants:
-    chem.B52:
+    B52:
       amount: 10
-    chem.Uranium:
+    Uranium:
       amount: 1
   products:
-    chem.AtomicBomb: 11
+    AtomicBomb: 11
 
 - type: reaction
-  id: react.WhiskeyCola
+  id: WhiskeyCola
   reactants:
-    chem.Whiskey:
+    Whiskey:
       amount: 2
-    chem.Cola:
+    Cola:
       amount: 1
   products:
-    chem.WhiskeyCola: 3
+    WhiskeyCola: 3
 
 - type: reaction
-  id: react.SyndicateBomb
+  id: SyndicateBomb
   reactants:
-    chem.WhiskeyCola:
+    WhiskeyCola:
       amount: 1
-    chem.Beer:
+    Beer:
       amount: 1
   products:
-    chem.SyndicateBomb: 2
+    SyndicateBomb: 2
 
 - type: reaction
-  id: react.Antifreeze
+  id: Antifreeze
   reactants:
-    chem.Vodka:
+    Vodka:
       amount: 2
-    chem.Cream:
+    Cream:
       amount: 1
-    chem.Ice:
+    Ice:
       amount: 1
   products:
-    chem.Antifreeze: 4
+    Antifreeze: 4
 
 - type: reaction
-  id: react.Moonshine
+  id: Moonshine
   reactants:
-    chem.Vodka:
+    Vodka:
       amount: 1
-    chem.Tequila:
+    Tequila:
       amount: 1
-    chem.Whiskey:
+    Whiskey:
       amount: 1
   products:
-    chem.Moonshine: 3
+    Moonshine: 3
 
 - type: reaction
-  id: react.CreamyDelight
+  id: CreamyDelight
   reactants:
-    chem.Moonshine:
+    Moonshine:
       amount: 1
-    chem.Cream:
+    Cream:
       amount: 1
-    chem.Wine:
+    Wine:
       amount: 1
   products:
-    chem.CreamyDelight: 3
+    CreamyDelight: 3
 
 - type: reaction
-  id: react.LeanShine
+  id: LeanShine
   reactants:
-    chem.Lean:
+    Lean:
       amount: 1
-    chem.Moonshine:
+    Moonshine:
       amount: 1
   products:
-    chem.LeanShine: 2
+    LeanShine: 2

@@ -3,7 +3,7 @@ using System;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystemMessages.Pulling;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
@@ -12,8 +12,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
-using Robust.Shared.Players;
 using Robust.Shared.Physics.Dynamics.Joints;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Pulling
@@ -29,10 +29,14 @@ namespace Content.Shared.GameObjects.Components.Pulling
         /// Only set in Puller->set! Only set in unison with _pullerPhysics!
         /// </summary>
         private IEntity? _puller;
-        private IPhysBody? _pullerPhysics;
-        public IPhysBody? PullerPhysics => _pullerPhysics;
+
+        public IPhysBody? PullerPhysics { get; private set; }
 
         private DistanceJoint? _pullJoint;
+
+        public float? MaxDistance => _pullJoint?.MaxLength;
+
+        private MapCoordinates? _movingTo;
 
         /// <summary>
         /// The current entity pulling this component.
@@ -52,11 +56,11 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 if (_puller != null)
                 {
                     var oldPuller = _puller;
-                    var oldPullerPhysics = _pullerPhysics;
+                    var oldPullerPhysics = PullerPhysics;
 
                     _puller = null;
                     Dirty();
-                    _pullerPhysics = null;
+                    PullerPhysics = null;
 
                     if (_physics != null && oldPullerPhysics != null)
                     {
@@ -78,7 +82,11 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     return;
                 }
 
-                if (value != null)
+                if (value == null)
+                {
+                    MovingTo = null;
+                }
+                else
                 {
                     // Pulling a new object : Perform sanity checks.
 
@@ -137,16 +145,16 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                     _puller = value;
                     Dirty();
-                    _pullerPhysics = pullerPhysics;
+                    PullerPhysics = pullerPhysics;
 
-                    var message = new PullStartedMessage(_pullerPhysics, _physics);
+                    var message = new PullStartedMessage(PullerPhysics, _physics);
 
                     _puller.SendMessage(null, message);
                     Owner.SendMessage(null, message);
 
                     _puller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
-                    var union = _pullerPhysics.GetWorldAABB().Union(_physics.GetWorldAABB());
+                    var union = PullerPhysics.GetWorldAABB().Union(_physics.GetWorldAABB());
                     var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
                     _physics.WakeBody();
@@ -161,6 +169,29 @@ namespace Content.Shared.GameObjects.Components.Pulling
         }
 
         public bool BeingPulled => Puller != null;
+
+        public MapCoordinates? MovingTo
+        {
+            get => _movingTo;
+            set
+            {
+                if (_movingTo == value)
+                {
+                    return;
+                }
+
+                _movingTo = value;
+
+                if (value == null)
+                {
+                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PullableStopMovingMessage());
+                }
+                else
+                {
+                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PullableMoveMessage());
+                }
+            }
+        }
 
         /// <summary>
         /// Sanity-check pull. This is called from Puller setter, so it will never deny a pull that's valid by setting Puller.
@@ -251,7 +282,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
             return TryStartPull(puller);
         }
 
-        public bool TryMoveTo(EntityCoordinates to)
+        public bool TryMoveTo(MapCoordinates to)
         {
             if (Puller == null)
             {
@@ -263,16 +294,8 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return false;
             }
 
-            /*
-            if (!_physics.TryGetController(out PullController controller))
-            {
-                return false;
-            }
-            */
-
+            MovingTo = to;
             return true;
-
-            //return controller.TryMoveTo(Puller.Transform.Coordinates, to);
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
@@ -314,21 +337,15 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return;
             }
 
-            SharedAlertsComponent? pulledStatus = Owner.GetComponentOrNull<SharedAlertsComponent>();
+            var pulledStatus = Owner.GetComponentOrNull<SharedAlertsComponent>();
 
             switch (message)
             {
-                case PullStartedMessage msg:
-                    if (pulledStatus != null)
-                    {
-                        pulledStatus.ShowAlert(AlertType.Pulled);
-                    }
+                case PullStartedMessage:
+                    pulledStatus?.ShowAlert(AlertType.Pulled);
                     break;
-                case PullStoppedMessage msg:
-                    if (pulledStatus != null)
-                    {
-                        pulledStatus.ClearAlert(AlertType.Pulled);
-                    }
+                case PullStoppedMessage:
+                    pulledStatus?.ClearAlert(AlertType.Pulled);
                     break;
             }
         }
@@ -336,6 +353,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
         public override void OnRemove()
         {
             TryStopPull();
+            MovingTo = null;
 
             base.OnRemove();
         }

@@ -179,7 +179,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 if (!entity.TryGetComponent<NodeContainerComponent>(out var container))
                     continue;
 
-                foreach (var node in container.Nodes)
+                foreach (var node in container.Nodes.Values)
                 {
                     if (node is PipeNode pipe)
                         yield return pipe;
@@ -243,7 +243,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             var netConnectedDirections = PipeDirection.None;
             if (Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
-                foreach (var node in container.Nodes)
+                foreach (var node in container.Nodes.Values)
                 {
                     if (node is PipeNode pipe)
                     {

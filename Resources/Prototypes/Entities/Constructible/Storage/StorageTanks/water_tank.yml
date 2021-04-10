@@ -17,5 +17,5 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Water
+      - ReagentId: Water
         Quantity: 1500
