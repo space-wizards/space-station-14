@@ -1,11 +1,8 @@
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using System;
 
 namespace Content.Shared.GameObjects.EntitySystems

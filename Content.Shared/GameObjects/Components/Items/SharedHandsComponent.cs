@@ -541,6 +541,12 @@ namespace Content.Shared.GameObjects.Components.Items
             if (handContainer == null)
                 return;
 
+            var entityPosition = entity.TryGetContainer(out var container) ? container.Owner.Transform.Coordinates : entity.Transform.Coordinates;
+            if (entityPosition != Owner.Transform.Coordinates)
+            {
+                SendNetworkMessage(new AnimatePickupEntityMessage(entity.Uid, entityPosition));
+            }
+
             if (!handContainer.Insert(entity))
             {
                 Logger.Error($"{nameof(SharedHandsComponent)} on {Owner} could not insert {entity} into {handContainer}.");
@@ -555,13 +561,6 @@ namespace Content.Shared.GameObjects.Components.Items
             entity.Transform.LocalPosition = Vector2.Zero;
 
             OnItemChanged?.Invoke();
-
-            var entityPosition = entity.TryGetContainer(out var container) ? container.Owner.Transform.Coordinates : entity.Transform.Coordinates;
-
-            if (entityPosition != Owner.Transform.Coordinates)
-            {
-                SendNetworkMessage(new AnimatePickupEntityMessage(entity.Uid, entityPosition));
-            }
 
             Dirty();
             HandsModified();

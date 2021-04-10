@@ -88,6 +88,14 @@ namespace Content.Client.GameObjects.Components.Items
                     HandleAnimatePickupEntityMessage(msg);
                     break;
             }
+
+            void HandleAnimatePickupEntityMessage(AnimatePickupEntityMessage msg)
+            {
+                if (!Owner.EntityManager.TryGetEntity(msg.EntityId, out var entity))
+                    return;
+
+                ReusableAnimations.AnimateEntityPickup(entity, msg.EntityPosition, Owner.Transform.WorldPosition);
+            }
         }
 
         public override void HandsModified()
@@ -168,14 +176,6 @@ namespace Content.Client.GameObjects.Components.Items
         public void UpdateHandsGuiState()
         {
             Gui.SetState(GetHandsGuiState());
-        }
-
-        private void HandleAnimatePickupEntityMessage(AnimatePickupEntityMessage msg)
-        {
-            if (!Owner.EntityManager.TryGetEntity(msg.EntityId, out var entity))
-                return;
-
-            ReusableAnimations.AnimateEntityPickup(entity, msg.EntityPosition, Owner.Transform.WorldPosition);
         }
 
         private void HandlePlayerAttachedMsg()
