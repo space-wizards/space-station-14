@@ -138,7 +138,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (args.Part.PartType != BodyPartType.Hand)
                 return;
 
-            var handLocation = ReadOnlyHands.Count == 0 ? HandLocation.Right : HandLocation.Left; //TODO: remove this hack - make hand body part have a handlocation
+            var handLocation = ReadOnlyHands.Count == 0 ? HandLocation.Right : HandLocation.Left; //TODO: remove this hack - make hand body part have a handlocation?
 
             AddHand(args.Slot, handLocation);
         }

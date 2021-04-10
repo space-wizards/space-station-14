@@ -23,7 +23,7 @@ namespace Content.Shared.GameObjects.Components.Items
 
         public sealed override uint? NetID => ContentNetIDs.HANDS;
 
-        public event Action? OnItemChanged; //TODO: Remove
+        public event Action? OnItemChanged; //TODO: Try to replace C# event
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? ActiveHand
@@ -378,7 +378,6 @@ namespace Content.Shared.GameObjects.Components.Items
 
             Dirty();
             HandsModified();
-
         }
 
         private void DropHeldEntity(Hand hand, EntityCoordinates targetDropLocation, bool intentionalDrop)

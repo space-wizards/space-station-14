@@ -204,6 +204,7 @@
       fireStackAlternateState: 3
     - type: CreamPiedVisualizer
       state: creampie_human
+    - type: HeldItemsVisualizer
   - type: CombatMode
   - type: Climbing
   - type: Cuffable

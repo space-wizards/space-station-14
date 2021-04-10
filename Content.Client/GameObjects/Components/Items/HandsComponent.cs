@@ -200,7 +200,7 @@ namespace Content.Client.GameObjects.Components.Items
             return new HandsGuiState(handStates, ActiveHand);
         }
 
-        private HeldItemsVisualState GetHeldItemVisualState() //TODO: update this to use new methods with updated ItemComponent
+        private HeldItemsVisualState GetHeldItemVisualState()
         {
             var itemStates = new List<ItemVisualState>();
             foreach (var hand in ReadOnlyHands)
@@ -209,10 +209,17 @@ namespace Content.Client.GameObjects.Components.Items
                 if (heldEntity == null)
                     continue;
 
-                if (!heldEntity.TryGetComponent(out SharedItemComponent? item))
+                if (!heldEntity.TryGetComponent(out SharedItemComponent? item) || item.RsiPath == null)
                     continue;
 
-                itemStates.Add(new ItemVisualState(item.RsiPath, item.Name, item.Color));
+                var state = $"inhand-{hand.Location.ToString().ToLowerInvariant()}";
+
+                var prefix = item.EquippedPrefix;
+
+                if (prefix != null)
+                    state = $"{prefix}-" + state;
+
+                itemStates.Add(new ItemVisualState(item.RsiPath, state, item.Color));
             }
             return new HeldItemsVisualState(itemStates);
         }
