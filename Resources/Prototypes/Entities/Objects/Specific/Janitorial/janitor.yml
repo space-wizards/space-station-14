@@ -34,7 +34,7 @@
     maxVol: 500
     contents:
       reagents:
-        - ReagentId: chem.Water
+        - ReagentId: Water
           Quantity: 500
   - type: Physics
     bodyType: Dynamic

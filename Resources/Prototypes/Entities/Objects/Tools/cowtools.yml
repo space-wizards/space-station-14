@@ -119,7 +119,7 @@
       caps: Refillable
       contents:
         reagents:
-          - ReagentId: chem.WeldingFuel
+          - ReagentId: WeldingFuel
             Quantity: 100
     - type: Welder
       weldSoundCollection: Welder

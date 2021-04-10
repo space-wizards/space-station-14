@@ -33,7 +33,7 @@
       maxVol: 100
       contents:
         reagents:
-          - ReagentId: chem.Water
+          - ReagentId: Water
             Quantity: 100
 
 - type: entity
@@ -47,7 +47,7 @@
       maxVol: 100
       contents:
         reagents:
-          - ReagentId: chem.SpaceCleaner
+          - ReagentId: SpaceCleaner
             Quantity: 100
 
 # Vapor

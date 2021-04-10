@@ -5,8 +5,6 @@ using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -22,16 +20,18 @@ namespace Content.Server.GameObjects.Components.NodeContainer
         public override string Name => "NodeContainer";
 
         [ViewVariables]
-        public IReadOnlyList<Node> Nodes => _nodes;
+        public IReadOnlyDictionary<string, Node> Nodes => _nodes;
+
         [DataField("nodes")]
-        private List<Node> _nodes = new();
+        private readonly Dictionary<string, Node> _nodes = new();
+
         [DataField("examinable")]
-        private bool _examinable;
+        private bool _examinable = false;
 
         public override void Initialize()
         {
             base.Initialize();
-            foreach (var node in _nodes)
+            foreach (var node in _nodes.Values)
             {
                 node.Initialize(Owner);
             }
@@ -40,20 +40,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer
         protected override void Startup()
         {
             base.Startup();
-            foreach (var node in _nodes)
+            foreach (var node in _nodes.Values)
             {
                 node.OnContainerStartup();
-            }
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case AnchoredChangedMessage:
-                    AnchorUpdate();
-                    break;
             }
         }
 
@@ -61,15 +50,15 @@ namespace Content.Server.GameObjects.Components.NodeContainer
         {
             base.Shutdown();
 
-            foreach (var node in _nodes)
+            foreach (var node in _nodes.Values)
             {
                 node.OnContainerShutdown();
             }
         }
 
-        private void AnchorUpdate()
+        public void AnchorUpdate()
         {
-            foreach (var node in Nodes)
+            foreach (var node in Nodes.Values)
             {
                 node.AnchorUpdate();
             }
@@ -79,28 +68,24 @@ namespace Content.Server.GameObjects.Components.NodeContainer
         {
             if (!_examinable || !inDetailsRange) return;
 
-            for (var i = 0; i < Nodes.Count; i++)
+            foreach (var node in Nodes.Values)
             {
-                var node = Nodes[i];
                 if (node == null) continue;
                 switch (node.NodeGroupID)
                 {
                     case NodeGroupID.HVPower:
                         message.AddMarkup(
-                            Loc.GetString("It has a connector for [color=orange]HV cables[/color]."));
+                            Loc.GetString("It has a connector for [color=orange]HV cables[/color].\n"));
                         break;
                     case NodeGroupID.MVPower:
                         message.AddMarkup(
-                            Loc.GetString("It has a connector for [color=yellow]MV cables[/color]."));
+                            Loc.GetString("It has a connector for [color=yellow]MV cables[/color].\n"));
                         break;
                     case NodeGroupID.Apc:
                         message.AddMarkup(
-                            Loc.GetString("It has a connector for [color=green]APC cables[/color]."));
+                            Loc.GetString("It has a connector for [color=green]APC cables[/color].\n"));
                         break;
                 }
-
-                if(i != Nodes.Count - 1)
-                    message.AddMarkup("\n");
             }
         }
     }
