@@ -33,7 +33,6 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Initialize();
 
             CommandBinds.Builder
-                .Bind(ContentKeyFunctions.Drop, new PointerInputCmdHandler(HandleDrop))
                 .Bind(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem))
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
@@ -67,14 +66,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
             playerEnt.TryGetComponent(out hands);
             return hands != null;
-        }
-
-        private bool HandleDrop(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-        {
-            if (!TryGetHandsComp(session, out var hands))
-                return false;
-
-            return hands.TryDropActiveHand(coords);
         }
 
         private void HandleActivateItem(ICommonSession? session)
