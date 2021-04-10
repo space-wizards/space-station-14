@@ -36,6 +36,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Dependency] private IMapManager _mapManager = default!;
         [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private IServerEntityManager _serverEntityManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
 
         public GridTileLookupSystem GridTileLookupSystem { get; private set; } = default!;
         internal GasTileOverlaySystem GasTileOverlaySystem { get; private set; } = default!;
@@ -634,7 +635,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.AtmosDevices;
                     break;
                 case ProcessState.AtmosDevices:
-                    if (!ProcessAtmosDevices(_timer, _paused, maxProcessTime))
+                    if (!ProcessAtmosDevices(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -854,7 +855,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        protected virtual bool ProcessAtmosDevices(float timer, bool resumed = false, float lagCheck = 5f)
+        protected virtual bool ProcessAtmosDevices(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
 
@@ -865,7 +866,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             while (_currentRunAtmosDevices.Count > 0)
             {
                 var device = _currentRunAtmosDevices.Dequeue();
-                device.Update(timer);
+                device.Update(_gameTiming);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;

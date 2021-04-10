@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
@@ -8,9 +7,7 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -20,6 +17,22 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     public class GasFilterComponent : Component, IAtmosProcess
     {
         public override string Name => "GasFilter";
+
+        private bool _enabled;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("inlet")]
+        private string _inlet = "inlet";
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("filter")]
+        private string _filter = "filter";
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("outlet")]
+        private string _outlet = "outlet";
+
+        private float _transferRate = Atmospherics.MaxTransferRate;
 
         /// <summary>
         ///     If the filter is currently filtering.
@@ -34,67 +47,16 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
                 UpdateAppearance();
             }
         }
-        private bool _enabled;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public Gas GasToFilter
-        {
-            get => _gasToFilter;
-            set
-            {
-                _gasToFilter = value;
-                UpdateAppearance();
-            }
-        }
-
-        [DataField("gasToFilter")] private Gas _gasToFilter = Gas.Plasma;
+        public Gas? FilteredGas { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public int VolumeFilterRate
+        public float TransferRate
         {
-            get => _volumeFilterRate;
-            set => _volumeFilterRate = Math.Clamp(value, 0, MaxVolumeFilterRate);
+            get => _transferRate;
+            set => _transferRate = Math.Min(value, Atmospherics.MaxTransferRate);
         }
-
-        [DataField("startingVolumePumpRate")]
-        private int _volumeFilterRate;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int MaxVolumeFilterRate
-        {
-            get => _maxVolumeFilterRate;
-            set => Math.Max(value, 0);
-        }
-
-        [DataField("maxVolumePumpRate")] private int _maxVolumeFilterRate = 100;
-
-        [DataField("inlet")] [ViewVariables]
-        private string _inletName = "inlet";
-
-        /// <summary>
-        ///     The direction the filtered-out gas goes.
-        /// </summary>
-        [DataField("filter")] [ViewVariables]
-        private string _filter = "filter";
-
-        /// <summary>
-        ///     The direction the rest of the gas goes.
-        /// </summary>
-        [DataField("outlet")] [ViewVariables]
-        private string _outlet = "outlet";
-
-        [ViewVariables]
-        private PipeNode? _inletPipe;
-
-        [ViewVariables]
-        private PipeNode? _filterOutletPipe;
-
-        [ViewVariables]
-        private PipeNode? _outletPipe;
-
-        [ComponentDependency]
-        private readonly AppearanceComponent? _appearance = default;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -103,10 +65,11 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         private void UpdateAppearance()
         {
-            _appearance?.SetData(FilterVisuals.VisualState, new FilterVisualState(Enabled));
+            if(Owner.TryGetComponent(out AppearanceComponent? appearance))
+                appearance.SetData(FilterVisuals.VisualState, new FilterVisualState(Enabled));
         }
 
-        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
+        public void ProcessAtmos(float time, IGridAtmosphereComponent atmosphere)
         {
             if (!Enabled)
                 return;
@@ -114,7 +77,34 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             if (!Owner.TryGetComponent(out NodeContainerComponent? nodeContainer))
                 return;
 
-            if(!nodeContainer.Nodes.TryGetValue(_inletName, out var inlet))
+            if (!nodeContainer.TryGetNode<PipeNode>(_inlet, out var inletNode)
+                || !nodeContainer.TryGetNode<PipeNode>(_filter, out var filterNode)
+                || !nodeContainer.TryGetNode<PipeNode>(_outlet, out var outletNode))
+                return;
+
+            if (outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure)
+                return; // No need to transfer if target is full.
+
+            // We take time into account here, transfer rates are L/s, after all.
+            var transferRatio = _transferRate * time / inletNode.Volume;
+
+            if (transferRatio <= 0)
+                return;
+
+            var removed = inletNode.Air.RemoveRatio(transferRatio);
+
+            if (FilteredGas.HasValue)
+            {
+                var filteredOut = new GasMixture {Temperature = removed.Temperature};
+
+                filteredOut.SetMoles(FilteredGas.Value, removed.GetMoles(FilteredGas.Value));
+                removed.SetMoles(FilteredGas.Value, 0f);
+
+                var target = filterNode.Air.Pressure < Atmospherics.MaxOutputPressure ? filterNode.Air : inletNode.Air;
+                target.Merge(filteredOut);
+            }
+
+            outletNode.Air.Merge(removed);
         }
     }
 }

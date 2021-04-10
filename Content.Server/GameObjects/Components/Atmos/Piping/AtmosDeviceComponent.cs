@@ -3,20 +3,23 @@ using System;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
     /// <summary>
     ///     Adds itself to a <see cref="IGridAtmosphereComponent"/> to be updated by.
-    ///     TODO: Make compatible with unanchoring/anchoring. Currently assumes that the Owner does not move.
     /// </summary>
     [RegisterComponent]
     public class AtmosDeviceComponent : Component
     {
         private static readonly AtmosDeviceUpdateEvent Event = new ();
+
+        private TimeSpan _lastTime = TimeSpan.Zero;
 
         public override string Name => "AtmosDevice";
 
@@ -29,12 +32,14 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         public IGridAtmosphereComponent? Atmosphere { get; private set; }
 
-        public float DeltaTime { get; private set; }
+        /// <summary>
+        ///     Time since the last atmos process.
+        /// </summary>
+        public TimeSpan DeltaTime { get; private set; }
 
         public override void Initialize()
         {
             base.Initialize();
-
             JoinAtmosphere();
         }
 
@@ -49,9 +54,10 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             LeaveAtmosphere();
         }
 
-        public void Update(float timer)
+        public void Update(IGameTiming gameTiming)
         {
-            DeltaTime = timer;
+            DeltaTime = gameTiming.CurTime - _lastTime;
+            _lastTime = gameTiming.CurTime;
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, Event);
         }
 
@@ -66,6 +72,9 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
             Atmosphere = atmosphere;
             Atmosphere.AddAtmosDevice(this);
+
+            // We update this as to not have it be zero by the time the next process occurs.
+            _lastTime = IoCManager.Resolve<IGameTiming>().CurTime;
         }
 
         public void LeaveAtmosphere()

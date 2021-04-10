@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             }
         }
 
-        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
+        public void ProcessAtmos(float time, IGridAtmosphereComponent atmosphere)
         {
             if (!GeneratorEnabled)
                 return;

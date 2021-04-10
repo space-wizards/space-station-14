@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private AppearanceComponent? _appearance;
 
-        private const float DefaultVolume = 1;
+        private const float DefaultVolume = 200f;
 
         public override void Initialize(IEntity owner)
         {

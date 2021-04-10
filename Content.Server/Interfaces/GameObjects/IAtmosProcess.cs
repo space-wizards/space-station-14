@@ -4,6 +4,6 @@ namespace Content.Server.Interfaces.GameObjects
 {
     public interface IAtmosProcess
     {
-        void ProcessAtmos(IGridAtmosphereComponent atmosphere);
+        void ProcessAtmos(float time, IGridAtmosphereComponent atmosphere);
     }
 }
