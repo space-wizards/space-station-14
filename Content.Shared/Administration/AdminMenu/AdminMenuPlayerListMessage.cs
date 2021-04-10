@@ -13,32 +13,36 @@ namespace Content.Shared.Administration.AdminMenu
         public AdminMenuPlayerListMessage(INetChannel channel) : base(NAME, GROUP) { }
         #endregion
 
-        public Dictionary<string, string> NamesToPlayers = default!;
+        public List<PlayerInfo> PlayersInfo = new();
 
         public override void ReadFromBuffer(NetIncomingMessage buffer)
         {
-            var pairs = buffer.ReadInt32();
+            var count = buffer.ReadInt32();
 
-            NamesToPlayers = new Dictionary<string, string>();
+            PlayersInfo.Clear();
 
-            for (var i = 0; i < pairs; i++)
+            for (var i = 0; i < count; i++)
             {
-                var name = buffer.ReadString();
-                var player = buffer.ReadString();
+                var username = buffer.ReadString();
+                var characterName = buffer.ReadString();
+                var antag = buffer.ReadBoolean();
 
-                NamesToPlayers.Add(name, player);
+                PlayersInfo.Add(new PlayerInfo(username, characterName, antag));
             }
         }
 
         public override void WriteToBuffer(NetOutgoingMessage buffer)
         {
-            buffer.Write(NamesToPlayers.Count);
+            buffer.Write(PlayersInfo.Count);
 
-            foreach (var (name, player) in NamesToPlayers)
+            foreach (var player in PlayersInfo)
             {
-                buffer.Write(name);
-                buffer.Write(player);
+                buffer.Write(player.Username);
+                buffer.Write(player.CharacterName);
+                buffer.Write(player.Antag);
             }
         }
+
+        public record PlayerInfo(string Username, string CharacterName, bool Antag);
     }
 }
