@@ -136,6 +136,8 @@ namespace Content.Shared.GameObjects.Components.Storage
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
+            var user = eventArgs.User;
+
             if (!CanPickup(user))
                 return false;
 
