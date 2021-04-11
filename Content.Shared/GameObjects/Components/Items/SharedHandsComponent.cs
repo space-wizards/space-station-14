@@ -416,7 +416,7 @@ namespace Content.Shared.GameObjects.Components.Items
         /// <summary>
         ///     Drops a hands contents to the target location.
         /// </summary>
-        private void DropHeldEntity(Hand hand, EntityCoordinates targetDropLocation, bool intentionalDrop)
+        private void DropHeldEntity(Hand hand, EntityCoordinates targetDropLocation, bool intentionalDrop = true)
         {
             var heldEntity = hand.HeldEntity;
 
@@ -453,7 +453,7 @@ namespace Content.Shared.GameObjects.Components.Items
         /// <summary>
         ///     Tries to drop a hands contents to the target location.
         /// </summary>
-        private bool TryDropHeldEntity(Hand hand, EntityCoordinates location, bool checkActionBlocker, bool intentionalDrop)
+        private bool TryDropHeldEntity(Hand hand, EntityCoordinates location, bool checkActionBlocker, bool intentionalDrop = true)
         {
             if (!CanRemoveHeldEntityFromHand(hand))
                 return false;
@@ -468,7 +468,7 @@ namespace Content.Shared.GameObjects.Components.Items
         /// <summary>
         ///     Drops the contents of a hand directly under the player.
         /// </summary>
-        private void DropHeldEntityToFloor(Hand hand, bool intentionalDrop)
+        private void DropHeldEntityToFloor(Hand hand, bool intentionalDrop = true)
         {
             DropHeldEntity(hand, Owner.Transform.Coordinates, intentionalDrop);
         }
@@ -780,6 +780,19 @@ namespace Content.Shared.GameObjects.Components.Items
         protected virtual void DoUse(IEntity heldEntity) { }
 
         protected virtual void DoActivate(IEntity heldEntity) { }
+
+        protected void EnableHand(Hand hand)
+        {
+            hand.Enabled = true;
+            Dirty();
+        }
+
+        protected void DisableHand(Hand hand)
+        {
+            hand.Enabled = false;
+            DropHeldEntityToFloor(hand, intentionalDrop: false);
+            Dirty();
+        }
     }
 
     public interface IReadOnlyHand

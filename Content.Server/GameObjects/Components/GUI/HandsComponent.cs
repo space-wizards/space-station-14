@@ -207,7 +207,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (firstFreeHand == null)
                 return;
 
-            firstFreeHand.Enabled = false;
+            DisableHand(firstFreeHand);
         }
 
         private void StopPulling()
@@ -217,7 +217,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (firstOccupiedHand == null)
                 return;
 
-            firstOccupiedHand.Enabled = true;
+            DisableHand(firstOccupiedHand);
         }
 
         #endregion
