@@ -21,15 +21,13 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Sprite
+    sprite: Constructible/Atmos/pipe.rsi
     netsync: false
   - type: Appearance
     visuals:
-    - type: PipeVisualizer
     - type: PipeConnectorVisualizer
-  - type: Icon
-    sprite: Constructible/Atmos/pipe.rsi
 
-#Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (east)
+#Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 
 - type: entity
   parent: PipeBase
@@ -42,7 +40,7 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: South
-  - type: Icon
+  - type: Sprite
     state: pipeHalf
 
 - type: entity
@@ -56,7 +54,7 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: Longitudinal
-  - type: Icon
+  - type: Sprite
     state: pipeStraight
 
 - type: entity
@@ -70,7 +68,7 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: SWBend
-  - type: Icon
+  - type: Sprite
     state: pipeBend
 
 - type: entity
@@ -84,7 +82,7 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: TSouth
-  - type: Icon
+  - type: Sprite
     state: pipeTJunction
 
 - type: entity
@@ -98,5 +96,5 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: Fourway
-  - type: Icon
+  - type: Sprite
     state: pipeFourway

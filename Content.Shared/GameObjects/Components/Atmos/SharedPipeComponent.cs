@@ -14,13 +14,11 @@ namespace Content.Shared.GameObjects.Components.Atmos
     [Serializable, NetSerializable]
     public class PipeVisualState
     {
-        public readonly PipeShape PipeShape;
-
+        // TODO ATMOS: Make this not a class and just be the field below...
         public readonly PipeDirection ConnectedDirections;
 
-        public PipeVisualState(PipeShape pipeShape, PipeDirection connectedDirections)
+        public PipeVisualState(PipeDirection connectedDirections)
         {
-            PipeShape = pipeShape;
             ConnectedDirections = connectedDirections;
         }
     }

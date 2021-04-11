@@ -252,7 +252,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 }
             }
 
-            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection.PipeDirectionToPipeShape(), netConnectedDirections));
+            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(netConnectedDirections));
         }
 
         /// <summary>

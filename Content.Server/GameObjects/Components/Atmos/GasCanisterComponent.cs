@@ -47,11 +47,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <summary>
         /// The floor connector port that the canister is attached to.
         /// </summary>
-        [ViewVariables]
-        public GasCanisterPortComponent? ConnectedPort { get; private set; }
+        //[ViewVariables]
+        // TODO ATMOS: this pls
+        //public GasCanisterPortComponent? ConnectedPort { get; private set; }
 
-        [ViewVariables]
-        public bool ConnectedToPort => ConnectedPort != null;
+        //[ViewVariables]
+        //public bool ConnectedToPort => ConnectedPort != null;
 
         public const float DefaultVolume = 10;
 
@@ -74,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             base.Initialize();
             if (Owner.TryGetComponent<IPhysBody>(out var physics))
             {
-                AnchorUpdate();
+                //AnchorUpdate();
             }
             if (UserInterface != null)
             {
@@ -89,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdateAppearance();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        /*public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)
@@ -145,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdateAppearance();
         }
 
-        #endregion
+        #endregion*/
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
@@ -222,7 +223,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// </summary>
         private void UpdateAppearance()
         {
-            _appearance?.SetData(GasCanisterVisuals.ConnectedState, ConnectedToPort);
+            //_appearance?.SetData(GasCanisterVisuals.ConnectedState, ConnectedToPort);
             // The Eris canisters are being used, so best to use the Eris light logic unless someone else has a better idea.
             // https://github.com/discordia-space/CEV-Eris/blob/fdd6ee7012f46838a6711adb1737cd90c48ae448/code/game/machinery/atmoalter/canister.dm#L129
             if (Air.Pressure < 10)

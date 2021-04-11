@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.Components.Atmos.Piping
             if (resourceCache.TryGetResource(rsiString, out RSIResource? rsi))
                 _connectorRsi = rsi.RSI;
             else
-                Logger.Error($"{nameof(PipeVisualizer)} could not load to load RSI {rsiString}.");
+                Logger.Error($"{nameof(PipeConnectorVisualizer)} could not load to load RSI {rsiString}.");
         }
 
         public override void InitializeEntity(IEntity entity)
