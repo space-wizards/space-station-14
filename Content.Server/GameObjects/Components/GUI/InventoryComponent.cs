@@ -523,7 +523,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     if (!heldEntity.TryGetComponent(out ItemComponent? item))
                         return;
 
-                    if (!hands.TryDropActiveHeldItemForEquip())
+                    if (!hands.TryDropNoInteraction())
                         return;
 
                     if (!Equip(msg.Inventoryslot, item, true, out _))

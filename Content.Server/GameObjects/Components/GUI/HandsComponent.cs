@@ -50,9 +50,6 @@ namespace Content.Server.GameObjects.Components.GUI
                 case PullStoppedMessage:
                     StopPulling();
                     break;
-                case HandDisabledMsg msg:
-                    Drop(msg.Name, false);
-                    break;
             }
         }
 
@@ -138,7 +135,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (args.Part.PartType != BodyPartType.Hand)
                 return;
 
-            var handLocation = ReadOnlyHands.Count == 0 ? HandLocation.Right : HandLocation.Left; //TODO: remove this hack - make hand body part have a handlocation?
+            var handLocation = ReadOnlyHands.Count == 0 ? HandLocation.Right : HandLocation.Left; //TODO: make hand body part have a handlocation?
 
             AddHand(args.Slot, handLocation);
         }
@@ -367,5 +364,27 @@ namespace Content.Server.GameObjects.Components.GUI
         }
 
         #endregion
+    }
+
+    //TODO: Make this used
+    public class HandEnabledMsg : ComponentMessage
+    {
+        public string Name { get; }
+
+        public HandEnabledMsg(string name)
+        {
+            Name = name;
+        }
+    }
+
+    //TODO: Make this used
+    public class HandDisabledMsg : ComponentMessage
+    {
+        public string Name { get; }
+
+        public HandDisabledMsg(string name)
+        {
+            Name = name;
+        }
     }
 }

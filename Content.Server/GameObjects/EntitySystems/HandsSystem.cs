@@ -149,7 +149,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            if (hands.HasActiveHeldEntity())
+            if (hands.ActiveHandIsHoldingEntity())
             {
                 storageComponent.PlayerInsertHeldEntity(plyEnt);
             }

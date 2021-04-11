@@ -98,7 +98,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="coords"></param>
         /// <param name="doMobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop()"/> for the mob or not.</param>
         /// <returns>True if an item was dropped, false otherwise.</returns>
-        bool Drop(string slot, EntityCoordinates coords, bool doMobChecks = true, bool intentional = true);
+        bool TryDropHand(string slot, EntityCoordinates coords, bool doMobChecks = true, bool intentional = true);
 
         /// <summary>
         ///     Drop the specified entity in our hands to a certain position.
@@ -120,7 +120,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <exception cref="ArgumentException">
         ///     Thrown if <see cref="entity"/> is not actually held in any hand.
         /// </exception>
-        bool Drop(IEntity entity, EntityCoordinates coords, bool doMobChecks = true, bool intentional = true);
+        bool TryDropEntity(IEntity entity, EntityCoordinates coords, bool doMobChecks = true, bool intentional = true);
 
         /// <summary>
         ///     Drop the item contained in a slot into another container.
@@ -134,7 +134,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         ///     but practical remove or insert returned false anyways.
         ///     This is an edge-case that is currently unhandled.
         /// </exception>
-        bool TryPutHandIntoContainer(string slot, BaseContainer targetContainer, bool doMobChecks = true, bool intentional = true);
+        bool TryPutHandIntoContainer(string slot, BaseContainer targetContainer, bool doMobChecks = true);
 
         /// <summary>
         ///     Drops an item in one of the hands into a container.

@@ -328,7 +328,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 // drop the item, and the item actions should go away
                 serverPlayerEnt.GetComponent<HandsComponent>()
-                    .Drop(serverFlashlight, serverPlayerEnt.Transform.Coordinates, false);
+                    .TryDropEntity(serverFlashlight, serverPlayerEnt.Transform.Coordinates, false);
                 Assert.That(serverActionsComponent.ItemActionStates().ContainsKey(serverFlashlight.Uid), Is.False);
             });
 

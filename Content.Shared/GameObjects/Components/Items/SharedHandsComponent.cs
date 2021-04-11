@@ -1,8 +1,4 @@
 #nullable enable
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Shared.Containers;
@@ -14,6 +10,10 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Shared.GameObjects.Components.Items
 {
@@ -25,6 +25,9 @@ namespace Content.Shared.GameObjects.Components.Items
 
         public event Action? OnItemChanged; //TODO: Try to replace C# event
 
+        /// <summary>
+        ///     The name of the currently active hand.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public string? ActiveHand
         {
@@ -46,7 +49,6 @@ namespace Content.Shared.GameObjects.Components.Items
                 {
                     DeselectActiveHeldEntity();
                     _activeHand = value;
-
                     SelectActiveHeldEntity();
 
                     HandsModified();
@@ -105,7 +107,6 @@ namespace Content.Shared.GameObjects.Components.Items
 
             HandCountChanged();
 
-            Dirty();
             HandsModified();
         }
 
@@ -128,7 +129,6 @@ namespace Content.Shared.GameObjects.Components.Items
 
             HandCountChanged();
 
-            Dirty();
             HandsModified();
         }
 
@@ -142,7 +142,7 @@ namespace Content.Shared.GameObjects.Components.Items
             return false;
         }
 
-        private Hand? GetServerHand(string handName)
+        private Hand? GetHand(string handName)
         {
             foreach (var hand in Hands)
             {
@@ -157,12 +157,12 @@ namespace Content.Shared.GameObjects.Components.Items
             if (ActiveHand == null)
                 return null;
 
-            return GetServerHand(ActiveHand);
+            return GetHand(ActiveHand);
         }
 
         protected bool TryGetHand(string handName, [NotNullWhen(true)] out Hand? foundHand)
         {
-            foundHand = GetServerHand(handName);
+            foundHand = GetHand(handName);
             return foundHand != null;
         }
 
@@ -174,7 +174,7 @@ namespace Content.Shared.GameObjects.Components.Items
 
         #region Held Entities
 
-        public bool HasActiveHeldEntity()
+        public bool ActiveHandIsHoldingEntity()
         {
             if (!TryGetActiveHand(out var hand))
                 return false;
@@ -237,6 +237,9 @@ namespace Content.Shared.GameObjects.Components.Items
 
         #region Dropping
 
+        /// <summary>
+        ///     Checks all the conditions relevant to a player being able to drop an item.
+        /// </summary>
         public bool CanDrop(string handName, bool checkActionBlocker = true)
         {
             if (!TryGetHand(handName, out var hand))
@@ -251,6 +254,9 @@ namespace Content.Shared.GameObjects.Components.Items
             return true;
         }
 
+        /// <summary>
+        ///     Tries to drop the contents of the active hand to the target location.
+        /// </summary>
         public bool TryDropActiveHand(EntityCoordinates targetDropLocation, bool doMobChecks = true, bool intentional = true)
         {
             if (!TryGetActiveHand(out var hand))
@@ -259,15 +265,21 @@ namespace Content.Shared.GameObjects.Components.Items
             return TryDropHeldEntity(hand, targetDropLocation, doMobChecks, intentional);
         }
 
-        public bool Drop(string handName, EntityCoordinates targetDropLocation, bool doMobChecks = true, bool intentional = true)
+        /// <summary>
+        ///     Tries to drop the contents of a hand to the target location.
+        /// </summary>
+        public bool TryDropHand(string handName, EntityCoordinates targetDropLocation, bool checkActionBlocker = true, bool intentional = true)
         {
             if (!TryGetHand(handName, out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, targetDropLocation, doMobChecks, intentional);
+            return TryDropHeldEntity(hand, targetDropLocation, checkActionBlocker, intentional);
         }
 
-        public bool Drop(IEntity entity, EntityCoordinates coords, bool doMobChecks = true, bool intentional = true)
+        /// <summary>
+        ///     Tries to drop a held entity to the target location.
+        /// </summary>
+        public bool TryDropEntity(IEntity entity, EntityCoordinates coords, bool doMobChecks = true, bool intentional = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
                 return false;
@@ -275,18 +287,24 @@ namespace Content.Shared.GameObjects.Components.Items
             return TryDropHeldEntity(hand, coords, doMobChecks, intentional);
         }
 
-        public bool TryPutHandIntoContainer(string handName, BaseContainer targetContainer, bool doMobChecks = true, bool intentional = true)
+        /// <summary>
+        ///     Attempts to move the contents of a hand into a container that is not another hand, without dropping it on the floor inbetween.
+        /// </summary>
+        public bool TryPutHandIntoContainer(string handName, BaseContainer targetContainer, bool checkActionBlocker = true)
         {
             if (!TryGetHand(handName, out var hand))
                 return false;
 
-            if (!CanPutHeldEntityIntoContainer(hand, targetContainer, doMobChecks))
+            if (!CanPutHeldEntityIntoContainer(hand, targetContainer, checkActionBlocker))
                 return false;
 
             PutHeldEntityIntoContainer(hand, targetContainer);
             return true;
         }
 
+        /// <summary>
+        ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor inbetween.
+        /// </summary>
         public bool TryPutEntityIntoContainer(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
@@ -299,6 +317,9 @@ namespace Content.Shared.GameObjects.Components.Items
             return true;
         }
 
+        /// <summary>
+        ///     Tries to drop the contents of a hand directly under the player.
+        /// </summary>
         public bool TryDropHandToFloor(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
         {
             if (!TryGetHand(handName, out var hand))
@@ -307,6 +328,9 @@ namespace Content.Shared.GameObjects.Components.Items
             return TryDropHeldEntity(hand, Owner.Transform.Coordinates, checkActionBlocker, intentionalDrop);
         }
 
+        /// <summary>
+        ///     Tries to drop a held entity directly under the player.
+        /// </summary>
         public bool TryDropEntityToFloor(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
@@ -316,9 +340,10 @@ namespace Content.Shared.GameObjects.Components.Items
         }
 
         /// <summary>
-        ///     Tries to remove the item from the active hand without triggering <see cref="IDropped"/>.
-        /// </summary>
-        public bool TryDropActiveHeldItemForEquip()
+        ///     Tries to remove the item in the active hand, without dropping it.
+        ///     For transfering the held item to anothe rlocation, like an inventory slot,
+        ///     which souldn't trigger the drop interaction
+        public bool TryDropNoInteraction()
         {
             if (!TryGetActiveHand(out var hand))
                 return false;
@@ -330,6 +355,9 @@ namespace Content.Shared.GameObjects.Components.Items
             return true;
         }
 
+        /// <summary>
+        ///     Checks if the contents of a hand is able to be removed from its container.
+        /// </summary>
         private bool CanRemoveHeldEntityFromHand(Hand hand)
         {
             var heldEntity = hand.HeldEntity;
@@ -347,6 +375,9 @@ namespace Content.Shared.GameObjects.Components.Items
             return true;
         }
 
+        /// <summary>
+        ///     Checks if the player is allowed to perform drops.
+        /// </summary>
         private bool PlayerCanDrop()
         {
             if (!ActionBlockerSystem.CanDrop(Owner))
@@ -355,6 +386,9 @@ namespace Content.Shared.GameObjects.Components.Items
             return true;
         }
 
+        /// <summary>
+        ///     Removes the contents of a hand from its container. Assumes that the removal is allowed.
+        /// </summary>
         private void RemoveHeldEntityFromHand(Hand hand)
         {
             var heldEntity = hand.HeldEntity;
@@ -376,10 +410,12 @@ namespace Content.Shared.GameObjects.Components.Items
             }
             OnHeldEntityRemovedFromHand(heldEntity, hand.ToHandState());
 
-            Dirty();
             HandsModified();
         }
 
+        /// <summary>
+        ///     Drops a hands contents to the target location.
+        /// </summary>
         private void DropHeldEntity(Hand hand, EntityCoordinates targetDropLocation, bool intentionalDrop)
         {
             var heldEntity = hand.HeldEntity;
@@ -414,6 +450,9 @@ namespace Content.Shared.GameObjects.Components.Items
             return targetCoords.WithPosition(dropVector);
         }
 
+        /// <summary>
+        ///     Tries to drop a hands contents to the target location.
+        /// </summary>
         private bool TryDropHeldEntity(Hand hand, EntityCoordinates location, bool checkActionBlocker, bool intentionalDrop)
         {
             if (!CanRemoveHeldEntityFromHand(hand))
@@ -427,7 +466,7 @@ namespace Content.Shared.GameObjects.Components.Items
         }
 
         /// <summary>
-        ///     Forcibly drops the contents of a hand directly under the player.
+        ///     Drops the contents of a hand directly under the player.
         /// </summary>
         private void DropHeldEntityToFloor(Hand hand, bool intentionalDrop)
         {
@@ -450,6 +489,9 @@ namespace Content.Shared.GameObjects.Components.Items
             return true;
         }
 
+        /// <summary>
+        ///     For putting the contents of a hand into a container that is not another hand.
+        /// </summary>
         private void PutHeldEntityIntoContainer(Hand hand, IContainer targetContainer)
         {
             var heldEntity = hand.HeldEntity;
@@ -498,6 +540,9 @@ namespace Content.Shared.GameObjects.Components.Items
             return true;
         }
 
+        /// <summary>
+        ///     Tries to pick up an entity to a specific hand.
+        /// </summary>
         public bool TryPickupEntity(string handName, IEntity entity, bool checkActionBlocker = true)
         {
             if (!TryGetHand(handName, out var hand))
@@ -514,6 +559,9 @@ namespace Content.Shared.GameObjects.Components.Items
             return TryPickupEntity(hand, entity, checkActionBlocker);
         }
 
+        /// <summary>
+        ///     Checks if an entity can be put into a hand's container.
+        /// </summary>
         protected bool CanInsertEntityIntoHand(Hand hand, IEntity entity)
         {
             var handContainer = hand.Container;
@@ -526,6 +574,10 @@ namespace Content.Shared.GameObjects.Components.Items
             return true;
         }
 
+        /// <summary>
+        ///     Checks if the player is allowed to perform pickup actions.
+        /// </summary>
+        /// <returns></returns>
         protected bool PlayerCanPickup()
         {
             if (!ActionBlockerSystem.CanPickup(Owner))
@@ -534,6 +586,9 @@ namespace Content.Shared.GameObjects.Components.Items
             return true;
         }
 
+        /// <summary>
+        ///     Puts an entity into the player's hand, assumes that the insertion is allowed.
+        /// </summary>
         private void PutEntityIntoHand(Hand hand, IEntity entity)
         {
             var handContainer = hand.Container;
@@ -561,7 +616,6 @@ namespace Content.Shared.GameObjects.Components.Items
 
             OnItemChanged?.Invoke();
 
-            Dirty();
             HandsModified();
         }
 
@@ -672,7 +726,7 @@ namespace Content.Shared.GameObjects.Components.Items
         }
 
         /// <summary>
-        ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into every other hand.
+        ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
         /// </summary>
         public bool TryPutInActiveHandOrAny(IEntity entity, bool checkActionBlocker = true)
         {
@@ -680,20 +734,20 @@ namespace Content.Shared.GameObjects.Components.Items
         }
 
         /// <summary>
-        ///     Tries to pick up an entity into the priority hand, if provided. If it cannot, tries to pick up the entity into every other hand.
+        ///     Tries to pick up an entity into the priority hand, if provided. If it cannot, tries to pick up the entity into each other hand.
         /// </summary>
         public bool TryPutInAnyHand(IEntity entity, string? priorityHandName = null, bool checkActionBlocker = true)
         {
             Hand? priorityHand = null;
 
             if (priorityHandName != null)
-                priorityHand = GetServerHand(priorityHandName);
+                priorityHand = GetHand(priorityHandName);
 
             return TryPutInAnyHand(entity, priorityHand, checkActionBlocker);
         }
 
         /// <summary>
-        ///     Tries to pick up an entity into the priority hand, if provided. Then, tries to pick up the entity into every other hand.
+        ///     Tries to pick up an entity into the priority hand, if provided. If it cannot, tries to pick up the entity into each other hand.
         /// </summary>
         private bool TryPutInAnyHand(IEntity entity, Hand? priorityHand = null, bool checkActionBlocker = true)
         {
@@ -750,6 +804,10 @@ namespace Content.Shared.GameObjects.Components.Items
         [ViewVariables]
         public HandLocation Location { get; set; }
 
+        /// <summary>
+        ///     The container used to hold the contents of this hand. Nullable because the client must get the containers via <see cref="ContainerManagerComponent"/>,
+        ///     which may not be synced with the server when the client hands are created.
+        /// </summary>
         [ViewVariables]
         public IContainer? Container { get; set; }
 
@@ -811,7 +869,7 @@ namespace Content.Shared.GameObjects.Components.Items
     }
 
     /// <summary>
-    /// A message that calls the activate interaction on the item in Index.
+    /// A message that calls the activate interaction on the item in the specified hand.
     /// </summary>
     [Serializable, NetSerializable]
     public class ActivateInHandMsg : ComponentMessage
@@ -825,6 +883,9 @@ namespace Content.Shared.GameObjects.Components.Items
         }
     }
 
+    /// <summary>
+    ///     Uses the item in the active hand on the item in the specified hand.
+    /// </summary>
     [Serializable, NetSerializable]
     public class ClientAttackByInHandMsg : ComponentMessage
     {
@@ -837,6 +898,9 @@ namespace Content.Shared.GameObjects.Components.Items
         }
     }
 
+    /// <summary>
+    ///     Moves an item from one hand to the active hand.
+    /// </summary>
     [Serializable, NetSerializable]
     public class MoveItemFromHandMsg : ComponentMessage
     {
@@ -849,6 +913,9 @@ namespace Content.Shared.GameObjects.Components.Items
         }
     }
 
+    /// <summary>
+    ///     Sets the player's active hand to a specified hand.
+    /// </summary>
     [Serializable, NetSerializable]
     public class ClientChangedHandMsg : ComponentMessage
     {
@@ -861,30 +928,8 @@ namespace Content.Shared.GameObjects.Components.Items
         }
     }
 
-    [Serializable, NetSerializable]
-    public class HandEnabledMsg : ComponentMessage
-    {
-        public string Name { get; }
-
-        public HandEnabledMsg(string name)
-        {
-            Name = name;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class HandDisabledMsg : ComponentMessage
-    {
-        public string Name { get; }
-
-        public HandDisabledMsg(string name)
-        {
-            Name = name;
-        }
-    }
-
     /// <summary>
-    ///     Whether a hand is a left or right hand, or some other type of hand.
+    ///     What side of the body this hand is on.
     /// </summary>
     public enum HandLocation : byte
     {
@@ -894,7 +939,7 @@ namespace Content.Shared.GameObjects.Components.Items
     }
 
     /// <summary>
-    /// Component message for displaying an animation of an entity flying towards the owner of a HandsComponent
+    ///     Component message for displaying an animation of an entity flying towards the owner of a HandsComponent
     /// </summary>
     [Serializable, NetSerializable]
     public class AnimatePickupEntityMessage : ComponentMessage

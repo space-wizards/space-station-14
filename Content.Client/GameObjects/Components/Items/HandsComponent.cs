@@ -85,16 +85,12 @@ namespace Content.Client.GameObjects.Components.Items
             switch (message)
             {
                 case AnimatePickupEntityMessage msg:
-                    HandleAnimatePickupEntityMessage(msg);
+
+                    if (!Owner.EntityManager.TryGetEntity(msg.EntityId, out var entity))
+                        break;
+
+                    ReusableAnimations.AnimateEntityPickup(entity, msg.EntityPosition, Owner.Transform.WorldPosition);
                     break;
-            }
-
-            void HandleAnimatePickupEntityMessage(AnimatePickupEntityMessage msg)
-            {
-                if (!Owner.EntityManager.TryGetEntity(msg.EntityId, out var entity))
-                    return;
-
-                ReusableAnimations.AnimateEntityPickup(entity, msg.EntityPosition, Owner.Transform.WorldPosition);
             }
         }
 
@@ -145,15 +141,9 @@ namespace Content.Client.GameObjects.Components.Items
 
         private void OnActivateInHand(string handActivated)
         {
-            if (!TryGetHand(handActivated, out var activatedHand))
-                return;
-
-            SendNetworkMessage(new ActivateInHandMsg(activatedHand.Name));
+            SendNetworkMessage(new ActivateInHandMsg(handActivated));
         }
 
-        /// <summary>
-        ///     Updates the containers of each hand. May not be "correct" if the state of <see cref="ContainerManagerComponent"/> has not updated yet.
-        /// </summary>
         public void UpdateHandContainers()
         {
             var containerMan = Owner.EnsureComponentWarn<ContainerManagerComponent>();
