@@ -62,7 +62,7 @@ namespace Content.Shared.Physics.Controllers
             }
         }
 
-        private void ReduceLinearVelocity(bool prediction, PhysicsComponent body, float friction, float frameTime)
+        private void ReduceLinearVelocity(bool prediction, IPhysBody body, float friction, float frameTime)
         {
             var speed = body.LinearVelocity.Length;
 
@@ -93,7 +93,7 @@ namespace Content.Shared.Physics.Controllers
             body.LinearVelocity *= newSpeed;
         }
 
-        private void ReduceAngularVelocity(bool prediction, PhysicsComponent body, float friction, float frameTime)
+        private void ReduceAngularVelocity(bool prediction, IPhysBody body, float friction, float frameTime)
         {
             var speed = MathF.Abs(body.AngularVelocity);
 

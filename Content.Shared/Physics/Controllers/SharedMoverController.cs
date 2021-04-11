@@ -100,7 +100,7 @@ namespace Content.Shared.Physics.Controllers
             physicsComponent.LinearVelocity = total;
         }
 
-        public static bool UseMobMovement(SharedBroadPhaseSystem broadPhaseSystem, PhysicsComponent body, IPhysicsManager? physicsManager = null)
+        public static bool UseMobMovement(SharedBroadPhaseSystem broadPhaseSystem, IPhysBody body, IPhysicsManager? physicsManager = null)
         {
             return (body.BodyStatus == BodyStatus.OnGround) &
                    body.Owner.HasComponent<IMobStateComponent>() &&
