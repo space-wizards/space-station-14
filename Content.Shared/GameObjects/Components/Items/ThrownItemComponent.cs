@@ -35,7 +35,7 @@ namespace Content.Shared.GameObjects.Components.Items
                 physicsComponent.Fixtures.Count != 1) return;
 
             var shape = physicsComponent.Fixtures[0].Shape;
-            _fixture = new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false};
+            _fixture = new Fixture(physicsComponent, shape, (int) CollisionGroup.ThrownItem, 0, false);
             physicsComponent.AddFixture(_fixture);
         }
 
