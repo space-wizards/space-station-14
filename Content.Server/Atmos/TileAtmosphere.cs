@@ -72,6 +72,8 @@ namespace Content.Server.Atmos
         [ViewVariables]
         private readonly TileAtmosphere[] _adjacentTiles = new TileAtmosphere[Atmospherics.Directions];
 
+        public IReadOnlyList<TileAtmosphere> AdjacentTiles => _adjacentTiles;
+
         private AtmosDirection _adjacentBits = AtmosDirection.Invalid;
 
         [ViewVariables, UsedImplicitly]

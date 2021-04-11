@@ -600,5 +600,18 @@ namespace Content.Server.Atmos
             };
             return newMixture;
         }
+
+        public void ScrubInto(GasMixture destination, IReadOnlyCollection<Gas> filterGases)
+        {
+            var buffer = new GasMixture(Atmospherics.CellVolume);
+
+            foreach (var gas in filterGases)
+            {
+                buffer.AdjustMoles(gas, GetMoles(gas));
+                SetMoles(gas, 0f);
+            }
+
+            destination.Merge(buffer);
+        }
     }
 }
