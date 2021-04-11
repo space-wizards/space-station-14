@@ -155,15 +155,11 @@ namespace Content.Client.UserInterface
         {
             var id = _configManager.GetCVar<int>("hud.theme");
             var dir = string.Empty;
-            if (_prototypeManager.TryIndex(id.ToString(), out HudThemePrototype? proto))
-            {
-                dir = proto.Path;
-            }
-
-            if (string.IsNullOrEmpty(dir))
+            if (!_prototypeManager.TryIndex(id.ToString(), out HudThemePrototype? proto))
             {
                 throw new ArgumentOutOfRangeException();
             }
+            dir = proto.Path;
 
             var resourcePath = (new ResourcePath("/Textures/Interface/Inventory") / dir) / path;
             return _resourceCache.GetTexture(resourcePath);
