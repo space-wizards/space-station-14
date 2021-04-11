@@ -855,3 +855,8 @@ Entries:
       smg.', type: Fix}
   id: 154
   time: '2021-04-10T16:34:45.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: You can now set your HUD's theme in the settings., type: Add}
+  id: 155
+  time: '2021-04-11T22:43:54.0000000+00:00'
