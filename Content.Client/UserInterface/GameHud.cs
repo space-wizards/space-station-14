@@ -82,6 +82,8 @@ namespace Content.Client.UserInterface
 
         Texture GetHudTexture(string path);
 
+        bool ValidateHudTheme(int idx);
+
         // Init logic.
         void Initialize();
     }
@@ -131,18 +133,40 @@ namespace Content.Client.UserInterface
             _topNotificationContainer.AddChild(notification);
         }
 
+        public bool ValidateHudTheme(int idx)
+        {
+            if (!_prototypeManager.TryIndex(idx.ToString(), out HudThemePrototype? _))
+            {
+                Logger.ErrorS("hud", "invalid HUD theme id {0}, using different theme",
+                    idx);
+                var proto = _prototypeManager.EnumeratePrototypes<HudThemePrototype>().FirstOrDefault();
+                if (proto == null)
+                {
+                    throw new NullReferenceException("No valid HUD prototypes!");
+                }
+                var id = int.Parse(proto.ID);
+                _configManager.SetCVar(CCVars.HudTheme, id);
+                return false;
+            }
+            return true;
+        }
+
         public Texture GetHudTexture(string path)
         {
             var id = _configManager.GetCVar<int>("hud.theme");
-            var dir = (from theme in _prototypeManager.EnumeratePrototypes<HudThemePrototype>() where id.ToString() == theme.ID select theme.Path).FirstOrDefault();
+            var dir = string.Empty;
+            if (_prototypeManager.TryIndex(id.ToString(), out HudThemePrototype? proto))
+            {
+                dir = proto.Path;
+            }
 
             if (string.IsNullOrEmpty(dir))
             {
-                Logger.ErrorS("hud", "invalid HUD theme id {0}, using different theme",
-                    id);
-                dir = (from theme in _prototypeManager.EnumeratePrototypes<HudThemePrototype>() select theme.Path).FirstOrDefault();
+                throw new ArgumentOutOfRangeException();
             }
-            return _resourceCache.GetTexture($"/Textures/Interface/Inventory/{dir}/{path}");
+
+            var resourcePath = (new ResourcePath("/Textures/Interface/Inventory") / dir) / path;
+            return _resourceCache.GetTexture(resourcePath);
         }
 
         public void Initialize()

@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared;
+using Content.Shared.Prototypes.HUD;
 using JetBrains.Annotations;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -12,7 +14,9 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Client.GameObjects.Components.HUD.Inventory
@@ -25,6 +29,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         [Dependency] private readonly INetConfigurationManager _configManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private readonly Dictionary<Slots, List<ItemSlotButton>> _inventoryButtons
             = new();
@@ -252,8 +257,13 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
         }
 
-        public void UpdateHudTheme(int _)
+        public void UpdateHudTheme(int idx)
         {
+            if (!_gameHud.ValidateHudTheme(idx))
+            {
+                return;
+            }
+
             foreach (var (_, list) in _inventoryButtons)
             {
                 foreach (var button in list)

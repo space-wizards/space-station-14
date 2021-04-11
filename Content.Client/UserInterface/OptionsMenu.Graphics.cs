@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Shared;
+using Content.Shared.Prototypes.HUD;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -30,6 +31,7 @@ namespace Content.Client.UserInterface
             };
 
             private readonly IConfigurationManager _cfg;
+            private readonly IPrototypeManager _prototypeManager;
 
             private readonly Button ApplyButton;
             private readonly CheckBox VSyncCheckBox;
@@ -38,9 +40,10 @@ namespace Content.Client.UserInterface
             private readonly OptionButton _uiScaleOption;
             private readonly OptionButton _hudThemeOption;
 
-            public GraphicsControl(IConfigurationManager cfg)
+            public GraphicsControl(IConfigurationManager cfg, IPrototypeManager proMan)
             {
                 _cfg = cfg;
+                _prototypeManager = proMan;
                 var vBox = new VBoxContainer();
 
                 var contents = new VBoxContainer
@@ -102,9 +105,10 @@ namespace Content.Client.UserInterface
                 });
 
                 _hudThemeOption = new OptionButton();
-                _hudThemeOption.AddItem(Loc.GetString("ui-options-hud-theme-default"));
-                _hudThemeOption.AddItem(Loc.GetString("ui-options-hud-theme-modernized"));
-                _hudThemeOption.AddItem(Loc.GetString("ui-options-hud-theme-classic"));
+                foreach (var gear in _prototypeManager.EnumeratePrototypes<HudThemePrototype>())
+                {
+                   _hudThemeOption.AddItem(Loc.GetString(gear.Name));
+                }
                 _hudThemeOption.OnItemSelected += OnHudThemeChanged;
 
                 contents.AddChild(new HBoxContainer
