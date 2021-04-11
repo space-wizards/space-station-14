@@ -1,6 +1,6 @@
 ﻿- type: entity
   abstract: true
-  id: PipeBase
+  id: GasPipeBase
   name: Pipe
   description: Holds gas.
   placement:
@@ -26,12 +26,13 @@
   - type: Appearance
     visuals:
     - type: PipeConnectorVisualizer
+  - type: NodeContainer
 
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 
 - type: entity
-  parent: PipeBase
-  id: PipeHalf
+  parent: GasPipeBase
+  id: GasPipeHalf
   suffix: Half
   components:
   - type: NodeContainer
@@ -44,8 +45,8 @@
     state: pipeHalf
 
 - type: entity
-  parent: PipeBase
-  id: PipeStraight
+  parent: GasPipeBase
+  id: GasPipeStraight
   suffix: Straight
   components:
   - type: NodeContainer
@@ -58,8 +59,8 @@
     state: pipeStraight
 
 - type: entity
-  parent: PipeBase
-  id: PipeBend
+  parent: GasPipeBase
+  id: GasPipeBend
   suffix: Bend
   components:
   - type: NodeContainer
@@ -72,8 +73,8 @@
     state: pipeBend
 
 - type: entity
-  parent: PipeBase
-  id: PipeTJunction
+  parent: GasPipeBase
+  id: GasPipeTJunction
   suffix: TJunction
   components:
   - type: NodeContainer
@@ -86,8 +87,8 @@
     state: pipeTJunction
 
 - type: entity
-  parent: PipeBase
-  id: PipeFourway
+  parent: GasPipeBase
+  id: GasPipeFourway
   suffix: Fourway
   components:
   - type: NodeContainer

@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
         private bool _enabled = true;
 
         [ViewVariables]
-        private string _outlet = "outlet";
+        private string _outlet = "pipe";
 
         [ViewVariables]
         private readonly HashSet<Gas> _filterGases = new()

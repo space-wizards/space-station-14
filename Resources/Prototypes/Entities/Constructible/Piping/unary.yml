@@ -1,0 +1,81 @@
+- type: entity
+  parent: GasPipeBase
+  abstract: true
+  id: GasUnaryBase
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: AtmosDevice
+    - type: NodeContainer
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasVent
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/vent.rsi
+      layers:
+        - sprite: Constructible/Atmos/pipe.rsi
+          state: pipeHalf
+        - state: ventOff
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+        - type: VentVisualizer
+    - type: GasVent
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasPassiveVent
+  placement:
+    mode: SnapgridCenter
+  components:
+    # TODO ATMOS: Find sprite for this.
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/vent.rsi
+      layers:
+        - sprite: Constructible/Atmos/pipe.rsi
+          state: pipeHalf
+        - state: ventOff
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+        - type: VentVisualizer
+    - type: GasPassiveVent
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasScrubber
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/scrubber.rsi
+      layers:
+        - sprite: Constructible/Atmos/pipe.rsi
+          state: pipeHalf
+        - state: scrubOff
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+        - type: SiphonVisualizer
+    - type: AtmosDevice
+    - type: GasScrubber
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasOutletInjector
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasOutletInjector

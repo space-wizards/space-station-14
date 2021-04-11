@@ -19,18 +19,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Sprite
-    netsync: false
-    sprite: Constructible/Atmos/scrubber.rsi
-    layers:
-    - sprite: Constructible/Atmos/pipe.rsi
-      state: pipeHalf
-    - state: scrubOff
-  - type: Appearance
-    visuals:
-    - type: PipeConnectorVisualizer
-    - type: SiphonVisualizer
-  - type: AtmosDevice
+
 
 - type: entity
   parent: ScrubberBase

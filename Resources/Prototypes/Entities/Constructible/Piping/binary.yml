@@ -1,0 +1,77 @@
+﻿- type: entity
+  parent: GasPipeBase
+  abstract: true
+  id: GasBinaryBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: AtmosDevice
+  - type: NodeContainer
+    nodes:
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+
+- type: entity
+  parent: GasBinaryBase
+  id: GasPump
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Atmos/pump.rsi
+    layers:
+    - sprite: Constructible/Atmos/pipe.rsi
+      state: pipeStraight
+    - state: pumpPressure
+  - type: Appearance
+    visuals:
+    - type: PipeConnectorVisualizer
+    - type: PumpVisualizer
+  - type: GasPump
+
+- type: entity
+  parent: GasBinaryBase
+  id: GasVolumePump
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/pump.rsi
+      layers:
+        - sprite: Constructible/Atmos/pipe.rsi
+          state: pipeStraight
+        - state: pumpVolume
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+        - type: PumpVisualizer
+          pumpEnabledState: pumpVolumeOn
+    - type: GasVolumePump
+
+- type: entity
+  parent: GasBinaryBase
+  id: GasPassiveGate
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/pump.rsi
+      layers:
+        - sprite: Constructible/Atmos/pipe.rsi
+          state: pipeStraight
+        - state: pumpPassiveGate
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+        - type: PumpVisualizer
+          pumpEnabledState: pumpPassiveGateOn
+    - type: GasPassiveGate
