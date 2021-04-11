@@ -122,21 +122,11 @@ namespace Content.Server.Commands.Physics
             var ground = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
 
             var horizontal = new EdgeShape(new Vector2(-20, 0), new Vector2(20, 0));
-            var horizontalFixture = new Fixture(ground, horizontal)
-            {
-                CollisionLayer = (int) CollisionGroup.Impassable,
-                CollisionMask = (int) CollisionGroup.Impassable,
-                Hard = true
-            };
+            var horizontalFixture = new Fixture(ground, horizontal, (int) CollisionGroup.Impassable, (int) CollisionGroup.Impassable, true);
             ground.AddFixture(horizontalFixture);
 
             var vertical = new EdgeShape(new Vector2(10, 0), new Vector2(10, 10));
-            var verticalFixture = new Fixture(ground, vertical)
-            {
-                CollisionLayer = (int) CollisionGroup.Impassable,
-                CollisionMask = (int) CollisionGroup.Impassable,
-                Hard = true
-            };
+            var verticalFixture = new Fixture(ground, vertical, (int) CollisionGroup.Impassable, (int) CollisionGroup.Impassable, true);
             ground.AddFixture(verticalFixture);
 
             var xs = new[]
@@ -164,12 +154,7 @@ namespace Content.Server.Commands.Physics
                     box.FixedRotation = false;
                     // TODO: Need to detect shape and work out if we need to use fixedrotation
 
-                    var fixture = new Fixture(box, shape)
-                    {
-                        CollisionMask = (int) CollisionGroup.Impassable,
-                        CollisionLayer = (int) CollisionGroup.Impassable,
-                        Hard = true,
-                    };
+                    var fixture = new Fixture(box, shape, (int) CollisionGroup.Impassable, (int) CollisionGroup.Impassable, true);
                     box.AddFixture(fixture);
                 }
             }
@@ -182,21 +167,12 @@ namespace Content.Server.Commands.Physics
             var ground = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
 
             var horizontal = new EdgeShape(new Vector2(-20, 0), new Vector2(20, 0));
-            var horizontalFixture = new Fixture(ground, horizontal)
-            {
-                CollisionLayer = (int) CollisionGroup.Impassable,
-                CollisionMask = (int) CollisionGroup.Impassable,
-                Hard = true
-            };
+            var horizontalFixture = new Fixture(ground, horizontal, (int) CollisionGroup.Impassable,
+                (int) CollisionGroup.Impassable, true);
             ground.AddFixture(horizontalFixture);
 
             var vertical = new EdgeShape(new Vector2(10, 0), new Vector2(10, 10));
-            var verticalFixture = new Fixture(ground, vertical)
-            {
-                CollisionLayer = (int) CollisionGroup.Impassable,
-                CollisionMask = (int) CollisionGroup.Impassable,
-                Hard = true
-            };
+            var verticalFixture = new Fixture(ground, vertical, (int) CollisionGroup.Impassable, (int) CollisionGroup.Impassable, true);
             ground.AddFixture(verticalFixture);
 
             var xs = new[]
@@ -223,12 +199,7 @@ namespace Content.Server.Commands.Physics
                     box.FixedRotation = false;
                     // TODO: Need to detect shape and work out if we need to use fixedrotation
 
-                    var fixture = new Fixture(box, shape)
-                    {
-                        CollisionMask = (int) CollisionGroup.Impassable,
-                        CollisionLayer = (int) CollisionGroup.Impassable,
-                        Hard = true,
-                    };
+                    var fixture = new Fixture(box, shape, (int) CollisionGroup.Impassable, (int) CollisionGroup.Impassable, true);
                     box.AddFixture(fixture);
                 }
             }
@@ -243,12 +214,7 @@ namespace Content.Server.Commands.Physics
             var ground = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
 
             var horizontal = new EdgeShape(new Vector2(-40, 0), new Vector2(40, 0));
-            var horizontalFixture = new Fixture(ground, horizontal)
-            {
-                CollisionLayer = (int) CollisionGroup.Impassable,
-                CollisionMask = (int) CollisionGroup.Impassable,
-                Hard = true
-            };
+            var horizontalFixture = new Fixture(ground, horizontal, (int) CollisionGroup.Impassable, (int) CollisionGroup.Impassable, true);
 
             ground.AddFixture(horizontalFixture);
 
@@ -271,13 +237,7 @@ namespace Content.Server.Commands.Physics
                     var box = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
                     box.BodyType = BodyType.Dynamic;
                     box.Owner.Transform.WorldPosition = y;
-                    box.AddFixture(
-                        new Fixture(box, shape) {
-                            CollisionLayer = (int) CollisionGroup.Impassable,
-                            CollisionMask = (int) CollisionGroup.Impassable,
-                            Hard = true,
-                            Mass = 5.0f,
-                        });
+                    box.AddFixture(new Fixture(box, shape, (int) CollisionGroup.Impassable, (int) CollisionGroup.Impassable, true, 5.0f));
                     y += deltaY;
                 }
 
