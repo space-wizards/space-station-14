@@ -27,6 +27,7 @@ using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Power.AME;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.VendingMachines;
+using Content.Shared.Interfaces;
 using Content.Shared.Kitchen;
 using Robust.Client;
 using Robust.Client.Graphics;
@@ -165,6 +166,7 @@ namespace Content.Client
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
 
             IoCManager.Resolve<IChatManager>().Initialize();
+            IoCManager.Resolve<ITicketManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();

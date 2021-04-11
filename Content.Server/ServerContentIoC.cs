@@ -39,6 +39,7 @@ namespace Content.Server
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IGameTicker, GameTicker>();
             IoCManager.Register<IChatManager, ChatManager>();
+            IoCManager.Register<ITicketManager, TicketManager>();
             IoCManager.Register<IMoMMILink, MoMMILink>();
             IoCManager.Register<ISandboxManager, SandboxManager>();
             IoCManager.Register<IModuleManager, ServerModuleManager>();

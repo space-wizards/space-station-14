@@ -31,6 +31,7 @@ namespace Content.Client
             IoCManager.Register<IClientGameTicker, ClientGameTicker>();
             IoCManager.Register<IParallaxManager, ParallaxManager>();
             IoCManager.Register<IChatManager, ChatManager>();
+            IoCManager.Register<ITicketManager, ClientTicketManager>();
             IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();
             IoCManager.Register<ISandboxManager, SandboxManager>();
             IoCManager.Register<IModuleManager, ClientModuleManager>();

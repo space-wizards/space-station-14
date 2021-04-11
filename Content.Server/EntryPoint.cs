@@ -15,6 +15,7 @@ using Content.Server.Sandbox;
 using Content.Server.Voting;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
+using Content.Shared.Interfaces;
 using Content.Shared.Kitchen;
 using Robust.Server.Player;
 using Robust.Shared.ContentPack;
@@ -62,6 +63,7 @@ namespace Content.Server
 
             IoCManager.Resolve<IServerNotifyManager>().Initialize();
             IoCManager.Resolve<IChatManager>().Initialize();
+            IoCManager.Resolve<ITicketManager>().Initialize();
 
             var playerManager = IoCManager.Resolve<IPlayerManager>();
 
