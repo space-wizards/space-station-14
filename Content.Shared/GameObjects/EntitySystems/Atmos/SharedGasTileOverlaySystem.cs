@@ -76,6 +76,8 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
 
             public bool Equals(GasOverlayData other)
             {
+                // If you revert this then you need to make sure the hash comparison between
+                // our Gas[] and the other.Gas[] works.
                 return HashCode == other.HashCode;
             }
         }
