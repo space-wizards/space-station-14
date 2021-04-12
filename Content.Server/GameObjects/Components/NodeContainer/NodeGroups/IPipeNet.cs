@@ -1,5 +1,7 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.EntitySystems;
@@ -50,11 +52,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             if (node is not PipeNode pipeNode)
                 return;
+
             _pipes.Add(pipeNode);
             pipeNode.JoinPipeNet(this);
             Air.Volume += pipeNode.Volume;
-            Air.Merge(pipeNode.LocalAir);
-            pipeNode.LocalAir.Clear();
         }
 
         protected override void OnRemoveNode(Node node)
@@ -62,9 +63,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             RemoveFromGridAtmos();
             if (node is not PipeNode pipeNode)
                 return;
-            var pipeAir = pipeNode.LocalAir;
-            pipeAir.Merge(Air);
-            pipeAir.Multiply(pipeNode.Volume / Air.Volume);
+
+
             _pipes.Remove(pipeNode);
         }
 
@@ -72,21 +72,28 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             if (newGroup is not IPipeNet newPipeNet)
                 return;
+
             newPipeNet.Air.Merge(Air);
-            Air.Clear();
         }
 
         protected override void AfterRemake(IEnumerable<INodeGroup> newGroups)
         {
+            RemoveFromGridAtmos();
+
+            var buffer = new GasMixture(Air.Volume) {Temperature = Air.Temperature};
+
             foreach (var newGroup in newGroups)
             {
                 if (newGroup is not IPipeNet newPipeNet)
                     continue;
-                newPipeNet.Air.Merge(Air);
-                var newPipeNetGas = newPipeNet.Air;
-                newPipeNetGas.Multiply(newPipeNetGas.Volume / Air.Volume);
+
+                var newAir = newPipeNet.Air;
+
+                buffer.Clear();
+                buffer.Merge(Air);
+                buffer.Multiply(MathF.Min(newAir.Volume / Air.Volume, 1f));
+                newAir.Merge(buffer);
             }
-            RemoveFromGridAtmos();
         }
 
         private void RemoveFromGridAtmos()
@@ -96,7 +103,16 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         private class NullPipeNet : IPipeNet
         {
-            GasMixture IGasMixtureHolder.Air { get; set; } = new();
+            private readonly GasMixture _air;
+
+            GasMixture IGasMixtureHolder.Air { get => _air; set { } }
+
+            public NullPipeNet()
+            {
+                _air = new GasMixture(1f) {Temperature = Atmospherics.T20C};
+                _air.MarkImmutable();
+            }
+
             public void Update() { }
         }
     }

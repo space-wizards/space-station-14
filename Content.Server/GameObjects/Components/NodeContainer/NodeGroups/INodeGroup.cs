@@ -71,11 +71,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 newGroup.CombineGroup(this);
                 return;
             }
+
             OnGivingNodesForCombine(newGroup);
+
             foreach (var node in Nodes)
             {
                 node.NodeGroup = newGroup;
             }
+
             Removed = true;
         }
 
@@ -89,7 +92,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 node.ClearNodeGroup();
             }
-            var newGroups = new List<INodeGroup>();
+
+            var newGroups = new HashSet<INodeGroup>();
+
             foreach (var node in Nodes)
             {
                 if (node.TryAssignGroupIfNeeded())
@@ -98,12 +103,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                     newGroups.Add(node.NodeGroup);
                 }
             }
+
             AfterRemake(newGroups);
+
             Removed = true;
         }
 
         protected virtual void OnAddNode(Node node) { }
-        
+
         protected virtual void OnRemoveNode(Node node) { }
 
         protected virtual void OnGivingNodesForCombine(INodeGroup newGroup) { }

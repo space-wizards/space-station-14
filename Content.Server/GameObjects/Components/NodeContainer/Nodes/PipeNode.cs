@@ -20,12 +20,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     [DataDefinition]
     public class PipeNode : Node, IGasMixtureHolder, IRotatableNode
     {
-        /// <summary>
-        ///     Modifies the <see cref="PipeDirection"/> of this pipe, and ensures the sprite is correctly rotated.
-        ///     This is a property for the sake of calling the method via ViewVariables.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public PipeDirection SetPipeDirectionAndSprite { get => PipeDirection; set => AdjustPipeDirectionAndSprite(value); }
+        private PipeDirection _connectedDirections;
 
         /// <summary>
         ///     The directions in which this pipe can connect to other pipes around it.
@@ -40,8 +35,16 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         ///     Used by <see cref="PipeVisualState"/>.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private PipeDirection ConnectedDirections { get => _connectedDirections; set { _connectedDirections = value; UpdateAppearance(); } }
-        private PipeDirection _connectedDirections;
+        public PipeDirection ConnectedDirections
+        {
+            get => _connectedDirections;
+            private set
+            {
+                _connectedDirections = value;
+                UpdateAppearance();
+            }
+
+        }
 
         /// <summary>
         ///     The <see cref="IPipeNet"/> this pipe is a part of. Set to <see cref="PipeNet.NullNet"/> when not in an <see cref="IPipeNet"/>.
@@ -50,54 +53,20 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         private IPipeNet _pipeNet = PipeNet.NullNet;
 
         /// <summary>
-        ///     If <see cref="_pipeNet"/> is set to <see cref="PipeNet.NullNet"/>.
-        ///     When true, this pipe may be storing gas in <see cref="LocalAir"/>.
-        /// </summary>
-        [ViewVariables]
-        private bool _needsPipeNet = true;
-
-        /// <summary>
-        ///     Prevents rotation events from re-calculating the <see cref="IPipeNet"/>.
-        ///     Used while rotating the sprite to the correct orientation while not affecting the pipe.
-        /// </summary>
-        private bool IgnoreRotation { get; set; }
-
-        /// <summary>
         ///     The gases in this pipe.
         /// </summary>
         [ViewVariables]
         public GasMixture Air
         {
-            get => _needsPipeNet ? LocalAir : _pipeNet.Air;
-            set
-            {
-                if (_needsPipeNet)
-                    LocalAir = value;
-                else
-                    _pipeNet.Air = value;
-            }
+            get => _pipeNet.Air;
+            set => _pipeNet.Air = value;
         }
 
-        /// <summary>
-        ///     Stores gas in this pipe when disconnected from a <see cref="IPipeNet"/>.
-        ///     Only for usage by <see cref="IPipeNet"/>s.
-        /// </summary>
         [ViewVariables]
-        [DataField("gasMixture")]
-        public GasMixture LocalAir { get; set; } = new(DefaultVolume) {Temperature = Atmospherics.T20C};
-
-        [ViewVariables]
-        public float Volume => LocalAir.Volume;
-
-        private AppearanceComponent? _appearance;
+        [DataField("volume")]
+        public float Volume { get; set; } = DefaultVolume;
 
         private const float DefaultVolume = 200f;
-
-        public override void Initialize(IEntity owner)
-        {
-            base.Initialize(owner);
-            Owner.TryGetComponent(out _appearance);
-        }
 
         public override void OnContainerStartup()
         {
@@ -115,13 +84,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public void JoinPipeNet(IPipeNet pipeNet)
         {
             _pipeNet = pipeNet;
-            _needsPipeNet = false;
         }
 
         public void ClearPipeNet()
         {
             _pipeNet = PipeNet.NullNet;
-            _needsPipeNet = true;
         }
 
         /// <summary>
@@ -129,9 +96,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         void IRotatableNode.RotateEvent(RotateEvent ev)
         {
-            if (IgnoreRotation)
-                return;
-
             var diff = ev.NewRotation - ev.OldRotation;
             PipeDirection = PipeDirection.RotatePipeDirection(diff);
             RefreshNodeGroup();
@@ -230,8 +194,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
             {
                 var pipeDir = (PipeDirection) (1 << i);
+
                 foreach (var pipe in LinkableNodesInDirection(pipeDir))
+                {
                     pipe.UpdateConnectedDirections();
+                }
             }
         }
 
@@ -241,50 +208,21 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         private void UpdateAppearance()
         {
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearance)
+                || !Owner.TryGetComponent(out NodeContainerComponent? container))
+                return;
+
             var netConnectedDirections = PipeDirection.None;
-            if (Owner.TryGetComponent<NodeContainerComponent>(out var container))
+
+            foreach (var node in container.Nodes.Values)
             {
-                foreach (var node in container.Nodes.Values)
+                if (node is PipeNode pipe)
                 {
-                    if (node is PipeNode pipe)
-                    {
-                        netConnectedDirections |= pipe.ConnectedDirections;
-                    }
+                    netConnectedDirections |= pipe.ConnectedDirections;
                 }
             }
 
-            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(netConnectedDirections));
-        }
-
-        /// <summary>
-        ///     Changes the directions of this pipe while ensuring the sprite is correctly rotated.
-        /// </summary>
-        public void AdjustPipeDirectionAndSprite(PipeDirection newDir)
-        {
-            IgnoreRotation = true;
-
-            var baseDir = newDir.PipeDirectionToPipeShape().ToBaseDirection();
-
-            var newAngle = Angle.FromDegrees(0);
-
-            for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
-            {
-                var pipeDir = (PipeDirection) (1 << i);
-                var angle = pipeDir.ToAngle();
-                if (baseDir.RotatePipeDirection(angle) == newDir) //finds what angle the entity needs to be rotated from the base to be set to the correct direction
-                {
-                    newAngle = angle;
-                    break;
-                }
-            }
-
-            Owner.Transform.LocalRotation = newAngle; //rotate the entity so the sprite's new state will be of the correct direction
-            PipeDirection = newDir;
-
-            RefreshNodeGroup();
-            OnConnectedDirectionsNeedsUpdating();
-            UpdateAppearance();
-            IgnoreRotation = false;
+            appearance.SetData(PipeVisuals.VisualState, new PipeVisualState(netConnectedDirections));
         }
     }
 }

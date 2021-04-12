@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Trinary
                 return; // No need to transfer if target is full.
 
             // We take time into account here, transfer rates are L/s, after all.
-            var transferRatio = _transferRate * time / inletNode.Volume;
+            var transferRatio = _transferRate * time / inletNode.Air.Volume;
 
             if (transferRatio <= 0)
                 return;

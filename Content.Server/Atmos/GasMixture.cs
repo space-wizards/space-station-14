@@ -154,8 +154,7 @@ namespace Content.Server.Atmos
                 var combinedHeatCapacity = HeatCapacity + giver.HeatCapacity;
                 if (combinedHeatCapacity > 0f)
                 {
-                    Temperature =
-                        (giver.Temperature * giver.HeatCapacity + Temperature * HeatCapacity) / combinedHeatCapacity;
+                    Temperature = (giver.Temperature * giver.HeatCapacity + Temperature * HeatCapacity) / combinedHeatCapacity;
                 }
             }
 

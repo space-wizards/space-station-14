@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Binary
                 var pressureDelta = MathF.Min(_targetPressure - outputStartingPressure, (inputStartingPressure - outputStartingPressure)/2);
                 // We can't have a pressure delta that would cause outlet pressure > inlet pressure.
 
-                var transferMoles = pressureDelta * outlet.Volume / (inlet.Air.Temperature * Atmospherics.R);
+                var transferMoles = pressureDelta * outlet.Air.Volume / (inlet.Air.Temperature * Atmospherics.R);
 
                 // Actually transfer the gas.
                 outlet.Air.Merge(inlet.Air.Remove(transferMoles));

@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Trinary
             if (outputStartingPressure >= _targetPressure)
                 return; // Target reached, no need to mix.
 
-            var generalTransfer = (_targetPressure - outputStartingPressure) * outlet.Volume / Atmospherics.R;
+            var generalTransfer = (_targetPressure - outputStartingPressure) * outlet.Air.Volume / Atmospherics.R;
 
             var transferMolesOne = inletOne.Air.Temperature > 0 ? _inletOneConcentration * generalTransfer / inletOne.Air.Temperature : 0f;
             var transferMolesTwo = inletTwo.Air.Temperature > 0 ? _inletTwoConcentration * generalTransfer / inletTwo.Air.Temperature : 0f;
