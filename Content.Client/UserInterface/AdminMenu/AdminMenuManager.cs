@@ -26,6 +26,8 @@ namespace Content.Client.UserInterface.AdminMenu
         {
             _netManager.RegisterNetMessage<AdminMenuPlayerListRequest>(AdminMenuPlayerListRequest.NAME);
             _netManager.RegisterNetMessage<AdminMenuPlayerListMessage>(AdminMenuPlayerListMessage.NAME, HandlePlayerListMessage);
+            _netManager.RegisterNetMessage<AdminMenuTicketListRequest>(AdminMenuTicketListRequest.NAME);
+            _netManager.RegisterNetMessage<AdminMenuTicketListMessage>(AdminMenuTicketListMessage.NAME, HandleTicketListMessage);
 
             _commandWindows = new List<SS14Window>();
             // Reset the AdminMenu Window on disconnect
@@ -71,6 +73,18 @@ namespace Content.Client.UserInterface.AdminMenu
             _window?.RefreshPlayerList(msg.NamesToPlayers);
         }
 
+        private void RequestTicketList()
+        {
+            var message = _netManager.CreateNetMessage<AdminMenuTicketListRequest>();
+
+            _netManager.ClientSendMessage(message);
+        }
+
+        private void HandleTicketListMessage(AdminMenuTicketListMessage msg)
+        {
+            _window?.RefreshTicketList(msg.TicketsInfo);
+        }
+
         public void ResetWindow()
         {
             _window?.Close();
@@ -91,6 +105,7 @@ namespace Content.Client.UserInterface.AdminMenu
         {
             _window ??= new AdminMenuWindow();
             _window.OnPlayerListRefresh += RequestPlayerList;
+            _window.OnTicketListRefresh += RequestTicketList;
             _window.OpenCentered();
         }
 

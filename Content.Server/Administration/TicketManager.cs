@@ -2,7 +2,9 @@
 using System.Linq;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
+using Content.Server.Players;
 using Content.Shared.Administration;
+using Content.Shared.Administration.AdminMenu;
 using Content.Shared.Administration.Tickets;
 using Content.Shared.Chat;
 using Content.Shared.Interfaces;
@@ -29,6 +31,8 @@ namespace Content.Server.Administration
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgTicketMessage>(MsgTicketMessage.NAME, OnTicketMessage);
+            _netManager.RegisterNetMessage<AdminMenuTicketListRequest>(AdminMenuTicketListRequest.NAME, HandleTicketListRequest);
+            _netManager.RegisterNetMessage<AdminMenuTicketListMessage>(AdminMenuTicketListMessage.NAME);
         }
 
         public bool HasTicket(NetUserId id)
@@ -43,15 +47,18 @@ namespace Content.Server.Administration
             return false;
         }
 
-        public void CreateTicket(NetUserId opener, NetUserId? target, string message)
+        public void CreateTicket(NetUserId opener, NetUserId target, string message)
         {
             var ticket = new Ticket(CurrentId, opener, target, message);
             Tickets.Add(CurrentId, ticket);
             CurrentId++;
             var player = _playerManager.GetSessionByUserId(opener);
+            var mind = player.ContentData()?.Mind;
+            var character = mind == null ? "Unknown" : mind.CharacterName;
+            ticket.Character = character;
             var msg = message.Length <= 32 ? message.Trim() : $"{message.Trim().Substring(0, 32)}...";
             _chatManager.SendAdminAnnouncement(
-                $"Ticket {ticket.Id} opened by {player.ConnectedClient.UserName}: {msg}");
+                $"Ticket {ticket.Id} opened by {player.ConnectedClient.UserName} ({character}): {msg}");
         }
 
         public void OnTicketMessage(MsgTicketMessage message)
@@ -64,7 +71,7 @@ namespace Content.Server.Administration
                         return;
                     }
 
-                    CreateTicket(message.TargetPlayer, null, message.Message);
+                    CreateTicket(message.TargetPlayer, message.TargetPlayer, message.Message);
                     break;
             }
         }
@@ -87,17 +94,31 @@ namespace Content.Server.Administration
             return count;
         }
 
-        private void SendTicketToAdmins(Ticket ticket)
+        private void HandleTicketListRequest(AdminMenuTicketListRequest message)
         {
-            var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
+            var senderSession = _playerManager.GetSessionByChannel(message.MsgChannel);
 
-            var msg = _netManager.CreateNetMessage<MsgTicketMessage>();
+            if (!_adminManager.IsAdmin(senderSession))
+            {
+                return;
+            }
 
-            msg.Id = ticket.Id;
-            msg.Message = Ticket.Messages. <= 32 ? message.Trim() : $"{message.Trim().Substring(0, 32)}...";;
-            msg.MessageWrap = $"{Loc.GetString("ADMIN")}: {{0}}";
+            var netMsg = _netManager.CreateNetMessage<AdminMenuTicketListMessage>();
+            netMsg.TicketsInfo.Clear();
 
-            _netManager.ServerSendToMany(msg, clients.ToList());
+            foreach (var (_, ticket) in Tickets)
+            {
+                var id = ticket.Id;
+                var player = _playerManager.GetSessionByUserId(ticket.TargetPlayer);
+                var name = $"{player.ConnectedClient.UserName} ({ticket.Character})";
+                var claimed = ticket.ClaimedAdmin == null;
+                var msg = ticket.Messages.First();
+                var summary = msg.Length <= 32 ? msg.Trim() : $"{msg.Trim().Substring(0, 32)}...";
+
+                netMsg.TicketsInfo.Add(new AdminMenuTicketListMessage.TicketInfo(id, name, claimed, summary));
+            }
+
+            _netManager.ServerSendMessage(netMsg, senderSession.ConnectedClient);
         }
     }
 }

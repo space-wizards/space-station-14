@@ -11,5 +11,6 @@
         <adminMenu:RoundTab />
         <adminMenu:ServerTab />
         <adminMenu:PlayerTab Name="PlayerTabControl" />
+        <adminMenu:TicketTab Name="TicketTabControl" />
     </TabContainer>
 </SS14Window>

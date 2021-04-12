@@ -12,7 +12,7 @@ namespace Content.Client.Administration
 {
     public class ClientTicketManager : ITicketManager
     {
-        [Dependency] private readonly IServerNetManager _netManager = default!;
+        [Dependency] private readonly INetManager _netManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         //[Dependency] private readonly IAdminManager _adminManager = default!;
@@ -40,7 +40,7 @@ namespace Content.Client.Administration
             return;
         }
 
-        public void CreateTicket(NetUserId opener, NetUserId? target, string message)
+        public void CreateTicket(NetUserId opener, NetUserId target, string message)
         {
             return;
         }

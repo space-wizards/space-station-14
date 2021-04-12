@@ -44,7 +44,7 @@ namespace Content.Server.Commands.Chat
                 shell.WriteError("You already have an open ticket!");
                 return;
             }
-            ticketManager.CreateTicket(player.UserId, null, message);
+            ticketManager.CreateTicket(player.UserId, player.UserId, message);
         }
     }
 }

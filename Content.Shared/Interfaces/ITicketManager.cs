@@ -7,7 +7,7 @@ namespace Content.Shared.Interfaces
     {
         void Initialize();
 
-        void CreateTicket(NetUserId opener, NetUserId? target, string message);
+        void CreateTicket(NetUserId opener, NetUserId target, string message);
 
         void OnTicketMessage(MsgTicketMessage message);
 
