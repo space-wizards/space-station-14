@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // creadth: everything exposable by atmos should be updated as well
             foreach (var atmosExposedComponent in EntityManager.ComponentManager.EntityQuery<AtmosExposedComponent>(true))
             {
-                var tile = atmosExposedComponent.Owner.Transform.Coordinates.GetTileAtmosphere(EntityManager);
+                var tile = atmosExposedComponent.Owner.Transform.Coordinates.GetTileAtmosphere();
                 if (tile == null) continue;
                 atmosExposedComponent.Update(tile, _lastUpdate);
             }

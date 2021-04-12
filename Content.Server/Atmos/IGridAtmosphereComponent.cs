@@ -160,6 +160,11 @@ namespace Content.Server.Atmos
         /// <summary>
         ///     Returns a dictionary of adjacent TileAtmospheres.
         /// </summary>
+        Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(EntityCoordinates coordinates, bool includeAirBlocked = false);
+
+        /// <summary>
+        ///     Returns a dictionary of adjacent TileAtmospheres.
+        /// </summary>
         Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(Vector2i indices, bool includeAirBlocked = false);
 
         void Update(float frameTime);

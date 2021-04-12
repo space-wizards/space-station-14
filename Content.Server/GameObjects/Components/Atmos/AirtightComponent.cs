@@ -141,7 +141,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
 
             if (_fixVacuum)
-                _atmosphereSystem.GetGridAtmosphere(_lastPosition.Item1).FixVacuum(_lastPosition.Item2);
+            {
+                _atmosphereSystem.GetGridAtmosphere(_lastPosition.Item1)?.FixVacuum(_lastPosition.Item2);
+            }
         }
 
         private void OnTransformMove()
@@ -165,8 +167,8 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             var gridAtmos = _atmosphereSystem.GetGridAtmosphere(gridId);
 
-            gridAtmos.UpdateAdjacentBits(pos);
-            gridAtmos.Invalidate(pos);
+            gridAtmos?.UpdateAdjacentBits(pos);
+            gridAtmos?.Invalidate(pos);
         }
     }
 }
