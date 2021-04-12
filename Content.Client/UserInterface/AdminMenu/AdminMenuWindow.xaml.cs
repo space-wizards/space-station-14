@@ -30,7 +30,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
         public AdminMenuWindow()
         {
-            MinSize = SetSize = (600, 250);
+            MinSize = SetSize = (800, 400);
             Title = Loc.GetString("Admin Menu");
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);

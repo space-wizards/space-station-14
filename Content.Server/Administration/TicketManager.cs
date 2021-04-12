@@ -111,11 +111,11 @@ namespace Content.Server.Administration
                 var id = ticket.Id;
                 var player = _playerManager.GetSessionByUserId(ticket.TargetPlayer);
                 var name = $"{player.ConnectedClient.UserName} ({ticket.Character})";
-                var claimed = ticket.ClaimedAdmin == null;
+                var status = ticket.Status;
                 var msg = ticket.Messages.First();
-                var summary = msg.Length <= 32 ? msg.Trim() : $"{msg.Trim().Substring(0, 32)}...";
+                var summary = msg.Length <= 48 ? msg.Trim() : $"{msg.Trim().Substring(0, 48)}...";
 
-                netMsg.TicketsInfo.Add(new AdminMenuTicketListMessage.TicketInfo(id, name, claimed, summary));
+                netMsg.TicketsInfo.Add(new AdminMenuTicketListMessage.TicketInfo(id, name, status, summary));
             }
 
             _netManager.ServerSendMessage(netMsg, senderSession.ConnectedClient);

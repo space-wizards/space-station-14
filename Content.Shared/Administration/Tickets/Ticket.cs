@@ -15,6 +15,8 @@ namespace Content.Shared.Administration.Tickets
 
         public string? Character { get; set; }
 
+        public TicketStatus Status = TicketStatus.Unclaimed;
+
         public List<string> Messages = new();
 
         public Ticket(int id, NetUserId opener, NetUserId target, string message)
@@ -24,6 +26,7 @@ namespace Content.Shared.Administration.Tickets
             {
                 TargetPlayer = target;
                 ClaimedAdmin = opener;
+                Status = TicketStatus.Claimed;
             }
             else
             {

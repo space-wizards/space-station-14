@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using Content.Shared.Administration.Tickets;
 using Lidgren.Network;
 using Robust.Shared.Network;
 
@@ -25,10 +26,10 @@ namespace Content.Shared.Administration.AdminMenu
             {
                 var id = buffer.ReadInt32();
                 var username = buffer.ReadString();
-                var claimed = buffer.ReadBoolean();
+                var status = (TicketStatus)buffer.ReadByte();
                 var message = buffer.ReadString();
 
-                TicketsInfo.Add(new TicketInfo(id, username, claimed, message));
+                TicketsInfo.Add(new TicketInfo(id, username, status, message));
             }
         }
 
@@ -40,11 +41,11 @@ namespace Content.Shared.Administration.AdminMenu
             {
                 buffer.Write(ticket.Id);
                 buffer.Write(ticket.Name);
-                buffer.Write(ticket.Claimed);
+                buffer.Write((byte)ticket.Status);
                 buffer.Write(ticket.Message);
             }
         }
 
-        public record TicketInfo(int Id, string Name, bool Claimed, string Message);
+        public record TicketInfo(int Id, string Name, TicketStatus Status, string Message);
     }
 }
