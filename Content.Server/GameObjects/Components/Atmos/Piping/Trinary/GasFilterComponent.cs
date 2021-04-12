@@ -18,20 +18,22 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Trinary
     {
         public override string Name => "GasFilter";
 
-        private bool _enabled;
+        [ViewVariables(VVAccess.ReadWrite)]
+        private bool _enabled = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]
-        private string _inlet = "inlet";
+        private string _inletName = "inlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("filter")]
-        private string _filter = "filter";
+        private string _filterName = "filter";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("outlet")]
-        private string _outlet = "outlet";
+        private string _outletName = "outlet";
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _transferRate = Atmospherics.MaxTransferRate;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -52,9 +54,9 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Trinary
             if (!Owner.TryGetComponent(out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (!nodeContainer.TryGetNode(_inlet, out PipeNode? inletNode)
-                || !nodeContainer.TryGetNode(_filter, out PipeNode? filterNode)
-                || !nodeContainer.TryGetNode(_outlet, out PipeNode? outletNode))
+            if (!nodeContainer.TryGetNode(_inletName, out PipeNode? inletNode)
+                || !nodeContainer.TryGetNode(_filterName, out PipeNode? filterNode)
+                || !nodeContainer.TryGetNode(_outletName, out PipeNode? outletNode))
                 return;
 
             if (outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure)

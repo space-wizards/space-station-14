@@ -603,7 +603,7 @@ namespace Content.Server.Atmos
 
         public void ScrubInto(GasMixture destination, IReadOnlyCollection<Gas> filterGases)
         {
-            var buffer = new GasMixture(Atmospherics.CellVolume);
+            var buffer = new GasMixture(Volume){Temperature = Temperature};
 
             foreach (var gas in filterGases)
             {

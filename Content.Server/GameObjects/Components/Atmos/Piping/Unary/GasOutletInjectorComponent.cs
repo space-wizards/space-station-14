@@ -17,8 +17,10 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _enabled = true;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool _injecting = false;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _volumeRate = 50f;
 
         [DataField("inlet")]

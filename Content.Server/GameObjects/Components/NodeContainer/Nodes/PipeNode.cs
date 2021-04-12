@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
+using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -83,7 +84,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         [ViewVariables]
         [DataField("gasMixture")]
-        public GasMixture LocalAir { get; set; } = new(DefaultVolume);
+        public GasMixture LocalAir { get; set; } = new(DefaultVolume) {Temperature = Atmospherics.T20C};
 
         [ViewVariables]
         public float Volume => LocalAir.Volume;

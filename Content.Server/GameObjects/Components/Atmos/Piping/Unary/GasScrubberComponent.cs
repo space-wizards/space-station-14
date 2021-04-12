@@ -8,6 +8,7 @@ using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
@@ -20,8 +21,9 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _enabled = true;
 
-        [ViewVariables]
-        private string _outlet = "pipe";
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("outlet")]
+        private string _outletName = "pipe";
 
         [ViewVariables]
         private readonly HashSet<Gas> _filterGases = new()
@@ -46,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
             if (!Owner.TryGetComponent(out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (!nodeContainer.TryGetNode(_outlet, out PipeNode? outlet))
+            if (!nodeContainer.TryGetNode(_outletName, out PipeNode? outlet))
                 return;
 
             var environment = atmosphere.GetTile(Owner.Transform.Coordinates)!;

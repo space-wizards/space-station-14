@@ -20,15 +20,15 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Trinary
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inletOne")]
-        private string _inletOne = "inletOne";
+        private string _inletOneName = "inletOne";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inletTwo")]
-        private string _inletTwo = "inletTwo";
+        private string _inletTwoName = "inletTwo";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("outlet")]
-        private string _outlet = "outlet";
+        private string _outletName = "outlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
         private float _targetPressure = Atmospherics.OneAtmosphere;
@@ -49,9 +49,9 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Trinary
             if (!Owner.TryGetComponent(out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (!nodeContainer.TryGetNode(_inletOne, out PipeNode? inletOne)
-                || !nodeContainer.TryGetNode(_inletTwo, out PipeNode? inletTwo)
-                || !nodeContainer.TryGetNode(_outlet, out PipeNode? outlet))
+            if (!nodeContainer.TryGetNode(_inletOneName, out PipeNode? inletOne)
+                || !nodeContainer.TryGetNode(_inletTwoName, out PipeNode? inletTwo)
+                || !nodeContainer.TryGetNode(_outletName, out PipeNode? outlet))
                 return;
 
             var outputStartingPressure = outlet.Air.Pressure;

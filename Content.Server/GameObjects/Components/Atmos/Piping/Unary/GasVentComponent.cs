@@ -15,11 +15,12 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
     {
         public override string Name => "GasVent";
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool _enabled = true;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]
-        private string _inlet = "pipe";
+        private string _inletName = "pipe";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public VentPumpDirection PumpDirection { get; set; } = VentPumpDirection.Releasing;
@@ -42,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
             if (!Owner.TryGetComponent(out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (!nodeContainer.TryGetNode(_inlet, out PipeNode? pipe))
+            if (!nodeContainer.TryGetNode(_inletName, out PipeNode? pipe))
                 return;
 
             var environment = atmosphere.GetTile(Owner.Transform.Coordinates)!;

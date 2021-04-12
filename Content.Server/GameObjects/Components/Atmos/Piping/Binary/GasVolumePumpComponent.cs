@@ -14,9 +14,11 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Binary
     {
         public override string Name => "GasVolumePump";
 
-        private bool _enabled;
+        [ViewVariables(VVAccess.ReadWrite)]
+        private bool _enabled = true;
 
-        private bool _overclocked;
+        [ViewVariables(VVAccess.ReadWrite)]
+        private bool _overclocked = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]
@@ -26,6 +28,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Binary
         [DataField("outlet")]
         private string _outletName = "outlet";
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _transferRate = Atmospherics.MaxTransferRate;
 
         [DataField("leakRatio")]

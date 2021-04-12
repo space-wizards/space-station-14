@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
         public override string Name => "GasPassiveVent";
 
         [DataField("inlet")]
-        private string _inlet = "pipe";
+        private string _inletName = "pipe";
 
         public void ProcessAtmos(float time, IGridAtmosphereComponent atmosphere)
         {
@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
             if (!Owner.TryGetComponent(out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (!nodeContainer.TryGetNode(_inlet, out PipeNode? inlet))
+            if (!nodeContainer.TryGetNode(_inletName, out PipeNode? inlet))
                 return;
 
             var environmentPressure = environment.Air.Pressure;

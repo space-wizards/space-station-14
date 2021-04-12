@@ -4,6 +4,7 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
@@ -21,7 +22,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     public class PipeNet : BaseNodeGroup, IPipeNet
     {
         [ViewVariables]
-        public GasMixture Air { get; set; } = new();
+        public GasMixture Air { get; set; } = new() {Temperature = Atmospherics.T20C};
 
         public static readonly IPipeNet NullNet = new NullPipeNet();
 
