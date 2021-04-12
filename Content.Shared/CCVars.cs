@@ -215,6 +215,9 @@ namespace Content.Shared
         public static readonly CVarDef<float> NetGasOverlayTickRate =
             CVarDef.Create("net.gasoverlaytickrate", 3.0f);
 
+        public static readonly CVarDef<int> GasOverlayThresholds =
+            CVarDef.Create("net.gasoverlaythresholds", 20);
+
         /*
          * Admin stuff
          */

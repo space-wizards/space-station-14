@@ -76,22 +76,7 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
 
             public bool Equals(GasOverlayData other)
             {
-
-                if (HashCode != other.HashCode) return false;
-                if (Gas.Length != other.Gas.Length) return false;
-                if (FireState != other.FireState) return false;
-                if (MathHelper.CloseTo(FireTemperature, FireTemperature)) return false;
-                if (Gas.GetHashCode() != other.Gas.GetHashCode()) return false;
-
-                for (var i = 0; i < Gas.Length; i++)
-                {
-                    var gas = Gas[i];
-                    var otherGas = other.Gas[i];
-                    if (!gas.Equals(otherGas))
-                        return false;
-                }
-
-                return true;
+                return HashCode == other.HashCode;
             }
         }
 
