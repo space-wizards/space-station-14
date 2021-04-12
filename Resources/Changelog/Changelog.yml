@@ -860,3 +860,8 @@ Entries:
   - {message: You can now set your HUD's theme in the settings., type: Add}
   id: 155
   time: '2021-04-11T22:43:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Make GasOverlayData great again, type: Tweak}
+  id: 156
+  time: '2021-04-12T13:01:17.0000000+00:00'
