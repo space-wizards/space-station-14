@@ -10,6 +10,7 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
@@ -25,11 +26,8 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly INetConfigurationManager _configManager = default!;
 
-        private Texture LeftHandTexture { get; }
-        private Texture MiddleHandTexture { get; }
-        private Texture RightHandTexture { get; }
-        private Texture StorageTexture { get; }
-        private Texture BlockedTexture { get; }
+        private Texture StorageTexture => _gameHud.GetHudTexture("back.png");
+        private Texture BlockedTexture => _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
 
         private ItemStatusPanel StatusPanel { get; }
 
@@ -48,6 +46,8 @@ namespace Content.Client.UserInterface
         public HandsGui()
         {
             IoCManager.InjectDependencies(this);
+            _configManager.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
+
             AddChild(new HBoxContainer
             {
                 SeparationOverride = 0,
@@ -64,11 +64,6 @@ namespace Content.Client.UserInterface
                     },
                 }
             });
-            LeftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
-            MiddleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
-            RightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
-            StorageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
-            BlockedTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
         }
 
         public void SetState(HandsGuiState state)
@@ -84,10 +79,7 @@ namespace Content.Client.UserInterface
 
             foreach (var hand in _hands)
             {
-                var location = hand.HandLocation;
-                var heldItem = hand.HeldItem;
-
-                var newButton = MakeHandButton(location);
+                var newButton = MakeHandButton(hand.HandLocation);
                 HandsContainer.AddChild(newButton);
                 hand.HandButton = newButton;
 
@@ -97,7 +89,7 @@ namespace Content.Client.UserInterface
 
                 newButton.Blocked.Visible = !hand.Enabled;
 
-                _itemSlotManager.SetItemSlot(newButton, heldItem);
+                _itemSlotManager.SetItemSlot(newButton, hand.HeldItem);
             }
             if (TryGetActiveHand(out var activeHand))
             {
@@ -154,14 +146,19 @@ namespace Content.Client.UserInterface
 
         private HandButton MakeHandButton(HandLocation buttonLocation)
         {
-            var buttonTexture = buttonLocation switch
+            var buttonTextureName = buttonLocation switch
             {
-                HandLocation.Left => LeftHandTexture,
-                HandLocation.Middle => MiddleHandTexture,
-                HandLocation.Right => RightHandTexture,
-                _ => throw new ArgumentOutOfRangeException()
+                HandLocation.Right => "hand_r.png",
+                _ => "hand_l.png"
             };
-            return new HandButton(buttonTexture, StorageTexture, BlockedTexture, buttonLocation);
+            var buttonTexture = _gameHud.GetHudTexture(buttonTextureName);
+
+            return new HandButton(buttonTexture, StorageTexture, buttonTextureName, BlockedTexture, buttonLocation);
+        }
+
+        private void UpdateHudTheme(int idx)
+        {
+            UpdateGui();
         }
 
         public class HandClickEventArgs
