@@ -9,7 +9,7 @@ namespace Content.Client.UserInterface
         private bool _activeHand;
         private bool _highlighted;
 
-        public HandButton(Texture texture, Texture storageTexture, Texture blockedTexture, HandLocation location) : base(texture, storageTexture)
+        public HandButton(Texture texture, Texture storageTexture, string textureName, Texture blockedTexture, HandLocation location) : base(texture, storageTexture, textureName)
         {
             Location = location;
 

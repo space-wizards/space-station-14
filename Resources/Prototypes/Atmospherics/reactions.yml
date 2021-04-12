@@ -37,4 +37,4 @@
   effects:
     - !type:WaterVaporReaction
       gas: 5
-      reagent: chem.Water
+      reagent: Water

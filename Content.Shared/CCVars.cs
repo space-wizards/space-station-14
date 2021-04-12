@@ -191,6 +191,13 @@ namespace Content.Shared
             CVarDef.Create("ambience.lobbymusicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
+         * HUD
+         */
+
+        public static readonly CVarDef<int> HudTheme =
+            CVarDef.Create("hud.theme", 0, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /*
          * AI
          */
 
@@ -305,5 +312,11 @@ namespace Content.Shared
         public static readonly CVarDef<float> VoteRestartRequiredRatio =
             CVarDef.Create("vote.restart_required_ratio", 0.8f, CVar.SERVERONLY);
 
+        /*
+         * BAN
+         */
+
+        public static readonly CVarDef<bool> BanHardwareIds =
+            CVarDef.Create("ban.hardware_ids", false, CVar.SERVERONLY);
     }
 }

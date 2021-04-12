@@ -42,8 +42,12 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Shutdown()
         {
-            CommandBinds.Unregister<HandsSystem>();
             base.Shutdown();
+
+            UnsubscribeLocalEvent<EntRemovedFromContainerMessage>();
+            UnsubscribeLocalEvent<EntInsertedIntoContainerMessage>();
+
+            CommandBinds.Unregister<HandsSystem>();
         }
 
         protected override void HandleContainerModified(ContainerModifiedMessage args)

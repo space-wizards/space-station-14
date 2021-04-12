@@ -306,19 +306,19 @@ namespace Content.Tests.Shared.Chemistry
         public void SplitSolutionZero()
         {
             var solution = new Solution();
-            solution.AddReagent("chem.Impedrezene", ReagentUnit.New(0.01 + 0.19));
-            solution.AddReagent("chem.Thermite", ReagentUnit.New(0.01 + 0.39));
-            solution.AddReagent("chem.Li", ReagentUnit.New(0.01 + 0.17));
-            solution.AddReagent("chem.F", ReagentUnit.New(0.01 + 0.17));
-            solution.AddReagent("chem.Na", ReagentUnit.New(0 + 0.13));
-            solution.AddReagent("chem.Hg", ReagentUnit.New(0.15 + 4.15));
-            solution.AddReagent("chem.Cu", ReagentUnit.New(0 + 0.13));
-            solution.AddReagent("chem.U", ReagentUnit.New(0.76 + 20.77));
-            solution.AddReagent("chem.Fe", ReagentUnit.New(0.01 + 0.36));
-            solution.AddReagent("chem.SpaceDrugs", ReagentUnit.New(0.02 + 0.41));
-            solution.AddReagent("chem.Al", ReagentUnit.New(0));
-            solution.AddReagent("chem.Glucose", ReagentUnit.New(0));
-            solution.AddReagent("chem.O", ReagentUnit.New(0));
+            solution.AddReagent("Impedrezene", ReagentUnit.New(0.01 + 0.19));
+            solution.AddReagent("Thermite", ReagentUnit.New(0.01 + 0.39));
+            solution.AddReagent("Li", ReagentUnit.New(0.01 + 0.17));
+            solution.AddReagent("F", ReagentUnit.New(0.01 + 0.17));
+            solution.AddReagent("Na", ReagentUnit.New(0 + 0.13));
+            solution.AddReagent("Hg", ReagentUnit.New(0.15 + 4.15));
+            solution.AddReagent("Cu", ReagentUnit.New(0 + 0.13));
+            solution.AddReagent("U", ReagentUnit.New(0.76 + 20.77));
+            solution.AddReagent("Fe", ReagentUnit.New(0.01 + 0.36));
+            solution.AddReagent("SpaceDrugs", ReagentUnit.New(0.02 + 0.41));
+            solution.AddReagent("Al", ReagentUnit.New(0));
+            solution.AddReagent("Glucose", ReagentUnit.New(0));
+            solution.AddReagent("O", ReagentUnit.New(0));
 
             solution.SplitSolution(ReagentUnit.New(0.98));
         }

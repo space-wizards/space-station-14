@@ -5,12 +5,14 @@ using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface
 {
     public sealed partial class OptionsMenu : SS14Window
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClydeAudio _clydeAudio = default!;
 
         public OptionsMenu()
@@ -28,7 +30,7 @@ namespace Content.Client.UserInterface
             {
                 Children =
                 {
-                    (graphicsControl = new GraphicsControl(_configManager)),
+                    (graphicsControl = new GraphicsControl(_configManager, _prototypeManager)),
                     (rebindControl = new KeyRebindControl()),
                     (audioControl = new AudioControl(_configManager, _clydeAudio)),
                 }

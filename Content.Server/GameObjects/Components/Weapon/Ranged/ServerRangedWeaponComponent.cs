@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
@@ -21,6 +21,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using Content.Server.Atmos;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged
 {
@@ -39,6 +40,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("clumsyExplodeChance")]
         public float ClumsyExplodeChance { get; set; } = 0.5f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("canHotspot")]
+        private bool _canHotspot = true;
 
         public Func<bool>? WeaponCanFireHandler;
         public Func<IEntity, bool>? UserCanFireHandler;
@@ -174,6 +179,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                 return;
             }
 
+            if (_canHotspot && user.Transform.Coordinates.TryGetTileAtmosphere(out var tile))
+            {
+                tile.HotspotExpose(700, 50);
+            }
             FireHandler?.Invoke(user, targetPos);
         }
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Utility;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -21,6 +22,8 @@ namespace Content.Client.UserInterface
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly INetConfigurationManager _configManager = default!;
 
         private Texture LeftHandTexture { get; }
         private Texture MiddleHandTexture { get; }

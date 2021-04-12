@@ -46,14 +46,14 @@
       - !type:ExtinguishReaction
         touch: true
         reagents:
-          - chem.Water
+          - Water
       - !type:FlammableReaction
         touch: true
         reagents:
-          - chem.WeldingFuel
-          - chem.Thermite
-          - chem.Plasma
-          - chem.Ethanol
+          - WeldingFuel
+          - Thermite
+          - Plasma
+          - Ethanol
   - type: Appearance
     visuals:
     - type: FireVisualizer

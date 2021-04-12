@@ -70,12 +70,10 @@ namespace Content.Server.Explosions
                                                                     MapId mapId)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
-            var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
 
-            var exAct = entitySystemManager.GetEntitySystem<ActSystem>();
+            var exAct = EntitySystem.Get<ActSystem>();
 
-            var entitiesInRange = serverEntityManager.GetEntitiesInRange(mapId, boundingBox, 0).ToList();
+            var entitiesInRange = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(mapId, boundingBox, 0).ToList();
 
             var impassableEntities = new List<Tuple<IEntity, float>>();
             var nonImpassableEntities = new List<Tuple<IEntity, float>>();

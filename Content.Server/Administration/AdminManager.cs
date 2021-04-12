@@ -245,17 +245,17 @@ namespace Content.Server.Administration
             }
 
             var netMsg = _netMgr.CreateNetMessage<AdminMenuPlayerListMessage>();
-            var namesToPlayers = new Dictionary<string, string>();
+
+            netMsg.PlayersInfo.Clear();
 
             foreach (var session in _playerManager.GetAllPlayers())
             {
                 var name = session.Name;
-                var player = session.AttachedEntity?.Name ?? "";
+                var username = session.AttachedEntity?.Name ?? "";
+                var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
 
-                namesToPlayers.Add(name, player);
+                netMsg.PlayersInfo.Add(new AdminMenuPlayerListMessage.PlayerInfo(name, username, antag));
             }
-
-            netMsg.NamesToPlayers = namesToPlayers;
 
             _netMgr.ServerSendMessage(netMsg, senderSession.ConnectedClient);
         }
