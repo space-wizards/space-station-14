@@ -1,19 +1,19 @@
 - type: reagent
-  id: chem.Alkycosine
+  id: Alkycosine
   name: alkycosine
   desc: Lessens the damage to neurological tissue. More effective at treating brain damage than alkysine and also a fairly effective painkiller as well. Caution is needed in its creation to avoid mixing bleach and the chlorine needed to make alkysine.
   physicalDesc: strong-smelling
   color: "#9e232b"
 
 - type: reagent
-  id: chem.Alkysine
+  id: Alkysine
   name: alkysine
   desc: Lessens the damage to neurological tissue, effective even after catastrophic injury. Used for treating brain damage and also a fairly effective painkiller.
   physicalDesc: oily
   color: "#ff8c00"
 
 - type: reagent
-  id: chem.Dylovene
+  id: Dylovene
   name: dylovene
   desc: A broad-spectrum anti-toxin, which treats toxin damage in the blood stream. Overdosing will cause vomiting, dizzyness and pain.
   physicalDesc: translucent
@@ -25,21 +25,21 @@
       amount: 1
 
 - type: reagent
-  id: chem.Arithrazine
+  id: Arithrazine
   name: arithrazine
   desc: A slightly unstable medication used for the most extreme any serious case of radiation poisoning. Lowers radiation level at over twice the rate Hyronalin does and will heal toxin damage at the same time. Deals very minor brute damage to the patient over time, but the patient's body will typically out-regenerate it easily.
   physicalDesc: cloudy
   color: "#bd5902"
 
 - type: reagent
-  id: chem.Bicaridine
+  id: Bicaridine
   name: bicaridine
   desc: An analgesic which is highly effective at treating brute damage. It is useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries. In the case of bleeding (internal or external), bicaridine will slow down the bleeding heavily. If the dosage exceeds the overdose limit, it'll stop it outright.
   physicalDesc: opaque
   color: "#ffaa00"
 
 - type: reagent
-  id: chem.Cryoxadone
+  id: Cryoxadone
   name: cryoxadone
   desc: Required for the proper function of cryogenics. Heals all standard types of damage very swiftly, but only works in temperatures under 170K (usually this means cryo cells). Can also slowly heal clone damage, such as caused by cloning or Slimes.
   physicalDesc: fizzy
@@ -51,7 +51,7 @@
       amount: 3
 
 - type: reagent
-  id: chem.Clonexadone
+  id: Clonexadone
   name: clonexadone
   desc: Heals standard damage in the same as Cryoxadone, with the same temperature requirement. Significantly more effective than the former at treating cellular damage, although both can be used simultaneously. Best used in cryo cells.
   physicalDesc: bubbly
@@ -63,189 +63,189 @@
       amount: 5
 
 - type: reagent
-  id: chem.Citalopram
+  id: Citalopram
   name: citalopram
   desc: Prevents hallucination slightly.
   physicalDesc: cloudy
   color: "#21693c"
 
 - type: reagent
-  id: chem.Dermaline
+  id: Dermaline
   name: dermaline
   desc: An advanced chemical that is more effective at treating burn damage than Kelotane.
   physicalDesc: translucent
   color: "#215263"
 
 - type: reagent
-  id: chem.Dexalin
+  id: Dexalin
   name: dexalin
   desc: Used for treating oxygen deprivation. In most cases where it is likely to be needed, the strength of Dexalin Plus will probably be more useful (Results in 1 unit instead of 2).
   physicalDesc: opaque
   color: "#0041a8"
 
 - type: reagent
-  id: chem.DexalinPlus
+  id: DexalinPlus
   name: dexalin plus
   desc: Used in treatment of extreme cases of oxygen deprivation. Even a single unit immediately counters all oxygen loss, which is hugely useful in many circumstances. Any dose beyond this will continue to counter oxygen loss until it is metabolized, essentially removing the need to breathe.
   physicalDesc: cloudy
   color: "#4da0bd"
 
 - type: reagent
-  id: chem.Ethylredoxrazine
+  id: Ethylredoxrazine
   name: ethylredoxrazine
   desc: Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.
   physicalDesc: opaque
   color: "#2d5708"
 
 - type: reagent
-  id: chem.Hyperzine
+  id: Hyperzine
   name: hyperzine
   desc: A highly effective, long lasting muscle stimulant. It allows greater freedom of movement in bulky clothing although it has the side effect of causing some twitching. Dangerous in higher doses.
   physicalDesc: translucent
   color: "#17bd61"
 
 - type: reagent
-  id: chem.Hyronalin
+  id: Hyronalin
   name: hyronalin
   desc: A weak treatment for radiation damage. Considered to be useful mainly for genetic modification, where it reduces radiation levels, and thus the chance of genetic mutations. Largely outclassed by Arithrazine.
   physicalDesc: cloudy
   color: "#4cb580"
 
 - type: reagent
-  id: chem.Imidazoline
+  id: Imidazoline
   name: imidazoline
   desc: Effective in treating eye trauma. It heals damage caused by physical or chemical trauma, though it is ineffective in treating genetic defects in the eyes.
   physicalDesc: pungent
   color: "#f7ef00"
 
 - type: reagent
-  id: chem.Inacusiate
+  id: Inacusiate
   name: inacusiate
   desc: You only need 1u for Inacusiate to be effective. Cures deafness instantly. Useful after an explosion.
   physicalDesc: pungent
   color: "#c4c04b"
 
 - type: reagent
-  id: chem.Inaprovaline
+  id: Inaprovaline
   name: inaprovaline
   desc: Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients- it stops oxygen loss when the patient is in critical health. It'll also slow down bleeding (internal or external) by half while in the body. Acts as a decent painkiller.
   physicalDesc: opaque
   color: "#731024"
 
 - type: reagent
-  id: chem.Kelotane
+  id: Kelotane
   name: kelotane
   desc: Treats burn damage and prevents infection.
   physicalDesc: strong-smelling
   color: "#bf3d19"
 
 - type: reagent
-  id: chem.Leporazine
+  id: Leporazine
   name: leporazine
   desc: This keeps a patient's body temperature stable. High doses can allow short periods of unprotected EVA, but prevents use of the cryogenics tubes.
   physicalDesc: pungent
   color: "#ff7db5"
 
 - type: reagent
-  id: chem.Methylin
+  id: Methylin
   name: methylin
   desc: An intelligence enhancer, also used in the treatment of attention deficit hyperactivity disorder. Also known as Ritalin. Allows monkeys (not diona nymphs) to understand human speech and improves their dexterity as long as they have some in their system. Causes toxin and brain damage in higher doses.
   physicalDesc: acrid
   color: "#a700c4"
 
 - type: reagent
-  id: chem.Oxycodone
+  id: Oxycodone
   name: oxycodone
   desc: A very effective painkiller, about 250% as strong as Tramadol.
   physicalDesc: acrid
   color: "#c4a300"
 
 - type: reagent
-  id: chem.Phalanximine
+  id: Phalanximine
   name: phalanximine
   desc: Used in the treatment of cancer, is as effective as Anti-Toxin. Causes moderate radiation and hair loss.
   physicalDesc: acrid
   color: "#c8ff75"
 
 - type: reagent
-  id: chem.Paroxetine
+  id: Paroxetine
   name: paroxetine
   desc: Prevents hallucination, but has a 10% chance of causing intense hallucinations.
   physicalDesc: acrid
   color: "#fffbad"
 
 - type: reagent
-  id: chem.Ryetalyn
+  id: Ryetalyn
   name: ryetalyn
   desc: You only need 1u for Ryetalin to work. Deactivates genetic defects and powers, restoring a patient to an ideal state. May be useful if genetics is unable to function properly. Deactivated effects return if the patient's genes are modified again.
   physicalDesc: cloudy
   color: "#532fd4"
 
 - type: reagent
-  id: chem.Spaceacillin
+  id: Spaceacillin
   name: spaceacillin
   desc: A theta-lactam antibiotic. A common and very useful medicine, effective against many diseases likely to be encountered in space. Slows progression of diseases.
   physicalDesc: opaque
   color: "#9942f5"
 
 - type: reagent
-  id: chem.Synaptizine
+  id: Synaptizine
   name: synaptizine
   desc: Toxic, but treats hallucinations, drowsiness & halves the duration of paralysis, stuns and knockdowns. It is metabolized very slowly. One unit is enough to treat hallucinations; two units is deadly.
   physicalDesc: pungent
   color: "#d49a2f"
 
 - type: reagent
-  id: chem.Tramadol
+  id: Tramadol
   name: tramadol
   desc: A simple, yet effective painkiller. Very effective for patients in shock.
   physicalDesc: strong-smelling
   color: "#2f6ed4"
 
 - type: reagent
-  id: chem.Tricordrazine
+  id: Tricordrazine
   name: tricordrazine
   desc: A wide-spectrum stimulant, originally derived from Cordrazine. Is capable of healing all four main damage types simultaneously, however it only heals at half the rate of conventional healing chemicals. Because of its low potency, it's best used as a supplement to other medicines.
   physicalDesc: opaque
   color: "#00e5ff"
 
 - type: reagent
-  id: chem.Vaccine
+  id: Vaccine
   name: vaccine
   desc: Introduces antigens to the body, allowing the immune system to produce enough antibodies to combat present or future infections. Is blank by default, vaccine carrying antigen is produced at a centrifuge. Each unit raises the associated antibody concentration by 20% so at most 5 units are needed to cure the strongest diseases.
   physicalDesc: translucent
   color: "#ffc9f6"
 
 - type: reagent
-  id: chem.Albuterol
+  id: Albuterol
   name: albuterol
   desc: A bronchodilator that relaxes muscles in the airways and increases air flow to the lungs. It'll remove mucus from your system as long as it's inside your body. Only useful to people with the Asthma disability.
   physicalDesc: cloudy
   color: "#00b89f"
 
 - type: reagent
-  id: chem.ChloralHydrate
+  id: ChloralHydrate
   name: chloral hydrate
   desc: A powerful sedative which causes death in doses upwards of 16.2 units. Sends the patient to sleep almost instantly.
   physicalDesc: acrid
   color: "#18c9b1"
 
 - type: reagent
-  id: chem.Creatine
+  id: Creatine
   name: creatine
   desc: A muscle-building drug that grants the user enormous strength, before their muscles seize and tear their own body to shreds. In practical terms, 1-25 units just causes toxin damage, and 26 units turns you into a hulk with all its associated benefits with the side effect of taking a little toxin damage over time. You'll remain as a hulk until it's all metabolized, at which point you'll take 200 brute damage and gib. With the correct administration, it can be the most potent drug there is, but even at the best of times it is best considered a double-edged sword.
   physicalDesc: cloudy
   color: "#a1000b"
 
 - type: reagent
-  id: chem.Cryptobiolin
+  id: Cryptobiolin
   name: cryptobiolin
   desc: Causes confusion and dizziness. This is essential to make Spaceacillin.
   physicalDesc: fizzy
   color: "#081a80"
 
 - type: reagent
-  id: chem.HeartbreakerToxin
+  id: HeartbreakerToxin
   name: heartbreaker toxin
   desc: A hallucinogenic compound that is illegal under space law. A synthetic drug derived from Mindbreaker toxin, it blocks some neurological signals to the respiratory system which causes choking.
   physicalDesc: strong-smelling
@@ -255,28 +255,28 @@
       amount: 10
 
 - type: reagent
-  id: chem.Impedrezene
+  id: Impedrezene
   name: impedrezene
   desc: A narcotic that impedes one's ability by slowing down the higher brain cell functions. Causes massive brain damage.
   physicalDesc: acrid
   color: "#215263"
 
 - type: reagent
-  id: chem.Lexorin
+  id: Lexorin
   name: lexorin
   desc: Temporarily stops respiration and causes tissue damage. Large doses are fatal, and will cause people to pass out very quickly. Dexalin and Dexalin Plus will both remove it, however.
   physicalDesc: pungent
   color: "#6b0007"
 
 - type: reagent
-  id: chem.Lipozine
+  id: Lipozine
   name: lipozine
   desc: Causes weight loss upon consumption.
   physicalDesc: oily
   color: "#2690b5"
 
 - type: reagent
-  id: chem.MindbreakerToxin
+  id: MindbreakerToxin
   name: mindbreaker toxin
   desc: A potent hallucinogenic compound that is illegal under space law. Formerly known as LSD.
   physicalDesc: opaque
@@ -286,28 +286,28 @@
       amount: 10
 
 - type: reagent
-  id: chem.Soporific
+  id: Soporific
   name: soporific (sleep-toxin)
   desc: A less powerful sedative that takes a while to work, intended to help insomniacs and patients that are too aggressive to be treated normally. Takes roughly 50 seconds to make the patient fall asleep. Is safe in large quantities. Can be counteracted with Anti-Toxin.
   physicalDesc: acrid
   color: "#215263"
 
 - type: reagent
-  id: chem.Sterilizine
+  id: Sterilizine
   name: sterilizine
   desc: Helps the patient when used during surgery, may also decontaminate objects and surfaces that bear pathogens. Is currently useless due to infections not being a thing.
   physicalDesc: strong-smelling
   color: "#7cad37"
 
 - type: reagent
-  id: chem.SpaceDrugs
+  id: SpaceDrugs
   name: space drugs
   desc: An illegal compound which induces a number of effects such as loss of balance and visual artefacts.
   physicalDesc: syrupy
   color: "#63806e"
 
 - type: reagent
-  id: chem.THCOil
+  id: THCOil
   name: THC oil
   desc: Pure THC oil, extracted from the leaves of the cannabis plant. Much stronger than in it's natural form and can be used to numb chronic pain in patients.
   physicalDesc: skunky

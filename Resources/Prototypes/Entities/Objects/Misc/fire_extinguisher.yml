@@ -17,7 +17,7 @@
       caps: Refillable, Drainable
       contents:
         reagents:
-          - ReagentId: chem.Water
+          - ReagentId: Water
             Quantity: 100
     - type: ItemCooldown
     - type: Spray

@@ -31,7 +31,7 @@ namespace Content.Tests.Shared.Chemistry
                 var newReagent = serializationManager.ReadValue<ReagentPrototype>(new MappingDataNode(proto));
 
                 Assert.That(defType, Is.EqualTo("reagent"));
-                Assert.That(newReagent.ID, Is.EqualTo("chem.H2"));
+                Assert.That(newReagent.ID, Is.EqualTo("H2"));
                 Assert.That(newReagent.Name, Is.EqualTo("Hydrogen"));
                 Assert.That(newReagent.Description, Is.EqualTo("A light, flammable gas."));
                 Assert.That(newReagent.SubstanceColor, Is.EqualTo(Color.Teal));
@@ -39,7 +39,7 @@ namespace Content.Tests.Shared.Chemistry
         }
 
         private const string YamlReagentPrototype = @"- type: reagent
-  id: chem.H2
+  id: H2
   name: Hydrogen
   desc: A light, flammable gas.
   color: " + "\"#008080\"";

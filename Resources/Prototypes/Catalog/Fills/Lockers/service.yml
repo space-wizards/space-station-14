@@ -47,6 +47,10 @@
         amount: 3
       - name: TrashBag
         amount: 2
+      - name: LightReplacer
+        amount: 1
+      - name: BoxLightMixed
+        amount: 1
 
 #- type: entity
 #  id: LockerLegalFilled

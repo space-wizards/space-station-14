@@ -35,7 +35,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Water
+      - ReagentId: Water
         Quantity: 180
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 20
