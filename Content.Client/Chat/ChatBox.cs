@@ -101,6 +101,7 @@ namespace Content.Client.Chat
         /// </summary>
         public ChatBox()
         {
+            //TODO Paul needs to fix xaml ctor args so we can pass this instead of resolving it.
             var stateManager = IoCManager.Resolve<IStateManager>();
             _lobbyMode = stateManager.CurrentState is LobbyState;
 
@@ -151,7 +152,7 @@ namespace Content.Client.Chat
                                             {
                                                 StyleClasses = { StyleNano.StyleClassChatChannelSelectorButton },
                                                 CustomMinimumSize = (75, 0),
-                                                Text = Loc.GetString("OOC"),
+                                                Text = Loc.GetString("hud-chatbox-ooc"),
                                                 ToggleMode = true
                                             }),
                                             (Input = new HistoryLineEdit
@@ -310,7 +311,14 @@ namespace Content.Client.Chat
             if (!selectableChannels.Contains(_selectedChannel) && _selectedChannel != ChatChannel.Unspecified)
             {
                 // our previously selected channel no longer exists, default back to OOC, which should always be available
-                SafelySelectChannel(ChatChannel.OOC);
+                if (selectableChannels.Contains(ChatChannel.OOC))
+                {
+                    SafelySelectChannel(ChatChannel.OOC);
+                }
+                else //This shouldn't happen but better to be safe than sorry
+                {
+                    SafelySelectChannel(selectableChannels.First());
+                }
             }
             else
             {
@@ -714,8 +722,8 @@ namespace Content.Client.Chat
         {
             return channel switch
             {
-                ChatChannel.AdminChat => Loc.GetString("Admin"),
-                ChatChannel.Unspecified => Loc.GetString("Console"),
+                ChatChannel.AdminChat => Loc.GetString("hud-chatbox-admin"),
+                ChatChannel.Unspecified => Loc.GetString("hud-chatbox-console"),
                 _ => Loc.GetString(channel.ToString())
             };
         }
@@ -892,7 +900,7 @@ namespace Content.Client.Chat
         {
             var name = Channel switch
             {
-                ChatChannel.AdminChat => Loc.GetString("Admin"),
+                ChatChannel.AdminChat => Loc.GetString("hud-chatbox-admin"),
                 ChatChannel.Unspecified => throw new InvalidOperationException(
                     "cannot create chat filter for Unspecified"),
                 _ => Loc.GetString(Channel.ToString())
