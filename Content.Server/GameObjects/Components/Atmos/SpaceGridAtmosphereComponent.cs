@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
+    [RegisterComponent]
+    [ComponentReference(typeof(IGridAtmosphereComponent))]
     public class SpaceGridAtmosphereComponent : UnsimulatedGridAtmosphereComponent
     {
         public override string Name => "SpaceGridAtmosphere";

@@ -8,6 +8,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -57,17 +58,17 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <summary>
         ///     Applies the damage when our projectile collides with its victim
         /// </summary>
-        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
             // This is so entities that shouldn't get a collision are ignored.
-            if (!otherBody.Hard || _damagedEntity)
+            if (!otherFixture.Hard || _damagedEntity)
             {
                 return;
             }
 
-            var coordinates = otherBody.Entity.Transform.Coordinates;
+            var coordinates = otherFixture.Body.Owner.Transform.Coordinates;
             var playerFilter = Filter.Pvs(coordinates);
-            if (otherBody.Entity.TryGetComponent(out IDamageableComponent? damage) && _soundHitSpecies != null)
+            if (otherFixture.Body.Owner.TryGetComponent(out IDamageableComponent? damage) && _soundHitSpecies != null)
             {
                 SoundSystem.Play(playerFilter, _soundHitSpecies, coordinates);
             }
@@ -89,9 +90,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
 
             // Damaging it can delete it
-            if (!otherBody.Entity.Deleted && otherBody.Entity.TryGetComponent(out CameraRecoilComponent? recoilComponent))
+            if (!otherFixture.Body.Deleted && otherFixture.Body.Owner.TryGetComponent(out CameraRecoilComponent? recoilComponent))
             {
-                var direction = ourBody.LinearVelocity.Normalized;
+                var direction = ourFixture.Body.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);
             }
 

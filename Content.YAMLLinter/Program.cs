@@ -44,7 +44,10 @@ namespace Content.YAMLLinter
 
         private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
         {
-            var client = StartClient();
+            var client = StartClient(new ClientContentIntegrationOption()
+            {
+                FailureLogLevel = null,
+            });
 
             await client.WaitIdleAsync();
 
@@ -63,7 +66,10 @@ namespace Content.YAMLLinter
 
         private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateServer()
         {
-            var server = StartServer();
+            var server = StartServer(new ServerContentIntegrationOption()
+            {
+                FailureLogLevel = null,
+            });
 
             await server.WaitIdleAsync();
 

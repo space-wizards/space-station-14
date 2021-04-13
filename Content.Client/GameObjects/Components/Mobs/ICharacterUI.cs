@@ -9,7 +9,7 @@ namespace Content.Client.GameObjects.Components.Mobs
     public interface ICharacterUI
     {
         /// <summary>
-        /// The godot control which holds the character user interface to be included in the window
+        /// The control which holds the character user interface to be included in the window
         /// </summary>
         Control Scene { get; }
 

@@ -75,7 +75,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 }
 
                 // all entities have a TransformComponent
-                var transform = physics.Entity.Transform;
+                var transform = physics.Owner.Transform;
 
                 // if not on the same map, continue
                 if (transform.MapID != _eyeManager.CurrentMap || !transform.IsMapTransform)

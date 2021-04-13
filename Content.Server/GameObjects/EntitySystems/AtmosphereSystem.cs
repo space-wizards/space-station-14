@@ -10,6 +10,7 @@ using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
@@ -36,7 +37,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
 
-        private SpaceGridAtmosphereComponent _spaceAtmos = default!;
         private GridTileLookupSystem? _gridTileLookup = null;
 
         private const float ExposedUpdateDelay = 1f;
@@ -59,9 +59,8 @@ namespace Content.Server.GameObjects.EntitySystems
             _gasReactions = _protoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
             Array.Sort(_gasReactions, (a, b) => b.Priority.CompareTo(a.Priority));
 
-            _spaceAtmos = new SpaceGridAtmosphereComponent();
-            _spaceAtmos.Initialize();
-            IoCManager.InjectDependencies(_spaceAtmos);
+            _mapManager.MapCreated += OnMapCreated;
+            _mapManager.TileChanged += OnTileChanged;
 
             Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
 
@@ -210,18 +209,39 @@ namespace Content.Server.GameObjects.EntitySystems
         #endregion
 
         #region Helper Methods
-        public IGridAtmosphereComponent GetGridAtmosphere(GridId gridId)
+        public IGridAtmosphereComponent? GetGridAtmosphere(GridId gridId)
         {
             if (!gridId.IsValid())
+                return null;
+
+            if (!_mapManager.TryGetGrid(gridId, out var grid))
+                return null;
+
+            return ComponentManager.TryGetComponent(grid.GridEntityId, out IGridAtmosphereComponent? gridAtmosphere)
+                ? gridAtmosphere : null;
+        }
+
+        public IGridAtmosphereComponent GetGridAtmosphere(EntityCoordinates coordinates)
+        {
+            return GetGridAtmosphere(coordinates.ToMap(EntityManager));
+        }
+
+        public IGridAtmosphereComponent GetGridAtmosphere(MapCoordinates coordinates)
+        {
+            if (coordinates.MapId == MapId.Nullspace)
             {
-                return _spaceAtmos;
+                throw new ArgumentException($"Coordinates cannot be in nullspace!", nameof(coordinates));
             }
 
-            var grid = _mapManager.GetGrid(gridId);
+            if (_mapManager.TryFindGridAt(coordinates, out var grid))
+            {
+                if (ComponentManager.TryGetComponent(grid.GridEntityId, out IGridAtmosphereComponent? atmos))
+                {
+                    return atmos;
+                }
+            }
 
-            if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) return _spaceAtmos;
-
-            return gridEnt.TryGetComponent(out IGridAtmosphereComponent? atmos) ? atmos : _spaceAtmos;
+            return _mapManager.GetMapEntity(coordinates.MapId).GetComponent<IGridAtmosphereComponent>();
         }
 
         /// <summary>
@@ -267,6 +287,17 @@ namespace Content.Server.GameObjects.EntitySystems
 
                 _exposedTimer = 0;
             }
+        }
+
+        private void OnMapCreated(object? sender, MapEventArgs e)
+        {
+            if (e.Map == MapId.Nullspace)
+                return;
+
+            var map = _mapManager.GetMapEntity(e.Map);
+
+            if (!map.HasComponent<IGridAtmosphereComponent>())
+                map.AddComponent<SpaceGridAtmosphereComponent>();
         }
     }
 }
