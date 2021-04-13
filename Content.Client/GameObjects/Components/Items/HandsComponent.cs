@@ -84,12 +84,8 @@ namespace Content.Client.GameObjects.Components.Items
 
             switch (message)
             {
-                case AnimatePickupEntityMessage msg:
-
-                    if (!Owner.EntityManager.TryGetEntity(msg.EntityId, out var entity))
-                        break;
-
-                    ReusableAnimations.AnimateEntityPickup(entity, msg.EntityPosition, Owner.Transform.WorldPosition);
+                case PickupAnimationMessage msg:
+                    RunPickupAnimation(msg);
                     break;
             }
         }
@@ -212,6 +208,21 @@ namespace Content.Client.GameObjects.Components.Items
                 itemStates.Add(new ItemVisualState(item.RsiPath, state, item.Color));
             }
             return new HeldItemsVisualState(itemStates);
+        }
+
+        private void RunPickupAnimation(PickupAnimationMessage msg)
+        {
+            if (!Owner.EntityManager.TryGetEntity(msg.EntityUid, out var entity))
+                return;
+
+            var outermostEntity = entity;
+            while (outermostEntity.TryGetContainer(out var container))
+            {
+                outermostEntity = container.Owner;
+            }
+            var initialPosition = outermostEntity.Transform.Coordinates;
+
+            ReusableAnimations.AnimateEntityPickup(entity, msg.InitialPosition, msg.PickupDirection);
         }
     }
 }

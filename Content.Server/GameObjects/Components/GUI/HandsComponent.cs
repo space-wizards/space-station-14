@@ -128,6 +128,14 @@ namespace Content.Server.GameObjects.Components.GUI
                 .TryInteractionActivate(Owner, heldEntity);
         }
 
+        protected override void HandlePickupAnimation(PickupAnimationMessage msg)
+        {
+            if (msg.PickupDirection == msg.InitialPosition.ToMapPos(Owner.EntityManager))
+                return;
+
+            SendNetworkMessage(msg);
+        }
+
         #region Pull/Disarm
 
         void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs args)

@@ -595,12 +595,6 @@ namespace Content.Shared.GameObjects.Components.Items
             if (handContainer == null)
                 return;
 
-            var entityPosition = entity.TryGetContainer(out var container) ? container.Owner.Transform.Coordinates : entity.Transform.Coordinates;
-            if (entityPosition != Owner.Transform.Coordinates)
-            {
-                SendNetworkMessage(new AnimatePickupEntityMessage(entity.Uid, entityPosition));
-            }
-
             if (!handContainer.Insert(entity))
             {
                 Logger.Error($"{nameof(SharedHandsComponent)} on {Owner} could not insert {entity} into {handContainer}.");
@@ -627,6 +621,7 @@ namespace Content.Shared.GameObjects.Components.Items
             if (checkActionBlocker && !PlayerCanPickup())
                 return false;
 
+            HandlePickupAnimation(new PickupAnimationMessage(entity.Uid, Owner.Transform.WorldPosition, entity.Transform.Coordinates));
             PutEntityIntoHand(hand, entity);
             return true;
         }
@@ -780,6 +775,8 @@ namespace Content.Shared.GameObjects.Components.Items
         protected virtual void DoUse(IEntity heldEntity) { }
 
         protected virtual void DoActivate(IEntity heldEntity) { }
+
+        protected virtual void HandlePickupAnimation(PickupAnimationMessage msg) { }
 
         protected void EnableHand(Hand hand)
         {
@@ -951,22 +948,6 @@ namespace Content.Shared.GameObjects.Components.Items
         Right
     }
 
-    /// <summary>
-    ///     Component message for displaying an animation of an entity flying towards the owner of a HandsComponent
-    /// </summary>
-    [Serializable, NetSerializable]
-    public class AnimatePickupEntityMessage : ComponentMessage
-    {
-        public readonly EntityUid EntityId;
-        public readonly EntityCoordinates EntityPosition;
-        public AnimatePickupEntityMessage(EntityUid entity, EntityCoordinates entityPosition)
-        {
-            Directed = true;
-            EntityId = entity;
-            EntityPosition = entityPosition;
-        }
-    }
-
     public class HandCountChangedEvent : EntityEventArgs
     {
         public HandCountChangedEvent(IEntity sender)
@@ -975,5 +956,21 @@ namespace Content.Shared.GameObjects.Components.Items
         }
 
         public IEntity Sender { get; }
+    }
+
+    [Serializable, NetSerializable]
+    public class PickupAnimationMessage : ComponentMessage
+    {
+        public EntityUid EntityUid { get; }
+        public EntityCoordinates InitialPosition { get; }
+        public Vector2 PickupDirection { get; }
+
+        public PickupAnimationMessage(EntityUid entityUid, Vector2 pickupDirection, EntityCoordinates initialPosition)
+        {
+            Directed = true;
+            EntityUid = entityUid;
+            PickupDirection = pickupDirection;
+            InitialPosition = initialPosition;
+        }
     }
 }
