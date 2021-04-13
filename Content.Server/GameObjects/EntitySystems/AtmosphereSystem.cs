@@ -101,6 +101,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Shutdown();
 
+            _mapManager.MapCreated -= OnMapCreated;
             _mapManager.TileChanged -= OnTileChanged;
 
             UnsubscribeLocalEvent<AirtightComponent, SnapGridPositionChangedEvent>(OnAirtightPositionChanged);
@@ -162,6 +163,17 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             GetGridAtmosphere(eventArgs.NewTile.GridIndex)?.Invalidate(eventArgs.NewTile.GridIndices);
+        }
+
+        private void OnMapCreated(object? sender, MapEventArgs e)
+        {
+            if (e.Map == MapId.Nullspace)
+                return;
+
+            var map = _mapManager.GetMapEntity(e.Map);
+
+            if (!map.HasComponent<IGridAtmosphereComponent>())
+                map.AddComponent<SpaceGridAtmosphereComponent>();
         }
 
         #region Airtight Handlers
@@ -247,14 +259,26 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         ///     Unlike <see cref="GetGridAtmosphere"/>, this doesn't return space grid when not found.
         /// </summary>
-        public bool TryGetSimulatedGridAtmosphere(GridId gridId, [NotNullWhen(true)] out IGridAtmosphereComponent? atmosphere)
+        public bool TryGetSimulatedGridAtmosphere(MapCoordinates coordinates, [NotNullWhen(true)] out IGridAtmosphereComponent? atmosphere)
         {
-            if (gridId.IsValid()
-                && _mapManager.TryGetGrid(gridId, out var mapGrid)
+            if (coordinates.MapId == MapId.Nullspace)
+            {
+                atmosphere = null;
+                return false;
+            }
+
+            if (_mapManager.TryFindGridAt(coordinates, out var mapGrid)
                 && ComponentManager.TryGetComponent(mapGrid.GridEntityId, out IGridAtmosphereComponent? atmosGrid)
                 && atmosGrid.Simulated)
             {
                 atmosphere = atmosGrid;
+                return true;
+            }
+
+            if (_mapManager.GetMapEntity(coordinates.MapId).TryGetComponent(out IGridAtmosphereComponent? atmosMap)
+                && atmosMap.Simulated)
+            {
+                atmosphere = atmosMap;
                 return true;
             }
 
@@ -280,24 +304,13 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 foreach (var exposed in EntityManager.ComponentManager.EntityQuery<AtmosExposedComponent>(true))
                 {
-                    var tile = exposed.Owner.Transform.Coordinates.GetTileAtmosphere(EntityManager);
+                    var tile = exposed.Owner.Transform.Coordinates.GetTileAtmosphere();
                     if (tile == null) continue;
                     exposed.Update(tile, _exposedTimer);
                 }
 
                 _exposedTimer = 0;
             }
-        }
-
-        private void OnMapCreated(object? sender, MapEventArgs e)
-        {
-            if (e.Map == MapId.Nullspace)
-                return;
-
-            var map = _mapManager.GetMapEntity(e.Map);
-
-            if (!map.HasComponent<IGridAtmosphereComponent>())
-                map.AddComponent<SpaceGridAtmosphereComponent>();
         }
     }
 }

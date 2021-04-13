@@ -66,8 +66,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             if (!CanJoinAtmosphere())
                 return;
 
-            // We try to get a valid, non-space atmosphere.
-            if (!EntitySystem.Get<AtmosphereSystem>().TryGetSimulatedGridAtmosphere(Owner.Transform.GridID, out var atmosphere))
+            // We try to get a valid, simulated atmosphere.
+            if (!EntitySystem.Get<AtmosphereSystem>().TryGetSimulatedGridAtmosphere(Owner.Transform.MapPosition, out var atmosphere))
                 return;
 
             Atmosphere = atmosphere;
