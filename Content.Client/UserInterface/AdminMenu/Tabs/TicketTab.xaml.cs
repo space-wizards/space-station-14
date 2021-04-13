@@ -139,7 +139,11 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
                 nameLabel.SetMessage(ticket.Name);
                 hBox.AddChild(nameLabel);
                 hBox.AddChild(new VSeparator());
-                var messageLabel = new RichTextLabel();
+                var messageLabel = new RichTextLabel
+                {
+                    MaxWidth = 256,
+                    MinWidth = 256
+                };
                 messageLabel.SetMessage(ticket.Message);
                 hBox.AddChild(messageLabel);
 

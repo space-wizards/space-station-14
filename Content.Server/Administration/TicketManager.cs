@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameTicking;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
+using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Administration.AdminMenu;
@@ -21,6 +23,7 @@ namespace Content.Server.Administration
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
 
         public const int MaxMessageLength = 1024;
 
@@ -33,6 +36,16 @@ namespace Content.Server.Administration
             _netManager.RegisterNetMessage<MsgTicketMessage>(MsgTicketMessage.NAME, OnTicketMessage);
             _netManager.RegisterNetMessage<AdminMenuTicketListRequest>(AdminMenuTicketListRequest.NAME, HandleTicketListRequest);
             _netManager.RegisterNetMessage<AdminMenuTicketListMessage>(AdminMenuTicketListMessage.NAME);
+            _gameTicker.OnRunLevelChanged += RunLevelChanged;
+        }
+
+        private void RunLevelChanged(GameRunLevelChangedEventArgs level)
+        {
+            if (level.NewRunLevel == GameRunLevel.PreRoundLobby)
+            {
+                CurrentId = 0;
+                Tickets.Clear();
+            }
         }
 
         public bool HasTicket(NetUserId id)
@@ -109,7 +122,7 @@ namespace Content.Server.Administration
             foreach (var (_, ticket) in Tickets)
             {
                 var id = ticket.Id;
-                var player = _playerManager.GetSessionByUserId(ticket.TargetPlayer);
+                var player = _playerManager.GetSessionByUserId(ticket.TargetPlayer); //TODO don't crash if the player isn't connected lol
                 var name = $"{player.ConnectedClient.UserName} ({ticket.Character})";
                 var status = ticket.Status;
                 var msg = ticket.Messages.First();
