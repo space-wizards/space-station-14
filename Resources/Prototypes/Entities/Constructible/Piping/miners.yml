@@ -1,0 +1,86 @@
+- type: entity
+  abstract: true
+  name: gas miner
+  description: Gases mined from the gas giant below (above?) flow out through this massive vent.
+  id: GasMinerBase
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Physics
+    - type: SnapGrid
+      offset: Center
+    - type: Damageable
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+    - type: Sprite
+      netsync: false
+    - type: AtmosDevice
+    - type: GasMiner
+
+- type: entity
+  name: O2 gas miner
+  parent: GasMinerBase
+  id: GasMinerOxygen
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasMiner
+      spawnGas: Oxygen
+
+- type: entity
+  name: N2 gas miner
+  parent: GasMinerBase
+  id: GasMinerNitrogen
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasMiner
+      spawnGas: Nitrogen
+
+- type: entity
+  name: CO2 gas miner
+  parent: GasMinerBase
+  id: GasMinerCarbonDioxide
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasMiner
+      spawnGas: CarbonDioxide
+
+- type: entity
+  name: Plasma gas miner
+  parent: GasMinerBase
+  id: GasMinerPlasma
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasMiner
+      spawnGas: Plasma
+
+- type: entity
+  name: Tritium gas miner
+  parent: GasMinerBase
+  id: GasMinerTritium
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasMiner
+      spawnGas: Tritium
+
+- type: entity
+  name: Water Vapor gas miner
+  parent: GasMinerBase
+  id: GasMinerWaterVapor
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasMiner
+      spawnGas: WaterVapor
