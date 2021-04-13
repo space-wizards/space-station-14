@@ -1,0 +1,54 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "AGPL-3.0 License",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/master/icons/obj/vending.dmi",
+    "states": [
+        {
+            "name": "normal-unshaded",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0,
+                    0.1,
+                    1.0,
+                    0.1,
+                    1.0,
+                    0.1,
+                    1.0,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "broken",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "off",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "panel",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        }
+    ]
+}
