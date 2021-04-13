@@ -147,6 +147,9 @@ namespace Content.Server.Physics.Controllers
 
         private void PlayFootstepSound(IEntity mover, bool sprinting)
         {
+            // In space no one can hear you squeak
+            if (mover.Transform.GridID == GridId.Invalid) return;
+
             var coordinates = mover.Transform.Coordinates;
             // Step one: figure out sound collection prototype.
             var grid = _mapManager.GetGrid(coordinates.GetGridId(EntityManager));
