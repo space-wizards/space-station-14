@@ -45,7 +45,7 @@ grids:
     snapsize: 1
   chunks:
   - ind: "-1,-1"
-    tiles: GAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAIQAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAYAAAAGAAAACEAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAhAAAAIQAAABgAAAAhAAAAIQAAACEAAAAgAAAAGAAAABgAAAAhAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGAAAABgAAAAYAAAAGAAAABgAAAAhAAAAIAAAABgAAAAYAAAAIQAAABsAAAAbAAAAGwAAACEAAAAhAAAAIQAAABgAAAAYAAAAGAAAABgAAAAYAAAAIQAAACAAAAAYAAAAGAAAACEAAAAhAAAAGwAAACEAAAAhAAAAIAAAACAAAAAYAAAAGAAAABgAAAAYAAAAGAAAACEAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAGAAAABgAAAAYAAAAGAAAABgAAAAhAAAAIAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAACEAAAAhAAAAIQAAABgAAAAhAAAAIQAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAgAAAAGAAAAA8AAAAPAAAADwAAAA8AAAAPAAAAIQAAABgAAAAYAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAPAAAADwAAAA8AAAAPAAAADwAAACEAAAAYAAAAGAAAACAAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAADwAAAA8AAAAPAAAADwAAAA8AAAAhAAAAIQAAACEAAAAgAAAAFgAAAAoAAAAKAAAACgAAAAoAAAAKAAAAIQAAAA8AAAAPAAAADwAAAA8AAAAPAAAAHgAAAB4AAAAeAAAAIQAAACEAAAAKAAAACgAAAAoAAAAKAAAACgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAhAAAAIQAAABYAAAAhAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAhAAAAGwAAABsAAAAbAAAAGwAAABsAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAIQAAABsAAAAbAAAAGwAAABsAAAAWAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAA==
+    tiles: GAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAIQAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAYAAAAGAAAACEAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAhAAAAIQAAABgAAAAhAAAAIQAAACEAAAAgAAAAGAAAABgAAAAhAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGAAAABgAAAAYAAAAGAAAABgAAAAhAAAAIAAAABgAAAAYAAAAIQAAABsAAAAbAAAAGwAAACEAAAAhAAAAIQAAABgAAAAYAAAAGAAAABgAAAAYAAAAIQAAACAAAAAYAAAAGAAAACEAAAAhAAAAGwAAACEAAAAhAAAAIAAAACAAAAAYAAAAGAAAABgAAAAYAAAAGAAAACEAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAGAAAABgAAAAYAAAAGAAAABgAAAAhAAAAIAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAIQAAABgAAAAhAAAAIQAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAGAAAABgAAAAYAAAAGAAAABgAAAAeAAAAHgAAAB4AAAAeAAAAGAAAAA8AAAAPAAAADwAAAA8AAAAPAAAAIQAAABgAAAAYAAAAIAAAABgAAAAgAAAAHgAAAB4AAAAeAAAAHgAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAACEAAAAYAAAAGAAAACAAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAADwAAAA8AAAAPAAAADwAAAA8AAAAhAAAAIQAAACEAAAAgAAAAFgAAAAoAAAAKAAAACgAAAAoAAAAKAAAAIQAAAA8AAAAPAAAADwAAAA8AAAAPAAAAHgAAAB4AAAAeAAAAIQAAACEAAAAKAAAACgAAAAoAAAAKAAAACgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAhAAAAIQAAABYAAAAhAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAhAAAAGwAAABsAAAAbAAAAGwAAABsAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAIQAAABsAAAAbAAAAGwAAABsAAAAWAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAA==
   - ind: "-1,0"
     tiles: FgAAABsAAAAbAAAAGwAAABsAAAAWAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAbAAAAGwAAABsAAAAbAAAAFgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAhAAAAFgAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACAAAAAhAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAIQAAABYAAAAgAAAAIQAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAACEAAAAWAAAAIAAAACEAAAAWAAAAFgAAABYAAAAhAAAAFgAAACEAAAAhAAAAFgAAABYAAAAhAAAAIQAAABYAAAAhAAAAIQAAACAAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAgAAAAGAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAAA==
   - ind: "0,-1"
@@ -5381,7 +5381,7 @@ entities:
 - uid: 585
   type: LockerBoozeFilled
   components:
-  - pos: -6.5,-6.5
+  - pos: -11.5,-6.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -5592,16 +5592,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 603
-  type: AirlockMaintIntLocked
+  type: Crowbar
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -12.5,-8.5
+  - pos: -15.521677,-10.494378
     parent: 853
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 604
   type: AirlockMaintRnDLocked
   components:
@@ -12536,10 +12533,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 904
-  type: Catwalk
+  type: solid_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -9.5,-7.5
+  - pos: -13.5,-6.5
     parent: 853
     type: Transform
 - uid: 905
@@ -24074,12 +24070,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 2395
-  type: solid_wall
+  type: Crowbar
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -10.5,-8.5
+  - pos: -15.459177,-11.244378
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2396
   type: solid_wall
   components:
@@ -24097,15 +24094,13 @@ entities:
 - uid: 2398
   type: solid_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -14.5,-8.5
+  - pos: -15.5,-9.5
     parent: 853
     type: Transform
 - uid: 2399
   type: solid_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -15.5,-8.5
+  - pos: -10.5,-8.5
     parent: 853
     type: Transform
 - uid: 2400
@@ -24284,12 +24279,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 2423
-  type: Table
+  type: ApcExtensionCable
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -15.5,-12.5
+  - pos: -13.5,-9.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 2424
   type: Table
   components:
@@ -24417,10 +24415,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 2441
-  type: WeldingFuelTankFull
+  type: VendingBarDrobe
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -15.5,-9.5
+  - pos: -12.5,-6.5
     parent: 853
     type: Transform
 - uid: 2442
@@ -27394,6 +27391,8 @@ entities:
     pos: -14.5,-8.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 2740
@@ -27924,7 +27923,7 @@ entities:
   type: SalternApc
   components:
   - rot: 4.371139006309477E-08 rad
-    pos: -14.5,-8.5
+    pos: -15.5,-9.5
     parent: 853
     type: Transform
   - startingCharge: 11999.45
@@ -38232,6 +38231,8 @@ entities:
     pos: -9.5,-7.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 3792
@@ -38241,6 +38242,8 @@ entities:
     pos: -9.5,-6.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 3793
@@ -38250,6 +38253,8 @@ entities:
     pos: -10.5,-6.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 3794
@@ -38259,6 +38264,8 @@ entities:
     pos: -11.5,-6.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 3795
@@ -38268,6 +38275,8 @@ entities:
     pos: -12.5,-6.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 3796
@@ -38498,6 +38507,8 @@ entities:
     pos: -14.5,-8.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 3818
@@ -39398,7 +39409,7 @@ entities:
   type: EmergencyLight
   components:
   - rot: 4.371139006309477E-08 rad
-    pos: -13.885857,-9
+    pos: -13.5,-10
     parent: 853
     type: Transform
   - powerLoad: 1
@@ -39746,15 +39757,15 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3941
-  type: Crowbar
+  type: solid_wall
   components:
-  - pos: -15.314676,-12.357978
+  - pos: -9.5,-8.5
     parent: 853
     type: Transform
 - uid: 3942
-  type: Crowbar
+  type: solid_wall
   components:
-  - pos: -15.502176,-11.748603
+  - pos: -13.5,-7.5
     parent: 853
     type: Transform
 - uid: 3943
@@ -40548,14 +40559,11 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 4030
-  type: Firelock
+  type: solid_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -10.5,-7.5
+  - pos: -8.5,-7.5
     parent: 853
     type: Transform
-  - airBlocked: False
-    type: Airtight
 - uid: 4031
   type: ComfyChair
   components:
@@ -40686,14 +40694,11 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 4047
-  type: Firelock
+  type: solid_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -10.5,-6.5
+  - pos: -8.5,-7.5
     parent: 853
     type: Transform
-  - airBlocked: False
-    type: Airtight
 - uid: 4048
   type: ApcExtensionCable
   components:
@@ -40952,8 +40957,7 @@ entities:
 - uid: 4079
   type: solid_wall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -8.5,-7.5
+  - pos: -8.5,-8.5
     parent: 853
     type: Transform
 - uid: 4080
@@ -47709,4 +47713,62 @@ entities:
     pos: 4.5,-30.5
     parent: 853
     type: Transform
+- uid: 4881
+  type: AirlockMaintBarLocked
+  components:
+  - pos: -12.5,-8.5
+    parent: 853
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 4882
+  type: WeldingFuelTankFull
+  components:
+  - pos: -15.5,-12.5
+    parent: 853
+    type: Transform
+- uid: 4883
+  type: solid_wall
+  components:
+  - pos: -13.5,-9.5
+    parent: 853
+    type: Transform
+- uid: 4884
+  type: AirlockMaint
+  components:
+  - pos: -14.5,-9.5
+    parent: 853
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 4885
+  type: ApcExtensionCable
+  components:
+  - pos: -15.5,-10.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 4886
+  type: Table
+  components:
+  - pos: -10.5,-6.5
+    parent: 853
+    type: Transform
+- uid: 4887
+  type: ApcExtensionCable
+  components:
+  - pos: -13.5,-10.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 ...
