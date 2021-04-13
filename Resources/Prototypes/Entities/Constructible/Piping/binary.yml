@@ -75,3 +75,30 @@
         - type: PumpVisualizer
           pumpEnabledState: pumpPassiveGateOn
     - type: GasPassiveGate
+
+- type: entity
+  parent: GasBinaryBase
+  id: GasValve
+  placement:
+    mode: SnapgridCenter
+  components:
+    # TODO ATMOS: Give unique sprite.
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/pump.rsi
+      layers:
+        - sprite: Constructible/Atmos/pipe.rsi
+          state: pipeStraight
+        - state: pumpPassiveGate
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+        - type: PumpVisualizer
+          pumpEnabledState: pumpPassiveGateOn
+    - type: GasValve
+    - type: NodeContainer
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: Longitudinal

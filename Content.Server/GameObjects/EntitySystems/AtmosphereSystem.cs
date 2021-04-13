@@ -59,9 +59,6 @@ namespace Content.Server.GameObjects.EntitySystems
             _gasReactions = _protoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
             Array.Sort(_gasReactions, (a, b) => b.Priority.CompareTo(a.Priority));
 
-            _mapManager.MapCreated += OnMapCreated;
-            _mapManager.TileChanged += OnTileChanged;
-
             Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
 
             for (var i = 0; i < GasPrototypes.Length; i++)
@@ -82,7 +79,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
             #region Events
 
-            // Map tile changes.
+            // Map events.
+            _mapManager.MapCreated += OnMapCreated;
             _mapManager.TileChanged += OnTileChanged;
 
             // Airtight entities.

@@ -117,7 +117,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         protected virtual void AfterRemake(IEnumerable<INodeGroup> newGroups) { }
 
-        private class NullNodeGroup : INodeGroup
+        protected class NullNodeGroup : INodeGroup
         {
             public IReadOnlyList<Node> Nodes => _nodes;
             private readonly List<Node> _nodes = new();

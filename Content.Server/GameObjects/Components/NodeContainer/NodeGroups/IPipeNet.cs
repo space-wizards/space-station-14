@@ -12,7 +12,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
-    public interface IPipeNet : IGasMixtureHolder
+    public interface IPipeNet : INodeGroup, IGasMixtureHolder
     {
         /// <summary>
         ///     Causes gas in the PipeNet to react.
@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             if (node is not PipeNode pipeNode)
                 return;
 
-
+            pipeNode.ClearPipeNet();
             _pipes.Remove(pipeNode);
         }
 
@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             GridAtmos?.RemovePipeNet(this);
         }
 
-        private class NullPipeNet : IPipeNet
+        private class NullPipeNet : NullNodeGroup, IPipeNet
         {
             private readonly GasMixture _air;
 

@@ -20,6 +20,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     [DataDefinition]
     public class PipeNode : Node, IGasMixtureHolder, IRotatableNode
     {
+        [DataField("connectionsEnabled")]
         private PipeDirection _connectedDirections;
 
         /// <summary>
@@ -43,7 +44,24 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 _connectedDirections = value;
                 UpdateAppearance();
             }
+        }
 
+        /// <summary>
+        ///     Whether this node can connect to others or not.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ConnectionsEnabled
+        {
+            get => _connectionsEnabled;
+            set
+            {
+                _connectionsEnabled = value;
+
+                if (!_connectionsEnabled)
+                {
+                    _pipeNet.RemoveNode(this);
+                }
+            }
         }
 
         /// <summary>
@@ -51,6 +69,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         [ViewVariables]
         private IPipeNet _pipeNet = PipeNet.NullNet;
+
+        private bool _connectionsEnabled = true;
 
         /// <summary>
         ///     The gases in this pipe.
@@ -124,7 +144,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             foreach (var pipe in PipesInDirection(pipeDir))
             {
-                if (pipe.PipeDirection.HasDirection(pipeDir.GetOpposite()))
+                if (pipe.ConnectionsEnabled && pipe.PipeDirection.HasDirection(pipeDir.GetOpposite()))
                     yield return pipe;
             }
         }
@@ -167,6 +187,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         private void UpdateConnectedDirections()
         {
             ConnectedDirections = PipeDirection.None;
+
             for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
             {
                 var pipeDir = (PipeDirection) (1 << i);
