@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Pulling
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = component.Puller == userPhysics.Entity
+                data.Text = component.Puller == userPhysics.Owner
                     ? Loc.GetString("Stop pulling")
                     : Loc.GetString("Pull");
             }

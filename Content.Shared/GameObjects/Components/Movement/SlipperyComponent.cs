@@ -13,6 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
@@ -153,8 +154,8 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             if (!Slippery
                 || Owner.IsInContainer()
-                ||  _slipped.Contains(otherBody.Entity.Uid)
-                ||  !otherBody.Entity.TryGetComponent(out SharedStunnableComponent? stun))
+                ||  _slipped.Contains(otherBody.Owner.Uid)
+                ||  !otherBody.Owner.TryGetComponent(out SharedStunnableComponent? stun))
             {
                 return false;
             }
@@ -171,7 +172,7 @@ namespace Content.Shared.GameObjects.Components.Movement
                 return false;
             }
 
-            if (!EffectBlockerSystem.CanSlip(otherBody.Entity))
+            if (!EffectBlockerSystem.CanSlip(otherBody.Owner))
             {
                 return false;
             }
@@ -179,7 +180,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             otherBody.LinearVelocity *= LaunchForwardsMultiplier;
 
             stun.Paralyze(5);
-            _slipped.Add(otherBody.Entity.Uid);
+            _slipped.Add(otherBody.Owner.Uid);
             Dirty();
 
             if (!string.IsNullOrEmpty(SlipSound) && _moduleManager.IsServerModule)
@@ -190,9 +191,9 @@ namespace Content.Shared.GameObjects.Components.Movement
             return true;
         }
 
-        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void IStartCollide.CollideWith(Fixture _, Fixture otherFixture, in Manifold manifold)
         {
-            _colliding.Add(otherBody.Owner.Uid);
+            _colliding.Add(otherFixture.Body.Owner.Uid);
         }
 
         public void Update()

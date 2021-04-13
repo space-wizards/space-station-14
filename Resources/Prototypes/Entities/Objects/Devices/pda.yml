@@ -88,18 +88,21 @@
   - type: CollisionWake
     enabled: false
   - type: Physics
-    bodyType: KinematicController
-    fixtures: # TODO: Make a second fixture.
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.4,0.3,0.4"
+      name: "slips"
+      hard: false
+      layer:
+      - SmallImpassable
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.3,-0.4,0.3,0.4"
       mass: 2.5
-      hard: false
-      layer:
-        - SmallImpassable
       mask:
-        - Impassable
-        - MobImpassable
+      - SmallImpassable
 
 - type: entity
   name: Mime PDA
