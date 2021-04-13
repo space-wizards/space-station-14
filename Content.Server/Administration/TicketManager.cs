@@ -56,7 +56,7 @@ namespace Content.Server.Administration
             var mind = player.ContentData()?.Mind;
             var character = mind == null ? "Unknown" : mind.CharacterName;
             ticket.Character = character;
-            var msg = message.Length <= 32 ? message.Trim() : $"{message.Trim().Substring(0, 32)}...";
+            var msg = message.Length <= 48 ? message.Trim() : $"{message.Trim().Substring(0, 48)}...";
             _chatManager.SendAdminAnnouncement(
                 $"Ticket {ticket.Id} opened by {player.ConnectedClient.UserName} ({character}): {msg}");
         }

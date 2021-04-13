@@ -49,31 +49,34 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
                 {
                     new Label
                     {
-                        Text = "Id",
+                        Text = " Id", //Space for padding
                         SizeFlagsStretchRatio = 2f,
                         //HorizontalExpand = true,
-                        MinWidth = 16
+                        MinWidth = 32
                     },
                     new TicketTab.VSeparator(),
                     new Label
                     {
                         Text = "Status",
                         SizeFlagsStretchRatio = 2f,
-                        HorizontalExpand = true
+                        //HorizontalExpand = true,
+                        MinWidth = 128
                     },
                     new TicketTab.VSeparator(),
                     new Label()
                     {
                         Text = "Action",
                         SizeFlagsStretchRatio = 2f,
-                        HorizontalExpand = true,
+                        //HorizontalExpand = true,
+                        MinWidth = 64
                     },
                     new TicketTab.VSeparator(),
                     new Label()
                     {
                         Text = "Name",
                         SizeFlagsStretchRatio = 2f,
-                        HorizontalExpand = true,
+                        //HorizontalExpand = true,
+                        MinWidth = 192
                     },
                     new TicketTab.VSeparator(),
                     new Label()
@@ -105,23 +108,33 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
                     HorizontalExpand = true,
                     SeparationOverride = 4,
                 };
-                var idLabel = new RichTextLabel();
-                idLabel.SetMessage(ticket.Id.ToString());
+                var idLabel = new RichTextLabel
+                {
+                    MaxWidth = 32,
+                    MinWidth = 32,
+                };
+                idLabel.SetMessage($" {ticket.Id.ToString()}"); //This is weird because the left edge needs a wee bit of padding
                 hBox.AddChild(idLabel);
                 hBox.AddChild(new VSeparator());
-                var statusLabel = new RichTextLabel();
+                var statusLabel = new RichTextLabel
+                {
+                    MaxWidth = 128,
+                    MinWidth = 128
+                };
                 statusLabel.SetMessage(GetReadableStatus(ticket.Status));
                 hBox.AddChild(statusLabel);
                 hBox.AddChild(new VSeparator());
                 var actionButton = new Button
                 {
-                    Text = "Claim"
+                    Text = "View",
+                    MaxWidth = 64
                 };
                 hBox.AddChild(actionButton);
                 hBox.AddChild(new VSeparator());
                 var nameLabel = new RichTextLabel
                 {
-                    MaxWidth = 192
+                    MaxWidth = 192,
+                    MinWidth = 192
                 };
                 nameLabel.SetMessage(ticket.Name);
                 hBox.AddChild(nameLabel);
