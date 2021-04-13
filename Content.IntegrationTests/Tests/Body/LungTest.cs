@@ -57,11 +57,11 @@ namespace Content.IntegrationTests.Tests.Body
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
 
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
+                var mapId = mapManager.CreateMap();
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                var human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", MapCoordinates.Nullspace);
+                var human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", new MapCoordinates(Vector2.Zero, mapId));
 
                 Assert.That(human.TryGetComponent(out IBody body));
                 Assert.That(body.TryGetMechanismBehaviors(out List<LungBehavior> lungs));

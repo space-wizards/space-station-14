@@ -283,7 +283,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
                 atmosSystem
-                    .GetGridAtmosphere(Owner.Transform.GridID)?
+                    .GetGridAtmosphere(Owner.Transform.Coordinates)?
                     .Invalidate(tileAtmos.GridIndices);
             }
 
