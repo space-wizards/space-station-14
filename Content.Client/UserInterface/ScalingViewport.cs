@@ -1,5 +1,6 @@
 ﻿using System;
 using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
@@ -12,7 +13,10 @@ namespace Content.Client.UserInterface
 {
     public sealed class ScalingViewport : Control, IViewportControl
     {
-        private readonly IClyde _clyde;
+        [Dependency]
+        private readonly IClyde _clyde = default!;
+        [Dependency]
+        private readonly IInputManager _inputManager = default!;
 
         private IClydeViewport? _viewport;
         private IEye? _eye;
@@ -76,9 +80,30 @@ namespace Content.Client.UserInterface
 
         public ScalingViewport()
         {
-            _clyde = IoCManager.Resolve<IClyde>();
+            IoCManager.InjectDependencies(this);
             RectClipContent = true;
         }
+
+        protected override void KeyBindDown(GUIBoundKeyEventArgs args)
+        {
+            base.KeyBindDown(args);
+
+            if (args.Handled)
+                return;
+
+            _inputManager.ViewportKeyEvent(this, args);
+        }
+
+        protected override void KeyBindUp(GUIBoundKeyEventArgs args)
+        {
+            base.KeyBindUp(args);
+
+            if (args.Handled)
+                return;
+
+            _inputManager.ViewportKeyEvent(this, args);
+        }
+
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
