@@ -29,7 +29,6 @@ namespace Content.Client.State
         [Dependency] protected readonly IClientEntityManager EntityManager = default!;
         [Dependency] protected readonly IInputManager InputManager = default!;
         [Dependency] protected readonly IPlayerManager PlayerManager = default!;
-        [Dependency] protected readonly IEyeManager EyeManager = default!;
         [Dependency] protected readonly IEntitySystemManager EntitySystemManager = default!;
         [Dependency] protected readonly IGameTiming Timing = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;

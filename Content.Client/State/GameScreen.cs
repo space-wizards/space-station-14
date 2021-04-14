@@ -6,6 +6,7 @@ using Content.Client.UserInterface;
 using Content.Client.Voting;
 using Content.Shared;
 using Content.Shared.Input;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -13,6 +14,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.State
@@ -26,24 +28,36 @@ namespace Content.Client.State
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
+        [Dependency] private readonly IClyde _clyde = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         [ViewVariables] private ChatBox? _gameChat;
         private ConstructionMenuPresenter? _constructionMenu;
 
         private bool _oocEnabled;
         private bool _adminOocEnabled;
+        private ScalingViewport _viewport = default!;
 
         public override void Startup()
         {
             base.Startup();
 
             _gameChat = new ChatBox();
+            _viewport = new ScalingViewport
+            {
+                ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15),
+                AlwaysRender = true,
+                RenderScaleMode = ScalingViewportRenderScaleMode.CeilInt,
+                MouseFilter = Control.MouseFilterMode.Stop
+            };
 
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
             LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
-            LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
             LayoutContainer.SetMarginLeft(_gameChat, -475);
             LayoutContainer.SetMarginBottom(_gameChat, 235);
+
+            _userInterfaceManager.StateRoot.AddChild(_viewport);
+            LayoutContainer.SetAnchorPreset(_viewport, LayoutContainer.LayoutPreset.Wide);
 
             _userInterfaceManager.StateRoot.AddChild(_gameHud.RootControl);
             _chatManager.SetChatBox(_gameChat);
@@ -65,6 +79,8 @@ namespace Content.Client.State
             _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
 
             SetupPresenters();
+
+            _eyeManager.MainViewport = _viewport;
         }
 
         public override void Shutdown()
@@ -74,7 +90,10 @@ namespace Content.Client.State
             base.Shutdown();
 
             _gameChat?.Dispose();
+            _viewport.Dispose();
             _gameHud.RootControl.Orphan();
+            // Clear viewport to some fallback, whatever.
+            _eyeManager.MainViewport = _userInterfaceManager.MainViewport;
 
         }
 
@@ -167,6 +186,13 @@ namespace Content.Client.State
             chat.Input.IgnoreNext = true;
             chat.Input.GrabKeyboardFocus();
             chat.Input.InsertAtCursor("]");
+        }
+
+        public override void FrameUpdate(FrameEventArgs e)
+        {
+            base.FrameUpdate(e);
+
+            _viewport.Eye = _eyeManager.CurrentEye;
         }
     }
 }
