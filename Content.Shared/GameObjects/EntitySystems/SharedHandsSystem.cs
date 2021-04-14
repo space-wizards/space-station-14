@@ -13,8 +13,8 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
-            SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
+            SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleContainerModified);
+            SubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleContainerModified);
 
             SubscribeLocalEvent<SwapHandsMessage>(HandleSwapHands);
             SubscribeNetworkEvent<SwapHandsMessage>(HandleSwapHands);
@@ -43,7 +43,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             hands.TryDropActiveHand(msg.DropTarget);
         }
 
-        protected abstract void HandleContainerModified(ContainerModifiedMessage args);
+        protected abstract void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args);
     }
 
     [Serializable, NetSerializable]

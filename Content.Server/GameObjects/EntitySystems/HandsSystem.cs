@@ -50,10 +50,9 @@ namespace Content.Server.GameObjects.EntitySystems
             CommandBinds.Unregister<HandsSystem>();
         }
 
-        protected override void HandleContainerModified(ContainerModifiedMessage args)
+        protected override void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args)
         {
-            if (args.Container.Owner.TryGetComponent(out SharedHandsComponent? hands))
-                hands.Dirty();
+            component.Dirty();
         }
 
         private bool TryGetHandsComp(ICommonSession? session, [NotNullWhen(true)] out SharedHandsComponent? hands)

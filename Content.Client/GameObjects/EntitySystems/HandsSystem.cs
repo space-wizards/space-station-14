@@ -39,10 +39,9 @@ namespace Content.Client.GameObjects.EntitySystems
             return true;
         }
 
-        protected override void HandleContainerModified(ContainerModifiedMessage args)
+        protected override void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args)
         {
-            if (args.Container.Owner.TryGetComponent(out SharedHandsComponent? hands))
-                hands.HandsModified();
+            component.HandsModified();
         }
     }
 }
