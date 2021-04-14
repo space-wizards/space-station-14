@@ -122,13 +122,13 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
             var dirs = CardinalConnectDirs.None;
 
-            if (MatchingEntity(SnapGrid.GetInDir(Direction.North)))
+            if (MatchingEntity(SnapGridComponent.GetInDir(SnapGrid, Direction.North)))
                 dirs |= CardinalConnectDirs.North;
-            if (MatchingEntity(SnapGrid.GetInDir(Direction.South)))
+            if (MatchingEntity(SnapGridComponent.GetInDir(SnapGrid, Direction.South)))
                 dirs |= CardinalConnectDirs.South;
-            if (MatchingEntity(SnapGrid.GetInDir(Direction.East)))
+            if (MatchingEntity(SnapGridComponent.GetInDir(SnapGrid, Direction.East)))
                 dirs |= CardinalConnectDirs.East;
-            if (MatchingEntity(SnapGrid.GetInDir(Direction.West)))
+            if (MatchingEntity(SnapGridComponent.GetInDir(SnapGrid, Direction.West)))
                 dirs |= CardinalConnectDirs.West;
 
             Sprite.LayerSetState(0, $"{StateBase}{(int) dirs}");
@@ -156,14 +156,14 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
                 return (CornerFill.None, CornerFill.None, CornerFill.None, CornerFill.None);
             }
 
-            var n = MatchingEntity(SnapGrid.GetInDir(Direction.North));
-            var ne = MatchingEntity(SnapGrid.GetInDir(Direction.NorthEast));
-            var e = MatchingEntity(SnapGrid.GetInDir(Direction.East));
-            var se = MatchingEntity(SnapGrid.GetInDir(Direction.SouthEast));
-            var s = MatchingEntity(SnapGrid.GetInDir(Direction.South));
-            var sw = MatchingEntity(SnapGrid.GetInDir(Direction.SouthWest));
-            var w = MatchingEntity(SnapGrid.GetInDir(Direction.West));
-            var nw = MatchingEntity(SnapGrid.GetInDir(Direction.NorthWest));
+            var n = MatchingEntity(SnapGridComponent.GetInDir(SnapGrid, Direction.North));
+            var ne = MatchingEntity(SnapGridComponent.GetInDir(SnapGrid, Direction.NorthEast));
+            var e = MatchingEntity(SnapGridComponent.GetInDir(SnapGrid, Direction.East));
+            var se = MatchingEntity(SnapGridComponent.GetInDir(SnapGrid, Direction.SouthEast));
+            var s = MatchingEntity(SnapGridComponent.GetInDir(SnapGrid, Direction.South));
+            var sw = MatchingEntity(SnapGridComponent.GetInDir(SnapGrid, Direction.SouthWest));
+            var w = MatchingEntity(SnapGridComponent.GetInDir(SnapGrid, Direction.West));
+            var nw = MatchingEntity(SnapGridComponent.GetInDir(SnapGrid, Direction.NorthWest));
 
             // ReSharper disable InconsistentNaming
             var cornerNE = CornerFill.None;

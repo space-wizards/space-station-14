@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void TryConnectToPort()
         {
             if (!Owner.TryGetComponent<SnapGridComponent>(out var snapGrid)) return;
-            var port = snapGrid.GetLocal()
+            var port = SnapGridComponent.GetLocal(snapGrid)
                 .Select(entity => entity.TryGetComponent<GasCanisterPortComponent>(out var port) ? port : null)
                 .Where(port => port != null)
                 .Where(port => !port!.ConnectedToCanister)

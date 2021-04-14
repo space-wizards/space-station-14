@@ -69,9 +69,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             foreach (Node node in Nodes)
             {
                 if (!node.Owner.TryGetComponent<AMEShieldComponent>(out var shield)) { continue; }
-                var nodeNeighbors = node.Owner
-                    .GetComponent<SnapGridComponent>()
-                    .GetCellsInSquareArea()
+                var nodeNeighbors = SnapGridComponent.GetCellsInSquareArea(node.Owner
+                        .GetComponent<SnapGridComponent>())
                     .Select(sgc => sgc.Owner)
                     .Where(entity => entity != node.Owner)
                     .Select(entity => entity.TryGetComponent<AMEShieldComponent>(out var adjshield) ? adjshield : null)

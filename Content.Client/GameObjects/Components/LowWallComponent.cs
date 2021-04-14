@@ -70,14 +70,14 @@ namespace Content.Client.GameObjects.Components
                 return;
             }
 
-            var (n, nl) = MatchingWall(SnapGrid.GetInDir(Direction.North));
-            var (ne, nel) = MatchingWall(SnapGrid.GetInDir(Direction.NorthEast));
-            var (e, el) = MatchingWall(SnapGrid.GetInDir(Direction.East));
-            var (se, sel) = MatchingWall(SnapGrid.GetInDir(Direction.SouthEast));
-            var (s, sl) = MatchingWall(SnapGrid.GetInDir(Direction.South));
-            var (sw, swl) = MatchingWall(SnapGrid.GetInDir(Direction.SouthWest));
-            var (w, wl) = MatchingWall(SnapGrid.GetInDir(Direction.West));
-            var (nw, nwl) = MatchingWall(SnapGrid.GetInDir(Direction.NorthWest));
+            var (n, nl) = MatchingWall(SnapGridComponent.GetInDir(SnapGrid, Direction.North));
+            var (ne, nel) = MatchingWall(SnapGridComponent.GetInDir(SnapGrid, Direction.NorthEast));
+            var (e, el) = MatchingWall(SnapGridComponent.GetInDir(SnapGrid, Direction.East));
+            var (se, sel) = MatchingWall(SnapGridComponent.GetInDir(SnapGrid, Direction.SouthEast));
+            var (s, sl) = MatchingWall(SnapGridComponent.GetInDir(SnapGrid, Direction.South));
+            var (sw, swl) = MatchingWall(SnapGridComponent.GetInDir(SnapGrid, Direction.SouthWest));
+            var (w, wl) = MatchingWall(SnapGridComponent.GetInDir(SnapGrid, Direction.West));
+            var (nw, nwl) = MatchingWall(SnapGridComponent.GetInDir(SnapGrid, Direction.NorthWest));
 
             // ReSharper disable InconsistentNaming
             var cornerNE = CornerFill.None;
@@ -194,7 +194,7 @@ namespace Content.Client.GameObjects.Components
             LastCornerSW = cornerSW;
             LastCornerNW = cornerNW;
 
-            foreach (var entity in SnapGrid.GetLocal())
+            foreach (var entity in SnapGridComponent.GetLocal(SnapGrid))
             {
                 if (entity.TryGetComponent(out WindowComponent? window))
                 {

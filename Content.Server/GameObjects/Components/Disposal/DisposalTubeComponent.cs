@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
             var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
 
-            foreach (var entity in snapGrid.GetInDir(nextDirection))
+            foreach (var entity in SnapGridComponent.GetInDir(snapGrid, nextDirection))
             {
                 if (!entity.TryGetComponent(out IDisposalTubeComponent? tube))
                 {

@@ -16,8 +16,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             if (!Owner.TryGetComponent(out SnapGridComponent? snap))
                 yield break;
 
-            foreach (var cell in snap.GetCardinalNeighborCells())
-            foreach (var entity in cell.GetLocal())
+            foreach (var cell in SnapGridComponent.GetCardinalNeighborCells(snap))
+            foreach (var entity in SnapGridComponent.GetLocal(cell))
             {
                 if (!entity.TryGetComponent<NodeContainerComponent>(out var container)) continue;
 

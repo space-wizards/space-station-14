@@ -107,7 +107,7 @@ namespace Content.Client.GameObjects.Components
                 return null;
             }
 
-            foreach (var entity in _snapGrid.GetLocal())
+            foreach (var entity in SnapGridComponent.GetLocal(_snapGrid))
             {
                 if (entity.TryGetComponent(out LowWallComponent? lowWall))
                 {

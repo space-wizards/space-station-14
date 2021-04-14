@@ -50,7 +50,7 @@ namespace Content.Client.GameObjects.Components
 
         private static LowWallComponent? FindLowWall(SnapGridComponent snapGrid)
         {
-            foreach (var entity in snapGrid.GetLocal())
+            foreach (var entity in SnapGridComponent.GetLocal(snapGrid))
             {
                 if (entity.TryGetComponent(out LowWallComponent? lowWall))
                 {

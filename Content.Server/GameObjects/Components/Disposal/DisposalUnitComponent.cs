@@ -261,8 +261,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
-            var entry = snapGrid
-                .GetLocal()
+            var entry = SnapGridComponent.GetLocal(snapGrid)
                 .FirstOrDefault(entity => entity.HasComponent<DisposalEntryComponent>());
 
             if (entry == null)

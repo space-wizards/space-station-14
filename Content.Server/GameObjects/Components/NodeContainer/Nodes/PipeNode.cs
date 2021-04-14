@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             if (!Owner.TryGetComponent(out SnapGridComponent? grid))
                 yield break;
 
-            var entities = grid.GetInDir(pipeDir.ToDirection());
+            var entities = SnapGridComponent.GetInDir(grid, pipeDir.ToDirection());
 
             foreach (var entity in entities)
             {

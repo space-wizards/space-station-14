@@ -360,7 +360,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return false;
             }
 
-            foreach (var entity in _snapGrid.GetInDir(direction))
+            foreach (var entity in SnapGridComponent.GetInDir(_snapGrid, direction))
             {
                 if (entity.TryGetComponent(out IPhysBody? physics) &&
                     (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
@@ -382,7 +382,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             if (puddle == default)
             {
-                var grid = _snapGrid.DirectionToGrid(direction);
+                var grid = SnapGridComponent.DirectionToGrid(_snapGrid, direction);
                 puddle = () => Owner.EntityManager.SpawnEntity(Owner.Prototype?.ID, grid).GetComponent<PuddleComponent>();
             }
 
