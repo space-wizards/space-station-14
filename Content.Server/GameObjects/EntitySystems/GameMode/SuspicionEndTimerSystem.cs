@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.EntitySystems.GameMode
                 EndTime = EndTime
             };
 
-            EntityNetworkManager.SendSystemNetworkMessage(msg, player.ConnectedClient);
+            EntityManager.EntityNetworkManager?.SendSystemNetworkMessage(msg, player.ConnectedClient);
         }
 
         void IResettingEntitySystem.Reset()
