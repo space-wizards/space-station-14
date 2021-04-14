@@ -44,9 +44,6 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Shutdown();
 
-            UnsubscribeLocalEvent<EntRemovedFromContainerMessage>();
-            UnsubscribeLocalEvent<EntInsertedIntoContainerMessage>();
-
             CommandBinds.Unregister<HandsSystem>();
         }
 

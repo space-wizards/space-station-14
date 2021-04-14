@@ -23,6 +23,20 @@ namespace Content.Shared.GameObjects.EntitySystems
             SubscribeNetworkEvent<DropMessage>(HandleDrop);
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<EntRemovedFromContainerMessage>();
+            UnsubscribeLocalEvent<EntInsertedIntoContainerMessage>();
+
+            UnsubscribeLocalEvent<SwapHandsMessage>();
+            UnsubscribeNetworkEvent<SwapHandsMessage>();
+
+            UnsubscribeLocalEvent<DropMessage>();
+            UnsubscribeNetworkEvent<DropMessage>();
+        }
+
         private void HandleSwapHands(SwapHandsMessage msg, EntitySessionEventArgs eventArgs)
         {
             var entity = eventArgs.SenderSession?.AttachedEntity;
