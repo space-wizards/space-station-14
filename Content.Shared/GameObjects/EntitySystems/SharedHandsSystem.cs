@@ -27,8 +27,8 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             base.Shutdown();
 
-            UnsubscribeLocalEvent<EntRemovedFromContainerMessage>();
-            UnsubscribeLocalEvent<EntInsertedIntoContainerMessage>();
+            UnsubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleContainerModified);
+            UnsubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleContainerModified);
 
             UnsubscribeLocalEvent<SwapHandsMessage>();
             UnsubscribeNetworkEvent<SwapHandsMessage>();
