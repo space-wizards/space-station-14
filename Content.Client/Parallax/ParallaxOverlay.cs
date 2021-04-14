@@ -36,15 +36,15 @@ namespace Content.Client.Parallax
             }
         }
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
+        protected override void Draw(in OverlayDrawArgs args)
         {
             if (_parallaxTexture == null)
             {
                 return;
             }
 
-            handle.UseShader(_shader);
-            var screenHandle = (DrawingHandleScreen) handle;
+            var screenHandle = args.ScreenHandle;
+            screenHandle.UseShader(_shader);
 
             var (sizeX, sizeY) = _parallaxTexture.Size;
             var (posX, posY) = _eyeManager.ScreenToMap(Vector2.Zero).Position;

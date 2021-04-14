@@ -133,14 +133,15 @@ namespace Content.Client.UserInterface
 
             _viewport!.Render();
 
-            _viewport.RenderScreenOverlaysBelow(handle);
             var drawBox = GetDrawBox();
+            var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
+            _viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
             handle.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
-            _viewport.RenderScreenOverlaysAbove(handle);
+            _viewport.RenderScreenOverlaysAbove(handle, this, drawBoxGlobal);
         }
 
         // Draw box in pixel coords to draw the viewport at.
-        private UIBox2 GetDrawBox()
+        private UIBox2i GetDrawBox()
         {
             DebugTools.AssertNotNull(_viewport);
 
@@ -153,7 +154,7 @@ namespace Content.Client.UserInterface
             // Size
             var pos = (ourSize - size) / 2;
 
-            return UIBox2.FromDimensions(pos, size);
+            return (UIBox2i) UIBox2.FromDimensions(pos, size);
         }
 
         private void RegenerateViewport()
@@ -239,7 +240,7 @@ namespace Content.Client.UserInterface
             DebugTools.AssertNotNull(_viewport);
 
             var drawBox = GetDrawBox();
-            var scaleFactor = drawBox.Size / _viewport!.Size;
+            var scaleFactor = drawBox.Size / (Vector2) _viewport!.Size;
 
             if (scaleFactor == (0, 0))
                 // Basically a nonsense scenario, at least make sure to return something that can be inverted.

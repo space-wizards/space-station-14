@@ -38,20 +38,21 @@ namespace Content.Client.Graphics.Overlays
             _lastsFor = duration;
         }
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
+        protected override void Draw(in OverlayDrawArgs args)
         {
             var percentComplete = (float) ((_gameTiming.CurTime.TotalSeconds - _startTime) / _lastsFor);
             if (percentComplete >= 1.0f)
                 return;
-            handle.UseShader(_shader);
-            _shader?.SetParameter("percentComplete", percentComplete);
 
-            var screenSpaceHandle = handle as DrawingHandleScreen;
+            var screenSpaceHandle = args.ScreenHandle;
+            screenSpaceHandle.UseShader(_shader);
+            _shader.SetParameter("percentComplete", percentComplete);
+
             var screenSize = UIBox2.FromDimensions((0, 0), _displayManager.ScreenSize);
 
             if (_screenshotTexture != null)
             {
-                screenSpaceHandle?.DrawTextureRect(_screenshotTexture, screenSize);
+                screenSpaceHandle.DrawTextureRect(_screenshotTexture, screenSize);
             }
         }
 
