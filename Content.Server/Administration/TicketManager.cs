@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Eui;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -10,10 +11,12 @@ using Content.Shared.Administration.AdminMenu;
 using Content.Shared.Administration.Tickets;
 using Content.Shared.Chat;
 using Content.Shared.Interfaces;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Robust.Server.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
+using Robust.Shared.Network.Messages;
 
 namespace Content.Server.Administration
 {
@@ -34,6 +37,7 @@ namespace Content.Server.Administration
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgTicketMessage>(MsgTicketMessage.NAME, OnTicketMessage);
+            _netManager.RegisterNetMessage<MsgViewTicket>(MsgViewTicket.NAME, ViewTicket);
             _netManager.RegisterNetMessage<AdminMenuTicketListRequest>(AdminMenuTicketListRequest.NAME, HandleTicketListRequest);
             _netManager.RegisterNetMessage<AdminMenuTicketListMessage>(AdminMenuTicketListMessage.NAME);
             _gameTicker.OnRunLevelChanged += RunLevelChanged;
@@ -105,6 +109,14 @@ namespace Content.Server.Administration
                 }
             }
             return count;
+        }
+
+        public void ViewTicket(MsgViewTicket message)
+        {
+            var session = _playerManager.GetSessionByChannel(message.MsgChannel);
+            var eui = IoCManager.Resolve<EuiManager>();
+            var ui = new TicketEui();
+            eui.OpenEui(ui, session);
         }
 
         private void HandleTicketListRequest(AdminMenuTicketListRequest message)

@@ -33,6 +33,7 @@ namespace Content.Client.Administration
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgTicketMessage>(MsgTicketMessage.NAME, OnTicketMessage);
+            _netManager.RegisterNetMessage<MsgViewTicket>(MsgViewTicket.NAME);
         }
 
         public void OnTicketMessage(MsgTicketMessage message)
