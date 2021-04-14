@@ -51,13 +51,14 @@ namespace Content.Client.State
                 MouseFilter = Control.MouseFilterMode.Stop
             };
 
+            _userInterfaceManager.StateRoot.AddChild(_viewport);
+            LayoutContainer.SetAnchorPreset(_viewport, LayoutContainer.LayoutPreset.Wide);
+            _viewport.SetPositionFirst();
+
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
             LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
             LayoutContainer.SetMarginLeft(_gameChat, -475);
             LayoutContainer.SetMarginBottom(_gameChat, 235);
-
-            _userInterfaceManager.StateRoot.AddChild(_viewport);
-            LayoutContainer.SetAnchorPreset(_viewport, LayoutContainer.LayoutPreset.Wide);
 
             _userInterfaceManager.StateRoot.AddChild(_gameHud.RootControl);
             _chatManager.SetChatBox(_gameChat);
