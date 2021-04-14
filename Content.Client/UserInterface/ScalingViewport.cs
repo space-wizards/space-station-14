@@ -8,9 +8,13 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.UserInterface
 {
+    /// <summary>
+    ///     Viewport control that has a fixed viewport size and scales it appropriately.
+    /// </summary>
     public sealed class ScalingViewport : Control, IViewportControl
     {
         [Dependency]
@@ -18,14 +22,18 @@ namespace Content.Client.UserInterface
         [Dependency]
         private readonly IInputManager _inputManager = default!;
 
+        // Internal viewport creation is deferred.
         private IClydeViewport? _viewport;
         private IEye? _eye;
         private Vector2i _viewportSize;
         private int _curRenderScale;
         private ScalingViewportStretchMode _stretchMode = ScalingViewportStretchMode.Bilinear;
-        private ScalingViewportRenderScaleMode _renderScaleMode = ScalingViewportRenderScaleMode.One;
-        private Vector2 _fixedRenderScale = Vector2.One;
+        private ScalingViewportRenderScaleMode _renderScaleMode = ScalingViewportRenderScaleMode.Fixed;
+        private int _fixedRenderScale = 1;
 
+        /// <summary>
+        ///     The eye to render.
+        /// </summary>
         public IEye? Eye
         {
             get => _eye;
@@ -38,6 +46,12 @@ namespace Content.Client.UserInterface
             }
         }
 
+        /// <summary>
+        ///     The size, in unscaled pixels, of the internal viewport.
+        /// </summary>
+        /// <remarks>
+        ///     The actual viewport may have render scaling applied based on parameters.
+        /// </remarks>
         public Vector2i ViewportSize
         {
             get => _viewportSize;
@@ -48,6 +62,7 @@ namespace Content.Client.UserInterface
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public ScalingViewportStretchMode StretchMode
         {
             get => _stretchMode;
@@ -58,6 +73,7 @@ namespace Content.Client.UserInterface
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public ScalingViewportRenderScaleMode RenderScaleMode
         {
             get => _renderScaleMode;
@@ -68,7 +84,8 @@ namespace Content.Client.UserInterface
             }
         }
 
-        public Vector2 FixedRenderScale
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int FixedRenderScale
         {
             get => _fixedRenderScale;
             set
@@ -156,8 +173,12 @@ namespace Content.Client.UserInterface
                 case ScalingViewportRenderScaleMode.FloorInt:
                     renderScale = (int) Math.Floor(ratio);
                     break;
+                case ScalingViewportRenderScaleMode.Fixed:
+                    renderScale = _fixedRenderScale;
+                    break;
             }
 
+            // Always has to be at least one to avoid passing 0,0 to the viewport constructor
             renderScale = Math.Max(1, renderScale);
 
             _curRenderScale = renderScale;
@@ -197,17 +218,6 @@ namespace Content.Client.UserInterface
             var matrix = Matrix3.Invert(LocalToScreenMatrix());
 
             return _viewport!.LocalToWorld(matrix.Transform(coords));
-
-
-            /*var relative = coords - GlobalPixelPosition;
-            var drawBox = GetDrawBox();
-
-            var relativeToBox = relative - drawBox.TopLeft;
-            var scale = drawBox.Size / _viewport!.Size;
-
-            var relativeScaled = relativeToBox / scale;
-
-            return _viewport!.LocalToWorld(relativeScaled);*/
         }
 
         public Vector2 WorldToScreen(Vector2 map)
@@ -252,17 +262,40 @@ namespace Content.Client.UserInterface
         }
     }
 
+    /// <summary>
+    ///     Defines how the viewport is stretched if it does not match the size of the control perfectly.
+    /// </summary>
     public enum ScalingViewportStretchMode
     {
+        /// <summary>
+        ///     Bilinear sampling is used.
+        /// </summary>
         Bilinear = 0,
+
+        /// <summary>
+        ///     Nearest neighbor sampling is used.
+        /// </summary>
         Nearest,
-        UpDown,
     }
 
+    /// <summary>
+    ///     Defines how the base render scale of the viewport is selected.
+    /// </summary>
     public enum ScalingViewportRenderScaleMode
     {
-        One = 0,
+        /// <summary>
+        ///     <see cref="ScalingViewport.FixedRenderScale"/> is used.
+        /// </summary>
+        Fixed = 0,
+
+        /// <summary>
+        ///     Floor to the closest integer scale possible.
+        /// </summary>
         FloorInt,
+
+        /// <summary>
+        ///     Ceiling to the closest integer scale possible.
+        /// </summary>
         CeilInt
     }
 }
