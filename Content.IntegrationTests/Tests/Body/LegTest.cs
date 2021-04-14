@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Body
 {
@@ -40,11 +41,10 @@ namespace Content.IntegrationTests.Tests.Body
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
 
-                var mapId = new MapId(0);
-                mapManager.CreateNewMapEntity(mapId);
+                var mapId = mapManager.CreateMap();
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-                var human = entityManager.SpawnEntity("HumanBodyAndAppearanceDummy", MapCoordinates.Nullspace);
+                var human = entityManager.SpawnEntity("HumanBodyAndAppearanceDummy", new MapCoordinates(Vector2.Zero, mapId));
 
                 Assert.That(human.TryGetComponent(out IBody body));
                 Assert.That(human.TryGetComponent(out appearance));

@@ -2,6 +2,7 @@ using Content.Server.GameObjects.Components.Explosion;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
@@ -17,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Owner.EnsureComponent<ExplosiveComponent>();
         }
 
-        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
             if (Owner.TryGetComponent(out ExplosiveComponent? explosive))
             {

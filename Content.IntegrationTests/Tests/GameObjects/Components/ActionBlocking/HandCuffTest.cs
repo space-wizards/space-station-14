@@ -10,6 +10,7 @@ using Robust.Server.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
 {
@@ -52,15 +53,16 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
             server.Assert(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
+                var mapId = mapManager.CreateMap();
+                var coordinates = new MapCoordinates(Vector2.Zero, mapId);
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
                 // Spawn the entities
-                human = entityManager.SpawnEntity("HumanDummy", MapCoordinates.Nullspace);
-                otherHuman = entityManager.SpawnEntity("HumanDummy", MapCoordinates.Nullspace);
-                cuffs = entityManager.SpawnEntity("HandcuffsDummy", MapCoordinates.Nullspace);
-                secondCuffs = entityManager.SpawnEntity("HandcuffsDummy", MapCoordinates.Nullspace);
+                human = entityManager.SpawnEntity("HumanDummy", coordinates);
+                otherHuman = entityManager.SpawnEntity("HumanDummy", coordinates);
+                cuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
+                secondCuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
 
                 human.Transform.WorldPosition = otherHuman.Transform.WorldPosition;
 

@@ -860,3 +860,23 @@ Entries:
   - {message: You can now set your HUD's theme in the settings., type: Add}
   id: 155
   time: '2021-04-11T22:43:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Make GasOverlayData great again, type: Tweak}
+  id: 156
+  time: '2021-04-12T13:01:17.0000000+00:00'
+- author: BulletGrade
+  changes:
+  - {message: Mask of joy now available in AutoDrobe., type: Add}
+  id: 157
+  time: '2021-04-13T00:32:02.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Added a library to the Saltern., type: Add}
+  id: 158
+  time: '2021-04-13T00:32:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add named fixtures so banana peel doesn't spin out of control, type: Add}
+  id: 159
+  time: '2021-04-13T10:57:29.0000000+00:00'

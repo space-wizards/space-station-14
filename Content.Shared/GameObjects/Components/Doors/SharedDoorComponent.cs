@@ -102,7 +102,7 @@ namespace Content.Shared.GameObjects.Components.Doors
         // stops us colliding with people we're crushing, to prevent hitbox clipping and jank
         public bool PreventCollide(IPhysBody collidedwith)
         {
-            return CurrentlyCrushing.Contains(collidedwith.Entity.Uid);
+            return CurrentlyCrushing.Contains(collidedwith.Owner.Uid);
         }
 
         /// <summary>
