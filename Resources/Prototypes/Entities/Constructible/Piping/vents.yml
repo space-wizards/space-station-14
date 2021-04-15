@@ -35,8 +35,8 @@
 - type: entity
   parent: VentBase
   id: Vent
-  name: Vent
-  description: "A vent that releases gas."
+  name: vent
+  description: A vent that releases gas.
   components:
   - type: NodeContainer
     nodes:

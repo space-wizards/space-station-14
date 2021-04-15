@@ -1,7 +1,7 @@
 ﻿- type: entity
   abstract: true
   id: PipeBase
-  name: Pipe
+  name: pipe
   description: Holds gas.
   placement:
     mode: SnapgridCenter

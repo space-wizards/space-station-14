@@ -1,7 +1,7 @@
 - type: entity
   id: AMEController
-  name: AME Controller
-  description: "It's a controller for the antimatter engine."
+  name: AME controller
+  description: It's a controller for the antimatter engine.
   placement:
     mode: SnapgridCenter
   components:
@@ -66,10 +66,10 @@
     supplyRate: 0
 
 - type: entity
-  id: AMEControllerUnanchored
-  parent: AMEController
-  suffix: Unanchored
   abstract: true
+  parent: AMEController
+  id: AMEControllerUnanchored
+  suffix: Unanchored
   components:
   - type: Physics
     bodyType: Dynamic
