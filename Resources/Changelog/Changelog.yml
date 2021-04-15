@@ -886,3 +886,9 @@ Entries:
   - {message: BarDrobe, type: Add}
   id: 160
   time: '2021-04-15T18:24:55.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Destroyed state for canisters, type: Add}
+  - {message: Buffed canister HP from 100 to 300, type: Tweak}
+  id: 161
+  time: '2021-04-15T21:14:47.0000000+00:00'
