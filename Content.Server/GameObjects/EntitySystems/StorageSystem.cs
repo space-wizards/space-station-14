@@ -16,8 +16,18 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Initialize()
         {
+            base.Initialize();
+
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleEntityRemovedFromContainer);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<EntRemovedFromContainerMessage>();
+            UnsubscribeLocalEvent<EntInsertedIntoContainerMessage>();
         }
 
         /// <inheritdoc />

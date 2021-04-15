@@ -39,8 +39,9 @@
   - type: NodeContainer
     examinable: true
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: MVPower
+      input:
+        !type:AdjacentNode
+        nodeGroupID: MVPower
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

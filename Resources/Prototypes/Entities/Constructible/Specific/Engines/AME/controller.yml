@@ -55,10 +55,12 @@
   - type: NodeContainer
     examinable: true
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: AMEngine
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
+      ame:
+        !type:AdjacentNode
+        nodeGroupID: AMEngine
+      input:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
   - type: PowerReceiver
   - type: PowerSupplier
     supplyRate: 0

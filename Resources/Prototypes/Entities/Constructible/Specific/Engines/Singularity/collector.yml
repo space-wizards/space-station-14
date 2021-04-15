@@ -36,8 +36,9 @@
   - type: NodeContainer
     examinable: true
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
+      input:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
   - type: RadiationCollector
   - type: Anchorable
   - type: Pullable
