@@ -116,27 +116,23 @@ namespace Content.Server.GameObjects.Components.Atmos
             return newAirBlockedDirs;
         }
 
+        /// <inheritdoc />
         public void MapInit()
         {
             if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
             {
-                snapGrid.OnPositionChanged += OnTransformMove;
                 _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
             }
 
             UpdatePosition();
         }
 
+        /// <inheritdoc />
         protected override void Shutdown()
         {
             base.Shutdown();
 
             _airBlocked = false;
-
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
-            {
-                snapGrid.OnPositionChanged -= OnTransformMove;
-            }
 
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
 
@@ -146,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        private void OnTransformMove()
+        public void OnTransformMove()
         {
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
             UpdatePosition();

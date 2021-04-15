@@ -73,8 +73,6 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
             if (SnapGrid != null)
             {
-                SnapGrid.OnPositionChanged += SnapGridOnPositionChanged;
-
                 // ensures lastposition initial value is populated on spawn. Just calling
                 // the hook here would cause a dirty event to fire needlessly
                 _lastPosition = (Owner.Transform.GridID, SnapGrid.Position);
@@ -236,12 +234,11 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
             if (SnapGrid != null)
             {
-                SnapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
             }
         }
 
-        private void SnapGridOnPositionChanged()
+        public void SnapGridOnPositionChanged()
         {
             if (SnapGrid != null)
             {

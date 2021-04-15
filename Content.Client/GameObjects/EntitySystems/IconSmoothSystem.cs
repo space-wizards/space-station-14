@@ -27,13 +27,18 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<IconSmoothDirtyEvent>(HandleDirtyEvent);
+
+            SubscribeLocalEvent<IconSmoothComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
         }
+
 
         public override void Shutdown()
         {
             base.Shutdown();
 
             UnsubscribeLocalEvent<IconSmoothDirtyEvent>();
+
+            UnsubscribeLocalEvent<IconSmoothComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
         }
 
         public override void FrameUpdate(float frameTime)
@@ -97,6 +102,11 @@ namespace Content.Client.GameObjects.EntitySystems
                     AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(1, -1)));
                 }
             }
+        }
+
+        private static void HandleSnapGridMove(EntityUid uid, IconSmoothComponent component, SnapGridPositionChangedEvent args)
+        {
+            component.SnapGridOnPositionChanged();
         }
 
         private void AddValidEntities(IEnumerable<IEntity> candidates)

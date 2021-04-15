@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.GameObjects;
@@ -31,11 +31,6 @@ namespace Content.Client.GameObjects.Components
         {
             base.Startup();
 
-            if (_snapGrid != null)
-            {
-                _snapGrid.OnPositionChanged += SnapGridOnPositionChanged;
-            }
-
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new WindowSmoothDirtyEvent(Owner));
 
             if (_sprite != null)
@@ -67,18 +62,7 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
-        /// <inheritdoc />
-        protected override void Shutdown()
-        {
-            if (_snapGrid != null)
-            {
-                _snapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
-            }
-
-            base.Shutdown();
-        }
-
-        private void SnapGridOnPositionChanged()
+        public void SnapGridOnPositionChanged()
         {
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new WindowSmoothDirtyEvent(Owner));
         }
