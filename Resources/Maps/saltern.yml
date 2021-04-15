@@ -47726,4 +47726,14 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 4888
+  type: PoweredSmallLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -15,-5.3
+    parent: 853
+    type: Transform
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
 ...
