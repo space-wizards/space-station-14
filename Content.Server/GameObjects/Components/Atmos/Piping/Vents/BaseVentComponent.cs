@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
             if (!VentEnabled)
                 return;
 
-            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere(Owner.EntityManager);
+            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
 
             if (_ventInlet == null || tileAtmos == null || tileAtmos.Air == null)
                 return;

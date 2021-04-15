@@ -1,16 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
+using Content.Shared;
+using Content.Shared.Prototypes.HUD;
 using JetBrains.Annotations;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Client.GameObjects.Components.HUD.Inventory
@@ -20,7 +26,10 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     public class HumanInventoryInterfaceController : InventoryInterfaceController
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+        [Dependency] private readonly INetConfigurationManager _configManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private readonly Dictionary<Slots, List<ItemSlotButton>> _inventoryButtons
             = new();
@@ -51,8 +60,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         public override void Initialize()
         {
             base.Initialize();
+            _configManager.OnValueChanged(CCVars.HudTheme, UpdateHudTheme, invokeImmediately: true);
 
-            _window = new HumanInventoryWindow(_resourceCache);
+            _window = new HumanInventoryWindow(_gameHud);
             _window.OnClose += () => GameHud.InventoryButtonDown = false;
             foreach (var (slot, button) in _window.Buttons)
             {
@@ -64,9 +74,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
             void AddButton(out ItemSlotButton variable, Slots slot, string textureName)
             {
-                var texture = _resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.png");
-                var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
-                variable = new ItemSlotButton(texture, storageTexture)
+                var texture = _gameHud.GetHudTexture($"{textureName}.png");
+                var storageTexture = _gameHud.GetHudTexture("back.png");
+                variable = new ItemSlotButton(texture, storageTexture, textureName)
                 {
                     OnPressed = (e) => AddToInventory(e, slot),
                     OnStoragePressed = (e) => OpenStorage(e, slot),
@@ -247,6 +257,23 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
         }
 
+        public void UpdateHudTheme(int idx)
+        {
+            if (!_gameHud.ValidateHudTheme(idx))
+            {
+                return;
+            }
+
+            foreach (var (_, list) in _inventoryButtons)
+            {
+                foreach (var button in list)
+                {
+                    button.Button.Texture = _gameHud.GetHudTexture($"{button.TextureName}.png");
+                    button.StorageButton.TextureNormal = _gameHud.GetHudTexture("back.png");
+                }
+            }
+        }
+
         private class HumanInventoryWindow : SS14Window
         {
             private const int ButtonSize = 64;
@@ -254,8 +281,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             private const int RightSeparation = 2;
 
             public IReadOnlyDictionary<Slots, ItemSlotButton> Buttons { get; }
+            [Dependency] private readonly IGameHud _gameHud = default!;
 
-            public HumanInventoryWindow(IResourceCache resourceCache)
+            public HumanInventoryWindow(IGameHud gameHud)
             {
                 Title = Loc.GetString("Your Inventory");
                 Resizable = false;
@@ -271,9 +299,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
                 void AddButton(Slots slot, string textureName, Vector2 position)
                 {
-                    var texture = resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.png");
-                    var storageTexture = resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
-                    var button = new ItemSlotButton(texture, storageTexture);
+                    var texture = gameHud.GetHudTexture($"{textureName}.png");
+                    var storageTexture = gameHud.GetHudTexture("back.png");
+                    var button = new ItemSlotButton(texture, storageTexture, textureName);
 
                     LayoutContainer.SetPosition(button, position);
 

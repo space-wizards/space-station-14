@@ -1,5 +1,5 @@
 ﻿- type: entityList
-  id: CowTools
+  id: cowtools
   entities:
   - Haycutters
   - Moodriver

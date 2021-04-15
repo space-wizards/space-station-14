@@ -100,6 +100,32 @@
 
 - type: entity
   parent: VendingMachine
+  id: VendingBarDrobe
+  name: BarDrobe
+  components:
+  - type: VendingMachine
+    pack: BarDrobe
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/bardrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Service"]]
+
+- type: entity
+  parent: VendingMachine
   id: VendingMachineCart
   name: PTech
   components:
