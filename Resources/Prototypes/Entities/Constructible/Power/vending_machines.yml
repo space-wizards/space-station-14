@@ -44,10 +44,6 @@
     LayoutId: Vending
   - type: Anchorable
     snap: true
-  - type: Advertise
-    minWait: 40
-    maxWait: 80
-  - type: Speech
 
 - type: entity
   parent: VendingMachine
@@ -75,6 +71,10 @@
       normalUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: Advertise
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
 
 - type: entity
   parent: VendingMachine
@@ -103,6 +103,10 @@
     - type: WiresVisualizer
   - type: AccessReader
     access: [["Service"]]
+  - type: Advertise
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
 
 - type: entity
   parent: VendingMachine
@@ -159,6 +163,10 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: Advertise
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
 
 - type: entity
   parent: VendingMachine
@@ -186,6 +194,10 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: Advertise
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
 
 - type: entity
   parent: VendingMachine
@@ -218,6 +230,10 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: Advertise
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
 
 - type: entity
   parent: VendingMachine
@@ -246,6 +262,10 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: Advertise
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
 
 - type: entity
   parent: VendingMachine
@@ -301,6 +321,10 @@
       normalUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: Advertise
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
 
 - type: entity
   parent: VendingMachine
@@ -498,6 +522,10 @@
       normalUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: Advertise
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
 
 - type: entity
   parent: VendingMachine
@@ -526,6 +554,10 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: Advertise
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
 
 - type: entity
   parent: VendingMachine
@@ -554,6 +586,10 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: Advertise
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
 
 - type: entity
   parent: VendingMachine
@@ -586,6 +622,10 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: Advertise
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
 
 - type: entity
   parent: VendingMachine
@@ -615,6 +655,10 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: Advertise
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
 
 - type: entity
   parent: VendingMachine

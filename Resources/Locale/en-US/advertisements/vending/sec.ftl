@@ -1,9 +1,0 @@
-﻿advertisement-sec-1 = Crack communist skulls!
-advertisement-sec-2 = Beat some heads in!
-advertisement-sec-3 = Don't forget - harm is good!
-advertisement-sec-4 = Your weapons are right here.
-advertisement-sec-5 = Handcuffs!
-advertisement-sec-6 = Freeze, scumbag!
-advertisement-sec-7 = Don't tase me bro!
-advertisement-sec-8 = Tase them, bro.
-advertisement-sec-9 = Why not have a donut?
