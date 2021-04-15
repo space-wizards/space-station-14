@@ -47709,4 +47709,48 @@ entities:
     pos: 4.5,-30.5
     parent: 853
     type: Transform
+- uid: 4881
+  type: ApcExtensionCable
+  components:
+  - pos: 9.5,24.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 4882
+  type: ApcExtensionCable
+  components:
+  - pos: 9.5,24.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 4883
+  type: ApcExtensionCable
+  components:
+  - pos: 10.5,24.5
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4884
+  type: ApcExtensionCable
+  components:
+  - pos: 11.5,24.5
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4885
+  type: ApcExtensionCable
+  components:
+  - pos: 12.5,24.5
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 ...
