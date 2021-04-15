@@ -1,4 +1,4 @@
-﻿- type: VendingMachineInventory
+﻿- type: vendingMachineInventory
   id: HotDrinksMachineInventory
   name: Hot drinks machine
   description: "Served boiling so it stays hot all shift!"

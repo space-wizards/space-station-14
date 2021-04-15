@@ -1,4 +1,4 @@
-- type: VendingMachineInventory
+- type: vendingMachineInventory
   id: PTechInventory
   name: PTech
   description: "PTech vending! Providing a ROBUST selection of PDA cartridges."

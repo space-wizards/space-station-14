@@ -1,4 +1,4 @@
-- type: VendingMachineInventory
+- type: vendingMachineInventory
   id: BoozeOMatInventory
   name: Booze-O-Mat
   description: A vending machine containing multiple drinks for bartending.

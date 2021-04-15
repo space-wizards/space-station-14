@@ -1,4 +1,4 @@
-- type: VendingMachineInventory
+- type: vendingMachineInventory
   id: EngiVendInventory
   name: Engi-Vend
   description: Spare tool vending. What? Did you expect some witty description?

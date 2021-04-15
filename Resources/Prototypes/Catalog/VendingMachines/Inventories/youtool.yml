@@ -1,4 +1,4 @@
-﻿- type: VendingMachineInventory
+﻿- type: vendingMachineInventory
   id: YouToolInventory
   name: YouTool
   description: "A vending machine containing standard tools. A label reads: \"Tools for tools.\""

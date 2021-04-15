@@ -1,4 +1,4 @@
-- type: VendingMachineInventory
+- type: vendingMachineInventory
   id: BodaInventory
   name: BODA
   description: An old vending machine containing sweet water.

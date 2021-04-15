@@ -1,4 +1,4 @@
-﻿# Vending machine descriptions are stored in VendingMachineInventory YAML files.
+﻿# Vending machine descriptions are stored in vendingMachineInventory YAML files.
 - type: entity
   id: VendingMachine
   parent: BaseConstructible

@@ -1,4 +1,4 @@
-- type: VendingMachineInventory
+- type: vendingMachineInventory
   id: RobotechDeluxeInventory
   name: Robotech Deluxe
   description: All the fine parts you need in one vending machine!

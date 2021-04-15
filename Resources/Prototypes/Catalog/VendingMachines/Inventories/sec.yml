@@ -1,4 +1,4 @@
-- type: VendingMachineInventory
+- type: vendingMachineInventory
   id: SecTechInventory
   name: SecTech
   description: "A vending machine containing Security equipment. A label reads \"SECURITY PERSONNEL ONLY\"."

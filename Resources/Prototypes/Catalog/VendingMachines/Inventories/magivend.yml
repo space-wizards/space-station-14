@@ -1,4 +1,4 @@
-- type: VendingMachineInventory
+- type: vendingMachineInventory
   id: MagiVendInventory
   name: MagiVend
   description: A mystical vending machine containing magical garments and magic supplies.

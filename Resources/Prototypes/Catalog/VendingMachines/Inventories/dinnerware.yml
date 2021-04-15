@@ -1,4 +1,4 @@
-﻿- type: VendingMachineInventory
+﻿- type: vendingMachineInventory
   id: DinnerwareInventory
   name: Dinnerware
   description: A vending machine containing kitchen and restaurant equipment.

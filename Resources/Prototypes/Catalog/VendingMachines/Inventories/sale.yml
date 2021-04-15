@@ -1,4 +1,4 @@
-- type: VendingMachineInventory
+- type: vendingMachineInventory
   id: SalesInventory
   name: Sales
   description: Buy, sell, repeat.

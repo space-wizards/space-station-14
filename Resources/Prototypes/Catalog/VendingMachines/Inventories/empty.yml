@@ -1,4 +1,4 @@
-- type: VendingMachineInventory
+- type: vendingMachineInventory
   id: EmptyVendingMachineInventory
   name: Empty vending machine
   description: Just add capitalism!

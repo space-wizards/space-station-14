@@ -6,7 +6,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Advertisements
 {
-    [Serializable, Prototype("AdvertisementsPack")]
+    [Serializable, Prototype("advertisementsPack")]
     public class AdvertisementsPackPrototype : IPrototype
     {
         [ViewVariables]

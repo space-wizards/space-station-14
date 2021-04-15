@@ -1,4 +1,4 @@
-- type: VendingMachineInventory
+- type: vendingMachineInventory
   id: VendomatInventory
   name: Vendomat
   description: "Only the finest robust equipment in space!"

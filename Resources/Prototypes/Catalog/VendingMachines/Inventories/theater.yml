@@ -1,4 +1,4 @@
-- type: VendingMachineInventory
+- type: vendingMachineInventory
   id: AutoDrobeInventory
   name: AutoDrobe
   description: A vending machine containing costumes.
