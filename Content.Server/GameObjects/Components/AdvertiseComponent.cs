@@ -15,10 +15,6 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     public class AdvertiseComponent : Component
     {
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         public override string Name => "Advertise";
 
         private CancellationTokenSource _cancellationSource = new();
@@ -45,7 +41,7 @@ namespace Content.Server.GameObjects.Components
         {
             base.Initialize();
 
-            _prototypeManager.TryIndex(PackPrototypeId, out AdvertisementsPackPrototype? packPrototype);
+            IoCManager.Resolve<IPrototypeManager>().TryIndex(PackPrototypeId, out AdvertisementsPackPrototype? packPrototype);
 
             // Load advertisements pack
             if (string.IsNullOrEmpty(PackPrototypeId) || packPrototype == null)
@@ -96,8 +92,11 @@ namespace Content.Server.GameObjects.Components
         /// </summary>
         private void SayAndRefresh()
         {
+            IRobustRandom random = IoCManager.Resolve<IRobustRandom>();
+            IChatManager chatManager = IoCManager.Resolve<IChatManager>();
+
             // Say advertisement
-            _chatManager.EntitySay(Owner, Loc.GetString(_random.Pick(_advertisements)));
+            chatManager.EntitySay(Owner, Loc.GetString(random.Pick(_advertisements)));
 
             // Refresh timer to repeat cycle
             RefreshTimer();
@@ -115,7 +114,8 @@ namespace Content.Server.GameObjects.Components
             _cancellationSource = new CancellationTokenSource();
 
             // Generate random wait time, then create timer
-            var wait = _random.Next(MinWait * 1000, MaxWait * 1000);
+            IRobustRandom random = IoCManager.Resolve<IRobustRandom>();
+            var wait = random.Next(MinWait * 1000, MaxWait * 1000);
             Owner.SpawnTimer(wait, SayAndRefresh, _cancellationSource.Token);
         }
 
