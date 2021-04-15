@@ -892,3 +892,9 @@ Entries:
   - {message: Buffed canister HP from 100 to 300, type: Tweak}
   id: 161
   time: '2021-04-15T21:14:47.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Bucket now works and there's one in botany and janitor hut, type: Fix}
+  - {message: Janitorial items now have proper inhands, type: Add}
+  id: 162
+  time: '2021-04-15T21:21:10.0000000+00:00'
