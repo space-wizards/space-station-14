@@ -23,7 +23,7 @@ namespace Content.Client.Administration
         public IPlayerSession? Session;
         public bool IsAdmin = false;
 
-        public ScrollContainer Messages;
+        public VBoxContainer Messages;
         public readonly LineEdit MessageInput;
         public readonly Button MessageSend;
 
@@ -44,7 +44,7 @@ namespace Content.Client.Administration
                 var textLabel = new RichTextLabel();
                 var myTime = new DateTimeOffset(message.time, new TimeSpan(message.offset));
                 var text =
-                    $"{myTime.ToLocalTime().ToString("HH:mm:ss")} {FormattedMessage.EscapeText(Ticket.GetPlayerName())}: {FormattedMessage.EscapeText(message.message)}";
+                    $"[{myTime.ToLocalTime().ToString("HH:mm:ss")}] {FormattedMessage.EscapeText(Ticket.GetPlayerName())}: {FormattedMessage.EscapeText(message.message)}";
                 if (message.admin)
                 {
                     textLabel.SetMessage(FormattedMessage.FromMarkup("[color=#ff0000]" + text + "[/color]"));
@@ -165,15 +165,19 @@ namespace Content.Client.Administration
                 //MaxHeight = 300,
                 Children =
                 {
-                    (Messages = new ScrollContainer()
+                    new ScrollContainer()
                     {
                         SizeFlagsStretchRatio = 8,
                         //VerticalExpand = true,
                         //HorizontalExpand = true,
                         //MaxHeight = 300,
                         MinSize = (120, 200),
-                        HScrollEnabled = false
-                    })
+                        HScrollEnabled = false,
+                        Children =
+                        {
+                            (Messages = new VBoxContainer())
+                        }
+                    }
                 }
             };
             mainBox.AddChild(panel);
@@ -207,7 +211,8 @@ namespace Content.Client.Administration
                         BackgroundColor = Color.FromHex("#3D4059"),
                         ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
                     },
-                    MaxHeight = 2f
+                    MaxHeight = 2f,
+                    VerticalAlignment = VAlignment.Top
                 });
             }
         }
