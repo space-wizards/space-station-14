@@ -55,7 +55,7 @@
               amount: 2
 
     - node: wall
-      entity: solid_wall
+      entity: WallSolid
       edges:
         - to: girder
           completed:
@@ -95,7 +95,7 @@
               doAfter: 2
 
     - node: reinforcedWall
-      entity: reinforced_wall
+      entity: WallReinforced
       edges:
         - to: girder
           steps:
