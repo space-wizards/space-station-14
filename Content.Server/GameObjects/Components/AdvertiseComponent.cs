@@ -49,9 +49,8 @@ namespace Content.Server.GameObjects.Components
             // Load advertisements pack
             if (string.IsNullOrEmpty(PackPrototypeId) || packPrototype == null)
             {
-                // If there is no pack, log a warning and remove the component
+                // If there is no pack, log a warning and don't start timer
                 Logger.Warning($"{Owner} has {Name}Component but no advertisments pack.");
-                Owner.RemoveComponent<AdvertiseComponent>();
                 return;
             }
 
@@ -60,9 +59,8 @@ namespace Content.Server.GameObjects.Components
             // Do not start timer if advertisement list is empty
             if (_advertisements.Count == 0)
             {
-                // If no advertisements could be loaded, log a warning and remove component
+                // If no advertisements could be loaded, log a warning and don't start timer
                 Logger.Warning($"{Owner} tried to load advertisements pack without ads.");
-                Owner.RemoveComponent<AdvertiseComponent>();
                 return;
             }
 
