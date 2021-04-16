@@ -839,19 +839,19 @@ entities:
     parent: 853
     type: Transform
 - uid: 99
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -10.5,-28.5
     parent: 853
     type: Transform
 - uid: 100
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -11.5,-28.5
     parent: 853
     type: Transform
 - uid: 101
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -12.5,-28.5
     parent: 853
@@ -972,13 +972,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 118
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -14.5,26.5
     parent: 853
     type: Transform
 - uid: 119
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -13.5,26.5
     parent: 853
@@ -1229,7 +1229,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 148
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 15.5,-3.5
     parent: 853
@@ -4006,56 +4006,56 @@ entities:
     parent: 853
     type: Transform
 - uid: 409
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -23.5,-12.5
     parent: 853
     type: Transform
 - uid: 410
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -22.5,-12.5
     parent: 853
     type: Transform
 - uid: 411
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,-12.5
     parent: 853
     type: Transform
 - uid: 412
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -20.5,-12.5
     parent: 853
     type: Transform
 - uid: 413
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -19.5,-12.5
     parent: 853
     type: Transform
 - uid: 414
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -19.5,-13.5
     parent: 853
     type: Transform
 - uid: 415
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -19.5,-14.5
     parent: 853
     type: Transform
 - uid: 416
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -19.5,-15.5
@@ -4307,7 +4307,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 452
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,21.5
@@ -4859,14 +4859,14 @@ entities:
     parent: 853
     type: Transform
 - uid: 526
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,-3.5
     parent: 853
     type: Transform
 - uid: 527
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,-1.5
@@ -5088,7 +5088,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 557
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 13.5,25.5
@@ -5161,13 +5161,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 563
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -38.5,1.5
     parent: 853
     type: Transform
 - uid: 564
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 31.5,-8.5
     parent: 853
@@ -5361,7 +5361,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 583
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -29.5,-3.5
@@ -5680,7 +5680,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 611
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -7.5,-7.5
@@ -6301,7 +6301,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 664
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 32.5,-8.5
     parent: 853
@@ -6366,7 +6366,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 672
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 16.5,-19.5
@@ -6380,28 +6380,28 @@ entities:
     parent: 853
     type: Transform
 - uid: 674
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 16.5,-20.5
     parent: 853
     type: Transform
 - uid: 675
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 16.5,-21.5
     parent: 853
     type: Transform
 - uid: 676
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 16.5,-22.5
     parent: 853
     type: Transform
 - uid: 677
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 16.5,-23.5
@@ -6415,28 +6415,28 @@ entities:
     parent: 853
     type: Transform
 - uid: 679
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 17.5,-23.5
     parent: 853
     type: Transform
 - uid: 680
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,-23.5
     parent: 853
     type: Transform
 - uid: 681
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,-22.5
     parent: 853
     type: Transform
 - uid: 682
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,-21.5
@@ -6450,21 +6450,21 @@ entities:
     parent: 853
     type: Transform
 - uid: 684
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,-20.5
     parent: 853
     type: Transform
 - uid: 685
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,-19.5
     parent: 853
     type: Transform
 - uid: 686
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 33.5,-8.5
     parent: 853
@@ -6477,31 +6477,31 @@ entities:
     parent: 853
     type: Transform
 - uid: 688
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 34.5,-8.5
     parent: 853
     type: Transform
 - uid: 689
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 30.5,-8.5
     parent: 853
     type: Transform
 - uid: 690
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 29.5,-8.5
     parent: 853
     type: Transform
 - uid: 691
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 37.5,-8.5
     parent: 853
     type: Transform
 - uid: 692
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 38.5,-8.5
     parent: 853
@@ -6521,13 +6521,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 695
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 39.5,-8.5
     parent: 853
     type: Transform
 - uid: 696
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 39.5,-7.5
     parent: 853
@@ -6540,7 +6540,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 698
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 39.5,-6.5
     parent: 853
@@ -6625,19 +6625,19 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 708
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 19.5,-26.5
     parent: 853
     type: Transform
 - uid: 709
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 18.5,-26.5
     parent: 853
     type: Transform
 - uid: 710
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 17.5,-26.5
     parent: 853
@@ -6650,7 +6650,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 712
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 45.5,9.5
@@ -6783,7 +6783,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 731
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 14.5,-12.5
@@ -6972,7 +6972,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 756
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,25.5
@@ -12135,52 +12135,52 @@ entities:
     parent: 853
     type: Transform
 - uid: 860
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 50.5,-1.5
     parent: 853
     type: Transform
 - uid: 861
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 48.5,-1.5
     parent: 853
     type: Transform
 - uid: 862
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 16.5,-26.5
     parent: 853
     type: Transform
 - uid: 863
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 50.5,5.5
     parent: 853
     type: Transform
 - uid: 864
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -18.5,-19.5
     parent: 853
     type: Transform
 - uid: 865
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -18.5,-20.5
     parent: 853
     type: Transform
 - uid: 866
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -18.5,-21.5
     parent: 853
     type: Transform
 - uid: 867
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 49.5,5.5
@@ -12200,14 +12200,14 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 869
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 47.5,-1.5
     parent: 853
     type: Transform
 - uid: 870
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 51.5,-1.5
@@ -12226,7 +12226,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 872
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 28.5,-18.5
     parent: 853
@@ -12262,20 +12262,20 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 876
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 27.5,-19.5
     parent: 853
     type: Transform
 - uid: 877
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 51.5,-7.5
     parent: 853
     type: Transform
 - uid: 878
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 50.5,-7.5
@@ -12293,63 +12293,63 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 880
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 48.5,-7.5
     parent: 853
     type: Transform
 - uid: 881
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 47.5,-7.5
     parent: 853
     type: Transform
 - uid: 882
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 46.5,-7.5
     parent: 853
     type: Transform
 - uid: 883
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 46.5,-6.5
     parent: 853
     type: Transform
 - uid: 884
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 46.5,-5.5
     parent: 853
     type: Transform
 - uid: 885
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 46.5,-4.5
     parent: 853
     type: Transform
 - uid: 886
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 46.5,-3.5
     parent: 853
     type: Transform
 - uid: 887
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 46.5,-2.5
     parent: 853
     type: Transform
 - uid: 888
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 46.5,-1.5
@@ -12437,7 +12437,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 897
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 28.5,-19.5
     parent: 853
@@ -12488,7 +12488,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 904
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: -13.5,-6.5
     parent: 853
@@ -12508,175 +12508,175 @@ entities:
     parent: 853
     type: Transform
 - uid: 907
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,-5.5
     parent: 853
     type: Transform
 - uid: 908
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -13.5,-5.5
     parent: 853
     type: Transform
 - uid: 909
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,-5.5
     parent: 853
     type: Transform
 - uid: 910
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,-5.5
     parent: 853
     type: Transform
 - uid: 911
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-3.5
     parent: 853
     type: Transform
 - uid: 912
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -9.5,-3.5
     parent: 853
     type: Transform
 - uid: 913
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,-2.5
     parent: 853
     type: Transform
 - uid: 914
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -13.5,-2.5
     parent: 853
     type: Transform
 - uid: 915
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,-2.5
     parent: 853
     type: Transform
 - uid: 916
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-2.5
     parent: 853
     type: Transform
 - uid: 917
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,-2.5
     parent: 853
     type: Transform
 - uid: 918
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,-1.5
     parent: 853
     type: Transform
 - uid: 919
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,-0.5
     parent: 853
     type: Transform
 - uid: 920
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,-3.5
     parent: 853
     type: Transform
 - uid: 921
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,1.5
     parent: 853
     type: Transform
 - uid: 922
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,2.5
     parent: 853
     type: Transform
 - uid: 923
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -13.5,2.5
     parent: 853
     type: Transform
 - uid: 924
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,2.5
     parent: 853
     type: Transform
 - uid: 925
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,2.5
     parent: 853
     type: Transform
 - uid: 926
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -20.5,-8.5
     parent: 853
     type: Transform
 - uid: 927
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -17.5,-10.5
     parent: 853
     type: Transform
 - uid: 928
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,-10.5
     parent: 853
     type: Transform
 - uid: 929
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -19.5,-10.5
     parent: 853
     type: Transform
 - uid: 930
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -20.5,-10.5
     parent: 853
     type: Transform
 - uid: 931
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -20.5,-9.5
@@ -12711,21 +12711,21 @@ entities:
     parent: 853
     type: Transform
 - uid: 936
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,-6.5
     parent: 853
     type: Transform
 - uid: 937
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,-6.5
     parent: 853
     type: Transform
 - uid: 938
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 33.5,11.5
     parent: 853
@@ -12755,67 +12755,67 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 942
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -0.5,-28.5
     parent: 853
     type: Transform
 - uid: 943
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -1.5,-28.5
     parent: 853
     type: Transform
 - uid: 944
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -2.5,-28.5
     parent: 853
     type: Transform
 - uid: 945
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -3.5,-28.5
     parent: 853
     type: Transform
 - uid: 946
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -4.5,-28.5
     parent: 853
     type: Transform
 - uid: 947
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -5.5,-28.5
     parent: 853
     type: Transform
 - uid: 948
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -6.5,-28.5
     parent: 853
     type: Transform
 - uid: 949
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -34.5,-8.5
     parent: 853
     type: Transform
 - uid: 950
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -34.5,-9.5
     parent: 853
     type: Transform
 - uid: 951
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 28.5,-14.5
     parent: 853
     type: Transform
 - uid: 952
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 28.5,-16.5
     parent: 853
@@ -12864,7 +12864,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 959
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 28.5,-12.5
     parent: 853
@@ -12877,7 +12877,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 961
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 28.5,-9.5
     parent: 853
@@ -12944,7 +12944,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 971
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 28.5,-8.5
     parent: 853
@@ -12956,7 +12956,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 973
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -34.5,-10.5
     parent: 853
@@ -13158,7 +13158,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 999
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -7.5,2.5
@@ -13205,14 +13205,14 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1004
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -5.5,2.5
     parent: 853
     type: Transform
 - uid: 1005
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,2.5
@@ -13269,7 +13269,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1011
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -8.5,2.5
@@ -13294,7 +13294,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1014
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -34.5,-11.5
     parent: 853
@@ -13843,37 +13843,37 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1075
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 51.5,4.5
     parent: 853
     type: Transform
 - uid: 1076
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 51.5,5.5
     parent: 853
     type: Transform
 - uid: 1077
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 51.5,-0.5
     parent: 853
     type: Transform
 - uid: 1078
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 47.5,-0.5
     parent: 853
     type: Transform
 - uid: 1079
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 47.5,0.5
     parent: 853
     type: Transform
 - uid: 1080
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 46.5,0.5
     parent: 853
@@ -14027,7 +14027,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1101
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 45.5,0.5
     parent: 853
@@ -14262,7 +14262,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1129
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 16.5,-17.5
@@ -14283,7 +14283,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1132
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 16.5,-16.5
@@ -14321,7 +14321,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1137
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 13.5,-3.5
     parent: 853
@@ -14513,7 +14513,7 @@ entities:
   - location: eva
     type: WarpPoint
 - uid: 1160
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 18.5,-3.5
     parent: 853
@@ -14590,7 +14590,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1168
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 13.5,2.5
     parent: 853
@@ -14609,7 +14609,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1171
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 15.5,2.5
     parent: 853
@@ -14633,13 +14633,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1174
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 19.5,1.5
     parent: 853
     type: Transform
 - uid: 1175
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 19.5,0.5
     parent: 853
@@ -14724,13 +14724,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 1187
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 44.5,0.5
     parent: 853
     type: Transform
 - uid: 1188
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 44.5,-0.5
     parent: 853
@@ -14914,7 +14914,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1207
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -5.5,23.5
     parent: 853
@@ -15330,7 +15330,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1248
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -33.5,9.5
@@ -15354,7 +15354,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1251
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -33.5,2.5
@@ -15493,7 +15493,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1262
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -33.5,1.5
@@ -15739,21 +15739,21 @@ entities:
     parent: 853
     type: Transform
 - uid: 1283
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -34.5,1.5
     parent: 853
     type: Transform
 - uid: 1284
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,22.5
     parent: 853
     type: Transform
 - uid: 1285
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,21.5
@@ -15953,14 +15953,14 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1300
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -34.5,0.5
     parent: 853
     type: Transform
 - uid: 1301
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -34.5,-0.5
@@ -15981,28 +15981,28 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1303
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -34.5,-1.5
     parent: 853
     type: Transform
 - uid: 1304
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -34.5,-2.5
     parent: 853
     type: Transform
 - uid: 1305
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 8.5,15.5
     parent: 853
     type: Transform
 - uid: 1306
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 7.5,15.5
@@ -16191,14 +16191,14 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1320
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -34.5,-3.5
     parent: 853
     type: Transform
 - uid: 1321
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -34.5,-4.5
@@ -16282,7 +16282,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1328
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -34.5,-5.5
@@ -16310,7 +16310,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1331
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -31.5,-2.5
@@ -16373,13 +16373,13 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1336
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 44.5,-1.5
     parent: 853
     type: Transform
 - uid: 1337
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 47.5,5.5
@@ -16393,13 +16393,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 1339
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 19.5,-0.5
     parent: 853
     type: Transform
 - uid: 1340
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 19.5,-1.5
     parent: 853
@@ -16459,7 +16459,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1345
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -31.5,-1.5
@@ -16508,14 +16508,14 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1349
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -31.5,-0.5
     parent: 853
     type: Transform
 - uid: 1350
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -31.5,0.5
@@ -16531,7 +16531,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1352
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -31.5,2.5
@@ -16552,7 +16552,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1354
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 45.5,6.5
@@ -16615,7 +16615,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1361
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,2.5
@@ -16832,14 +16832,14 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1378
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -27.5,2.5
     parent: 853
     type: Transform
 - uid: 1379
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,2.5
@@ -16912,7 +16912,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1385
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,25.5
@@ -16989,7 +16989,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1393
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,1.5
@@ -17034,31 +17034,31 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 1399
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 44.5,-2.5
     parent: 853
     type: Transform
 - uid: 1400
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 44.5,-3.5
     parent: 853
     type: Transform
 - uid: 1401
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 44.5,-4.5
     parent: 853
     type: Transform
 - uid: 1402
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 44.5,-5.5
     parent: 853
     type: Transform
 - uid: 1403
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 43.5,-5.5
     parent: 853
@@ -17288,14 +17288,14 @@ entities:
     parent: 853
     type: Transform
 - uid: 1436
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -28.5,2.5
     parent: 853
     type: Transform
 - uid: 1437
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -29.5,2.5
@@ -17323,13 +17323,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 1441
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 42.5,-5.5
     parent: 853
     type: Transform
 - uid: 1442
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -25.5,1.5
@@ -17476,7 +17476,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1463
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 41.5,-5.5
     parent: 853
@@ -17573,7 +17573,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1477
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 25.5,-6.5
     parent: 853
@@ -17782,13 +17782,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 1505
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 19.5,-2.5
     parent: 853
     type: Transform
 - uid: 1506
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 19.5,-3.5
     parent: 853
@@ -17871,19 +17871,19 @@ entities:
     parent: 853
     type: Transform
 - uid: 1518
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 17.5,2.5
     parent: 853
     type: Transform
 - uid: 1519
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 16.5,2.5
     parent: 853
     type: Transform
 - uid: 1520
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 18.5,2.5
     parent: 853
@@ -18116,14 +18116,14 @@ entities:
     parent: 853
     type: Transform
 - uid: 1551
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,-7.5
     parent: 853
     type: Transform
 - uid: 1552
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 40.5,-5.5
     parent: 853
@@ -18275,13 +18275,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 1573
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 39.5,-5.5
     parent: 853
     type: Transform
 - uid: 1574
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 20.5,-26.5
     parent: 853
@@ -18438,147 +18438,147 @@ entities:
     parent: 853
     type: Transform
 - uid: 1596
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -22.5,1.5
     parent: 853
     type: Transform
 - uid: 1597
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 39.5,10.5
     parent: 853
     type: Transform
 - uid: 1598
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 38.5,10.5
     parent: 853
     type: Transform
 - uid: 1599
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 37.5,10.5
     parent: 853
     type: Transform
 - uid: 1600
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 37.5,11.5
     parent: 853
     type: Transform
 - uid: 1601
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 37.5,12.5
     parent: 853
     type: Transform
 - uid: 1602
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 37.5,13.5
     parent: 853
     type: Transform
 - uid: 1603
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 37.5,14.5
     parent: 853
     type: Transform
 - uid: 1604
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 38.5,14.5
     parent: 853
     type: Transform
 - uid: 1605
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 39.5,14.5
     parent: 853
     type: Transform
 - uid: 1606
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 40.5,14.5
     parent: 853
     type: Transform
 - uid: 1607
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 41.5,14.5
     parent: 853
     type: Transform
 - uid: 1608
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 42.5,14.5
     parent: 853
     type: Transform
 - uid: 1609
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 43.5,14.5
     parent: 853
     type: Transform
 - uid: 1610
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 44.5,14.5
     parent: 853
     type: Transform
 - uid: 1611
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 44.5,13.5
     parent: 853
     type: Transform
 - uid: 1612
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 44.5,12.5
     parent: 853
     type: Transform
 - uid: 1613
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 44.5,11.5
     parent: 853
     type: Transform
 - uid: 1614
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 44.5,10.5
     parent: 853
     type: Transform
 - uid: 1615
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 43.5,10.5
     parent: 853
     type: Transform
 - uid: 1616
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 42.5,10.5
@@ -18646,56 +18646,56 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1623
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,-0.5
     parent: 853
     type: Transform
 - uid: 1624
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 37.5,9.5
     parent: 853
     type: Transform
 - uid: 1625
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 37.5,8.5
     parent: 853
     type: Transform
 - uid: 1626
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 37.5,7.5
     parent: 853
     type: Transform
 - uid: 1627
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 36.5,7.5
     parent: 853
     type: Transform
 - uid: 1628
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 35.5,7.5
     parent: 853
     type: Transform
 - uid: 1629
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -8.5,-3.5
     parent: 853
     type: Transform
 - uid: 1630
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 36.5,6.5
@@ -18716,91 +18716,91 @@ entities:
     parent: 853
     type: Transform
 - uid: 1633
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 41.5,1.5
     parent: 853
     type: Transform
 - uid: 1634
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 41.5,0.5
     parent: 853
     type: Transform
 - uid: 1635
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 41.5,-0.5
     parent: 853
     type: Transform
 - uid: 1636
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 41.5,-1.5
     parent: 853
     type: Transform
 - uid: 1637
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 41.5,-2.5
     parent: 853
     type: Transform
 - uid: 1638
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 40.5,-2.5
     parent: 853
     type: Transform
 - uid: 1639
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 39.5,-2.5
     parent: 853
     type: Transform
 - uid: 1640
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 38.5,-2.5
     parent: 853
     type: Transform
 - uid: 1641
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 37.5,-2.5
     parent: 853
     type: Transform
 - uid: 1642
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 36.5,-2.5
     parent: 853
     type: Transform
 - uid: 1643
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 36.5,-1.5
     parent: 853
     type: Transform
 - uid: 1644
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 36.5,1.5
     parent: 853
     type: Transform
 - uid: 1645
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 36.5,0.5
@@ -18814,7 +18814,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1647
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 36.5,2.5
@@ -18828,34 +18828,34 @@ entities:
     parent: 853
     type: Transform
 - uid: 1649
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 35.5,1.5
     parent: 853
     type: Transform
 - uid: 1650
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 31.5,1.5
     parent: 853
     type: Transform
 - uid: 1651
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 42.5,0.5
     parent: 853
     type: Transform
 - uid: 1652
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 21.5,-26.5
     parent: 853
     type: Transform
 - uid: 1653
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 22.5,-26.5
     parent: 853
@@ -18868,121 +18868,121 @@ entities:
     parent: 853
     type: Transform
 - uid: 1655
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 35.5,-8.5
     parent: 853
     type: Transform
 - uid: 1656
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 36.5,-8.5
     parent: 853
     type: Transform
 - uid: 1657
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 23.5,-24.5
     parent: 853
     type: Transform
 - uid: 1658
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 23.5,-25.5
     parent: 853
     type: Transform
 - uid: 1659
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 23.5,-26.5
     parent: 853
     type: Transform
 - uid: 1660
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 23.5,-19.5
     parent: 853
     type: Transform
 - uid: 1661
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 23.5,-20.5
     parent: 853
     type: Transform
 - uid: 1662
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 23.5,-21.5
     parent: 853
     type: Transform
 - uid: 1663
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 23.5,-22.5
     parent: 853
     type: Transform
 - uid: 1664
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 23.5,-23.5
     parent: 853
     type: Transform
 - uid: 1665
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 28.5,-15.5
     parent: 853
     type: Transform
 - uid: 1666
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 28.5,-17.5
     parent: 853
     type: Transform
 - uid: 1667
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 28.5,-13.5
     parent: 853
     type: Transform
 - uid: 1668
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 28.5,-11.5
     parent: 853
     type: Transform
 - uid: 1669
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 28.5,-10.5
     parent: 853
     type: Transform
 - uid: 1670
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 24.5,-19.5
     parent: 853
     type: Transform
 - uid: 1671
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 26.5,-19.5
     parent: 853
     type: Transform
 - uid: 1672
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 25.5,-19.5
     parent: 853
     type: Transform
 - uid: 1673
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -16.5,26.5
     parent: 853
     type: Transform
 - uid: 1674
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -15.5,26.5
     parent: 853
@@ -19000,134 +19000,134 @@ entities:
     parent: 853
     type: Transform
 - uid: 1677
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -12.5,26.5
     parent: 853
     type: Transform
 - uid: 1678
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -11.5,26.5
     parent: 853
     type: Transform
 - uid: 1679
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -9.5,26.5
     parent: 853
     type: Transform
 - uid: 1680
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 28.5,-7.5
     parent: 853
     type: Transform
 - uid: 1681
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -10.5,26.5
     parent: 853
     type: Transform
 - uid: 1682
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -6.5,25.5
     parent: 853
     type: Transform
 - uid: 1683
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -5.5,25.5
     parent: 853
     type: Transform
 - uid: 1684
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -4.5,25.5
     parent: 853
     type: Transform
 - uid: 1685
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -18.5,-17.5
     parent: 853
     type: Transform
 - uid: 1686
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -19.5,15.5
     parent: 853
     type: Transform
 - uid: 1687
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -20.5,15.5
     parent: 853
     type: Transform
 - uid: 1688
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -21.5,15.5
     parent: 853
     type: Transform
 - uid: 1689
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -22.5,15.5
     parent: 853
     type: Transform
 - uid: 1690
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -23.5,15.5
     parent: 853
     type: Transform
 - uid: 1691
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -24.5,15.5
     parent: 853
     type: Transform
 - uid: 1692
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -25.5,15.5
     parent: 853
     type: Transform
 - uid: 1693
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -26.5,15.5
     parent: 853
     type: Transform
 - uid: 1694
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -27.5,15.5
     parent: 853
     type: Transform
 - uid: 1695
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -28.5,15.5
     parent: 853
     type: Transform
 - uid: 1696
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -29.5,15.5
     parent: 853
     type: Transform
 - uid: 1697
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -19.5,26.5
     parent: 853
     type: Transform
 - uid: 1698
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -19.5,25.5
     parent: 853
@@ -19141,19 +19141,19 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1700
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -19.5,24.5
     parent: 853
     type: Transform
 - uid: 1701
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -19.5,23.5
     parent: 853
     type: Transform
 - uid: 1702
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -19.5,22.5
     parent: 853
@@ -19173,129 +19173,129 @@ entities:
     parent: 853
     type: Transform
 - uid: 1705
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 18.5,-23.5
     parent: 853
     type: Transform
 - uid: 1706
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 19.5,-23.5
     parent: 853
     type: Transform
 - uid: 1707
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -19.5,21.5
     parent: 853
     type: Transform
 - uid: 1708
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -19.5,20.5
     parent: 853
     type: Transform
 - uid: 1709
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -19.5,19.5
     parent: 853
     type: Transform
 - uid: 1710
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -19.5,18.5
     parent: 853
     type: Transform
 - uid: 1711
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -19.5,17.5
     parent: 853
     type: Transform
 - uid: 1712
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -19.5,16.5
     parent: 853
     type: Transform
 - uid: 1713
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -30.5,15.5
     parent: 853
     type: Transform
 - uid: 1714
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -31.5,15.5
     parent: 853
     type: Transform
 - uid: 1715
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -6.5,26.5
     parent: 853
     type: Transform
 - uid: 1716
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -8.5,26.5
     parent: 853
     type: Transform
 - uid: 1717
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -7.5,26.5
     parent: 853
     type: Transform
 - uid: 1718
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -18.5,-16.5
     parent: 853
     type: Transform
 - uid: 1719
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -19.5,-16.5
     parent: 853
     type: Transform
 - uid: 1720
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -20.5,-16.5
     parent: 853
     type: Transform
 - uid: 1721
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -21.5,-16.5
     parent: 853
     type: Transform
 - uid: 1722
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -22.5,-16.5
     parent: 853
     type: Transform
 - uid: 1723
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -23.5,-16.5
     parent: 853
     type: Transform
 - uid: 1724
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -24.5,-16.5
     parent: 853
     type: Transform
 - uid: 1725
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 45.5,10.5
@@ -19316,63 +19316,63 @@ entities:
     parent: 853
     type: Transform
 - uid: 1728
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 31.5,7.5
     parent: 853
     type: Transform
 - uid: 1729
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 30.5,7.5
     parent: 853
     type: Transform
 - uid: 1730
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 29.5,7.5
     parent: 853
     type: Transform
 - uid: 1731
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 29.5,8.5
     parent: 853
     type: Transform
 - uid: 1732
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 29.5,9.5
     parent: 853
     type: Transform
 - uid: 1733
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 28.5,7.5
     parent: 853
     type: Transform
 - uid: 1734
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 30.5,6.5
     parent: 853
     type: Transform
 - uid: 1735
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 30.5,2.5
     parent: 853
     type: Transform
 - uid: 1736
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 30.5,1.5
@@ -19463,28 +19463,28 @@ entities:
     parent: 853
     type: Transform
 - uid: 1749
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 29.5,11.5
     parent: 853
     type: Transform
 - uid: 1750
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 29.5,12.5
     parent: 853
     type: Transform
 - uid: 1751
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 29.5,13.5
     parent: 853
     type: Transform
 - uid: 1752
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -25.5,-16.5
     parent: 853
@@ -19513,7 +19513,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1756
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -25.5,-15.5
     parent: 853
@@ -19535,119 +19535,119 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1759
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,13.5
     parent: 853
     type: Transform
 - uid: 1760
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,12.5
     parent: 853
     type: Transform
 - uid: 1761
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,11.5
     parent: 853
     type: Transform
 - uid: 1762
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,10.5
     parent: 853
     type: Transform
 - uid: 1763
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,8.5
     parent: 853
     type: Transform
 - uid: 1764
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,7.5
     parent: 853
     type: Transform
 - uid: 1765
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 26.5,7.5
     parent: 853
     type: Transform
 - uid: 1766
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 24.5,7.5
     parent: 853
     type: Transform
 - uid: 1767
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 24.5,6.5
     parent: 853
     type: Transform
 - uid: 1768
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 23.5,6.5
     parent: 853
     type: Transform
 - uid: 1769
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 18.5,6.5
     parent: 853
     type: Transform
 - uid: 1770
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 17.5,6.5
     parent: 853
     type: Transform
 - uid: 1771
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 17.5,7.5
     parent: 853
     type: Transform
 - uid: 1772
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 17.5,8.5
     parent: 853
     type: Transform
 - uid: 1773
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 17.5,9.5
     parent: 853
     type: Transform
 - uid: 1774
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 16.5,8.5
     parent: 853
     type: Transform
 - uid: 1775
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,8.5
@@ -19723,239 +19723,239 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1785
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,-7.5
     parent: 853
     type: Transform
 - uid: 1786
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -25.5,-14.5
     parent: 853
     type: Transform
 - uid: 1787
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -25.5,-13.5
     parent: 853
     type: Transform
 - uid: 1788
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 17.5,12.5
     parent: 853
     type: Transform
 - uid: 1789
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 17.5,13.5
     parent: 853
     type: Transform
 - uid: 1790
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -25.5,-12.5
     parent: 853
     type: Transform
 - uid: 1791
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -26.5,-12.5
     parent: 853
     type: Transform
 - uid: 1792
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -34.5,11.5
     parent: 853
     type: Transform
 - uid: 1793
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -40.5,11.5
     parent: 853
     type: Transform
 - uid: 1794
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 16.5,13.5
     parent: 853
     type: Transform
 - uid: 1795
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 15.5,13.5
     parent: 853
     type: Transform
 - uid: 1796
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 14.5,13.5
     parent: 853
     type: Transform
 - uid: 1797
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 13.5,13.5
     parent: 853
     type: Transform
 - uid: 1798
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,13.5
     parent: 853
     type: Transform
 - uid: 1799
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,13.5
     parent: 853
     type: Transform
 - uid: 1800
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,12.5
     parent: 853
     type: Transform
 - uid: 1801
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 10.5,12.5
     parent: 853
     type: Transform
 - uid: 1802
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 9.5,12.5
     parent: 853
     type: Transform
 - uid: 1803
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 7.5,12.5
     parent: 853
     type: Transform
 - uid: 1804
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,12.5
     parent: 853
     type: Transform
 - uid: 1805
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,12.5
     parent: 853
     type: Transform
 - uid: 1806
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,11.5
     parent: 853
     type: Transform
 - uid: 1807
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,10.5
     parent: 853
     type: Transform
 - uid: 1808
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,9.5
     parent: 853
     type: Transform
 - uid: 1809
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,8.5
     parent: 853
     type: Transform
 - uid: 1810
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,7.5
     parent: 853
     type: Transform
 - uid: 1811
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,6.5
     parent: 853
     type: Transform
 - uid: 1812
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,6.5
     parent: 853
     type: Transform
 - uid: 1813
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,11.5
     parent: 853
     type: Transform
 - uid: 1814
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,10.5
     parent: 853
     type: Transform
 - uid: 1815
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,9.5
     parent: 853
     type: Transform
 - uid: 1816
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,8.5
     parent: 853
     type: Transform
 - uid: 1817
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,7.5
     parent: 853
     type: Transform
 - uid: 1818
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 10.5,6.5
     parent: 853
     type: Transform
 - uid: 1819
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,6.5
@@ -19969,20 +19969,20 @@ entities:
     parent: 853
     type: Transform
 - uid: 1821
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 14.5,15.5
     parent: 853
     type: Transform
 - uid: 1822
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -39.5,11.5
     parent: 853
     type: Transform
 - uid: 1823
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -38.5,11.5
     parent: 853
@@ -20013,83 +20013,83 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1827
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -18.5,-18.5
     parent: 853
     type: Transform
 - uid: 1828
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -17.5,2.5
     parent: 853
     type: Transform
 - uid: 1829
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -20.5,2.5
     parent: 853
     type: Transform
 - uid: 1830
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,2.5
     parent: 853
     type: Transform
 - uid: 1831
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,21.5
     parent: 853
     type: Transform
 - uid: 1832
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,19.5
     parent: 853
     type: Transform
 - uid: 1833
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,18.5
     parent: 853
     type: Transform
 - uid: 1834
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,17.5
     parent: 853
     type: Transform
 - uid: 1835
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,16.5
     parent: 853
     type: Transform
 - uid: 1836
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,15.5
     parent: 853
     type: Transform
 - uid: 1837
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 10.5,15.5
     parent: 853
     type: Transform
 - uid: 1838
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 9.5,15.5
@@ -20110,203 +20110,203 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1840
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,0.5
     parent: 853
     type: Transform
 - uid: 1841
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,15.5
     parent: 853
     type: Transform
 - uid: 1842
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,15.5
     parent: 853
     type: Transform
 - uid: 1843
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,16.5
     parent: 853
     type: Transform
 - uid: 1844
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,13.5
     parent: 853
     type: Transform
 - uid: 1845
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,21.5
     parent: 853
     type: Transform
 - uid: 1846
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 10.5,22.5
     parent: 853
     type: Transform
 - uid: 1847
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 9.5,22.5
     parent: 853
     type: Transform
 - uid: 1848
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 8.5,22.5
     parent: 853
     type: Transform
 - uid: 1849
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 7.5,22.5
     parent: 853
     type: Transform
 - uid: 1850
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,22.5
     parent: 853
     type: Transform
 - uid: 1851
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,22.5
     parent: 853
     type: Transform
 - uid: 1852
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 10.5,23.5
     parent: 853
     type: Transform
 - uid: 1853
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 10.5,24.5
     parent: 853
     type: Transform
 - uid: 1854
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 10.5,25.5
     parent: 853
     type: Transform
 - uid: 1855
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 10.5,26.5
     parent: 853
     type: Transform
 - uid: 1856
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 10.5,27.5
     parent: 853
     type: Transform
 - uid: 1857
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 10.5,28.5
     parent: 853
     type: Transform
 - uid: 1858
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 10.5,30.5
     parent: 853
     type: Transform
 - uid: 1859
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 10.5,31.5
     parent: 853
     type: Transform
 - uid: 1860
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,31.5
     parent: 853
     type: Transform
 - uid: 1861
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,30.5
     parent: 853
     type: Transform
 - uid: 1862
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,28.5
     parent: 853
     type: Transform
 - uid: 1863
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,27.5
     parent: 853
     type: Transform
 - uid: 1864
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,26.5
     parent: 853
     type: Transform
 - uid: 1865
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,25.5
     parent: 853
     type: Transform
 - uid: 1866
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,22.5
     parent: 853
     type: Transform
 - uid: 1867
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,22.5
     parent: 853
     type: Transform
 - uid: 1868
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,22.5
@@ -20326,119 +20326,119 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1870
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,22.5
     parent: 853
     type: Transform
 - uid: 1871
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,22.5
     parent: 853
     type: Transform
 - uid: 1872
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,23.5
     parent: 853
     type: Transform
 - uid: 1873
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,24.5
     parent: 853
     type: Transform
 - uid: 1874
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,26.5
     parent: 853
     type: Transform
 - uid: 1875
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,27.5
     parent: 853
     type: Transform
 - uid: 1876
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,27.5
     parent: 853
     type: Transform
 - uid: 1877
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,27.5
     parent: 853
     type: Transform
 - uid: 1878
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,23.5
     parent: 853
     type: Transform
 - uid: 1879
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,23.5
     parent: 853
     type: Transform
 - uid: 1880
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,24.5
     parent: 853
     type: Transform
 - uid: 1881
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,26.5
     parent: 853
     type: Transform
 - uid: 1882
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,27.5
     parent: 853
     type: Transform
 - uid: 1883
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,27.5
     parent: 853
     type: Transform
 - uid: 1884
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 7.5,27.5
     parent: 853
     type: Transform
 - uid: 1885
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 8.5,27.5
     parent: 853
     type: Transform
 - uid: 1886
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 9.5,27.5
@@ -20613,84 +20613,84 @@ entities:
     parent: 853
     type: Transform
 - uid: 1911
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,15.5
     parent: 853
     type: Transform
 - uid: 1912
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,15.5
     parent: 853
     type: Transform
 - uid: 1913
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,15.5
     parent: 853
     type: Transform
 - uid: 1914
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,15.5
     parent: 853
     type: Transform
 - uid: 1915
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,15.5
     parent: 853
     type: Transform
 - uid: 1916
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,15.5
     parent: 853
     type: Transform
 - uid: 1917
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -4.5,15.5
     parent: 853
     type: Transform
 - uid: 1918
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -4.5,16.5
     parent: 853
     type: Transform
 - uid: 1919
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -4.5,17.5
     parent: 853
     type: Transform
 - uid: 1920
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -4.5,18.5
     parent: 853
     type: Transform
 - uid: 1921
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -4.5,19.5
     parent: 853
     type: Transform
 - uid: 1922
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -5.5,19.5
@@ -20704,70 +20704,70 @@ entities:
     parent: 853
     type: Transform
 - uid: 1924
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,19.5
     parent: 853
     type: Transform
 - uid: 1925
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,19.5
     parent: 853
     type: Transform
 - uid: 1926
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,19.5
     parent: 853
     type: Transform
 - uid: 1927
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,19.5
     parent: 853
     type: Transform
 - uid: 1928
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,19.5
     parent: 853
     type: Transform
 - uid: 1929
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,18.5
     parent: 853
     type: Transform
 - uid: 1930
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,16.5
     parent: 853
     type: Transform
 - uid: 1931
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -5.5,20.5
     parent: 853
     type: Transform
 - uid: 1932
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -5.5,21.5
     parent: 853
     type: Transform
 - uid: 1933
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -5.5,22.5
@@ -20808,91 +20808,91 @@ entities:
     parent: 853
     type: Transform
 - uid: 1939
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,22.5
     parent: 853
     type: Transform
 - uid: 1940
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,22.5
     parent: 853
     type: Transform
 - uid: 1941
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -13.5,22.5
     parent: 853
     type: Transform
 - uid: 1942
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,22.5
     parent: 853
     type: Transform
 - uid: 1943
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,22.5
     parent: 853
     type: Transform
 - uid: 1944
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,22.5
     parent: 853
     type: Transform
 - uid: 1945
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,23.5
     parent: 853
     type: Transform
 - uid: 1946
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,23.5
     parent: 853
     type: Transform
 - uid: 1947
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,23.5
     parent: 853
     type: Transform
 - uid: 1948
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -13.5,23.5
     parent: 853
     type: Transform
 - uid: 1949
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,23.5
     parent: 853
     type: Transform
 - uid: 1950
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,23.5
     parent: 853
     type: Transform
 - uid: 1951
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,23.5
@@ -20906,217 +20906,217 @@ entities:
     parent: 853
     type: Transform
 - uid: 1953
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,21.5
     parent: 853
     type: Transform
 - uid: 1954
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,20.5
     parent: 853
     type: Transform
 - uid: 1955
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,19.5
     parent: 853
     type: Transform
 - uid: 1956
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,18.5
     parent: 853
     type: Transform
 - uid: 1957
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,17.5
     parent: 853
     type: Transform
 - uid: 1958
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,21.5
     parent: 853
     type: Transform
 - uid: 1959
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,20.5
     parent: 853
     type: Transform
 - uid: 1960
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,19.5
     parent: 853
     type: Transform
 - uid: 1961
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,18.5
     parent: 853
     type: Transform
 - uid: 1962
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,17.5
     parent: 853
     type: Transform
 - uid: 1963
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,17.5
     parent: 853
     type: Transform
 - uid: 1964
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -13.5,17.5
     parent: 853
     type: Transform
 - uid: 1965
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,17.5
     parent: 853
     type: Transform
 - uid: 1966
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,17.5
     parent: 853
     type: Transform
 - uid: 1967
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,18.5
     parent: 853
     type: Transform
 - uid: 1968
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,19.5
     parent: 853
     type: Transform
 - uid: 1969
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,8.5
     parent: 853
     type: Transform
 - uid: 1970
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,7.5
     parent: 853
     type: Transform
 - uid: 1971
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,6.5
     parent: 853
     type: Transform
 - uid: 1972
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -13.5,6.5
     parent: 853
     type: Transform
 - uid: 1973
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,6.5
     parent: 853
     type: Transform
 - uid: 1974
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,6.5
     parent: 853
     type: Transform
 - uid: 1975
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,6.5
     parent: 853
     type: Transform
 - uid: 1976
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,7.5
     parent: 853
     type: Transform
 - uid: 1977
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,8.5
     parent: 853
     type: Transform
 - uid: 1978
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,9.5
     parent: 853
     type: Transform
 - uid: 1979
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,12.5
     parent: 853
     type: Transform
 - uid: 1980
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,12.5
     parent: 853
     type: Transform
 - uid: 1981
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,13.5
     parent: 853
     type: Transform
 - uid: 1982
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,14.5
     parent: 853
     type: Transform
 - uid: 1983
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,15.5
@@ -21134,21 +21134,21 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1985
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,10.5
     parent: 853
     type: Transform
 - uid: 1986
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,9.5
     parent: 853
     type: Transform
 - uid: 1987
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,18.5
@@ -21162,182 +21162,182 @@ entities:
     parent: 853
     type: Transform
 - uid: 1989
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -9.5,18.5
     parent: 853
     type: Transform
 - uid: 1990
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,16.5
     parent: 853
     type: Transform
 - uid: 1991
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,13.5
     parent: 853
     type: Transform
 - uid: 1992
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,12.5
     parent: 853
     type: Transform
 - uid: 1993
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,12.5
     parent: 853
     type: Transform
 - uid: 1994
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,12.5
     parent: 853
     type: Transform
 - uid: 1995
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -13.5,12.5
     parent: 853
     type: Transform
 - uid: 1996
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -5.5,18.5
     parent: 853
     type: Transform
 - uid: 1997
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,14.5
     parent: 853
     type: Transform
 - uid: 1998
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,13.5
     parent: 853
     type: Transform
 - uid: 1999
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,12.5
     parent: 853
     type: Transform
 - uid: 2000
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,11.5
     parent: 853
     type: Transform
 - uid: 2001
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,10.5
     parent: 853
     type: Transform
 - uid: 2002
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,9.5
     parent: 853
     type: Transform
 - uid: 2003
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,8.5
     parent: 853
     type: Transform
 - uid: 2004
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,7.5
     parent: 853
     type: Transform
 - uid: 2005
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,6.5
     parent: 853
     type: Transform
 - uid: 2006
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -4.5,6.5
     parent: 853
     type: Transform
 - uid: 2007
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,6.5
     parent: 853
     type: Transform
 - uid: 2008
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -7.5,6.5
     parent: 853
     type: Transform
 - uid: 2009
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -4.5,7.5
     parent: 853
     type: Transform
 - uid: 2010
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -4.5,8.5
     parent: 853
     type: Transform
 - uid: 2011
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -4.5,9.5
     parent: 853
     type: Transform
 - uid: 2012
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,9.5
     parent: 853
     type: Transform
 - uid: 2013
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,7.5
     parent: 853
     type: Transform
 - uid: 2014
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,8.5
@@ -21372,77 +21372,77 @@ entities:
     parent: 853
     type: Transform
 - uid: 2019
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,6.5
     parent: 853
     type: Transform
 - uid: 2020
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -17.5,6.5
     parent: 853
     type: Transform
 - uid: 2021
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,6.5
     parent: 853
     type: Transform
 - uid: 2022
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,7.5
     parent: 853
     type: Transform
 - uid: 2023
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,8.5
     parent: 853
     type: Transform
 - uid: 2024
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,9.5
     parent: 853
     type: Transform
 - uid: 2025
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,10.5
     parent: 853
     type: Transform
 - uid: 2026
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,11.5
     parent: 853
     type: Transform
 - uid: 2027
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -19.5,11.5
     parent: 853
     type: Transform
 - uid: 2028
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,14.5
     parent: 853
     type: Transform
 - uid: 2029
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -19.5,14.5
@@ -21501,73 +21501,73 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2036
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 6.5,-21.5
     parent: 853
     type: Transform
 - uid: 2037
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 7.5,-21.5
     parent: 853
     type: Transform
 - uid: 2038
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 9.5,-21.5
     parent: 853
     type: Transform
 - uid: 2039
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 10.5,-21.5
     parent: 853
     type: Transform
 - uid: 2040
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 11.5,-21.5
     parent: 853
     type: Transform
 - uid: 2041
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 12.5,-21.5
     parent: 853
     type: Transform
 - uid: 2042
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 13.5,-21.5
     parent: 853
     type: Transform
 - uid: 2043
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 13.5,-22.5
     parent: 853
     type: Transform
 - uid: 2044
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 13.5,-23.5
     parent: 853
     type: Transform
 - uid: 2045
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 13.5,-24.5
     parent: 853
     type: Transform
 - uid: 2046
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 13.5,-25.5
     parent: 853
     type: Transform
 - uid: 2047
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -18.5,-22.5
     parent: 853
@@ -21625,13 +21625,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2054
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 6.5,-22.5
     parent: 853
     type: Transform
 - uid: 2055
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 5.5,-22.5
     parent: 853
@@ -21657,157 +21657,157 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2058
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 5.5,-25.5
     parent: 853
     type: Transform
 - uid: 2059
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 14.5,-26.5
     parent: 853
     type: Transform
 - uid: 2060
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 15.5,-26.5
     parent: 853
     type: Transform
 - uid: 2061
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -34.5,-12.5
     parent: 853
     type: Transform
 - uid: 2062
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -33.5,-12.5
     parent: 853
     type: Transform
 - uid: 2063
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -32.5,-12.5
     parent: 853
     type: Transform
 - uid: 2064
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -31.5,-12.5
     parent: 853
     type: Transform
 - uid: 2065
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -30.5,-12.5
     parent: 853
     type: Transform
 - uid: 2066
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -29.5,-12.5
     parent: 853
     type: Transform
 - uid: 2067
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -28.5,-12.5
     parent: 853
     type: Transform
 - uid: 2068
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -27.5,-12.5
     parent: 853
     type: Transform
 - uid: 2069
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -33.5,11.5
     parent: 853
     type: Transform
 - uid: 2070
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -33.5,12.5
     parent: 853
     type: Transform
 - uid: 2071
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -33.5,13.5
     parent: 853
     type: Transform
 - uid: 2072
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -33.5,14.5
     parent: 853
     type: Transform
 - uid: 2073
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -33.5,15.5
     parent: 853
     type: Transform
 - uid: 2074
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -32.5,15.5
     parent: 853
     type: Transform
 - uid: 2075
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -18.5,26.5
     parent: 853
     type: Transform
 - uid: 2076
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -33.5,10.5
     parent: 853
     type: Transform
 - uid: 2077
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,1.5
     parent: 853
     type: Transform
 - uid: 2078
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -33.5,7.5
     parent: 853
     type: Transform
 - uid: 2079
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -33.5,6.5
     parent: 853
     type: Transform
 - uid: 2080
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -32.5,6.5
     parent: 853
     type: Transform
 - uid: 2081
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -31.5,6.5
     parent: 853
     type: Transform
 - uid: 2082
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,6.5
@@ -21837,14 +21837,14 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2086
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,6.5
     parent: 853
     type: Transform
 - uid: 2087
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,7.5
@@ -21859,175 +21859,175 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2089
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,7.5
     parent: 853
     type: Transform
 - uid: 2090
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,8.5
     parent: 853
     type: Transform
 - uid: 2091
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,9.5
     parent: 853
     type: Transform
 - uid: 2092
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,10.5
     parent: 853
     type: Transform
 - uid: 2093
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,11.5
     parent: 853
     type: Transform
 - uid: 2094
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,12.5
     parent: 853
     type: Transform
 - uid: 2095
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -28.5,12.5
     parent: 853
     type: Transform
 - uid: 2096
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -27.5,12.5
     parent: 853
     type: Transform
 - uid: 2097
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,12.5
     parent: 853
     type: Transform
 - uid: 2098
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -25.5,12.5
     parent: 853
     type: Transform
 - uid: 2099
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -24.5,12.5
     parent: 853
     type: Transform
 - uid: 2100
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -23.5,12.5
     parent: 853
     type: Transform
 - uid: 2101
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -22.5,12.5
     parent: 853
     type: Transform
 - uid: 2102
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -29.5,12.5
     parent: 853
     type: Transform
 - uid: 2103
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -22.5,11.5
     parent: 853
     type: Transform
 - uid: 2104
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -22.5,11.5
     parent: 853
     type: Transform
 - uid: 2105
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,11.5
     parent: 853
     type: Transform
 - uid: 2106
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -22.5,10.5
     parent: 853
     type: Transform
 - uid: 2107
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -22.5,8.5
     parent: 853
     type: Transform
 - uid: 2108
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -22.5,7.5
     parent: 853
     type: Transform
 - uid: 2109
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,7.5
     parent: 853
     type: Transform
 - uid: 2110
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,6.5
     parent: 853
     type: Transform
 - uid: 2111
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -20.5,6.5
     parent: 853
     type: Transform
 - uid: 2112
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -19.5,6.5
     parent: 853
     type: Transform
 - uid: 2113
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -25.5,11.5
@@ -22076,98 +22076,98 @@ entities:
     parent: 853
     type: Transform
 - uid: 2120
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 30.5,-0.5
     parent: 853
     type: Transform
 - uid: 2121
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 30.5,0.5
     parent: 853
     type: Transform
 - uid: 2122
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 29.5,-0.5
     parent: 853
     type: Transform
 - uid: 2123
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 28.5,-0.5
     parent: 853
     type: Transform
 - uid: 2124
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 27.5,-0.5
     parent: 853
     type: Transform
 - uid: 2125
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 26.5,-0.5
     parent: 853
     type: Transform
 - uid: 2126
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,-0.5
     parent: 853
     type: Transform
 - uid: 2127
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 24.5,-0.5
     parent: 853
     type: Transform
 - uid: 2128
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 24.5,0.5
     parent: 853
     type: Transform
 - uid: 2129
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 24.5,1.5
     parent: 853
     type: Transform
 - uid: 2130
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 24.5,2.5
     parent: 853
     type: Transform
 - uid: 2131
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 23.5,2.5
     parent: 853
     type: Transform
 - uid: 2132
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 22.5,2.5
     parent: 853
     type: Transform
 - uid: 2133
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 14.5,2.5
     parent: 853
@@ -22184,25 +22184,25 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2135
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 19.5,2.5
     parent: 853
     type: Transform
 - uid: 2136
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 14.5,-3.5
     parent: 853
     type: Transform
 - uid: 2137
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 14.5,-2.5
     parent: 853
     type: Transform
 - uid: 2138
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 14.5,1.5
     parent: 853
@@ -22214,35 +22214,35 @@ entities:
     parent: 853
     type: Transform
 - uid: 2140
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,2.5
     parent: 853
     type: Transform
 - uid: 2141
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,2.5
     parent: 853
     type: Transform
 - uid: 2142
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,2.5
     parent: 853
     type: Transform
 - uid: 2143
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,1.5
     parent: 853
     type: Transform
 - uid: 2144
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,2.5
@@ -22316,56 +22316,56 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2153
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 13.5,-6.5
     parent: 853
     type: Transform
 - uid: 2154
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,-3.5
     parent: 853
     type: Transform
 - uid: 2155
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,-4.5
     parent: 853
     type: Transform
 - uid: 2156
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,-5.5
     parent: 853
     type: Transform
 - uid: 2157
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,-6.5
     parent: 853
     type: Transform
 - uid: 2158
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,-7.5
     parent: 853
     type: Transform
 - uid: 2159
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,-12.5
     parent: 853
     type: Transform
 - uid: 2160
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,-11.5
@@ -22526,133 +22526,133 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2181
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,-3.5
     parent: 853
     type: Transform
 - uid: 2182
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 21.5,-3.5
     parent: 853
     type: Transform
 - uid: 2183
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 22.5,-3.5
     parent: 853
     type: Transform
 - uid: 2184
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 23.5,-3.5
     parent: 853
     type: Transform
 - uid: 2185
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 24.5,-3.5
     parent: 853
     type: Transform
 - uid: 2186
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,-3.5
     parent: 853
     type: Transform
 - uid: 2187
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,-4.5
     parent: 853
     type: Transform
 - uid: 2188
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,-5.5
     parent: 853
     type: Transform
 - uid: 2189
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,-7.5
     parent: 853
     type: Transform
 - uid: 2190
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,-8.5
     parent: 853
     type: Transform
 - uid: 2191
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 24.5,-8.5
     parent: 853
     type: Transform
 - uid: 2192
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 23.5,-8.5
     parent: 853
     type: Transform
 - uid: 2193
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 22.5,-8.5
     parent: 853
     type: Transform
 - uid: 2194
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 21.5,-8.5
     parent: 853
     type: Transform
 - uid: 2195
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,-8.5
     parent: 853
     type: Transform
 - uid: 2196
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,-7.5
     parent: 853
     type: Transform
 - uid: 2197
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 16.5,-18.5
     parent: 853
     type: Transform
 - uid: 2198
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,-4.5
     parent: 853
     type: Transform
 - uid: 2199
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,-9.5
@@ -22666,112 +22666,112 @@ entities:
     parent: 853
     type: Transform
 - uid: 2201
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,-11.5
     parent: 853
     type: Transform
 - uid: 2202
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 21.5,-11.5
     parent: 853
     type: Transform
 - uid: 2203
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 22.5,-11.5
     parent: 853
     type: Transform
 - uid: 2204
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 23.5,-11.5
     parent: 853
     type: Transform
 - uid: 2205
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 24.5,-11.5
     parent: 853
     type: Transform
 - uid: 2206
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,-11.5
     parent: 853
     type: Transform
 - uid: 2207
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,-12.5
     parent: 853
     type: Transform
 - uid: 2208
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,-13.5
     parent: 853
     type: Transform
 - uid: 2209
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,-14.5
     parent: 853
     type: Transform
 - uid: 2210
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,-15.5
     parent: 853
     type: Transform
 - uid: 2211
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 25.5,-16.5
     parent: 853
     type: Transform
 - uid: 2212
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 24.5,-16.5
     parent: 853
     type: Transform
 - uid: 2213
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 23.5,-16.5
     parent: 853
     type: Transform
 - uid: 2214
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 22.5,-16.5
     parent: 853
     type: Transform
 - uid: 2215
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 21.5,-16.5
     parent: 853
     type: Transform
 - uid: 2216
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,-16.5
@@ -22785,42 +22785,42 @@ entities:
     parent: 853
     type: Transform
 - uid: 2218
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 15.5,-18.5
     parent: 853
     type: Transform
 - uid: 2219
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,-17.5
     parent: 853
     type: Transform
 - uid: 2220
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 20.5,-18.5
     parent: 853
     type: Transform
 - uid: 2221
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 46.5,5.5
     parent: 853
     type: Transform
 - uid: 2222
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 45.5,5.5
     parent: 853
     type: Transform
 - uid: 2223
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 48.5,5.5
@@ -22869,7 +22869,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 2230
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,-12.5
@@ -22883,7 +22883,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 2232
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,-12.5
@@ -22897,70 +22897,70 @@ entities:
     parent: 853
     type: Transform
 - uid: 2234
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,-13.5
     parent: 853
     type: Transform
 - uid: 2235
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,-14.5
     parent: 853
     type: Transform
 - uid: 2236
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,-15.5
     parent: 853
     type: Transform
 - uid: 2237
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,-16.5
     parent: 853
     type: Transform
 - uid: 2238
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,-17.5
     parent: 853
     type: Transform
 - uid: 2239
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 7.5,-17.5
     parent: 853
     type: Transform
 - uid: 2240
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 8.5,-17.5
     parent: 853
     type: Transform
 - uid: 2241
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 9.5,-17.5
     parent: 853
     type: Transform
 - uid: 2242
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 10.5,-17.5
     parent: 853
     type: Transform
 - uid: 2243
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,-17.5
@@ -22974,336 +22974,336 @@ entities:
     parent: 853
     type: Transform
 - uid: 2245
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,-18.5
     parent: 853
     type: Transform
 - uid: 2246
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,-18.5
     parent: 853
     type: Transform
 - uid: 2247
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 13.5,-18.5
     parent: 853
     type: Transform
 - uid: 2248
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,-18.5
     parent: 853
     type: Transform
 - uid: 2249
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 6.5,-20.5
     parent: 853
     type: Transform
 - uid: 2250
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 28.5,-1.5
     parent: 853
     type: Transform
 - uid: 2251
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 28.5,-2.5
     parent: 853
     type: Transform
 - uid: 2252
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 28.5,-3.5
     parent: 853
     type: Transform
 - uid: 2253
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 28.5,-4.5
     parent: 853
     type: Transform
 - uid: 2254
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 28.5,-5.5
     parent: 853
     type: Transform
 - uid: 2255
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 29.5,-5.5
     parent: 853
     type: Transform
 - uid: 2256
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 30.5,-5.5
     parent: 853
     type: Transform
 - uid: 2257
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 31.5,-5.5
     parent: 853
     type: Transform
 - uid: 2258
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 32.5,-5.5
     parent: 853
     type: Transform
 - uid: 2259
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 34.5,-5.5
     parent: 853
     type: Transform
 - uid: 2260
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 35.5,-5.5
     parent: 853
     type: Transform
 - uid: 2261
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 36.5,-5.5
     parent: 853
     type: Transform
 - uid: 2262
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 36.5,-4.5
     parent: 853
     type: Transform
 - uid: 2263
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 36.5,-3.5
     parent: 853
     type: Transform
 - uid: 2264
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,1.5
     parent: 853
     type: Transform
 - uid: 2265
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,2.5
     parent: 853
     type: Transform
 - uid: 2266
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,2.5
     parent: 853
     type: Transform
 - uid: 2267
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,-3.5
     parent: 853
     type: Transform
 - uid: 2268
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,-4.5
     parent: 853
     type: Transform
 - uid: 2269
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,-5.5
     parent: 853
     type: Transform
 - uid: 2270
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,-6.5
     parent: 853
     type: Transform
 - uid: 2271
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,-5.5
     parent: 853
     type: Transform
 - uid: 2272
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,-5.5
     parent: 853
     type: Transform
 - uid: 2273
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,-5.5
     parent: 853
     type: Transform
 - uid: 2274
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,-5.5
     parent: 853
     type: Transform
 - uid: 2275
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,-9.5
     parent: 853
     type: Transform
 - uid: 2276
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,-10.5
     parent: 853
     type: Transform
 - uid: 2277
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,-11.5
     parent: 853
     type: Transform
 - uid: 2278
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,-12.5
     parent: 853
     type: Transform
 - uid: 2279
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,-8.5
     parent: 853
     type: Transform
 - uid: 2280
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,-12.5
     parent: 853
     type: Transform
 - uid: 2281
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,-12.5
     parent: 853
     type: Transform
 - uid: 2282
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,-12.5
     parent: 853
     type: Transform
 - uid: 2283
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,-12.5
     parent: 853
     type: Transform
 - uid: 2284
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,-13.5
     parent: 853
     type: Transform
 - uid: 2285
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -5.5,-18.5
     parent: 853
     type: Transform
 - uid: 2286
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,-17.5
     parent: 853
     type: Transform
 - uid: 2287
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,-18.5
     parent: 853
     type: Transform
 - uid: 2288
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,-18.5
     parent: 853
     type: Transform
 - uid: 2289
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-18.5
     parent: 853
     type: Transform
 - uid: 2290
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,-18.5
     parent: 853
     type: Transform
 - uid: 2291
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,-11.5
     parent: 853
     type: Transform
 - uid: 2292
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,-11.5
@@ -23323,56 +23323,56 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2294
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -5.5,-11.5
     parent: 853
     type: Transform
 - uid: 2295
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-11.5
     parent: 853
     type: Transform
 - uid: 2296
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-12.5
     parent: 853
     type: Transform
 - uid: 2297
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-13.5
     parent: 853
     type: Transform
 - uid: 2298
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-14.5
     parent: 853
     type: Transform
 - uid: 2299
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-15.5
     parent: 853
     type: Transform
 - uid: 2300
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-16.5
     parent: 853
     type: Transform
 - uid: 2301
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-17.5
@@ -23400,42 +23400,42 @@ entities:
     parent: 853
     type: Transform
 - uid: 2305
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -7.5,-21.5
     parent: 853
     type: Transform
 - uid: 2306
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 1.5,-22.5
     parent: 853
     type: Transform
 - uid: 2307
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,-22.5
     parent: 853
     type: Transform
 - uid: 2308
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,-21.5
     parent: 853
     type: Transform
 - uid: 2309
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,-21.5
     parent: 853
     type: Transform
 - uid: 2310
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,-21.5
@@ -23449,91 +23449,91 @@ entities:
     parent: 853
     type: Transform
 - uid: 2312
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,-22.5
     parent: 853
     type: Transform
 - uid: 2313
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,-23.5
     parent: 853
     type: Transform
 - uid: 2314
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,-24.5
     parent: 853
     type: Transform
 - uid: 2315
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,-25.5
     parent: 853
     type: Transform
 - uid: 2316
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,-25.5
     parent: 853
     type: Transform
 - uid: 2317
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,-25.5
     parent: 853
     type: Transform
 - uid: 2318
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -4.5,-25.5
     parent: 853
     type: Transform
 - uid: 2319
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -5.5,-25.5
     parent: 853
     type: Transform
 - uid: 2320
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-25.5
     parent: 853
     type: Transform
 - uid: 2321
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-24.5
     parent: 853
     type: Transform
 - uid: 2322
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-23.5
     parent: 853
     type: Transform
 - uid: 2323
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-22.5
     parent: 853
     type: Transform
 - uid: 2324
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-21.5
@@ -23554,332 +23554,332 @@ entities:
     parent: 853
     type: Transform
 - uid: 2327
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -9.5,-21.5
     parent: 853
     type: Transform
 - uid: 2328
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,-27.5
     parent: 853
     type: Transform
 - uid: 2329
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -13.5,-27.5
     parent: 853
     type: Transform
 - uid: 2330
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,-27.5
     parent: 853
     type: Transform
 - uid: 2331
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,-27.5
     parent: 853
     type: Transform
 - uid: 2332
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,-27.5
     parent: 853
     type: Transform
 - uid: 2333
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -17.5,-27.5
     parent: 853
     type: Transform
 - uid: 2334
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,-27.5
     parent: 853
     type: Transform
 - uid: 2335
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,-26.5
     parent: 853
     type: Transform
 - uid: 2336
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,-25.5
     parent: 853
     type: Transform
 - uid: 2337
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,-24.5
     parent: 853
     type: Transform
 - uid: 2338
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,-23.5
     parent: 853
     type: Transform
 - uid: 2339
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -17.5,-23.5
     parent: 853
     type: Transform
 - uid: 2340
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -13.5,-23.5
     parent: 853
     type: Transform
 - uid: 2341
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,-23.5
     parent: 853
     type: Transform
 - uid: 2342
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,-24.5
     parent: 853
     type: Transform
 - uid: 2343
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,-25.5
     parent: 853
     type: Transform
 - uid: 2344
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,-26.5
     parent: 853
     type: Transform
 - uid: 2345
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -17.5,26.5
     parent: 853
     type: Transform
 - uid: 2346
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 29.5,14.5
     parent: 853
     type: Transform
 - uid: 2347
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 25.5,14.5
     parent: 853
     type: Transform
 - uid: 2348
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 24.5,14.5
     parent: 853
     type: Transform
 - uid: 2349
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 18.5,14.5
     parent: 853
     type: Transform
 - uid: 2350
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 17.5,14.5
     parent: 853
     type: Transform
 - uid: 2351
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 17.5,15.5
     parent: 853
     type: Transform
 - uid: 2352
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 17.5,16.5
     parent: 853
     type: Transform
 - uid: 2353
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 16.5,16.5
     parent: 853
     type: Transform
 - uid: 2354
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 14.5,17.5
     parent: 853
     type: Transform
 - uid: 2355
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-21.5
     parent: 853
     type: Transform
 - uid: 2356
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-22.5
     parent: 853
     type: Transform
 - uid: 2357
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-23.5
     parent: 853
     type: Transform
 - uid: 2358
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-24.5
     parent: 853
     type: Transform
 - uid: 2359
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-25.5
     parent: 853
     type: Transform
 - uid: 2360
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,-22.5
     parent: 853
     type: Transform
 - uid: 2361
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,-21.5
     parent: 853
     type: Transform
 - uid: 2362
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,-18.5
     parent: 853
     type: Transform
 - uid: 2363
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,-17.5
     parent: 853
     type: Transform
 - uid: 2364
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,-16.5
     parent: 853
     type: Transform
 - uid: 2365
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,-16.5
     parent: 853
     type: Transform
 - uid: 2366
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-16.5
     parent: 853
     type: Transform
 - uid: 2367
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -9.5,-16.5
     parent: 853
     type: Transform
 - uid: 2368
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -8.5,-16.5
     parent: 853
     type: Transform
 - uid: 2369
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -7.5,-16.5
     parent: 853
     type: Transform
 - uid: 2370
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -13.5,-16.5
     parent: 853
     type: Transform
 - uid: 2371
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,-16.5
     parent: 853
     type: Transform
 - uid: 2372
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,-16.5
     parent: 853
     type: Transform
 - uid: 2373
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -17.5,-16.5
     parent: 853
     type: Transform
 - uid: 2374
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 14.5,16.5
     parent: 853
     type: Transform
 - uid: 2375
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 14.5,21.5
     parent: 853
@@ -23917,7 +23917,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2380
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 5.5,-28.5
     parent: 853
@@ -23955,70 +23955,70 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2385
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,-13.5
     parent: 853
     type: Transform
 - uid: 2386
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,-13.5
     parent: 853
     type: Transform
 - uid: 2387
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,-13.5
     parent: 853
     type: Transform
 - uid: 2388
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,-13.5
     parent: 853
     type: Transform
 - uid: 2389
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,-13.5
     parent: 853
     type: Transform
 - uid: 2390
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-13.5
     parent: 853
     type: Transform
 - uid: 2391
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-12.5
     parent: 853
     type: Transform
 - uid: 2392
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-11.5
     parent: 853
     type: Transform
 - uid: 2393
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-10.5
     parent: 853
     type: Transform
 - uid: 2394
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-9.5
@@ -24033,96 +24033,96 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2396
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,-8.5
     parent: 853
     type: Transform
 - uid: 2397
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -13.5,-8.5
     parent: 853
     type: Transform
 - uid: 2398
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: -15.5,-9.5
     parent: 853
     type: Transform
 - uid: 2399
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: -10.5,-8.5
     parent: 853
     type: Transform
 - uid: 2400
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,-8.5
     parent: 853
     type: Transform
 - uid: 2401
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,-9.5
     parent: 853
     type: Transform
 - uid: 2402
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,-10.5
     parent: 853
     type: Transform
 - uid: 2403
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,-11.5
     parent: 853
     type: Transform
 - uid: 2404
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,-12.5
     parent: 853
     type: Transform
 - uid: 2405
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -9.5,-24.5
     parent: 853
     type: Transform
 - uid: 2406
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -8.5,-24.5
     parent: 853
     type: Transform
 - uid: 2407
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -7.5,-24.5
     parent: 853
     type: Transform
 - uid: 2408
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,-6.5
     parent: 853
     type: Transform
 - uid: 2409
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,-7.5
@@ -24156,7 +24156,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 2413
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -8.5,-4.5
@@ -24191,14 +24191,14 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2417
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -6.5,-7.5
     parent: 853
     type: Transform
 - uid: 2418
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -8.5,-5.5
@@ -24213,14 +24213,14 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2420
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -9.5,-5.5
     parent: 853
     type: Transform
 - uid: 2421
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,-5.5
@@ -24275,28 +24275,28 @@ entities:
     parent: 853
     type: Transform
 - uid: 2428
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -10.5,2.5
     parent: 853
     type: Transform
 - uid: 2429
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -4.5,2.5
     parent: 853
     type: Transform
 - uid: 2430
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -9.5,2.5
     parent: 853
     type: Transform
 - uid: 2431
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,2.5
@@ -24406,14 +24406,14 @@ entities:
     parent: 853
     type: Transform
 - uid: 2446
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,-9.5
     parent: 853
     type: Transform
 - uid: 2447
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -22.5,-9.5
@@ -24426,70 +24426,70 @@ entities:
     parent: 853
     type: Transform
 - uid: 2449
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -24.5,-9.5
     parent: 853
     type: Transform
 - uid: 2450
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -25.5,-9.5
     parent: 853
     type: Transform
 - uid: 2451
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,-9.5
     parent: 853
     type: Transform
 - uid: 2452
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -27.5,-9.5
     parent: 853
     type: Transform
 - uid: 2453
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -28.5,-9.5
     parent: 853
     type: Transform
 - uid: 2454
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -29.5,-9.5
     parent: 853
     type: Transform
 - uid: 2455
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,-9.5
     parent: 853
     type: Transform
 - uid: 2456
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -31.5,-9.5
     parent: 853
     type: Transform
 - uid: 2457
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,-3.5
     parent: 853
     type: Transform
 - uid: 2458
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -31.5,-8.5
@@ -24516,28 +24516,28 @@ entities:
     parent: 853
     type: Transform
 - uid: 2462
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -34.5,-7.5
     parent: 853
     type: Transform
 - uid: 2463
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -31.5,-5.5
     parent: 853
     type: Transform
 - uid: 2464
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -31.5,-4.5
     parent: 853
     type: Transform
 - uid: 2465
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -31.5,-3.5
@@ -24610,14 +24610,14 @@ entities:
     parent: 853
     type: Transform
 - uid: 2475
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,-8.5
     parent: 853
     type: Transform
 - uid: 2476
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -6.5,23.5
     parent: 853
@@ -24644,28 +24644,28 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2479
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -20.5,-6.5
     parent: 853
     type: Transform
 - uid: 2480
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -19.5,-6.5
     parent: 853
     type: Transform
 - uid: 2481
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,-6.5
     parent: 853
     type: Transform
 - uid: 2482
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -17.5,-6.5
@@ -24702,119 +24702,119 @@ entities:
     parent: 853
     type: Transform
 - uid: 2487
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -17.5,-4.5
     parent: 853
     type: Transform
 - uid: 2488
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -17.5,-5.5
     parent: 853
     type: Transform
 - uid: 2489
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -17.5,-3.5
     parent: 853
     type: Transform
 - uid: 2490
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.5,-3.5
     parent: 853
     type: Transform
 - uid: 2491
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -19.5,-3.5
     parent: 853
     type: Transform
 - uid: 2492
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -20.5,-3.5
     parent: 853
     type: Transform
 - uid: 2493
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,-3.5
     parent: 853
     type: Transform
 - uid: 2494
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -21.5,-2.5
     parent: 853
     type: Transform
 - uid: 2495
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 11.5,22.5
     parent: 853
     type: Transform
 - uid: 2496
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 14.5,23.5
     parent: 853
     type: Transform
 - uid: 2497
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 13.5,22.5
     parent: 853
     type: Transform
 - uid: 2498
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 14.5,22.5
     parent: 853
     type: Transform
 - uid: 2499
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 14.5,24.5
     parent: 853
     type: Transform
 - uid: 2500
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 14.5,25.5
     parent: 853
     type: Transform
 - uid: 2501
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,15.5
     parent: 853
     type: Transform
 - uid: 2502
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,16.5
     parent: 853
     type: Transform
 - uid: 2503
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -16.5,15.5
@@ -25039,7 +25039,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2524
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,-11.5
@@ -27132,7 +27132,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2719
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -31.5,1.5
@@ -39082,7 +39082,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3877
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 23.5,-9.5
@@ -39712,13 +39712,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3941
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: -9.5,-8.5
     parent: 853
     type: Transform
 - uid: 3942
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: -13.5,-7.5
     parent: 853
@@ -40079,7 +40079,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3981
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -25.5,7.5
@@ -40350,7 +40350,7 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 4011
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 16.5,-14.5
@@ -40514,7 +40514,7 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 4030
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: -8.5,-7.5
     parent: 853
@@ -40649,7 +40649,7 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 4047
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: -8.5,-7.5
     parent: 853
@@ -40753,7 +40753,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4060
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 15.5,-12.5
@@ -40889,28 +40889,28 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4076
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,-7.5
     parent: 853
     type: Transform
 - uid: 4077
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -4.5,-7.5
     parent: 853
     type: Transform
 - uid: 4078
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -5.5,-7.5
     parent: 853
     type: Transform
 - uid: 4079
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: -8.5,-8.5
     parent: 853
@@ -40990,98 +40990,98 @@ entities:
     parent: 853
     type: Transform
 - uid: 4090
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,-0.5
     parent: 853
     type: Transform
 - uid: 4091
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -27.5,-0.5
     parent: 853
     type: Transform
 - uid: 4092
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -28.5,-0.5
     parent: 853
     type: Transform
 - uid: 4093
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -29.5,-0.5
     parent: 853
     type: Transform
 - uid: 4094
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,-0.5
     parent: 853
     type: Transform
 - uid: 4095
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,-3.5
     parent: 853
     type: Transform
 - uid: 4096
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -27.5,-3.5
     parent: 853
     type: Transform
 - uid: 4097
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -28.5,-3.5
     parent: 853
     type: Transform
 - uid: 4098
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -31.5,-6.5
     parent: 853
     type: Transform
 - uid: 4099
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,-6.5
     parent: 853
     type: Transform
 - uid: 4100
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -27.5,-6.5
     parent: 853
     type: Transform
 - uid: 4101
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -28.5,-6.5
     parent: 853
     type: Transform
 - uid: 4102
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -29.5,-6.5
     parent: 853
     type: Transform
 - uid: 4103
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -30.5,-6.5
@@ -41106,14 +41106,14 @@ entities:
     parent: 853
     type: Transform
 - uid: 4106
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,-1.5
     parent: 853
     type: Transform
 - uid: 4107
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -26.5,-4.5
@@ -41548,21 +41548,21 @@ entities:
     parent: 853
     type: Transform
 - uid: 4158
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 16.5,-13.5
     parent: 853
     type: Transform
 - uid: 4159
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,-12.5
     parent: 853
     type: Transform
 - uid: 4160
-  type: solid_wall
+  type: WallSolid
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 13.5,-12.5
@@ -41971,19 +41971,19 @@ entities:
     parent: 853
     type: Transform
 - uid: 4207
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -9.5,23.5
     parent: 853
     type: Transform
 - uid: 4208
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -8.5,23.5
     parent: 853
     type: Transform
 - uid: 4209
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: -7.5,23.5
     parent: 853
@@ -42542,49 +42542,49 @@ entities:
     parent: 853
     type: Transform
 - uid: 4283
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 52.5,-1.5
     parent: 853
     type: Transform
 - uid: 4284
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 52.5,-2.5
     parent: 853
     type: Transform
 - uid: 4285
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 52.5,-3.5
     parent: 853
     type: Transform
 - uid: 4286
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 52.5,-4.5
     parent: 853
     type: Transform
 - uid: 4287
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 52.5,-5.5
     parent: 853
     type: Transform
 - uid: 4288
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 52.5,-6.5
     parent: 853
     type: Transform
 - uid: 4289
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 52.5,-7.5
@@ -42689,14 +42689,14 @@ entities:
     parent: 853
     type: Transform
 - uid: 4304
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 51.5,6.5
     parent: 853
     type: Transform
 - uid: 4305
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 45.5,14.5
@@ -43152,182 +43152,182 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4351
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 46.5,-8.5
     parent: 853
     type: Transform
 - uid: 4352
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 45.5,-8.5
     parent: 853
     type: Transform
 - uid: 4353
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 44.5,-8.5
     parent: 853
     type: Transform
 - uid: 4354
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 43.5,-8.5
     parent: 853
     type: Transform
 - uid: 4355
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 43.5,-9.5
     parent: 853
     type: Transform
 - uid: 4356
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 43.5,-10.5
     parent: 853
     type: Transform
 - uid: 4357
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 43.5,-11.5
     parent: 853
     type: Transform
 - uid: 4358
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 43.5,-12.5
     parent: 853
     type: Transform
 - uid: 4359
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 43.5,-13.5
     parent: 853
     type: Transform
 - uid: 4360
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 43.5,-14.5
     parent: 853
     type: Transform
 - uid: 4361
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 55.5,-14.5
     parent: 853
     type: Transform
 - uid: 4362
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 55.5,-13.5
     parent: 853
     type: Transform
 - uid: 4363
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 55.5,-12.5
     parent: 853
     type: Transform
 - uid: 4364
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 55.5,-11.5
     parent: 853
     type: Transform
 - uid: 4365
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 55.5,-10.5
     parent: 853
     type: Transform
 - uid: 4366
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 55.5,-9.5
     parent: 853
     type: Transform
 - uid: 4367
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 55.5,-8.5
     parent: 853
     type: Transform
 - uid: 4368
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 54.5,-8.5
     parent: 853
     type: Transform
 - uid: 4369
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 53.5,-8.5
     parent: 853
     type: Transform
 - uid: 4370
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 52.5,-8.5
     parent: 853
     type: Transform
 - uid: 4371
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 46.5,-10.5
     parent: 853
     type: Transform
 - uid: 4372
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 46.5,-11.5
     parent: 853
     type: Transform
 - uid: 4373
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 46.5,-12.5
     parent: 853
     type: Transform
 - uid: 4374
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 52.5,-12.5
     parent: 853
     type: Transform
 - uid: 4375
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 52.5,-11.5
     parent: 853
     type: Transform
 - uid: 4376
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 52.5,-10.5
@@ -46440,7 +46440,7 @@ entities:
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4735
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: -20.5,-4.5
     parent: 853
@@ -46555,19 +46555,19 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4751
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 10.5,-28.5
     parent: 853
     type: Transform
 - uid: 4752
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 11.5,-28.5
     parent: 853
     type: Transform
 - uid: 4753
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 12.5,-28.5
     parent: 853
@@ -46618,7 +46618,7 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4760
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 10.5,-12.5
     parent: 853
@@ -46688,7 +46688,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4768
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 10.5,-29.5
     parent: 853
@@ -46761,13 +46761,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4776
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 5.5,-29.5
     parent: 853
     type: Transform
 - uid: 4777
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 5.5,-30.5
     parent: 853
@@ -47384,37 +47384,37 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4839
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 13.5,-26.5
     parent: 853
     type: Transform
 - uid: 4840
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 13.5,-27.5
     parent: 853
     type: Transform
 - uid: 4841
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 13.5,-28.5
     parent: 853
     type: Transform
 - uid: 4842
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 13.5,-29.5
     parent: 853
     type: Transform
 - uid: 4843
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 13.5,-30.5
     parent: 853
     type: Transform
 - uid: 4844
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 13.5,-31.5
     parent: 853
@@ -47427,25 +47427,25 @@ entities:
     parent: 853
     type: Transform
 - uid: 4846
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 1.5,-24.5
     parent: 853
     type: Transform
 - uid: 4847
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 1.5,-25.5
     parent: 853
     type: Transform
 - uid: 4848
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 1.5,-26.5
     parent: 853
     type: Transform
 - uid: 4849
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: 1.5,-27.5
     parent: 853
@@ -47537,79 +47537,79 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4859
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 0.5,-28.5
     parent: 853
     type: Transform
 - uid: 4860
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 1.5,-28.5
     parent: 853
     type: Transform
 - uid: 4861
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 1.5,-29.5
     parent: 853
     type: Transform
 - uid: 4862
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 1.5,-30.5
     parent: 853
     type: Transform
 - uid: 4863
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 1.5,-31.5
     parent: 853
     type: Transform
 - uid: 4864
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 5.5,-31.5
     parent: 853
     type: Transform
 - uid: 4865
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 6.5,-31.5
     parent: 853
     type: Transform
 - uid: 4866
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 7.5,-31.5
     parent: 853
     type: Transform
 - uid: 4867
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 8.5,-31.5
     parent: 853
     type: Transform
 - uid: 4868
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 9.5,-31.5
     parent: 853
     type: Transform
 - uid: 4869
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 10.5,-31.5
     parent: 853
     type: Transform
 - uid: 4870
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 11.5,-31.5
     parent: 853
     type: Transform
 - uid: 4871
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - pos: 12.5,-31.5
     parent: 853
@@ -47687,7 +47687,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 4883
-  type: solid_wall
+  type: WallSolid
   components:
   - pos: -13.5,-9.5
     parent: 853
