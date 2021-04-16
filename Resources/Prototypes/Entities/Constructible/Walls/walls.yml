@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   parent: BaseConstructible
-  id: base_wall
+  id: WallBase
   name: basewall
   description: Keeps the air in and the greytide out.
   placement:
@@ -42,8 +42,8 @@
     base: solid
 
 - type: entity
-  parent: base_wall
-  id: brick_wall
+  parent: WallBase
+  id: WallBrick
   name: brick wall
   components:
   - type: Sprite
@@ -68,8 +68,8 @@
     base: brick
 
 - type: entity
-  parent: base_wall
-  id: clock_wall
+  parent: WallBase
+  id: WallClock
   name: clock wall
   components:
   - type: Sprite
@@ -94,8 +94,8 @@
     base: clock
 
 - type: entity
-  parent: base_wall
-  id: clown_wall
+  parent: WallBase
+  id: WallClown
   name: clown wall
   components:
   - type: Sprite
@@ -121,8 +121,8 @@
 
 
 - type: entity
-  parent: base_wall
-  id: cult_wall
+  parent: WallBase
+  id: WallCult
   name: cult wall
   components:
   - type: Sprite
@@ -147,8 +147,8 @@
     base: cult
 
 - type: entity
-  parent: base_wall
-  id: debug_wall
+  parent: WallBase
+  id: WallDebug
   name: debug wall
   components:
   - type: Sprite
@@ -173,8 +173,8 @@
     base: debug
 
 - type: entity
-  parent: base_wall
-  id: diamond_wall
+  parent: WallBase
+  id: WallDiamond
   name: diamond wall
   components:
   - type: Sprite
@@ -198,10 +198,9 @@
     key: walls
     base: diamond
 
-
 - type: entity
-  parent: base_wall
-  id: gold_wall
+  parent: WallBase
+  id: WallGold
   name: gold wall
   components:
   - type: Sprite
@@ -226,8 +225,8 @@
     base: gold
 
 - type: entity
-  parent: base_wall
-  id: ice_wall
+  parent: WallBase
+  id: WallIce
   name: ice wall
   components:
   - type: Sprite
@@ -252,8 +251,8 @@
     base: ice
 
 - type: entity
-  parent: base_wall
-  id: metal_wall
+  parent: WallBase
+  id: WallMetal
   name: metal wall
   components:
   - type: Sprite
@@ -278,8 +277,8 @@
     base: metal
 
 - type: entity
-  parent: base_wall
-  id: plasma_wall
+  parent: WallBase
+  id: WallPlasma
   name: plasma wall
   components:
   - type: Sprite
@@ -304,8 +303,8 @@
     base: plasma
 
 - type: entity
-  parent: base_wall
-  id: plastic_wall
+  parent: WallBase
+  id: WallPlastic
   name: plastic wall
   components:
   - type: Sprite
@@ -330,8 +329,8 @@
     base: plastic
 
 - type: entity
-  parent: base_wall
-  id: reinforced_wall
+  parent: WallBase
+  id: WallReinforced
   name: reinforced wall
   components:
   - type: Sprite
@@ -363,8 +362,8 @@
 
 # Riveting
 - type: entity
-  parent: base_wall
-  id: riveted_wall
+  parent: WallBase
+  id: WallRiveted
   name: riveted wall
   components:
   - type: Sprite
@@ -389,8 +388,8 @@
     base: riveted
 
 - type: entity
-  parent: base_wall
-  id: sandstone_wall
+  parent: WallBase
+  id: WallSandstone
   name: sandstone wall
   components:
   - type: Sprite
@@ -415,8 +414,8 @@
     base: sandstone
 
 - type: entity
-  parent: base_wall
-  id: silver_wall
+  parent: WallBase
+  id: WallSilver
   name: silver wall
   components:
   - type: Sprite
@@ -441,8 +440,8 @@
     base: silver
 
 - type: entity
-  parent: base_wall
-  id: solid_wall
+  parent: WallBase
+  id: WallSolid
   name: solid wall
   components:
   - type: Sprite
@@ -471,8 +470,8 @@
     base: solid
 
 - type: entity
-  parent: base_wall
-  id: uranium_wall
+  parent: WallBase
+  id: WallUranium
   name: uranium wall
   components:
   - type: Sprite
@@ -497,8 +496,8 @@
     base: uranium
 
 - type: entity
-  parent: base_wall
-  id: wood_wall
+  parent: WallBase
+  id: WallWood
   name: wood wall
   components:
   - type: Sprite
