@@ -9,6 +9,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -22,15 +23,17 @@ namespace Content.Server.GameObjects.Components
         /// <summary>
         /// Minimum time to wait before saying a new ad, in seconds. Has to be larger than or equal to 1.
         /// </summary>
+        [ViewVariables]
         [field: DataField("minWait")]
-        private int MinWait { get; } = 40;
+        private int MinWait { get; } = 480; // 8 minutes
 
         /// <summary>
         /// Maximum time to wait before saying a new ad, in seconds. Has to be larger than or equal
         /// to <see cref="MinWait"/>
         /// </summary>
+        [ViewVariables]
         [field: DataField("maxWait")]
-        private int MaxWait { get; } = 80;
+        private int MaxWait { get; } = 600; // 10 minutes
 
         [field: DataField("pack")]
         private string PackPrototypeId { get; } = string.Empty;
@@ -75,8 +78,8 @@ namespace Content.Server.GameObjects.Components
                 throw new PrototypeLoadException($"{Owner} should have minWait greater than or equal to maxWait for {Name}Component.");
             }
 
-            // Start timer at initialization
-            RefreshTimer();
+            // Start timer at initialization, without MinWait bound
+            RefreshTimer(false);
         }
 
         public override void OnRemove()
@@ -105,8 +108,11 @@ namespace Content.Server.GameObjects.Components
         /// <summary>
         /// Refresh cancellation token and spawn new timer with random wait between <see cref="MinWait"/>
         /// and <see cref="MaxWait"/>.
+        /// <param name="minBound">
+        /// Whether <see cref="MinWait"/> should be used to have a minimum waiting time.
+        /// </param>
         /// </summary>
-        private void RefreshTimer()
+        private void RefreshTimer(bool minBound = true)
         {
             // Generate new source
             _cancellationSource.Cancel();
@@ -115,7 +121,7 @@ namespace Content.Server.GameObjects.Components
 
             // Generate random wait time, then create timer
             IRobustRandom random = IoCManager.Resolve<IRobustRandom>();
-            var wait = random.Next(MinWait * 1000, MaxWait * 1000);
+            var wait = minBound ? random.Next(MinWait * 1000, MaxWait * 1000) : random.Next(MaxWait * 1000);
             Owner.SpawnTimer(wait, SayAndRefresh, _cancellationSource.Token);
         }
 
@@ -133,8 +139,8 @@ namespace Content.Server.GameObjects.Components
         /// </summary>
         public void Resume()
         {
-            // Restart timer
-            RefreshTimer();
+            // Restart timer, without minBound
+            RefreshTimer(false);
         }
     }
 }
