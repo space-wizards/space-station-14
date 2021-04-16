@@ -26,10 +26,11 @@ namespace Content.Shared.Administration.AdminMenu
             {
                 var id = buffer.ReadInt32();
                 var username = buffer.ReadString();
+                var admin = buffer.ReadString();
                 var status = (TicketStatus)buffer.ReadByte();
                 var message = buffer.ReadString();
 
-                TicketsInfo.Add(new TicketInfo(id, username, status, message));
+                TicketsInfo.Add(new TicketInfo(id, username, admin, status, message));
             }
         }
 
@@ -41,11 +42,12 @@ namespace Content.Shared.Administration.AdminMenu
             {
                 buffer.Write(ticket.Id);
                 buffer.Write(ticket.Name);
+                buffer.Write(ticket.Admin);
                 buffer.Write((byte)ticket.Status);
                 buffer.Write(ticket.Message);
             }
         }
 
-        public record TicketInfo(int Id, string Name, TicketStatus Status, string Message);
+        public record TicketInfo(int Id, string Name, string Admin, TicketStatus Status, string Message);
     }
 }

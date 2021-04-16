@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Administration;
+using Content.Shared.Administration.Tickets;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Interfaces
@@ -12,5 +13,7 @@ namespace Content.Shared.Interfaces
         void OnTicketMessage(MsgTicketMessage message);
 
         bool HasTicket(NetUserId id);
+
+        Ticket? GetTicket(int id);
     }
 }

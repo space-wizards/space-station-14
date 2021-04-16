@@ -69,13 +69,20 @@ namespace Content.Server.Administration
             var ticket = new Ticket(CurrentId, opener, target, message);
             Tickets.Add(CurrentId, ticket);
             CurrentId++;
-            var player = _playerManager.GetSessionByUserId(opener);
-            var mind = player.ContentData()?.Mind;
+            var player = _playerManager.TryGetSessionById(opener, out var session);
+            var mind = session?.ContentData()?.Mind;
             var character = mind == null ? "Unknown" : mind.CharacterName;
             ticket.Character = character;
+            var username = session?.ConnectedClient.UserName ?? string.Empty;
+            ticket.PlayerUsername = username;
             var msg = message.Length <= 48 ? message.Trim() : $"{message.Trim().Substring(0, 48)}...";
             _chatManager.SendAdminAnnouncement(
-                $"Ticket {ticket.Id} opened by {player.ConnectedClient.UserName} ({character}): {msg}");
+                $"Ticket {ticket.Id} opened by {username} ({character}): {msg}");
+        }
+
+        public Ticket? GetTicket(int id)
+        {
+            return Tickets[id];
         }
 
         public void OnTicketMessage(MsgTicketMessage message)
@@ -117,6 +124,8 @@ namespace Content.Server.Administration
             var eui = IoCManager.Resolve<EuiManager>();
             var ui = new TicketEui();
             eui.OpenEui(ui, session);
+            ui.TicketId = message.TicketId;
+            ui.StateDirty();
         }
 
         private void HandleTicketListRequest(AdminMenuTicketListRequest message)
@@ -134,13 +143,14 @@ namespace Content.Server.Administration
             foreach (var (_, ticket) in Tickets)
             {
                 var id = ticket.Id;
-                var player = _playerManager.GetSessionByUserId(ticket.TargetPlayer); //TODO don't crash if the player isn't connected lol
-                var name = $"{player.ConnectedClient.UserName} ({ticket.Character})";
+                var player = string.IsNullOrEmpty(ticket.PlayerUsername) ? ticket.TargetPlayer.ToString() : ticket.PlayerUsername;
+                var name = $"{player} ({ticket.Character})";
+                var admin = ticket.ClaimedAdmin.ToString() ?? string.Empty;
                 var status = ticket.Status;
                 var msg = ticket.Messages.First();
-                var summary = msg.Length <= 48 ? msg.Trim() : $"{msg.Trim().Substring(0, 48)}...";
+                var summary = msg.message.Length <= 48 ? msg.message.Trim() : $"{msg.message.Trim().Substring(0, 48)}...";
 
-                netMsg.TicketsInfo.Add(new AdminMenuTicketListMessage.TicketInfo(id, name, status, summary));
+                netMsg.TicketsInfo.Add(new AdminMenuTicketListMessage.TicketInfo(id, name, admin, status, summary));
             }
 
             _netManager.ServerSendMessage(netMsg, senderSession.ConnectedClient);

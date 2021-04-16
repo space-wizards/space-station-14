@@ -45,5 +45,10 @@ namespace Content.Client.Administration
         {
             return;
         }
+
+        public Ticket? GetTicket(int id)
+        {
+            return CurrentTicket;
+        }
     }
 }

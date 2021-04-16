@@ -1,13 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Administration.Tickets
 {
+    [NetSerializable, Serializable]
     public class Ticket
     {
         public NetUserId TargetPlayer { get; set; }
+        public string PlayerUsername = string.Empty;
 
         public NetUserId? ClaimedAdmin { get; set; }
+        public string AdminUsername = string.Empty;
 
         public int Id { get; set; }
 
@@ -17,7 +24,7 @@ namespace Content.Shared.Administration.Tickets
 
         public TicketStatus Status = TicketStatus.Unclaimed;
 
-        public List<string> Messages = new();
+        public List<TicketMessage> Messages = new();
 
         public Ticket(int id, NetUserId opener, NetUserId target, string message)
         {
@@ -32,7 +39,18 @@ namespace Content.Shared.Administration.Tickets
             {
                 TargetPlayer = opener;
             }
-            Messages.Add(message);
+
+            var time = DateTimeOffset.Now; //var myTime = new DateTimeOffset(dateTicks, new TimeSpan(offsetTicks));
+            var msg = new TicketMessage(time.Ticks, time.Offset.Ticks, opener.ToString(), opener != target, message);
+            Messages.Add(msg);
+        }
+
+        public string GetPlayerName()
+        {
+            return string.IsNullOrEmpty(PlayerUsername) ? TargetPlayer.ToString() : PlayerUsername;
         }
     }
+
+    [NetSerializable, Serializable]
+    public record TicketMessage(long time, long offset, string author, bool admin, string message);
 }
