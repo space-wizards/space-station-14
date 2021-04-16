@@ -1,5 +1,7 @@
-﻿- type: entity
+- type: entity
   id: Emitter
+  name: emitter
+  description: A heavy duty industrial laser. Shoots non-stop when turned on.
   placement:
     mode: SnapgridCenter
   components:
@@ -67,4 +69,3 @@
     - type: EmitterVisualizer
   - type: AccessReader
     access: [[ "Engineering" ]]
-

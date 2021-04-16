@@ -1,0 +1,181 @@
+- type: entity
+  abstract: true
+  id: BaseSmes
+  name: SMES
+  description: A high-capacity superconducting magnetic energy storage (SMES) unit.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      mass: 25
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Power/smes.rsi
+    layers:
+    - state: smes
+    - state: smes-display
+      shader: unshaded
+  - type: Smes
+  - type: Appearance
+    visuals:
+    - type: SmesVisualizer
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      power:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
+  - type: PowerConsumer
+  - type: BatteryStorage
+    activeDrawRate: 1500
+  - type: PowerSupplier
+  - type: BatteryDischarger
+    activeSupplyRate: 1000
+  - type: Anchorable
+  - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
+
+- type: entity
+  abstract: true
+  id: BaseSubstation
+  name: substation
+  description: Reduces the voltage of electricity put into it.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      mass: 25
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Constructible/Power/substation.rsi
+    layers:
+    - state: substation
+    - state: screen
+      shader: unshaded
+    - state: full
+      shader: unshaded
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
+      output:
+        !type:AdjacentNode
+        nodeGroupID: MVPower
+  - type: PowerConsumer
+  - type: BatteryStorage
+    activeDrawRate: 1500
+  - type: PowerSupplier
+    voltage: Medium
+  - type: BatteryDischarger
+    activeSupplyRate: 1000
+  - type: Anchorable
+  - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
+    - MVDummyWire
+
+- type: entity
+  abstract: true
+  id: BaseApc
+  name: APC
+  description: A control terminal for the area's electrical systems.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: AccessReader
+    access: [["Engineering"]]
+  - type: InteractionOutline
+  - type: Physics
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.25, -0.25, 0.25, 0.3"
+        layer: [ Passable ]
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    drawdepth: WallMountedItems
+    netsync: false
+    sprite: "Constructible/Power/apc.rsi"
+    state: apc0
+  - type: Appearance
+    visuals:
+    - type: ApcVisualizer
+  - type: Battery
+    maxCharge: 10000
+    startingCharge: 10000
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:AdjacentNode
+        nodeGroupID: MVPower
+      output:
+        !type:AdjacentNode
+        nodeGroupID: Apc
+  - type: PowerConsumer
+    voltage: Medium
+  - type: BatteryStorage
+    activeDrawRate: 1000
+  - type: PowerProvider
+    voltage: Apc
+  - type: Apc
+    voltage: Apc
+  - type: UserInterface
+    interfaces:
+    - key: enum.ApcUiKey.Key
+      type: ApcBoundUserInterface
+  - type: Construction
+    graph: apc
+    node: apc
+  - type: ClientEntitySpawner
+    prototypes:
+    - MVDummyWire
+    - LVDummyWire

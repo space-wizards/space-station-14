@@ -1,11 +1,12 @@
 ﻿- type: entity
   id: DebugGenerator
   parent: BaseGenerator
-  name: Debug Generator
+  suffix: DEBUG
 
 - type: entity
   id: DebugConsumer
-  name: Debug Consumer
+  name: consumer
+  suffix: DEBUG
   placement:
     mode: SnapgridCenter
   components:
@@ -43,7 +44,8 @@
 
 - type: entity
   id: DebugBatteryStorage
-  name: Debug Battery Storage
+  name: battery storage
+  suffix: DEBUG
   placement:
     mode: SnapgridCenter
   components:
@@ -72,7 +74,8 @@
 
 - type: entity
   id: DebugBatteryDischarger
-  name: Debug Battery Discharger
+  name: battery discharger
+  suffix: DEBUG
   placement:
     mode: SnapgridCenter
   components:
@@ -102,21 +105,22 @@
 - type: entity
   id: DebugSmes
   parent: BaseSmes
-  name: Debug Smes
+  suffix: DEBUG
 
 - type: entity
   id: DebugSubstation
   parent: BaseSubstation
-  name: Debug Substation
+  suffix: DEBUG
 
 - type: entity
   id: DebugApc
   parent: BaseApc
-  name: Debug Apc
+  suffix: DEBUG
 
 - type: entity
   id: DebugPowerReceiver
-  name: Debug Power Receiver
+  name: power receiver
+  suffix: DEBUG
   placement:
     mode: SnapgridCenter
   components:

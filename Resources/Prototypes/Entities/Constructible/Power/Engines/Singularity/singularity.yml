@@ -1,7 +1,7 @@
 - type: entity
-  name: "Gravitational Singularity"
-  description: "A mesmerizing swirl of darkness that sucks in everything.\nIf it's moving towards you, run."
   id: Singularity
+  name: gravitational singularity
+  description: A mesmerizing swirl of darkness that sucks in everything.\nIf it's moving towards you, run.
   components:
   - type: Clickable
   - type: Physics
