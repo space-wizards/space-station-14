@@ -1,12 +1,12 @@
 ﻿- type: entity
   id: TableBase
-  name: "table"
+  parent: BaseConstructible
+  name: table
   description: A square piece of metal standing on four metal legs.
   abstract: true
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Clickable
+  - type: Damageable
+    resistances: metallicResistances
   - type: PlaceableSurface
   - type: Sprite
     netsync: false
@@ -16,17 +16,38 @@
   - type: IconSmooth
     key: state
     base: state_
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      layer:
-      - VaultImpassable
-      mask:
-      - Impassable
-  - type: SnapGrid
-    offset: Center
   - type: Climbable
+
+- type: entity
+  id: TableFrame
+  parent: TableBase
+  name: "table frame"
+  description: Pieces of metal that make the frame of a table.
+  components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/frame.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Tables/frame.rsi
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PartRodMetal1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: table
+    node: TableFrame
 
 - type: entity
   id: Table
@@ -55,37 +76,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-
-- type: entity
-  id: TableFrame
-  parent: TableBase
-  name: "table frame"
-  description: Pieces of metal that make the frame of a table.
-  components:
-  - type: Sprite
-    sprite: Constructible/Structures/Tables/frame.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Tables/frame.rsi
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Construction
-    graph: Tables
-    node: TableFrame
+    graph: table
+    node: Table
 
 - type: entity
   id: TableBar
@@ -97,8 +90,6 @@
     sprite: Constructible/Structures/Tables/bar.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/bar.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -112,8 +103,14 @@
           SheetSteel1:
             min: 1
             max: 1
+          MaterialCloth1:
+            min: 1
+            max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Construction
+    graph: table
+    node: TableBar
 
 - type: entity
   id: TableMetal
@@ -125,8 +122,6 @@
     sprite: Constructible/Structures/Tables/metal.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/metal.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -142,12 +137,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Construction
-    graph: Tables
-    node: MetalTable
 
 - type: entity
-  id: TableR
+  id: TableReinforced
   parent: TableBase
   name: "reinforced table"
   description: "A square piece of metal standing on four metal legs. Extra robust."
@@ -156,8 +148,6 @@
     sprite: Constructible/Structures/Tables/reinforced.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/reinforced.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -169,13 +159,13 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
-            min: 1
-            max: 1
+            min: 2
+            max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: Tables
-    node: ReinforcedTable
+    graph: table
+    node: TableReinforced
 
 - type: entity
   id: TableGlass
@@ -187,8 +177,6 @@
     sprite: Constructible/Structures/Tables/glass.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/glass.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -205,11 +193,11 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: Tables
-    node: GlassTable
+    graph: table
+    node: TableGlass
 
 - type: entity
-  id: TableGlassR
+  id: TableReinforcedGlass
   parent: TableBase
   name: "reinforced glass table"
   description: "A square piece of glass, standing on four metal legs. Extra robust."
@@ -218,8 +206,6 @@
     sprite: Constructible/Structures/Tables/r_glass.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/r_glass.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -233,11 +219,14 @@
           ShardGlass:
             min: 1
             max: 1
+          PartRodMetal1:
+            min: 1
+            max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: Tables
-    node: RGlassTable
+    graph: table
+    node: TableReinforcedGlass
 
 - type: entity
   id: TableWood
@@ -249,8 +238,6 @@
     sprite: Constructible/Structures/Tables/wood.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/wood.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -267,8 +254,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: Tables
-    node: WoodTable
+    graph: table
+    node: TableWood
 
 - type: entity
   id: TableCarpet
@@ -280,8 +267,6 @@
     sprite: Constructible/Structures/Tables/carpet.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/carpet.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -295,11 +280,14 @@
           MaterialWoodPlank:
             min: 1
             max: 1
+          MaterialCloth1:
+            min: 1
+            max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: Tables
-    node: PokerTable
+    graph: table
+    node: TableCarpet
 
 - type: entity
   id: TableStone
@@ -311,8 +299,6 @@
     sprite: Constructible/Structures/Tables/stone.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/stone.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -334,8 +320,6 @@
     sprite: Constructible/Structures/Tables/debug.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/debug.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:

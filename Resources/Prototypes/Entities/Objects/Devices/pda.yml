@@ -85,13 +85,24 @@
     state: pda-clown
   - type: Slippery
     paralyzeTime: 4
+  - type: CollisionWake
+    enabled: false
   - type: Physics
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
+        bounds: "-0.3,-0.4,0.3,0.4"
+      name: "slips"
+      hard: false
       layer:
-      - MobImpassable
+      - SmallImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.4,0.3,0.4"
+      mass: 2.5
+      mask:
+      - SmallImpassable
 
 - type: entity
   name: Mime PDA

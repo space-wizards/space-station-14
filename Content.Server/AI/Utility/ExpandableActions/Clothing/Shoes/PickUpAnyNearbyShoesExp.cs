@@ -36,7 +36,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Shoes
 
             foreach (var entity in context.GetState<NearbyClothingState>().GetValue())
             {
-                if (entity.TryGetComponent(out ClothingComponent clothing) &&
+                if (entity.TryGetComponent(out ClothingComponent? clothing) &&
                     (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.SHOES) != 0)
                 {
                     yield return new PickUpShoes {Owner = owner, Target = entity, Bonus = Bonus};

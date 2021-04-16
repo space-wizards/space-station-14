@@ -26,6 +26,14 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<EntParentChangedMessage>(EntParentChanged);
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<GravityChangedMessage>();
+            UnsubscribeLocalEvent<EntParentChangedMessage>();
+        }
+
         public void Reset()
         {
             _alerts.Clear();
@@ -97,13 +105,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void EntParentChanged(EntParentChangedMessage ev)
         {
-            if (!ev.Entity.TryGetComponent(out ServerAlertsComponent status))
+            if (!ev.Entity.TryGetComponent(out ServerAlertsComponent? status))
             {
                 return;
             }
 
             if (ev.OldParent != null &&
-                ev.OldParent.TryGetComponent(out IMapGridComponent mapGrid))
+                ev.OldParent.TryGetComponent(out IMapGridComponent? mapGrid))
             {
                 var oldGrid = mapGrid.GridIndex;
 

@@ -1,10 +1,8 @@
-﻿using Content.Server.GameObjects.Components.Chemistry;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
-using System.Collections.Generic;
-using System.Linq;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
@@ -17,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         [DataField("fractionTransfered")]
         private float _fractionTransfered = 1;
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)

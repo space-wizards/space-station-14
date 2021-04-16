@@ -45,8 +45,9 @@
   - type: AMEShield
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: AMEngine
+      ame:
+        !type:AdjacentNode
+        nodeGroupID: AMEngine
   - type: PointLight
     enabled: false
     radius: 5

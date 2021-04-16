@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Eui;
 using Content.Server.GameObjects.Components.Mobs;
@@ -19,8 +19,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -79,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
             if (_cloningProgress >= _cloningTime &&
                 _bodyContainer.ContainedEntity != null &&
-                _capturedMind?.Session.AttachedEntity == _bodyContainer.ContainedEntity &&
+                _capturedMind?.Session?.AttachedEntity == _bodyContainer.ContainedEntity &&
                 Powered)
             {
                 _bodyContainer.Remove(_bodyContainer.ContainedEntity);
@@ -157,6 +155,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     }
 
                     var dead =
+                        mind.OwnedEntity != null &&
                         mind.OwnedEntity.TryGetComponent<IMobStateComponent>(out var state) &&
                         state.IsDead();
                     if (!dead) return;
@@ -204,9 +203,6 @@ namespace Content.Server.GameObjects.Components.Medical
         {
             if (message.Sender == _capturedMind)
             {
-                //If the captured mind is in a ghost, we want to get rid of it.
-                _capturedMind.VisitingEntity?.Delete();
-
                 //Transfer the mind to the new mob
                 _capturedMind.TransferTo(_bodyContainer.ContainedEntity);
 

@@ -9,14 +9,7 @@
         !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
       layer:
-      - Opaque
-      - Impassable
       - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      - Clickable
-
-
   - type: Sprite
     state: atmosplaque
   - type: AtmosPlaque

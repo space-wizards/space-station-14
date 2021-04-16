@@ -82,38 +82,6 @@ namespace Content.Shared.Chemistry
             return SubstanceColor;
         }
 
-        public ReagentUnit ReactionEntity(IEntity? entity, ReactionMethod method, ReagentUnit reactVolume)
-        {
-            var removed = ReagentUnit.Zero;
-
-            if (entity == null || entity.Deleted)
-                return removed;
-
-            foreach (var react in entity.GetAllComponents<IReagentReaction>())
-            {
-                switch (method)
-                {
-                    case ReactionMethod.Touch:
-                        removed += react.ReagentReactTouch(this, reactVolume);
-                        break;
-                    case ReactionMethod.Ingestion:
-                        removed += react.ReagentReactIngestion(this, reactVolume);
-                        break;
-                    case ReactionMethod.Injection:
-                        removed += react.ReagentReactInjection(this, reactVolume);
-                        break;
-                }
-
-                if (removed > reactVolume)
-                    throw new Exception("Removed more than we have!");
-
-                if (removed == reactVolume)
-                    break;
-            }
-
-            return removed;
-        }
-
         public ReagentUnit ReactionTile(TileRef tile, ReagentUnit reactVolume)
         {
             var removed = ReagentUnit.Zero;

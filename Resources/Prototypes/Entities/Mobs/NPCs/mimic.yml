@@ -23,11 +23,11 @@
     state: normal
   - type: Physics
     bodyType: Dynamic
-    mass: 85
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
+      mass: 100
       mask:
       - Impassable
       - MobImpassable

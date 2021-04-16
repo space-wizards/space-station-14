@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Power
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
         {
             IsRigged = Owner.TryGetComponent(out SolutionContainerComponent? solution)
-                       && solution.Solution.ContainsReagent("chem.Plasma", out var plasma)
+                       && solution.Solution.ContainsReagent("Plasma", out var plasma)
                        && plasma >= 5;
         }
     }

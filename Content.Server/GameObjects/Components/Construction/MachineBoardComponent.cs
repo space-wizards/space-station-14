@@ -22,27 +22,23 @@ namespace Content.Server.GameObjects.Components.Construction
 
         [ViewVariables]
         [DataField("requirements")]
-        private Dictionary<MachinePart, int> _requirements = new();
+        public readonly Dictionary<MachinePart, int> Requirements = new();
 
         [ViewVariables]
         [DataField("materialRequirements")]
-        private Dictionary<string, int> _materialIdRequirements = new();
+        public readonly Dictionary<string, int> MaterialIdRequirements = new();
 
         [ViewVariables]
         [DataField("tagRequirements")]
-        private Dictionary<string, GenericPartInfo> _tagRequirements = new();
+        public readonly Dictionary<string, GenericPartInfo> TagRequirements = new();
 
         [ViewVariables]
         [DataField("componentRequirements")]
-        private Dictionary<string, GenericPartInfo> _componentRequirements = new();
+        public readonly Dictionary<string, GenericPartInfo> ComponentRequirements = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("prototype")]
-        public string Prototype { get; private set; }
-
-        public IReadOnlyDictionary<MachinePart, int> Requirements => _requirements;
-
-        public IReadOnlyDictionary<string, int> MaterialIdRequirements => _materialIdRequirements;
+        public string? Prototype { get; private set; }
 
         public IEnumerable<KeyValuePair<StackPrototype, int>> MaterialRequirements
         {
@@ -55,10 +51,6 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
             }
         }
-
-        public IReadOnlyDictionary<string, GenericPartInfo> ComponentRequirements => _componentRequirements;
-        public IReadOnlyDictionary<string, GenericPartInfo> TagRequirements => _tagRequirements;
-
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {

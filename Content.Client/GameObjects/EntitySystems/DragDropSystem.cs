@@ -20,6 +20,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using DrawDepth = Content.Shared.GameObjects.DrawDepth;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -217,8 +218,11 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 return false;
             }
+
+            DebugTools.AssertNotNull(_dragger);
+
             // still in range of the thing we are dragging?
-            if (!_interactionSystem.InRangeUnobstructed(_dragger, _dragDropHelper.Dragged))
+            if (!_interactionSystem.InRangeUnobstructed(_dragger!, _dragDropHelper.Dragged))
             {
                 return false;
             }
@@ -368,7 +372,7 @@ namespace Content.Client.GameObjects.EntitySystems
             // TODO: Duplicated in SpriteSystem
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
             var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
-            var pvsEntities = EntityManager.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, true);
+            var pvsEntities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, true);
             foreach (var pvsEntity in pvsEntities)
             {
                 if (!pvsEntity.TryGetComponent(out ISpriteComponent? inRangeSprite) ||

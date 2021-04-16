@@ -35,16 +35,16 @@
     maxVol: 500
     contents:
       reagents:
-        - ReagentId: chem.Water
+        - ReagentId: Water
           Quantity: 500
 
   - type: Physics
-    mass: 5
     bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.40,-0.25,0.25,0.25"
+      mass: 5
       mask:
       - Impassable
       - Opaque
@@ -70,12 +70,12 @@
   - type: SolutionContainer
     maxVol: 500
   - type: Physics
-    mass: 5
     bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 5
       mask:
       - Impassable
   - type: Spillable
@@ -104,20 +104,26 @@
   - type: Item
     sprite: Objects/Specific/Janitorial/soap.rsi
   - type: Slippery
-    paralyzeTime: 2.5
+    paralyzeTime: 2
+    intersectPercentage: 0.2
+  - type: CollisionWake
+    enabled: false
   - type: Physics
     bodyType: Dynamic
-    mass: 5
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-        layer:
-          - SmallImpassable
-        mask:
-          - SmallImpassable
-          - MobImpassable
-        hard: false
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.4,0.3,0.4"
+      name: "slips"
+      hard: false
+      layer:
+      - SmallImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.4,0.3,0.4"
+      mass: 5
+      mask:
+      - SmallImpassable
 
 - type: entity
   name: soap
@@ -187,7 +193,7 @@
         - state: chempuff
           map: [ "enum.VaporVisualLayers.Base" ]
     - type: Physics
-      bodyType: Dynamic
+      bodyType: KinematicController
       fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -233,7 +239,7 @@
       maxVol: 100
       contents:
         reagents:
-          - ReagentId: chem.Water
+          - ReagentId: Water
             Quantity: 100
 
 - type: entity
@@ -247,7 +253,7 @@
       maxVol: 100
       contents:
         reagents:
-          - ReagentId: chem.SpaceCleaner
+          - ReagentId: SpaceCleaner
             Quantity: 100
 
 
@@ -264,3 +270,24 @@
     quickInsert: true
     areaInsert: true
     storageSoundCollection: trashBagRustle
+
+- type: entity
+  parent: BaseItem
+  name: light replacer
+  id: LightReplacer
+  description: An item which uses magnets to easily replace broken lights.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/light_replacer.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Janitorial/light_replacer.rsi
+  - type: LightReplacer
+    contents:
+    - name: LightTube
+      amount: 8
+      type: Tube
+    - name: LightBulb
+      amount: 5
+      type: Bulb
+  

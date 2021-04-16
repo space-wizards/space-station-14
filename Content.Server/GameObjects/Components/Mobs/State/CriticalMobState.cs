@@ -12,22 +12,17 @@ namespace Content.Server.GameObjects.Components.Mobs.State
         {
             base.EnterState(entity);
 
-            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Critical);
             }
 
-            if (entity.TryGetComponent(out StunnableComponent stun))
+            if (entity.TryGetComponent(out StunnableComponent? stun))
             {
                 stun.CancelAll();
             }
 
             EntitySystem.Get<StandingStateSystem>().Down(entity);
-        }
-
-        public override void ExitState(IEntity entity)
-        {
-            base.ExitState(entity);
         }
     }
 }

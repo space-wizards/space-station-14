@@ -54,7 +54,7 @@ namespace Content.Server.Database
             // So that IPv4 addresses are consistent between separate-socket and dual-stack socket modes.
             modelBuilder.Entity<PostgresServerBan>()
                 .HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address")
-                .HasCheckConstraint("HaveEitherAddressOrUserId", "address IS NOT NULL OR user_id IS NOT NULL");
+                .HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
 
             modelBuilder.Entity<PostgresPlayer>()
                 .HasIndex(p => p.UserId)
@@ -84,6 +84,7 @@ namespace Content.Server.Database
 
         [Column("user_id")] public Guid? UserId { get; set; }
         [Column("address", TypeName = "inet")] public (IPAddress, int)? Address { get; set; }
+        [Column("hwid")] public byte[]? HWId { get; set; }
 
         [Column("ban_time", TypeName = "timestamp with time zone")]
         public DateTime BanTime { get; set; }
@@ -129,6 +130,7 @@ namespace Content.Server.Database
         public DateTime LastSeenTime { get; set; }
 
         [Column("last_seen_address")] public IPAddress LastSeenAddress { get; set; } = null!;
+        [Column("last_seen_hwid")] public byte[]? LastSeenHWId { get; set; }
     }
 
     [Table("connection_log")]
@@ -143,5 +145,6 @@ namespace Content.Server.Database
         public DateTime Time { get; set; }
 
         [Column("address")] public IPAddress Address { get; set; } = null!;
+        [Column("hwid")] public byte[]? HWId { get; set; }
     }
 }

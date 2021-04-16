@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameTicking;
 using Content.Server.Mobs;
-using Content.Shared.Roles;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -41,7 +41,7 @@ namespace Content.Server.Interfaces.GameTicking
 
         void Respawn(IPlayerSession targetPlayer);
         void MakeObserve(IPlayerSession player);
-        void MakeJoinGame(IPlayerSession player, string jobId);
+        void MakeJoinGame(IPlayerSession player, string? jobId = null);
         void ToggleReady(IPlayerSession player, bool ready);
         void ToggleDisallowLateJoin(bool disallowLateJoin);
 
@@ -52,15 +52,16 @@ namespace Content.Server.Interfaces.GameTicking
         EntityCoordinates GetJobSpawnPoint(string jobId);
         EntityCoordinates GetObserverSpawnPoint();
 
-        void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, HumanoidCharacterProfile profile);
+        void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile);
 
         // GameRule system.
         T AddGameRule<T>() where T : GameRule, new();
-        bool HasGameRule(Type type);
+        bool HasGameRule(string? type);
+        bool HasGameRule(Type? type);
         void RemoveGameRule(GameRule rule);
         IEnumerable<GameRule> ActiveGameRules { get; }
 
-        bool TryGetPreset(string name, [NotNullWhen(true)] out Type type);
+        bool TryGetPreset(string name, [NotNullWhen(true)] out Type? type);
         void SetStartPreset(Type type, bool force = false);
         void SetStartPreset(string name, bool force = false);
 

@@ -9,10 +9,10 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class AllConditions : IEdgeCondition
+    public class AllConditions : IGraphCondition
     {
         [field: DataField("conditions")]
-        public IEdgeCondition[] Conditions { get; } = Array.Empty<IEdgeCondition>();
+        public IGraphCondition[] Conditions { get; } = Array.Empty<IGraphCondition>();
 
         public async Task<bool> Condition(IEntity entity)
         {

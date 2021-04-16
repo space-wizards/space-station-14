@@ -40,6 +40,12 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            UnsubscribeLocalEvent<PlayerAttachSysMessage>();
+        }
+
         private void HandlePlayerAttached(PlayerAttachSysMessage message)
         {
             _attachedEntity = message.AttachedEntity;

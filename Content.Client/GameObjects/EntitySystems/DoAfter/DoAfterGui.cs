@@ -30,10 +30,6 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         public IEntity? AttachedEntity { get; set; }
         private ScreenCoordinates _playerPosition;
 
-        // This behavior probably shouldn't be happening; so for whatever reason the control position is set the frame after
-        // I got NFI why because I don't know the UI internals
-        public bool FirstDraw { get; set; }
-
         public DoAfterGui()
         {
             IoCManager.InjectDependencies(this);
@@ -151,12 +147,16 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             if (AttachedEntity?.IsValid() != true ||
                 !AttachedEntity.TryGetComponent(out DoAfterComponent? doAfterComponent))
             {
+                Visible = false;
                 return;
             }
 
             var doAfters = doAfterComponent.DoAfters;
             if (doAfters.Count == 0)
+            {
+                Visible = false;
                 return;
+            }
 
             if (_eyeManager.CurrentMap != AttachedEntity.Transform.MapID ||
                 !AttachedEntity.Transform.Coordinates.IsValid(_entityManager))
@@ -169,19 +169,6 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 Visible = true;
             }
 
-            // Set position ready for 2nd+ frames.
-            var screenCoordinates = _eyeManager.CoordinatesToScreen(AttachedEntity.Transform.Coordinates);
-            _playerPosition = new ScreenCoordinates(screenCoordinates.X / UIScale, screenCoordinates.Y / UIScale);
-            LayoutContainer.SetPosition(this, new Vector2(_playerPosition.X - Width / 2, _playerPosition.Y - Height - 30.0f));
-
-            if (FirstDraw)
-            {
-                Visible = false;
-                FirstDraw = false;
-                return;
-            }
-
-            Visible = true;
             var currentTime = _gameTiming.CurTime;
             var toRemove = new List<byte>();
 
@@ -221,6 +208,10 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             {
                 RemoveDoAfter(id);
             }
+
+            var screenCoordinates = _eyeManager.CoordinatesToScreen(AttachedEntity.Transform.Coordinates);
+            _playerPosition = new ScreenCoordinates(screenCoordinates.X / UIScale, screenCoordinates.Y / UIScale);
+            LayoutContainer.SetPosition(this, new Vector2(_playerPosition.X - Width / 2, _playerPosition.Y - Height - 30.0f));
         }
     }
 }

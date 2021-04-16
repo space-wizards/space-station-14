@@ -75,27 +75,38 @@ namespace Content.Server.GameObjects.Components.Construction
         private readonly Dictionary<string, int> _tagProgress = new();
 
         [ViewVariables]
-        private Container _boardContainer;
+        private Dictionary<MachinePart, int> _requirements = new();
 
         [ViewVariables]
-        private Container _partContainer;
+        private Dictionary<string, int> _materialRequirements = new();
 
         [ViewVariables]
-        public IReadOnlyDictionary<MachinePart, int> Requirements { get; private set; }
+        private Dictionary<string, GenericPartInfo> _componentRequirements = new();
 
         [ViewVariables]
-        public IReadOnlyDictionary<string, int> MaterialRequirements { get; private set; }
+        private Dictionary<string, GenericPartInfo> _tagRequirements = new();
 
         [ViewVariables]
-        public IReadOnlyDictionary<string, GenericPartInfo> ComponentRequirements { get; private set; }
+        private Container _boardContainer = default!;
 
         [ViewVariables]
-        public IReadOnlyDictionary<string, GenericPartInfo> TagRequirements { get; private set; }
+        private Container _partContainer = default!;
 
         public IReadOnlyDictionary<MachinePart, int> Progress => _progress;
+
         public IReadOnlyDictionary<string, int> MaterialProgress => _materialProgress;
+
         public IReadOnlyDictionary<string, int> ComponentProgress => _componentProgress;
+
         public IReadOnlyDictionary<string, int> TagProgress => _tagProgress;
+
+        public IReadOnlyDictionary<MachinePart, int> Requirements => _requirements;
+
+        public IReadOnlyDictionary<string, int> MaterialRequirements => _materialRequirements;
+
+        public IReadOnlyDictionary<string, GenericPartInfo> ComponentRequirements => _componentRequirements;
+
+        public IReadOnlyDictionary<string, GenericPartInfo> TagRequirements => _tagRequirements;
 
         public override void Initialize()
         {
@@ -120,10 +131,10 @@ namespace Content.Server.GameObjects.Components.Construction
 
         private void ResetProgressAndRequirements(MachineBoardComponent machineBoard)
         {
-            Requirements = machineBoard.Requirements;
-            MaterialRequirements = machineBoard.MaterialIdRequirements;
-            ComponentRequirements = machineBoard.ComponentRequirements;
-            TagRequirements = machineBoard.TagRequirements;
+            _requirements = machineBoard.Requirements;
+            _materialRequirements = machineBoard.MaterialIdRequirements;
+            _componentRequirements = machineBoard.ComponentRequirements;
+            _tagRequirements = machineBoard.TagRequirements;
 
             _progress.Clear();
             _materialProgress.Clear();
@@ -153,7 +164,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
         public void RegenerateProgress()
         {
-            AppearanceComponent appearance;
+            AppearanceComponent? appearance;
 
             if (!HasBoard)
             {
@@ -162,10 +173,10 @@ namespace Content.Server.GameObjects.Components.Construction
                     appearance.SetData(MachineFrameVisuals.State, 1);
                 }
 
-                Requirements = null;
-                MaterialRequirements = null;
-                ComponentRequirements = null;
-                TagRequirements = null;
+                _requirements.Clear();
+                _materialRequirements.Clear();
+                _componentRequirements.Clear();
+                _tagRequirements.Clear();
                 _progress.Clear();
                 _materialProgress.Clear();
                 _componentProgress.Clear();
@@ -258,7 +269,7 @@ namespace Content.Server.GameObjects.Components.Construction
                         appearance.SetData(MachineFrameVisuals.State, 2);
                     }
 
-                    if (Owner.TryGetComponent(out ConstructionComponent construction))
+                    if (Owner.TryGetComponent(out ConstructionComponent? construction))
                     {
                         // So prying the components off works correctly.
                         construction.ResetEdge();

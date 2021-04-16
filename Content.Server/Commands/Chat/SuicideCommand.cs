@@ -69,7 +69,7 @@ namespace Content.Server.Commands.Chat
                 return;
 
             var chat = IoCManager.Resolve<IChatManager>();
-            var owner = player.ContentData()?.Mind?.OwnedComponent.Owner;
+            var owner = player.ContentData()?.Mind?.OwnedComponent?.Owner;
 
             if (owner == null)
             {
@@ -95,7 +95,7 @@ namespace Content.Server.Commands.Chat
                 }
             }
             // Get all entities in range of the suicider
-            var entities = owner.EntityManager.GetEntitiesInRange(owner, 1, true).ToArray();
+            var entities = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(owner, 1, true).ToArray();
 
             if (entities.Length > 0)
             {

@@ -25,7 +25,7 @@ namespace Content.Server.Chemistry.Metabolism
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
             var metabolismAmount = MetabolismRate * tickTime;
-            if (solutionEntity.TryGetComponent(out ThirstComponent thirst))
+            if (solutionEntity.TryGetComponent(out ThirstComponent? thirst))
                 thirst.UpdateThirst(metabolismAmount.Float() * HydrationFactor);
 
             //Return amount of reagent to be removed, remove reagent regardless of ThirstComponent presence

@@ -11,13 +11,13 @@ namespace Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels
         public int CurrentSlot { get; }
         public FireRateSelector FireRateSelector { get; }
         public bool?[] Bullets { get; }
-        public string SoundGunshot { get; }
+        public string? SoundGunshot { get; }
 
         public RevolverBarrelComponentState(
             int currentSlot,
             FireRateSelector fireRateSelector,
             bool?[] bullets,
-            string soundGunshot) :
+            string? soundGunshot) :
             base(ContentNetIDs.REVOLVER_BARREL)
         {
             CurrentSlot = currentSlot;

@@ -15,7 +15,7 @@ namespace Content.Server.Atmos
         private readonly HashSet<TileAtmosphere> _tiles = new();
 
         [ViewVariables]
-        private GridAtmosphereComponent _gridAtmosphereComponent;
+        private GridAtmosphereComponent _gridAtmosphereComponent = default!;
 
         [ViewVariables]
         public int DismantleCooldown { get; set; }
@@ -139,7 +139,7 @@ namespace Content.Server.Atmos
 
             Dismantle(false);
 
-            _gridAtmosphereComponent = null;
+            _gridAtmosphereComponent = null!;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Disposal
 
         public DisposalUnitWindow()
         {
-            MinSize = SetSize = (300, 200);
+            MinSize = SetSize = (300, 225);
 
             Contents.AddChild(new VBoxContainer
             {

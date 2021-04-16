@@ -1,0 +1,23 @@
+﻿- type: entity
+  save: false
+  name: Vox
+  parent: BaseVox
+  id: Vox
+  components:
+    - type: Mind
+      showExamineInfo: true
+    - type: Input
+      context: "human"
+    - type: Alerts
+    - type: Actions
+      innateActions:
+        - VoxScream
+        - Disarm
+    - type: Eye
+      zoom: 0.5, 0.5
+    - type: CameraRecoil
+    - type: Examiner
+    - type: HumanInventoryController
+    - type: AiFactionTag
+      factions:
+        - NanoTrasen

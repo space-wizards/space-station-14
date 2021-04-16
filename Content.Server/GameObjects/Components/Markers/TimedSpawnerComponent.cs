@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Markers
         [DataField("MaximumEntitiesSpawned")]
         public int MaximumEntitiesSpawned { get; set; } = 1;
 
-        private CancellationTokenSource TokenSource;
+        private CancellationTokenSource? TokenSource;
 
         void ISerializationHooks.AfterDeserialization()
         {
@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Markers
         protected override void Shutdown()
         {
             base.Shutdown();
-            TokenSource.Cancel();
+            TokenSource?.Cancel();
         }
 
         private void SetupTimer()

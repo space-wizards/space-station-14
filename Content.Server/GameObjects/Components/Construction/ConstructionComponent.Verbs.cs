@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
                 data.CategoryData = VerbCategories.Construction;
                 data.Text = Loc.GetString("Begin deconstructing");
-                data.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.96dpi.png";
+                data.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, ConstructionComponent component)

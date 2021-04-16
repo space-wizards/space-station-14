@@ -21,6 +21,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.GamePresets
 {
@@ -106,19 +107,22 @@ namespace Content.Server.GameTicking.GamePresets
                     list.Remove(traitor);
                     Logger.InfoS("preset", "Selected a preferred traitor.");
                 }
-                var mind = traitor.Data.ContentData().Mind;
+                var mind = traitor.Data.ContentData()?.Mind;
                 var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorID);
-                var traitorRole = new SuspicionTraitorRole(mind, antagPrototype);
-                mind.AddRole(traitorRole);
+
+                DebugTools.AssertNotNull(mind?.OwnedEntity);
+
+                var traitorRole = new SuspicionTraitorRole(mind!, antagPrototype);
+                mind!.AddRole(traitorRole);
                 traitors.Add(traitorRole);
                 // creadth: we need to create uplink for the antag.
                 // PDA should be in place already, so we just need to
                 // initiate uplink account.
                 var uplinkAccount =
-                    new UplinkAccount(mind.OwnedEntity.Uid,
+                    new UplinkAccount(mind.OwnedEntity!.Uid,
                         TraitorStartingBalance);
                 var inventory = mind.OwnedEntity.GetComponent<InventoryComponent>();
-                if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent pdaItem))
+                if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? pdaItem))
                 {
                     continue;
                 }
@@ -137,9 +141,12 @@ namespace Content.Server.GameTicking.GamePresets
 
             foreach (var player in list)
             {
-                var mind = player.Data.ContentData().Mind;
+                var mind = player.Data.ContentData()?.Mind;
                 var antagPrototype = _prototypeManager.Index<AntagPrototype>(InnocentID);
-                mind.AddRole(new SuspicionInnocentRole(mind, antagPrototype));
+
+                DebugTools.AssertNotNull(mind);
+
+                mind!.AddRole(new SuspicionInnocentRole(mind, antagPrototype));
             }
 
             foreach (var traitor in traitors)

@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.UserInterface;
@@ -14,13 +14,14 @@ namespace Content.Client.GameObjects.Components.Atmos
     internal class GasAnalyzerComponent : SharedGasAnalyzerComponent, IItemStatus
     {
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
-        [ViewVariables] public GasAnalyzerDanger Danger { get; private set; }
+        [ViewVariables] private GasAnalyzerDanger Danger { get; set; }
 
         Control IItemStatus.MakeControl()
         {
             return new StatusControl(this);
         }
 
+        /// <inheritdoc />
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState is not GasAnalyzerComponentState state)
@@ -44,9 +45,10 @@ namespace Content.Client.GameObjects.Components.Atmos
                 parent._uiUpdateNeeded = true;
             }
 
-            protected override void Update(FrameEventArgs args)
+            /// <inheritdoc />
+            protected override void FrameUpdate(FrameEventArgs args)
             {
-                base.Update(args);
+                base.FrameUpdate(args);
 
                 if (!_parent._uiUpdateNeeded)
                 {
@@ -62,9 +64,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                     _ => "green",
                 };
 
-                _label.SetMarkup(Loc.GetString("Pressure: [color={0}]{1}[/color]",
-                    color,
-                   _parent.Danger));
+                _label.SetMarkup(Loc.GetString("itemstatus-pressure-warn", ("color", color), ("danger", _parent.Danger)));
             }
         }
     }

@@ -18,7 +18,7 @@ namespace Content.Client.GameObjects.Components.Disposal
 
         public DisposalRouterWindow()
         {
-            MinSize = SetSize = (400, 80);
+            MinSize = SetSize = (500, 110);
             Title = Loc.GetString("Disposal Router");
 
             Contents.AddChild(new VBoxContainer

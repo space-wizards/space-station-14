@@ -10,11 +10,11 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: KinematicController
-    mass: 5
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
+      mass: 5
       mask:
       - GhostImpassable
     status: InAir

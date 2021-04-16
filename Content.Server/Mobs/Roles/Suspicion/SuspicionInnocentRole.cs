@@ -24,8 +24,12 @@ namespace Content.Server.Mobs.Roles.Suspicion
             base.Greet();
 
             var chat = IoCManager.Resolve<IChatManager>();
-            chat.DispatchServerMessage(Mind.Session, $"You're an {Name}!");
-            chat.DispatchServerMessage(Mind.Session, $"Objective: {Objective}");
+
+            if (Mind.TryGetSession(out var session))
+            {
+                chat.DispatchServerMessage(session, $"You're an {Name}!");
+                chat.DispatchServerMessage(session, $"Objective: {Objective}");
+            }
         }
     }
 }

@@ -24,7 +24,7 @@
     Asphyxiation: 0
     Bloodloss: 0
     Cellular: 0
-   
+
 - type: resistanceSet
   id: dionaResistances
   coefficients:
@@ -51,7 +51,7 @@
     Asphyxiation: 0
     Bloodloss: 0
     Cellular: 0
-    
+
 - type: resistanceSet
   id: metallicResistances
   coefficients:
@@ -68,6 +68,33 @@
     Cellular: 0
   flatReductions:
     Blunt: 0
+    Slash: 0
+    Piercing: 0
+    Heat: 0
+    Shock: 0
+    Cold: 0
+    Poison: 0
+    Radiation: 0
+    Asphyxiation: 0
+    Bloodloss: 0
+    Cellular: 0
+
+- type: resistanceSet
+  id: inflatableResistances
+  coefficients:
+    Blunt: 0.5
+    Slash: 1.0
+    Piercing: 2.0
+    Heat: 0.5
+    Shock: 0
+    Cold: 0
+    Poison: 0
+    Radiation: 0
+    Asphyxiation: 0
+    Bloodloss: 0
+    Cellular: 0
+  flatReductions:
+    Blunt: 5
     Slash: 0
     Piercing: 0
     Heat: 0

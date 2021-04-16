@@ -75,7 +75,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 }
 
                 // all entities have a TransformComponent
-                var transform = physics.Entity.Transform;
+                var transform = physics.Owner.Transform;
 
                 // if not on the same map, continue
                 if (transform.MapID != _eyeManager.CurrentMap || !transform.IsMapTransform)
@@ -100,9 +100,9 @@ namespace Content.Client.GameObjects.Components.Suspicion
         {
             var baseLine = new Vector2(pos.X, font.GetAscent(1) + pos.Y);
 
-            foreach (var chr in str)
+            foreach (var rune in str.EnumerateRunes())
             {
-                var advance = font.DrawChar(handle, chr, baseLine, 1, color);
+                var advance = font.DrawChar(handle, rune, baseLine, 1, color);
                 baseLine += new Vector2(advance, 0);
             }
         }

@@ -19,12 +19,12 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
     public sealed class UnarmedAttackEntity : UtilityAction
     {
-        public IEntity Target { get; set; }
+        public IEntity Target { get; set; } = default!;
 
         public override void SetupOperators(Blackboard context)
         {
             MoveToEntityOperator moveOperator;
-            if (Owner.TryGetComponent(out UnarmedCombatComponent unarmedCombatComponent))
+            if (Owner.TryGetComponent(out UnarmedCombatComponent? unarmedCombatComponent))
             {
                 moveOperator = new MoveToEntityOperator(Owner, Target, unarmedCombatComponent.Range - 0.01f);
             }

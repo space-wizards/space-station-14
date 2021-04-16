@@ -8,9 +8,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Nutrition
@@ -26,9 +25,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [Dependency] private readonly IRobustRandom _random = default!;
         public override string Name => "FoodContainer";
 
-        private AppearanceComponent _appearance;
+        private AppearanceComponent? _appearance;
         [DataField("prototypes")]
-        private Dictionary<string, int> _prototypes = default;
+        private Dictionary<string, int>? _prototypes = default;
         [DataField("capacity")]
         private uint _capacity = 5;
 
@@ -49,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+            if (!eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
             {
                 return false;
             }
@@ -62,18 +61,26 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 Owner.Delete();
                 return false;
             }
-            return true;
 
+            return true;
         }
 
-
-        private string GetRandomPrototype()
+        private string? GetRandomPrototype()
         {
-            var defaultProto = _prototypes.Keys.FirstOrDefault();
-            if (_prototypes.Count == 1)
+            var defaultProto = _prototypes?.Keys.FirstOrDefault();
+
+            if (defaultProto == null)
+            {
+                return null;
+            }
+
+            DebugTools.AssertNotNull(_prototypes);
+
+            if (_prototypes!.Count == 1)
             {
                 return defaultProto;
             }
+
             var probResult = _random.Next(0, 100);
             var total = 0;
             foreach (var item in _prototypes)

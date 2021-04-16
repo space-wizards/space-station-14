@@ -1,0 +1,118 @@
+- type: construction
+  name: chair
+  id: Chair
+  graph: seat
+  startNode: start
+  targetNode: chair
+  category: Furniture
+  description: You sit in this. Either by will or force.
+  icon:
+    sprite: Constructible/Misc/furniture.rsi
+    state: chair
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  name: stool
+  id: Stool
+  graph: seat
+  startNode: start
+  targetNode: stool
+  category: Furniture
+  description: You sit in this. Either by will or force.
+  icon:
+    sprite: Constructible/Misc/furniture.rsi
+    state: stool_base
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  name: bar stool
+  id: StoolBar
+  graph: seat
+  startNode: start
+  targetNode: stoolBar
+  category: Furniture
+  description: You sit in this. Either by will or force.
+  icon:
+    sprite: Constructible/Misc/furniture.rsi
+    state: bar_stool
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  name: office chair
+  id: ChairOfficeLight
+  graph: seat
+  startNode: start
+  targetNode: chairOffice
+  category: Furniture
+  description: You sit in this. Either by will or force.
+  icon:
+    sprite: Constructible/Misc/furniture.rsi
+    state: officechair_white
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  name: dark office chair
+  id: ChairOfficeDark
+  graph: seat
+  startNode: start
+  targetNode: chairOfficeDark
+  category: Furniture
+  description: You sit in this. Either by will or force.
+  icon:
+    sprite: Constructible/Misc/furniture.rsi
+    state: officechair_dark
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  name: comfy chair
+  id: ChairComfy
+  graph: seat
+  startNode: start
+  targetNode: chairComfy
+  category: Furniture
+  description: It looks comfy.
+  icon:
+    sprite: Constructible/Misc/furniture.rsi
+    state: comfychair_preview
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  name: wooden chair
+  id: ChairWood
+  graph: seat
+  startNode: start
+  targetNode: chairWood
+  category: Furniture
+  description: You sit in this. Either by will or force.
+  icon:
+    sprite: Constructible/Misc/furniture.rsi
+    state: wooden_chair
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}

@@ -16,7 +16,7 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
         private readonly Label _diagnostics;
         public MedicalScannerWindow()
         {
-            MinSize = SetSize = (485, 90);
+            SetSize = (250, 100);
 
             Contents.AddChild(new VBoxContainer
             {
@@ -44,6 +44,7 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
             {
                 _diagnostics.Text = Loc.GetString("No patient data.");
                 ScanButton.Disabled = true;
+                SetSize = (250, 100);
             }
             else
             {
@@ -68,6 +69,8 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
 
                 _diagnostics.Text = text.ToString();
                 ScanButton.Disabled = state.IsScanned;
+
+                SetSize = (250, 575);
             }
         }
     }

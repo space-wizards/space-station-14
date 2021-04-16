@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Research
                 if (!IsTechnologyUnlocked(tech)) AddTechnology(tech);
             }
 
-            if(twoway)
+            if (twoway)
                 otherDatabase.Sync(this, false);
 
             Dirty();
@@ -41,8 +41,8 @@ namespace Content.Server.GameObjects.Components.Research
         /// <returns>Whether it could sync or not</returns>
         public bool SyncWithServer()
         {
-            if (!Owner.TryGetComponent(out ResearchClientComponent client)) return false;
-            if (!client.ConnectedToServer) return false;
+            if (!Owner.TryGetComponent(out ResearchClientComponent? client)) return false;
+            if (client.Server?.Database == null) return false;
 
             Sync(client.Server.Database);
 

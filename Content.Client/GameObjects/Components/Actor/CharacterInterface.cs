@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
@@ -90,7 +90,7 @@ namespace Content.Client.GameObjects.Components.Actor
                         {
                             if (b)
                             {
-                                Window.Open();
+                                Window.OpenCentered();
                             }
                             else
                             {

@@ -17,7 +17,14 @@ namespace Content.Server.Commands.Chat
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = (IPlayerSession?) shell.Player;
+
+            if (player == null)
+            {
+                shell.WriteError("You can't run this command locally.");
+                return;
+            }
+
             if (args.Length < 1)
                 return;
 

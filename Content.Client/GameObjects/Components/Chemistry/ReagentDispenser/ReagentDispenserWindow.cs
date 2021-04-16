@@ -67,7 +67,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
         /// </summary>
         public ReagentDispenserWindow()
         {
-            SetSize = MinSize = (500, 600);
+            SetSize = MinSize = (590, 400);
             IoCManager.InjectDependencies(this);
 
             var dispenseAmountGroup = new ButtonGroup();

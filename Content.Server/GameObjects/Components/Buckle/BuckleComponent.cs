@@ -13,14 +13,15 @@ using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -237,12 +238,12 @@ namespace Content.Server.GameObjects.Components.Buckle
 
         public override bool TryBuckle(IEntity? user, IEntity to)
         {
-            if (!CanBuckle(user, to, out var strap))
+            if (user == null || !CanBuckle(user, to, out var strap))
             {
                 return false;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(strap.BuckleSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), strap.BuckleSound, Owner);
 
             if (!strap.TryAdd(this))
             {
@@ -349,7 +350,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             UpdateBuckleStatus();
 
             oldBuckledTo.Remove(this);
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(oldBuckledTo.UnbuckleSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), oldBuckledTo.UnbuckleSound, Owner);
 
             SendMessage(new UnbuckleMessage(Owner, oldBuckledTo.Owner));
 
@@ -410,7 +411,7 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             return new BuckleComponentState(Buckled, drawDepth, LastEntityBuckledTo, DontCollide);
         }
-        
+
         public void Update()
         {
             if (!DontCollide || Physics == null)

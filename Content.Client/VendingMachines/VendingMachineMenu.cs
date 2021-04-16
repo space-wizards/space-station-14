@@ -23,7 +23,7 @@ namespace Content.Client.VendingMachines
 
         public VendingMachineMenu(VendingMachineBoundUserInterface owner)
         {
-            SetSize = MinSize = (300, 450);
+            SetSize = (300, 450);
             IoCManager.InjectDependencies(this);
 
             Owner = owner;
@@ -42,17 +42,25 @@ namespace Content.Client.VendingMachines
         {
             _items.Clear();
             _cachedInventory = inventory;
+            var longestEntry = "";
             foreach (VendingMachineInventoryEntry entry in inventory)
             {
                 var itemName = _prototypeManager.Index<EntityPrototype>(entry.ID).Name;
+                if (itemName.Length > longestEntry.Length)
+                {
+                    longestEntry = itemName;
+                }
 
                 Texture? icon = null;
                 if(_prototypeManager.TryIndex(entry.ID, out EntityPrototype? prototype))
                 {
                     icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache).Default;
                 }
+
                 _items.AddItem($"{itemName} ({entry.Amount} left)", icon);
             }
+
+            SetSize = ((longestEntry.Length + 8) * 12, _items.Count * 40 + 50);
         }
 
         public void ItemSelected(ItemList.ItemListSelectedEventArgs args)

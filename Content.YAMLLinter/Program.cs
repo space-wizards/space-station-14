@@ -44,7 +44,10 @@ namespace Content.YAMLLinter
 
         private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
         {
-            var client = StartClient();
+            var client = StartClient(new ClientContentIntegrationOption()
+            {
+                FailureLogLevel = null,
+            });
 
             await client.WaitIdleAsync();
 
@@ -63,7 +66,10 @@ namespace Content.YAMLLinter
 
         private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateServer()
         {
-            var server = StartServer();
+            var server = StartServer(new ServerContentIntegrationOption()
+            {
+                FailureLogLevel = null,
+            });
 
             await server.WaitIdleAsync();
 
@@ -90,15 +96,15 @@ namespace Content.YAMLLinter
 
             foreach (var (key, val) in serverErrors)
             {
+                var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
                 if (clientErrors.TryGetValue(key, out var clientVal))
                 {
-                    var newErrors = val.Intersect(clientVal).ToHashSet();
-                    newErrors.UnionWith(val.Where(n => n.AlwaysRelevant));
+                    newErrors.UnionWith(val.Intersect(clientVal));
                     newErrors.UnionWith(clientVal.Where(n => n.AlwaysRelevant));
-                    if (newErrors.Count == 0) continue;
-
-                    allErrors[key] = newErrors;
                 }
+
+                if (newErrors.Count == 0) continue;
+                allErrors[key] = newErrors;
             }
 
             return allErrors;

@@ -1,5 +1,5 @@
 - type: reagent
-  id: chem.Absinthe
+  id: Absinthe
   name: absinthe
   desc: One sip of this and you just know you're gonna have a good time.
   spritePath: absintheglass.rsi
@@ -7,7 +7,7 @@
   physicalDesc: strong-smelling
 
 - type: reagent
-  id: chem.Whiskey
+  id: Whiskey
   name: whiskey
   desc: An alcoholic beverage made from fermented grain mash
   physicalDesc: strong-smelling
@@ -15,7 +15,7 @@
   spritePath: whiskeyglass.rsi
 
 - type: reagent
-  id: chem.Ale
+  id: Ale
   name: ale
   desc: A type of beer brewed using a warm fermentation method, resulting in a sweet, full-bodied and fruity taste.
   physicalDesc: bubbly
@@ -23,7 +23,7 @@
   spritePath: aleglass.rsi
 
 - type: reagent
-  id: chem.Wine
+  id: Wine
   name: wine
   desc: An alcoholic drink made from fermented grapes
   physicalDesc: translucent
@@ -31,7 +31,7 @@
   spritePath: wineglass.rsi
 
 - type: reagent
-  id: chem.Beer
+  id: Beer
   name: beer
   desc: A cold pint of pale lager.
   physicalDesc: bubbly
@@ -44,7 +44,7 @@
       amount: 0.7
 
 - type: reagent
-  id: chem.Vodka
+  id: Vodka
   name: vodka
   desc: The glass contain wodka. Хуета.
   physicalDesc: strong-smelling
@@ -52,7 +52,7 @@
   spritePath: ginvodkaglass.rsi
 
 - type: reagent
-  id: chem.Gin
+  id: Gin
   name: gin
   desc: A crystal clear glass of Griffeater gin.
   physicalDesc: strong-smelling
@@ -60,7 +60,7 @@
   spritePath: ginvodkaglass.rsi
 
 - type: reagent
-  id: chem.Rum
+  id: Rum
   name: rum
   desc: Popular with the sailors. Not very popular with anyone else.
   physicalDesc: strong-smelling
@@ -68,21 +68,21 @@
   spritePath: rumglass.rsi
 
 - type: reagent
-  id: chem.Moonshine
+  id: Moonshine
   name: moonshine
   desc: Artisanal homemade liquor. What could go wrong?
   physicalDesc: strong-smelling
   color: "#d1d7d155"
 
 - type: reagent
-  id: chem.Tequila
+  id: Tequila
   name: tequila
   desc: This stuff will get you fucked up.
   physicalDesc: strong-smelling
   color: "#d7d1d155"
 
 - type: reagent
-  id: chem.Kahlua
+  id: Kahlua
   name: kahlua
   desc: A widely known, Mexican coffee-flavoured liqueur. In production since 1936!
   physicalDesc: cloudy
@@ -90,7 +90,7 @@
   spritePath: kahluaglass.rsi
 
 - type: reagent
-  id: chem.Cognac
+  id: Cognac
   name: cognac
   desc: A sweet and strongly alcoholic drink, twice distilled and left to mature for several years. Classy as fornication.
   physicalDesc: strong-smelling
@@ -98,7 +98,7 @@
   spritePath: cognacglass.rsi
 
 - type: reagent
-  id: chem.ManlyDorf
+  id: ManlyDorf
   name: manly dorf
   desc: A dwarfy concoction made from ale and beer. Intended for stout dwarves only.
   physicalDesc: bubbly
@@ -106,7 +106,7 @@
   spritePath: manlydorfglass.rsi
 
 - type: reagent
-  id: chem.CubaLibre
+  id: CubaLibre
   name: cuba libre
   desc: A classic mix of rum and cola.
   physicalDesc: bubbly
@@ -114,7 +114,7 @@
   spritePath: cubalibreglass.rsi
 
 - type: reagent
-  id: chem.IrishCarBomb
+  id: IrishCarBomb
   name: irish car bomb
   desc: A troubling mixture of irish cream and ale.
   physicalDesc: bubbly
@@ -122,7 +122,7 @@
   spritePath: irishcarbomb.rsi
 
 - type: reagent
-  id: chem.IrishCoffee
+  id: IrishCoffee
   name: irish coffee
   desc: Coffee served with irish cream. Regular cream just isn't the same!
   physicalDesc: cloudy
@@ -130,7 +130,7 @@
   spritePath: irishcoffeeglass.rsi
 
 - type: reagent
-  id: chem.IrishCream
+  id: IrishCream
   name: irish cream
   desc: Whiskey-imbued cream. What else could you expect from the Irish.
   physicalDesc: creamy
@@ -138,7 +138,7 @@
   spritePath: irishcreamglass.rsi
 
 - type: reagent
-  id: chem.B52
+  id: B52
   name: b-52
   desc: Coffee, irish cream, and cognac. You will get bombed.
   physicalDesc: bubbly
@@ -146,7 +146,7 @@
   spritePath: b52glass.rsi
 
 - type: reagent
-  id: chem.AtomicBomb
+  id: AtomicBomb
   name: atomic bomb
   desc: Nuclear proliferation never tasted so good.
   physicalDesc: cloudy
@@ -154,7 +154,7 @@
   spritePath: atomicbombglass.rsi
 
 - type: reagent
-  id: chem.WhiskeyCola
+  id: WhiskeyCola
   name: whiskey cola
   desc: An innocent-looking mixture of cola and whiskey. Delicious.
   physicalDesc: bubbly
@@ -162,7 +162,7 @@
   spritePath: whiskeycolaglass.rsi
 
 - type: reagent
-  id: chem.SyndicateBomb
+  id: SyndicateBomb
   name: syndicate bomb
   desc: Somebody set us up the bomb!
   physicalDesc: opaque
@@ -170,7 +170,7 @@
   spritePath: syndicatebomb.rsi
 
 - type: reagent
-  id: chem.Antifreeze
+  id: Antifreeze
   name: antifreeze
   desc: The ultimate refreshment.
   physicalDesc: translucent
@@ -178,7 +178,7 @@
   spritePath: antifreeze.rsi
 
 - type: reagent
-  id: chem.Cola
+  id: Cola
   name: cola
   desc: A sweet, carbonated soft drink. Caffeine free.
   physicalDesc: fizzy
@@ -195,7 +195,7 @@
       amount: 0.1
 
 - type: reagent
-  id: chem.Coffee
+  id: Coffee
   name: coffee
   desc: A drink made from brewed coffee beans. Contains a moderate amount of caffeine.
   physicalDesc: aromatic
@@ -205,7 +205,7 @@
       rate: 1
 
 - type: reagent
-  id: chem.Tea
+  id: Tea
   name: tea
   desc: A drink made by boiling leaves of the tea tree, Camellia sinensis.
   physicalDesc: aromatic
@@ -215,7 +215,7 @@
       rate: 1
 
 - type: reagent
-  id: chem.Cream
+  id: Cream
   name: cream
   desc: The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?
   physicalDesc: creamy
@@ -225,7 +225,7 @@
       rate: 1
 
 - type: reagent
-  id: chem.Milk
+  id: Milk
   name: milk
   desc: An opaque white liquid produced by the mammary glands of mammals.
   physicalDesc: opaque
@@ -240,7 +240,7 @@
       amount: 0.9
 
 - type: reagent
-  id: chem.SpoiledMilk
+  id: SpoiledMilk
   name: spoiled milk
   desc: This milk has gone rancid.
   physicalDesc: putrid
@@ -250,7 +250,7 @@
       rate: 1
 
 - type: reagent
-  id: chem.CreamyDelight
+  id: CreamyDelight
   name: creamy delight
   desc: A combination of cream, wine and moonshine. Why would you do this?
   physicalDesc: foul
@@ -260,7 +260,7 @@
       rate: 1
 
 - type: reagent
-  id: chem.Lean
+  id: Lean
   name: lean
   desc: Turn up for days.
   physicalDesc: bubbly
@@ -270,7 +270,7 @@
       rate: 1
 
 - type: reagent
-  id: chem.LeanShine
+  id: LeanShine
   name: leanshine
   desc: Lean mixed with moonshine. Turn up for months.
   physicalDesc: bubbly
@@ -282,7 +282,7 @@
 
 #Juices
 - type: reagent
-  id: chem.AppleJuice
+  id: AppleJuice
   name: apple juice
   desc: It's a little piece of Eden.
   physicalDesc: crisp
@@ -292,7 +292,7 @@
       rate: 1
 
 - type: reagent
-  id: chem.BerryJuice
+  id: BerryJuice
   name: berry juice
   desc: A delicious blend of several different kinds of berries.
   physicalDesc: sweet
@@ -302,7 +302,7 @@
       rate: 1
 
 - type: reagent
-  id: chem.BananaJuice
+  id: BananaJuice
   name: banana juice
   desc: The raw essence of a banana. HONK.
   physicalDesc: crisp
@@ -323,7 +323,7 @@
 # data++
 
 - type: reagent
-  id: chem.CarrotJuice
+  id: CarrotJuice
   name: carrot juice
   desc: It's like a carrot, but less crunchy.
   physicalDesc: crisp
@@ -333,7 +333,7 @@
       rate: 1
 
 - type: reagent
-  id: chem.LimeJuice
+  id: LimeJuice
   name: lime juice
   desc: The sweet-sour juice of limes.
   physicalDesc: citric
@@ -343,7 +343,7 @@
       rate: 1
 
 - type: reagent
-  id: chem.LemonJuice
+  id: LemonJuice
   name: lemon juice
   desc: This juice is VERY sour.
   physicalDesc: citric
@@ -353,7 +353,7 @@
       rate: 1
 
 - type: reagent
-  id: chem.GrapeJuice
+  id: GrapeJuice
   name: grape juice
   desc: Freshly squeezed juice from red grapes. Quite sweet.
   physicalDesc: crisp
@@ -372,7 +372,7 @@
 # M.adjustToxLoss(-REM)
 
 - type: reagent
-  id: chem.OrangeJuice
+  id: OrangeJuice
   name: orange juice
   desc: Both delicious AND rich in Vitamin C. What more do you need?
   physicalDesc: citric
@@ -382,7 +382,7 @@
       rate: 1
 
 - type: reagent
-  id: chem.TomatoJuice
+  id: TomatoJuice
   name: tomato juice
   desc: Tomatoes made into juice. What a waste of good tomatoes, huh?
   physicalDesc: saucey
@@ -399,7 +399,7 @@
 # M.adjustToxLoss(1)
 
 - type: reagent
-  id: chem.PoisonBerryJuice
+  id: PoisonBerryJuice
   name: poison berry juice
   desc: A surprisingly tasty juice blended from various kinds of very deadly and toxic berries.
   physicalDesc: aromatic #maybe should be 'sickly'?
@@ -409,7 +409,7 @@
       rate: 1
 
 - type: reagent
-  id: chem.WatermelonJuice
+  id: WatermelonJuice
   name: water melon juice
   desc: The delicious juice of a watermelon.
   physicalDesc: sweet
@@ -419,7 +419,7 @@
       rate: 1
 
 - type: reagent
-  id: chem.PotatoJuice
+  id: PotatoJuice
   name: potato juice
   desc: Juice of the potato. Bleh.
   physicalDesc: starchy

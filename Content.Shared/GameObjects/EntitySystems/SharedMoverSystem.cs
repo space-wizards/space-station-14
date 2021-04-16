@@ -1,7 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
@@ -48,7 +49,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         private static void HandleDirChange(ICommonSession? session, Direction dir, ushort subTick, bool state)
         {
-            if (!TryGetAttachedComponent<SharedPlayerInputMoverComponent>(session, out var moverComp))
+            if (!TryGetAttachedComponent<IMoverComponent>(session, out var moverComp))
                 return;
 
             var owner = session?.AttachedEntity;

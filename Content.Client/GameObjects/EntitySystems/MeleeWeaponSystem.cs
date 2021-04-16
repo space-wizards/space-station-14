@@ -46,7 +46,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             if (!EntityManager.TryGetEntity(msg.Attacker, out var attacker))
             {
-                //FIXME: This should never happen.
+                // FIXME: This should never happen.
                 Logger.Error($"Tried to play a weapon arc {msg.ArcPrototype}, but the attacker does not exist. attacker={msg.Attacker}, source={msg.Source}");
                 return;
             }
@@ -115,10 +115,15 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void PlayLunge(PlayLungeAnimationMessage msg)
         {
-            EntityManager
-                .GetEntity(msg.Source)
-                .EnsureComponent<MeleeLungeComponent>()
-                .SetData(msg.Angle);
+            if (EntityManager.TryGetEntity(msg.Source, out var entity))
+            {
+                entity.EnsureComponent<MeleeLungeComponent>().SetData(msg.Angle);
+            }
+            else
+            {
+                // FIXME: This should never happen.
+                Logger.Error($"Tried to play a lunge animation, but the entity \"{msg.Source}\" does not exist.");
+            }
         }
     }
 }

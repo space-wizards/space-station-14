@@ -510,3 +510,57 @@
       state_open: weaponcrate_open
       state_closed: weaponcrate_door
 
+- type: entity
+  id: CrateLivestock
+  name: livestock crate
+  parent: CrateGeneric
+  components:
+  - type: Sprite
+    sprite: Constructible/Storage/Crates/livestock.rsi
+    layers:
+    - state: livestockcrate
+    - state: livestockcrate_door
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Constructible/Storage/Crates/livestock.rsi
+    state: livestockcrate
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: livestockcrate_open
+      state_closed: livestockcrate_door
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4, -0.4, 0.29, 0.4"
+      mass: 75
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - SmallImpassable
+  - type: Construction
+    graph: CrateLivestock
+    node: start

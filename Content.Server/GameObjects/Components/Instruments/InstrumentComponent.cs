@@ -15,8 +15,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -201,11 +199,11 @@ namespace Content.Server.GameObjects.Components.Instruments
                         {
                             if (_laggedBatches == (int) (maxMidiLaggedBatches * (1 / 3d) + 1))
                             {
-                                Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
+                                InstrumentPlayer.AttachedEntity?.PopupMessage(
                                     Loc.GetString("Your fingers are beginning to a cramp a little!"));
                             } else if (_laggedBatches == (int) (maxMidiLaggedBatches * (2 / 3d) + 1))
                             {
-                                Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
+                                InstrumentPlayer.AttachedEntity?.PopupMessage(
                                     Loc.GetString("Your fingers are seriously cramping up!"));
                             }
                         }
@@ -360,11 +358,11 @@ namespace Content.Server.GameObjects.Components.Instruments
                         stun.Stun(1);
                         Clean();
                     }
+
+                    Owner.PopupMessage(mob, "Your fingers cramp up from playing!");
                 }
 
                 InstrumentPlayer = null;
-
-                Owner.PopupMessage(mob, "Your fingers cramp up from playing!");
             }
 
             _timer += delta;

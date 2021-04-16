@@ -1,7 +1,7 @@
 - type: entity
+  abstract: true
   parent: Clothing
   id: ClothingHeadBase
-  abstract: true
   components:
   - type: Clothing
     Slots:
@@ -10,9 +10,9 @@
     state: icon
 
 - type: entity
+  abstract: true
   parent: Clothing
   id: HatBase
-  abstract: true
   components:
   - type: Clothing
     Slots:
@@ -21,20 +21,20 @@
     state: icon
 
 - type: entity
+  abstract: true
   parent: ClothingHeadBase
   id: ClothingHeadHardsuitBase
   name: base hardsuit helmet
-  abstract: true
   components:
-    - type: PressureProtection
-      highPressureMultiplier: 0.5
-      lowPressureMultiplier: 100
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 100
 
 - type: entity
+  abstract: true
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHardsuitWithLightBase
   name: base hardsuit helmet with light
-  abstract: true
   components:
   - type: Sprite
     layers:
@@ -50,12 +50,12 @@
   - type: LoopingSound
   - type: Appearance
     visuals:
-      - type: FlashLightVisualizer
+    - type: FlashLightVisualizer
   - type: ItemActions
     actions:
-      - actionType: ToggleLight
+    - actionType: ToggleLight
     # right now there is no power system for hardsuits
-    # so hardsuit helmet just have small battery inside 
+    # so hardsuit helmet just have small battery inside
   - type: HandheldLight
   - type: PowerCellSlot
     startingCellType: PowerCellSmallHigh

@@ -19,6 +19,12 @@ namespace Content.Server.GameObjects.EntitySystems
 
     public class TimerTriggerEventArgs : EventArgs
     {
+        public TimerTriggerEventArgs(IEntity user, IEntity source)
+        {
+            User = user;
+            Source = source;
+        }
+
         public IEntity User { get; set; }
         public IEntity Source { get; set; }
     }
@@ -31,11 +37,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             Timer.Spawn(delay, () =>
             {
-                var timerTriggerEventArgs = new TimerTriggerEventArgs
-                {
-                    User = user,
-                    Source = trigger
-                };
+                var timerTriggerEventArgs = new TimerTriggerEventArgs(user, trigger);
                 var timerTriggers = trigger.GetAllComponents<ITimerTrigger>().ToList();
 
                 foreach (var timerTrigger in timerTriggers)

@@ -18,6 +18,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -142,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (!string.IsNullOrEmpty(_useSound))
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_useSound, target, AudioParams.Default.WithVolume(-2f));
+                SoundSystem.Play(Filter.Pvs(target), _useSound, target, AudioParams.Default.WithVolume(-2f));
             }
 
             target.PopupMessage(Loc.GetString("Slurp"));

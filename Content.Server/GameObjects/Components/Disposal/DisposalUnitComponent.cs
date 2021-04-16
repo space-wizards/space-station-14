@@ -29,6 +29,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -86,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Delay from trying to shove someone else into disposals.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _draggedEntryDelay;
+        private float _draggedEntryDelay = 0.5f;
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -129,13 +130,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         }
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalUnitUiKey.Key);
-
-        private DisposalUnitBoundUserInterfaceState? _lastUiState;
-
-        /// <summary>
-        ///     Store the translated state.
-        /// </summary>
-        private (PressureState State, string Localized) _locState;
 
         [DataField("air")]
         public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
@@ -289,7 +283,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
                 atmosSystem
-                    .GetGridAtmosphere(Owner.Transform.GridID)?
+                    .GetGridAtmosphere(Owner.Transform.Coordinates)?
                     .Invalidate(tileAtmos.GridIndices);
             }
 
@@ -327,33 +321,12 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateInterface();
         }
 
-        private DisposalUnitBoundUserInterfaceState GetInterfaceState()
+        private void UpdateInterface()
         {
             string stateString;
 
-            if (_locState.State != State)
-            {
-                stateString = Loc.GetString($"{State}");
-                _locState = (State, stateString);
-            }
-            else
-            {
-                stateString = _locState.Localized;
-            }
-
-            return new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
-        }
-
-        private void UpdateInterface()
-        {
-            var state = GetInterfaceState();
-
-            if (_lastUiState != null && _lastUiState.Equals(state))
-            {
-                return;
-            }
-
-            _lastUiState = state;
+            stateString = Loc.GetString($"{State}");
+            var state = new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
             UserInterface?.SetState(state);
         }
 
@@ -400,7 +373,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     break;
                 case UiButton.Power:
                     TogglePower();
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -487,7 +460,11 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
             }
 
-            UpdateInterface();
+            // TODO: Ideally we'd just send the start and end and client could lerp as the bandwidth would be way lower
+            if (_pressure < 1.0f || oldPressure < 1.0f && _pressure >= 1.0f)
+            {
+                UpdateInterface();
+            }
         }
 
         private void PowerStateChanged(PowerChangedMessage args)
@@ -530,6 +507,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             UpdateVisualState();
+            UpdateInterface();
         }
 
         public override void OnRemove()
@@ -703,6 +681,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 data.Visibility = VerbVisibility.Visible;
                 data.Text = Loc.GetString("Flush");
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)

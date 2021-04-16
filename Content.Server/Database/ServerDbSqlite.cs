@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -58,7 +59,10 @@ namespace Content.Server.Database
             return ConvertBan(ban);
         }
 
-        public override async Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId)
+        public override async Task<ServerBanDef?> GetServerBanAsync(
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId)
         {
             await using var db = await GetDbImpl();
 
@@ -69,23 +73,15 @@ namespace Content.Server.Database
                 .Where(p => p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow))
                 .ToListAsync();
 
-            foreach (var ban in bans)
-            {
-                if (address != null && ban.Address != null && address.IsInSubnet(ban.Address))
-                {
-                    return ConvertBan(ban);
-                }
-
-                if (userId is { } id && ban.UserId == id.UserId)
-                {
-                    return ConvertBan(ban);
-                }
-            }
-
-            return null;
+            return bans.FirstOrDefault(b => BanMatches(b, address, userId, hwId)) is { } foundBan
+                ? ConvertBan(foundBan)
+                : null;
         }
 
-        public override async Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address, NetUserId? userId)
+        public override async Task<List<ServerBanDef>> GetServerBansAsync(
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId)
         {
             await using var db = await GetDbImpl();
 
@@ -95,30 +91,34 @@ namespace Content.Server.Database
                 .Include(p => p.Unban)
                 .ToListAsync();
 
-            var bans = new List<ServerBanDef>();
+            return queryBans
+                .Where(b => BanMatches(b, address, userId, hwId))
+                .Select(ConvertBan)
+                .ToList()!;
+        }
 
-            foreach (var ban in queryBans)
+        private static bool BanMatches(
+            SqliteServerBan ban,
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId)
+        {
+            if (address != null && ban.Address != null && address.IsInSubnet(ban.Address))
             {
-                ServerBanDef? banDef = null;
-
-                if (address != null && ban.Address != null && address.IsInSubnet(ban.Address))
-                {
-                    banDef = ConvertBan(ban);
-                }
-                else if (userId is { } id && ban.UserId == id.UserId)
-                {
-                    banDef = ConvertBan(ban);
-                }
-
-                if (banDef == null)
-                {
-                    continue;
-                }
-
-                bans.Add(banDef);
+                return true;
             }
 
-            return bans;
+            if (userId is { } id && ban.UserId == id.UserId)
+            {
+                return true;
+            }
+
+            if (hwId is { } hwIdVar && hwIdVar.AsSpan().SequenceEqual(ban.HWId))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public override async Task AddServerBanAsync(ServerBanDef serverBan)
@@ -136,6 +136,7 @@ namespace Content.Server.Database
                 Address = addrStr,
                 Reason = serverBan.Reason,
                 BanningAdmin = serverBan.BanningAdmin?.UserId,
+                HWId = serverBan.HWId?.ToArray(),
                 BanTime = serverBan.BanTime.UtcDateTime,
                 ExpirationTime = serverBan.ExpirationTime?.UtcDateTime,
                 UserId = serverBan.UserId?.UserId
@@ -158,7 +159,11 @@ namespace Content.Server.Database
             await db.SqliteDbContext.SaveChangesAsync();
         }
 
-        public override async Task UpdatePlayerRecord(NetUserId userId, string userName, IPAddress address)
+        public override async Task UpdatePlayerRecord(
+            NetUserId userId,
+            string userName,
+            IPAddress address,
+            ImmutableArray<byte> hwId)
         {
             await using var db = await GetDbImpl();
 
@@ -175,6 +180,7 @@ namespace Content.Server.Database
             record.LastSeenTime = DateTime.UtcNow;
             record.LastSeenAddress = address.ToString();
             record.LastSeenUserName = userName;
+            record.LastSeenHWId = hwId.ToArray();
 
             await db.SqliteDbContext.SaveChangesAsync();
         }
@@ -215,8 +221,10 @@ namespace Content.Server.Database
                 new DateTimeOffset(record.FirstSeenTime, TimeSpan.Zero),
                 record.LastSeenUserName,
                 new DateTimeOffset(record.LastSeenTime, TimeSpan.Zero),
-                IPAddress.Parse(record.LastSeenAddress));
+                IPAddress.Parse(record.LastSeenAddress),
+                record.LastSeenHWId?.ToImmutableArray());
         }
+
         private static ServerBanDef? ConvertBan(SqliteServerBan? ban)
         {
             if (ban == null)
@@ -225,13 +233,13 @@ namespace Content.Server.Database
             }
 
             NetUserId? uid = null;
-            if (ban.UserId is {} guid)
+            if (ban.UserId is { } guid)
             {
                 uid = new NetUserId(guid);
             }
 
             NetUserId? aUid = null;
-            if (ban.BanningAdmin is {} aGuid)
+            if (ban.BanningAdmin is { } aGuid)
             {
                 aUid = new NetUserId(aGuid);
             }
@@ -250,6 +258,7 @@ namespace Content.Server.Database
                 ban.Id,
                 uid,
                 addrTuple,
+                ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
                 ban.BanTime,
                 ban.ExpirationTime,
                 ban.Reason,
@@ -265,7 +274,7 @@ namespace Content.Server.Database
             }
 
             NetUserId? aUid = null;
-            if (unban.UnbanningAdmin is {} aGuid)
+            if (unban.UnbanningAdmin is { } aGuid)
             {
                 aUid = new NetUserId(aGuid);
             }
@@ -276,7 +285,8 @@ namespace Content.Server.Database
                 unban.UnbanTime);
         }
 
-        public override async Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address)
+        public override async Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address,
+            ImmutableArray<byte> hwId)
         {
             await using var db = await GetDbImpl();
 
@@ -285,7 +295,8 @@ namespace Content.Server.Database
                 Address = address.ToString(),
                 Time = DateTime.UtcNow,
                 UserId = userId.UserId,
-                UserName = userName
+                UserName = userName,
+                HWId = hwId.ToArray()
             });
 
             await db.SqliteDbContext.SaveChangesAsync();

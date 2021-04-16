@@ -20,7 +20,7 @@ namespace Content.Server.Utility
         /// <param name="range">
         ///     The range in which to search for players, defaulting to one screen.
         /// </param>
-        public static void PopupMessageOtherClients(this IEntity source, string message, IPlayerManager playerManager = null, int range = 15)
+        public static void PopupMessageOtherClients(this IEntity source, string message, IPlayerManager? playerManager = null, int range = 15)
         {
             playerManager ??= IoCManager.Resolve<IPlayerManager>();
 
@@ -30,7 +30,7 @@ namespace Content.Server.Utility
             {
                 var viewerEntity = viewer.AttachedEntity;
 
-                if (viewerEntity == null || source == viewerEntity)
+                if (viewerEntity == null || source == viewerEntity || viewer.AttachedEntity == null)
                 {
                     continue;
                 }
@@ -52,7 +52,7 @@ namespace Content.Server.Utility
         /// <param name="range">
         ///     The range in which to search for players, defaulting to one screen.
         /// </param>
-        public static void PopupMessageEveryone(this IEntity source, string message, IPlayerManager playerManager = null, int range = 15)
+        public static void PopupMessageEveryone(this IEntity source, string message, IPlayerManager? playerManager = null, int range = 15)
         {
             source.PopupMessage(message);
             source.PopupMessageOtherClients(message, playerManager, range);

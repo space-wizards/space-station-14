@@ -41,6 +41,9 @@ namespace Content.Server.GameObjects.EntitySystems
             if (highScoreEntries.Min(e => e.Score) >= entry.Score) return null;
 
             var lowestHighscore = highScoreEntries.Min();
+
+            if (lowestHighscore == null) return null;
+
             highScoreEntries.Remove(lowestHighscore);
             highScoreEntries.Add(entry);
             return GetPlacement(highScoreEntries, entry);

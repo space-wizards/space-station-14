@@ -9,12 +9,12 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 25
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.5, -0.4, 0.3, 0.4"
+      mass: 25
       mask:
       - Impassable
       - MobImpassable
@@ -33,8 +33,9 @@
   - type: NodeContainer
     examinable: true
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
+      output:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
   - type: PowerSupplier
     supplyRate: 3000
   - type: Anchorable
@@ -54,11 +55,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 25
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mass: 25
       mask:
       - Impassable
       - MobImpassable
@@ -88,8 +89,9 @@
   - type: NodeContainer
     examinable: true
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
+      power:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
   - type: PowerConsumer
   - type: BatteryStorage
     activeDrawRate: 1500
@@ -113,11 +115,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 25
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mass: 25
       mask:
       - Impassable
       - MobImpassable
@@ -144,10 +146,12 @@
   - type: NodeContainer
     examinable: true
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
-    - !type:AdjacentNode
-      nodeGroupID: MVPower
+      input:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
+      output:
+        !type:AdjacentNode
+        nodeGroupID: MVPower
   - type: PowerConsumer
   - type: BatteryStorage
     activeDrawRate: 1500
@@ -196,10 +200,12 @@
   - type: NodeContainer
     examinable: true
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: MVPower
-    - !type:AdjacentNode
-      nodeGroupID: Apc
+      input:
+        !type:AdjacentNode
+        nodeGroupID: MVPower
+      output:
+        !type:AdjacentNode
+        nodeGroupID: Apc
   - type: PowerConsumer
     voltage: Medium
   - type: BatteryStorage
@@ -228,11 +234,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 100
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mass: 100
       mask:
       - Impassable
       - MobImpassable
@@ -249,8 +255,9 @@
   - type: NodeContainer
     examinable: true
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
+      output:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
   - type: PowerSupplier
   - type: SolarPanel
     supply: 1500
@@ -285,11 +292,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 75
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mass: 75
       mask:
       - VaultImpassable
       layer:
@@ -323,11 +330,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 100
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mass: 100
       mask:
       - Impassable
       - MobImpassable

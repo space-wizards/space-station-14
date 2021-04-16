@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using Content.Server.Construction;
 using Content.Server.Interfaces.GameObjects;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Construction
@@ -17,24 +14,17 @@ namespace Content.Server.GameObjects.Components.Construction
         public override string Name => "Machine";
 
         [DataField("board")]
-        public string BoardPrototype { get; private set; }
+        public string? BoardPrototype { get; private set; }
 
-        private Container _boardContainer;
-        private Container _partContainer;
+        private Container _boardContainer = default!;
+        private Container _partContainer = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _boardContainer = ContainerHelpers.EnsureContainer<Container>(Owner, MachineFrameComponent.BoardContainer);
-            _partContainer = ContainerHelpers.EnsureContainer<Container>(Owner, MachineFrameComponent.PartContainer);
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            CreateBoardAndStockParts();
+            _boardContainer = Owner.EnsureContainer<Container>(MachineFrameComponent.BoardContainer);
+            _partContainer = Owner.EnsureContainer<Container>(MachineFrameComponent.PartContainer);
         }
 
         public IEnumerable<MachinePartComponent> GetAllParts()
@@ -57,8 +47,8 @@ namespace Content.Server.GameObjects.Components.Construction
         public void CreateBoardAndStockParts()
         {
             // Entity might not be initialized yet.
-            var boardContainer = ContainerHelpers.EnsureContainer<Container>(Owner, MachineFrameComponent.BoardContainer, out var existedBoard);
-            var partContainer = ContainerHelpers.EnsureContainer<Container>(Owner, MachineFrameComponent.PartContainer, out var existedParts);
+            var boardContainer = Owner.EnsureContainer<Container>(MachineFrameComponent.BoardContainer, out var existedBoard);
+            var partContainer = Owner.EnsureContainer<Container>(MachineFrameComponent.PartContainer, out var existedParts);
 
             if (string.IsNullOrEmpty(BoardPrototype))
                 return;
