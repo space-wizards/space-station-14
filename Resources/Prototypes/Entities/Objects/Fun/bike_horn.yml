@@ -1,7 +1,7 @@
 - type: entity
-  name: bike horn
   parent: BaseItem
   id: BikeHorn
+  name: bike horn
   description: A horn off of a bicycle.
   components:
   - type: Sprite
@@ -10,8 +10,7 @@
   - type: Clothing
     sprite: Objects/Fun/bikehorn.rsi
     size: 5
-    Slots:
-      - Belt
+    Slots: [Belt]
     QuickEquip: false
   - type: ItemCooldown
   - type: EmitSoundOnUse

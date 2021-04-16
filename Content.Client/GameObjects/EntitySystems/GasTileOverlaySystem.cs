@@ -131,7 +131,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 overlayManager.RemoveOverlay<GasTileOverlay>();
         }
 
-        private void OnGridRemoved(GridId gridId)
+        private void OnGridRemoved(MapId mapId, GridId gridId)
         {
             if (_tileData.ContainsKey(gridId))
             {

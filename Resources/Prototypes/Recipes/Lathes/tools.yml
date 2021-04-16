@@ -4,7 +4,7 @@
   result: Wirecutter
   completetime: 500
   materials:
-    steel: 70
+    steel: 200
 
 - type: latheRecipe
   id: Screwdriver
@@ -14,7 +14,7 @@
   result: Screwdriver
   completetime: 500
   materials:
-    steel: 50
+    steel: 200
 
 - type: latheRecipe
   id: Welder
@@ -24,7 +24,7 @@
   result: Welder
   completetime: 500
   materials:
-    steel: 90
+    steel: 400
 
 - type: latheRecipe
   id: Wrench
@@ -32,7 +32,7 @@
   result: Wrench
   completetime: 500
   materials:
-    steel: 70
+    steel: 200
 
 - type: latheRecipe
   id: CableStack
@@ -41,8 +41,7 @@
   result: ApcExtensionCableStack1
   completetime: 500
   materials:
-    steel: 50
-    plastic: 50
+    steel: 100
 
 - type: latheRecipe
   id: Crowbar
@@ -50,7 +49,7 @@
   result: Crowbar
   completetime: 500
   materials:
-    steel: 70
+    steel: 200
 
 - type: latheRecipe
   id: Pickaxe
@@ -58,7 +57,8 @@
   result: Pickaxe
   completetime: 500
   materials:
-    steel: 80
+    steel: 200
+    wood: 100
 
 - type: latheRecipe
   id: Shovel
@@ -68,8 +68,8 @@
   result: Shovel
   completetime: 500
   materials:
-    steel: 50
-    wood: 30
+    steel: 200
+    wood: 100
 
 - type: latheRecipe
   id: Multitool
@@ -79,8 +79,8 @@
   result: Multitool
   completetime: 500
   materials:
-    steel: 50
-    plastic: 20
+    steel: 200
+    plastic: 200
 
 - type: latheRecipe
   id: PowerDrill
@@ -90,7 +90,8 @@
   result: PowerDrill
   completetime: 500
   materials:
-    steel: 90
+    steel: 600
+    plastic: 200
 
 - type: latheRecipe
   id: RCD
@@ -100,8 +101,8 @@
   result: RCD
   completetime: 1000
   materials:
-    steel: 250
-    plastic: 100
+    steel: 1000
+    plastic: 300
 
 - type: latheRecipe
   id: RCDAmmo
@@ -111,5 +112,5 @@
   result: RCDAmmo
   completetime: 600
   materials:
-    steel: 90
-    plastic: 80
+    steel: 500
+    plastic: 250

@@ -33,8 +33,9 @@
   - type: NodeContainer
     examinable: true
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
+      output:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
   - type: PowerSupplier
     supplyRate: 3000
   - type: Anchorable
@@ -88,8 +89,9 @@
   - type: NodeContainer
     examinable: true
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
+      power:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
   - type: PowerConsumer
   - type: BatteryStorage
     activeDrawRate: 1500
@@ -144,10 +146,12 @@
   - type: NodeContainer
     examinable: true
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
-    - !type:AdjacentNode
-      nodeGroupID: MVPower
+      input:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
+      output:
+        !type:AdjacentNode
+        nodeGroupID: MVPower
   - type: PowerConsumer
   - type: BatteryStorage
     activeDrawRate: 1500
@@ -196,10 +200,12 @@
   - type: NodeContainer
     examinable: true
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: MVPower
-    - !type:AdjacentNode
-      nodeGroupID: Apc
+      input:
+        !type:AdjacentNode
+        nodeGroupID: MVPower
+      output:
+        !type:AdjacentNode
+        nodeGroupID: Apc
   - type: PowerConsumer
     voltage: Medium
   - type: BatteryStorage
@@ -249,8 +255,9 @@
   - type: NodeContainer
     examinable: true
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
+      output:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
   - type: PowerSupplier
   - type: SolarPanel
     supply: 1500

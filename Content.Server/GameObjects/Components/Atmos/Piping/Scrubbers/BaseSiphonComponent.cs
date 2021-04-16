@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
             if (!SiphonEnabled)
                 return;
 
-            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere(Owner.EntityManager);
+            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
 
             if (_scrubberOutlet == null || tileAtmos == null || tileAtmos.Air ==  null)
                 return;

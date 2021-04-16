@@ -42,5 +42,4 @@
       mask:
       - VaultImpassable
   - type: Anchorable
-    snap: true
   - type: Pullable

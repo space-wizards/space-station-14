@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Observer
             base.Startup();
 
             // Allow this entity to be seen by other ghosts.
-            Owner.EnsureComponent<VisibilityComponent>().Layer = (int) VisibilityFlags.Ghost;
+            Owner.EnsureComponent<VisibilityComponent>().Layer |= (int) VisibilityFlags.Ghost;
 
             // Allows this entity to see other ghosts.
             Owner.EnsureComponent<EyeComponent>().VisibilityMask |= (uint) VisibilityFlags.Ghost;

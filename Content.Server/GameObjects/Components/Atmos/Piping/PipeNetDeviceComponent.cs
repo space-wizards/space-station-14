@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         private void JoinGridAtmos()
         {
             var gridAtmos = EntitySystem.Get<AtmosphereSystem>()
-                .GetGridAtmosphere(Owner.Transform.GridID);
+                .GetGridAtmosphere(Owner.Transform.Coordinates);
             JoinedGridAtmos = gridAtmos;
             JoinedGridAtmos.AddPipeNetDevice(this);
         }

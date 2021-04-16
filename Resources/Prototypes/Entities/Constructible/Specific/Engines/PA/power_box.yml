@@ -23,7 +23,8 @@
     - type: NodeContainer
       examinable: true
       nodes:
-        - !type:AdjacentNode
+        input:
+          !type:AdjacentNode
           nodeGroupID: HVPower
     - type: Construction
       graph: particleAcceleratorPowerBox

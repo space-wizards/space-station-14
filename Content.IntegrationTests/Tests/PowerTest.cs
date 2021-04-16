@@ -23,8 +23,9 @@ namespace Content.IntegrationTests.Tests
   components:
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
+      output:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
   - type: PowerSupplier
     supplyRate: 3000
   - type: Anchorable
@@ -39,8 +40,9 @@ namespace Content.IntegrationTests.Tests
     offset: Center
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
+      input:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
   - type: PowerConsumer
     drawRate: 50
 
@@ -53,10 +55,12 @@ namespace Content.IntegrationTests.Tests
     startingCharge: 1000
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
-    - !type:AdjacentNode
-      nodeGroupID: MVPower
+      input:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
+      output:
+        !type:AdjacentNode
+        nodeGroupID: MVPower
   - type: PowerConsumer
   - type: BatteryStorage
     activeDrawRate: 1500
@@ -84,10 +88,12 @@ namespace Content.IntegrationTests.Tests
     voltage: Medium
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: MVPower
-    - !type:AdjacentNode
-      nodeGroupID: Apc
+      input:
+        !type:AdjacentNode
+        nodeGroupID: MVPower
+      output:
+        !type:AdjacentNode
+        nodeGroupID: Apc
   - type: SnapGrid
     offset: Center
   - type: UserInterface
@@ -103,10 +109,12 @@ namespace Content.IntegrationTests.Tests
   components:
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: Apc
-    - !type:AdjacentNode
-      nodeGroupID: WireNet
+      apc:
+        !type:AdjacentNode
+        nodeGroupID: Apc
+      wire:
+        !type:AdjacentNode
+        nodeGroupID: WireNet
   - type: PowerProvider
     voltage: Apc
   - type: Wire

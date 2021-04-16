@@ -168,7 +168,7 @@ namespace Content.Server.Physics.Controllers
             {
                 // Walking on a tile.
                 var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-                if (def.FootstepSounds == null)
+                if (string.IsNullOrEmpty(def.FootstepSounds))
                 {
                     // Nothing to play, oh well.
                     return;

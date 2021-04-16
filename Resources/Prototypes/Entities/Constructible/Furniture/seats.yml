@@ -42,7 +42,6 @@
   parent: SeatBase
   components:
   - type: Anchorable
-    snap: true
   - type: Rotatable
   - type: Sprite
     state: chair
@@ -68,7 +67,6 @@
   description: Apply butt.
   components:
   - type: Anchorable
-    snap: true
   - type: Sprite
     state: stool_base
     color: "#8e9799"
@@ -92,7 +90,6 @@
   parent: SeatBase
   components:
   - type: Anchorable
-    snap: true
   - type: Sprite
     state: bar_stool
   - type: Physics
@@ -149,7 +146,6 @@
   description: It looks comfy.
   components:
   - type: Anchorable
-    snap: true
   - type: Sprite
     state: comfychair_preview
   - type: Physics

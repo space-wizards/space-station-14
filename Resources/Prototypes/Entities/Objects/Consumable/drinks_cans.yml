@@ -11,7 +11,7 @@
     caps: None
     contents:
       reagents:
-      - ReagentId: chem.Cola
+      - ReagentId: Cola
         Quantity: 20
   - type: SolutionTransfer
     transferAmount: 5

@@ -43,7 +43,6 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
-    snap: true
 
 - type: entity
   parent: VendingMachine
@@ -89,6 +88,32 @@
   - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/boozeomat.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Service"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingBarDrobe
+  name: BarDrobe
+  components:
+  - type: VendingMachine
+    pack: BarDrobe
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/bardrobe.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -398,31 +423,6 @@
     - type: WiresVisualizer
   - type: AccessReader
     access: [["Service"]]
-
-- type: entity
-  parent: VendingMachine
-  id: VendingMachineSales
-  name: Sales
-  components:
-  - type: VendingMachine
-    pack: SalesInventory
-  - type: Sprite
-    sprite: Constructible/Power/VendingMachines/sale.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-      brokenUnshaded: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine

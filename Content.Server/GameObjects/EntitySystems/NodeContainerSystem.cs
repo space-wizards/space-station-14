@@ -13,30 +13,34 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<RotateEvent>(RotateEvent);
+            SubscribeLocalEvent<NodeContainerComponent, PhysicsBodyTypeChangedEvent>(OnBodyTypeChanged);
+            SubscribeLocalEvent<NodeContainerComponent, RotateEvent>(OnRotateEvent);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
 
-            UnsubscribeLocalEvent<RotateEvent>();
+
+            UnsubscribeLocalEvent<NodeContainerComponent, PhysicsBodyTypeChangedEvent>(OnBodyTypeChanged);
+            UnsubscribeLocalEvent<NodeContainerComponent, RotateEvent>(OnRotateEvent);
         }
 
-        private void RotateEvent(RotateEvent ev)
+        private void OnBodyTypeChanged(EntityUid uid, NodeContainerComponent component, PhysicsBodyTypeChangedEvent args)
         {
-            if (!ev.Sender.TryGetComponent(out NodeContainerComponent? container))
-            {
-                return;
-            }
+            component.AnchorUpdate();
+        }
 
+        private void OnRotateEvent(EntityUid uid, NodeContainerComponent container, RotateEvent ev)
+        {
             if (ev.NewRotation == ev.OldRotation)
             {
                 return;
             }
 
-            foreach (var rotatableNode in container.Nodes.OfType<IRotatableNode>())
+            foreach (var node in container.Nodes.Values)
             {
+                if (node is not IRotatableNode rotatableNode) continue;
                 rotatableNode.RotateEvent(ev);
             }
         }

@@ -24,9 +24,9 @@
       caps: None
       contents:
         reagents:
-          - ReagentId: chem.Nutriment
+          - ReagentId: Nutriment
             Quantity: 5
-          - ReagentId: chem.Flour
+          - ReagentId: Flour
             Quantity: 5
     - type: Produce
       seed: wheat
@@ -43,9 +43,9 @@
       caps: None
       contents:
         reagents:
-          - ReagentId: chem.Nutriment
+          - ReagentId: Nutriment
             Quantity: 5
-          - ReagentId: chem.Glucose
+          - ReagentId: Glucose
             Quantity: 5
     - type: Produce
       seed: sugarcane
@@ -76,7 +76,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.Nutriment
+          - ReagentId: Nutriment
             Quantity: 6
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/banana.rsi
@@ -85,7 +85,7 @@
     - type: Juiceable
       result:
         reagents:
-          - ReagentId: chem.BananaJuice
+          - ReagentId: BananaJuice
             Quantity: 10
 
 - type: entity
@@ -98,7 +98,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.Nutriment
+          - ReagentId: Nutriment
             Quantity: 6
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/carrot.rsi
@@ -107,7 +107,7 @@
     - type: Juiceable
       result:
         reagents:
-          - ReagentId: chem.CarrotJuice
+          - ReagentId: CarrotJuice
             Quantity: 10
 
 - type: entity
@@ -120,7 +120,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.Nutriment
+          - ReagentId: Nutriment
             Quantity: 6
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/lemon.rsi
@@ -129,7 +129,7 @@
     - type: Juiceable
       result:
         reagents:
-          - ReagentId: chem.LimeJuice
+          - ReagentId: LimeJuice
             Quantity: 10
 
 - type: entity
@@ -142,7 +142,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.Nutriment
+          - ReagentId: Nutriment
             Quantity: 6
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/potato.rsi
@@ -151,7 +151,7 @@
     - type: Juiceable
       result:
         reagents:
-          - ReagentId: chem.PotatoJuice
+          - ReagentId: PotatoJuice
             Quantity: 10
 
 - type: entity
@@ -164,7 +164,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.Nutriment
+          - ReagentId: Nutriment
             Quantity: 6
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/tomato.rsi
@@ -173,7 +173,7 @@
     - type: Juiceable
       result:
         reagents:
-          - ReagentId: chem.TomatoJuice
+          - ReagentId: TomatoJuice
             Quantity: 10
 
 - type: entity
@@ -186,7 +186,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.Nutriment
+          - ReagentId: Nutriment
             Quantity: 6
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/eggplant.rsi
@@ -203,7 +203,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.Nutriment
+          - ReagentId: Nutriment
             Quantity: 6
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/apple.rsi
@@ -212,7 +212,7 @@
     - type: Juiceable
       result:
         reagents:
-          - ReagentId: chem.AppleJuice
+          - ReagentId: AppleJuice
             Quantity: 10
 
 - type: entity
@@ -226,7 +226,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.Nutriment
+          - ReagentId: Nutriment
             Quantity: 6
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/corn.rsi
@@ -243,7 +243,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.Nutriment
+          - ReagentId: Nutriment
             Quantity: 6
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/chanterelle.rsi
@@ -266,7 +266,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.THCOil
+          - ReagentId: THCOil
             Quantity: 5
 
 - type: entity
@@ -282,7 +282,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.THC
+          - ReagentId: THC
             Quantity: 2
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/tobacco.rsi
@@ -301,7 +301,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.THC
+          - ReagentId: THC
             Quantity: 10
     - type: Sprite
       sprite: Objects/Misc/reageant_fillings.rsi
@@ -335,7 +335,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.Nicotine
+          - ReagentId: Nicotine
             Quantity: 2
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/tobacco.rsi
@@ -354,7 +354,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.Nicotine
+          - ReagentId: Nicotine
             Quantity: 10
     - type: Sprite
       sprite: Objects/Misc/reageant_fillings.rsi

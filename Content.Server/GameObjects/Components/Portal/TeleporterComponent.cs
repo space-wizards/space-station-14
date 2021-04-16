@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Portal
             }
             if (_avoidCollidable)
             {
-                foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(mapCoords))
+                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(mapCoords))
                 {
                     // Added this component to avoid stacking portals and causing shenanigans
                     // TODO: Doesn't do a great job of stopping stacking portals for directed
@@ -139,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Portal
         private bool EmptySpace(IEntity user, Vector2 target)
         {
             // TODO: Check the user's spot? Upside is no stacking TPs but downside is they can't unstuck themselves from walls.
-            foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(user.Transform.MapID, target))
+            foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(user.Transform.MapID, target))
             {
                 if (entity.HasComponent<IPhysBody>() || entity.HasComponent<PortalComponent>())
                 {

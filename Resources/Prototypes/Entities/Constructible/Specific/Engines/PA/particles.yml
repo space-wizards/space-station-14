@@ -23,5 +23,4 @@
         layer: [None]
         mask:
         - MobMask
-        - Clickable
     - type: ParticleProjectile
