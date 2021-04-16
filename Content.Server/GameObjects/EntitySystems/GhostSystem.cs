@@ -1,10 +1,7 @@
-#nullable enable
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using System;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -17,6 +14,14 @@ namespace Content.Server.GameObjects.EntitySystems
 
             SubscribeLocalEvent<GhostComponent, MindRemovedMessage>(OnMindRemovedMessage);
             SubscribeLocalEvent<GhostComponent, MindUnvisitedMessage>(OnMindUnvisitedMessage);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<GhostComponent, MindRemovedMessage>(OnMindRemovedMessage);
+            UnsubscribeLocalEvent<GhostComponent, MindUnvisitedMessage>(OnMindUnvisitedMessage);
         }
 
         private void OnMindRemovedMessage(EntityUid uid, GhostComponent component, MindRemovedMessage args)

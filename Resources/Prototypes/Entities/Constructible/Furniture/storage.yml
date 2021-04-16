@@ -11,6 +11,7 @@
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: rack
+    drawdepth: FloorObjects
   - type: Physics
     bodyType: Static
     fixtures:
@@ -24,7 +25,6 @@
       - VaultImpassable
   - type: Pullable
   - type: Anchorable
-    snap: true
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

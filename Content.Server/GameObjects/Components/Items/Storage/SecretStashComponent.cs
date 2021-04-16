@@ -1,6 +1,7 @@
 #nullable enable
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Shared.Containers;

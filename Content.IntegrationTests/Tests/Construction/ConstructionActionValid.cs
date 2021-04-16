@@ -59,7 +59,7 @@ namespace Content.IntegrationTests.Tests.Construction
 
             foreach (var graph in protoMan.EnumeratePrototypes<ConstructionGraphPrototype>())
             {
-                foreach (var (_, node) in graph.Nodes)
+                foreach (var node in graph.Nodes.Values)
                 {
                     foreach (var action in node.Actions)
                     {
@@ -99,7 +99,7 @@ namespace Content.IntegrationTests.Tests.Construction
 
             foreach (var graph in protoMan.EnumeratePrototypes<ConstructionGraphPrototype>())
             {
-                foreach (var (_, node) in graph.Nodes)
+                foreach (var node in graph.Nodes.Values)
                 {
                     if (string.IsNullOrEmpty(node.Entity) || protoMan.TryIndex(node.Entity, out EntityPrototype _)) continue;
 
@@ -125,7 +125,7 @@ namespace Content.IntegrationTests.Tests.Construction
 
             foreach (var graph in protoMan.EnumeratePrototypes<ConstructionGraphPrototype>())
             {
-                foreach (var (_, node) in graph.Nodes)
+                foreach (var node in graph.Nodes.Values)
                 {
                     foreach (var edge in node.Edges)
                     {

@@ -6,7 +6,6 @@
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
   components:
   - type: Anchorable
-    snap: true
   - type: Sprite
     sprite: Constructible/Watercloset/toilet.rsi
     state: closed_toilet_seat_up
@@ -36,7 +35,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Water
+      - ReagentId: Water
         Quantity: 180
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 20

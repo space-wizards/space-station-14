@@ -1,0 +1,40 @@
+- type: entity
+  id: debugRotation1
+  name: dbg_rotation1
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    netsync: false
+    visible: true
+    sprite: debugRotation.rsi
+    state: direction1
+  placement:
+    mode: AlignTileAny
+
+- type: entity
+  id: debugRotation4
+  name: dbg_rotation4
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    netsync: false
+    visible: true
+    sprite: debugRotation.rsi
+    state: direction4
+  placement:
+    mode: AlignTileAny
+
+- type: entity
+  id: debugRotationTex
+  name: dbg_rotationTex
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    netsync: false
+    visible: true
+    texture: debugRotation.rsi/direction1.png
+  placement:
+    mode: AlignTileAny

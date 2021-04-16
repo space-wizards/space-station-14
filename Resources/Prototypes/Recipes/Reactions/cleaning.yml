@@ -1,33 +1,33 @@
 - type: reaction
-  id: react.Bleach
+  id: Bleach
   reactants:
-    chem.TableSalt:
+    TableSalt:
       amount: 2
-    chem.SpaceCleaner:
+    SpaceCleaner:
       amount: 2
-    chem.Oxygen:
+    Oxygen:
       amount: 1
   products:
-    chem.Bleach: 5
+    Bleach: 5
 
 - type: reaction
-  id: react.SpaceCleaner
+  id: SpaceCleaner
   reactants:
-    chem.Ammonia:
+    Ammonia:
       amount: 1
-    chem.Water:
+    Water:
       amount: 1
   products:
-    chem.SpaceCleaner: 2
+    SpaceCleaner: 2
 
 - type: reaction
-  id: react.SpaceLube
+  id: SpaceLube
   reactants:
-    chem.Water:
+    Water:
       amount: 1
-    chem.Silicon:
+    Silicon:
       amount: 1
-    chem.Oxygen:
+    Oxygen:
       amount: 1
   products:
-    chem.SpaceLube: 3
+    SpaceLube: 3

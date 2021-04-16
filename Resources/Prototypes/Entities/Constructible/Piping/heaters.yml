@@ -27,8 +27,9 @@
     - state: heaterPipe
   - type: NodeContainer
     nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: East
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: East
   - type: PipeHeater
   - type: PipeNetDevice

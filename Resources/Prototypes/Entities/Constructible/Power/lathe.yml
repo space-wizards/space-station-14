@@ -156,6 +156,9 @@
       - Flash
       - Handcuffs
       - Stunbaton
+      - FirelockElectronics
+      - DoorElectronics
+      - APCElectronics
 
   - type: UserInterface
     interfaces:

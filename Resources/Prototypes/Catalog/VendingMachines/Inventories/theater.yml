@@ -4,6 +4,7 @@
   description: A vending machine containing costumes.
   spriteName: theater
   startingInventory:
+    ClothingMaskJoy: 2
     ClothingOuterCardborg: 2
     ClothingOuterPonchoClassic: 2
     ClothingOuterRobesJudge: 2

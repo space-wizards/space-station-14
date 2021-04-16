@@ -216,7 +216,7 @@
     - type: Sprite
       layers:
         - state: blue
-        - texture: Objects/Weapons/Guns/Ammunition/Boxes/LRifle/l_rifle_big_box.rsi/icon.png
+        - texture: Objects/Weapons/Guns/Ammunition/Boxes/l_rifle.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - MagazineSRifle
@@ -253,7 +253,7 @@
     - type: Sprite
       layers:
         - state: blue
-        - texture: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box.rsi/icon.png
+        - texture: Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - MagazinePistol
@@ -270,7 +270,7 @@
     - type: Sprite
       layers:
         - state: blue
-        - texture: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box.rsi/icon.png
+        - texture: Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi/icon.png
     - type: ConditionalSpawner
       prototypes:
         - MagazineMagnum

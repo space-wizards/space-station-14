@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/commit/d76180f48949870dd57c7274d494175b3b3515ba",
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "emagged"
+        },
+		{
+			"name": "inhand-right",
+			"directions": 4
+		},
+		{
+			"name": "inhand-left",
+			"directions": 4
+		}
+    ]
+}

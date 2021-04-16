@@ -4,7 +4,9 @@ using System.Linq;
 using Content.Client.Animations;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Storage;
 using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -161,20 +163,26 @@ namespace Content.Client.GameObjects.Components.Items
                 return;
             }
 
-            if (!entity.TryGetComponent(out ItemComponent? item)) return;
+            if (!entity.TryGetComponent(out SharedItemComponent? item))
+                return;
 
-            var maybeInHands = item.GetInHandStateInfo(hand.Location);
-
-            if (!maybeInHands.HasValue)
+            if (item.RsiPath == null)
             {
                 _sprite.LayerSetVisible($"hand-{name}", false);
             }
             else
             {
-                var (rsi, state, color) = maybeInHands.Value;
+                var rsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / item.RsiPath).RSI;
+
+                var handName = hand.Location.ToString().ToLowerInvariant();
+                var prefix = item.EquippedPrefix;
+                var state = prefix != null ? $"{prefix}-inhand-{handName}" : $"inhand-{handName}";
+
+                var color = item.Color;
+
                 _sprite.LayerSetColor($"hand-{name}", color);
                 _sprite.LayerSetVisible($"hand-{name}", true);
-                _sprite.LayerSetState($"hand-{name}", state, rsi);
+                _sprite.LayerSetState($"hand-{name}", state, rsi);  
             }
         }
 

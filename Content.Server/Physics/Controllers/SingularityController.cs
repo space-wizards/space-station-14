@@ -74,7 +74,7 @@ namespace Content.Server.Physics.Controllers
         {
             var singularityCoords = component.Owner.Transform.Coordinates;
             // TODO: Maybe if we have named fixtures needs to pull out the outer circle collider (inner will be for deleting).
-            var entitiesToPull = EntityManager.GetEntitiesInRange(singularityCoords, component.Level * 10);
+            var entitiesToPull = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(singularityCoords, component.Level * 10);
             foreach (var entity in entitiesToPull)
             {
                 if (!entity.TryGetComponent<PhysicsComponent>(out var collidableComponent) || collidableComponent.BodyType == BodyType.Static) continue;

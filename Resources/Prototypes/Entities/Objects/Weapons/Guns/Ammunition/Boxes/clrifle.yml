@@ -1,0 +1,157 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BoxClRifleBase
+  name: ammunition box (.25 caseless)
+  components:
+  - type: AmmoBox
+    caliber: ClRifle
+    capacity: 60
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/cl_rifle.rsi
+    netsync: false
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 2
+      zeroVisible: false
+
+# Boxes
+- type: entity
+  parent: BoxClRifleBase
+  id: BoxClRifle10x24
+  name: ammunition box (.25 caseless)
+  components:
+  - type: AmmoBox
+    capacity: 200
+    fillPrototype: CartridgeClRifle
+  - type: Sprite
+    layers:
+    - state: base-10x24
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag10-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag10
+      steps: 2
+      zeroVisible: false
+
+- type: entity
+  parent: BoxClRifleBase
+  id: BoxClRifleBigBox
+  name: ammunition box (.25 caseless)
+  components:
+  - type: AmmoBox
+    capacity: 200
+    fillPrototype: CartridgeClRifle
+  - type: Sprite
+    layers:
+    - state: base-b
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: magb-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: magb
+      steps: 2
+      zeroVisible: false
+
+- type: entity
+  parent: BoxClRifleBase
+  id: BoxClRifleBigBoxRubber
+  name: ammunition box (.25 caseless rubber)
+  components:
+  - type: AmmoBox
+    capacity: 200
+    fillPrototype: CartridgeClRifleRubber
+  - type: Sprite
+    layers:
+    - state: base-b
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: magb-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: rubber-b
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: magb
+      steps: 2
+      zeroVisible: false
+
+- type: entity
+  parent: BoxClRifleBase
+  id: BoxClRifleBox
+  name: ammunition box (.25 caseless)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgeClRifle
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+
+- type: entity
+  parent: BoxClRifleBase
+  id: BoxClRifleBoxFlash
+  name: ammunition box (.25 caseless flash)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgeClRifleFlash
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: flash
+
+- type: entity
+  parent: BoxClRifleBase
+  id: BoxClRifleBoxHV
+  name: ammunition box (.25 caseless high-velocity)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgeClRifleHV
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: hv
+
+- type: entity
+  parent: BoxClRifleBase
+  id: BoxClRifleBoxPractice
+  name: ammunition box (.25 caseless practice)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgeClRiflePractice
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: practice
+
+- type: entity
+  parent: BoxClRifleBase
+  id: BoxClRifleBoxRubber
+  name: ammunition box (.25 caseless rubber)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgeClRifleRubber
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: rubber

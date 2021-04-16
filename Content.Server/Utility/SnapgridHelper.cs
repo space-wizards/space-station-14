@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -27,6 +27,19 @@ namespace Content.Server.Utility
                 var grid = mapManager.GetGrid(gridId);
                 tileSize = grid.TileSize;
             }
+
+            var localPos = coordinates.Position;
+
+            var x = (int)Math.Floor(localPos.X / tileSize) + tileSize / (offset == SnapGridOffset.Center ? 2f : 0f);
+            var y = (int)Math.Floor(localPos.Y / tileSize) + tileSize / (offset == SnapGridOffset.Center ? 2f : 0f);
+
+            return new EntityCoordinates(coordinates.EntityId, x, y);
+        }
+
+        public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates, IMapGrid grid,
+            SnapGridOffset offset = SnapGridOffset.Center)
+        {
+            var tileSize = grid.TileSize;
 
             var localPos = coordinates.Position;
 
