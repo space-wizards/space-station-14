@@ -47,8 +47,6 @@ namespace Content.Client.Parallax
             var screenHandle = args.WorldHandle;
             screenHandle.UseShader(_shader);
 
-            var vpSize = args.Viewport.Size;
-
             var (sizeX, sizeY) = _parallaxTexture.Size / (float) EyeManager.PixelsPerMeter;
             var (posX, posY) = args.Viewport.Eye.Position;
             var o = new Vector2(posX * Slowness, posY * Slowness);
