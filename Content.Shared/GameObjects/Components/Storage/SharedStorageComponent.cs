@@ -155,6 +155,19 @@ namespace Content.Shared.GameObjects.Components.Storage
         }
     }
 
+    [Serializable, NetSerializable]
+    public struct StorageFillLevel
+    {
+        public readonly int StorageSizeMax;
+        public readonly int StorageSizeUsed;
+
+        public StorageFillLevel(int storageUsed, int storageMaxSize)
+        {
+            StorageSizeMax = storageMaxSize;
+            StorageSizeUsed = storageUsed;
+        }
+    }
+
     [NetSerializable]
     [Serializable]
     public enum StorageVisuals
@@ -163,6 +176,7 @@ namespace Content.Shared.GameObjects.Components.Storage
         CanWeld,
         Welded,
         CanLock,
-        Locked
+        Locked,
+        FillLevel
     }
 }

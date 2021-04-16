@@ -2,10 +2,14 @@
   name: trash bag
   id: TrashBag
   parent: BaseItem
+  description: It's the heavy-duty black polymer kind. Time to take out the trash!
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/trashbag.rsi
-    state: icon-3
+    netsync: false
+    layers:
+      - state: icon-0
+        map: ["enum.StorageVisualLayers.FillLevel"]
   - type: Item
     sprite: Objects/Specific/Janitorial/trashbag.rsi
   - type: Storage
@@ -13,20 +17,32 @@
     quickInsert: true
     areaInsert: true
     storageSoundCollection: trashBagRustle
+    showFillLevel: true
+  - type: Appearance
+    visuals:
+    - type: StorageFillVisualizer
+      maxFillLevels: 3
+      fillBaseName: icon-
 
 - type: entity
-  name: trash bag
+  name: trash bag of holding
   id: TrashBagBlue
-  parent: BaseItem
+  parent: TrashBag
+  description: The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage.
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/trashbag.rsi
-    state: blue-icon-3
+    netsync: false
+    layers:
+      - state: blue-icon-0
+        map: ["enum.StorageVisualLayers.FillLevel"]
   - type: Item
     sprite: Objects/Specific/Janitorial/trashbag.rsi
     HeldPrefix: blue
   - type: Storage
-    capacity: 125
-    quickInsert: true
-    areaInsert: true
-    storageSoundCollection: trashBagRustle
+    capacity: 250
+  - type: Appearance
+    visuals:
+    - type: StorageFillVisualizer
+      maxFillLevels: 3
+      fillBaseName: blue-icon-

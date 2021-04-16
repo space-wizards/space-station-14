@@ -71,6 +71,7 @@ namespace Content.Client.GameObjects.Components.Storage
     {
         Door,
         Welded,
-        Lock
+        Lock,
+        FillLevel
     }
 }

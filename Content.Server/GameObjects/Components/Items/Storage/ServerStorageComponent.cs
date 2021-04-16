@@ -53,10 +53,14 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private int _storageUsed;
         [DataField("capacity")]
         private int _storageCapacityMax = 10000;
+        [DataField("showFillLevel")]
+        private bool _showFillLevel = false;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
         [DataField("storageSoundCollection")]
         public string? StorageSoundCollection { get; set; }
+
+        [ComponentDependency] private readonly AppearanceComponent? _appearanceComponent = default;
 
         [ViewVariables]
         public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
@@ -159,6 +163,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             _storageUsed += size;
             _sizeCache[message.Entity] = size;
 
+            UpdateFillLevelVisualizer();
             UpdateClientInventories();
         }
 
@@ -183,7 +188,18 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             _storageUsed -= size;
 
+            UpdateFillLevelVisualizer();
             UpdateClientInventories();
+        }
+
+        private void UpdateFillLevelVisualizer()
+        {
+            // udpate visualizer if needed
+            if (_showFillLevel && _appearanceComponent != null)
+            {
+                var state = new StorageFillLevel(_storageUsed, _storageCapacityMax);
+                _appearanceComponent.SetData(StorageVisuals.FillLevel, state);
+            }
         }
 
         /// <summary>
