@@ -50,5 +50,10 @@ namespace Content.Client.Administration
         {
             return CurrentTicket;
         }
+
+        public void NewMessage(int id, NetUserId author, string message)
+        {
+            return;
+        }
     }
 }

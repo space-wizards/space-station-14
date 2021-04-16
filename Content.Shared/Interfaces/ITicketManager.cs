@@ -1,4 +1,5 @@
-﻿using Content.Shared.Administration;
+﻿using System.Collections.Generic;
+using Content.Shared.Administration;
 using Content.Shared.Administration.Tickets;
 using Robust.Shared.Network;
 
@@ -15,5 +16,7 @@ namespace Content.Shared.Interfaces
         bool HasTicket(NetUserId id);
 
         Ticket? GetTicket(int id);
+
+        void NewMessage(int id, NetUserId author, string message);
     }
 }

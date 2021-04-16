@@ -40,7 +40,7 @@ namespace Content.Shared.Administration.Tickets
                 TargetPlayer = opener;
             }
 
-            var time = DateTimeOffset.Now; //var myTime = new DateTimeOffset(dateTicks, new TimeSpan(offsetTicks));
+            var time = DateTimeOffset.Now;
             var msg = new TicketMessage(time.Ticks, time.Offset.Ticks, opener.ToString(), opener != target, message);
             Messages.Add(msg);
         }

@@ -1,46 +1,55 @@
 ﻿using Content.Server.Eui;
 using Content.Server.Players;
+using Content.Shared.Administration;
 using Content.Shared.Administration.Tickets;
 using Content.Shared.Eui;
 using Content.Shared.GameObjects.Components.Observer;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.Server.Administration
 {
     public class TicketEui : BaseEui
     {
+        [Dependency] private readonly ITicketManager _ticketManager = default!;
+
+        public NetUserId Owner;
         public int TicketId;
         public override TicketEuiState GetNewState()
         {
-            var ticketMan = IoCManager.Resolve<ITicketManager>();
-            var ticket = ticketMan.GetTicket(TicketId);
+            var ticket = _ticketManager.GetTicket(TicketId);
             var state = new TicketEuiState(ticket);
             return state;
         }
 
-        /*public TicketEui(Ticket ticket)
+        public TicketEui(NetUserId owner)
         {
-            _ticket = ticket;
-        }*/
+            IoCManager.InjectDependencies(this);
+            Owner = owner;
+        }
 
-        /*public override void HandleMessage(EuiMessageBase msg)
+        public override void HandleMessage(EuiMessageBase msg)
         {
             base.HandleMessage(msg);
-
-            if (msg is not AcceptCloningChoiceMessage choice
-                || choice.Button == AcceptCloningUiButton.Deny)
+            switch (msg)
             {
-                Close();
-                return;
+                case TicketsEuiMsg.TicketSendMessage message:
+                {
+                    var text = message.Message.Trim();
+                    if (!string.IsNullOrEmpty(text))
+                    {
+                        _ticketManager.NewMessage(TicketId, Owner, text);
+                    }
+                    break;
+                }
             }
 
-            var mind = Player.ContentData()?.Mind;
-            //mind?.TransferTo(_newMob);
-            mind?.UnVisit();
-            Close();
-        }*/
+            //StateDirty();
+        }
+
+        //public override void M
 
     }
 }

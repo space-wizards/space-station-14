@@ -27,6 +27,32 @@ namespace Content.Client.Administration
         public readonly LineEdit MessageInput;
         public readonly Button MessageSend;
 
+        public void AddMessage(TicketMessage message)
+        {
+            var hBox = new HBoxContainer
+            {
+                HorizontalExpand = true,
+                SeparationOverride = 4,
+            };
+            var textLabel = new RichTextLabel();
+            var myTime = new DateTimeOffset(message.time, new TimeSpan(message.offset));
+            var text =
+                $"[{myTime.ToLocalTime().ToString("HH:mm:ss")}] {Ticket?.GetPlayerName() ?? "Unknown"}: {message.message}";
+            if (message.admin)
+            {
+                textLabel.SetMessage(FormattedMessage.FromMarkup("[color=#ff0000]" + FormattedMessage.EscapeText(text) + "[/color]"));
+            }
+            else
+            {
+                textLabel.SetMessage(text);
+            }
+            hBox.AddChild(textLabel);
+            //outerBox.AddChild(new HSeparator());
+
+            Messages.AddChild(hBox);
+            Messages.AddChild(new HSeparator());
+        }
+
 
         public void LoadTicket(Ticket _ticket)
         {
@@ -36,28 +62,7 @@ namespace Content.Client.Administration
 
             foreach (var message in Ticket.Messages)
             {
-                var hBox = new HBoxContainer
-                {
-                    HorizontalExpand = true,
-                    SeparationOverride = 4,
-                };
-                var textLabel = new RichTextLabel();
-                var myTime = new DateTimeOffset(message.time, new TimeSpan(message.offset));
-                var text =
-                    $"[{myTime.ToLocalTime().ToString("HH:mm:ss")}] {FormattedMessage.EscapeText(Ticket.GetPlayerName())}: {FormattedMessage.EscapeText(message.message)}";
-                if (message.admin)
-                {
-                    textLabel.SetMessage(FormattedMessage.FromMarkup("[color=#ff0000]" + text + "[/color]"));
-                }
-                else
-                {
-                    textLabel.SetMessage(text);
-                }
-                hBox.AddChild(textLabel);
-                //outerBox.AddChild(new HSeparator());
-
-                Messages.AddChild(hBox);
-                Messages.AddChild(new HSeparator());
+                AddMessage(message);
             }
         }
 

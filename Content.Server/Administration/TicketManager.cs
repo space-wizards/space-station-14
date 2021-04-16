@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Eui;
 using Content.Server.GameTicking;
@@ -32,7 +33,8 @@ namespace Content.Server.Administration
 
         public int CurrentId = 0;
 
-        Dictionary<int, Ticket> Tickets = new();
+        public Dictionary<int, Ticket> Tickets = new();
+        public Dictionary<int, List<TicketEui>> TicketEuis = new();
 
         public void Initialize()
         {
@@ -120,12 +122,39 @@ namespace Content.Server.Administration
 
         public void ViewTicket(MsgViewTicket message)
         {
-            var session = _playerManager.GetSessionByChannel(message.MsgChannel);
+            if (!_playerManager.TryGetSessionByChannel(message.MsgChannel, out var session))
+            {
+                return;
+            }
             var eui = IoCManager.Resolve<EuiManager>();
-            var ui = new TicketEui();
+            var ui = new TicketEui(session.UserId);
             eui.OpenEui(ui, session);
+            if (!TicketEuis.ContainsKey(message.TicketId))
+            {
+                TicketEuis[message.TicketId] = new List<TicketEui>();
+            }
+            TicketEuis[message.TicketId].Add(ui);
             ui.TicketId = message.TicketId;
             ui.StateDirty();
+        }
+
+        public void NewMessage(int id, NetUserId author, string message)
+        {
+            var ticket = Tickets[id];
+            if (ticket.TargetPlayer != author && ticket.ClaimedAdmin != author)
+            {
+                return;
+            }
+            var time = DateTimeOffset.Now;
+            var msg = new TicketMessage(time.Ticks, time.Offset.Ticks, author.ToString(), ticket.ClaimedAdmin == author, message);
+            ticket.Messages.Add(msg);
+            var euis = TicketEuis[id];
+            foreach (var eui in euis)
+            {
+                var receiveMessage = new TicketsEuiMsg.TicketReceiveMessage(msg);
+                eui.SendMessage(receiveMessage);
+                //TODO notify the user if their UI is closed
+            }
         }
 
         private void HandleTicketListRequest(AdminMenuTicketListRequest message)
