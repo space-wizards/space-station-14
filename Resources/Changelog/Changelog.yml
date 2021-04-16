@@ -898,3 +898,8 @@ Entries:
   - {message: Janitorial items now have proper inhands, type: Add}
   id: 162
   time: '2021-04-15T21:21:10.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: 'Names for tanks, solar stuff and more are fixed.', type: Fix}
+  id: 163
+  time: '2021-04-16T05:28:09.0000000+00:00'
