@@ -23,6 +23,9 @@
   id: Grindable
 
 - type: Tag
+  id: TrashBag
+
+- type: Tag
   id: Hoe
 
 - type: Tag

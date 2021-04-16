@@ -4,6 +4,9 @@
   parent: BaseItem
   description: It's the heavy-duty black polymer kind. Time to take out the trash!
   components:
+  - type: Tag
+    tags:
+    - TrashBag
   - type: Sprite
     sprite: Objects/Specific/Janitorial/trashbag.rsi
     netsync: false

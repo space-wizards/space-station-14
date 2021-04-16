@@ -17,6 +17,7 @@ using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -208,6 +209,36 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
 
+        private bool TryEmptyTrashbag(IEntity user, IEntity entity)
+        {
+            if (!entity.TryGetComponent(out ServerStorageComponent? storage))
+                return false;
+
+            // get all trashbag content folder
+            var content = storage.StoredEntities;
+            if (content == null || content.Count == 0)
+                return false;
+
+            var hasDumpedTrash = false;
+            var contentCopy = content.ToList();
+
+            // try to move each ent into disposal
+            foreach (var trash in contentCopy)
+            {
+                if (!CanInsert(trash) || !storage.Remove(trash))
+                    continue;
+
+                _container.Insert(trash);
+                hasDumpedTrash = true;
+            }
+
+            // if we got anything from trashbag - play sound
+            if (hasDumpedTrash)
+                storage.PlayStorageSound();
+
+            return hasDumpedTrash;
+        }
+
         private bool TryDrop(IEntity user, IEntity entity)
         {
             if (!user.TryGetComponent(out HandsComponent? hands))
@@ -283,7 +314,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
                 atmosSystem
-                    .GetGridAtmosphere(Owner.Transform.Coordinates)?
+                    .GetGridAtmosphere(Owner.Transform.GridID)?
                     .Invalidate(tileAtmos.GridIndices);
             }
 
@@ -615,6 +646,14 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            // you can dump trashbag content 
+            if (eventArgs.Using.HasTag("TrashBag"))
+            {
+                var dumpedTrashbag = TryEmptyTrashbag(eventArgs.User, eventArgs.Using);
+                if (dumpedTrashbag)
+                    return true;
+            }
+
             return TryDrop(eventArgs.User, eventArgs.Using);
         }
 
