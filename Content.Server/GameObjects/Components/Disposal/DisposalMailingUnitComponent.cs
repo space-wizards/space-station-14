@@ -281,7 +281,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             var grid = _mapManager.GetGrid(Owner.Transform.GridID);
             var coords = Owner.Transform.Coordinates;
-            var entry = MapGrid.GetLocal(grid, coords)
+            var entry = grid.GetLocal(coords)
                 .FirstOrDefault(entity => entity.HasComponent<DisposalEntryComponent>());
 
             if (entry == null)

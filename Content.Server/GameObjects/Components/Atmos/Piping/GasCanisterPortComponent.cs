@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             {
                 var grid = _mapManager.GetGrid(Owner.Transform.GridID);
                 var coords = Owner.Transform.Coordinates;
-                var entities = MapGrid.GetLocal(grid, coords);
+                var entities = grid.GetLocal(coords);
                 foreach (var entity in entities)
                 {
                     if (entity.TryGetComponent<GasCanisterComponent>(out var canister) && canister.Anchored && !canister.ConnectedToPort)

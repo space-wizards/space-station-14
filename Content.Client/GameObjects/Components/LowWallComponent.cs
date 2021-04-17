@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using Content.Client.GameObjects.Components.IconSmoothing;
@@ -77,14 +77,14 @@ namespace Content.Client.GameObjects.Components
             var grid = _mapManager.GetGrid(Owner.Transform.GridID);
             var coords = Owner.Transform.Coordinates;
 
-            var (n, nl) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.North));
-            var (ne, nel) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.NorthEast));
-            var (e, el) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.East));
-            var (se, sel) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.SouthEast));
-            var (s, sl) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.South));
-            var (sw, swl) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.SouthWest));
-            var (w, wl) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.West));
-            var (nw, nwl) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.NorthWest));
+            var (n, nl) = MatchingWall(grid.GetInDir(coords, Direction.North));
+            var (ne, nel) = MatchingWall(grid.GetInDir(coords, Direction.NorthEast));
+            var (e, el) = MatchingWall(grid.GetInDir(coords, Direction.East));
+            var (se, sel) = MatchingWall(grid.GetInDir(coords, Direction.SouthEast));
+            var (s, sl) = MatchingWall(grid.GetInDir(coords, Direction.South));
+            var (sw, swl) = MatchingWall(grid.GetInDir(coords, Direction.SouthWest));
+            var (w, wl) = MatchingWall(grid.GetInDir(coords, Direction.West));
+            var (nw, nwl) = MatchingWall(grid.GetInDir(coords, Direction.NorthWest));
 
             // ReSharper disable InconsistentNaming
             var cornerNE = CornerFill.None;
@@ -201,7 +201,7 @@ namespace Content.Client.GameObjects.Components
             LastCornerSW = cornerSW;
             LastCornerNW = cornerNW;
 
-            foreach (var entity in MapGrid.GetLocal(grid, coords))
+            foreach (var entity in grid.GetLocal(coords))
             {
                 if (entity.TryGetComponent(out WindowComponent? window))
                 {

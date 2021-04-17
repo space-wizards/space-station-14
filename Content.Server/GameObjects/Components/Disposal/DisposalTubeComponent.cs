@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             var grid = _mapManager.GetGrid(Owner.Transform.GridID);
             var position = Owner.Transform.Coordinates;
-            foreach (var entity in MapGrid.GetInDir(grid, position, nextDirection))
+            foreach (var entity in grid.GetInDir(position, nextDirection))
             {
                 if (!entity.TryGetComponent(out IDisposalTubeComponent? tube))
                 {

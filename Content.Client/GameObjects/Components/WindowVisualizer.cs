@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
@@ -54,7 +54,7 @@ namespace Content.Client.GameObjects.Components
         {
             var grid = mapManager.GetGrid(transform.GridID);
             var coords = transform.Coordinates;
-            foreach (var entity in MapGrid.GetLocal(grid, coords))
+            foreach (var entity in grid.GetLocal(coords))
             {
                 if (entity.TryGetComponent(out LowWallComponent? lowWall))
                 {

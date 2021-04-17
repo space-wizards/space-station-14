@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 if (!nodeOwner.TryGetComponent<AMEShieldComponent>(out var shield)) { continue; }
 
                 var grid = IoCManager.Resolve<IMapManager>().GetGrid(nodeOwner.Transform.GridID);
-                var nodeNeighbors = MapGrid.GetCellsInSquareArea(grid, nodeOwner.Transform.Coordinates, 1)
+                var nodeNeighbors = grid.GetCellsInSquareArea(nodeOwner.Transform.Coordinates, 1)
                     .Select(sgc => sgc.Owner)
                     .Where(entity => entity != nodeOwner)
                     .Select(entity => entity.TryGetComponent<AMEShieldComponent>(out var adjshield) ? adjshield : null)

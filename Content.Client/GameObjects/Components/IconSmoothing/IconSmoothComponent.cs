@@ -123,13 +123,13 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
             var grid = _mapManager.GetGrid(Owner.Transform.GridID);
             var position = Owner.Transform.Coordinates;
-            if (MatchingEntity(MapGrid.GetInDir(grid, position, Direction.North)))
+            if (MatchingEntity(grid.GetInDir(position, Direction.North)))
                 dirs |= CardinalConnectDirs.North;
-            if (MatchingEntity(MapGrid.GetInDir(grid, position, Direction.South)))
+            if (MatchingEntity(grid.GetInDir(position, Direction.South)))
                 dirs |= CardinalConnectDirs.South;
-            if (MatchingEntity(MapGrid.GetInDir(grid, position, Direction.East)))
+            if (MatchingEntity(grid.GetInDir(position, Direction.East)))
                 dirs |= CardinalConnectDirs.East;
-            if (MatchingEntity(MapGrid.GetInDir(grid, position, Direction.West)))
+            if (MatchingEntity(grid.GetInDir(position, Direction.West)))
                 dirs |= CardinalConnectDirs.West;
 
             Sprite.LayerSetState(0, $"{StateBase}{(int) dirs}");
@@ -159,14 +159,14 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
             var grid = _mapManager.GetGrid(Owner.Transform.GridID);
             var position = Owner.Transform.Coordinates;
-            var n = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.North));
-            var ne = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.NorthEast));
-            var e = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.East));
-            var se = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.SouthEast));
-            var s = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.South));
-            var sw = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.SouthWest));
-            var w = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.West));
-            var nw = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.NorthWest));
+            var n = MatchingEntity(grid.GetInDir(position, Direction.North));
+            var ne = MatchingEntity(grid.GetInDir(position, Direction.NorthEast));
+            var e = MatchingEntity(grid.GetInDir(position, Direction.East));
+            var se = MatchingEntity(grid.GetInDir(position, Direction.SouthEast));
+            var s = MatchingEntity(grid.GetInDir(position, Direction.South));
+            var sw = MatchingEntity(grid.GetInDir(position, Direction.SouthWest));
+            var w = MatchingEntity(grid.GetInDir(position, Direction.West));
+            var nw = MatchingEntity(grid.GetInDir(position, Direction.NorthWest));
 
             // ReSharper disable InconsistentNaming
             var cornerNE = CornerFill.None;

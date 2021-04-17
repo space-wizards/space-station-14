@@ -94,7 +94,7 @@ namespace Content.Client.GameObjects.Components
 
             var grid = _mapManager.GetGrid(Owner.Transform.GridID);
             var coords = Owner.Transform.Coordinates;
-            foreach (var entity in MapGrid.GetLocal(grid, coords))
+            foreach (var entity in grid.GetLocal(coords))
             {
                 if (entity.TryGetComponent(out LowWallComponent? lowWall))
                 {

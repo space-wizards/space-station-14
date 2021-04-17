@@ -362,7 +362,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             if (!Owner.Transform.Anchored)
                 return false;
 
-            foreach (var entity in MapGrid.GetInDir(mapGrid, coords, direction))
+            foreach (var entity in mapGrid.GetInDir(coords, direction))
             {
                 if (entity.TryGetComponent(out IPhysBody? physics) &&
                     (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
@@ -384,7 +384,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             if (puddle == default)
             {
-                puddle = () => Owner.EntityManager.SpawnEntity(Owner.Prototype?.ID, MapGrid.DirectionToGrid(mapGrid, coords, direction)).GetComponent<PuddleComponent>();
+                puddle = () => Owner.EntityManager.SpawnEntity(Owner.Prototype?.ID, mapGrid.DirectionToGrid(coords, direction)).GetComponent<PuddleComponent>();
             }
 
             return true;

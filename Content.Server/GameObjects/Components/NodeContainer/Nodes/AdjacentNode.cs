@@ -20,9 +20,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
             var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
             var coords = Owner.Transform.Coordinates;
-            foreach (var cell in MapGrid.GetCardinalNeighborCells(grid, coords))
+            foreach (var cell in grid.GetCardinalNeighborCells(coords))
             {
-                foreach (var entity in MapGrid.GetLocal(grid, cell.Owner.Transform.Coordinates))
+                foreach (var entity in grid.GetLocal(cell.Owner.Transform.Coordinates))
                 {
                     if (!entity.TryGetComponent<NodeContainerComponent>(out var container))
                         continue;

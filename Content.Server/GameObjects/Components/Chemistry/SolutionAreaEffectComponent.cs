@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 var grid = MapManager.GetGrid(Owner.Transform.GridID);
                 var coords = Owner.Transform.Coordinates;
-                foreach (var neighbor in MapGrid.GetInDir(grid, coords, dir))
+                foreach (var neighbor in grid.GetInDir(coords, dir))
                 {
                     if (neighbor.TryGetComponent(out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
                         return;
@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                         return;
                 }
 
-                var newEffect = Owner.EntityManager.SpawnEntity(Owner.Prototype.ID, MapGrid.DirectionToGrid(grid, coords, dir));
+                var newEffect = Owner.EntityManager.SpawnEntity(Owner.Prototype.ID, grid.DirectionToGrid(coords, dir));
 
                 if (!newEffect.TryGetComponent(out SolutionAreaEffectComponent? effectComponent))
                 {

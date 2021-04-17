@@ -72,16 +72,16 @@ namespace Content.Client.GameObjects.EntitySystems
                 var coords = senderEnt.Transform.Coordinates;
 
                 _dirtyEntities.Enqueue(senderEnt);
-                AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.North));
-                AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.South));
-                AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.East));
-                AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.West));
+                AddValidEntities(grid1.GetInDir(coords, Direction.North));
+                AddValidEntities(grid1.GetInDir(coords, Direction.South));
+                AddValidEntities(grid1.GetInDir(coords, Direction.East));
+                AddValidEntities(grid1.GetInDir(coords, Direction.West));
                 if (ev.Mode == IconSmoothingMode.Corners)
                 {
-                    AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.NorthEast));
-                    AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.SouthEast));
-                    AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.SouthWest));
-                    AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.NorthWest));
+                    AddValidEntities(grid1.GetInDir(coords, Direction.NorthEast));
+                    AddValidEntities(grid1.GetInDir(coords, Direction.SouthEast));
+                    AddValidEntities(grid1.GetInDir(coords, Direction.SouthWest));
+                    AddValidEntities(grid1.GetInDir(coords, Direction.NorthWest));
                 }
             }
 

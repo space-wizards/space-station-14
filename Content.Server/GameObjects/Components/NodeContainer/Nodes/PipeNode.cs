@@ -176,7 +176,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
             var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
             var position = Owner.Transform.Coordinates;
-            foreach (var entity in MapGrid.GetInDir(grid, position, pipeDir.ToDirection()))
+            foreach (var entity in grid.GetInDir(position, pipeDir.ToDirection()))
             {
                 if (!entity.TryGetComponent<NodeContainerComponent>(out var container))
                     continue;
