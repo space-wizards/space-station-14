@@ -14,7 +14,7 @@
     maxVol: 15
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 15
   - type: Item
     sprite: Objects/Consumable/Food/burger.rsi
@@ -157,7 +157,7 @@
     maxVol: 25
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 25
   - type: Sprite
     state: bigbite
@@ -173,7 +173,7 @@
     maxVol: 40
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     state: superbite

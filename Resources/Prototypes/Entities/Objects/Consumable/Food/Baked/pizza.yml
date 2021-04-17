@@ -15,7 +15,7 @@
     maxVol: 15
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 15
   - type: SliceableFood
     count: 8
@@ -33,7 +33,7 @@
     maxVol: 5
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 5
   - type: Item
     size: 1

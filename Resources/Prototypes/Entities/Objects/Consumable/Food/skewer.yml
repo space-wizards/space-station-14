@@ -15,7 +15,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 20
   - type: Item
     size: 5
@@ -107,7 +107,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 5
 
 - type: entity
@@ -124,7 +124,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
 
 - type: entity

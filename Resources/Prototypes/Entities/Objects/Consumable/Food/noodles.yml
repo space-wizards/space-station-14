@@ -16,7 +16,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 20
 
 # Noodles

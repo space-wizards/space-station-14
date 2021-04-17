@@ -14,7 +14,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 5
       - ReagentId: chem.Toxin
         Quantity: 1
@@ -360,7 +360,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 20
   - type: SliceableFood
     count: 3
@@ -390,7 +390,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 15
 
 - type: entity
@@ -411,7 +411,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 15
   - type: SliceableFood
     count: 3
@@ -435,7 +435,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 15
   - type: SliceableFood
     count: 3
@@ -459,7 +459,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
   - type: SliceableFood
     count: 3
@@ -486,7 +486,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 15
 
 - type: entity
@@ -507,7 +507,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 15
 
 - type: entity
@@ -528,7 +528,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 15
 
 - type: entity
@@ -549,7 +549,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
   - type: SliceableFood
     count: 3
@@ -573,7 +573,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 15
 
 - type: entity
@@ -590,7 +590,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
 
 # Cutlets
@@ -768,7 +768,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
 
 # Cooked
@@ -788,7 +788,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
 
 - type: entity
@@ -809,7 +809,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
 
 - type: entity
@@ -828,7 +828,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
 
 - type: entity
@@ -847,7 +847,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
 
 - type: entity
@@ -867,7 +867,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
 
 - type: entity
@@ -889,7 +889,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 5
 
 - type: entity
@@ -911,5 +911,5 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 5

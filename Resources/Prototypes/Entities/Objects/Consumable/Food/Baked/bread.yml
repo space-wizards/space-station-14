@@ -14,7 +14,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 20
 
 - type: entity
@@ -26,7 +26,7 @@
     maxVol: 7
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 7
 
 # Custom Bread Example

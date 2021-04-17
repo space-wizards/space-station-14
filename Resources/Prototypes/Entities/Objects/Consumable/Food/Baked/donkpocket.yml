@@ -14,7 +14,7 @@
     maxVol: 10
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 3
   - type: Item
     size: 1
@@ -41,7 +41,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 7
 
 - type: entity
@@ -53,7 +53,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 5
   - type: Sprite
     state: dank
@@ -67,7 +67,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
 
 - type: entity
@@ -88,7 +88,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
   - type: Sprite
     state: spicy
@@ -111,7 +111,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
 
 - type: entity
@@ -123,7 +123,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
   - type: Sprite
     state: pizza
@@ -137,7 +137,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 15
 
 - type: entity
@@ -149,7 +149,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 5
   - type: Sprite
     state: banana
@@ -163,7 +163,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
 
 - type: entity
@@ -175,7 +175,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 5
   - type: Sprite
     state: berry
@@ -189,7 +189,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
 
 - type: entity
@@ -201,7 +201,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 5
   - type: Sprite
     state: gondola
@@ -214,5 +214,5 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10

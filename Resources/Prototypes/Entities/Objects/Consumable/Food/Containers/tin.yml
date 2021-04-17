@@ -74,7 +74,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 15
   - type: LoopingSound
   - type: Food
@@ -121,7 +121,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 15
   - type: LoopingSound
   - type: Food
@@ -168,7 +168,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 15
   - type: LoopingSound
   - type: Food
@@ -219,7 +219,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 15
   - type: LoopingSound
   - type: Food

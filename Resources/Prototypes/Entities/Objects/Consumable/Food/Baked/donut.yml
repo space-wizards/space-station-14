@@ -21,7 +21,7 @@
     maxVol: 5
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 3
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donut.rsi
