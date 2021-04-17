@@ -3,6 +3,7 @@ using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Client.GameObjects.Components.IconSmoothing.IconSmoothComponent;
 
@@ -16,14 +17,12 @@ namespace Content.Client.GameObjects.Components
         private string? _stateBase;
 
         private ISpriteComponent? _sprite;
-        private SnapGridComponent? _snapGrid;
 
         public override void Initialize()
         {
             base.Initialize();
 
             _sprite = Owner.GetComponent<ISpriteComponent>();
-            _snapGrid = Owner.GetComponent<SnapGridComponent>();
         }
 
         /// <inheritdoc />
@@ -86,12 +85,10 @@ namespace Content.Client.GameObjects.Components
 
         private LowWallComponent? FindLowWall()
         {
-            if (_snapGrid == null)
-            {
+            if (!Owner.TryGetComponent<SnapGridComponent>(out var snapComp))
                 return null;
-            }
 
-            foreach (var entity in SnapGridComponent.GetLocal(_snapGrid))
+            foreach (var entity in MapGrid.GetLocal(snapComp))
             {
                 if (entity.TryGetComponent(out LowWallComponent? lowWall))
                 {

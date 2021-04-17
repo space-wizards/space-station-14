@@ -15,6 +15,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -380,7 +381,7 @@ namespace Content.Server.GameObjects.Components.PA
             // Find fuel chamber first by scanning cardinals.
             if (SnapGrid != null)
             {
-                foreach (var maybeFuel in SnapGridComponent.GetCardinalNeighborCells(SnapGrid))
+                foreach (var maybeFuel in MapGrid.GetCardinalNeighborCells(SnapGrid))
                 {
                     if (maybeFuel.Owner.TryGetComponent(out _partFuelChamber))
                     {
@@ -452,7 +453,7 @@ namespace Content.Server.GameObjects.Components.PA
         private bool ScanPart<T>(Vector2i offset, [NotNullWhen(true)] out T? part)
             where T : ParticleAcceleratorPartComponent
         {
-            foreach (var ent in SnapGridComponent.GetOffset(SnapGrid!, offset))
+            foreach (var ent in MapGrid.GetOffset(SnapGrid!, offset))
             {
                 if (ent.TryGetComponent(out part) && !part.Deleted)
                 {

@@ -3,6 +3,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -14,6 +15,8 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class AirtightComponent : Component, IMapInit
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         private (GridId, Vector2i) _lastPosition;
         private AtmosphereSystem _atmosphereSystem = default!;
 
@@ -119,9 +122,10 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public void MapInit()
         {
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+            if (Owner.HasComponent<SnapGridComponent>())
             {
-                _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
+                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+                _lastPosition = (Owner.Transform.GridID, grid.SnapGridCellFor(Owner.Transform.Coordinates));
             }
 
             UpdatePosition();
@@ -147,16 +151,20 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
             UpdatePosition();
 
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+            if (Owner.HasComponent<SnapGridComponent>())
             {
-                _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
+                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+                _lastPosition = (Owner.Transform.GridID, grid.SnapGridCellFor(Owner.Transform.Coordinates));
             }
         }
 
         private void UpdatePosition()
         {
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
-                UpdatePosition(Owner.Transform.GridID, snapGrid.Position);
+            if (Owner.HasComponent<SnapGridComponent>())
+            {
+                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+                UpdatePosition(Owner.Transform.GridID, grid.SnapGridCellFor(Owner.Transform.Coordinates));
+            }
         }
 
         private void UpdatePosition(GridId gridId, Vector2i pos)

@@ -36,12 +36,11 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         private void UpdateAll()
         {
-            foreach (var comp in EntityManager.ComponentManager.EntityQuery<SubFloorHideComponent>(true))
+            foreach (var comp in ComponentManager.EntityQuery<SubFloorHideComponent>(true))
             {
-                if (!_mapManager.TryGetGrid(comp.Owner.Transform.GridID, out var grid)) return;
-
-                var snapPos = comp.Owner.GetComponent<SnapGridComponent>();
-                UpdateTile(grid, snapPos.Position);
+                var transform = comp.Owner.Transform;
+                if (!_mapManager.TryGetGrid(transform.GridID, out var grid)) return;
+                UpdateTile(grid, grid.SnapGridCellFor(transform.Coordinates));
             }
         }
 

@@ -26,6 +26,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
@@ -278,7 +279,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
-            var entry = SnapGridComponent.GetLocal(snapGrid)
+            var entry = MapGrid.GetLocal(snapGrid)
                 .FirstOrDefault(entity => entity.HasComponent<DisposalEntryComponent>());
 
             if (entry == null)

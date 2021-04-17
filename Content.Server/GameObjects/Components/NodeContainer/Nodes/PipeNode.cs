@@ -6,6 +6,7 @@ using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -172,7 +173,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             if (!Owner.TryGetComponent(out SnapGridComponent? grid))
                 yield break;
 
-            var entities = SnapGridComponent.GetInDir(grid, pipeDir.ToDirection());
+            var entities = MapGrid.GetInDir(grid, pipeDir.ToDirection());
 
             foreach (var entity in entities)
             {

@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.Power.AME;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
@@ -69,7 +70,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             foreach (Node node in Nodes)
             {
                 if (!node.Owner.TryGetComponent<AMEShieldComponent>(out var shield)) { continue; }
-                var nodeNeighbors = SnapGridComponent.GetCellsInSquareArea(node.Owner
+                var nodeNeighbors = MapGrid.GetCellsInSquareArea(node.Owner
                         .GetComponent<SnapGridComponent>())
                     .Select(sgc => sgc.Owner)
                     .Where(entity => entity != node.Owner)

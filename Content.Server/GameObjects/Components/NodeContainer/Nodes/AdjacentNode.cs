@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
@@ -16,8 +17,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             if (!Owner.TryGetComponent(out SnapGridComponent? snap))
                 yield break;
 
-            foreach (var cell in SnapGridComponent.GetCardinalNeighborCells(snap))
-            foreach (var entity in SnapGridComponent.GetLocal(cell))
+            foreach (var cell in MapGrid.GetCardinalNeighborCells(snap))
+            foreach (var entity in MapGrid.GetLocal(cell))
             {
                 if (!entity.TryGetComponent<NodeContainerComponent>(out var container)) continue;
 

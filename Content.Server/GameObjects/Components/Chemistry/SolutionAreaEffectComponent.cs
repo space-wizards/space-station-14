@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             void SpreadToDir(Direction dir)
             {
-                foreach (var neighbor in SnapGridComponent.GetInDir(SnapGridComponent, dir))
+                foreach (var neighbor in MapGrid.GetInDir(SnapGridComponent, dir))
                 {
                     if (neighbor.TryGetComponent(out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
                         return;
@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 }
 
                 var newEffect =
-                    Owner.EntityManager.SpawnEntity(Owner.Prototype.ID, SnapGridComponent.DirectionToGrid(SnapGridComponent, dir));
+                    Owner.EntityManager.SpawnEntity(Owner.Prototype.ID, MapGrid.DirectionToGrid(SnapGridComponent, dir));
 
                 if (!newEffect.TryGetComponent(out SolutionAreaEffectComponent? effectComponent))
                 {

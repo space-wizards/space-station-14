@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             SetGasPort();
             if (Owner.TryGetComponent<SnapGridComponent>(out var snapGrid))
             {
-                var entities = SnapGridComponent.GetLocal(snapGrid);
+                var entities = MapGrid.GetLocal(snapGrid);
                 foreach (var entity in entities)
                 {
                     if (entity.TryGetComponent<GasCanisterComponent>(out var canister) && canister.Anchored && !canister.ConnectedToPort)

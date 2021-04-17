@@ -3,24 +3,25 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class PuddleSystem : EntitySystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public override void Initialize()
         {
             base.Initialize();
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            mapManager.TileChanged += HandleTileChanged;
+            _mapManager.TileChanged += HandleTileChanged;
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            mapManager.TileChanged -= HandleTileChanged;
+            _mapManager.TileChanged -= HandleTileChanged;
         }
 
         private void HandleTileChanged(object? sender, TileChangedEventArgs eventArgs)
@@ -29,8 +30,10 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var (puddle, snapGrid) in ComponentManager.EntityQuery<PuddleComponent, SnapGridComponent>(true))
             {
                 // If the tile becomes space then delete it (potentially change by design)
+                var snapTransform = snapGrid.Owner.Transform;
+                var grid = _mapManager.GetGrid(snapTransform.GridID);
                 if (eventArgs.NewTile.GridIndex == puddle.Owner.Transform.GridID &&
-                    snapGrid.Position == eventArgs.NewTile.GridIndices &&
+                    grid.SnapGridCellFor(snapTransform.Coordinates) == eventArgs.NewTile.GridIndices &&
                     eventArgs.NewTile.Tile.IsEmpty)
                 {
                     puddle.Owner.Delete();

@@ -71,17 +71,17 @@ namespace Content.Client.GameObjects.EntitySystems
                 var snapGrid = senderEnt.GetComponent<SnapGridComponent>();
 
                 _dirtyEntities.Enqueue(senderEnt);
-                AddValidEntities(SnapGridComponent.GetInDir(snapGrid, Direction.North));
-                AddValidEntities(SnapGridComponent.GetInDir(snapGrid, Direction.South));
-                AddValidEntities(SnapGridComponent.GetInDir(snapGrid, Direction.East));
-                AddValidEntities(SnapGridComponent.GetInDir(snapGrid, Direction.West));
+                AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.North));
+                AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.South));
+                AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.East));
+                AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.West));
                 if (ev.Mode == IconSmoothingMode.Corners)
                 {
 
-                    AddValidEntities(SnapGridComponent.GetInDir(snapGrid, Direction.NorthEast));
-                    AddValidEntities(SnapGridComponent.GetInDir(snapGrid, Direction.SouthEast));
-                    AddValidEntities(SnapGridComponent.GetInDir(snapGrid, Direction.SouthWest));
-                    AddValidEntities(SnapGridComponent.GetInDir(snapGrid, Direction.NorthWest));
+                    AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.NorthEast));
+                    AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.SouthEast));
+                    AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.SouthWest));
+                    AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.NorthWest));
                 }
             }
 

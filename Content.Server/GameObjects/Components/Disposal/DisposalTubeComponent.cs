@@ -12,6 +12,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -70,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
             var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
 
-            foreach (var entity in SnapGridComponent.GetInDir(snapGrid, nextDirection))
+            foreach (var entity in MapGrid.GetInDir(snapGrid, nextDirection))
             {
                 if (!entity.TryGetComponent(out IDisposalTubeComponent? tube))
                 {

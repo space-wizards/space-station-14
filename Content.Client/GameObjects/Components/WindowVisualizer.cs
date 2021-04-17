@@ -4,6 +4,7 @@ using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -50,7 +51,7 @@ namespace Content.Client.GameObjects.Components
 
         private static LowWallComponent? FindLowWall(SnapGridComponent snapGrid)
         {
-            foreach (var entity in SnapGridComponent.GetLocal(snapGrid))
+            foreach (var entity in MapGrid.GetLocal(snapGrid))
             {
                 if (entity.TryGetComponent(out LowWallComponent? lowWall))
                 {
