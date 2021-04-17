@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Client.GameObjects.Components.IconSmoothing.IconSmoothComponent;
@@ -13,6 +15,8 @@ namespace Content.Client.GameObjects.Components
     [ComponentReference(typeof(SharedWindowComponent))]
     public sealed class WindowComponent : SharedWindowComponent
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         [DataField("base")]
         private string? _stateBase;
 
@@ -85,10 +89,12 @@ namespace Content.Client.GameObjects.Components
 
         private LowWallComponent? FindLowWall()
         {
-            if (!Owner.TryGetComponent<SnapGridComponent>(out var snapComp))
+            if (!Owner.Transform.Anchored)
                 return null;
 
-            foreach (var entity in MapGrid.GetLocal(snapComp))
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var coords = Owner.Transform.Coordinates;
+            foreach (var entity in MapGrid.GetLocal(grid, coords))
             {
                 if (entity.TryGetComponent(out LowWallComponent? lowWall))
                 {

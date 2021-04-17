@@ -68,20 +68,20 @@ namespace Content.Client.GameObjects.EntitySystems
                 senderEnt.TryGetComponent(out IconSmoothComponent? iconSmooth)
                 && iconSmooth.Running)
             {
-                var snapGrid = senderEnt.GetComponent<SnapGridComponent>();
+                var grid1 = _mapManager.GetGrid(senderEnt.Transform.GridID);
+                var coords = senderEnt.Transform.Coordinates;
 
                 _dirtyEntities.Enqueue(senderEnt);
-                AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.North));
-                AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.South));
-                AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.East));
-                AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.West));
+                AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.North));
+                AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.South));
+                AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.East));
+                AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.West));
                 if (ev.Mode == IconSmoothingMode.Corners)
                 {
-
-                    AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.NorthEast));
-                    AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.SouthEast));
-                    AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.SouthWest));
-                    AddValidEntities(MapGrid.GetInDir(snapGrid, Direction.NorthWest));
+                    AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.NorthEast));
+                    AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.SouthEast));
+                    AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.SouthWest));
+                    AddValidEntities(MapGrid.GetInDir(grid1, coords, Direction.NorthWest));
                 }
             }
 

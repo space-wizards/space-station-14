@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Utility;
@@ -72,7 +73,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             void SpreadToDir(Direction dir)
             {
-                foreach (var neighbor in MapGrid.GetInDir(SnapGridComponent, dir))
+                var grid = MapManager.GetGrid(Owner.Transform.GridID);
+                var coords = Owner.Transform.Coordinates;
+                foreach (var neighbor in MapGrid.GetInDir(grid, coords, dir))
                 {
                     if (neighbor.TryGetComponent(out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
                         return;
@@ -81,8 +84,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                         return;
                 }
 
-                var newEffect =
-                    Owner.EntityManager.SpawnEntity(Owner.Prototype.ID, MapGrid.DirectionToGrid(SnapGridComponent, dir));
+                var newEffect = Owner.EntityManager.SpawnEntity(Owner.Prototype.ID, MapGrid.DirectionToGrid(grid, coords, dir));
 
                 if (!newEffect.TryGetComponent(out SolutionAreaEffectComponent? effectComponent))
                 {

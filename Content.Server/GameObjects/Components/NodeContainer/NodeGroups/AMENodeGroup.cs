@@ -69,11 +69,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             //Check each shield node to see if it meets core criteria
             foreach (Node node in Nodes)
             {
-                if (!node.Owner.TryGetComponent<AMEShieldComponent>(out var shield)) { continue; }
-                var nodeNeighbors = MapGrid.GetCellsInSquareArea(node.Owner
-                        .GetComponent<SnapGridComponent>())
+                var nodeOwner = node.Owner;
+                if (!nodeOwner.TryGetComponent<AMEShieldComponent>(out var shield)) { continue; }
+
+                var grid = IoCManager.Resolve<IMapManager>().GetGrid(nodeOwner.Transform.GridID);
+                var nodeNeighbors = MapGrid.GetCellsInSquareArea(grid, nodeOwner.Transform.Coordinates, 1)
                     .Select(sgc => sgc.Owner)
-                    .Where(entity => entity != node.Owner)
+                    .Where(entity => entity != nodeOwner)
                     .Select(entity => entity.TryGetComponent<AMEShieldComponent>(out var adjshield) ? adjshield : null)
                     .Where(adjshield => adjshield != null);
 

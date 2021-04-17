@@ -44,6 +44,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     public class DisposalMailingUnitComponent : SharedDisposalMailingUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private const string HolderPrototypeId = "DisposalHolder";
 
@@ -278,8 +279,9 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            var snapGrid = Owner.GetComponent<SnapGridComponent>();
-            var entry = MapGrid.GetLocal(snapGrid)
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var coords = Owner.Transform.Coordinates;
+            var entry = MapGrid.GetLocal(grid, coords)
                 .FirstOrDefault(entity => entity.HasComponent<DisposalEntryComponent>());
 
             if (entry == null)

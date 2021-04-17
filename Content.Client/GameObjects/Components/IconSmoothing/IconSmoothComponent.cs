@@ -114,20 +114,22 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
         private void CalculateNewSpriteCardinal()
         {
-            if (!Owner.TryGetComponent<SnapGridComponent>(out var SnapGrid) || Sprite == null)
+            if (!Owner.Transform.Anchored || Sprite == null)
             {
                 return;
             }
 
             var dirs = CardinalConnectDirs.None;
 
-            if (MatchingEntity(MapGrid.GetInDir(SnapGrid, Direction.North)))
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var position = Owner.Transform.Coordinates;
+            if (MatchingEntity(MapGrid.GetInDir(grid, position, Direction.North)))
                 dirs |= CardinalConnectDirs.North;
-            if (MatchingEntity(MapGrid.GetInDir(SnapGrid, Direction.South)))
+            if (MatchingEntity(MapGrid.GetInDir(grid, position, Direction.South)))
                 dirs |= CardinalConnectDirs.South;
-            if (MatchingEntity(MapGrid.GetInDir(SnapGrid, Direction.East)))
+            if (MatchingEntity(MapGrid.GetInDir(grid, position, Direction.East)))
                 dirs |= CardinalConnectDirs.East;
-            if (MatchingEntity(MapGrid.GetInDir(SnapGrid, Direction.West)))
+            if (MatchingEntity(MapGrid.GetInDir(grid, position, Direction.West)))
                 dirs |= CardinalConnectDirs.West;
 
             Sprite.LayerSetState(0, $"{StateBase}{(int) dirs}");
@@ -150,19 +152,21 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
         protected (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill()
         {
-            if (!Owner.TryGetComponent<SnapGridComponent>(out var SnapGrid))
+            if (!Owner.Transform.Anchored)
             {
                 return (CornerFill.None, CornerFill.None, CornerFill.None, CornerFill.None);
             }
 
-            var n = MatchingEntity(MapGrid.GetInDir(SnapGrid, Direction.North));
-            var ne = MatchingEntity(MapGrid.GetInDir(SnapGrid, Direction.NorthEast));
-            var e = MatchingEntity(MapGrid.GetInDir(SnapGrid, Direction.East));
-            var se = MatchingEntity(MapGrid.GetInDir(SnapGrid, Direction.SouthEast));
-            var s = MatchingEntity(MapGrid.GetInDir(SnapGrid, Direction.South));
-            var sw = MatchingEntity(MapGrid.GetInDir(SnapGrid, Direction.SouthWest));
-            var w = MatchingEntity(MapGrid.GetInDir(SnapGrid, Direction.West));
-            var nw = MatchingEntity(MapGrid.GetInDir(SnapGrid, Direction.NorthWest));
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var position = Owner.Transform.Coordinates;
+            var n = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.North));
+            var ne = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.NorthEast));
+            var e = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.East));
+            var se = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.SouthEast));
+            var s = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.South));
+            var sw = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.SouthWest));
+            var w = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.West));
+            var nw = MatchingEntity(MapGrid.GetInDir(grid, position, Direction.NorthWest));
 
             // ReSharper disable InconsistentNaming
             var cornerNE = CornerFill.None;

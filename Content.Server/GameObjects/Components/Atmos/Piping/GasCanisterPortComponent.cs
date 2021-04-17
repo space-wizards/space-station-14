@@ -1,8 +1,10 @@
 #nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
@@ -13,6 +15,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     public class GasCanisterPortComponent : Component
     {
         public override string Name => "GasCanisterPort";
+
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         [ViewVariables]
         public GasCanisterComponent? ConnectedCanister { get; private set; }
@@ -28,9 +32,11 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             base.Initialize();
             Owner.EnsureComponentWarn<PipeNetDeviceComponent>();
             SetGasPort();
-            if (Owner.TryGetComponent<SnapGridComponent>(out var snapGrid))
+            if (Owner.Transform.Anchored)
             {
-                var entities = MapGrid.GetLocal(snapGrid);
+                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+                var coords = Owner.Transform.Coordinates;
+                var entities = MapGrid.GetLocal(grid, coords);
                 foreach (var entity in entities)
                 {
                     if (entity.TryGetComponent<GasCanisterComponent>(out var canister) && canister.Anchored && !canister.ConnectedToPort)

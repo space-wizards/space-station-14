@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using Content.Client.GameObjects.Components.IconSmoothing;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
@@ -23,6 +24,8 @@ namespace Content.Client.GameObjects.Components
     public class LowWallComponent : IconSmoothComponent
     {
         public override string Name => "LowWall";
+
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public CornerFill LastCornerNE { get; private set; }
         public CornerFill LastCornerSE { get; private set; }
@@ -66,19 +69,22 @@ namespace Content.Client.GameObjects.Components
         {
             base.CalculateNewSprite();
 
-            if (Sprite == null || !Owner.TryGetComponent<SnapGridComponent>(out var snapGrid) || _overlaySprite == null)
+            if (Sprite == null || !Owner.Transform.Anchored || _overlaySprite == null)
             {
                 return;
             }
 
-            var (n, nl) = MatchingWall(MapGrid.GetInDir(snapGrid, Direction.North));
-            var (ne, nel) = MatchingWall(MapGrid.GetInDir(snapGrid, Direction.NorthEast));
-            var (e, el) = MatchingWall(MapGrid.GetInDir(snapGrid, Direction.East));
-            var (se, sel) = MatchingWall(MapGrid.GetInDir(snapGrid, Direction.SouthEast));
-            var (s, sl) = MatchingWall(MapGrid.GetInDir(snapGrid, Direction.South));
-            var (sw, swl) = MatchingWall(MapGrid.GetInDir(snapGrid, Direction.SouthWest));
-            var (w, wl) = MatchingWall(MapGrid.GetInDir(snapGrid, Direction.West));
-            var (nw, nwl) = MatchingWall(MapGrid.GetInDir(snapGrid, Direction.NorthWest));
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var coords = Owner.Transform.Coordinates;
+
+            var (n, nl) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.North));
+            var (ne, nel) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.NorthEast));
+            var (e, el) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.East));
+            var (se, sel) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.SouthEast));
+            var (s, sl) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.South));
+            var (sw, swl) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.SouthWest));
+            var (w, wl) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.West));
+            var (nw, nwl) = MatchingWall(MapGrid.GetInDir(grid, coords, Direction.NorthWest));
 
             // ReSharper disable InconsistentNaming
             var cornerNE = CornerFill.None;
@@ -195,7 +201,7 @@ namespace Content.Client.GameObjects.Components
             LastCornerSW = cornerSW;
             LastCornerNW = cornerNW;
 
-            foreach (var entity in MapGrid.GetLocal(snapGrid))
+            foreach (var entity in MapGrid.GetLocal(grid, coords))
             {
                 if (entity.TryGetComponent(out WindowComponent? window))
                 {

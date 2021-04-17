@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Client.GameObjects.Components
@@ -16,10 +17,10 @@ namespace Content.Client.GameObjects.Components
             base.OnChangeData(component);
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (!component.Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+            if (!component.Owner.Transform.Anchored)
                 return;
 
-            var lowWall = FindLowWall(snapGrid);
+            var lowWall = FindLowWall(IoCManager.Resolve<IMapManager>(), component.Owner.Transform);
             if (lowWall == null)
                 return;
 
@@ -49,9 +50,11 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
-        private static LowWallComponent? FindLowWall(SnapGridComponent snapGrid)
+        private static LowWallComponent? FindLowWall(IMapManager mapManager, ITransformComponent transform)
         {
-            foreach (var entity in MapGrid.GetLocal(snapGrid))
+            var grid = mapManager.GetGrid(transform.GridID);
+            var coords = transform.Coordinates;
+            foreach (var entity in MapGrid.GetLocal(grid, coords))
             {
                 if (entity.TryGetComponent(out LowWallComponent? lowWall))
                 {

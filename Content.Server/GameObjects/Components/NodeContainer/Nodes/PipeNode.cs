@@ -6,6 +6,7 @@ using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -170,12 +171,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         private IEnumerable<PipeNode> PipesInDirection(PipeDirection pipeDir)
         {
-            if (!Owner.TryGetComponent(out SnapGridComponent? grid))
+            if (!Owner.Transform.Anchored)
                 yield break;
 
-            var entities = MapGrid.GetInDir(grid, pipeDir.ToDirection());
-
-            foreach (var entity in entities)
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
+            var position = Owner.Transform.Coordinates;
+            foreach (var entity in MapGrid.GetInDir(grid, position, pipeDir.ToDirection()))
             {
                 if (!entity.TryGetComponent<NodeContainerComponent>(out var container))
                     continue;
