@@ -35,16 +35,19 @@
 - type: entity
   parent: PumpBase
   id: DebugPressurePump
-  name: Debug Pressure Pump
+  name: pressure pump
+  suffix: DEBUG
   components:
   - type: NodeContainer
     nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: North
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: South
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
   - type: PressurePump
     initialInletDirection: North
     initialOutletDirection: South

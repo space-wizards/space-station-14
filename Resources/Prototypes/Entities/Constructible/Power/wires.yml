@@ -35,7 +35,7 @@
   parent: WireBase
   id: HVWire
   name: HV Wire
-  description: "An orange high voltage power cable."
+  description: An orange high voltage power cable.
   components:
   - type: Sprite
     sprite: Constructible/Power/Wires/hv_cable.rsi
@@ -48,10 +48,12 @@
     key: hv_cables
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
-    - !type:AdjacentNode
-      nodeGroupID: WireNet
+      power:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
+      wire:
+        !type:AdjacentNode
+        nodeGroupID: WireNet
   - type: Wire
     wireDroppedOnCutPrototype: HVWireStack1
     wireType: HighVoltage
@@ -73,7 +75,7 @@
   parent: WireBase
   id: MVWire
   name: MV Wire
-  description: "A medium voltage power cable."
+  description: A medium voltage power cable.
   components:
   - type: Sprite
     color: Yellow
@@ -88,10 +90,12 @@
     key: mv_cables
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: MVPower
-    - !type:AdjacentNode
-      nodeGroupID: WireNet
+      power:
+        !type:AdjacentNode
+        nodeGroupID: MVPower
+      wire:
+        !type:AdjacentNode
+        nodeGroupID: WireNet
   - type: Wire
     wireDroppedOnCutPrototype: MVWireStack1
     wireType: MediumVoltage
@@ -112,8 +116,8 @@
 - type: entity
   parent: WireBase
   id: ApcExtensionCable
-  name: Apc Extension Cable
-  description: "A cable used to connect machines to an APC." #ACPs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
+  name: LV Wire
+  description: A cable used to connect machines to an APC. #ACPs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
   components:
   - type: Sprite
     color: Green
@@ -128,10 +132,12 @@
     key: lv_cables
   - type: NodeContainer
     nodes:
-    - !type:AdjacentNode
-      nodeGroupID: Apc
-    - !type:AdjacentNode
-      nodeGroupID: WireNet
+      power:
+        !type:AdjacentNode
+        nodeGroupID: Apc
+      wire:
+        !type:AdjacentNode
+        nodeGroupID: WireNet
   - type: PowerProvider
     voltage: Apc
   - type: Wire

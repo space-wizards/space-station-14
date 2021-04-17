@@ -7,7 +7,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
     maxVol: 11 # needs room for water
     caps: Refillable
@@ -20,7 +20,7 @@
         ingestion: true
         injection: true
         reagents:
-          - chem.Water
+          - Water
   - type: Rehydratable
     target: MonkeyMob_Content
   - type: CollisionWake
@@ -48,7 +48,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
     maxVol: 11 # needs room for water
     caps: Refillable
@@ -59,7 +59,7 @@
       ingestion: true
       injection: true
       reagents:
-        - chem.Water
+        - Water
   - type: Rehydratable
     target: CarpMob_Content
   - type: CollisionWake

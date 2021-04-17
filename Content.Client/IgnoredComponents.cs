@@ -233,6 +233,7 @@ namespace Content.Client
             "FoamSolutionAreaEffect",
             "GasFilter",
             "Recyclable",
+            "LightReplacer",
             "SecretStash",
             "Toilet",
             "ClusterFlash",

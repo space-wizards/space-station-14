@@ -73,7 +73,7 @@
 
 - type: entity
   name: bang stick 100dmg
-  parent: MeleeDebug
+  parent: MeleeDebugGib
   id: MeleeDebug100
   components:
   - type: MeleeWeapon
@@ -81,7 +81,7 @@
 
 - type: entity
   name: bang stick 200dmg
-  parent: MeleeDebug
+  parent: MeleeDebugGib
   id: MeleeDebug200
   components:
   - type: MeleeWeapon

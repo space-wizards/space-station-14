@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: CloningPod
-  name: Cloning Pod
+  name: cloning pod
   description: A Cloning Pod. 50% reliable.
   placement:
     mode: SnapgridCenter

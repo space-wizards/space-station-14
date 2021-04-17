@@ -111,56 +111,56 @@ entities:
       "1, -1": 1
     type: GridAtmosphere
 - uid: 1
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 3
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 0.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 5
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 1.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 6
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 1.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 7
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 1.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 8
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 0.5,-0.5

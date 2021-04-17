@@ -63,9 +63,10 @@ The ban reason is: ""{ban.Reason}""
             var addr = e.IP.Address;
             var userId = e.UserId;
             ImmutableArray<byte>? hwId = e.UserData.HWId;
-            if (hwId.Value.Length == 0)
+            if (hwId.Value.Length == 0 || !_cfg.GetCVar(CCVars.BanHardwareIds))
             {
                 // HWId not available for user's platform, don't look it up.
+                // Or hardware ID checks disabled.
                 hwId = null;
             }
 

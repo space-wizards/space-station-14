@@ -16,16 +16,16 @@ namespace Content.Shared.GameObjects.Components.Body.Template
     [Serializable, NetSerializable]
     public class BodyTemplatePrototype : IPrototype, ISerializationHooks
     {
-        [DataField("slots")]
+        [field: DataField("slots")]
         private Dictionary<string, BodyPartType> _slots = new();
 
-        [DataField("connections")]
+        [field: DataField("connections")]
         private Dictionary<string, List<string>> _rawConnections = new();
 
-        [DataField("layers")]
+        [field: DataField("layers")]
         private Dictionary<string, string> _layers = new();
 
-        [DataField("mechanismLayers")]
+        [field: DataField("mechanismLayers")]
         private Dictionary<string, string> _mechanismLayers = new();
 
         [ViewVariables]
@@ -44,7 +44,7 @@ namespace Content.Shared.GameObjects.Components.Body.Template
         public Dictionary<string, BodyPartType> Slots => new(_slots);
 
         [ViewVariables]
-        public Dictionary<string, List<string>> Connections { get; set; } = new();
+        public Dictionary<string, HashSet<string>> Connections { get; set; } = new();
 
         [ViewVariables]
         public Dictionary<string, string> Layers => new(_layers);
@@ -56,11 +56,11 @@ namespace Content.Shared.GameObjects.Components.Body.Template
         {
             //Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
             //The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
-            var cleanedConnections = new Dictionary<string, List<string>>();
+            var cleanedConnections = new Dictionary<string, HashSet<string>>();
 
             foreach (var targetSlotName in _slots.Keys)
             {
-                var tempConnections = new List<string>();
+                var tempConnections = new HashSet<string>();
                 foreach (var (slotName, slotConnections) in _rawConnections)
                 {
                     if (slotName == targetSlotName)

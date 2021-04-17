@@ -20,8 +20,6 @@
         !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
       mass: 5
-      layer:
-      - Clickable
       mask:
       - Impassable
       - VaultImpassable

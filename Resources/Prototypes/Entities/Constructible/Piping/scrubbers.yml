@@ -35,13 +35,14 @@
 - type: entity
   parent: ScrubberBase
   id: Scrubber
-  name: Scrubber
-  description: "Scrubs unwanted gasses out of the air."
+  name: scrubber
+  description: Scrubs unwanted gasses out of the air.
   components:
   - type: NodeContainer
     nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: South
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
   - type: PressureSiphon
     scrubberOutletDirection: South

@@ -11,6 +11,7 @@
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: rack
+    drawdepth: FloorObjects
   - type: Physics
     bodyType: Static
     fixtures:

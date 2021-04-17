@@ -7,6 +7,7 @@ using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -74,14 +75,14 @@ namespace Content.Shared.GameObjects.Components.Disposal
 
         bool ICollideSpecial.PreventCollide(IPhysBody collided)
         {
-            if (IsExiting(collided.Entity)) return true;
+            if (IsExiting(collided.Owner)) return true;
             if (!Owner.TryGetComponent(out IContainerManager? manager)) return false;
 
-            if (manager.ContainsEntity(collided.Entity))
+            if (manager.ContainsEntity(collided.Owner))
             {
-                if (!_intersecting.Contains(collided.Entity))
+                if (!_intersecting.Contains(collided.Owner))
                 {
-                    _intersecting.Add(collided.Entity);
+                    _intersecting.Add(collided.Owner);
                 }
                 return true;
             }
@@ -102,11 +103,12 @@ namespace Content.Shared.GameObjects.Components.Disposal
         {
             if(_intersecting.Count == 0) return;
 
+            // TODO: Yeah look this sucks but we'll fix it someday.
             for (var i = _intersecting.Count - 1; i >= 0; i--)
             {
                 var entity = _intersecting[i];
 
-                if (!Owner.EntityManager.IsIntersecting(entity, Owner))
+                if (IoCManager.Resolve<IEntityLookup>().IsIntersecting(entity, Owner))
                     _intersecting.RemoveAt(i);
             }
         }

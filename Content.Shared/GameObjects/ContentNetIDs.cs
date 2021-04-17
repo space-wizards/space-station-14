@@ -97,6 +97,7 @@ namespace Content.Shared.GameObjects
         public const uint DOOR = 1087;
         public const uint SPAWN_AFTER_INTERACT = 1088;
         public const uint DISASSEMBLE_ON_ACTIVATE = 1089;
+        public const uint LIGHT_REPLACER = 1090;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

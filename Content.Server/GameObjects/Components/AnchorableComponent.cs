@@ -83,6 +83,13 @@ namespace Content.Server.GameObjects.Components
             if (_physicsComponent == null)
                 return false;
 
+            var attempt = new AnchorAttemptMessage();
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, attempt, false);
+
+            if (attempt.Cancelled)
+                return false;
+
             _physicsComponent.BodyType = BodyType.Static;
 
             // Snap rotation to cardinal (multiple of 90)
@@ -99,6 +106,8 @@ namespace Content.Server.GameObjects.Components
 
             if (Snap)
                 Owner.SnapToGrid(SnapGridOffset.Center, Owner.EntityManager);
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AnchoredMessage(), false);
 
             return true;
         }
@@ -120,7 +129,16 @@ namespace Content.Server.GameObjects.Components
             if (_physicsComponent == null)
                 return false;
 
+            var attempt = new UnanchorAttemptMessage();
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, attempt, false);
+
+            if (attempt.Cancelled)
+                return false;
+
             _physicsComponent.BodyType = BodyType.Dynamic;
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new UnanchoredMessage(), false);
 
             return true;
         }
@@ -147,4 +165,10 @@ namespace Content.Server.GameObjects.Components
             return await TryToggleAnchor(eventArgs.User, eventArgs.Using);
         }
     }
+
+    public class AnchorAttemptMessage : CancellableEntityEventArgs { }
+    public class UnanchorAttemptMessage : CancellableEntityEventArgs { }
+
+    public class AnchoredMessage : EntityEventArgs {}
+    public class UnanchoredMessage : EntityEventArgs {}
 }

@@ -12,8 +12,6 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.15,-0.3,0.2,0.3" # TODO: these are placeholder values
-      layer:
-      - Clickable
   - type: PowerCell
   - type: Sprite
     netsync: false
@@ -155,6 +153,27 @@
       visuals:
         - type: PowerCellVisualizer
           prefix: s_ar
+
+- type: entity
+  name: hardsuit helmet power cell
+  description: A small cell that recharges itself intended for hardsuit helmets.
+  id: PowerCellHardsuitHelmet
+  parent: PowerCellSmallBase
+  components:
+    - type: Sprite
+      sprite: Objects/Power/PowerCells/power_cell_small_autorecharge.rsi
+      layers:
+        - state: s_ar
+    - type: PowerCell
+      maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
+      startingCharge: 600
+      autoRecharge: true
+      autoRechargeRate: 2 #recharge of 2 makes total drain 1w / s so max charge is 1:1 with time. Time to fully charge should be 5 minutes. Having recharge gives light an extended flicker period which gives you some warning to return to light area.
+    - type: Appearance
+      visuals:
+        - type: PowerCellVisualizer
+          prefix: s_ar
+
 
 - type: entity
   name: medium standard power cell
@@ -300,89 +319,3 @@
       visuals:
         - type: PowerCellVisualizer
           prefix: l_hy
-
-- type: entity
-  name: cell recharger
-  id: PowerCellRecharger
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Constructible/Power/cell_recharger.rsi
-    drawdepth: Items
-  - type: Icon
-    sprite: Constructible/Power/cell_recharger.rsi
-    state: empty
-  - type: PowerCellCharger
-    transfer_efficiency: 0.85
-  - type: PowerReceiver
-  - type: Appearance
-    visuals:
-    - type: PowerChargerVisualizer
-  - type: Anchorable
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-      mass: 5
-      mask: [Impassable]
-      layer: [Clickable]
-
-- type: entity
-  name: recharger
-  id: WeaponCapacitorRecharger
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Constructible/Power/recharger.rsi
-    drawdepth: Items
-  - type: Icon
-    sprite: Constructible/Power/recharger.rsi
-    state: empty
-  - type: WeaponCapacitorCharger
-    transfer_efficiency: 0.85
-  - type: PowerReceiver
-  - type: Appearance
-    visuals:
-    - type: PowerChargerVisualizer
-  - type: Anchorable
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-      mass: 5
-      mask: [Impassable]
-      layer: [Clickable]
-
-- type: entity
-  name: wall recharger
-  id: WallWeaponCapacitorRecharger
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Constructible/Power/wall_recharger.rsi
-    drawdepth: Items
-  - type: Icon
-    sprite: Constructible/Power/wall_recharger.rsi
-    state: empty
-  - type: WeaponCapacitorCharger
-    transfer_efficiency: 0.95
-  - type: PowerReceiver
-  - type: Appearance
-    visuals:
-    - type: PowerChargerVisualizer
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-      mass: 5
-      mask: [Impassable]
-      layer: [Clickable]

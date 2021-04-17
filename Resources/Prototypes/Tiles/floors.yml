@@ -1,5 +1,4 @@
-﻿
-- type: tile
+﻿- type: tile
   name: floor_dark
   display_name: Dark floor
   texture: "dark"
@@ -113,7 +112,7 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds:
+  footstep_sounds: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemShowroom
 
