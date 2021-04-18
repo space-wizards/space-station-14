@@ -128,12 +128,20 @@ namespace Content.Server.GameObjects.Components.GUI
                 .TryInteractionActivate(Owner, heldEntity);
         }
 
-        protected override void HandlePickupAnimation(PickupAnimationMessage msg)
+        protected override void HandlePickupAnimation(IEntity entity)
         {
-            if (msg.PickupDirection == msg.InitialPosition.ToMapPos(Owner.EntityManager))
+            var pickupDirection = Owner.Transform.WorldPosition;
+
+            var outermostEntity = entity;
+            while (outermostEntity.TryGetContainer(out var container))
+                outermostEntity = container.Owner;
+
+            var initialPosition = outermostEntity.Transform.Coordinates;
+
+            if (pickupDirection == initialPosition.ToMapPos(Owner.EntityManager))
                 return;
 
-            SendNetworkMessage(msg);
+            SendNetworkMessage(new PickupAnimationMessage(entity.Uid, pickupDirection, initialPosition));
         }
 
         #region Pull/Disarm

@@ -624,7 +624,7 @@ namespace Content.Shared.GameObjects.Components.Items
             if (checkActionBlocker && !PlayerCanPickup())
                 return false;
 
-            HandlePickupAnimation(new PickupAnimationMessage(entity.Uid, Owner.Transform.WorldPosition, entity.Transform.Coordinates));
+            HandlePickupAnimation(entity);
             PutEntityIntoHand(hand, entity);
             return true;
         }
@@ -779,7 +779,7 @@ namespace Content.Shared.GameObjects.Components.Items
 
         protected virtual void DoActivate(IEntity heldEntity) { }
 
-        protected virtual void HandlePickupAnimation(PickupAnimationMessage msg) { }
+        protected virtual void HandlePickupAnimation(IEntity entity) { }
 
         protected void EnableHand(Hand hand)
         {
