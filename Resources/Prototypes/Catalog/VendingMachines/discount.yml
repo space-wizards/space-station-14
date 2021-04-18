@@ -4,17 +4,8 @@
   description: A vending machine containing discount snacks from the infamous 'Discount Dan' franchise.
   spriteName: discount
   startingInventory:
-    Food4NoRaisins: 10
-    FoodCandy: 10
-    FoodCandyCorn: 2
-    FoodCheesieHonkers: 5
-    FoodChips: 5
-    FoodCookie: 2
-    FoodDonut: 1
-    FoodFrostedDonut: 1
-    FoodHotdog: 2
-    FoodLiquidFood: 1
-    FoodSosJerky: 5
-    FoodSpaceTwinkie: 3
-    FoodSyndiCakes: 2
-
+    FoodSnackCheesie: 3
+    FoodSnackChips: 3
+    FoodSnackBoritos: 2
+    FoodSnackPopcorn: 1
+    FoodSnackEnergybar: 2

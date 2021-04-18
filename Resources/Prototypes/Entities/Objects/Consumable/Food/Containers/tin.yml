@@ -10,10 +10,10 @@
   - type: SolutionContainer
     maxVol: 20
   - type: Sprite
-    sprite: Objects/Consumable/Food/packaged.rsi
+    sprite: Objects/Consumable/Food/snacks.rsi
     netsync: false
   - type: Item
-    sprite: Objects/Consumable/Food/packaged.rsi
+    sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
     color: gray
   - type: DamageOnLand
@@ -30,10 +30,10 @@
   description: An empty tin. Could get a bit of metal from this.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/packaged.rsi
+    sprite: Objects/Consumable/Food/snacks.rsi
     netsync: false
   - type: Item
-    sprite: Objects/Consumable/Food/packaged.rsi
+    sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
     color: gray
 
