@@ -101,6 +101,7 @@ namespace Content.Client
             IoCManager.Resolve<IStylesheetManager>().Initialize();
             IoCManager.Resolve<IScreenshotHook>().Initialize();
             IoCManager.Resolve<ChangelogManager>().Initialize();
+            IoCManager.Resolve<ViewportManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
 

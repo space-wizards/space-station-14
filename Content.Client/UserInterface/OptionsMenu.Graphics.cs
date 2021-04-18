@@ -1,4 +1,5 @@
-﻿using Robust.Client.Graphics;
+﻿using Content.Shared;
+using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -32,6 +33,11 @@ namespace Content.Client.UserInterface
             private readonly CheckBox FullscreenCheckBox;
             private readonly OptionButton LightingPresetOption;
             private readonly OptionButton _uiScaleOption;
+            private readonly CheckBox _viewportStretchCheckBox;
+            private readonly CheckBox _viewportLowResCheckBox;
+            private readonly Slider _viewportScaleSlider;
+            private readonly Control _viewportScaleBox;
+            private readonly Label _viewportScaleText;
 
             public GraphicsControl(IConfigurationManager cfg)
             {
@@ -97,11 +103,54 @@ namespace Content.Client.UserInterface
                     }
                 });
 
-                contents.AddChild(new Placeholder()
+                _viewportStretchCheckBox = new CheckBox
                 {
-                    VerticalExpand = true,
-                    PlaceholderText = Loc.GetString("ui-options-placeholder-viewport")
+                    Text = Loc.GetString("ui-options-vp-stretch")
+                };
+
+                _viewportStretchCheckBox.OnToggled += _ =>
+                {
+                    UpdateViewportScale();
+                    UpdateApplyButton();
+                };
+
+                _viewportScaleSlider = new Slider
+                {
+                    MinValue = 1,
+                    MaxValue = 5,
+                    Rounded = true,
+                    MinWidth = 200
+                };
+
+                _viewportScaleSlider.OnValueChanged += _ =>
+                {
+                    UpdateApplyButton();
+                    UpdateViewportScale();
+                };
+
+                _viewportLowResCheckBox = new CheckBox { Text = Loc.GetString("ui-options-vp-low-res")};
+                _viewportLowResCheckBox.OnToggled += OnCheckBoxToggled;
+
+                contents.AddChild(new HBoxContainer
+                {
+                    Children =
+                    {
+                        _viewportStretchCheckBox,
+                        (_viewportScaleBox = new HBoxContainer
+                        {
+                            Children =
+                            {
+                                (_viewportScaleText = new Label
+                                {
+                                    Margin = new Thickness(8, 0)
+                                }),
+                                _viewportScaleSlider,
+                            }
+                        })
+                    }
                 });
+
+                contents.AddChild(_viewportLowResCheckBox);
 
                 vBox.AddChild(contents);
 
@@ -120,6 +169,12 @@ namespace Content.Client.UserInterface
                 FullscreenCheckBox.Pressed = ConfigIsFullscreen;
                 LightingPresetOption.SelectId(GetConfigLightingQuality());
                 _uiScaleOption.SelectId(GetConfigUIScalePreset(ConfigUIScale));
+                _viewportScaleSlider.Value = _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
+                _viewportStretchCheckBox.Pressed = _cfg.GetCVar(CCVars.ViewportStretch);
+                _viewportLowResCheckBox.Pressed = !_cfg.GetCVar(CCVars.ViewportScaleRender);
+
+                UpdateViewportScale();
+                UpdateApplyButton();
 
                 AddChild(vBox);
             }
@@ -137,6 +192,9 @@ namespace Content.Client.UserInterface
                 _cfg.SetCVar(CVars.DisplayWindowMode,
                     (int) (FullscreenCheckBox.Pressed ? WindowMode.Fullscreen : WindowMode.Windowed));
                 _cfg.SetCVar(CVars.DisplayUIScale, UIScaleOptions[_uiScaleOption.SelectedId]);
+                _cfg.SetCVar(CCVars.ViewportStretch, _viewportStretchCheckBox.Pressed);
+                _cfg.SetCVar(CCVars.ViewportFixedScaleFactor, (int) _viewportScaleSlider.Value);
+                _cfg.SetCVar(CCVars.ViewportScaleRender, !_viewportLowResCheckBox.Pressed);
                 _cfg.SaveToFile();
                 UpdateApplyButton();
             }
@@ -158,7 +216,17 @@ namespace Content.Client.UserInterface
                 var isFullscreenSame = FullscreenCheckBox.Pressed == ConfigIsFullscreen;
                 var isLightingQualitySame = LightingPresetOption.SelectedId == GetConfigLightingQuality();
                 var isUIScaleSame = MathHelper.CloseTo(UIScaleOptions[_uiScaleOption.SelectedId], ConfigUIScale);
-                ApplyButton.Disabled = isVSyncSame && isFullscreenSame && isLightingQualitySame && isUIScaleSame;
+                var isVPStretchSame = _viewportStretchCheckBox.Pressed == _cfg.GetCVar(CCVars.ViewportStretch);
+                var isVPScaleSame = (int) _viewportScaleSlider.Value == _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
+                var isVPResSame = _viewportLowResCheckBox.Pressed == !_cfg.GetCVar(CCVars.ViewportScaleRender);
+
+                ApplyButton.Disabled = isVSyncSame &&
+                                       isFullscreenSame &&
+                                       isLightingQualitySame &&
+                                       isUIScaleSame &&
+                                       isVPStretchSame &&
+                                       isVPScaleSame &&
+                                       isVPResSame;
             }
 
             private bool ConfigIsFullscreen =>
@@ -222,6 +290,12 @@ namespace Content.Client.UserInterface
                 }
 
                 return 0;
+            }
+
+            private void UpdateViewportScale()
+            {
+                _viewportScaleBox.Visible = !_viewportStretchCheckBox.Pressed;
+                _viewportScaleText.Text = Loc.GetString("ui-options-vp-scale", ("scale", _viewportScaleSlider.Value));
             }
         }
     }

@@ -34,7 +34,7 @@ namespace Content.Client.Graphics.Overlays
         {
             if (_stateManager.CurrentState is IMainViewportState state)
             {
-                state.Viewport.Screenshot(image =>
+                state.Viewport.Viewport.Screenshot(image =>
                 {
                     var rgba32Image = image.CloneAs<Rgba32>(Configuration.Default);
                     _screenshotTexture = _displayManager.LoadTextureFromImage(rgba32Image);

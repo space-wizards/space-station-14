@@ -10,7 +10,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.UserInterface
@@ -20,10 +19,8 @@ namespace Content.Client.UserInterface
     /// </summary>
     public sealed class ScalingViewport : Control, IViewportControl
     {
-        [Dependency]
-        private readonly IClyde _clyde = default!;
-        [Dependency]
-        private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IClyde _clyde = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
 
         // Internal viewport creation is deferred.
         private IClydeViewport? _viewport;
@@ -35,6 +32,8 @@ namespace Content.Client.UserInterface
         private int _fixedRenderScale = 1;
 
         private readonly List<CopyPixelsDelegate<Rgba32>> _queuedScreenshots = new();
+
+        public int CurrentRenderScale => _curRenderScale;
 
         /// <summary>
         ///     The eye to render.
@@ -66,6 +65,10 @@ namespace Content.Client.UserInterface
                 InvalidateViewport();
             }
         }
+
+        // Do not need to InvalidateViewport() since it doesn't affect viewport creation.
+
+        [ViewVariables(VVAccess.ReadWrite)] public Vector2i? FixedStretchSize { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public ScalingViewportStretchMode StretchMode
@@ -172,14 +175,24 @@ namespace Content.Client.UserInterface
 
             var vpSize = _viewport!.Size;
             var ourSize = (Vector2) PixelSize;
-            var (ratioX, ratioY) = ourSize / vpSize;
-            var ratio = Math.Min(ratioX, ratioY);
 
-            var size = vpSize * ratio;
-            // Size
-            var pos = (ourSize - size) / 2;
+            if (FixedStretchSize == null)
+            {
+                var (ratioX, ratioY) = ourSize / vpSize;
+                var ratio = Math.Min(ratioX, ratioY);
 
-            return (UIBox2i) UIBox2.FromDimensions(pos, size);
+                var size = vpSize * ratio;
+                // Size
+                var pos = (ourSize - size) / 2;
+
+                return (UIBox2i) UIBox2.FromDimensions(pos, size);
+            }
+            else
+            {
+                // Center only, no scaling.
+                var pos = (ourSize - FixedStretchSize.Value) / 2;
+                return (UIBox2i) UIBox2.FromDimensions(pos, FixedStretchSize.Value);
+            }
         }
 
         private void RegenerateViewport()

@@ -10,6 +10,6 @@ namespace Content.Client.State
     /// </remarks>
     public interface IMainViewportState
     {
-        public ScalingViewport Viewport { get; }
+        public MainViewport Viewport { get; }
     }
 }

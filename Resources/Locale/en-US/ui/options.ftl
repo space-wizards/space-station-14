@@ -32,7 +32,9 @@ ui-options-scale-125 = 125%
 ui-options-scale-150 = 150%
 ui-options-scale-175 = 175%
 ui-options-scale-200 = 200%
-ui-options-placeholder-viewport = Viewport settings
+ui-options-vp-stretch = Stretch viewport to fit game window?
+ui-options-vp-scale = Fixed viewport scale: x{ $scale }
+ui-options-vp-low-res = Low-resolution viewport?
 
 ## Controls menu
 ui-options-binds-reset-all = Reset ALL keybinds

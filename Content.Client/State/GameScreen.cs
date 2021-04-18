@@ -14,6 +14,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -21,6 +22,8 @@ namespace Content.Client.State
 {
     public class GameScreen : GameScreenBase, IMainViewportState
     {
+        public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
+
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
@@ -37,19 +40,19 @@ namespace Content.Client.State
         private bool _oocEnabled;
         private bool _adminOocEnabled;
 
-        public ScalingViewport Viewport { get; private set; } = default!;
+        public MainViewport Viewport { get; private set; } = default!;
 
         public override void Startup()
         {
             base.Startup();
 
             _gameChat = new ChatBox();
-            Viewport = new ScalingViewport
+            Viewport = new MainViewport
             {
-                ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15),
-                AlwaysRender = true,
-                RenderScaleMode = ScalingViewportRenderScaleMode.CeilInt,
-                MouseFilter = Control.MouseFilterMode.Stop
+                Viewport =
+                {
+                    ViewportSize = ViewportSize
+                }
             };
 
             _userInterfaceManager.StateRoot.AddChild(Viewport);
@@ -82,7 +85,7 @@ namespace Content.Client.State
 
             SetupPresenters();
 
-            _eyeManager.MainViewport = Viewport;
+            _eyeManager.MainViewport = Viewport.Viewport;
         }
 
         public override void Shutdown()
@@ -194,7 +197,7 @@ namespace Content.Client.State
         {
             base.FrameUpdate(e);
 
-            Viewport.Eye = _eyeManager.CurrentEye;
+            Viewport.Viewport.Eye = _eyeManager.CurrentEye;
         }
     }
 }

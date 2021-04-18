@@ -36,7 +36,7 @@ namespace Content.Client
             {
                 if (_stateManager.CurrentState is IMainViewportState state)
                 {
-                    state.Viewport.Screenshot(Take);
+                    state.Viewport.Viewport.Screenshot(Take);
                 }
                 else
                 {
