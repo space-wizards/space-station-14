@@ -687,13 +687,13 @@ namespace Content.Shared.GameObjects.Components.Items
         /// </summary>
         public bool TryMoveHeldEntityToActiveHand(string handName, bool checkActionBlocker = true)
         {
-            if (!TryGetHand(handName, out var hand))
+            if (!TryGetHand(handName, out var hand) || !TryGetActiveHand(out var activeHand))
                 return false;
 
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return false;
 
-            if (!TryGetActiveHand(out var activeHand) || activeHand.HeldEntity != null)
+            if (!CanInsertEntityIntoHand(activeHand, heldEntity) || !CanRemoveHeldEntityFromHand(hand))
                 return false;
 
             if (checkActionBlocker && (!PlayerCanDrop() || !PlayerCanPickup()))

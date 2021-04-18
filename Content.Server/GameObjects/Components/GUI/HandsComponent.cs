@@ -373,26 +373,4 @@ namespace Content.Server.GameObjects.Components.GUI
 
         #endregion
     }
-
-    //TODO: Make this used
-    public class HandEnabledMsg : ComponentMessage
-    {
-        public string Name { get; }
-
-        public HandEnabledMsg(string name)
-        {
-            Name = name;
-        }
-    }
-
-    //TODO: Make this used
-    public class HandDisabledMsg : ComponentMessage
-    {
-        public string Name { get; }
-
-        public HandDisabledMsg(string name)
-        {
-            Name = name;
-        }
-    }
 }
