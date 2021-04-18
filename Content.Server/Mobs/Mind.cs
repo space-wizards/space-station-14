@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
+using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles;
 using Content.Server.Objectives;
 using Content.Server.Players;
@@ -208,8 +209,7 @@ namespace Content.Server.Mobs
                 }
                 else if (component.HasMind)
                 {
-                    // TODO: Kick them out, maybe?
-                    throw new ArgumentException("That entity already has a mind.", nameof(entity));
+                    IoCManager.Resolve<IGameTicker>().OnGhostAttempt(component.Mind!, false);
                 }
 
                 if (entity.TryGetComponent(out IActorComponent? actor))

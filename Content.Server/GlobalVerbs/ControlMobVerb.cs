@@ -56,7 +56,6 @@ namespace Content.Server.GlobalVerbs
 
             var targetMind = target.GetComponent<MindComponent>();
 
-            targetMind.Mind?.TransferTo(null);
             userMind?.TransferTo(target);
         }
     }
