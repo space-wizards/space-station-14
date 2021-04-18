@@ -18,9 +18,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         [ViewVariables] [DataField("AddedComponent")] public string InduceComponent { get; set; } = "RadiatonPulse";
 
-        public Type RegisteredTargetType;
+        public Type? RegisteredTargetType;
 
-        public Type RegisteredInduceType;
+        public Type? RegisteredInduceType;
       
 
         public override void Initialize()
@@ -49,12 +49,6 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Component compInducedFinal = (Component) componentInduced;
             compInducedFinal.Owner = target;
             target.EntityManager.ComponentManager.AddComponent(target, compInducedFinal);
-        }
-
-        // Projectile should handle the deleting
-        void ICollideBehavior.PostCollide(int collisionCount)
-        {
-            return;
         }
     }
 }

@@ -56,7 +56,6 @@ namespace Content.Server.Actions
                 }
                 spawnedSpell
                 .GetComponent<IPhysicsComponent>()
-                .EnsureController<BulletController>()
                 .LinearVelocity = direction * VelocityMult;
             }
               spawnedSpell.Transform.LocalRotation = args.Performer.Transform.LocalRotation;

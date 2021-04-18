@@ -34,7 +34,7 @@ namespace Content.Server.Actions
             var casterCoords = caster.Transform.Coordinates;
             var spawnedProto = caster.EntityManager.SpawnEntity(ItemProto, casterCoords);
             caster.PopupMessageEveryone(CastMessage);
-            args.PerformerActions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown));
+            args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown));
             caster.GetComponent<HandsComponent>().PutInHandOrDrop(spawnedProto.GetComponent<ItemComponent>());
         }
     }
