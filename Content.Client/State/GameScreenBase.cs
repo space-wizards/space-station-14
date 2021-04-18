@@ -2,10 +2,10 @@
 using System.Collections.Immutable;
 using System.Linq;
 using Content.Client.GameObjects.Components;
+using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
@@ -69,10 +69,16 @@ namespace Content.Client.State
                 return;
 
             IEntity? entityToClick = null;
+            var renderScale = 1;
             if (UserInterfaceManager.CurrentlyHovered is IViewportControl vp)
             {
                 var mousePosWorld = vp.ScreenToMap(InputManager.MouseScreenPosition);
                 entityToClick = GetEntityUnderPosition(mousePosWorld);
+
+                if (vp is ScalingViewport svp)
+                {
+                    renderScale = svp.CurrentRenderScale;
+                }
             }
 
             var inRange = false;
@@ -95,7 +101,7 @@ namespace Content.Client.State
             {
                 if (entityToClick != null && entityToClick.TryGetComponent(out outline))
                 {
-                    outline.UpdateInRange(inRange);
+                    outline.UpdateInRange(inRange, renderScale);
                 }
 
                 return;
@@ -111,7 +117,7 @@ namespace Content.Client.State
 
             if (_lastHoveredEntity != null && _lastHoveredEntity.TryGetComponent(out outline))
             {
-                outline.OnMouseEnter(inRange);
+                outline.OnMouseEnter(inRange, renderScale);
             }
         }
 
