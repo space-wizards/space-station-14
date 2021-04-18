@@ -903,3 +903,8 @@ Entries:
   - {message: 'Names for tanks, solar stuff and more are fixed.', type: Fix}
   id: 163
   time: '2021-04-16T05:28:09.0000000+00:00'
+- author: MehimoNemo
+  changes:
+  - {message: Thrown PDAs and IDs now open doors. Try it out!, type: Add}
+  id: 164
+  time: '2021-04-18T08:03:31.0000000+00:00'
