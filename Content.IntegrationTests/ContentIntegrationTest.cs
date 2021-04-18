@@ -28,6 +28,8 @@ namespace Content.IntegrationTests
                 FailureLogLevel = LogLevel.Warning
             };
 
+            options.ContentStart = true;
+
             options.ContentAssemblies = new[]
             {
                 typeof(Shared.EntryPoint).Assembly,
@@ -68,6 +70,8 @@ namespace Content.IntegrationTests
             {
                 FailureLogLevel = LogLevel.Warning
             };
+
+            options.ContentStart = true;
 
             options.ContentAssemblies = new[]
             {
