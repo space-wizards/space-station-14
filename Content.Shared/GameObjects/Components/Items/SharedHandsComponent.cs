@@ -564,6 +564,9 @@ namespace Content.Shared.GameObjects.Components.Items
         /// </summary>
         protected bool CanInsertEntityIntoHand(Hand hand, IEntity entity)
         {
+            if (!hand.Enabled)
+                return false;
+
             var handContainer = hand.Container;
             if (handContainer == null)
                 return false;
