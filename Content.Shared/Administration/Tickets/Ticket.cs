@@ -49,6 +49,11 @@ namespace Content.Shared.Administration.Tickets
         {
             return string.IsNullOrEmpty(PlayerUsername) ? TargetPlayer.ToString() : PlayerUsername;
         }
+
+        public string GetAdminName()
+        {
+            return string.IsNullOrEmpty(AdminUsername) ? ClaimedAdmin?.ToString() ?? "Unclaimed" : AdminUsername;
+        }
     }
 
     [NetSerializable, Serializable]

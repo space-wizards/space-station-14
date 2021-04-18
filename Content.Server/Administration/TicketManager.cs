@@ -149,10 +149,56 @@ namespace Content.Server.Administration
             var msg = new TicketMessage(time.Ticks, time.Offset.Ticks, author.ToString(), ticket.ClaimedAdmin == author, message);
             ticket.Messages.Add(msg);
             var euis = TicketEuis[id];
+            var receiveMessage = new TicketsEuiMsg.TicketReceiveMessage(msg);
             foreach (var eui in euis)
             {
-                var receiveMessage = new TicketsEuiMsg.TicketReceiveMessage(msg);
                 eui.SendMessage(receiveMessage);
+                //TODO notify the user if their UI is closed
+            }
+        }
+
+        public void ChangeStatus(int id, NetUserId author, TicketStatus status)
+        {
+            var ticket = Tickets[id];
+            if (ticket.Status == TicketStatus.Closed || ticket.Status == TicketStatus.Resolved)
+            {
+                return;
+            }
+            if ((ticket.Status == TicketStatus.Claimed && ticket.ClaimedAdmin != author) || !_playerManager.TryGetSessionById(author, out var session) || !_adminManager.HasAdminFlag(session, AdminFlags.Admin))
+            {
+                return;
+            }
+
+            switch (status)
+            {
+                case TicketStatus.Claimed:
+                {
+                    if (author == ticket.TargetPlayer) return;
+                    ticket.Status = TicketStatus.Claimed;
+                    ticket.ClaimedAdmin = author;
+                    ticket.AdminUsername = session.ConnectedClient.UserName;
+                    _chatManager.SendAdminAnnouncement(
+                        $"Ticket {ticket.Id} claimed by: {session.ConnectedClient.UserName}");
+                    NewMessage(ticket.Id, author, $"Ticket claimed by: {session.ConnectedClient.UserName}");
+                    break;
+                }
+                case TicketStatus.Unclaimed:
+                {
+                    ticket.Status = TicketStatus.Unclaimed;
+                    ticket.ClaimedAdmin = null;
+                    ticket.AdminUsername = string.Empty;
+                    _chatManager.SendAdminAnnouncement(
+                        $"{session.ConnectedClient.UserName} unclaimed Ticket {ticket.Id}");
+                    NewMessage(ticket.Id, author, "Ticket unclaimed.");
+                    break;
+                }
+            }
+
+            var euis = TicketEuis[id];
+            var statusMessage = new TicketsEuiMsg.TicketChangeStatus(ticket.Status, author, session.ConnectedClient.UserName);
+            foreach (var eui in euis)
+            {
+                eui.SendMessage(statusMessage);
                 //TODO notify the user if their UI is closed
             }
         }

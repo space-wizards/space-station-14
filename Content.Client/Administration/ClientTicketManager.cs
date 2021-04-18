@@ -55,5 +55,10 @@ namespace Content.Client.Administration
         {
             return;
         }
+
+        public void ChangeStatus(int id, NetUserId author, TicketStatus status)
+        {
+            return;
+        }
     }
 }

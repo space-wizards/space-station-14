@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Shared.Eui;
 using Content.Shared.GameObjects.Components.Observer.GhostRoles;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration.Tickets
@@ -37,6 +38,21 @@ namespace Content.Shared.Administration.Tickets
             public TicketReceiveMessage(TicketMessage _message)
             {
                 Message = _message;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public sealed class TicketChangeStatus : EuiMessageBase
+        {
+            public TicketStatus Status;
+            public NetUserId? Admin;
+            public string? AdminUsername;
+
+            public TicketChangeStatus(TicketStatus status, NetUserId? admin = null, string? username = null)
+            {
+                Status = status;
+                Admin = admin;
+                AdminUsername = username;
             }
         }
 

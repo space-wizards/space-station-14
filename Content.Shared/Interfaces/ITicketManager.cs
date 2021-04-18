@@ -18,5 +18,7 @@ namespace Content.Shared.Interfaces
         Ticket? GetTicket(int id);
 
         void NewMessage(int id, NetUserId author, string message);
+
+        void ChangeStatus(int id, NetUserId author, TicketStatus status);
     }
 }

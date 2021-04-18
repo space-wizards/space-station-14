@@ -22,6 +22,7 @@ namespace Content.Client.Administration
         public Ticket? Ticket;
         public IPlayerSession? Session;
         public bool IsAdmin = false;
+        public TicketStatus WindowStatus = TicketStatus.Unclaimed;
 
         public VBoxContainer Messages;
         public readonly LineEdit MessageInput;
@@ -36,8 +37,9 @@ namespace Content.Client.Administration
             };
             var textLabel = new RichTextLabel();
             var myTime = new DateTimeOffset(message.time, new TimeSpan(message.offset));
+            var name = message.admin ? Ticket?.GetAdminName() : Ticket?.GetPlayerName();
             var text =
-                $"[{myTime.ToLocalTime().ToString("HH:mm:ss")}] {Ticket?.GetPlayerName() ?? "Unknown"}: {message.message}";
+                $"[{myTime.ToLocalTime().ToString("HH:mm:ss")}] {name ?? "Unknown"}: {message.message}";
             if (message.admin)
             {
                 textLabel.SetMessage(FormattedMessage.FromMarkup("[color=#ff0000]" + FormattedMessage.EscapeText(text) + "[/color]"));
@@ -47,7 +49,6 @@ namespace Content.Client.Administration
                 textLabel.SetMessage(text);
             }
             hBox.AddChild(textLabel);
-            //outerBox.AddChild(new HSeparator());
 
             Messages.AddChild(hBox);
             Messages.AddChild(new HSeparator());
@@ -74,7 +75,7 @@ namespace Content.Client.Administration
             }
             MessageSend.Disabled = !CanMessage();
             ClaimTicketButton.Text = Loc.GetString("Claim");
-            if (Ticket.Status == TicketStatus.Claimed)
+            if (WindowStatus == TicketStatus.Claimed)
             {
                 if (Ticket.ClaimedAdmin == Session.UserId)
                 {
@@ -90,9 +91,9 @@ namespace Content.Client.Administration
             }
             else
             {
-                if (Ticket.Status == TicketStatus.Unclaimed)
+                if (WindowStatus == TicketStatus.Unclaimed)
                 {
-                    ClaimTicketButton.Disabled = !IsAdmin;
+                    ClaimTicketButton.Disabled = !IsAdmin || Session.UserId == Ticket.TargetPlayer;
                 }
                 else
                 {
@@ -106,7 +107,7 @@ namespace Content.Client.Administration
 
         public bool CanMessage()
         {
-            if (Ticket is null || Session is null || Ticket.Status == TicketStatus.Closed || Ticket.Status == TicketStatus.Resolved)
+            if (Ticket is null || Session is null || WindowStatus == TicketStatus.Closed || WindowStatus == TicketStatus.Resolved)
             {
                 return false;
             }

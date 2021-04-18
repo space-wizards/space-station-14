@@ -1,4 +1,5 @@
-﻿using Content.Server.Eui;
+﻿using System;
+using Content.Server.Eui;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Tickets;
@@ -44,12 +45,16 @@ namespace Content.Server.Administration
                     }
                     break;
                 }
+                case TicketsEuiMsg.TicketChangeStatus message:
+                {
+                    _ticketManager.ChangeStatus(TicketId, Owner, message.Status);
+                    break;
+                }
+                default:
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
             }
-
-            //StateDirty();
         }
-
-        //public override void M
-
     }
 }
