@@ -225,7 +225,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (firstOccupiedHand == null)
                 return;
 
-            DisableHand(firstOccupiedHand);
+            EnableHand(firstOccupiedHand);
         }
 
         #endregion
