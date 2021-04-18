@@ -119,13 +119,13 @@ namespace Content.Server.GameObjects.Components.GUI
         protected override void DoActivate(IEntity heldEntity)
         {
             _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .TryUseInteraction(Owner, heldEntity);
+                .TryInteractionActivate(Owner, heldEntity);
         }
 
         protected override void DoUse(IEntity heldEntity)
         {
             _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .TryInteractionActivate(Owner, heldEntity);
+                .TryUseInteraction(Owner, heldEntity);
         }
 
         protected override void HandlePickupAnimation(IEntity entity)
