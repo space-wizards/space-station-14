@@ -61,7 +61,7 @@ namespace Content.Client.Chat
         /// <summary>
         /// Will be Unspecified if set to Console
         /// </summary>
-        public ChatChannel _selectedChannel;
+        public ChatChannel SelectedChannel;
 
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
@@ -92,7 +92,7 @@ namespace Content.Client.Chat
         private byte _clampIn;
         // currently known selectable channels as provided by ChatManager,
         // never contains Unspecified (which corresponds to Console which is always available)
-        public List<ChatChannel> _selectableChannels = new();
+        public List<ChatChannel> SelectableChannels = new();
 
         /// <summary>
         /// When lobbyMode is false, will position / add to correct location in StateRoot and
@@ -115,50 +115,47 @@ namespace Content.Client.Chat
             // being freely resizable within those bounds.
             _clyde = IoCManager.Resolve<IClyde>();
             MouseFilter = MouseFilterMode.Stop;
+            LayoutContainer.SetMarginLeft(this, 4);
+            LayoutContainer.SetMarginRight(this, 4);
 
             AddChild(new PanelContainer
             {
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#25252aaa")},
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                VerticalExpand = true,
+                HorizontalExpand = true,
                 Children =
                 {
                     new VBoxContainer
                     {
                         Children =
                         {
-                            new MarginContainer
+                            (Contents = new OutputPanel
                             {
-                                MarginLeftOverride = 4, MarginRightOverride = 4,
-                                SizeFlagsVertical = SizeFlags.FillExpand,
-                                Children =
-                                {
-                                    (Contents = new OutputPanel())
-                                }
-                            },
+                                VerticalExpand = true,
+                            }),
                             new PanelContainer
                             {
                                 StyleClasses = { StyleNano.StyleClassChatSubPanel },
-                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                HorizontalExpand = true,
                                 Children =
                                 {
                                     new HBoxContainer
                                     {
-                                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                        HorizontalExpand = true,
                                         SeparationOverride = 4,
                                         Children =
                                         {
                                             (_channelSelector = new ChannelSelectorButton
                                             {
                                                 StyleClasses = { StyleNano.StyleClassChatChannelSelectorButton },
-                                                CustomMinimumSize = (75, 0),
+                                                MinWidth = 75,
                                                 Text = Loc.GetString("hud-chatbox-ooc"),
                                                 ToggleMode = true
                                             }),
                                             (Input = new HistoryLineEdit
                                             {
                                                 PlaceHolder = Loc.GetString("hud-chatbox-info"),
-                                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                                HorizontalExpand = true,
                                                 StyleClasses = { StyleNano.StyleClassChatLineEdit }
                                             }),
                                             (_filterButton = new FilterButton
@@ -187,7 +184,7 @@ namespace Content.Client.Chat
                             {
                                 Children =
                                 {
-                                    new Control{CustomMinimumSize = (10,0)},
+                                    new Control{MinSize = (10,0)},
                                     (_filterVBox = new VBoxContainer
                                     {
                                         SeparationOverride = 10
@@ -284,7 +281,7 @@ namespace Content.Client.Chat
         public void SetChannelPermissions(List<ChatChannel> selectableChannels, IReadOnlySet<ChatChannel> filterableChannels,
             IReadOnlyDictionary<ChatChannel, bool> channelFilters, IReadOnlyDictionary<ChatChannel, byte> unreadMessages)
         {
-            _selectableChannels = selectableChannels;
+            SelectableChannels = selectableChannels;
             // update the channel selector
             UnsubChannelItems();
             _channelSelectorHBox.RemoveAllChildren();
@@ -308,7 +305,7 @@ namespace Content.Client.Chat
                 _savedSelectedChannel = null;
             }
 
-            if (!selectableChannels.Contains(_selectedChannel) && _selectedChannel != ChatChannel.Unspecified)
+            if (!selectableChannels.Contains(SelectedChannel) && SelectedChannel != ChatChannel.Unspecified)
             {
                 // our previously selected channel no longer exists, default back to OOC, which should always be available
                 if (selectableChannels.Contains(ChatChannel.OOC))
@@ -322,7 +319,7 @@ namespace Content.Client.Chat
             }
             else
             {
-                SafelySelectChannel(_selectedChannel);
+                SafelySelectChannel(SelectedChannel);
             }
 
             // update the channel filters
@@ -453,9 +450,9 @@ namespace Content.Client.Chat
         private bool SafelySelectChannel(ChatChannel toSelect)
         {
             if (toSelect == ChatChannel.Unspecified ||
-                _selectableChannels.Contains(toSelect))
+                SelectableChannels.Contains(toSelect))
             {
-                _selectedChannel = toSelect;
+                SelectedChannel = toSelect;
                 _channelSelector.Text = ChannelSelectorName(toSelect);
                 return true;
             }
@@ -683,7 +680,7 @@ namespace Content.Client.Chat
             if (trimmed.Length == 0 || trimmed.Length > 1) return;
 
             var channel = GetChannelFromPrefix(trimmed[0]);
-            var prevChannel = _selectedChannel;
+            var prevChannel = SelectedChannel;
             if (channel == null || !SafelySelectChannel(channel.Value)) return;
             // we ate the prefix and auto-switched (temporarily) to the channel with that prefix
             _savedSelectedChannel = prevChannel;
@@ -758,7 +755,7 @@ namespace Content.Client.Chat
 
             if (!string.IsNullOrWhiteSpace(args.Text))
             {
-                TextSubmitted?.Invoke(this, GetPrefixFromChannel(_selectedChannel)
+                TextSubmitted?.Invoke(this, GetPrefixFromChannel(SelectedChannel)
                                             + args.Text);
             }
 

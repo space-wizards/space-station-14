@@ -118,14 +118,9 @@ namespace Content.Client.State
 
         internal static void CycleChatChannel(ChatBox chat, bool forward)
         {
-            if (chat.UserInterfaceManager.KeyboardFocused != null)
-            {
-                return;
-            }
-
             chat.Input.IgnoreNext = true;
-            var channels = chat._selectableChannels;
-            var idx = channels.IndexOf(chat._selectedChannel);
+            var channels = chat.SelectableChannels;
+            var idx = channels.IndexOf(chat.SelectedChannel);
             if (forward)
             {
                 idx++;
