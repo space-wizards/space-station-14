@@ -4,18 +4,21 @@ using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Damage
 {
     [RegisterComponent]
-    public class DamageOnHighSpeedImpactComponent : Component, ICollideBehavior
+    public class DamageOnHighSpeedImpactComponent : Component, IStartCollide
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -42,16 +45,16 @@ namespace Content.Server.GameObjects.Components.Damage
         public float DamageCooldown { get; set; } = 2f;
         private TimeSpan _lastHit = TimeSpan.Zero;
 
-        public void CollideWith(IEntity collidedWith)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-            if (!Owner.TryGetComponent(out IPhysicsComponent physics) || !Owner.TryGetComponent(out IDamageableComponent damageable)) return;
+            if (!Owner.TryGetComponent(out IDamageableComponent? damageable)) return;
 
-            var speed = physics.LinearVelocity.Length;
+            var speed = ourFixture.Body.LinearVelocity.Length;
 
             if (speed < MinimumSpeed) return;
 
-            if(!string.IsNullOrEmpty(SoundHit))
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(SoundHit, collidedWith, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
+            if (!string.IsNullOrEmpty(SoundHit))
+                SoundSystem.Play(Filter.Pvs(otherFixture.Body.Owner), SoundHit, otherFixture.Body.Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
 
             if ((_gameTiming.CurTime - _lastHit).TotalSeconds < DamageCooldown)
                 return;
@@ -60,10 +63,10 @@ namespace Content.Server.GameObjects.Components.Damage
 
             var damage = (int) (BaseDamage * (speed / MinimumSpeed) * Factor);
 
-            if (Owner.TryGetComponent(out StunnableComponent stun) && _robustRandom.Prob(StunChance))
+            if (Owner.TryGetComponent(out StunnableComponent? stun) && _robustRandom.Prob(StunChance))
                 stun.Stun(StunSeconds);
 
-            damageable.ChangeDamage(Damage, damage, false, collidedWith);
+            damageable.ChangeDamage(Damage, damage, false, otherFixture.Body.Owner);
         }
     }
 }

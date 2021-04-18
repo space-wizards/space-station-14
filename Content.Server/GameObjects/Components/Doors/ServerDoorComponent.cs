@@ -26,18 +26,29 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Physics.Broadphase;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
+using Content.Server.GameObjects.Components.Construction;
+using Robust.Shared.Containers;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.GameObjects.Components.Doors
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedDoorComponent))]
-    public class ServerDoorComponent : SharedDoorComponent, IActivate, ICollideBehavior, IInteractUsing, IMapInit
+    public class ServerDoorComponent : SharedDoorComponent, IActivate, IStartCollide, IInteractUsing, IMapInit
     {
         [ComponentDependency]
         private readonly IDoorCheck? _doorCheck = null;
+
+        [ViewVariables]
+        [DataField("board")]
+        private string? _boardPrototype;
 
         public override DoorState State
         {
@@ -131,7 +142,8 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         /// Whether the door can ever be welded shut.
         /// </summary>
-        private bool _weldable;
+        [DataField("weldable")]
+        private bool _weldable = true;
 
         /// <summary>
         /// Whether the door can currently be welded.
@@ -160,6 +172,8 @@ namespace Content.Server.GameObjects.Components.Doors
                 }
                 SetAppearance(DoorVisualState.Welded);
             }
+
+            CreateDoorElectronicsBoard();
         }
 
         public override void OnRemove()
@@ -181,6 +195,8 @@ namespace Content.Server.GameObjects.Components.Doors
                 }
                 QuickOpen();
             }
+
+            CreateDoorElectronicsBoard();
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -200,7 +216,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        void ICollideBehavior.CollideWith(IEntity entity)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
             if (State != DoorState.Closed)
             {
@@ -214,23 +230,8 @@ namespace Content.Server.GameObjects.Components.Doors
 
             // Disabled because it makes it suck hard to walk through double doors.
 
-            if (entity.HasComponent<IBody>())
-            {
-                if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
-
-                /*
-                // TODO: temporary hack to fix the physics system raising collision events akwardly.
-                // E.g. when moving parallel to a door by going off the side of a wall.
-                var (walking, sprinting) = mover.VelocityDir;
-                // Also TODO: walking and sprint dir are added together here
-                // instead of calculating their contribution correctly.
-                var dotProduct = Vector2.Dot((sprinting + walking).Normalized, (entity.Transform.WorldPosition - Owner.Transform.WorldPosition).Normalized);
-                if (dotProduct <= -0.85f)
-                    TryOpen(entity);
-                */
-
-                TryOpen(entity);
-            }
+                TryOpen(otherFixture.Body.Owner);
+            
         }
 
         #region Opening
@@ -243,7 +244,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 if (user.TryGetComponent(out HandsComponent? hands) && hands.Count == 0)
                 {
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/bang.ogg", Owner,
+                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/bang.ogg", Owner,
                                                                    AudioParams.Default.WithVolume(-2));
                 }
             }
@@ -410,18 +411,14 @@ namespace Content.Server.GameObjects.Components.Doors
         {
             var safety = SafetyCheck();
 
-            if (safety && PhysicsComponent != null)
+            if (safety && Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
-                var physics = IoCManager.Resolve<IPhysicsManager>();
+                var broadPhaseSystem = EntitySystem.Get<SharedBroadPhaseSystem>();
 
-                foreach(var e in physics.GetCollidingEntities(Owner.Transform.MapID, PhysicsComponent.WorldAABB))
+                // Use this version so we can ignore the CanCollide being false
+                foreach(var e in broadPhaseSystem.GetCollidingEntities(physicsComponent.Owner.Transform.MapID, physicsComponent.GetWorldAABB()))
                 {
-                    if (e.CanCollide &&
-                       ((PhysicsComponent.CollisionMask & e.CollisionLayer) != 0x0 ||
-                        (PhysicsComponent.CollisionLayer & e.CollisionMask) != 0x0))
-                    {
-                        return true;
-                    }
+                    if ((physicsComponent.CollisionMask & e.CollisionLayer) != 0 && broadPhaseSystem.IntersectionPercent(physicsComponent, e) > 0.01f) return true;
                 }
             }
             return false;
@@ -493,26 +490,25 @@ namespace Content.Server.GameObjects.Components.Doors
                 return false;
             }
 
-            var doorAABB = PhysicsComponent.WorldAABB;
+            var doorAABB = PhysicsComponent.GetWorldAABB();
             var hitsomebody = false;
 
             // Crush
             foreach (var e in collidingentities)
             {
-                if (!e.TryGetComponent(out StunnableComponent? stun)
-                    || !e.TryGetComponent(out IDamageableComponent? damage)
-                    || !e.TryGetComponent(out IPhysicsComponent? otherBody))
+                if (!e.Owner.TryGetComponent(out StunnableComponent? stun)
+                    || !e.Owner.TryGetComponent(out IDamageableComponent? damage))
                 {
                     continue;
                 }
 
-                var percentage = otherBody.WorldAABB.IntersectPercentage(doorAABB);
+                var percentage = e.GetWorldAABB().IntersectPercentage(doorAABB);
 
                 if (percentage < 0.1f)
                     continue;
 
                 hitsomebody = true;
-                CurrentlyCrushing.Add(e.Uid);
+                CurrentlyCrushing.Add(e.Owner.Uid);
 
                 damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
                 stun.Paralyze(DoorStunTime);
@@ -637,6 +633,39 @@ namespace Content.Server.GameObjects.Components.Doors
                 _beingWelded = false;
             }
             return false;
+        }
+
+        /// <summary>
+        ///     Creates the corresponding door electronics board on the door.
+        ///     This exists so when you deconstruct doors that were serialized with the map,
+        ///     you can retrieve the door electronics board.
+        /// </summary>
+        private void CreateDoorElectronicsBoard()
+        {
+            // Ensure that the construction component is aware of the board container.
+            if (Owner.TryGetComponent(out ConstructionComponent? construction))
+                construction.AddContainer("board");
+
+            // We don't do anything if this is null or empty.
+            if (string.IsNullOrEmpty(_boardPrototype))
+                return;
+
+            var container = Owner.EnsureContainer<Container>("board", out var existed);
+
+            return;
+            /* // TODO ShadowCommander: Re-enable when access is added to boards. Requires map update.
+            if (existed)
+            {
+                // We already contain a board. Note: We don't check if it's the right one!
+                if (container.ContainedEntities.Count != 0)
+                    return;
+            }
+
+            var board = Owner.EntityManager.SpawnEntity(_boardPrototype, Owner.Transform.Coordinates);
+
+            if(!container.Insert(board))
+                Logger.Warning($"Couldn't insert board {board} into door {Owner}!");
+            */
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

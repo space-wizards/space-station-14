@@ -32,8 +32,8 @@ namespace Content.Client.State
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
-        private MainMenuControl _mainMenuControl;
-        private OptionsMenu _optionsMenu;
+        private MainMenuControl _mainMenuControl = default!;
+        private OptionsMenu _optionsMenu = default!;
         private bool _isConnecting;
 
         // ReSharper disable once InconsistentNaming
@@ -132,7 +132,7 @@ namespace Content.Client.State
             }
         }
 
-        private void RunLevelChanged(object obj, RunLevelChangedEventArgs args)
+        private void RunLevelChanged(object? obj, RunLevelChangedEventArgs args)
         {
             if (args.NewLevel == ClientRunLevel.Initialize)
             {
@@ -179,7 +179,7 @@ namespace Content.Client.State
             }
         }
 
-        private void _onConnectFailed(object _, NetConnectFailArgs args)
+        private void _onConnectFailed(object? _, NetConnectFailArgs args)
         {
             _userInterfaceManager.Popup($"Failed to connect:\n{args.Reason}");
             _netManager.ConnectFailed -= _onConnectFailed;
@@ -200,24 +200,19 @@ namespace Content.Client.State
             private readonly IResourceCache _resourceCache;
             private readonly IConfigurationManager _configurationManager;
 
-            public LineEdit UserNameBox { get; private set; }
-            public Button JoinPublicServerButton { get; private set; }
-            public LineEdit AddressBox { get; private set; }
-            public Button DirectConnectButton { get; private set; }
-            public Button OptionsButton { get; private set; }
-            public Button QuitButton { get; private set; }
-            public Label VersionLabel { get; private set; }
+            public LineEdit UserNameBox { get; }
+            public Button JoinPublicServerButton { get; }
+            public LineEdit AddressBox { get; }
+            public Button DirectConnectButton { get; }
+            public Button OptionsButton { get; }
+            public Button QuitButton { get; }
+            public Label VersionLabel { get; }
 
             public MainMenuControl(IResourceCache resCache, IConfigurationManager configMan)
             {
                 _resourceCache = resCache;
                 _configurationManager = configMan;
 
-                PerformLayout();
-            }
-
-            private void PerformLayout()
-            {
                 LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
 
                 var layout = new LayoutContainer();

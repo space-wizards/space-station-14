@@ -15,9 +15,12 @@ namespace Content.Server.Mobs.Roles.Traitor
 
         public void GreetTraitor(string[] codewords)
         {
-            var chatMgr = IoCManager.Resolve<IChatManager>();
-            chatMgr.DispatchServerMessage(Mind.Session, Loc.GetString("Hello Agent!"));
-            chatMgr.DispatchServerMessage(Mind.Session, Loc.GetString("Your codewords are: {0}", string.Join(", ",codewords)));
+            if (Mind.TryGetSession(out var session))
+            {
+                var chatMgr = IoCManager.Resolve<IChatManager>();
+                chatMgr.DispatchServerMessage(session, Loc.GetString("Hello Agent!"));
+                chatMgr.DispatchServerMessage(session, Loc.GetString("Your codewords are: {0}", string.Join(", ",codewords)));
+            }
         }
     }
 }

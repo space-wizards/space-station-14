@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -314,15 +315,11 @@ namespace Content.Shared.Chemistry
 
         public void DoEntityReaction(IEntity entity, ReactionMethod method)
         {
-            var proto = IoCManager.Resolve<IPrototypeManager>();
+            var chemistry = EntitySystem.Get<ChemistrySystem>();
 
             foreach (var (reagentId, quantity) in _contents.ToArray())
             {
-                if (!proto.TryIndex(reagentId, out ReagentPrototype? reagent))
-                    continue;
-
-                var removedAmount = reagent.ReactionEntity(entity, method, quantity);
-                RemoveReagent(reagentId, removedAmount);
+                chemistry.ReactionEntity(entity, method, reagentId, quantity, this);
             }
         }
 

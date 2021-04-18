@@ -1,0 +1,12 @@
+- type: entity
+  id: DoorElectronics
+  parent: BaseItem
+  name: door electronics
+  components:
+    - type: Tag
+      tags:
+      - DoorElectronics
+    - type: Sprite
+      sprite: Constructible/Misc/module.rsi
+      state: door_electronics
+    - type: AccessReader

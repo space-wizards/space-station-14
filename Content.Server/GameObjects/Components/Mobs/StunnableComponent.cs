@@ -1,17 +1,17 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
-using Content.Shared.Alert;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -22,24 +22,28 @@ namespace Content.Server.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedStunnableComponent))]
     public class StunnableComponent : SharedStunnableComponent, IDisarmedAct
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-
         protected override void OnKnockdown()
         {
             EntitySystem.Get<StandingStateSystem>().Down(Owner);
         }
 
+        protected override void OnKnockdownEnd()
+        {
+            if(Owner.TryGetComponent(out IMobStateComponent? mobState) && !mobState.IsIncapacitated())
+                EntitySystem.Get<StandingStateSystem>().Standing(Owner);
+        }
+
         public void CancelAll()
         {
-            KnockdownTimer = 0f;
-            StunnedTimer = 0f;
+            KnockdownTimer = null;
+            StunnedTimer = null;
             Dirty();
         }
 
         public void ResetStuns()
         {
-            StunnedTimer = 0f;
-            SlowdownTimer = 0f;
+            StunnedTimer = null;
+            SlowdownTimer = null;
 
             if (KnockedDown &&
                 Owner.TryGetComponent(out IMobStateComponent? mobState) && !mobState.IsIncapacitated())
@@ -47,83 +51,13 @@ namespace Content.Server.GameObjects.Components.Mobs
                 EntitySystem.Get<StandingStateSystem>().Standing(Owner);
             }
 
-            KnockdownTimer = 0f;
+            KnockdownTimer = null;
             Dirty();
-        }
-
-        public void Update(float delta)
-        {
-            if (Stunned)
-            {
-                StunnedTimer -= delta;
-
-                if (StunnedTimer <= 0)
-                {
-                    StunnedTimer = 0f;
-                    Dirty();
-                }
-            }
-
-            if (KnockedDown)
-            {
-                KnockdownTimer -= delta;
-
-                if (KnockdownTimer <= 0f
-                    && Owner.TryGetComponent(out IMobStateComponent? mobState) && !mobState.IsIncapacitated())
-                {
-                    EntitySystem.Get<StandingStateSystem>().Standing(Owner);
-
-                    KnockdownTimer = 0f;
-                    Dirty();
-                }
-            }
-
-            if (SlowedDown)
-            {
-                SlowdownTimer -= delta;
-
-                if (SlowdownTimer <= 0f)
-                {
-                    SlowdownTimer = 0f;
-
-                    if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movement))
-                    {
-                        movement.RefreshMovementSpeedModifiers();
-                    }
-
-                    Dirty();
-                }
-            }
-
-            if (!StunStart.HasValue || !StunEnd.HasValue ||
-                !Owner.TryGetComponent(out ServerAlertsComponent? status))
-            {
-                return;
-            }
-
-            var start = StunStart.Value;
-            var end = StunEnd.Value;
-
-            var length = (end - start).TotalSeconds;
-            var progress = (_gameTiming.CurTime - start).TotalSeconds;
-
-            if (progress >= length)
-            {
-                Owner.SpawnTimer(250, () => status.ClearAlert(AlertType.Stun), StatusRemoveCancellation.Token);
-                LastStun = null;
-            }
         }
 
         protected override void OnInteractHand()
         {
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity("/Audio/Effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.05f));
-        }
-
-        public override ComponentState GetComponentState(ICommonSession player)
-        {
-            return new StunnableComponentState(StunnedTimer, KnockdownTimer, SlowdownTimer, WalkModifierOverride,
-                RunModifierOverride);
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.05f));
         }
 
         bool IDisarmedAct.Disarmed(DisarmedActEventArgs eventArgs)
@@ -134,12 +68,18 @@ namespace Content.Server.GameObjects.Components.Mobs
             Paralyze(4f);
 
             var source = eventArgs.Source;
+            var target = eventArgs.Target;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/thudswoosh.ogg", source,
-                AudioHelpers.WithVariation(0.025f));
-
-            source.PopupMessageOtherClients(Loc.GetString("{0} pushes {1}!", source.Name, eventArgs.Target.Name));
-            source.PopupMessageCursor(Loc.GetString("You push {0}!", eventArgs.Target.Name));
+            if (source != null)
+            {
+                SoundSystem.Play(Filter.Pvs(source), "/Audio/Effects/thudswoosh.ogg", source,
+                    AudioHelpers.WithVariation(0.025f));
+                if (target != null)
+                {
+                    source.PopupMessageOtherClients(Loc.GetString("{0} pushes {1}!", source.Name, target.Name));
+                    source.PopupMessageCursor(Loc.GetString("You push {0}!", target.Name));
+                }
+            }
 
             return true;
         }

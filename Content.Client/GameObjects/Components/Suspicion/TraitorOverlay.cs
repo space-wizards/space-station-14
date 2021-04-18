@@ -2,10 +2,12 @@ using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 
 namespace Content.Client.GameObjects.Components.Suspicion
 {
@@ -24,7 +26,6 @@ namespace Content.Client.GameObjects.Components.Suspicion
             IEntityManager entityManager,
             IResourceCache resourceCache,
             IEyeManager eyeManager)
-            : base(nameof(TraitorOverlay))
         {
             _playerManager = IoCManager.Resolve<IPlayerManager>();
 
@@ -49,7 +50,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
             var viewport = _eyeManager.GetWorldViewport();
 
             var ent = _playerManager.LocalPlayer?.ControlledEntity;
-            if (ent == null || ent.TryGetComponent(out SuspicionRoleComponent sus) != true)
+            if (ent == null || ent.TryGetComponent(out SuspicionRoleComponent? sus) != true)
             {
                 return;
             }
@@ -62,7 +63,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     continue;
                 }
 
-                if (!ally.TryGetComponent(out IPhysicsComponent physics))
+                if (!ally.TryGetComponent(out IPhysBody? physics))
                 {
                     continue;
                 }
@@ -74,7 +75,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 }
 
                 // all entities have a TransformComponent
-                var transform = physics.Entity.Transform;
+                var transform = physics.Owner.Transform;
 
                 // if not on the same map, continue
                 if (transform.MapID != _eyeManager.CurrentMap || !transform.IsMapTransform)
@@ -82,7 +83,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     continue;
                 }
 
-                var worldBox = physics.WorldAABB;
+                var worldBox = physics.GetWorldAABB();
 
                 // if not on screen, or too small, continue
                 if (!worldBox.Intersects(in viewport) || worldBox.IsEmpty())
@@ -90,7 +91,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     continue;
                 }
 
-                var screenCoordinates = _eyeManager.WorldToScreen(physics.WorldAABB.TopLeft + (0, 0.5f));
+                var screenCoordinates = _eyeManager.WorldToScreen(physics.GetWorldAABB().TopLeft + (0, 0.5f));
                 DrawString(screen, _font, screenCoordinates, _traitorText, Color.OrangeRed);
             }
         }
@@ -99,9 +100,9 @@ namespace Content.Client.GameObjects.Components.Suspicion
         {
             var baseLine = new Vector2(pos.X, font.GetAscent(1) + pos.Y);
 
-            foreach (var chr in str)
+            foreach (var rune in str.EnumerateRunes())
             {
-                var advance = font.DrawChar(handle, chr, baseLine, 1, color);
+                var advance = font.DrawChar(handle, rune, baseLine, 1, color);
                 baseLine += new Vector2(advance, 0);
             }
         }

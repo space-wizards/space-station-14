@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Construction;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Construction;
@@ -41,7 +40,7 @@ namespace Content.Client.Construction
         {
             if (entity.TryGetComponent(out ConstructionGhostComponent? ghost))
             {
-                _constructionSystem.ClearGhost(ghost.GhostID);
+                _constructionSystem.ClearGhost(ghost.GhostId);
             }
             return true;
         }

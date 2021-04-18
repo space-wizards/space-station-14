@@ -32,16 +32,16 @@ namespace Content.Server.AI.WorldState
     public abstract class StateData<T> : IAiState
     {
         public abstract string Name { get; }
-        protected IEntity Owner { get; private set; }
+        protected IEntity Owner { get; private set; } = default!;
 
         public void Setup(IEntity owner)
         {
             Owner = owner;
         }
 
-        public abstract T GetValue();
+        public abstract T? GetValue();
     }
-    
+
     /// <summary>
     /// For when we want to set StateData but not reset it when re-planning actions
     /// Useful for group blackboard sharing or to avoid repeating the same action (e.g. bark phrases).
@@ -51,21 +51,21 @@ namespace Content.Server.AI.WorldState
     {
         // Probably not the best class name but couldn't think of anything better
         public abstract string Name { get; }
-        private IEntity Owner { get; set; }
+        private IEntity? Owner { get; set; }
 
-        private T _value;
+        private T? _value;
 
         public void Setup(IEntity owner)
         {
             Owner = owner;
         }
 
-        public virtual void SetValue(T value)
+        public virtual void SetValue(T? value)
         {
             _value = value;
         }
 
-        public T GetValue()
+        public T? GetValue()
         {
             return _value;
         }
@@ -79,8 +79,8 @@ namespace Content.Server.AI.WorldState
     public abstract class PlanningStateData<T> : IAiState, IPlanningState
     {
         public abstract string Name { get; }
-        protected IEntity Owner { get; private set; }
-        protected T Value;
+        protected IEntity? Owner { get; private set; }
+        protected T? Value;
 
         public void Setup(IEntity owner)
         {
@@ -89,12 +89,12 @@ namespace Content.Server.AI.WorldState
 
         public abstract void Reset();
 
-        public T GetValue()
+        public T? GetValue()
         {
             return Value;
         }
 
-        public virtual void SetValue(T value)
+        public virtual void SetValue(T? value)
         {
             Value = value;
         }
@@ -108,9 +108,9 @@ namespace Content.Server.AI.WorldState
     public abstract class CachedStateData<T> : IAiState, ICachedState
     {
         public abstract string Name { get; }
-        protected IEntity Owner { get; private set; }
+        protected IEntity Owner { get; private set; } = default!;
         private bool _cached;
-        protected T Value;
+        protected T Value = default!;
         private TimeSpan _lastCache = TimeSpan.Zero;
         /// <summary>
         /// How long something stays in the cache before new values are retrieved
@@ -125,7 +125,7 @@ namespace Content.Server.AI.WorldState
         public void CheckCache()
         {
             var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
-            
+
             if (!_cached || (curTime - _lastCache).TotalSeconds >= CacheTime)
             {
                 _cached = false;

@@ -13,6 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -25,7 +26,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
 
-        private PathfindingSystem _pathfindingSystem;
+        private PathfindingSystem _pathfindingSystem = default!;
 
         /// <summary>
         /// Whether we try to avoid non-blocking physics objects
@@ -126,7 +127,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <exception cref="InvalidOperationException"></exception>
         public void Unregister(IEntity entity)
         {
-            if (entity.TryGetComponent(out AiControllerComponent controller))
+            if (entity.TryGetComponent(out AiControllerComponent? controller))
             {
                 controller.VelocityDir = Vector2.Zero;
             }
@@ -244,7 +245,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         private SteeringStatus Steer(IEntity entity, IAiSteeringRequest steeringRequest, float frameTime)
         {
             // Main optimisation to be done below is the redundant calls and adding more variables
-            if (entity.Deleted || !entity.TryGetComponent(out AiControllerComponent controller) || !ActionBlockerSystem.CanMove(entity))
+            if (entity.Deleted ||
+                !entity.TryGetComponent(out AiControllerComponent? controller) ||
+                !ActionBlockerSystem.CanMove(entity) ||
+                !entity.Transform.GridID.IsValid())
             {
                 return SteeringStatus.NoPath;
             }
@@ -413,7 +417,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             var startTile = gridManager.GetTileRef(entity.Transform.Coordinates);
             var endTile = gridManager.GetTileRef(steeringRequest.TargetGrid);
             var collisionMask = 0;
-            if (entity.TryGetComponent(out IPhysicsComponent physics))
+            if (entity.TryGetComponent(out IPhysBody? physics))
             {
                 collisionMask = physics.CollisionMask;
             }
@@ -599,7 +603,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 return Vector2.Zero;
             }
 
-            if (target.TryGetComponent(out IPhysicsComponent physics))
+            if (target.TryGetComponent(out IPhysBody? physics))
             {
                 var targetDistance = (targetPos.Position - entityPos.Position);
                 targetPos = targetPos.Offset(physics.LinearVelocity * targetDistance);
@@ -617,7 +621,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <returns></returns>
         private Vector2 CollisionAvoidance(IEntity entity, Vector2 direction, ICollection<IEntity> ignoredTargets)
         {
-            if (direction == Vector2.Zero || !entity.TryGetComponent(out IPhysicsComponent physics))
+            if (direction == Vector2.Zero || !entity.TryGetComponent(out IPhysBody? physics))
             {
                 return Vector2.Zero;
             }
@@ -658,7 +662,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     // if we're moving in the same direction then ignore
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction
                     // i.e. towards the right
-                    if (physicsEntity.TryGetComponent(out IPhysicsComponent otherPhysics) &&
+                    if (physicsEntity.TryGetComponent(out IPhysBody? otherPhysics) &&
                         Vector2.Dot(otherPhysics.LinearVelocity, direction) > 0)
                     {
                         continue;

@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             protected override void GetData(IEntity user, SpillableComponent component, VerbData data)
             {
                 if (!ActionBlockerSystem.CanInteract(user) ||
-                    !component.Owner.TryGetComponent(out ISolutionInteractionsComponent solutionComponent) ||
+                    !component.Owner.TryGetComponent(out ISolutionInteractionsComponent? solutionComponent) ||
                     !solutionComponent.CanDrain)
                 {
                     data.Visibility = VerbVisibility.Invisible;
@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (!eventArgs.Intentional && Owner.TryGetComponent(out ISolutionInteractionsComponent solutionComponent))
+            if (!eventArgs.Intentional && Owner.TryGetComponent(out ISolutionInteractionsComponent? solutionComponent))
             {
                 solutionComponent.Drain(solutionComponent.DrainAvailable).SpillAt(Owner.Transform.Coordinates, "PuddleSmear");
             }

@@ -1,49 +1,28 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "bucket",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "cleaner"
     },
     {
-      "name": "bucket_water",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "mopbucket"
     },
     {
-      "name": "cleaner",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "mopbucket_water"
     },
     {
-      "name": "mopbucket",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "inhand-left",
+      "directions": 4
     },
     {
-      "name": "mopbucket_water",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "inhand-right",
+      "directions": 4
     }
   ]
 }

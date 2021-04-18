@@ -1,11 +1,10 @@
 ﻿using System;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Disposal;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Disposal
 {
@@ -13,15 +12,17 @@ namespace Content.Client.GameObjects.Components.Disposal
     public class DisposalVisualizer : AppearanceVisualizer
     {
         [DataField("state_free")]
-        private string _stateFree;
+        private string? _stateFree;
+
         [DataField("state_anchored")]
-        private string _stateAnchored;
+        private string? _stateAnchored;
+
         [DataField("state_broken")]
-        private string _stateBroken;
+        private string? _stateBroken;
 
         private void ChangeState(AppearanceComponent appearance)
         {
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!appearance.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }

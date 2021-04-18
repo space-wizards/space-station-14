@@ -1,8 +1,6 @@
 ﻿using System;
 using Content.Shared.Administration;
 
-#nullable enable
-
 namespace Content.Client.Administration
 {
     /// <summary>

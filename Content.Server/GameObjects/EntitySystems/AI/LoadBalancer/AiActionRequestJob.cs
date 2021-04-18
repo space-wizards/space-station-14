@@ -9,13 +9,14 @@ using Content.Server.AI.WorldState.States.Utility;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Shared.AI;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
 {
     public class AiActionRequestJob : Job<UtilityAction>
     {
 #if DEBUG
-        public static event Action<SharedAiDebug.UtilityAiDebugMessage> FoundAction;
+        public static event Action<SharedAiDebug.UtilityAiDebugMessage>? FoundAction;
 #endif
         private readonly AiActionRequest _request;
 
@@ -27,7 +28,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
             _request = request;
         }
 
-        protected override async Task<UtilityAction> Process()
+        protected override async Task<UtilityAction?> Process()
         {
             if (_request.Context == null)
             {
@@ -55,7 +56,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
 
             // Use last action as the basis for the cutoff
             var cutoff = _request.Context.GetState<LastUtilityScoreState>().GetValue();
-            UtilityAction foundAction = null;
+            UtilityAction? foundAction = null;
 
             // To see what I was trying to do watch these 2 videos about Infinite Axis Utility System (IAUS):
             // Architecture Tricks: Managing Behaviors in Time, Space, and Depth
@@ -83,7 +84,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
                         {
                             break;
                         }
-                        
+
                         foreach (var expanded in expandableUtilityAction.GetActions(_request.Context))
                         {
                             actions.Push(expanded);
@@ -116,8 +117,12 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
 #if DEBUG
             if (foundAction != null)
             {
+                var selfState = _request.Context.GetState<SelfState>().GetValue();
+
+                DebugTools.AssertNotNull(selfState);
+
                 FoundAction?.Invoke(new SharedAiDebug.UtilityAiDebugMessage(
-                    _request.Context.GetState<SelfState>().GetValue().Uid,
+                    selfState!.Uid,
                     DebugTime,
                     cutoff,
                     foundAction.GetType().Name,

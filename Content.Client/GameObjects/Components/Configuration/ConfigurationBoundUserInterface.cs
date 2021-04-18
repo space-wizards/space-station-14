@@ -4,17 +4,17 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using static Content.Shared.GameObjects.Components.SharedConfigurationComponent;
 
-namespace Content.Client.GameObjects.Components.Wires
+namespace Content.Client.GameObjects.Components.Configuration
 {
     public class ConfigurationBoundUserInterface : BoundUserInterface
     {
-        public Regex Validation { get; internal set; }
+        public Regex? Validation { get; internal set; }
 
         public ConfigurationBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
 
-        private ConfigurationMenu _menu;
+        private ConfigurationMenu? _menu;
 
         protected override void Open()
         {
@@ -28,12 +28,19 @@ namespace Content.Client.GameObjects.Components.Wires
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            _menu.Populate(state as ConfigurationBoundUserInterfaceState);
+
+            if (state is not ConfigurationBoundUserInterfaceState configurationState)
+            {
+                return;
+            }
+
+            _menu?.Populate(configurationState);
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
             base.ReceiveMessage(message);
+
             if (message is ValidationUpdateMessage msg)
             {
                 Validation = new Regex(msg.ValidationString, RegexOptions.Compiled);
@@ -49,8 +56,11 @@ namespace Content.Client.GameObjects.Components.Wires
         {
             base.Dispose(disposing);
 
-            _menu.OnClose -= Close;
-            _menu.Close();
+            if (disposing && _menu != null)
+            {
+                _menu.OnClose -= Close;
+                _menu.Close();
+            }
         }
     }
 }

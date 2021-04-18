@@ -1,16 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
+using Content.Shared;
+using Content.Shared.Prototypes.HUD;
 using JetBrains.Annotations;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Client.GameObjects.Components.HUD.Inventory
@@ -20,18 +26,32 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     public class HumanInventoryInterfaceController : InventoryInterfaceController
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+        [Dependency] private readonly INetConfigurationManager _configManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private readonly Dictionary<Slots, List<ItemSlotButton>> _inventoryButtons
             = new();
 
-        private ItemSlotButton _hudButtonPocket1;
-        private ItemSlotButton _hudButtonPocket2;
-        private ItemSlotButton _hudButtonBelt;
-        private ItemSlotButton _hudButtonBack;
-        private ItemSlotButton _hudButtonId;
-        private Control _rightQuickButtonsContainer;
-        private Control _leftQuickButtonsContainer;
+        private ItemSlotButton _hudButtonPocket1 = default!;
+        private ItemSlotButton _hudButtonPocket2 = default!;
+        private ItemSlotButton _hudButtonShoes = default!;
+        private ItemSlotButton _hudButtonJumpsuit = default!;
+        private ItemSlotButton _hudButtonGloves = default!;
+        private ItemSlotButton _hudButtonNeck = default!;
+        private ItemSlotButton _hudButtonHead = default!;
+        private ItemSlotButton _hudButtonBelt = default!;
+        private ItemSlotButton _hudButtonBack = default!;
+        private ItemSlotButton _hudButtonOClothing = default!;
+        private ItemSlotButton _hudButtonId = default!;
+        private ItemSlotButton _hudButtonMask = default!;
+        private ItemSlotButton _hudButtonEyes = default!;
+        private ItemSlotButton _hudButtonEars = default!;
+
+        private Control _topQuickButtonsContainer = default!;
+        private Control _bottomLeftQuickButtonsContainer = default!;
+        private Control _bottomRightQuickButtonsContainer = default!;
 
         public HumanInventoryInterfaceController(ClientInventoryComponent owner) : base(owner)
         {
@@ -40,61 +60,89 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         public override void Initialize()
         {
             base.Initialize();
+            _configManager.OnValueChanged(CCVars.HudTheme, UpdateHudTheme, invokeImmediately: true);
 
-            _window = new HumanInventoryWindow(_resourceCache);
+            _window = new HumanInventoryWindow(_gameHud);
             _window.OnClose += () => GameHud.InventoryButtonDown = false;
             foreach (var (slot, button) in _window.Buttons)
             {
                 button.OnPressed = (e) => AddToInventory(e, slot);
                 button.OnStoragePressed = (e) => OpenStorage(e, slot);
-                button.OnHover = (e) => RequestItemHover(slot);
+                button.OnHover = (_) => RequestItemHover(slot);
                 _inventoryButtons.Add(slot, new List<ItemSlotButton> {button});
             }
 
             void AddButton(out ItemSlotButton variable, Slots slot, string textureName)
             {
-                var texture = _resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.png");
-                var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
-                variable = new ItemSlotButton(texture, storageTexture)
+                var texture = _gameHud.GetHudTexture($"{textureName}.png");
+                var storageTexture = _gameHud.GetHudTexture("back.png");
+                variable = new ItemSlotButton(texture, storageTexture, textureName)
                 {
                     OnPressed = (e) => AddToInventory(e, slot),
                     OnStoragePressed = (e) => OpenStorage(e, slot),
-                    OnHover = (e) => RequestItemHover(slot)
+                    OnHover = (_) => RequestItemHover(slot)
                 };
                 _inventoryButtons[slot].Add(variable);
             }
 
             AddButton(out _hudButtonPocket1, Slots.POCKET1, "pocket");
             AddButton(out _hudButtonPocket2, Slots.POCKET2, "pocket");
-            AddButton(out _hudButtonBack, Slots.BACKPACK, "back");
-            AddButton(out _hudButtonBelt, Slots.BELT, "belt");
             AddButton(out _hudButtonId, Slots.IDCARD, "id");
 
-            _leftQuickButtonsContainer = new HBoxContainer
+            AddButton(out _hudButtonBack, Slots.BACKPACK, "back");
+
+            AddButton(out _hudButtonBelt, Slots.BELT, "belt");
+
+            AddButton(out _hudButtonShoes, Slots.SHOES, "shoes");
+            AddButton(out _hudButtonJumpsuit, Slots.INNERCLOTHING, "uniform");
+            AddButton(out _hudButtonOClothing, Slots.OUTERCLOTHING, "suit");
+            AddButton(out _hudButtonGloves, Slots.GLOVES, "gloves");
+            AddButton(out _hudButtonNeck, Slots.NECK, "neck");
+            AddButton(out _hudButtonMask, Slots.MASK, "mask");
+            AddButton(out _hudButtonEyes, Slots.EYES, "glasses");
+            AddButton(out _hudButtonEars, Slots.EARS, "ears");
+            AddButton(out _hudButtonHead, Slots.HEAD, "head");
+
+            _topQuickButtonsContainer = new HBoxContainer
             {
                 Children =
                 {
-                    _hudButtonId,
-                    _hudButtonBack,
-                    _hudButtonBelt,
+                    _hudButtonShoes,
+                    _hudButtonJumpsuit,
+                    _hudButtonOClothing,
+                    _hudButtonGloves,
+                    _hudButtonNeck,
+                    _hudButtonMask,
+                    _hudButtonEyes,
+                    _hudButtonEars,
+                    _hudButtonHead
                 },
                 SeparationOverride = 5
             };
-            _rightQuickButtonsContainer = new HBoxContainer
+
+            _bottomRightQuickButtonsContainer = new HBoxContainer
             {
                 Children =
                 {
                     _hudButtonPocket1,
                     _hudButtonPocket2,
-                    // keeps this "balanced" with the left, so the hands will appear perfectly in the center
-                    new Control{MinSize = (64, 64)}
+                    _hudButtonId,
+                },
+                SeparationOverride = 5
+            };
+            _bottomLeftQuickButtonsContainer = new HBoxContainer
+            {
+                Children =
+                {
+                    _hudButtonBelt,
+                    _hudButtonBack
                 },
                 SeparationOverride = 5
             };
         }
 
-        public override SS14Window Window => _window;
-        private HumanInventoryWindow _window;
+        public override SS14Window? Window => _window;
+        private HumanInventoryWindow? _window;
 
         public override IEnumerable<ItemSlotButton> GetItemSlotButtons(Slots slot)
         {
@@ -152,7 +200,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         protected override void HandleInventoryKeybind(GUIBoundKeyEventArgs args, Slots slot)
         {
-            if (!_inventoryButtons.TryGetValue(slot, out var buttons))
+            if (!_inventoryButtons.ContainsKey(slot))
                 return;
             if (!Owner.TryGetSlot(slot, out var item))
                 return;
@@ -172,8 +220,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.PlayerAttached();
 
-            GameHud.RightInventoryQuickButtonContainer.AddChild(_rightQuickButtonsContainer);
-            GameHud.LeftInventoryQuickButtonContainer.AddChild(_leftQuickButtonsContainer);
+            GameHud.BottomLeftInventoryQuickButtonContainer.AddChild(_bottomLeftQuickButtonsContainer);
+            GameHud.BottomRightInventoryQuickButtonContainer.AddChild(_bottomRightQuickButtonsContainer);
+            GameHud.TopInventoryQuickButtonContainer.AddChild(_topQuickButtonsContainer);
 
             // Update all the buttons to make sure they check out.
 
@@ -195,14 +244,32 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.PlayerDetached();
 
-            GameHud.RightInventoryQuickButtonContainer.RemoveChild(_rightQuickButtonsContainer);
-            GameHud.LeftInventoryQuickButtonContainer.RemoveChild(_leftQuickButtonsContainer);
+            GameHud.BottomRightInventoryQuickButtonContainer.RemoveChild(_bottomRightQuickButtonsContainer);
+            GameHud.BottomLeftInventoryQuickButtonContainer.RemoveChild(_bottomLeftQuickButtonsContainer);
+            GameHud.TopInventoryQuickButtonContainer.RemoveChild(_topQuickButtonsContainer);
 
             foreach (var (slot, list) in _inventoryButtons)
             {
                 foreach (var button in list)
                 {
                     ClearButton(button, slot);
+                }
+            }
+        }
+
+        public void UpdateHudTheme(int idx)
+        {
+            if (!_gameHud.ValidateHudTheme(idx))
+            {
+                return;
+            }
+
+            foreach (var (_, list) in _inventoryButtons)
+            {
+                foreach (var button in list)
+                {
+                    button.Button.Texture = _gameHud.GetHudTexture($"{button.TextureName}.png");
+                    button.StorageButton.TextureNormal = _gameHud.GetHudTexture("back.png");
                 }
             }
         }
@@ -214,8 +281,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             private const int RightSeparation = 2;
 
             public IReadOnlyDictionary<Slots, ItemSlotButton> Buttons { get; }
+            [Dependency] private readonly IGameHud _gameHud = default!;
 
-            public HumanInventoryWindow(IResourceCache resourceCache)
+            public HumanInventoryWindow(IGameHud gameHud)
             {
                 Title = Loc.GetString("Your Inventory");
                 Resizable = false;
@@ -231,9 +299,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
                 void AddButton(Slots slot, string textureName, Vector2 position)
                 {
-                    var texture = resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.png");
-                    var storageTexture = resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
-                    var button = new ItemSlotButton(texture, storageTexture);
+                    var texture = gameHud.GetHudTexture($"{textureName}.png");
+                    var storageTexture = gameHud.GetHudTexture("back.png");
+                    var button = new ItemSlotButton(texture, storageTexture, textureName);
 
                     LayoutContainer.SetPosition(button, position);
 

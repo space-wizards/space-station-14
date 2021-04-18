@@ -1,5 +1,5 @@
-#- type: accessLevel
-#  id: Bar
+- type: accessLevel
+  id: Bar
 
 #- type: accessLevel
 #  id: Kitchen

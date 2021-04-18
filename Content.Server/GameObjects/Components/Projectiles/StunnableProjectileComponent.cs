@@ -1,5 +1,8 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Projectiles
@@ -8,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
     /// Adds stun when it collides with an entity
     /// </summary>
     [RegisterComponent]
-    public sealed class StunnableProjectileComponent : Component, ICollideBehavior
+    public sealed class StunnableProjectileComponent : Component, IStartCollide
     {
         public override string Name => "StunnableProjectile";
 
@@ -27,16 +30,14 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Owner.EnsureComponentWarn(out ProjectileComponent _);
         }
 
-        void ICollideBehavior.CollideWith(IEntity entity)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-            if (entity.TryGetComponent(out StunnableComponent stunnableComponent))
+            if (otherFixture.Body.Owner.TryGetComponent(out StunnableComponent? stunnableComponent))
             {
                 stunnableComponent.Stun(_stunAmount);
                 stunnableComponent.Knockdown(_knockdownAmount);
                 stunnableComponent.Slowdown(_slowdownAmount);
             }
         }
-
-        void ICollideBehavior.PostCollide(int collidedCount) {}
     }
 }

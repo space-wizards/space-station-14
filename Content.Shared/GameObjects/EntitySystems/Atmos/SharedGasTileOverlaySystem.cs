@@ -53,7 +53,7 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
             {
                 FireState = fireState;
                 FireTemperature = fireTemperature;
-                Gas = gas ?? Array.Empty<GasData>();
+                Gas = gas;
 
                 Array.Sort(Gas, (a, b) => a.Index.CompareTo(b.Index));
 
@@ -76,22 +76,9 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
 
             public bool Equals(GasOverlayData other)
             {
-
-                if (HashCode != other.HashCode) return false;
-                if (Gas.Length != other.Gas.Length) return false;
-                if (FireState != other.FireState) return false;
-                if (MathHelper.CloseTo(FireTemperature, FireTemperature)) return false;
-                if (Gas.GetHashCode() != other.Gas.GetHashCode()) return false;
-
-                for (var i = 0; i < Gas.Length; i++)
-                {
-                    var gas = Gas[i];
-                    var otherGas = other.Gas[i];
-                    if (!gas.Equals(otherGas))
-                        return false;
-                }
-
-                return true;
+                // If you revert this then you need to make sure the hash comparison between
+                // our Gas[] and the other.Gas[] works.
+                return HashCode == other.HashCode;
             }
         }
 
@@ -100,7 +87,7 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         ///     No point re-sending every tile if only a subset might have been updated.
         /// </summary>
         [Serializable, NetSerializable]
-        public sealed class GasOverlayMessage : EntitySystemMessage
+        public sealed class GasOverlayMessage : EntityEventArgs
         {
             public GridId GridId { get; }
 

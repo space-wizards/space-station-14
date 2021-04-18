@@ -28,7 +28,7 @@ namespace Content.Client.Chat
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
         /// </summary>
-        public string DefaultChatFormat { get; set; }
+        public string DefaultChatFormat { get; set; } = string.Empty;
 
         public bool ReleaseFocusOnEnter { get; set; } = true;
 
@@ -136,9 +136,9 @@ namespace Content.Client.Chat
             }
         }
 
-        public event TextSubmitHandler TextSubmitted;
+        public event TextSubmitHandler? TextSubmitted;
 
-        public event FilterToggledHandler FilterToggled;
+        public event FilterToggledHandler? FilterToggled;
 
         public void AddLine(string message, ChatChannel channel, Color color)
         {

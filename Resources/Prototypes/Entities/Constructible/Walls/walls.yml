@@ -1,8 +1,9 @@
 - type: entity
-  id: base_wall
+  abstract: true
+  parent: BaseConstructible
+  id: WallBase
   name: basewall
   description: Keeps the air in and the greytide out.
-  abstract: true
   placement:
     mode: SnapgridCenter
     snap:
@@ -12,16 +13,20 @@
   - type: Tag
     tags:
     - Wall
-  - type: Clickable
   - type: InteractionOutline
   - type: Sprite
     netsync: false
     drawdepth: Walls
   - type: Icon
     state: full
+  - type: Damageable
+    resistances: metallicResistances
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
       layer:
       - Opaque
       - Impassable
@@ -31,24 +36,20 @@
   - type: Occluder
     sizeX: 32
     sizeY: 32
-  - type: SnapGrid
-    offset: Center
   - type: Airtight
   - type: IconSmooth
     key: walls
     base: solid
 
 - type: entity
-  id: brick_wall
+  parent: WallBase
+  id: WallBrick
   name: brick wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/brick.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/brick.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -67,16 +68,14 @@
     base: brick
 
 - type: entity
-  id: clock_wall
+  parent: WallBase
+  id: WallClock
   name: clock wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/clock.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/clock.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -95,16 +94,14 @@
     base: clock
 
 - type: entity
-  id: clown_wall
+  parent: WallBase
+  id: WallClown
   name: clown wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/clown.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/clown.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -124,16 +121,14 @@
 
 
 - type: entity
-  id: cult_wall
+  parent: WallBase
+  id: WallCult
   name: cult wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/cult.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/cult.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -152,16 +147,14 @@
     base: cult
 
 - type: entity
-  id: debug_wall
+  parent: WallBase
+  id: WallDebug
   name: debug wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/debug.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/debug.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -180,16 +173,14 @@
     base: debug
 
 - type: entity
-  id: diamond_wall
+  parent: WallBase
+  id: WallDiamond
   name: diamond wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/diamond.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/diamond.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -207,18 +198,15 @@
     key: walls
     base: diamond
 
-
 - type: entity
-  id: gold_wall
+  parent: WallBase
+  id: WallGold
   name: gold wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/gold.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/gold.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -237,16 +225,14 @@
     base: gold
 
 - type: entity
-  id: ice_wall
+  parent: WallBase
+  id: WallIce
   name: ice wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/ice.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/ice.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -265,16 +251,14 @@
     base: ice
 
 - type: entity
-  id: metal_wall
+  parent: WallBase
+  id: WallMetal
   name: metal wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/metal.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/metal.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -293,16 +277,14 @@
     base: metal
 
 - type: entity
-  id: plasma_wall
+  parent: WallBase
+  id: WallPlasma
   name: plasma wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/plasma.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/plasma.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -321,16 +303,14 @@
     base: plasma
 
 - type: entity
-  id: plastic_wall
+  parent: WallBase
+  id: WallPlastic
   name: plastic wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/plastic.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/plastic.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -349,9 +329,9 @@
     base: plastic
 
 - type: entity
-  id: reinforced_wall
+  parent: WallBase
+  id: WallReinforced
   name: reinforced wall
-  parent: base_wall
   components:
   - type: Sprite
     color: "#889192"
@@ -362,8 +342,6 @@
   - type: Construction
     graph: girder
     node: reinforcedWall
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -384,16 +362,14 @@
 
 # Riveting
 - type: entity
-  id: riveted_wall
+  parent: WallBase
+  id: WallRiveted
   name: riveted wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/riveted.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/riveted.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -412,16 +388,14 @@
     base: riveted
 
 - type: entity
-  id: sandstone_wall
+  parent: WallBase
+  id: WallSandstone
   name: sandstone wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/sandstone.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/sandstone.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -440,16 +414,14 @@
     base: sandstone
 
 - type: entity
-  id: silver_wall
+  parent: WallBase
+  id: WallSilver
   name: silver wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/silver.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/silver.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -468,9 +440,9 @@
     base: silver
 
 - type: entity
-  id: solid_wall
+  parent: WallBase
+  id: WallSolid
   name: solid wall
-  parent: base_wall
   components:
   - type: Sprite
     color: "#889192"
@@ -480,8 +452,6 @@
     node: wall
   - type: Icon
     sprite: Constructible/Structures/Walls/solid.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -500,16 +470,14 @@
     base: solid
 
 - type: entity
-  id: uranium_wall
+  parent: WallBase
+  id: WallUranium
   name: uranium wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/uranium.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/uranium.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -528,16 +496,14 @@
     base: uranium
 
 - type: entity
-  id: wood_wall
+  parent: WallBase
+  id: WallWood
   name: wood wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/wood.rsi
   - type: Icon
     sprite: Constructible/Structures/Walls/wood.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:

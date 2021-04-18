@@ -12,14 +12,14 @@ namespace Content.Client.GameObjects.Components.Mobs.State
         {
             base.EnterState(entity);
 
-            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
             }
 
             EntitySystem.Get<StandingStateSystem>().Down(entity);
 
-            if (entity.TryGetComponent(out PhysicsComponent physics))
+            if (entity.TryGetComponent(out PhysicsComponent? physics))
             {
                 physics.CanCollide = false;
             }
@@ -31,7 +31,7 @@ namespace Content.Client.GameObjects.Components.Mobs.State
 
             EntitySystem.Get<StandingStateSystem>().Standing(entity);
 
-            if (entity.TryGetComponent(out PhysicsComponent physics))
+            if (entity.TryGetComponent(out PhysicsComponent? physics))
             {
                 physics.CanCollide = true;
             }

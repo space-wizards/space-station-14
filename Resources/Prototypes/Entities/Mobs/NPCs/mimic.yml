@@ -22,11 +22,12 @@
     sprite: Constructible/Power/VendingMachines/cola.rsi
     state: normal
   - type: Physics
-    anchored: false
-    mass: 85
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.35,-0.35,0.35,0.35"
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
+      mass: 100
       mask:
       - Impassable
       - MobImpassable

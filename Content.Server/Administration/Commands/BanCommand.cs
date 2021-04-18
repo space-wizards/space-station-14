@@ -1,11 +1,12 @@
 using System;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
-using Robust.Shared.Network;
 
 #nullable enable
 
@@ -16,12 +17,13 @@ namespace Content.Server.Administration.Commands
     {
         public string Command => "ban";
         public string Description => "Bans somebody";
-        public string Help => $"Usage: {Command} <name or user ID> <reason> <duration in minutes, or 0 for permanent ban>";
+        public string Help => $"Usage: {Command} <name or user ID> <reason> [duration in minutes, leave out or 0 for permanent ban]";
 
         public async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             var plyMgr = IoCManager.Resolve<IPlayerManager>();
+            var locator = IoCManager.Resolve<IPlayerLocator>();
             var dbMan = IoCManager.Resolve<IServerDbManager>();
 
             string target;
@@ -51,21 +53,16 @@ namespace Content.Server.Administration.Commands
                     return;
             }
 
-            NetUserId targetUid;
-
-            if (plyMgr.TryGetSessionByUsername(target, out var targetSession))
+            var located = await locator.LookupIdByNameOrIdAsync(target);
+            if (located == null)
             {
-                targetUid = targetSession.UserId;
-            }
-            else if (Guid.TryParse(target, out var targetGuid))
-            {
-                targetUid = new NetUserId(targetGuid);
-            }
-            else
-            {
-                shell.WriteLine("Unable to find user with that name.");
+                shell.WriteError("Unable to find a player with that name.");
                 return;
             }
+
+            var targetUid = located.UserId;
+            var targetHWid = located.LastHWId;
+            var targetAddr = located.LastAddress;
 
             if (player != null && player.UserId == targetUid)
             {
@@ -79,9 +76,31 @@ namespace Content.Server.Administration.Commands
                 expires = DateTimeOffset.Now + TimeSpan.FromMinutes(minutes);
             }
 
-            await dbMan.AddServerBanAsync(new ServerBanDef(null, targetUid, null, DateTimeOffset.Now, expires, reason, player?.UserId, null));
+            (IPAddress, int)? addrRange = null;
+            if (targetAddr != null)
+            {
+                if (targetAddr.IsIPv4MappedToIPv6)
+                    targetAddr = targetAddr.MapToIPv4();
 
-            var response = new StringBuilder($"Banned {targetUid} with reason \"{reason}\"");
+                // Ban /64 for IPv4, /32 for IPv4.
+                var cidr = targetAddr.AddressFamily == AddressFamily.InterNetworkV6 ? 64 : 32;
+                addrRange = (targetAddr, cidr);
+            }
+
+            var banDef = new ServerBanDef(
+                null,
+                targetUid,
+                addrRange,
+                targetHWid,
+                DateTimeOffset.Now,
+                expires,
+                reason,
+                player?.UserId,
+                null);
+
+            await dbMan.AddServerBanAsync(banDef);
+
+            var response = new StringBuilder($"Banned {target} with reason \"{reason}\"");
 
             response.Append(expires == null ?
                 " permanently."

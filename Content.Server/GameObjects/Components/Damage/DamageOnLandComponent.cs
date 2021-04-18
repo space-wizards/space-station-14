@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Damage
 
         void ILand.Land(LandEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
+            if (!Owner.TryGetComponent(out IDamageableComponent? damageable)) return;
 
             damageable.ChangeDamage(_damageType, _amount, _ignoreResistances, eventArgs.User);
         }

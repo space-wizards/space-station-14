@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -22,10 +21,10 @@ namespace Content.Shared.GameObjects.Components
         {
             public float Pressure;
             public float Temperature;
-            public GasEntry[] Gases;
-            public string Error = string.Empty;
+            public GasEntry[]? Gases;
+            public string? Error;
 
-            public GasAnalyzerBoundUserInterfaceState(float pressure, float temperature, GasEntry[] gases, string error = null)
+            public GasAnalyzerBoundUserInterfaceState(float pressure, float temperature, GasEntry[]? gases, string? error = null)
             {
                 Pressure = pressure;
                 Temperature = temperature;

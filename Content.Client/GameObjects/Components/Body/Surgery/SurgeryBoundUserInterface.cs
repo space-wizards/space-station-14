@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.GameObjects.Components.Body.Surgery;
+﻿using Content.Shared.GameObjects.Components.Body.Surgery;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;

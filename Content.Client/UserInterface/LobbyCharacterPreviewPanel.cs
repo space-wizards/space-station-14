@@ -6,7 +6,6 @@ using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -15,6 +14,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Client.UserInterface
 {
@@ -87,7 +87,7 @@ namespace Content.Client.UserInterface
 
             if (!disposing) return;
             _previewDummy.Delete();
-            _previewDummy = null;
+            _previewDummy = null!;
         }
 
         private static SpriteView MakeSpriteView(IEntity entity, Direction direction)
@@ -111,7 +111,7 @@ namespace Content.Client.UserInterface
             {
                 _loaded.Visible = true;
                 _unloaded.Visible = false;
-                if (_preferencesManager.Preferences.SelectedCharacter is not HumanoidCharacterProfile selectedCharacter)
+                if (_preferencesManager.Preferences?.SelectedCharacter is not HumanoidCharacterProfile selectedCharacter)
                 {
                     _summaryLabel.Text = string.Empty;
                 }
@@ -129,25 +129,29 @@ namespace Content.Client.UserInterface
         public static void GiveDummyJobClothes(IEntity dummy, HumanoidCharacterProfile profile)
         {
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
-            var entityMan = IoCManager.Resolve<IEntityManager>();
 
             var inventory = dummy.GetComponent<ClientInventoryComponent>();
 
             var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 
             var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.OverflowJob);
-            var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
 
             inventory.ClearAllSlotVisuals();
 
-            foreach (var slot in AllSlots)
+            if (job.StartingGear != null)
             {
-                var itemType = gear.GetGear(slot, profile);
-                if (itemType != "")
+                var entityMan = IoCManager.Resolve<IEntityManager>();
+                var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
+
+                foreach (var slot in AllSlots)
                 {
-                    var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
-                    inventory.SetSlotVisuals(slot, item);
-                    item.Delete();
+                    var itemType = gear.GetGear(slot, profile);
+                    if (itemType != "")
+                    {
+                        var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                        inventory.SetSlotVisuals(slot, item);
+                        item.Delete();
+                    }
                 }
             }
         }

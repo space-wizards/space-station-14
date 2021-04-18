@@ -19,9 +19,10 @@ namespace Content.Client
     {
         [Dependency] private readonly IClientNetManager _netManager = default!;
 
-        public event Action OnServerDataLoaded;
-        public GameSettings Settings { get; private set; }
-        public PlayerPreferences Preferences { get; private set; }
+        public event Action? OnServerDataLoaded;
+
+        public GameSettings Settings { get; private set; } = default!;
+        public PlayerPreferences Preferences { get; private set; } = default!;
 
         public void Initialize()
         {
@@ -47,6 +48,7 @@ namespace Content.Client
 
         public void UpdateCharacter(ICharacterProfile profile, int slot)
         {
+            profile.EnsureValid();
             var characters = new Dictionary<int, ICharacterProfile>(Preferences.Characters) {[slot] = profile};
             Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
             var msg = _netManager.CreateNetMessage<MsgUpdateCharacter>();

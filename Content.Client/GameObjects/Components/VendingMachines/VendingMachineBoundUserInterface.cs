@@ -3,33 +3,33 @@ using Content.Shared.GameObjects.Components.VendingMachines;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
+using static Content.Shared.GameObjects.Components.VendingMachines.SharedVendingMachineComponent;
 
 namespace Content.Client.GameObjects.Components.VendingMachines
 {
     class VendingMachineBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
-        private VendingMachineMenu _menu;
+        [ViewVariables] private VendingMachineMenu? _menu;
 
-        public SharedVendingMachineComponent VendingMachine { get; private set; }
+        public SharedVendingMachineComponent? VendingMachine { get; private set; }
 
         public VendingMachineBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-            SendMessage(new SharedVendingMachineComponent.InventorySyncRequestMessage());
+            SendMessage(new InventorySyncRequestMessage());
         }
 
         protected override void Open()
         {
             base.Open();
 
-            if(!Owner.Owner.TryGetComponent(out SharedVendingMachineComponent vendingMachine))
+            if (!Owner.Owner.TryGetComponent(out SharedVendingMachineComponent? vendingMachine))
             {
                 return;
             }
 
             VendingMachine = vendingMachine;
 
-            _menu = new VendingMachineMenu() { Owner = this, Title = Owner.Owner.Name };
+            _menu = new VendingMachineMenu(this) {Title = Owner.Owner.Name};
             _menu.Populate(VendingMachine.Inventory);
 
             _menu.OnClose += Close;
@@ -38,15 +38,15 @@ namespace Content.Client.GameObjects.Components.VendingMachines
 
         public void Eject(string ID)
         {
-            SendMessage(new SharedVendingMachineComponent.VendingMachineEjectMessage(ID));
+            SendMessage(new VendingMachineEjectMessage(ID));
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
-            switch(message)
+            switch (message)
             {
-                case SharedVendingMachineComponent.VendingMachineInventoryMessage msg:
-                    _menu.Populate(msg.Inventory);
+                case VendingMachineInventoryMessage msg:
+                    _menu?.Populate(msg.Inventory);
                     break;
             }
         }

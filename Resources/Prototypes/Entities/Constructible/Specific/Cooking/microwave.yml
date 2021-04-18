@@ -22,13 +22,13 @@
     - key: enum.MicrowaveUiKey.Key
       type: MicrowaveBoundUserInterface
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.16,-0.3,0.16,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.16,-0.3,0.16,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
+      - SmallImpassable
+      mask:
       - VaultImpassable
   - type: Sprite
     netsync: false

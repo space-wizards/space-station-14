@@ -49,8 +49,9 @@
   description: "Portal to another location."
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       mask: [Impassable, MobImpassable]
   - type: Portal
   - type: Sprite

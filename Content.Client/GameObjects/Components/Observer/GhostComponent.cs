@@ -10,7 +10,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
-#nullable enable
 namespace Content.Client.GameObjects.Components.Observer
 {
     [RegisterComponent]

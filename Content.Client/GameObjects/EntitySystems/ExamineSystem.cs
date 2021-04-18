@@ -27,8 +27,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
-        private Popup _examineTooltipOpen;
-        private CancellationTokenSource _requestCancelTokenSource;
+        private Popup? _examineTooltipOpen;
+        private CancellationTokenSource? _requestCancelTokenSource;
 
         public override void Initialize()
         {
@@ -45,14 +45,14 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        private bool HandleExamine(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleExamine(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             if (!uid.IsValid() || !EntityManager.TryGetEntity(uid, out var examined))
             {
                 return false;
             }
 
-            var playerEntity = _playerManager.LocalPlayer.ControlledEntity;
+            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
 
             if (playerEntity == null || !CanExamine(playerEntity, examined))
             {
@@ -82,7 +82,7 @@ namespace Content.Client.GameObjects.EntitySystems
             panel.AddChild(vBox);
             var hBox = new HBoxContainer {SeparationOverride = 5};
             vBox.AddChild(hBox);
-            if (entity.TryGetComponent(out ISpriteComponent sprite))
+            if (entity.TryGetComponent(out ISpriteComponent? sprite))
             {
                 hBox.AddChild(new SpriteView {Sprite = sprite});
             }
@@ -101,7 +101,7 @@ namespace Content.Client.GameObjects.EntitySystems
             FormattedMessage message;
             if (entity.Uid.IsClientSide())
             {
-                message = GetExamineText(entity, _playerManager.LocalPlayer.ControlledEntity);
+                message = GetExamineText(entity, _playerManager.LocalPlayer?.ControlledEntity);
             }
             else
             {

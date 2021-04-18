@@ -20,7 +20,7 @@ namespace Content.Client.GameObjects.Components.Markers
         {
             var system = EntitySystem.Get<MarkerSystem>();
 
-            if (Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 sprite.Visible = system.MarkersVisible;
             }

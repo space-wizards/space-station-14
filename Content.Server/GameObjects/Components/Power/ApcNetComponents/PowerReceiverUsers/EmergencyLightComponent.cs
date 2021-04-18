@@ -167,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         };
     }
 
-    public sealed class EmergencyLightMessage : EntitySystemMessage
+    public sealed class EmergencyLightMessage : EntityEventArgs
     {
         public EmergencyLightComponent Component { get; }
 

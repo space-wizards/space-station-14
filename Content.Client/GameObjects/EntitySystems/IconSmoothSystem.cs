@@ -24,9 +24,16 @@ namespace Content.Client.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Initialize()
         {
-            SubscribeLocalEvent<IconSmoothDirtyEvent>(HandleDirtyEvent);
+            base.Initialize();
 
-            IoCManager.InjectDependencies(this);
+            SubscribeLocalEvent<IconSmoothDirtyEvent>(HandleDirtyEvent);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<IconSmoothDirtyEvent>();
         }
 
         public override void FrameUpdate(float frameTime)
@@ -53,7 +60,7 @@ namespace Content.Client.GameObjects.EntitySystems
             // This is simpler to implement. If you want to optimize it be my guest.
             var senderEnt = ev.Sender;
             if (senderEnt.IsValid() &&
-                senderEnt.TryGetComponent(out IconSmoothComponent iconSmooth)
+                senderEnt.TryGetComponent(out IconSmoothComponent? iconSmooth)
                 && iconSmooth.Running)
             {
                 var snapGrid = senderEnt.GetComponent<SnapGridComponent>();
@@ -114,7 +121,7 @@ namespace Content.Client.GameObjects.EntitySystems
             // As it stands now, it's totally possible for something to get queued twice.
             // Generation on the component is set after an update so we can cull updates that happened this generation.
             if (!entity.IsValid()
-                || !entity.TryGetComponent(out IconSmoothComponent smoothing)
+                || !entity.TryGetComponent(out IconSmoothComponent? smoothing)
                 || smoothing.UpdateGeneration == _generation)
             {
                 return;
@@ -129,7 +136,7 @@ namespace Content.Client.GameObjects.EntitySystems
     /// <summary>
     ///     Event raised by a <see cref="IconSmoothComponent"/> when it needs to be recalculated.
     /// </summary>
-    public sealed class IconSmoothDirtyEvent : EntitySystemMessage
+    public sealed class IconSmoothDirtyEvent : EntityEventArgs
     {
         public IconSmoothDirtyEvent(IEntity sender, (GridId grid, Vector2i pos)? lastPosition, SnapGridOffset offset, IconSmoothingMode mode)
         {

@@ -1,17 +1,17 @@
-﻿using Content.Server.GameObjects.Components.Stack;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
 using Content.Shared.Utility;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Items
@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Items
 
         public override string Name => "FloorTile";
         [DataField("outputs")]
-        private List<string> _outputTiles;
+        private List<string>? _outputTiles;
 
         public override void Initialize()
         {
@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Items
         private void PlaceAt(IMapGrid mapGrid, EntityCoordinates location, ushort tileId, float offset = 0)
         {
             mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId));
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Items/genhit.ogg", location, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(location), "/Audio/Items/genhit.ogg", location, AudioHelpers.WithVariation(0.125f));
         }
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
@@ -55,14 +55,20 @@ namespace Content.Server.GameObjects.Components.Items
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
                 return true;
 
-            if (!Owner.TryGetComponent(out StackComponent stack))
+            if (!Owner.TryGetComponent(out StackComponent? stack))
                 return true;
 
             var mapManager = IoCManager.Resolve<IMapManager>();
 
             var location = eventArgs.ClickLocation.AlignWithClosestGridTile();
             var locationMap = location.ToMap(Owner.EntityManager);
+            if (locationMap.MapId == MapId.Nullspace)
+                return true;
             mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid);
+
+            if (_outputTiles == null)
+                return true;
+
             foreach (var currentTile in _outputTiles)
             {
                 var currentTileDefinition = (ContentTileDefinition) _tileDefinitionManager[currentTile];

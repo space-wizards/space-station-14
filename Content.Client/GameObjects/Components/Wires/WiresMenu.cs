@@ -286,8 +286,8 @@ namespace Content.Client.GameObjects.Components.Wires
 
             private const string TextureContact = "/Textures/Interface/WireHacking/contact.svg.96dpi.png";
 
-            public event Action WireClicked;
-            public event Action ContactsClicked;
+            public event Action? WireClicked;
+            public event Action? ContactsClicked;
 
             public WireControl(WireColor color, WireLetter letter, bool isCut, bool flip, bool mirror, int type,
                 IResourceCache resourceCache)
@@ -519,7 +519,7 @@ namespace Content.Client.GameObjects.Components.Wires
                     }
                 };
 
-                Animation animation = null;
+                Animation? animation = null;
 
                 switch (data.State)
                 {

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.GameObjects.Components.Body.Mechanism;
+﻿using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Body.Mechanism

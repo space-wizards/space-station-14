@@ -2,8 +2,6 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
@@ -11,9 +9,9 @@ namespace Content.Client.GameObjects.Components.Atmos
     public class GasAnalyzerVisualizer : AppearanceVisualizer
     {
         [DataField("state_off")]
-        private string _stateOff;
+        private string? _stateOff;
         [DataField("state_working")]
-        private string _stateWorking;
+        private string? _stateWorking;
 
         public override void OnChangeData(AppearanceComponent component)
         {
@@ -24,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                 return;
             }
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -38,8 +36,6 @@ namespace Content.Client.GameObjects.Components.Atmos
                         break;
                     case GasAnalyzerVisualState.Working:
                         sprite.LayerSetState(0, _stateWorking);
-                        break;
-                    default:
                         break;
                 }
             }

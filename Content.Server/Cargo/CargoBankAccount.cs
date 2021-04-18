@@ -21,7 +21,7 @@ namespace Content.Server.Cargo
             }
         }
 
-        public event Action OnBalanceChange;
+        public event Action? OnBalanceChange;
 
         public CargoBankAccount(int id, string name, int balance)
         {

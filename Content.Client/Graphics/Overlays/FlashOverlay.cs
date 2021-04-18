@@ -1,4 +1,5 @@
-﻿using Robust.Client.Graphics;
+using Robust.Client.Graphics;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -18,9 +19,9 @@ namespace Content.Client.Graphics.Overlays
         private readonly ShaderInstance _shader;
         private double _startTime = -1;
         private double _lastsFor = 1;
-        private Texture _screenshotTexture;
+        private Texture? _screenshotTexture;
 
-        public FlashOverlay() : base(nameof(FlashOverlay))
+        public FlashOverlay()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").Instance().Duplicate();
@@ -54,10 +55,9 @@ namespace Content.Client.Graphics.Overlays
             }
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void DisposeBehavior()
         {
-            base.Dispose(disposing);
-
+            base.Dispose();
             _screenshotTexture = null;
         }
     }

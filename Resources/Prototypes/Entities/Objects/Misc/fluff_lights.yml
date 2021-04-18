@@ -87,8 +87,9 @@
         shader: unshaded
         visible: false
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       layer:
       - Opaque
       - Impassable
@@ -149,8 +150,9 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       layer:
       - Opaque
       - Impassable

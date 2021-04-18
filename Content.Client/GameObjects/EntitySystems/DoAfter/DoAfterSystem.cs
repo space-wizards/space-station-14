@@ -1,6 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Content.Client.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
@@ -40,6 +38,12 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         {
             base.Initialize();
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            UnsubscribeLocalEvent<PlayerAttachSysMessage>();
         }
 
         private void HandlePlayerAttached(PlayerAttachSysMessage message)

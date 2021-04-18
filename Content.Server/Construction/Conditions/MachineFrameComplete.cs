@@ -14,7 +14,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class MachineFrameComplete : IEdgeCondition
+    public class MachineFrameComplete : IGraphCondition
     {
         public async Task<bool> Condition(IEntity entity)
         {
@@ -59,6 +59,15 @@ namespace Content.Server.Construction.Conditions
             foreach (var (compName, info) in machineFrame.ComponentRequirements)
             {
                 var amount = info.Amount - machineFrame.ComponentProgress[compName];
+
+                if(amount == 0) continue;
+
+                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
+            }
+
+            foreach (var (tagName, info) in machineFrame.TagRequirements)
+            {
+                var amount = info.Amount - machineFrame.TagProgress[tagName];
 
                 if(amount == 0) continue;
 

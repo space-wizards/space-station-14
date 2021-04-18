@@ -1,0 +1,6 @@
+The part YAML takes the following format:
+
+author: Your_Name_Here
+changes:
+  - type: Fix # One of the following: Add, Remove, Tweak, Fix
+    message: Your change here!

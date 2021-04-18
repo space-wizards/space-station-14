@@ -62,11 +62,11 @@ namespace Content.Client.GameObjects.Components.Sound
 
                     if (!_audioStreams.ContainsKey(schedule))
                     {
-                        _audioStreams.Add(schedule,SoundSystem.Play(Filter.Local(), schedule.Filename, Owner, schedule.AudioParams));
+                        _audioStreams.Add(schedule, SoundSystem.Play(Filter.Local(), schedule.Filename, Owner, schedule.AudioParams)!);
                     }
                     else
                     {
-                        _audioStreams[schedule] = SoundSystem.Play(Filter.Local(), schedule.Filename, Owner, schedule.AudioParams);
+                        _audioStreams[schedule] = SoundSystem.Play(Filter.Local(), schedule.Filename, Owner, schedule.AudioParams)!;
                     }
 
                     if (schedule.Times == 0) return;
@@ -77,7 +77,7 @@ namespace Content.Client.GameObjects.Components.Sound
                 });
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
             switch (message)

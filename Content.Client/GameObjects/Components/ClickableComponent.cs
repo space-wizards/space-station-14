@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -89,17 +88,7 @@ namespace Content.Client.GameObjects.Components
 
                     var layerPos = modAngle.RotateVec(localPos);
 
-                    var localOffset = layerPos * EyeManager.PixelsPerMeter;
-
-                    localOffset *= layer.DirOffset switch
-                    {
-                        SpriteComponent.DirectionOffset.None => (1, -1),
-                        SpriteComponent.DirectionOffset.Clockwise => (-1, -1),
-                        SpriteComponent.DirectionOffset.CounterClockwise => (1, 1),
-                        SpriteComponent.DirectionOffset.Flip => (-1, 1),
-                        _ => throw new ArgumentOutOfRangeException()
-                    };
-
+                    var localOffset = layerPos * EyeManager.PixelsPerMeter * (1, -1);
                     if (layer.Texture != null)
                     {
                         if (_clickMapManager.IsOccluding(layer.Texture,
@@ -118,10 +107,6 @@ namespace Content.Client.GameObjects.Components
                         }
 
                         var (mX, mY) = localOffset + rsi.Size / 2;
-                        (mX, mY) = layer.DirOffset == SpriteComponent.DirectionOffset.Clockwise ||
-                                   layer.DirOffset == SpriteComponent.DirectionOffset.CounterClockwise
-                            ? (mY, mX)
-                            : (mX, mY);
 
                         if (_clickMapManager.IsOccluding(rsi, layer.RsiState, dir,
                             layer.AnimationFrame, ((int) mX, (int) mY)))

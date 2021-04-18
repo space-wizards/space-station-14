@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;

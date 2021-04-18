@@ -1,0 +1,31 @@
+- type: entity
+  id: Singularity
+  name: gravitational singularity
+  description: A mesmerizing swirl of darkness that sucks in everything.\nIf it's moving towards you, run.
+  components:
+  - type: Clickable
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+          radius: 0.5
+      mass: 5
+      layer:
+      - Impassable
+      mask:
+      - AllMask
+  - type: Singularity
+  - type: RadiationPulse
+    range: 15
+    decay: false
+  - type: Sprite
+    sprite: Constructible/Power/Singularity/singularity_1.rsi
+    state: singularity_1
+  - type: Icon
+    sprite: Constructible/Power/Singularity/singularity_1.rsi
+    state: singularity_1
+    drawdepth: Items
+  - type: Appearance
+    visuals:
+    - type: SingularityVisualizer

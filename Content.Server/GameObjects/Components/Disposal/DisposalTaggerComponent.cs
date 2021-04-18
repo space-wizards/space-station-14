@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Verbs;
@@ -14,7 +14,9 @@ using Robust.Shared.ViewVariables;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Player;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalTaggerComponent;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -31,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         public bool Anchored =>
             !Owner.TryGetComponent(out PhysicsComponent? physics) ||
-            physics.Anchored;
+            physics.BodyType == BodyType.Static;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalTaggerUiKey.Key);
 
@@ -111,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void ClickSound()
         {
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         /// <summary>
@@ -158,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
 
                 data.Text = Loc.GetString("Open Configuration");
-                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.96dpi.png";
+                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, DisposalTaggerComponent component)

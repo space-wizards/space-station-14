@@ -1,39 +1,40 @@
 - type: latheRecipe
   id: Beaker
-  icon: Objects/Specific/Chemistry/beakers.rsi
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+    state: beaker
   result: Beaker
   completetime: 500
   materials:
-    glass: 50
+    glass: 100
 
 - type: latheRecipe
   id: LargeBeaker
-  icon: Objects/Specific/Chemistry/beakers.rsi
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker_large.rsi
+    state: beakerlarge
   result: LargeBeaker
   completetime: 500
   materials:
-    glass: 90
+    glass: 200
 
 - type: latheRecipe
   id: Dropper
-  icon: Objects/Specific/Chemistry/dropper.rsi
+  icon:
+    sprite: Objects/Specific/Chemistry/dropper.rsi
+    state: dropper
   result: Dropper
   completetime: 500
   materials:
-    glass: 70
-
+    glass: 200
+    plastic: 100
+    
 - type: latheRecipe
   id: Syringe
-  icon: Objects/Specific/Chemistry/syringe.rsi
+  icon:
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: syringe_base0
   result: Syringe
   completetime: 500
   materials:
-    glass: 50
-
-- type: latheRecipe
-  id: bottle
-  icon: Objects/Specific/Chemistry/bottle.rsi
-  result: bottle
-  completetime: 500
-  materials:
-    glass: 60
+    glass: 200

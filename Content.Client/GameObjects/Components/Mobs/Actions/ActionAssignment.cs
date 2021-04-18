@@ -65,7 +65,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             return _actionType == other._actionType && _itemActionType == other._itemActionType && Equals(_item, other._item);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is ActionAssignment other && Equals(other);
         }

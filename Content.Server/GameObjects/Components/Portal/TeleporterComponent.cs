@@ -1,14 +1,17 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.GameObjects.Components.Portal;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -91,11 +94,11 @@ namespace Content.Server.GameObjects.Components.Portal
             }
             if (_avoidCollidable)
             {
-                foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(mapCoords))
+                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(mapCoords))
                 {
                     // Added this component to avoid stacking portals and causing shenanigans
                     // TODO: Doesn't do a great job of stopping stacking portals for directed
-                    if (entity.HasComponent<IPhysicsComponent>() || entity.HasComponent<TeleporterComponent>())
+                    if (entity.HasComponent<IPhysBody>() || entity.HasComponent<TeleporterComponent>())
                     {
                         return;
                     }
@@ -123,8 +126,7 @@ namespace Content.Server.GameObjects.Components.Portal
             Owner.SpawnTimer(TimeSpan.FromSeconds(_chargeTime + _cooldown), () => SetState(ItemTeleporterState.Off));
             if (_cooldownSound != null)
             {
-                var soundPlayer = EntitySystem.Get<AudioSystem>();
-                soundPlayer.PlayFromEntity(_cooldownSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _cooldownSound, Owner);
             }
         }
 
@@ -137,9 +139,9 @@ namespace Content.Server.GameObjects.Components.Portal
         private bool EmptySpace(IEntity user, Vector2 target)
         {
             // TODO: Check the user's spot? Upside is no stacking TPs but downside is they can't unstuck themselves from walls.
-            foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(user.Transform.MapID, target))
+            foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(user.Transform.MapID, target))
             {
-                if (entity.HasComponent<IPhysicsComponent>() || entity.HasComponent<PortalComponent>())
+                if (entity.HasComponent<IPhysBody>() || entity.HasComponent<PortalComponent>())
                 {
                     return false;
                 }
@@ -208,7 +210,6 @@ namespace Content.Server.GameObjects.Components.Portal
         {
             // Messy maybe?
             var targetGrid = user.Transform.Coordinates.WithPosition(vector);
-            var soundPlayer = EntitySystem.Get<AudioSystem>();
 
             // If portals use those, otherwise just move em over
             if (_portalAliveTime > 0.0f)
@@ -228,12 +229,12 @@ namespace Content.Server.GameObjects.Components.Portal
             else
             {
                 // Departure
-                soundPlayer.PlayAtCoords(_departureSound, user.Transform.Coordinates);
+                SoundSystem.Play(Filter.Pvs(user), _departureSound, user.Transform.Coordinates);
 
                 // Arrival
                 user.Transform.AttachToGridOrMap();
                 user.Transform.WorldPosition = vector;
-                soundPlayer.PlayAtCoords(_arrivalSound, user.Transform.Coordinates);
+                SoundSystem.Play(Filter.Pvs(user), _arrivalSound, user.Transform.Coordinates);
             }
         }
     }

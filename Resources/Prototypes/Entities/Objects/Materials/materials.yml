@@ -1,277 +1,277 @@
 - type: entity
-  id: MaterialBase
   abstract: true
   parent: BaseItem
+  id: MaterialBase
   description: A raw material.
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Objects/Materials/materials.rsi
-    - type: Item
-      sprite: Objects/Materials/materials.rsi
-    - type: ItemStatus
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Materials/materials.rsi
+  - type: Item
+    sprite: Objects/Materials/materials.rsi
+  - type: ItemStatus
 
 - type: entity
-  name: bananium
+  parent: MaterialBase
   id: MaterialBananium
-  parent: MaterialBase
+  name: bananium
   components:
-    - type: Stack
-      stackType: Bananium
-    - type: Sprite
-      state: bananium
+  - type: Stack
+    stackType: Bananium
+  - type: Sprite
+    state: bananium
 
 - type: entity
-  id: MaterialBananium1
   parent: MaterialBananium
+  id: MaterialBananium1
   suffix: 1
   components:
-    - type: Stack
-      count: 1
+  - type: Stack
+    count: 1
 
 - type: entity
-  name: cloth
+  parent: MaterialBase
   id: MaterialCloth
-  parent: MaterialBase
+  name: cloth
   components:
-    - type: Stack
-      stackType: Cloth
-    - type: Sprite
-      state: cloth_3
-    - type: Appearance
-      visuals:
-        - type: StackVisualizer
-          stackLayers:
-            - cloth
-            - cloth_2
-            - cloth_3
+  - type: Stack
+    stackType: Cloth
+  - type: Sprite
+    state: cloth_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - cloth
+      - cloth_2
+      - cloth_3
 
 - type: entity
-  id: MaterialCloth1
   parent: MaterialCloth
+  id: MaterialCloth1
   components:
-    - type: Sprite
-      state: cloth
-    - type: Stack
-      count: 1
+  - type: Sprite
+    state: cloth
+  - type: Stack
+    count: 1
 
 - type: entity
-  name: cotton
+  parent: MaterialBase
   id: MaterialCotton
-  parent: MaterialBase
+  name: cotton
   components:
-    - type: Stack
-      stackType: Cotton
-    - type: Sprite
-      state: cotton_3
-    - type: Appearance
-      visuals:
-        - type: StackVisualizer
-          stackLayers:
-            - cotton
-            - cotton_2
-            - cotton_3
+  - type: Stack
+    stackType: Cotton
+  - type: Sprite
+    state: cotton_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - cotton
+      - cotton_2
+      - cotton_3
 
 - type: entity
-  id: MaterialCotton1
   parent: MaterialCotton
+  id: MaterialCotton1
   components:
-    - type: Sprite
-      state: cotton
-    - type: Stack
-      count: 1
+  - type: Sprite
+    state: cotton
+  - type: Stack
+    count: 1
 
 - type: entity
-  name: refined diamond
+  parent: MaterialBase
   id: MaterialDiamond
-  parent: MaterialBase
+  name: refined diamond
   components:
-    - type: Stack
-      stackType: Diamond
-    - type: Sprite
-      state: diamond
-    - type: Item
-      HeldPrefix: diamond
+  - type: Stack
+    stackType: Diamond
+  - type: Sprite
+    state: diamond
+  - type: Item
+    HeldPrefix: diamond
 
 - type: entity
-  id: MaterialDiamond1
   parent: MaterialDiamond
+  id: MaterialDiamond1
   suffix: 1
   components:
-    - type: Stack
-      count: 1
+  - type: Stack
+    count: 1
 
 - type: entity
-  name: durathread
+  parent: MaterialBase
   id: MaterialDurathread
-  parent: MaterialBase
+  name: durathread
   components:
-    - type: Stack
-      stackType: Durathread
-    - type: Sprite
-      state: durathread_3
-    - type: Appearance
-      visuals:
-        - type: StackVisualizer
-          stackLayers:
-            - durathread
-            - durathread_2
-            - durathread_3
+  - type: Stack
+    stackType: Durathread
+  - type: Sprite
+    state: durathread_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - durathread
+      - durathread_2
+      - durathread_3
 
 - type: entity
-  id: MaterialDurathread1
   parent: MaterialDurathread
+  id: MaterialDurathread1
   components:
-    - type: Sprite
-      state: durathread
-    - type: Stack
-      count: 1
+  - type: Sprite
+    state: durathread
+  - type: Stack
+    count: 1
 
 - type: entity
-  name: raw durathread
+  parent: MaterialBase
   id: MaterialDurathreadRaw
-  parent: MaterialBase
+  name: raw durathread
   components:
-    - type: Stack
-      stackType: RawDurathread
-    - type: Sprite
-      state: durathreadraw_3
-    - type: Appearance
-      visuals:
-        - type: StackVisualizer
-          stackLayers:
-            - durathreadraw
-            - durathreadraw_2
-            - durathreadraw_3
+  - type: Stack
+    stackType: RawDurathread
+  - type: Sprite
+    state: durathreadraw_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - durathreadraw
+      - durathreadraw_2
+      - durathreadraw_3
 
 - type: entity
-  id: MaterialDurathreadRaw1
   parent: MaterialDurathreadRaw
+  id: MaterialDurathreadRaw1
   components:
-    - type: Sprite
-      state: durathreadraw
-    - type: Stack
-      count: 1
+  - type: Sprite
+    state: durathreadraw
+  - type: Stack
+    count: 1
 
 - type: entity
-  name: hide
+  parent: MaterialBase
   id: MaterialHide
-  parent: MaterialBase
+  name: hide
   components:
-    - type: Stack
-      stackType: Hide
-    - type: Sprite
-      state: hide_3
-    - type: Appearance
-      visuals:
-        - type: StackVisualizer
-          stackLayers:
-            - hide
-            - hide_2
-            - hide_3
+  - type: Stack
+    stackType: Hide
+  - type: Sprite
+    state: hide_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - hide
+      - hide_2
+      - hide_3
 
 - type: entity
-  id: MaterialHide1
   parent: MaterialHide
+  id: MaterialHide1
   components:
-    - type: Sprite
-      state: hide
-    - type: Stack
-      count: 1
+  - type: Sprite
+    state: hide
+  - type: Stack
+    count: 1
 
 - type: entity
-  name: leather
+  parent: MaterialBase
   id: MaterialLeather
-  parent: MaterialBase
+  name: leather
   components:
-    - type: Stack
-      stackType: Leather
-    - type: Sprite
-      state: leather_3
-    - type: Appearance
-      visuals:
-        - type: StackVisualizer
-          stackLayers:
-            - leather
-            - leather_2
-            - leather_3
+  - type: Stack
+    stackType: Leather
+  - type: Sprite
+    state: leather_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - leather
+      - leather_2
+      - leather_3
 
 - type: entity
-  id: MaterialLeather1
   parent: MaterialLeather
+  id: MaterialLeather1
   components:
-    - type: Sprite
-      state: leather
-    - type: Stack
-      count: 1
+  - type: Sprite
+    state: leather
+  - type: Stack
+    count: 1
 
 - type: entity
-  name: wood
-  id: MaterialWoodPlank
   parent: MaterialBase
+  id: MaterialWoodPlank
+  name: wood
   components:
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: wood
-    - type: Stack
-      stackType: WoodPlank
-    - type: Sprite
-      state: wood
-    - type: Item
-      HeldPrefix: wood
+  - type: Material
+    materials:
+    - key: enum.MaterialKeys.Stack
+      mat: wood
+  - type: Stack
+    stackType: WoodPlank
+  - type: Sprite
+    state: wood
+  - type: Item
+    HeldPrefix: wood
 
 - type: entity
-  id: MaterialWoodPlank1
   parent: MaterialWoodPlank
+  id: MaterialWoodPlank1
   suffix: 1
   components:
-    - type: Stack
-      count: 1
+  - type: Stack
+    count: 1
 
 # Specific Hides
 
 - type: entity
-  name: bear hide
+  parent: MaterialBase
   id: MaterialHideBear
-  parent: MaterialBase
+  name: bear hide
   components:
-    - type: Sprite
-      sprite: Objects/Materials/materials.rsi
-      state: bearpelt
-    - type: Clothing
-      sprite: Clothing/Head/Misc/hides.rsi
-      HeldPrefix: bear
-      ClothingPrefix: bear
-      Slots:
-      - Helmet
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: bearpelt
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hides.rsi
+    HeldPrefix: bear
+    ClothingPrefix: bear
+    Slots:
+    - Helmet
 
 - type: entity
-  name: cat hide
+  parent: MaterialBase
   id: MaterialHideCat
-  parent: MaterialBase
+  name: cat hide
   components:
-    - type: Sprite
-      sprite: Objects/Materials/materials.rsi
-      state: cathide
-    # - type: Clothing
-    #   sprite: Clothing/Head/Misc/hides.rsi
-    #   HeldPrefix: cat
-    #   ClothingPrefix: cat
-    #   Slots:
-    #   - Helmet
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: cathide
+  # - type: Clothing
+  #   sprite: Clothing/Head/Misc/hides.rsi
+  #   HeldPrefix: cat
+  #   ClothingPrefix: cat
+  #   Slots:
+  #   - Helmet
 
 - type: entity
-  name: corgi hide
-  id: MaterialHideCorgi
   parent: MaterialBase
+  id: MaterialHideCorgi
+  name: corgi hid
   components:
-    - type: Sprite
-      sprite: Objects/Materials/materials.rsi
-      state: corgihide
-    - type: Clothing
-      sprite: Clothing/Head/Misc/hides.rsi
-    #   HeldPrefix: corgi
-      ClothingPrefix: corgi2
-      Slots:
-      - Helmet
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: corgihide
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hides.rsi
+  #   HeldPrefix: corgi
+    ClothingPrefix: corgi2
+    Slots:
+    - Helmet

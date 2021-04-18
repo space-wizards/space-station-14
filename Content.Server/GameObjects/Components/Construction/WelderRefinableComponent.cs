@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Construction
     {
         [ViewVariables]
         [DataField("refineResult")]
-        private HashSet<string>? _refineResult = new() { "GlassStack" };
+        private HashSet<string>? _refineResult = new() { };
         [ViewVariables]
         [DataField("refineTime")]
         private float _refineTime = 2f;
@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
         public override string Name => "WelderRefinable";
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // check if object is welder
             if (!eventArgs.Using.TryGetComponent(out ToolComponent? tool))

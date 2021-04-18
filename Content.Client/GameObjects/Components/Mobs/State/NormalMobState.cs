@@ -11,7 +11,7 @@ namespace Content.Client.GameObjects.Components.Mobs.State
         {
             base.EnterState(entity);
 
-            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Alive);
             }

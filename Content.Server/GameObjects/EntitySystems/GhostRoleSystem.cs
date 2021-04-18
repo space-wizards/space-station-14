@@ -30,7 +30,16 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Initialize()
         {
+            base.Initialize();
+
             SubscribeLocalEvent<PlayerAttachSystemMessage>(OnPlayerAttached);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<PlayerAttachSystemMessage>();
         }
 
         private uint GetNextRoleIdentifier()

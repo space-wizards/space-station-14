@@ -38,7 +38,7 @@ namespace Content.Client.State
 
         private IEventBus _eventBus => _entityManager.EventBus;
 
-        private IEntity _lastHoveredEntity;
+        private IEntity? _lastHoveredEntity;
 
         private bool _outlineEnabled = true;
 
@@ -79,7 +79,7 @@ namespace Content.Client.State
                 inRange = localPlayer.InRangeUnobstructed(entityToClick, ignoreInsideBlocker: true);
             }
 
-            InteractionOutlineComponent outline;
+            InteractionOutlineComponent? outline;
             if(!_outlineEnabled || !ConfigurationManager.GetCVar(CCVars.OutlineEnabled))
             {
                 if(entityToClick != null && entityToClick.TryGetComponent(out outline))
@@ -113,7 +113,7 @@ namespace Content.Client.State
             }
         }
 
-        public IEntity GetEntityUnderPosition(MapCoordinates coordinates)
+        public IEntity? GetEntityUnderPosition(MapCoordinates coordinates)
         {
             var entitiesUnderPosition = GetEntitiesUnderPosition(coordinates);
             return entitiesUnderPosition.Count > 0 ? entitiesUnderPosition[0] : null;
@@ -127,7 +127,7 @@ namespace Content.Client.State
         public IList<IEntity> GetEntitiesUnderPosition(MapCoordinates coordinates)
         {
             // Find all the entities intersecting our click
-            var entities = EntityManager.GetEntitiesIntersecting(coordinates.MapId,
+            var entities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(coordinates.MapId,
                 Box2.CenteredAround(coordinates.Position, (1, 1)));
 
             // Check the entities against whether or not we can click them
@@ -226,7 +226,7 @@ namespace Content.Client.State
                 entityToClick?.Uid ?? EntityUid.Invalid);
 
             // client side command handlers will always be sent the local player session.
-            var session = PlayerManager.LocalPlayer.Session;
+            var session = PlayerManager.LocalPlayer?.Session;
             if (inputSys.HandleInputCommand(session, func, message))
             {
                 args.Handle();

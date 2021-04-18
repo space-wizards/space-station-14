@@ -29,12 +29,12 @@ namespace Content.Server.Interfaces.GameObjects
         /// <summary>
         ///     The entity being disarmed.
         /// </summary>
-        public IEntity Target { get; init; }
+        public IEntity? Target { get; init; }
 
         /// <summary>
         ///     The entity performing the disarm.
         /// </summary>
-        public IEntity Source { get; init; }
+        public IEntity? Source { get; init; }
 
         /// <summary>
         ///     Probability for push/knockdown.

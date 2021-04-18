@@ -22,6 +22,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.GamePresets
 {
@@ -107,7 +108,6 @@ namespace Content.Server.GameTicking.GamePresets
                     Logger.InfoS("preset", "Selected a preferred traitor.");
                 }
                 var mind = traitor.Data.ContentData()?.Mind;
-                var traitorRole = new TraitorRole(mind);
                 if (mind == null)
                 {
                     Logger.ErrorS("preset", "Failed getting mind for picked traitor.");
@@ -117,9 +117,11 @@ namespace Content.Server.GameTicking.GamePresets
                 // creadth: we need to create uplink for the antag.
                 // PDA should be in place already, so we just need to
                 // initiate uplink account.
-                var uplinkAccount = new UplinkAccount(mind.OwnedEntity.Uid, StartingBalance);
+                DebugTools.AssertNotNull(mind.OwnedEntity);
+
+                var uplinkAccount = new UplinkAccount(mind.OwnedEntity!.Uid, StartingBalance);
                 var inventory = mind.OwnedEntity.GetComponent<InventoryComponent>();
-                if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent pdaItem))
+                if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? pdaItem))
                 {
                     Logger.ErrorS("preset", "Failed getting pda for picked traitor.");
                     continue;
@@ -133,6 +135,8 @@ namespace Content.Server.GameTicking.GamePresets
                     Logger.ErrorS("preset","PDA had no id for picked traitor");
                     continue;
                 }
+
+                var traitorRole = new TraitorRole(mind);
 
                 mind.AddRole(traitorRole);
                 _traitors.Add(traitorRole);
@@ -185,7 +189,10 @@ namespace Content.Server.GameTicking.GamePresets
 
             foreach (var traitor in _traitors)
             {
-                result += "\n"+Loc.GetString("traitor-user-was-a-traitor", ("user", traitor.Mind.Session.Name));
+                if (traitor.Mind.TryGetSession(out var session))
+                {
+                    result += "\n" + Loc.GetString("traitor-user-was-a-traitor", ("user", session.Name));
+                }
 
                 var objectives = traitor.Mind.AllObjectives.ToArray();
                 if (objectives.Length == 0)

@@ -12,8 +12,8 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class PopupUser : IGraphAction
     {
-        [DataField("cursor")] public bool Cursor { get; private set; } = false;
-        [DataField("text")] public string Text { get; private set; } = string.Empty;
+        [field: DataField("cursor")] public bool Cursor { get; } = false;
+        [field: DataField("text")] public string Text { get; } = string.Empty;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {

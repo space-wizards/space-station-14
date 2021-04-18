@@ -13,8 +13,8 @@ namespace Content.Client.GameObjects.Components
     {
         private const string AnimationKey = "radiationcollector_animation";
 
-        private Animation ActivateAnimation;
-        private Animation DeactiveAnimation;
+        private Animation ActivateAnimation = default!;
+        private Animation DeactiveAnimation = default!;
 
         void ISerializationHooks.AfterDeserialization()
         {
@@ -91,6 +91,7 @@ namespace Content.Client.GameObjects.Components
             }
         }
     }
+
     public enum RadiationCollectorVisualLayers : byte
     {
         Main

@@ -1,0 +1,44 @@
+- type: entity
+  id: RadiationCollector
+  name: radiation collector
+  description: A machine that collects Radiation and turns it into power.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
+      mass: 25
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - Opaque
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Constructible/Power/Singularity/collector.rsi
+    layers:
+      - state: ca_on
+        map: ["enum.RadiationCollectorVisualLayers.Main"]
+  - type: Appearance
+    visuals:
+      - type: RadiationCollectorVisualizer
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
+  - type: RadiationCollector
+  - type: Anchorable
+  - type: Pullable

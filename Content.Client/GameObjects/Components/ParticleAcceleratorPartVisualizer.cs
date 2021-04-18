@@ -14,16 +14,22 @@ namespace Content.Client.GameObjects.Components
     public class ParticleAcceleratorPartVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         [DataField("baseState", required: true)]
-        private string _baseState;
+        private string? _baseState;
+
         private Dictionary<ParticleAcceleratorVisualState, string> _states = new();
 
         void ISerializationHooks.AfterDeserialization()
         {
-            _states.Add(ParticleAcceleratorVisualState.Powered, _baseState+"p");
-            _states.Add(ParticleAcceleratorVisualState.Level0, _baseState+"p0");
-            _states.Add(ParticleAcceleratorVisualState.Level1, _baseState+"p1");
-            _states.Add(ParticleAcceleratorVisualState.Level2, _baseState+"p2");
-            _states.Add(ParticleAcceleratorVisualState.Level3, _baseState+"p3");
+            if (_baseState == null)
+            {
+                return;
+            }
+
+            _states.Add(ParticleAcceleratorVisualState.Powered, _baseState + "p");
+            _states.Add(ParticleAcceleratorVisualState.Level0, _baseState + "p0");
+            _states.Add(ParticleAcceleratorVisualState.Level1, _baseState + "p1");
+            _states.Add(ParticleAcceleratorVisualState.Level2, _baseState + "p2");
+            _states.Add(ParticleAcceleratorVisualState.Level3, _baseState + "p3");
         }
 
         public override void InitializeEntity(IEntity entity)

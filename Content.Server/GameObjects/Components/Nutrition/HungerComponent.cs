@@ -12,8 +12,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -81,13 +79,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 // Revert slow speed if required
                 if (_lastHungerThreshold == HungerThreshold.Starving && _currentHungerThreshold != HungerThreshold.Dead &&
-                    Owner.TryGetComponent(out MovementSpeedModifierComponent movementSlowdownComponent))
+                    Owner.TryGetComponent(out MovementSpeedModifierComponent? movementSlowdownComponent))
                 {
                     movementSlowdownComponent.RefreshMovementSpeedModifiers();
                 }
 
                 // Update UI
-                Owner.TryGetComponent(out ServerAlertsComponent alertsComponent);
+                Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent);
 
                 if (HungerThresholdAlertTypes.TryGetValue(_currentHungerThreshold, out var alertId))
                 {
@@ -119,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     case HungerThreshold.Starving:
                         // TODO: If something else bumps this could cause mega-speed.
                         // If some form of speed update system if multiple things are touching it use that.
-                        if (Owner.TryGetComponent(out MovementSpeedModifierComponent movementSlowdownComponent1))
+                        if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movementSlowdownComponent1))
                         {
                             movementSlowdownComponent1.RefreshMovementSpeedModifiers();
                         }
@@ -180,10 +178,10 @@ namespace Content.Server.GameObjects.Components.Nutrition
             if (_currentHungerThreshold != HungerThreshold.Dead)
                 return;
 
-            if (!Owner.TryGetComponent(out IDamageableComponent damageable))
+            if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
                 return;
 
-            if (!Owner.TryGetComponent(out IMobStateComponent mobState))
+            if (!Owner.TryGetComponent(out IMobStateComponent? mobState))
                 return;
 
             if (!mobState.IsDead())

@@ -9,18 +9,19 @@ namespace Content.Client.GameObjects.Components.Research
     public class ResearchClientServerSelectionMenu : SS14Window
     {
         private readonly ItemList _servers;
-        private int _serverCount = 0;
+        private int _serverCount;
         private string[] _serverNames = new string[]{};
         private int[] _serverIds = new int[]{};
         private int _selectedServerId = -1;
 
-        public ResearchClientBoundUserInterface Owner { get; set; }
+        public ResearchClientBoundUserInterface Owner { get; }
 
-        public ResearchClientServerSelectionMenu()
+        public ResearchClientServerSelectionMenu(ResearchClientBoundUserInterface owner)
         {
             MinSize = SetSize = (300, 300);
             IoCManager.InjectDependencies(this);
 
+            Owner = owner;
             Title = Loc.GetString("Research Server Selection");
 
             _servers = new ItemList() {SelectMode = ItemList.ItemListSelectMode.Single};

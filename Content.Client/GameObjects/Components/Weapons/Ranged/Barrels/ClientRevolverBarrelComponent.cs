@@ -16,7 +16,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         public override string Name => "RevolverBarrel";
         public override uint? NetID => ContentNetIDs.REVOLVER_BARREL;
 
-        private StatusControl _statusControl;
+        private StatusControl? _statusControl;
 
         /// <summary>
         /// A array that lists the bullet states
@@ -25,12 +25,12 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         /// null means no bullet
         /// </summary>
         [ViewVariables]
-        public bool?[] Bullets { get; private set; }
+        public bool?[] Bullets { get; private set; } = new bool?[0];
 
         [ViewVariables]
         public int CurrentSlot { get; private set; }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 

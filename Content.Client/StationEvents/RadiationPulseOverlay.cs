@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +5,7 @@ using Content.Client.GameObjects.Components.StationEvents;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -44,7 +44,7 @@ namespace Content.Client.StationEvents
         // TODO: When worldHandle can do DrawCircle change this.
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-        public RadiationPulseOverlay() : base(nameof(RadiationPulseOverlay))
+        public RadiationPulseOverlay()
         {
             IoCManager.InjectDependencies(this);
             _lastTick = _gameTiming.CurTime;

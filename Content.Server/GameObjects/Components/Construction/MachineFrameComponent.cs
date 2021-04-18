@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Construction;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components.Construction;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -48,6 +49,12 @@ namespace Content.Server.GameObjects.Components.Construction
                         return false;
                 }
 
+                foreach (var (tagName, info) in TagRequirements)
+                {
+                    if (_tagProgress[tagName] < info.Amount)
+                        return false;
+                }
+
                 return true;
             }
         }
@@ -56,32 +63,50 @@ namespace Content.Server.GameObjects.Components.Construction
         public bool HasBoard => _boardContainer?.ContainedEntities.Count != 0;
 
         [ViewVariables]
-        private Dictionary<MachinePart, int> _progress;
+        private readonly Dictionary<MachinePart, int> _progress = new();
 
         [ViewVariables]
-        private Dictionary<string, int> _materialProgress;
+        private readonly Dictionary<string, int> _materialProgress = new();
 
         [ViewVariables]
-        private Dictionary<string, int> _componentProgress;
+        private readonly Dictionary<string, int> _componentProgress = new();
 
         [ViewVariables]
-        private Container _boardContainer;
+        private readonly Dictionary<string, int> _tagProgress = new();
 
         [ViewVariables]
-        private Container _partContainer;
+        private Dictionary<MachinePart, int> _requirements = new();
 
         [ViewVariables]
-        public IReadOnlyDictionary<MachinePart, int> Requirements { get; private set; }
+        private Dictionary<string, int> _materialRequirements = new();
 
         [ViewVariables]
-        public IReadOnlyDictionary<string, int> MaterialRequirements { get; private set; }
+        private Dictionary<string, GenericPartInfo> _componentRequirements = new();
 
         [ViewVariables]
-        public IReadOnlyDictionary<string, ComponentPartInfo> ComponentRequirements { get; private set; }
+        private Dictionary<string, GenericPartInfo> _tagRequirements = new();
+
+        [ViewVariables]
+        private Container _boardContainer = default!;
+
+        [ViewVariables]
+        private Container _partContainer = default!;
 
         public IReadOnlyDictionary<MachinePart, int> Progress => _progress;
+
         public IReadOnlyDictionary<string, int> MaterialProgress => _materialProgress;
+
         public IReadOnlyDictionary<string, int> ComponentProgress => _componentProgress;
+
+        public IReadOnlyDictionary<string, int> TagProgress => _tagProgress;
+
+        public IReadOnlyDictionary<MachinePart, int> Requirements => _requirements;
+
+        public IReadOnlyDictionary<string, int> MaterialRequirements => _materialRequirements;
+
+        public IReadOnlyDictionary<string, GenericPartInfo> ComponentRequirements => _componentRequirements;
+
+        public IReadOnlyDictionary<string, GenericPartInfo> TagRequirements => _tagRequirements;
 
         public override void Initialize()
         {
@@ -106,12 +131,15 @@ namespace Content.Server.GameObjects.Components.Construction
 
         private void ResetProgressAndRequirements(MachineBoardComponent machineBoard)
         {
-            Requirements = machineBoard.Requirements;
-            MaterialRequirements = machineBoard.MaterialIdRequirements;
-            ComponentRequirements = machineBoard.ComponentRequirements;
-            _progress = new Dictionary<MachinePart, int>();
-            _materialProgress = new Dictionary<string, int>();
-            _componentProgress = new Dictionary<string, int>();
+            _requirements = machineBoard.Requirements;
+            _materialRequirements = machineBoard.MaterialIdRequirements;
+            _componentRequirements = machineBoard.ComponentRequirements;
+            _tagRequirements = machineBoard.TagRequirements;
+
+            _progress.Clear();
+            _materialProgress.Clear();
+            _componentProgress.Clear();
+            _tagProgress.Clear();
 
             foreach (var (machinePart, _) in Requirements)
             {
@@ -127,11 +155,16 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 _componentProgress[compName] = 0;
             }
+
+            foreach (var (compName, _) in TagRequirements)
+            {
+                _tagProgress[compName] = 0;
+            }
         }
 
         public void RegenerateProgress()
         {
-            AppearanceComponent appearance;
+            AppearanceComponent? appearance;
 
             if (!HasBoard)
             {
@@ -140,12 +173,14 @@ namespace Content.Server.GameObjects.Components.Construction
                     appearance.SetData(MachineFrameVisuals.State, 1);
                 }
 
-                Requirements = null;
-                MaterialRequirements = null;
-                ComponentRequirements = null;
-                _progress = null;
-                _materialProgress = null;
-                _componentProgress = null;
+                _requirements.Clear();
+                _materialRequirements.Clear();
+                _componentRequirements.Clear();
+                _tagRequirements.Clear();
+                _progress.Clear();
+                _materialProgress.Clear();
+                _componentProgress.Clear();
+                _tagProgress.Clear();
 
                 return;
             }
@@ -190,7 +225,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
 
                 // I have many regrets.
-                foreach (var (compName, amount) in ComponentRequirements)
+                foreach (var (compName, _) in ComponentRequirements)
                 {
                     var registration = _componentFactory.GetRegistration(compName);
 
@@ -201,6 +236,18 @@ namespace Content.Server.GameObjects.Components.Construction
                         _componentProgress[compName] = 1;
                     else
                         _componentProgress[compName]++;
+                }
+
+                // I have MANY regrets.
+                foreach (var (tagName, _) in TagRequirements)
+                {
+                    if (!part.HasTag(tagName))
+                        continue;
+
+                    if (!_tagProgress.ContainsKey(tagName))
+                        _tagProgress[tagName] = 1;
+                    else
+                        _tagProgress[tagName]++;
                 }
             }
         }
@@ -222,7 +269,7 @@ namespace Content.Server.GameObjects.Components.Construction
                         appearance.SetData(MachineFrameVisuals.State, 2);
                     }
 
-                    if (Owner.TryGetComponent(out ConstructionComponent construction))
+                    if (Owner.TryGetComponent(out ConstructionComponent? construction))
                     {
                         // So prying the components off works correctly.
                         construction.ResetEdge();
@@ -289,6 +336,19 @@ namespace Content.Server.GameObjects.Components.Construction
 
                     if (!eventArgs.Using.TryRemoveFromContainer() || !_partContainer.Insert(eventArgs.Using)) continue;
                     _componentProgress[compName]++;
+                    return true;
+                }
+
+                foreach (var (tagName, info) in TagRequirements)
+                {
+                    if (_tagProgress[tagName] >= info.Amount)
+                        continue;
+
+                    if (!eventArgs.Using.HasTag(tagName))
+                        continue;
+
+                    if (!eventArgs.Using.TryRemoveFromContainer() || !_partContainer.Insert(eventArgs.Using)) continue;
+                    _tagProgress[tagName]++;
                     return true;
                 }
             }

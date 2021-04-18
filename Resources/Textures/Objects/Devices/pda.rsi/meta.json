@@ -8,208 +8,83 @@
   "copyright": "https://github.com/tgstation/tgstation/commit/59f2a4e10e5ba36033c9734ddebfbbdc6157472d",
   "states": [
     {
-      "name": "id_overlay",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "id_overlay"
     },
     {
       "name": "equipped-BELT",
       "directions": 4
     },
     {
-      "name": "insert_overlay",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "insert_overlay"
     },
     {
-      "name": "light_overlay",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "light_overlay"
     },
     {
-      "name": "pai_off_overlay",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pai_off_overlay"
     },
     {
-      "name": "pai_overlay",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pai_overlay"
     },
     {
-      "name": "pda",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda"
     },
     {
-      "name": "pda-atmos",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-atmos"
     },
     {
-      "name": "pda-bartender",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-bartender"
     },
     {
-      "name": "pda-captain",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-captain"
     },
     {
-      "name": "pda-cargo",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-cargo"
     },
     {
-      "name": "pda-ce",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-ce"
     },
     {
-      "name": "pda-chaplain",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-chaplain"
     },
     {
-      "name": "pda-chemistry",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-chemistry"
     },
     {
-      "name": "pda-clear",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-clear"
     },
     {
-      "name": "pda-clown",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-clown"
     },
     {
-      "name": "pda-cmo",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-cmo"
     },
     {
-      "name": "pda-cook",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-cook"
     },
     {
-      "name": "pda-detective",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-detective"
     },
     {
-      "name": "pda-engineer",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-engineer"
     },
     {
-      "name": "pda-genetics",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-genetics"
     },
     {
-      "name": "pda-hop",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-hop"
     },
     {
-      "name": "pda-hos",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-hos"
     },
     {
-      "name": "pda-hydro",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-hydro"
     },
     {
-      "name": "pda-janitor",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-janitor"
     },
     {
-      "name": "pda-lawyer",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-lawyer"
     },
     {
       "name": "pda-library",
@@ -223,36 +98,16 @@
       ]
     },
     {
-      "name": "pda-medical",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-medical"
     },
     {
-      "name": "pda-mime",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-mime"
     },
     {
-      "name": "pda-miner",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-miner"
     },
     {
-      "name": "pda-qm",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-qm"
     },
     {
       "name": "pda-r",
@@ -273,60 +128,25 @@
       ]
     },
     {
-      "name": "pda-rd",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-rd"
     },
     {
-      "name": "pda-roboticist",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-roboticist"
     },
     {
-      "name": "pda-science",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-science"
     },
     {
-      "name": "pda-security",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-security"
     },
     {
-      "name": "pda-syndi",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-syndi"
     },
     {
-      "name": "pda-virology",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-virology"
     },
     {
-      "name": "pda-warden",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "pda-warden"
     }
   ]
 }

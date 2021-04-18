@@ -16,8 +16,8 @@ namespace Content.Client.GameObjects.Components
 
         public override string Name => "InteractionOutline";
 
-        private ShaderInstance _selectionShaderInstance;
-        private ShaderInstance _selectionShaderInRangeInstance;
+        private ShaderInstance? _selectionShaderInstance;
+        private ShaderInstance? _selectionShaderInRangeInstance;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -30,7 +30,7 @@ namespace Content.Client.GameObjects.Components
 
         public void OnMouseEnter(bool inInteractionRange)
         {
-            if (Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 sprite.PostShader = inInteractionRange ? _selectionShaderInRangeInstance : _selectionShaderInstance;
                 sprite.RenderOrder = Owner.EntityManager.CurrentTick.Value;
@@ -39,7 +39,7 @@ namespace Content.Client.GameObjects.Components
 
         public void OnMouseLeave()
         {
-            if (Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 sprite.PostShader = null;
                 sprite.RenderOrder = 0;
@@ -48,7 +48,7 @@ namespace Content.Client.GameObjects.Components
 
         public void UpdateInRange(bool inInteractionRange)
         {
-            if (Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 sprite.PostShader = inInteractionRange ? _selectionShaderInRangeInstance : _selectionShaderInstance;
             }

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;

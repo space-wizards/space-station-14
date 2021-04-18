@@ -17,9 +17,9 @@ namespace Content.Client
     {
         private static readonly ResourcePath BaseScreenshotPath = new("/Screenshots");
 
-        [Dependency] private readonly IInputManager _inputManager = default;
-        [Dependency] private readonly IClyde _clyde = default;
-        [Dependency] private readonly IResourceManager _resourceManager = default;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IClyde _clyde = default!;
+        [Dependency] private readonly IResourceManager _resourceManager = default!;
 
         public void Initialize()
         {

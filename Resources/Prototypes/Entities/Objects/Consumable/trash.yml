@@ -152,7 +152,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/tastybread.rsi
-    
+
 
 - type: entity
   name: tray (trash)
@@ -182,9 +182,21 @@
     state: peel
   - type: Slippery
     intersectPercentage: 0.2
+  - type: CollisionWake
+    enabled: false
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.2,0.2,0.2"
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      name: "slips"
+      hard: false
       layer:
-      - MobImpassable
+        - SmallImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      mass: 5
+      mask:
+        - SmallImpassable

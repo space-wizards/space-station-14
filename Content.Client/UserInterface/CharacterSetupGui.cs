@@ -125,7 +125,7 @@ namespace Content.Client.UserInterface
             };
             _createNewCharacterButton.OnPressed += args =>
             {
-                preferencesManager.CreateCharacter(HumanoidCharacterProfile.Default());
+                preferencesManager.CreateCharacter(HumanoidCharacterProfile.Random());
                 UpdateUI();
                 args.Event.Handle();
             };
@@ -136,7 +136,7 @@ namespace Content.Client.UserInterface
                 MinSize = (2, 0)
             });
             _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager, entityManager);
-            _humanoidProfileEditor.OnProfileChanged += newProfile => { UpdateUI(); };
+            _humanoidProfileEditor.OnProfileChanged += ProfileChanged;
             hBox.AddChild(_humanoidProfileEditor);
 
             UpdateUI();
@@ -155,6 +155,12 @@ namespace Content.Client.UserInterface
 
         public void Save() => _humanoidProfileEditor.Save();
 
+        private void ProfileChanged(ICharacterProfile profile, int profileSlot)
+        {
+            _humanoidProfileEditor.UpdateControls();
+            UpdateUI();
+        }
+
         private void UpdateUI()
         {
             var numberOfFullSlots = 0;
@@ -167,9 +173,9 @@ namespace Content.Client.UserInterface
             }
 
             _createNewCharacterButton.ToolTip =
-                $"A maximum of {_preferencesManager.Settings.MaxCharacterSlots} characters are allowed.";
+                $"A maximum of {_preferencesManager.Settings!.MaxCharacterSlots} characters are allowed.";
 
-            foreach (var (slot, character) in _preferencesManager.Preferences.Characters)
+            foreach (var (slot, character) in _preferencesManager.Preferences!.Characters)
             {
                 if (character is null)
                 {
@@ -222,7 +228,7 @@ namespace Content.Client.UserInterface
                     LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy, humanoid);
                 }
 
-                var isSelectedCharacter = profile == preferencesManager.Preferences.SelectedCharacter;
+                var isSelectedCharacter = profile == preferencesManager.Preferences?.SelectedCharacter;
 
                 if (isSelectedCharacter)
                     Pressed = true;
@@ -254,9 +260,9 @@ namespace Content.Client.UserInterface
                     Text = "Delete",
                     Visible = !isSelectedCharacter,
                 };
-                deleteButton.OnPressed += args =>
+                deleteButton.OnPressed += _ =>
                 {
-                    Parent.RemoveChild(this);
+                    Parent?.RemoveChild(this);
                     preferencesManager.DeleteCharacter(profile);
                 };
 
@@ -282,7 +288,7 @@ namespace Content.Client.UserInterface
                     return;
 
                 _previewDummy.Delete();
-                _previewDummy = null;
+                _previewDummy = null!;
             }
         }
     }

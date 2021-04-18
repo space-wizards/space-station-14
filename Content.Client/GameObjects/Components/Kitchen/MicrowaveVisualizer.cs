@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Client.GameObjects.Components.Sound;
+﻿using Content.Client.GameObjects.Components.Sound;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Sound;
 using Content.Shared.Kitchen;

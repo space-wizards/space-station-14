@@ -13,7 +13,7 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
         public delegate void OptionSelectedCallback(int selectedOptionData);
 
         private readonly VBoxContainer _optionsBox;
-        private OptionSelectedCallback _optionSelectedCallback;
+        private OptionSelectedCallback? _optionSelectedCallback;
 
         public SurgeryWindow()
         {
@@ -65,7 +65,7 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
         {
             if (args.Button.Parent is SurgeryButton surgery)
             {
-                _optionSelectedCallback(surgery.CallbackData);
+                _optionSelectedCallback?.Invoke(surgery.CallbackData);
             }
         }
     }

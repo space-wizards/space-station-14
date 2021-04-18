@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -45,7 +46,7 @@ namespace Content.Server.GameTicking
                                 .Where(j =>
                                 {
                                     var (jobId, priority) = j;
-                                    if (!_prototypeManager.TryIndex(jobId, out JobPrototype job))
+                                    if (!_prototypeManager.TryIndex(jobId, out JobPrototype? job))
                                     {
                                         // Job doesn't exist, probably old data?
                                         return false;
@@ -145,7 +146,7 @@ namespace Content.Server.GameTicking
         {
             var available = GetAvailablePositions();
 
-            bool TryPick(JobPriority priority, out string jobId)
+            bool TryPick(JobPriority priority, [NotNullWhen(true)] out string? jobId)
             {
                 var filtered = profile.JobPriorities
                     .Where(p => p.Value == priority)

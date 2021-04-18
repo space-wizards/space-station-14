@@ -26,7 +26,7 @@ namespace Content.IntegrationTests.Tests.Gravity
         [Test]
         public async Task WeightlessStatusTest()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
+            var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
             await server.WaitIdleAsync();

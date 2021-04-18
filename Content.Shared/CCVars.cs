@@ -166,6 +166,15 @@ namespace Content.Shared
         public static readonly CVarDef<bool> ParallaxDebug =
             CVarDef.Create("parallax.debug", false, CVar.CLIENTONLY);
 
+        /*
+         * Physics
+         */
+
+        public static readonly CVarDef<float> TileFrictionModifier =
+            CVarDef.Create("physics.tilefriction", 15.0f);
+
+        public static readonly CVarDef<float> StopSpeed =
+            CVarDef.Create("physics.stopspeed", 0.1f);
 
         /*
          * Ambience
@@ -174,6 +183,19 @@ namespace Content.Shared
         public static readonly CVarDef<bool> AmbienceBasicEnabled =
             CVarDef.Create("ambience.basicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        /*
+         * Lobby music
+         */
+
+        public static readonly CVarDef<bool> LobbyMusicEnabled =
+            CVarDef.Create("ambience.lobbymusicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /*
+         * HUD
+         */
+
+        public static readonly CVarDef<int> HudTheme =
+            CVarDef.Create("hud.theme", 0, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * AI
@@ -218,6 +240,13 @@ namespace Content.Shared
         /// </summary>
         public static readonly CVarDef<bool> MonstermosEqualization =
             CVarDef.Create("atmos.monstermos_equalization", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether atmos superconduction is enabled.
+        /// </summary>
+        /// <remarks> Disabled by default, superconduction is awful. </remarks>
+        public static readonly CVarDef<bool> Superconduction =
+            CVarDef.Create("atmos.superconduction", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Maximum time in milliseconds that atmos can take processing.
@@ -283,5 +312,11 @@ namespace Content.Shared
         public static readonly CVarDef<float> VoteRestartRequiredRatio =
             CVarDef.Create("vote.restart_required_ratio", 0.8f, CVar.SERVERONLY);
 
+        /*
+         * BAN
+         */
+
+        public static readonly CVarDef<bool> BanHardwareIds =
+            CVarDef.Create("ban.hardware_ids", false, CVar.SERVERONLY);
     }
 }

@@ -9,7 +9,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
     public static class ExamineSystemMessages
     {
         [Serializable, NetSerializable]
-        public class RequestExamineInfoMessage : EntitySystemMessage
+        public class RequestExamineInfoMessage : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
 
@@ -20,7 +20,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
         }
 
         [Serializable, NetSerializable]
-        public class ExamineInfoResponseMessage : EntitySystemMessage
+        public class ExamineInfoResponseMessage : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
             public readonly FormattedMessage Message;

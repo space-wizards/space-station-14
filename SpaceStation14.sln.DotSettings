@@ -41,8 +41,10 @@
     <s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/TYPE_DECLARATION_BRACES/@EntryValue">NEXT_LINE</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=BB/@EntryIndexedValue">BB</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CC/@EntryIndexedValue">CC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=GC/@EntryIndexedValue">GC</s:String>
     <s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=GD/@EntryIndexedValue">GD</s:String>
     <s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=GL/@EntryIndexedValue">GL</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=HW/@EntryIndexedValue">HW</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=IL/@EntryIndexedValue">IL</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=IP/@EntryIndexedValue">IP</s:String>
     <s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=KHR/@EntryIndexedValue">KHR</s:String>
@@ -82,6 +84,7 @@
     <s:String x:Key="/Default/FilterSettingsManager/AttributeFilterXml/@EntryValue">&lt;data /&gt;</s:String>
     <s:String x:Key="/Default/FilterSettingsManager/CoverageFilterXml/@EntryValue">&lt;data&gt;&lt;IncludeFilters /&gt;&lt;ExcludeFilters&gt;&lt;Filter ModuleMask="Lidgren.Network" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;/ExcludeFilters&gt;&lt;/data&gt;</s:String>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=cellslot/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=centcomm/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Charlieson/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Clonexadone/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Collidable/@EntryIndexedValue">True</s:Boolean>
@@ -92,6 +95,7 @@
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Cooldowns/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Diethylamine/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Drainable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=euid/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Firelock/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Cuffable/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=cvar/@EntryIndexedValue">True</s:Boolean>
@@ -130,6 +134,7 @@
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Octile/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Pathfind/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Patreon/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=pdas/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Phoron/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=pipenet/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=placeable/@EntryIndexedValue">True</s:Boolean>
@@ -160,6 +165,9 @@
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=tickrate/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Trasen/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=unanchor/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Unanchored/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Uncancel/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Uncancels/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Uncuff/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=underplating/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=unequip/@EntryIndexedValue">True</s:Boolean>

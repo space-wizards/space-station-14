@@ -1,26 +1,25 @@
 ﻿using Content.Client.Arcade;
-using Content.Shared.GameObjects.Components.Arcade;
-using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
+using static Content.Shared.GameObjects.Components.Arcade.SharedSpaceVillainArcadeComponent;
 
 namespace Content.Client.GameObjects.Components.Arcade
 {
     public class SpaceVillainArcadeBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables] private SpaceVillainArcadeMenu _menu;
+        [ViewVariables] private SpaceVillainArcadeMenu? _menu;
 
         //public SharedSpaceVillainArcadeComponent SpaceVillainArcade;
 
-        public SpaceVillainArcadeBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] object uiKey) : base(owner, uiKey)
+        public SpaceVillainArcadeBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-            SendAction(SharedSpaceVillainArcadeComponent.PlayerAction.RequestData);
+            SendAction(PlayerAction.RequestData);
         }
 
-        public void SendAction(SharedSpaceVillainArcadeComponent.PlayerAction action)
+        public void SendAction(PlayerAction action)
         {
-            SendMessage(new SharedSpaceVillainArcadeComponent.SpaceVillainArcadePlayerActionMessage(action));
+            SendMessage(new SpaceVillainArcadePlayerActionMessage(action));
         }
 
         protected override void Open()
@@ -42,16 +41,14 @@ namespace Content.Client.GameObjects.Components.Arcade
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
-            if(message is SharedSpaceVillainArcadeComponent.SpaceVillainArcadeDataUpdateMessage msg) _menu.UpdateInfo(msg);
+            if (message is SpaceVillainArcadeDataUpdateMessage msg) _menu?.UpdateInfo(msg);
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!disposing)
-                return;
 
-            _menu?.Dispose();
+            if (disposing) _menu?.Dispose();
         }
     }
 }

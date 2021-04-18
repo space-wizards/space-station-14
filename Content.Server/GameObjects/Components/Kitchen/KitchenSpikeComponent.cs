@@ -1,16 +1,19 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Kitchen;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -69,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             return true;
         }
 
-        private bool Spikeable(IEntity user, IEntity victim, [NotNullWhen(true)] out ButcherableComponent? butcherable)
+        private bool Spikeable(IEntity user, IEntity victim, [NotNullWhen(true)] out SharedButcherableComponent? butcherable)
         {
             butcherable = null;
 
@@ -93,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             var victimUid = victim.Uid;
             if (_beingButchered.Contains(victimUid)) return;
 
-            ButcherableComponent? butcherable;
+            SharedButcherableComponent? butcherable;
 
             if (!Spikeable(user, victim, out butcherable)) return;
 
@@ -143,8 +146,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
 
             Owner.PopupMessageEveryone(Loc.GetString("{0:theName} has forced {1:theName} onto the spike, killing them instantly!", user, victim));
+            // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             victim.Delete();
-            return;
+
+            if (SpikeSound != null)
+                SoundSystem.Play(Filter.Pvs(Owner), SpikeSound, Owner);
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)

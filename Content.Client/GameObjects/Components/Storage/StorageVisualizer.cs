@@ -3,8 +3,6 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Storage
 {
@@ -12,15 +10,15 @@ namespace Content.Client.GameObjects.Components.Storage
     public sealed class StorageVisualizer : AppearanceVisualizer
     {
         [DataField("state")]
-        private string _stateBase;
+        private string? _stateBase;
         [DataField("state_open")]
-        private string _stateOpen;
+        private string? _stateOpen;
         [DataField("state_closed")]
-        private string _stateClosed;
+        private string? _stateClosed;
 
         public override void InitializeEntity(IEntity entity)
         {
-            if (!entity.TryGetComponent(out ISpriteComponent sprite))
+            if (!entity.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -35,7 +33,7 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }

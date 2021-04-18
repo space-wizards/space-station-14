@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Input;
@@ -130,7 +129,6 @@ namespace Content.Client.UserInterface
                 AddButton(ContentKeyFunctions.Drop);
                 AddButton(ContentKeyFunctions.ExamineEntity);
                 AddButton(ContentKeyFunctions.SwapHands);
-                AddButton(ContentKeyFunctions.ToggleCombatMode);
 
                 AddHeader("ui-options-header-interaction-adv");
                 AddButton(ContentKeyFunctions.SmartEquipBackpack);

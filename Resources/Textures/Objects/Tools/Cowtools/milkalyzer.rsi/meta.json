@@ -8,12 +8,7 @@
     "copyright": "@trerri#0107",
     "states": [
         {
-            "name": "milkalyzer",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "milkalyzer"
         }
     ]
 }

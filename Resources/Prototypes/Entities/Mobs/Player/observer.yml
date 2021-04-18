@@ -9,11 +9,12 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    anchored: false
-    mass: 5
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.35,-0.35,0.35,0.35"
+    bodyType: KinematicController
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
+      mass: 5
       mask:
       - GhostImpassable
     status: InAir

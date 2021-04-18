@@ -1,0 +1,15 @@
+- type: entity
+  name: fireaxe
+  parent: BaseItem
+  id: FireAxe
+  description: A large, robust axe. Can pry open doors and skulls alike.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/fireaxe.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage: 30
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Melee/fireaxe.rsi
+    prefix: inhand

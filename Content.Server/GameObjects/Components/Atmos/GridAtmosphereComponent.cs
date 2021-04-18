@@ -288,7 +288,19 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 } else if (isAirBlocked)
                 {
-                    tile.Air = null;
+                    var nullAir = false;
+
+                    foreach (var airtight in GetObstructingComponents(indices))
+                    {
+                        if (airtight.NoAirWhenFullyAirBlocked)
+                        {
+                            nullAir = true;
+                            break;
+                        }
+                    }
+
+                    if(nullAir)
+                        tile.Air = null;
                 }
                 else
                 {
@@ -361,7 +373,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void AddActiveTile(TileAtmosphere tile)
         {
-            if (tile?.GridIndex != _gridId) return;
+            if (tile?.GridIndex != _gridId || tile.Air == null) return;
             tile.Excited = true;
             _activeTiles.Add(tile);
         }
@@ -395,7 +407,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public virtual void AddSuperconductivityTile(TileAtmosphere tile)
         {
-            if (tile?.GridIndex != _gridId) return;
+            if (tile?.GridIndex != _gridId || !AtmosphereSystem.Superconduction) return;
             _superconductivityTiles.Add(tile);
         }
 
@@ -502,6 +514,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             return _mapGridComponent.Grid.GetTileRef(indices).IsSpace();
         }
 
+        public Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(EntityCoordinates coordinates, bool includeAirBlocked = false)
+        {
+            return GetAdjacentTiles(coordinates.ToVector2i(_serverEntityManager, _mapManager), includeAirBlocked);
+        }
+
         public Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(Vector2i indices, bool includeAirBlocked = false)
         {
             var sides = new Dictionary<AtmosDirection, TileAtmosphere>();
@@ -594,7 +611,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                     }
 
                     _paused = false;
-                    _state = ProcessState.Superconductivity;
+                    // Next state depends on whether superconduction is enabled or not.
+                    // Note: We do this here instead of on the tile equalization step to prevent ending it early.
+                    //       Therefore, a change to this CVar might only be applied after that step is over.
+                    _state = AtmosphereSystem.Superconduction ? ProcessState.Superconductivity : ProcessState.PipeNet;
                     break;
                 case ProcessState.Superconductivity:
                     if (!ProcessSuperconductivity(_paused, maxProcessTime))
@@ -919,18 +939,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         public virtual void BurnTile(Vector2i gridIndices)
         {
             // TODO ATMOS
-        }
-    }
-
-    public struct IntermediateTileAtmosphere
-    {
-        public readonly Vector2i Indices;
-        public readonly GasMixture GasMixture;
-
-        public IntermediateTileAtmosphere(Vector2i indices, GasMixture gasMixture)
-        {
-            Indices = indices;
-            GasMixture = gasMixture;
         }
     }
 }

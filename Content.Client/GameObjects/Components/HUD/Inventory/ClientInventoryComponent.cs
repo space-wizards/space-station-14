@@ -1,14 +1,15 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.Components.Inventory.SharedInventoryComponent.ClientInventoryMessage;
@@ -20,7 +21,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class ClientInventoryComponent : SharedInventoryComponent
+    public class ClientInventoryComponent : SharedInventoryComponent, IEffectBlocker
     {
         private readonly Dictionary<Slots, IEntity> _slots = new();
 
@@ -32,6 +33,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         private ISpriteComponent? _sprite;
 
         private bool _playerAttached = false;
+
+        [ViewVariables]
+        [DataField("speciesId")] public string? SpeciesId { get; set; }
 
         public override void OnRemove()
         {
@@ -181,7 +185,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             if (entity.TryGetComponent(out ClothingComponent? clothing))
             {
                 var flag = SlotMasks[slot];
-                var data = clothing.GetEquippedStateInfo(flag);
+                var data = clothing.GetEquippedStateInfo(flag, SpeciesId);
                 if (data != null)
                 {
                     var (rsi, state) = data.Value;
@@ -189,7 +193,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                     _sprite.LayerSetState(slot, state, rsi);
                     _sprite.LayerSetAutoAnimated(slot, true);
 
-                    if (slot == Slots.INNERCLOTHING)
+                    if (slot == Slots.INNERCLOTHING && _sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
                     {
                         _sprite.LayerSetState(HumanoidVisualLayers.StencilMask, clothing.FemaleMask switch
                         {
@@ -266,7 +270,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
         }
 
-        public bool TryGetSlot(Slots slot, out IEntity? item)
+        public bool TryGetSlot(Slots slot, [NotNullWhen(true)] out IEntity? item)
         {
             return _slots.TryGetValue(slot, out item);
         }
@@ -285,6 +289,11 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
 
             return false;
+        }
+
+        bool IEffectBlocker.CanSlip()
+        {
+            return !TryGetSlot(Slots.SHOES, out var shoes) || shoes == null || EffectBlockerSystem.CanSlip(shoes);
         }
     }
 }

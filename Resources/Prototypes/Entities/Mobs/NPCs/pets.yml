@@ -14,10 +14,11 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
   - type: Physics
-    mass: 10
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.50,-0.25,0.30,0.25"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.50,-0.25,0.30,0.25"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable
@@ -61,10 +62,11 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
   - type: Physics
-    mass: 10
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.45,-0.20,0.30,0.20"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45,-0.20,0.30,0.20"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable
@@ -96,6 +98,24 @@
       dead: cat2_dead
 
 - type: entity
+  name: caracal cat
+  id: CatCaracalMob_Content
+  parent: CatMob_Content
+  description: Hilarious.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/caracal.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: caracal_flop
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: caracal_flop
+      dead: caracal_dead
+
+- type: entity
   name: sloth
   parent: SimpleMobBase
   id: SlothMob_Content
@@ -111,10 +131,11 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: sloth
   - type: Physics
-    mass: 10
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.45,-0.35,0.15,0.35"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45,-0.35,0.15,0.35"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable

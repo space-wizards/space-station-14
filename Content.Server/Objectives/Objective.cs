@@ -26,7 +26,7 @@ namespace Content.Server.Objectives
             }
         }
 
-        public bool Equals(Objective other)
+        public bool Equals(Objective? other)
         {
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -40,7 +40,7 @@ namespace Content.Server.Objectives
             return true;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;

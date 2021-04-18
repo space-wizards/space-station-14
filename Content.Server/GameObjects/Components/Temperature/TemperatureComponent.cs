@@ -5,6 +5,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Temperature
         [ViewVariables] public float HeatCapacity {
             get
             {
-                if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+                if (Owner.TryGetComponent<IPhysBody>(out var physics))
                 {
                     return SpecificHeat * physics.Mass;
                 }
@@ -66,9 +67,9 @@ namespace Content.Server.GameObjects.Components.Temperature
                 damageType = DamageType.Cold;
             }
 
-            if (Owner.TryGetComponent(out ServerAlertsComponent status))
+            if (Owner.TryGetComponent(out ServerAlertsComponent? status))
             {
-                switch(CurrentTemperature)
+                switch (CurrentTemperature)
                 {
                     // Cold strong.
                     case var t when t <= 260:
@@ -109,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Temperature
 
             if (!damageType.HasValue) return;
 
-            if (!Owner.TryGetComponent(out IDamageableComponent component)) return;
+            if (!Owner.TryGetComponent(out IDamageableComponent? component)) return;
             component.ChangeDamage(damageType.Value, tempDamage, false);
         }
 

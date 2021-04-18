@@ -8,6 +8,8 @@ namespace Content.Shared.Actions
     {
         Error,
         HumanScream,
+        VoxScream,
+        CombatMode,
         Disarm,
         GhostBoo,
         DebugInstant,

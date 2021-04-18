@@ -1,39 +1,30 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from baystation at https://github.com/Baystation12/Baystation12/commit/f200ae08d71ecbc91412ee650a334981892f5177",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "broken"
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/commit/a7290010020e541ed6b57817a07023ca6bef26fe",
-    "states": [
-        {
-            "name": "broken"
-        },
-        {
-            "name": "deny-unshaded",
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.3,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "normal-unshaded"
-        },
-        {
-            "name": "off"
-        }
-    ]
+    {
+      "name": "deny-unshaded",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "normal-unshaded"
+    },
+    {
+      "name": "off"
+    }
+  ]
 }

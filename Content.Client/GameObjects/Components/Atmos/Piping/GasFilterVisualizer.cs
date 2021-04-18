@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;

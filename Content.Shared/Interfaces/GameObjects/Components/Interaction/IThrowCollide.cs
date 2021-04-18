@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -18,7 +18,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         ///     The entity that threw <see cref="Thrown"/> and hit <see cref="Target"/>.
         /// </summary>
-        public IEntity User { get; }
+        public IEntity? User { get; }
 
         /// <summary>
         ///     The entity thrown by <see cref="User"/> that hit <see cref="Target"/>
@@ -29,28 +29,21 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         ///     The entity hit with <see cref="Thrown"/> by <see cref="User"/>
         /// </summary>
         public IEntity Target { get; }
-        public EntityCoordinates Location { get; }
 
-        public ThrowCollideEventArgs(IEntity user, IEntity thrown, IEntity target, EntityCoordinates location)
+        public ThrowCollideEventArgs(IEntity? user, IEntity thrown, IEntity target)
         {
             User = user;
             Thrown = thrown;
             Target = target;
-            Location = location;
         }
     }
 
-    public class ThrowCollideMessage : EntitySystemMessage
+    public class ThrowCollideMessage : HandledEntityEventArgs
     {
-        /// <summary>
-        ///     If this message has already been "handled" by a previous system.
-        /// </summary>
-        public bool Handled { get; set; }
-
         /// <summary>
         ///     The entity that threw <see cref="Thrown"/>.
         /// </summary>
-        public IEntity User { get; }
+        public IEntity? User { get; }
 
         /// <summary>
         ///     The entity thrown by <see cref="User"/> that hit <see cref="Target"/>
@@ -61,14 +54,12 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         ///     The entity hit with <see cref="Thrown"/> by <see cref="User"/>
         /// </summary>
         public IEntity Target { get; }
-        public EntityCoordinates Location { get; }
 
-        public ThrowCollideMessage(IEntity user, IEntity thrown, IEntity target, EntityCoordinates location)
+        public ThrowCollideMessage(IEntity? user, IEntity thrown, IEntity target)
         {
             User = user;
             Thrown = thrown;
             Target = target;
-            Location = location;
         }
     }
 }

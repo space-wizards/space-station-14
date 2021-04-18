@@ -18,7 +18,7 @@ namespace Content.Client.Utility
             IEntity other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -33,7 +33,7 @@ namespace Content.Client.Utility
             IComponent other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -45,7 +45,7 @@ namespace Content.Client.Utility
             IContainer other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -57,7 +57,7 @@ namespace Content.Client.Utility
             EntityCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -73,7 +73,7 @@ namespace Content.Client.Utility
             MapCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {

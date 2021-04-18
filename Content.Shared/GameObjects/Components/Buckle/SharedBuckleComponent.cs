@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
@@ -19,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
 
         public sealed override uint? NetID => ContentNetIDs.BUCKLE;
 
-        [ComponentDependency] protected readonly IPhysicsComponent? Physics;
+        [ComponentDependency] protected readonly IPhysBody? Physics;
 
         /// <summary>
         ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.
@@ -43,7 +43,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
 
         bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
         {
-            if (collidedwith.Entity.Uid == LastEntityBuckledTo)
+            if (collidedwith.Owner.Uid == LastEntityBuckledTo)
             {
                 IsOnStrapEntityThisFrame = true;
                 return Buckled || DontCollide;

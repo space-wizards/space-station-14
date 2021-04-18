@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameObjects.Components.Singularity
@@ -62,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 }
 
                 containmentFieldComponent.Parent = this;
-                newEnt.Transform.WorldRotation = dirVec.ToAngle();
+                newEnt.Transform.WorldRotation = dirVec.ToWorldAngle();
 
                 _fields.Add(newEnt);
                 currentOffset += dirVec;
@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         public bool CanRepell(IEntity toRepell)
         {
             var powerNeeded = 1;
-            if (toRepell.TryGetComponent<SingularityComponent>(out var singularityComponent))
+            if (toRepell.TryGetComponent<ServerSingularityComponent>(out var singularityComponent))
             {
                 powerNeeded += 2*singularityComponent.Level;
             }
@@ -90,10 +90,12 @@ namespace Content.Server.GameObjects.Components.Singularity
         /// <param name="toRepell">Entity to repell.</param>
         public void TryRepell(IEntity repellFrom, IEntity toRepell)
         {
-            if (!_fields.Contains(repellFrom) || !toRepell.TryGetComponent<IPhysicsComponent>(out var collidableComponent)) return;
+            // TODO: Fix this also it's fucking repel
+            if (!_fields.Contains(repellFrom) || !toRepell.TryGetComponent<IPhysBody>(out var collidableComponent)) return;
 
+            return;
             var speed = 5;
-            var containmentFieldRepellController = collidableComponent.EnsureController<ContainmentFieldRepellController>();
+            //var containmentFieldRepellController = collidableComponent.EnsureController<ContainmentFieldRepellController>();
 
             if (!CanRepell(toRepell))
             {
@@ -106,22 +108,22 @@ namespace Content.Server.GameObjects.Components.Singularity
             {
                 if (repellFrom.Transform.WorldPosition.X.CompareTo(toRepell.Transform.WorldPosition.X) > 0)
                 {
-                    containmentFieldRepellController.Repell(Direction.West, speed);
+                    //containmentFieldRepellController.Repell(Direction.West, speed);
                 }
                 else
                 {
-                    containmentFieldRepellController.Repell(Direction.East, speed);
+                    //containmentFieldRepellController.Repell(Direction.East, speed);
                 }
             }
             else
             {
                 if (repellFrom.Transform.WorldPosition.Y.CompareTo(toRepell.Transform.WorldPosition.Y) > 0)
                 {
-                    containmentFieldRepellController.Repell(Direction.South, speed);
+                    //containmentFieldRepellController.Repell(Direction.South, speed);
                 }
                 else
                 {
-                    containmentFieldRepellController.Repell(Direction.North, speed);
+                    //containmentFieldRepellController.Repell(Direction.North, speed);
                 }
             }
 

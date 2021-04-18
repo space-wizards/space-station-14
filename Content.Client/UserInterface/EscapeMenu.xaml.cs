@@ -11,7 +11,7 @@ namespace Content.Client.UserInterface
     {
         private readonly IClientConsoleHost _consoleHost;
 
-        private OptionsMenu optionsMenu;
+        private readonly OptionsMenu _optionsMenu;
 
         public EscapeMenu(IClientConsoleHost consoleHost)
         {
@@ -19,7 +19,7 @@ namespace Content.Client.UserInterface
 
             RobustXamlLoader.Load(this);
 
-            optionsMenu = new OptionsMenu();
+            _optionsMenu = new OptionsMenu();
 
             OptionsButton.OnPressed += OnOptionsButtonClicked;
             QuitButton.OnPressed += OnQuitButtonClicked;
@@ -40,15 +40,16 @@ namespace Content.Client.UserInterface
 
         private void OnOptionsButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            optionsMenu.OpenCentered();
+            _optionsMenu.OpenCentered();
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+
             if (disposing)
             {
-                optionsMenu.Dispose();
+                _optionsMenu.Dispose();
             }
         }
     }

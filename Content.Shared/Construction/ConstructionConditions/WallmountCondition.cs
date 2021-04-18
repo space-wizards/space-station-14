@@ -9,6 +9,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Shared.Construction.ConstructionConditions
 {
@@ -33,7 +34,7 @@ namespace Content.Shared.Construction.ConstructionConditions
                 return false;
 
             // now we need to check that user actually tries to build wallmount on a wall
-            var physics = IoCManager.Resolve<IPhysicsManager>();
+            var physics = EntitySystem.Get<SharedBroadPhaseSystem>();
             var rUserToObj = new CollisionRay(userWorldPosition, userToObject.Normalized, (int) CollisionGroup.Impassable);
             var length = userToObject.Length;
             var userToObjRaycastResults = physics.IntersectRayWithPredicate(user.Transform.MapID, rUserToObj, maxLength: length,

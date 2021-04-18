@@ -7,14 +7,13 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Research
 {
     public class ResearchConsoleMenu : SS14Window
     {
-        public ResearchConsoleBoundUserInterface Owner { get; set; }
+        public ResearchConsoleBoundUserInterface Owner { get; }
 
         private readonly List<TechnologyPrototype> _unlockedTechnologyPrototypes = new();
         private readonly List<TechnologyPrototype> _unlockableTechnologyPrototypes = new();
@@ -34,9 +33,9 @@ namespace Content.Client.Research
         public Button ServerSelectionButton { get; private set; }
         public Button ServerSyncButton { get; private set; }
 
-        public TechnologyPrototype TechnologySelected;
+        public TechnologyPrototype? TechnologySelected;
 
-        public ResearchConsoleMenu(ResearchConsoleBoundUserInterface owner = null)
+        public ResearchConsoleMenu(ResearchConsoleBoundUserInterface owner)
         {
             SetSize = MinSize = (800, 400);
 
@@ -274,7 +273,7 @@ namespace Content.Client.Research
             for (var i = 0; i < TechnologySelected.RequiredTechnologies.Count; i++)
             {
                 var requiredId = TechnologySelected.RequiredTechnologies[i];
-                if (!prototypeMan.TryIndex(requiredId, out TechnologyPrototype prototype)) continue;
+                if (!prototypeMan.TryIndex(requiredId, out TechnologyPrototype? prototype)) continue;
                 if (i == 0)
                     _technologyRequirements.Text = Loc.GetString("Requires") + $": {prototype.Name}";
                 else

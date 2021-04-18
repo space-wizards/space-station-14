@@ -10,6 +10,41 @@ namespace Content.IntegrationTests.Tests.Construction
     [TestFixture]
     public class ConstructionActionValid : ContentIntegrationTest
     {
+        private bool IsValid(IGraphAction action, IPrototypeManager protoMan, out string prototype)
+        {
+            switch (action)
+            {
+                case SpawnPrototype spawn:
+                    prototype = spawn.Prototype;
+                    return protoMan.TryIndex<EntityPrototype>(spawn.Prototype, out _);
+                case SpawnPrototypeAtContainer spawn:
+                    prototype = spawn.Prototype;
+                    return protoMan.TryIndex<EntityPrototype>(spawn.Prototype, out _);
+                case ConditionalAction conditional:
+                    var valid = IsValid(conditional.Action, protoMan, out var protoA) & IsValid(conditional.Else, protoMan, out var protoB);
+
+                    if (!string.IsNullOrEmpty(protoA) && string.IsNullOrEmpty(protoB))
+                    {
+                        prototype = protoA;
+                    }
+
+                    else if (string.IsNullOrEmpty(protoA) && !string.IsNullOrEmpty(protoB))
+                    {
+                        prototype = protoB;
+                    }
+
+                    else
+                    {
+                        prototype = $"{protoA}, {protoB}";
+                    }
+
+                    return valid;
+                default:
+                    prototype = string.Empty;
+                    return true;
+            }
+        }
+
         [Test]
         public async Task ConstructionGraphSpawnPrototypeValid()
         {
@@ -24,24 +59,24 @@ namespace Content.IntegrationTests.Tests.Construction
 
             foreach (var graph in protoMan.EnumeratePrototypes<ConstructionGraphPrototype>())
             {
-                foreach (var (_, node) in graph.Nodes)
+                foreach (var node in graph.Nodes.Values)
                 {
                     foreach (var action in node.Actions)
                     {
-                        if (action is not SpawnPrototype spawn || protoMan.TryIndex(spawn.Prototype, out EntityPrototype _)) continue;
+                        if (IsValid(action, protoMan, out var prototype)) continue;
 
                         valid = false;
-                        message.Append($"Invalid entity prototype \"{spawn.Prototype}\" on graph action in node \"{node.Name}\" of graph \"{graph.ID}\"\n");
+                        message.Append($"Invalid entity prototype \"{prototype}\" on graph action in node \"{node.Name}\" of graph \"{graph.ID}\"\n");
                     }
 
                     foreach (var edge in node.Edges)
                     {
                         foreach (var action in edge.Completed)
                         {
-                            if (action is not SpawnPrototype spawn || protoMan.TryIndex(spawn.Prototype, out EntityPrototype _)) continue;
+                            if (IsValid(action, protoMan, out var prototype)) continue;
 
                             valid = false;
-                            message.Append($"Invalid entity prototype \"{spawn.Prototype}\" on graph action in edge \"{edge.Target}\" of node \"{node.Name}\" of graph \"{graph.ID}\"\n");
+                            message.Append($"Invalid entity prototype \"{prototype}\" on graph action in edge \"{edge.Target}\" of node \"{node.Name}\" of graph \"{graph.ID}\"\n");
                         }
                     }
                 }
@@ -64,7 +99,7 @@ namespace Content.IntegrationTests.Tests.Construction
 
             foreach (var graph in protoMan.EnumeratePrototypes<ConstructionGraphPrototype>())
             {
-                foreach (var (_, node) in graph.Nodes)
+                foreach (var node in graph.Nodes.Values)
                 {
                     if (string.IsNullOrEmpty(node.Entity) || protoMan.TryIndex(node.Entity, out EntityPrototype _)) continue;
 
@@ -90,7 +125,7 @@ namespace Content.IntegrationTests.Tests.Construction
 
             foreach (var graph in protoMan.EnumeratePrototypes<ConstructionGraphPrototype>())
             {
-                foreach (var (_, node) in graph.Nodes)
+                foreach (var node in graph.Nodes.Values)
                 {
                     foreach (var edge in node.Edges)
                     {

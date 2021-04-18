@@ -1,0 +1,169 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/59fe5dd2841f47a8abce60eecb9fafad34282bd0",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "closed"
+    },
+    {
+      "name": "locked"
+    },
+    {
+      "name": "closed_unlit"
+    },
+    {
+      "name": "closing",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "closing_unlit",
+      "delays": [
+        [
+          0.6,
+          0.1,
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "deny_unlit",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bolted_unlit"
+    },
+    {
+      "name": "panel_closing",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "panel_opening",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "open"
+    },
+    {
+      "name": "opening",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "opening_unlit",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.1,
+          0.6
+        ]
+      ]
+    },
+    {
+      "name": "panel_open"
+    },
+    {
+      "name": "spark",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "sparks_broken",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "sparks_damaged",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          1.7
+        ]
+      ]
+    },
+    {
+      "name": "sparks_open",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "welded"
+    }
+  ]
+}

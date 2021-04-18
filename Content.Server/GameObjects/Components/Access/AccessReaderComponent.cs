@@ -97,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Access
             if (entity.TryGetComponent(out InventoryComponent? inventoryComponent))
             {
                 if (inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
-                    inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent item) &&
+                    inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
                     item.Owner.TryGetComponent(out IAccess? idAccessComponent)
                 )
                 {

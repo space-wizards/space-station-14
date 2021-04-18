@@ -6,204 +6,79 @@
   },
   "states": [
     {
-      "name": "markerbronze",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerbronze"
     },
     {
-      "name": "markerbronze-on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerbronze-on"
     },
     {
-      "name": "markerburgundy",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerburgundy"
     },
     {
-      "name": "markerburgundy-on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerburgundy-on"
     },
     {
-      "name": "markercerulean",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markercerulean"
     },
     {
-      "name": "markercerulean-on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markercerulean-on"
     },
     {
-      "name": "markerfuchsia",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerfuchsia"
     },
     {
-      "name": "markerfuchsia-on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerfuchsia-on"
     },
     {
-      "name": "markerindigo",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerindigo"
     },
     {
-      "name": "markerindigo-on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerindigo-on"
     },
     {
-      "name": "markerjade",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerjade"
     },
     {
-      "name": "markerjade-on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerjade-on"
     },
     {
-      "name": "markerlime",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerlime"
     },
     {
-      "name": "markerlime-on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerlime-on"
     },
     {
-      "name": "markerolive",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerolive"
     },
     {
-      "name": "markerolive-on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerolive-on"
     },
     {
-      "name": "markerpurple",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerpurple"
     },
     {
-      "name": "markerpurple-on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerpurple-on"
     },
     {
-      "name": "markerrandom",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerrandom"
     },
     {
-      "name": "markerteal",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerteal"
     },
     {
-      "name": "markerteal-on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerteal-on"
     },
     {
-      "name": "markerviolet",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerviolet"
     },
     {
-      "name": "markerviolet-on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markerviolet-on"
     },
     {
-      "name": "markeryellow",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markeryellow"
     },
     {
-      "name": "markeryellow-on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "markeryellow-on"
     }
   ]
 }

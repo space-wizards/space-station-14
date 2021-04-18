@@ -48,7 +48,6 @@ namespace Content.Server.Preferences
                 HandleDeleteCharacterMessage);
         }
 
-
         private async void HandleSelectCharacterMessage(MsgSelectCharacter message)
         {
             var index = message.SelectedCharacterIndex;
@@ -107,9 +106,11 @@ namespace Content.Server.Preferences
 
             var curPrefs = prefsData.Prefs!;
 
+            profile.EnsureValid();
+
             var profiles = new Dictionary<int, ICharacterProfile>(curPrefs.Characters)
             {
-                [slot] = HumanoidCharacterProfile.EnsureValid((HumanoidCharacterProfile) profile, _protos)
+                [slot] = profile
             };
 
             prefsData.Prefs = new PlayerPreferences(profiles, slot, curPrefs.AdminOOCColor);
@@ -181,7 +182,7 @@ namespace Content.Server.Preferences
                 {
                     PrefsLoaded = Task.CompletedTask,
                     Prefs = new PlayerPreferences(
-                        new[] {new KeyValuePair<int, ICharacterProfile>(0, HumanoidCharacterProfile.Default())},
+                        new[] {new KeyValuePair<int, ICharacterProfile>(0, HumanoidCharacterProfile.Random())},
                         0, Color.Transparent)
                 };
 
@@ -248,7 +249,7 @@ namespace Content.Server.Preferences
             var prefs = await _db.GetPlayerPreferencesAsync(userId);
             if (prefs is null)
             {
-                return await _db.InitPrefsAsync(userId, HumanoidCharacterProfile.Default());
+                return await _db.InitPrefsAsync(userId, HumanoidCharacterProfile.Random());
             }
 
             return SanitizePreferences(prefs);

@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
   id: ClusterBang
-  name: ClusterBang
+  name: clusterbang
   description: Can be used only with flashbangs. Explodes several times.
   components:
   - type: Sprite
@@ -23,4 +23,3 @@
     state: base-3
   - type: ClusterFlash
     fillPrototype: GrenadeFlashBang
-

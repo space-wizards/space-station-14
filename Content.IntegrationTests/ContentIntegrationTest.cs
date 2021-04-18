@@ -7,6 +7,7 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Shared;
 using NUnit.Framework;
 using Robust.Server.Maps;
+using Robust.Shared;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -22,8 +23,11 @@ namespace Content.IntegrationTests
     {
         protected sealed override ClientIntegrationInstance StartClient(ClientIntegrationOptions options = null)
         {
-            options ??= new ClientIntegrationOptions();
-            // ReSharper disable once RedundantNameQualifier
+            options ??= new ClientContentIntegrationOption()
+            {
+                FailureLogLevel = LogLevel.Warning
+            };
+
             options.ContentAssemblies = new[]
             {
                 typeof(Shared.EntryPoint).Assembly,
@@ -52,12 +56,19 @@ namespace Content.IntegrationTests
             // Basically just makes the CI logs a mess.
             options.CVarOverrides["discord.enabled"] = "false";
 
+            // Avoid preloading textures in tests.
+            options.CVarOverrides.TryAdd(CVars.TexturePreloadingEnabled.Name, "false");
+
             return base.StartClient(options);
         }
 
         protected override ServerIntegrationInstance StartServer(ServerIntegrationOptions options = null)
         {
-            options ??= new ServerIntegrationOptions();
+            options ??= new ServerContentIntegrationOption()
+            {
+                FailureLogLevel = LogLevel.Warning
+            };
+
             options.ContentAssemblies = new[]
             {
                 typeof(Shared.EntryPoint).Assembly,
@@ -213,11 +224,21 @@ namespace Content.IntegrationTests
 
         protected sealed class ClientContentIntegrationOption : ClientIntegrationOptions
         {
+            public ClientContentIntegrationOption()
+            {
+                FailureLogLevel = LogLevel.Warning;
+            }
+
             public Action ContentBeforeIoC { get; set; }
         }
 
         protected sealed class ServerContentIntegrationOption : ServerIntegrationOptions
         {
+            public ServerContentIntegrationOption()
+            {
+                FailureLogLevel = LogLevel.Warning;
+            }
+
             public Action ContentBeforeIoC { get; set; }
         }
     }

@@ -3,14 +3,13 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Trigger.TimerTrigger;
-using Content.Server.Throw;
+using Content.Server.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Explosion;
-using Robust.Shared.Containers;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -108,10 +107,13 @@ namespace Content.Server.GameObjects.Components.Explosion
                     var angleMin = segmentAngle * thrownCount;
                     var angleMax = segmentAngle * (thrownCount + 1);
                     var angle = Angle.FromDegrees(random.Next(angleMin, angleMax));
-                    var distance = (float)random.NextFloat() * _throwDistance;
-                    var target = new EntityCoordinates(Owner.Uid, angle.ToVec().Normalized * distance);
+                    // var distance = random.NextFloat() * _throwDistance;
 
-                    grenade.Throw(0.5f, target, grenade.Transform.Coordinates);
+                    delay += random.Next(550, 900);
+                    thrownCount++;
+
+                    // TODO: Suss out throw strength
+                    grenade.TryThrow(angle.ToVec().Normalized * 50);
 
                     grenade.SpawnTimer(delay, () =>
                     {
@@ -123,9 +125,6 @@ namespace Content.Server.GameObjects.Components.Explosion
                             useTimer.Trigger(eventArgs.User);
                         }
                     });
-
-                    delay += random.Next(550, 900);
-                    thrownCount++;
                 }
 
                 Owner.Delete();
@@ -140,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Explosion
             if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.MapPosition);
                 return true;
             }
 

@@ -2,7 +2,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Access
 {
-    public sealed class AccessReaderChangeMessage : EntitySystemMessage
+    public sealed class AccessReaderChangeMessage : EntityEventArgs
     {
         public IEntity Sender { get; }
 

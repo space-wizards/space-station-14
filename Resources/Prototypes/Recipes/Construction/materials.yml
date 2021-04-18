@@ -8,3 +8,33 @@
   description: A sturdy metal rod that can be used for various purposes.
   icon: Objects/Materials/parts.rsi/rods.png
   objectType: Item
+
+- type: construction
+  name: Reinforced Glass
+  id: sheetRGlass
+  graph: glass
+  startNode: start
+  targetNode: SheetRGlass
+  category: Materials
+  icon: Objects/Materials/Sheets/glass.rsi/rglass.png
+  objectType: Item
+
+- type: construction
+  name: Plasma Glass
+  id: sheetPGlass
+  graph: glass
+  startNode: start
+  targetNode: SheetPGlass
+  category: Materials
+  icon: Objects/Materials/Sheets/glass.rsi/pglass.png
+  objectType: Item
+
+- type: construction
+  name: Reinforced Plasma Glass
+  id: sheetRPGlass
+  graph: glass
+  startNode: start
+  targetNode: SheetRPGlass
+  category: Materials
+  icon: Objects/Materials/Sheets/glass.rsi/rpglass.png
+  objectType: Item

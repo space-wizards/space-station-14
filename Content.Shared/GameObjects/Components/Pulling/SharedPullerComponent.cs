@@ -74,14 +74,5 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     break;
             }
         }
-
-        private void OnClickAlert(ClickAlertEventArgs args)
-        {
-            EntitySystem
-                .Get<SharedPullingSystem>()
-                .GetPulled(args.Player)?
-                .GetComponentOrNull<SharedPullableComponent>()?
-                .TryStopPull();
-        }
     }
 }

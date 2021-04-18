@@ -1,69 +1,73 @@
 using Content.Client.Research;
-using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using static Content.Shared.GameObjects.Components.Research.SharedResearchConsoleComponent;
 
 namespace Content.Client.GameObjects.Components.Research
 {
+    [UsedImplicitly]
     public class ResearchConsoleBoundUserInterface : BoundUserInterface
     {
-        public int Points { get; private set; } = 0;
-        public int PointsPerSecond { get; private set; } = 0;
-        private ResearchConsoleMenu _consoleMenu;
-        private TechnologyDatabaseComponent TechnologyDatabase;
-
+        public int Points { get; private set; }
+        public int PointsPerSecond { get; private set; }
+        private ResearchConsoleMenu? _consoleMenu;
+        private TechnologyDatabaseComponent? _technologyDatabase;
 
         public ResearchConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-            SendMessage(new SharedResearchConsoleComponent.ConsoleServerSyncMessage());
+            SendMessage(new ConsoleServerSyncMessage());
         }
 
         protected override void Open()
         {
             base.Open();
 
-            if (!Owner.Owner.TryGetComponent(out TechnologyDatabase)) return;
+            if (!Owner.Owner.TryGetComponent(out _technologyDatabase)) return;
 
             _consoleMenu = new ResearchConsoleMenu(this);
 
             _consoleMenu.OnClose += Close;
 
-            _consoleMenu.ServerSyncButton.OnPressed += (args) =>
-                {
-                    SendMessage(new SharedResearchConsoleComponent.ConsoleServerSyncMessage());
-                };
-
-            _consoleMenu.ServerSelectionButton.OnPressed += (args) =>
+            _consoleMenu.ServerSyncButton.OnPressed += (_) =>
             {
-                SendMessage(new SharedResearchConsoleComponent.ConsoleServerSelectionMessage());
+                SendMessage(new ConsoleServerSyncMessage());
             };
 
-            _consoleMenu.UnlockButton.OnPressed += (args) =>
+            _consoleMenu.ServerSelectionButton.OnPressed += (_) =>
             {
-                SendMessage(new SharedResearchConsoleComponent.ConsoleUnlockTechnologyMessage(_consoleMenu.TechnologySelected.ID));
+                SendMessage(new ConsoleServerSelectionMessage());
+            };
+
+            _consoleMenu.UnlockButton.OnPressed += (_) =>
+            {
+                if (_consoleMenu.TechnologySelected != null)
+                {
+                    SendMessage(new ConsoleUnlockTechnologyMessage(_consoleMenu.TechnologySelected.ID));
+                }
             };
 
             _consoleMenu.OpenCentered();
 
-            TechnologyDatabase.OnDatabaseUpdated += _consoleMenu.Populate;
+            _technologyDatabase.OnDatabaseUpdated += _consoleMenu.Populate;
         }
 
         public bool IsTechnologyUnlocked(TechnologyPrototype technology)
         {
-            return TechnologyDatabase.IsTechnologyUnlocked(technology);
+            return _technologyDatabase?.IsTechnologyUnlocked(technology) ?? false;
         }
 
         public bool CanUnlockTechnology(TechnologyPrototype technology)
         {
-            return TechnologyDatabase.CanUnlockTechnology(technology);
+            return _technologyDatabase?.CanUnlockTechnology(technology) ?? false;
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
 
-            var castState = (SharedResearchConsoleComponent.ResearchConsoleBoundInterfaceState)state;
+            var castState = (ResearchConsoleBoundInterfaceState)state;
             Points = castState.Points;
             PointsPerSecond = castState.PointsPerSecond;
             // We update the user interface here.

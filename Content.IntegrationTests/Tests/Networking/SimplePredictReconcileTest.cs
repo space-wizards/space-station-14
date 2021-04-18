@@ -8,6 +8,7 @@ using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Client.GameStates;
 using Robust.Server.Player;
+using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -43,7 +44,11 @@ namespace Content.IntegrationTests.Tests.Networking
                     // This test is designed around specific timing values and when I wrote it interpolation was off.
                     // As such, I would have to update half this test to make sure it works with interpolation.
                     // I'm kinda lazy.
-                    CVarOverrides = {{"net.interp", "false"}},
+                    CVarOverrides =
+                    {
+                        {CVars.NetInterp.Name, "false"},
+                        {CVars.NetPVS.Name, "false"}
+                    },
                     ContentBeforeIoC = () =>
                     {
                         IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
@@ -52,6 +57,10 @@ namespace Content.IntegrationTests.Tests.Networking
                 },
                 new ServerContentIntegrationOption
                 {
+                    CVarOverrides =
+                    {
+                        {CVars.NetPVS.Name, "false"}
+                    },
                     ContentBeforeIoC = () =>
                     {
                         IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
@@ -445,6 +454,13 @@ namespace Content.IntegrationTests.Tests.Networking
                 SubscribeLocalEvent<SetFooMessage>(HandleMessage);
             }
 
+            public override void Shutdown()
+            {
+                base.Shutdown();
+                UnsubscribeNetworkEvent<SetFooMessage>();
+                UnsubscribeLocalEvent<SetFooMessage>();
+            }
+
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
             {
                 var entity = EntityManager.GetEntity(message.Uid);
@@ -460,7 +476,7 @@ namespace Content.IntegrationTests.Tests.Networking
             }
         }
 
-        private sealed class SetFooMessage : EntitySystemMessage
+        private sealed class SetFooMessage : EntityEventArgs
         {
             public SetFooMessage(EntityUid uid, bool newFoo)
             {

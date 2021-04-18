@@ -1,16 +1,17 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Throw;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -50,26 +51,30 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Shutdown()
         {
-            CommandBinds.Unregister<HandsSystem>();
             base.Shutdown();
+
+            UnsubscribeLocalEvent<EntRemovedFromContainerMessage>();
+            UnsubscribeLocalEvent<EntInsertedIntoContainerMessage>();
+
+            CommandBinds.Unregister<HandsSystem>();
         }
 
         private static void HandleContainerModified(ContainerModifiedMessage args)
         {
-            if (args.Container.Owner.TryGetComponent(out IHandsComponent handsComponent))
+            if (args.Container.Owner.TryGetComponent(out IHandsComponent? handsComponent))
             {
                 handsComponent.HandleSlotModifiedMaybe(args);
             }
         }
 
-        private static bool TryGetAttachedComponent<T>(IPlayerSession session, out T component)
+        private static bool TryGetAttachedComponent<T>(IPlayerSession? session, [NotNullWhen(true)] out T? component)
             where T : Component
         {
             component = default;
 
-            var ent = session.AttachedEntity;
+            var ent = session?.AttachedEntity;
 
-            if (ent == null || !ent.IsValid() || !ent.TryGetComponent(out T comp))
+            if (ent == null || !ent.IsValid() || !ent.TryGetComponent(out T? comp))
             {
                 return false;
             }
@@ -78,9 +83,9 @@ namespace Content.Server.GameObjects.EntitySystems
             return true;
         }
 
-        private static void HandleSwapHands(ICommonSession session)
+        private static void HandleSwapHands(ICommonSession? session)
         {
-            if (!TryGetAttachedComponent(session as IPlayerSession, out HandsComponent handsComp))
+            if (!TryGetAttachedComponent(session as IPlayerSession, out HandsComponent? handsComp))
             {
                 return;
             }
@@ -104,14 +109,14 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private bool HandleDrop(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleDrop(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            var ent = ((IPlayerSession) session).AttachedEntity;
+            var ent = ((IPlayerSession?) session)?.AttachedEntity;
 
             if (ent == null || !ent.IsValid())
                 return false;
 
-            if (!ent.TryGetComponent(out HandsComponent handsComp))
+            if (!ent.TryGetComponent(out HandsComponent? handsComp))
                 return false;
 
             if (handsComp.ActiveHand == null || handsComp.GetActiveHand == null)
@@ -135,74 +140,91 @@ namespace Content.Server.GameObjects.EntitySystems
             return true;
         }
 
-        private static void HandleActivateItem(ICommonSession session)
+        private static void HandleActivateItem(ICommonSession? session)
         {
-            if (!TryGetAttachedComponent(session as IPlayerSession, out HandsComponent handsComp))
+            if (!TryGetAttachedComponent(session as IPlayerSession, out HandsComponent? handsComp))
                 return;
 
             handsComp.ActivateItem();
         }
 
-        private bool HandleThrowItem(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            var plyEnt = ((IPlayerSession)session).AttachedEntity;
+            var playerEnt = ((IPlayerSession?)session)?.AttachedEntity;
 
-            if (plyEnt == null || !plyEnt.IsValid())
+            if (playerEnt == null || !playerEnt.IsValid())
                 return false;
 
-            if (!plyEnt.TryGetComponent(out HandsComponent handsComp))
+            if (!playerEnt.TryGetComponent(out HandsComponent? handsComp))
                 return false;
 
-            if (!handsComp.CanDrop(handsComp.ActiveHand))
+            if (handsComp.ActiveHand == null || !handsComp.CanDrop(handsComp.ActiveHand))
                 return false;
 
-            var throwEnt = handsComp.GetItem(handsComp.ActiveHand).Owner;
+            var throwEnt = handsComp.GetItem(handsComp.ActiveHand)?.Owner;
+
+            if (throwEnt == null)
+                return false;
 
             if (!handsComp.ThrowItem())
                 return false;
 
             // throw the item, split off from a stack if it's meant to be thrown individually
-            if (!throwEnt.TryGetComponent(out StackComponent stackComp) || stackComp.Count < 2 || !stackComp.ThrowIndividually)
+            if (!throwEnt.TryGetComponent(out StackComponent? stackComp) || stackComp.Count < 2 || !stackComp.ThrowIndividually)
             {
                 handsComp.Drop(handsComp.ActiveHand);
             }
             else
             {
                 stackComp.Use(1);
-                throwEnt = throwEnt.EntityManager.SpawnEntity(throwEnt.Prototype.ID, plyEnt.Transform.Coordinates);
+                throwEnt = throwEnt.EntityManager.SpawnEntity(throwEnt.Prototype?.ID, playerEnt.Transform.Coordinates);
 
                 // can only throw one item at a time, regardless of what the prototype stack size is.
                 if (throwEnt.TryGetComponent<StackComponent>(out var newStackComp))
                     newStackComp.Count = 1;
             }
 
-            throwEnt.ThrowTo(ThrowForce, coords, plyEnt.Transform.Coordinates, false, plyEnt);
+            var direction = coords.ToMapPos(EntityManager) - playerEnt.Transform.WorldPosition;
+            if (direction == Vector2.Zero) return true;
+
+            direction = direction.Normalized * MathF.Min(direction.Length, 8.0f);
+            var yeet = direction * ThrowForce * 15;
+
+            // Softer yeet in weightlessness
+            if (playerEnt.IsWeightless())
+            {
+                throwEnt.TryThrow(yeet / 4, playerEnt, 10.0f);
+            }
+            else
+            {
+                throwEnt.TryThrow(yeet, playerEnt);
+            }
 
             return true;
         }
 
-        private void HandleSmartEquipBackpack(ICommonSession session)
+        private void HandleSmartEquipBackpack(ICommonSession? session)
         {
             HandleSmartEquip(session, Slots.BACKPACK);
         }
 
-        private void HandleSmartEquipBelt(ICommonSession session)
+        private void HandleSmartEquipBelt(ICommonSession? session)
         {
             HandleSmartEquip(session, Slots.BELT);
         }
 
-        private void HandleSmartEquip(ICommonSession session, Slots equipmentSlot)
+        private void HandleSmartEquip(ICommonSession? session, Slots equipmentSlot)
         {
-            var plyEnt = ((IPlayerSession) session).AttachedEntity;
+            var plyEnt = ((IPlayerSession?) session)?.AttachedEntity;
 
             if (plyEnt == null || !plyEnt.IsValid())
                 return;
 
-            if (!plyEnt.TryGetComponent(out HandsComponent handsComp) ||
-                !plyEnt.TryGetComponent(out InventoryComponent inventoryComp))
+            if (!plyEnt.TryGetComponent(out HandsComponent? handsComp) ||
+                !plyEnt.TryGetComponent(out InventoryComponent? inventoryComp))
                 return;
 
-            if (!inventoryComp.TryGetSlotItem(equipmentSlot, out ItemComponent equipmentItem)
+            if (!inventoryComp.TryGetSlotItem(equipmentSlot, out ItemComponent? equipmentItem)
                 || !equipmentItem.Owner.TryGetComponent<ServerStorageComponent>(out var storageComponent))
             {
                 plyEnt.PopupMessage(Loc.GetString("You have no {0} to take something out of!",
@@ -216,7 +238,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 storageComponent.PlayerInsertHeldEntity(plyEnt);
             }
-            else
+            else if (storageComponent.StoredEntities != null)
             {
                 if (storageComponent.StoredEntities.Count == 0)
                 {

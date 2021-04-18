@@ -147,7 +147,8 @@ namespace Content.Client.UserInterface.ContextMenu
                                  },
                                  new TextureRect
                                  {
-                                     Texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Interface/VerbIcons/group.svg.96dpi.png"),
+                                     Texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png"),
+                                     TextureScale = (0.5f, 0.5f),
                                      Stretch = TextureRect.StretchMode.KeepCentered,
                                  }
                              }

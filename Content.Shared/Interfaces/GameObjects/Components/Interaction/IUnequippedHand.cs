@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Shared.GameObjects.Components.Items;
 using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
@@ -31,13 +31,8 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when removing the entity from an inventory slot.
     /// </summary>
     [PublicAPI]
-    public class UnequippedHandMessage : EntitySystemMessage
+    public class UnequippedHandMessage : HandledEntityEventArgs
     {
-        /// <summary>
-        ///     If this message has already been "handled" by a previous system.
-        /// </summary>
-        public bool Handled { get; set; }
-
         /// <summary>
         ///     Entity that equipped the item.
         /// </summary>

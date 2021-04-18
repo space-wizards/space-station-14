@@ -1,6 +1,6 @@
-﻿using Content.Server.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -9,14 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public class RadioSystem : EntitySystem
     {
-        private List<string> _messages;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _messages = new List<string>();
-        }
+        private readonly List<string> _messages = new();
 
         public void SpreadMessage(IRadio source, IEntity speaker, string message, int channel)
         {

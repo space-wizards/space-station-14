@@ -12,7 +12,7 @@ namespace Content.Server.AI.WorldState.States.Nutrition
 
         public override bool GetValue()
         {
-            if (!Owner.TryGetComponent(out HungerComponent hungerComponent))
+            if (!Owner.TryGetComponent(out HungerComponent? hungerComponent))
             {
                 return false;
             }

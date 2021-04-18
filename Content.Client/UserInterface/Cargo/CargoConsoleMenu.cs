@@ -10,6 +10,7 @@ using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Cargo
 {
@@ -17,9 +18,9 @@ namespace Content.Client.UserInterface.Cargo
     {
         public CargoConsoleBoundUserInterface Owner { get; private set; }
 
-        public event Action<BaseButton.ButtonEventArgs> OnItemSelected;
-        public event Action<BaseButton.ButtonEventArgs> OnOrderApproved;
-        public event Action<BaseButton.ButtonEventArgs> OnOrderCanceled;
+        public event Action<ButtonEventArgs>? OnItemSelected;
+        public event Action<ButtonEventArgs>? OnOrderApproved;
+        public event Action<ButtonEventArgs>? OnOrderCanceled;
 
         private readonly List<string> _categoryStrings = new();
 
@@ -36,7 +37,7 @@ namespace Content.Client.UserInterface.Cargo
         public Button CallShuttleButton { get; set; }
         public Button PermissionsButton { get; set; }
 
-        private string _category = null;
+        private string? _category = null;
 
         public CargoConsoleMenu(CargoConsoleBoundUserInterface owner)
         {
@@ -197,7 +198,7 @@ namespace Content.Client.UserInterface.Cargo
             _categories.OnItemSelected += OnCategoryItemSelected;
         }
 
-        private void OnCallShuttleButtonPressed(BaseButton.ButtonEventArgs args)
+        private void OnCallShuttleButtonPressed(ButtonEventArgs args)
         {
         }
 
@@ -227,6 +228,11 @@ namespace Content.Client.UserInterface.Cargo
         public void PopulateProducts()
         {
             Products.RemoveAllChildren();
+
+            if (Owner.Market == null)
+            {
+                return;
+            }
 
             var search = _searchBar.Text.Trim().ToLowerInvariant();
             foreach (var prototype in Owner.Market.Products)
@@ -260,6 +266,11 @@ namespace Content.Client.UserInterface.Cargo
             _categoryStrings.Clear();
             _categories.Clear();
 
+            if (Owner.Market == null)
+            {
+                return;
+            }
+
             _categoryStrings.Add(Loc.GetString("All"));
 
             var search = _searchBar.Text.Trim().ToLowerInvariant();
@@ -284,13 +295,25 @@ namespace Content.Client.UserInterface.Cargo
         {
             _orders.RemoveAllChildren();
             _requests.RemoveAllChildren();
+
+            if (Owner.Orders == null || Owner.Market == null)
+            {
+                return;
+            }
+
             foreach (var order in Owner.Orders.Orders)
             {
-                var row = new CargoOrderRow();
-                row.Order = order;
-                row.Icon.Texture = Owner.Market.GetProduct(order.ProductId).Icon.Frame0();
-                row.ProductName.Text = $"{Owner.Market.GetProduct(order.ProductId).Name} (x{order.Amount}) by {order.Requester}";
-                row.Description.Text = $"Reasons: {order.Reason}";
+                var row = new CargoOrderRow
+                {
+                    Order = order,
+                    Icon = {Texture = Owner.Market.GetProduct(order.ProductId)?.Icon.Frame0()},
+                    ProductName =
+                    {
+                        Text =
+                            $"{Owner.Market.GetProduct(order.ProductId)?.Name} (x{order.Amount}) by {order.Requester}"
+                    },
+                    Description = {Text = $"Reasons: {order.Reason}"}
+                };
                 row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(args); };
                 if (order.Approved)
                 {
@@ -342,7 +365,7 @@ namespace Content.Client.UserInterface.Cargo
 
     internal class CargoProductRow : PanelContainer
     {
-        public CargoProductPrototype Product { get; set; }
+        public CargoProductPrototype? Product { get; set; }
         public TextureRect Icon { get; private set; }
         public Button MainButton { get; private set; }
         public Label ProductName { get; private set; }
@@ -395,7 +418,7 @@ namespace Content.Client.UserInterface.Cargo
 
     internal class CargoOrderRow : PanelContainer
     {
-        public CargoOrderData Order { get; set; }
+        public CargoOrderData? Order { get; set; }
         public TextureRect Icon { get; private set; }
         public Label ProductName { get; private set; }
         public Label Description { get; private set; }

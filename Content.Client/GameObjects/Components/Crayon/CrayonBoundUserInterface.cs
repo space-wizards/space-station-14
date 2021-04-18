@@ -1,9 +1,9 @@
-﻿using Content.Shared.GameObjects.Components;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using System.Linq;
+﻿using System.Linq;
+using Content.Shared.GameObjects.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.GameObjects.Components.Crayon
 {
@@ -13,7 +13,7 @@ namespace Content.Client.GameObjects.Components.Crayon
         {
         }
 
-        private CrayonWindow _menu;
+        private CrayonWindow? _menu;
 
         protected override void Open()
         {
@@ -31,7 +31,8 @@ namespace Content.Client.GameObjects.Components.Crayon
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            _menu.UpdateState((CrayonBoundUserInterfaceState) state);
+
+            _menu?.UpdateState((CrayonBoundUserInterfaceState) state);
         }
 
         public void Select(string state)
@@ -43,7 +44,10 @@ namespace Content.Client.GameObjects.Components.Crayon
         {
             base.Dispose(disposing);
 
-            _menu.Close();
+            if (disposing)
+            {
+                _menu?.Close();
+            }
         }
     }
 }

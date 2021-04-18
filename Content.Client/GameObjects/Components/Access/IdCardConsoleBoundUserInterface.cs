@@ -15,14 +15,13 @@ namespace Content.Client.GameObjects.Components.Access
         {
         }
 
-        private IdCardConsoleWindow _window;
+        private IdCardConsoleWindow? _window;
 
         protected override void Open()
         {
             base.Open();
 
-            _window = new IdCardConsoleWindow(this, _prototypeManager);
-            _window.Title = Owner.Owner.Name;
+            _window = new IdCardConsoleWindow(this, _prototypeManager) {Title = Owner.Owner.Name};
             _window.OnClose += Close;
             _window.OpenCentered();
         }
@@ -31,7 +30,7 @@ namespace Content.Client.GameObjects.Components.Access
         {
             base.UpdateState(state);
             var castState = (IdCardConsoleBoundUserInterfaceState) state;
-            _window.UpdateState(castState);
+            _window?.UpdateState(castState);
         }
 
         public void ButtonPressed(UiButton button)

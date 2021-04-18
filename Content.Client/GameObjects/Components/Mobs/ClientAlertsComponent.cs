@@ -7,13 +7,13 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
@@ -24,8 +24,8 @@ namespace Content.Client.GameObjects.Components.Mobs
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        private AlertsUI _ui;
-        private AlertOrderPrototype _alertOrder;
+        private AlertsUI? _ui;
+        private AlertOrderPrototype? _alertOrder;
 
         [ViewVariables]
         private readonly Dictionary<AlertKey, AlertControl> _alertControls
@@ -43,7 +43,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             PlayerDetached();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)
@@ -57,7 +57,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
@@ -207,12 +207,17 @@ namespace Content.Client.GameObjects.Components.Mobs
             return alertControl;
         }
 
-        private void AlertControlOnPressed(BaseButton.ButtonEventArgs args)
+        private void AlertControlOnPressed(ButtonEventArgs args)
         {
-            AlertPressed(args, args.Button as AlertControl);
+            if (args.Button is not AlertControl control)
+            {
+                return;
+            }
+
+            AlertPressed(args, control);
         }
 
-        private void AlertPressed(BaseButton.ButtonEventArgs args, AlertControl alert)
+        private void AlertPressed(ButtonEventArgs args, AlertControl alert)
         {
             if (args.Event.Function != EngineKeyFunctions.UIClick)
             {

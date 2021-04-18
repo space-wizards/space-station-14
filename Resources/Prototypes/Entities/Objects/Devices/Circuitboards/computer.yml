@@ -1,7 +1,8 @@
 ﻿# TODO: Add descriptions (10)
+
 - type: entity
-  id: BaseComputerCircuitboard
   parent: BaseItem
+  id: BaseComputerCircuitboard
   name: circuit board
   abstract: true
   components:
@@ -11,80 +12,80 @@
       state: id_mod
 
 - type: entity
-  id: SupplyComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: supply computer circuit board
+  id: SupplyComputerCircuitboard
+  name: supply board
   components:
     - type: ComputerBoard
       prototype: ComputerSupplyOrdering
 
 - type: entity
-  id: SupplyRequestComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: supply request computer circuit board
+  id: SupplyRequestComputerCircuitboard
+  name: supply request board
   components:
     - type: ComputerBoard
       prototype: ComputerSupplyRequest
 
 - type: entity
-  id: ResearchComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: R&D computer circuit board
+  id: ResearchComputerCircuitboard
+  name: R&D computer board
   components:
     - type: ComputerBoard
       prototype: ComputerResearchAndDevelopment
 
 - type: entity
-  id: IDComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: ID card terminal circuit board
+  id: IDComputerCircuitboard
+  name: ID card terminal board
   components:
     - type: ComputerBoard
       prototype: ComputerId
 
 - type: entity
-  id: BodyScannerComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: body scanner computer circuit board
+  id: BodyScannerComputerCircuitboard
+  name: body scanner computer board
   components:
     - type: ComputerBoard
       prototype: computerBodyScanner
 
 - type: entity
-  id: CommsComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: communications computer circuit board
+  id: CommsComputerCircuitboard
+  name: communications computer board
   components:
     - type: ComputerBoard
       prototype: ComputerComms
 
 - type: entity
-  id: SolarControlComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: solar control computer circuit board
+  id: SolarControlComputerCircuitboard
+  name: solar control board
   components:
     - type: ComputerBoard
       prototype: ComputerSolarControl
 
 - type: entity
-  id: SpaceVillainArcadeComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: space villain arcade computer circuit board
+  id: SpaceVillainArcadeComputerCircuitboard
+  name: space villain arcade board
   components:
     - type: ComputerBoard
       prototype: SpaceVillainArcade
 
 - type: entity
-  id: BlockGameArcadeComputerCircuitboard
   parent: BaseComputerCircuitboard
-  name: block game arcade computer circuit board
+  id: BlockGameArcadeComputerCircuitboard
+  name: block game arcade board
   components:
     - type: ComputerBoard
       prototype: BlockGameArcade
 
 - type: entity
-  id: ParticleAcceleratorComputerCircuitboard
   parent: BaseComputerCircuitboard
+  id: ParticleAcceleratorComputerCircuitboard
   name: PA control box
   suffix: Circuit Board
   components:

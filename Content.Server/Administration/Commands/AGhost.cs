@@ -46,7 +46,7 @@ namespace Content.Server.Administration.Commands
 
             if (canReturn)
             {
-                ghost.Name = mind.CharacterName;
+                ghost.Name = mind.CharacterName ?? string.Empty;
                 mind.Visit(ghost);
             }
             else

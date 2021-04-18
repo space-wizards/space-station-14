@@ -1,5 +1,4 @@
-﻿#nullable enable
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalTaggerComponent;

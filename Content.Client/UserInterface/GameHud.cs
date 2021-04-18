@@ -1,17 +1,24 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Input;
+using Content.Shared.Prototypes.HUD;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.Input.Keyboard.Key;
 using Control = Robust.Client.UserInterface.Control;
@@ -28,52 +35,54 @@ namespace Content.Client.UserInterface
 
         // Escape top button.
         bool EscapeButtonDown { get; set; }
-        Action<bool> EscapeButtonToggled { get; set; }
+        Action<bool>? EscapeButtonToggled { get; set; }
 
         // Character top button.
         bool CharacterButtonDown { get; set; }
         bool CharacterButtonVisible { get; set; }
-        Action<bool> CharacterButtonToggled { get; set; }
+        Action<bool>? CharacterButtonToggled { get; set; }
 
         // Inventory top button.
         bool InventoryButtonDown { get; set; }
         bool InventoryButtonVisible { get; set; }
-        Action<bool> InventoryButtonToggled { get; set; }
 
         // Crafting top button.
         bool CraftingButtonDown { get; set; }
         bool CraftingButtonVisible { get; set; }
-        Action<bool> CraftingButtonToggled { get; set; }
+        Action<bool>? CraftingButtonToggled { get; set; }
 
         // Actions top button.
         bool ActionsButtonDown { get; set; }
         bool ActionsButtonVisible { get; set; }
-        Action<bool> ActionsButtonToggled { get; set; }
+        Action<bool>? ActionsButtonToggled { get; set; }
 
         // Admin top button.
         bool AdminButtonDown { get; set; }
         bool AdminButtonVisible { get; set; }
-        Action<bool> AdminButtonToggled { get; set; }
+        Action<bool>? AdminButtonToggled { get; set; }
 
         // Sandbox top button.
         bool SandboxButtonDown { get; set; }
         bool SandboxButtonVisible { get; set; }
-        Action<bool> SandboxButtonToggled { get; set; }
+        Action<bool>? SandboxButtonToggled { get; set; }
 
         Control HandsContainer { get; }
         Control SuspicionContainer { get; }
-        Control RightInventoryQuickButtonContainer { get; }
-        Control LeftInventoryQuickButtonContainer { get; }
+        Control BottomLeftInventoryQuickButtonContainer { get; }
+        Control BottomRightInventoryQuickButtonContainer { get; }
+        Control TopInventoryQuickButtonContainer { get; }
 
         bool CombatPanelVisible { get; set; }
-        bool CombatModeActive { get; set; }
         TargetingZone TargetingZone { get; set; }
-        Action<bool> OnCombatModeChanged { get; set; }
-        Action<TargetingZone> OnTargetingZoneChanged { get; set; }
+        Action<TargetingZone>? OnTargetingZoneChanged { get; set; }
 
         Control VoteContainer { get; }
 
         void AddTopNotification(TopNotification notification);
+
+        Texture GetHudTexture(string path);
+
+        bool ValidateHudTheme(int idx);
 
         // Init logic.
         void Initialize();
@@ -81,28 +90,30 @@ namespace Content.Client.UserInterface
 
     internal sealed class GameHud : IGameHud
     {
-        private HBoxContainer _topButtonsContainer;
-        private TopButton _buttonEscapeMenu;
-        private TopButton _buttonInfo;
-        private TopButton _buttonCharacterMenu;
-        private TopButton _buttonInventoryMenu;
-        private TopButton _buttonCraftingMenu;
-        private TopButton _buttonActionsMenu;
-        private TopButton _buttonAdminMenu;
-        private TopButton _buttonSandboxMenu;
-        private InfoWindow _infoWindow;
-        private TargetingDoll _targetingDoll;
-        private Button _combatModeButton;
-        private VBoxContainer _combatPanelContainer;
-        private VBoxContainer _topNotificationContainer;
+        private HBoxContainer _topButtonsContainer = default!;
+        private TopButton _buttonEscapeMenu = default!;
+        private TopButton _buttonInfo = default!;
+        private TopButton _buttonCharacterMenu = default!;
+        private TopButton _buttonInventoryMenu = default!;
+        private TopButton _buttonCraftingMenu = default!;
+        private TopButton _buttonActionsMenu = default!;
+        private TopButton _buttonAdminMenu = default!;
+        private TopButton _buttonSandboxMenu = default!;
+        private InfoWindow _infoWindow = default!;
+        private TargetingDoll _targetingDoll = default!;
+        private VBoxContainer _combatPanelContainer = default!;
+        private VBoxContainer _topNotificationContainer = default!;
 
         [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly INetConfigurationManager _configManager = default!;
 
-        public Control HandsContainer { get; private set; }
-        public Control SuspicionContainer { get; private set; }
-        public Control RightInventoryQuickButtonContainer { get; private set; }
-        public Control LeftInventoryQuickButtonContainer { get; private set; }
+        public Control HandsContainer { get; private set; } = default!;
+        public Control SuspicionContainer { get; private set; } = default!;
+        public Control TopInventoryQuickButtonContainer { get; private set; } = default!;
+        public Control BottomLeftInventoryQuickButtonContainer { get; private set; } = default!;
+        public Control BottomRightInventoryQuickButtonContainer { get; private set; } = default!;
 
         public bool CombatPanelVisible
         {
@@ -110,24 +121,48 @@ namespace Content.Client.UserInterface
             set => _combatPanelContainer.Visible = value;
         }
 
-        public bool CombatModeActive
-        {
-            get => _combatModeButton.Pressed;
-            set => _combatModeButton.Pressed = value;
-        }
-
         public TargetingZone TargetingZone
         {
             get => _targetingDoll.ActiveZone;
             set => _targetingDoll.ActiveZone = value;
         }
-
-        public Action<bool> OnCombatModeChanged { get; set; }
-        public Action<TargetingZone> OnTargetingZoneChanged { get; set; }
+        public Action<TargetingZone>? OnTargetingZoneChanged { get; set; }
 
         public void AddTopNotification(TopNotification notification)
         {
             _topNotificationContainer.AddChild(notification);
+        }
+
+        public bool ValidateHudTheme(int idx)
+        {
+            if (!_prototypeManager.TryIndex(idx.ToString(), out HudThemePrototype? _))
+            {
+                Logger.ErrorS("hud", "invalid HUD theme id {0}, using different theme",
+                    idx);
+                var proto = _prototypeManager.EnumeratePrototypes<HudThemePrototype>().FirstOrDefault();
+                if (proto == null)
+                {
+                    throw new NullReferenceException("No valid HUD prototypes!");
+                }
+                var id = int.Parse(proto.ID);
+                _configManager.SetCVar(CCVars.HudTheme, id);
+                return false;
+            }
+            return true;
+        }
+
+        public Texture GetHudTexture(string path)
+        {
+            var id = _configManager.GetCVar<int>("hud.theme");
+            var dir = string.Empty;
+            if (!_prototypeManager.TryIndex(id.ToString(), out HudThemePrototype? proto))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            dir = proto.Path;
+
+            var resourcePath = (new ResourcePath("/Textures/Interface/Inventory") / dir) / path;
+            return _resourceCache.GetTexture(resourcePath);
         }
 
         public void Initialize()
@@ -194,7 +229,7 @@ namespace Content.Client.UserInterface
 
             _topButtonsContainer.AddChild(_buttonInventoryMenu);
 
-            _buttonInventoryMenu.OnToggled += args => InventoryButtonToggled?.Invoke(args.Pressed);
+            _buttonInventoryMenu.OnToggled += args => InventoryButtonDown = args.Pressed;
 
             // Crafting
             _buttonCraftingMenu = new TopButton(craftingTexture, ContentKeyFunctions.OpenCraftingMenu, _inputManager)
@@ -270,13 +305,10 @@ namespace Content.Client.UserInterface
 
             _combatPanelContainer = new VBoxContainer
             {
+                HorizontalAlignment = Control.HAlignment.Left,
+                VerticalAlignment = Control.VAlignment.Bottom,
                 Children =
                 {
-                    (_combatModeButton = new Button
-                    {
-                        Text = Loc.GetString("Combat Mode"),
-                        ToggleMode = true
-                    }),
                     (_targetingDoll = new TargetingDoll(_resourceCache))
                 }
             };
@@ -285,14 +317,13 @@ namespace Content.Client.UserInterface
             LC.SetGrowVertical(_combatPanelContainer, LC.GrowDirection.Begin);
             LC.SetAnchorAndMarginPreset(_combatPanelContainer, LC.LayoutPreset.BottomRight);
             LC.SetMarginBottom(_combatPanelContainer, -10f);
-            RootControl.AddChild(_combatPanelContainer);
 
-            _combatModeButton.OnToggled += args => OnCombatModeChanged?.Invoke(args.Pressed);
             _targetingDoll.OnZoneChanged += args => OnTargetingZoneChanged?.Invoke(args);
 
-            var centerBottomContainer = new HBoxContainer
+            var centerBottomContainer = new VBoxContainer
             {
-                SeparationOverride = 5
+                SeparationOverride = 5,
+                HorizontalAlignment = Control.HAlignment.Center
             };
             LC.SetAnchorAndMarginPreset(centerBottomContainer, LC.LayoutPreset.CenterBottom);
             LC.SetGrowHorizontal(centerBottomContainer, LC.GrowDirection.Both);
@@ -303,23 +334,56 @@ namespace Content.Client.UserInterface
             HandsContainer = new Control
             {
                 VerticalAlignment = Control.VAlignment.Bottom,
+                HorizontalAlignment = Control.HAlignment.Center
             };
-            RightInventoryQuickButtonContainer = new Control
+            BottomRightInventoryQuickButtonContainer = new HBoxContainer()
             {
                 VerticalAlignment = Control.VAlignment.Bottom,
+                HorizontalAlignment = Control.HAlignment.Right
             };
-            LeftInventoryQuickButtonContainer = new Control
+            BottomLeftInventoryQuickButtonContainer = new HBoxContainer()
             {
                 VerticalAlignment = Control.VAlignment.Bottom,
+                HorizontalAlignment = Control.HAlignment.Left
             };
-            centerBottomContainer.AddChild(LeftInventoryQuickButtonContainer);
-            centerBottomContainer.AddChild(HandsContainer);
-            centerBottomContainer.AddChild(RightInventoryQuickButtonContainer);
+            TopInventoryQuickButtonContainer = new HBoxContainer()
+            {
+                Visible = false,
+                VerticalAlignment = Control.VAlignment.Bottom,
+                HorizontalAlignment = Control.HAlignment.Center
+            };
+            var bottomRow = new HBoxContainer()
+            {
+                HorizontalAlignment = Control.HAlignment.Center
+
+            };
+            bottomRow.AddChild(new Control {MinSize = (69, 0)}); //Padding (nice)
+            bottomRow.AddChild(BottomLeftInventoryQuickButtonContainer);
+            bottomRow.AddChild(HandsContainer);
+            bottomRow.AddChild(BottomRightInventoryQuickButtonContainer);
+            bottomRow.AddChild(new Control {MinSize = (1, 0)}); //Padding
+
+
+            centerBottomContainer.AddChild(TopInventoryQuickButtonContainer);
+            centerBottomContainer.AddChild(bottomRow);
 
             SuspicionContainer = new Control
             {
                 HorizontalAlignment = Control.HAlignment.Center
             };
+
+            var rightBottomContainer = new HBoxContainer
+            {
+                SeparationOverride = 5
+            };
+            LC.SetAnchorAndMarginPreset(rightBottomContainer, LC.LayoutPreset.BottomRight);
+            LC.SetGrowHorizontal(rightBottomContainer, LC.GrowDirection.Begin);
+            LC.SetGrowVertical(rightBottomContainer, LC.GrowDirection.Begin);
+            LC.SetMarginBottom(rightBottomContainer, -10f);
+            LC.SetMarginRight(rightBottomContainer, -10f);
+            RootControl.AddChild(rightBottomContainer);
+
+            rightBottomContainer.AddChild(_combatPanelContainer);
 
             RootControl.AddChild(SuspicionContainer);
 
@@ -369,7 +433,7 @@ namespace Content.Client.UserInterface
             }
         }
 
-        public Control RootControl { get; private set; }
+        public Control RootControl { get; private set; } = default!;
 
         public bool EscapeButtonDown
         {
@@ -377,7 +441,7 @@ namespace Content.Client.UserInterface
             set => _buttonEscapeMenu.Pressed = value;
         }
 
-        public Action<bool> EscapeButtonToggled { get; set; }
+        public Action<bool>? EscapeButtonToggled { get; set; }
 
         public bool CharacterButtonDown
         {
@@ -391,12 +455,16 @@ namespace Content.Client.UserInterface
             set => _buttonCharacterMenu.Visible = value;
         }
 
-        public Action<bool> CharacterButtonToggled { get; set; }
+        public Action<bool>? CharacterButtonToggled { get; set; }
 
         public bool InventoryButtonDown
         {
             get => _buttonInventoryMenu.Pressed;
-            set => _buttonInventoryMenu.Pressed = value;
+            set
+            {
+                TopInventoryQuickButtonContainer.Visible = value;
+                _buttonInventoryMenu.Pressed = value;
+            }
         }
 
         public bool InventoryButtonVisible
@@ -404,8 +472,6 @@ namespace Content.Client.UserInterface
             get => _buttonInventoryMenu.Visible;
             set => _buttonInventoryMenu.Visible = value;
         }
-
-        public Action<bool> InventoryButtonToggled { get; set; }
 
         public bool CraftingButtonDown
         {
@@ -419,7 +485,7 @@ namespace Content.Client.UserInterface
             set => _buttonCraftingMenu.Visible = value;
         }
 
-        public Action<bool> CraftingButtonToggled { get; set; }
+        public Action<bool>? CraftingButtonToggled { get; set; }
 
         public bool ActionsButtonDown
         {
@@ -433,7 +499,7 @@ namespace Content.Client.UserInterface
             set => _buttonActionsMenu.Visible = value;
         }
 
-        public Action<bool> ActionsButtonToggled { get; set; }
+        public Action<bool>? ActionsButtonToggled { get; set; }
 
         public bool AdminButtonDown
         {
@@ -447,7 +513,7 @@ namespace Content.Client.UserInterface
             set => _buttonAdminMenu.Visible = value;
         }
 
-        public Action<bool> AdminButtonToggled { get; set; }
+        public Action<bool>? AdminButtonToggled { get; set; }
 
         public bool SandboxButtonDown
         {
@@ -461,9 +527,9 @@ namespace Content.Client.UserInterface
             set => _buttonSandboxMenu.Visible = value;
         }
 
-        public Action<bool> SandboxButtonToggled { get; set; }
+        public Action<bool>? SandboxButtonToggled { get; set; }
 
-        public Control VoteContainer { get; private set; }
+        public Control VoteContainer { get; private set; } = default!;
 
         public sealed class TopButton : ContainerButton
         {
@@ -547,7 +613,7 @@ namespace Content.Client.UserInterface
                 return TryGetShortKeyName(keyFunction, out var name) ? Loc.GetString(name) : " ";
             }
 
-            private bool TryGetShortKeyName(BoundKeyFunction keyFunction, out string name)
+            private bool TryGetShortKeyName(BoundKeyFunction keyFunction, [NotNullWhen(true)] out string? name)
             {
                 if (_inputManager.TryGetKeyBinding(keyFunction, out var binding))
                 {
@@ -632,7 +698,7 @@ namespace Content.Client.UserInterface
                 return false;
             }
 
-            private string DefaultShortKeyName(BoundKeyFunction keyFunction)
+            private string? DefaultShortKeyName(BoundKeyFunction keyFunction)
             {
                 var name = FormattedMessage.EscapeText(_inputManager.GetKeyFunctionButtonString(keyFunction));
                 return name.Length > 3 ? null : name;

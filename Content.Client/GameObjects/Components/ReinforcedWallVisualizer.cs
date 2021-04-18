@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components
         {
             var entity = component.Owner;
 
-            if (!entity.TryGetComponent(out ISpriteComponent sprite)) return;
+            if (!entity.TryGetComponent(out ISpriteComponent? sprite)) return;
 
             if (stage < 0)
             {

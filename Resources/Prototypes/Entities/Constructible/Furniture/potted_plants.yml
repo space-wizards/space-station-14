@@ -1,31 +1,28 @@
 - type: entity
   id: PottedPlantBase
+  parent: BaseConstructibleDynamic
   abstract: true
   components:
-  - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 25
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.2, 0.5, 0.2"
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.2, 0.5, 0.2"
+      mass: 25
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+        - MobImpassable
       layer:
-      - Opaque
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+        - Opaque
+        - MobImpassable
+        - SmallImpassable
+        - VaultImpassable
   - type: Sprite
     sprite: Constructible/Misc/potted_plants.rsi
   - type: PottedPlantHide
   - type: SecretStash
     secretPartName: the plant
-  - type: Anchorable
   - type: Pullable
 
 - type: entity
@@ -58,10 +55,16 @@
   - type: Sprite
     state: plant-25
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.47,-0.25,0.05,0.25"
-        layer: [ Passable ]
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.47,-0.25,0.05,0.25"
+      mass: 25
+      layer:
+      - SmallImpassable
+      mask:
+      - Impassable
 
 - type: entity
   id: PottedPlantBioluminscent

@@ -18,8 +18,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-#nullable enable
-
 namespace Content.Client.Chat
 {
     internal sealed class ChatManager : IChatManager, IPostInjectInit

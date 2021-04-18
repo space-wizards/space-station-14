@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Pointing;
+using Content.Server.GameObjects.Components.Pointing;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.GameObjects;
@@ -18,6 +18,7 @@ namespace Content.Server.GlobalVerbs
         public override void GetData(IEntity user, IEntity target, VerbData data)
         {
             data.Visibility = VerbVisibility.Invisible;
+            data.IconTexture = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
 
             if (!user.HasComponent<IActorComponent>())
             {
@@ -41,7 +42,7 @@ namespace Content.Server.GlobalVerbs
 
         public override void Activate(IEntity user, IEntity target)
         {
-            if (!user.TryGetComponent(out IActorComponent actor))
+            if (!user.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }

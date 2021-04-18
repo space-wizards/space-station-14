@@ -20,7 +20,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         [DataField("animation_state")]
         private string _state = "chempuff";
 
-        private Animation VaporFlick;
+        private Animation VaporFlick = default!;
 
         void ISerializationHooks.AfterDeserialization()
         {

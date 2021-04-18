@@ -19,8 +19,9 @@ namespace Content.Client.Research
         private readonly Label _description;
         private readonly TextureRect _icon;
 
-        public LatheQueueMenu()
+        public LatheQueueMenu(LatheBoundUserInterface owner)
         {
+            Owner = owner;
             SetSize = MinSize = (300, 450);
             Title = Loc.GetString("Lathe Queue");
 

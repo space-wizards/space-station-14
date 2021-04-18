@@ -6,84 +6,34 @@
   },
   "states": [
     {
-      "name": "bananalamp",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "bananalamp"
     },
     {
-      "name": "bananalamp_on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "bananalamp_on"
     },
     {
-      "name": "floodlight",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "floodlight"
     },
     {
-      "name": "floodlight_on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "floodlight_on"
     },
     {
-      "name": "floodlight_burned",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "floodlight_burned"
     },
     {
-      "name": "floodlight_broken",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "floodlight_broken"
     },
     {
-      "name": "lamp",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "lamp"
     },
     {
-      "name": "lamp_on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "lamp_on"
     },
     {
-      "name": "lampgreen",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "lampgreen"
     },
     {
-      "name": "lampgreen_on",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "lampgreen_on"
     }
   ]
 }

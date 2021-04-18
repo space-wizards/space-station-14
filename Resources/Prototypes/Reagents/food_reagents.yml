@@ -1,5 +1,5 @@
 - type: reagent
-  id: chem.Flour
+  id: Flour
   name: flour
   desc: Used for baking.
   physicalDesc: powdery

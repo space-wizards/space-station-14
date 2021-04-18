@@ -7,7 +7,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Research
@@ -24,11 +23,11 @@ namespace Content.Client.Research
         public Button ServerConnectButton;
         public Button ServerSyncButton;
 
-        public LatheBoundUserInterface Owner { get; set; }
+        public LatheBoundUserInterface Owner { get; }
 
         private readonly List<LatheRecipePrototype> _shownRecipes = new();
 
-        public LatheMenu(LatheBoundUserInterface owner = null)
+        public LatheMenu(LatheBoundUserInterface owner)
         {
             SetSize = MinSize = (300, 450);
             IoCManager.InjectDependencies(this);
@@ -126,7 +125,7 @@ namespace Content.Client.Research
             };
 
             hBoxButtons.AddChild(spacer);
-            if (Owner?.Database is ProtolatheDatabaseComponent database)
+            if (Owner.Database is ProtolatheDatabaseComponent database)
             {
                 hBoxButtons.AddChild(ServerConnectButton);
                 hBoxButtons.AddChild(ServerSyncButton);
@@ -157,9 +156,11 @@ namespace Content.Client.Research
         {
             _materials.Clear();
 
+            if (Owner.Storage == null) return;
+
             foreach (var (id, amount) in Owner.Storage)
             {
-                if (!_prototypeManager.TryIndex(id, out MaterialPrototype materialPrototype)) continue;
+                if (!_prototypeManager.TryIndex(id, out MaterialPrototype? materialPrototype)) continue;
                 var material = materialPrototype;
                 _materials.AddItem($"{material.Name} {amount} cm³", material.Icon.Frame0(), false);
             }
@@ -175,7 +176,7 @@ namespace Content.Client.Research
             for (var i = 0; i < _shownRecipes.Count; i++)
             {
                 var prototype = _shownRecipes[i];
-                _items[i].Disabled = !Owner.Lathe.CanProduce(prototype, quantity);
+                _items[i].Disabled = !Owner.Lathe?.CanProduce(prototype, quantity) ?? true;
             }
         }
 
@@ -205,6 +206,8 @@ namespace Content.Client.Research
         public void Populate()
         {
             _shownRecipes.Clear();
+
+            if (Owner.Database == null) return;
 
             foreach (var prototype in Owner.Database)
             {

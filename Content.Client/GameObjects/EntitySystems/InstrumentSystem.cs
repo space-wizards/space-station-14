@@ -11,7 +11,7 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public class InstrumentSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         public override void Initialize()

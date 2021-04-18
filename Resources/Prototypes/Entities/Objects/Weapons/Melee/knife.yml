@@ -48,3 +48,20 @@
     size: 10
     sprite: Objects/Weapons/Melee/cleaver.rsi
     prefix: inhand
+
+- type: entity
+  name: combat knife
+  parent: BaseKnife
+  id: CombatKnife
+  description: A deadly knife intended for melee confrontations.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/combat_knife.rsi
+    size: 2
+    state: icon
+  - type: MeleeWeapon
+    damage: 20
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/combat_knife.rsi
+    prefix: inhand

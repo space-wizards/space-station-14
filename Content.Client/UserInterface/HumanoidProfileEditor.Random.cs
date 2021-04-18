@@ -1,4 +1,4 @@
-﻿using Content.Shared.Preferences;
+using Content.Shared.Preferences;
 using Content.Shared.Prototypes;
 using Content.Shared.Utility;
 using Robust.Shared.Prototypes;
@@ -20,10 +20,12 @@ namespace Content.Client.UserInterface
             UpdateAgeEdit();
             UpdateNameEdit();
             UpdateHairPickers();
+            UpdateEyePickers();
         }
 
         private void RandomizeName()
         {
+            if (Profile == null) return;
             var firstName = _random.Pick(Profile.Sex.FirstNames(_prototypeManager).Values);
             var lastName = _random.Pick(_prototypeManager.Index<DatasetPrototype>("names_last"));
             SetName($"{firstName} {lastName}");

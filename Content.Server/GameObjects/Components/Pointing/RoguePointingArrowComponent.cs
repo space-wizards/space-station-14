@@ -1,12 +1,14 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using Content.Server.Explosions;
 using Content.Shared.GameObjects.Components.Pointing;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -120,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Pointing
             }
 
             Owner.SpawnExplosion(0, 2, 1, 1);
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/explosion.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/explosion.ogg", Owner);
 
             Owner.Delete();
         }

@@ -7,8 +7,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
 
-#nullable enable
-
 namespace Content.Client.Administration
 {
     public class ClientAdminManager : IClientAdminManager, IClientConGroupImplementation, IPostInjectInit

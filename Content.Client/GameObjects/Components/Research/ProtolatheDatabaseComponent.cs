@@ -16,16 +16,19 @@ namespace Content.Client.GameObjects.Components.Research
         /// <summary>
         ///     Invoked when the database gets updated.
         /// </summary>
-        public event Action OnDatabaseUpdated;
+        public event Action? OnDatabaseUpdated;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
+
             if (curState is not ProtolatheDatabaseState state) return;
+
             Clear();
+
             foreach (var ID in state.Recipes)
             {
-                if(!_prototypeManager.TryIndex(ID, out LatheRecipePrototype recipe)) continue;
+                if(!_prototypeManager.TryIndex(ID, out LatheRecipePrototype? recipe)) continue;
                 AddRecipe(recipe);
             }
 

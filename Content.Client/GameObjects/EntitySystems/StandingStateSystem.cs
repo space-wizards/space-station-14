@@ -9,7 +9,7 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         protected override bool OnDown(IEntity entity, bool playSound = true, bool dropItems = true, bool force = false)
         {
-            if (!entity.TryGetComponent(out AppearanceComponent appearance))
+            if (!entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 return false;
             }
@@ -27,7 +27,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         protected override bool OnStand(IEntity entity)
         {
-            if (!entity.TryGetComponent(out AppearanceComponent appearance)) return false;
+            if (!entity.TryGetComponent(out AppearanceComponent? appearance)) return false;
 
             appearance.TryGetData<RotationState>(RotationVisuals.RotationState, out var oldState);
             var newState = RotationState.Vertical;

@@ -3,8 +3,6 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.PDA
 {
@@ -16,7 +14,7 @@ namespace Content.Client.GameObjects.Components.PDA
         /// The base PDA sprite state, eg. "pda", "pda-clown"
         /// </summary>
         [DataField("state")]
-        private string _state;
+        private string? _state;
 
         private enum PDAVisualLayers : byte
         {
@@ -30,7 +28,11 @@ namespace Content.Client.GameObjects.Components.PDA
             base.InitializeEntity(entity);
             var sprite = entity.GetComponent<ISpriteComponent>();
 
-            sprite.LayerMapSet(PDAVisualLayers.Base, sprite.AddLayerState(_state));
+            if (_state != null)
+            {
+                sprite.LayerMapSet(PDAVisualLayers.Base, sprite.AddLayerState(_state));
+            }
+
             sprite.LayerMapSet(PDAVisualLayers.Flashlight, sprite.AddLayerState("light_overlay"));
             sprite.LayerSetShader(PDAVisualLayers.Flashlight, "unshaded");
             sprite.LayerMapSet(PDAVisualLayers.IDLight, sprite.AddLayerState("id_overlay"));

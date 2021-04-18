@@ -1,15 +1,18 @@
 #nullable enable
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
-    public class ContainmentFieldComponent : Component, ICollideBehavior
+    public class ContainmentFieldComponent : Component, IStartCollide
     {
         public override string Name => "ContainmentField";
         public ContainmentFieldConnection? Parent;
 
-        public void CollideWith(IEntity collidedWith)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
             if (Parent == null)
             {
@@ -17,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            Parent.TryRepell(Owner, collidedWith);
+            Parent.TryRepell(Owner, otherFixture.Body.Owner);
         }
     }
 }

@@ -5,7 +5,7 @@
   result: FoodCheeseburger
   time: 5
   reagents:
-    chem.Flour: 5
+    Flour: 5
   solids:
     FoodMeat: 1
 
@@ -15,7 +15,7 @@
   result: FoodClownBurger
   time: 5
   reagents:
-    chem.Flour: 5
+    Flour: 5
   solids:
     ClothingMaskClown: 1
 
@@ -25,7 +25,7 @@
   result: FoodTofuBurger
   time: 5
   reagents:
-    chem.Flour: 15
+    Flour: 15
   solids:
     FoodTofu: 1
 
@@ -35,7 +35,7 @@
   result: FoodXenoburger
   time: 5
   reagents:
-    chem.Flour: 5
+    Flour: 5
   solids:
     FoodXenomeat: 1
 
@@ -61,7 +61,7 @@
   result: FoodBread
   time: 15
   reagents:
-    chem.Flour: 15
+    Flour: 15
 
 - type: microwaveMealRecipe
   id: RecipeSandwich
@@ -106,7 +106,7 @@
   result: FoodCreamCheeseBread
   time: 20
   reagents:
-    chem.Flour: 15
+    Flour: 15
   solids:
     FoodCheeseWedge: 2
 
@@ -116,8 +116,8 @@
   result: FoodBananaBread
   time: 25
   reagents:
-    chem.Flour: 15
-    chem.Milk: 5
+    Flour: 15
+    Milk: 5
   solids:
     FoodEgg: 3
     FoodBanana: 1
@@ -129,7 +129,7 @@
   result: FoodMargheritaPizza
   time: 30
   reagents:
-    chem.Flour: 10
+    Flour: 10
   solids:
     FoodCheeseWedge: 4
     FoodTomato: 1
@@ -140,7 +140,7 @@
   result: FoodMushroomPizza
   time: 25
   reagents:
-    chem.Flour: 10
+    Flour: 10
   solids:
     FoodMushroom: 5
 
@@ -150,7 +150,7 @@
   result: FoodMeatPizza
   time: 30
   reagents:
-    chem.Flour: 10
+    Flour: 10
   solids:
     FoodMeat: 3
     FoodCheeseWedge: 1
@@ -162,7 +162,7 @@
   result: FoodVegetablePizza
   time: 30
   reagents:
-    chem.Flour: 10
+    Flour: 10
   solids:
     FoodEggplant: 1
     FoodCarrot: 1
@@ -176,7 +176,7 @@
   result: FoodSpaghetti
   time: 1
   reagents:
-    chem.Flour: 5
+    Flour: 5
 
 - type: microwaveMealRecipe
   id: RecipeBoiledSpaghetti
@@ -184,7 +184,7 @@
   result: FoodSpaghettiBoiled
   time: 5
   reagents:
-    chem.Water: 5
+    Water: 5
   solids:
     FoodSpaghetti: 1
 
@@ -194,7 +194,7 @@
   result: FoodPastaTomato
   time: 10
   reagents:
-    chem.Water: 5
+    Water: 5
   solids:
     FoodSpaghetti: 1
     FoodTomato: 2
@@ -205,7 +205,7 @@
   result: FoodMeatballSpaghetti
   time: 10
   reagents:
-    chem.Water: 5
+    Water: 5
   solids:
     FoodSpaghetti: 1
     FoodMeatball: 2
@@ -292,7 +292,7 @@
   result: FoodMeatballSoup
   time: 10
   reagents:
-    chem.Water: 10
+    Water: 10
   solids:
     FoodMeatball: 1
     FoodCarrot: 1
@@ -328,7 +328,7 @@
   result: DisgustingSweptSoup
   time: 15
   reagents:
-    chem.Cola: 5
+    Cola: 5
   solids:
     FoodMiloSoup: 1
 
@@ -346,7 +346,7 @@
   name: candy corn recipe
   result: FoodCandyCorn
   time: 5
-  solids:    
+  solids:
       FoodCorn: 1
       Sugarcane: 1
 
@@ -358,8 +358,8 @@
 #  time: 5
 #  reagents:
 #    chem.Glucose: 5
-#  solids:    
-#    FoodCorn: 1  
+#  solids:
+#    FoodCorn: 1
 
 - type: microwaveMealRecipe
   id: RecipePopcorn
@@ -375,7 +375,7 @@
   result: FoodBananaCreamPie
   time: 15
   reagents:
-    chem.Flour: 10
+    Flour: 10
   solids:
     FoodBanana: 3
 

@@ -82,7 +82,7 @@ namespace Content.IntegrationTests.Tests.Disposal
   - type: Anchorable
   - type: PowerReceiver
   - type: Physics
-    anchored: true
+    bodyType: Static
 
 - type: entity
   name: DisposalTrunkDummy

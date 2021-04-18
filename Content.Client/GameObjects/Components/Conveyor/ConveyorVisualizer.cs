@@ -4,8 +4,6 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Conveyor
 {
@@ -13,15 +11,17 @@ namespace Content.Client.GameObjects.Components.Conveyor
     public class ConveyorVisualizer : AppearanceVisualizer
     {
         [DataField("state_running")]
-        private string _stateRunning;
+        private string? _stateRunning;
+
         [DataField("state_stopped")]
-        private string _stateStopped;
+        private string? _stateStopped;
+
         [DataField("state_reversed")]
-        private string _stateReversed;
+        private string? _stateReversed;
 
         private void ChangeState(AppearanceComponent appearance)
         {
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!appearance.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }

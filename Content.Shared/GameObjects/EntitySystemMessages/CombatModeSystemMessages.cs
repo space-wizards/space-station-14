@@ -9,7 +9,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
     public static class CombatModeSystemMessages
     {
         [Serializable, NetSerializable]
-        public sealed class SetTargetZoneMessage : EntitySystemMessage
+        public sealed class SetTargetZoneMessage : EntityEventArgs
         {
             public SetTargetZoneMessage(TargetingZone targetZone)
             {
@@ -20,7 +20,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
         }
 
         [Serializable, NetSerializable]
-        public sealed class SetCombatModeActiveMessage : EntitySystemMessage
+        public sealed class SetCombatModeActiveMessage : EntityEventArgs
         {
             public SetCombatModeActiveMessage(bool active)
             {

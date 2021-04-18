@@ -15,9 +15,9 @@ namespace Content.Client.GameObjects.Components.Trigger
         private const string AnimationKey = "priming_animation";
 
         [DataField("countdown_sound", required: true)]
-        private string _countdownSound;
+        private string? _countdownSound;
 
-        private Animation PrimingAnimation;
+        private Animation PrimingAnimation = default!;
 
         void ISerializationHooks.AfterDeserialization()
         {
@@ -28,9 +28,12 @@ namespace Content.Client.GameObjects.Components.Trigger
                 flick.LayerKey = TriggerVisualLayers.Base;
                 flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("primed", 0f));
 
-                var sound = new AnimationTrackPlaySound();
-                PrimingAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_countdownSound, 0));
+                if (_countdownSound != null)
+                {
+                    var sound = new AnimationTrackPlaySound();
+                    PrimingAnimation.AnimationTracks.Add(sound);
+                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_countdownSound, 0));
+                }
             }
         }
 

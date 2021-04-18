@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.Components.Cargo
     [RegisterComponent]
     public class CargoOrderDatabaseComponent : SharedCargoOrderDatabaseComponent
     {
-        public CargoOrderDatabase Database { get; set; }
+        public CargoOrderDatabase? Database { get; set; }
         public bool ConnectedToDatabase => Database != null;
 
         public override void Initialize()
@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Cargo
         {
             if (!ConnectedToDatabase)
                 return new CargoOrderDatabaseState(null);
-            return new CargoOrderDatabaseState(Database.GetOrders());
+            return new CargoOrderDatabaseState(Database?.GetOrders());
         }
     }
 }

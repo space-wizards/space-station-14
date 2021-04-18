@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using Content.Shared.Chemistry;
+using Content.Shared.Kitchen;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Content.Shared.Kitchen;
-using Robust.Shared.GameObjects;
-using Content.Shared.Chemistry;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Client.GameObjects;
+using static Content.Shared.Chemistry.Solution;
 
 namespace Content.Client.GameObjects.Components.Kitchen
 {
@@ -18,14 +19,16 @@ namespace Content.Client.GameObjects.Components.Kitchen
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        private GrinderMenu _menu;
-        private Dictionary<int, EntityUid> _chamberVisualContents = new();
-        private Dictionary<int, Solution.ReagentQuantity> _beakerVisualContents = new();
+        private GrinderMenu? _menu;
+        private readonly Dictionary<int, EntityUid> _chamberVisualContents = new();
+        private readonly Dictionary<int, ReagentQuantity> _beakerVisualContents = new();
+
         public ReagentGrinderBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
 
         protected override void Open()
         {
             base.Open();
+
             _menu = new GrinderMenu(this);
             _menu.OpenCentered();
             _menu.OnClose += Close;
@@ -64,6 +67,12 @@ namespace Content.Client.GameObjects.Components.Kitchen
             {
                 return;
             }
+
+            if (_menu == null)
+            {
+                return;
+            }
+
             _menu.BeakerContentBox.EjectButton.Disabled = !cState.HasBeakerIn;
             _menu.ChamberContentBox.EjectButton.Disabled = cState.ChamberContents.Length <= 0;
             _menu.GrindButton.Disabled = !cState.CanGrind || !cState.Powered;
@@ -74,6 +83,12 @@ namespace Content.Client.GameObjects.Components.Kitchen
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
             base.ReceiveMessage(message);
+
+            if (_menu == null)
+            {
+                return;
+            }
+
             switch (message)
             {
                 case SharedReagentGrinderComponent.ReagentGrinderWorkStartedMessage workStarted:
@@ -95,10 +110,16 @@ namespace Content.Client.GameObjects.Components.Kitchen
             }
         }
 
-        private void RefreshContentsDisplay(IList<Solution.ReagentQuantity> reagents, IReadOnlyList<EntityUid> containedSolids, bool isBeakerAttached)
+        private void RefreshContentsDisplay(IList<ReagentQuantity>? reagents, IReadOnlyList<EntityUid> containedSolids, bool isBeakerAttached)
         {
             //Refresh chamber contents
             _chamberVisualContents.Clear();
+
+            if (_menu == null)
+            {
+                return;
+            }
+
             _menu.ChamberContentBox.BoxContents.Clear();
             foreach (var uid in containedSolids)
             {
@@ -131,8 +152,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
             {
                 for (var i = 0; i < reagents.Count; i++)
                 {
-                    var goodIndex = _prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype proto);
-                    var reagentName = goodIndex ? Loc.GetString($"{reagents[i].Quantity} {proto.Name}") : Loc.GetString("???");
+                    var goodIndex = _prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype? proto);
+                    var reagentName = goodIndex ? Loc.GetString($"{reagents[i].Quantity} {proto!.Name}") : Loc.GetString("???");
                     var reagentAdded = _menu.BeakerContentBox.BoxContents.AddItem(reagentName);
                     var reagentIndex = _menu.BeakerContentBox.BoxContents.IndexOf(reagentAdded);
                     _beakerVisualContents.Add(reagentIndex, reagents[i]);
@@ -167,7 +188,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
             public sealed class LabelledContentBox : VBoxContainer
             {
-                public string LabelText { get; set; }
+                public string? LabelText { get; set; }
+
                 public ItemList BoxContents { get; set; }
 
                 public Button EjectButton { get; set; }
@@ -176,7 +198,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
                 public LabelledContentBox(string labelText, string buttonText)
                 {
-
                     _label = new Label
                     {
                         Text = labelText,
@@ -211,7 +232,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 }
             }
 
-            public GrinderMenu(ReagentGrinderBoundUserInterface owner = null)
+            public GrinderMenu(ReagentGrinderBoundUserInterface owner)
             {
                 SetSize = MinSize = (512, 256);
                 Owner = owner;

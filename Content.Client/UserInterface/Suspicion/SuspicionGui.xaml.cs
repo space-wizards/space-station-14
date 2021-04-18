@@ -16,8 +16,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-#nullable enable
-
 namespace Content.Client.UserInterface.Suspicion
 {
     [GenerateTypedNameReferences]

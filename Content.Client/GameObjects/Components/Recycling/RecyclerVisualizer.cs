@@ -3,8 +3,6 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Recycling
 {
@@ -12,16 +10,17 @@ namespace Content.Client.GameObjects.Components.Recycling
     public class RecyclerVisualizer : AppearanceVisualizer
     {
         [DataField("state_clean")]
-        private string _stateClean;
+        private string? _stateClean;
+
         [DataField("state_bloody")]
-        private string _stateBloody;
+        private string? _stateBloody;
 
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent(out ISpriteComponent sprite) ||
-                !entity.TryGetComponent(out AppearanceComponent appearance))
+            if (!entity.TryGetComponent(out ISpriteComponent? sprite) ||
+                !entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -36,7 +35,7 @@ namespace Content.Client.GameObjects.Components.Recycling
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }

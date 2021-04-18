@@ -17,7 +17,7 @@
       caps: Refillable, Drainable
       contents:
         reagents:
-          - ReagentId: chem.Water
+          - ReagentId: Water
             Quantity: 100
     - type: ItemCooldown
     - type: Spray
@@ -48,14 +48,16 @@
         - state: extinguish
           map: [ "enum.VaporVisualLayers.Base" ]
     - type: Physics
-      hard: false
-      shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-          mask:
-            - Impassable
-            - MobImpassable
-            - SmallImpassable
+      bodyType: KinematicController
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+        hard: false
+        mask:
+          - Impassable
+          - MobImpassable
+          - SmallImpassable
     - type: Appearance
       visuals:
         - type: VaporVisualizer

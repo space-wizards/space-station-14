@@ -28,7 +28,7 @@ namespace Content.Server
 
         public override void PopupMessage(IEntity source, IEntity viewer, string message)
         {
-            if (!viewer.TryGetComponent(out IActorComponent actor))
+            if (!viewer.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
@@ -42,7 +42,7 @@ namespace Content.Server
 
         public override void PopupMessage(EntityCoordinates coordinates, IEntity viewer, string message)
         {
-            if (!viewer.TryGetComponent(out IActorComponent actor))
+            if (!viewer.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
@@ -56,7 +56,7 @@ namespace Content.Server
 
         public override void PopupMessageCursor(IEntity viewer, string message)
         {
-            if (!viewer.TryGetComponent(out IActorComponent actor))
+            if (!viewer.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }

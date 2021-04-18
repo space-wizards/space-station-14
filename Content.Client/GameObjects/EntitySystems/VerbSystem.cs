@@ -33,12 +33,12 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
-        private ContextMenuPresenter _contextMenuPresenter;
-        public event EventHandler<PointerInputCmdHandler.PointerInputCmdArgs> ToggleContextMenu;
-        public event EventHandler<bool> ToggleContainerVisibility;
+        public event EventHandler<PointerInputCmdHandler.PointerInputCmdArgs>? ToggleContextMenu;
+        public event EventHandler<bool>? ToggleContainerVisibility;
 
-        private VerbPopup _currentVerbListRoot;
-        private VerbPopup _currentGroupList;
+        private ContextMenuPresenter _contextMenuPresenter = default!;
+        private VerbPopup? _currentVerbListRoot;
+        private VerbPopup? _currentGroupList;
         private EntityUid _currentEntity;
 
         // TODO: Move presenter out of the system
@@ -46,7 +46,6 @@ namespace Content.Client.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            IoCManager.InjectDependencies(this);
 
             SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
             SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
@@ -62,11 +61,14 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public override void Shutdown()
         {
+            base.Shutdown();
+
+            UnsubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>();
+            UnsubscribeNetworkEvent<PlayerContainerVisibilityMessage>();
             UnsubscribeLocalEvent<MoveEvent>();
             _contextMenuPresenter?.Dispose();
 
             CommandBinds.Unregister<VerbSystem>();
-            base.Shutdown();
         }
 
         public void Reset()
@@ -132,7 +134,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var buttons = new Dictionary<string, List<ListedVerbData>>();
             var groupIcons = new Dictionary<string, SpriteSpecifier>();
 
-            var vBox = _currentVerbListRoot.List;
+            var vBox = _currentVerbListRoot!.List;
             vBox.DisposeAllChildren();
 
             // Local variable so that scope capture ensures this is the correct value.
@@ -147,7 +149,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     groupIcons.Add(data.Category, data.CategoryIcon);
                 }
 
-                list.Add(new ListedVerbData(data.Text, !data.Available, data.Key, entity.ToString(), () =>
+                list.Add(new ListedVerbData(data.Text, !data.Available, data.Key, entity.ToString()!, () =>
                 {
                     RaiseNetworkEvent(new VerbSystemMessages.UseVerbMessage(curEntity, data.Key));
                     CloseAllMenus();
@@ -175,7 +177,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     groupIcons.Add(verbData.Category, verbData.CategoryIcon);
                 }
 
-                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, verb.ToString(), entity.ToString(),
+                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, verb.ToString()!, entity.ToString()!,
                     () => verb.Activate(user, component), verbData.Icon));
             }
 
@@ -199,8 +201,8 @@ namespace Content.Client.GameObjects.EntitySystems
                     groupIcons.Add(verbData.Category, verbData.CategoryIcon);
                 }
 
-                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, globalVerb.ToString(),
-                    entity.ToString(),
+                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, globalVerb.ToString()!,
+                    entity.ToString()!,
                     () => globalVerb.Activate(user, entity), verbData.Icon));
             }
 
@@ -289,7 +291,7 @@ namespace Content.Client.GameObjects.EntitySystems
             return button;
         }
 
-        private Control CreateCategoryButton(string text, List<ListedVerbData> verbButtons, SpriteSpecifier icon)
+        private Control CreateCategoryButton(string text, List<ListedVerbData> verbButtons, SpriteSpecifier? icon)
         {
             verbButtons.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.CurrentCulture));
 
@@ -321,7 +323,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private IEntity GetUserEntity()
         {
-            return _playerManager.LocalPlayer.ControlledEntity;
+            return _playerManager.LocalPlayer!.ControlledEntity!;
         }
 
         private sealed class VerbPopup : Popup
@@ -343,13 +345,13 @@ namespace Content.Client.GameObjects.EntitySystems
             private readonly Label _label;
             private readonly TextureRect _icon;
 
-            public Texture Icon
+            public Texture? Icon
             {
                 get => _icon.Texture;
                 set => _icon.Texture = value;
             }
 
-            public string Text
+            public string? Text
             {
                 get => _label.Text;
                 set => _label.Text = value;
@@ -364,7 +366,8 @@ namespace Content.Client.GameObjects.EntitySystems
                         (_icon = new TextureRect
                         {
                             MinSize = (32, 32),
-                            Stretch = TextureRect.StretchMode.KeepCentered
+                            Stretch = TextureRect.StretchMode.KeepCentered,
+                            TextureScale = (0.5f, 0.5f)
                         }),
                         (_label = new Label()),
                         // Padding
@@ -389,25 +392,27 @@ namespace Content.Client.GameObjects.EntitySystems
             private static readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
 
             private readonly VerbSystem _system;
-            public List<ListedVerbData> VerbButtons { get; }
+
             private readonly Label _label;
             private readonly TextureRect _icon;
 
-            private CancellationTokenSource _openCancel;
+            private CancellationTokenSource? _openCancel;
 
-            public string Text
+            public List<ListedVerbData> VerbButtons { get; }
+
+            public string? Text
             {
                 get => _label.Text;
                 set => _label.Text = value;
             }
 
-            public Texture Icon
+            public Texture? Icon
             {
                 get => _icon.Texture;
                 set => _icon.Texture = value;
             }
 
-            public VerbGroupButton(VerbSystem system, List<ListedVerbData> verbButtons, SpriteSpecifier icon)
+            public VerbGroupButton(VerbSystem system, List<ListedVerbData> verbButtons, SpriteSpecifier? icon)
             {
                 _system = system;
                 VerbButtons = verbButtons;
@@ -421,6 +426,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         (_icon = new TextureRect
                         {
                             MinSize = (32, 32),
+                            TextureScale = (0.5f, 0.5f),
                             Stretch = TextureRect.StretchMode.KeepCentered
                         }),
 
@@ -435,7 +441,8 @@ namespace Content.Client.GameObjects.EntitySystems
                         new TextureRect
                         {
                             Texture = IoCManager.Resolve<IResourceCache>()
-                                .GetTexture("/Textures/Interface/VerbIcons/group.svg.96dpi.png"),
+                                .GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png"),
+                            TextureScale = (0.5f, 0.5f),
                             Stretch = TextureRect.StretchMode.KeepCentered,
                         }
                     }
@@ -509,11 +516,11 @@ namespace Content.Client.GameObjects.EntitySystems
             public bool Disabled { get; }
             public string VerbName { get; }
             public string OwnerName { get; }
-            public SpriteSpecifier Icon { get; }
+            public SpriteSpecifier? Icon { get; }
             public Action Action { get; }
 
             public ListedVerbData(string text, bool disabled, string verbName, string ownerName,
-                Action action, SpriteSpecifier icon)
+                Action action, SpriteSpecifier? icon)
             {
                 Text = text;
                 Disabled = disabled;

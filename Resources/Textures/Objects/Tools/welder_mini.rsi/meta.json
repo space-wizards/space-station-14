@@ -8,12 +8,7 @@
   "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/199fffd989d6f7fd6ea9c5188c875137df4f34b8",
   "states": [
     {
-      "name": "icon",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "icon"
     },
     {
       "name": "welder_flame",

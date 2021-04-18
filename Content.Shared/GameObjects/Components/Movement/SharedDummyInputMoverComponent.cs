@@ -10,14 +10,12 @@ namespace Content.Shared.GameObjects.Components.Movement
     public class SharedDummyInputMoverComponent : Component, IMoverComponent
     {
         public override string Name => "DummyInputMover";
+        public bool IgnorePaused => false;
         public float CurrentWalkSpeed => 0f;
         public float CurrentSprintSpeed => 0f;
-        public float CurrentPushSpeed => 0f;
-        public float GrabRange => 0f;
+
         public bool Sprinting => false;
         public (Vector2 walking, Vector2 sprinting) VelocityDir => (Vector2.Zero, Vector2.Zero);
-        public EntityCoordinates LastPosition { get; set; }
-        public float StepSoundDistance { get; set; }
 
         public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled)
         {
