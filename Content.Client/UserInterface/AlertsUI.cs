@@ -72,7 +72,6 @@ namespace Content.Client.UserInterface
             {
                 LayoutContainer.SetMarginTop(this, 250);
             }
-
         }
 
         // This makes no sense but I'm leaving it in place in case I break anything by removing it.
