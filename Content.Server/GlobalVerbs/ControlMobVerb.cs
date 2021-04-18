@@ -1,5 +1,4 @@
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Console;
@@ -53,8 +52,6 @@ namespace Content.Server.GlobalVerbs
             }
 
             var userMind = player.ContentData()?.Mind;
-
-            var targetMind = target.GetComponent<MindComponent>();
 
             userMind?.TransferTo(target);
         }
