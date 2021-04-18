@@ -22,25 +22,11 @@ namespace Content.Client.GameObjects.Components.Items
         [Dependency] private readonly IGameHud _gameHud = default!;
 
         [ViewVariables]
-        public HandsGui Gui { get; private set; } = default!;
-
-        public override void OnAdd()
-        {
-            base.OnAdd();
-            Gui = new HandsGui();
-            _gameHud.HandsContainer.AddChild(Gui);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            Gui.HandClick += args => OnHandClick(args.HandClicked);
-            Gui.HandActivate += args => OnActivateInHand(args.HandUsed);
-        }
+        public HandsGui? Gui { get; private set; }
 
         public override void OnRemove()
         {
-            Gui.Dispose();
+            Gui?.Dispose();
             base.OnRemove();
         }
 
@@ -161,17 +147,26 @@ namespace Content.Client.GameObjects.Components.Items
 
         public void UpdateHandsGuiState()
         {
-            Gui.SetState(GetHandsGuiState());
+            Gui?.SetState(GetHandsGuiState());
         }
 
         private void HandlePlayerAttachedMsg()
         {
+            if (Gui == null)
+            {
+                Gui = new HandsGui();
+                _gameHud.HandsContainer.AddChild(Gui);
+                Gui.HandClick += args => OnHandClick(args.HandClicked);
+                Gui.HandActivate += args => OnActivateInHand(args.HandUsed);
+                UpdateHandsGuiState();
+            }
             Gui.Visible = true;
         }
 
         private void HandlePlayerDetachedMsg()
         {
-            Gui.Visible = false;
+            if (Gui != null)
+                Gui.Visible = false;
         }
 
         private HandsGuiState GetHandsGuiState()
@@ -214,13 +209,6 @@ namespace Content.Client.GameObjects.Components.Items
         {
             if (!Owner.EntityManager.TryGetEntity(msg.EntityUid, out var entity))
                 return;
-
-            var outermostEntity = entity;
-            while (outermostEntity.TryGetContainer(out var container))
-            {
-                outermostEntity = container.Owner;
-            }
-            var initialPosition = outermostEntity.Transform.Coordinates;
 
             ReusableAnimations.AnimateEntityPickup(entity, msg.InitialPosition, msg.PickupDirection);
         }

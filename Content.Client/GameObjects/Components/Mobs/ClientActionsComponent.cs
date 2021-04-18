@@ -241,8 +241,11 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             StopHighlightingItemSlots();
 
+            if (_handsComponent?.Gui == null)
+                return;
+
             // figure out if it's in hand or inventory and highlight it
-            foreach (var hand in _handsComponent!.Gui.Hands)
+            foreach (var hand in _handsComponent.Gui.Hands)
             {
                 var handButton = hand.HandButton;
                 if (hand.HeldItem != item || handButton == null)
