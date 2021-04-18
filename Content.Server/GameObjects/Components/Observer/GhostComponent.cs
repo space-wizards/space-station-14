@@ -72,26 +72,6 @@ namespace Content.Server.GameObjects.Components.Observer
             base.Shutdown();
         }
 
-        public override void OnAdd()
-        {
-            base.OnAdd();
-
-            if (Owner.TryGetComponent<MindComponent>(out var mind))
-            {
-                mind.GhostOnShutdown = false;
-            }
-        }
-
-        public override void OnRemove()
-        {
-            base.OnRemove();
-
-            if (Owner.TryGetComponent<MindComponent>(out var mind))
-            {
-                mind.GhostOnShutdown = true;
-            }
-        }
-
         public override ComponentState GetComponentState(ICommonSession player) => new GhostComponentState(CanReturnToBody);
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null!)
