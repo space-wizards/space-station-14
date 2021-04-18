@@ -1,12 +1,10 @@
 #nullable enable
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -25,7 +23,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [Dependency] protected readonly IMapManager MapManager = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
 
-        [ComponentDependency] protected readonly SnapGridComponent? SnapGridComponent = default!;
         [ComponentDependency] protected readonly SolutionContainerComponent? SolutionContainerComponent = default!;
         public int Amount { get; set; }
         public SolutionAreaEffectInceptionComponent? Inception { get; set; }
@@ -61,13 +58,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (Owner.Prototype == null)
             {
                 Logger.Error("AreaEffectComponent needs its owner to be spawned by a prototype.");
-                return;
-            }
-
-            if (SnapGridComponent == null)
-            {
-                Logger.Error("AreaEffectComponent attached to " + Owner.Prototype.ID +
-                             " couldn't get SnapGridComponent from owner.");
                 return;
             }
 

@@ -71,7 +71,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
         {
             base.Startup();
 
-            if (Owner.HasComponent<SnapGridComponent>())
+            if (Owner.Transform.Anchored)
             {
                 // ensures lastposition initial value is populated on spawn. Just calling
                 // the hook here would cause a dirty event to fire needlessly
@@ -237,7 +237,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
         {
             base.Shutdown();
 
-            if (Owner.HasComponent<SnapGridComponent>())
+            if (Owner.Transform.Anchored)
             {
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
             }
@@ -245,7 +245,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
         public void SnapGridOnPositionChanged()
         {
-            if (Owner.HasComponent<SnapGridComponent>())
+            if (Owner.Transform.Anchored)
             {
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
                 var grid = _mapManager.GetGrid(Owner.Transform.GridID);

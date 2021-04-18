@@ -4,6 +4,7 @@ using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -80,13 +81,12 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             _atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            // Using the SnapGrid is critical for performance, and thus if it is absent the component
-            // will not be airtight. A warning is much easier to track down than the object magically
-            // not being airtight, so log one if the SnapGrid component is missing.
-            Owner.EnsureComponentWarn(out SnapGridComponent _);
-
             if (_fixAirBlockedDirectionInitialize)
                 RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.WorldRotation));
+
+            // Adding this component will immediately anchor the entity, because the atmos system
+            // requires airtight entities to be anchored for performance.
+            Owner.Transform.Anchored = true;
 
             UpdatePosition();
         }
@@ -122,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public void MapInit()
         {
-            if (Owner.HasComponent<SnapGridComponent>())
+            if (Owner.Transform.Anchored)
             {
                 var grid = _mapManager.GetGrid(Owner.Transform.GridID);
                 _lastPosition = (Owner.Transform.GridID, grid.SnapGridCellFor(Owner.Transform.Coordinates));
@@ -151,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
             UpdatePosition();
 
-            if (Owner.HasComponent<SnapGridComponent>())
+            if (Owner.Transform.Anchored)
             {
                 var grid = _mapManager.GetGrid(Owner.Transform.GridID);
                 _lastPosition = (Owner.Transform.GridID, grid.SnapGridCellFor(Owner.Transform.Coordinates));
@@ -160,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void UpdatePosition()
         {
-            if (Owner.HasComponent<SnapGridComponent>())
+            if (Owner.Transform.Anchored)
             {
                 var grid = _mapManager.GetGrid(Owner.Transform.GridID);
                 UpdatePosition(Owner.Transform.GridID, grid.SnapGridCellFor(Owner.Transform.Coordinates));

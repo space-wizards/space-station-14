@@ -24,16 +24,20 @@ namespace Content.Server.GameObjects.EntitySystems
             _mapManager.TileChanged -= HandleTileChanged;
         }
 
+        //TODO: Replace all this with an Unanchored event that deletes the puddle
         private void HandleTileChanged(object? sender, TileChangedEventArgs eventArgs)
         {
             // If this gets hammered you could probably queue up all the tile changes every tick but I doubt that would ever happen.
-            foreach (var (puddle, snapGrid) in ComponentManager.EntityQuery<PuddleComponent, SnapGridComponent>(true))
+            foreach (var puddle in ComponentManager.EntityQuery<PuddleComponent>(true))
             {
                 // If the tile becomes space then delete it (potentially change by design)
-                var snapTransform = snapGrid.Owner.Transform;
-                var grid = _mapManager.GetGrid(snapTransform.GridID);
+                var puddleTransform = puddle.Owner.Transform;
+                if(!puddleTransform.Anchored)
+                    continue;
+
+                var grid = _mapManager.GetGrid(puddleTransform.GridID);
                 if (eventArgs.NewTile.GridIndex == puddle.Owner.Transform.GridID &&
-                    grid.SnapGridCellFor(snapTransform.Coordinates) == eventArgs.NewTile.GridIndices &&
+                    grid.SnapGridCellFor(puddleTransform.Coordinates) == eventArgs.NewTile.GridIndices &&
                     eventArgs.NewTile.Tile.IsEmpty)
                 {
                     puddle.Owner.Delete();

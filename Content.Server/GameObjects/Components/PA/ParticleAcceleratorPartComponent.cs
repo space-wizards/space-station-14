@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.Components.PA
             base.Initialize();
             // FIXME: this has to be an entity system, full stop.
 
-            Owner.EnsureComponent<SnapGridComponent>();
+            Owner.Transform.Anchored = true;
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
