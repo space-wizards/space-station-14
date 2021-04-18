@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
@@ -9,6 +10,8 @@ using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.UserInterface
 {
@@ -30,6 +33,8 @@ namespace Content.Client.UserInterface
         private ScalingViewportStretchMode _stretchMode = ScalingViewportStretchMode.Bilinear;
         private ScalingViewportRenderScaleMode _renderScaleMode = ScalingViewportRenderScaleMode.Fixed;
         private int _fixedRenderScale = 1;
+
+        private readonly List<CopyPixelsDelegate<Rgba32>> _queuedScreenshots = new();
 
         /// <summary>
         ///     The eye to render.
@@ -133,11 +138,31 @@ namespace Content.Client.UserInterface
 
             _viewport!.Render();
 
+            if (_queuedScreenshots.Count != 0)
+            {
+                var callbacks = _queuedScreenshots.ToArray();
+
+                _viewport.RenderTarget.CopyPixelsToMemory<Rgba32>(image =>
+                {
+                    foreach (var callback in callbacks)
+                    {
+                        callback(image);
+                    }
+                });
+
+                _queuedScreenshots.Clear();
+            }
+
             var drawBox = GetDrawBox();
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
             _viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
             handle.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
             _viewport.RenderScreenOverlaysAbove(handle, this, drawBoxGlobal);
+        }
+
+        public void Screenshot(CopyPixelsDelegate<Rgba32> callback)
+        {
+            _queuedScreenshots.Add(callback);
         }
 
         // Draw box in pixel coords to draw the viewport at.

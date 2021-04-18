@@ -1,4 +1,6 @@
+using Content.Client.State;
 using Robust.Client.Graphics;
+using Robust.Client.State;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -14,6 +16,7 @@ namespace Content.Client.Graphics.Overlays
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClyde _displayManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IStateManager _stateManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
         private readonly ShaderInstance _shader;
@@ -29,11 +32,15 @@ namespace Content.Client.Graphics.Overlays
 
         public void ReceiveFlash(double duration)
         {
-            _displayManager.Screenshot(ScreenshotType.BeforeUI, image =>
+            if (_stateManager.CurrentState is IMainViewportState state)
             {
-                var rgba32Image = image.CloneAs<Rgba32>(Configuration.Default);
-                _screenshotTexture = _displayManager.LoadTextureFromImage(rgba32Image);
-            });
+                state.Viewport.Screenshot(image =>
+                {
+                    var rgba32Image = image.CloneAs<Rgba32>(Configuration.Default);
+                    _screenshotTexture = _displayManager.LoadTextureFromImage(rgba32Image);
+                });
+            }
+
             _startTime = _gameTiming.CurTime.TotalSeconds;
             _lastsFor = duration;
         }

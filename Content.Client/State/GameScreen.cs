@@ -19,7 +19,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Client.State
 {
-    public class GameScreen : GameScreenBase
+    public class GameScreen : GameScreenBase, IMainViewportState
     {
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
@@ -36,14 +36,15 @@ namespace Content.Client.State
 
         private bool _oocEnabled;
         private bool _adminOocEnabled;
-        private ScalingViewport _viewport = default!;
+
+        public ScalingViewport Viewport { get; private set; } = default!;
 
         public override void Startup()
         {
             base.Startup();
 
             _gameChat = new ChatBox();
-            _viewport = new ScalingViewport
+            Viewport = new ScalingViewport
             {
                 ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15),
                 AlwaysRender = true,
@@ -51,9 +52,9 @@ namespace Content.Client.State
                 MouseFilter = Control.MouseFilterMode.Stop
             };
 
-            _userInterfaceManager.StateRoot.AddChild(_viewport);
-            LayoutContainer.SetAnchorPreset(_viewport, LayoutContainer.LayoutPreset.Wide);
-            _viewport.SetPositionFirst();
+            _userInterfaceManager.StateRoot.AddChild(Viewport);
+            LayoutContainer.SetAnchorPreset(Viewport, LayoutContainer.LayoutPreset.Wide);
+            Viewport.SetPositionFirst();
 
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
             LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
@@ -81,7 +82,7 @@ namespace Content.Client.State
 
             SetupPresenters();
 
-            _eyeManager.MainViewport = _viewport;
+            _eyeManager.MainViewport = Viewport;
         }
 
         public override void Shutdown()
@@ -91,7 +92,7 @@ namespace Content.Client.State
             base.Shutdown();
 
             _gameChat?.Dispose();
-            _viewport.Dispose();
+            Viewport.Dispose();
             _gameHud.RootControl.Orphan();
             // Clear viewport to some fallback, whatever.
             _eyeManager.MainViewport = _userInterfaceManager.MainViewport;
@@ -193,7 +194,7 @@ namespace Content.Client.State
         {
             base.FrameUpdate(e);
 
-            _viewport.Eye = _eyeManager.CurrentEye;
+            Viewport.Eye = _eyeManager.CurrentEye;
         }
     }
 }
