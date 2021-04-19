@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using Content.Client.GameObjects.Components.IconSmoothing;
@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Robust.Client.GameObjects.SpriteComponent;
 
@@ -203,7 +204,7 @@ namespace Content.Client.GameObjects.Components
 
             foreach (var entity in grid.GetLocal(coords))
             {
-                if (entity.TryGetComponent(out WindowComponent? window))
+                if (Owner.EntityManager.ComponentManager.TryGetComponent(entity, out WindowComponent? window))
                 {
                     window.UpdateSprite();
                 }
@@ -211,11 +212,11 @@ namespace Content.Client.GameObjects.Components
         }
 
         [Pure]
-        private (bool connected, bool lowWall) MatchingWall(IEnumerable<IEntity> candidates)
+        private (bool connected, bool lowWall) MatchingWall(IEnumerable<EntityUid> candidates)
         {
             foreach (var entity in candidates)
             {
-                if (!entity.TryGetComponent(out IconSmoothComponent? other))
+                if (!Owner.EntityManager.ComponentManager.TryGetComponent(entity, out IconSmoothComponent? other))
                 {
                     continue;
                 }

@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
                 var entities = grid.GetLocal(coords);
                 foreach (var entity in entities)
                 {
-                    if (entity.TryGetComponent<GasCanisterComponent>(out var canister) && canister.Anchored && !canister.ConnectedToPort)
+                    if (Owner.EntityManager.ComponentManager.TryGetComponent<GasCanisterComponent>(entity, out var canister) && canister.Anchored && !canister.ConnectedToPort)
                     {
                         canister.TryConnectToPort();
                         break;

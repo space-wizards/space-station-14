@@ -125,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (Owner.Transform.Anchored)
             {
                 var grid = _mapManager.GetGrid(Owner.Transform.GridID);
-                _lastPosition = (Owner.Transform.GridID, grid.SnapGridCellFor(Owner.Transform.Coordinates));
+                _lastPosition = (Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
             }
 
             UpdatePosition();
@@ -154,7 +154,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (Owner.Transform.Anchored)
             {
                 var grid = _mapManager.GetGrid(Owner.Transform.GridID);
-                _lastPosition = (Owner.Transform.GridID, grid.SnapGridCellFor(Owner.Transform.Coordinates));
+                _lastPosition = (Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
             }
         }
 
@@ -163,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (Owner.Transform.Anchored)
             {
                 var grid = _mapManager.GetGrid(Owner.Transform.GridID);
-                UpdatePosition(Owner.Transform.GridID, grid.SnapGridCellFor(Owner.Transform.Coordinates));
+                UpdatePosition(Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
             }
         }
 

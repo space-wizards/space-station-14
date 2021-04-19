@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             var position = Owner.Transform.Coordinates;
             foreach (var entity in grid.GetInDir(position, nextDirection))
             {
-                if (!entity.TryGetComponent(out IDisposalTubeComponent? tube))
+                if (!Owner.EntityManager.ComponentManager.TryGetComponent(entity, out IDisposalTubeComponent? tube))
                 {
                     continue;
                 }

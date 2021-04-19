@@ -123,7 +123,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             var grid = _mapManager.GetGrid(Owner.Transform.GridID);
             var coords = Owner.Transform.Coordinates;
             var port = grid.GetLocal(coords)
-                .Select(entity => entity.TryGetComponent<GasCanisterPortComponent>(out var port) ? port : null)
+                .Select(entity => Owner.EntityManager.ComponentManager.TryGetComponent<GasCanisterPortComponent>(entity, out var port) ? port : null)
                 .Where(port => port != null)
                 .Where(port => !port!.ConnectedToCanister)
                 .FirstOrDefault();

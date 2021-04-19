@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
@@ -56,7 +56,7 @@ namespace Content.Client.GameObjects.Components
             var coords = transform.Coordinates;
             foreach (var entity in grid.GetLocal(coords))
             {
-                if (entity.TryGetComponent(out LowWallComponent? lowWall))
+                if (transform.Owner.EntityManager.ComponentManager.TryGetComponent(entity, out LowWallComponent? lowWall))
                 {
                     return lowWall;
                 }

@@ -8,6 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 using static Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.Client.GameObjects.Components.IconSmoothing
@@ -76,7 +77,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
                 // ensures lastposition initial value is populated on spawn. Just calling
                 // the hook here would cause a dirty event to fire needlessly
                 var grid = _mapManager.GetGrid(Owner.Transform.GridID);
-                _lastPosition = (Owner.Transform.GridID, grid.SnapGridCellFor(Owner.Transform.Coordinates));
+                _lastPosition = (Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
 
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, null, Mode));
             }
@@ -249,16 +250,16 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             {
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
                 var grid = _mapManager.GetGrid(Owner.Transform.GridID);
-                _lastPosition = (Owner.Transform.GridID, grid.SnapGridCellFor(Owner.Transform.Coordinates));
+                _lastPosition = (Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
             }
         }
 
         [System.Diagnostics.Contracts.Pure]
-        protected bool MatchingEntity(IEnumerable<IEntity> candidates)
+        protected bool MatchingEntity(IEnumerable<EntityUid> candidates)
         {
             foreach (var entity in candidates)
             {
-                if (!entity.TryGetComponent(out IconSmoothComponent? other))
+                if (!Owner.EntityManager.ComponentManager.TryGetComponent(entity, out IconSmoothComponent? other))
                 {
                     continue;
                 }

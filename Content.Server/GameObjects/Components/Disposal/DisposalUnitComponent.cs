@@ -265,14 +265,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             var grid = _mapManager.GetGrid(Owner.Transform.GridID);
             var coords = Owner.Transform.Coordinates;
             var entry = grid.GetLocal(coords)
-                .FirstOrDefault(entity => entity.HasComponent<DisposalEntryComponent>());
+                .FirstOrDefault(entity => Owner.EntityManager.ComponentManager.HasComponent<DisposalEntryComponent>(entity));
 
-            if (entry == null)
+            if (entry == default)
             {
                 return false;
             }
 
-            var entryComponent = entry.GetComponent<DisposalEntryComponent>();
+            var entryComponent = Owner.EntityManager.ComponentManager.GetComponent<DisposalEntryComponent>(entry);
 
             if (Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos) &&
                 tileAtmos.Air != null &&

@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
                 var grid = _mapManager.GetGrid(puddleTransform.GridID);
                 if (eventArgs.NewTile.GridIndex == puddle.Owner.Transform.GridID &&
-                    grid.SnapGridCellFor(puddleTransform.Coordinates) == eventArgs.NewTile.GridIndices &&
+                    grid.TileIndicesFor(puddleTransform.Coordinates) == eventArgs.NewTile.GridIndices &&
                     eventArgs.NewTile.Tile.IsEmpty)
                 {
                     puddle.Owner.Delete();

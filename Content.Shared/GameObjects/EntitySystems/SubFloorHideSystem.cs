@@ -40,7 +40,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 var transform = comp.Owner.Transform;
                 if (!_mapManager.TryGetGrid(transform.GridID, out var grid)) return;
-                UpdateTile(grid, grid.SnapGridCellFor(transform.Coordinates));
+                UpdateTile(grid, grid.TileIndicesFor(transform.Coordinates));
             }
         }
 
@@ -118,22 +118,21 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             var tile = grid.GetTileRef(position);
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-            foreach (var snapGridComponent in grid.GetSnapGridCell(position))
+            foreach (var anchored in grid.GetAnchoredEntities(position))
             {
-                var entity = snapGridComponent.Owner;
-                if (!entity.TryGetComponent(out SubFloorHideComponent? subFloorComponent))
+                if (!ComponentManager.TryGetComponent(anchored, out SubFloorHideComponent? subFloorComponent))
                 {
                     continue;
                 }
 
                 // Show sprite
-                if (entity.TryGetComponent(out SharedSpriteComponent? spriteComponent))
+                if (ComponentManager.TryGetComponent(anchored, out SharedSpriteComponent ? spriteComponent))
                 {
                     spriteComponent.Visible = ShowAll || !subFloorComponent.Running || tileDef.IsSubFloor;
                 }
 
                 // So for collision all we care about is that the component is running.
-                if (entity.TryGetComponent(out PhysicsComponent? physicsComponent))
+                if (ComponentManager.TryGetComponent(anchored, out PhysicsComponent ? physicsComponent))
                 {
                     physicsComponent.CanCollide = !subFloorComponent.Running;
                 }

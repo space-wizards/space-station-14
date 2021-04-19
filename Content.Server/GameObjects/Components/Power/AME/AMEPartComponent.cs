@@ -40,8 +40,8 @@ namespace Content.Server.GameObjects.Components.Power.AME
             if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(_serverEntityManager), out var mapGrid))
                 return false; // No AME in space.
 
-            var snapPos = mapGrid.SnapGridCellFor(args.ClickLocation);
-            if (mapGrid.GetSnapGridCell(snapPos).Any(sc => sc.Owner.HasComponent<AMEShieldComponent>()))
+            var snapPos = mapGrid.TileIndicesFor(args.ClickLocation);
+            if (mapGrid.GetAnchoredEntities(snapPos).Any(sc => _serverEntityManager.ComponentManager.HasComponent<AMEShieldComponent>(sc)))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("Shielding is already there!"));
                 return true;

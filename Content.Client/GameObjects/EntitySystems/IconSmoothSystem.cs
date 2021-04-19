@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -17,7 +18,7 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        private readonly Queue<IEntity> _dirtyEntities = new();
+        private readonly Queue<EntityUid> _dirtyEntities = new();
 
         private int _generation;
 
@@ -71,7 +72,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 var grid1 = _mapManager.GetGrid(senderEnt.Transform.GridID);
                 var coords = senderEnt.Transform.Coordinates;
 
-                _dirtyEntities.Enqueue(senderEnt);
+                _dirtyEntities.Enqueue(senderEnt.Uid);
                 AddValidEntities(grid1.GetInDir(coords, Direction.North));
                 AddValidEntities(grid1.GetInDir(coords, Direction.South));
                 AddValidEntities(grid1.GetInDir(coords, Direction.East));
@@ -90,16 +91,16 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 var pos = ev.LastPosition.Value.pos;
 
-                AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(1, 0)));
-                AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(-1, 0)));
-                AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(0, 1)));
-                AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(0, -1)));
+                AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(1, 0)));
+                AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(-1, 0)));
+                AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(0, 1)));
+                AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(0, -1)));
                 if (ev.Mode == IconSmoothingMode.Corners)
                 {
-                    AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(1, 1)));
-                    AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(-1, -1)));
-                    AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(-1, 1)));
-                    AddValidEntities(grid.GetSnapGridCell(pos + new Vector2i(1, -1)));
+                    AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(1, 1)));
+                    AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(-1, -1)));
+                    AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(-1, 1)));
+                    AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(1, -1)));
                 }
             }
         }
@@ -109,29 +110,24 @@ namespace Content.Client.GameObjects.EntitySystems
             component.SnapGridOnPositionChanged();
         }
 
-        private void AddValidEntities(IEnumerable<IEntity> candidates)
+        private void AddValidEntities(IEnumerable<EntityUid> candidates)
         {
             foreach (var entity in candidates)
             {
-                if (entity.HasComponent<IconSmoothComponent>())
+                if (ComponentManager.HasComponent<IconSmoothComponent>(entity))
                 {
                     _dirtyEntities.Enqueue(entity);
                 }
             }
         }
 
-        private void AddValidEntities(IEnumerable<IComponent> candidates)
-        {
-            AddValidEntities(candidates.Select(c => c.Owner));
-        }
-
-        private void CalculateNewSprite(IEntity entity)
+        private void CalculateNewSprite(EntityUid euid)
         {
             // The generation check prevents updating an entity multiple times per tick.
             // As it stands now, it's totally possible for something to get queued twice.
             // Generation on the component is set after an update so we can cull updates that happened this generation.
-            if (!entity.IsValid()
-                || !entity.TryGetComponent(out IconSmoothComponent? smoothing)
+            if (!EntityManager.EntityExists(euid)
+                || !ComponentManager.TryGetComponent(euid, out IconSmoothComponent? smoothing)
                 || smoothing.UpdateGeneration == _generation)
             {
                 return;

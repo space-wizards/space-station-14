@@ -178,7 +178,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             var position = Owner.Transform.Coordinates;
             foreach (var entity in grid.GetInDir(position, pipeDir.ToDirection()))
             {
-                if (!entity.TryGetComponent<NodeContainerComponent>(out var container))
+                if (!Owner.EntityManager.ComponentManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
                     continue;
 
                 foreach (var node in container.Nodes.Values)

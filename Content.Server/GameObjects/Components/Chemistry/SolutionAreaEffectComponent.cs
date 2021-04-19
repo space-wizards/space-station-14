@@ -67,10 +67,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 var coords = Owner.Transform.Coordinates;
                 foreach (var neighbor in grid.GetInDir(coords, dir))
                 {
-                    if (neighbor.TryGetComponent(out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
+                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor, out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
                         return;
 
-                    if (neighbor.TryGetComponent(out AirtightComponent? airtight) && airtight.AirBlocked)
+                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor, out AirtightComponent? airtight) && airtight.AirBlocked)
                         return;
                 }
 

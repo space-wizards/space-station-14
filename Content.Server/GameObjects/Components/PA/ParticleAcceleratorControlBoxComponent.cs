@@ -388,7 +388,7 @@ namespace Content.Server.GameObjects.Components.PA
                 var coords = Owner.Transform.Coordinates;
                 foreach (var maybeFuel in grid.GetCardinalNeighborCells(coords))
                 {
-                    if (maybeFuel.Owner.TryGetComponent(out _partFuelChamber))
+                    if (Owner.EntityManager.ComponentManager.TryGetComponent(maybeFuel, out _partFuelChamber))
                     {
                         break;
                     }
@@ -462,7 +462,7 @@ namespace Content.Server.GameObjects.Components.PA
             var coords = Owner.Transform.Coordinates;
             foreach (var ent in grid.GetOffset(coords, offset))
             {
-                if (ent.TryGetComponent(out part) && !part.Deleted)
+                if (Owner.EntityManager.ComponentManager.TryGetComponent(ent, out part) && !part.Deleted)
                 {
                     return true;
                 }

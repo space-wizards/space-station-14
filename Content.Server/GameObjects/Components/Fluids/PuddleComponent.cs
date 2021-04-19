@@ -364,14 +364,14 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             foreach (var entity in mapGrid.GetInDir(coords, direction))
             {
-                if (entity.TryGetComponent(out IPhysBody? physics) &&
+                if (Owner.EntityManager.ComponentManager.TryGetComponent(entity, out IPhysBody? physics) &&
                     (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
                 {
                     puddle = default;
                     return false;
                 }
 
-                if (entity.TryGetComponent(out PuddleComponent? existingPuddle))
+                if (Owner.EntityManager.ComponentManager.TryGetComponent(entity, out PuddleComponent? existingPuddle))
                 {
                     if (existingPuddle._overflown)
                     {
