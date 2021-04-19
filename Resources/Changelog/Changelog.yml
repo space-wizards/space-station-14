@@ -913,3 +913,13 @@ Entries:
   - {message: Improved shadow edges somewhat., type: Tweak}
   id: 165
   time: '2021-04-19T07:49:27.579650+00:00'
+- author: PJB
+  changes:
+  - {message: The game viewport is now a limited size (21x15 tiles)., type: Add}
+  - {message: 'As part of this, the game viewport is now scaled to match your window
+      size.', type: Add}
+  - {message: Scaling is quite intelligent and will use integer-scale nearest neighbor
+      where applicable. So people playing on fullscreen 1080p/1440p monitors will
+      experience perfect crisp graphics., type: Add}
+  id: 166
+  time: '2021-04-19T07:52:40.0000000+00:00'
