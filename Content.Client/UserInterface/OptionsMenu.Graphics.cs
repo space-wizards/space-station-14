@@ -1,4 +1,5 @@
 using Content.Shared;
+using Content.Shared.Prototypes.HUD;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
