@@ -36,7 +36,9 @@ ui-options-hud-theme = HUD Theme:
 ui-options-hud-theme-default = Default
 ui-options-hud-theme-modernized = Modernized
 ui-options-hud-theme-classic = Classic
-ui-options-placeholder-viewport = Viewport settings
+ui-options-vp-stretch = Stretch viewport to fit game window?
+ui-options-vp-scale = Fixed viewport scale: x{ $scale }
+ui-options-vp-low-res = Low-resolution viewport?
 
 ## Controls menu
 ui-options-binds-reset-all = Reset ALL keybinds
