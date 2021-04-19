@@ -58,11 +58,6 @@ namespace Content.Client.State
             LayoutContainer.SetAnchorPreset(Viewport, LayoutContainer.LayoutPreset.Wide);
             Viewport.SetPositionFirst();
 
-            _userInterfaceManager.StateRoot.AddChild(_gameChat);
-            LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
-            LayoutContainer.SetMarginLeft(_gameChat, -475);
-            LayoutContainer.SetMarginBottom(_gameChat, 235);
-
             _userInterfaceManager.StateRoot.AddChild(_gameHud.RootControl);
             _chatManager.SetChatBox(_gameChat);
             _voteManager.SetPopupContainer(_gameHud.VoteContainer);
