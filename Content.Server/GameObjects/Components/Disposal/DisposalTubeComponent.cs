@@ -19,6 +19,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -43,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private bool Anchored =>
             !Owner.TryGetComponent(out PhysicsComponent? physics) ||
-            physics.Anchored;
+            physics.BodyType == BodyType.Static;
 
         /// <summary>
         ///     The directions that this tube can connect to others from
@@ -196,7 +197,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (physics.Anchored)
+            if (physics.BodyType == BodyType.Static)
             {
                 OnAnchor();
             }
@@ -230,7 +231,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Startup();
 
-            if (!Owner.EnsureComponent<PhysicsComponent>().Anchored)
+            Owner.EnsureComponent<PhysicsComponent>(out var physicsComponent);
+            if (physicsComponent.BodyType != BodyType.Static)
             {
                 return;
             }

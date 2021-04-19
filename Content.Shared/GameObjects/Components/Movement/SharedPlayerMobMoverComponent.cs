@@ -92,11 +92,6 @@ namespace Content.Shared.GameObjects.Components.Movement
             {
                 Owner.EnsureComponentWarn<SharedPlayerInputMoverComponent>();
             }
-
-            if (Owner.TryGetComponent(out IPhysBody? body) && body.BodyType != BodyType.KinematicController)
-            {
-                Logger.WarningS("mover", $"Attached {nameof(SharedPlayerMobMoverComponent)} to a mob that's BodyType is not KinematicController!'");
-            }
         }
 
         public override ComponentState GetComponentState(ICommonSession session)

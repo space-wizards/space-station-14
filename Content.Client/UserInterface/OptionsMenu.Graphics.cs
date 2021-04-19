@@ -1,13 +1,12 @@
-﻿using Content.Shared;
+using Content.Shared;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface
 {
@@ -27,21 +26,24 @@ namespace Content.Client.UserInterface
             };
 
             private readonly IConfigurationManager _cfg;
+            private readonly IPrototypeManager _prototypeManager;
 
             private readonly Button ApplyButton;
             private readonly CheckBox VSyncCheckBox;
             private readonly CheckBox FullscreenCheckBox;
             private readonly OptionButton LightingPresetOption;
             private readonly OptionButton _uiScaleOption;
+            private readonly OptionButton _hudThemeOption;
             private readonly CheckBox _viewportStretchCheckBox;
             private readonly CheckBox _viewportLowResCheckBox;
             private readonly Slider _viewportScaleSlider;
             private readonly Control _viewportScaleBox;
             private readonly Label _viewportScaleText;
 
-            public GraphicsControl(IConfigurationManager cfg)
+            public GraphicsControl(IConfigurationManager cfg, IPrototypeManager proMan)
             {
                 _cfg = cfg;
+                _prototypeManager = proMan;
                 var vBox = new VBoxContainer();
 
                 var contents = new VBoxContainer
@@ -81,10 +83,9 @@ namespace Content.Client.UserInterface
                     HorizontalAlignment = HAlignment.Right
                 };
 
-                var resourceCache = IoCManager.Resolve<IResourceCache>();
-
                 _uiScaleOption = new OptionButton();
-                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-auto", ("scale", UserInterfaceManager.DefaultUIScale)));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-auto",
+                    ("scale", UserInterfaceManager.DefaultUIScale)));
                 _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-75"));
                 _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-100"));
                 _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-125"));
@@ -100,6 +101,23 @@ namespace Content.Client.UserInterface
                         new Label {Text = Loc.GetString("ui-options-scale-label")},
                         new Control {MinSize = (4, 0)},
                         _uiScaleOption
+                    }
+                });
+
+                _hudThemeOption = new OptionButton();
+                foreach (var gear in _prototypeManager.EnumeratePrototypes<HudThemePrototype>())
+                {
+                   _hudThemeOption.AddItem(Loc.GetString(gear.Name));
+                }
+                _hudThemeOption.OnItemSelected += OnHudThemeChanged;
+
+                contents.AddChild(new HBoxContainer
+                {
+                    Children =
+                    {
+                        new Label {Text = Loc.GetString("ui-options-hud-theme")},
+                        new Control {MinSize = (4, 0)},
+                        _hudThemeOption
                     }
                 });
 
@@ -169,6 +187,7 @@ namespace Content.Client.UserInterface
                 FullscreenCheckBox.Pressed = ConfigIsFullscreen;
                 LightingPresetOption.SelectId(GetConfigLightingQuality());
                 _uiScaleOption.SelectId(GetConfigUIScalePreset(ConfigUIScale));
+                _hudThemeOption.SelectId(_cfg.GetCVar(CCVars.HudTheme));
                 _viewportScaleSlider.Value = _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
                 _viewportStretchCheckBox.Pressed = _cfg.GetCVar(CCVars.ViewportStretch);
                 _viewportLowResCheckBox.Pressed = !_cfg.GetCVar(CCVars.ViewportScaleRender);
@@ -185,10 +204,21 @@ namespace Content.Client.UserInterface
                 UpdateApplyButton();
             }
 
+            private void OnHudThemeChanged(OptionButton.ItemSelectedEventArgs args)
+            {
+                _hudThemeOption.SelectId(args.Id);
+                UpdateApplyButton();
+            }
+
             private void OnApplyButtonPressed(BaseButton.ButtonEventArgs args)
             {
                 _cfg.SetCVar(CVars.DisplayVSync, VSyncCheckBox.Pressed);
                 SetConfigLightingQuality(LightingPresetOption.SelectedId);
+                if (_hudThemeOption.SelectedId != _cfg.GetCVar(CCVars.HudTheme)) // Don't unnecessarily redraw the HUD
+                {
+                    _cfg.SetCVar(CCVars.HudTheme, _hudThemeOption.SelectedId);
+                }
+
                 _cfg.SetCVar(CVars.DisplayWindowMode,
                     (int) (FullscreenCheckBox.Pressed ? WindowMode.Fullscreen : WindowMode.Windowed));
                 _cfg.SetCVar(CVars.DisplayUIScale, UIScaleOptions[_uiScaleOption.SelectedId]);
@@ -215,6 +245,7 @@ namespace Content.Client.UserInterface
                 var isVSyncSame = VSyncCheckBox.Pressed == _cfg.GetCVar(CVars.DisplayVSync);
                 var isFullscreenSame = FullscreenCheckBox.Pressed == ConfigIsFullscreen;
                 var isLightingQualitySame = LightingPresetOption.SelectedId == GetConfigLightingQuality();
+                var isHudThemeSame = _hudThemeOption.SelectedId == _cfg.GetCVar(CCVars.HudTheme);
                 var isUIScaleSame = MathHelper.CloseTo(UIScaleOptions[_uiScaleOption.SelectedId], ConfigUIScale);
                 var isVPStretchSame = _viewportStretchCheckBox.Pressed == _cfg.GetCVar(CCVars.ViewportStretch);
                 var isVPScaleSame = (int) _viewportScaleSlider.Value == _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
@@ -226,7 +257,8 @@ namespace Content.Client.UserInterface
                                        isUIScaleSame &&
                                        isVPStretchSame &&
                                        isVPScaleSame &&
-                                       isVPResSame;
+                                       isVPResSame &&
+                                       isHudThemeSame;
             }
 
             private bool ConfigIsFullscreen =>

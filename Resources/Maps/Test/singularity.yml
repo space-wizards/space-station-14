@@ -1656,7 +1656,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 190
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 3.5,17.5
@@ -1698,168 +1698,168 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 196
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 4.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 197
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 5.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 198
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 6.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 199
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 200
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 201
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,15.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 202
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 203
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 204
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 205
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 206
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 207
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 208
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 1.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 209
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 2.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 210
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 211
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 212
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 213
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 214
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 215
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 216
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,15.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 217
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 218
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 219
-  type: reinforced_wall
+  type: WallReinforced
   components:
   - parent: 0
     pos: 0.5,17.5

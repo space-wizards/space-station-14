@@ -83,7 +83,7 @@
 - type: uplinkListing
   id: UplinkPistol9mmMagazine
   category: Ammo
-  itemId: magazine_9mm
+  itemId: MagazinePistol
   price: 2
 
 # For the Mandella

@@ -19,11 +19,11 @@
     soundHit: /Audio/Effects/bang.ogg
   - type: InteractionOutline
   - type: Physics
-    mass: 25
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.48,-0.25,0.48,0.25"
+      mass: 70
       mask:
       - Impassable
       - VaultImpassable

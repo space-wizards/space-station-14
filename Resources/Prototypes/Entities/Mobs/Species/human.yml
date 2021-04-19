@@ -15,19 +15,19 @@
     - !type:ExtinguishReaction
       touch: true
       reagents:
-      - chem.Water
+      - Water
     - !type:FlammableReaction
       touch: true
       reagents:
-      - chem.WeldingFuel
-      - chem.Thermite
-      - chem.Plasma
-      - chem.Ethanol
+      - WeldingFuel
+      - Thermite
+      - Plasma
+      - Ethanol
     - !type:WashCreamPieReaction
       touch: true
       reagents:
-      - chem.Water
-      - chem.SpaceCleaner
+      - Water
+      - SpaceCleaner
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
@@ -135,11 +135,11 @@
     - map: [ "enum.Slots.HEAD" ]
   - type: Physics
     bodyType: KinematicController
-    mass: 70
     fixtures: # TODO: This needs a second fixture just for mob collisions.
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
+      mass: 70
       restitution: 0.0
       mask:
       - Impassable
@@ -163,7 +163,6 @@
   - type: Body
     template: HumanoidTemplate
     preset: HumanPreset
-    centerSlot: torso
   - type: Damageable
     damageContainer: biologicalDamageContainer
   - type: Metabolism
@@ -319,11 +318,12 @@
       - map: ["hand-right"]
     - type: Physics
       bodyType: Dynamic
-      mass: 85
       fixtures:
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.35,-0.35,0.35,0.35"
+        mass: 70
+        restitution: 0.0
         mask:
         - Impassable
         - MobImpassable
@@ -335,7 +335,6 @@
     - type: Body
       template: HumanoidTemplate
       preset: HumanPreset
-      centerSlot: torso
     - type: Damageable
       damageContainer: biologicalDamageContainer
     - type: MobState

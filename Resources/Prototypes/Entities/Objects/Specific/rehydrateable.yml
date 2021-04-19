@@ -7,7 +7,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
     maxVol: 11 # needs room for water
     caps: Refillable
@@ -20,24 +20,24 @@
         ingestion: true
         injection: true
         reagents:
-          - chem.Water
+          - Water
   - type: Rehydratable
     target: MonkeyMob_Content
   - type: CollisionWake
     enabled: false
   - type: Physics
     bodyType: KinematicController
-    mass: 2.5
     fixtures: # TODO: Make a second fixture.
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-        hard: false
-        layer:
-          - SmallImpassable
-        mask:
-          - Impassable
-          - MobImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.4,0.3,0.4"
+      mass: 2.5
+      hard: false
+      layer:
+        - SmallImpassable
+      mask:
+        - Impassable
+        - MobImpassable
 
 - type: entity
   parent: PlushieCarp
@@ -48,7 +48,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
     maxVol: 11 # needs room for water
     caps: Refillable
@@ -59,21 +59,21 @@
       ingestion: true
       injection: true
       reagents:
-        - chem.Water
+        - Water
   - type: Rehydratable
     target: CarpMob_Content
   - type: CollisionWake
     enabled: false
   - type: Physics
     bodyType: KinematicController
-    mass: 2.5
     fixtures: # TODO: Make a second fixture.
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
-        hard: false
-        layer:
-          - SmallImpassable
-        mask:
-          - Impassable
-          - MobImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      mass: 2.5
+      hard: false
+      layer:
+        - SmallImpassable
+      mask:
+        - Impassable
+        - MobImpassable

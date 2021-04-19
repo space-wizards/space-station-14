@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Observer
             base.Startup();
 
             // Allow this entity to be seen by other ghosts.
-            Owner.EnsureComponent<VisibilityComponent>().Layer = (int) VisibilityFlags.Ghost;
+            Owner.EnsureComponent<VisibilityComponent>().Layer |= (int) VisibilityFlags.Ghost;
 
             // Allows this entity to see other ghosts.
             Owner.EnsureComponent<EyeComponent>().VisibilityMask |= (uint) VisibilityFlags.Ghost;
@@ -92,13 +92,12 @@ namespace Content.Server.GameObjects.Components.Observer
                     {
                         var o = actor.playerSession.ContentData()!.Mind;
                         o?.UnVisit();
-                        Owner.Delete();
                     }
                     break;
                 }
                 case ReturnToCloneComponentMessage _:
 
-                    if (Owner.TryGetComponent(out VisitingMindComponent? mind))
+                    if (Owner.TryGetComponent(out VisitingMindComponent? mind) && mind.Mind != null)
                     {
                         Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
                     }

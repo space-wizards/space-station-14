@@ -21,5 +21,4 @@
         acts: ["Destruction"]
   - type: KitchenSpike
   - type: Anchorable
-    snap: true
   - type: Pullable

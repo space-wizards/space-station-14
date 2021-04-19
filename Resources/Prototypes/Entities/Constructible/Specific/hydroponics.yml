@@ -7,12 +7,12 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 25
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.5, -0.5, 0.1, 0.5"
+      mass: 25
       hard: false
       mask:
       - Impassable
@@ -37,6 +37,7 @@
   - type: Sprite
     sprite: Constructible/Hydroponics/misc.rsi
     state: soil
+    drawdepth: FloorObjects
   - type: PlantHolder
     drawWarnings: false
   - type: SolutionContainer
@@ -58,18 +59,18 @@
   description: An interstellar-grade space farmplot allowing for rapid growth and selective breeding of crops. Just... keep in mind the space weeds.
   components:
   - type: Physics
-    mass: 25
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mass: 25
       hard: true
       mask:
       - Impassable
   - type: Anchorable
-    snap: true
   - type: Pullable
   - type: Sprite
     sprite: Constructible/Hydroponics/containers.rsi
     state: hydrotray3
+    drawdepth: FloorObjects
   - type: PlantHolder
     drawWarnings: true

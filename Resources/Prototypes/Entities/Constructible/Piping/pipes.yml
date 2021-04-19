@@ -1,7 +1,7 @@
 ﻿- type: entity
   abstract: true
   id: PipeBase
-  name: Pipe
+  name: pipe
   description: Holds gas.
   placement:
     mode: SnapgridCenter
@@ -29,7 +29,7 @@
   - type: Icon
     sprite: Constructible/Atmos/pipe.rsi
 
-#Note: The PipeDirection of the PipeNode should be the east-facing version, because the entity starts at an angle of 0 (east)
+#Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (east)
 
 - type: entity
   parent: PipeBase
@@ -38,9 +38,10 @@
   components:
   - type: NodeContainer
     nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: South
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
   - type: Icon
     state: pipeHalf
 
@@ -51,12 +52,13 @@
   components:
   - type: NodeContainer
     nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: Longitudinal
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Longitudinal
   - type: Icon
     state: pipeStraight
-    
+
 - type: entity
   parent: PipeBase
   id: PipeBend
@@ -64,12 +66,13 @@
   components:
   - type: NodeContainer
     nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: SWBend
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: SWBend
   - type: Icon
     state: pipeBend
-    
+
 - type: entity
   parent: PipeBase
   id: PipeTJunction
@@ -77,12 +80,13 @@
   components:
   - type: NodeContainer
     nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: TSouth
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: TSouth
   - type: Icon
     state: pipeTJunction
-    
+
 - type: entity
   parent: PipeBase
   id: PipeFourway
@@ -90,8 +94,9 @@
   components:
   - type: NodeContainer
     nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: Fourway
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
   - type: Icon
     state: pipeFourway

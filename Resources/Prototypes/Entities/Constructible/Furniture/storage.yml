@@ -11,20 +11,20 @@
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: rack
+    drawdepth: FloorObjects
   - type: Physics
-    mass: 50
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
+      mass: 50
       layer:
       - MobImpassable
       mask:
       - VaultImpassable
   - type: Pullable
   - type: Anchorable
-    snap: true
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

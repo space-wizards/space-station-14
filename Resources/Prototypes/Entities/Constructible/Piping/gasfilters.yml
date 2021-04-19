@@ -35,20 +35,23 @@
 - type: entity
   parent: GasFilterBase
   id: GasFilter
-  name: Gas Filter
+  name: gas filter
   description: It filters gases.
   components:
   - type: NodeContainer
     nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: West
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: South
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: East
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: West
+      filter:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: East
   - type: GasFilter
     inletDirection: West
     filterOutletDirection: South

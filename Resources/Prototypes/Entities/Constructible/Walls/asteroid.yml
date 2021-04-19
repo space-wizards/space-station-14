@@ -22,3 +22,6 @@
   - type: Occluder
     sizeX: 32
     sizeY: 32
+  - type: Appearance
+    visuals:
+    - type: AsteroidRockVisualizer

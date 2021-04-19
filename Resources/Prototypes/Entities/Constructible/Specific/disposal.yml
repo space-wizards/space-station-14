@@ -145,7 +145,6 @@
       - Opaque
       - MobImpassable
   - type: Anchorable
-    snap: true
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

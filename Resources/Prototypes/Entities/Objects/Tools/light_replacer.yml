@@ -1,0 +1,19 @@
+- type: entity
+  parent: BaseItem
+  name: light replacer
+  id: LightReplacer
+  description: An item which uses magnets to easily replace broken lights.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/light_replacer.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Janitorial/light_replacer.rsi
+  - type: LightReplacer
+    contents:
+    - name: LightTube
+      amount: 8
+      type: Tube
+    - name: LightBulb
+      amount: 5
+      type: Bulb

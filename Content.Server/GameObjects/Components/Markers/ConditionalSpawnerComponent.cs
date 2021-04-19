@@ -15,7 +15,6 @@ namespace Content.Server.GameObjects.Components.Markers
     public class ConditionalSpawnerComponent : Component, IMapInit
     {
         [Dependency] private readonly IGameTicker _gameTicker = default!;
-        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "ConditionalSpawner";

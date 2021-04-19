@@ -135,6 +135,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     inputSys.HandleInputCommand(session, func, message);
                 }
                 CloseAllMenus();
+                args.Handle();
                 return;
             }
 
@@ -207,12 +208,14 @@ namespace Content.Client.GameObjects.EntitySystems
              if (args.Function == ContentKeyFunctions.OpenContextMenu)
              {
                  _verbSystem.OnContextButtonPressed(entity);
+                 args.Handle();
                  return;
              }
 
              if (args.Function == ContentKeyFunctions.ExamineEntity)
              {
                  _systemManager.GetEntitySystem<ExamineSystem>().DoExamine(entity);
+                 args.Handle();
                  return;
              }
 
@@ -234,6 +237,7 @@ namespace Content.Client.GameObjects.EntitySystems
                  }
 
                  CloseAllMenus();
+                 args.Handle();
                  return;
              }
 

@@ -1,0 +1,75 @@
+- type: entity
+  id: AMEController
+  name: AME controller
+  description: It's a controller for the antimatter engine.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Constructible/Power/ame_controller.rsi
+    state: control
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.45, 0.45, 0.45"
+      mass: 25
+      layer:
+      - Opaque
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: SnapGrid
+    offset: Center
+  - type: Anchorable
+  - type: Pullable
+  - type: AMEController
+  - type: UserInterface
+    interfaces:
+    - key: enum.AMEControllerUiKey.Key
+      type: AMEControllerBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: AMEControllerVisualizer
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      ame:
+        !type:AdjacentNode
+        nodeGroupID: AMEngine
+      input:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
+  - type: PowerReceiver
+  - type: PowerSupplier
+    supplyRate: 0
+
+- type: entity
+  abstract: true
+  parent: AMEController
+  id: AMEControllerUnanchored
+  suffix: Unanchored
+  components:
+  - type: Physics
+    bodyType: Dynamic

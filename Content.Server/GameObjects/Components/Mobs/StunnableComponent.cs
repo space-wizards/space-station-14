@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
@@ -22,8 +22,6 @@ namespace Content.Server.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedStunnableComponent))]
     public class StunnableComponent : SharedStunnableComponent, IDisarmedAct
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-
         protected override void OnKnockdown()
         {
             EntitySystem.Get<StandingStateSystem>().Down(Owner);

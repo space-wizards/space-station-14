@@ -1,9 +1,10 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Server.GameObjects;
+using Robust.Server.GameStates;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -19,6 +20,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     public sealed class ServerActionsComponent : SharedActionsComponent
     {
         [Dependency] private readonly IServerEntityManager _entityManager = default!;
+        [Dependency] private readonly IServerGameStateManager _stateManager = default!;
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
@@ -174,7 +176,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             // ensure it's within their clickable range
             var targetWorldPos = target.ToMapPos(EntityManager);
             var rangeBox = new Box2(player.Transform.WorldPosition, player.Transform.WorldPosition)
-                .Enlarged(_entityManager.MaxUpdateRange);
+                .Enlarged(_stateManager.PvsRange);
             if (!rangeBox.Contains(targetWorldPos))
             {
                 Logger.DebugS("action", "user {0} attempted to" +

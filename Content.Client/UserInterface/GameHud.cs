@@ -1,18 +1,24 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Input;
+using Content.Shared.Prototypes.HUD;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.Input.Keyboard.Key;
 using Control = Robust.Client.UserInterface.Control;
@@ -74,6 +80,10 @@ namespace Content.Client.UserInterface
 
         void AddTopNotification(TopNotification notification);
 
+        Texture GetHudTexture(string path);
+
+        bool ValidateHudTheme(int idx);
+
         // Init logic.
         void Initialize();
     }
@@ -95,7 +105,9 @@ namespace Content.Client.UserInterface
         private VBoxContainer _topNotificationContainer = default!;
 
         [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly INetConfigurationManager _configManager = default!;
 
         public Control HandsContainer { get; private set; } = default!;
         public Control SuspicionContainer { get; private set; } = default!;
@@ -119,6 +131,38 @@ namespace Content.Client.UserInterface
         public void AddTopNotification(TopNotification notification)
         {
             _topNotificationContainer.AddChild(notification);
+        }
+
+        public bool ValidateHudTheme(int idx)
+        {
+            if (!_prototypeManager.TryIndex(idx.ToString(), out HudThemePrototype? _))
+            {
+                Logger.ErrorS("hud", "invalid HUD theme id {0}, using different theme",
+                    idx);
+                var proto = _prototypeManager.EnumeratePrototypes<HudThemePrototype>().FirstOrDefault();
+                if (proto == null)
+                {
+                    throw new NullReferenceException("No valid HUD prototypes!");
+                }
+                var id = int.Parse(proto.ID);
+                _configManager.SetCVar(CCVars.HudTheme, id);
+                return false;
+            }
+            return true;
+        }
+
+        public Texture GetHudTexture(string path)
+        {
+            var id = _configManager.GetCVar<int>("hud.theme");
+            var dir = string.Empty;
+            if (!_prototypeManager.TryIndex(id.ToString(), out HudThemePrototype? proto))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            dir = proto.Path;
+
+            var resourcePath = (new ResourcePath("/Textures/Interface/Inventory") / dir) / path;
+            return _resourceCache.GetTexture(resourcePath);
         }
 
         public void Initialize()

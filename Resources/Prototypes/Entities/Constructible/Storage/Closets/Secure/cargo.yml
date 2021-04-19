@@ -8,4 +8,4 @@
     - type: StorageVisualizer
       state: qm
   - type: AccessReader
-    access: [["Quartermaster"]]
+    access: [["Cargo"]] # TODO access [["Quartermaster"]]

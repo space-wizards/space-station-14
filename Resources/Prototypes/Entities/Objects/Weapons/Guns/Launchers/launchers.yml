@@ -98,7 +98,7 @@
         - Single
       fillPrototype: FoodBananaCreamPie
       fireRate: 5
-      capacity: 15
+      capacity: 5
       soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
       soundGunshot: /Audio/Effects/bang.ogg
       soundInsert: /Audio/Items/bikehorn.ogg

@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Delay from trying to shove someone else into disposals.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _draggedEntryDelay;
+        private float _draggedEntryDelay = 0.5f;
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -283,7 +283,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
                 atmosSystem
-                    .GetGridAtmosphere(Owner.Transform.GridID)?
+                    .GetGridAtmosphere(Owner.Transform.Coordinates)?
                     .Invalidate(tileAtmos.GridIndices);
             }
 

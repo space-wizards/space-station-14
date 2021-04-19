@@ -1,471 +1,473 @@
 - type: reaction
-  id: react.Alkycosine
+  id: Alkycosine
   reactants:
-    chem.Alkysine:
+    Alkysine:
       amount: 1
-    chem.Bleach:
+    Bleach:
       amount: 1
-    chem.Dylovene:
+    Dylovene:
       amount: 1
   products:
-    chem.Alkycosine: 3
+    Alkycosine: 3
 
 - type: reaction
-  id: react.Alkysine
+  id: Alkysine
   reactants:
-    chem.Chlorine:
+    Chlorine:
       amount: 1
-    chem.Nitrogen:
+    Nitrogen:
       amount: 1
-    chem.Dylovene:
+    Dylovene:
       amount: 1
   products:
-    chem.Alkysine: 3
+    Alkysine: 3
 
 - type: reaction
-  id: react.Dylovene
+  id: Dylovene
   reactants:
-    chem.Silicon:
+    Silicon:
       amount: 1
-    chem.Nitrogen:
+    Nitrogen:
       amount: 1
-    chem.Potassium:
+    Potassium:
       amount: 1
   products:
-    chem.Dylovene: 3
+    Dylovene: 3
 
 - type: reaction
-  id: react.Arithrazine
+  id: Arithrazine
   reactants:
-    chem.Hyronalin:
+    Hyronalin:
       amount: 1
-    chem.Hydrogen:
+    Hydrogen:
       amount: 1
   products:
-    chem.Arithrazine: 2
+    Arithrazine: 2
 
 - type: reaction
-  id: react.Bicaridine
+  id: Bicaridine
   reactants:
-    chem.Inaprovaline:
+    Inaprovaline:
       amount: 1
-    chem.Carbon:
+    Carbon:
       amount: 1
   products:
-    chem.Bicaridine: 2
+    Bicaridine: 2
 
 - type: reaction
-  id: react.Cryoxadone
+  id: Cryoxadone
   reactants:
-    chem.Dexalin:
+    Dexalin:
       amount: 1
-    chem.Water:
+    Water:
       amount: 1
-    chem.Oxygen:
+    Oxygen:
       amount: 1
   products:
-    chem.Cryoxadone: 3
+    Cryoxadone: 3
 
 - type: reaction
-  id: react.Clonexadone
+  id: Clonexadone
   reactants:
-    chem.Cryoxadone:
+    Cryoxadone:
       amount: 1
-    chem.Sodium:
+    Sodium:
       amount: 1
-    chem.Plasma:
+    Plasma:
       amount: 5
       catalyst: true
   products:
-    chem.Clonexadone: 2
+    Clonexadone: 2
 
 - type: reaction
-  id: react.Citalopram
+  id: Citalopram
   reactants:
-    chem.MindbreakerToxin:
+    MindbreakerToxin:
       amount: 5
-    chem.Carbon:
+    Carbon:
       amount: 5
   products:
-    chem.Citalopram: 10
+    Citalopram: 10
 
 - type: reaction
-  id: react.Dermaline
+  id: Dermaline
   reactants:
-    chem.Kelotane:
+    Kelotane:
       amount: 1
-    chem.Oxygen:
+    Oxygen:
       amount: 1
-    chem.Phosphorus:
+    Phosphorus:
       amount: 1
   products:
-    chem.Dermaline: 3
+    Dermaline: 3
 
 - type: reaction
-  id: react.Dexalin
+  id: Dexalin
   reactants:
-    chem.Oxygen:
+    Oxygen:
       amount: 2
-    chem.Plasma:
+    Plasma:
       amount: 5
       catalyst: true
   products:
-    chem.Dexalin: 3
+    Dexalin: 3
 
 - type: reaction
-  id: react.DexalinPlus
+  id: DexalinPlus
   reactants:
-    chem.Dexalin:
+    Dexalin:
       amount: 1
-    chem.Carbon:
+    Carbon:
       amount: 1
-    chem.Iron:
+    Iron:
       amount: 1
   products:
-    chem.DexalinPlus: 3
+    DexalinPlus: 3
 
 - type: reaction
-  id: react.Ethylredoxrazine
+  id: Ethylredoxrazine
   reactants:
-    chem.Oxygen:
+    Oxygen:
       amount: 1
-    chem.Dylovene:
+    Dylovene:
       amount: 1
-    chem.Carbon:
+    Carbon:
       amount: 1
   products:
-    chem.Ethylredoxrazine: 3
+    Ethylredoxrazine: 3
 
 - type: reaction
-  id: react.Hyperzine
+  id: Hyperzine
   reactants:
-    chem.Glucose:
+    Glucose:
       amount: 1
-    chem.Phosphorus:
+    Phosphorus:
       amount: 1
-    chem.Sulfur:
+    Sulfur:
       amount: 1
   products:
-    chem.Hyperzine: 3
+    Hyperzine: 3
 
 - type: reaction
-  id: react.Hyronalin
+  id: Hyronalin
   reactants:
-    chem.Radium:
+    Radium:
       amount: 1
-    chem.Dylovene:
+    Dylovene:
       amount: 1
   products:
-    chem.Hyronalin: 2
+    Hyronalin: 2
 
 - type: reaction
-  id: react.Imidazoline
+  id: Imidazoline
   reactants:
-    chem.Hydrogen:
+    Hydrogen:
       amount: 1
-    chem.Carbon:
+    Carbon:
       amount: 1
-    chem.Dylovene:
+    Dylovene:
       amount: 1
   products:
-    chem.Imidazoline: 3
+    Imidazoline: 3
 
 - type: reaction
-  id: react.Inacusiate
+  id: Inacusiate
   reactants:
-    chem.Dylovene:
+    Dylovene:
       amount: 1
-    chem.Carbon:
+    Carbon:
       amount: 1
-    chem.Water:
+    Water:
       amount: 1
   products:
-    chem.Inacusiate: 3
+    Inacusiate: 3
 
 - type: reaction
-  id: react.Inaprovaline
+  id: Inaprovaline
   reactants:
-    chem.Oxygen:
+    Oxygen:
       amount: 1
-    chem.Carbon:
+    Carbon:
       amount: 1
-    chem.Glucose:
+    Glucose:
       amount: 1
   products:
-    chem.Inaprovaline: 3
+    Inaprovaline: 3
 
 - type: reaction
-  id: react.Kelotane
+  id: Kelotane
   reactants:
-    chem.Silicon:
+    Silicon:
       amount: 1
-    chem.Carbon:
+    Carbon:
       amount: 1
   products:
-    chem.Kelotane: 2
+    Kelotane: 2
 
 - type: reaction
-  id: react.Leporazine
+  id: Leporazine
   reactants:
-    chem.Silicon:
+    Silicon:
       amount: 1
-    chem.Copper:
+    Copper:
       amount: 1
-    chem.Plasma:
+    Plasma:
       amount: 5
       catalyst: true
   products:
-    chem.Leporazine: 2
+    Leporazine: 2
 
 - type: reaction
-  id: react.Methylin
+  id: Methylin
   reactants:
-    chem.Hydrogen:
+    Hydrogen:
       amount: 1
-    chem.Chlorine:
+    Chlorine:
       amount: 1
-    chem.Ethanol:
+    Ethanol:
       amount: 1
-    chem.Fluorine:
+    Fluorine:
       amount: 5
       catalyst: true
   products:
-    chem.Methylin: 3
+    Methylin: 3
 
 - type: reaction
-  id: react.Oxycodone
+  id: Oxycodone
   reactants:
-    chem.Ethanol:
+    Ethanol:
       amount: 1
-    chem.Tramadol:
+    Tramadol:
       amount: 1
-    chem.Plasma:
+    Plasma:
       amount: 1
   products:
-    chem.Oxycodone: 3
+    Oxycodone: 3
 
 - type: reaction
-  id: react.Phalanximine
+  id: Phalanximine
   reactants:
-    chem.Hyronalin:
+    Hyronalin:
       amount: 1
-    chem.Ethanol:
+    Ethanol:
       amount: 1
-    chem.UnstableMutagen:
+    UnstableMutagen:
       amount: 1
   products:
-    chem.Phalanximine: 3
+    Phalanximine: 3
 
 - type: reaction
-  id: react.Paroxetine
+  id: Paroxetine
   reactants:
-    chem.MindbreakerToxin:
+    MindbreakerToxin:
       amount: 5
-    chem.Oxygen:
+    Oxygen:
       amount: 5
-    chem.Inaprovaline:
+    Inaprovaline:
       amount: 5
   products:
-    chem.Paroxetine: 15
+    Paroxetine: 15
 
 - type: reaction
-  id: react.Ryetalyn
+  id: Ryetalyn
   reactants:
-    chem.Arithrazine:
+    Arithrazine:
       amount: 1
-    chem.Carbon:
+    Carbon:
       amount: 1
   products:
-    chem.Ryetalyn: 2
+    Ryetalyn: 2
 
 - type: reaction
-  id: react.Spaceacillin
+  id: Spaceacillin
   reactants:
-    chem.Cryptobiolin:
+    Cryptobiolin:
       amount: 1
-    chem.Inaprovaline:
+    Inaprovaline:
       amount: 1
   products:
-    chem.Spaceacillin: 2
+    Spaceacillin: 2
 
 - type: reaction
-  id: react.Synaptizine
+  id: Synaptizine
   reactants:
-    chem.Lithium:
+    Lithium:
       amount: 1
-    chem.Glucose:
+    Glucose:
       amount: 1
-    chem.Water:
+    Water:
       amount: 1
   products:
-    chem.Synaptizine: 3
+    Synaptizine: 3
 
 - type: reaction
-  id: react.Tramadol
+  id: Tramadol
   reactants:
-    chem.Inaprovaline:
+    Inaprovaline:
       amount: 1
-    chem.Ethanol:
+    Ethanol:
       amount: 1
-    chem.Oxygen:
+    Oxygen:
       amount: 1
   products:
-    chem.Tramadol: 3
+    Tramadol: 3
 
 - type: reaction
-  id: react.Tricordrazine
+  id: Tricordrazine
   reactants:
-    chem.Inaprovaline:
+    Inaprovaline:
       amount: 1
-    chem.Dylovene:
+    Dylovene:
       amount: 1
   products:
-    chem.Tricordrazine: 2
+    Tricordrazine: 2
 
 - type: reaction
-  id: react.Vaccine
+  id: Vaccine
   reactants:
-    chem.Aluminium:
+    Aluminium:
       amount: 1
-    chem.Glucose:
+    Glucose:
       amount: 1
-    chem.Water:
+    Water:
       amount: 1
   products:
-    chem.Vaccine: 3
+    Vaccine: 3
 
 - type: reaction
-  id: react.Albuterol
+  id: Albuterol
   reactants:
-    chem.Hyperzine:
+    Hyperzine:
       amount: 1
-    chem.Tramadol:
+    Tramadol:
       amount: 1
   products:
-    chem.Albuterol: 2
+    Albuterol: 2
 
 - type: reaction
-  id: react.ChloralHydrate
+  id: ChloralHydrate
   reactants:
-    chem.Ethanol:
+    Ethanol:
       amount: 1
-    chem.Chlorine:
+    Chlorine:
       amount: 3
-    chem.Water:
+    Water:
       amount: 1
   products:
-    chem.ChloralHydrate: 1
+    ChloralHydrate: 1
 
 - type: reaction
-  id: react.Creatine #Add nutriment as ingredient (amount = 1) once that's a thing
+  id: Creatine
   reactants:
-    chem.Bicaridine:
+    Bicaridine:
       amount: 1
-    chem.Hyperzine:
+    Hyperzine:
       amount: 1
-    chem.UnstableMutagen:
+    Nutriment:
+      amount: 1
+    UnstableMutagen:
       amount: 1
   products:
-    chem.Creatine: 3
+    Creatine: 3
 
 - type: reaction
-  id: react.Cryptobiolin
+  id: Cryptobiolin
   reactants:
-    chem.Potassium:
+    Potassium:
       amount: 1
-    chem.Oxygen:
+    Oxygen:
       amount: 1
-    chem.Glucose:
+    Glucose:
       amount: 1
   products:
-    chem.Cryptobiolin: 3
+    Cryptobiolin: 3
 
 - type: reaction
-  id: react.HeartbreakerToxin #heat to 37C once temperatures supported
+  id: HeartbreakerToxin #heat to 37C once temperatures supported
   reactants:
-    chem.Dexalin:
+    Dexalin:
       amount: 1
-    chem.MindbreakerToxin:
+    MindbreakerToxin:
       amount: 1
   products:
-    chem.HeartbreakerToxin: 2
+    HeartbreakerToxin: 2
 
 - type: reaction
-  id: react.Impedrezene
+  id: Impedrezene
   reactants:
-    chem.Mercury:
+    Mercury:
       amount: 1
-    chem.Oxygen:
+    Oxygen:
       amount: 1
-    chem.Glucose:
+    Glucose:
       amount: 1
   products:
-    chem.Impedrezene: 3
+    Impedrezene: 3
 
 - type: reaction
-  id: react.Lexorin
+  id: Lexorin
   reactants:
-    chem.Ammonia:
+    Ammonia:
       amount: 1
-    chem.Plasma:
+    Plasma:
       amount: 1
   products:
-    chem.Lexorin: 2
+    Lexorin: 2
 
 - type: reaction
-  id: react.Lipozine
+  id: Lipozine
   reactants:
-    chem.TableSalt:
+    TableSalt:
       amount: 1
-    chem.Ethanol:
+    Ethanol:
       amount: 1
-    chem.Radium:
+    Radium:
       amount: 1
   products:
-    chem.Lipozine: 3
+    Lipozine: 3
 
 - type: reaction
-  id: react.MindbreakerToxin
+  id: MindbreakerToxin
   reactants:
-    chem.Silicon:
+    Silicon:
       amount: 1
-    chem.Hydrogen:
+    Hydrogen:
       amount: 1
-    chem.Dylovene:
+    Dylovene:
       amount: 1
   products:
-    chem.MindbreakerToxin: 3
+    MindbreakerToxin: 3
 
 - type: reaction
-  id: react.Soporific
+  id: Soporific
   reactants:
-    chem.ChloralHydrate:
+    ChloralHydrate:
       amount: 1
-    chem.Glucose:
+    Glucose:
       amount: 4
   products:
-    chem.Soporific: 5
+    Soporific: 5
 
 - type: reaction
-  id: react.Sterilizine
+  id: Sterilizine
   reactants:
-    chem.Ethanol:
+    Ethanol:
       amount: 1
-    chem.Dylovene:
+    Dylovene:
       amount: 1
-    chem.Chlorine:
+    Chlorine:
       amount: 1
   products:
-    chem.Sterilizine: 3
+    Sterilizine: 3
 
 - type: reaction
-  id: react.SpaceDrugs
+  id: SpaceDrugs
   reactants:
-    chem.Mercury:
+    Mercury:
       amount: 1
-    chem.Glucose:
+    Glucose:
       amount: 1
-    chem.Lithium:
+    Lithium:
       amount: 1
   products:
-    chem.SpaceDrugs: 3
+    SpaceDrugs: 3

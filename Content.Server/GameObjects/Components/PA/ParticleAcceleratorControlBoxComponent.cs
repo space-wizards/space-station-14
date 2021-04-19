@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.PA
         /// <summary>
         ///     Power receiver for the control console itself.
         /// </summary>
-        [ViewVariables] private PowerReceiverComponent? _powerReceiverComponent;
+        [ViewVariables] private PowerReceiverComponent _powerReceiverComponent = default!;
 
         [ViewVariables] private ParticleAcceleratorFuelChamberComponent? _partFuelChamber;
         [ViewVariables] private ParticleAcceleratorEndCapComponent? _partEndCap;
@@ -104,12 +104,9 @@ namespace Content.Server.GameObjects.Components.PA
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            if (!Owner.TryGetComponent(out _powerReceiverComponent))
-            {
-                Logger.Error("ParticleAcceleratorControlBox was created without PowerReceiverComponent");
-                return;
-            }
-            _powerReceiverComponent.Load = 250;
+            Owner.EnsureComponent(out _powerReceiverComponent);
+
+            _powerReceiverComponent!.Load = 250;
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
