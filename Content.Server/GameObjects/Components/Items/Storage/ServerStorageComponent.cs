@@ -19,6 +19,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -94,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             foreach (var entity in _storage.ContainedEntities)
             {
-                var item = entity.GetComponent<StorableComponent>();
+                var item = entity.GetComponent<SharedItemComponent>();
                 _storageUsed += item.Size;
             }
         }
@@ -114,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return false;
             }
 
-            if (entity.TryGetComponent(out StorableComponent? store) &&
+            if (entity.TryGetComponent(out SharedItemComponent? store) &&
                 store.Size > _storageCapacityMax - _storageUsed)
             {
                 return false;
@@ -152,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
 
             var size = 0;
-            if (message.Entity.TryGetComponent(out StorableComponent? storable))
+            if (message.Entity.TryGetComponent(out SharedItemComponent? storable))
                 size = storable.Size;
 
             _storageUsed += size;
@@ -495,14 +496,14 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
-            if(_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<StorableComponent>()))
+            if(_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<SharedItemComponent>()))
             {
                 var validStorables = new List<IEntity>();
-                foreach (var entity in Owner.EntityManager.GetEntitiesInRange(eventArgs.ClickLocation, 1))
+                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, 1))
                 {
                     if (!entity.Transform.IsMapTransform
                         || entity == eventArgs.User
-                        || !entity.HasComponent<StorableComponent>())
+                        || !entity.HasComponent<SharedItemComponent>())
                         continue;
                     validStorables.Add(entity);
                 }
@@ -529,7 +530,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
                     if (!entity.Transform.IsMapTransform
                         || entity == eventArgs.User
-                        || !entity.HasComponent<StorableComponent>())
+                        || !entity.HasComponent<SharedItemComponent>())
                         continue;
                     var coords = entity.Transform.Coordinates;
                     if (PlayerInsertEntityInWorld(eventArgs.User, entity))
@@ -558,7 +559,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 if (eventArgs.Target == null
                     || !eventArgs.Target.Transform.IsMapTransform
                     || eventArgs.Target == eventArgs.User
-                    || !eventArgs.Target.HasComponent<StorableComponent>())
+                    || !eventArgs.Target.HasComponent<SharedItemComponent>())
                     return false;
                 var position = eventArgs.Target.Transform.Coordinates;
                 if(PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))

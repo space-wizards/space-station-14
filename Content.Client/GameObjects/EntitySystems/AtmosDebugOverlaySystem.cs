@@ -72,7 +72,7 @@ namespace Content.Client.GameObjects.EntitySystems
             _tileData.Clear();
         }
 
-        private void OnGridRemoved(GridId gridId)
+        private void OnGridRemoved(MapId mapId, GridId gridId)
         {
             if (_tileData.ContainsKey(gridId))
             {

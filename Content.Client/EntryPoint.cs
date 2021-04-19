@@ -33,6 +33,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
+using Robust.Client.UserInterface;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -100,6 +101,7 @@ namespace Content.Client
             IoCManager.Resolve<IStylesheetManager>().Initialize();
             IoCManager.Resolve<IScreenshotHook>().Initialize();
             IoCManager.Resolve<ChangelogManager>().Initialize();
+            IoCManager.Resolve<ViewportManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
 
@@ -182,6 +184,9 @@ namespace Content.Client
                                          args.OldLevel == ClientRunLevel.InGame);
                 }
             };
+
+            // Disable engine-default viewport since we use our own custom viewport control.
+            IoCManager.Resolve<IUserInterfaceManager>().MainViewport.Visible = false;
 
             SwitchToDefaultState();
         }

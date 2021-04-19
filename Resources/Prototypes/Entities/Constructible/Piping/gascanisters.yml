@@ -1,6 +1,8 @@
 - type: entity
   abstract: true
   id: GasCanisterBase
+  name: gas canister
+  description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
   parent: BaseConstructibleDynamic
   components:
   - type: InteractionOutline
@@ -8,6 +10,7 @@
     offset: Center
   - type: Sprite
   - type: Damageable
+    resistances: metallicResistances
   - type: Physics
     bodyType: Dynamic
     fixtures:
@@ -37,8 +40,6 @@
 - type: entity
   parent: GasCanisterBase
   id: GasCanister
-  name: Gas Canister
-  description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
   components:
   - type: Sprite
     netsync: false
@@ -57,14 +58,28 @@
     interfaces:
       - key: enum.GasCanisterUiKey.Key
         type: GasCanisterBoundUserInterface
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          GasCanisterBrokenBase:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: GasCanister
   id: StorageCanister
-  name: Storage Canister
+  name: storage canister
   components:
     - type: Sprite
-      sprite: Constructible/Atmos/canister.rsi
       state: yellow # Classic toxins canister
     - type: GasCanister
       gasMixture:
@@ -77,16 +92,30 @@
           - 0 # Tritium
           - 0 # Water vapor
         temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            StorageCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 # Filled canisters, contain 1871.71051 moles each
 
 - type: entity
   parent: GasCanister
   id: AirCanister
-  name: Air Canister
+  name: air canister
   components:
   - type: Sprite
-    sprite: Constructible/Atmos/canister.rsi
     state: grey
   - type: GasCanister
     gasMixture:
@@ -95,14 +124,28 @@
         - 393.0592071 # oxygen 21%
         - 1478.6513029 # nitrogen 79%
       temperature: 293.15
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          AirCanisterBroken:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: GasCanister
   id: OxygenCanister
-  name: Oxygen Canister
+  name: oxygen canister
   components:
   - type: Sprite
-    sprite: Constructible/Atmos/canister.rsi
     state: blue
   - type: GasCanister
     gasMixture:
@@ -110,14 +153,28 @@
       moles:
         - 1871.71051 # oxygen
       temperature: 293.15
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          OxygenCanisterBroken:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: GasCanister
   id: NitrogenCanister
-  name: Nitrogen Canister
+  name: nitrogen canister
   components:
     - type: Sprite
-      sprite: Constructible/Atmos/canister.rsi
       state: red
     - type: GasCanister
       gasMixture:
@@ -126,14 +183,28 @@
           - 0 # oxygen
           - 1871.71051 # nitrogen
         temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            NitrogenCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   parent: GasCanister
   id: CarbonDioxideCanister
-  name: Carbon Dioxide Canister
+  name: carbon dioxide canister
   components:
     - type: Sprite
-      sprite: Constructible/Atmos/canister.rsi
       state: black
     - type: GasCanister
       gasMixture:
@@ -143,14 +214,28 @@
           - 0 # nitrogen
           - 1871.71051 # CO2
         temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            CarbonDioxideCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   parent: GasCanister
   id: PlasmaCanister
-  name: Plasma Canister
+  name: plasma canister
   components:
     - type: Sprite
-      sprite: Constructible/Atmos/canister.rsi
       state: orange
     - type: GasCanister
       gasMixture:
@@ -161,14 +246,28 @@
           - 0 # carbon dioxide
           - 1871.71051 # plasma
         temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            PlasmaCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   parent: GasCanister
   id: TritiumCanister
-  name: Tritium Canister
+  name: tritium canister
   components:
     - type: Sprite
-      sprite: Constructible/Atmos/canister.rsi
       state: green
     - type: GasCanister
       gasMixture:
@@ -180,14 +279,28 @@
           - 0 # Plasma
           - 1871.71051 # Tritium
         temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            TritiumCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   parent: GasCanister
   id: WaterVaporCanister
-  name: Water Vapor Canister
+  name: water vapor canister
   components:
     - type: Sprite
-      sprite: Constructible/Atmos/canister.rsi
       state: water_vapor
     - type: GasCanister
       gasMixture:
@@ -200,3 +313,135 @@
           - 0 # Tritium
           - 1871.71051 # Water vapor
         temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            WaterVaporCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+
+# Broke Entities
+
+- type: entity
+  parent: BaseConstructible
+  id: GasCanisterBrokenBase
+  name: broken gas canister
+  description: A broken gas canister. Not useless yet, as it can be salvaged for high quality materials.
+  abstract: true
+  components:
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetPlasteel1:
+              min: 1
+              max: 2
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: Damageable
+      resistances: metallicResistances
+    - type: InteractionOutline
+    - type: Sprite
+      sprite: Constructible/Atmos/canister.rsi
+      state: grey-1
+    - type: Physics
+      bodyType: Dynamic
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+              bounds: "-0.3,-0.4,0.3,0.4"
+          mass: 25
+          mask:
+            - MobImpassable
+          layer:
+            - Opaque
+            - MobImpassable
+            - SmallImpassable
+            - VaultImpassable
+
+- type: entity
+  parent: GasCanisterBrokenBase
+  id: StorageCanisterBroken
+  name: broken storage canister
+  abstract: true
+  components:
+    - type: Sprite
+      state: yellow-1
+
+- type: entity
+  parent: GasCanisterBrokenBase
+  id: AirCanisterBroken
+  name: broken air canister
+  abstract: true
+  components:
+  - type: Sprite
+    state: grey-1
+
+- type: entity
+  parent: GasCanisterBrokenBase
+  id: OxygenCanisterBroken
+  name: broken oxygen canister
+  abstract: true
+  components:
+  - type: Sprite
+    state: blue-1
+
+- type: entity
+  parent: GasCanisterBrokenBase
+  id: NitrogenCanisterBroken
+  name: broken nitrogen canister
+  abstract: true
+  components:
+    - type: Sprite
+      state: red-1
+
+- type: entity
+  parent: GasCanisterBrokenBase
+  id: CarbonDioxideCanisterBroken
+  name: broken carbon dioxide canister
+  abstract: true
+  components:
+    - type: Sprite
+      state: black-1
+
+- type: entity
+  parent: GasCanisterBrokenBase
+  id: PlasmaCanisterBroken
+  name: broken plasma canister
+  abstract: true
+  components:
+    - type: Sprite
+      state: orange-1
+
+- type: entity
+  parent: GasCanisterBrokenBase
+  id: TritiumCanisterBroken
+  name: broken tritium canister
+  abstract: true
+  components:
+    - type: Sprite
+      state: green-1
+
+- type: entity
+  parent: GasCanisterBrokenBase
+  id: WaterVaporCanisterBroken
+  name: broken water vapor canister
+  abstract: true
+  components:
+    - type: Sprite
+      state: water_vapor-1

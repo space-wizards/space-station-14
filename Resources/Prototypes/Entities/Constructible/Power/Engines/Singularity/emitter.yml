@@ -1,0 +1,71 @@
+- type: entity
+  id: Emitter
+  name: emitter
+  description: A heavy duty industrial laser. Shoots non-stop when turned on.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25, -0.25, 0.25, 0.25"
+      mass: 100
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - Opaque
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Constructible/Power/Singularity/emitter.rsi
+    layers:
+    - state: emitter2
+    - state: beam
+      shader: unshaded
+      visible: false
+    - state: lock
+      shader: unshaded
+      visible: false
+  - type: Emitter
+  - type: PowerConsumer
+    voltage: Medium
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:AdjacentNode
+        nodeGroupID: MVPower
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel1:
+              min: 5
+              max: 5
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+  - type: Anchorable
+  - type: Pullable
+  - type: Rotatable
+  - type: Appearance
+    visuals:
+    - type: EmitterVisualizer
+  - type: AccessReader
+    access: [[ "Engineering" ]]

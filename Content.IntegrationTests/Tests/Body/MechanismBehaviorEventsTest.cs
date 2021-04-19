@@ -9,6 +9,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Body
 {
@@ -122,16 +123,15 @@ namespace Content.IntegrationTests.Tests.Body
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
 
-                var mapId = new MapId(0);
-                mapManager.CreateNewMapEntity(mapId);
+                var mapId = mapManager.CreateMap();
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-                var human = entityManager.SpawnEntity("HumanBodyDummy", MapCoordinates.Nullspace);
+                var human = entityManager.SpawnEntity("HumanBodyDummy", new MapCoordinates(Vector2.Zero, mapId));
 
                 Assert.That(human.TryGetComponent(out IBody? body));
                 Assert.NotNull(body);
 
-                var centerPart = body!.CenterPart();
+                var centerPart = body!.CenterPart;
                 Assert.NotNull(centerPart);
 
                 Assert.That(body.TryGetSlot(centerPart!, out var centerSlot));
@@ -196,7 +196,7 @@ namespace Content.IntegrationTests.Tests.Body
 
                 behavior.ResetAll();
 
-                body.TryAddPart(centerSlot!, centerPart, true);
+                body.SetPart(centerSlot!.Id, centerPart);
 
                 Assert.That(behavior.WasAddedToBody);
                 Assert.False(behavior.WasAddedToPart);

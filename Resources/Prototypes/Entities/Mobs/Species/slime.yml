@@ -141,7 +141,6 @@
     - type: Body
       template: HumanoidTemplate
       preset: SlimePreset
-      centerSlot: torso
     - type: Damageable
       damageContainer: biologicalDamageContainer
     - type: Metabolism

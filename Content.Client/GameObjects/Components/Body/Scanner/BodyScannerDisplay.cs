@@ -8,7 +8,6 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.Controls.ItemList;
 
 namespace Content.Client.GameObjects.Components.Body.Scanner
@@ -114,9 +113,9 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                 return;
             }
 
-            foreach (var slotName in body.Parts.Keys)
+            foreach (var (part, _) in body.Parts)
             {
-                BodyPartList.AddItem(Loc.GetString(slotName));
+                BodyPartList.AddItem(Loc.GetString(part.Name));
             }
         }
 
@@ -129,12 +128,12 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                 return;
             }
 
-            var slot = body.SlotAt(args.ItemIndex).Key;
-            _currentBodyPart = body.PartAt(args.ItemIndex).Value;
+            var slot = body.SlotAt(args.ItemIndex);
+            _currentBodyPart = body.PartAt(args.ItemIndex).Key;
 
-            if (body.Parts.TryGetValue(slot, out var part))
+            if (slot.Part != null)
             {
-                UpdateBodyPartBox(part, slot);
+                UpdateBodyPartBox(slot.Part, slot.Id);
             }
         }
 

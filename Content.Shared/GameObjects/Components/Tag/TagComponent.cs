@@ -8,6 +8,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Tag
@@ -18,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Tag
         public override string Name => "Tag";
 
         [ViewVariables]
-        [DataField("tags")]
+        [DataField("tags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TagPrototype>))]
         private readonly HashSet<string> _tags = new();
 
         public IReadOnlySet<string> Tags => _tags;

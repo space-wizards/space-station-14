@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             {
                 var nodes = nodeContainer.Nodes;
 
-                foreach (var node in nodes)
+                foreach (var node in nodes.Values)
                 {
                     if (node.NodeGroupID == NodeGroupID.WireNet)
                     {

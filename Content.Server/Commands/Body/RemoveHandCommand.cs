@@ -42,7 +42,8 @@ namespace Content.Server.Commands.Body
                 return;
             }
 
-            var (_, hand) = body.Parts.FirstOrDefault(x => x.Value.PartType == BodyPartType.Hand);
+            var hand = body.GetPartsOfType(BodyPartType.Hand).FirstOrDefault();
+
             if (hand == null)
             {
                 shell.WriteLine("You have no hands.");

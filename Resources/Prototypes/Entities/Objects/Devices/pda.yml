@@ -1,8 +1,8 @@
 - type: entity
-  name: PDA
+  abstract: true
   parent: BaseItem
   id: BasePDA
-  abstract: true
+  name: PDA
   description: Personal Data Assistant.
   components:
   - type: Appearance
@@ -31,18 +31,18 @@
   - type: LoopingSound
 
 - type: entity
-  name: Assistant PDA
   parent: BasePDA
   id: AssistantPDA
+  name: assistant PDA
   description: Why isn't it gray?
   components:
   - type: PDA
     idCard: AssistantIDCard
 
 - type: entity
-  name: Chef PDA
   parent: BasePDA
   id: ChefPDA
+  name: chef PDA
   description: Covered in grease and flour.
   components:
   - type: PDA
@@ -55,9 +55,9 @@
     state: pda-cook
 
 - type: entity
-  name: Botanist PDA
   parent: BasePDA
   id: BotanistPDA
+  name: botanist PDA
   description: Has an earthy scent.
   components:
   - type: PDA
@@ -70,10 +70,10 @@
     state: pda-hydro
 
 - type: entity
-  name: Clown PDA
   parent: BasePDA
   id: ClownPDA
-  description: "Looks can be deceiving. Warning: extra slippery"
+  name: clown PDA
+  description: Looks can be deceiving.
   components:
   - type: PDA
     idCard: ClownIDCard
@@ -88,23 +88,26 @@
   - type: CollisionWake
     enabled: false
   - type: Physics
-    bodyType: KinematicController
-    fixtures: # TODO: Make a second fixture.
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.4,0.3,0.4"
+      name: "slips"
+      hard: false
+      layer:
+      - SmallImpassable
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.3,-0.4,0.3,0.4"
       mass: 2.5
-      hard: false
-      layer:
-        - SmallImpassable
       mask:
-        - Impassable
-        - MobImpassable
+      - SmallImpassable
 
 - type: entity
-  name: Mime PDA
   parent: BasePDA
   id: MimePDA
+  name: mime PDA
   description: Suprisingly not on mute.
   components:
   - type: PDA
@@ -147,9 +150,9 @@
 #      state: pda-qm
 
 - type: entity
-  name: Cargo PDA
   parent: BasePDA
   id: CargoPDA
+  name: cargo PDA
   description: PDA for the guys that order the pizzas.
   components:
   - type: PDA
@@ -162,9 +165,9 @@
     state: pda-cargo
 
 - type: entity
-  name: Bartender PDA
   parent: BasePDA
   id: BartenderPDA
+  name: bartender PDA
   description: Smells like beer.
   components:
   - type: PDA
@@ -178,9 +181,9 @@
 
 
 - type: entity
-  name: Janitor PDA
   parent: BasePDA
   id: JanitorPDA
+  name: janitor PDA
   description: Smells like bleach.
   components:
   - type: PDA
@@ -193,9 +196,9 @@
     state: pda-janitor
 
 - type: entity
-  name: Captain PDA
   parent: BasePDA
   id: CaptainPDA
+  name: captain PDA
   description: Surprisingly no different from your PDA.
   components:
   - type: PDA
@@ -209,9 +212,9 @@
 
 
 - type: entity
-  name: Head of Personnel PDA
   parent: BasePDA
   id: HoPPDA
+  name: head of personnel PDA
   description: Looks like it's been chewed on.
   components:
   - type: PDA
@@ -225,9 +228,9 @@
 
 
 - type: entity
-  name: Chief Engineer PDA
   parent: BasePDA
   id: CEPDA
+  name: chief engineer PDA
   description: Looks like it's barely been used.
   components:
   - type: PDA
@@ -241,9 +244,9 @@
 
 
 - type: entity
-  name: Engineer PDA
   parent: BasePDA
   id: EngineerPDA
+  name: engineer PDA
   description: Rugged and well-worn.
   components:
   - type: PDA
@@ -257,9 +260,9 @@
 
 
 - type: entity
-  name: Chief Medical Officer PDA
   parent: BasePDA
   id: CMOPDA
+  name: chief medical officer PDA
   description: Extraordinarily shiny and sterile.
   components:
   - type: PDA
@@ -273,9 +276,9 @@
 
 
 - type: entity
-  name: Medical PDA
   parent: BasePDA
   id: MedicalPDA
+  name: medical PDA
   description: Shiny and sterile.
   components:
   - type: PDA
@@ -288,9 +291,9 @@
     state: pda-medical
 
 - type: entity
-  name: Research Director PDA
   parent: BasePDA
   id: RnDPDA
+  name: research director PDA
   description: It appears surprisingly ordinary.
   components:
   - type: PDA
@@ -303,9 +306,9 @@
     state: pda-rd
 
 - type: entity
-  name: Science PDA
   parent: BasePDA
   id: SciencePDA
+  name: science PDA
   description: It's covered with an unknown gooey substance.
   components:
   - type: PDA
@@ -318,9 +321,9 @@
     state: pda-science
 
 - type: entity
-  name: Head of Security PDA
   parent: BasePDA
   id: HoSPDA
+  name: head of security PDA
   description: Whosoever bears this PDA is the law.
   components:
   - type: PDA
@@ -333,9 +336,9 @@
     state: pda-hos
 
 - type: entity
-  name: Warden PDA
   parent: BasePDA
   id: WardenPDA
+  name: warden PDA
   description: The OS appears to have been jailbroken.
   components:
     - type: PDA
@@ -348,9 +351,9 @@
       state: pda-warden
 
 - type: entity
-  name: Security PDA
   parent: BasePDA
   id: SecurityPDA
+  name: security PDA
   description: Red to hide the stains of assistant blood.
   components:
   - type: PDA
@@ -363,9 +366,9 @@
     state: pda-security
 
 - type: entity
-  name: Centcom PDA
   parent: AssistantPDA
   id: CentcomPDA
+  name: centcom PDA
   description: Colored the numbing grey of bureaucracy.
   components:
   - type: PDA

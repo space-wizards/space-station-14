@@ -95,6 +95,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Analyzers", "RobustT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.YAMLLinter", "Content.YAMLLinter\Content.YAMLLinter.csproj", "{A59E2FCC-93CF-4886-8EA7-94F021A7475D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Base", "RobustToolbox\Avalonia.Base\Avalonia.Base.csproj", "{A3C5B00A-D232-4A01-B82E-B0E58BFD5C12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -211,6 +213,10 @@ Global
 		{A59E2FCC-93CF-4886-8EA7-94F021A7475D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A59E2FCC-93CF-4886-8EA7-94F021A7475D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A59E2FCC-93CF-4886-8EA7-94F021A7475D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3C5B00A-D232-4A01-B82E-B0E58BFD5C12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3C5B00A-D232-4A01-B82E-B0E58BFD5C12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3C5B00A-D232-4A01-B82E-B0E58BFD5C12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3C5B00A-D232-4A01-B82E-B0E58BFD5C12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -238,6 +244,7 @@ Global
 		{23F09C45-950E-4DB7-A465-E937450FF008} = {AFF53804-115F-4E67-B81F-26265EA27880}
 		{440426C1-8DCA-43F6-967F-94439B8DAF47} = {AFF53804-115F-4E67-B81F-26265EA27880}
 		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
+		{A3C5B00A-D232-4A01-B82E-B0E58BFD5C12} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA37ED9F-F8D6-468E-A101-658AD605B09A}

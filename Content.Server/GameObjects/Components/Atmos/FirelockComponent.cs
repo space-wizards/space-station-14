@@ -61,7 +61,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 return;
             }
-            
+
             if (IsHoldingPressure())
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("A gush of air blows in your face... Maybe you should reconsider."));
@@ -76,15 +76,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            if (!Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos))
-                return false;
-
-            var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.GridID);
+            var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.Coordinates);
 
             var minMoles = float.MaxValue;
             var maxMoles = 0f;
 
-            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
+            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(Owner.Transform.Coordinates))
             {
                 // includeAirBlocked remains false, and therefore Air must be present
                 var moles = adjacent.Air!.TotalMoles;
@@ -107,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (tileAtmos.Hotspot.Valid)
                 return true;
 
-            var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.GridID);
+            var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.Coordinates);
 
             foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
             {

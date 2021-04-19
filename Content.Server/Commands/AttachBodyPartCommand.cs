@@ -1,6 +1,5 @@
 #nullable enable
 using Content.Server.Administration;
-using Content.Server.GameObjects.Components.Body.Part;
 using Content.Shared.Administration;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
@@ -8,6 +7,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using static Content.Server.GameObjects.Components.Body.Part.BodyPartComponent;
 
 namespace Content.Server.Commands
 {
@@ -100,7 +100,7 @@ namespace Content.Server.Commands
                 return;
             }
 
-            body.TryAddPart($"{nameof(BodyPartComponent.AttachBodyPartVerb)}-{partEntity.Uid}", part, true);
+            body.SetPart($"{nameof(AttachBodyPartVerb)}-{partEntity.Uid}", part);
         }
     }
 }

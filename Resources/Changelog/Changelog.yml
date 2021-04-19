@@ -795,3 +795,131 @@ Entries:
   - {message: Fixed placement of inflatable walls., type: Fix}
   id: 143
   time: '2021-04-01T21:34:36.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Debug weapons, type: Add}
+  id: 144
+  time: '2021-04-02T08:54:08.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Adds Animal / critter mob crates to cargo, type: Add}
+  id: 145
+  time: '2021-04-02T10:41:00.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: You can eat organs, type: Add}
+  id: 146
+  time: '2021-04-02T13:44:02.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Saltern's space-facing walls are all reinforced and computers should
+      not be physics fucky anymore, type: Tweak}
+  - {message: Removed plasma canister from Saltern for now, type: Remove}
+  id: 147
+  time: '2021-04-02T19:37:33.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Pie cannon inhands fixed and can only hold 5 pies instead of 15, type: Fix}
+  id: 148
+  time: '2021-04-04T11:13:20.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Increased material cost of all lathe recipes, type: Tweak}
+  id: 149
+  time: '2021-04-05T00:00:45.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to move pulled entities, type: Fix}
+  id: 150
+  time: '2021-04-05T12:08:46.0000000+00:00'
+- author: MehimoNemo
+  changes:
+  - {message: 'Lathes can now print Firelock electronics, APC electronics, and Door
+      electronics ;)', type: Add}
+  id: 151
+  time: '2021-04-06T19:06:25.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Add light replacer to janitorial closet., type: Add}
+  id: 152
+  time: '2021-04-08T12:28:06.0000000+00:00'
+- author: bryce0110
+  changes:
+  - {message: Welded Lockers and Crates will now look welded., type: Fix}
+  id: 153
+  time: '2021-04-08T12:39:50.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: 'baseball bat, machete, captain''s sabre and katana.', type: Add}
+  - {message: 'smaller combat knife icon, inhands for fireaxe, Olivaw pistol and WT-550
+      smg.', type: Fix}
+  id: 154
+  time: '2021-04-10T16:34:45.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: You can now set your HUD's theme in the settings., type: Add}
+  id: 155
+  time: '2021-04-11T22:43:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Make GasOverlayData great again, type: Tweak}
+  id: 156
+  time: '2021-04-12T13:01:17.0000000+00:00'
+- author: BulletGrade
+  changes:
+  - {message: Mask of joy now available in AutoDrobe., type: Add}
+  id: 157
+  time: '2021-04-13T00:32:02.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Added a library to the Saltern., type: Add}
+  id: 158
+  time: '2021-04-13T00:32:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add named fixtures so banana peel doesn't spin out of control, type: Add}
+  id: 159
+  time: '2021-04-13T10:57:29.0000000+00:00'
+- author: Hardly
+  changes:
+  - {message: Bar backroom in Saltern, type: Add}
+  - {message: BarDrobe, type: Add}
+  id: 160
+  time: '2021-04-15T18:24:55.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Destroyed state for canisters, type: Add}
+  - {message: Buffed canister HP from 100 to 300, type: Tweak}
+  id: 161
+  time: '2021-04-15T21:14:47.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Bucket now works and there's one in botany and janitor hut, type: Fix}
+  - {message: Janitorial items now have proper inhands, type: Add}
+  id: 162
+  time: '2021-04-15T21:21:10.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: 'Names for tanks, solar stuff and more are fixed.', type: Fix}
+  id: 163
+  time: '2021-04-16T05:28:09.0000000+00:00'
+- author: MehimoNemo
+  changes:
+  - {message: Thrown PDAs and IDs now open doors. Try it out!, type: Add}
+  id: 164
+  time: '2021-04-18T08:03:31.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: Improved shadow edges somewhat., type: Tweak}
+  id: 165
+  time: '2021-04-19T07:49:27.579650+00:00'
+- author: PJB
+  changes:
+  - {message: The game viewport is now a limited size (21x15 tiles)., type: Add}
+  - {message: 'As part of this, the game viewport is now scaled to match your window
+      size.', type: Add}
+  - {message: Scaling is quite intelligent and will use integer-scale nearest neighbor
+      where applicable. So people playing on fullscreen 1080p/1440p monitors will
+      experience perfect crisp graphics., type: Add}
+  id: 166
+  time: '2021-04-19T07:52:40.0000000+00:00'

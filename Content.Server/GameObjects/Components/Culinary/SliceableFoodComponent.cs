@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Culinary
                 Owner.Delete();
                 return true;
             }
-            solution.TryRemoveReagent("chem.Nutriment", solution.CurrentVolume / ReagentUnit.New(Count + 1));
+            solution.TryRemoveReagent("Nutriment", solution.CurrentVolume / ReagentUnit.New(Count + 1));
             return true;
         }
 

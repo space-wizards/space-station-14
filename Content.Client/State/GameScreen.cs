@@ -8,6 +8,7 @@ using Content.Client.Voting;
 using Content.Shared;
 using Content.Shared.Chat;
 using Content.Shared.Input;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -16,12 +17,15 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.State
 {
-    public class GameScreen : GameScreenBase
+    public class GameScreen : GameScreenBase, IMainViewportState
     {
+        public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
+
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
@@ -29,15 +33,35 @@ namespace Content.Client.State
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
+        [Dependency] private readonly IClyde _clyde = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         [ViewVariables] private ChatBox? _gameChat;
         private ConstructionMenuPresenter? _constructionMenu;
+
+        public MainViewport Viewport { get; private set; } = default!;
 
         public override void Startup()
         {
             base.Startup();
 
             _gameChat = new ChatBox();
+            Viewport = new MainViewport
+            {
+                Viewport =
+                {
+                    ViewportSize = ViewportSize
+                }
+            };
+
+            _userInterfaceManager.StateRoot.AddChild(Viewport);
+            LayoutContainer.SetAnchorPreset(Viewport, LayoutContainer.LayoutPreset.Wide);
+            Viewport.SetPositionFirst();
+
+            _userInterfaceManager.StateRoot.AddChild(_gameChat);
+            LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
+            LayoutContainer.SetMarginLeft(_gameChat, -475);
+            LayoutContainer.SetMarginBottom(_gameChat, 235);
 
             _userInterfaceManager.StateRoot.AddChild(_gameHud.RootControl);
             _chatManager.SetChatBox(_gameChat);
@@ -66,6 +90,8 @@ namespace Content.Client.State
                 InputCmdHandler.FromDelegate(_ => CycleChatChannel(_gameChat, false)));
 
             SetupPresenters();
+
+            _eyeManager.MainViewport = Viewport.Viewport;
         }
 
         public override void Shutdown()
@@ -75,7 +101,10 @@ namespace Content.Client.State
             base.Shutdown();
 
             _gameChat?.Dispose();
+            Viewport.Dispose();
             _gameHud.RootControl.Orphan();
+            // Clear viewport to some fallback, whatever.
+            _eyeManager.MainViewport = _userInterfaceManager.MainViewport;
 
         }
 
@@ -133,6 +162,13 @@ namespace Content.Client.State
             }
 
             chat.SelectChannel(channels[idx]);
+        }
+
+        public override void FrameUpdate(FrameEventArgs e)
+        {
+            base.FrameUpdate(e);
+
+            Viewport.Viewport.Eye = _eyeManager.CurrentEye;
         }
     }
 }

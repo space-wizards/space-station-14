@@ -160,7 +160,7 @@ namespace Content.Server.Atmos
                     || entity.IsInContainer())
                     continue;
 
-                var pressureMovements = physics.Entity.EnsureComponent<MovedByPressureComponent>();
+                var pressureMovements = physics.Owner.EnsureComponent<MovedByPressureComponent>();
                 if (pressure.LastHighPressureMovementAirCycle < _gridAtmosphereComponent.UpdateCounter)
                 {
                     pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToEntityCoordinates(GridIndex, _mapManager) ?? EntityCoordinates.Invalid);
