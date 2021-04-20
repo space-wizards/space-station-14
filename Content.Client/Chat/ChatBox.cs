@@ -53,8 +53,6 @@ namespace Content.Client.Chat
 
         private const float FilterPopupWidth = 110;
         private const int DragMarginSize = 7;
-        private const float MinHeight = 128;
-        private const int MinWidth = 200;
         private const int MinDistanceFromBottom = 255;
         private const int MinLeft = 500;
 
@@ -117,6 +115,8 @@ namespace Content.Client.Chat
             MouseFilter = MouseFilterMode.Stop;
             LayoutContainer.SetMarginLeft(this, 4);
             LayoutContainer.SetMarginRight(this, 4);
+            MinHeight = 128;
+            MinWidth = 200;
 
             AddChild(new PanelContainer
             {
