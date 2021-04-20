@@ -51,15 +51,28 @@ binds:
 - function: ShowEscapeMenu
   type: State
   key: Escape
-- function: FocusChatWindow
+- function: CycleChatChannelForward
+  type: State
+  key: Tab
+- function: CycleChatChannelBackward
+  type: State
+  key: Tab
+  mod1: Control
+- function: FocusChatInputWindow
   type: State
   key: T
-- function: FocusOOCWindow
+- function: FocusLocalChatWindow
   type: State
   key: LBracket
-- function: FocusAdminChatWindow
+- function: FocusRadioWindow
+  type: State
+  key: SemiColon
+- function: FocusOOCWindow
   type: State
   key: RBracket
+- function: FocusAdminChatWindow
+  type: State
+  key: BackSlash
 - function: EditorLinePlace
   type: State
   key: MouseLeft

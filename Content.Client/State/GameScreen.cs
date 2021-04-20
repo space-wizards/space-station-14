@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Administration;
 using Content.Client.Chat;
 using Content.Client.Construction;
@@ -5,6 +6,7 @@ using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
 using Content.Client.Voting;
 using Content.Shared;
+using Content.Shared.Chat;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -37,9 +39,6 @@ namespace Content.Client.State
         [ViewVariables] private ChatBox? _gameChat;
         private ConstructionMenuPresenter? _constructionMenu;
 
-        private bool _oocEnabled;
-        private bool _adminOocEnabled;
-
         public MainViewport Viewport { get; private set; } = default!;
 
         public override void Startup()
@@ -59,29 +58,31 @@ namespace Content.Client.State
             LayoutContainer.SetAnchorPreset(Viewport, LayoutContainer.LayoutPreset.Wide);
             Viewport.SetPositionFirst();
 
-            _userInterfaceManager.StateRoot.AddChild(_gameChat);
-            LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
-            LayoutContainer.SetMarginLeft(_gameChat, -475);
-            LayoutContainer.SetMarginBottom(_gameChat, 235);
-
             _userInterfaceManager.StateRoot.AddChild(_gameHud.RootControl);
             _chatManager.SetChatBox(_gameChat);
             _voteManager.SetPopupContainer(_gameHud.VoteContainer);
             _gameChat.DefaultChatFormat = "say \"{0}\"";
-            _gameChat.Input.PlaceHolder = Loc.GetString("Say something! [ for OOC");
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
                 InputCmdHandler.FromDelegate(_ => FocusChat(_gameChat)));
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
-                InputCmdHandler.FromDelegate(_ => FocusOOC(_gameChat)));
+                InputCmdHandler.FromDelegate(_ => FocusChannel(_gameChat, ChatChannel.OOC)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusLocalChat,
+                InputCmdHandler.FromDelegate(_ => FocusChannel(_gameChat, ChatChannel.Local)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusRadio,
+                InputCmdHandler.FromDelegate(_ => FocusChannel(_gameChat, ChatChannel.Radio)));
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
-                InputCmdHandler.FromDelegate(_ => FocusAdminChat(_gameChat)));
+                InputCmdHandler.FromDelegate(_ => FocusChannel(_gameChat, ChatChannel.AdminChat)));
 
-            _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
-            _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
-            _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
+            _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelForward,
+                InputCmdHandler.FromDelegate(_ => CycleChatChannel(_gameChat, true)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelBackward,
+                InputCmdHandler.FromDelegate(_ => CycleChatChannel(_gameChat, false)));
 
             SetupPresenters();
 
@@ -118,50 +119,9 @@ namespace Content.Client.State
             _constructionMenu?.Dispose();
         }
 
-
-        private void OnOocEnabledChanged(bool val)
-        {
-            _oocEnabled = val;
-
-            if (_adminManager.IsActive())
-            {
-                return;
-            }
-
-            if(_gameChat is null)
-                return;
-
-            _gameChat.Input.PlaceHolder = Loc.GetString(_oocEnabled ? "Say something! [ for OOC" : "Say something!");
-        }
-
-        private void OnAdminOocEnabledChanged(bool val)
-        {
-            _adminOocEnabled = val;
-
-            if (!_adminManager.IsActive())
-            {
-                return;
-            }
-
-            if (_gameChat is null)
-                return;
-
-            _gameChat.Input.PlaceHolder = Loc.GetString(_adminOocEnabled ? "Say something! [ for OOC" : "Say something!");
-        }
-
-        private void OnAdminStatusUpdated()
-        {
-            if (_gameChat is null)
-                return;
-
-            _gameChat.Input.PlaceHolder = _adminManager.IsActive()
-                ? Loc.GetString(_adminOocEnabled ? "Say something! [ for OOC" : "Say something!")
-                : Loc.GetString(_oocEnabled ? "Say something! [ for OOC" : "Say something!");
-        }
-
         internal static void FocusChat(ChatBox chat)
         {
-            if (chat == null || chat.UserInterfaceManager.KeyboardFocused != null)
+            if (chat.UserInterfaceManager.KeyboardFocused != null)
             {
                 return;
             }
@@ -169,28 +129,34 @@ namespace Content.Client.State
             chat.Input.IgnoreNext = true;
             chat.Input.GrabKeyboardFocus();
         }
-        internal static void FocusOOC(ChatBox chat)
+        internal static void FocusChannel(ChatBox chat, ChatChannel channel)
         {
-            if (chat == null || chat.UserInterfaceManager.KeyboardFocused != null)
+            if (chat.UserInterfaceManager.KeyboardFocused != null)
             {
                 return;
             }
 
             chat.Input.IgnoreNext = true;
-            chat.Input.GrabKeyboardFocus();
-            chat.Input.InsertAtCursor("[");
+            chat.SelectChannel(channel);
         }
 
-        internal static void FocusAdminChat(ChatBox chat)
+        internal static void CycleChatChannel(ChatBox chat, bool forward)
         {
-            if (chat == null || chat.UserInterfaceManager.KeyboardFocused != null)
+            chat.Input.IgnoreNext = true;
+            var channels = chat.SelectableChannels;
+            var idx = channels.IndexOf(chat.SelectedChannel);
+            if (forward)
             {
-                return;
+                idx++;
+                idx = MathHelper.Mod(idx, channels.Count());
+            }
+            else
+            {
+                idx--;
+                idx = MathHelper.Mod(idx, channels.Count());
             }
 
-            chat.Input.IgnoreNext = true;
-            chat.Input.GrabKeyboardFocus();
-            chat.Input.InsertAtCursor("]");
+            chat.SelectChannel(channels[idx]);
         }
 
         public override void FrameUpdate(FrameEventArgs e)
