@@ -1,4 +1,4 @@
-﻿advertisement-sovietsoda-1 = For Tsar and Country.
+﻿advertisement-sovietsoda-1 = For Comrade and Country.
 advertisement-sovietsoda-2 = Have you fulfilled your nutrition quota today?
 advertisement-sovietsoda-3 = Very nice!
 advertisement-sovietsoda-4 = We are simple people, for this is all we eat.
