@@ -182,20 +182,6 @@
       amount: -5
       
 - type: reagent
-  id: Sugar
-  name: sugar
-  desc: Sweet.
-  color: "#ffffff"
-  physicalDesc: opaque
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWeeds
-      amount: 2
-    - !type:AdjustPests
-      amount: 2
-
-- type: reagent
   id: SulfuricAcid
   name: sulfuric acid
   desc: A highly corrosive, oily, colorless liquid.

@@ -1,0 +1,199 @@
+# Packets
+
+# Since this one is closed, the only way to insert liquid is with a syringe.
+- type: entity
+  parent: BaseItem
+  id: FoodCondimentPacket
+  name: condiment packet
+  description: A small plastic pack with condiments to put on your food.
+  components:
+  - type: Drink
+    openSounds: packetOpenSounds
+  - type: SolutionContainer
+    maxVol: 10
+  - type: SolutionTransfer
+    transferAmount: 5
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-empty
+
+- type: entity
+  parent: FoodCondimentPacket
+  id: FoodCondimentPacketAstrotame
+  name: Astrotame
+  description: The sweetness of a thousand sugars but none of the calories.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Astrotame
+        Quantity: 10
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-astrotame
+
+- type: entity
+  parent: FoodCondimentPacket
+  id: FoodCondimentPacketBbq
+  name: BBQ sauce
+  description: Hand wipes not included.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: BbqSauce
+        Quantity: 10
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-bbq
+
+- type: entity
+  parent: FoodCondimentPacket
+  id: FoodCondimentPacketCornoil
+  name: Corn Oil
+  description: Corn Oil. A delicious oil used in cooking. Made from corn.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Cornoil
+        Quantity: 10
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-cornoil
+
+- type: entity
+  parent: FoodCondimentPacket
+  id: FoodCondimentPacketFrostoil
+  name: coldsauce
+  description: Coldsauce. Leaves the tongue numb in its passage.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Frostoil
+        Quantity: 10
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-frostoil
+
+- type: entity
+  parent: FoodCondimentPacket
+  id: FoodCondimentPacketHorseradish
+  name: horseradish sauce
+  description: A packet of smelly horseradish sauce.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: HorseradishSauce
+        Quantity: 10
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-greygoo
+
+- type: entity
+  parent: FoodCondimentPacket
+  id: FoodCondimentPacketHotsauce
+  name: hotsauce
+  description: You can almost TASTE the stomach ulcers now!
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Hotsauce
+        Quantity: 10
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-hotsauce
+
+- type: entity
+  parent: FoodCondimentPacket
+  id: FoodCondimentPacketKetchup
+  name: ketchup
+  description: You feel more American already.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Ketchup
+        Quantity: 10
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-ketchup
+
+- type: entity
+  parent: FoodCondimentPacket
+  id: FoodCondimentPacketPepper
+  name: black pepper
+  description: Often used to flavor food or make people sneeze.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Blackpepper
+        Quantity: 10
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-pepper
+
+- type: entity
+  parent: FoodCondimentPacket
+  id: FoodCondimentPacketSalt
+  name: salt
+  description: Salt. From space oceans, presumably.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Salt
+        Quantity: 10
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-salt
+
+- type: entity
+  parent: FoodCondimentPacket
+  id: FoodCondimentPacketSoy
+  name: soy sauce
+  description: A salty soy-based flavoring.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Soysauce
+        Quantity: 10
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-soysauce
+
+- type: entity
+  parent: FoodCondimentPacket
+  id: FoodCondimentPacketSugar
+  name: sugar
+  description: Tasty spacey sugar!
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Sugar
+        Quantity: 10
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-sugar
+
+# Bottles
+
+# Trash
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: FoodCondimentPacketTrash
+  name: empty condiment packet
+  description:
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    netsync: false
+    state: packet-trash

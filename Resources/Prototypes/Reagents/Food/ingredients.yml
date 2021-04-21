@@ -3,17 +3,47 @@
   name: flour
   desc: Used for baking.
   physicalDesc: powdery
-  color: "#FFFFFF"
+  color: white
   metabolism:
     - !type:DefaultFood
       rate: 1
 
 - type: reagent
-  id: chem.Egg
+  id: Egg
   name: egg
   desc: Used for baking.
   physicalDesc: mucus-like
-  color: "#FFFFFF"
+  color: white
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Sugar
+  name: sugar
+  desc: Tasty spacey sugar!
+  physicalDesc:
+  color: white
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Salt
+  name: salt
+  desc: Salt. From space oceans, presumably.
+  physicalDesc: Coarse.
+  color: white
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Blackpepper
+  name: black pepper
+  desc: Often used to flavor food or make people sneeze.
+  physicalDesc: Grainy.
+  color: black
   metabolism:
     - !type:DefaultFood
       rate: 1

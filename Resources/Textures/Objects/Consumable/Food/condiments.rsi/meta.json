@@ -8,10 +8,10 @@
   },
   "states": [
     {
-      "name": "astrotame-packet"
+      "name": "packet-astrotame"
     },
     {
-      "name": "bbq-packet"
+      "name": "packet-bbq"
     },
     {
       "name": "bbqsauce"
@@ -20,13 +20,13 @@
       "name": "coldsauce"
     },
     {
-      "name": "cornoil-packet"
+      "name": "packet-cornoil"
     },
     {
-      "name": "empty2-packet"
+      "name": "packet-empty"
     },
     {
-      "name": "empty-packet"
+      "name": "packet-trash"
     },
     {
       "name": "empty"
@@ -35,34 +35,34 @@
       "name": "enzyme"
     },
     {
-      "name": "frostoil-packet"
+      "name": "packet-frostoil"
     },
     {
-      "name": "greygoo-packet"
+      "name": "packet-greygoo"
+    },
+    {
+      "name": "packet-hotsauce"
     },
     {
       "name": "hotsauce"
     },
     {
-      "name": "hotsauce-packet"
+      "name": "packet-ketchup"
     },
     {
       "name": "ketchup"
     },
     {
-      "name": "ketchup-packet"
-    },
-    {
       "name": "mixed"
     },
     {
-      "name": "mixed-packet"
+      "name": "packet-mixed"
     },
     {
-      "name": "pepper-packet"
+      "name": "packet-pepper"
     },
     {
-      "name": "salt-packet"
+      "name": "packet-salt"
     },
     {
       "name": "shaker-empty"
@@ -74,10 +74,10 @@
       "name": "shaker-salt"
     },
     {
-      "name": "soysauce-packet"
+      "name": "packet-soysauce"
     },
     {
-      "name": "sugar-packet"
+      "name": "packet-sugar"
     }
   ]
 }
