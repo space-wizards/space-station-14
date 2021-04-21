@@ -47,6 +47,7 @@ namespace Content.Client
             IoCManager.Register<EuiManager, EuiManager>();
             IoCManager.Register<IVoteManager, VoteManager>();
             IoCManager.Register<ChangelogManager, ChangelogManager>();
+            IoCManager.Register<ViewportManager, ViewportManager>();
         }
     }
 }

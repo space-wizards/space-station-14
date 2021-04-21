@@ -35,8 +35,8 @@
 - type: entity
   parent: ScrubberBase
   id: Scrubber
-  name: Scrubber
-  description: "Scrubs unwanted gasses out of the air."
+  name: scrubber
+  description: Scrubs unwanted gasses out of the air.
   components:
   - type: NodeContainer
     nodes:

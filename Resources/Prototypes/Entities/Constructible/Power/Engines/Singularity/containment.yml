@@ -1,0 +1,76 @@
+- type: entity
+  id: ContainmentFieldGenerator
+  name: containment field generator
+  description: A machine that generates a containment field when powered by an emitter.\nKeeps the Singularity docile.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
+      mass: 25
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - Opaque
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Constructible/Power/Singularity/containment.rsi
+    state: icon
+  - type: Icon
+    sprite: Constructible/Power/Singularity/containment.rsi
+    state: icon
+  - type: ContainmentFieldGenerator
+  - type: Anchorable
+  - type: Pullable
+  - type: PointLight
+    enabled: false
+    color: "#4080FF"
+    radius: 32
+    energy: 2.0
+    softness: 32.0
+
+- type: entity
+  id: ContainmentField
+  name: containment field
+  description: A containment field that repels gravitational singularities.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - Opaque
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Constructible/Power/Singularity/containment_field.rsi
+    state: field
+  - type: Icon
+    sprite: Constructible/Power/Singularity/containment_field.rsi
+    state: field
+  - type: ContainmentField
