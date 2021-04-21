@@ -937,3 +937,8 @@ Entries:
     type: Add}
   id: 167
   time: '2021-04-20T23:39:39.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Added advertising to vending machines, type: Add}
+  id: 168
+  time: '2021-04-21T10:00:15.0000000+00:00'
