@@ -1,0 +1,7 @@
+﻿- type: advertisementsPack
+  id: VendomatAds
+  advertisements:
+  - advertisement-vendomat-1
+  - advertisement-vendomat-2
+  - advertisement-vendomat-3
+  - advertisement-vendomat-4
