@@ -29,11 +29,14 @@ namespace Content.Client.UserInterface
         public readonly Button CloseButton;
         public readonly Button SaveButton;
 
-        public CharacterSetupGui(IEntityManager entityManager,
+        public CharacterSetupGui(
+            IEntityManager entityManager,
             IResourceCache resourceCache,
             IClientPreferencesManager preferencesManager,
             IPrototypeManager prototypeManager)
         {
+            AddChild(new ParallaxControl());
+
             _entityManager = entityManager;
             _preferencesManager = preferencesManager;
             var margin = new Control

@@ -1,6 +1,10 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+﻿using Content.Client.Chat;
+using Content.Client.Interfaces.Chat;
+using Content.Client.UserInterface.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface
 {
@@ -9,6 +13,7 @@ namespace Content.Client.UserInterface
     /// </summary>
     public sealed class AlertsUI : Control
     {
+        public const float ChatSeparation = 38f;
         public GridContainer Grid { get; }
 
         public AlertsUI()
@@ -37,6 +42,36 @@ namespace Content.Client.UserInterface
             panelContainer.AddChild(Grid);
 
             MinSize = (64, 64);
+        }
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            var _chatManager = IoCManager.Resolve<IChatManager>();
+            _chatManager.OnChatBoxResized += OnChatResized;
+            OnChatResized(new ChatResizedEventArgs(ChatBox.InitialChatBottom));
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+            var _chatManager = IoCManager.Resolve<IChatManager>();
+            _chatManager.OnChatBoxResized -= OnChatResized;
+        }
+
+
+        private void OnChatResized(ChatResizedEventArgs chatResizedEventArgs)
+        {
+            // resize us to fit just below the chatbox
+            var _chatManager = IoCManager.Resolve<IChatManager>();
+            if (_chatManager.CurrentChatBox != null)
+            {
+                LayoutContainer.SetMarginTop(this, chatResizedEventArgs.NewBottom + ChatSeparation);
+            }
+            else
+            {
+                LayoutContainer.SetMarginTop(this, 250);
+            }
         }
 
         // This makes no sense but I'm leaving it in place in case I break anything by removing it.

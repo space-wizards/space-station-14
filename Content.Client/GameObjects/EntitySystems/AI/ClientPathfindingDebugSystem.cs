@@ -464,15 +464,15 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
         #endregion
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
+        protected override void Draw(in OverlayDrawArgs args)
         {
             if (Modes == 0)
             {
                 return;
             }
 
-            handle.UseShader(_shader);
-            var screenHandle = (DrawingHandleScreen) handle;
+            var screenHandle = args.ScreenHandle;
+            screenHandle.UseShader(_shader);
             var viewport = _eyeManager.GetWorldViewport();
 
             if ((Modes & PathfindingDebugMode.Route) != 0)

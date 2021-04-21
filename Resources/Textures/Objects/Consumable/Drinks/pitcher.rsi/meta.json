@@ -1,32 +1,50 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/d23125a1b04ef77c00da9e7aa7110835672077bb",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/f7aa28fd4b4d0386c3393d829681ebca526f1d2d/icons/obj/drinks.dmi",
-    "states": [
-        {
-            "name": "icon-0"
-        },
-        {
-            "name": "icon-1"
-        },
-        {
-            "name": "icon-2"
-        },
-        {
-            "name": "icon-3"
-        },
-        {
-            "name": "icon-4"
-        },
-        {
-            "name": "icon-5"
-        },
-        {
-            "name": "icon-6"
-        }
-    ]
+    {
+      "name": "icon-1"
+    },
+    {
+      "name": "icon-2"
+    },
+    {
+      "name": "icon-3"
+    },
+    {
+      "name": "icon-4"
+    },
+    {
+      "name": "icon-5"
+    },
+    {
+      "name": "icon-6"
+    },
+    {
+      "name": "fill-1"
+    },
+    {
+      "name": "fill-2"
+    },
+    {
+      "name": "fill-3"
+    },
+    {
+      "name": "fill-4"
+    },
+    {
+      "name": "fill-5"
+    },
+    {
+      "name": "fill-6"
+    }
+  ]
 }

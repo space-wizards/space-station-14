@@ -215,6 +215,8 @@ namespace Content.Client.State
 
                 LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
 
+                AddChild(new ParallaxControl());
+
                 var layout = new LayoutContainer();
                 AddChild(layout);
 
