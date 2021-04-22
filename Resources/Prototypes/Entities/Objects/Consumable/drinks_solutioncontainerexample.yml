@@ -5,7 +5,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkVisualizerTestCut
-  name: insulated pitcher
+  name: solution container vis cut-out
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
   components:
   - type: SolutionContainer
@@ -34,7 +34,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkVisualizerTestNot
-  name: insulated pitcher
+  name: solution container vis cut-not
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
   components:
   - type: SolutionContainer
