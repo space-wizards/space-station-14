@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         [ViewVariables] [DataField("trash")] protected virtual string? TrashPrototype { get; set; }
 
-        [ViewVariables] [DataField("transferAmount")] protected virtual ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
+        [ViewVariables] [DataField("transferAmount")] protected virtual ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(2);
 
         [DataField("utensilsNeeded")] private UtensilType _utensilsNeeded = UtensilType.None;
 

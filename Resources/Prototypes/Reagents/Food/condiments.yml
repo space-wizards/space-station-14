@@ -3,7 +3,7 @@
   name: Astrotame
   desc: The sweetness of a thousand sugars but none of the calories.
 #  physicalDesc:
-  color: teal
+  color: aquamarine
   metabolism:
     - !type:DefaultFood
       rate: 1

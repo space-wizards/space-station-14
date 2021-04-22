@@ -78,6 +78,21 @@
     },
     {
       "name": "packet-sugar"
+    },
+    {
+      "name": "packet-layer"
+    },
+    {
+      "name": "packet-trans-1"
+    },
+    {
+      "name": "packet-trans-2"
+    },
+    {
+      "name": "packet-solid-1"
+    },
+    {
+      "name": "packet-solid-2"
     }
   ]
 }

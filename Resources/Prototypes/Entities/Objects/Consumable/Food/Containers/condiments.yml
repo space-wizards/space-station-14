@@ -14,6 +14,7 @@
   - type: SolutionTransfer
     transferAmount: 5
   - type: Sprite
+    netsync: false
     sprite: Objects/Consumable/Food/condiments.rsi
     state: packet-empty
 
@@ -29,8 +30,16 @@
       - ReagentId: Astrotame
         Quantity: 10
   - type: Sprite
-    sprite: Objects/Consumable/Food/condiments.rsi
-    state: packet-astrotame
+    layers:
+      - state: packet-trans-2
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+      - state: packet-astrotame
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 2
+      fillBaseName: packet-trans-
 
 - type: entity
   parent: FoodCondimentPacket
