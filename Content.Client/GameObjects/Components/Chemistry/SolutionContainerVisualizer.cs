@@ -50,7 +50,8 @@ namespace Content.Client.GameObjects.Components.Chemistry
                 else
                 {
                     sprite.LayerSetState(fillLayer, _emptySpriteName);
-                    sprite.LayerSetColor(fillLayer, _emptySpriteColor);
+                    if (_changeColor)
+                        sprite.LayerSetColor(fillLayer, _emptySpriteColor);
                 }
             }
         }
