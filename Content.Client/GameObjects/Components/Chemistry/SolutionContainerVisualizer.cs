@@ -3,6 +3,7 @@ using System;
 using Content.Shared.GameObjects.Components.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Chemistry
@@ -12,9 +13,10 @@ namespace Content.Client.GameObjects.Components.Chemistry
     {
         [DataField("maxFillLevels")] private int _maxFillLevels = 0;
         [DataField("fillBaseName")] private string? _fillBaseName = null;
-        [DataField("emptySpriteName")] private string? _emptySpriteName = null;
         [DataField("layer")] private SolutionContainerLayers _layer = SolutionContainerLayers.Fill;
         [DataField("changeColor")] private bool _changeColor = true;
+        [DataField("emptySpriteName")] private string? _emptySpriteName = null;
+        [DataField("emptySpriteColor")] private Color _emptySpriteColor = Color.White;
 
         public override void OnChangeData(AppearanceComponent component)
         {
@@ -46,7 +48,11 @@ namespace Content.Client.GameObjects.Components.Chemistry
                 if (_emptySpriteName == null)
                     sprite.LayerSetVisible(fillLayer, false);
                 else
+                {
                     sprite.LayerSetState(fillLayer, _emptySpriteName);
+                    if (_changeColor)
+                        sprite.LayerSetColor(fillLayer, _emptySpriteColor);
+                }
             }
         }
     }
