@@ -1,0 +1,38 @@
+- type: DamageClass
+  id: Brute
+  types:
+    - Blunt
+    - Slash
+    - Piercing
+
+- type: DamageClass
+  id: Burn
+  types:
+    - Heat
+    - Shock
+    - Cold
+
+- type: DamageClass
+  id: Toxin
+  types:
+    - Poison
+    - Radiation
+
+- type: DamageClass
+  id: Airloss
+  types:
+    - Asphyxiation
+    - Bloodloss
+
+- type: DamageClass
+  id: Genetic
+  types:
+    - Cellular
+
+
+
+
+
+
+
+
