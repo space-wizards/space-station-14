@@ -8,8 +8,5 @@ namespace Content.Shared.Damage
     {
         [field: DataField(tag: "id", required: true)]
         public string ID { get; } = default!;
-
-        [field: DataField(tag: "name", required: true)]
-        public string Name { get; } = default!;
     }
 }
