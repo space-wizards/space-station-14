@@ -26,16 +26,11 @@ namespace Content.Server.Actions
         [ViewVariables] [DataField("AddedComponent")] public string InduceComponent { get; set; } = "RadiatonPulse";
         [ViewVariables] [DataField("castsound")] public string castSound { get; set; } = "/Audio/Effects/Fluids/slosh.ogg";
 
-        public Type RegisteredTargetType;
+        public Type? RegisteredTargetType;
 
-        public Type RegisteredInduceType;
+        public Type? RegisteredInduceType;
 
-        public IComponent CheckedComponent;
-
-        public TargetSpell()
-        {
-
-        }
+        public IComponent? CheckedComponent;
 
         public void DoTargetEntityAction(TargetEntityActionEventArgs args)
         {
@@ -74,7 +69,7 @@ namespace Content.Server.Actions
             var componentInduced = compFactory.GetComponent(RegisteredInduceType);
             Component compInducedFinal = (Component)componentInduced;
             compInducedFinal.Owner = target;
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(castSound, caster);
+           // EntitySystem.Get<AudioSystem>().PlayFromEntity(castSound, caster);
             target.EntityManager.ComponentManager.AddComponent(target, compInducedFinal);
         }
 

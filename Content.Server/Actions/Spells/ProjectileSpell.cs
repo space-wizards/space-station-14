@@ -44,7 +44,7 @@ namespace Content.Server.Actions
 
             args.Performer.PopupMessageEveryone(CastMessage); //Speak the cast message out loud
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(CastSound, args.Performer); //play the sound
+           // EntitySystem.Get<AudioSystem>().PlayFromEntity(CastSound, args.Performer); //play the sound
 
             var spawnedSpell = _entityManager.SpawnEntity(Projectile, coords);
 
@@ -55,7 +55,7 @@ namespace Content.Server.Actions
                     projectileComponent.IgnoreEntity(args.Performer);
                 }
                 spawnedSpell
-                .GetComponent<IPhysicsComponent>()
+                .GetComponent<PhysicsComponent>()
                 .LinearVelocity = direction * VelocityMult;
             }
               spawnedSpell.Transform.LocalRotation = args.Performer.Transform.LocalRotation;

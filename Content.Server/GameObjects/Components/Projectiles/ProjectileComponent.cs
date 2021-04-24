@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;

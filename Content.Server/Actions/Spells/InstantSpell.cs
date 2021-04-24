@@ -20,12 +20,12 @@ namespace Content.Server.Actions
     {
         [ViewVariables] [DataField("castmessage")] public string CastMessage { get; set; } = "I CAST SPELL";
         [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
-        [ViewVariables] [DataField("spellitem")] public string ItemProto { get; set; } = "FoodCreamPie";
+        [ViewVariables] [DataField("spellitem")] public string ItemProto { get; set; } = "FoodBananaCreamPie";
 
         [ViewVariables] [DataField("castSound")] public string CastSound { get; set; } = "/Audio/Effects/Fluids/slosh.ogg";
 
-        //TODO: this semi-teleportation rubber-snap method of an item on the ground teleporting into the player's hands is utter ass,
-        //I urge you to make a function instantly giving an item instead, and updating this shitcode if possible. Many thanks!
+        //Rubber-band snapping items into player's hands, originally was a workaround, later found it works quite well with stuns
+        //Not sure if needs fixing
 
         public void DoInstantAction(InstantActionEventArgs args)
         {

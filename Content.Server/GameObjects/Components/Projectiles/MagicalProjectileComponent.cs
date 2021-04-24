@@ -1,6 +1,8 @@
 using Content.Server.GameObjects.Components.Explosion;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -10,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 {
     [RegisterComponent]
     [DataDefinition]
-    public class MagicalProjectileComponent : Component, ICollideBehavior
+    public class MagicalProjectileComponent : Component, IStartCollide
     {
         public override string Name => "MagicalProjectile";
 
@@ -29,8 +31,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         }
 
-        void ICollideBehavior.CollideWith(IEntity target)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
+            var target = otherFixture.Body.Owner;
             var compFactory = IoCManager.Resolve<IComponentFactory>();
             var registration = compFactory.GetRegistration(TargetType);
             RegisteredTargetType = registration.Type;

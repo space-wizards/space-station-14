@@ -3,12 +3,12 @@
   icon: Interface/Actions/Spells/fireball.png
   name: "Fireball"
   filters:
-    - human
+    - spells
   description: "Puts the fire at your fingertips! And explosive power!"
   behaviorType: TargetPoint
   behavior: !type:ProjectileSpell
    castmessage: ONI SOMA! 
-   spellprojectile: FireBallbullet
+   spellprojectile:  FireBallbullet
    speed: 15
    cooldown: 1
    ignorecaster: true
@@ -18,7 +18,7 @@
   icon: Interface/Actions/Spells/traps.png
   name: "Traps!"
   filters:
-    - human
+    - spells
   description: "Snare your enemies with a magical trap! Semi-transperent."
   behaviorType: TargetPoint
   behavior: !type:ProjectileSpell
@@ -30,10 +30,10 @@
    
 - type: action
   actionType: SpellCarp
-  icon: Mobs/Aliens/Carps/carp_magic.rsi/icon.png
+  icon: Mobs/Aliens/Carps/magic.rsi/icon.png
   name: "Carps!"
   filters:
-    - human
+    - spells
   description: "Open a portal into space dragon's lair to summon a carp imbued with magic!"
   behaviorType: TargetPoint
   behavior: !type:ProjectileSpell
@@ -49,7 +49,7 @@
   icon: Mobs/Species/Human/organs.rsi/brain.png
   name: "Mind to ass"
   filters:
-    - human
+    - spells
   description: "Instantly give a sentient creature a hunched seatable back"
   behaviorType: TargetEntity
   behavior: !type:TargetSpell
@@ -64,7 +64,7 @@
   icon: Objects/Consumable/Food/pie.rsi/icon.png
   name: "Pie"
   filters:
-    - human
+    - spells
   description: "Give me a pie, I dare you!"
   behaviorType: Instant
   behavior: !type:InstantSpell
