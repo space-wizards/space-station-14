@@ -109,7 +109,7 @@
   parent: DrinkCanBaseFull
   id: DrinkThirteenLokoCan
   name: thirteen loko can
-  description: The MBO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
+  description: The MBO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkenness, or even death. Please Drink Responsibly.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/thirteen_loko.rsi
