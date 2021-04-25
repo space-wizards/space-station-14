@@ -1,0 +1,7 @@
+﻿- type: advertisementsPack
+  id: ClothesMateAds
+  advertisements:
+  - advertisement-clothes-1
+  - advertisement-clothes-2
+  - advertisement-clothes-3
+  - advertisement-clothes-4

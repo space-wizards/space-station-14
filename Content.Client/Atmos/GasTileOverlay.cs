@@ -25,9 +25,9 @@ namespace Content.Client.Atmos
             _gasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
         }
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace overlay)
+        protected override void Draw(in OverlayDrawArgs args)
         {
-            var drawHandle = (DrawingHandleWorld) handle;
+            var drawHandle = args.WorldHandle;
 
             var mapId = _eyeManager.CurrentMap;
             var eye = _eyeManager.CurrentEye;
@@ -41,7 +41,7 @@ namespace Content.Client.Atmos
                     continue;
 
                 var gridBounds = new Box2(mapGrid.WorldToLocal(worldBounds.BottomLeft), mapGrid.WorldToLocal(worldBounds.TopRight));
-                
+
                 foreach (var tile in mapGrid.GetTilesIntersecting(gridBounds))
                 {
                     foreach (var (texture, color) in _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices))

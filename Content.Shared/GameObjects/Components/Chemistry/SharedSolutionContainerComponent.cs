@@ -70,6 +70,12 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public bool CanRefill => Capabilities.HasCap(SolutionContainerCaps.Refillable);
         public bool CanDrain => Capabilities.HasCap(SolutionContainerCaps.Drainable);
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            UpdateAppearance();
+        }
+
         public void RemoveAllSolution()
         {
             if (CurrentVolume == 0)

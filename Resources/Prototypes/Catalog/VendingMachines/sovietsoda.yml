@@ -1,7 +1,0 @@
-- type: vendingMachineInventory
-  id: BODA
-  name: BODA
-  description: An old vending machine containing sweet water.
-  spriteName: sovietsoda
-  startingInventory:
-    DrinkColaCan: 10 #typically hacked product. Default product is "soda"
