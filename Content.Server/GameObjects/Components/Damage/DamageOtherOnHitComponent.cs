@@ -12,9 +12,11 @@ namespace Content.Server.GameObjects.Components.Damage
         public override string Name => "DamageOtherOnHit";
 
         [DataField("damageType")]
-        private DamageType _damageType = DamageType.Blunt;
+        private DamageTypePrototype _damageType = default!;
+
         [DataField("amount")]
         private int _amount = 1;
+
         [DataField("ignoreResistances")]
         private bool _ignoreResistances;
 
@@ -22,7 +24,10 @@ namespace Content.Server.GameObjects.Components.Damage
         {
             if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable)) return;
 
-            damageable.ChangeDamage(_damageType, _amount, _ignoreResistances, eventArgs.User);
+            if (_damageType is null)
+                damageable.ChangeDamage(damageable.GetDamageType("Blunt"), _amount, _ignoreResistances, eventArgs.User);
+            else
+                damageable.ChangeDamage(_damageType, _amount, _ignoreResistances, eventArgs.User);
         }
     }
 }

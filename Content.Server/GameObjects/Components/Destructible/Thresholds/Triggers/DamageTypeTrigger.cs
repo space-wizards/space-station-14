@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
     public class DamageTypeTrigger : IThresholdTrigger
     {
         [DataField("type")]
-        public DamageType? Type { get; set; }
+        public DamageTypePrototype? Type { get; set; }
 
         [DataField("damage")]
         public int Damage { get; set; }
@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
                 return false;
             }
 
-            return damageable.TryGetDamage(Type.Value, out var damageReceived) &&
+            return damageable.TryGetDamage(Type, out var damageReceived) &&
                    damageReceived >= Damage;
         }
     }

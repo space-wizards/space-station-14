@@ -47,8 +47,8 @@ namespace Content.Server.GameObjects.Components.Damage
             if (eventArgs.Target.TryGetComponent<IDamageableComponent>(out var damageable))
             {
                 damageable.ChangeDamage(tool.HasQuality(ToolQuality.Welding)
-                        ? DamageType.Heat
-                        : DamageType.Blunt,
+                        ? damageable.GetDamageType("Heat")
+                        : damageable.GetDamageType("Blunt"),
                     Damage, false, eventArgs.User);
 
                 return true;
