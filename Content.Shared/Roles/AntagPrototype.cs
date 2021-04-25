@@ -1,5 +1,4 @@
 #nullable enable
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -13,13 +12,13 @@ namespace Content.Shared.Roles
     public class AntagPrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         /// <summary>
         ///     The name of this antag as displayed to players.
         /// </summary>
-        [field: DataField("name")]
+        [DataField("name")]
         public string Name { get; } = string.Empty;
 
         /// <summary>

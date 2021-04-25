@@ -14,7 +14,7 @@ namespace Content.Shared.Prototypes.Kitchen
     public class FoodRecipePrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         [DataField("name")]
@@ -26,10 +26,10 @@ namespace Content.Shared.Prototypes.Kitchen
         [DataField("solids")]
         private readonly Dictionary<string, int> _ingsSolids = new ();
 
-        [field: DataField("result")]
+        [DataField("result")]
         public string Result { get; } = string.Empty;
 
-        [field: DataField("time")]
+        [DataField("time")]
         public int CookTime { get; } = 5;
 
         public string Name => Loc.GetString(_name);

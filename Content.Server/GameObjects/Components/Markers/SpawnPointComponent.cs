@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Markers
         private string? _jobId;
 
         [field: ViewVariables(VVAccess.ReadWrite)]
-        [field: DataField("spawn_type")]
+        [DataField("spawn_type")]
         public SpawnPointType SpawnType { get; } = SpawnPointType.Unset;
 
         public JobPrototype? Job => string.IsNullOrEmpty(_jobId) ? null : _prototypeManager.Index<JobPrototype>(_jobId);

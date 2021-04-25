@@ -16,7 +16,7 @@ namespace Content.Shared.Materials
     public class MaterialPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         [DataField("name")] public string Name { get; private set; } = "unobtanium";
@@ -82,10 +82,10 @@ namespace Content.Shared.Materials
         [DataField("icon")]
         public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
 
-        [field: DataField("parent")]
+        [DataField("parent")]
         public string? Parent { get; }
 
-        [field: DataField("abstract")]
+        [DataField("abstract")]
         public bool Abstract { get; }
     }
 }

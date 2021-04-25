@@ -17,7 +17,7 @@ namespace Content.Shared.Prototypes.Cargo
         [DataField("description")] private string _description = string.Empty;
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         /// <summary>
@@ -64,35 +64,35 @@ namespace Content.Shared.Prototypes.Cargo
         ///     Texture path used in the CargoConsole GUI.
         /// </summary>
         [ViewVariables]
-        [field: DataField("icon")]
+        [DataField("icon")]
         public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         ///     The prototype name of the product.
         /// </summary>
         [ViewVariables]
-        [field: DataField("product")]
+        [DataField("product")]
         public string Product { get; } = string.Empty;
 
         /// <summary>
         ///     The point cost of the product.
         /// </summary>
         [ViewVariables]
-        [field: DataField("cost")]
+        [DataField("cost")]
         public int PointCost { get; }
 
         /// <summary>
         ///     The prototype category of the product. (e.g. Engineering, Medical)
         /// </summary>
         [ViewVariables]
-        [field: DataField("category")]
+        [DataField("category")]
         public string Category { get; } = string.Empty;
 
         /// <summary>
         ///     The prototype group of the product. (e.g. Contraband)
         /// </summary>
         [ViewVariables]
-        [field: DataField("group")]
+        [DataField("group")]
         public string Group { get; } = string.Empty;
     }
 }

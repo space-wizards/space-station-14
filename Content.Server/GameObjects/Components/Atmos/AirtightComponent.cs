@@ -1,7 +1,6 @@
 #nullable enable
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -41,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private bool _fixAirBlockedDirectionInitialize = true;
 
         [ViewVariables]
-        [field: DataField("noAirWhenFullyAirBlocked")]
+        [DataField("noAirWhenFullyAirBlocked")]
         public bool NoAirWhenFullyAirBlocked { get; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]

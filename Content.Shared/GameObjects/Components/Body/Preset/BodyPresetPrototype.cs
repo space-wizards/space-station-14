@@ -17,14 +17,14 @@ namespace Content.Shared.GameObjects.Components.Body.Preset
     public class BodyPresetPrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [field: DataField("partIDs")]
+        [DataField("partIDs")]
         private Dictionary<string, string> _partIDs = new();
 
         [ViewVariables]
-        [field: DataField("name")]
+        [DataField("name")]
         public string Name { get; } = string.Empty;
 
         [ViewVariables]
