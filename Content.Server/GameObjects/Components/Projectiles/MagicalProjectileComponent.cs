@@ -10,8 +10,6 @@ using System;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
-    [RegisterComponent]
-    [DataDefinition]
     public class MagicalProjectileComponent : Component, IStartCollide
     {
         public override string Name => "MagicalProjectile";

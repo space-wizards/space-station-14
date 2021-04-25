@@ -14,8 +14,6 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Actions
 {
-    [UsedImplicitly]
-    [DataDefinition]
     public class InstantSpell : IInstantAction
     {
         [ViewVariables] [DataField("castmessage")] public string CastMessage { get; set; } = "I CAST SPELL";

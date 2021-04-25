@@ -23,9 +23,7 @@ using System.Collections.Generic;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameObjects.Components
-{
-    [RegisterComponent]
-
+{ 
     public sealed class SpellBookComponent : IUse
     {
         [ViewVariables] [DataField("spells")] public List<ActionType>? GrantedSpells { get; set; }
