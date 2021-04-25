@@ -19,7 +19,6 @@
           bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     sprite: Constructible/Power/power.rsi
     state: wiredmachine
@@ -58,7 +57,6 @@
           bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     sprite: Constructible/Power/power.rsi
     state: provider
@@ -88,7 +86,6 @@
           bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     sprite: Constructible/Power/power.rsi
     state: provider
@@ -133,7 +130,6 @@
           bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     sprite: Constructible/Power/power.rsi
     state: wirelessmachine
