@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     if(pressure > Atmospherics.WarningLowPressure)
                         goto default;
 
-                    damageable.ChangeDamage(DamageType.Blunt, Atmospherics.LowPressureDamage, false, Owner);
+                    damageable.ChangeDamage(damageable.GetDamageType("Blunt"), Atmospherics.LowPressureDamage, false, Owner);
 
                     if (status == null) break;
 
@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     var damage = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
-                    damageable.ChangeDamage(DamageType.Blunt, damage, false, Owner);
+                    damageable.ChangeDamage(damageable.GetDamageType("Blunt"), damage, false, Owner);
 
                     if (status == null) break;
 
