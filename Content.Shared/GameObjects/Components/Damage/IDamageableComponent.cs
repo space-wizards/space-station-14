@@ -16,40 +16,22 @@ namespace Content.Shared.GameObjects.Components.Damage
         /// <summary>
         ///     The amount of damage mapped by <see cref="DamageClass"/>.
         /// </summary>
-        IReadOnlyDictionary<DamageClass, int> DamageClasses { get; }
+        IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses { get; }
 
         /// <summary>
         ///     The amount of damage mapped by <see cref="DamageType"/>.
         /// </summary>
-        IReadOnlyDictionary<DamageType, int> DamageTypes { get; }
+        IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes { get; }
 
         /// <summary>
-        ///     The damage flags on this component.
+        ///  Get a specific DamageType via a ID.
         /// </summary>
-        DamageFlag Flags { get; }
+        /// <param name="ID"></param>
+        DamageTypePrototype GetDamageType(string ID);
 
-        /// <summary>
-        ///     Adds a flag to this component.
-        /// </summary>
-        /// <param name="flag">The flag to add.</param>
-        void AddFlag(DamageFlag flag);
+        bool SupportsDamageClass(DamageGroupPrototype damageGroup);
 
-        /// <summary>
-        ///     Checks whether or not this component has a specific flag.
-        /// </summary>
-        /// <param name="flag">The flag to check for.</param>
-        /// <returns>True if it has the flag, false otherwise.</returns>
-        bool HasFlag(DamageFlag flag);
-
-        /// <summary>
-        ///     Removes a flag from this component.
-        /// </summary>
-        /// <param name="flag">The flag to remove.</param>
-        void RemoveFlag(DamageFlag flag);
-
-        bool SupportsDamageClass(DamageClass @class);
-
-        bool SupportsDamageType(DamageType type);
+        bool SupportsDamageType(DamageTypePrototype type);
 
         /// <summary>
         ///     Gets the amount of damage of a type.
@@ -59,7 +41,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         /// <returns>
         ///     True if the given <see cref="type"/> is supported, false otherwise.
         /// </returns>
-        bool TryGetDamage(DamageType type, out int damage);
+        bool TryGetDamage(DamageTypePrototype type, out int damage);
 
         /// <summary>
         ///     Gets the amount of damage of a class.
@@ -69,7 +51,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         /// <returns>
         ///     True if the given <see cref="@class"/> is supported, false otherwise.
         /// </returns>
-        bool TryGetDamage(DamageClass @class, out int damage);
+        bool TryGetDamage(DamageGroupPrototype damageGroup, out int damage);
 
         /// <summary>
         ///     Changes the specified <see cref="DamageType"/>, applying
@@ -94,7 +76,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool ChangeDamage(
-            DamageType type,
+            DamageTypePrototype type,
             int amount,
             bool ignoreResistances,
             IEntity? source = null,
@@ -124,7 +106,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool ChangeDamage(
-            DamageClass @class,
+            DamageGroupPrototype damageGroup,
             int amount,
             bool ignoreResistances,
             IEntity? source = null,
@@ -146,7 +128,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool SetDamage(
-            DamageType type,
+            DamageTypePrototype type,
             int newValue,
             IEntity? source = null,
             DamageChangeParams? extraParams = null);

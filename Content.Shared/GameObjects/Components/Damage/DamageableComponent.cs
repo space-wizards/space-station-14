@@ -25,6 +25,12 @@ namespace Content.Shared.GameObjects.Components.Damage
     [ComponentReference(typeof(IDamageableComponent))]
     public class DamageableComponent : Component, IDamageableComponent, IRadiationAct, ISerializationHooks
     {
+        private Dictionary<string, DamageTypePrototype> _damageTypeDict= default!;
+        private readonly Dictionary<DamageTypePrototype, int> _damageList = default!;
+        private readonly HashSet<DamageTypePrototype> _supportedDamageTypes = new();
+        private readonly HashSet<DamageGroupPrototype> _supportedDamageGroups = new();
+        [ViewVariables] private ResistanceSet Resistances { get; set; } = new();
+
         public override string Name => "Damageable";
 
         public override uint? NetID => ContentNetIDs.DAMAGEABLE;
@@ -33,69 +39,28 @@ namespace Content.Shared.GameObjects.Components.Damage
         public const string DefaultResistanceSet = "defaultResistances";
         public const string DefaultDamageContainer = "metallicDamageContainer";
 
-        private readonly Dictionary<DamageType, int> _damageList = DamageTypeExtensions.ToNewDictionary();
+        [DataField("resistances")]
+        public string ResistanceSetId = DefaultResistanceSet;
 
-        private readonly HashSet<DamageType> _supportedTypes = new();
 
-        private readonly HashSet<DamageClass> _supportedClasses = new();
-
-        [DataField("flags")]
-        private DamageFlag _flags;
-
-        [DataField("resistances")] public string ResistanceSetId = DefaultResistanceSet;
 
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
-        [ViewVariables] [DataField("damageContainer")] public string DamageContainerId { get; set; } = DefaultDamageContainer;
-
-        [ViewVariables] private ResistanceSet Resistances { get; set; } = new();
+        [ViewVariables] [DataField("damageContainer")]
+        public string DamageContainerId { get; set; } = DefaultDamageContainer;
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses => damageListToDamageGroup(_damageList);
+        [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes => _damageList;
 
-        [ViewVariables]
-        public IReadOnlyDictionary<DamageClass, int> DamageClasses =>
-            DamageTypeExtensions.ToClassDictionary(_damageList);
-
-        [ViewVariables] public IReadOnlyDictionary<DamageType, int> DamageTypes => _damageList;
-
-        public DamageFlag Flags
+        public bool SupportsDamageClass(DamageGroupPrototype damageGroup)
         {
-            get => _flags;
-            private set
-            {
-                if (_flags == value)
-                {
-                    return;
-                }
-
-                _flags = value;
-                Dirty();
-            }
+            return _supportedDamageGroups.Contains(damageGroup);
         }
 
-        public void AddFlag(DamageFlag flag)
+        public bool SupportsDamageType(DamageTypePrototype type)
         {
-            Flags |= flag;
-        }
-
-        public bool HasFlag(DamageFlag flag)
-        {
-            return Flags.HasFlag(flag);
-        }
-
-        public void RemoveFlag(DamageFlag flag)
-        {
-            Flags &= ~flag;
-        }
-
-        public bool SupportsDamageClass(DamageClass @class)
-        {
-            return _supportedClasses.Contains(@class);
-        }
-
-        public bool SupportsDamageType(DamageType type)
-        {
-            return _supportedTypes.Contains(type);
+            return _supportedDamageTypes.Contains(type);
         }
 
         public override void Initialize()
@@ -104,15 +69,20 @@ namespace Content.Shared.GameObjects.Components.Damage
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
+            foreach (var damageType in prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
+            {
+                _damageTypeDict.Add(damageType.ID, damageType);
+            }
+
             // TODO DAMAGE Serialize damage done and resistance changes
-            var damagePrototype = prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
+            var damageContainerPrototype = prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
 
-            _supportedClasses.Clear();
-            _supportedTypes.Clear();
+            _supportedDamageGroups.Clear();
+            _supportedDamageTypes.Clear();
 
-            DamageContainerId = damagePrototype.ID;
-            _supportedClasses.UnionWith(damagePrototype.SupportedClasses);
-            _supportedTypes.UnionWith(damagePrototype.SupportedTypes);
+            DamageContainerId = damageContainerPrototype.ID;
+            _supportedDamageGroups.UnionWith(damageContainerPrototype.SupportedClasses);
+            _supportedDamageTypes.UnionWith(damageContainerPrototype.SupportedTypes);
 
             var resistancePrototype = prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
             Resistances = new ResistanceSet(resistancePrototype);
@@ -125,9 +95,14 @@ namespace Content.Shared.GameObjects.Components.Damage
             ForceHealthChangedEvent();
         }
 
+        public DamageTypePrototype GetDamageType(string ID)
+        {
+            return _damageTypeDict[ID];
+        }
+
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new DamageableComponentState(_damageList, _flags);
+            return new DamageableComponentState(_damageList);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -145,30 +120,28 @@ namespace Content.Shared.GameObjects.Components.Damage
             {
                 _damageList[type] = damage;
             }
-
-            _flags = state.Flags;
         }
 
-        public int GetDamage(DamageType type)
+        public int GetDamage(DamageTypePrototype type)
         {
             return _damageList.GetValueOrDefault(type);
         }
 
-        public bool TryGetDamage(DamageType type, out int damage)
+        public bool TryGetDamage(DamageTypePrototype type, out int damage)
         {
             return _damageList.TryGetValue(type, out damage);
         }
 
-        public int GetDamage(DamageClass @class)
+        public int GetDamage(DamageGroupPrototype damageGroup)
         {
-            if (!SupportsDamageClass(@class))
+            if (!SupportsDamageClass(damageGroup))
             {
                 return 0;
             }
 
             var damage = 0;
 
-            foreach (var type in @class.ToTypes())
+            foreach (var type in damageGroup.Types)
             {
                 damage += GetDamage(type);
             }
@@ -176,15 +149,15 @@ namespace Content.Shared.GameObjects.Components.Damage
             return damage;
         }
 
-        public bool TryGetDamage(DamageClass @class, out int damage)
+        public bool TryGetDamage(DamageGroupPrototype damageGroup, out int damage)
         {
-            if (!SupportsDamageClass(@class))
+            if (!SupportsDamageClass(damageGroup))
             {
                 damage = 0;
                 return false;
             }
 
-            damage = GetDamage(@class);
+            damage = GetDamage(damageGroup);
             return true;
         }
 
@@ -194,16 +167,14 @@ namespace Content.Shared.GameObjects.Components.Damage
         /// <returns>
         ///     True if successful, false if this container does not support that type.
         /// </returns>
-        public bool TrySetDamage(DamageType type, int newValue)
+        public bool TrySetDamage(DamageTypePrototype type, int newValue)
         {
             if (newValue < 0)
             {
                 return false;
             }
 
-            var damageClass = type.ToClass();
-
-            if (_supportedClasses.Contains(damageClass))
+            if (_supportedDamageTypes.Contains(type))
             {
                 var old = _damageList[type] = newValue;
                 _damageList[type] = newValue;
@@ -220,27 +191,27 @@ namespace Content.Shared.GameObjects.Components.Damage
             return false;
         }
 
-        public void Heal(DamageType type)
+        public void Heal(DamageTypePrototype type)
         {
             SetDamage(type, 0);
         }
 
         public void Heal()
         {
-            foreach (var type in _supportedTypes)
+            foreach (var type in _supportedDamageTypes)
             {
                 Heal(type);
             }
         }
 
         public bool ChangeDamage(
-            DamageType type,
+            DamageTypePrototype type,
             int amount,
             bool ignoreResistances,
             IEntity? source = null,
             DamageChangeParams? extraParams = null)
         {
-            if (amount > 0 && HasFlag(DamageFlag.Invulnerable))
+            if (amount > 0)
             {
                 return false;
             }
@@ -280,21 +251,21 @@ namespace Content.Shared.GameObjects.Components.Damage
             return true;
         }
 
-        public bool ChangeDamage(DamageClass @class, int amount, bool ignoreResistances,
+        public bool ChangeDamage(DamageGroupPrototype damageGroup, int amount, bool ignoreResistances,
             IEntity? source = null,
             DamageChangeParams? extraParams = null)
         {
-            if (amount > 0 && HasFlag(DamageFlag.Invulnerable))
+            if (amount > 0)
             {
                 return false;
             }
 
-            if (!SupportsDamageClass(@class))
+            if (!SupportsDamageClass(damageGroup))
             {
                 return false;
             }
 
-            var types = @class.ToTypes();
+            var types = damageGroup.Types;
 
             if (amount < 0)
             {
@@ -311,7 +282,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                     healThisCycle = 0;
 
                     int healPerType;
-                    if (healingLeft < types.Count)
+                    if (healingLeft < types.Count())
                     {
                         // Say we were to distribute 2 healing between 3
                         // this will distribute 1 to each (and stop after 2 are given)
@@ -321,7 +292,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                     {
                         // Say we were to distribute 62 healing between 3
                         // this will distribute 20 to each, leaving 2 for next loop
-                        healPerType = healingLeft / types.Count;
+                        healPerType = healingLeft / types.Count();
                     }
 
                     foreach (var type in types)
@@ -345,13 +316,13 @@ namespace Content.Shared.GameObjects.Components.Damage
             {
                 int damagePerType;
 
-                if (damageLeft < types.Count)
+                if (damageLeft < types.Count())
                 {
                     damagePerType = 1;
                 }
                 else
                 {
-                    damagePerType = damageLeft / types.Count;
+                    damagePerType = damageLeft / types.Count();
                 }
 
                 foreach (var type in types)
@@ -365,9 +336,9 @@ namespace Content.Shared.GameObjects.Components.Damage
             return true;
         }
 
-        public bool SetDamage(DamageType type, int newValue, IEntity? source = null,  DamageChangeParams? extraParams = null)
+        public bool SetDamage(DamageTypePrototype type, int newValue, IEntity? source = null,  DamageChangeParams? extraParams = null)
         {
-            if (newValue >= TotalDamage && HasFlag(DamageFlag.Invulnerable))
+            if (newValue >= TotalDamage )
             {
                 return false;
             }
@@ -398,7 +369,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         {
             var data = new List<DamageChangeData>();
 
-            foreach (var type in _supportedTypes)
+            foreach (var type in _supportedDamageTypes)
             {
                 var damage = GetDamage(type);
                 var datum = new DamageChangeData(type, damage, 0);
@@ -414,6 +385,26 @@ namespace Content.Shared.GameObjects.Components.Damage
             OnHealthChanged(args);
         }
 
+        private IReadOnlyDictionary<DamageGroupPrototype, int> damageListToDamageGroup(IReadOnlyDictionary<DamageTypePrototype, int> damagelist)
+        {
+            var damageGroupDict = new Dictionary<DamageGroupPrototype, int>();
+            int damageGroupSumDamage = 0;
+            int damageTypeDamage = 0 ;
+            foreach (var damageGroup in _supportedDamageGroups)
+            {
+                damageGroupSumDamage = 0;
+                foreach (var damageType in _supportedDamageTypes)
+                {
+                    damageTypeDamage = 0;
+                     damagelist.TryGetValue(damageType,out damageTypeDamage);
+                     damageGroupSumDamage += damageTypeDamage;
+                }
+                damageGroupDict.Add(damageGroup,damageGroupSumDamage);
+            }
+
+            return damageGroupDict;
+        }
+
         protected virtual void OnHealthChanged(DamageChangedEventArgs e)
         {
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, e);
@@ -424,11 +415,11 @@ namespace Content.Shared.GameObjects.Components.Damage
             Dirty();
         }
 
-        void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
+        public void RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
         {
             var totalDamage = Math.Max((int)(frameTime * radiation.RadsPerSecond), 1);
 
-            ChangeDamage(DamageType.Radiation, totalDamage, false, radiation.Owner);
+            ChangeDamage(GetDamageType("Radiation"), totalDamage, false, radiation.Owner);
         }
 
         public void OnExplosion(ExplosionEventArgs eventArgs)
@@ -441,21 +432,19 @@ namespace Content.Shared.GameObjects.Components.Damage
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            ChangeDamage(DamageType.Piercing, damage, false);
-            ChangeDamage(DamageType.Heat, damage, false);
+            ChangeDamage(GetDamageType("Piercing"), damage, false);
+            ChangeDamage(GetDamageType("Heat"), damage, false);
         }
     }
 
     [Serializable, NetSerializable]
     public class DamageableComponentState : ComponentState
     {
-        public readonly Dictionary<DamageType, int> DamageList;
-        public readonly DamageFlag Flags;
+        public readonly Dictionary<DamageTypePrototype, int> DamageList;
 
-        public DamageableComponentState(Dictionary<DamageType, int> damageList, DamageFlag flags) : base(ContentNetIDs.DAMAGEABLE)
+        public DamageableComponentState(Dictionary<DamageTypePrototype, int> damageList ) : base(ContentNetIDs.DAMAGEABLE)
         {
             DamageList = damageList;
-            Flags = flags;
         }
     }
 }
