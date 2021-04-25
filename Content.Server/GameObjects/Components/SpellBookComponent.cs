@@ -30,10 +30,12 @@ namespace Content.Server.GameObjects.Components
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent<SharedActionsComponent>(out var actions)) return false;
+            if (GrantedSpells == null) return false;
             foreach(var spell in GrantedSpells)
             {
                 actions.Grant(spell);
             }
+            return false;
         }
     }
 }
