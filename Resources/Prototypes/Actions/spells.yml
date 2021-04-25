@@ -2,6 +2,7 @@
   actionType: SpellFireball
   icon: Interface/Actions/Spells/fireball.png
   name: "Fireball"
+  id: MagicFireball
   filters:
     - spells
   description: "Puts the fire at your fingertips! And explosive power!"
@@ -17,6 +18,7 @@
   actionType: SpellTraps
   icon: Interface/Actions/Spells/traps.png
   name: "Traps!"
+  id: MagicSnare
   filters:
     - spells
   description: "Snare your enemies with a magical trap! Semi-transperent."
@@ -32,6 +34,7 @@
   actionType: SpellCarp
   icon: Mobs/Aliens/Carps/magic.rsi/icon.png
   name: "Carps!"
+  id: MagicSummonCarp
   filters:
     - spells
   description: "Open a portal into space dragon's lair to summon a carp imbued with magic!"
@@ -48,6 +51,7 @@
   actionType: DebugTarget
   icon: Mobs/Species/Human/organs.rsi/brain.png
   name: "Mind to ass"
+  id: MagicInstantSummons
   filters:
     - spells
   description: "Instantly give a sentient creature a hunched seatable back"
@@ -63,6 +67,7 @@
   actionType: SpellPie
   icon: Objects/Consumable/Food/pie.rsi/icon.png
   name: "Pie"
+  id: MagicGrantPie
   filters:
     - spells
   description: "Give me a pie, I dare you!"
